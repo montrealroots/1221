@@ -255,10 +255,10 @@
    "source": "audit",
    "goal": "Answer, dismiss or read what the world raises | Home's Dismiss (Home.tsx run('world.dismiss_decision') at :273) sends decisionId. It refuses an unknown id ('No such decision.') and one already dismissed ('It’s dismissed already.'), then sets dismissedAt. Downstream: openDecisions drops the row from Home's list and GameShell's count; prune deletes it 180 days on (not before a dated row's dueAt); take_decision_action refuses a dismissed row.",
    "entry": "Home.tsx:276 (Dismiss’s run('world.dismiss_decision')). Until 2026-10-13 this said :267. | guide: What Needs You | Home.tsx",
-   "preconditions": "An open decision; its action’s command must succeed, or the decision stays open with the reason | refused where: No such decision.; It’s dismissed already.",
+   "preconditions": "An open decision; its action’s command must succeed, or the decision stays open with the reason | refused where: You’ve already dismissed that question.",
    "reads": "decision",
    "decisions": "chooses: decisionId, dismissed",
-   "validation": "refusals: No such decision.; It’s dismissed already. | costs: An action runs its command (tax.file, bank.reactivate, documents.apply_opt) and resolves the decision; dismissing closes it; marking read clears the unread notices. Decisions are raised now by a tax return (systems/taxreturn.ts), an account about to go to the state (systems/accountlife.ts) and US status ending (systems/permission.ts); each is dated by its raiser and ends on its date (an undated one ended after a season until 2026-10-14, when the owner had the rule go)",
+   "validation": "refusals: You’ve already dismissed that question. | costs: An action runs its command (tax.file, bank.reactivate, documents.apply_opt) and resolves the decision; dismissing closes it; marking read clears the unread notices. Decisions are raised now by a tax return (systems/taxreturn.ts), an account about to go to the state (systems/accountlife.ts) and US status ending (systems/permission.ts); each is dated by its raiser and ends on its date (an undated one ended after a season until 2026-10-14, when the owner had the rule go)",
    "changes": "dismissedAt",
    "later": "Not recorded",
    "systems": "world.ts:openDecisions (off the Home’s list); world.ts prune, a season after; take_decision_action refuses a dismissed row | openDecisions and unreadNotifications, which leave out a decision resolved or dismissed and a notice read (world/world.ts); expireDecisions and prune (world/world.ts), which pass over a decision closed and forget it a season on; world.take_decision_action, which refuses a decision acted on or dismissed",
@@ -276,7 +276,7 @@
    "kind": "command",
    "source": "audit",
    "goal": "Answer, dismiss or read what the world raises | Home's 'Mark N Read' (Home.tsx run('world.mark_read') at :216, no ids) sends the command, with or without notificationIds. It marks the listed notifications, or every one, read, and returns how many it changed. Downstream: unreadNotifications feeds Home's list and count and GameShell's count.",
-   "entry": "Home.tsx:219 (Mark N Read’s run('world.mark_read')). Until 2026-10-13 this said :211. | guide: What Needs You | Home.tsx",
+   "entry": "Home.tsx:219 (Mark N Read’s run('world.mark_read')). Until 2026-10-13 this said :211. | guide: What Needs You | Home.tsx attention.tsx",
    "preconditions": "An open decision; its action’s command must succeed, or the decision stays open with the reason | refused where: —",
    "reads": "notifications",
    "decisions": "chooses: notificationIds, read",
@@ -299,10 +299,10 @@
    "source": "audit",
    "goal": "Put your own plans on the calendar, call them off or skip them, and set how fast the clock runs | TimeControls' Play and Pause (run('world.set_preferences', { timeSpeed }) at :62) set the speed. It refuses any key but timeSpeed ('x isn’t a preference.') and any speed but paused or live ('The clock runs paused or live.'). The guide holds 'live' until The Clock is read, never 'paused'. A save's fast or faster opens as live. Downstream: the page's live clock, game-context.tsx SPEED_MULTIPLIER (paused 0 returns without ticking; live 1), stepped by core/realclock.",
    "entry": "TimeControls.tsx:62 (setSpeed’s run('world.set_preferences'), sent by the Play/Pause button at :76). Until 2026-10-13 this said :55. | guide: The Clock | TimeControls.tsx game-context.tsx",
-   "preconditions": "A plan passes checkPlan (a title, a start, a length from half an hour to all day, in the town you’re in); calling off only before it starts, skipping only once it’s due | refused where: … isn’t a preference.; The clock runs paused or live.",
+   "preconditions": "A plan passes checkPlan (a title, a start, a length from half an hour to all day, in the town you’re in); calling off only before it starts, skipping only once it’s due | refused where: That isn’t a setting the game has.; The clock can only be set to Play or Pause.",
    "reads": "timeSpeed",
    "decisions": "issued with no choice beyond the control",
-   "validation": "refusals: … isn’t a preference.; The clock runs paused or live. | costs: A plan holds the time and halts the clock when it comes due. Skipped, it’s marked missed and costs nothing but the plan; called off, it comes off the calendar. The speed is paused or live, and nothing else is a preference. Until 2026-10-12 this said paused, live, fast or faster: the command took ‘fast’ and ‘faster’, which no control sent, and refuses them since (world/world.ts), and a save that stored one opens at live (migrate, src/engine/index.ts)",
+   "validation": "refusals: That isn’t a setting the game has.; The clock can only be set to Play or Pause. | costs: A plan holds the time and halts the clock when it comes due. Skipped, it’s marked missed and costs nothing but the plan; called off, it comes off the calendar. The speed is paused or live, and nothing else is a preference. Until 2026-10-12 this said paused, live, fast or faster: the command took ‘fast’ and ‘faster’, which no control sent, and refuses them since (world/world.ts), and a save that stored one opens at live (migrate, src/engine/index.ts)",
    "changes": "preferences.timeSpeed",
    "later": "Not recorded",
    "systems": "the page’s live clock: SPEED_MULTIPLIER’s rate for paused or live (src/app/game-context.tsx), stepped by core/realclock | occupiedAt (systems/life.ts), which refuses sleep, looking after, coursework, play reading and production work while a plan runs; the clock’s halt at a due item (advanceTo and advanceBy with stopOnPlayerRequired, core/simulation.ts), held as standingAt (app/game-context.tsx) and put on screen with Skip It or Go (ui/shell/TimeControls.tsx); the live clock’s rate, SPEED_MULTIPLIER (app/game-context.tsx)",
@@ -321,10 +321,10 @@
    "source": "audit",
    "goal": "Answer, dismiss or read what the world raises | A decision's button on Home (Home.tsx run('world.take_decision_action') at :260) sends decisionId and actionIndex. It refuses an unknown id, a row already acted on (resolvedAt), a dismissed row, and an index with no action. It asks the guide's guards about the nested command, then runs it. If the nested command fails or answers { ok: false }, the row stays open with the reason. Otherwise resolvedAt is set. Downstream: the nested command's own effect (tax.file, bank.reactivate, documents.apply_opt in the game); openDecisions; prune a season on; its own refusal of a row acted on.",
    "entry": "Home.tsx:263 (a decision’s button’s run('world.take_decision_action')). Until 2026-10-13 this said :254. | guide: What Needs You | Home.tsx",
-   "preconditions": "An open decision; its action’s command must succeed, or the decision stays open with the reason | refused where: No such decision.; That’s been done already.; It’s dismissed.; That action isn’t available on this item.",
+   "preconditions": "An open decision; its action’s command must succeed, or the decision stays open with the reason | refused where: That question is already settled: it was answered, or its date passed.; You dismissed that question, so it can’t be answered from What Needs You.; That isn’t one of this question’s answers.",
    "reads": "decision.actions",
    "decisions": "chooses: decisionId, actionIndex, ok, error",
-   "validation": "refusals: No such decision.; That’s been done already.; It’s dismissed.; That action isn’t available on this item. | costs: An action runs its command (tax.file, bank.reactivate, documents.apply_opt) and resolves the decision; dismissing closes it; marking read clears the unread notices. Decisions are raised now by a tax return (systems/taxreturn.ts), an account about to go to the state (systems/accountlife.ts) and US status ending (systems/permission.ts); each is dated by its raiser and ends on its date (an undated one ended after a season until 2026-10-14, when the owner had the rule go)",
+   "validation": "refusals: That question is already settled: it was answered, or its date passed.; You dismissed that question, so it can’t be answered from What Needs You.; That isn’t one of this question’s answers. | costs: An action runs its command (tax.file, bank.reactivate, documents.apply_opt) and resolves the decision; dismissing closes it; marking read clears the unread notices. Decisions are raised now by a tax return (systems/taxreturn.ts), an account about to go to the state (systems/accountlife.ts) and US status ending (systems/permission.ts); each is dated by its raiser and ends on its date (an undated one ended after a season until 2026-10-14, when the owner had the rule go)",
    "changes": "runs nested command; resolvedAt",
    "later": "Not recorded",
    "systems": "the nested command (tax.file, bank.reactivate, documents.apply_opt); resolvedAt -> world.ts:openDecisions (off the Home’s list), world.ts prune a season after, and its own refusal of a row acted on | openDecisions and unreadNotifications, which leave out a decision resolved or dismissed and a notice read (world/world.ts); expireDecisions and prune (world/world.ts), which pass over a decision closed and forget it a season on; world.take_decision_action, which refuses a decision acted on or dismissed",
@@ -11130,7 +11130,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11205,7 +11205,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-g",
@@ -11257,7 +11257,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-i",
@@ -11333,7 +11333,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -13716,7 +13716,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14135,7 +14135,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14436,7 +14436,7 @@
     "commit": "51cdd7d6",
     "watch": "app"
    },
-   "missing": "It was measured on 51cdd7d6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 51cdd7d6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/entry.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14463,7 +14463,7 @@
     "commit": "51cdd7d6",
     "watch": "app"
    },
-   "missing": "It was measured on 51cdd7d6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 51cdd7d6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/entry.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14490,7 +14490,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14517,7 +14517,7 @@
     "commit": "0cf3a9bc",
     "watch": "app"
    },
-   "missing": "It was measured on 0cf3a9bc, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 0cf3a9bc, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/entry.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14800,7 +14800,7 @@
     "commit": "7e7a3af6",
     "watch": "app"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/entry.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14827,7 +14827,7 @@
     "commit": "7e7a3af6",
     "watch": "app"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/entry.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14854,7 +14854,7 @@
     "commit": "7e7a3af6",
     "watch": "app"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/entry.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14881,7 +14881,7 @@
     "commit": "7e7a3af6",
     "watch": "app"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/entry.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14908,7 +14908,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14935,7 +14935,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14962,7 +14962,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14989,7 +14989,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15016,7 +15016,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15043,7 +15043,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15070,7 +15070,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15097,7 +15097,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15124,7 +15124,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15151,7 +15151,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15178,7 +15178,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15205,7 +15205,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15232,7 +15232,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15259,7 +15259,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15286,7 +15286,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15313,7 +15313,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15340,7 +15340,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15367,7 +15367,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15394,7 +15394,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15421,7 +15421,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15448,7 +15448,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15475,7 +15475,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15502,7 +15502,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15529,7 +15529,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15578,7 +15578,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15605,7 +15605,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15632,7 +15632,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15659,7 +15659,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15686,7 +15686,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15713,7 +15713,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15740,7 +15740,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15767,7 +15767,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/entry.ts, src/engine/content/ethnicity.ts, src/engine/content/guide/day.ts, …): measure it again"
   }
  ]
 }

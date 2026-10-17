@@ -65,7 +65,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `brief.prepare` | Implemented But Unverified | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also prepareRefusal) | — | — | — | 27 | — |
 | `brief.reader` | Implemented But Unverified | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also readerRefusal) | — | — | — | 6 | — |
 | `calendar.cancel` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | — | 8 | journey-life.test.ts |
-| `calendar.schedule` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | life.commitment | 22 | journey-life.test.ts |
+| `calendar.schedule` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | life.commitment | 23 | journey-life.test.ts |
 | `calendar.skip` | Implemented But Unverified | What’s Coming | TimeControls.tsx | `world/plans.ts` | — | status; resolvedAt | — | — | 3 | — |
 | `card.apply` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You have no credit record to apply with.; A card is already on its way.; You need a bank to apply to.; SLATE doesn’t know that bank.; and 3 more (also abroadRefusal, transferRefusal) | — | — | card.arrives | 14 | — |
 | `card.close` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; It’s already being closed. | — | — | — | 8 | — |
@@ -127,7 +127,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `plays.research` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/playreading.ts` | — (also researchRefusal) | — | — | — | 3 | — |
 | `practice.exercise` | Implemented But Unverified | You As An Actor | ProfileWorkspace.tsx | `systems/practice.ts` | There’s no such tier. (also practiceRefusal, focusRefusal) | — | — | — | 25 | — |
 | `practice.self_tape` | Implemented But Unverified | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 31 | — |
-| `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 5 | journey-school-year.test.ts; journey-three-students.test.ts |
+| `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 6 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.appeal_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | Only a leave the dean imposed can be appealed.; You appealed on ….; The appeal had to be in by …. | — | — | school.leave_appeal | 4 | — |
 | `school.approach` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a way to work on it. (also approachRefusal) | — | — | — | 8 | journey-three-students.test.ts |
 | `school.ask_partner` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also askRefusal) | — | — | — | 16 | — |
@@ -168,7 +168,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `tax.catch_up_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | Your plan isn’t behind.; … is more than the bank can cover. | status; nextDue | Yes | tax.plan_payment | 2 | — |
 | `tax.catch_up_state_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statetax.ts` | That plan isn’t behind.; … is more than the bank can cover. | — | Yes | tax.state_plan_payment | 3 | — |
 | `tax.federal_lien_withdraw` | Implemented But Unverified | Cover, Benefits And Returns | LienPanels.tsx | `systems/taxreturn.ts` | — (also federalLienWithdrawRefusal, planRefusal) | status; startedAt; nextDue; payBy; why; and 3 more | Yes | tax.federal_lien; tax.notice; short; tax.plan_payment; and 5 more | 4 | — |
-| `tax.file` | Verified (journey) | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | There’s no return for that year.; You’ve filed it. A change is an amended return. | — | Yes | tax.refund | 30 | journey-money.test.ts |
+| `tax.file` | Verified (journey) | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | There’s no return for that year.; You’ve filed it. A change is an amended return. | — | Yes | tax.refund | 31 | journey-money.test.ts |
 | `tax.lien_dispute` | Implemented But Unverified | Cover, Benefits And Returns | LienPanels.tsx | `systems/statetax.ts` | — (also lienDisputeRefusal) | status; why; nextDue | Yes | tax.state_lien; tax.state_plan_payment | 3 | — |
 | `tax.lien_release` | Implemented But Unverified | Cover, Benefits And Returns | LienPanels.tsx | `systems/statetax.ts` | Its release fee, …, is more than the bank can cover. (also lienReleaseRefusal) | — | Yes | — | 4 | — |
 | `tax.pay` | Verified (journey) | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | That year is paid.; Pay something.; … is owed; pay that or less.; … is more than the bank can cover. | — | Yes | — | 9 | journey-money.test.ts |
@@ -179,10 +179,10 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `work.identify` | Implemented But Unverified | Drama School | WorkThrough.tsx | `systems/workbook.ts` | — (also identifyRefusal) | — | — | — | 7 | — |
 | `work.settle` | Implemented But Unverified | Drama School | WorkThrough.tsx | `systems/workbook.ts` | — (also settleRefusal) | — | — | — | 11 | — |
 | `work.try` | Implemented But Unverified | Drama School | WorkThrough.tsx | `systems/workbook.ts` | — (also tryRefusal) | — | — | — | 6 | — |
-| `world.dismiss_decision` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | No such decision.; It’s dismissed already. | — | — | — | 6 | — |
-| `world.mark_read` | Verified (journey) | What Needs You | Home.tsx | `world/world.ts` | — | — | — | — | 7 | journey-life.test.ts |
-| `world.set_preferences` | Implemented But Unverified | The Clock | TimeControls.tsx game-context.tsx | `world/world.ts` | … isn’t a preference.; The clock runs paused or live. | — | — | — | 7 | — |
-| `world.take_decision_action` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | No such decision.; That’s been done already.; It’s dismissed.; That action isn’t available on this item. | — | — | — | 12 | — |
+| `world.dismiss_decision` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | You’ve already dismissed that question. | — | — | — | 7 | — |
+| `world.mark_read` | Verified (journey) | What Needs You | Home.tsx attention.tsx | `world/world.ts` | — | — | — | — | 8 | journey-life.test.ts |
+| `world.set_preferences` | Implemented But Unverified | The Clock | TimeControls.tsx game-context.tsx | `world/world.ts` | That isn’t a setting the game has.; The clock can only be set to Play or Pause. | — | — | — | 8 | — |
+| `world.take_decision_action` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | That question is already settled: it was answered, or its date passed.; You dismissed that question, so it can’t be answered from What Needs You.; That isn’t one of this question’s answers. | — | — | — | 12 | — |
 
 ## Scheduled kinds
 
