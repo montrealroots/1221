@@ -472,7 +472,7 @@ describe('p-traits-line', () => {
     fresh();
     const sim = life('g31-dispositions', { personality, personalityTraits: ['early_riser', 'even_tempered'] });
     const html = profile(sim);
-    expect(dispositions(html)).toBe('Emotional Stability 72, how fast stress builds and clears, and where your composure started; Conscientiousness 40, how much a night’s sleep restores you, and where your discipline started; Ambition 60, how fast stress builds, whatever causes it; Risk Tolerance 70, over 65, so your card’s autopay began on the minimum payment; Extraversion 55, how you feel with an audience watching; Openness 30, how rehearsing new work goes for you; Agreeableness 80, how a rehearsal goes for you.');
+    expect(dispositions(html)).toBe('Emotional Stability 72, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 40, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 70, over 65, so your card’s autopay began on the minimum payment; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 30, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood; Agreeableness 80, how a day of rehearsal affects your mood.');
     // Where composure starts: 25 and 0.35 a point of stability, 50.2 at 72. Where discipline starts: 30 and half a
     // point of conscientiousness, 50.0 at 40. Each as the Attributes table shows it.
     expect(rowOf(abilities(html), 'Composure')[1]).toBe('50.2');
@@ -493,8 +493,8 @@ describe('p-traits-line', () => {
     expect(dispositions(profile(at65))).toContain('Risk Tolerance 65, 65 or under, so your card’s autopay began on the whole statement;');
     const steadier = life('g31-stability-40', { personality: { ...personality, riskTolerance: 50, emotionalStability: 40, conscientiousness: 70 } });
     const html = profile(steadier);
-    expect(dispositions(html)).toContain('Emotional Stability 40, how fast stress builds');
-    expect(dispositions(html)).toContain('Conscientiousness 70, how much a night’s sleep');
+    expect(dispositions(html)).toContain('Emotional Stability 40, how quickly stress builds');
+    expect(dispositions(html)).toContain('Conscientiousness 70, how well you sleep');
     expect(dispositions(html)).toContain('Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement;');
     // 25 + 0.35 × 40 = 39.0; 30 + 0.5 × 70 = 65.0.
     expect(rowOf(abilities(html), 'Composure')[1]).toBe('39.0');

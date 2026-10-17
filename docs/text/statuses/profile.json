@@ -61,9 +61,9 @@
  },
  "src/engine/content/abilities.ts#ABILITY_DEFS [stamina]": {
   "status": "Rewritten And Verified",
-  "hash": "acc36980329f",
+  "hash": "52b2b2ea63e1",
   "on": "2026-10-17",
-  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt. Its source line shortened at the end of the area to 214 characters, under the look's one-line limit (tests/looks.test.ts 'keeps provenance to one line and never opens it', 23 of 23)."
  },
  "src/engine/content/abilities.ts#ABILITY_DEFS [vocal]": {
   "status": "Rewritten And Verified",
@@ -2669,6 +2669,12 @@
   "on": "2026-10-17",
   "evidence": "tests/genre-identity-screens.test.ts (research and estimated, both); every genre's in docs/verification/language-2026-10-17/profile/b4-genres.txt"
  },
+ "src/ui/components/AttributesPanel.tsx#AttributesPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "111616880322",
+  "on": "2026-10-17",
+  "evidence": "Built app, text walk at 1440 (14 saves): the School screen shows the panel as written (brief.json: 'Nerves add 3.3 stress before a performance', 'Composure keeps your work consistent under pressure, …'); claims read against attributes.ts nerves() (stress by composure, composure and presence nudged on each performance night, called from school.ts nights) and practice.ts graded-exposure (trains composure)."
+ },
  "src/ui/looks/actor.tsx#BAND_WORD": {
   "status": "Reviewed And Retained",
   "hash": "3c7dcf0bad01",
@@ -2701,9 +2707,9 @@
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#DISPOSITIONS": {
   "status": "Rewritten And Verified",
-  "hash": "aa9e367c8fff",
+  "hash": "f6642e7056b4",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g31-ui.test.ts (all seven exactly), tests/evidence-g27-ui.test.ts, tests/evidence-g28-ui.test.ts, tests/evidence-g34-ui.test.ts"
+  "evidence": "Each disposition in creation's own words (the frame area's src/ui/creation/CharacterCreation.tsx PersonalityStep, at the coordinator's note), each claim read against the engine: axisModifier (stressGain, stressRecovery, sleepQuality, energyRecovery) and the Composure and Discipline starts in systems/attributes.ts; DISPOSED room, novel work (the Hughes and Carlotta festival casts, the Cabaret) and rehearsal in systems/enjoyment.ts. tests/evidence-g31-ui.test.ts (all seven exactly, 21 of 21), tests/evidence-g27-ui.test.ts, tests/evidence-g28-ui.test.ts, tests/evidence-g34-ui.test.ts, tests/need-paths.test.ts (96 of 97, then the one partial assertion brought over, 21 of 21)."
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#GenresPanel": {
   "status": "Rewritten And Verified",

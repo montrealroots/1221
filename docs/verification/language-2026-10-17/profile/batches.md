@@ -279,3 +279,65 @@ spelling, typos 0; text-inventory over its ratchet by one "the take" from two ne
 guide's engine-speak fell from 131 to the taped brief's own "take").
 
 **Screens verified:** `b5-guide.txt`, every entry printed as the rules fill it, in the brief's order of questions.
+
+## At The End Of The Area: The Whole Suite, The Built App, And Two Late Changes
+
+**Every source has a status:** 466 (the inventory counted 462 when the area began),
+Rewritten And Verified 92, Reviewed And Retained 374, Pending 0, Blocked 0. The last Pending one,
+`src/ui/components/AttributesPanel.tsx#AttributesPanel` (Your Composure on the School screen), was verified on the built
+app: the 1440 walk's `brief.json` School screen reads "Nerves add 3.3 stress before a performance" and "Composure keeps
+your work consistent under pressure, …", each claim read against `nerves` in `systems/attributes.ts` and the Graded
+Exposure exercise in `content/practice.ts`.
+
+**The whole suite** (`npx vitest run`, on a machine running five other areas' suites, 79 minutes): 376 files, 4,586 of
+4,588, exit 1. The two failures were mine, both in `tests/looks.test.ts`:
+- *keeps provenance to one line and never opens it.* Stamina's source line was 270 characters, over the look's 220.
+  Until batch 1 a source of 200 or more was replaced on the look by the research file's path, so the long one was never
+  shown; from batch 1 every source is shown whole. Shortened to 214, keeping its studies and figures ("half the gain in
+  aerobic fitness came in 10.3 to 10.8 days and it leveled off by three weeks; Hickson & Rosenkoetter (1981) on keeping
+  it"), and `AbilityDef.source`'s comment now says the limit.
+- *writes the apostrophe the house writes.* A comment of mine in `ui/looks/actor.tsx` had three straight apostrophes;
+  the test reads comments too. Made typographic.
+
+Then `tests/looks.test.ts` 23 of 23, and the files that read what changed after the suite were run again (below).
+
+**The coordinator's note on the dispositions.** The frame area rewrote creation's disposition lines
+(`src/ui/creation/CharacterCreation.tsx`, PersonalityStep), so the Profile's lines for the same seven read differently.
+`DISPOSITIONS` now says each in creation's words, in the Profile's own form ("Label N, what it does"): Emotional
+Stability "how quickly stress builds and how quickly it clears, and where your Composure starts"; Conscientiousness "how
+well you sleep, and where your Discipline starts"; Ambition "how quickly stress builds, from work and from money alike";
+Extraversion "how being watched as you perform, by an audience or a class, affects your stress"; Openness "how
+rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood"; Agreeableness "how a day of rehearsal
+affects your mood". Risk Tolerance keeps saying what it did in this life ("so your card’s autopay began on the minimum
+payment"), where creation says the rule. Each claim was read against the engine before it was taken: `axisModifier`
+(`systems/personality.ts`: stress gain by stability and ambition, recovery by stability, sleep quality and energy
+recovery by conscientiousness); `DISPOSED` (`systems/enjoyment.ts`: the room at every performance's nerves, novel work
+set for the Hughes and Carlotta festival casts and the Cabaret, rehearsal days). Assertions in
+`tests/evidence-g27-ui.test.ts`, `-g28-ui`, `-g31-ui` and `-g34-ui` brought over (one partial, "how much a night’s
+sleep", was missed by the map and failed once, 96 of 97, then 21 of 21). The built app's Profile, walked again at 1440 on
+`brief.json` (`p14/final-1440`), reads all seven as written.
+
+**The built app.** `npm run build` exit 0, served on 4204, walked with `tools/text-walk.mjs` at 1440 and 390 on all
+fourteen scenario saves, 25 screens each, exit 0 both. `tools/text-render-check.mjs` over both: exit 1, 129,182 strings,
+5 distinct faults, none in a profile source: "-$3" written four ways on `missed-plan.json`'s Money screen (money area) and
+"You and Hannah had rehearsed together 1 times." on `workload.json`'s School, Coursework (school area). Read on the
+Profile at both widths: the advice's parts each on a line of their own, "Not held back today", "Class: Play (DRAM 153a)"
+and "Coursework: the choices" in Last Change, Work In It and Studied Or Worked In, Your readiness for work today, the
+sleep owed in whole hours. At 390 the Profile's five tables sit in `table-scroll` regions, so a long Last Change cell
+scrolls inside its table rather than pushing the page. After the late changes it was built again (exit 0) and
+`tools/acceptance-ui.mjs` run at 390 on the scenario saves, whose forecast and assumes matchers batch 2 changed: 77 passed, 0 failed, 0 errors,
+0 overflows, exit 0, its advice step reading "What the forecast assumes of your last 6 pieces: 3 were fully prepared
+when taped and 3 were taped under…". The preview was stopped by its process ids.
+
+**After the suite:** `tests/looks.test.ts` and the 34 files that read `ProfileWorkspace`, `ABILITY_DEFS` or the looks,
+35 files, 595 of 595, exit 0. tsc 0; eslint 0 on the files changed; title-case, label-sweep, plural-check,
+voice-check, tics, spelling, typos, text-inventory, doc-refs, deciders 0; and, once on the whole branch, `npm run lint`,
+wired, geo-check, inventory, devmap, traceability, capabilities, coverage and student-matrix 0. `b1-looks.txt` was
+printed again from today's code, so it shows stamina's new source line and the genre looks as batch 4 left them.
+
+**Not run green on this branch alone: `tools/completion-matrix.mjs --check`.** It fails, and will on every area's
+branch: the matrix holds a measurement current only while no file it reads differs from the commit it was made on
+(`WATCH` app = `src`, engine = `src/engine`, judge = the evaluation's files, `abilities.ts`, `genres.ts`,
+`interpretation.ts` and `approaches.ts` among them). Words changed in those files made 85 rows Implemented, Verification
+Incomplete, 612 of 636 to 527 (written once to see it, then put back as committed). Which measurements to make again
+after the areas are merged, and when, is the coordinator's.

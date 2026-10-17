@@ -55,15 +55,19 @@ function riskWords(person: Person, sim: Simulation): string {
     : `${CARRIES_A_BALANCE} or under, so your card’s autopay began on the whole statement`;
 }
 
-/** Each disposition, as creation names it, and what it does in play; Risk Tolerance’s, what it did in this life. */
+/**
+ * Each disposition, as creation names it, and what it does in play in creation’s own words, so a disposition reads the
+ * same in both places (from 2026-10-17, brief 14; until then the two said each one differently). Risk Tolerance’s says
+ * what it did in this life.
+ */
 const DISPOSITIONS: readonly [keyof Personality, string, string | ((person: Person, sim: Simulation) => string)][] = [
-  ['emotionalStability', 'Emotional Stability', 'how fast stress builds and clears, and where your composure started'],
-  ['conscientiousness', 'Conscientiousness', 'how much a night’s sleep restores you, and where your discipline started'],
-  ['ambition', 'Ambition', 'how fast stress builds, whatever causes it'],
+  ['emotionalStability', 'Emotional Stability', 'how quickly stress builds and how quickly it clears, and where your Composure starts'],
+  ['conscientiousness', 'Conscientiousness', 'how well you sleep, and where your Discipline starts'],
+  ['ambition', 'Ambition', 'how quickly stress builds, from work and from money alike'],
   ['riskTolerance', 'Risk Tolerance', riskWords],
-  ['extraversion', 'Extraversion', 'how you feel with an audience watching'],
-  ['openness', 'Openness', 'how rehearsing new work goes for you'],
-  ['agreeableness', 'Agreeableness', 'how a rehearsal goes for you'],
+  ['extraversion', 'Extraversion', 'how being watched as you perform, by an audience or a class, affects your stress'],
+  ['openness', 'Openness', 'how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood'],
+  ['agreeableness', 'Agreeableness', 'how a day of rehearsal affects your mood'],
 ];
 import { DIMENSION_LABEL, EVALUATION, TASK_PROFILES } from '@/engine/content/tasks';
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied, genreTags } from '@/engine/content/demands';

@@ -60,8 +60,8 @@ export const BAND_WORD: Readonly<Record<string, string>> = { unready: 'Unready',
 export function sourceWords(source: string): string {
   const [kind, rest] = source.split(':') as [string, string | undefined];
   if (kind === 'practice') return EXERCISES.find((e) => e.id === rest)?.label ?? 'Practice';
-  // A class by its name and a coursework step by its part's words (from 2026-10-17, brief 14): until then the course's
-  // code alone and the part's key, "Class: DRAM 153a", "Coursework: interpretation".
+  // A class by its name and a coursework step by its part’s words (from 2026-10-17, brief 14): until then the course’s
+  // code alone and the part’s key, "Class: DRAM 153a", "Coursework: interpretation".
   if (kind === 'class') { const c = COURSES.find((x) => x.code === rest); return c ? `Class: ${c.name} (${c.code})` : `Class: ${rest}`; }
   if (kind === 'prepare') return `Coursework: ${(TASK_PROFILES.scene?.prepLabel?.[rest ?? ''] ?? rest ?? 'preparation').toLowerCase()}`;
   if (kind === 'interest') return 'An interest, from before they were removed';

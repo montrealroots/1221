@@ -27,7 +27,9 @@ export interface AbilityDef {
   affects: string;
   /** For a life from before it, and a new life's start: how its first value is drawn from what's already true. */
   derivedFrom: string;
-  /** The line at the foot of its look, a sentence: its source in acting's pedagogy or the research, or that it's estimated. */
+  /** The line at the foot of its look, a sentence: its source in acting's pedagogy or the research, or that it's estimated.
+   * Shown whole from 2026-10-17 (brief 14), so it stays under the look's one line, 220 characters (`tests/looks.test.ts`);
+   * until then one of 200 or more was replaced by the path of the research file. */
   source: string;
   /** Whether it's one of the general capacities beside the acting ones. */
   general?: boolean;
@@ -175,7 +177,7 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     // which until then was 10 whatever the stamina; this said a whole night, any part, was the heaviest until then.
     affects: 'In a piece judged moment by moment (a scene, a brief, a night on stage), how well you hold up in its later moments, more the longer the piece and the more physical and vocal work it asks; on a night, how much its workload asks (the production’s running time, your part’s share of it and how intense it is), with less strain just after an interval; the energy a night costs you afterward, up to half of it spared at full stamina; and in work shown whole, without a scene (voice work, a song, movement, a fight), your consistency.',
     derivedFrom: 'It’s your fitness, so it started where your fitness was. Full is the fittest a body your age can be.',
-    source: 'Sources: Hickson et al. (1981), where half the gain in aerobic fitness came in 10.3 to 10.8 days and it leveled off by three weeks at a steady load; Hickson & Rosenkoetter (1981), where two hard sessions a week kept it for 15 weeks; Mujika & Padilla (2000) on losing it.',
+    source: 'Sources: Hickson et al. (1981), where half the gain in aerobic fitness came in 10.3 to 10.8 days and it leveled off by three weeks; Hickson & Rosenkoetter (1981) on keeping it; Mujika & Padilla (2000) on losing it.',
   },
 ];
 

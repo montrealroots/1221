@@ -392,7 +392,7 @@ describe('c-disp-extraversion', () => {
   it('PLAYER JOURNEY: says on Dispositions & Traits and on the Profile what Extraversion sets, how a house watching sits with you', () => {
     const { sim, page } = slidTo('g28-house-page', 'extraversion', 5);
     expect(page).toContain('Extraversion sets how a house watching you sits with you');
-    expect(profile(sim)).toContain('Extraversion 5, how you feel with an audience watching;');
+    expect(profile(sim)).toContain('Extraversion 5, how being watched as you perform, by an audience or a class, affects your stress;');
   });
 });
 
@@ -443,7 +443,7 @@ describe('c-disp-openness', () => {
     const { sim, page, review } = slidTo('g28-new-work-page', 'openness', 90);
     expect(page).toContain('Openness how rehearsing new work does, a festival’s new play or a Cabaret piece');
     expect(review).toContain('Openness 90/100');
-    expect(profile(sim)).toContain('Openness 90, how rehearsing new work goes for you;');
+    expect(profile(sim)).toContain('Openness 90, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood;');
   });
 });
 
@@ -479,7 +479,7 @@ describe('c-disp-agreeableness', () => {
     const { sim, page, review } = slidTo('g28-company-page', 'agreeableness', 10);
     expect(page).toContain('and Agreeableness how a rehearsal does.');
     expect(review).toContain('Agreeableness 10/100');
-    expect(profile(sim)).toContain('Agreeableness 10, how a rehearsal goes for you.');
+    expect(profile(sim)).toContain('Agreeableness 10, how a day of rehearsal affects your mood.');
   });
 });
 

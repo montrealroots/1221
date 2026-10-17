@@ -255,10 +255,10 @@
   "source": "src/ui/workspaces/ProfileWorkspace.tsx#DISPOSITIONS",
   "kind": "other",
   "before": "Extraversion 55, how a house watching sits with you; Openness 55, how rehearsing new work does; Agreeableness 55, how a rehearsal does.",
-  "after": "Extraversion 55, how you feel with an audience watching; Openness 55, how rehearsing new work goes for you; Agreeableness 55, how a rehearsal goes for you.",
-  "why": "'How a rehearsal does' isn't English.",
-  "meaningSensitive": false,
-  "verified": "tests/evidence-g31-ui.test.ts, tests/evidence-g34-ui.test.ts, tests/evidence-g28-ui.test.ts"
+  "after": "Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood; Agreeableness 55, how a day of rehearsal affects your mood.",
+  "why": "'How a rehearsal does' isn't English; and each disposition now reads as creation says it (the frame area's PersonalityStep), so the Profile and creation don't describe the same disposition two ways.",
+  "meaningSensitive": true,
+  "verified": "Read against systems/enjoyment.ts (DISPOSED room at every performance's nerves; novel work and rehearsal days moving morale); tests/evidence-g31-ui.test.ts (all seven exactly), tests/evidence-g34-ui.test.ts, tests/evidence-g28-ui.test.ts"
  },
  {
   "source": "src/ui/workspaces/ProfileWorkspace.tsx#riskWords",
@@ -538,5 +538,14 @@
   "why": "'SLATE designed'; plainer.",
   "meaningSensitive": false,
   "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/ProfileWorkspace.tsx#DISPOSITIONS",
+  "kind": "other",
+  "before": "Emotional Stability 72, how fast stress comes and clears, and where composure starts; Conscientiousness 40, how well a night’s sleep restores you, and where discipline starts; Ambition 60, how fast every stress comes",
+  "after": "Emotional Stability 72, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 40, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike",
+  "why": "The same disposition in creation's words, at the coordinator's note; 'how fast every stress comes' said as what it is.",
+  "meaningSensitive": true,
+  "verified": "Read against axisModifier in systems/personality.ts (stressGain by stability and ambition, stressRecovery by stability, sleepQuality and energyRecovery by conscientiousness) and the starts in systems/attributes.ts; tests/evidence-g31-ui.test.ts p-traits-line (Composure 39.0 at stability 40, Discipline 65.0 at conscientiousness 70)"
  }
 ]

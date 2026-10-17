@@ -22,3 +22,11 @@ hours, one hour singular and none as none"), which fails on the old line: one ho
 "about 1 points a piece" beside a brief (`heldVersusNext` printed `points` whatever the figure), and "Coming to the work
 with knowing the genre short" (a label that's a gerund placed mid-phrase). Each was a sentence assembled from parts that
 read wrong in one of its variants; none changed a figure.
+
+## At The End Of The Area
+
+None in the profile area's behavior. Two found on the built app in other areas' text, for the coordinator: on
+`missed-plan.json`'s Money screen a balance of minus three dollars is written "-$3", "Its -$3, moves to …", "Chase (-$3)"
+and "Balance-$3" (money area), and on `workload.json`'s School, Coursework a partner's line reads "You and Hannah had
+rehearsed together 1 times." (school area). Both found by `tools/text-render-check.mjs` over the 1440 walk.
+
