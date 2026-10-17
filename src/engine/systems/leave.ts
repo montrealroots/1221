@@ -393,10 +393,10 @@ export function startLeave(sim: Simulation, person: Person, begun = true): void 
     if (!l.retro) l.feeCredit = account.healthPlan;
     if (l.retro) {
       l.feeRefund = account.healthPlan;
-      creditAccount(sim, person, l.feeRefund, `Yale Health fee refunded, ${termLabel(t)}: cover canceled back to the insurance term’s start`);
+      creditAccount(sim, person, l.feeRefund, `Yale Health fee refunded, ${termLabel(t)}: cover canceled back to the insurance term’s start`, 'The Yale Health fee refunded on your leave');
     }
     const billed = school.enrolledBilled?.[String(t)];
-    if (billed && share > 0) creditAccount(sim, person, Math.round(share * billed), `Tuition rebated (${Math.round(share * 100)}%), ${termLabel(t)}: leave of absence`);
+    if (billed && share > 0) creditAccount(sim, person, Math.round(share * billed), `Tuition rebated (${Math.round(share * 100)}%), ${termLabel(t)}: leave of absence`, `The tuition rebated on your leave (${Math.round(share * 100)}%)`);
   }
   l.coverEnds = !begunHere || l.retro ? insuranceStart(t) : sim.now;
   if (l.kind === 'medical') {
@@ -696,7 +696,7 @@ function rescind(sim: Simulation, person: Person, l: Leave): void {
   school.classOf -= Math.round(n / 2);
   delete school.joinsCohort;
   school.enrolled = [...new Set([...enrolledTerms(school), l.firstTerm])].sort((a, b) => a - b);
-  if (l.aidReturned) creditAccount(sim, person, l.aidReturned, `Living-expense scholarship restored, ${termLabel(l.firstTerm)}: the leave overturned on appeal`);
+  if (l.aidReturned) creditAccount(sim, person, l.aidReturned, `Living-expense scholarship restored, ${termLabel(l.firstTerm)}: the leave overturned on appeal`, 'The living-expense scholarship restored on your appeal');
   const f1 = f1Of(person);
   if (l.f1Extended && f1?.expiresAt !== undefined) { f1.expiresAt = addYears(f1.expiresAt, -n / 2); scheduleUsStatus(sim, person); }
   for (const i of sim.universe.scheduled) if (i.status === 'pending' && i.payload.personId === person.id && (i.kind === LEAVE_NOTICE_KIND || (i.kind === TERM_KIND && i.payload.term === l.returnTerm))) sim.timeline.cancel(i.id, sim.now);
@@ -766,18 +766,38 @@ export const accountOwed = (sim: Simulation, person: Person): Money => 0 - (yale
 export const aidOnAccount = (sim: Simulation, person: Person, amount: Money): Money => Math.max(0, Math.min(accountOwed(sim, person), amount));
 
 /**
- * The hold lifted once the account owes nothing, said once: by a payment (`payBalance`), or by a term's aid
- * (`aidOnAccount`, from 2026-10-16). The degree waiting on it is conferred. A credit that clears the account (a rebate,
- * a fee refunded, aid restored on appeal, `creditAccount`) doesn't lift it: no played life was found to reach one under
- * a hold, and a lift written there was protected by no test, so it wasn't kept.
+ * The hold lifted once the account owes nothing, said once: by a payment (`payBalance`), by a term's aid (`aidOnAccount`,
+ * from 2026-10-16), or by a credit (`creditAccount`, from 2026-10-17, brief 11). Its own condition is all it reads: a term
+ * begun under it still asks to register (`mustRegister`), and a degree waiting for an Incomplete still waits
+ * (`conferIfReady`). `why` opens the notice; `settled` opens the degree's, where one waited only on the hold.
+ *
+ * Until 2026-10-17 a credit that cleared the account (a rebate, a fee refunded, aid restored on appeal) didn't lift it:
+ * no played life had been found to reach one under a hold, and a lift written there was protected by no test, so it
+ * wasn't kept. Two reach one in play (tests/remaining-school.test.ts, defect.yale-credit-hold): a seventh term's bill
+ * unpaid past its thirty days, most of it paid and a medical leave's tuition rebate giving back the rest; and a term
+ * begun under that hold, a medical leave before its classes refunding its Yale Health fee and its tuition. The hold
+ * stayed over nothing owed: Pay was refused “Your Yale account owes no balance.”, and the registration the leave's
+ * return asked for was refused for it.
  */
-export function liftHold(sim: Simulation, person: Person, why: string): boolean {
+export function liftHold(sim: Simulation, person: Person, why: string, settled = 'Your Yale account paid'): boolean {
   const school = person.school;
   if (!school || school.hold === undefined || accountOwed(sim, person) > 0) return false;
   delete school.hold;
   notify(sim, person, 'The Financial Hold Is Lifted', `${why} Registration and the diploma are open to you again.`, 70);
-  conferIfReady(sim, person, 'Your Yale account paid');
+  conferIfReady(sim, person, settled);
   return true;
+}
+
+/**
+ * A hold a save from before 2026-10-17 kept over nothing owed, lifted on opening (brief 11): that build left the hold
+ * when a credit cleared the account, and nothing the save keeps could lift it after, Pay being refused with nothing owed.
+ * On every opening, as `strandedMoments` is, since a save made since can't hold one; a hold over something owed is left
+ * as it is. Returns how many were lifted.
+ */
+export function holdsOverNothing(sim: Simulation): number {
+  let lifted = 0;
+  for (const person of Object.values(sim.universe.people)) if (person.school?.hold !== undefined && liftHold(sim, person, 'Your Yale account owes nothing: a credit on it cleared it.', 'Your Yale account cleared')) lifted += 1;
+  return lifted;
 }
 
 function chargeAccount(sim: Simulation, person: Person, amount: Money, memo: string): void {
@@ -785,15 +805,17 @@ function chargeAccount(sim: Simulation, person: Person, amount: Money, memo: str
   sim.post({ memo, category: 'school', postings: [{ accountId: sim.nominalAccount('expense', expenseFor('school')).id, amount }, { accountId: yaleAccount(sim, person)!.id, amount: -amount }] });
 }
 
-/** A credit on the account; a credit balance left over is refunded to the bank, as Yale refunds one. */
-function creditAccount(sim: Simulation, person: Person, amount: Money, memo: string): void {
+/**
+ * A credit on the account; a credit balance left over is refunded to the bank, as Yale refunds one. One that leaves
+ * nothing owed lifts a hold (`liftHold`, from 2026-10-17), said in `what`: “The tuition rebated on your leave (25%)”.
+ */
+function creditAccount(sim: Simulation, person: Person, amount: Money, memo: string, what: string): void {
   if (amount <= 0) return;
   const acc = yaleAccount(sim, person)!;
   sim.post({ memo, category: 'school', postings: [{ accountId: acc.id, amount }, { accountId: sim.nominalAccount('expense', expenseFor('school')).id, amount: -amount }] });
-  if (acc.balance > 0) {
-    const back = acc.balance;
-    sim.post({ memo: 'Yale account credit balance refunded', category: 'school', postings: [{ accountId: payeeAccount(sim, person).id, amount: back }, { accountId: acc.id, amount: -back }] });
-  }
+  const back = Math.max(0, acc.balance);
+  if (back > 0) sim.post({ memo: 'Yale account credit balance refunded', category: 'school', postings: [{ accountId: payeeAccount(sim, person).id, amount: back }, { accountId: acc.id, amount: -back }] });
+  liftHold(sim, person, `${what}, ${money(sim, amount)}, clears your Yale account${back > 0 ? `, and the ${money(sim, back)} over what it owed is refunded to your bank` : ''}.`, 'Your Yale account cleared');
 }
 
 /**

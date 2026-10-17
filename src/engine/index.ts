@@ -60,7 +60,7 @@ import { findTermInterest, registerAccountLife, TERM_NOTICE_KIND } from './syste
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, timeTheCalls, yearOfStudy } from './systems/school';
-import { registerLeave } from './systems/leave';
+import { holdsOverNothing, registerLeave } from './systems/leave';
 import { registerInjury } from './systems/injury';
 import { attributesOf, derivedAbilities } from './systems/attributes';
 import { WORK_KEPT, countWork, limitsOnce } from './systems/evaluation';
@@ -400,6 +400,9 @@ export function loadSave(universe: SaveUniverse): Simulation {
   // A classmate's moment a save from before 2026-10-13 left open with no lapse on the clock, which a leave, a withdrawal
   // or a dismissal called off then: lapsed at its hour (`strandedMoments`, from 2026-10-15).
   strandedMoments(sim);
+  // A Yale hold a save from before 2026-10-17 kept over nothing owed, after a credit cleared the account: lifted, said
+  // once (`holdsOverNothing`, brief 11).
+  holdsOverNothing(sim);
   // An appointment a save from before 2026-10-15 booked at Fair Haven by default for a Yale Health member: had at Yale
   // Health's practice, as that day's rule has a member's care (`followTheCover`). Once, on the first opening of a save
   // that doesn't name it (`SaveUniverse.opened`): until later that day it ran on every opening, and moved a current
