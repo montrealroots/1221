@@ -180,7 +180,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `work.settle` | Implemented But Unverified | Drama School | WorkThrough.tsx | `systems/workbook.ts` | — (also settleRefusal) | — | — | — | 11 | — |
 | `work.try` | Implemented But Unverified | Drama School | WorkThrough.tsx | `systems/workbook.ts` | — (also tryRefusal) | — | — | — | 6 | — |
 | `world.dismiss_decision` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | No such decision.; It’s dismissed already. | — | — | — | 6 | — |
-| `world.mark_read` | Verified (journey) | What Needs You | Home.tsx | `world/world.ts` | — | — | — | — | 6 | journey-life.test.ts |
+| `world.mark_read` | Verified (journey) | What Needs You | Home.tsx | `world/world.ts` | — | — | — | — | 7 | journey-life.test.ts |
 | `world.set_preferences` | Implemented But Unverified | The Clock | TimeControls.tsx game-context.tsx | `world/world.ts` | … isn’t a preference.; The clock runs paused or live. | — | — | — | 7 | — |
 | `world.take_decision_action` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | No such decision.; That’s been done already.; It’s dismissed.; That action isn’t available on this item. | — | — | — | 12 | — |
 
