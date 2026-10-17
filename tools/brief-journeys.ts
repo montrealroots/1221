@@ -15,6 +15,9 @@
  * brief, the one the record suggests for the weakness recent work names, else the next untaped genre in a seeded
  * order, read the way the preview shows this actor best, or, back on a brief, a reading not yet taped. Every other free
  * hour is training on what recent work names (`practiceHour`).
+ *
+ * From brief 11 (2026-10-17) the week's advice is kept with what it said (`recommendations.longestSameMessage`,
+ * `longestSameState`, `longRuns`), which L1 as clarified reads beside the run of one target as written.
  */
 import { writeFileSync } from 'node:fs';
 import { CONCERN_STRENGTH } from '../src/engine/content/concerns';
@@ -78,7 +81,7 @@ setUp(sim);
 const order = [...FILM_GENRES.map((g) => g.id)].sort((a, b) => { const h = (s: string) => [...`${SEED}:${s}`].reduce((x, c) => (x * 31 + c.charCodeAt(0)) >>> 0, 7); return h(a) - h(b); });
 let current: string | undefined;
 const studied = new Map<string, number>();
-const log = { hours: { brief: 0, training: 0, study: 0 }, takes: [] as { day: number; brief: string; genre: string; reading: string; sides: string; purpose: string; overall: number; chief?: string; concern?: string }[], recs: [] as { day: number; target: string; level: number }[] };
+const log = { hours: { brief: 0, training: 0, study: 0 }, takes: [] as { day: number; brief: string; genre: string; reading: string; sides: string; purpose: string; overall: number; chief?: string; concern?: string }[], recs: [] as { day: number; target: string; level: number; message: string; state: string }[] };
 const day0 = sim.now;
 const dayOf = () => Math.floor((sim.now - day0) / MS_DAY);
 
@@ -194,7 +197,14 @@ while (sim.now < end && sim.universe.meta.endedAt === undefined) {
     if (practiceHour(sim)) { log.hours.training += 1; return true; }
     return briefHour();
   });
-  if (dayOf() !== lastRecDay && dayOf() % 7 === 0) { lastRecDay = dayOf(); const w = weakness(); if (w) log.recs.push({ day: dayOf(), target: w.target, level: Math.round(w.level) }); }
+  // The week's advice (from brief 11, 2026-10-17: L1 as clarified, docs/verification/completion-2026-10-16/clarifications.md):
+  // its target and level as before, and what it said, whole (`message`: the reason, the standing and the next action) and
+  // as the player's state (`state`: the standing without how long ago, which moves with the clock alone).
+  if (dayOf() !== lastRecDay && dayOf() % 7 === 0) {
+    lastRecDay = dayOf();
+    const r = adviceFor(sim, sim.player).find((x) => !x.target.includes(':'));
+    if (r) log.recs.push({ day: dayOf(), target: r.target, level: Math.round(levelOf(sim, sim.player, r.target as never)), message: [r.why, r.standing, r.next].filter(Boolean).join(' '), state: `${r.target}: ${(r.standing ?? '').replace(/, \d+ (?:days?|weeks) ago/, '')}` });
+  }
   if (sim.now - lastReload >= 30 * MS_DAY) { sim = loadSave(deserialise(serialise(sim.universe)) as never); reloads += 1; lastReload = sim.now; }
   if (TRACE && Math.floor(dayOf() / 30) > snapped) { snapped = Math.floor(dayOf() / 30); monthLevels.push({ month: snapped, day: dayOf(), levels: snap(), abilities: levelsNow() }); }
 }
@@ -228,7 +238,25 @@ const result = {
     shown.forEach((n, i) => { sRun = i > 0 && n === shown[i - 1] ? sRun + 1 : 1; sBest = Math.max(sBest, sRun); if (i > 0 && n === shown[i - 1] && log.takes[i]!.genre !== log.takes[i - 1]!.genre) sAcross += 1; });
     return { takes: ns.length, distinct: new Set(ns).size, longestSame: best, sameAgainInAnotherGenre: acrossGenres, withConcern: log.takes.filter((t) => t.concern).length, concerns: [...new Set(log.takes.map((t) => t.concern).filter(Boolean))], asShown: { distinct: new Set(shown).size, longestSame: sBest, sameAgainInAnotherGenre: sAcross }, sequence: log.takes.map((t, i) => `d${t.day} ${t.genre} ${t.purpose} ${t.overall}: ${shown[i]}`) };
   })(),
-  recommendations: { weeks: log.recs.length, distinctTargets: new Set(log.recs.map((r) => r.target)).size, longestSameTarget: log.recs.reduce((acc, r, i) => { const run = i > 0 && r.target === log.recs[i - 1]!.target ? acc.run + 1 : 1; return { run, best: Math.max(acc.best, run) }; }, { run: 0, best: 0 }).best, sequence: log.recs.map((r) => `${r.day}:${r.target}@${r.level}`).slice(0, 30) },
+  recommendations: (() => {
+    const longest = (same: (a: (typeof log.recs)[number], b: (typeof log.recs)[number]) => boolean) => log.recs.reduce((acc, r, i) => { const run = i > 0 && same(r, log.recs[i - 1]!) ? acc.run + 1 : 1; return { run, best: Math.max(acc.best, run) }; }, { run: 0, best: 0 }).best;
+    // Each run of one target past L1's four weeks (from brief 11): its weeks, how far its input rose, and how many of its
+    // weeks' messages and states were new against the week before.
+    const runs: { from: number; to: number; target: string; weeks: number; rose: number; newMessages: number; newStates: number }[] = [];
+    log.recs.forEach((r, i) => {
+      const open = runs.at(-1);
+      if (open && open.target === r.target && open.to === log.recs[i - 1]?.day) { open.to = r.day; open.weeks += 1; open.rose = r.level - log.recs.find((x) => x.day === open.from)!.level; if (r.message !== log.recs[i - 1]!.message) open.newMessages += 1; if (r.state !== log.recs[i - 1]!.state) open.newStates += 1; }
+      else runs.push({ from: r.day, to: r.day, target: r.target, weeks: 1, rose: 0, newMessages: 0, newStates: 0 });
+    });
+    return {
+      weeks: log.recs.length, distinctTargets: new Set(log.recs.map((r) => r.target)).size,
+      longestSameTarget: longest((a, b) => a.target === b.target),
+      longestSameMessage: longest((a, b) => a.message === b.message),
+      longestSameState: longest((a, b) => a.state === b.state),
+      longRuns: runs.filter((x) => x.weeks > 4),
+      sequence: log.recs.map((r) => `${r.day}:${r.target}@${r.level}`).slice(0, 30),
+    };
+  })(),
   abilities: Object.fromEntries(ABILITY_DEFS.map((d) => [d.id, Math.round(abilityOf(sim, sim.player, d.id))])),
   breaches: breaches(sim.universe).length, unbalanced: sim.ledger.audit().length,
   lastTakes: t.slice(-6),

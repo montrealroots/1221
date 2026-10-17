@@ -46,7 +46,32 @@ export interface Experience {
   exercises: Record<string, { sessions: number; lastDay?: string; focus: Record<string, number>; tiers: Record<string, number>; streak?: number; gains?: number[]; lastTier?: number }>;
   /** The exercise practised last, whatever it was. */
   lastExercise?: string;
+  /** What the advice named first, from when, and where it stood then (from brief 11, 2026-10-17; `noteAdvice`, `systems/next-steps.ts`). */
+  advised?: Advised;
 }
+
+/**
+ * What to improve next as it was given (from brief 11, 2026-10-17; L1, docs/verification/completion-2026-10-16/
+ * clarifications.md): the input the advice named first, from when, and where it stood when it was first given and after
+ * the player's latest work, noted as they come to work or to practice after new work (`noteAdvice`). It's
+ * what lets the advice say how long it has been first and what has moved since, rather than the same words week after
+ * week. Until then nothing of the advice was kept, and the same advice read the same on every day it was given.
+ */
+export interface Advised {
+  target: string;
+  /** The first time it was noted first, and the day of the latest note, at home (a day's work is noted once). */
+  since: Instant;
+  day: string;
+  /** Where it stood when it was first noted first. */
+  first: AdvisedAt;
+  /** Where it stood at the latest note after new work (the latest piece's key), or when first noted: what practice since is read against. */
+  last: AdvisedAt & { key?: string };
+  /** What was first before it: from when, the day it was last first, and its level and forecast when it was first given and on that day. */
+  before?: { target: string; since: Instant; until: string; first: { level: number; forecast: number }; then: { level: number; forecast?: number } };
+}
+
+/** An input's level, its forecast at full precision, and discipline, at a note. */
+export interface AdvisedAt { at: Instant; level: number; forecast: number; discipline: number }
 
 export const experienceOf = (person: Person): Experience => {
   const e = (person.experience ??= { features: {}, approaches: {}, exercises: {} });
@@ -120,6 +145,10 @@ export interface Recommendation {
   forecast?: Forecast;
   /** Other training about as useful as this (from 2026-10-16, `tied`): said beside the first, so a near-tie isn't called a winner. */
   tiedWith?: string[];
+  /** How long it has been first and what has moved since it was first given, or what was first before it (from brief 11, `adviceFor`): the first training recommendation's. */
+  standing?: string;
+  /** What the player can do about it now (from brief 11, `adviceFor`): the exercise, where, what an hour costs and brings, or why not now. */
+  next?: string;
 }
 
 /**
@@ -264,6 +293,11 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     const near = out.filter((r) => r !== firstTraining && r.forecast && tied(ownOf(r.forecast), ownOf(firstTraining.forecast!))).map((r) => r.label);
     // "Either" for one beside it, "any of them" for more (from brief 10: near mastery four or five can be within a tenth).
     if (near.length) { firstTraining.tiedWith = near; firstTraining.why = `${firstTraining.why} About as useful: ${near.join(', ')}; ${near.length === 1 ? 'either' : 'any of them'} is a sound next step.`; }
+    // What preparation would bring, apart from what training brings (from brief 11, F2-A10 (f)): said once, on the first,
+    // in its own figure. Until then a piece read as prepared was counted, and what its preparation was worth said nowhere.
+    const prep = firstTraining.forecast!.preparation;
+    const n = firstTraining.forecast!.prepared ?? 0;
+    if (prep !== undefined && n > 0) firstTraining.why = `${firstTraining.why} Apart from training: completing the preparation of ${n === 1 ? 'the piece' : `the ${n} pieces`} its own preparation held back most would bring ${n === 1 ? 'it' : 'them'} about ${Math.round(prep * 100) / 100} ${Math.round(prep * 100) === 100 ? 'point' : 'points'} a piece as you are now: that’s preparation, not training, and it isn’t in the ${firstTraining.points} above.`;
   }
   return out.slice(0, 5);
 }

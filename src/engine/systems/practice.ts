@@ -38,6 +38,7 @@ import { SPENT, commitmentWithin, occupiedAt } from './life';
 import { exerts } from './body';
 import { trainingRefusal } from './injury';
 import { inHospital } from './health';
+import { noteAdvice } from './next-steps';
 
 /** Today's date at home, the key a day's practice is counted under. */
 const today = (sim: Simulation) => { const p = zonedParts(sim.now, sim.homeZone); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; };
@@ -265,6 +266,8 @@ export function registerPractice(sim: Simulation): void {
     const no = alreadyApplied(person, p?.actionId) ?? practiceRefusal(s, person, e) ?? focusRefusal(focus);
     if (no) throw new CommandError(no);
     markApplied(person, p?.actionId);
+    // The advice in front of them as they came to practice after new work, noted (from brief 11, `noteAdvice`).
+    noteAdvice(s, person, 'practice');
     return practiceHour(s, person, e!, tier as 0 | 1 | 2 | undefined, focus);
   });
 }

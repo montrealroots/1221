@@ -44,6 +44,13 @@
  *   knowing of the genre said 0.25, and imagination's 0.33 where it said 0.40.
  * - **A technique at full at `MASTERED`**, as the game's own `atFull` says: past it no piece reads more.
  * - **The work it read** (`Forecast.of`, `most`): how many of the recent pieces, and the piece it gains most on.
+ *
+ * From brief 11 (2026-10-17; docs/verification/completion-2026-10-16/clarifications.md, F2-A10 (f) and (h)):
+ * - **Preparation's figure, apart** (`Forecast.preparation`): what completing their own preparation would bring the pieces
+ *   read as prepared, as you are now, weighted as the work is. Until then a take read as prepared was only counted
+ *   (`prepared`), and what its preparation was worth was said nowhere beside training's; it's never added to training's.
+ * - **One input's forecast at another discipline** (`forecastAtDiscipline`): what the advice reads to say how much of a
+ *   change since it was first given is discipline's lift (`DEVELOPMENT.disciplineLift`) and how much the input's own.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -52,7 +59,7 @@ import { DEVELOPMENT, MASTERED, TECHNIQUES, type AbilityId } from '../content/ab
 import { PRACTICE, TIER, exerciseFor } from '../content/practice';
 import type { Skill } from '../content/school';
 import { TASK_PROFILES } from '../content/tasks';
-import { abilityFull, abilityGain, abilityOf, develop, isAbility, levelOf } from './attributes';
+import { CRAFT_ABILITY, abilityFull, abilityGain, abilityOf, attributesOf, develop, isAbility, levelOf } from './attributes';
 import { RULESET } from '../content/tasks';
 import { replayAs, type Performer, type WorkRecord } from './evaluation';
 import { BRIEF_BY_ID } from '../content/briefs';
@@ -89,6 +96,11 @@ export interface Forecast {
   most?: { what: string; points: number };
   /** How many of the recent pieces it read as prepared, their own preparation what held them back most (from brief 10). */
   prepared?: number;
+  /**
+   * What completing their own preparation would bring those pieces, as you are now, in points a piece weighted to the
+   * latest as the rest is (from brief 11): preparation's figure, the same for every input, never part of `points`.
+   */
+  preparation?: number;
 }
 
 /**
@@ -159,12 +171,30 @@ export function genreNow(person: Person): (w: WorkRecord) => WorkRecord {
   };
 }
 
-/** The candidates' forecasts for a person, from their recent work: what `ADVICE.sessions` hours of each would be worth, grown through the engine. */
-export function trainingForecast(sim: Simulation, person: Person, work: readonly WorkRecord[] = person.work ?? []): Map<string, Forecast> {
+/** The candidates' forecasts for a person, from their recent work: what `ADVICE.sessions` hours of each would be worth, grown through the engine. `only` (from brief 11) forecasts those inputs alone. */
+export function trainingForecast(sim: Simulation, person: Person, work: readonly WorkRecord[] = person.work ?? [], only?: readonly string[]): Map<string, Forecast> {
   return forecastFor(performerFor(sim, person), work.map(genreNow(person)), (id) => {
     const p = trained(sim, person, id as AbilityId | Skill);
     return { to: levelOf(sim, p, id as AbilityId | Skill), discipline: abilityOf(sim, p, 'discipline') };
-  });
+  }, only);
+}
+
+/**
+ * One input's forecast as it would be at another discipline, everything else as it is (from brief 11): a scratch copy of
+ * the person with discipline set there, forecast as `trainingForecast` forecasts. Nothing of the save is touched.
+ */
+export function forecastAtDiscipline(sim: Simulation, person: Person, id: string, discipline: number): Forecast | undefined {
+  const p: Person = { ...person, ...(person.attrs ? { attrs: { ...person.attrs } } : {}), craft: person.craft ? { ...person.craft } : person.craft, wellbeing: { ...person.wellbeing } };
+  setAbility(sim, p, 'discipline', discipline);
+  return trainingForecast(sim, p, p.work ?? [], [id]).get(id);
+}
+
+/** An ability set where it's kept, on a scratch copy (as `grown` sets it). */
+function setAbility(sim: Simulation, p: Person, id: AbilityId, v: number): void {
+  const skill = CRAFT_ABILITY[id];
+  if (skill) p.craft![skill] = v;
+  else if (id === 'stamina') p.wellbeing.fitness = v;
+  else (attributesOf(sim, p) as unknown as Record<string, number>)[id] = v;
 }
 
 /** What an input's hours bring it to, and discipline with it: the engine's (`trained`), or with no save the curve alone (`levelAfter`). */
@@ -183,8 +213,8 @@ export function readOf(latest: readonly WorkRecord[]): string[] {
 /** The level an input counts full at for the work: an ability's full, a technique's `MASTERED` (as `atFull` reads it). */
 const workFull = (now: Performer, id: string) => (isAbility(id as never) ? now.full(id as AbilityId) : MASTERED);
 
-/** The same, for any performer: the pure part, which tools and tests read with an actor of their own. */
-export function forecastFor(now: Performer, work: readonly WorkRecord[], grow?: Grow): Map<string, Forecast> {
+/** The same, for any performer: the pure part, which tools and tests read with an actor of their own. `only` (from brief 11): those inputs alone. */
+export function forecastFor(now: Performer, work: readonly WorkRecord[], grow?: Grow, only?: readonly string[]): Map<string, Forecast> {
   const kept = forecastWork(work);
   const latest = kept.map((w) => (heldByPreparation(w) ? asPrepared(w) : w));
   const prepared = kept.filter(heldByPreparation).length;
@@ -194,6 +224,9 @@ export function forecastFor(now: Performer, work: readonly WorkRecord[], grow?: 
   const W = weights.reduce((a, x) => a + x, 0);
   const exact = (w: WorkRecord, p: Performer) => { const e = replayAs(w, TASK_PROFILES[w.task]!, p); return e ? e.exact ?? e.overall : undefined; };
   const base = latest.map((w) => exact(w, now));
+  // Preparation's figure (from brief 11): each piece read as prepared, as prepared against as it was taped, both as you
+  // are now and weighted as the rest; said apart, and never in what training brings.
+  const preparation = prepared ? kept.reduce((t, w, i) => { if (!heldByPreparation(w)) return t; const a = base[i]; const b = exact(w, now); return a === undefined || b === undefined ? t : t + ((a - b) * weights[i]!) / W; }, 0) : undefined;
   const growth: Grow = grow ?? ((id, from, full) => ({ to: levelAfter(from, full, ADVICE.sessions, now.ability('discipline'), id === 'discipline'), discipline: now.ability('discipline') }));
   const set = (p: Performer, x: string, v: number): Performer => (isAbility(x as never) ? { ...p, ability: (y) => (y === x ? v : p.ability(y)) } : { ...p, technique: (y) => (y === x ? v : p.technique(y)) });
   // What the days' discipline brings, on every recent piece, whatever is trained (a day kept grows it the same for any
@@ -208,6 +241,7 @@ export function forecastFor(now: Performer, work: readonly WorkRecord[], grow?: 
     return daysAt.get(discipline)!;
   };
   for (const id of readOf(latest).sort()) {
+    if (only && !only.includes(id)) continue;
     if (!exerciseFor(id as AbilityId | Skill)) continue;
     const ability = isAbility(id as never);
     const from = ability ? now.ability(id as AbilityId) : now.technique(id as Skill);
@@ -230,7 +264,7 @@ export function forecastFor(now: Performer, work: readonly WorkRecord[], grow?: 
     });
     const days = daysOf(discipline);
     const all = own + days;
-    out.set(id, { points: Math.round(all * 100) / 100, exact: all, own, days, from, to: Math.round(to * 10) / 10, hours: ADVICE.sessions, pieces, of: latest.length, ...(most ? { most: { what: most.what, points: Math.round(most.points * 100) / 100 } } : {}), prepared });
+    out.set(id, { points: Math.round(all * 100) / 100, exact: all, own, days, from, to: Math.round(to * 10) / 10, hours: ADVICE.sessions, pieces, of: latest.length, ...(most ? { most: { what: most.what, points: Math.round(most.points * 100) / 100 } } : {}), prepared, ...(preparation !== undefined ? { preparation } : {}) });
   }
   return out;
 }
