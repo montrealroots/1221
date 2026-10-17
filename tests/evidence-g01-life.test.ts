@@ -54,7 +54,7 @@ import { createSave, loadSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Personality, Wellbeing } from '@/engine/domain/model';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
-import { MS_DAY, MS_HOUR } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, formatDate } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { catching, healthOf } from '@/engine/systems/health';
 import { readiness, trainingAt } from '@/engine/systems/life';
@@ -592,10 +592,10 @@ describe('life.look_after:exercise', () => {
     expect(days).toBeGreaterThanOrEqual(hurt.days[0]);
     expect(days).toBeLessThanOrEqual(hurt.days[1]);
     expect(notices(sim, hurt.label)).toHaveLength(1);
-    expect(notices(sim, hurt.label)[0]!.body.startsWith(`${days} days to mend`)).toBe(true);
+    expect(notices(sim, hurt.label)[0]!.body.startsWith(`It takes ${days} days to mend`)).toBe(true);
     // Yale Health pays a student's care in full: no bill, and the notice names no cost.
     expect(healthOf(sim.player).bills).toHaveLength(0);
-    expect(notices(sim, hurt.label)[0]!.body).not.toContain('Its care comes to');
+    expect(notices(sim, hurt.label)[0]!.body).not.toContain('Your share of its care');
 
     const words = `Not with ${hurt.label.toLowerCase()}; it has ${days} days yet to mend.`;
     Object.assign(sim.player.wellbeing, { energy: 90 }); // TEST SETUP: rested, so only the injury stands in the way
@@ -637,7 +637,7 @@ describe('life.look_after:exercise', () => {
     expect(bill.dueAt).toBe(sim.now + 30 * MS_DAY);
     expect(bill.amount).toBeGreaterThan(0);
     const dollars = `$${(bill.amount / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    expect(notices(sim, hurt.label)[0]!.body).toContain(`Your share of its care is ${dollars}, due in 30 days.`);
+    expect(notices(sim, hurt.label)[0]!.body).toContain(`Your share of its care is ${dollars}, due on ${formatDate(bill.dueAt, sim.zone)}, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.`);
     expect(sim.universe.scheduled.filter((i) => i.label === `Medical Bill Due: ${hurt.bill}` && i.at === bill.dueAt)).toHaveLength(1);
     // Refused while it mends; reloaded, still one bill.
     expect(lookAfter(sim, 'exercise').error).toMatch(/^Not with /);

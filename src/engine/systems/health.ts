@@ -944,7 +944,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     const chose = own?.ended !== undefined && !(yale !== undefined && yale <= at && yale > own.until!);
     const state = BENEFIT_STATE[home];
     const back = !state ? '' : `, or once a month’s income qualifies you for ${PROGRAM_NAMES[state].medicaid}${state === 'ca' ? '' : ` or ${PROGRAM_NAMES[state].essential}`}`;
-    const penalty = inCalifornia(home) ? '. Each month without cover in California adds to the penalty on your state tax return' : '';
+    const penalty = inCalifornia(home) ? '. Each month without cover in California adds to California’s Penalty For No Cover on your tax return' : '';
     // Uncovered from when the last cover in force ended, which can be after last month’s look and before this one’s:
     // Yale Health ends at the hour its days run out. Until 2026-10-14 the notice gave this look’s day, so an F-1 who
     // withdrew on 2 October, Yale Health ended at eight on 1 November, was told on 1 December that she was uncovered
@@ -977,7 +977,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     // Out of status there’s no way back to name: the marketplace and the state’s plan for the lawfully present refuse
     // you (`mayEnroll`). Until 2026-10-13 the notice offered the marketplace’s 60 days to somebody it refused.
     const way = chose ? `Dropping a plan or leaving it unpaid doesn’t open special enrollment. You can enroll again in open enrollment${back}`
-      : !lawfullyPresent(person) && state ? `You’re out of status, so neither the marketplace nor ${PROGRAM_NAMES[state].essential} can take you`
+      : !lawfullyPresent(person) && state ? `You’re out of status, so neither the marketplace nor ${PROGRAM_NAMES[state].essential} will take you`
         : `${window}${program}. Enroll on Papers, under Health Cover`;
     if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Health Cover Ended', body: `You have no health cover from ${formatDate(from, HOME)}. ${way}${penalty}.`, importance: 80, route: '/workspace/papers' });
   }
@@ -999,7 +999,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
  */
 const byWords = (by: EngagedBy, cur: string): string => ({
   income: `with ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} or more of income`, school: 'with time at the School', age: 'because people your age are exempt',
-  snap: 'because you received SNAP under its work rules', hardship: 'through a stay in hospital you asked to count',
+  snap: 'because you received SNAP, whose own work rules applied to you', hardship: 'through a stay in hospital you asked to count',
 })[by];
 const capital = (s: string): string => `${s.charAt(0).toUpperCase()}${s.slice(1)}`;
 
@@ -1801,12 +1801,23 @@ function planPays(person: Person, care: Care, clinic: ReturnType<typeof clinicBy
 }
 
 /**
- * What the flu means for the days it lasts (from 2026-10-17, brief 14): no workout (`lookAfterRefusal`), and a day of
- * classes excused through Call In Sick (`school.call_in_sick` takes the flu as reason enough). Until then the notice
- * said only "The flu. It costs nothing."
+ * What the flu means for the days it lasts (from 2026-10-17, brief 14): its last day, the toll `careFor` took, no
+ * workout (`lookAfterRefusal`), and, while enrolled, a day of classes excused through Call In Sick (`school.call_in_sick`
+ * takes the flu as reason enough, and the School offers it while `schoolEnded` is false). Until then the notice said
+ * only "The flu. It costs nothing."
  */
-function fluMeans(person: Person): string {
-  return `Work Out waits until it passes${person.school ? ', and Call In Sick, on School, excuses a day of classes' : ''}.`;
+function fluMeans(sim: Simulation, person: Person, until: Instant): string {
+  const enrolled = person.school !== undefined && !schoolEnded(person.school.standing);
+  return `It lasts until ${formatDate(until, sim.zone)}, and it has cost you some condition and energy. Work Out waits until it passes${enrolled ? ', and Call In Sick, on School, excuses a day of classes' : ''}.`;
+}
+
+/**
+ * When a bill is taken and what follows if it can't be (from 2026-10-17, brief 14): `BILL_KIND` pays it from the current
+ * account, with its overdraft and linked savings (`payFromCurrent`), on its due date, or makes it medical debt. The date
+ * is in the zone Papers shows it in. Until then the notices said only "due in 30 days".
+ */
+export function dueWords(sim: Simulation, dueAt: Instant): string {
+  return `due on ${formatDate(dueAt, sim.zone)}, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.`;
 }
 
 /**
@@ -1832,7 +1843,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   // and the player was never told of the flu that cost them condition and energy and stopped their workouts; found by the
   // review of that day).
   if (event.flu && event.care === 'visit') {
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'You Have The Flu', body: `You have the flu until ${formatDate(h.fluUntil!, HOME)}. It takes from your condition and energy. You didn’t see a doctor, so it costs nothing. ${fluMeans(person)}`, importance: 60, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'You Have The Flu', body: `You have the flu. ${fluMeans(sim, person, h.fluUntil!)} You didn’t see a doctor, so there’s nothing to pay.`, importance: 60, route: '/workspace/papers' });
     return undefined;
   }
   // Where it was had: a named practice, clinic or hospital in the town they're in (`systems/clinics.ts`), the practice
@@ -1873,7 +1884,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   const logged = MEDICAL.includes(event.care) ? { at, care: event.care, what: event.what, share: amount, ...(event.care === 'visit' && clinic ? { clinicId: clinic.id } : {}), planPaid: planPart } as NonNullable<HealthRecord['careLog']>[number] : undefined;
   if (logged) { h.careLog = [...(h.careLog ?? []), logged]; pruneCareLog(h, at); }
   if (person.id === sim.universe.playerId && MEDICAL.includes(event.care)) {
-    sim.notify({ category: 'health', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: [`${event.what}${event.care === 'stay' ? `, for ${CARE.stayDays} days` : ''}.`, outside ? 'Yale Health pays for a visit only at its own Health Center, not here.' : '', event.flu ? fluMeans(person) : (event.care === 'stay' || event.care === 'emergency') && person.school ? 'Classes you miss while you’re there are excused.' : '', amount > 0 ? `Your share is ${formatMoney(amount, cur)}, due on ${formatDate(at + MEDICAL_DEBT.dueDays * MS_DAY, HOME)}. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt.` : 'There’s nothing to pay.'].filter(Boolean).join(' '), importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
+    sim.notify({ category: 'health', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: [`${event.what}${event.care === 'stay' ? `, for ${CARE.stayDays} days` : ''}.`, outside ? 'Yale Health pays for a visit only at its own Health Center, not here.' : '', event.flu ? fluMeans(sim, person, h.fluUntil!) : (event.care === 'stay' || event.care === 'emergency') && person.school && !schoolEnded(person.school.standing) ? 'Classes you miss while you’re there are excused.' : '', amount > 0 ? `Your share is ${formatMoney(amount, cur)}, ${dueWords(sim, at + MEDICAL_DEBT.dueDays * MS_DAY)}` : 'There’s nothing to pay.'].filter(Boolean).join(' '), importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
   }
   if (amount <= 0) return undefined;
   h.seq = (h.seq ?? 0) + 1;
@@ -2022,7 +2033,7 @@ export function repriceCare(sim: Simulation, person: Person, from: Instant, to: 
     if (diff > 0) { sim.schedule({ at: line.dueAt, kind: BILL_KIND, label: `Medical Bill Due: ${line.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: line.id } }); continue; }
     sim.post({ memo: `Refund: ${f.what}, ${why}`, category: 'health', postings: [{ accountId: payeeAccount(sim, person).id, amount: -diff }, { accountId: sim.nominalAccount('expense', expenseFor('health')).id, amount: diff }] });
   }
-  if (net !== 0 && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: net > 0 ? 'Care Billed Again' : 'Care Credited', body: `${capital(why)}. Care you had from ${formatDate(from, HOME)} is billed again as that cover pays: ${net > 0 ? `${formatMoney(net, cur)} more, on a bill of its own` : `${formatMoney(-net, cur)} less, taken off what was open or owed, with the rest back in your bank`}.`, importance: 75, route: '/workspace/papers' });
+  if (net !== 0 && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: net > 0 ? 'Care Billed Again' : 'Care Credited', body: `${capital(why)}: care you had from ${formatDate(from, HOME)} is billed again as that cover pays, ${net > 0 ? `${formatMoney(net, cur)} more, on a bill of its own` : `${formatMoney(-net, cur)} less, taken off what was open or owed, with the rest back in your bank`}.`, importance: 75, route: '/workspace/papers' });
   return net;
 }
 

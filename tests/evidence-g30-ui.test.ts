@@ -660,8 +660,8 @@ describe('trait-illnessToll', () => {
     // The draw is 7 days for the plain body, so somewhere in [6.5, 7.5); at 0.6474 that is [4.21, 4.86): 4 days.
     expect((injury(plain).until - RAN_AT) / MS_DAY).toBe(7);
     expect((injury(resilient).until - RAN_AT) / MS_DAY).toBe(4);
-    expect(notices(plain, 'A Sprained Ankle').map((n) => n.body)[0]).toContain('7 days to mend.');
-    expect(notices(resilient, 'A Sprained Ankle').map((n) => n.body)[0]).toContain('4 days to mend.');
+    expect(notices(plain, 'A Sprained Ankle').map((n) => n.body)[0]).toContain('It takes 7 days to mend, and you can’t work out until then.');
+    expect(notices(resilient, 'A Sprained Ankle').map((n) => n.body)[0]).toContain('It takes 4 days to mend, and you can’t work out until then.');
     expect(lookAfter(plain, 'exercise').error).toBe('Not with a sprained ankle; it has 7 days yet to mend.');
     expect(lookAfter(resilient, 'exercise').error).toBe('Not with a sprained ankle; it has 4 days yet to mend.');
 
@@ -689,7 +689,7 @@ describe('trait-illnessToll', () => {
       expect(notices(sim, 'You Have The Flu')).toHaveLength(0);
       const before = { ...sim.player.wellbeing };
       sim.advanceTo(AT + 1);
-      expect(notices(sim, 'You Have The Flu').map((n) => n.body)).toEqual(['The flu. It costs nothing.']);
+      expect(notices(sim, 'You Have The Flu').map((n) => n.body)).toEqual(['You have the flu. It lasts until December 19, 2026, and it has cost you some condition and energy. Work Out waits until it passes, and Call In Sick, on School, excuses a day of classes. You didn’t see a doctor, so there’s nothing to pay.']);
       return { sim, condition: before.condition - sim.player.wellbeing.condition, energy: before.energy - sim.player.wellbeing.energy };
     };
     const plain = draw([]);

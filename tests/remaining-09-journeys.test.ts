@@ -425,7 +425,7 @@ describe('journeys.x2: a leave and its Affiliate cover, then a bill', () => {
     expect(coverOn(sim.player, sim.now)).toBeUndefined();
     const [appointment] = healthOf(sim.player).appointments!;
     expect(appointment).toMatchObject({ at: at(2027, 3, 4, 10), clinicId: 'us-ct-fhchc-grand' });
-    expect(titled(sim, 'A Doctor’s Appointment').at(-1)!.body).toBe('A doctor’s visit: booked at Fair Haven Community Health Care for March 4, 2027, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.');
+    expect(titled(sim, 'A Doctor’s Appointment').at(-1)!.body).toBe('A doctor’s visit: booked at Fair Haven Community Health Care for March 4, 2027, the wait where you live.');
     // What Papers prices it at there, before the cover changes and after: the bill it brings, kept.
     ok(sim, 'school.buy_affiliate', { confirm: true });
     expect(coverOn(sim.player, appointment!.at)).toBe('yale');
@@ -438,7 +438,7 @@ describe('journeys.x2: a leave and its Affiliate cover, then a bill', () => {
     // A twin that keeps it: billed at Fair Haven as the uninsured's, the figure Papers gave, and told why.
     const kept = reload(sim);
     tend(kept, at(2027, 3, 4, 18));
-    expect(titled(kept, 'A Doctor’s Visit').at(-1)!.body).toBe(`A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is ${priced}, due in 30 days.`);
+    expect(titled(kept, 'A Doctor’s Visit').at(-1)!.body).toBe(`A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is ${priced}, due on April 3, 2027, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.`);
     // The player's way: called off under Your Doctor, then booked again: Yale Health's Student Health, the next weekday.
     sim = reload(sim);
     expect(titled(sim, 'Your Appointment Is Outside Yale Health')).toHaveLength(1);
@@ -471,7 +471,7 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
     // Enroll is open at once: January had school at least half-time, HUSKY D's work rule met.
     expect(mayEnroll(sim.player, sim.now, 'USD', sim)).toMatchObject({ ok: true, program: 'medicaid' });
     tend(sim, at(2027, 4, 1, 12));
-    expect(titled(sim, 'Your Health Cover Ended').map((n) => n.body)).toEqual(['You have no health cover from March 17, 2027. You can enroll in the marketplace until May 16, 2027, 60 days after you lost cover.']);
+    expect(titled(sim, 'Your Health Cover Ended').map((n) => n.body)).toEqual(['You have no health cover from March 17, 2027. You can enroll in the marketplace until May 16, 2027, 60 days after you lost cover. Enroll on Papers, under Health Cover.']);
     // March had no work, income or school: HUSKY D isn't hers on April's look, and the marketplace's 60 days are.
     expect(mayEnroll(sim.player, sim.now, 'USD', sim).why).toBe('From January 1, 2027, HUSKY D asks for $580.00 of income, time at the School or an exception in the month before you apply, and last month had none of them. The marketplace is open to you, because you’re within 60 days of losing cover.');
     sim = reload(sim);
@@ -484,9 +484,9 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
     expect(ok<{ kind: string; from: Instant }>(twin, 'health.enroll')).toEqual({ kind: 'marketplace', from: at(2027, 6, 1, 0) });
     tend(sim, at(2027, 5, 20, 12));
     const before = still(sim);
-    expect(refused(sim, 'health.enroll')).toBe('From January 1, 2027, HUSKY D asks for $580.00 of income, time at the School or an exception in the month before you apply, and last month had none of them. It’s outside open enrollment, 23 October to 15 January, and not within 60 days of losing cover.');
+    expect(refused(sim, 'health.enroll')).toBe('From January 1, 2027, HUSKY D asks for $580.00 of income, time at the School or an exception in the month before you apply, and last month had none of them. It’s outside open enrollment, October 23 to January 15, and you haven’t lost cover in the last 60 days.');
     expect(still(sim)).toBe(before);
-    expect(drawn(sim, PapersWorkspace, 'health')).toContain('not within 60 days of losing cover');
+    expect(drawn(sim, PapersWorkspace, 'health')).toContain('you haven’t lost cover in the last 60 days');
     expect(breaches(sim.universe)).toEqual([]);
   }, 300_000);
 
@@ -506,7 +506,7 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
     for (const s of [steps, jump]) {
       // Uncovered from 4 November at noon, thirty days on; told at December's look, 1 December, with the window's last
       // day, 60 days from the loss, 3 January 2027, and HUSKY D, which takes her at any time on November's income.
-      expect(titled(s, 'Your Health Cover Ended').map((n) => [dated(n.at), n.body])).toEqual([['December 1, 2026', 'You have no health cover from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days after you lost cover. HUSKY D can take you at any time on last month’s income, with no premium.']]);
+      expect(titled(s, 'Your Health Cover Ended').map((n) => [dated(n.at), n.body])).toEqual([['December 1, 2026', 'You have no health cover from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days after you lost cover. HUSKY D can take you at any time on last month’s income, with no premium. Enroll on Papers, under Health Cover.']]);
       expect((healthOf(s.player).careLog ?? []).filter((e) => e.at >= at(2026, 11, 1, 0))).toEqual([]);
       expect(ok<{ kind: string; from: Instant }>(s, 'health.enroll')).toEqual({ kind: 'medicaid', from: at(2026, 12, 1, 0) });
       expect(refused(s, 'health.enroll')).toBe('You’re already enrolled.');

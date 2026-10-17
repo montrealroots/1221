@@ -385,7 +385,7 @@ PLAYS['papers.health-cover'] = () => {
   const o = zonedParts(opens, NY);
   expect(ex.result).toContain(`Enrolled ahead, from ${o.day} ${MONTHS[o.month - 1]} while Yale Health still covered them, their cover would have begun 1 August.`);
   tended(ahead, opens - 12 * MS_HOUR);
-  expect(mayEnroll(ahead.player, ahead.now).why).toContain(`you can enroll from ${day(opens)}`);
+  expect(mayEnroll(ahead.player, ahead.now).why).toContain(`You can enroll from ${day(opens)}`);
   tended(ahead, opens + 12 * MS_HOUR);
   const early = ahead.must<{ from: number }>({ kind: 'health.enroll', payload: {} });
   expect(early.from).toBe(yaleUntil(ahead.player));
@@ -431,7 +431,7 @@ PLAYS['papers.doctor'] = () => {
   tended(sim, again.at + 2 * MS_HOUR);
   const kept = titled(sim, 'A Doctor’s Visit', again.at);
   expect(kept).toHaveLength(1);
-  expect(kept[0]!.body).toMatch(/Nothing to pay\.$/);
+  expect(kept[0]!.body).toMatch(/There’s nothing to pay\.$/);
   // Had at the practice the result names (from 2026-10-15).
   expect(practice).toBe('Yale Health Center, Student Health');
   expect(kept[0]!.body.startsWith(`A doctor’s visit, ${practice}.`)).toBe(true);

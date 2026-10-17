@@ -772,7 +772,7 @@ const HEALTH = { 'tab:/workspace/papers': 'health' };
  * SETUP: September's earnings of $5,000 (a year's $60,000, near four times the poverty line), so the plan is the
  * marketplace's and not HUSKY D or Covered Connecticut; and the checkup billed through `careFor`. Each seed was chosen
  * for its outcome, which each test asserts outright. Open enrollment, not September: measured on 2026-10-13, the day of
- * the withdrawal `health.enroll` refused "It’s outside open enrollment, 23 October to 15 January, and not within 60 days of
+ * the withdrawal `health.enroll` refused "Outside open enrollment, 23 October to 15 January, and not within 60 days of
  * losing cover.", since a withdrawal canceling Yale Health sets no `lostAt`; that's `health.enroll`'s row, not these.
  */
 function deniedClaim(seed: string): { sim: Simulation; bill: MedicalBill } {

@@ -153,7 +153,7 @@ describe('HUSKY D’s work test reads last month’s work: its hours and its pay
     expect(short.player.health!.program!.until).toBeUndefined();
     expect(coverOn(short.player, renewal + MS_DAY)).toBe('medicaid');
     expect(short.player.health!.pending).toMatchObject({ kind: 'renewal', noticeAt: renewal, decideAt: at(2027, 8, 5, 0), months: ['2027-06', '2027-05', '2027-04', '2027-03', '2027-02', '2027-01'] });
-    expect(titled(short, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from January to June 2027. You stay covered while you answer, until August 4, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, HUSKY D ends on August 31, 2027, said on August 5, 2027, and you won’t get the premium tax credit while HUSKY D would take you if not for its work rules, and you can apply again in any month after one that meets them.']);
+    expect(titled(short, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from January to June 2027. You stay covered while you answer, until August 4, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, HUSKY D ends on August 31, 2027, and you’ll be told on August 5, 2027. After that, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.']);
     expect(titled(short, 'Your Public Cover Ends')).toEqual([]);
   });
 
@@ -184,7 +184,7 @@ describe('HUSKY D’s work test reads last month’s work: its hours and its pay
     healthMonth(may, may.player, renewal);
     expect(may.player.health!.program!.until).toBeUndefined();
     expect(may.player.health!.pending).toBeUndefined();
-    expect(titled(may, 'Your Public Cover Is Renewed')[0]!.body).toMatch(/May 2027 met its work rules by its income, \$580\.00 or more\.$/);
+    expect(titled(may, 'Your Public Cover Is Renewed')[0]!.body).toMatch(/May 2027 met its work rules with \$580\.00 or more of income\.$/);
     const short = huskyD('g84-work-hours-short');
     worked(short, at(2027, 6, 12), 79, 400_00);
     worked(short, at(2027, 7, 1, 0) + 30 * 60_000, 80, 1_840_00);

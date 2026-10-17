@@ -232,7 +232,7 @@ describe('health.book', () => {
     expect(h.toasts).toEqual(['Booked for September 28, 2026.']);
     const booked = appointmentsOf(sim.player);
     expect(booked).toEqual([{ id: expect.any(String), at: at(2026, 9, 28, 10), what: 'A doctor’s visit', clinicId: 'us-ct-fhchc-grand' }]);
-    expect(titled(sim, 'A Doctor’s Appointment', sim.now).map((n) => n.body)).toEqual(['A doctor’s visit: booked at Fair Haven Community Health Care for September 28, 2026, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.']);
+    expect(titled(sim, 'A Doctor’s Appointment', sim.now).map((n) => n.body)).toEqual(['A doctor’s visit: booked at Fair Haven Community Health Care for September 28, 2026, the wait where you live.']);
     // The visit is no longer owed: the button is gone, and booking again is refused as owing nothing.
     expect(healthOf(sim.player).owedVisit).toBeUndefined();
     expect(shown(sim).buttons.map((b) => b.text)).not.toContain('Book An Appointment');
@@ -243,13 +243,13 @@ describe('health.book', () => {
     expect(appointmentsOf(sim.player)).toEqual(booked);
     expect(sim.universe.scheduled.filter((i) => i.kind === APPOINTMENT_KIND && i.status === 'pending').map((i) => [i.at, i.label])).toEqual([[at(2026, 9, 28, 10), 'The Doctor, Fair Haven Community Health Care']]);
     // Kept on the clock: the visit at the practice, and the prescriptions renewed, which nothing in New Haven reads.
-    // Until 2026-10-15 it was Yale Health's $0, with no bill and "There’s nothing to pay."; from that day Yale Health pays none of
+    // Until 2026-10-15 it was Yale Health's $0, with no bill and "Nothing to pay."; from that day Yale Health pays none of
     // a member's visit outside its Health Center, and Fair Haven, publishing no fee, bills it as SLATE bills anybody
     // uninsured: $100 of 2024 grown by the physicians' services index to 2026, 10,000 × 439.389 ÷ 417.93 = 10,513.47,
     // 10,513 cents, times 1.75 = 18,397.75, $183.98, due in 30 days, the plan paying none (no `covered`).
     tended(sim, at(2026, 9, 28, 12));
     const kept = titled(sim, 'A Doctor’s Visit', at(2026, 9, 28, 10));
-    expect(kept.map((n) => [n.at, n.body])).toEqual([[at(2026, 9, 28, 10), 'A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due in 30 days.']]);
+    expect(kept.map((n) => [n.at, n.body])).toEqual([[at(2026, 9, 28, 10), 'A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due on October 28, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.']]);
     expect(healthOf(sim.player).bills.filter((b) => b.at === at(2026, 9, 28, 10)).map((b) => [b.what, b.amount, b.dueAt, b.covered])).toEqual([['A doctor’s visit, Fair Haven Community Health Care', 18_398, at(2026, 10, 28, 10), undefined]]);
     expect(appointmentsOf(sim.player).filter((a) => a.what === 'A doctor’s visit')).toEqual([]);
     expect(healthOf(sim.player).chronic!.hypertension!.prescribedAt).toBe(at(2026, 9, 28, 10));
@@ -387,11 +387,11 @@ describe('health.choose_clinic', () => {
     expect(didnt.booked).toEqual([{ id: expect.any(String), at: day, what: 'A doctor’s visit', clinicId: 'uk-ldn-sohosquare-gp' }]);
     expect(chose.label).toBe('The Doctor, Bupa Private GP (pay-as-you-go)');
     expect(didnt.label).toBe('The Doctor, Soho Square General Practice');
-    expect(chose.notice).toEqual(['A doctor’s visit: booked at Bupa Private GP (pay-as-you-go) for January 26, 2026, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.']);
-    expect(didnt.notice).toEqual(['A doctor’s visit: booked at Soho Square General Practice for January 26, 2026, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.']);
+    expect(chose.notice).toEqual(['A doctor’s visit: booked at Bupa Private GP (pay-as-you-go) for January 26, 2026, the wait where you live.']);
+    expect(didnt.notice).toEqual(['A doctor’s visit: booked at Soho Square General Practice for January 26, 2026, the wait where you live.']);
     // Bupa's pay-as-you-go GP is private, and the NHS doesn't pay it: its 15-minute visit's £79 (`SELF_PAY`). Until
-    // 2026-10-13 this held "There’s nothing to pay." for it, as at Soho Square, the choice moving only the name.
-    expect(chose.kept).toEqual(['A doctor’s visit, Bupa Private GP (pay-as-you-go). Your share is £79.00, due in 30 days.']);
+    // 2026-10-13 this held "Nothing to pay." for it, as at Soho Square, the choice moving only the name.
+    expect(chose.kept).toEqual(['A doctor’s visit, Bupa Private GP (pay-as-you-go). Your share is £79.00, due on February 25, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.']);
     expect(didnt.kept).toEqual(['A doctor’s visit, Soho Square General Practice. There’s nothing to pay.']);
   });
 
@@ -524,7 +524,7 @@ describe('health.dental', () => {
     const sim = student('g03-dental-broke');
     broke(sim);
     const before = sim.universe.transactions.length;
-    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'The year is $312.72, more than your bank can cover.' });
+    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'The year costs $312.72, more than your bank can cover.' });
     expect(healthOf(sim.player).dental).toBeUndefined();
     expect(sim.universe.transactions.length).toBe(before);
   });

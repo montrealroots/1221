@@ -23,15 +23,20 @@ For `docs/GLOSSARY.md`'s "Health, Body And Time" section, in its columns, writte
 | **the marketplace** | The ACA exchange: open in open enrollment, or for 60 days around a loss of cover. | |
 | **out of status** | A noncitizen who has stayed past their permission to be in the country. | stayed past your status |
 | **medical debt** | A bill unpaid at its due date, owed to Your Providers in the Owed For Medical Care account. | |
+| **due on**, **your share is … due on …** | A bill's date (`dueAt`, 30 days after the care): on it the bill is taken from your current account, with its overdraft and any savings linked to it (`payFromCurrent`), or, if it can't be paid, it becomes medical debt. A notice names the date, as Papers does. | due in 30 days |
+| **financial assistance** (a hospital's) | A Connecticut hospital's charity policy, taken off a bill you put in for it with Apply For Assistance (`health.apply_aid`). | the hospital's charity, in a refusal |
+| **special enrollment** | The 60 days to enroll in the marketplace after losing cover (or before Yale Health's end). Dropping a plan or leaving it unpaid doesn't open them. | |
+| **work rules** | From January 1, 2027, what Medicaid (HUSKY D) asks of a month: enough income, time at the School, or an exception (your age, SNAP, a stay in hospital you ask to count). | community engagement, "by 80 hours' work" |
+| **a notice of noncompliance** | Medicaid's letter when it can't find the work rules met: 30 days from its receipt to answer, then a denial or the end of cover. | |
+| **workers' compensation** | What pays an injury at work: its care, and a share of the week's wage while you're laid up. | |
 
 ## To The Coordinator: Core
 
-- **energy.** Core says "Sleep and food bring it back." Only sleep does: `applyLookingAfter` gives a meal nourishment
-  and mood, never energy, and `applySleep` (and a skipped-through night, which sleeps) is the one thing that raises it.
-  Suggested: "How much you have left today. Only sleep brings it back."
-- **condition.** Core says "How fit your body is for work today, after illness, injury and rest." An injury doesn't
-  move condition (it weighs on morale and stress, `INJURY.weighs`), and condition changes over nights, not within a
-  day. Suggested: "How sound your body is, after illness, hunger, stress and short nights. Rest mends it, as far as
-  your fitness allows."
+- **energy** and **condition**: settled by the coordinator on 2026-10-17 in Core, as this file proposed: only sleep
+  brings energy back (a meal doesn't), and an injury doesn't lower condition. The health area's words are written to it.
 - **"condition" twice.** The game uses the word for the measure and for a long-term illness (Papers' "Your
   Conditions" panel, the papers area's). The health area's text now says "a long-term condition" for the second.
+- **"charity" and "financial assistance".** The health area's refusals say a hospital's "financial assistance", as
+  Papers' button does (Apply For Assistance); Papers' own lines still say "a hospital's charity" (the uninsured line,
+  the toast "The hospital took the charity off it.") and the papers guide quotes the old refusals (`guide/papers.ts:345`).
+  One word for it is the papers area's call.

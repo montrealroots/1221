@@ -190,7 +190,7 @@ function press(feature: string, label?: string): string[] {
 // “80 hours’ work” and said “school at least half-time”.
 const REFUSED = 'From January 1, 2027, HUSKY D asks for $580.00 of income, time at the School or an exception in the month before you apply, and last month had none of them.';
 const APPLY_LINE = 'Applying for HUSKY D anyway, you’re sent a notice of noncompliance and 30 days from its receipt to show the work rules met in December 2026, or an exception, a stay in hospital that month among them; it’s decided after, and the marketplace sells to you meanwhile.';
-const APPLIED_NOTICE = 'HUSKY D couldn’t find $580.00 of income, time at the School or an exception in December 2026, before the month you applied. Answer by February 7, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in that month counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, the application is denied on February 8, 2027; the marketplace sells to you meanwhile in its own windows, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules, and you can apply again in any month after one that meets them.';
+const APPLIED_NOTICE = 'HUSKY D couldn’t find $580.00 of income, time at the School or an exception in December 2026, before the month you applied. Answer by February 7, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in that month counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, the application is denied on February 8, 2027. Meanwhile you can buy a marketplace plan in its enrollment windows, but you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.';
 
 // ---------------------------------------------------------------------------
 // 3 and 4. An application: the month before, a notice, thirty days to answer, then the decision
@@ -247,7 +247,7 @@ describe('health.apply: HUSKY D applied for on its notice, the month before read
     expect(titled(jump, 'Public Cover Denied').map((n) => [n.at, n.body])).toEqual([[at(2027, 2, 8, 0), 'December 2026 didn’t show $580.00 of income, time at the School or an exception, and none was shown by February 7, 2027, so your application for HUSKY D is denied. You can still buy a marketplace plan in its enrollment windows, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.']]);
     expect(titled(jump, 'A Notice Of Noncompliance')).toHaveLength(1);
     const denied = home(jump);
-    expect(denied).toContain('Public Cover Denied December 2026 didn’t show $580.00 of income, time at the School or an exception, and none was shown by February 7, 2027: HUSKY D is denied.');
+    expect(denied).toContain('Public Cover Denied December 2026 didn’t show $580.00 of income, time at the School or an exception, and none was shown by February 7, 2027, so your application for HUSKY D is denied.');
     expect(denied).not.toMatch(NO_HOURS);
     expect(healthOf(jump.player).pending).toBeUndefined();
     expect(healthOf(jump.player).program).toBeUndefined();
@@ -360,8 +360,8 @@ describe('HUSKY D’s work rules: the exceptions SLATE reads, applied before a d
     expect(press('health.apply', 'Apply For HUSKY D')).toEqual(['Applied: a notice says what’s needed, decided February 8, 2027.']);
     expect(papers(sim)).toContain('A stay in hospital in a month it assessed counts if you ask for it.');
     expect(press('health.request_hardship', 'Request A Hardship Exception')).toEqual(['The hardship is granted, and the work rules met.']);
-    expect(titled(sim, 'Public Cover Approved').map((n) => n.body)).toEqual(['HUSKY D covers you from December 1, 2026, with no premium: December 2026 met its work rules through a stay in hospital you asked to count. Your marketplace plan ends as it begins.']);
-    expect(home(sim)).toContain('Public Cover Approved HUSKY D covers you from December 1, 2026, with no premium: December 2026 met its work rules through a stay in hospital you asked to count. Your marketplace plan ends as it begins.');
+    expect(titled(sim, 'Public Cover Approved').map((n) => n.body)).toEqual(['HUSKY D covers you from December 1, 2026, with no premium. December 2026 met its work rules through a stay in hospital you asked to count. Your marketplace plan ends as it begins.']);
+    expect(home(sim)).toContain('Public Cover Approved HUSKY D covers you from December 1, 2026, with no premium. December 2026 met its work rules through a stay in hospital you asked to count. Your marketplace plan ends as it begins.');
     expect(healthOf(sim.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2026, 12, 1, 0), band: 'low', renewAt: at(2027, 7, 1, 0) });
     const stay = healthOf(sim.player).careLog!.find((e) => e.care === 'stay')!;
     expect([stay.share, stay.planPaid! > 0]).toEqual([0, true]);
@@ -465,7 +465,7 @@ describe('HUSKY D’s renewal: the six months before read, then a notice and thi
     expect(healthOf(jump.player).program!.until).toBe(at(2027, 12, 1, 0));
     expect(coverOn(jump.player, at(2027, 11, 30, 23))).toBe('medicaid');
     expect(coverOn(jump.player, at(2027, 12, 1, 9))).toBeUndefined();
-    expect(titled(jump, 'Your Health Cover Ended').filter((n) => n.at >= at(2027, 10, 1, 0)).map((n) => [n.at, n.body])).toEqual([[at(2027, 12, 1, 0, 30), 'You have no health cover from December 1, 2027. You have 60 days to enroll in the marketplace.']]);
+    expect(titled(jump, 'Your Health Cover Ended').filter((n) => n.at >= at(2027, 10, 1, 0)).map((n) => [n.at, n.body])).toEqual([[at(2027, 12, 1, 0, 30), 'You have no health cover from December 1, 2027. You have 60 days to enroll in the marketplace. Enroll on Papers, under Health Cover.']]);
     expect(healthOf(jump.player).pending).toBeUndefined();
     // No premium for HUSKY D, ever: nothing health took from her bank but care.
     expect(jump.universe.transactions.filter((t) => /premium/i.test(t.memo))).toEqual([]);

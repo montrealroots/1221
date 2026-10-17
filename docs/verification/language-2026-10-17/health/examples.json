@@ -277,5 +277,383 @@
   "why": "Names the drags as what holds readiness back, worst first, as dragsOn ranks them.",
   "meaningSensitive": false,
   "verified": "render-after-1.txt; tests/scope-people.test.ts (her Readiness)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#careFor",
+  "kind": "notification",
+  "before": "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit at its own Health Center, not here. Your share is $183.98, due in 30 days.",
+  "after": "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due on October 28, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.",
+  "why": "What happens on the due date and after it: BILL_KIND takes it with payFromCurrent (the current account, its overdraft and linked savings) or makes it medical debt. The date is the bill’s dueAt in the zone Papers shows it in, so the notice and Papers’ Due column agree.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g03-life.test.ts (health.book, Fair Haven, kept and billed)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#careFor",
+  "kind": "notification",
+  "before": "A stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department, 3 days. Your share is $200.00, due in 30 days.",
+  "after": "A stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department, for 3 days. Classes you miss while you’re there are excused. Your share is $200.00, due on October 7, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.",
+  "why": "What a stay means for school: inHospital makes offSick true, and the classes are counted excused (school.ts). Said only while enrolled (schoolEnded false).",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g05-life.test.ts (health.bill; health.week “a stay is three days in hospital…”)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#careFor",
+  "kind": "notification",
+  "before": "A stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department, 3 days. Nothing to pay.",
+  "after": "A stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department, for 3 days. There’s nothing to pay.",
+  "why": "The same stay for a student who has left the School: no word about classes, and a sentence for the fragment.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-09-hardship.test.ts (Home, after the withdrawal), the run’s output"
+ },
+ {
+  "source": "src/engine/systems/health.ts#careFor",
+  "kind": "notification",
+  "before": "The flu. It costs nothing.",
+  "after": "You have the flu. It lasts until December 19, 2026, and it has cost you some condition and energy. Work Out waits until it passes, and Call In Sick, on School, excuses a day of classes. You didn’t see a doctor, so there’s nothing to pay.",
+  "why": "What happened, until when (fluUntil), what it took (CARE.toll.flu, taken once), and what it changes: Work Out refused (“Not with the flu”) and Call In Sick accepted (sickRefusal takes the flu as reason enough).",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g30-ui.test.ts “takes the flu’s 25 condition and 30 energy…”"
+ },
+ {
+  "source": "src/engine/systems/health.ts#careFor",
+  "kind": "notification",
+  "before": "The flu, at urgent care, PhysicianOne Urgent Care (Yale New Haven Health Urgent Care), New Haven. Nothing to pay.",
+  "after": "The flu, at urgent care, PhysicianOne Urgent Care (Yale New Haven Health Urgent Care), New Haven. It lasts until December 5, 2026, and it has cost you some condition and energy. Work Out waits until it passes, and Call In Sick, on School, excuses a day of classes. There’s nothing to pay.",
+  "why": "The flu seen at urgent care says the same things as the flu unseen.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g05-life.test.ts “PLAYER JOURNEY: the flu, seen at urgent care…”"
+ },
+ {
+  "source": "src/engine/systems/health.ts#careFor",
+  "kind": "notification",
+  "before": "Your plan denied the claim for a doctor’s visit, Fair Haven Community Health Care: $183.98 is yours to pay unless an appeal overturns it.",
+  "after": "Your plan denied the claim for a doctor’s visit, Fair Haven Community Health Care, so the bill is $183.98 unless an appeal overturns it. You can appeal within 180 days with Appeal It, on Papers, under Health Cover.",
+  "why": "The next step and its window, read from DENIALS.appealDays; the outcome stays conditional (“unless an appeal overturns it”).",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g05-life.test.ts “the denial’s and the decision’s notices name the clinic as it’s written”"
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth",
+  "kind": "notification",
+  "before": "$200.00 for a stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department is a medical debt now.",
+  "after": "$200.00 for a stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department couldn’t be paid from your current account on its due date, so it’s medical debt now. Pay It Off, on Papers under Health Cover, clears it.",
+  "why": "Why it became debt, and the button that settles it.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g05-life.test.ts “A Medical Bill Went Unpaid names the hospital as it’s written”"
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth",
+  "kind": "notification",
+  "before": "The plan reversed its denial for a doctor’s visit, Fair Haven Community Health Care: you owe its share, $45.00.",
+  "after": "The plan reversed its denial for a doctor’s visit, Fair Haven Community Health Care. You owe only your share, $45.00.",
+  "why": "“Its share” could be read as the plan’s; it’s the player’s share of the care.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g05-life.test.ts; tests/evidence3-lifepapers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/health.ts#healthMonth",
+  "kind": "official",
+  "before": "You’re uncovered from March 17, 2027. You can enroll in the marketplace until May 16, 2027, 60 days from losing cover.",
+  "after": "You have no health cover from March 17, 2027. You can enroll in the marketplace until May 16, 2027, 60 days after you lost cover. Enroll on Papers, under Health Cover.",
+  "why": "Plain words, and the next step by the screen’s labels; the date and the 60 days unchanged.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-09-journeys.test.ts “DEFECT: withdrawn on 15 February 2027…”"
+ },
+ {
+  "source": "src/engine/systems/health.ts#healthMonth",
+  "kind": "official",
+  "before": "You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.",
+  "after": "You have no health cover from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days after you lost cover. HUSKY D can take you at any time on last month’s income, with no premium. Enroll on Papers, under Health Cover.",
+  "why": "“Can take you”: mayEnroll says it would, on last month’s income, and the player still has to enroll.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-09-journeys.test.ts “DEFECT: withdrawn in the first fall on 5 October 2026…”"
+ },
+ {
+  "source": "src/engine/systems/health.ts#healthMonth",
+  "kind": "official",
+  "before": "You’re uncovered from November 4, 2026. Out of status, neither the marketplace nor Covered Connecticut will take you.",
+  "after": "You have no health cover from November 4, 2026. You’re out of status, so neither the marketplace nor Covered Connecticut will take you.",
+  "why": "A subject for the sentence; no step offered where the game offers none (lawfullyPresent is false).",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-09-journeys.test.ts (the F-1 student from London)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#healthMonth",
+  "kind": "official",
+  "before": "You’re uncovered from February 1, 2027. A plan dropped or left unpaid opens no special enrollment: open enrollment, or a month’s income that qualifies you for Medi-Cal, is the way back, and every month uncovered in California costs its penalty on your return.",
+  "after": "You have no health cover from February 1, 2027. Dropping a plan or leaving it unpaid doesn’t open special enrollment. You can enroll again in open enrollment, or once a month’s income qualifies you for Medi-Cal. Each month without cover in California adds to California’s Penalty For No Cover on your tax return.",
+  "why": "The way back as sentences, each condition kept; the penalty named by its line on the return (PapersWorkspace: California’s Penalty For No Cover, from uncoveredInCalifornia). Before: the old template played the same way.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-2.txt (Los Angeles, a plan dropped)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#healthMonth",
+  "kind": "official",
+  "before": "Unpaid a year and $500.00 or more, it’s reported now.",
+  "after": "Your medical debt is $500.00 or more and has gone unpaid for a year, so it’s now on your credit record. You can still clear it with Pay It Off, on Papers, under Health Cover.",
+  "why": "Says what was reported and where (markRecord), and promises nothing about the record, only that the debt can still be paid.",
+  "meaningSensitive": true,
+  "verified": "tests/defects-g8-6.test.ts “…a medical debt of exactly the reporting figure is reported…”; tests/evidence-g05-life.test.ts"
+ },
+ {
+  "source": "src/engine/systems/health.ts#healthMonth",
+  "kind": "official",
+  "before": "Covered Connecticut comes with the premium tax credit, which from January 1, 2027, a noncitizen has only with a green card, as a Cuban or Haitian entrant or under a Compact of Free Association. The marketplace still sells to you, with no credit.",
+  "after": "Covered Connecticut depends on the premium tax credit. From January 1, 2027, a noncitizen gets that credit only with a green card, as a Cuban or Haitian entrant, or under a Compact of Free Association. You can still buy a marketplace plan, without the credit.",
+  "why": "Three sentences; every status the law names kept.",
+  "meaningSensitive": true,
+  "verified": "tests/scope-cover.test.ts (Covered Connecticut held by an F-1 student into 2027)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#mayEnroll",
+  "kind": "official",
+  "before": "From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them. The marketplace is open to you: within 60 days of losing cover.",
+  "after": "From January 1, 2027, HUSKY D asks for $580.00 of income, time at the School or an exception in the month before you apply, and last month had none of them. The marketplace is open to you, because you’re within 60 days of losing cover.",
+  "why": "Which month (the one before you apply), and the window said as a reason.",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-papers.test.ts “papers.health-cover…” (and the guide’s quote of it, guide/papers.ts:375)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#mayEnroll",
+  "kind": "error",
+  "before": "SLATE has public cover and the marketplace in New York, Los Angeles and New Haven.",
+  "after": "You can enroll in public cover or the marketplace only while you live in New York, Los Angeles or New Haven.",
+  "why": "The player’s obstacle, not the game describing its scope.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-2.txt (London: Enroll, and Apply For HUSKY D)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#marketplaceOpen",
+  "kind": "error",
+  "before": "From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them. Outside open enrollment, 23 October to 15 January, and not within 60 days of losing cover.",
+  "after": "From January 1, 2027, HUSKY D asks for $580.00 of income, time at the School or an exception in the month before you apply, and last month had none of them. It’s outside open enrollment, October 23 to January 15, and you haven’t lost cover in the last 60 days.",
+  "why": "Dates written as every other date the game writes; a subject for each clause.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-09-journeys.test.ts and tests/scope-cover.test.ts (the refusal whole)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#noticeOfNoncompliance",
+  "kind": "official",
+  "before": "HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from January to June 2027. You’re covered while you answer, to August 4, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in those months counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, HUSKY D ends on August 31, 2027, said on August 5, 2027, and the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.",
+  "after": "HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from January to June 2027. You stay covered while you answer, until August 4, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, HUSKY D ends on August 31, 2027, and you’ll be told on August 5, 2027. After that, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.",
+  "why": "An official notice in sentences: the answer-by date, the end date, the day it’s decided and the credit kept exactly; the button named where it is.",
+  "meaningSensitive": true,
+  "verified": "tests/defects-g8-4.test.ts"
+ },
+ {
+  "source": "src/engine/systems/health.ts#endAhead",
+  "kind": "official",
+  "before": "No month from February to July 2027 showed $580.00 of income, time at the School or an exception, and none was shown by September 4, 2027: HUSKY D ends on September 30, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.",
+  "after": "No month from February to July 2027 showed $580.00 of income, time at the School or an exception, and none was shown by September 4, 2027, so HUSKY D ends on September 30, 2027. Losing it gives you 60 days to enroll in the marketplace, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.",
+  "why": "Cause, consequence, then the way on, each its own sentence; “apply for HUSKY D again” says what can be applied for.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g05-life.test.ts “PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026…”"
+ },
+ {
+  "source": "src/engine/systems/health.ts#applyRenewal",
+  "kind": "official",
+  "before": "Last month’s income is under what HUSKY D allows, which takes the place of Covered Connecticut: you’re renewed into HUSKY D from November 1, 2027, with no gap and no premium, and October 2027 met its work rules by its income, $580.00 or more.",
+  "after": "Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and October 2027 met its work rules with $580.00 or more of income.",
+  "why": "The $580.00 is now read from PUBLIC_COVER.workEarnings in the save’s money, where it had been typed into the words.",
+  "meaningSensitive": true,
+  "verified": "tests/need-paths.test.ts “PLAYER JOURNEY: on Covered Connecticut from 1 November 2026…”"
+ },
+ {
+  "source": "src/engine/systems/health.ts#byWords",
+  "kind": "official",
+  "before": "HUSKY D is renewed to its next renewal, January 1, 2028: last month’s income is within what it allows, and June 2027 met its work rules by SNAP, whose work rules you were under.",
+  "after": "HUSKY D is renewed until its next renewal, on January 1, 2028. Last month’s income is within its limit, and June 2027 met its work rules because you received SNAP, whose own work rules applied to you.",
+  "why": "Each way a month meets the work rules said as a reason (monthEngagement: income, the School, age, SNAP, a stay asked for). Before: the old template played the same way.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-2.txt (a 1 July 2027 renewal, by SNAP; and by age, “because people your age are exempt”)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#grantPending",
+  "kind": "official",
+  "before": "HUSKY D is yours from December 1, 2026, with no premium: December 2026 met its work rules by a stay in hospital, on your request, and your marketplace plan ends as it begins.",
+  "after": "HUSKY D covers you from December 1, 2026, with no premium. December 2026 met its work rules through a stay in hospital you asked to count. Your marketplace plan ends as it begins.",
+  "why": "Three facts, three sentences.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-health-eligibility.test.ts “PLAYER JOURNEY: a stay in hospital in December 2026…”"
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth",
+  "kind": "official",
+  "before": "December 2026 didn’t show $580.00 of income, time at the School or an exception, and none was shown by February 7, 2027: HUSKY D is denied. The marketplace sells to you in its own windows, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.",
+  "after": "December 2026 didn’t show $580.00 of income, time at the School or an exception, and none was shown by February 7, 2027, so your application for HUSKY D is denied. You can still buy a marketplace plan in its enrollment windows, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.",
+  "why": "What was denied (the application), and the player’s ways on.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-health-eligibility.test.ts (Public Cover Denied, and on Home)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#hardshipRefusal",
+  "kind": "error",
+  "before": "No month it assessed, November to December 2026, had a stay in hospital, the hardship SLATE keeps.",
+  "after": "None of the months it checked, November to December 2026, had a stay in hospital, the one hardship the game counts.",
+  "why": "“The one hardship the game counts” keeps the line between the law’s exceptions and the one the simulation models. Before: the old template with the same months.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-2.txt"
+ },
+ {
+  "source": "src/engine/systems/health.ts#applyRefusal",
+  "kind": "error",
+  "before": "Last month meets its work rules: Enroll gives it.",
+  "after": "Last month meets its work rules, so press Enroll instead.",
+  "why": "The next step by its button.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-2.txt (New Haven, low income)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#renewalDue",
+  "kind": "notification",
+  "before": "The prescription for your depression medicine is past its date. It’s filled again once a doctor renews it.",
+  "after": "The prescription for your depression medicine has run out, so it can’t be filled until a doctor renews it. A visit to renew it is booked.",
+  "why": "Says whether the renewal visit was booked (book’s result), which until now it didn’t. Before: the old template played the same way.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-2.txt (Vancouver)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#repriceCare",
+  "kind": "notification",
+  "before": "Yale Health cover canceled back to the insurance term’s start, on withdrawing: care you had from August 1, 2026 is billed as that cover pays, $133.98 more, on a bill of its own.",
+  "after": "Yale Health cover canceled back to the insurance term’s start, on withdrawing: care you had from August 1, 2026 is billed again as that cover pays, $133.98 more, on a bill of its own.",
+  "why": "“Billed again”: the first bill stands and the difference is a bill of its own. Kept as one sentence: a split left “Yale Health cover canceled…” standing alone as a fragment.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-health-billing.test.ts “repriceCare: a bill as issued stands…”"
+ },
+ {
+  "source": "src/engine/systems/injury.ts#mayHurt",
+  "kind": "notification",
+  "before": "5 days to mend. Its care comes to $699.13, due in 30 days.",
+  "after": "It takes 5 days to mend, and you can’t work out until then. Your share of its care is $699.13, due on October 2, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.",
+  "why": "What a sprain keeps you from (trainingRefusal, limits body), and the bill as your share (shareOf), with the same date and what follows as every care bill.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence2-b02.test.ts (health.bill, a sprain)"
+ },
+ {
+  "source": "src/engine/systems/injury.ts#mayHurt",
+  "kind": "notification",
+  "before": "6 days to mend, and off work for them. It happened at work, so workers’ compensation pays the care and 75% of your week’s wage while you’re off.",
+  "after": "It takes 6 days to mend, and you’re laid up until then, kept from classes, work and training. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off.",
+  "why": "Laid up keeps you from classes (offSick, excused), rehearsals and evenings (laidUp) and training (trainingRefusal): “off work” said only one of the three.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence2-b02.test.ts “…off six days, the first three are Connecticut’s waiting days…”"
+ },
+ {
+  "source": "src/engine/systems/injury.ts#mayHurt",
+  "kind": "notification",
+  "before": "5 days to mend.",
+  "after": "It takes 5 days to mend.",
+  "why": "A bad knock limits nothing (limits none) and Yale Health leaves nothing to pay, so the one sentence is all there is to say.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g04-life.test.ts (a bad knock at midnight on 19 November)"
+ },
+ {
+  "source": "src/engine/systems/therapy.ts#registerTherapy",
+  "kind": "notification",
+  "before": "Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, after 1 of 8 sessions. A therapist outside Yale can take it on.",
+  "after": "Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, so your course there stopped after 1 of 8 sessions. A therapist outside Yale can start a new course with you: choose one on Papers, under Health Cover.",
+  "why": "What stopped, and that another therapist begins a new course (therapy.ts starts a course of THERAPY.sessions), not the same one carried on.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g04-life.test.ts “PLAYER JOURNEY: a withdrawal ends Yale Health’s cover…”"
+ },
+ {
+  "source": "src/engine/systems/therapy.ts#registerTherapy",
+  "kind": "notification",
+  "before": "8 sessions with Yale Mental Health & Counseling; it hasn’t lifted yet, and another course can be had.",
+  "after": "You’ve finished 8 sessions with Yale Mental Health & Counseling. The depression hasn’t lifted yet, and you can start another course on Papers, under Health Cover.",
+  "why": "A sentence with a subject, and where to start the next course.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g04-life.test.ts; tests/evidence-g05-life.test.ts"
+ },
+ {
+  "source": "src/engine/systems/therapy.ts#registerTherapy",
+  "kind": "notification",
+  "before": "After 8 sessions with Yale Mental Health & Counseling, it no longer weighs on you.",
+  "after": "After 8 sessions with Yale Mental Health & Counseling, your depression has lifted. It no longer needs care, and it no longer takes from your morale.",
+  "why": "What lifting changes: the condition is deleted, so its monthly care and its weekly morale toll (CHRONIC.untreated.moraleAWeek) go.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g04-life.test.ts “PLAYER JOURNEY: Yale’s course of eight…”"
+ },
+ {
+  "source": "src/engine/systems/appointments.ts#registerAppointments",
+  "kind": "notification",
+  "before": "A doctor’s visit: you weren’t there, so you weren’t seen. Book again when you can.",
+  "after": "A doctor’s visit: you weren’t there, so you weren’t seen. Book again with Book An Appointment, on Papers under Health Cover.",
+  "why": "The next step by its button.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g05-life.test.ts “PLAYER JOURNEY: booked again after Call It Off…”"
+ },
+ {
+  "source": "src/engine/systems/appointments.ts#registerAppointments",
+  "kind": "notification",
+  "before": "A doctor’s visit: Yale Health sees Yale students it covers, and it doesn’t cover you now. You weren’t seen at Yale Health Center, Student Health. Book again, and it’s at Fair Haven Community Health Care.",
+  "after": "A doctor’s visit: Yale Health sees Yale students it covers, and it doesn’t cover you now. You weren’t seen at Yale Health Center, Student Health. If you book again, with Book An Appointment on Papers under Health Cover, it’s at Fair Haven Community Health Care.",
+  "why": "Where the next booking goes is conditional on booking; the button named.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-health.test.ts “PLAYER JOURNEY: booked at Yale Health, then withdrawn the same Monday…”"
+ },
+ {
+  "source": "src/engine/systems/appointments.ts#registerAppointments <health.book>",
+  "kind": "error",
+  "before": "No wait is published where you live; you’re seen when it comes up.",
+  "after": "No waiting time is published where you live, so there’s nothing to book: you’re seen when you need care.",
+  "why": "Why there’s nothing to book, and what happens instead (care is had when the week draws it).",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g03-life.test.ts “LIFE FIXTURE (Dublin, where no GP wait is published)…”"
+ },
+ {
+  "source": "src/engine/systems/clinics.ts#clinicRefusal",
+  "kind": "error",
+  "before": "Your doctor is in the town you live in.",
+  "after": "Your doctor has to be in the town you live in.",
+  "why": "A rule, said as one: the old words read as a statement of fact.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g03-life.test.ts “refuses through the command in its own words…”"
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth <health.dental>",
+  "kind": "error",
+  "before": "SLATE sells a dental plan of your own in New York, beside a Covered California plan, and at Yale.",
+  "after": "You can buy a dental plan of your own only in New York, alongside a Covered California plan, or at Yale.",
+  "why": "The player as the subject; the three places kept.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-2.txt (London)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth <health.dental>",
+  "kind": "error",
+  "before": "The year is $312.72, which the bank can’t cover.",
+  "after": "The year costs $312.72, more than your bank can cover.",
+  "why": "The same shape as every other refusal for money in the area.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g03-life.test.ts “refused in its own words when the bank can’t cover the year…”"
+ },
+ {
+  "source": "src/engine/systems/health.ts#prepayRefusal",
+  "kind": "error",
+  "before": "Prescriptions are free at 60.",
+  "after": "Prescriptions are free from age 60.",
+  "why": "From that age on, not at it alone (NHS.prescriptionFreeFrom).",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-2.txt (London at 61)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#aidRefusal",
+  "kind": "error",
+  "before": "Only a Connecticut hospital’s bill.",
+  "after": "Only a Connecticut hospital’s bill can be put in for its financial assistance.",
+  "why": "A sentence for the fragment, naming what Apply For Assistance does.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-2.txt (a New York hospital’s bill)"
+ },
+ {
+  "source": "src/engine/content/geography.ts#loadCountryCities",
+  "kind": "error",
+  "before": "The city list for Iceland couldn’t be loaded.",
+  "after": "This country’s full list of towns couldn’t be loaded, so for now only the towns already listed can be picked. Check your connection, then choose another country and come back to this one.",
+  "why": "What it stops (the bundled towns still list) and a step that loads it again (LocationPicker reloads on a change of country, and a failure isn’t cached). “This country” because the picker shows it beside the country chosen, so no article problem with a name like United Kingdom.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-2.txt; src/ui/creation/LocationPicker.tsx (its alert)"
  }
 ]

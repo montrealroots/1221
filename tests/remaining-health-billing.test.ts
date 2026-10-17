@@ -225,7 +225,7 @@ describe('repriceCare: a bill as issued stands, and a change of cover is a line 
     expect(issued.covered!.planPaid + lines[0]!.covered!.planPaid).toBe(0);
     expect([lineOf('visit').share, lineOf('visit').planPaid, lineOf('visit').billId]).toEqual([183_98, 0, lines[1]!.id]);
     expect(Math.round(105_13 * 1.75)).toBe(183_98);
-    expect(titled(sim, 'Care Billed Again').map((n) => n.body)).toEqual(['Yale Health cover canceled back to the insurance term’s start, on withdrawing. Care you had from August 1, 2026 is billed again as that cover pays: $133.98 more, on a bill of its own.']);
+    expect(titled(sim, 'Care Billed Again').map((n) => n.body)).toEqual(['Yale Health cover canceled back to the insurance term’s start, on withdrawing: care you had from August 1, 2026 is billed again as that cover pays, $133.98 more, on a bill of its own.']);
     // Nothing went back to the bank: the credit came off the bill still open.
     expect(careRefunds(sim)).toEqual([]);
     // Papers: the issued bill shows what's left of the share it was issued at, and Credited; the line, its credit
@@ -276,7 +276,7 @@ describe('repriceCare: a bill as issued stands, and a change of cover is a line 
       const log = h1.careLog!.find((e) => e.care === 'urgent')!;
       // Yale Health leaves urgent care $0: $0 + $192.55, the price.
       expect([log.share, log.planPaid, log.share + log.planPaid!]).toEqual([0, 192_55, 192_55]);
-      expect(titled(s, 'Care Credited').map((n) => n.body)).toEqual(['Yale Health Affiliate cover, back to the day student cover ended. Care you had from January 20, 2027 is billed again as that cover pays: $336.96 less, taken off what was open or owed, with the rest back in your bank.']);
+      expect(titled(s, 'Care Credited').map((n) => n.body)).toEqual(['Yale Health Affiliate cover, back to the day student cover ended: care you had from January 20, 2027 is billed again as that cover pays, $336.96 less, taken off what was open or owed, with the rest back in your bank.']);
     }
     // Its due day, 24 February, takes nothing, and nothing came back to the bank.
     back.advanceTo(at(2027, 2, 26, 12));
@@ -374,7 +374,7 @@ describe('the insured paths, from cover to a bill paid once, the same in one jum
     fair.must({ kind: 'health.choose_clinic', payload: { clinicId: 'us-ct-fhchc-grand' } });
     // Yale Health sees only its members: the member may choose it, a withdrawn twin may not (clinic selection's access).
     const out = withdrawn(life('rhb-yale-out', 'wealthy'));
-    expect(out.execute({ kind: 'health.choose_clinic', payload: { clinicId: 'us-ct-yalehealth-studenthealth' } }).error).toBe('Yale Health only sees the Yale students it covers, and it doesn’t cover you now.');
+    expect(out.execute({ kind: 'health.choose_clinic', payload: { clinicId: 'us-ct-yalehealth-studenthealth' } }).error).toBe('Yale Health sees Yale students it covers, and it doesn’t cover you now.');
     const snapYale = freeze(yale);
     const snapFair = freeze(fair);
     const y = jumpAgainstSteps(snapYale, yale.now, at(2026, 9, 3, 12), rig);

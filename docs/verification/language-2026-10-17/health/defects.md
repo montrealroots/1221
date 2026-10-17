@@ -30,3 +30,15 @@ Brief 14, 2026-10-17. Functional faults found while reading the health area's so
    `src/engine/systems/life.ts` (the home area's): "Holding up, and no dial is far enough out to be worth naming."
    Found in `render-after-1.txt`. Suggested: "Holding up, with nothing far enough out to name." (or any wording without
    "dial").
+7. **Stray spaces in the gazetteer's country table.** `src/engine/content/world-data.ts:42`, `COUNTRY_TABLE`, which
+   `rows()` splits on tabs without trimming: Bonaire's name is `"Bonaire, Saint Eustatius and Saba "` (a space after
+   it), Curacao's capital is `" Willemstad"` (a space before it), and Heard Island's dialling code is `" "`. Found by a
+   script that read every field of the table for a leading or trailing space, while marking world-data for batch 3
+   (its status reason names this file). What a player meets: a sentence that ends on Bonaire's name has a space before
+   its stop ("a citizen of Bonaire, Saint Eustatius and Saba ."), and a select or list shows the trailing space.
+   Curacao's capital is mostly hidden by the place look, which finds the city by `CITIES.byName` (`normalise` trims)
+   and shows the city's own name; anything that prints `country.capital` itself prints the leading space. Not fixed
+   here: the gazetteer is kept as its source spells it, and the fix (trimming each field in `rows()`, or the three
+   fields) changes the parse of all three tables, countries, regions and cities, so it's for the coordinator to place.
+   Suggested: `const rows = (table: string) => table.split('\n').map((line) => line.split('\t').map((f) => f.trim()));`
+   with a test that `WORLD_COUNTRIES` has no field with a leading or trailing space.

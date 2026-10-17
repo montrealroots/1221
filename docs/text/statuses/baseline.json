@@ -15464,11 +15464,6 @@
   "hash": "2c00f04d1b56",
   "on": "2026-10-17"
  },
- "src/engine/systems/health.ts#BY_WORDS": {
-  "status": "Pending",
-  "hash": "b8ce9a7cfde6",
-  "on": "2026-10-17"
- },
  "src/engine/systems/health.ts#careFor": {
   "status": "Pending",
   "hash": "987a6be4d9c8",

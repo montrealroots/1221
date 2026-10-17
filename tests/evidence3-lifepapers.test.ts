@@ -395,7 +395,7 @@ describe('health.appeal_decided, on the marketplace a family’s savings reach (
     expect(debtOf(sim)!.balance).toBe(-SHARE);
     // What was over the share came off the debt, $138.98; nothing was paid on it, so nothing comes back to the bank.
     expect(memos(sim, /^Appeal won: /).map((t) => [into(t, debtOf(sim)!.id), into(t, payeeAccount(sim, sim.player).id)])).toEqual([[138_98, 0]]);
-    expect(titled(sim, 'Appeal Won')[0]!.body).toContain('you owe its share, $45.00.');
+    expect(titled(sim, 'Appeal Won')[0]!.body).toContain('You owe only your share, $45.00.');
     const text = papers(sim).text;
     expect(text).toContain('$45.00 Owed As Debt Denial Overturned');
     const bank = checking(sim).balance;

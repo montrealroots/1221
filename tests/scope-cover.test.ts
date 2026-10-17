@@ -251,9 +251,9 @@ describe('health.enroll: HUSKY D asks an applicant for the month before’s work
     const late = thaw(leave());
     late.advanceTo(at(2027, 4, 5, 9));
     const lateText = papers(late);
-    expect(lateText).toContain(`${REFUSED} It’s outside open enrollment, 23 October to 15 January, and not within 60 days of losing cover.`);
+    expect(lateText).toContain(`${REFUSED} It’s outside open enrollment, October 23 to January 15, and you haven’t lost cover in the last 60 days.`);
     expect(enrollDrawn()).toEqual([]);
-    expect(late.execute({ kind: 'health.enroll', payload: {} }).error).toBe(`${REFUSED} It’s outside open enrollment, 23 October to 15 January, and not within 60 days of losing cover.`);
+    expect(late.execute({ kind: 'health.enroll', payload: {} }).error).toBe(`${REFUSED} It’s outside open enrollment, October 23 to January 15, and you haven’t lost cover in the last 60 days.`);
   }, 600_000);
 
   // Found by the skeptic's play of 2026-10-15: until then the School was read at the instant she applied, and a student
@@ -405,7 +405,7 @@ describe('Covered Connecticut is had with the premium tax credit: none under the
     expect(healthOf(f1.player).program).toMatchObject({ kind: 'essential', from: at(2026, 11, 1, 0), until: at(2027, 1, 1, 0, 30) });
     expect(coverOn(f1.player, f1.now)).toBeUndefined();
     expect(titled(f1, 'Your Public Cover Has Ended').map((n) => [n.at, n.body])).toEqual([[at(2027, 1, 1, 0, 30), 'Covered Connecticut depends on the premium tax credit. From January 1, 2027, a noncitizen gets that credit only with a green card, as a Cuban or Haitian entrant, or under a Compact of Free Association. You can still buy a marketplace plan, without the credit.']]);
-    expect(titled(f1, 'Your Health Cover Ended').map((n) => n.body)).toEqual(['You have no health cover from January 1, 2027. You have 60 days to enroll in the marketplace.']);
+    expect(titled(f1, 'Your Health Cover Ended').map((n) => n.body)).toEqual(['You have no health cover from January 1, 2027. You have 60 days to enroll in the marketplace. Enroll on Papers, under Health Cover.']);
     expect(titled(f1, 'Your Public Cover Ends')).toEqual([]);
     papers(f1);
     expect(pressEnroll()).toEqual(['Enrolled in the marketplace, from February 1, 2027.']);

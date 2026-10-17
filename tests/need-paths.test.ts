@@ -633,7 +633,7 @@ describe('health.enroll: a program’s renewal, reached by the clock', () => {
  * HUSKY Health coverage will be renewed or if you qualify for another program", read 2026-10-15): Covered Connecticut is
  * for income over HUSKY D's 138% and to 175%, so income under 138% places a Covered Connecticut member in HUSKY D, and
  * income from 138% to 175% places a HUSKY D member in Covered Connecticut. Until 2026-10-15 either lost her cover there,
- * told “Last month’s income is over its limit”, which for the first was false.
+ * told “Last month’s income is over what it allows”, which for the first was false.
  *
  * Played by a life without need, the Inherited family's, since only interest moves a withdrawn life's income and only
  * its savings earn enough of it: the student moves money between 360 Checking, which pays nothing, and 360 Performance
@@ -745,7 +745,7 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     expect(healthOf(low.player).program).toMatchObject({ kind: 'essential', from: at(2026, 11, 1, 0) });
     expect(healthOf(low.player).program!.until).toBeUndefined();
     expect(titled(low, 'Your Public Cover Changed At Renewal')).toEqual([]);
-    expect(titled(low, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from May to October 2027, and last month’s income places you in it in place of Covered Connecticut. You stay covered while you answer, until December 5, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, Covered Connecticut ends on December 31, 2027, said on December 6, 2027, and you won’t get the premium tax credit while HUSKY D would take you if not for its work rules, and you can apply again in any month after one that meets them.']);
+    expect(titled(low, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from May to October 2027, and last month’s income moves you from Covered Connecticut to HUSKY D. You stay covered while you answer, until December 5, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, Covered Connecticut ends on December 31, 2027, and you’ll be told on December 6, 2027. After that, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.']);
     low.advanceTo(at(2027, 12, 6, 9));
     expect(coverOn(low.player, low.now)).toBe('essential');
     expect(healthOf(low.player).program!.until).toBe(at(2028, 1, 1, 0));

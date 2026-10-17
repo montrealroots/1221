@@ -149,12 +149,12 @@ describe('a specialist booked again after it was called off is told so in plain 
     const zone = CITIES.require(sim.player.currentLocationId).timeZone;
     // The referral, as a kept visit draws one (odds 1 stands in for the draw).
     const a = mayRefer(sim, sim.player, { id: 'v1', at: sim.now, what: 'A checkup' }, 1)!;
-    expect(titled(sim, 'A Referral').at(-1)!.body).toBe(`Referred after a checkup: a specialist, booked for ${formatDate(a.at, zone)}, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.`);
+    expect(titled(sim, 'A Referral').at(-1)!.body).toBe(`Referred after a checkup: a specialist, booked for ${formatDate(a.at, zone)}, the wait where you live.`);
     sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: a.id } });
     expect(healthOf(sim.player).owedVisit).toBe(SPECIALIST);
     const again = sim.must<{ at: number }>({ kind: 'health.book', payload: {} });
     const body = titled(sim, 'A Referral').at(-1)!.body;
-    expect(body).toBe(`A specialist, referred: booked for ${formatDate(again.at, zone)}, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.`);
+    expect(body).toBe(`A specialist, referred: booked for ${formatDate(again.at, zone)}, the wait where you live.`);
     expect(body).not.toMatch(/booked specialist/);
     expect(appointmentsOf(sim.player)).toHaveLength(1);
   });
@@ -284,7 +284,7 @@ describe('Papers reads the charity’s, the appeal’s and the medical debt’s 
     healthMonth(sim, sim.player, sim.now);
     const notice = titled(sim, 'A Medical Debt Is On Your Record');
     expect(notice).toHaveLength(1);
-    expect(notice[0]!.body).toBe(`Unpaid a year and ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)} or more, it’s reported now.`);
+    expect(notice[0]!.body).toBe(`Your medical debt is ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)} or more and has gone unpaid for a year, so it’s now on your credit record. You can still clear it with Pay It Off, on Papers, under Health Cover.`);
     expect(notice[0]!.body).not.toMatch(/over \$500/);
   }, 120_000);
 });

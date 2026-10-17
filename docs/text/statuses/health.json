@@ -341,6 +341,12 @@
   "on": "2026-10-17",
   "reason": "The derived town's note, the same unread City.note field as #city's: no screen reads it."
  },
+ "src/engine/content/geography.ts#loadCountryCities": {
+  "status": "Rewritten And Verified",
+  "hash": "4325b343eed1",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/health/render-after-2.txt (the city list refused by the server); src/ui/creation/LocationPicker.tsx shows it in its alert beside the chosen country, and choosing the country again loads it again (a failure isn’t cached)"
+ },
  "src/engine/content/geography.ts#NEEDED_AT_BOOT [ca-02-sechelt]": {
   "status": "Reviewed And Retained",
   "hash": "e43e53b2e477",
@@ -525,7 +531,43 @@
   "status": "Reviewed And Retained",
   "hash": "a3e645ce7c54",
   "on": "2026-10-17",
-  "reason": "Programming errors thrown when a random pick is asked of an empty list: internal, never caught for a screen, and the code never asks it (a player meets them only as a crash, not as words to read)."
+  "reason": "Programming errors thrown when a random pick is asked of an empty list: internal, never caught for a screen, and the code never asks it (a player meets them only as a crash, not as words to read). Its one engine-speak hit, “weighted”, is the function’s own name (rng.weighted), right for a programmer’s error."
+ },
+ "src/engine/systems/appointments.ts#bookIn": {
+  "status": "Reviewed And Retained",
+  "hash": "ec7e3e245ba3",
+  "on": "2026-10-17",
+  "reason": "The booking notice keeps its words because the papers guide quotes them whole (guide/papers.ts, papers.doctor’s example) and tests/guide-examples-papers.test.ts holds the two equal. A rewrite that names the next step (“…, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.”) is with the coordinator, to land with that quote (batches.md, batch 2). Its labels (A Referral, A Doctor’s Appointment, The Doctor, …) are plain."
+ },
+ "src/engine/systems/appointments.ts#mayRefer": {
+  "status": "Reviewed And Retained",
+  "hash": "fb52cf5ae094",
+  "on": "2026-10-17",
+  "reason": "“Referred after …”, the reason a referral names (“Referred after a checkup”); plain."
+ },
+ "src/engine/systems/appointments.ts#registerAppointments": {
+  "status": "Rewritten And Verified",
+  "hash": "4af638c95cfa",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g05-life.test.ts “PLAYER JOURNEY: booked again after Call It Off, missed in hospital…” (Missed The Doctor); tests/scope-health.test.ts “PLAYER JOURNEY: booked at Yale Health, then withdrawn the same Monday…” (Not Seen At Your Practice)"
+ },
+ "src/engine/systems/appointments.ts#registerAppointments <health.book>": {
+  "status": "Rewritten And Verified",
+  "hash": "19260fcc83d3",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g03-life.test.ts “LIFE FIXTURE (Dublin, where no GP wait is published)…”; docs/verification/language-2026-10-17/health/render-after-2.txt (Dublin)"
+ },
+ "src/engine/systems/appointments.ts#registerAppointments <health.cancel_appointment>": {
+  "status": "Reviewed And Retained",
+  "hash": "5f0fa9bab3a5",
+  "on": "2026-10-17",
+  "reason": "“No such appointment.”, refused only for an appointment id the screen never sends; plain."
+ },
+ "src/engine/systems/appointments.ts#SPECIALIST": {
+  "status": "Reviewed And Retained",
+  "hash": "2408263c92a5",
+  "on": "2026-10-17",
+  "reason": "“A specialist, referred”, the referral visit’s name, compared in the code (what === SPECIALIST); plain."
  },
  "src/engine/systems/body.ts#bmiWord": {
   "status": "Reviewed And Retained",
@@ -538,6 +580,330 @@
   "hash": "1ce77dbe703a",
   "on": "2026-10-17",
   "reason": "Says which units a body is given in and why ('In feet, inches and pounds, the units of the United States, where you live.'), on your own page and at creation; already plain and true, asserted in tests/scope-people.test.ts and tests/need-paths.test.ts."
+ },
+ "src/engine/systems/clinics.ts#clinicRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "7d286c58ae1b",
+  "on": "2026-10-17",
+  "evidence": "tests/clinics.test.ts “their own doctor, chosen in the town they live in, sees them”; tests/evidence-g03-life.test.ts “refuses through the command in its own words…”"
+ },
+ "src/engine/systems/clinics.ts#MEMBERS_ONLY": {
+  "status": "Reviewed And Retained",
+  "hash": "59e187648476",
+  "on": "2026-10-17",
+  "reason": "Already plain (“Yale Health sees Yale students it covers, and it doesn’t cover you now.”), and the papers guide quotes it word for word (guide/papers.ts:455); held by tests/scope-health.test.ts."
+ },
+ "src/engine/systems/health.ts#aidRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "8dbfa1353a3f",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-g8-6.test.ts; tests/evidence-g02-life.test.ts; tests/safetynet.test.ts “…takes it off an insured Connecticut patient’s hospital bill…”; docs/verification/language-2026-10-17/health/render-after-2.txt (a New York hospital’s bill; past its due date)"
+ },
+ "src/engine/systems/health.ts#appealRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "c4bd2d9e436a",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g02-life.test.ts “refuses an appeal 181 days after the denial in its words…”; tests/evidence2-b02.test.ts; tests/claims.test.ts"
+ },
+ "src/engine/systems/health.ts#applyRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "c3c5dfce29b3",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-health-eligibility.test.ts (the application waiting on its notice); docs/verification/language-2026-10-17/health/render-after-2.txt (London; “so press Enroll instead”; income over the line)"
+ },
+ "src/engine/systems/health.ts#applyRenewal": {
+  "status": "Rewritten And Verified",
+  "hash": "c59319186109",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g05-life.test.ts “PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026…”; tests/need-paths.test.ts “PLAYER JOURNEY: on Covered Connecticut from 1 November 2026…” and “…on HUSKY D from 1 October 2026…”; tests/scope-cover.test.ts"
+ },
+ "src/engine/systems/health.ts#armHealth": {
+  "status": "Reviewed And Retained",
+  "hash": "052f2297dd51",
+  "on": "2026-10-17",
+  "reason": "“Health Cover” and “Health”, labels of system items (category system), which the calendar leaves out, so no player reads them."
+ },
+ "src/engine/systems/health.ts#billCare": {
+  "status": "Reviewed And Retained",
+  "hash": "2c00f04d1b56",
+  "on": "2026-10-17",
+  "reason": "“Medical Bill Due: …”, the calendar label of a bill’s due date; Title Case with the bill’s name."
+ },
+ "src/engine/systems/health.ts#byWords": {
+  "status": "Rewritten And Verified",
+  "hash": "8c756c1d6d7d",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-g8-4.test.ts (income); tests/scope-cover.test.ts “PLAYER JOURNEY: a student with need takes HUSKY D on her leave…” (time at the School); tests/remaining-health-eligibility.test.ts “PLAYER JOURNEY: a stay in hospital in December 2026…” (a stay you asked to count); docs/verification/language-2026-10-17/health/render-after-2.txt (age and SNAP, a 1 July 2027 renewal)"
+ },
+ "src/engine/systems/health.ts#careFor": {
+  "status": "Rewritten And Verified",
+  "hash": "16102b7baca8",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-health.test.ts (visits at Fair Haven and Yale Health); tests/evidence-g05-life.test.ts (health.week: the flu, a stay, an emergency; health.bill); tests/evidence-g07-life.test.ts (an unseen flu; asthma let go); tests/evidence2-b01.test.ts (“There’s nothing to pay.”); tests/need-paths.test.ts and tests/evidence-g05-life.test.ts (A Claim Denied)"
+ },
+ "src/engine/systems/health.ts#CONDITION_LABEL": {
+  "status": "Reviewed And Retained",
+  "hash": "455b1e11e29d",
+  "on": "2026-10-17",
+  "reason": "The five long-term conditions’ names, plain medical words a player knows, as labels and titles (“Diagnosed: High Blood Pressure”)."
+ },
+ "src/engine/systems/health.ts#COVER_LABEL": {
+  "status": "Reviewed And Retained",
+  "hash": "e2833d47ba8f",
+  "on": "2026-10-17",
+  "reason": "The cover’s names as Papers labels them: Yale Health, Medicaid, Essential Plan, Marketplace Plan."
+ },
+ "src/engine/systems/health.ts#dueWords": {
+  "status": "Rewritten And Verified",
+  "hash": "c939fd96a536",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-health.test.ts (Fair Haven’s bills, whole); tests/evidence-g03-life.test.ts (London, Bupa); tests/evidence2-b02.test.ts (a sprain’s care); tests/evidence-g01-life.test.ts “bills an injury’s care where the plan leaves a share…”"
+ },
+ "src/engine/systems/health.ts#endAhead": {
+  "status": "Rewritten And Verified",
+  "hash": "1f2f54b82749",
+  "on": "2026-10-17",
+  "evidence": "tests/defects4.test.ts (out of status); tests/evidence-g05-life.test.ts; tests/need-paths.test.ts; tests/remaining-09-hardship.test.ts (Home’s line)"
+ },
+ "src/engine/systems/health.ts#extraSupplyRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "68eda0fd5090",
+  "on": "2026-10-17",
+  "evidence": "tests/commands-kept.test.ts “fills a longer supply where you live…”; tests/evidence-g03-life.test.ts “refused in its own words with no medicine taken, and past the longest supply here”"
+ },
+ "src/engine/systems/health.ts#fillMedicine": {
+  "status": "Reviewed And Retained",
+  "hash": "c88ab2d04bbf",
+  "on": "2026-10-17",
+  "reason": "“Medicine for …”, the ledger memo of a fill; plain."
+ },
+ "src/engine/systems/health.ts#fluMeans": {
+  "status": "Rewritten And Verified",
+  "hash": "46ee57ee6e35",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g05-life.test.ts “PLAYER JOURNEY: the flu, seen at urgent care…”; tests/evidence-g30-ui.test.ts “takes the flu’s 25 condition and 30 energy…” (whole, with Call In Sick); tests/evidence-g07-life.test.ts “an unseen flu is told…”"
+ },
+ "src/engine/systems/health.ts#grantPending": {
+  "status": "Rewritten And Verified",
+  "hash": "3f598c2f9c71",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-health-eligibility.test.ts “PLAYER JOURNEY: a stay in hospital in December 2026…” (Public Cover Approved, and on Home)"
+ },
+ "src/engine/systems/health.ts#hardshipRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "27655aa39388",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-09-journeys.test.ts (HUSKY D dropped; GUARD: a renewal’s notice waiting…); tests/remaining-health-eligibility.test.ts; docs/verification/language-2026-10-17/health/render-after-2.txt (the 30 days ended; none of the months had a stay)"
+ },
+ "src/engine/systems/health.ts#healthMonth": {
+  "status": "Rewritten And Verified",
+  "hash": "6a81d431f665",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g05-life.test.ts “PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026…”; tests/remaining-09-journeys.test.ts (the withdrawals of 5 October 2026 and 15 February 2027, the F-1 from London, HUSKY D dropped on Papers); tests/scope-cover.test.ts (Covered Connecticut and the credit; no other qualifying cover); tests/evidence2-b06.test.ts (out of status); tests/defects-g8-6.test.ts “…a medical debt of exactly the reporting figure is reported…”; docs/verification/language-2026-10-17/health/render-after-2.txt (Los Angeles: a dropped plan and California’s Penalty For No Cover; Covered Connecticut out of status)"
+ },
+ "src/engine/systems/health.ts#HOME": {
+  "status": "Reviewed And Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-17",
+  "reason": "“America/New_York”, a time-zone id the code formats dates in; never shown as words."
+ },
+ "src/engine/systems/health.ts#illnessWeek": {
+  "status": "Reviewed And Retained",
+  "hash": "d05b8120a885",
+  "on": "2026-10-17",
+  "reason": "The care names (“A stay in hospital”, “The flu, at urgent care”, “An eye exam”), in sentence case because notices and bills read them into sentences; plain."
+ },
+ "src/engine/systems/health.ts#inMonths": {
+  "status": "Reviewed And Retained",
+  "hash": "988a6e8aa163",
+  "on": "2026-10-17",
+  "reason": "“in any month from …”, the span of months a notice names; read in the notices of tests/defects-g8-4.test.ts and tests/need-paths.test.ts."
+ },
+ "src/engine/systems/health.ts#keepUp": {
+  "status": "Reviewed And Retained",
+  "hash": "1818fd4b0bb8",
+  "on": "2026-10-17",
+  "reason": "“Care for …”, a ledger memo for a month’s care, shown on Money’s statement as the line’s description; plain."
+ },
+ "src/engine/systems/health.ts#marketplaceOpen": {
+  "status": "Rewritten And Verified",
+  "hash": "4cb1859c228f",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-09-journeys.test.ts “DEFECT: withdrawn on 15 February 2027…” (within 60 days; outside open enrollment); tests/scope-cover.test.ts (the leave journey’s refusal, whole); tests/commands-kept.test.ts “sells marketplace cover only to somebody lawfully present…”; tests/safetynet.test.ts “covers a low month by HUSKY D…” (October 23 to January 15)"
+ },
+ "src/engine/systems/health.ts#mayEnroll": {
+  "status": "Rewritten And Verified",
+  "hash": "0fe6d6746210",
+  "on": "2026-10-17",
+  "evidence": "tests/guide-examples-papers.test.ts “papers.health-cover: a spring graduate’s cover ends on 1 August…” (the HUSKY D line, “You can enroll from …”); tests/scope-cover.test.ts “PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027…” (“Last month’s income qualifies you for HUSKY D. …”); tests/evidence-g03-life.test.ts “at school, refused through the command in Yale Health’s words…”; docs/verification/language-2026-10-17/health/render-after-2.txt (London: outside the three cities)"
+ },
+ "src/engine/systems/health.ts#MONTH_NAMES": {
+  "status": "Reviewed And Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-17",
+  "reason": "The months’ names, read into dates in sentences."
+ },
+ "src/engine/systems/health.ts#NAMED_TEETH_EYES": {
+  "status": "Reviewed And Retained",
+  "hash": "33a07456bf7e",
+  "on": "2026-10-17",
+  "reason": "Real dental and optical practices’ names as they spell them (hi sonrisa in lower case, Ópticas Devlyn)."
+ },
+ "src/engine/systems/health.ts#noticeOfNoncompliance": {
+  "status": "Rewritten And Verified",
+  "hash": "0366187b9b29",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-g8-4.test.ts; tests/need-paths.test.ts; tests/remaining-09-hardship.test.ts (NOTICE); tests/remaining-health-eligibility.test.ts “PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026…” (the application’s notice, on Home)"
+ },
+ "src/engine/systems/health.ts#onsetMonth": {
+  "status": "Rewritten And Verified",
+  "hash": "c4ea2c979dad",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g05-life.test.ts “PLAYER JOURNEY: diagnoses high blood pressure on the 1st…”; tests/evidence2-b01.test.ts (Order In at 6′7″… high blood pressure on 1 September)"
+ },
+ "src/engine/systems/health.ts#prepayRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "de7df03a56df",
+  "on": "2026-10-17",
+  "evidence": "tests/whynot-papers.test.ts “…says the engine’s refusal as words once a year is prepaid…”; tests/coverage-gaps-life.test.ts; tests/commands-kept.test.ts; docs/verification/language-2026-10-17/health/render-after-2.txt (New York; London at 61)"
+ },
+ "src/engine/systems/health.ts#PROGRAM_NAMES": {
+  "status": "Reviewed And Retained",
+  "hash": "4bc4ccb4e3a4",
+  "on": "2026-10-17",
+  "reason": "The programs’ own names as their states spell them: Medicaid, Medi-Cal, HUSKY D, the Essential Plan, Covered Connecticut."
+ },
+ "src/engine/systems/health.ts#registerHealth": {
+  "status": "Rewritten And Verified",
+  "hash": "252885f19dcf",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g05-life.test.ts (A Medical Bill Went Unpaid, whole; the appeal’s notices); tests/evidence3-lifepapers.test.ts (Appeal Won; Appeal Upheld); tests/evidence-g02-life.test.ts; tests/remaining-health-eligibility.test.ts (Public Cover Denied, on Home)"
+ },
+ "src/engine/systems/health.ts#registerHealth [loan]": {
+  "status": "Reviewed And Retained",
+  "hash": "a62cb05cfff9",
+  "on": "2026-10-17",
+  "reason": "“Owed For Medical Care” and “Your Providers”, the medical-debt account and its holder as Money shows them; plain, and named in the papers guide."
+ },
+ "src/engine/systems/health.ts#registerHealth <health.appeal>": {
+  "status": "Reviewed And Retained",
+  "hash": "d1266cd0cb54",
+  "on": "2026-10-17",
+  "reason": "“An Appeal Decided”, the calendar label of an appeal’s decision day; plain."
+ },
+ "src/engine/systems/health.ts#registerHealth <health.apply_aid>": {
+  "status": "Reviewed And Retained",
+  "hash": "f55cb2613b29",
+  "on": "2026-10-17",
+  "reason": "“There’s no such bill.”, refused only for a bill id the screen never sends (a stale one); plain."
+ },
+ "src/engine/systems/health.ts#registerHealth <health.choose_pharmacy>": {
+  "status": "Rewritten And Verified",
+  "hash": "077f9dca15c6",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/health/render-after-2.txt (London: a pharmacy chosen outside the United States)"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.dental>": {
+  "status": "Rewritten And Verified",
+  "hash": "60abc61e8ebc",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g03-life.test.ts “refused in its own words when the bank can’t cover the year…”; docs/verification/language-2026-10-17/health/render-after-2.txt (London; Los Angeles without Covered California)"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.drop>": {
+  "status": "Rewritten And Verified",
+  "hash": "270d621a2582",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-09-journeys.test.ts “DEFECT: HUSKY D dropped on Papers on 2 October 2027…”; docs/verification/language-2026-10-17/health/render-after-2.txt (Los Angeles, Drop pressed twice)"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.extra_supply>": {
+  "status": "Rewritten And Verified",
+  "hash": "5ea4813cf83e",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-g8-5.test.ts “PLAYER JOURNEY: refused, and nothing filled, when the bank can’t cover the supply”; tests/evidence-g03-life.test.ts"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.pay_bill>": {
+  "status": "Reviewed And Retained",
+  "hash": "789eddc92cb7",
+  "on": "2026-10-17",
+  "reason": "Pay It Off’s refusals, already plain and specific (how much there is, and Move Money as the next step); the papers guide quotes them word for word (guide/papers.ts), so they stay as they are."
+ },
+ "src/engine/systems/health.ts#registerHealth <health.prepay>": {
+  "status": "Rewritten And Verified",
+  "hash": "59ef65023824",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/health/render-after-2.txt (London, Prepay A Year with nothing in the bank)"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.treat>": {
+  "status": "Rewritten And Verified",
+  "hash": "e0b39cce5700",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g04-life.test.ts; tests/evidence-g05-life.test.ts “PLAYER JOURNEY: a course that lifts the depression…”; tests/carried.test.ts"
+ },
+ "src/engine/systems/health.ts#renewalDue": {
+  "status": "Rewritten And Verified",
+  "hash": "659927af4fcc",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/health/render-after-2.txt (Vancouver: a prescription past its date, the renewal booked). The other ending, “Book An Appointment, …”, is reached only where no visit can be booked, and only British Columbia’s prescriptions run out (RX.validYears) while Canada always gives a wait (waitDays): kept as the fallback, read in the code."
+ },
+ "src/engine/systems/health.ts#renewProgram": {
+  "status": "Rewritten And Verified",
+  "hash": "cf764b42a4ea",
+  "on": "2026-10-17",
+  "evidence": "tests/defects4.test.ts “PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month…” (renewal checks that); tests/need-paths.test.ts (income over its limit)"
+ },
+ "src/engine/systems/health.ts#repriceCare": {
+  "status": "Rewritten And Verified",
+  "hash": "598423409f8d",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-health-billing.test.ts “repriceCare: a bill as issued stands…” (Care Billed Again and Care Credited, whole)"
+ },
+ "src/engine/systems/health.ts#reviewWhat": {
+  "status": "Reviewed And Retained",
+  "hash": "0cc56a637772",
+  "on": "2026-10-17",
+  "reason": "“A review of your …”, the name of a long-term condition’s review visit in a notice and on Papers; plain."
+ },
+ "src/engine/systems/health.ts#RX": {
+  "status": "Reviewed And Retained",
+  "hash": "f3e3e952e9dc",
+  "on": "2026-10-17",
+  "reason": "“A prescription to renew”, the renewal visit’s name in a notice and on Papers, and a key the code compares (owedVisit); plain."
+ },
+ "src/engine/systems/health.ts#workWords": {
+  "status": "Reviewed And Retained",
+  "hash": "af674ac98d0f",
+  "on": "2026-10-17",
+  "reason": "What the work rules ask, “… of income, time at the School or an exception”, in the words Papers uses; read inside the notices verified in tests/defects-g8-4.test.ts and tests/remaining-health-eligibility.test.ts."
+ },
+ "src/engine/systems/injury.ts#compWeek": {
+  "status": "Reviewed And Retained",
+  "hash": "c8857468d385",
+  "on": "2026-10-17",
+  "reason": "“Workers’ compensation” and “Workers’ Compensation”, the payment’s memo and its payer’s name on Money; plain."
+ },
+ "src/engine/systems/injury.ts#mayHurt": {
+  "status": "Rewritten And Verified",
+  "hash": "6197fa2048c7",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g07-life.test.ts (a pulled muscle; a sprain’s bill; a work-study shift); tests/evidence2-b02.test.ts (a concussion; a sprain); tests/evidence-g05-life.test.ts (a broken bone at work); tests/evidence-g04-life.test.ts (a bad knock); tests/evidence-g09-life.test.ts; tests/evidence-g30-ui.test.ts; tests/defects-g8-13.test.ts"
+ },
+ "src/engine/systems/injury.ts#registerInjury": {
+  "status": "Reviewed And Retained",
+  "hash": "b2522f90ba1f",
+  "on": "2026-10-17",
+  "reason": "“Workers’ Compensation”, the label of a system item; plain."
+ },
+ "src/engine/systems/injury.ts#shareWords": {
+  "status": "Reviewed And Retained",
+  "hash": "228e4fea023b",
+  "on": "2026-10-17",
+  "reason": "The state’s share of a week’s wage (“75% of your week’s wage”, “… after tax” where the state pays that way), read into the injury notice; plain, and held by tests/defects-g8-13.test.ts."
+ },
+ "src/engine/systems/injury.ts#trainingRefusal": {
+  "status": "Reviewed And Retained",
+  "hash": "79f33f76e1bd",
+  "on": "2026-10-17",
+  "reason": "Work Out’s refusal while an injury mends: names the injury and the days left (“Not with a sprained ankle; it has 6 days yet to mend.”), so it says why and how long; tests compare the button’s refusal to it."
  },
  "src/engine/systems/mortality.ts#decideStretch": {
   "status": "Reviewed And Retained",
@@ -556,6 +922,24 @@
   "hash": "9ab7fb716fd8",
   "on": "2026-10-17",
   "reason": "'World Simulation', a system item's label, filtered from the calendar (category 'system')."
+ },
+ "src/engine/systems/therapy.ts#registerTherapy": {
+  "status": "Rewritten And Verified",
+  "hash": "c88df0e68211",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g04-life.test.ts (a withdrawal ends the course at Yale; Yale’s course of eight lifts it or doesn’t); tests/evidence-g05-life.test.ts (after 2 of 8; a course that lifts the depression)"
+ },
+ "src/engine/systems/therapy.ts#THERAPISTS": {
+  "status": "Reviewed And Retained",
+  "hash": "3f624e669e1d",
+  "on": "2026-10-17",
+  "reason": "Real practices’ names as they spell them (Yale Mental Health & Counseling, NHS Talking Therapies, R&A Psicólogos)."
+ },
+ "src/engine/systems/therapy.ts#therapyRefusal": {
+  "status": "Reviewed And Retained",
+  "hash": "349a5a1d81a1",
+  "on": "2026-10-17",
+  "reason": "Already plain and specific (where you live, Yale Health’s cover, depression only, one course at a time); the papers guide quotes them word for word (guide/papers.ts), so they stay."
  },
  "src/ui/looks/wellbeing.tsx#bodyWords": {
   "status": "Rewritten And Verified",

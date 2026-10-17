@@ -93,7 +93,7 @@ describe('Connecticut', () => {
     expect(programFor(p, at(2026, 6, 2))).toBeUndefined();
     earningsOf(p).months['2026-09'] = 5_000_00;
     expect(mayEnroll(p, at(2026, 10, 25)).ok).toBe(true);
-    expect(mayEnroll(p, at(2026, 10, 20)).why).toMatch(/23 October to 15 January/);
+    expect(mayEnroll(p, at(2026, 10, 20)).why).toMatch(/October 23 to January 15/);
     expect(benchmarkFor('ct', 2026, 'USD')).toBe(706_00);
     expect(benchmarkFor('ct', 2027, 'USD')).toBe(786_00);
     // Enrolled in Covered Connecticut, care costs nothing and renews every six months from 2027.
@@ -259,7 +259,7 @@ describe('the tax return', () => {
     // Not a New York hospital's, nor one already screened.
     healthOf(sim.player).bills.push({ ...bill, id: 'mx2', cityId: 'us-ny-newyork' }, { ...bill, id: 'mx3', aid: 'screened' as const });
     expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: 'mx2' } }).ok).toBe(false);
-    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: 'mx3' } }).error).toMatch(/charity is off it already/);
+    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: 'mx3' } }).error).toMatch(/financial assistance has already come off it/);
   });
 
   it('adds Connecticut’s 2026 assistance: half of what the expired credits would have paid over 400% of the poverty line, and none elsewhere', () => {
