@@ -348,7 +348,7 @@ describe('HUSKY D kept at its renewal through work, read over Connecticut’s si
     expect(healthOf(idle.player).pending).toMatchObject({ kind: 'renewal', noticeAt: at(2027, 3, 1, 0, 30), decideAt: at(2027, 4, 5, 0), months: ['2027-02', '2027-01', '2026-12', '2026-11', '2026-10', '2026-09'] });
     idle.advanceTo(at(2027, 4, 30, 12));
     expect(coverOn(idle.player, idle.now)).toBe('medicaid');
-    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 4, 5, 0), 'No month from September 2026 to February 2027 showed 80 hours’ work, $580.00 of income, school at least half-time or an exception, and none was shown by April 4, 2027: HUSKY D ends on April 30, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
+    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 4, 5, 0), 'No month from September 2026 to February 2027 showed $580.00 of income, time at the School or an exception, and none was shown by April 4, 2027: HUSKY D ends on April 30, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
     idle.advanceTo(at(2027, 5, 1, 9));
     expect(coverOn(idle.player, idle.now)).toBeUndefined();
     expect(healthOf(idle.player).program!.until).toBe(at(2027, 5, 1, 0));

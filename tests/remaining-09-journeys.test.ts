@@ -473,7 +473,7 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
     tend(sim, at(2027, 4, 1, 12));
     expect(titled(sim, 'Your Health Cover Ended').map((n) => n.body)).toEqual(['You’re uncovered from March 17, 2027. You can enroll in the marketplace until May 16, 2027, 60 days from losing cover.']);
     // March had no work, income or school: HUSKY D isn't hers on April's look, and the marketplace's 60 days are.
-    expect(mayEnroll(sim.player, sim.now, 'USD', sim).why).toBe('From January 1, 2027, HUSKY D asks an applicant for 80 hours’ work, $580.00 of income, school at least half-time or an exception in the month before, and last month had none of them. The marketplace is open to you: within 60 days of losing cover.');
+    expect(mayEnroll(sim.player, sim.now, 'USD', sim).why).toBe('From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them. The marketplace is open to you: within 60 days of losing cover.');
     sim = reload(sim);
     // The 2026 return, filed on 1 March would have been the same: the withdrawal reaches 2027's, not 2026's. Filed now.
     const filed = ok<{ balance: number; paid: boolean }>(sim, 'tax.file', { year: 2026 });
@@ -484,7 +484,7 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
     expect(ok<{ kind: string; from: Instant }>(twin, 'health.enroll')).toEqual({ kind: 'marketplace', from: at(2027, 6, 1, 0) });
     tend(sim, at(2027, 5, 20, 12));
     const before = still(sim);
-    expect(refused(sim, 'health.enroll')).toBe('From January 1, 2027, HUSKY D asks an applicant for 80 hours’ work, $580.00 of income, school at least half-time or an exception in the month before, and last month had none of them. Outside open enrollment, 23 October to 15 January, and not within 60 days of losing cover.');
+    expect(refused(sim, 'health.enroll')).toBe('From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them. Outside open enrollment, 23 October to 15 January, and not within 60 days of losing cover.');
     expect(still(sim)).toBe(before);
     expect(drawn(sim, PapersWorkspace, 'health')).toContain('not within 60 days of losing cover');
     expect(breaches(sim.universe)).toEqual([]);

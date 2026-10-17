@@ -225,7 +225,10 @@ export const PUBLIC_COVER = {
   renewMonthsCt: [['2025-01-01', 12], ['2027-01-01', 6]] as RateSteps,
   essentialCopaysFrom: 1.5,
   workFrom: '2027-01-01',
-  workHours: 80,
+  /**
+   * A month's income that meets the work rules: 80 hours at the federal minimum wage (42 CFR 435.552(f)). Until
+   * 2026-10-17 `workHours` (80) sat beside it, read by the work branch and the notices' words, which brief 12 cut.
+   */
   workEarnings: 580_00,
   /**
    * The work rules' look-back (from 2026-10-16; until then SLATE read the month before alone, at renewal as at an

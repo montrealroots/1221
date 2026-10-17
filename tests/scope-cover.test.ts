@@ -170,9 +170,10 @@ function pressEnroll(): string[] {
   return h.toasts;
 }
 
-// The sentence names income, school at least half-time or an exception from 2026-10-16: until then it said “$580.00 of
-// earnings”, and income of any kind counts toward the $580 since (42 CFR 435.552(f)(2)).
-const REFUSED = 'From January 1, 2027, HUSKY D asks an applicant for 80 hours’ work, $580.00 of income, school at least half-time or an exception in the month before, and last month had none of them.';
+// The sentence named income, school at least half-time or an exception from 2026-10-16: until then it said “$580.00 of
+// earnings”, and income of any kind counts toward the $580 since (42 CFR 435.552(f)(2)). From 2026-10-17 it names income,
+// time at the School or an exception: until then it began with 80 hours' work, which nobody off the School can do (brief 12).
+const REFUSED = 'From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them.';
 
 /** Two citizens at the School to the last night of 2026, with need (Comfortable) and without (Inherited). */
 const atSchool = once(() => {

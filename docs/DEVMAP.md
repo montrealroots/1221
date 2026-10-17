@@ -255,6 +255,6 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `world.dismiss_decision` | `src/engine/world/world.ts` | `Home.tsx` | `evidence-g02-life.test.ts` `evidence-g04-life.test.ts` `evidence-g34-ui.test.ts` `evidence2-b01.test.ts` `guide-examples-start-day-body.test.ts` `smoke.test.ts` | What Needs You |
-| `world.mark_read` | `src/engine/world/world.ts` | `Home.tsx` | `commands-kept.test.ts` `evidence-g32-ui.test.ts` `guide-examples-start-day-body.test.ts` `journey-life.test.ts` | What Needs You |
+| `world.mark_read` | `src/engine/world/world.ts` | `Home.tsx` | `commands-kept.test.ts` `evidence-g32-ui.test.ts` `guide-examples-start-day-body.test.ts` `journey-life.test.ts` `remaining-09-hardship.test.ts` `remaining-health-eligibility.test.ts` | What Needs You |
 | `world.set_preferences` | `src/engine/world/world.ts` | `TimeControls.tsx` `game-context.tsx` | `defects-g6-1.test.ts` `evidence-g02-life.test.ts` `evidence-g29-ui.test.ts` `evidence2-b01.test.ts` `guide-examples-start-day-body.test.ts` `plans.test.ts` `tutorial.test.ts` | The Clock |
 | `world.take_decision_action` | `src/engine/world/world.ts` | `Home.tsx` | `evidence-g02-life.test.ts` `evidence-g04-life.test.ts` `evidence-g15-papers.test.ts` `evidence-g16-papers.test.ts` `evidence-g29-ui.test.ts` `evidence-g33-ui.test.ts` `evidence-g34-ui.test.ts` `evidence2-b01.test.ts` `evidence2-b06.test.ts` `life-fixes.test.ts` `papers-fixes.test.ts` `smoke.test.ts` | What Needs You |

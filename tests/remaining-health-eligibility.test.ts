@@ -108,6 +108,7 @@ vi.mock('@/ui/guide/Guide', async (orig) => {
 });
 
 const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
+const { Home } = await import('@/ui/screens/Home');
 
 const ZONE = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0): Instant => instantFromZoned({ year, month, day, hour, minute }, ZONE);
@@ -166,6 +167,16 @@ function papers(sim: Simulation, tab = 'health'): string {
   return onScreen(renderToStaticMarkup(createElement(PapersWorkspace as FunctionComponent)));
 }
 const drawnFor = (feature: string) => h.clicks.filter((c) => c.feature === feature);
+/** Home as the player has it: What Needs You draws the six unread notices, the most important and latest first. */
+function home(sim: Simulation): string {
+  h.sim = sim;
+  h.clicks = [];
+  return onScreen(renderToStaticMarkup(createElement(Home as FunctionComponent)));
+}
+/** Papers' paragraph on the work rules, as the player meets them (from 2026-10-17, brief 12: until then it began “80 hours’ work”). */
+const RULES_LINE = 'From 2027 Medicaid’s work rules are met by a month you spend any of at the School, or one with $580.00 of income (pay, interest, a benefit or a pension): in Connecticut the month before you apply, and any one of the 6 months before a renewal. Being 65 or over, SNAP received under its work rules, or a stay in hospital you ask for counts as meeting them.';
+/** No screen says hours of work meet the rules, or asks school at least half-time (brief 12). */
+const NO_HOURS = /hours’ work|hours of work|half-time/;
 /** A Gated button pressed by its own onClick: what it toasted. */
 function press(feature: string, label?: string): string[] {
   const b = drawnFor(feature).filter((c) => label === undefined || c.label === label);
@@ -175,9 +186,11 @@ function press(feature: string, label?: string): string[] {
   return h.toasts;
 }
 
-const REFUSED = 'From January 1, 2027, HUSKY D asks an applicant for 80 hours’ work, $580.00 of income, school at least half-time or an exception in the month before, and last month had none of them.';
+// The work rules as the player meets them, from 2026-10-17 (brief 12): until then REFUSED and APPLIED_NOTICE began
+// “80 hours’ work” and said “school at least half-time”.
+const REFUSED = 'From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them.';
 const APPLY_LINE = 'Applying for HUSKY D anyway, you’re sent a notice of noncompliance and 30 days from its receipt to show the work rules met in December 2026, or an exception, a stay in hospital that month among them; it’s decided after, and the marketplace sells to you meanwhile.';
-const APPLIED_NOTICE = 'HUSKY D couldn’t find 80 hours’ work, $580.00 of income, school at least half-time or an exception in December 2026, before the month you applied. Answer by February 7, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in that month counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, the application is denied on February 8, 2027; the marketplace sells to you meanwhile in its own windows, the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.';
+const APPLIED_NOTICE = 'HUSKY D couldn’t find $580.00 of income, time at the School or an exception in December 2026, before the month you applied. Answer by February 7, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in that month counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, the application is denied on February 8, 2027; the marketplace sells to you meanwhile in its own windows, the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.';
 
 // ---------------------------------------------------------------------------
 // 3 and 4. An application: the month before, a notice, thirty days to answer, then the decision
@@ -195,7 +208,15 @@ describe('health.apply: HUSKY D applied for on its notice, the month before read
     const text = papers(sim);
     expect(text).toContain(`${REFUSED} The marketplace is open to you: open enrollment.`);
     expect(text).toContain(APPLY_LINE);
+    // The rules as she can meet them, off the School: income, or an exception; no hours of work (brief 12, 2026-10-17).
+    expect(text).toContain(RULES_LINE);
+    expect(text).not.toMatch(NO_HOURS);
+    // What Needs You read and cleared with Mark … Read, as the player does before she applies.
+    sim.must({ kind: 'world.mark_read', payload: {} });
     expect(press('health.apply', 'Apply For HUSKY D')).toEqual(['Applied: a notice says what’s needed, decided February 8, 2027.']);
+    const told = home(sim);
+    expect(told).toContain(`A Notice Of Noncompliance ${APPLIED_NOTICE}`);
+    expect(told).not.toMatch(NO_HOURS);
     // Approved, it would begin on the first of the month of application, 1 January (from 2026-10-16; until then 1 February).
     expect(healthOf(sim.player).pending).toEqual({ kind: 'application', state: 'ct', noticeAt: at(2027, 1, 4, 9), decideAt: at(2027, 2, 8, 0), months: ['2026-12'], band: 'low', from: at(2027, 1, 1, 0) });
     expect(titled(sim, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual([APPLIED_NOTICE]);
@@ -223,8 +244,11 @@ describe('health.apply: HUSKY D applied for on its notice, the month before read
     expect(health(steps)).toEqual(health(jump));
     expect(healthOf(steps.player)).toEqual(healthOf(jump.player));
     // On 7 February it waits still; on 8 February it's denied, said once.
-    expect(titled(jump, 'Public Cover Denied').map((n) => [n.at, n.body])).toEqual([[at(2027, 2, 8, 0), 'December 2026 didn’t show 80 hours’ work, $580.00 of income, school at least half-time or an exception, and none was shown by February 7, 2027: HUSKY D is denied. The marketplace sells to you in its own windows, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
+    expect(titled(jump, 'Public Cover Denied').map((n) => [n.at, n.body])).toEqual([[at(2027, 2, 8, 0), 'December 2026 didn’t show $580.00 of income, time at the School or an exception, and none was shown by February 7, 2027: HUSKY D is denied. The marketplace sells to you in its own windows, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
     expect(titled(jump, 'A Notice Of Noncompliance')).toHaveLength(1);
+    const denied = home(jump);
+    expect(denied).toContain('Public Cover Denied December 2026 didn’t show $580.00 of income, time at the School or an exception, and none was shown by February 7, 2027: HUSKY D is denied.');
+    expect(denied).not.toMatch(NO_HOURS);
     expect(healthOf(jump.player).pending).toBeUndefined();
     expect(healthOf(jump.player).program).toBeUndefined();
     // No restriction on applying again (42 CFR 435.558(e)): January is read now, and it's short too.
@@ -337,6 +361,7 @@ describe('HUSKY D’s work rules: the exceptions SLATE reads, applied before a d
     expect(papers(sim)).toContain('A stay in hospital in a month it assessed counts if you ask for it.');
     expect(press('health.request_hardship', 'Request A Hardship Exception')).toEqual(['The hardship is granted, and the work rules met.']);
     expect(titled(sim, 'Public Cover Approved').map((n) => n.body)).toEqual(['HUSKY D is yours from December 1, 2026, with no premium: December 2026 met its work rules by a stay in hospital, on your request, and your marketplace plan ends as it begins.']);
+    expect(home(sim)).toContain('Public Cover Approved HUSKY D is yours from December 1, 2026, with no premium: December 2026 met its work rules by a stay in hospital, on your request, and your marketplace plan ends as it begins.');
     expect(healthOf(sim.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2026, 12, 1, 0), band: 'low', renewAt: at(2027, 7, 1, 0) });
     const stay = healthOf(sim.player).careLog!.find((e) => e.care === 'stay')!;
     expect([stay.share, stay.planPaid! > 0]).toEqual([0, true]);

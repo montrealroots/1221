@@ -692,7 +692,7 @@ describe('health.month', () => {
     expect(titled(idle, 'A Notice Of Noncompliance')).toHaveLength(1);
     idle.advanceTo(at(2027, 9, 30, 12));
     expect(coverOn(idle.player, idle.now)).toBe('medicaid');
-    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 9, 5, 0), 'No month from February to July 2027 showed 80 hours’ work, $580.00 of income, school at least half-time or an exception, and none was shown by September 4, 2027: HUSKY D ends on September 30, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
+    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 9, 5, 0), 'No month from February to July 2027 showed $580.00 of income, time at the School or an exception, and none was shown by September 4, 2027: HUSKY D ends on September 30, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
     idle.advanceTo(at(2027, 10, 1, 2));
     expect(coverOn(idle.player, idle.now)).toBeUndefined();
     expect(healthOf(idle.player).program!.until).toBe(at(2027, 10, 1, 0));

@@ -153,7 +153,7 @@ describe('HUSKY D’s work test reads last month’s work: its hours and its pay
     expect(short.player.health!.program!.until).toBeUndefined();
     expect(coverOn(short.player, renewal + MS_DAY)).toBe('medicaid');
     expect(short.player.health!.pending).toMatchObject({ kind: 'renewal', noticeAt: renewal, decideAt: at(2027, 8, 5, 0), months: ['2027-06', '2027-05', '2027-04', '2027-03', '2027-02', '2027-01'] });
-    expect(titled(short, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find 80 hours’ work, $580.00 of income, school at least half-time or an exception in any month from January to June 2027. You’re covered while you answer, to August 4, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in those months counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, HUSKY D ends on August 31, 2027, said on August 5, 2027, and the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.']);
+    expect(titled(short, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from January to June 2027. You’re covered while you answer, to August 4, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in those months counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, HUSKY D ends on August 31, 2027, said on August 5, 2027, and the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.']);
     expect(titled(short, 'Your Public Cover Ends')).toEqual([]);
   });
 
@@ -165,25 +165,19 @@ describe('HUSKY D’s work test reads last month’s work: its hours and its pay
     expect(healthOf(sim.player).program!.renewAt).toBe(at(2028, 1, 1, 0));
   });
 
-  // Its title kept whole inside the new one, twice, for what cites it. Until 2026-10-16 a renewal read June alone, and
-  // May's work didn't count. Connecticut reads the six months before a renewal, any one of them (CHA's HUSKY D materials
-  // from DSS's, 8/25/26, read 2026-10-16; `lookBack`), so May's month renews her; July's, the renewal's own month, still
-  // doesn't, and 79 hours in June with July's 80 bring a notice of noncompliance. Until 2026-10-17 80 hours renewed her
-  // whatever they paid, by `monthEngagement`'s work branch, which brief 12 had cut as serving no necessary purpose
-  // (docs/verification/resolution-2026-10-17/health-criteria.md): no wage SLATE has paid, in play or in any save's history,
-  // came to under $7.25 an hour where the rules are read, so 80 paid hours always met the $580 income test too.
+  // Its title kept whole inside the new one, twice, for what cites it. Until 2026-10-16 a renewal read June alone, and May's work didn't count: Connecticut reads the six months before a renewal, any one of them (CHA's HUSKY D materials from
+  // DSS's, 8/25/26, read 2026-10-16; `lookBack`), so May's month renews her; July's, the renewal's own month, still doesn't, and 79 hours in June with July's 80 bring a notice of noncompliance. Until 2026-10-17 80 hours renewed her
+  // whatever they paid, by `monthEngagement`'s work branch, which brief 12 had cut as serving no necessary purpose (docs/verification/resolution-2026-10-17/health-criteria.md): no wage SLATE has paid, in play or in any save's
+  // history, came to under $7.25 an hour where the rules are read, so 80 paid hours always met the $580 income test too.
   it('until 2026-10-17 it read: until 2026-10-16 it read: renews on 80 hours, whatever the pay, and not on 79; work paid in May or July isn’t June’s; since then any of the six months before the renewal counts, May among them, and July, its own month, still doesn’t; since then the hours aren’t read: 80 hours paid $400 in June bring a notice of noncompliance, and May’s 80 paid $1,840 renew her by their income', () => {
-    // FIXTURE: 80 hours at $5 an hour, under the $580 the income test asks, which no save can hold. They're read as their
-    // pay, $400, and nothing else meets the rules from January to June, so she's sent a notice and covered while she
-    // answers, where until 2026-10-17 she was renewed "by 80 hours’ work".
+    // FIXTURE: 80 hours at $5 an hour, under the $580 the income test asks, which no save can hold. They're read as their pay, $400, and nothing else meets
+    // the rules from January to June, so she's sent a notice and covered while she answers, where until 2026-10-17 she was renewed "by 80 hours’ work".
     const enough = huskyD('g84-work-hours');
     worked(enough, at(2027, 6, 12), 80, 400_00);
     healthMonth(enough, enough.player, renewal);
-    expect(enough.player.health!.program!.until).toBeUndefined();
-    expect(coverOn(enough.player, renewal + MS_DAY)).toBe('medicaid');
+    expect([enough.player.health!.program!.until, coverOn(enough.player, renewal + MS_DAY)]).toEqual([undefined, 'medicaid']);
     expect(enough.player.health!.pending).toMatchObject({ kind: 'renewal', noticeAt: renewal, months: ['2027-06', '2027-05', '2027-04', '2027-03', '2027-02', '2027-01'] });
-    expect(titled(enough, 'Your Public Cover Is Renewed')).toEqual([]);
-    expect(titled(enough, 'A Notice Of Noncompliance')).toHaveLength(1);
+    expect([titled(enough, 'Your Public Cover Is Renewed').length, titled(enough, 'A Notice Of Noncompliance').length]).toEqual([0, 1]);
     const may = huskyD('g84-work-hours-may');
     worked(may, at(2027, 6, 12), 79, 400_00);
     worked(may, at(2027, 5, 31, 12), 80, 1_840_00);

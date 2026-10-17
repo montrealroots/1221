@@ -1091,8 +1091,12 @@ function endAhead(sim: Simulation, person: Person, prog: NonNullable<HealthRecor
   if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Public Cover Ends', body: `${why}: ${name} ends on ${formatDate(lastDayBefore(until), HOME)}, ${lawfullyPresent(person) ? `and losing it opens ${ENROLLMENT.specialDays} days to enroll in the marketplace${credit}` : 'and out of status the marketplace won’t take you'}.`, importance: 80, route: '/workspace/papers' });
 }
 
-/** The work rules' words, for the notices: "80 hours’ work, $580.00 of income, school at least half-time or an exception". */
-const workWords = (cur: string): string => `${PUBLIC_COVER.workHours} hours’ work, ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of income, school at least half-time or an exception`;
+/**
+ * The work rules' words, for the notices and Enroll's refusal: "$580.00 of income, time at the School or an exception",
+ * what a player can meet them with (from 2026-10-17, brief 12). Until then they began "80 hours’ work", which nobody off
+ * the School can do in SLATE and nobody at it needs, and said "school at least half-time" for the School.
+ */
+const workWords = (cur: string): string => `${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of income, time at the School or an exception`;
 /** The months assessed, in a sentence: "in December 2026", "in any month from May to October 2027". */
 const inMonths = (months: string[]): string => (months.length > 1 ? `in any month from ${monthsWords(months)}` : `in ${monthsWords(months)}`);
 

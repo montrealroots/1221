@@ -80,6 +80,7 @@ vi.mock('@/ui/guide/Guide', async (orig) => {
 });
 
 const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
+const { Home } = await import('@/ui/screens/Home');
 
 const ZONE = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0): Instant => instantFromZoned({ year, month, day, hour, minute }, ZONE);
@@ -114,6 +115,12 @@ function papers(sim: Simulation): string {
   return onScreen(renderToStaticMarkup(createElement(PapersWorkspace as FunctionComponent)));
 }
 const drawnFor = (feature: string) => h.clicks.filter((c) => c.feature === feature);
+/** Home as the player has it: What Needs You draws the six unread notices, the most important and latest first. */
+function home(sim: Simulation): string {
+  h.sim = sim;
+  h.clicks = [];
+  return onScreen(renderToStaticMarkup(createElement(Home as FunctionComponent)));
+}
 /** A Gated button pressed by its own onClick: what it toasted. */
 function press(feature: string, label?: string): string[] {
   const b = drawnFor(feature).filter((c) => label === undefined || c.label === label);
@@ -124,8 +131,9 @@ function press(feature: string, label?: string): string[] {
 }
 
 // The notice of 1 October 2027, worked from the rules above: April to September read, answered by 4 November, decided on
-// 5 November, ended with November where unanswered (each a month earlier from 2026-10-16, brief 09's journeys).
-const NOTICE = 'HUSKY D couldn’t find 80 hours’ work, $580.00 of income, school at least half-time or an exception in any month from April to September 2027. You’re covered while you answer, to November 4, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in those months counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, HUSKY D ends on November 30, 2027, said on November 5, 2027, and the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.';
+// 5 November, ended with November where unanswered (each a month earlier from 2026-10-16, brief 09's journeys). Until
+// 2026-10-17 it began “80 hours’ work” and said “school at least half-time” (brief 12).
+const NOTICE = 'HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from April to September 2027. You’re covered while you answer, to November 4, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in those months counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, HUSKY D ends on November 30, 2027, said on November 5, 2027, and the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.';
 const PENDING_LINE = 'A notice of noncompliance of October 1, 2027: HUSKY D couldn’t find the work rules met in April to September 2027. Answer by November 4, 2027; you’re covered until it’s decided on November 5, 2027.';
 const RENEWED = 'HUSKY D is renewed to its next renewal, April 1, 2028: last month’s income is within what it allows, and September 2027 met its work rules by a stay in hospital, on your request.';
 const NO_STAY = 'No month it assessed, April to September 2027, had a stay in hospital, the hardship SLATE keeps.';
@@ -179,8 +187,13 @@ describe('health.request_hardship: a member’s renewal notice answered by a sta
 
     // The notice, by the clock: April to September read, covered while she answers.
     const jump = thaw(snap);
+    // What Needs You read and cleared with Mark … Read the evening before, as the player does.
+    jump.must({ kind: 'world.mark_read', payload: {} });
     jump.advanceTo(at(2027, 10, 1, 9));
     expect(titled(jump, 'A Notice Of Noncompliance').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 1, 0, 30), NOTICE]]);
+    // Home draws it in the words she can act on (brief 12, 2026-10-17): income, the School or an exception, no hours.
+    expect(home(jump)).toContain(`A Notice Of Noncompliance ${NOTICE}`);
+    expect(home(jump)).not.toMatch(/hours’ work|half-time/);
     expect(healthOf(jump.player).pending).toMatchObject({ kind: 'renewal', months: ['2027-09', '2027-08', '2027-07', '2027-06', '2027-05', '2027-04'], renewAt: at(2028, 4, 1, 0) });
     expect(coverOn(jump.player, jump.now)).toBe('medicaid');
     expect(jump.universe.scheduled.filter((i) => i.kind === WORK_DECIDED_KIND && i.status === 'pending').map((i) => i.at)).toEqual([at(2027, 11, 5, 0)]);
@@ -195,6 +208,7 @@ describe('health.request_hardship: a member’s renewal notice answered by a sta
 
     // Renewed as it would have been at its date: six months on from the renewal of 1 October, no gap, said once.
     expect(titled(jump, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 10, 9), RENEWED]]);
+    expect(home(jump)).toContain(`Your Public Cover Is Renewed ${RENEWED}`);
     expect(healthOf(jump.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2026, 10, 1, 0), band: 'low', renewAt: at(2028, 4, 1, 0) });
     expect(healthOf(jump.player).pending).toBeUndefined();
     // Asked again: nothing waits; Papers draws neither the notice's line nor the button.
@@ -236,6 +250,7 @@ describe('health.request_hardship: a member’s renewal notice answered by a sta
     unasked.advanceTo(at(2027, 12, 2, 9));
     expect(titled(unasked, 'Your Public Cover Is Renewed')).toEqual([]);
     expect(titled(unasked, 'Your Public Cover Ends').map((n) => n.at)).toEqual([at(2027, 11, 5, 0)]);
+    expect(home(unasked)).toContain('Your Public Cover Ends No month from April to September 2027 showed $580.00 of income, time at the School or an exception, and none was shown by November 4, 2027: HUSKY D ends on November 30, 2027');
     expect(healthOf(unasked.player).program!.until).toBe(at(2027, 12, 1, 0));
     expect(coverOn(unasked.player, at(2027, 12, 1, 9))).toBeUndefined();
   }, 900_000);
