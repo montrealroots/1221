@@ -2647,9 +2647,9 @@
  },
  "src/ui/screens/Home.tsx#Home": {
   "status": "Rewritten And Verified",
-  "hash": "3e533bc6c130",
+  "hash": "903f8f6ee103",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g32-ui.test.ts (the head at every part of the day, the Calendar, What Needs You with seven questions, Show All and Show The Six Most Important pressed, each weighing sentence, How You Are, Where You Are and its Daylight's of daylight, the weather), tests/evidence2-b11.test.ts, tests/evidence3-home.test.ts, tests/evidence-g33-ui.test.ts, tests/evidence-g03-life.test.ts, tests/evidence-g34-ui.test.ts"
+  "evidence": "tests/evidence-g32-ui.test.ts (the head at every part of the day, the Calendar, What Needs You with seven questions, Show All and Show The Six Most Important pressed, each weighing sentence, How You Are, Where You Are and its Daylight's of daylight, the weather), tests/evidence2-b11.test.ts, tests/evidence3-home.test.ts, tests/evidence-g33-ui.test.ts, tests/evidence-g03-life.test.ts, tests/evidence-g34-ui.test.ts; tests/language-dynamic.test.ts 'an account: money in it, nothing, and overdrawn, on its look and on Home…' (the Money line at $1,234.56, $0.00, −$41.10 and Worth −$41) and 'each screen at each stage says where the life stands…'"
  },
  "src/ui/screens/Home.tsx#PapersLine": {
   "status": "Reviewed And Retained",

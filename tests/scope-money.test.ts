@@ -341,7 +341,7 @@ describe('h-money', () => {
       const owed = mine(sim).filter((a) => !a.closedAt && a.kind === 'credit_card').reduce((n, a) => n + Math.max(0, -a.balance), 0);
       expect(netWorth(sim, sim.player.id).total).toBe(held - owed);
       const c = primary(sim);
-      const usd = (n: number) => `${n < 0 ? '-' : ''}$${(Math.abs(n) / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+      const usd = (n: number) => `${n < 0 ? '−' : ''}$${(Math.abs(n) / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
       const whole = (n: number) => `$${Math.round(n / 100).toLocaleString('en-US')}`;
       expect(affairs(sim)).toContain(`Money Chase Total Checking: ${usd(c.balance)}. Worth ${whole(held - owed)}${owed > 0 ? `, ${whole(owed)} of it owed` : ''}.`);
     }

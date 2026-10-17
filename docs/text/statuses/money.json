@@ -3937,9 +3937,9 @@
  },
  "src/ui/looks/money.tsx#accountSentence": {
   "status": "Rewritten And Verified",
-  "hash": "12fe0c6696c0",
+  "hash": "0d451e1c51e6",
   "on": "2026-10-17",
-  "evidence": "tests/language-money.test.ts 'opens an account in words for each balance…' ($250, empty and $3.30 overdrawn savings, the primary account); tests/defects-g13-1.test.ts (Bills Owed, paid from the first money in your primary account)"
+  "evidence": "tests/language-money.test.ts 'opens an account in words for each balance…' ($250, empty and $3.30 overdrawn savings, the primary account); tests/defects-g13-1.test.ts (Bills Owed, paid from the first money in your primary account); tests/language-dynamic.test.ts 'an account: money in it, nothing, and overdrawn…' and 'a card: owing on it, owing nothing, and holding your money after paying more than was owed'"
  },
  "src/ui/looks/money.tsx#CATEGORY_WORDS": {
   "status": "Reviewed And Retained",

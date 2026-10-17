@@ -8,17 +8,22 @@
  * Each fault is counted by kind, with up to eight examples each and the file it came from. It exits 1 if it found any
  * fault outside ALLOWED. A fault isn't always wrong: a name a person spells with a capital inside it, a real domain
  * with a dot. Those are listed in ALLOWED with the reason, never silenced in the rule.
+ *
+ * From 2026-10-17 the rules are exported (`CHECKS`, `ALLOWED`, `faultsIn`), so a test reads a generator's sentence with
+ * the very rules the walk's output is read with (`tests/language-dynamic.test.ts`); the command line runs only when this
+ * file is the one node was given, and does what it did before.
  */
-import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { readFileSync, readdirSync, realpathSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 /** Names and forms that look like a fault and aren't, each with why. */
-const ALLOWED = [
+export const ALLOWED = [
   [/\b(iQIYI|tvN|eBay|iPhone|iPad|YouTube|LinkedIn|McDonald|PayPal|DoorDash|GoFundMe|HealthCare|MasterCard|TikTok|WhatsApp|McKinsey|MacArthur|DeVos|LaGuardia|McCarter|MacDowell|DiCaprio|LeBlanc|DuBois|FedEx|JetBlue|SoHo|NoHo|TriBeCa|DeKalb|McNally|McCann|BlackRock|SmartBank|CaixaBank|ING|HSBC|BBVA|NatWest|BankAmericard|ePass)\w*/g, 'a real name, spelled as its owner spells it'],
   [/\b[\w-]+\.(?:com|org|edu|gov|net|co\.uk|ac\.uk|gov\.uk|de|fr|is|mx|ca|jp|kr|es|it|nz|au|ie|nl|se|no|dk|fi|ch|at|be|pt|br|in|cn)\b/g, 'a web address'],
   [/\b(?:e\.g|i\.e|vs|St|Dr|Mr|Mrs|Ms|No|p|pp|a\.m|p\.m|U\.S|U\.K|Jr|Sr|Inc|Co|Ltd|approx|etc|Mt|Ave|Blvd|Rd)\.\s+[a-z]/g, 'an abbreviation, not a sentence’s end'],
 ];
-const CHECKS = [
+export const CHECKS = [
   ['a leaked value', /\bundefined\b|\bNaN\b|\[object Object\]|\bInvalid Date\b|\$\{|\{…\}|\bnull\b(?! and void)/],
   ['doubled punctuation', /(?<![.])([,;:!?])\1|\.\.(?!\.)|[,;:]\s*\.(?!\.)|\.\s*,|,\s*,/],
   ['a space before punctuation', /\S \s*[,;:.!?](?=\s|$)(?!\d)/],
@@ -32,11 +37,19 @@ const CHECKS = [
   ['a timestamp in prose', /\b\d{4}-\d{2}-\d{2}T\d{2}/],
   ['money written oddly', /\$\d[\d,]*\.\d(?!\d)|\$-\d|-\$\d/],
 ];
-function strip(t) { let s = t; for (const [re] of ALLOWED) s = s.replace(re, (m) => 'X'.repeat(m.length)); return s; }
-function unbalanced(t) {
+export function strip(t) { let s = t; for (const [re] of ALLOWED) s = s.replace(re, (m) => 'X'.repeat(m.length)); return s; }
+export function unbalanced(t) {
   const o = (t.match(/\(/g) ?? []).length, c = (t.match(/\)/g) ?? []).length;
   const q = (t.match(/“/g) ?? []).length, e = (t.match(/”/g) ?? []).length;
   return o !== c || q !== e;
+}
+
+/** The kinds of fault one string has, as the command line counts them: each rule's name, and an unbalanced bracket or quote. */
+export function faultsIn(text) {
+  const t = strip(text);
+  const hits = CHECKS.filter(([, re]) => re.test(t)).map(([k]) => k);
+  if (unbalanced(text)) hits.push('an unbalanced bracket or quote');
+  return hits;
 }
 
 /** The strings a file holds, as a player read them: a walk's screens, a journey's notices and reviews, else any prose. */
@@ -63,34 +76,35 @@ function strings(file) {
 }
 const files = (p) => (statSync(p).isDirectory() ? readdirSync(p).flatMap((f) => files(join(p, f))) : p.endsWith('.json') ? [p] : []);
 
-const args = process.argv.slice(2);
-const jsonAt = args.indexOf('--json');
-const OUT = jsonAt >= 0 ? args.splice(jsonAt, 2)[1] : null;
-const found = {};
-let read = 0;
-const seen = new Set();
-for (const f of args.flatMap(files)) {
-  if (/walk\.json$|summary\.json$|compare\.json$/.test(f)) continue;
-  for (const s of strings(f)) {
-    read++;
-    const t = strip(s.text);
-    const hits = CHECKS.filter(([, re]) => re.test(t)).map(([k]) => k);
-    if (unbalanced(s.text)) hits.push('an unbalanced bracket or quote');
-    for (const k of hits) {
-      const key = `${k}\u0000${s.text}`;
-      if (seen.has(key)) { found[k].count++; continue; }
-      seen.add(key);
-      (found[k] ??= { count: 0, distinct: 0, examples: [] }).count++;
-      found[k].distinct++;
-      if (found[k].examples.length < 8) found[k].examples.push({ file: f, where: s.where, text: s.text.slice(0, 300) });
+/** The command line, run only when node was given this file (an import, a test's, runs none of it). */
+const isMain = process.argv[1] !== undefined && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
+if (isMain) {
+  const args = process.argv.slice(2);
+  const jsonAt = args.indexOf('--json');
+  const OUT = jsonAt >= 0 ? args.splice(jsonAt, 2)[1] : null;
+  const found = {};
+  let read = 0;
+  const seen = new Set();
+  for (const f of args.flatMap(files)) {
+    if (/walk\.json$|summary\.json$|compare\.json$/.test(f)) continue;
+    for (const s of strings(f)) {
+      read++;
+      for (const k of faultsIn(s.text)) {
+        const key = `${k}\u0000${s.text}`;
+        if (seen.has(key)) { found[k].count++; continue; }
+        seen.add(key);
+        (found[k] ??= { count: 0, distinct: 0, examples: [] }).count++;
+        found[k].distinct++;
+        if (found[k].examples.length < 8) found[k].examples.push({ file: f, where: s.where, text: s.text.slice(0, 300) });
+      }
     }
   }
+  for (const [k, v] of Object.entries(found)) {
+    console.log(`\n${k}: ${v.count} (${v.distinct} distinct)`);
+    for (const e of v.examples) console.log(`  ${e.file} ${e.where}: ${e.text}`);
+  }
+  const total = Object.values(found).reduce((n, v) => n + v.distinct, 0);
+  console.log(`\n${read} strings read, ${total} distinct faults`);
+  if (OUT) writeFileSync(OUT, `${JSON.stringify({ read, found }, null, 1)}\n`);
+  process.exit(total ? 1 : 0);
 }
-for (const [k, v] of Object.entries(found)) {
-  console.log(`\n${k}: ${v.count} (${v.distinct} distinct)`);
-  for (const e of v.examples) console.log(`  ${e.file} ${e.where}: ${e.text}`);
-}
-const total = Object.values(found).reduce((n, v) => n + v.distinct, 0);
-console.log(`\n${read} strings read, ${total} distinct faults`);
-if (OUT) writeFileSync(OUT, `${JSON.stringify({ read, found }, null, 1)}\n`);
-process.exit(total ? 1 : 0);

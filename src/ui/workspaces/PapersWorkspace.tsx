@@ -474,8 +474,11 @@ function ReturnsPane() {
               <div className="table-scroll">
                 <table>
                   <tbody>
-                    {lines.filter(([, v]) => v !== 0).map(([label, v]) => <tr key={label}><td>{label}</td><td className="num mono">{money(v)}</td></tr>)}
-                    <tr className="strong"><td>{f.balance > 0 ? 'You Owe' : 'Your Refund'}</td><td className="num mono">{money(Math.abs(f.balance))}</td></tr>
+                    {/* A line that takes away is written with a minus sign, as Money writes an overdrawn balance (from 2026-10-17, brief
+                        14's dynamic cases: until then “-$1,961.96”, a hyphen). */}
+                    {lines.filter(([, v]) => v !== 0).map(([label, v]) => <tr key={label}><td>{label}</td><td className="num mono">{v < 0 ? `−${money(-v)}` : money(v)}</td></tr>)}
+                    {/* Nothing either way is said as nothing (from 2026-10-17, brief 14's dynamic cases: until then "Your Refund $0.00"). */}
+                    <tr className="strong"><td>{f.balance > 0 ? 'You Owe' : f.balance < 0 ? 'Your Refund' : 'Nothing Owed Or Due Back'}</td><td className="num mono">{money(Math.abs(f.balance))}</td></tr>
                     {r.penalty ? <tr><td>Late Penalties</td><td className="num mono">{money(r.penalty)}</td></tr> : null}
                     {r.owed ? <tr><td>Still Owed To The IRS, With Interest And Penalty To Date</td><td className="num mono">{money(owedOn(r, sim.now))}</td></tr> : null}
                     {Object.entries(r.stateDue ?? {}).filter(([, sd]) => sd.owed).map(([state, sd]) => <tr key={state}><td>{`Still Owed To ${agencyOf(state)}, With Interest And Penalty To Date`}</td><td className="num mono">{money(stateOwedOn(sd, stateDueOf(r), sim.now))}</td></tr>)}

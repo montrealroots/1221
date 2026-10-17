@@ -4174,7 +4174,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:121-143 'advances the world by exactly the hours slept', 'restores energy and pays down sleep debt', 'accrues debt when the night is short'",
+    "where": "tests/simulation.test.ts:122-144 'advances the world by exactly the hours slept', 'restores energy and pays down sleep debt', 'accrues debt when the night is short'",
     "asserts": "sim.now = before + 8h exactly; energy > 60 and debt < 12 after 9 h from 20/12; debt > 0 after 4 h",
     "reachesAction": true,
     "checksConsequence": true,
@@ -4183,7 +4183,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:290-306 'charges the hours up to a night booked ahead, and reads the night at the hour it starts'",
+    "where": "tests/simulation.test.ts:291-307 'charges the hours up to a night booked ahead, and reads the night at the hour it starts'",
     "asserts": "With startAt two hours ahead: quality = the eight o'clock quality - 0.08; lastSleptAt = start + 8h; every waking hour up to the bedtime is charged (100 - 19*3)",
     "reachesAction": true,
     "checksConsequence": true,
@@ -4192,7 +4192,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:318-335 'sleeps a chosen night once, whether it crosses midnight, ends on it, or neither'",
+    "where": "tests/simulation.test.ts:319-336 'sleeps a chosen night once, whether it crosses midnight, ends on it, or neither'",
     "asserts": "Energy, sleepDebt, stress and morale after the command equal applySleep applied once to a bedtime copy, for bedtimes 23, 1 and 16, three nights each",
     "reachesAction": true,
     "checksConsequence": true,
@@ -4237,7 +4237,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/life-fixes.test.ts:162-166 'asks for a number of hours, and a start within the day ahead'; tests/simulation.test.ts:1141-1158, 1166-1172",
+    "where": "tests/life-fixes.test.ts:162-166 'asks for a number of hours, and a start within the day ahead'; tests/simulation.test.ts:1142-1159, 1169-1175",
     "asserts": "NaN hours is refused 'Say how long to sleep.'; a start 3 days ahead is refused; a past start is refused, with the clock, energy, accounts, transactions and audit unchanged",
     "reachesAction": true,
     "checksConsequence": true,
@@ -5083,7 +5083,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/tutorial.test.ts:100-121, 150-164",
+    "where": "tests/tutorial.test.ts:100-122, 151-165",
     "asserts": "A guided life starts paused; live is refused until 'The Clock' is read; paused is always allowed",
     "reachesAction": true,
     "checksConsequence": true,
@@ -5240,7 +5240,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/tutorial.test.ts:107-183",
+    "where": "tests/tutorial.test.ts:108-184",
     "asserts": "Commands refused until their chapter is read, naming it; chapters read only in order; each chapter opens exactly what it names; the guide finished; a re-read refused; read state kept through a save and load; an unguided life open",
     "reachesAction": true,
     "checksConsequence": true,
@@ -5276,7 +5276,7 @@
    },
    {
     "kind": "code",
-    "where": "tests/guide.test.ts:155-160 'runs no command and moves no clock'",
+    "where": "tests/guide.test.ts:175-180 'runs no command and moves no clock'",
     "asserts": "Help.tsx, HowItWorks.tsx and help-context.ts contain no run(, execute(, must( or advance(",
     "reachesAction": false,
     "checksConsequence": false,
@@ -5285,7 +5285,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/guide.test.ts:165-178",
+    "where": "tests/guide.test.ts:185-198",
     "asserts": "The reference's reads leave a guided save byte for byte",
     "reachesAction": false,
     "checksConsequence": true,
@@ -5379,7 +5379,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:351-372 'costs the same in one-second ticks...'",
+    "where": "tests/simulation.test.ts:352-373 'costs the same in one-second ticks...'",
     "asserts": "16 h from energy 30, nourishment 30, stress 70: condition falls, ticks equal a jump",
     "reachesAction": true,
     "checksConsequence": false,
@@ -5620,7 +5620,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:416",
+    "where": "tests/simulation.test.ts:417",
     "asserts": "after midnight nourishment is 76 less 2 an hour",
     "reachesAction": true,
     "checksConsequence": true,
@@ -5715,7 +5715,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:337-349",
+    "where": "tests/simulation.test.ts:338-350",
     "asserts": "hygiene 82 at midnight, 82 - 1.6 per waking hour",
     "reachesAction": true,
     "checksConsequence": true,
@@ -5811,7 +5811,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:351-372",
+    "where": "tests/simulation.test.ts:352-373",
     "asserts": "16 h from energy 30: stress > 75",
     "reachesAction": true,
     "checksConsequence": false,
@@ -9552,7 +9552,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/bank-moves-card-line.test.ts:95-174 (render of BankMoves, then the command its Apply button runs)",
+    "where": "tests/bank-moves-card-line.test.ts:95-176 (render of BankMoves, then the command its Apply button runs)",
     "asserts": "The panel's debit-card line, read off the rendered panel, matches the day the card arrives",
     "reachesAction": true,
     "checksConsequence": true,
@@ -13198,7 +13198,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:258-267 'charges nothing at midnight...'",
+    "where": "tests/simulation.test.ts:259-268 'charges nothing at midnight...'",
     "asserts": "energy across a midnight falls by 0.1 for two minutes",
     "reachesAction": true,
     "checksConsequence": false,
@@ -13234,7 +13234,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:337-348, 805-847",
+    "where": "tests/simulation.test.ts:338-349, 806-848",
     "asserts": "the hygiene floor: 82 at midnight, then 1.6 an hour",
     "reachesAction": true,
     "checksConsequence": true,
@@ -13943,7 +13943,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:189-256",
+    "where": "tests/simulation.test.ts:190-257",
     "asserts": "clock-driven drain: 12 over 4 hours; ×1.5 at a debt of 24; the same by the minute as in one jump",
     "reachesAction": true,
     "checksConsequence": true,
@@ -13952,7 +13952,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:129-136 'restores energy and pays down sleep debt'",
+    "where": "tests/simulation.test.ts:130-137 'restores energy and pays down sleep debt'",
     "asserts": "life.sleep 9h from energy 20 gives > 60",
     "reachesAction": true,
     "checksConsequence": true,
@@ -14037,7 +14037,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:202-245, 925-950",
+    "where": "tests/simulation.test.ts:203-246, 926-951",
     "asserts": "drain ×1.5 at a woken debt of 24; over 60 held the same by minute or jump; short nights never leave more than 60 + shortfall × 1.35; a 5.9-hour night clears quality × 1.4 per hour",
     "reachesAction": true,
     "checksConsequence": true,
@@ -14046,7 +14046,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:138-143 'accrues debt when the night is short'",
+    "where": "tests/simulation.test.ts:139-144 'accrues debt when the night is short'",
     "asserts": "debt > 0 after 4 hours",
     "reachesAction": true,
     "checksConsequence": true,
@@ -18215,7 +18215,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/migration-94.test.ts:48-61 'changes nothing on a second open, and opens into a game that runs'",
+    "where": "tests/migration-94.test.ts:48-63 'changes nothing on a second open, and opens into a game that runs'",
     "asserts": "A second migrate is byte-identical; after loadSave, byGenre.comedy.familiarity > 0; interest.pursue is refused as unknown.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -19257,7 +19257,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:767-779 'puts nobody to bed once a sound sleeper would be up, however long they would lie in'",
+    "where": "tests/simulation.test.ts:768-780 'puts nobody to bed once a sound sleeper would be up, however long they would lie in'",
     "asserts": "A light_sleeper save advanced by the clock: unattendedNight hours > 8, and lastSleptAt does not change after 8 AM.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -20744,7 +20744,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/tutorial.test.ts:107 'refuses a command until its chapter is read, and names the chapter'",
+    "where": "tests/tutorial.test.ts:108 'refuses a command until its chapter is read, and names the chapter'",
     "asserts": "life.sleep is refused with an error naming “Sleep” and the first chapter; setting live speed is refused and the clock stays paused",
     "reachesAction": true,
     "checksConsequence": true,
@@ -20753,7 +20753,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/tutorial.test.ts:176 'leaves a life without the guide wholly open'",
+    "where": "tests/tutorial.test.ts:177 'leaves a life without the guide wholly open'",
     "asserts": "quickSave({}): no tutorial, timeSpeed 'live', all open, sleep ok, tutorial.read refused",
     "reachesAction": true,
     "checksConsequence": true,
@@ -22399,7 +22399,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:1271 'gives a save written under 80 a title from its pronouns'",
+    "where": "tests/simulation.test.ts:1334 'gives a save written under 80 a title from its pronouns'",
     "asserts": "migrate gives a title-less save the pronouns' title and careerLabel.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -23773,7 +23773,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/simulation.test.ts:1401-1420",
+    "where": "tests/simulation.test.ts:1464-1483",
     "asserts": "Overdue rows sort first; open rows are never resolved or dismissed.",
     "reachesAction": false,
     "checksConsequence": false,
@@ -25235,7 +25235,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:120-170 (describe 'sleep')",
+    "where": "tests/simulation.test.ts:121-171 (describe 'sleep')",
     "asserts": "Through the command: the clock moves exactly the hours asked, across DST too; energy and debt recover, and debt grows on a short night; a scheduled item still fires during the night.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -25280,7 +25280,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/tutorial.test.ts:107-115,152-164; tests/simulation.test.ts:1149,1169; tests/life-fixes.test.ts:164-165",
+    "where": "tests/tutorial.test.ts:108-116,153-165; tests/simulation.test.ts:1150,1172; tests/life-fixes.test.ts:164-165",
     "asserts": "Refused while the guide holds it, for a start in the past, for NaN hours and for a bedtime more than a day ahead.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -25500,7 +25500,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g6-1.test.ts:20-36; tests/tutorial.test.ts:107-115,121-124",
+    "where": "tests/defects-g6-1.test.ts:20-36; tests/tutorial.test.ts:108-116,122-125",
     "asserts": "fast and faster refused with 'The clock runs paused or live.'; paused and live set; the guide holds live and always allows paused.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -25681,7 +25681,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/tutorial.test.ts:107-194",
+    "where": "tests/tutorial.test.ts:108-195",
     "asserts": "Commands are refused naming the chapter; reads in order only, each once; each read opens exactly its chapter's features (against CHAPTERS content) and nothing later; the clock runs once 'clock' is read and sleep once 'sleep' is; read survives a reload; unguided lives are wholly open.",
     "reachesAction": true,
     "checksConsequence": true,

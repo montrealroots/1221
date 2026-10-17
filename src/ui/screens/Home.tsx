@@ -478,7 +478,9 @@ export function Home() {
           {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
             <AffairLine
               title="Money"
-              line={`${primary?.name ?? 'No account'}: ${primary ? balanceText(sim, primary) : formatMoney(0, cur)}${keptWords}. Worth ${formatMoney(worth.total, cur, { cents: false })}${worth.liabilities > 0 ? `, ${formatMoney(worth.liabilities, cur, { cents: false })} of it owed` : ''}.`}
+              // Overdrawn, and a worth below nothing, written with a minus sign as Money writes them (from 2026-10-17, brief 14's
+              // dynamic cases: until then “-$10.00” and “Worth -$227”, a hyphen).
+              line={`${primary?.name ?? 'No account'}: ${primary ? (primary.balance < 0 ? `−${balanceText(sim, primary, -primary.balance, primary.currency ? -heldOf(primary) : undefined)}` : balanceText(sim, primary)) : formatMoney(0, cur)}${keptWords}. Worth ${worth.total < 0 ? '−' : ''}${formatMoney(Math.abs(worth.total), cur, { cents: false })}${worth.liabilities > 0 ? `, ${formatMoney(worth.liabilities, cur, { cents: false })} of it owed` : ''}.`}
               alert={(primary?.balance ?? 0) < 0 ? 'Your account is overdrawn.' : undefined}
               action={<Gated feature="ui.bank" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{primary?.institution ?? 'Your Bank'}</Gated>}
               help="bank.accounts"

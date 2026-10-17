@@ -15,7 +15,7 @@
  *   a save and a load. A piece due at a meeting is shown there, and the meeting grows its course's skill by the band's
  *   weight (0.85 unready, 1 working, 1.1 strong, 1.2 exceptional), worked out here against an unprepared twin.
  * - `school.shift`: registration slept through, the first assigned Saturday is counted and not worked, said once in
- *   its words, nothing owed or bought, and the Standing tab counts 0 of 1 assigned shifts; registered on the School
+ *   its words, nothing owed or bought, and the Standing tab counts 0 of 1 assigned shift; registered on the School
  *   screen, the next Saturday is worked. A worked Saturday takes 4 energy beyond the clock's against a twin away. The
  *   crew's injury roll comes up at a shift (a seed found for it): a sprain at work, its weekly wage the week's hours at
  *   $23, $138 for the Saturday alone and $230 after a Thursday evening, with no FICA. A Saturday over the week's cap is
@@ -334,7 +334,7 @@ describe('school.shift', () => {
     expect(sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(bank);
     expect(itemsOf(sim, PAYDAY_KIND).filter((i) => i.status === 'pending')).toEqual([]);
     // The evaluation's attendance reads it: an assigned shift asked of them and not worked.
-    expect(drawn(sim, 'standing')).toContain(' and 0 of 1 assigned shifts.');
+    expect(drawn(sim, 'standing')).toContain(' and 0 of 1 assigned shift.');
 
     // Registered on the School screen, late; the next Saturday is worked, and its equipment bought there.
     sim.must({ kind: 'school.orientation', payload: { task: 'register' } });

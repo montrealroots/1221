@@ -1913,7 +1913,7 @@
           },
           {
             "kind": "inspection",
-            "where": "tests/guide.test.ts:161-166 'runs no command and moves no clock'",
+            "where": "tests/guide.test.ts:175-180 'runs no command and moves no clock'",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": true,
@@ -1921,7 +1921,7 @@
           },
           {
             "kind": "fixture",
-            "where": "tests/guide.test.ts:171-184",
+            "where": "tests/guide.test.ts:185-198",
             "reachesAction": false,
             "checksConsequence": true,
             "independent": true

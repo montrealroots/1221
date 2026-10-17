@@ -166,7 +166,7 @@ defineLook<ThePaper>('document', {
     // The interview or biometrics it waits on, from 2026-10-06 (`systems/papervisits.ts`).
     const visit = doc.visit && doc.visit.keptAt === undefined ? `It’s waiting on your ${VISITS[doc.visit.rule].what.toLowerCase()} in ${CITIES.get(doc.visit.cityId)?.name ?? 'town'} on ${formatDate(doc.visit.at, zone)}. Be there, or ${VISITS[doc.visit.rule].again && !doc.visit.missed ? 'it’s booked once more, and if you miss that too, the application' : 'the application'} ends. ` : '';
     // An ID card past every check is being made and mailed, not decided (from 2026-10-17, `idCardOnItsWay`): until then
-    // a citizen's said "it’s being decided" while the toast said it was on its way.
+    // a citizen’s said "it’s being decided" while the toast said it was on its way.
     const mailed = idCardOnItsWay(doc, sim.now);
     const summary = state === 'pending'
       ? mailed ? `You’ve applied and paid, and the card is on its way. It should arrive by ${formatDate(doc.readyAt!, zone)}.` : `${visit}You’ve applied, and it’s being decided. It should be ready ${doc.readyAt ? `by ${formatDate(doc.readyAt, zone)}` : 'soon'}.`
@@ -215,7 +215,7 @@ defineLook<ThePaper>('document', {
           </p>
           <div className="grid grid-3">
             <Stat label="Number Ends" value={<span className="mono">{last}</span>} note="The last digits of its number" />
-            {/* Not yet while pending (from 2026-10-17), as the row: a replacement carries the lost card's date until it comes. */}
+            {/* Not yet while pending (from 2026-10-17), as the row: a replacement carries the lost card’s date until it comes. */}
             <Stat label="Issued" value={doc.issuedAt && state !== 'pending' ? formatDate(doc.issuedAt, zone) : 'Not Yet'} note={doc.appliedAt ? `Applied for ${formatDate(doc.appliedAt, zone)}` : 'Issued directly, with no application on record'} />
             <Stat
               label={state === 'expired' ? 'Ran Out' : 'Runs Out'}

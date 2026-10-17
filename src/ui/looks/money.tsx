@@ -205,6 +205,13 @@ function accountSentence(a: Account, sim: Simulation): string {
   if (isLiability(a.kind)) {
     const owed = owedOn(a);
     const limit = a.creditLimit ?? 0;
+    // A card paid past what it owed holds the rest (from 2026-10-17, brief 14's dynamic cases: until then it read as
+    // owing nothing with the whole limit free, beside a Left To Spend over the limit).
+    if (owed === 0 && a.balance > 0) {
+      return limit > 0
+        ? `You owe nothing on it${where}, and it holds ${formatMoney(a.balance, cur)} of your money on top of the whole ${formatMoney(limit, cur)} limit.`
+        : `You owe nothing on it${where}, and it holds ${formatMoney(a.balance, cur)} of your money.`;
+    }
     if (owed === 0) {
       return limit > 0
         ? `You owe nothing on it${where}, and the whole ${formatMoney(limit, cur)} limit is free to use.`
@@ -267,7 +274,8 @@ function accountBody(a: Account, sim: Simulation) {
     <Stat
       key="balance"
       label={liability ? 'Owed' : 'Balance'}
-      value={<span className="mono">{liability ? formatMoney(owed, cur) : balanceText(sim, a)}</span>}
+      // Overdrawn, with a minus sign, as Money writes it (from 2026-10-17, brief 14's dynamic cases: until then "-$41.10").
+      value={<span className="mono">{liability ? formatMoney(owed, cur) : a.balance < 0 ? `−${balanceText(sim, a, -a.balance, a.currency ? -(a.held ?? 0) : undefined)}` : balanceText(sim, a)}</span>}
       tone={liability ? (owed > 0 ? 'negative' : undefined) : (a.balance < 0 ? 'negative' : undefined)}
       note={liability ? 'What you owe on it' : 'What’s in it now'}
     />,

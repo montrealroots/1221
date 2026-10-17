@@ -361,7 +361,7 @@ function Partners() {
           const owed = (p.incidents ?? []).filter((x) => !x.repaired).length;
           return (
             <div key={m.name} className="small">
-              <strong><Open subject={at('classmate', String(i))}>{m.name}</Open></strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · Came {r.kept ?? 0} of {(r.kept ?? 0) + (r.stoodUp ?? 0)}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? ` · Wants A Day’s Notice (Until ${boundaryLiftsAfter(p.boundary) - p.boundary.keptSince} More Rehearsals Are Kept)` : ''}{stoppedAsking(m, sim.now) ? ' · Has Stopped Asking You To Run Lines' : owesYouLines(m, sim.now) ? ' · Owes You Lines' : ''}</span>
+              <strong><Open subject={at('classmate', String(i))}>{m.name}</Open></strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · Came {r.kept ?? 0} of {(r.kept ?? 0) + (r.stoodUp ?? 0)}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? (() => { const n = boundaryLiftsAfter(p.boundary) - p.boundary.keptSince; return ` · Wants A Day’s Notice (Until ${n} More ${n === 1 ? 'Rehearsal Is' : 'Rehearsals Are'} Kept)`; })() : ''}{stoppedAsking(m, sim.now) ? ' · Has Stopped Asking You To Run Lines' : owesYouLines(m, sim.now) ? ' · Owes You Lines' : ''}</span>
               {r.log?.[0] && <div className="xs dim">{formatDate(r.log[0].at, zone())}: {r.log[0].what}</div>}
               {owed > 0 && (
                 <div className="row gap-2" style={{ alignItems: 'center' }}>

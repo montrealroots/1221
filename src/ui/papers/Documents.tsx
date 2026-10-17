@@ -28,7 +28,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { MS_DAY, dateKey, formatDate } from '@/engine/core/time';
+import { MS_DAY, dateKey, formatDate, instantFromZoned } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { COUNTRIES } from '@/engine/content/geography';
 import { countryOfIso } from '@/engine/content/bankdays';
@@ -166,7 +166,9 @@ export function PassportPane() {
           )}
           {visa && <Fine>{visa.name}: {visa.basis} Source: {visa.source}.</Fine>}
           <Fine>Travel isn’t part of the game, so you can’t apply for a visa or travel authorization here. Each country’s rules are shown as they stand, for reference.</Fine>
-          {answer?.rule && <Fine>{answer.rule.note} Source: {answer.rule.source}. Researched {ENTRY_AS_OF}. Permission to live or work there is separate.</Fine>}
+          {/* The day the rules were researched, as the game writes a date (from 2026-10-17, brief 14's dynamic cases: until
+              then “Researched 2026-09-29.”, the data's own ISO day). */}
+          {answer?.rule && <Fine>{answer.rule.note} Source: {answer.rule.source}. Researched {(() => { const [year, month, day] = ENTRY_AS_OF.split('-').map(Number); return formatDate(instantFromZoned({ year: year!, month: month!, day: day!, hour: 12 }, sim.zone), sim.zone); })()}. Permission to live or work there is separate.</Fine>}
         </div>
       </Panel>
     </div>
@@ -282,7 +284,7 @@ function TaxIdPanel() {
             {no && <span className="xs dim">{no}</span>}
           </div>
         )}
-        <Fine>Source: SSA POMS RM 10211.245, and the IRS on the ITIN, read 2026-10-10. Whether Yale pays you before the card comes isn’t published. In the game it does, since the IRS lets an employer report the number as applied for.</Fine>
+        <Fine>Source: SSA POMS RM 10211.245, and the IRS on the ITIN, read October 10, 2026. Whether Yale pays you before the card comes isn’t published. In the game it does, since the IRS lets an employer report the number as applied for.</Fine>
       </div>
     </Panel>
   );
