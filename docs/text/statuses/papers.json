@@ -1,0 +1,2792 @@
+{
+ "src/engine/content/guide/documents.ts#DOCUMENTS [documents.passport-id]": {
+  "status": "Rewritten And Verified",
+  "hash": "cb82a4a840b3",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the documents entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [documents.residence]": {
+  "status": "Rewritten And Verified",
+  "hash": "6e719027cf15",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the documents entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]": {
+  "status": "Rewritten And Verified",
+  "hash": "563079504316",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the documents entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [evaluation]": {
+  "status": "Rewritten And Verified",
+  "hash": "ceb8f6fd00cf",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the documents entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [immediate]": {
+  "status": "Reviewed And Retained",
+  "hash": "3f9eb0c50efb",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [optional]": {
+  "status": "Rewritten And Verified",
+  "hash": "72dfcdc14d59",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the documents entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [prerequisite]": {
+  "status": "Rewritten And Verified",
+  "hash": "84dc6c58a58b",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the documents entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [scheduled]": {
+  "status": "Rewritten And Verified",
+  "hash": "efc8afd737c2",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the documents entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/documents.ts#NEW_HAVEN": {
+  "status": "Reviewed And Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-17",
+  "reason": "A time zone id the code reads; never shown."
+ },
+ "src/engine/content/guide/documents.ts#NY_MAILS": {
+  "status": "Reviewed And Retained",
+  "hash": "5f510aebbacb",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/documents.ts#SSN_VISIT": {
+  "status": "Reviewed And Retained",
+  "hash": "90335b649ade",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/papers.ts#BENCH_WORDS": {
+  "status": "Reviewed And Retained",
+  "hash": "9a44c3a7b273",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/papers.ts#CHAINS": {
+  "status": "Reviewed And Retained",
+  "hash": "a0739eaa08d1",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/papers.ts#CT_FLOOR_WORDS": {
+  "status": "Rewritten And Verified",
+  "hash": "09f0ed187691",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/papers.ts#EMERGENCY_ROOM": {
+  "status": "Reviewed And Retained",
+  "hash": "9788f46689e7",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/papers.ts#FROM_CURRENT": {
+  "status": "Reviewed And Retained",
+  "hash": "e5c8c33ab987",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/papers.ts#MONTHS": {
+  "status": "Reviewed And Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [evaluation]": {
+  "status": "Reviewed And Retained",
+  "hash": "e6c789d356d9",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [history]": {
+  "status": "Reviewed And Retained",
+  "hash": "648d7a5db6ac",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [immediate]": {
+  "status": "Reviewed And Retained",
+  "hash": "e09397448e27",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [optional]": {
+  "status": "Rewritten And Verified",
+  "hash": "fc4e06469743",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.benefits]": {
+  "status": "Rewritten And Verified",
+  "hash": "0f2956d73d90",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.conditions]": {
+  "status": "Rewritten And Verified",
+  "hash": "35227330d3b3",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]": {
+  "status": "Rewritten And Verified",
+  "hash": "b58a17144db6",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
+  "status": "Rewritten And Verified",
+  "hash": "d73a503d2deb",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.overview]": {
+  "status": "Rewritten And Verified",
+  "hash": "99290226fa26",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.pensions]": {
+  "status": "Rewritten And Verified",
+  "hash": "b7189ca9d124",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [prerequisite]": {
+  "status": "Reviewed And Retained",
+  "hash": "2d3da8701dd4",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [scheduled]": {
+  "status": "Rewritten And Verified",
+  "hash": "3fdb3fe6202d",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/papers.ts#PRACTICE": {
+  "status": "Reviewed And Retained",
+  "hash": "aae7e7690819",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/papers.ts#SNAP_FULL": {
+  "status": "Reviewed And Retained",
+  "hash": "8607c9472184",
+  "on": "2026-10-17",
+  "reason": "A date the code parses; never shown."
+ },
+ "src/engine/content/guide/papers.ts#YALE_PRACTICE": {
+  "status": "Reviewed And Retained",
+  "hash": "e1faaf1accf2",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/papers.ts#YALE_SOON": {
+  "status": "Reviewed And Retained",
+  "hash": "1074be4669e2",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/taxes.ts#NEW_HAVEN": {
+  "status": "Reviewed And Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-17",
+  "reason": "A time zone id the code reads; never shown."
+ },
+ "src/engine/content/guide/taxes.ts#PART": {
+  "status": "Reviewed And Retained",
+  "hash": "b95c5225568c",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/taxes.ts#REFUND_WORDS": {
+  "status": "Reviewed And Retained",
+  "hash": "740e9da84718",
+  "on": "2026-10-17",
+  "reason": "A constant or line the guide’s sentences read (a month, a practice, a label, a prerequisite or history line), already plain and true to the rule it names."
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [immediate]": {
+  "status": "Rewritten And Verified",
+  "hash": "df65fe1a2099",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the taxes entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [optional]": {
+  "status": "Rewritten And Verified",
+  "hash": "556e0fa28d6d",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the taxes entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [prerequisite]": {
+  "status": "Rewritten And Verified",
+  "hash": "abb3057b92e4",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the taxes entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [scheduled]": {
+  "status": "Rewritten And Verified",
+  "hash": "9b7e269764cd",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the taxes entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [taxes.lien]": {
+  "status": "Rewritten And Verified",
+  "hash": "02871b5eca95",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the taxes entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [taxes.pay]": {
+  "status": "Rewritten And Verified",
+  "hash": "7cfe4c7b8811",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the taxes entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [taxes.plan]": {
+  "status": "Rewritten And Verified",
+  "hash": "05a8a44813b5",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the taxes entries’ worked examples, played)"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [taxes.return]": {
+  "status": "Rewritten And Verified",
+  "hash": "fbddf64a6ecf",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the taxes entries’ worked examples, played)"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_EXCHANGES": {
+  "status": "Reviewed And Retained",
+  "hash": "4e8c04e02cbf",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .au-nsw": {
+  "status": "Reviewed And Retained",
+  "hash": "b0986d64fcaf",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .br": {
+  "status": "Reviewed And Retained",
+  "hash": "7f3ca04f5c34",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .ca-bc": {
+  "status": "Reviewed And Retained",
+  "hash": "b6635e39f8ac",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .ca-on": {
+  "status": "Reviewed And Retained",
+  "hash": "a4c26c8e7a7a",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .de": {
+  "status": "Reviewed And Retained",
+  "hash": "1cce4307f0a1",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .es": {
+  "status": "Reviewed And Retained",
+  "hash": "94a67cdef360",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .fr": {
+  "status": "Reviewed And Retained",
+  "hash": "a00a8097e6c2",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .gb": {
+  "status": "Reviewed And Retained",
+  "hash": "7418a2b0a7ce",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .gb-nir": {
+  "status": "Reviewed And Retained",
+  "hash": "9684f672566e",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .ie": {
+  "status": "Reviewed And Retained",
+  "hash": "fa675d1426c6",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .is": {
+  "status": "Reviewed And Retained",
+  "hash": "fbff9fe851b8",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .jp": {
+  "status": "Reviewed And Retained",
+  "hash": "bad98325fbf0",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .kr": {
+  "status": "Reviewed And Retained",
+  "hash": "e613d9203375",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .lv": {
+  "status": "Reviewed And Retained",
+  "hash": "2a337b8dcfeb",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .mx-cmx": {
+  "status": "Reviewed And Retained",
+  "hash": "364d9819f0de",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .nz": {
+  "status": "Reviewed And Retained",
+  "hash": "2c3241178606",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .us-ca": {
+  "status": "Reviewed And Retained",
+  "hash": "b21d3639f3fa",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .us-ct": {
+  "status": "Reviewed And Retained",
+  "hash": "326f08ddabe4",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .us-ny": {
+  "status": "Reviewed And Retained",
+  "hash": "58e2e268d713",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [application]": {
+  "status": "Reviewed And Retained",
+  "hash": "cacbd0230e97",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [aptitude]": {
+  "status": "Reviewed And Retained",
+  "hash": "b610ea163134",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [class5]": {
+  "status": "Reviewed And Retained",
+  "hash": "090f8acb1105",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [class7-50]": {
+  "status": "Reviewed And Retained",
+  "hash": "5abddf1f9328",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [class7]": {
+  "status": "Reviewed And Retained",
+  "hash": "1c6f7a813901",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [cnh]": {
+  "status": "Reviewed And Retained",
+  "hash": "7057b35d4a68",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [code]": {
+  "status": "Reviewed And Retained",
+  "hash": "5505dd2a1a32",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [course]": {
+  "status": "Reviewed And Retained",
+  "hash": "a095b1c2e80f",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [dkt]": {
+  "status": "Reviewed And Retained",
+  "hash": "099c1b244ec4",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [driving]": {
+  "status": "Reviewed And Retained",
+  "hash": "ca8a190f826d",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [dt]": {
+  "status": "Reviewed And Retained",
+  "hash": "985deddedd94",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [edt]": {
+  "status": "Reviewed And Retained",
+  "hash": "ec28a83a4b9e",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [exam]": {
+  "status": "Reviewed And Retained",
+  "hash": "a9b0e2c4cf07",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [eyes]": {
+  "status": "Reviewed And Retained",
+  "hash": "694928577995",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [firstaid]": {
+  "status": "Reviewed And Retained",
+  "hash": "660140675000",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [full]": {
+  "status": "Reviewed And Retained",
+  "hash": "35226a4b031b",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [full2027]": {
+  "status": "Reviewed And Retained",
+  "hash": "2dd905acf1a0",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [full25]": {
+  "status": "Reviewed And Retained",
+  "hash": "59a16dc72cc7",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [g]": {
+  "status": "Reviewed And Retained",
+  "hash": "f6aaadf9f4b7",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [g1]": {
+  "status": "Reviewed And Retained",
+  "hash": "925f802bcc78",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [g2]": {
+  "status": "Reviewed And Retained",
+  "hash": "7a1d9a072630",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [hpt]": {
+  "status": "Reviewed And Retained",
+  "hash": "46ec7d434a2c",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [knowledge]": {
+  "status": "Reviewed And Retained",
+  "hash": "2d62d2cf3e2d",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [learner]": {
+  "status": "Reviewed And Retained",
+  "hash": "be0a4041d24a",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [lessons]": {
+  "status": "Reviewed And Retained",
+  "hash": "5829f9c49a91",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [license]": {
+  "status": "Reviewed And Retained",
+  "hash": "d7be3dcca95d",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [logbook]": {
+  "status": "Reviewed And Retained",
+  "hash": "aa5156372087",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [medical]": {
+  "status": "Reviewed And Retained",
+  "hash": "b229ee6a0a3c",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [neph]": {
+  "status": "Reviewed And Retained",
+  "hash": "033d39049dbe",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [p2]": {
+  "status": "Reviewed And Retained",
+  "hash": "cd6c2953903d",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [permit]": {
+  "status": "Reviewed And Retained",
+  "hash": "933671dab131",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [practical]": {
+  "status": "Reviewed And Retained",
+  "hash": "60b69fcfe140",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [practice]": {
+  "status": "Reviewed And Retained",
+  "hash": "7db751604c14",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [provisional]": {
+  "status": "Reviewed And Retained",
+  "hash": "ecfb9cecd51a",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [restricted]": {
+  "status": "Reviewed And Retained",
+  "hash": "84d3bde879cf",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [road]": {
+  "status": "Reviewed And Retained",
+  "hash": "5488e3d9bb79",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [safety]": {
+  "status": "Reviewed And Retained",
+  "hash": "232177216b61",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [school]": {
+  "status": "Reviewed And Retained",
+  "hash": "676a8de3b0c1",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [school3]": {
+  "status": "Reviewed And Retained",
+  "hash": "2df37a554d0f",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [skill]": {
+  "status": "Reviewed And Retained",
+  "hash": "3c20372850c8",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [tasa]": {
+  "status": "Reviewed And Retained",
+  "hash": "56ba53501e09",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [test]": {
+  "status": "Reviewed And Retained",
+  "hash": "48c714d6c471",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [theory]": {
+  "status": "Reviewed And Retained",
+  "hash": "1d7e57c9b353",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [toxicology]": {
+  "status": "Reviewed And Retained",
+  "hash": "cb076796d991",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [training]": {
+  "status": "Reviewed And Retained",
+  "hash": "e9358a138765",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [written]": {
+  "status": "Reviewed And Retained",
+  "hash": "7322417ce6c9",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#PASS_RATES [road]": {
+  "status": "Reviewed And Retained",
+  "hash": "aef0d88dbda8",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#PASS_RATES [theory]": {
+  "status": "Reviewed And Retained",
+  "hash": "c53032c3d6a5",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licensepaths.ts#passRate": {
+  "status": "Reviewed And Retained",
+  "hash": "41779aaed45e",
+  "on": "2026-10-17",
+  "reason": "Read by nothing: LICENSE_PATHS, PASS_RATES, passRate and LICENSE_EXCHANGES lost their readers when driving went, and only the type LicenseStage is imported (defects.md, 5). Rewriting words no player sees would be a word nothing reads."
+ },
+ "src/engine/content/licenses.ts#LICENSES .au-nsw": {
+  "status": "Reviewed And Retained",
+  "hash": "295005761fd8",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .br": {
+  "status": "Reviewed And Retained",
+  "hash": "f01e7217f4a2",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .ca-bc": {
+  "status": "Reviewed And Retained",
+  "hash": "c8f8d177e580",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .ca-on": {
+  "status": "Reviewed And Retained",
+  "hash": "c73a45151d58",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .de": {
+  "status": "Reviewed And Retained",
+  "hash": "c2e2c7d19a2f",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .es": {
+  "status": "Reviewed And Retained",
+  "hash": "36127654cd7b",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .fr": {
+  "status": "Reviewed And Retained",
+  "hash": "adddd7bfd332",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .gb": {
+  "status": "Reviewed And Retained",
+  "hash": "31f2f0d062e7",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .gb-nir": {
+  "status": "Reviewed And Retained",
+  "hash": "c92646488153",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .ie": {
+  "status": "Reviewed And Retained",
+  "hash": "ab63091048c9",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .is": {
+  "status": "Reviewed And Retained",
+  "hash": "21464a041a46",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .jp": {
+  "status": "Reviewed And Retained",
+  "hash": "3a02e7c85b97",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .kr": {
+  "status": "Reviewed And Retained",
+  "hash": "76c5750fd7f4",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .lv": {
+  "status": "Reviewed And Retained",
+  "hash": "b2b87a123c43",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .mx-cmx": {
+  "status": "Reviewed And Retained",
+  "hash": "f10e99c42ed7",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .nz": {
+  "status": "Reviewed And Retained",
+  "hash": "d1be7091399d",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .us-ca": {
+  "status": "Reviewed And Retained",
+  "hash": "20029f66731c",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .us-ct": {
+  "status": "Reviewed And Retained",
+  "hash": "4ea40016a1a2",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/licenses.ts#LICENSES .us-ny": {
+  "status": "Reviewed And Retained",
+  "hash": "e4d4f32682e3",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .AU": {
+  "status": "Reviewed And Retained",
+  "hash": "63385db83726",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .BR": {
+  "status": "Reviewed And Retained",
+  "hash": "8a5ed9e3894e",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .CA": {
+  "status": "Reviewed And Retained",
+  "hash": "b719d2a81e16",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .DE": {
+  "status": "Reviewed And Retained",
+  "hash": "16cbfaf8b134",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .ES": {
+  "status": "Reviewed And Retained",
+  "hash": "60f94605f2e7",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .FR": {
+  "status": "Reviewed And Retained",
+  "hash": "37e13692f28e",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .GB": {
+  "status": "Reviewed And Retained",
+  "hash": "38f82ab167af",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .IE": {
+  "status": "Reviewed And Retained",
+  "hash": "71e6a5a109f1",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .IS": {
+  "status": "Reviewed And Retained",
+  "hash": "d7a42b83d25c",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .JP": {
+  "status": "Reviewed And Retained",
+  "hash": "04dc5e22f642",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .KR": {
+  "status": "Reviewed And Retained",
+  "hash": "e3e0d9a0acf3",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .LV": {
+  "status": "Reviewed And Retained",
+  "hash": "6d860cd2a17f",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .MX": {
+  "status": "Reviewed And Retained",
+  "hash": "55f1cee25cc4",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .NZ": {
+  "status": "Reviewed And Retained",
+  "hash": "940b672a80f7",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passports.ts#PASSPORTS .US": {
+  "status": "Reviewed And Retained",
+  "hash": "516ed2563b4a",
+  "on": "2026-10-17",
+  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+ },
+ "src/engine/content/passportsabroad.ts#nzTerms": {
+  "status": "Rewritten And Verified",
+  "hash": "8a01468aabf4",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-papers.test.ts (tax.s8.passport); text walk after-1440 and after-390, Papers, Passport And ID"
+ },
+ "src/engine/content/passportsabroad.ts#PASSPORTS_ABROAD": {
+  "status": "Rewritten And Verified",
+  "hash": "3eacfcd55522",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-papers.test.ts (tax.s8.passport); text walk after-1440 and after-390, Papers, Passport And ID"
+ },
+ "src/engine/content/safetynet.ts#CARE": {
+  "status": "Reviewed And Retained",
+  "hash": "5d8e1e8d06d3",
+  "on": "2026-10-17",
+  "reason": "Plan names and research citations as the publishers give them (Access Health CT, Covered California, CDC); read by the code and the tests."
+ },
+ "src/engine/content/safetynet.ts#CHARITY": {
+  "status": "Reviewed And Retained",
+  "hash": "efac3c21f6a0",
+  "on": "2026-10-17",
+  "reason": "Plan names and research citations as the publishers give them (Access Health CT, Covered California, CDC); read by the code and the tests."
+ },
+ "src/engine/content/safetynet.ts#CHRONIC": {
+  "status": "Reviewed And Retained",
+  "hash": "d084e1d3a10f",
+  "on": "2026-10-17",
+  "reason": "Plan names and research citations as the publishers give them (Access Health CT, Covered California, CDC); read by the code and the tests."
+ },
+ "src/engine/content/safetynet.ts#DENTAL_PLANS": {
+  "status": "Reviewed And Retained",
+  "hash": "96346facab4b",
+  "on": "2026-10-17",
+  "reason": "Plan names and research citations as the publishers give them (Access Health CT, Covered California, CDC); read by the code and the tests."
+ },
+ "src/engine/content/safetynet.ts#ENHANCED_CREDIT": {
+  "status": "Reviewed And Retained",
+  "hash": "7e90ace48079",
+  "on": "2026-10-17",
+  "reason": "Plan names and research citations as the publishers give them (Access Health CT, Covered California, CDC); read by the code and the tests."
+ },
+ "src/engine/content/safetynet.ts#PLANS": {
+  "status": "Reviewed And Retained",
+  "hash": "997e9dd7894a",
+  "on": "2026-10-17",
+  "reason": "Plan names and research citations as the publishers give them (Access Health CT, Covered California, CDC); read by the code and the tests."
+ },
+ "src/engine/content/statetax.ts#FEDERAL_STATE_OFFSET": {
+  "status": "Rewritten And Verified",
+  "hash": "5ae463b2ac4a",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-az": {
+  "status": "Rewritten And Verified",
+  "hash": "16deffe2f45c",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ca": {
+  "status": "Rewritten And Verified",
+  "hash": "765f956b395f",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-co": {
+  "status": "Rewritten And Verified",
+  "hash": "b14b8026c03e",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ct": {
+  "status": "Rewritten And Verified",
+  "hash": "ff6daa51524b",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-dc": {
+  "status": "Rewritten And Verified",
+  "hash": "ea012d16537b",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ga": {
+  "status": "Rewritten And Verified",
+  "hash": "9870a07e2afa",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-hi": {
+  "status": "Rewritten And Verified",
+  "hash": "847d2449d15f",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-il": {
+  "status": "Rewritten And Verified",
+  "hash": "bc2260d13da6",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-in": {
+  "status": "Rewritten And Verified",
+  "hash": "5de2765eaf89",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-la": {
+  "status": "Rewritten And Verified",
+  "hash": "392a786656ad",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ma": {
+  "status": "Rewritten And Verified",
+  "hash": "75994e0d04a5",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-nc": {
+  "status": "Rewritten And Verified",
+  "hash": "c116339a43ab",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-nm": {
+  "status": "Rewritten And Verified",
+  "hash": "5b90020b5aa8",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ny": {
+  "status": "Rewritten And Verified",
+  "hash": "991f11fec8ab",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-oh": {
+  "status": "Rewritten And Verified",
+  "hash": "2ac1e5eb12a2",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-oh-columbus": {
+  "status": "Rewritten And Verified",
+  "hash": "2471052ae6b2",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ok": {
+  "status": "Rewritten And Verified",
+  "hash": "ea5a59547acc",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-or": {
+  "status": "Rewritten And Verified",
+  "hash": "e9a546471b90",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-or-portland": {
+  "status": "Rewritten And Verified",
+  "hash": "717e86ed7570",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-pa": {
+  "status": "Rewritten And Verified",
+  "hash": "33a429a382ec",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-pa-philadelphia": {
+  "status": "Rewritten And Verified",
+  "hash": "361f741dfcd1",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [ADOR Bill]": {
+  "status": "Reviewed And Retained",
+  "hash": "e2265ce8abda",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [AU-222]": {
+  "status": "Reviewed And Retained",
+  "hash": "77d09edff81d",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Bill]": {
+  "status": "Reviewed And Retained",
+  "hash": "df713acd7411",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Billing Notice]": {
+  "status": "Rewritten And Verified",
+  "hash": "05ced64f4767",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [bL0001]": {
+  "status": "Reviewed And Retained",
+  "hash": "51be7fb57fe1",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [bL0006]": {
+  "status": "Rewritten And Verified",
+  "hash": "23bbe15d4373",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [bL0008]": {
+  "status": "Rewritten And Verified",
+  "hash": "1dc85bef398a",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Certified Claim]": {
+  "status": "Rewritten And Verified",
+  "hash": "4a101ef8d776",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Delinquent Notice]": {
+  "status": "Rewritten And Verified",
+  "hash": "1c828e1534ba",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Demand For Payment]": {
+  "status": "Reviewed And Retained",
+  "hash": "5b4536539848",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Demand To File]": {
+  "status": "Rewritten And Verified",
+  "hash": "80ba56aed8cc",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Distraint Warrant]": {
+  "status": "Rewritten And Verified",
+  "hash": "bce0bfd75fb0",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [DOTAX Bill]": {
+  "status": "Reviewed And Retained",
+  "hash": "30f2ae0a1d28",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [DRS Bill]": {
+  "status": "Reviewed And Retained",
+  "hash": "945636faf363",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [DTF Bill]": {
+  "status": "Reviewed And Retained",
+  "hash": "bf6f35decc29",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [DTF-966-E]": {
+  "status": "Reviewed And Retained",
+  "hash": "fcb609775818",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Earnings Tax Assessment]": {
+  "status": "Rewritten And Verified",
+  "hash": "20dddc491755",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Failure To File Notice]": {
+  "status": "Rewritten And Verified",
+  "hash": "9e4a608c0f53",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Final Demand]": {
+  "status": "Rewritten And Verified",
+  "hash": "f4d651a189af",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Final Determination And Demand]": {
+  "status": "Rewritten And Verified",
+  "hash": "e0a240a91109",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Final Notice Before Seizure]": {
+  "status": "Reviewed And Retained",
+  "hash": "cc27ed529390",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Final Notice]": {
+  "status": "Rewritten And Verified",
+  "hash": "238b8c243665",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [FTB 4600]": {
+  "status": "Reviewed And Retained",
+  "hash": "927231ba56e7",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [FTB 4601]": {
+  "status": "Reviewed And Retained",
+  "hash": "b49bbcb3e799",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [FTB 4963]": {
+  "status": "Rewritten And Verified",
+  "hash": "154cbb35ea54",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [FTB 4966]": {
+  "status": "Reviewed And Retained",
+  "hash": "a417adad5be1",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [IDOR-2-BILL]": {
+  "status": "Rewritten And Verified",
+  "hash": "268422b8a7a5",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Information Request For Non-Filed Period]": {
+  "status": "Reviewed And Retained",
+  "hash": "7160ed1a163a",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [ITDQ0009]": {
+  "status": "Reviewed And Retained",
+  "hash": "e1f96450d30a",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [LTR-393-IPD]": {
+  "status": "Rewritten And Verified",
+  "hash": "09a6d7383062",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Nonfiling Notice]": {
+  "status": "Reviewed And Retained",
+  "hash": "00b66c9d9861",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice And Demand]": {
+  "status": "Reviewed And Retained",
+  "hash": "b17e92fa5d40",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Assessment]": {
+  "status": "Rewritten And Verified",
+  "hash": "96308d803281",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Collection, Second]": {
+  "status": "Rewritten And Verified",
+  "hash": "58c2985a9bdc",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Collection]": {
+  "status": "Reviewed And Retained",
+  "hash": "f9ab6f326207",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Deficiency]": {
+  "status": "Rewritten And Verified",
+  "hash": "798895e86109",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Determination And Assessment]": {
+  "status": "Rewritten And Verified",
+  "hash": "be6cf495e67b",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Enforcement]": {
+  "status": "Rewritten And Verified",
+  "hash": "a6bb13a72d82",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Estimated Assessment]": {
+  "status": "Rewritten And Verified",
+  "hash": "cb4dfd31ef43",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Failure To File]": {
+  "status": "Rewritten And Verified",
+  "hash": "86de6939b106",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Final Assessment]": {
+  "status": "Rewritten And Verified",
+  "hash": "35e09c421d56",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Individual Income Tax Assessment]": {
+  "status": "Rewritten And Verified",
+  "hash": "d1e488b86ef1",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Assess]": {
+  "status": "Rewritten And Verified",
+  "hash": "165d848c8fa7",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Garnish]": {
+  "status": "Rewritten And Verified",
+  "hash": "931c4882ae0a",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Issue Judgment/Lien]": {
+  "status": "Reviewed And Retained",
+  "hash": "92f7db982fc2",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Levy]": {
+  "status": "Reviewed And Retained",
+  "hash": "1c438f089a8a",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Offset]": {
+  "status": "Reviewed And Retained",
+  "hash": "ded4cf65ac46",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Proposed Assessment]": {
+  "status": "Rewritten And Verified",
+  "hash": "64f12eea12de",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Tax, Penalty And/Or Interest Due]": {
+  "status": "Reviewed And Retained",
+  "hash": "ebaaf6d4af9d",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice To File]": {
+  "status": "Reviewed And Retained",
+  "hash": "ef3141cccabf",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice To Submit Return]": {
+  "status": "Reviewed And Retained",
+  "hash": "8665f9182fe9",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Official Assessment And Demand]": {
+  "status": "Rewritten And Verified",
+  "hash": "aa6964b8e682",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Past-Due Bill]": {
+  "status": "Reviewed And Retained",
+  "hash": "792f4fbc14a8",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Personal Income Tax Non-Filer Notice]": {
+  "status": "Reviewed And Retained",
+  "hash": "3686bec230e5",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Proposed Assessment]": {
+  "status": "Rewritten And Verified",
+  "hash": "c94dfbf9d87e",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Referral Notice]": {
+  "status": "Rewritten And Verified",
+  "hash": "bf7b6e1721ef",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [State Tax Execution]": {
+  "status": "Rewritten And Verified",
+  "hash": "ace842e63f62",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Statement Of Account]": {
+  "status": "Rewritten And Verified",
+  "hash": "14b6f48826c7",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Statement Of Proposed Audit Change]": {
+  "status": "Rewritten And Verified",
+  "hash": "73669805a39e",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Statement Of Tax Due]": {
+  "status": "Reviewed And Retained",
+  "hash": "b742beed8b6d",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Tax Warrant]": {
+  "status": "Rewritten And Verified",
+  "hash": "a9bddd1e54cf",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Top Notice]": {
+  "status": "Reviewed And Retained",
+  "hash": "df1b3577b503",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Written Demand]": {
+  "status": "Reviewed And Retained",
+  "hash": "60cdde38a7ae",
+  "on": "2026-10-17",
+  "reason": "A state’s notice code and title as the state names them, and its sentence, which the notice body capitalizes after “you owe … on your … return.”; already plain and exact, with every day and percentage kept."
+ },
+ "src/engine/content/statetax.ts#STATE_UNRESEARCHED": {
+  "status": "Rewritten And Verified",
+  "hash": "3baa2cb4ca3d",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax-states.test.ts, tests/tax-places.test.ts, tests/liens-and-arrangements.test.ts, tests/liens-step-skip.test.ts"
+ },
+ "src/engine/content/tax.ts#APPROX": {
+  "status": "Reviewed And Retained",
+  "hash": "e8683c2d776d",
+  "on": "2026-10-17",
+  "reason": "Jurisdiction codes and tax names the code reads, and rule notes no screen draws; the names are the taxes’ own."
+ },
+ "src/engine/content/tax.ts#computeAnnualTax": {
+  "status": "Reviewed And Retained",
+  "hash": "4f55b0e644f3",
+  "on": "2026-10-17",
+  "reason": "Jurisdiction codes and tax names the code reads, and rule notes no screen draws; the names are the taxes’ own."
+ },
+ "src/engine/content/tax.ts#DENVER_OPT": {
+  "status": "Rewritten And Verified",
+  "hash": "8f8010fd21fd",
+  "on": "2026-10-17",
+  "evidence": "tests/tax.test.ts, tests/federal-tax-years.test.ts, tests/state-tax-states.test.ts (the rules unchanged; a rule’s note is drawn by no screen)"
+ },
+ "src/engine/content/tax.ts#ICELAND_NOTE": {
+  "status": "Reviewed And Retained",
+  "hash": "0ee5efabe642",
+  "on": "2026-10-17",
+  "reason": "Jurisdiction codes and tax names the code reads, and rule notes no screen draws; the names are the taxes’ own."
+ },
+ "src/engine/content/tax.ts#INCOME_TAX_RULES": {
+  "status": "Reviewed And Retained",
+  "hash": "9943cecd4c21",
+  "on": "2026-10-17",
+  "reason": "Jurisdiction codes and tax names the code reads, and rule notes no screen draws; the names are the taxes’ own."
+ },
+ "src/engine/content/tax.ts#INCOME_TAX_RULES [flat]": {
+  "status": "Rewritten And Verified",
+  "hash": "a433e7c99e96",
+  "on": "2026-10-17",
+  "evidence": "tests/tax.test.ts, tests/federal-tax-years.test.ts, tests/state-tax-states.test.ts (the rules unchanged; a rule’s note is drawn by no screen)"
+ },
+ "src/engine/content/tax.ts#INCOME_TAX_RULES [none]": {
+  "status": "Reviewed And Retained",
+  "hash": "ea620c3397bf",
+  "on": "2026-10-17",
+  "reason": "Jurisdiction codes and tax names the code reads, and rule notes no screen draws; the names are the taxes’ own."
+ },
+ "src/engine/content/tax.ts#INCOME_TAX_RULES [progressive]": {
+  "status": "Rewritten And Verified",
+  "hash": "bc09b5bd0a49",
+  "on": "2026-10-17",
+  "evidence": "tests/tax.test.ts, tests/federal-tax-years.test.ts, tests/state-tax-states.test.ts (the rules unchanged; a rule’s note is drawn by no screen)"
+ },
+ "src/engine/content/tax.ts#PROPERTY_TAX_RULES": {
+  "status": "Reviewed And Retained",
+  "hash": "7a8076900efa",
+  "on": "2026-10-17",
+  "reason": "Jurisdiction codes and tax names the code reads, and rule notes no screen draws; the names are the taxes’ own."
+ },
+ "src/engine/content/tax.ts#SALES_TAX_RULES": {
+  "status": "Reviewed And Retained",
+  "hash": "f2d6804565c3",
+  "on": "2026-10-17",
+  "reason": "Jurisdiction codes and tax names the code reads, and rule notes no screen draws; the names are the taxes’ own."
+ },
+ "src/engine/content/visas.ts#AU_600": {
+  "status": "Rewritten And Verified",
+  "hash": "167ce7fd4629",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/evidence-g15-papers.test.ts (a visa’s name in mayEnter’s words)"
+ },
+ "src/engine/content/visas.ts#BR_EVISA": {
+  "status": "Rewritten And Verified",
+  "hash": "14b9c660879c",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/evidence-g15-papers.test.ts (a visa’s name in mayEnter’s words)"
+ },
+ "src/engine/content/visas.ts#CA_TRV": {
+  "status": "Rewritten And Verified",
+  "hash": "3491f3e8832d",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/evidence-g15-papers.test.ts (a visa’s name in mayEnter’s words)"
+ },
+ "src/engine/content/visas.ts#US_B1B2": {
+  "status": "Rewritten And Verified",
+  "hash": "8cde6e50db6a",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/evidence-g15-papers.test.ts (a visa’s name in mayEnter’s words)"
+ },
+ "src/engine/content/visas.ts#VISAS": {
+  "status": "Rewritten And Verified",
+  "hash": "cf1618445ca0",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/evidence-g15-papers.test.ts (a visa’s name in mayEnter’s words)"
+ },
+ "src/engine/content/workrules.ts#WORK_RULES": {
+  "status": "Reviewed And Retained",
+  "hash": "63deba223f3c",
+  "on": "2026-10-17",
+  "reason": "Form and permit names as USCIS and IRCC publish them, and a fee note, read by the Permission To Work tab as they stand."
+ },
+ "src/engine/systems/abroad.ts#abroadQuote": {
+  "status": "Rewritten And Verified",
+  "hash": "887617bf3945",
+  "on": "2026-10-17",
+  "evidence": "tests/home-account-abroad.test.ts, tests/home-account-tax.test.ts, tests/home-account-transfers.test.ts, tests/remaining-09-banking.test.ts"
+ },
+ "src/engine/systems/abroad.ts#abroadRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "0f7bf3aa3b2e",
+  "on": "2026-10-17",
+  "evidence": "tests/home-account-abroad.test.ts, tests/home-account-tax.test.ts, tests/home-account-transfers.test.ts, tests/remaining-09-banking.test.ts"
+ },
+ "src/engine/systems/abroad.ts#armHomeAccounts": {
+  "status": "Reviewed And Retained",
+  "hash": "18f1c5c319d2",
+  "on": "2026-10-17",
+  "reason": "A bank’s charge words, ledger memos and notice titles, already plain; the memos are what the ledger and the tests read."
+ },
+ "src/engine/systems/abroad.ts#arriveFromAbroad": {
+  "status": "Reviewed And Retained",
+  "hash": "dc3e1eb15050",
+  "on": "2026-10-17",
+  "reason": "A bank’s charge words, ledger memos and notice titles, already plain; the memos are what the ledger and the tests read."
+ },
+ "src/engine/systems/abroad.ts#atmAbroad": {
+  "status": "Rewritten And Verified",
+  "hash": "74c9ccad315f",
+  "on": "2026-10-17",
+  "evidence": "tests/home-account-abroad.test.ts, tests/home-account-tax.test.ts, tests/home-account-transfers.test.ts, tests/remaining-09-banking.test.ts"
+ },
+ "src/engine/systems/abroad.ts#cardAbroadRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "66a3eb41df42",
+  "on": "2026-10-17",
+  "evidence": "tests/home-account-abroad.test.ts, tests/home-account-tax.test.ts, tests/home-account-transfers.test.ts, tests/remaining-09-banking.test.ts"
+ },
+ "src/engine/systems/abroad.ts#chargeAbroadFee": {
+  "status": "Reviewed And Retained",
+  "hash": "63e778379d32",
+  "on": "2026-10-17",
+  "reason": "A bank’s charge words, ledger memos and notice titles, already plain; the memos are what the ledger and the tests read."
+ },
+ "src/engine/systems/abroad.ts#chargeWords": {
+  "status": "Reviewed And Retained",
+  "hash": "24e72264ae57",
+  "on": "2026-10-17",
+  "reason": "A bank’s charge words, ledger memos and notice titles, already plain; the memos are what the ledger and the tests read."
+ },
+ "src/engine/systems/abroad.ts#closingBanks": {
+  "status": "Reviewed And Retained",
+  "hash": "bf3566f0f953",
+  "on": "2026-10-17",
+  "reason": "A bank’s charge words, ledger memos and notice titles, already plain; the memos are what the ledger and the tests read."
+ },
+ "src/engine/systems/abroad.ts#foreignAccountsNotice": {
+  "status": "Rewritten And Verified",
+  "hash": "51cdaa078212",
+  "on": "2026-10-17",
+  "evidence": "tests/home-account-abroad.test.ts, tests/home-account-tax.test.ts, tests/home-account-transfers.test.ts, tests/remaining-09-banking.test.ts"
+ },
+ "src/engine/systems/abroad.ts#homeAccountLines": {
+  "status": "Reviewed And Retained",
+  "hash": "0e9a6c66e2e9",
+  "on": "2026-10-17",
+  "reason": "A bank’s charge words, ledger memos and notice titles, already plain; the memos are what the ledger and the tests read."
+ },
+ "src/engine/systems/abroad.ts#homeCloses": {
+  "status": "Reviewed And Retained",
+  "hash": "cb23e1fc7b31",
+  "on": "2026-10-17",
+  "reason": "A bank’s charge words, ledger memos and notice titles, already plain; the memos are what the ledger and the tests read."
+ },
+ "src/engine/systems/abroad.ts#limitRefusal": {
+  "status": "Reviewed And Retained",
+  "hash": "4ec23611b266",
+  "on": "2026-10-17",
+  "reason": "A bank’s charge words, ledger memos and notice titles, already plain; the memos are what the ledger and the tests read."
+ },
+ "src/engine/systems/abroad.ts#quoteWords": {
+  "status": "Rewritten And Verified",
+  "hash": "7897865f7eec",
+  "on": "2026-10-17",
+  "evidence": "tests/home-account-abroad.test.ts, tests/home-account-tax.test.ts, tests/home-account-transfers.test.ts, tests/remaining-09-banking.test.ts"
+ },
+ "src/engine/systems/abroad.ts#sendAbroad": {
+  "status": "Reviewed And Retained",
+  "hash": "1be28df6553f",
+  "on": "2026-10-17",
+  "reason": "A bank’s charge words, ledger memos and notice titles, already plain; the memos are what the ledger and the tests read."
+ },
+ "src/engine/systems/assistance.ts#assistanceRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "77b6b2552811",
+  "on": "2026-10-17",
+  "evidence": "tests/assistance.test.ts, tests/defects-g8-6.test.ts, tests/evidence-g15-papers.test.ts, tests/evidence2-b06.test.ts"
+ },
+ "src/engine/systems/assistance.ts#registerAssistance": {
+  "status": "Rewritten And Verified",
+  "hash": "f078dbcb4507",
+  "on": "2026-10-17",
+  "evidence": "tests/assistance.test.ts, tests/defects-g8-6.test.ts, tests/evidence-g15-papers.test.ts, tests/evidence2-b06.test.ts"
+ },
+ "src/engine/systems/assistance.ts#registerAssistance [escrow]": {
+  "status": "Reviewed And Retained",
+  "hash": "e136d8ae7040",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/assistance.ts#schedule": {
+  "status": "Reviewed And Retained",
+  "hash": "3cd487e7f4ad",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/assistance.ts#snapStudentRefusal": {
+  "status": "Reviewed And Retained",
+  "hash": "0603849eaa6e",
+  "on": "2026-10-17",
+  "reason": "A plain refusal that names its rule (7 CFR 273.5) and the two ways past it."
+ },
+ "src/engine/systems/assistance.ts#snapYearOn": {
+  "status": "Reviewed And Retained",
+  "hash": "cfe7e4812bff",
+  "on": "2026-10-17",
+  "reason": "A date the code parses; never shown."
+ },
+ "src/engine/systems/citizenship.ts#naturalizeRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "543738f58af9",
+  "on": "2026-10-17",
+  "evidence": "tests/coverage-gaps-papers.test.ts"
+ },
+ "src/engine/systems/citizenship.ts#registerCitizenship": {
+  "status": "Rewritten And Verified",
+  "hash": "b61f53cad760",
+  "on": "2026-10-17",
+  "evidence": "tests/coverage-gaps-papers.test.ts"
+ },
+ "src/engine/systems/citizenship.ts#registerCitizenship <documents.naturalize>": {
+  "status": "Rewritten And Verified",
+  "hash": "c96a02402436",
+  "on": "2026-10-17",
+  "evidence": "tests/coverage-gaps-papers.test.ts"
+ },
+ "src/engine/systems/documents.ts#issue": {
+  "status": "Rewritten And Verified",
+  "hash": "717a30335ad8",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/residence.test.ts, tests/evidence2-b05.test.ts, tests/evidence-g15-papers.test.ts"
+ },
+ "src/engine/systems/documents.ts#mayDrive": {
+  "status": "Rewritten And Verified",
+  "hash": "6ffc3ae9afcf",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/residence.test.ts, tests/evidence2-b05.test.ts, tests/evidence-g15-papers.test.ts"
+ },
+ "src/engine/systems/documents.ts#mayEnter": {
+  "status": "Rewritten And Verified",
+  "hash": "7945343a594d",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/residence.test.ts, tests/evidence2-b05.test.ts, tests/evidence-g15-papers.test.ts"
+ },
+ "src/engine/systems/documents.ts#passportOffice": {
+  "status": "Reviewed And Retained",
+  "hash": "22583179dba7",
+  "on": "2026-10-17",
+  "reason": "The US renewal by mail, every condition and figure read from the office’s rule; plain as it stands."
+ },
+ "src/engine/systems/documents.ts#passportRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "08a4cefff52e",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/residence.test.ts, tests/evidence2-b05.test.ts, tests/evidence-g15-papers.test.ts"
+ },
+ "src/engine/systems/documents.ts#policeReportRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "60dffcb12ae4",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/residence.test.ts, tests/evidence2-b05.test.ts, tests/evidence-g15-papers.test.ts"
+ },
+ "src/engine/systems/documents.ts#registerDocuments <documents.apply_passport>": {
+  "status": "Rewritten And Verified",
+  "hash": "112b3679a853",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/residence.test.ts, tests/evidence2-b05.test.ts, tests/evidence-g15-papers.test.ts"
+ },
+ "src/engine/systems/documents.ts#registerDocuments <documents.report_lost>": {
+  "status": "Rewritten And Verified",
+  "hash": "4f9c8234f7ad",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/residence.test.ts, tests/evidence2-b05.test.ts, tests/evidence-g15-papers.test.ts"
+ },
+ "src/engine/systems/documents.ts#residenceRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "1184e4b1d6e5",
+  "on": "2026-10-17",
+  "evidence": "tests/documents.test.ts, tests/residence.test.ts, tests/evidence2-b05.test.ts, tests/evidence-g15-papers.test.ts"
+ },
+ "src/engine/systems/documents.ts#STARTING": {
+  "status": "Reviewed And Retained",
+  "hash": "8cee4a741f85",
+  "on": "2026-10-17",
+  "reason": "The research citations behind the starting documents, as their publishers title them."
+ },
+ "src/engine/systems/documents.ts#startingDocuments": {
+  "status": "Reviewed And Retained",
+  "hash": "d5ed1ca0e308",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/documents.ts#startingDocuments [license]": {
+  "status": "Reviewed And Retained",
+  "hash": "a86dcee9e106",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/documents.ts#startingDocuments [visa]": {
+  "status": "Reviewed And Retained",
+  "hash": "6d5e4249b611",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/eiself.ts#eiRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "820690bb0a87",
+  "on": "2026-10-17",
+  "evidence": "tests/cabenefits.test.ts"
+ },
+ "src/engine/systems/eiself.ts#eiWeek": {
+  "status": "Reviewed And Retained",
+  "hash": "4e96e8a24281",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/homebenefits.ts#CDMX_DESEMPLEO": {
+  "status": "Reviewed And Retained",
+  "hash": "9c3125ef32aa",
+  "on": "2026-10-17",
+  "reason": "The program’s source, as the Gaceta Oficial titles it."
+ },
+ "src/engine/systems/homebenefits.ts#claimAtHome": {
+  "status": "Reviewed And Retained",
+  "hash": "477d001ce8f0",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/homebenefits.ts#desempleoRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "da8a11622513",
+  "on": "2026-10-17",
+  "evidence": "tests/homebenefits.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/homebenefits.ts#jobseekerRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "3d87b14bb051",
+  "on": "2026-10-17",
+  "evidence": "tests/homebenefits.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/homebenefits.ts#registerHomeBenefits": {
+  "status": "Reviewed And Retained",
+  "hash": "bda3d2e82154",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/homepensions.ts#bienestarRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "4c10d15b1efa",
+  "on": "2026-10-17",
+  "evidence": "tests/homepensions.test.ts"
+ },
+ "src/engine/systems/homepensions.ts#irishMeans": {
+  "status": "Reviewed And Retained",
+  "hash": "81428446f962",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/homepensions.ts#irishPensionRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "c0679701b9ce",
+  "on": "2026-10-17",
+  "evidence": "tests/homepensions.test.ts"
+ },
+ "src/engine/systems/homepensions.ts#registerHomePensions": {
+  "status": "Reviewed And Retained",
+  "hash": "9ca5645cf72e",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/homepensions.ts#registerHomePensions <pension.bienestar>": {
+  "status": "Reviewed And Retained",
+  "hash": "f8cd68af078b",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/homepensions.ts#registerHomePensions <pension.ie_state>": {
+  "status": "Reviewed And Retained",
+  "hash": "6daaa499360e",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/identity.ts#idCardRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "f6e50dac89bc",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g15-papers.test.ts, tests/idreplace.test.ts, tests/remaining-papers.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/identity.ts#idReplaceRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "5b4e011d9482",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g15-papers.test.ts, tests/idreplace.test.ts, tests/remaining-papers.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/identity.ts#licenseReplaceRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "d1dd560f9805",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g15-papers.test.ts, tests/idreplace.test.ts, tests/remaining-papers.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/identity.ts#noncitizenTermNote": {
+  "status": "Rewritten And Verified",
+  "hash": "55bc3e098ee0",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g15-papers.test.ts, tests/idreplace.test.ts, tests/remaining-papers.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/identity.ts#pastItsDate": {
+  "status": "Reviewed And Retained",
+  "hash": "adea485c362f",
+  "on": "2026-10-17",
+  "reason": "The two clauses the replacement refusal is built from (“It runs out on …, before a new card would come”); plain, and tests/defects3-50-70.test.ts holds them."
+ },
+ "src/engine/systems/identity.ts#registerIdentity": {
+  "status": "Rewritten And Verified",
+  "hash": "fe2271fdcd39",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g15-papers.test.ts, tests/idreplace.test.ts, tests/remaining-papers.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/identity.ts#registerIdentity <documents.apply_idcard>": {
+  "status": "Rewritten And Verified",
+  "hash": "679a42d7d829",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g15-papers.test.ts, tests/idreplace.test.ts, tests/remaining-papers.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/identity.ts#registerIdentity <documents.replace_idcard>": {
+  "status": "Rewritten And Verified",
+  "hash": "9439a4a91972",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g15-papers.test.ts, tests/idreplace.test.ts, tests/remaining-papers.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/identity.ts#registerIdentity <documents.replace_license>": {
+  "status": "Rewritten And Verified",
+  "hash": "e6e336f7cf41",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g15-papers.test.ts, tests/idreplace.test.ts, tests/remaining-papers.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/imss.ts#imssRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "f6b9474160a9",
+  "on": "2026-10-17",
+  "evidence": "tests/imss.test.ts"
+ },
+ "src/engine/systems/imss.ts#registerImss": {
+  "status": "Reviewed And Retained",
+  "hash": "3abd51a81bf9",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/imss.ts#registerImss <pension.imss>": {
+  "status": "Reviewed And Retained",
+  "hash": "c922c52be7d7",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/papervisits.ts#registerPaperVisits": {
+  "status": "Rewritten And Verified",
+  "hash": "4c0741b835e4",
+  "on": "2026-10-17",
+  "evidence": "tests/paper-visits.test.ts, tests/evidence2-b03.test.ts"
+ },
+ "src/engine/systems/papervisits.ts#VISITS": {
+  "status": "Rewritten And Verified",
+  "hash": "f3ddb2e759cb",
+  "on": "2026-10-17",
+  "evidence": "tests/paper-visits.test.ts, tests/evidence2-b03.test.ts"
+ },
+ "src/engine/systems/permission.ts#businessDaysOn": {
+  "status": "Reviewed And Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-17",
+  "reason": "A time zone id the code reads; never shown."
+ },
+ "src/engine/systems/permission.ts#optRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "30ddfc830ba5",
+  "on": "2026-10-17",
+  "evidence": "tests/permission.test.ts, tests/evidence2-b12.test.ts (J16: the status ending and out of status), tests/evidence-g15-papers.test.ts"
+ },
+ "src/engine/systems/permission.ts#registerPermission": {
+  "status": "Rewritten And Verified",
+  "hash": "a7ec4ef2a3ad",
+  "on": "2026-10-17",
+  "evidence": "tests/permission.test.ts, tests/evidence2-b12.test.ts (J16: the status ending and out of status), tests/evidence-g15-papers.test.ts"
+ },
+ "src/engine/systems/permission.ts#registerPermission [permit]": {
+  "status": "Reviewed And Retained",
+  "hash": "fa444ed0db6d",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/permission.ts#registerPermission <documents.apply_opt>": {
+  "status": "Reviewed And Retained",
+  "hash": "772bb7251df9",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/permission.ts#scheduleUsStatus": {
+  "status": "Reviewed And Retained",
+  "hash": "1a1611328206",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/residence.ts#MEXICO_RENEWAL": {
+  "status": "Reviewed And Retained",
+  "hash": "5c8e0ea2c245",
+  "on": "2026-10-17",
+  "reason": "Mexico’s renewal rule in one plain sentence, its fee read from the rule, followed by the reason the game grants none."
+ },
+ "src/engine/systems/residence.ts#MEXICO_RULE": {
+  "status": "Rewritten And Verified",
+  "hash": "c163b195ceda",
+  "on": "2026-10-17",
+  "evidence": "tests/residence.test.ts, tests/guide-examples-papers.test.ts, tests/remaining-09-journeys.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/residence.ts#MEXICO_UNREAD": {
+  "status": "Rewritten And Verified",
+  "hash": "27769c147d1f",
+  "on": "2026-10-17",
+  "evidence": "tests/residence.test.ts, tests/guide-examples-papers.test.ts, tests/remaining-09-journeys.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/residence.ts#registerResidence <documents.settle>": {
+  "status": "Rewritten And Verified",
+  "hash": "cc395c6b7232",
+  "on": "2026-10-17",
+  "evidence": "tests/residence.test.ts, tests/guide-examples-papers.test.ts, tests/remaining-09-journeys.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/residence.ts#routeRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "e26c01aa4250",
+  "on": "2026-10-17",
+  "evidence": "tests/residence.test.ts, tests/guide-examples-papers.test.ts, tests/remaining-09-journeys.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/residence.ts#settleRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "b5d0d439c52e",
+  "on": "2026-10-17",
+  "evidence": "tests/residence.test.ts, tests/guide-examples-papers.test.ts, tests/remaining-09-journeys.test.ts, tests/commands-kept.test.ts"
+ },
+ "src/engine/systems/socialsecurity.ts#registerSocialSecurity": {
+  "status": "Reviewed And Retained",
+  "hash": "505a1d852d57",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/socialsecurity.ts#registerSocialSecurity <pension.social_security>": {
+  "status": "Reviewed And Retained",
+  "hash": "1bc13bd76f79",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/socialsecurity.ts#socialSecurityRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "1a90f73e6b53",
+  "on": "2026-10-17",
+  "evidence": "tests/socialsecurity.test.ts, tests/guide-examples-papers.test.ts"
+ },
+ "src/engine/systems/statepension.ts#registerStatePension": {
+  "status": "Reviewed And Retained",
+  "hash": "3671ecdd7b1e",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/statepension.ts#registerStatePension <pension.state>": {
+  "status": "Reviewed And Retained",
+  "hash": "904cfb8df299",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/statepension.ts#statePensionRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "7a46ba15e2b1",
+  "on": "2026-10-17",
+  "evidence": "tests/statepension.test.ts"
+ },
+ "src/engine/systems/statetax.ts#agencyOf": {
+  "status": "Reviewed And Retained",
+  "hash": "c2fa3ba9d1dd",
+  "on": "2026-10-17",
+  "reason": "The fallback agency name, “{state}’s revenue department”, for a state with no named agency; plain."
+ },
+ "src/engine/systems/statetax.ts#applyStatePayment": {
+  "status": "Reviewed And Retained",
+  "hash": "531da6ba6538",
+  "on": "2026-10-17",
+  "reason": "A line of the plan’s history; plain."
+ },
+ "src/engine/systems/statetax.ts#assessStateNonFiler": {
+  "status": "Rewritten And Verified",
+  "hash": "5b48c5e13d1e",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#federalOffsetToState": {
+  "status": "Rewritten And Verified",
+  "hash": "3d8a695c216b",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#fileState": {
+  "status": "Reviewed And Retained",
+  "hash": "fb70af69b41c",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/statetax.ts#fileStateLien": {
+  "status": "Rewritten And Verified",
+  "hash": "3d954714e2cc",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#HOME": {
+  "status": "Reviewed And Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-17",
+  "reason": "A time zone id the code reads; never shown."
+ },
+ "src/engine/systems/statetax.ts#interestWords": {
+  "status": "Rewritten And Verified",
+  "hash": "b95278178949",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#lienDisputeRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "794546281d98",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#lienReleaseRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "3675c952ca84",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#lienReleaseWords": {
+  "status": "Rewritten And Verified",
+  "hash": "4e24314bf828",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#missStatePlan": {
+  "status": "Rewritten And Verified",
+  "hash": "feab43fa2e9b",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#nextJanuary": {
+  "status": "Reviewed And Retained",
+  "hash": "0e2aaaf149af",
+  "on": "2026-10-17",
+  "reason": "A date the code parses; never shown."
+ },
+ "src/engine/systems/statetax.ts#orderWords": {
+  "status": "Rewritten And Verified",
+  "hash": "fae1d8e3c4ba",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#payLateFor": {
+  "status": "Reviewed And Retained",
+  "hash": "cfe7e4812bff",
+  "on": "2026-10-17",
+  "reason": "A date the code parses; never shown."
+ },
+ "src/engine/systems/statetax.ts#payLateWords": {
+  "status": "Rewritten And Verified",
+  "hash": "4e133f8583e7",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#payStateRefund": {
+  "status": "Rewritten And Verified",
+  "hash": "9b00ba1de6eb",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#reconsiderState": {
+  "status": "Rewritten And Verified",
+  "hash": "3faf4f5d1a07",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax": {
+  "status": "Rewritten And Verified",
+  "hash": "cf51ea15771c",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.apply_state_plan>": {
+  "status": "Rewritten And Verified",
+  "hash": "2df321606dd9",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.catch_up_state_plan>": {
+  "status": "Rewritten And Verified",
+  "hash": "af3f3e6cfeba",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.lien_dispute>": {
+  "status": "Reviewed And Retained",
+  "hash": "a324ce637186",
+  "on": "2026-10-17",
+  "reason": "A line of the lien’s history, quoting the state’s own process for an error; plain."
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.lien_release>": {
+  "status": "Rewritten And Verified",
+  "hash": "780279f1f750",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.pay_state>": {
+  "status": "Rewritten And Verified",
+  "hash": "e019c3b67deb",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.request_waiver>": {
+  "status": "Rewritten And Verified",
+  "hash": "cb52c3394c36",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#releaseLater": {
+  "status": "Reviewed And Retained",
+  "hash": "686a18eeb8bb",
+  "on": "2026-10-17",
+  "reason": "A line of the lien’s history, shown dated under The Lien’s History; plain."
+ },
+ "src/engine/systems/statetax.ts#releaseStateLien": {
+  "status": "Rewritten And Verified",
+  "hash": "148a9c0fb70b",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#scheduleStateNonFiler": {
+  "status": "Reviewed And Retained",
+  "hash": "67b93cebada8",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/statetax.ts#startStatePlan": {
+  "status": "Rewritten And Verified",
+  "hash": "9dcf7ec50c54",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#stateLienPaid": {
+  "status": "Rewritten And Verified",
+  "hash": "835e183d67db",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#stateLienStep": {
+  "status": "Rewritten And Verified",
+  "hash": "f250ae11d436",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#stateName": {
+  "status": "Reviewed And Retained",
+  "hash": "12824acb788d",
+  "on": "2026-10-17",
+  "reason": "State and city names."
+ },
+ "src/engine/systems/statetax.ts#stateNonFilerStep": {
+  "status": "Rewritten And Verified",
+  "hash": "1f3fd5b83861",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#statePlanNewBalance": {
+  "status": "Reviewed And Retained",
+  "hash": "c8dda4d1fbc7",
+  "on": "2026-10-17",
+  "reason": "A line of the plan’s history; plain."
+ },
+ "src/engine/systems/statetax.ts#statePlanRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "09ee921f568e",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#threeYearCheck": {
+  "status": "Rewritten And Verified",
+  "hash": "ce299b761a03",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/statetax.ts#waiverRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "892f146501ab",
+  "on": "2026-10-17",
+  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+ },
+ "src/engine/systems/taxid.ts#registerTaxId": {
+  "status": "Rewritten And Verified",
+  "hash": "1956a4fa911c",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-r7-1.test.ts, tests/papers-complete.test.ts, tests/defects-r3d-1.test.ts"
+ },
+ "src/engine/systems/taxid.ts#registerTaxId <documents.apply_ssn>": {
+  "status": "Reviewed And Retained",
+  "hash": "ad91f135c691",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/taxid.ts#ssnRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "2364741cf4a8",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-r7-1.test.ts, tests/papers-complete.test.ts, tests/defects-r3d-1.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#amendRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "c3b36431ac27",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#amendState": {
+  "status": "Rewritten And Verified",
+  "hash": "044167201597",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#armCollection": {
+  "status": "Reviewed And Retained",
+  "hash": "93104e6be6aa",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/taxreturn.ts#armTaxes": {
+  "status": "Reviewed And Retained",
+  "hash": "164a33a7591f",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/taxreturn.ts#billed": {
+  "status": "Rewritten And Verified",
+  "hash": "c8e4afa02840",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#COLLECTION [CP501]": {
+  "status": "Rewritten And Verified",
+  "hash": "a9adcae07ed0",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#COLLECTION [CP503]": {
+  "status": "Rewritten And Verified",
+  "hash": "79da42b35b01",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#COLLECTION [CP504]": {
+  "status": "Rewritten And Verified",
+  "hash": "9b254a34ebed",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#COLLECTION [LT11]": {
+  "status": "Rewritten And Verified",
+  "hash": "afc706d864a8",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#FEDERAL_LIEN": {
+  "status": "Rewritten And Verified",
+  "hash": "969abe90796f",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#federalLienPaid": {
+  "status": "Reviewed And Retained",
+  "hash": "bc792cf2ebd1",
+  "on": "2026-10-17",
+  "reason": "A line of the lien’s history, shown dated under The Lien’s History; plain, and the date is the IRS’s to meet."
+ },
+ "src/engine/systems/taxreturn.ts#federalLienStep": {
+  "status": "Rewritten And Verified",
+  "hash": "ea70eb977872",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#federalLienWithdrawRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "61f67800c869",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#HOME": {
+  "status": "Reviewed And Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-17",
+  "reason": "A time zone id the code reads; never shown."
+ },
+ "src/engine/systems/taxreturn.ts#newLiability": {
+  "status": "Rewritten And Verified",
+  "hash": "141c1d773780",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#nextNotice": {
+  "status": "Reviewed And Retained",
+  "hash": "084589cb5e3a",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/taxreturn.ts#planRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "fe546c7a7f97",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#reconsider": {
+  "status": "Rewritten And Verified",
+  "hash": "aeaa0c61ab10",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#refusePlan": {
+  "status": "Rewritten And Verified",
+  "hash": "c8c2d6c9cea9",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#registerFederalLien": {
+  "status": "Rewritten And Verified",
+  "hash": "b1d2fdc02b6d",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#registerFederalLien <tax.federal_lien_withdraw>": {
+  "status": "Rewritten And Verified",
+  "hash": "2ef03f2199c7",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn": {
+  "status": "Rewritten And Verified",
+  "hash": "6f7e966e1010",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.amend>": {
+  "status": "Rewritten And Verified",
+  "hash": "dcc4d3854aff",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.apply_plan>": {
+  "status": "Rewritten And Verified",
+  "hash": "48917d532047",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.catch_up_plan>": {
+  "status": "Rewritten And Verified",
+  "hash": "f4ae30c98f28",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.file>": {
+  "status": "Rewritten And Verified",
+  "hash": "9487c1decbc5",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.pay>": {
+  "status": "Rewritten And Verified",
+  "hash": "9ab60d5730a1",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.revise_plan>": {
+  "status": "Rewritten And Verified",
+  "hash": "faeca62831e7",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn tell()": {
+  "status": "Reviewed And Retained",
+  "hash": "07d1964f9130",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/taxreturn.ts#settleUkYears": {
+  "status": "Rewritten And Verified",
+  "hash": "17da8f89c635",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#splitReturns": {
+  "status": "Rewritten And Verified",
+  "hash": "849673c70dad",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-tax.test.ts, tests/tax-lifecycle.test.ts, tests/evidence-g17-papers.test.ts, tests/scope-taxpapers.test.ts, tests/save-migration.test.ts, tests/defects-g8-7.test.ts"
+ },
+ "src/engine/systems/taxreturn.ts#startPlan": {
+  "status": "Reviewed And Retained",
+  "hash": "afc3404ffba0",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/unemployment.ts#basePeriodFor": {
+  "status": "Reviewed And Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-17",
+  "reason": "A time zone id the code reads; never shown."
+ },
+ "src/engine/systems/unemployment.ts#claimStateFor": {
+  "status": "Reviewed And Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-17",
+  "reason": "A time zone id the code reads; never shown."
+ },
+ "src/engine/systems/unemployment.ts#close": {
+  "status": "Reviewed And Retained",
+  "hash": "f781978a98d6",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/unemployment.ts#monetary": {
+  "status": "Reviewed And Retained",
+  "hash": "1b0e6672e630",
+  "on": "2026-10-17",
+  "reason": "Each state’s earnings test in its own figures, already one plain sentence each, read by the claim’s preview."
+ },
+ "src/engine/systems/unemployment.ts#registerUnemployment": {
+  "status": "Reviewed And Retained",
+  "hash": "e4191289bc87",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/unemployment.ts#registerUnemployment <benefits.claim>": {
+  "status": "Rewritten And Verified",
+  "hash": "ba582570deb1",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g16-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/guide-examples-papers.test.ts"
+ },
+ "src/engine/systems/unemployment.ts#studentUnavailable": {
+  "status": "Rewritten And Verified",
+  "hash": "dc3d13998486",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g16-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/guide-examples-papers.test.ts"
+ },
+ "src/engine/systems/universalcredit.ts#close": {
+  "status": "Reviewed And Retained",
+  "hash": "40dabaf13784",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/universalcredit.ts#creditAward": {
+  "status": "Reviewed And Retained",
+  "hash": "e7489c1ddcf2",
+  "on": "2026-10-17",
+  "reason": "The award’s line labels (the standard allowance, the 55% taper, the savings rule), as DWP names them."
+ },
+ "src/engine/systems/universalcredit.ts#creditRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "75529b01d102",
+  "on": "2026-10-17",
+  "evidence": "tests/universalcredit.test.ts"
+ },
+ "src/engine/systems/universalcredit.ts#registerUniversalCredit": {
+  "status": "Reviewed And Retained",
+  "hash": "2f5f40783629",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/engine/systems/universalcredit.ts#schedule": {
+  "status": "Reviewed And Retained",
+  "hash": "44fea49f14af",
+  "on": "2026-10-17",
+  "reason": "A ledger memo, notice title or calendar label, plain as it stands and read by the code or the tests (an account name, a memo the ledger matches, a notice the tests find by title)."
+ },
+ "src/ui/components/LienPanels.tsx#FederalLien": {
+  "status": "Rewritten And Verified",
+  "hash": "e3d2bcdf11cc",
+  "on": "2026-10-17",
+  "evidence": "tests/liens-and-arrangements.test.ts, tests/remaining-09-coverage.test.ts, tests/scope-taxpapers.test.ts; text walk after-1440 and after-390, Papers, Tax Returns (lien save)"
+ },
+ "src/ui/components/LienPanels.tsx#LienFacts": {
+  "status": "Rewritten And Verified",
+  "hash": "9942872f5d44",
+  "on": "2026-10-17",
+  "evidence": "tests/liens-and-arrangements.test.ts, tests/remaining-09-coverage.test.ts, tests/scope-taxpapers.test.ts; text walk after-1440 and after-390, Papers, Tax Returns (lien save)"
+ },
+ "src/ui/components/LienPanels.tsx#StateLienAndPenalty": {
+  "status": "Rewritten And Verified",
+  "hash": "82cb31f131b5",
+  "on": "2026-10-17",
+  "evidence": "tests/liens-and-arrangements.test.ts, tests/remaining-09-coverage.test.ts, tests/scope-taxpapers.test.ts; text walk after-1440 and after-390, Papers, Tax Returns (lien save)"
+ },
+ "src/ui/components/LienPanels.tsx#STATUS": {
+  "status": "Reviewed And Retained",
+  "hash": "a53b018163ff",
+  "on": "2026-10-17",
+  "reason": "The lien statuses, each a short state the panel shows beside the lien; plain and distinct as they stand."
+ },
+ "src/ui/looks/papers.tsx#KIND_WORD": {
+  "status": "Rewritten And Verified",
+  "hash": "3ba330715984",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-g25-1.test.ts, tests/defects-r7-1.test.ts, tests/looks.test.ts"
+ },
+ "src/ui/looks/papers.tsx#PLAIN_NAME": {
+  "status": "Reviewed And Retained",
+  "hash": "0d7c2d17f8f6",
+  "on": "2026-10-17",
+  "reason": "The documents’ plain names, used where a look names its kind; plain and distinct."
+ },
+ "src/ui/looks/papers.tsx#top": {
+  "status": "Rewritten And Verified",
+  "hash": "281cdc22c3ba",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-g25-1.test.ts, tests/defects-r7-1.test.ts, tests/looks.test.ts"
+ },
+ "src/ui/looks/papers.tsx#whatItDoes": {
+  "status": "Rewritten And Verified",
+  "hash": "5ad66bd6e57b",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-g25-1.test.ts, tests/defects-r7-1.test.ts, tests/looks.test.ts"
+ },
+ "src/ui/papers/Documents.tsx#DocumentList": {
+  "status": "Rewritten And Verified",
+  "hash": "60959d25d540",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
+ },
+ "src/ui/papers/Documents.tsx#IdPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "60f2edcd6498",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
+ },
+ "src/ui/papers/Documents.tsx#KIND_WORD": {
+  "status": "Reviewed And Retained",
+  "hash": "f42966c65c02",
+  "on": "2026-10-17",
+  "reason": "The document kinds as the table names them, plain and distinct."
+ },
+ "src/ui/papers/Documents.tsx#PassportPane": {
+  "status": "Rewritten And Verified",
+  "hash": "fe5eb8d3bece",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel": {
+  "status": "Rewritten And Verified",
+  "hash": "5e324abf0031",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel <documents.naturalize>": {
+  "status": "Reviewed And Retained",
+  "hash": "a19e83dc5f89",
+  "on": "2026-10-17",
+  "reason": "A fallback toast label for a residence command no life reaches (settling, naturalizing and renewing are refused); plain as it stands."
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel <documents.renew_residence>": {
+  "status": "Reviewed And Retained",
+  "hash": "21677df38d7d",
+  "on": "2026-10-17",
+  "reason": "A fallback toast label for a residence command no life reaches (settling, naturalizing and renewing are refused); plain as it stands."
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel <documents.residence>": {
+  "status": "Reviewed And Retained",
+  "hash": "a3e4a569ead0",
+  "on": "2026-10-17",
+  "reason": "A fallback toast label for a residence command no life reaches (settling, naturalizing and renewing are refused); plain as it stands."
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel <documents.settle>": {
+  "status": "Reviewed And Retained",
+  "hash": "7fb3a9b5101b",
+  "on": "2026-10-17",
+  "reason": "A fallback toast label for a residence command no life reaches (settling, naturalizing and renewing are refused); plain as it stands."
+ },
+ "src/ui/papers/Documents.tsx#STATUS_WORD": {
+  "status": "Reviewed And Retained",
+  "hash": "e0cc317e85d2",
+  "on": "2026-10-17",
+  "reason": "A document’s four states, the Status column’s words, plain and distinct."
+ },
+ "src/ui/papers/Documents.tsx#TaxIdPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "ddcd910c0073",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
+ },
+ "src/ui/papers/Documents.tsx#WorkPane": {
+  "status": "Rewritten And Verified",
+  "hash": "85839bad8038",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
+ },
+ "src/ui/papers/Documents.tsx#WorkPane <documents.apply_opt>": {
+  "status": "Rewritten And Verified",
+  "hash": "1570df1f36c0",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#aidWord": {
+  "status": "Reviewed And Retained",
+  "hash": "8a78331eb345",
+  "on": "2026-10-17",
+  "reason": "The three outcomes of a charity care request, as the hospital policy names them."
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#amendWords": {
+  "status": "Reviewed And Retained",
+  "hash": "d219673787c9",
+  "on": "2026-10-17",
+  "reason": "Fragments the amended-return toast reads (“… more tax”, “no change in the total”), plain as they stand."
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#AssistancePanel": {
+  "status": "Rewritten And Verified",
+  "hash": "b23c42387380",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#BenefitsPane": {
+  "status": "Rewritten And Verified",
+  "hash": "91b0a3eadcbc",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#ConditionsPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "34813acd6fa0",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#DentalPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "ba804a9bc77b",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#EiPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "6d3a7df26db6",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#filedWords": {
+  "status": "Rewritten And Verified",
+  "hash": "2da3674d1107",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#HealthPane": {
+  "status": "Rewritten And Verified",
+  "hash": "0fe0918b82a5",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#HomeClaimsPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "1e4f90666602",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#PapersWorkspace": {
+  "status": "Rewritten And Verified",
+  "hash": "3a1625091e6c",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#PensionsPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "d03fe9b86fd7",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#PLAN_STATUS": {
+  "status": "Rewritten And Verified",
+  "hash": "5e6bd316c6b9",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#ReturnLife": {
+  "status": "Rewritten And Verified",
+  "hash": "4d899bf4acab",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane": {
+  "status": "Rewritten And Verified",
+  "hash": "a2fa7b9ab79e",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#STATE_NAMES": {
+  "status": "Reviewed And Retained",
+  "hash": "fa6cc8fb543e",
+  "on": "2026-10-17",
+  "reason": "State names."
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#StatePlanPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "c7a707550fa9",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "54af5c329e34",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#TherapyRow": {
+  "status": "Rewritten And Verified",
+  "hash": "41c458c77293",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#WhoIsOwed": {
+  "status": "Rewritten And Verified",
+  "hash": "00cfe0c91b0d",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#YourDoctor": {
+  "status": "Rewritten And Verified",
+  "hash": "a2f7221584b0",
+  "on": "2026-10-17",
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+ }
+}

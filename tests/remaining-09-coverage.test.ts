@@ -463,7 +463,7 @@ describe('tax.federal_lien_withdraw: an Inherited family’s student who files n
     back.advanceTo(asked + 31 * MS_DAY);
     const after = returnsOf(back.player)['2027']!.lien!;
     expect([after.status, after.withdrawnAt]).toEqual(['withdrawn', asked + 30 * MS_DAY]);
-    expect(titled(back, 'Your Federal Tax Lien Is Withdrawn').map((n) => n.body)).toEqual(['The IRS withdrew the notice of federal tax lien on your 2027 return: it’s as if it had never been filed.']);
+    expect(titled(back, 'Your Federal Tax Lien Is Withdrawn').map((n) => n.body)).toEqual(['The IRS withdrew the notice of federal tax lien on your 2027 return. A withdrawn notice is treated as if it had never been filed.']);
     expect(back.execute({ kind: 'tax.federal_lien_withdraw', payload: { year: 2027 } }).error).toBe('The lien has already been withdrawn.');
 
     // The Wealthy family's twin: the same calendar, an LT11 on 2027 under $10,000, and no lien.

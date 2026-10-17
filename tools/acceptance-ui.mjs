@@ -769,7 +769,7 @@ await step('health: Health Cover names the student’s cover and says the School
   const cover = await statIn(page.locator('section.card', { has: page.getByRole('heading', { name: 'Your Cover', exact: true }) }).first(), 'This Month');
   must(/Yale Health/.test(cover), `Your Cover says “${cover}”`);
   const market = (await page.locator('section.card', { has: page.getByRole('heading', { name: 'The Marketplace', exact: true }) }).first().innerText()).replace(/\s+/g, ' ');
-  const rules = market.match(/From 2027 Medicaid’s work rules[^.]*\./)?.[0] ?? '';
+  const rules = market.match(/From 2027 Medicaid also has work rules\. You meet them[^.]*\./)?.[0] ?? '';
   must(/at the School/.test(rules), `the work rules said: ${rules || market.slice(0, 200)}`);
   must(!/\b80 hours|hours’ work|hours of work/i.test(market), `The Marketplace offers work hours: ${market.match(/.{0,60}(80 hours|hours’ work|hours of work).{0,60}/i)?.[0]}`);
   return `${cover}; ${rules}`;
@@ -1337,9 +1337,9 @@ if (DIR && existsSync(`${DIR}/nonfiler.json`)) {
   await step('[save: nonfiler scenario] papers: Connecticut’s own assessment of a return never filed, and its rules in words', async () => {
     await openSave('nonfiler.json');
     await rail('Papers'); await tab('Tax Returns');
-    const said = page.getByText(/Assessed by Connecticut DRS with no return from you/).first();
+    const said = page.getByText(/Connecticut DRS assessed this year on [A-Z][a-z]+ \d{1,2}, \d{4}, with no return from you/).first();
     must(await said.count(), 'no assessment said');
-    must(await page.getByText(/12% a year, a month or part, simple/).count(), 'no interest in words');
+    must(await page.getByText(/12% a year, simple, for each month or part of one/).count(), 'no interest in words');
     return (await said.innerText()).slice(0, 160);
   });
   await overflow('papers tax (nonfiler save)');
@@ -1572,7 +1572,7 @@ if (DIR && existsSync(`${DIR}/lien.json`)) {
     await rail('Papers'); await tab('Tax Returns');
     must(await lienLine().count(), 'no lien shown');
     const said = await lienLine().innerText();
-    must(/· Filed\./.test(said) && /recorded with the town clerk/.test(said), `lien said: ${said.slice(0, 200)}`);
+    must(/· Filed\./.test(said) && /recorded in the town clerk/.test(said), `lien said: ${said.slice(0, 200)}`);
     const ask = page.getByRole('button', { name: /^Ask For Its Release$/ }).first();
     must(await ask.isDisabled(), 'release offered before it’s paid');
     const why = page.getByText(/once the balance it secures is paid in full/).first();
@@ -1613,7 +1613,7 @@ if (DIR && existsSync(`${DIR}/lien.json`)) {
     await rail('Papers'); await tab('Tax Returns');
     const irs = irsPanel();
     must(await irs.count(), 'no IRS Payment Plan panel');
-    must(await irs.getByText(/federal tax only, a state’s being the state’s, with a plan of its own/).count(), 'the IRS plan panel doesn’t say it covers federal tax only');
+    must(await irs.getByText(/It’s for federal tax only: a state has its own plan for what you owe it\./).count(), 'the IRS plan panel doesn’t say it covers federal tax only');
     const apply = irs.getByRole('button', { name: /^Apply$/ }).first();
     must(await apply.count(), 'no Apply in the IRS plan panel');
     must(!(await apply.isDisabled()), `Apply grayed: ${(await irs.innerText()).slice(-200)}`);

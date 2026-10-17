@@ -311,7 +311,7 @@ describe('tax.ct_filed_in_error', () => {
     expect(drew('tax.lien_dispute')).toEqual([]);
     expect(drew('tax.lien_release').map((c) => [c.disabled, c.title])).toEqual([[true, 'You can ask for its release once the balance it secures is paid in full.']]);
     expect(screen).toContain(SECURED);
-    expect(screen).not.toContain('Filed in error, it’s withdrawn on request');
+    expect(screen).not.toContain('Because it was filed in error, you can ask for it to be withdrawn');
     // GUARD: the command, which the screen no longer sends here.
     const before = still(sim);
     expect(refusal(sim, 'tax.lien_dispute', { state: 'us-ct', year: 2027 })).toBe(SECURED);

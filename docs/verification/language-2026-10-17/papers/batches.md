@@ -1,7 +1,7 @@
 # Papers: Batches
 
 Brief 14, the papers area: 465 sources in 35 files, 53,141 words at the baseline (`d82d38d0`). Every source has a
-status (`docs/text/statuses/papers.json`): 223 rewritten, 242 reviewed and kept. Engine-speak in these files fell from
+status (`docs/text/statuses/papers.json`): 222 rewritten, 243 reviewed and kept. Engine-speak in these files fell from
 73 to 3; the three left are in `src/engine/content/licensepaths.ts`, which nothing reads (defects.md, 5).
 
 The house conventions this pass used throughout, so each batch below doesn't repeat them:
@@ -47,7 +47,12 @@ the IRS plan's statuses (applying vs in force); the lien release toasts (a date 
 `tests/evidence-g02-life.test.ts`, `tests/evidence-g03-life.test.ts`, `tests/evidence-g04-life.test.ts`,
 `tests/state-tax.test.ts`, `tests/tax-places.test.ts`. **Matchers updated in `tools/acceptance-ui.mjs`:** “Apply For The
 Plan”, “Applied: $… a month. Connecticut DRS decides by”, “Asked. It’s to be released by”, “It’s to be released by”
-(twice), “Applied. The IRS answers by”, `/^(Being decided|In force)$/`, `/^Catch Up By$/`.
+(twice), “Applied. The IRS answers by”, `/^(Being decided|In force)$/`, `/^Catch Up By$/`, and, after the
+first acceptance run at the end showed them reading the old words: the work rules' sentence (“From 2027 Medicaid also
+has work rules. You meet them …”), the state's assessment (“Connecticut DRS assessed this year on …, with no return
+from you”), Connecticut's interest (“12% a year, simple, for each month or part of one”), the lien's record (“recorded
+in the town clerk”) and the IRS plan's scope (“It’s for federal tax only: a state has its own plan for what you owe
+it.”). `tests/evidence-g32-ui.test.ts` (What Needs You) reads the return's “File it by …”.
 
 **Screens verified:** the text walk's Papers screens, every tab, on the tax, lien, missed-plan, nonfiler, withdraw and
 brief saves, at 1440 and 390 (`after-1440/`, `after-390/`).
@@ -59,7 +64,7 @@ brief saves, at 1440 and 390 (`after-1440/`, `after-390/`).
 
 **Changed:** every IRS notice body (CP14, CP501, CP503, CP504, LT11, Letter 3172, CP523, CP2566, the levy, the offset,
 the plan's approval, refusal and end, the amended return's), every refusal, the decision on a year's return, the split
-of an older save's single balance; every state's notice body (“{code}: you owe $… on your {year} {state} return. … You can
+of an older save's single balance, the IRS plan's fine-print source (a research file's name was in it); every state's notice body (“{code}: you owe $… on your {year} {state} return. … You can
 pay it on Papers, under Tax Returns.”), its plan refusals and notices, the lien notices, the waiver and three-year
 notices; the state rules' sentences in `content/statetax.ts` (research file names out of the player's sources, “isn’t
 published, so in the game its review takes 30 days”, six estimated-assessment notices “based on” what was reported).
