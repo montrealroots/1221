@@ -1130,7 +1130,7 @@ describe('bank.savings_notice', () => {
     const interest = postedTo(sim, `Interest: ${saver.name}, on closing`, saver.id).reduce((n, a) => n + a, 0);
     expect(postedTo(sim, `Closed ${saver.name}`, giro.id)).toEqual([held + interest]);
     expect(sim.universe.accounts[giro.id]!.balance - giroBefore).toBe(held + interest);
-    expect(titled(sim, `${saver.name} Closed`).map((n) => n.body)).toEqual([`The notice ran out, and what it held is in your ${giro.name} at Postbank.`]);
+    expect(titled(sim, `${saver.name} Closed`).map((n) => n.body)).toEqual([`Its notice period ended, and what it held is now in your ${giro.name} at Postbank.`]);
     expect(sim.player.payments!.standingOrders).toEqual([]);
     expect(sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === 'bank.standing_order')).toEqual([]);
   }, 60_000);
@@ -1155,7 +1155,7 @@ describe('bank.savings_notice', () => {
     const sent = sim.universe.transactions.filter((t) => t.at === notice.at && t.memo === `To ${giro.name} at Commerzbank`).flatMap((t) => t.postings).filter((q) => q.accountId === giro.id).map((q) => q.amount);
     expect(sent).toEqual([held + interest]);
     expect(sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === 'bank.transfer_arrives')).toEqual([]);
-    expect(titled(sim, `${flexgeld.name} Closed`).map((n) => n.body)).toEqual([`The notice ran out, and what it held is in your ${giro.name} at Commerzbank.`]);
+    expect(titled(sim, `${flexgeld.name} Closed`).map((n) => n.body)).toEqual([`Its notice period ended, and what it held is now in your ${giro.name} at Commerzbank.`]);
   }, 60_000);
 });
 

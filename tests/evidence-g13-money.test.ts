@@ -418,7 +418,7 @@ describe('bank.scheduled_payment', () => {
     const closedChase = again.universe.accounts[chase.id]!;
     // A send between banks goes out under "To Capital One: 360 Checking" (in transit) or "To 360 Checking at Capital One".
     const sent = (sim: Simulation) => txns(sim, /^To (Capital One: 360 Checking|360 Checking at Capital One)$/, at - HOUR);
-    expect(notes(again, 'A Scheduled Payment Didn’t Go').map((n) => n.body)).toEqual(['$500.00 to 360 Checking didn’t go: Chase Total Checking is closed.']);
+    expect(notes(again, 'A Scheduled Payment Didn’t Go').map((n) => n.body)).toEqual(['Your $500.00 payment to 360 Checking didn’t go, because Chase Total Checking is closed.']);
     expect(again.universe.transactions.filter((t) => t.at > closedChase.closedAt! && on(t, closedChase) !== 0)).toEqual([]);
     expect(sent(again)).toEqual([]);
     // The twin: $500 out of Chase on the day, into Capital One in Chase's days.
@@ -452,7 +452,7 @@ describe('bank.scheduled_payment', () => {
     run(sim, 'bank.schedule_payment', { fromId: saver.id, toId: current.id, amount: 62_341_00, at: day(9) });
     run(sim, 'bank.schedule_payment', { fromId: saver.id, toId: current.id, amount: 62_339_00, at: day(10) });
     sim.advanceTo(day(10) + HOUR);
-    expect(notes(sim, 'A Scheduled Payment Didn’t Go').map((n) => n.body)).toEqual(['C$62,341.00 to RBC Signature No Limit Banking wasn’t in RBC High Interest eSavings on the day.']);
+    expect(notes(sim, 'A Scheduled Payment Didn’t Go').map((n) => n.body)).toEqual(['Your C$62,341.00 payment to RBC Signature No Limit Banking didn’t go. There wasn’t enough in RBC High Interest eSavings on the day.']);
     expect(txns(sim, 'Savings withdrawal fee: RBC High Interest eSavings').map((t) => t.at)).toEqual([day(8), day(10)]);
     expect(saver.balance).toBe(0);
   });
@@ -472,8 +472,8 @@ describe('bank.scheduled_payment', () => {
     expect(saver.balance).toBe(held - 2_000_00);
     expect(txns(sim, /^Scheduled payment to /).map((t) => [t.at, on(t, saver), on(t, current)])).toEqual([[day(8), -2_000_00, 2_000_00]]);
     expect(notes(sim, 'A Scheduled Payment Didn’t Go').map((n) => n.body)).toEqual([
-      `€2,500.00 to ${current.name} wasn’t in ${saver.name} on the day.`,
-      `€1.00 to ${current.name} wasn’t in ${saver.name} on the day.`,
+      `Your €2,500.00 payment to ${current.name} didn’t go. There wasn’t enough in ${saver.name} on the day.`,
+      `Your €1.00 payment to ${current.name} didn’t go. There wasn’t enough in ${saver.name} on the day.`,
     ]);
   });
 });

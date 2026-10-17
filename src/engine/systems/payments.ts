@@ -170,7 +170,7 @@ function nextOn(sim: Simulation, day: number, after: Instant): Instant {
 function blockedBy(from: Account, to: Account): string | undefined {
   const term = [from, to].find((a) => a.category === 'term');
   if (term) return `${term.name} is a term deposit, locked until its end`;
-  if (from.switchDebt) return `${from.name} is blocked to everything but paying off what it owes, since the switch`;
+  if (from.switchDebt) return `${from.name} has been blocked since the switch, except for paying off what it owes`;
   const dormant = [from, to].find((a) => a.dormant);
   if (dormant) return `${dormant.name} is dormant`;
   const closing = [from, to].find((a) => a.closingAt !== undefined);
@@ -208,12 +208,12 @@ export function registerPayments(sim: Simulation): void {
     if (!open) why = `${to?.name ?? 'The account'} is closed`;
     else if (!current) why = `${source?.name ?? 'The account it pays from'} is closed`;
     else {
-      why = blockedBy(current, open) ?? (current.balance >= order.amount ? undefined : `It wasn’t in ${current.name} on the day`);
+      why = blockedBy(current, open) ?? (current.balance >= order.amount ? undefined : `There wasn’t enough in ${current.name} on the day. Move money into it before the order’s next date`);
       if (!why && current.bankId !== open.bankId) why = sendAcross(s, person, current, open, order.amount);
       else if (!why) s.post({ memo: `Standing order to ${open.name}`, category: 'transfer', postings: [{ accountId: current.id, amount: -order.amount }, { accountId: open.id, amount: order.amount }] });
     }
     if (why && person.id === s.universe.playerId) {
-      s.notify({ category: 'bank', title: 'A Standing Order Didn’t Go', body: `${formatMoney(order.amount, saveCurrency(s.universe))} to ${to?.name ?? 'your savings'}: ${why}, so the bank didn’t make it.`, importance: 50, route: '/workspace/bank' });
+      s.notify({ category: 'bank', title: 'A Standing Order Didn’t Go', body: `Your ${formatMoney(order.amount, saveCurrency(s.universe))} standing order to ${to?.name ?? 'your savings'} didn’t go. ${why}.`, importance: 50, route: '/workspace/bank' });
     }
     s.schedule({ at: nextOn(s, order.day, item.at), kind: STANDING_ORDER_KIND, label: 'Standing Order', category: 'home', priority: 37, payload: { personId: person.id, orderId: order.id } });
   });
@@ -228,7 +228,7 @@ export function registerPayments(sim: Simulation): void {
     if (!from || !to) return;
     // An account closed since it was set: said, not passed over in silence (from 2026-10-10), as a standing order says it.
     if (from.closedAt || to.closedAt) {
-      if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Scheduled Payment Didn’t Go', body: `${formatMoney(amount, saveCurrency(s.universe))} to ${to.name} didn’t go: ${from.closedAt ? from.name : to.name} is closed.`, importance: 50, route: '/workspace/bank' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Scheduled Payment Didn’t Go', body: `Your ${formatMoney(amount, saveCurrency(s.universe))} payment to ${to.name} didn’t go, because ${from.closedAt ? from.name : to.name} is closed.`, importance: 50, route: '/workspace/bank' });
       return;
     }
     // From savings, what it lets out, and its withdrawal fee: until 2026-09-27 neither was read here.
@@ -240,7 +240,7 @@ export function registerPayments(sim: Simulation): void {
       if (!across) s.post({ memo: `Scheduled payment to ${to.name}`, category: 'transfer', postings: [{ accountId: from.id, amount: -amount }, { accountId: to.id, amount }] });
       if (fee > 0) s.post({ memo: `Savings withdrawal fee: ${from.name}`, category: 'bank_fee', postings: [{ accountId: from.id, amount: -fee }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: fee }] });
     } else if (person.id === s.universe.playerId) {
-      s.notify({ category: 'bank', title: 'A Scheduled Payment Didn’t Go', body: refused ? `${formatMoney(amount, saveCurrency(s.universe))} to ${to.name} didn’t go: ${refused}.` : `${formatMoney(amount, saveCurrency(s.universe))} to ${to.name} wasn’t in ${from.name} on the day.`, importance: 50, route: '/workspace/bank' });
+      s.notify({ category: 'bank', title: 'A Scheduled Payment Didn’t Go', body: refused ? `Your ${formatMoney(amount, saveCurrency(s.universe))} payment to ${to.name} didn’t go. ${refused}.` : `Your ${formatMoney(amount, saveCurrency(s.universe))} payment to ${to.name} didn’t go. There wasn’t enough in ${from.name} on the day.`, importance: 50, route: '/workspace/bank' });
     }
   });
 
@@ -264,11 +264,11 @@ export function registerPayments(sim: Simulation): void {
   sim.onCommand<{ toId: string; amount: Money; day: number }, { id: string }>('bank.add_standing_order', (p, { sim: s }) => {
     const person = s.player;
     const to = s.universe.accounts[p.toId];
-    if (!to || to.ownerId !== person.id || to.closedAt || to.kind !== 'savings') throw new CommandError('A standing order of your own goes into one of your savings accounts.');
+    if (!to || to.ownerId !== person.id || to.closedAt || to.kind !== 'savings') throw new CommandError('A standing order can only go into one of your savings accounts.');
     // Until 2026-10-12 a term deposit was taken here, and money went into it every month though the screen never offered it.
-    if (to.category === 'term') throw new CommandError(`${to.name} is a term deposit, locked until its end: a standing order goes into easy-access savings.`);
+    if (to.category === 'term') throw new CommandError(`${to.name} is a term deposit, locked until its end. A standing order goes into easy-access savings.`);
     const amount = Math.round(Number(p.amount));
-    if (!(amount > 0)) throw new CommandError('Say how much each month.');
+    if (!(amount > 0)) throw new CommandError('Enter how much to pay each month.');
     const day = Math.round(Number(p.day));
     if (!(day >= 1 && day <= 31)) throw new CommandError('Pick a day of the month, 1 to 31.');
     const order = { id: s.nextId('sched'), toId: to.id, amount, day };
@@ -279,7 +279,7 @@ export function registerPayments(sim: Simulation): void {
 
   sim.onCommand<{ id: string }, { id: string }>('bank.cancel_standing_order', (p, { sim: s }) => {
     const pay = settle(s.player);
-    if (!pay.standingOrders.some((one) => one.id === p.id)) throw new CommandError('There’s no standing order by that name.');
+    if (!pay.standingOrders.some((one) => one.id === p.id)) throw new CommandError('That standing order no longer exists.');
     pay.standingOrders = pay.standingOrders.filter((one) => one.id !== p.id);
     for (const item of s.universe.scheduled) {
       if (item.kind === STANDING_ORDER_KIND && item.status === 'pending' && item.payload.orderId === p.id) s.timeline.cancel(item.id, s.now);
@@ -292,21 +292,21 @@ export function registerPayments(sim: Simulation): void {
     const from = s.universe.accounts[p.fromId];
     const to = s.universe.accounts[p.toId];
     const mine = (a?: Account) => a && a.ownerId === person.id && !a.closedAt && (a.kind === 'checking' || a.kind === 'savings');
-    if (!mine(from) || !mine(to) || from!.id === to!.id) throw new CommandError('A scheduled payment goes between two of your own accounts.');
+    if (!mine(from) || !mine(to) || from!.id === to!.id) throw new CommandError('A payment set for a date goes between two of your own accounts.');
     // Until 2026-10-12 a term deposit was taken here too, so money went into one, or came out of it with no penalty.
     const term = [from!, to!].find((a) => a.category === 'term');
-    if (term) throw new CommandError(`${term.name} is a term deposit, locked until its end: a payment set for a date goes between your current and easy-access savings accounts.`);
+    if (term) throw new CommandError(`${term.name} is a term deposit, locked until its end. A payment set for a date goes between your current and easy-access savings accounts.`);
     const amount = Math.round(Number(p.amount));
-    if (!(amount > 0)) throw new CommandError('Say how much.');
+    if (!(amount > 0)) throw new CommandError('Enter an amount.');
     const at = Number(p.at);
-    if (!(at > s.now)) throw new CommandError('Pick a day ahead.');
+    if (!(at > s.now)) throw new CommandError('Choose a date in the future.');
     const item = s.schedule({ at, kind: SCHEDULED_KIND, label: `Payment To ${to!.name}`, category: 'home', priority: 37, payload: { personId: person.id, fromId: from!.id, toId: to!.id, amount } });
     return { id: item.id };
   });
 
   sim.onCommand<{ id: string }, { id: string }>('bank.cancel_scheduled', (p, { sim: s }) => {
     const item = s.universe.scheduled.find((one) => one.id === p.id && one.kind === SCHEDULED_KIND && one.status === 'pending' && one.payload.personId === s.player.id);
-    if (!item) throw new CommandError('There’s no payment waiting by that name.');
+    if (!item) throw new CommandError('That payment is no longer scheduled.');
     s.timeline.cancel(item.id, s.now);
     return { id: p.id };
   });

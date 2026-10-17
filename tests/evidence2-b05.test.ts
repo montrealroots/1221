@@ -401,7 +401,7 @@ describe('bank.set_order_source', () => {
     expect(was.cap).toBe(0);
     sim.advanceTo(at(2026, 8, 28, 9, 1));
     expect({ chase: acct(sim, chase).balance, savings: acct(sim, savings).balance, cap: acct(sim, cap).balance, transit: inTransitOf(sim, sim.player).balance }).toEqual(was);
-    expect(titled(sim, 'A Standing Order Didn’t Go').map((n) => [n.at, n.body])).toEqual([[at(2026, 8, 28, 9), '$50.00 to Chase Savings: It wasn’t in 360 Checking on the day, so the bank didn’t make it.']]);
+    expect(titled(sim, 'A Standing Order Didn’t Go').map((n) => [n.at, n.body])).toEqual([[at(2026, 8, 28, 9), 'Your $50.00 standing order to Chase Savings didn’t go. There wasn’t enough in 360 Checking on the day. Move money into it before the order’s next date.']]);
 
     // $100 from Chase, in Chase's three business days: Wednesday 2 September.
     const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase, toId: cap, amount: 100_00 });
@@ -423,7 +423,7 @@ describe('bank.set_order_source', () => {
     const chase = primaryId(sim);
     const cap = run<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'us-capital-one' }).accountId;
     for (const current of [chase, cap]) {
-      expect(refused(sim, 'bank.add_standing_order', { toId: current, amount: 50_00, day: 28 })).toBe('A standing order of your own goes into one of your savings accounts.');
+      expect(refused(sim, 'bank.add_standing_order', { toId: current, amount: 50_00, day: 28 })).toBe('A standing order can only go into one of your savings accounts.');
     }
     const orderId = run<{ id: string }>(sim, 'bank.add_standing_order', { toId: savingsAt(sim, 'us-chase').id, amount: 50_00, day: 28 }).id;
     expect(paymentsOf(sim.player).standingOrders.map((o) => acct(sim, o.toId).kind)).toEqual(['savings']);

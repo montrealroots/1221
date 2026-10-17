@@ -522,8 +522,9 @@ export function endOrdersOf(sim: Simulation, person: Person, account: Account): 
 /** The closing notice's sentence on the standing orders that ended with the account, or nothing. */
 export function endedWords(sim: Simulation, ended: readonly StandingOrder[]): string {
   if (ended.length === 0) return '';
-  const each = ended.map((o) => `${formatMoney(o.amount, saveCurrency(sim.universe))} into ${sim.universe.accounts[o.toId]?.name ?? 'your savings'} on the ${o.day}`);
-  return ` ${ended.length === 1 ? 'Its standing order' : 'Its standing orders'} of ${each.join(' and ')} ended with it: set ${ended.length === 1 ? 'one' : 'them'} up again on How You Pay.`;
+  const nth = (n: number) => { const t = n % 100; return `${n}${t >= 11 && t <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th')}`; };
+  const each = ended.map((o) => `${formatMoney(o.amount, saveCurrency(sim.universe))} into ${sim.universe.accounts[o.toId]?.name ?? 'your savings'} on the ${nth(o.day)}`);
+  return ` ${ended.length === 1 ? 'Its standing order' : 'Its standing orders'} of ${each.join(' and ')} ended with it. You can set ${ended.length === 1 ? 'one' : 'them'} up again on How You Pay.`;
 }
 
 /**
@@ -723,17 +724,17 @@ export function cardYearWords(sim: Simulation, account: Account): string | undef
   if (!bank || !year || account.kind !== 'checking' || account.closedAt !== undefined || account.feesEndedAt !== undefined) return undefined;
   const own = (x: Money) => formatMoney(x, bank.currency);
   const fee = bank.card!.yearly!;
-  const said = [`Its debit card costs ${own(fee)} a year${bank.card!.freeUnder !== undefined ? ` from ${bank.card!.freeUnder}, nothing at ${bank.card!.freeUnder - 1} and under` : ''}.`];
+  const said = [`Its debit card costs ${own(fee)} a year${bank.card!.freeUnder !== undefined ? ` from age ${bank.card!.freeUnder}, and nothing at ${bank.card!.freeUnder - 1} and under` : ''}.`];
   const span = cardYearSpan(sim, account, year);
   if (span && account.cardYearRule) {
     const paid = account.cardFeePaid ?? 0;
     said.push(account.cardYearRule === 'ahead'
-      ? ` This card year began ${dayWords(span.from)}, ${paid > 0 ? `paid ahead with ${own(paid)}` : 'nothing paid for it'}, and runs to ${dayWords(span.next - 1)}; the next is charged ${dayWords(span.next)}.`
-      : ` This card year began ${dayWords(span.from)} and runs to ${dayWords(span.next - 1)}; its fee is charged at its end, ${dayWords(span.next)}.`);
-  } else said.push(year.paid === 'ahead' ? ' The first year is charged ahead, tonight.' : ' The first year begins tonight, its fee charged at its end.');
-  said.push((account.cardYearRule ?? year.paid) === 'ahead' ? ' Closing the account gives back the days of the year left.' : ' Closing the account charges the days of the year used.');
+      ? ` This card year began ${dayWords(span.from)}, ${paid > 0 ? `paid in advance with ${own(paid)}` : 'with nothing paid for it'}, and runs to ${dayWords(span.next - 1)}. The next year is charged ${dayWords(span.next)}.`
+      : ` This card year began ${dayWords(span.from)} and runs to ${dayWords(span.next - 1)}. Its fee is charged at its end, ${dayWords(span.next)}.`);
+  } else said.push(year.paid === 'ahead' ? ' The first year is charged in advance, tonight.' : ' The first year begins tonight, and its fee is charged at its end.');
+  said.push((account.cardYearRule ?? year.paid) === 'ahead' ? ' Closing the account refunds the days left in the year.' : ' Closing the account charges for the days of the year used.');
   if (year.place) said.push(` Its days are counted by ${year.place}’s calendar.`);
-  said.push(' An account that can’t cover the year’s fee is charged it all the same, and goes below zero by what’s short.');
+  said.push(' If the account can’t cover the year’s fee, it’s charged anyway, and the account goes below zero by the difference.');
   if (year.simulated) said.push(` Estimated: ${year.simulated}.`);
   return said.join('');
 }
@@ -947,31 +948,31 @@ export function registerBanking(sim: Simulation): void {
     const mine = bankAccountsOf(s, person);
     const from = mine.find((a) => a.id === p.fromId);
     const to = mine.find((a) => a.id === p.toId);
-    if (!from || !to) throw new CommandError('Money moves here between your own current and savings accounts.');
-    if (from.id === to.id) throw new CommandError('That’s the same account.');
+    if (!from || !to) throw new CommandError('Move Money only moves money between your own current and savings accounts.');
+    if (from.id === to.id) throw new CommandError('From and To are the same account. Choose another account to move it to.');
     const typed = Math.round(Number(p.amount));
-    if (!(typed > 0)) throw new CommandError('Say how much to move.');
+    if (!(typed > 0)) throw new CommandError('Enter how much to move.');
     // In the sending account's own money where it's kept in another (from 2026-10-16): pounds typed are the pounds sent,
     // and the dollars they're worth move in the save's books.
     const save = saveCurrency(s.universe);
     if (p.in !== undefined && p.in !== (from.currency ?? save)) throw new CommandError(`${from.name} is kept in ${from.currency ?? save}.`);
     const own = from.currency !== undefined && p.in === from.currency;
-    if (own && typed > (from.held ?? 0)) throw new CommandError(`${from.name} holds ${formatMoney(Math.max(0, from.held ?? 0), from.currency!, { cents: false })}.`);
+    if (own && typed > (from.held ?? 0)) throw new CommandError(`${from.name} only has ${formatMoney(Math.max(0, from.held ?? 0), from.currency!, { cents: false })} in it.`);
     const amount = own ? (typed === from.held ? from.balance : exchange(typed, from.currency!, save) ?? typed) : typed;
     // Left open by a switch while in debt: blocked to all but repayment (from 2026-10-10).
-    if (from.switchDebt) throw new CommandError(`${from.name} is blocked to everything but paying off what it owes, since the switch.`);
+    if (from.switchDebt) throw new CommandError(`${from.name} has been blocked since the switch, except for paying off what it owes.`);
     if (amount > from.balance) {
-      throw new CommandError(`${from.name} holds ${formatMoney(Math.max(0, from.balance), saveCurrency(s.universe), { cents: false })}.`);
+      throw new CommandError(`${from.name} only has ${formatMoney(Math.max(0, from.balance), saveCurrency(s.universe), { cents: false })} in it.`);
     }
-    if (from.dormant || to.dormant) throw new CommandError(`${(from.dormant ? from : to).name} is dormant; use Reactivate first.`);
+    if (from.dormant || to.dormant) throw new CommandError(`${(from.dormant ? from : to).name} is dormant. Reactivate it first, under Your Accounts Over Time.`);
     const { room, fee: withdrawalFee } = from.kind === 'savings' ? savingsDebit(s, from) : { room: from.balance, fee: 0 };
     const left = savingsLeftThisMonth(s, from);
     if (left !== undefined && amount > left) {
-      throw new CommandError(`${from.name} lets ${formatMoney(left, saveCurrency(s.universe), { cents: false })} more out this month without notice; more takes three months’ notice.`);
+      throw new CommandError(`You can take ${formatMoney(left, saveCurrency(s.universe), { cents: false })} more out of ${from.name} this month without notice. More than that takes three months’ notice.`);
     }
     // The fee comes out beside it: until 2026-09-27 a move of the whole balance left the account overdrawn by the fee.
-    if (amount > room) throw new CommandError(`${from.name} can let ${formatMoney(room, saveCurrency(s.universe), { cents: false })} out, with the ${formatMoney(withdrawalFee, saveCurrency(s.universe))} withdrawal fee.`);
-    if (from.closingAt !== undefined || to.closingAt !== undefined) throw new CommandError(`${(from.closingAt !== undefined ? from : to).name} is closing.`);
+    if (amount > room) throw new CommandError(`With the ${formatMoney(withdrawalFee, saveCurrency(s.universe))} withdrawal fee, you can move at most ${formatMoney(room, saveCurrency(s.universe), { cents: false })} out of ${from.name}.`);
+    if (from.closingAt !== undefined || to.closingAt !== undefined) throw new CommandError(`${(from.closingAt !== undefined ? from : to).name} is closing, so money can’t move into or out of it.`);
     // Between two banks, it goes out now and arrives in the sending bank's days (`systems/bankmoves.ts`, from
     // 2026-10-10); until then it couldn't, and a bank switch moved everything at once.
     const sent = own ? { sent: typed, sentIn: from.currency! } : {};
@@ -994,7 +995,7 @@ export function registerBanking(sim: Simulation): void {
     // At any bank they keep a current account with, one each (from 2026-10-10: until then one savings account in all,
     // at the primary account's bank).
     const bank = p?.bankId ? bankById(String(p.bankId)) : bankOf(s, person);
-    if (!bank || !checkingAt(s, person, bank.id)) throw new CommandError('Savings opens beside a current account of yours at that bank.');
+    if (!bank || !checkingAt(s, person, bank.id)) throw new CommandError('You can only open savings at a bank where you have a current account.');
     // Nothing new at a bank in another country (from 2026-10-16), in its words.
     const abroad = abroadRefusal(person, bank);
     if (abroad) throw new CommandError(abroad);
@@ -1009,7 +1010,7 @@ export function registerBanking(sim: Simulation): void {
     const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
     if (!current || current.closedAt) throw new CommandError('There’s no current account to move the money into.');
     const notice = savingsNotice(s, account);
-    if (notice) throw new CommandError(`Notice is given: ${account.name} closes on ${formatDate(notice.at, s.homeZone)}.`);
+    if (notice) throw new CommandError(`You’ve already given notice: ${account.name} closes on ${formatDate(notice.at, s.homeZone)}.`);
     // More than Germany's monthly allowance takes the law's three months' notice, and it closes then.
     const left = savingsLeftThisMonth(s, account);
     if (left !== undefined && account.balance + Math.floor(account.accrued ?? 0) > left) {
@@ -1031,7 +1032,7 @@ export function registerBanking(sim: Simulation): void {
     // own bank where there is one; found by that day's scope pass).
     const went = closeSavings(s, person, account, current);
     const where = `your ${went.to.name} at ${went.to.institution ?? 'your bank'}`;
-    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${account.name} Closed`, body: went.arrives !== undefined ? `The notice ran out, and what it held is on its way to ${where}, arriving ${formatDate(went.arrives, s.zone)}.` : `The notice ran out, and what it held is in ${where}.`, importance: 50, route: '/workspace/bank' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${account.name} Closed`, body: went.arrives !== undefined ? `Its notice period ended, and what it held is on its way to ${where}. It arrives ${formatDate(went.arrives, s.zone)}.` : `Its notice period ended, and what it held is now in ${where}.`, importance: 50, route: '/workspace/bank' });
   });
 }
 

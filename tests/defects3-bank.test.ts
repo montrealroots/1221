@@ -119,7 +119,7 @@ describe('cash.deposit at a machine reads the card of the bank taking the money'
     const atm = (to: Account) => sim.execute({ kind: 'cash.deposit', payload: { amount: 10_00, toId: to.id, at: 'atm' } });
 
     must(sim, 'card.lock', { which: 'debit', locked: true, accountId: wf.id });
-    expect(atm(wf).error).toBe('Your debit card is locked; the counter can still take it.');
+    expect(atm(wf).error).toBe('Your debit card is locked. You can still pay cash in at the counter.');
     const w0 = wf.balance;
     must(sim, 'cash.deposit', { amount: 10_00, toId: wf.id, at: 'counter' });
     expect(wf.balance).toBe(w0 + 10_00);
@@ -130,7 +130,7 @@ describe('cash.deposit at a machine reads the card of the bank taking the money'
     expect(atm(wf).ok).toBe(true);
     expect(wf.balance).toBe(w0 + 20_00);
     // Savings at Chase reads the card of the Chase account beside it.
-    expect(atm(mine(sim, 'savings', 'us-chase')).error).toBe('Your debit card is locked; the counter can still take it.');
+    expect(atm(mine(sim, 'savings', 'us-chase')).error).toBe('Your debit card is locked. You can still pay cash in at the counter.');
   });
 });
 

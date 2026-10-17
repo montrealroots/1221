@@ -682,5 +682,113 @@
   "why": "'run forward' and the dash",
   "meaningSensitive": false,
   "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "That’s the same account.",
+  "after": "From and To are the same account. Choose another account to move it to.",
+  "why": "said which fields, and the next step",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "Chase Total Checking holds $93,391.",
+  "after": "Chase Total Checking only has $93,391 in it.",
+  "why": "says it's not enough, not just a balance",
+  "meaningSensitive": false,
+  "verified": "tests/bank-moves.test.ts"
+ },
+ {
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "Flexgeld lets €2,000 more out this month without notice; more takes three months’ notice.",
+  "after": "You can take €2,000 more out of Flexgeld this month without notice. More than that takes three months’ notice.",
+  "why": "subject is the player; semicolon split",
+  "meaningSensitive": false,
+  "verified": "tests/integration-savings-notice.test.ts"
+ },
+ {
+  "source": "src/engine/systems/payments.ts#registerPayments",
+  "kind": "notification",
+  "before": "$50.00 to Chase Savings: It wasn’t in Chase Total Checking on the day, so the bank didn’t make it.",
+  "after": "Your $50.00 standing order to Chase Savings didn’t go. There wasn’t enough in Chase Total Checking on the day. Move money into it before the order’s next date.",
+  "why": "leads with what happened, then why, then the next step",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-banking.test.ts"
+ },
+ {
+  "source": "src/engine/systems/accountlife.ts#idleAccounts",
+  "kind": "notification",
+  "before": "Untouched for 24 months. Chase has blocked it until you use it again.",
+  "after": "It hasn’t been used for 24 months, so Chase has blocked it. Reactivate it on Money, under Your Accounts Over Time, to use it again.",
+  "why": "names the real next step: a dormant account refuses being used until it's reactivated",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g10-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/banking.ts#registerBanking",
+  "kind": "notification",
+  "before": "The notice ran out, and what it held is in Postbank Giro.",
+  "after": "Its notice period ended, and what it held is now in Postbank Giro.",
+  "why": "'the notice ran out'",
+  "meaningSensitive": false,
+  "verified": "tests/integration-savings-notice.test.ts"
+ },
+ {
+  "source": "src/engine/systems/banking.ts#endedWords",
+  "kind": "notification",
+  "before": "Its standing order of $50.00 into Chase Savings on the 28 ended with it.",
+  "after": "Its standing order of $50.00 into Chase Savings on the 28th ended with it. You can set one up again on How You Pay.",
+  "why": "the ordinal, and where to set it up again",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-banking.test.ts"
+ },
+ {
+  "source": "src/engine/systems/cash.ts#withdrawalQuote",
+  "kind": "error",
+  "before": "Your debit card is stopped; the counter can still pay out.",
+  "after": "Your debit card is stopped. You can still take cash out at the counter.",
+  "why": "says what the player can still do",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/cash.ts#withdrawalQuote",
+  "kind": "error",
+  "before": "Chase lets $1,000.00 out of machines in a day, and $1,000.00 has come out today.",
+  "after": "Chase lets you take $1,000.00 a day out of machines, and you’ve taken $1,000.00 today.",
+  "why": "the player as the subject",
+  "meaningSensitive": false,
+  "verified": "tests/cash.test.ts"
+ },
+ {
+  "source": "src/engine/systems/statements.ts#registerStatements <bank.set_alerts>",
+  "kind": "error",
+  "before": "Set the low balance as an amount, or turn it off.",
+  "after": "Enter the low balance alert as an amount, or leave it blank to turn it off.",
+  "why": "how the field turns it off",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/accountlife.ts#registerAccountLife",
+  "kind": "notification",
+  "before": "On the notice given: $1,004.00 to your current account, after $3.00 taken for closing early.",
+  "after": "Your notice period ended: $1,004.00 went to your current account, after a $3.00 penalty for closing early.",
+  "why": "a sentence with a subject; the penalty named",
+  "meaningSensitive": false,
+  "verified": "tests/accountlife.test.ts"
+ },
+ {
+  "source": "src/engine/systems/payments.ts#registerPayments <bank.schedule_payment>",
+  "kind": "error",
+  "before": "Pick a day ahead.",
+  "after": "Choose a date in the future.",
+  "why": "plain",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
  }
 ]

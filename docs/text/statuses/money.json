@@ -1,4 +1,190 @@
 {
+ "src/engine/systems/accountlife.ts#breakQuote": {
+  "status": "Reviewed And Retained",
+  "hash": "9d61b70130ef",
+  "on": "2026-10-17",
+  "reason": "'… doesn’t let a term deposit be broken before its end.': plain, names the bank and the rule"
+ },
+ "src/engine/systems/accountlife.ts#breakTerm": {
+  "status": "Reviewed And Retained",
+  "hash": "28eea0865af5",
+  "on": "2026-10-17",
+  "reason": "statement memos and account keys (Bank Fees, Interest, Tax On Interest) that statements, lending.ts and the year's totals match by name; plain already (Early Withdrawal Penalty, … broken early)"
+ },
+ "src/engine/systems/accountlife.ts#cancelRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "a842fd410b33",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g13-money.test.ts and tests/remaining-banking.test.ts (… are more than it holds. Pay in … first.)"
+ },
+ "src/engine/systems/accountlife.ts#cancelWords": {
+  "status": "Reviewed And Retained",
+  "hash": "d4cf0e0af276",
+  "on": "2026-10-17",
+  "reason": "the fragments of Cancel It's line (its money back with its interest, … less the fees it owes, with anything spent still to repay): plain, each the outcome cancelRefusal computes"
+ },
+ "src/engine/systems/accountlife.ts#creditInterest": {
+  "status": "Reviewed And Retained",
+  "hash": "376e315a4b81",
+  "on": "2026-10-17",
+  "reason": "statement memos and account keys (Bank Fees, Interest, Tax On Interest) that statements, lending.ts and the year's totals match by name; plain already"
+ },
+ "src/engine/systems/accountlife.ts#END_WORDS": {
+  "status": "Reviewed And Retained",
+  "hash": "747816fb2bfc",
+  "on": "2026-10-17",
+  "reason": "'renews for the same term at the bank’s rate on the day', 'moves, with its interest, into the bank’s easy-access savings', 'is paid, with its interest, into your current account': plain, and quoted after 'On … it' by the panel, the notice and the guide"
+ },
+ "src/engine/systems/accountlife.ts#endTerm": {
+  "status": "Reviewed And Retained",
+  "hash": "6c4deb0aa890",
+  "on": "2026-10-17",
+  "reason": "statement memos and account keys (Bank Fees, Interest, Tax On Interest) that statements, lending.ts and the year's totals match by name; plain already (… ended, into …; Interest: …, reinvested)"
+ },
+ "src/engine/systems/accountlife.ts#idleAccounts": {
+  "status": "Rewritten And Verified",
+  "hash": "e420a065c39a",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g10-money.test.ts (… Is Dormant: It hasn’t been used for … months, so … has blocked it. Reactivate it on Money, under Your Accounts Over Time…; Unclaimed Money: … left unused in … for … years went to …); the escheat question's detail and Keep The Account read in code and in tests/guide-examples-money.test.ts (Keep The Account pressed)"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife": {
+  "status": "Rewritten And Verified",
+  "hash": "6117ef9615dc",
+  "on": "2026-10-17",
+  "evidence": "tests/accountlife.test.ts (Your … Closed: Your notice period ended: … went to your current account, after a … penalty for closing early.)"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.break_term>": {
+  "status": "Rewritten And Verified",
+  "hash": "0c41c5990e26",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g10-money.test.ts (It already closes on …, on the notice you gave.)"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.cancel_new>": {
+  "status": "Reviewed And Retained",
+  "hash": "3d4390559a17",
+  "on": "2026-10-17",
+  "reason": "'That isn’t one of your accounts.', 'Its cooling-off period has passed, or there isn’t one here for it.', 'Your primary current account can’t be canceled. Make another account primary first.': each says why and, where there is one, the next step"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.claim_unclaimed>": {
+  "status": "Reviewed And Retained",
+  "hash": "3c864607e767",
+  "on": "2026-10-17",
+  "reason": "'No money of yours is held as unclaimed.': plain"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.reactivate>": {
+  "status": "Reviewed And Retained",
+  "hash": "d23ace4b54db",
+  "on": "2026-10-17",
+  "reason": "'That account isn’t dormant.': plain and specific"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.set_term_end>": {
+  "status": "Rewritten And Verified",
+  "hash": "0cef3fb9c2d1",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'refuses a payment set for a date, an alert, a term deposit command and cash in their own words' (That isn’t one of your term deposits.)"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.take_term_interest>": {
+  "status": "Reviewed And Retained",
+  "hash": "45361e5db4cd",
+  "on": "2026-10-17",
+  "reason": "'… pays a term deposit’s interest at its end.' and 'It hasn’t earned anything to take yet.': plain, each says why Take The Interest So Far can't run"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <world.day_rollover>": {
+  "status": "Rewritten And Verified",
+  "hash": "101aab3fb130",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g10-money.test.ts and tests/remaining-banking.test.ts (Your … Ends Soon: On … it renews …; You can change that until …)"
+ },
+ "src/engine/systems/accountlife.ts#unclaimedLaw": {
+  "status": "Reviewed And Retained",
+  "hash": "0f8a57850688",
+  "on": "2026-10-17",
+  "reason": "the unclaimed-property office's name and its law's source line (Conn. Gen. Stat. §3-57a), shown as the Source line: a citation, kept as written"
+ },
+ "src/engine/systems/banking.ts#cardYearWords": {
+  "status": "Rewritten And Verified",
+  "hash": "e885f8c66e3e",
+  "on": "2026-10-17",
+  "evidence": "tests/decisions-arion.test.ts (This card year began …, paid in advance with …; Closing the account refunds the days left in the year.)"
+ },
+ "src/engine/systems/banking.ts#closeSavings": {
+  "status": "Rewritten And Verified",
+  "hash": "364b3dc46c3a",
+  "on": "2026-10-17",
+  "evidence": "tests/integration-savings-notice.test.ts and tests/scope-money.test.ts (Its notice period ended, and what it held is …); tests/accountlife.test.ts (You’ve already given notice)"
+ },
+ "src/engine/systems/banking.ts#closingFeesWords": {
+  "status": "Reviewed And Retained",
+  "hash": "962c3514ab19",
+  "on": "2026-10-17",
+  "reason": "the German closing-fee sentence (“Closing it now charges its fees to the day, …: …. German law charges a month’s fee only to the day an account closes.”) is already plain and every figure is read from closingFeesDue; the guide quotes it as it stands"
+ },
+ "src/engine/systems/banking.ts#endedWords": {
+  "status": "Rewritten And Verified",
+  "hash": "3c8f4dff0464",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-banking.test.ts (Its standing order of … on the 28th ended with it. You can set one up again on How You Pay.)"
+ },
+ "src/engine/systems/banking.ts#feesWords": {
+  "status": "Reviewed And Retained",
+  "hash": "eadabd68aaba",
+  "on": "2026-10-17",
+  "reason": "the same sentence's parts (kept for the quarter’s closing, for last month, due on the 1st, is waived so far): plain, each one the state of the month's fee"
+ },
+ "src/engine/systems/banking.ts#payInterest": {
+  "status": "Reviewed And Retained",
+  "hash": "376e315a4b81",
+  "on": "2026-10-17",
+  "reason": "statement memos and account keys (Bank Fees, Interest, Tax On Interest) that statements, lending.ts and the year's totals match by name; plain already"
+ },
+ "src/engine/systems/banking.ts#rebank": {
+  "status": "Reviewed And Retained",
+  "hash": "036a27e74459",
+  "on": "2026-10-17",
+  "reason": "' Credit Card', the suffix of a card account's name when a save is rebanked: a product name, as the bank spells it"
+ },
+ "src/engine/systems/banking.ts#registerBanking": {
+  "status": "Rewritten And Verified",
+  "hash": "47787455b409",
+  "on": "2026-10-17",
+  "evidence": "tests/integration-savings-notice.test.ts (… Closed: Its notice period ended, and what it held is now in …)"
+ },
+ "src/engine/systems/banking.ts#registerBanking <bank.close_savings>": {
+  "status": "Rewritten And Verified",
+  "hash": "26e642b3f9b6",
+  "on": "2026-10-17",
+  "evidence": "tests/accountlife.test.ts and tests/integration-savings-notice.test.ts (You’ve already given notice: … closes on …)"
+ },
+ "src/engine/systems/banking.ts#registerBanking <bank.open_savings>": {
+  "status": "Rewritten And Verified",
+  "hash": "abc527435d77",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'refuses a move, savings and a standing order …' (You already have a savings account at Chase.; You can only open savings at a bank where you have a current account.)"
+ },
+ "src/engine/systems/banking.ts#registerBanking <bank.transfer>": {
+  "status": "Rewritten And Verified",
+  "hash": "cbea8fa12f8e",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'refuses a move, savings and a standing order in words that name the obstacle, and moves nothing'; tests/evidence-g12-money.test.ts and tests/home-account-transfers.test.ts (… only has … in it.); tests/evidence-g10-money.test.ts (Reactivate it first, under Your Accounts Over Time)"
+ },
+ "src/engine/systems/banking.ts#registerBanking <world.day_rollover>": {
+  "status": "Reviewed And Retained",
+  "hash": "56ef4cab4752",
+  "on": "2026-10-17",
+  "reason": "statement memos and account keys (Bank Fees, Interest, Tax On Interest) that statements, lending.ts and the year's totals match by name; plain already; ' at the close.' finishes a memo"
+ },
+ "src/engine/systems/banking.ts#scheduleMonthEnd": {
+  "status": "Reviewed And Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-17",
+  "reason": "the label of an engine-scheduled event (category 'system'): no screen lists those (Home lists only school items, the calendar legend leaves system out), and no text walk has shown one"
+ },
+ "src/engine/systems/banking.ts#settleFees": {
+  "status": "Reviewed And Retained",
+  "hash": "a407a62abe58",
+  "on": "2026-10-17",
+  "reason": "statement memos and account keys (Bank Fees, Interest, Tax On Interest) that statements, lending.ts and the year's totals match by name; plain already"
+ },
  "src/engine/systems/bankmoves.ts#closedByBank": {
   "status": "Rewritten And Verified",
   "hash": "01673e889f10",
@@ -101,6 +287,84 @@
   "on": "2026-10-17",
   "reason": "Statement memos ('To Capital One: 360 Checking') and the calendar item 'Money Arrives From Your Other Bank': plain, and a memo is stored on each save's ledger lines, where tests and the guide read it back by its words"
  },
+ "src/engine/systems/cash.ts#registerCash <cash.deposit>": {
+  "status": "Rewritten And Verified",
+  "hash": "640b2e84d566",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g12-money.test.ts and tests/defects3-bank.test.ts (Your debit card is locked/stopped/hasn’t arrived yet. You can still pay cash in at the counter.; … is dormant. Reactivate it first, under Your Accounts Over Time.)"
+ },
+ "src/engine/systems/cash.ts#registerCash <cash.withdraw>": {
+  "status": "Rewritten And Verified",
+  "hash": "c2ff671acd5e",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'refuses a payment set for a date, an alert, a term deposit command and cash in their own words' (Enter an amount.; Choose where to take it from: …); tests/evidence-g12-money.test.ts"
+ },
+ "src/engine/systems/cash.ts#walletOf [cash]": {
+  "status": "Reviewed And Retained",
+  "hash": "7c86c81e9979",
+  "on": "2026-10-17",
+  "reason": "'Cash In Hand', the wallet account's name, shown on Net Worth and statements: plain"
+ },
+ "src/engine/systems/cash.ts#withdrawalQuote": {
+  "status": "Rewritten And Verified",
+  "hash": "9cbbee3a74d2",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g12-money.test.ts (… of its limit left, and this needs …; The card lets you take … out as cash; You can still take cash out at the counter); tests/cash.test.ts (… a day out of machines …); tests/home-account-abroad.test.ts (HSBC Bank Account only has £… ($…) in it.)"
+ },
+ "src/engine/systems/payments.ts#armPayments": {
+  "status": "Reviewed And Retained",
+  "hash": "fa7b6a2fad5b",
+  "on": "2026-10-17",
+  "reason": "'Payment To …' and 'Standing Order To …': calendar labels in Title Case, plain"
+ },
+ "src/engine/systems/payments.ts#blockedBy": {
+  "status": "Rewritten And Verified",
+  "hash": "efc3a4cd4cee",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-banking.test.ts and tests/evidence2-b05.test.ts (A Standing Order Didn’t Go: … didn’t go. … is dormant/closing …)"
+ },
+ "src/engine/systems/payments.ts#coveredBanks": {
+  "status": "Reviewed And Retained",
+  "hash": "32292255465d",
+  "on": "2026-10-17",
+  "reason": "a list of bank names joined with and, quoted inside the link's refusal"
+ },
+ "src/engine/systems/payments.ts#registerPayments": {
+  "status": "Rewritten And Verified",
+  "hash": "ad34be23c990",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-banking.test.ts, tests/evidence2-b05.test.ts and tests/evidence-g13-money.test.ts (Your $… standing order to … didn’t go. There wasn’t enough in … on the day. Move money into it before the order’s next date.; A Scheduled Payment Didn’t Go)"
+ },
+ "src/engine/systems/payments.ts#registerPayments <bank.add_standing_order>": {
+  "status": "Rewritten And Verified",
+  "hash": "e6f342e7c90c",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'refuses a move, savings and a standing order …' (Enter how much to pay each month.; Pick a day of the month, 1 to 31.); tests/evidence2-b05.test.ts (A standing order can only go into one of your savings accounts.)"
+ },
+ "src/engine/systems/payments.ts#registerPayments <bank.cancel_scheduled>": {
+  "status": "Rewritten And Verified",
+  "hash": "2dc9db315fbb",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'refuses a payment set for a date, …' (That payment is no longer scheduled.)"
+ },
+ "src/engine/systems/payments.ts#registerPayments <bank.cancel_standing_order>": {
+  "status": "Rewritten And Verified",
+  "hash": "676bea19f007",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'refuses a move, savings and a standing order …' (That standing order no longer exists.); tests/evidence-g14-money.test.ts"
+ },
+ "src/engine/systems/payments.ts#registerPayments <bank.schedule_payment>": {
+  "status": "Rewritten And Verified",
+  "hash": "89e050bf1ae7",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'refuses a payment set for a date, an alert, a term deposit command and cash in their own words' (A payment set for a date goes between two of your own accounts.; Enter an amount.; Choose a date in the future.)"
+ },
+ "src/engine/systems/payments.ts#registerPayments <bank.set_payments>": {
+  "status": "Reviewed And Retained",
+  "hash": "c808c793309c",
+  "on": "2026-10-17",
+  "reason": "'Everyday spending goes in cash, on the debit card or on the credit card.' and 'There’s no savings account at … to cover …': plain, each names the choice or what's missing"
+ },
  "src/engine/systems/routing.ts#closeHold": {
   "status": "Rewritten And Verified",
   "hash": "cf775a013225",
@@ -130,6 +394,102 @@
   "hash": "64663dc47680",
   "on": "2026-10-17",
   "reason": "'Yale’s payroll', the one payer a change of deposit names apart: plain"
+ },
+ "src/engine/systems/spending.ts#arrearsAccount [loan]": {
+  "status": "Reviewed And Retained",
+  "hash": "185bc034120b",
+  "on": "2026-10-17",
+  "reason": "'Bills Owed' and 'Unpaid': the arrears account's name and status, plain; matched by name in Owed"
+ },
+ "src/engine/systems/spending.ts#buyTheDaysFood": {
+  "status": "Reviewed And Retained",
+  "hash": "432167396248",
+  "on": "2026-10-17",
+  "reason": "the groceries memos and the No Money For Food Today notice: it says the price, that nothing was left to pay with, and what it means for the day; plain"
+ },
+ "src/engine/systems/spending.ts#CANT_AFFORD": {
+  "status": "Reviewed And Retained",
+  "hash": "ea27a50063b3",
+  "on": "2026-10-17",
+  "reason": "'You can’t afford it.': plain and true where it's said (the account, linked savings, its overdraft and the card together can't pay). The health area's guide (content/guide/body.ts) quotes these words verbatim, so a change is for the coordinator with that area (money/glossary.md, For The Coordinator)."
+ },
+ "src/engine/systems/spending.ts#CASH_UNSPENT": {
+  "status": "Reviewed And Retained",
+  "hash": "957440a30f8e",
+  "on": "2026-10-17",
+  "reason": "Says why cash on hand wasn't spent and the setting that spends it, by its real labels. The health area's guide (content/guide/body.ts) quotes these words verbatim, so a change is for the coordinator with that area (money/glossary.md, For The Coordinator)."
+ },
+ "src/engine/systems/spending.ts#drawFromBank": {
+  "status": "Reviewed And Retained",
+  "hash": "940b9e90bf59",
+  "on": "2026-10-17",
+  "reason": "'Bank Fees', the nominal expense account's key, matched by name"
+ },
+ "src/engine/systems/spending.ts#EXPENSE_LINE": {
+  "status": "Reviewed And Retained",
+  "hash": "de1d64bdf4d4",
+  "on": "2026-10-17",
+  "reason": "Where It Went's spending kinds (Food, Union Dues, Medical Care, Tax Paid, Work Costs, School, Documents And Their Fees): plain Title Case labels, and nominal account names matched in code"
+ },
+ "src/engine/systems/spending.ts#expenseFor": {
+  "status": "Reviewed And Retained",
+  "hash": "6e6a6f2086bb",
+  "on": "2026-10-17",
+  "reason": "'Other', the catch-all spending kind: plain"
+ },
+ "src/engine/systems/spending.ts#settleArrears": {
+  "status": "Reviewed And Retained",
+  "hash": "1da8e65c37a5",
+  "on": "2026-10-17",
+  "reason": "'Paid back what was owed', a statement memo: plain"
+ },
+ "src/engine/systems/spending.ts#spend": {
+  "status": "Reviewed And Retained",
+  "hash": "fbfb8fd2b6b3",
+  "on": "2026-10-17",
+  "reason": "'Food', the nominal account's key, matched by name"
+ },
+ "src/engine/systems/spending.ts#spendRefusal": {
+  "status": "Reviewed And Retained",
+  "hash": "ee0de475d6c4",
+  "on": "2026-10-17",
+  "reason": "Each names the card's state and what else couldn't pay. The health area's guide (content/guide/body.ts) quotes these words verbatim, so a change is for the coordinator with that area (money/glossary.md, For The Coordinator)."
+ },
+ "src/engine/systems/statements.ts#cardPeriods": {
+  "status": "Reviewed And Retained",
+  "hash": "1cc4e9364e34",
+  "on": "2026-10-17",
+  "reason": "card statement period names (a statement's dates): plain"
+ },
+ "src/engine/systems/statements.ts#MONTHS": {
+  "status": "Reviewed And Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-17",
+  "reason": "month names, as the calendar spells them"
+ },
+ "src/engine/systems/statements.ts#periodsOf": {
+  "status": "Reviewed And Retained",
+  "hash": "3101ad7e80c8",
+  "on": "2026-10-17",
+  "reason": "statement period names (a month and year, a quarter): plain"
+ },
+ "src/engine/systems/statements.ts#registerStatements <bank.set_alerts>": {
+  "status": "Rewritten And Verified",
+  "hash": "ed28314c357d",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'refuses a payment set for a date, an alert, …' (Enter the low balance alert as an amount, or leave it blank to turn it off.)"
+ },
+ "src/engine/systems/statements.ts#registerStatements <world.day_rollover>": {
+  "status": "Reviewed And Retained",
+  "hash": "1dd4498f196f",
+  "on": "2026-10-17",
+  "reason": "the alerts' titles and lines (Low Balance, A Large Payment, Short For A Payment), each naming the account, the amount and the date; tests/guide-examples-money.test.ts presses through A Large Payment"
+ },
+ "src/engine/systems/statements.ts#statementReady": {
+  "status": "Reviewed And Retained",
+  "hash": "ca23b81bb0af",
+  "on": "2026-10-17",
+  "reason": "the Statement Ready alert's title and line (… Statement Ready: …): plain"
  },
  "src/ui/bank/BankAccountLife.tsx#BankAccountLife": {
   "status": "Rewritten And Verified",

@@ -220,7 +220,7 @@ describe('the exploits the old switch allowed', () => {
     const chase = primary(sim);
     fund(sim, chase.id, 1_000_00);
     const cap = sim.universe.accounts[run<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'us-capital-one' }).accountId]!;
-    expect(refused(sim, 'bank.transfer', { fromId: chase.id, toId: cap.id, amount: chase.balance + 1 })).toMatch(/holds/);
+    expect(refused(sim, 'bank.transfer', { fromId: chase.id, toId: cap.id, amount: chase.balance + 1 })).toMatch(/only has/);
     const before = worth(sim);
     const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase.id, toId: cap.id, amount: 200_00 });
     expect(worth(sim)).toBe(before);

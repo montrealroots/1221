@@ -50,7 +50,7 @@ describe('taking cash out', () => {
     expect(run(sim, 'cash.withdraw', { amount: daily, from: 'atm' }).ok).toBe(true);
     const over = run(sim, 'cash.withdraw', { amount: 1_00, from: 'other_atm' });
     expect(over.ok).toBe(false);
-    expect(over.error).toMatch(/in a day/);
+    expect(over.error).toMatch(/a day out of machines/);
     expect(run(sim, 'cash.withdraw', { amount: 2_000_00, from: 'counter' }).ok).toBe(true);
     sim.advanceBy(MS_DAY);
     expect(run(sim, 'cash.withdraw', { amount: 1_00, from: 'atm' }).ok).toBe(true);

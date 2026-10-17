@@ -356,7 +356,7 @@ describe('bank.break_term', () => {
     const closing = accountLife(sim, 'gb-natwest');
     expect(closing.text).toContain('It closes on February 9, 2026, on the notice you gave.');
     expect(closing.button('Give 35 Days’ Notice').disabled).toBe(true);
-    expect(refused(sim, 'bank.break_term', { accountId })).toBe('It closes on February 9, 2026, on the notice given.');
+    expect(refused(sim, 'bank.break_term', { accountId })).toBe('It already closes on February 9, 2026, on the notice you gave.');
     sim.advanceTo(asked + 34 * MS_DAY);
     expect(term.closedAt).toBeUndefined();
     sim.advanceTo(asked + 36 * MS_DAY);
@@ -366,7 +366,7 @@ describe('bank.break_term', () => {
     expect(posted(sim, current, 'Fixed-Term Savings broken early')).toEqual([{ at: term.closedAt!, amount: 10_000_00 }]);
     // The £10,000 is what arrived, the charge already taken: until the third round of 2026-10-13 the notice said “less”
     // it, which read as less than £10,000 to come (defect 57 of that round).
-    expect(notices(sim, 'Your Fixed-Term Savings Closed')[0]!.body).toMatch(/^On the notice given: £10,000\.00 to your current account, after £\d+\.\d\d taken for closing early\.$/);
+    expect(notices(sim, 'Your Fixed-Term Savings Closed')[0]!.body).toMatch(/^Your notice period ended: £10,000\.00 went to your current account, after a £\d+\.\d\d penalty for closing early\.$/);
   });
 });
 
@@ -391,7 +391,7 @@ describe('bank.claim_unclaimed', () => {
     const letter = Object.values(sim.universe.decisions).find((d) => d.refType === 'unclaimed-notice' && d.refId === savings.id)!;
     expect(letter.detail).toContain('it goes to the state’s unclaimed-property office as unclaimed money.');
     const whole = `$${Math.round(held / 100).toLocaleString('en-US')}`;
-    expect(notices(sim, 'Unclaimed Money').map((n) => n.body)).toEqual([`${whole} left untouched in Chase Savings for 3 years went to the state’s unclaimed-property office. It can be claimed back from that office.`]);
+    expect(notices(sim, 'Unclaimed Money').map((n) => n.body)).toEqual([`${whole} left unused in Chase Savings for 3 years went to the state’s unclaimed-property office. It can be claimed back from that office.`]);
     for (const words of [letter.detail, notices(sim, 'Unclaimed Money')[0]!.body]) expect(words).not.toMatch(/New York|Comptroller|yes, from/);
 
     const again = reload(sim);
@@ -404,7 +404,7 @@ describe('bank.claim_unclaimed', () => {
     expect(screen.text).not.toMatch(/New York|Comptroller|yes, from/);
     // The rules shown are Connecticut’s, by its statute, which gives the three years taken: until the third round of
     // 2026-10-13 they were New York’s research, a law firm’s note on its Comptroller (defect 58 of that round).
-    expect(screen.text).toContain('The country’s rules: each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, 2026-10-13), and SLATE takes the three years for every state.');
+    expect(screen.text).toContain('The country’s rules: each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, 2026-10-13); the game uses the three years for every state.');
     expect(screen.text).not.toContain('cullenllp');
     const b0 = bank.balance;
     screen.button('Claim It Back').onClick!();
@@ -807,18 +807,18 @@ describe('bank.reactivate', () => {
     sim.advanceTo(at(2028, 9, 1));
     expect([capital.dormant, savings.dormant]).toEqual([true, true]);
     for (const name of ['360 Checking', '360 Performance Savings']) {
-      expect(notices(sim, `${name} Is Dormant`).map((n) => ({ at: n.at, body: n.body }))).toEqual([{ at: at(2028, 9, 1, 0), body: 'Untouched for 24 months. Capital One has blocked it until you use it again.' }]);
+      expect(notices(sim, `${name} Is Dormant`).map((n) => ({ at: n.at, body: n.body }))).toEqual([{ at: at(2028, 9, 1, 0), body: 'It hasn’t been used for 24 months, so Capital One has blocked it. Reactivate it on Money, under Your Accounts Over Time, to use it again.' }]);
     }
     // Capital One stops the interest on an account it holds dormant.
     const stopped = savings.accrued;
     sim.advanceTo(at(2028, 9, 2));
     expect(savings.accrued).toBe(stopped);
     // Every way in refused: Move Money out, cash in, and the ATM once 360 Checking is primary again.
-    expect(refused(sim, 'bank.transfer', { fromId: savings.id, toId: capital.id, amount: 100_00 })).toBe('360 Performance Savings is dormant; use Reactivate first.');
+    expect(refused(sim, 'bank.transfer', { fromId: savings.id, toId: capital.id, amount: 100_00 })).toBe('360 Performance Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
     sim.must({ kind: 'cash.withdraw', payload: { amount: 200_00, from: 'atm' } });
-    expect(refused(sim, 'cash.deposit', { amount: 100_00, toId: savings.id, at: 'counter' })).toBe('360 Performance Savings is dormant; use Reactivate first.');
+    expect(refused(sim, 'cash.deposit', { amount: 100_00, toId: savings.id, at: 'counter' })).toBe('360 Performance Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
     sim.must({ kind: 'bank.set_primary', payload: { accountId: capital.id } });
-    expect(refused(sim, 'cash.withdraw', { amount: 100_00, from: 'atm' })).toBe('360 Checking is dormant; use Reactivate first.');
+    expect(refused(sim, 'cash.withdraw', { amount: 100_00, from: 'atm' })).toBe('360 Checking is dormant. Reactivate it first, under Your Accounts Over Time.');
     expect(refused(sim, 'bank.reactivate', { accountId: citi.id })).toBe('That account isn’t dormant.');
 
     // Your Accounts Over Time, as the player has it: a line and a Reactivate for each.

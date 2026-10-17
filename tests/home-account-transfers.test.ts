@@ -216,7 +216,7 @@ describe('refusals, in words', () => {
   it('says what the bank or the research leaves out', async () => {
     const barclays = await make(london('gb-barclays'));
     expect(refused(barclays, 'bank.transfer', { fromId: at(barclays, 'gb-barclays', 'checking').id, toId: at(barclays, 'us-chase', 'checking').id, amount: 100_000, in: 'GBP' }))
-      .toBe('Barclays Bank Account holds £0.');
+      .toBe('Barclays Bank Account only has £0 in it.');
     const mizuho = await make(life({ homeRegionId: 'jp-13-tokyo', priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: 'jp-mizuho' }));
     expect(refused(mizuho, 'bank.transfer', { fromId: at(mizuho, 'jp-mizuho', 'savings').id, toId: at(mizuho, 'us-chase', 'checking').id, amount: 100_000, in: 'JPY' }))
       .toBe('Mizuho’s app and Direct banking aren’t open to a non-resident, and its counters are in Japan.');

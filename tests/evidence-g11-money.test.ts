@@ -911,7 +911,7 @@ describe('card.lock', () => {
     expect(primary(sim).plastic!.locked).toBe(true);
     expect(card.plastic!.locked).toBe(true);
     expect(cardRoom(sim.player, card)).toBe(0);
-    expect(refusal(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' })).toBe('Your debit card is locked.');
+    expect(refusal(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' })).toBe('Your debit card is locked. Unlock it under Your Cards, or take cash out at the counter.');
     ok(sim, 'cash.withdraw', { amount: 20_00, from: 'counter' });
     expect(walletOf(sim)!.balance).toBe(20_00);
     ok(sim, 'card.lock', { which: 'debit', locked: false });
@@ -932,7 +932,7 @@ describe('card.lock', () => {
     sim.advanceTo(arrivesAt + MS_HOUR);
     expect(primary(sim).plastic!.stopped).toBeUndefined();
     expect(ok<{ locked: boolean }>(sim, 'card.lock', { which: 'debit', locked: true }).locked).toBe(true);
-    expect(refusal(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' })).toBe('Your debit card is locked.');
+    expect(refusal(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' })).toBe('Your debit card is locked. Unlock it under Your Cards, or take cash out at the counter.');
   });
 });
 

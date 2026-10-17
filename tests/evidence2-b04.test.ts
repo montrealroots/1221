@@ -264,7 +264,7 @@ describe('bank.break_term', () => {
     expect(between(sim, term, barclays)).toEqual([]);
     // The £10,000.00 is what arrived, the charge already taken: until 2026-10-13 this held “less £39.41”, which read as
     // £9,960.59 to come (defect 57 of that day’s third round).
-    expect(notes(sim, 'Your Fixed-Term Savings Closed').map((n) => n.body)).toEqual([`On the notice given: £10,000.00 to your current account, after £${(CHARGE / 100).toFixed(2)} taken for closing early.`]);
+    expect(notes(sim, 'Your Fixed-Term Savings Closed').map((n) => n.body)).toEqual([`Your notice period ended: £10,000.00 went to your current account, after a £${(CHARGE / 100).toFixed(2)} penalty for closing early.`]);
     // No Early Withdrawal Penalty: the charge came out of the interest, none from the deposit.
     expect(moved(sim, sim.nominalAccount('expense', 'Early Withdrawal Penalty'), 'Fixed-Term Savings broken early')).toEqual([]);
     expect(draw(sim, createElement(BankAccountLife, { bankId: 'gb-natwest' })).text).not.toContain('Fixed-Term Savings, £10,000.00');
@@ -298,7 +298,7 @@ describe('bank.break_term', () => {
     ]);
     expect(between(sim, term, select)).toHaveLength(1); // its opening, from the NatWest account, and nothing since
     expect(barclays.balance).toBe(10_000_00);
-    expect(notes(sim, 'Your Fixed-Term Savings Closed').map((n) => n.body)).toEqual([`On the notice given: £10,000.00 to your current account, after £${(CHARGE / 100).toFixed(2)} taken for closing early.`]);
+    expect(notes(sim, 'Your Fixed-Term Savings Closed').map((n) => n.body)).toEqual([`Your notice period ended: £10,000.00 went to your current account, after a £${(CHARGE / 100).toFixed(2)} penalty for closing early.`]);
     hungry(sim); // TEST SETUP
     must(sim, 'life.look_after', { action: 'eat' });
     const meal = moved(sim, barclays, 'A meal');

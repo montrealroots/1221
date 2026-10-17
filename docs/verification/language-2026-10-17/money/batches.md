@@ -166,3 +166,50 @@ files rendering these panels, 5 failures at first (old words), then all; `langua
 (`walk-b3-*`), then `text-render-check.mjs`: the money faults the before-walk found are gone ("−$3.30", "Balance
 −$3.30"); the one left, "Sleep owed 1 hours", is the profile area's. The Statements tab reads "Posted payments only:
 what’s pending hasn’t posted yet" under Posted Balance, and Borrowing reads as the test asserts.
+
+## Batch 4a: Move Money, Savings, Payments, Alerts, Cash And The Account's Life (Engine)
+
+**Sources (60):** `src/engine/systems/banking.ts` (14), `accountlife.ts` (17), `payments.ts` (9), `statements.ts` (6),
+`cash.ts` (4), `spending.ts` (10). Rewritten And Verified 27, Reviewed And Retained 33.
+
+**What changed.**
+- Every refusal now says what's in the way and, where there is one, the next step: "That’s the same account." became
+  "From and To are the same account. Choose another account to move it to."; "… holds $93,391." became "… only has
+  $93,391 in it."; "… is dormant; use Reactivate first." became "… is dormant. Reactivate it first, under Your Accounts
+  Over Time."; "Say how much." became "Enter an amount."; "Pick a day ahead." became "Choose a date in the future.".
+- Notices lead with what happened: "$50.00 to Chase Savings: It wasn’t in Chase Total Checking on the day, so the bank
+  didn’t make it." became "Your $50.00 standing order to Chase Savings didn’t go. There wasn’t enough in Chase Total
+  Checking on the day. Move money into it before the order’s next date."; "Untouched for 24 months. … has blocked it
+  until you use it again." became "It hasn’t been used for 24 months, so … has blocked it. Reactivate it on Money, under
+  Your Accounts Over Time, to use it again." (Reactivate is what unblocks it; using it is refused while it's dormant).
+- A savings account's notice: "The notice ran out" became "Its notice period ended"; a standing order that ended with
+  its account is named "on the 28th" (it said "on the 28") and says where to set it up again.
+- Arion's card year: "paid ahead" became "paid in advance", the over-the-balance case a plain conditional.
+- The cash refusals at a machine say "You can still take cash out at the counter." (or pay it in), and the daily limit
+  says "you’ve taken … today".
+- "SLATE takes the three years for every state" in the unclaimed-property source line became "the game uses …".
+
+**Kept, and why:** statement memos and the nominal accounts' names (Bank Fees, Interest, Tax On Interest, Food, Cash In
+Hand, Bills Owed: matched by name in code); the German closing-fee sentence, plain and read from `closingFeesDue`; the
+`END_WORDS`; and all of `spending.ts`, whose words the health area's guide (`content/guide/body.ts`) quotes verbatim.
+I changed "payment ceiling" to "spending limit" there and put it back for that reason: it's in For The Coordinator.
+
+**Meaning-sensitive changes:** the dormant notice now names Reactivate, where it said the account was blocked "until you
+use it again" (a dormant account refuses Move Money and cash until it's reactivated, `systems/banking.ts`,
+`systems/cash.ts`); the escheat question says "tell the bank to keep the account" where it said "get in touch", which is
+what its one action, Keep The Account, does.
+
+**Tests updated:** accountlife, bank-moves, cash, decisions-arion, defects3-bank, evidence-g10/g11/g12/g13-money,
+evidence2-b04, evidence2-b05, home-account-abroad, home-account-transfers, integration-savings-notice,
+remaining-banking, scope-money: old words to new, every assertion as narrow as it was (four regexes moved to the new
+words: /Notice is given/, /holds/, /in a day/, and HSBC's abroad "only has £… ($…) in it."). `tests/language-money.test.ts`
+gained two cases: a refused move, savings and standing order (balances unchanged), and a refused payment set for a
+date, alert, term command and cash, each to its exact words.
+
+**Checks:** tsc 0; eslint 0; title-case 0; label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0;
+text-inventory --check 0; doc-refs 0; deciders 0. Vitest: the 64 files that assert these words, 4 failures at first (an
+abroad cash refusal I'd missed in `cash.ts`, and three regexes on old words), then those 4 files 67 of 67;
+`language-money` 19 of 19.
+
+**Screens:** these are refusals and notices; the ones a screen shows (Move Money's notes, the What Needs You notices)
+are read in the after-walk with the guide batch.

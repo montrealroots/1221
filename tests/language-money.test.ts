@@ -341,3 +341,37 @@ describe('PLAYER JOURNEY: a statement with nothing on it', () => {
     expect(cardWords).toContain('The card wasn’t used or paid in this period.');
   });
 });
+
+describe('PLAYER JOURNEY: a refused banking action says why and what to do', () => {
+  const refused = (sim: Simulation, kind: string, payload: Record<string, unknown>): string | undefined => sim.execute({ kind, payload }).error;
+
+  it('refuses a move, savings and a standing order in words that name the obstacle, and moves nothing', () => {
+    const sim = nyStudent('lang14-refusals');
+    const checking = checkingOf(sim);
+    const savings = savingsOf(sim);
+    const [held, kept] = [checking.balance, savings.balance];
+    expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: checking.id, amount: 1_00 })).toBe('From and To are the same account. Choose another account to move it to.');
+    expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: 0 })).toBe('Enter how much to move.');
+    expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: held + 1_00 })).toBe(`${checking.name} only has ${formatMoney(held, 'USD', { cents: false })} in it.`);
+    expect(refused(sim, 'bank.open_savings', { bankId: 'us-chase' })).toBe('You already have a savings account at Chase.');
+    expect(refused(sim, 'bank.open_savings', { bankId: 'us-citi' })).toBe('You can only open savings at a bank where you have a current account.');
+    expect(refused(sim, 'bank.add_standing_order', { amount: 0, day: 1, toId: savings.id })).toBe('Enter how much to pay each month.');
+    expect(refused(sim, 'bank.add_standing_order', { amount: 50_00, day: 40, toId: savings.id })).toBe('Pick a day of the month, 1 to 31.');
+    expect(refused(sim, 'bank.cancel_standing_order', { id: 'none' })).toBe('That standing order no longer exists.');
+    expect([checking.balance, savings.balance]).toEqual([held, kept]);
+  });
+
+  it('refuses a payment set for a date, an alert, a term deposit command and cash in their own words', () => {
+    const sim = nyStudent('lang14-refusals-2');
+    const checking = checkingOf(sim);
+    const savings = savingsOf(sim);
+    expect(refused(sim, 'bank.schedule_payment', { fromId: checking.id, toId: checking.id, amount: 1_00, at: sim.now + 86_400_000 })).toBe('A payment set for a date goes between two of your own accounts.');
+    expect(refused(sim, 'bank.schedule_payment', { fromId: checking.id, toId: savings.id, amount: 0, at: sim.now + 86_400_000 })).toBe('Enter an amount.');
+    expect(refused(sim, 'bank.schedule_payment', { fromId: checking.id, toId: savings.id, amount: 1_00, at: sim.now - 1 })).toBe('Choose a date in the future.');
+    expect(refused(sim, 'bank.cancel_scheduled', { id: 'none' })).toBe('That payment is no longer scheduled.');
+    expect(refused(sim, 'bank.set_alerts', { lowBalance: -5 })).toBe('Enter the low balance alert as an amount, or leave it blank to turn it off.');
+    expect(refused(sim, 'bank.set_term_end', { accountId: savings.id, atEnd: 'paid_out' })).toBe('That isn’t one of your term deposits.');
+    expect(refused(sim, 'cash.withdraw', { amount: 0, from: 'atm' })).toBe('Enter an amount.');
+    expect(refused(sim, 'cash.withdraw', { amount: 20_00, from: 'mars' })).toBe('Choose where to take it from: your bank’s ATM, another bank’s, the counter, the Post Office or the card.');
+  });
+});
