@@ -144,6 +144,8 @@ at the owner's word ("Merge it.", 2026-10-16). **Merged isn't deployed: nothing 
 ## 1. The Repository
 
 - **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `0e7ff7c2`, #37's merge.
+  (**Superseded 2026-10-17:** `main` is at `9302b29c`, #38's merge, checked with `git fetch` on brief 12's first day.
+  The current status is the first section of this file.)
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 10's commits on `44dcd973`
   (`git log --oneline 44dcd973..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in pull request #37
   (https://github.com/yvcbcjhsy7-prog/1221/pull/37), merged with a merge commit at the owner's word (until then this
@@ -262,9 +264,12 @@ measured it then.
 ## 1. The Repository
 
 - **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `64b69fc7`.
+  (**Superseded 2026-10-17:** #36 was merged as `44dcd973`, and `main` is at `9302b29c`, #38's merge. The current
+  status is the first section of this file.)
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 09's commits on `64b69fc7`
   (`git log --oneline 64b69fc7..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in pull request #36
-  (https://github.com/yvcbcjhsy7-prog/1221/pull/36), which the owner hasn't merged. **The tested commit is `7c1198a2`**; what came after it is the account, this handoff and the
+  (https://github.com/yvcbcjhsy7-prog/1221/pull/36), which the owner hasn't merged (**Superseded:** merged as
+  `44dcd973`). **The tested commit is `7c1198a2`**; what came after it is the account, this handoff and the
   runs' records.
 - **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
   worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees. Two
@@ -352,6 +357,7 @@ Not deployed. Base44 deployment happens on the owner's word, after the gate pass
    work plan (section 12), the briefs. Preserve the stash, worktrees and local files.
 2. **The owner's decisions** in section 3, each with what it would change written beside it in `brief-09.md`.
 3. **The pull request**, merged only at the owner's word; a follow-up after a merge starts a fresh branch from `main`.
+   (**Superseded:** #36, merged at the owner's word as `44dcd973`.)
 4. **The matrix's What's Left**, row by row.
 
 # Earlier: The Integration And Acceptance Pass, 2026-10-16
@@ -479,7 +485,8 @@ after the sweep, on `claude/zen-mccarthy-i88ujw`, and merged in pull request #34
 ## 1. The Repository, Verified On 2026-10-16
 
 - **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`.
-- **`main`:** #34's merge commit, the first on `main` after `297452ed`. A file can't name the commit that merges it: the
+- **`main`:** #34's merge commit, the first on `main` after `297452ed`. (**Superseded 2026-10-17:** that was `ef784ccd`, and
+  `main` is at `9302b29c`, #38's merge. The current status is the first section of this file.) A file can't name the commit that merges it: the
   handoff's receipt names it, and `git log origin/main -1` shows it. Its tree is the tree of #34's head, which the gate
   passed on (section 7).
 - **The working branch,** `claude/zen-mccarthy-i88ujw`, is wholly in `main`. Nothing of this session's is unmerged.
@@ -494,7 +501,8 @@ after the sweep, on `claude/zen-mccarthy-i88ujw`, and merged in pull request #34
   | #34 | the first after `297452ed` | this handoff: the briefs verbatim, the sweep's account, two tools |
 
   Before them, #28 and #29 merged `claude/current-scope-acceptance` and `claude/remaining-acceptance`.
-- **Open pull requests:** none, checked before #34 was opened.
+- **Open pull requests:** none, checked before #34 was opened. (On 2026-10-17, during brief 12, still none: #35 to #38
+  were each merged.)
 - **Branches with commits not in `main`,** checked against the full history. The container's clone was shallow, and
   every branch looked unmerged until `git fetch --unshallow`. None is this session's, and each was left as it is:
   - the seventeen `base44/setup-*` branches, one or two commits each, the Base44 platform's own setup of 2026-09-03 to
