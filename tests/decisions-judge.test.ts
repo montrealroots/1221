@@ -39,13 +39,23 @@
  * restraint read against its own abilities (the specialist and its twin) and against the grain's strength, and the
  * materials restraint suits held to exist; L3-R (a)'s fixed set as it was named and judged, controlled, with each
  * journey's own work replayed beside it; and L3-R (e)'s report, on two months the journeys' tool plays. ST6-R (a), (c)
- * and (e) still fail: what was measured of them is the owner's to decide on, and nothing here asserts them.
+ * and (e) still failed: what was measured of them was the owner's to decide on, and nothing here asserted them.
+ *
+ * Added on 2026-10-17 by brief 12's acting area: ST6-R2, the replacements of ST6-R (a), (c), (e) and (g) the owner
+ * authorized (docs/verification/resolution-2026-10-17/acting-criteria.md, committed before any of this was written), each
+ * part asserted where it holds as written, on every piece a player can play restrained, by `tools/acting-criteria.ts`'s
+ * measures, and a played journey through the brief commands. ST6-R (a), (c), (e) and (g) as written are superseded by
+ * that authorization and stay unasserted, their figures kept as the record. Where an ST6-R2 part didn't hold as written,
+ * it isn't asserted here either: what it measured is in docs/verification/resolution-2026-10-17/acting-result.json, for
+ * the owner.
  */
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave, loadSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
@@ -53,14 +63,14 @@ import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { ABILITY_DEFS, DEVELOPMENT, MASTERED, type AbilityId } from '@/engine/content/abilities';
 import { APPROACH_EFFECT, AXES, CAMERA_LEAN, STAGE_LEAN } from '@/engine/content/approaches';
-import { GRAIN } from '@/engine/content/interpretation';
+import { CIRCUMSTANCE_AFFINITY, GRAIN } from '@/engine/content/interpretation';
 import { PIECE, TONE_LEAN } from '@/engine/content/piece';
 import { PLAY_MATERIAL, SCENE_MATERIAL, type Axis, type AxisValue, type MaterialProfile } from '@/engine/content/material';
-import { BRIEF_BY_ID } from '@/engine/content/briefs';
+import { BRIEFS, BRIEF_BY_ID } from '@/engine/content/briefs';
 import { EVALUATION, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
 import { SCENES, templateById } from '@/engine/content/coursework';
 import { difficultyOf } from '@/engine/systems/coursework';
-import { frozenPerformer, leanedWeights, replay, replayAs, type EvalContext, type Evaluation, type Performer, type WorkRecord } from '@/engine/systems/evaluation';
+import { frozenPerformer, leanedWeights, performerOf, replay, replayAs, type EvalContext, type Evaluation, type Performer, type WorkRecord } from '@/engine/systems/evaluation';
 import { judgePiece, judgePieceExact, loadOf, nightPiece, unitSegments } from '@/engine/systems/piece';
 import { demandsOf, materialContext, misfitOf, type Playing } from '@/engine/systems/material';
 import { eveningCost, nightLoad, partText, withPart } from '@/engine/systems/workload';
@@ -70,8 +80,21 @@ import { sceneOfMaterial, suitabilityOf } from '@/engine/systems/interpretation'
 import { scenesFor, type Worked } from '@/engine/systems/learning';
 import { abilityFull, abilityOf, attributesOf, ATTRIBUTES } from '@/engine/systems/attributes';
 import { personalityOf } from '@/engine/systems/personality';
-import { ALL_PIECES, FIXED_SET, fixedPieces } from '../tools/pieces';
+import { ALL_PIECES, FIXED_SET, briefReadingPiece, fixedPieces, workPiece } from '../tools/pieces';
 import { attentiveHour, life as policyLife } from '../tools/policy';
+import { ARGUES_FOR_RESTRAINT, CIRCUMSTANCES, RESTRAINTS_OWN, ST6R2, ST6R2_ACTORS, st6r2Cases, variedEnough, withRestraintDraws, type R2Case } from '../tools/acting-criteria';
+import { briefContext, briefMaterial, briefPiece, preview, readingOf, recordOf, sceneOf, taskOf } from '@/engine/systems/briefs';
+import type { Skill } from '@/engine/content/school';
+
+// The brief pane's chooser, drawn in the played journey below, reads the game through its context: mocked as
+// tests/defects-g8-12.test.ts mocks it, the save the test plays in place of the app's.
+const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation }));
+vi.mock('@/app/game-context', () => {
+  const noop = () => undefined;
+  const game = () => new Proxy({ get sim() { return h.sim; }, version: 0, run: (kind: string, payload: Record<string, unknown> = {}) => h.sim.execute({ kind, payload }), toast: noop } as Record<string, unknown>, { get: (t, k) => (k in t ? t[k as string] : noop) });
+  return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
+});
+const { PlayingChooser } = await import('@/ui/components/PlayingChooser');
 
 const r1 = (x: number) => Math.round(x * 10) / 10;
 const ABILITIES = ABILITY_DEFS.map((d) => d.id);
@@ -327,6 +350,227 @@ describe('ST6-R: restrained and expansive interpretations, the wins and the limi
     expect(wins(steps[3]!)).toBeLessThan(wins(steps[0]!));
     expect(wins(steps[3]!)).toBeGreaterThan(0);
   });
+});
+
+describe('ST6-R2: restrained acting judged by what it does for a player (brief 12)', () => {
+  // docs/verification/resolution-2026-10-17/acting-criteria.md, written and committed before any of this. Every piece a
+  // player can play restrained (`st6r2Cases`): the 97 class scenes and plays as class scenes, the 30 plays as nights and
+  // the 298 briefs, in their first reading where a part judges many variants of each piece and in every reading (657)
+  // otherwise, as the criteria say the gate carries them; `tools/interpretation.ts -- --st6r2` measures every part on
+  // every reading. The five actors are TEST SETUP, named in the criteria before anything was measured (`ST6R2_ACTORS`).
+  const HEAVY = st6r2Cases('first'), EVERY = st6r2Cases('all');
+  const A = ST6R2_ACTORS;
+  const ACTORS = Object.keys(A).length;
+  const where = (r: { id: string; actor?: string }) => `${r.id}${r.actor ? ` ${r.actor}` : ''}`;
+  const briefOf = (c: R2Case) => { const i = c.id.lastIndexOf('/'); return { b: BRIEF_BY_ID[c.id.slice(0, i)]!, reading: c.id.slice(i + 1) }; };
+
+  it('FIXTURE: the measure judges each piece as the game does: with no way chosen, every class scene and play, night and brief reading comes to what tools/pieces.ts gives it, to the last digit; played restrained, every brief at its first reading comes to the brief pane’s own preview for a played save’s actor', () => {
+    expect(EVERY.length).toBe(MATS.length + PLAY_MATERIAL.length + BRIEFS.reduce((t, b) => t + b.readings.length, 0));
+    for (const c of EVERY) {
+      const pc = c.kind === 'brief' ? briefReadingPiece(briefOf(c).b.id, briefOf(c).reading) : workPiece(c.kind === 'night' ? PLAY_MATERIAL.find((m) => `night:${m.id}` === c.id)! : byId(c.id), c.kind);
+      expect(c.judge(A.even, undefined).exact, c.id).toBe(pc.judge(A.even).exact);
+    }
+    const sim = createSave(1, 'st6r2-preview', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    const me = performerOf(sim, sim.player);
+    for (const c of HEAVY.filter((x) => x.kind === 'brief')) expect(c.judge(me, 'restrained').exact, c.id).toBe(preview(sim, sim.player, briefOf(c).b, briefOf(c).reading, { scale: 'restrained' }).exact);
+  }, 120_000);
+
+  it('FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it', () => {
+    const rows = ST6R2.contribution(HEAVY, A);
+    expect(rows.length).toBe(HEAVY.length * ACTORS);
+    for (const r of rows) {
+      expect(r.rise, where(r)).toBeGreaterThan(0.05);
+      expect(r.drawsPart, where(r)).toBeGreaterThan(1e-9);
+      for (const a of RESTRAINTS_OWN) expect(r.own[a]!.drawsPart, `${where(r)} ${a}`).toBeGreaterThan(1e-9);
+    }
+  }, 120_000);
+
+  it('FIXTURE: ST6-R2 (a3), more is better up to the cap: each of the three set to 0, 20, 40, 60, 80 and 100, everything else held, raises the restrained take at every step, on every piece for every actor; set past its full it moves nothing, the cap `termsOf` documents', () => {
+    const rows = ST6R2.dose(HEAVY, A);
+    expect(rows.length).toBe(HEAVY.length * ACTORS * RESTRAINTS_OWN.length);
+    for (const r of rows) {
+      expect(r.least, `${where(r)} ${r.ability}`).toBeGreaterThan(1e-9);
+      expect(Math.abs(r.pastFull), `${where(r)} ${r.ability}`).toBeLessThanOrEqual(1e-9);
+    }
+  }, 120_000);
+
+  it('FIXTURE: ST6-R2 (a4), the guarantee kept: a mastered actor, fully prepared, played restrained, on a sufficient day, comes to 100 on every class scene, play, night and brief reading, with no draw and with one', () => {
+    const rows = ST6R2.mastery(EVERY);
+    expect(rows.length).toBe(EVERY.length);
+    for (const r of rows) { expect(r.noDraw, r.id).toBe(100); expect(r.drawn, r.id).toBe(100); }
+  }, 120_000);
+
+  it('FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing', () => {
+    const rows = ST6R2.preparation(HEAVY, A);
+    expect(rows.length).toBe(HEAVY.length * ACTORS);
+    for (const r of rows) {
+      expect(r.least, where(r)).toBeGreaterThanOrEqual(-1e-9);
+      expect(r.half, where(r)).toBeGreaterThan(0.05);
+      expect(r.named, where(r)).toBe(true);
+      if (r.required > 0.9) { expect(r.short, where(r)).toBeGreaterThan(1e-9); expect(r.s, where(r)).toBeLessThan(0); } else expect(Math.abs(r.short), where(r)).toBeLessThanOrEqual(1e-9);
+      if (r.required < 0.9) expect(r.s, where(r)).toBeGreaterThan(0);
+    }
+    // Both sides of the mark are there, so neither half of the clause holds on nothing.
+    expect(rows.filter((r) => r.required > 0.9).length).toBeGreaterThan(0);
+    expect(rows.filter((r) => r.required < 0.9).length).toBeGreaterThan(0);
+  }, 120_000);
+
+  it('FIXTURE: ST6-R2 (c2), the scene’s circumstances in their direction: on every class scene, play and night, each circumstance a level up or down, everything else held, moves restraint’s suitability its way and the restrained and expansive takes theirs, strictly wherever the suitability moved; and on every piece, reading the scene’s grain never moves a restrained take the wrong way, and lifts it wherever restraint suits', () => {
+    // The directions are the content's own, and the criteria name them.
+    for (const k of CIRCUMSTANCES) expect(Math.sign(CIRCUMSTANCE_AFFINITY[k].affinity.restrained ?? 0), k).toBe(ARGUES_FOR_RESTRAINT[k]);
+    const rows = ST6R2.circumstances(HEAVY, A);
+    expect(rows.length).toBeGreaterThan(3000);
+    for (const r of rows) {
+      const at = `${where(r)} ${r.circumstance} ${r.dir > 0 ? 'up' : 'down'}`;
+      expect((r.sR[1] - r.sR[0]) * r.want, at).toBeGreaterThanOrEqual(0);
+      expect(r.dR, at).toBeGreaterThanOrEqual(-1e-9);
+      expect(r.dE, at).toBeGreaterThanOrEqual(-1e-9);
+      // A suitability that didn't move is one held at its end (−1..1, `suitabilityOf`), the documented hold.
+      if (r.sR[0] === r.sR[1]) expect(Math.abs(r.sR[0]), at).toBe(1); else if (!r.floorHeld) expect(r.dR, at).toBeGreaterThan(1e-9);
+      if (r.sE[0] === r.sE[1]) expect(Math.abs(r.sE[0]), at).toBe(1); else if (!r.floorHeld) expect(r.dE, at).toBeGreaterThan(1e-9);
+    }
+    // The scene read or not. Measured on 2026-10-17 on every reading, 10 of the 784 pieces are brief readings with
+    // restraint at −0.01 or 0.01 (one a first reading, brief-psychological_horror-2's together), whose grain, 0.003 of
+    // difficulty, is kept to a hundredth (`grainOf`) and so comes to nothing; none of the 784 moves the wrong way. The
+    // criteria's strict reading isn't met on those ten, which is the owner's to settle
+    // (docs/verification/resolution-2026-10-17/acting-result.json). What holds on the gate's pieces is asserted.
+    for (const r of ST6R2.grain(HEAVY, A)) {
+      if (r.s > 0) expect(r.d, where(r)).toBeGreaterThan(1e-9);
+      else if (r.s < 0) expect(r.d, where(r)).toBeLessThanOrEqual(1e-9);
+      else expect(Math.abs(r.d), where(r)).toBeLessThanOrEqual(1e-9);
+    }
+  }, 120_000);
+
+  it('FIXTURE: ST6-R2 (c3), a valid interpretation: on every brief reading, under a callback asking for it expansive, restraint doesn’t fit, the chooser’s reason is the director’s, and the take is behind the same take under a callback asking for it restrained by more than 0.05, naming the misfit, for every actor; a mastered actor’s isn’t 100 there', () => {
+    const rows = ST6R2.validity(EVERY, A);
+    expect(rows.length).toBe(EVERY.filter((c) => c.kind === 'brief').length * ACTORS);
+    for (const r of rows) {
+      expect(r.said, where(r)).toBe('The director has asked for it expansive.');
+      expect(r.gap, where(r)).toBeGreaterThan(0.05);
+      expect(r.named, where(r)).toBe(true);
+      expect(r.master, where(r)).toBeLessThan(100);
+    }
+  }, 120_000);
+
+  // H4-R (c)'s rule read on restrained takes, the clause's other part, measured on 2026-10-17 at 60 of 3,433 pairs (1.75%)
+  // on the gate's pieces and 65 of 6,344 (1.02%) on every reading, against its 1%: every one against the grain, its
+  // ability carrying between the equal budget's break-even (1/12) and a tenth of the take's ability effects, and none of
+  // the 2,757 under 1/12 on the gate's pieces. It isn't asserted here; it's the owner's
+  // (docs/verification/resolution-2026-10-17/acting-result.json).
+  it('FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on', () => {
+    const rows = ST6R2.weakness(HEAVY).nine;
+    expect(rows.length).toBe(HEAVY.length);
+    for (const r of rows) expect(r.rise, r.id).toBeGreaterThan(0.05);
+  }, 120_000);
+
+  // On stage each specialist's count equals the even actor's, measured on 2026-10-17: every stage piece the scene favors
+  // restraint on (66) or size on (57) is already the even actor's better choice, so neither specialist can have more
+  // there, which the criteria's "more" didn't foresee. It isn't asserted here; it's the owner's (acting-result.json).
+  it('FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor', () => {
+    const o = ST6R2.opportunities(EVERY, A);
+    for (const m of ['stage', 'tape'] as const) {
+      for (const n of ['beginner', 'even', 'restrainedSpecialist', 'nearMaster'] as const) expect(variedEnough(o.restrained.byActor[n]![m]!), `restraint, ${n}, ${m}`).toBe(true);
+      for (const n of ['beginner', 'even', 'expansiveSpecialist', 'nearMaster'] as const) expect(variedEnough(o.expansive.byActor[n]![m]!), `size, ${n}, ${m}`).toBe(true);
+    }
+    expect(o.restrained.byActor.restrainedSpecialist!.tape!.count).toBeGreaterThan(o.restrained.byActor.even!.tape!.count);
+    expect(o.expansive.byActor.expansiveSpecialist!.tape!.count).toBeGreaterThan(o.expansive.byActor.even!.tape!.count);
+  }, 120_000);
+
+  it('PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit', () => {
+    const NY = 'America/New_York';
+    const at = (day: number, hour: number) => instantFromZoned({ year: 2026, month: 9, day, hour }, NY);
+    // The first brief in the catalog at a close frame whose first reading suits restraint, and more than it suits size.
+    const b = BRIEFS.find((x) => { const m = briefMaterial(x), sc = sceneOf(x, x.readings[0]); const r = suitabilityOf('restrained', m, sc); return m.medium === 'camera' && r.band === 'suits' && r.s > suitabilityOf('expansive', m, sc).s; })!;
+    const reading = b.readings[0]!.id;
+    const c = HEAVY.find((x) => x.id === `${b.id}/${reading}`)!;
+    let sim = createSave(1, 'st6r2-journey', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    h.sim = sim;
+    const rec = () => recordOf(sim.player, b.id);
+    // The actor's levels as they stand, kept: `performerOf` reads the save as it is at each read.
+    const kept = (s: Simulation): Performer => {
+      const ab = Object.fromEntries(ABILITIES.map((a) => [a, abilityOf(s, s.player, a)])), fu = Object.fromEntries(ABILITIES.map((a) => [a, abilityFull(s, s.player, a)]));
+      const craft = { ...(s.player.craft ?? {}) } as Partial<Record<Skill, number>>;
+      return { ability: (id) => ab[id]!, full: (id) => fu[id]!, technique: (k) => craft[k] ?? 0 };
+    };
+    sim.advanceTo(at(4, 20));
+    const chose = sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading, scale: 'restrained' } });
+    expect(chose.ok, String(chose.error)).toBe(true);
+    // The chooser, drawn as the brief pane draws it: what restraint draws on, the scene's band, its fully prepared result.
+    const html = renderToStaticMarkup(createElement(PlayingChooser, { material: briefMaterial(b), scene: sceneOf(b, readingOf(b, reading)), current: rec().playing, feature: 'brief.choose', preview: (x) => preview(sim, sim.player, b, reading, x), onChoose: () => undefined })).replace(/<!-- -->/g, '');
+    const row = html.split('<tr').find((r) => r.includes('<strong>Restrained</strong>'))!;
+    expect(row).toContain('Emotional Depth, Composure, Focus');
+    expect(row).toContain('Suits The Scene');
+    expect(row).toContain(`>${preview(sim, sim.player, b, reading, { scale: 'restrained' }).overall.toFixed(1)}<`);
+    const before = kept(sim);
+    // Prepared as a player prepares a brief: broken down and its lines learned, since a rehearsal needs some of them and a
+    // dimension's preparation is the least of its parts (with the breakdown at nothing, the choice's rehearsal moved
+    // nothing, the first time this was played); then each evening of a week, the choice rehearsed in on its feet and an
+    // hour of Sense Memory, which trains emotional depth.
+    const step = (s: 'read' | 'lines' | 'rehearse') => sim.execute({ kind: 'brief.prepare', payload: { brief: b.id, step: s } }).ok;
+    expect(step('read')).toBe(true);
+    expect(step('lines')).toBe(true);
+    const marks = [rec().playing!.prep];
+    let sessions = 0;
+    for (const d of [5, 6, 7, 8, 9, 10, 11]) {
+      sim.advanceTo(at(d, 18));
+      if (rec().prep.interpretation < 0.9) step('read');
+      if (rec().prep.memorization < 0.9) step('lines');
+      sim.advanceTo(at(d, 20));
+      if (step('rehearse')) marks.push(rec().playing!.prep);
+      sim.advanceTo(at(d, 21));
+      if (sim.execute({ kind: 'practice.exercise', payload: { exercise: 'sense-memory' } }).ok) sessions += 1;
+    }
+    expect(marks.length).toBeGreaterThanOrEqual(4);
+    expect(sessions).toBeGreaterThanOrEqual(5);
+    marks.slice(1).forEach((x, i) => expect(x, `rehearsal ${i + 1}`).toBeGreaterThan(marks[i]!));
+    const after = kept(sim);
+    expect(after.ability('emotionalDepth')).toBeGreaterThan(before.ability('emotionalDepth'));
+    // Preparation: the take as the record stands, on a sufficient day, against the same with the choice's rehearsal put
+    // back to nothing; the shortfall named there, and not named now if the choice is complete at its mark.
+    const asRecorded = (p: Performer, approach?: number) => judgePiece(sim.universe.meta.seed, p, { ...briefContext(sim.player, b, rec(), approach === undefined ? {} : { prep: { approach } }), condition: { readiness: 100 }, key: 'st6r2-journey', expected: true }, briefPiece(b, rec()));
+    expect(asRecorded(after).exact! - asRecorded(after, 0).exact!).toBeGreaterThan(0.05);
+    const short = (e: Evaluation) => e.limits.some((l) => l.kind === 'preparation' && l.what === 'approach');
+    expect(short(asRecorded(after, 0))).toBe(true);
+    if (rec().playing!.prep >= c.required('restrained')) expect(short(asRecorded(after))).toBe(false);
+    // The week, the same brief fully prepared (the pane's preview): up more played restrained than expansive, and less
+    // with restraint's draws taken out than with them.
+    const gain = (p: Performer, side: 'restrained' | 'expansive') => c.judge(p, side).exact! - c.judge(before, side).exact!;
+    const depthAlone: Performer = { ...before, ability: (id) => (id === 'emotionalDepth' ? after.ability(id) : before.ability(id)) };
+    // Measured on 2026-10-17, on brief-action's clock reading: the week took emotional depth from 52.72 to 53.78, and
+    // imagination from 54.20 to 54.40 and discipline from 57.5 to 58.73 with it (Sense Memory's carry-over, and practice on
+    // days running). The whole week raised the restrained take 0.1147 and the expansive 0.1106; restrained, it came to
+    // 0.00006 less with restraint's draws than without, since the draws, adding weight to emotional depth, composure and
+    // focus, thin imagination's and discipline's share. So what the draws do is read on the depth the week built, alone:
+    // 0.0961 restrained, 0.0827 expansive, 0.0926 restrained with the draws taken out.
+    expect(gain(after, 'restrained')).toBeGreaterThan(0.05);
+    expect(gain(depthAlone, 'restrained')).toBeGreaterThan(gain(depthAlone, 'expansive'));
+    expect(gain(depthAlone, 'restrained') - withRestraintDraws({}, () => gain(depthAlone, 'restrained'))).toBeGreaterThan(1e-9);
+    // Taped: the take kept as played, restraint's draws in what it read, exactly the draws' weights over its read without them.
+    sim.advanceTo(at(12, 20));
+    const taped = sim.execute<{ overall: number }>({ kind: 'practice.self_tape', payload: { genre: b.kinds[0]!, brief: b.id } });
+    expect(taped.ok, String(taped.error)).toBe(true);
+    const take = rec().takes.at(-1)!;
+    expect(take.sides).toEqual(['restrained']);
+    expect(take.prep.approach).toBe(rec().playing!.prep);
+    const work = sim.player.work!.at(-1)!;
+    expect(work.overall).toBe(taped.value!.overall);
+    const without = withRestraintDraws({}, () => briefContext(sim.player, b, rec()).inputs);
+    const w = (inputs: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>>, d: Dimension, a: AbilityId) => inputs[d]?.find((x) => x.ability === a)?.weight ?? 0;
+    expect(w(work.inputs.inputs!, 'believability', 'emotionalDepth') - w(without, 'believability', 'emotionalDepth')).toBeCloseTo(1, 12);
+    expect(w(work.inputs.inputs!, 'believability', 'composure') - w(without, 'believability', 'composure')).toBeCloseTo(0.5, 12);
+    expect(w(work.inputs.inputs!, 'consistency', 'focus') - w(without, 'consistency', 'focus')).toBeCloseTo(0.5, 12);
+    // Saved and opened again: the choice, the pane's forecast and the take, to the last digit.
+    const playing = structuredClone(rec().playing), shown = preview(sim, sim.player, b, reading, { scale: 'restrained' }).exact;
+    const replayed = replay(work, taskOf(b))!.exact;
+    sim = loadSave(deserialise(serialise(sim.universe)) as never);
+    h.sim = sim;
+    expect(rec().playing).toEqual(playing);
+    expect(preview(sim, sim.player, b, reading, { scale: 'restrained' }).exact).toBe(shown);
+    const back = sim.player.work!.at(-1)!;
+    expect(back.overall).toBe(work.overall);
+    expect(replay(back, taskOf(b))!.exact).toBe(replayed);
+    expect(replay(back, taskOf(b))!.overall).toBe(work.overall);
+  }, 180_000);
 });
 
 describe('H4-R: every ability’s contribution on its own work (brief 10)', () => {

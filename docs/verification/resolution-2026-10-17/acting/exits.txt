@@ -1,0 +1,7 @@
+at 86d9c8a5, 0 files uncommitted outside this folder
+st6r2 exit=0 cmd: npx vite-node tools/interpretation.ts -- --st6r2 <out>/st6r2.json --st6r2-only
+(in a scratch folder) stage exit=0 cmd: npx vite-node tools/interpretation.ts -- --fresh --stage --out <out>/stage.json --st3 <out>/st3.json --st6 <out>/st6.json
+st6.json byte-identical to ../../completion-2026-10-16/acting/measured/st6.json (brief 11, 44cd15c2): ST6-R as written, unmoved
+st3.json byte-identical to ../../decisions-2026-10-16/integrated/after/st3.json (brief 10)
+stage.json byte-identical to ../../decisions-2026-10-16/integrated/after/stage.json (brief 10)
+mutations: VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 node tools/judge-mutations.mjs --list docs/verification/resolution-2026-10-17/acting/mutations.list.json --work <scratch> --out docs/verification/resolution-2026-10-17/acting/mutations.json --only <ids>, exit 0 for each batch (g0-g3, g4-g7, g8-g11, g11b and g12), on f17511ac with nothing uncommitted; the first run, on 5edff411's tree, came out the same for every one
