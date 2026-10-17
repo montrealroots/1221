@@ -231,7 +231,15 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
   }
   for (const [k, c] of dayCost) {
     if (c.points < RECOMMEND.floor) continue;
-    out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: Math.round(c.points * 10) / 10, why: c.kind === 'fit' ? `A way of playing that didn’t fit cost about ${Math.round(c.points * 10) / 10} points of the whole a piece: choose one the material or the direction takes.` : `${c.label} cost about ${Math.round(c.points * 10) / 10} points of the whole a piece: come to the work rested and well, or find places to breathe in it.` });
+    const each = Math.round(c.points * 10) / 10;
+    // Stamina draining through a piece's later parts is kept as a limit of the condition kind (`judgePiece`), but it's the
+    // body's fitness, not the day's (from 2026-10-17, brief 11, F3 and section 7): said as stamina, what builds it and
+    // what leaves less of it to drain. Until then it was said as the day's condition, under the label of the part it was
+    // first found in, "Stamina, By Beat 2 cost about 2.7 points of the whole a piece: come to the work rested and well, or
+    // find places to breathe in it", at fitness 15 on long taped briefs: rest restores energy, and a brief's drain reads
+    // none of it.
+    if (k === 'condition:stamina') { out.push({ target: k, label: 'Stamina', focus: 'stamina', points: each, why: `Stamina draining through the later parts of a piece cost about ${each} points of the whole a piece. It’s your fitness: Work Out, under Look After Yourself, builds it, and places to breathe in a piece leave less of it to drain; on a night, so does coming to the curtain rested. Rest restores energy, not fitness.` }); continue; }
+    out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: each, why: c.kind === 'fit' ? `A way of playing that didn’t fit cost about ${each} points of the whole a piece: choose one the material or the direction takes.` : `${c.label} cost about ${each} points of the whole a piece: come to the work rested and well, or find places to breathe in it.` });
   }
   // Ranked by the forecast's own figure where there is one: the tenth said can make two forecasts equal that aren't. From
   // brief 10 at full precision (`exact`), what the hours are forecast to bring, which is what's said and what's played
