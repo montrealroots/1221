@@ -280,8 +280,10 @@ export function registerAssistance(sim: Simulation): void {
       const ui = person.unemployment?.claim;
       const onUi = ui !== undefined && ui.endsAt > item.at;
       const limited = !enrolled && !onUi && age >= SNAP.abawd.from && age < SNAP.abawd.to + 1 && hours < SNAP.abawd.hours;
+      // The notice names the exemptions a player can reach (from 2026-10-17, brief 12): until then it said SNAP paid no more
+      // “until you work them”, an action nobody off the School has since jobs went in the scope reset of 2026-10-09.
       if (limited && within.length >= SNAP.abawd.months) {
-        if (mine) s.notify({ category: 'benefits', title: 'SNAP Time Limit Reached', body: 'Three months in three years without 80 hours of work a month: SNAP pays no more until you work them.', importance: 60, route: '/workspace/papers' });
+        if (mine) s.notify({ category: 'benefits', title: 'SNAP Time Limit Reached', body: 'Three months in three years without 80 hours of work a month: SNAP pays no more until an exemption applies, as study at least half-time or an unemployment claim does.', importance: 60, route: '/workspace/papers' });
         schedule(s, person, item.at + 30 * MS_DAY);
         return;
       }

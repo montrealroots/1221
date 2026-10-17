@@ -94,6 +94,15 @@ describe('the coverage matrix', () => {
   });
 });
 
+describe('what the chapters offer', () => {
+  // GUARD: jobs went in the scope reset of 2026-10-09; a chapter that opened “Between jobs” offered a player something
+  // the game no longer has, until brief 12 (2026-10-17). Paid work is the School's: work-study and the Summer Cabaret.
+  it('GUARD: offers no job: no chapter speaks of being between jobs or taking one', () => {
+    const offered = CHAPTERS.flatMap((c) => c.body.filter((p) => /\bbetween jobs\b|\b(?:take|find|get|start) a job\b/i.test(p)).map((p) => `${c.id}: ${p.slice(0, 60)}`));
+    expect(offered).toEqual([]);
+  });
+});
+
 describe('a guided life', () => {
   const guidedLife = (seed = 'guide') => quickSave({ tutorial: true }, seed);
 

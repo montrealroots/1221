@@ -621,6 +621,8 @@ describe('benefits.assistance_month', () => {
     expect(memos(twin, /^SNAP, the month/).map((t) => [t.at, own(twin, t)[0]!.amount])).toEqual([[Date.UTC(2028, 1, 8, 17), 306_00], [Date.UTC(2028, 2, 9, 17), 306_00], [Date.UTC(2028, 3, 8, 17), 306_00]]);
     expect(twin.player.assistance).toMatchObject({ months: 3, counted: ['2028-02', '2028-03', '2028-04'] });
     expect(titled(twin, 'SNAP Time Limit Reached').map((n) => n.at)).toEqual([Date.UTC(2028, 4, 8, 17)]);
+    // It says what would lift the limit and she can reach, not work she has no way to take (from 2026-10-17, brief 12).
+    expect(titled(twin, 'SNAP Time Limit Reached').map((n) => n.body)).toEqual(['Three months in three years without 80 hours of work a month: SNAP pays no more until an exemption applies, as study at least half-time or an unemployment claim does.']);
   }, 60_000);
 
   it('DEFECT: a claim made at nine on the evening of 24 January is paid at nine on the 31st, still January in New Haven: it reads December, $306, not January’s weeks, which are the month before only in UTC', () => {
