@@ -312,6 +312,8 @@ describe('L1: repeated advice, for a player who ignores it and one who follows i
     const ex = EXERCISE_BY_ID[after.exercise!]!;
     expect(after.standing).toContain(`${ADVICE.sessions} hours of ${ex.label}: it went from ${Math.round(from * 10) / 10} to ${Math.round(now * 10) / 10}, and its forecast from ${fromForecast.toFixed(2)} to ${nowForecast.toFixed(2)}`);
     expect(after.standing).not.toBe(weeks.at(-1)!.standing);
+    // Its forecast fell here, as the input's own should: nothing is said of a rise.
+    expect(after.standing).not.toContain('a little up');
     // And the ignorer, the same five weeks on, never trained it: it says so.
     expect(weeks.at(-1)!.standing).toContain(`you haven’t practiced ${ex.label} since`);
     expect(adviceFor(clone(follower), follower.player)).toEqual(adviceFor(follower, follower.player));
