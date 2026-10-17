@@ -4,12 +4,14 @@
 at the end of the owner's "Resolve The Remaining Decisions And Complete The Authorized Build"
 (`docs/verification/briefs-2026-10-16/12-resolve-the-remaining-decisions-and-complete-the-authorized-build.txt`, kept
 verbatim), worked on `claude/peaceful-hamilton-59zdbb` from `main` at `9302b29c` (#38's merge). It is pushed and in
-pull request #39 (https://github.com/yvcbcjhsy7-prog/1221/pull/39) for the owner. **Nothing of it is merged, and nothing is deployed:** each is the owner's word.
+pull request #39 (https://github.com/yvcbcjhsy7-prog/1221/pull/39), merged to `main` with a merge commit at the owner's
+word ("Merge it.", 2026-10-17, `102ba8f2`); until then this said nothing of it was merged. **Merged isn't deployed:
+nothing is.**
 
 ## 1. The Repository
 
-- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `9302b29c`, #38's merge,
-  checked on 2026-10-17. No pull request was open before brief 12's.
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `102ba8f2`, #39's merge;
+  until then this said `9302b29c`, #38's. No pull request was open before brief 12's, and none after its merge.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 12's commits on `9302b29c`
   (`git log --oneline 9302b29c..origin/claude/peaceful-hamilton-59zdbb`), pushed and never force-pushed. Two areas,
   acting and advice, were merged into it with merge commits from their clones.
