@@ -270,8 +270,8 @@ describe('the IRS’s decision on a payment plan', () => {
 
 describe('the gazetteer’s fields', () => {
   it('holds no field that starts or ends with a space in any country, region or bundled city; Bonaire’s name, Curacao’s capital and Heard Island’s dialling code read as they should, on the country look too', () => {
-    const rows = [...WORLD_COUNTRIES, ...WORLD_REGIONS, ...WORLD_CITIES] as readonly Record<string, unknown>[];
-    const stray = rows.flatMap((row) => Object.entries(row).filter(([, v]) => typeof v === 'string' && v !== v.trim()).map(([k, v]) => `${String(row.id)}.${k} ${JSON.stringify(v)}`));
+    const rows = [...WORLD_COUNTRIES, ...WORLD_REGIONS, ...WORLD_CITIES];
+    const stray = rows.flatMap((row) => Object.entries(row).filter(([, v]) => typeof v === 'string' && v !== v.trim()).map(([k, v]) => `${row.id}.${k} ${JSON.stringify(v)}`));
     expect(stray).toEqual([]);
     expect([COUNTRIES.get('bq')!.name, COUNTRIES.get('cw')!.capital, COUNTRIES.get('hm')!.phone]).toEqual(['Bonaire, Saint Eustatius and Saba', 'Willemstad', '']);
 
