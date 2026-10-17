@@ -80,7 +80,7 @@ function AccountStatementView({ account, period }: { account: Account; period: R
   const own = (native: number, dollars: number) => (h && account.currency ? { value: formatMoney(native, account.currency), note: `${money(dollars)} in dollars` } : { value: money(dollars) });
   return (
     <LookRegion className="col gap-3">
-      {h && account.currency && <p className="xs dim" style={{ margin: 0 }}>In {account.currency}, as {account.institution ?? 'the bank'} keeps it, with the dollars at the game’s exchange rate under each figure.</p>}
+      {h && account.currency && <p className="xs dim" style={{ margin: 0 }}>In {account.currency}, as {account.institution ?? 'the bank'} keeps it, with its value in dollars, at an estimated exchange rate, under each figure.</p>}
       <div className="grid grid-3">
         <Figure look={look} label={owed ? 'Owed At The Start' : 'Opening Balance'} {...own(h?.opening ?? 0, st.opening)} />
         <Figure look={look} label={owed ? 'Paid Off' : 'Money In'} {...own(h?.moneyIn ?? 0, owed ? st.moneyOut : st.moneyIn)} />

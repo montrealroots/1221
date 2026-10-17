@@ -555,7 +555,7 @@ export const MONEY: readonly GuideEntry[] = [
       // the other.
       'Cancel It on a savings account, term deposit or current account: it closes without a penalty, and its money goes to the current account at its bank, or to your primary account in the bank’s usual days if there’s none there.',
       'Interest when you cancel: in Britain and Canada you keep the interest it earned. In Europe and Mexico the interest goes back, including any already paid into it, because their rules return what each side received.',
-      'Fees when you cancel: in Canada and Mexico, the bank’s fees charged while it was open are refunded, but not overdraft interest or a machine owner’s fee. Elsewhere a current account is charged the fees it owes, as Close It would; in Germany, this month’s fee only up to the day, as the line under Cancel It says. Everywhere, a current account is charged the overdraft interest built up since the 1st, and that interest is never refunded.',
+      'Fees when you cancel: in Canada and Mexico, the bank’s fees charged while it was open are refunded, but not overdraft interest or a machine owner’s fee. Elsewhere a current account is charged the fees it owes, as Close It would; in Germany, this month’s fee only up to the day, as the line under Cancel It says. Everywhere, a current account is charged the overdraft interest built up since the 1st. It’s never refunded.',
       'In a save made before October 15, 2026, interest a term deposit paid out during its term is found once when the save opens and goes back the same way. Where the save’s records can’t say which deposit paid it, it stays paid.',
       'Cancel It on a card: nothing new can go on it, and what you spent on it is still yours to repay.',
       'Claim It Back: all of it comes back into your primary account.',
@@ -1407,7 +1407,7 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     now: [
       // From 2026-10-16: until then the current account opened at nothing, and at 21 of the 54 banks its fees overdrew it.
-      'Kept: the bank’s current account opens with what its own fees will come to until you graduate, and its savings with the rest, in whole units of its currency at the game’s exchange rate. Anything left over joins your American checking. Together they add up to your family’s money, to the cent.',
+      'Kept: the bank’s current account opens with what its own fees will come to until you graduate, and its savings with the rest, in whole units of its currency at an estimated exchange rate. Anything left over joins your American checking. Together they add up to your family’s money, to the cent.',
       'Moved: your American accounts open as if nothing were kept, minus what the current account at home opens with to cover its fees until you graduate. A bank that charges nothing keeps it empty.',
       'Each account at the bank at home keeps its balance in its own currency, shown beside what it’s worth in dollars, and counts as used on the morning you arrive.',
     ],
@@ -1429,14 +1429,14 @@ export const MONEY: readonly GuideEntry[] = [
       `Move Money sends money between it and your American account as a payment abroad, typed in the sending account’s currency. It leaves at once with the sending bank’s fee, and arrives after its business days in both countries, minus the bank’s margin on the exchange and the receiving bank’s fee. Barclays charges nothing online and takes up to ${percentOf(homeTerms('gb-barclays')!.abroad.margin!)}; Chase charges ${usd(US_WIRES['us-chase']!.incoming!.fixed!)} for a payment from abroad. Where a bank publishes no margin or no time, the game estimates them, and the line under the amount says so.`,
       'Make Primary on its current account makes its debit card your everyday card here, for its own fee on every purchase in dollars, where its card works abroad and the research has the fee.',
       // From 2026-10-16, module 6: the return reads the interest by its bank's country (`figuresFor`), and the accounts' figures each night (`Account.peak`).
-      'On an F-1, its interest is foreign income America doesn’t tax: it stays off your 1040-NR and Connecticut’s return. A US citizen reports it on the 1040 and Connecticut’s return, and the tax its country took is credited against the US tax on that interest, up to that tax.',
-      `A US citizen whose accounts abroad together held over ${usd(US_REPORTS.fbar.over)} at any time in a year is told once, with the next February’s return, that FinCEN’s FBAR is due April 15, extended to October 15, and, past ${usd(US_REPORTS.form8938.yearEnd)} at the year’s end or ${usd(US_REPORTS.form8938.anyTime)} at any time, that Form 8938 is due with a return. The game files neither, charges no penalty, and converts at the game’s exchange rate.`,
+      'On an F-1, its interest is foreign income America doesn’t tax: it stays off your 1040-NR and Connecticut’s return. A US citizen reports it on the 1040 and Connecticut’s return, and the tax its country took is credited against the US tax on the interest, up to that tax.',
+      `A US citizen whose accounts abroad together held over ${usd(US_REPORTS.fbar.over)} at any time in a year is told once, with the next February’s return, that FinCEN’s FBAR is due April 15, extended to October 15, and, past ${usd(US_REPORTS.form8938.yearEnd)} at the year’s end or ${usd(US_REPORTS.form8938.anyTime)} at any time, that Form 8938 is due with a return. The game files neither, charges no penalty, and converts at an estimated exchange rate.`,
     ],
     interpret: [
       '“Kept At … : £… In …” is the balance the bank holds, in its currency.',
       `What keeping it means says how sure the research was: ${RETENTION_CONFIDENCE.H.toLowerCase().replace(/\.$/, '')}; or only partly; or the bank publishes nothing and the game assumes it.`,
       'Move Money’s line under the amount says what the bank sends, for what fee, at what margin, what arrives after the receiving bank’s fee, and on what day.',
-      'Each account there shows its balance in its currency, Held From Abroad beside its number, and its value in dollars at the game’s exchange rate under it, with the bank’s fee for a customer abroad, its card’s fees here, and its closing date if it’s closing. Its statements, Home’s Money line and the alerts give it in its currency too.',
+      'Each account there shows its balance in its currency, Held From Abroad beside its number, and its value in dollars at an estimated exchange rate under it, with the bank’s fee for a customer abroad, its card’s fees here, and its closing date if it’s closing. Its statements, Home’s Money line and the alerts give it in its currency too.',
     ],
     unavailable: [
       '“You lived in America before Yale, so your account is the one here.”',

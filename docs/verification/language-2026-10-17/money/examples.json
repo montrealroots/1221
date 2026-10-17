@@ -988,5 +988,14 @@
   "why": "a research file's name in a Source line",
   "meaningSensitive": false,
   "verified": "printed-data.txt"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "label",
+  "before": "$126.58 in dollars, at SLATE’s rate",
+  "after": "About $126.58 at an estimated exchange rate",
+  "why": "the coordinator's note: rates are said as estimated, as the frame area says them",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-screens.test.ts"
  }
 ]

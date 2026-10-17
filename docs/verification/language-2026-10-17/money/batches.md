@@ -319,3 +319,42 @@ researched banks), so they're Reviewed And Retained with that reason.
 
 **Tests updated:** home-account-creation and home-account-transfers (the confidence line, Japan Post Bank, the margin
 and days estimates in Move Money's line).
+
+## The Built App, After
+
+A fresh build of `afa821b7`, served on 4205; `text-walk.mjs` on all fourteen scenario saves at 1440 and 390
+(`after-1440/`, `after-390/`), then `text-render-check.mjs` (`render-check.txt`): 129,028 strings, 2 distinct faults,
+neither money's ("Sleep owed 1 hours" on the Profile, "rehearsed together 1 times" on Coursework). On the Money
+screens of every save, "SLATE" appeared 85 times before this pass (`l14/walk-before-1440`) and 0 times after; the
+missed-plan save's "Its -$3, moves to Chase Total Checking." and "Balance-$3" read "It’s overdrawn by $3.30. Closing it
+takes $3.30 from Chase Total Checking to clear it." and "Balance −$3.30 Overdrawn". The Money tabs read a little
+longer (Accounts 590 to 656 words on the missed-plan save, Cards 888 to 973), from the next steps and the fee
+sentences said in full; Borrowing slightly shorter.
+
+The walk doesn't open How This Works for the money entries, so the guide is verified by its played examples and the
+label check above, not by a walked screen.
+
+## A Manual Route For The Owner
+
+On the missed-plan save: Money, Accounts (the savings at −$3.30 and what Close It would do; the fee lines), Move Money
+with 0 typed (Enter how much to move.), Cards (the card's terms, Your Cards, The Card’s Offers), Payments And Cash,
+Borrowing (Chase's overdraft and its estimated reach at the foot), Statements (Posted Balance under Available Now,
+Alerts). Then How This Works beside Your Accounts, A Credit Card and Overdrafts And Loans: each opens with what it's
+for, then the steps by the labels just seen, and ends with what to do next.
+
+## The Coordinator's Note: Rates Said As Estimated
+
+The coordinator asked (from the frame area's review) that exchange rates be said as estimated, as the frame area writes
+them ("About 1.53 to the US dollar, estimated"), and that the missed-plan save's "-$3" stop being written four ways.
+
+- `RATES_NOTE` went from "Exchange rates are SLATE's calibrated estimates, not a live market." (at the pass's start) to
+  "Exchange rates are estimated, not live market rates."
+- A home account's balance note, "$126.58 in dollars, at SLATE’s rate" at the start and "… at the game’s exchange
+  rate" after batch 1, is now "About $126.58 at an estimated exchange rate"; its statement's line, and the guide's
+  three mentions, say "at an estimated exchange rate".
+- The "-$3": batch 1 made it one figure. The after-walk of the missed-plan save, at 1440 and 390, writes it as
+  "−$3.30" in the balance tile (with "Overdrawn"), the From list ("Chase Savings ···3136, Chase (−$3.30)") and
+  nowhere else, and as "overdrawn by $3.30" in the sentence under Close It.
+
+Tests: home-account-screens (both lines), and `tools/acceptance-ui.mjs`'s home-account matcher. home-account-screens,
+language-money, guide-examples-money and decisions-arion: 55 of 55. tsc 0, eslint 0, text-inventory --check 0.

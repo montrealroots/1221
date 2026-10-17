@@ -253,7 +253,7 @@ describe('arion.AR1: Arion’s debit card, its first year charged on the first n
   });
 
   it('the guide’s A Bank At Home says Arion’s 950 kr from 24 as its price list’s, and the year paid ahead as SLATE’s simulation, unverified', () => {
-    expect(GUIDE_BY_ID['bank.home-account']!.later).toContain(`Arion’s debit card costs 950 kr a year from 24, nothing at 23 and under, as its price list says. It’s charged ahead, on the first night and on that date each year after, by Reykjavík’s calendar, and on a close the days of that year left are refunded in proportion, as Iceland’s Act on Payment Services, art. 57, has it, said on the account’s panel and under Close It first. ${LABEL}`);
+    expect(GUIDE_BY_ID['bank.home-account']!.later).toContain(`Arion’s debit card costs 950 kr a year from age 24, and nothing at 23 and under, as its price list says. It’s charged in advance, on the first night and on that date each year after, by Reykjavík’s calendar. If you close the account, the days of that year left are refunded in proportion, as Iceland’s Act on Payment Services, art. 57, has it. The account’s panel and the line under Close It say so first. ${LABEL}`);
   });
 });
 

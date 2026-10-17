@@ -2497,9 +2497,9 @@
  },
  "src/engine/content/currency.ts#RATES_NOTE": {
   "status": "Rewritten And Verified",
-  "hash": "36b5ebaae44c",
+  "hash": "434b8cbc68d0",
   "on": "2026-10-17",
-  "evidence": "printed in docs/verification/language-2026-10-17/money/printed-data.txt (Exchange rates are the game’s estimates, not a live market.); shown on a place's money and in creation"
+  "evidence": "read in code and in the creation and place screens' use of it: 'Exchange rates are estimated, not live market rates.', matching the frame area's 'About 1.53 to the US dollar, estimated' (the coordinator's note of 2026-10-17)"
  },
  "src/engine/content/currency.ts#SYMBOLS": {
   "status": "Reviewed And Retained",
@@ -2581,7 +2581,7 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.home-account]": {
   "status": "Rewritten And Verified",
-  "hash": "c4bf0613aa67",
+  "hash": "95e689cd8949",
   "on": "2026-10-17",
   "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
  },
@@ -2617,7 +2617,7 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.upkeep]": {
   "status": "Rewritten And Verified",
-  "hash": "d4b4b5d011a7",
+  "hash": "411ae2f2ccc2",
   "on": "2026-10-17",
   "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
  },
@@ -3847,9 +3847,9 @@
  },
  "src/ui/bank/BankStatements.tsx#AccountStatementView": {
   "status": "Rewritten And Verified",
-  "hash": "7686e1f1d768",
+  "hash": "ea7c3907a584",
   "on": "2026-10-17",
-  "evidence": "tests/home-account-screens.test.ts (In GBP, as HSBC UK keeps it, with the dollars at the game’s exchange rate…); the built app's Statements tab on the missed-plan save (Posted Balance's note, the pending lines), walk-b3 in the scratch folder"
+  "evidence": "tests/home-account-screens.test.ts (In GBP, as HSBC UK keeps it, with its value in dollars, at an estimated exchange rate, under each figure.); the built app's Statements tab on the missed-plan save (Posted Balance's note, the pending lines)"
  },
  "src/ui/bank/BankStatements.tsx#AlertsView": {
   "status": "Rewritten And Verified",
@@ -4021,9 +4021,9 @@
  },
  "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace": {
   "status": "Rewritten And Verified",
-  "hash": "f2fdd687335d",
+  "hash": "708c5954f5c4",
   "on": "2026-10-17",
-  "evidence": "tests/language-money.test.ts 'says what closing savings does, above zero, at zero and overdrawn…' (the tile's −$3.30 Overdrawn, its control's name) and 'says a fee’s conditions as what the player does in a month…'; tests/defects-g14-1.test.ts; tests/integration-savings-notice.test.ts; tests/remaining-09-banking.test.ts; the built app's Money, Accounts tab on the missed-plan save at 1440 and 390 (walk-b1 in the scratch folder)"
+  "evidence": "tests/language-money.test.ts (closing words, fee words, confidence lines, Other Charges); tests/home-account-screens.test.ts (Balance £100.00 About $126.58 at an estimated exchange rate); the built app's Accounts tab on the missed-plan and round-ups saves (after-1440, after-390); tools/acceptance-ui.mjs at 390, 77 of 77"
  },
  "src/ui/workspaces/BankWorkspace.tsx#BorrowingAt": {
   "status": "Reviewed And Retained",

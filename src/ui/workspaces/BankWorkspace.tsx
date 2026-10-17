@@ -139,7 +139,7 @@ export function BankWorkspace() {
                     <span className="stat-label">Balance</span>{' '}
                     <span className="stat-value mono">{home ? heldText(sim, account) : balanceOf(account.balance)}</span>
                   </Open>
-                  {home && <span className="stat-note">{formatMoney(account.balance, cur)} in dollars, at the game’s exchange rate</span>}
+                  {home && <span className="stat-note">About {formatMoney(account.balance, cur)} at an estimated exchange rate</span>}
                   {!home && account.balance < 0 && <span className="stat-note">Overdrawn</span>}
                 </div>
                 <p className="small" style={{ margin: 0 }}>{interestWords(sim, product, tax, money, own.currency, account.openedAt, closesQuarterly(account), account, home ? inBank : undefined)}</p>
