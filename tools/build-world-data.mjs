@@ -241,7 +241,10 @@ const REGION_TABLE = ${lit(tsv(regions.map((r) => [r.id, r.code, r.name, r.count
 
 const CITY_TABLE = ${lit(tsv(bundled.map((c) => [c.id, c.name, c.regionId, c.countryId, c.lat.toFixed(4), c.lon.toFixed(4), c.timeZone, c.population, c.kind])))};
 
-const rows = (table: string) => table.split('\\n').map((line) => line.split('\\t'));
+// Each field trimmed (from 2026-10-17, brief 14's cross-area pass). GeoNames' country table has a space after Bonaire's
+// name, one before Curacao's capital, and a lone space for Heard Island's dialling code, which reached the screen as they
+// were: a stop after a space, "+ " for a calling code. When it was added, those three were the only fields it changed.
+const rows = (table: string) => table.split('\\n').map((line) => line.split('\\t').map((field) => field.trim()));
 
 export const WORLD_COUNTRIES: readonly RawCountry[] = rows(COUNTRY_TABLE).map((r) => ({
   id: r[0] as string, iso2: r[1] as string, name: r[2] as string, capital: r[3] as string,

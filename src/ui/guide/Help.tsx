@@ -344,7 +344,6 @@ function Entry({ e, onOpen, onWhere }: { e: GuideEntry; onOpen: (id: string) => 
   const locked = useWorld((s) => e.covers.find((f) => !isOpen(s, f)), [e]);
   const chapter = locked ? chapterFor(locked) : undefined;
   const leads = useMemo(() => connectionsTo(e.id), [e]);
-  const next = e.next ?? [];
   // The brief's eight questions, in its order, then the deeper parts. The first two, what it's for and where to find it,
   // are always showing; what to press opens with the entry; the rest open when pressed, or all with Show Everything.
   const sections: { title: string; show: boolean; open?: boolean; body: ReactNode }[] = [
@@ -396,7 +395,7 @@ function Entry({ e, onOpen, onWhere }: { e: GuideEntry; onOpen: (id: string) => 
         </div>
       ),
     },
-    { title: 'What To Do Next', show: next.length > 0, body: <List items={next} /> },
+    { title: 'What To Do Next', show: e.next.length > 0, body: <List items={e.next} /> },
     {
       title: 'If You Can’t', show: e.unavailable.length + e.mistakes.length > 0, body: (
         <div className="col gap-3">

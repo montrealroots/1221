@@ -28,6 +28,8 @@ the words themselves. None changes a rule, a calculation or a save.
    the words “payment plan” and “application” in the two sentences it matches (“You already have a payment plan with the
    IRS.”, “Your application is already with the IRS. …”), and the branch can't fire anyway, since the handler sets the
    plan's status to refused before asking. A later change should test the status, not the sentence.
+   **Fixed** on 2026-10-17 by the cross-area pass (`crossarea/defects.md`, 2): the decision passes `planRefusal` the plan
+   it decides, by its state, and the match and the status flip went. What's above was true until then.
 5. **Dead content.** `src/engine/content/licensepaths.ts` (69 sources, 2,394 words) is imported nowhere but for one
    type (`LicenseStage`, by `systems/documents.ts`): `LICENSE_PATHS`, `PASS_RATES`, `passRate` and `LICENSE_EXCHANGES`
    have no reader since driving went. And of `src/engine/content/licenses.ts` only a license's `authority`, `name` and

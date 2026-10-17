@@ -38,7 +38,7 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
 import { ageOn } from './mortality';
-import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, DUE_KIND, ensurePrimary, freshCardState, MIN_CYCLE_DAYS, scheduleStatement, stateOf, statementDayRefusal, STATEMENT_KIND } from './credit';
+import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, DUE_KIND, ensurePrimary, freshCardState, MIN_CYCLE_DAYS, RAISE_FROM, scheduleStatement, stateOf, statementDayRefusal, STATEMENT_KIND } from './credit';
 import { transferOnArrival, transferRefusal } from './cardoffers';
 import { last4For } from './security';
 import { abroadRefusal } from './abroad';
@@ -191,8 +191,8 @@ export function registerCardLife(sim: Simulation): void {
       return { limit: card.creditLimit, granted: true };
     }
     const clean = !credit.late.some((when) => s.now - when < 365 * 86_400_000);
-    if (credit.score < 700 || !clean || stateOf(person, card).suspended || heldInBanks(s, person) <= 0) {
-      s.notify({ category: 'bank', title: 'Limit Increase Declined', body: `The bank kept your limit at ${formatMoney(now, cur)}. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.`, importance: 40 });
+    if (credit.score < RAISE_FROM || !clean || stateOf(person, card).suspended || heldInBanks(s, person) <= 0) {
+      s.notify({ category: 'bank', title: 'Limit Increase Declined', body: `The bank kept your limit at ${formatMoney(now, cur)}. It raises a limit only with a credit score of ${RAISE_FROM} or more, no late payment in the last year, and money in the bank to repay it.`, importance: 40 });
       return { limit: now, granted: false };
     }
     card.creditLimit = Math.min(want, Math.round(now * RAISE_SHARE / 100) * 100);
