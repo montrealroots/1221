@@ -2795,7 +2795,32 @@
     "specialist": 10,
     "twin": 2,
     "evenActor": 0,
-    "of": 44
+    "of": 44,
+    "materials": [
+     "muchado-4-1",
+     "enemy-2",
+     "earnest-2",
+     "stoops-2",
+     "wayoftheworld-4",
+     "hamlet-3-1",
+     "Much Ado About Nothing",
+     "orig-runway",
+     "caesar-4-3",
+     "henry5-4-3"
+    ],
+    "halfRehearsed": 0,
+    "smallerGapRate": 0.4545,
+    "largerGapRate": 0,
+    "works": 9,
+    "mostFromOneWork": 2,
+    "families": [
+     "comedy",
+     "drama",
+     "tragedy",
+     "romantic_comedy"
+    ],
+    "withNoGrain": 44,
+    "withoutRestraintsDraws": 7
    }
   },
   "budgets": {
@@ -3573,7 +3598,31 @@
     "specialist": 9,
     "twin": 1,
     "evenActor": 0,
-    "of": 44
+    "of": 44,
+    "materials": [
+     "muchado-4-1",
+     "enemy-2",
+     "earnest-2",
+     "stoops-2",
+     "wayoftheworld-4",
+     "hamlet-3-1",
+     "Much Ado About Nothing",
+     "orig-runway",
+     "caesar-4-3"
+    ],
+    "halfRehearsed": 0,
+    "smallerGapRate": 0.4091,
+    "largerGapRate": 0,
+    "works": 8,
+    "mostFromOneWork": 2,
+    "families": [
+     "comedy",
+     "drama",
+     "tragedy",
+     "romantic_comedy"
+    ],
+    "withNoGrain": 44,
+    "withoutRestraintsDraws": 7
    }
   },
   "budgets": {
