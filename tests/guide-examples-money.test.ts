@@ -189,7 +189,7 @@ const PLAYS: Record<string, () => void> = {
     expect(postings(sim, current, /^Round-ups$/, night - HOUR)).toEqual([{ at: night, amount: -moved[0]!.amount }]);
     h.sim = sim;
     const shown = renderToStaticMarkup(createElement(BankAccountLife, { bankId: 'gb-natwest' })).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-    const said = grab(result, 'the panel says “', '(Last moved: £\\d+\\.\\d\\d into savings)', '”');
+    const said = grab(result, 'the panel says “', '(Last moved to savings: £\\d+\\.\\d\\d)', '”');
     expect(shown).toContain(said);
   },
   'money.affairs': () => {

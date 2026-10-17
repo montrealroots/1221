@@ -62,14 +62,19 @@ vi.mock('@/ui/guide/Guide', async (orig) => {
 
 const { BankWorkspace } = await import('@/ui/workspaces/BankWorkspace');
 const { BankMoves } = await import('@/ui/bank/BankMoves');
+const { BankCard } = await import('@/ui/bank/BankCard');
+const { BankCardOffers } = await import('@/ui/bank/BankCardOffers');
+const { BankSecurity } = await import('@/ui/bank/BankSecurity');
+const { BankPayments } = await import('@/ui/bank/BankPayments');
+const { BankCash } = await import('@/ui/bank/BankCash');
 
 const onScreen = (html: string) => html.replace(/\stitle="[^"]*"/g, '').replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ')
   .replace(/&quot;/g, '"').replace(/&#x27;/g, '\'').replace(/&amp;/g, '&').replace(/\s+/g, ' ').replace(/\s+([,.;:])/g, '$1');
 /** A screen as the player has it: its words, and the Gated buttons it drew. */
-function drawn(sim: Simulation, component: FunctionComponent): string {
+function drawn(sim: Simulation, component: FunctionComponent<{ bankId: string }>): string {
   h.sim = sim;
   h.clicks = [];
-  return onScreen(renderToStaticMarkup(createElement(component)));
+  return onScreen(renderToStaticMarkup(createElement(component, { bankId: 'us-chase' })));
 }
 /** The one Gated button of a feature with a label, pressed, and the toasts it gave. */
 function press(feature: string, label: string): string[] {
@@ -119,7 +124,8 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Accounts', () => {
     expect(words).toContain(`It’s overdrawn by $3.30. Closing it takes $3.30 from ${checking.name} to clear it.`);
     expect(words).not.toMatch(/Its -\$/);
     // The balance tile's control reads its label and figure apart: until 2026-10-17 its name was "Balance-$3".
-    expect(renderToStaticMarkup(createElement(BankWorkspace))).toMatch(/<span class="stat-label">Balance<\/span> <span class="stat-value mono">-\$3<\/span>/);
+    expect(renderToStaticMarkup(createElement(BankWorkspace))).toMatch(/<span class="stat-label">Balance<\/span> <span class="stat-value mono">−\$3\.30<\/span>/);
+    expect(words).toContain("Balance −$3.30 Overdrawn");
     drawn(sim, BankWorkspace);
     const before = checking.balance;
     expect(press('bank.close_savings', 'Close It')).toEqual([]);
@@ -230,5 +236,40 @@ describe('PLAYER JOURNEY: Other Charges and the sources line, at banks around th
     } finally {
       if (was === undefined) delete chase.confidence; else chase.confidence = was;
     }
+  });
+});
+
+describe('PLAYER JOURNEY: a New York student at Chase reads Cards and Payments And Cash', () => {
+  it('says the card’s rate as set when it opened, its fees and its minimum, in the introductory months', () => {
+    const sim = nyStudent('lang14-card');
+    const card = cardsOf(sim, sim.player)[0]!;
+    const words = drawn(sim, BankCard as FunctionComponent<{ bankId: string }>);
+    // Until 2026-10-17 it said the card "opened at this", the 0% of its introductory months.
+    expect(words).toMatch(new RegExp(`0% a year on any balance you carry during the introductory months, then 18\\.46%\\. Chase sets a new card’s rate between 18\\.24% and 27\\.74% from your credit record when it opens\\. Yours was set at ${(card.apr! * 100).toFixed(2).replace(/\\.?0+$/, '').replace('.', '\\.')}% when it opened, and the bank doesn’t reprice it\\.`));
+    expect(words).toContain('Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.');
+    expect(words).toContain('If a payment is sixty days late, the rate goes up to 29.99% after 45 days’ notice. No yearly fee. Statements come on the 20th, and payment is due 21 days after each one.');
+    expect(words).toContain('The minimum payment is 1% of the statement plus the month’s interest, or $40 if that’s more. Paying less than the minimum by the due date costs $30 the first time, and $40 if it happens again within 6 billing periods, but never more than the minimum itself.');
+    expect(words).toContain('Owed $0 Left To Spend');
+    expect(words).toContain('You can apply to any bank here, not only yours. It looks at your credit record and whether you have income or money to repay from, and if it says yes, the card arrives a week later. Applying takes a few points off your credit record, whether or not you’re approved.');
+  });
+
+  it('says the card’s offers, and that there’s nothing to put in a plan when there isn’t', () => {
+    const words = drawn(nyStudent('lang14-offers'), BankCardOffers as FunctionComponent<{ bankId: string }>);
+    expect(words).toMatch(/Rewards: 1\.5% back on every purchase, added up at each statement\. You have \$0 to redeem\. In the bank’s words: .*?\. Those categories are things a card doesn’t buy in the game, so you earn the base rate\./);
+    expect(words).toMatch(/A plan made while the introductory rate lasts, until [A-Z][a-z]+ \d{1,2}, \d{4}, is free for its whole life\. One made after that costs 1\.72% of the plan a month, the most the bank says it charges\. There’s nothing on the card to put into one right now\./);
+  });
+
+  it('says what a new card costs and how long a card lasts, the estimate as one', () => {
+    const words = drawn(nyStudent('lang14-security'), BankSecurity as FunctionComponent<{ bankId: string }>);
+    expect(words).toContain('Your Cards Lock a card, report it lost or stolen, or report a payment that wasn’t yours');
+    expect(words).toContain('A new card is free. A rushed one costs $15.00 more. Cards last 4 years here. That’s estimated: the bank doesn’t say.');
+    expect(words).toContain('The bank lists no fee for a new card, so the game charges nothing for one.');
+    expect(words).toContain('The law on the debit card: Under the Electronic Fund Transfer Act');
+  });
+
+  it('says how the day’s spending is paid and what savings covers, and what cash is in hand', () => {
+    const sim = nyStudent('lang14-pay');
+    expect(drawn(sim, BankPayments as FunctionComponent<{ bankId: string }>)).toContain('How the day’s spending is paid, and which account each payment comes from. How This Works The Day’s Spending In Cash, Then The Debit Card On The Credit Card On The Debit Card When this is on, a payment a current account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows. Chase Savings covers Chase Total Checking, which pays the day’s spending and the Chase Freedom Unlimited’s autopay.');
+    expect(drawn(sim, BankCash as FunctionComponent<{ bankId: string }>)).toContain('Cash You have $0.00 in cash. How This Works Amount To Take Out (USD)');
   });
 });

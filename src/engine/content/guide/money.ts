@@ -630,7 +630,7 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     interpret: [
       '“Counted, not yet moved” is waiting for the bank’s day; at Wells Fargo and Lloyds, what’s “to move at the next business day’s start” has been counted already.',
-      '“Last moved: … into savings” is the last transfer. “Not moved: …, because …” says why one didn’t happen.',
+      '“Last moved to savings: …” is the last transfer. “Not moved on …: …, because …” says why one didn’t happen.',
       // The panel’s count of whole purchases (`ui/bank/RoundUps.tsx`, `wholePurchase`), said here from 2026-10-13: until
       // then the panel showed it and this list didn’t say what it was.
       '“… purchases since the last transfer were already a multiple of …, so rounded up to nothing.” counts the purchases that moved nothing because they were already whole; it starts again at each transfer that moves money, and when round-ups stop.',
@@ -660,7 +660,7 @@ export const MONEY: readonly GuideEntry[] = [
         `A purchase of ${gbp(230)} is paid by debit card.`,
         'The day ends.',
       ],
-      result: `The purchase counts ${gbp(210)}, its change of ${gbp(70)} three times, as NatWest’s own example has it. At the next day’s start ${gbp(210)} moves from the current account to savings in one transfer, and the panel says “Last moved: ${gbp(210)} into savings”.`,
+      result: `The purchase counts ${gbp(210)}, its change of ${gbp(70)} three times, as NatWest’s own example has it. At the next day’s start ${gbp(210)} moves from the current account to savings in one transfer, and the panel says “Last moved to savings: ${gbp(210)}”.`,
     },
   },
   {

@@ -51,6 +51,9 @@ export function BankWorkspace() {
   const { sim, run, toast } = useGame();
   const cur = saveCurrency(sim.universe);
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
+  // A balance as the tile and the From list show it: overdrawn, to the cent with a minus sign, where whole dollars and a
+  // hyphen read "-$3" of -$3.30 (from 2026-10-17, the before-walk's find on the missed-plan save).
+  const balanceOf = (cents: number) => (cents < 0 ? `−${formatMoney(-cents, cur)}` : money(cents));
   const bank = useWorld((s) => bankOf(s, s.player));
   const accounts = useWorld((s) => bankAccountsOf(s, s.player));
   const currents = useWorld((s) => checkingsOf(s, s.player));
@@ -134,9 +137,10 @@ export function BankWorkspace() {
                 <div className="stat">
                   <Open subject={at('account', account.id)}>
                     <span className="stat-label">Balance</span>{' '}
-                    <span className="stat-value mono">{home ? heldText(sim, account) : money(account.balance)}</span>
+                    <span className="stat-value mono">{home ? heldText(sim, account) : balanceOf(account.balance)}</span>
                   </Open>
                   {home && <span className="stat-note">{formatMoney(account.balance, cur)} in dollars, at the game’s exchange rate</span>}
+                  {!home && account.balance < 0 && <span className="stat-note">Overdrawn</span>}
                 </div>
                 <p className="small" style={{ margin: 0 }}>{interestWords(sim, product, tax, money, own.currency, account.openedAt, closesQuarterly(account), account, home ? inBank : undefined)}</p>
                 {account.secondChance ? (
@@ -202,7 +206,7 @@ export function BankWorkspace() {
               <label htmlFor="move-from">From</label>
               <select id="move-from" value={fromId} onChange={(e) => setFrom(e.target.value)}>
                 {/* By balance, the most in it last. */}
-                {[...accounts].sort((a, b) => a.balance - b.balance).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4}, {a.institution} ({a.currency ? heldText(sim, a) : money(a.balance)})</option>)}
+                {[...accounts].sort((a, b) => a.balance - b.balance).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4}, {a.institution} ({a.currency ? heldText(sim, a) : balanceOf(a.balance)})</option>)}
               </select>
             </div>
             <div className="field">

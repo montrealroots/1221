@@ -306,7 +306,7 @@ describe('finance.pay_card', () => {
     // Fifteen days on, on New Haven's calendar (EDT, UTC−4), written out here.
     const until = new Date(paidAt + 15 * MS_DAY - 4 * HOUR);
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    expect(screen).toContain(`$2,000 of the credit your payment freed is held until ${months[until.getUTCMonth()]} ${until.getUTCDate()}, 2026, while it clears from another bank. After you make a payment, it can take Chase up to 15 days`);
+    expect(screen).toContain(`$2,000 of the credit your payment freed up is on hold until ${months[until.getUTCMonth()]} ${until.getUTCDate()}, 2026, while the payment clears from another bank. After you make a payment, it can take Chase up to 15 days`);
 
     // Capital One's own debit card is still on its way, so the days' groceries meanwhile go on this card: Left To
     // Spend is the limit less what's owed, less the $2,000 held while it's held.
@@ -602,7 +602,7 @@ describe('credit score', () => {
     staying.player.credit!.score = 600;
     staying.player.credit!.marks = [{ at: staying.now - 7 * year + 30 * MS_DAY, points: 100, country: 'us' }];
     // Chase prices within 18.24% and 27.74% between a record of 800 and one of 580: 600 is 200/220 up it, 26.88%.
-    expect(words(cardScreen(leaving))).toContain('A record today would get 26.88%.');
+    expect(words(cardScreen(leaving))).toContain('With your record today, a new card would get 26.88%.');
     const again = reload(leaving);
     for (const sim of [again, staying]) sim.advanceTo(edt(2026, 9, 1, 8)); // past the month's end, 31 August at 11 PM
     expect(again.player.credit!.marks).toEqual([]);
@@ -610,7 +610,7 @@ describe('credit score', () => {
     expect(staying.player.credit!.marks).toHaveLength(1);
     expect(staying.player.credit!.score).toBe(600);
     // 625 is 175/220 up the range: 25.80%.
-    expect(words(cardScreen(again))).toContain('A record today would get 25.8%.');
+    expect(words(cardScreen(again))).toContain('With your record today, a new card would get 25.8%.');
     // Citi's card, each applying: five points for the inquiry, and approved from 620.
     expect(run(again, 'card.apply', { bankId: 'us-citi' })).toEqual({ approved: true, limit: 1_000_00 });
     expect(notes(again, 'Card Approved').map((n) => n.body)).toEqual(['Citi approved a card with a $1,000.00 limit. It arrives in a week.']);

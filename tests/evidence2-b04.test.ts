@@ -321,7 +321,7 @@ describe('card.lock', () => {
       press(screen.button('Lock It', which === 'debit' ? 0 : 1));
       const after = draw(sim, createElement(BankSecurity, { bankId: 'us-chase' }));
       expect(after.all('Unlock It')).toHaveLength(1);
-      expect(after.text.split('Locked: nothing new goes on it.')).toHaveLength(2);
+      expect(after.text.split('Locked: nothing new can go on it until you unlock it.')).toHaveLength(2);
       expect((which === 'debit' ? primary(sim) : chaseCard(sim)).plastic!.locked).toBe(true);
     };
     /** Six nights with the US rate set to certain, 25 to 30 August, after what the player did first. */
@@ -375,8 +375,8 @@ describe('card.report', () => {
     const before = checking.balance;
     const screen = draw(sim, createElement(BankSecurity, { bankId: 'us-capital-one' }));
     // The debit card's first, then the Platinum card's.
-    expect(screen.all('Report It, Rush The New One')).toHaveLength(2);
-    press(screen.button('Report It, Rush The New One'));
+    expect(screen.all('Report It And Rush The New One')).toHaveLength(2);
+    press(screen.button('Report It And Rush The New One'));
     // Three business days from Monday 24 August at 7:30: Tuesday, Wednesday, Thursday 27 August.
     expect(checking.plastic).toMatchObject({ stopped: 'lost', replacementAt: edt(8, 27, 7, 30) });
     expect(checking.balance).toBe(before);
@@ -390,9 +390,9 @@ describe('card.report', () => {
     const wfChecking = primary(wf);
     expect(wfChecking.bankId).toBe('us-wells-fargo');
     const wfScreen = draw(wf, createElement(BankSecurity, { bankId: 'us-wells-fargo' }));
-    expect(wfScreen.all('Report It, Rush The New One')).toHaveLength(0);
+    expect(wfScreen.all('Report It And Rush The New One')).toHaveLength(0);
     expect(wfScreen.all('Report It').length).toBeGreaterThan(0);
-    expect(wfScreen.text).toContain('Wells Fargo’s rush is for credit cards: “We may be able to replace your card in as little as 24 hours (additional fees may apply)” (wellsfargo.com/help/lost-wallet), and its Active Cash card agreement names a Rush Plastic Fee without an amount. With no fee published, SLATE sends none in a rush.');
+    expect(wfScreen.text).toContain('Wells Fargo’s rush is for credit cards: “We may be able to replace your card in as little as 24 hours (additional fees may apply)” (wellsfargo.com/help/lost-wallet), and its Active Cash card agreement names a Rush Plastic Fee without an amount. With no fee published, the game doesn’t offer a rushed card.');
     for (const which of ['debit', 'credit'] as const) {
       const refused = wf.execute({ kind: 'card.report', payload: { which, why: 'lost', rush: true } });
       expect(refused.error).toBe('Wells Fargo doesn’t publish what it charges for a rush, so SLATE can’t send one.');

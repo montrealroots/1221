@@ -604,12 +604,12 @@ describe('bank.set_round_ups', () => {
     // A $5.00 meal at a frugal student's price, $4.29; to the next whole dollar, $0.71.
     expect(meal(sim, start)).toEqual([4_29]);
     expect(sim.player.roundUps!.pending).toBe(71);
-    expect(panel()).toContain('Counted, not yet moved: $0.71.');
+    expect(panel()).toContain('Counted but not moved yet: $0.71.');
     const saved = account(sim, savings).balance;
     sim.advanceTo(at(2026, 8, 25, 0, 1));
     expect(moves(sim)).toEqual([{ at: at(2026, 8, 25), amount: 71, from: checking, to: savings }]);
     expect(account(sim, savings).balance - saved).toBe(71);
-    expect(panel()).toContain('Last moved: $0.71 into savings, August 25, 2026.');
+    expect(panel()).toContain('Last moved to savings: $0.71, on August 25, 2026.');
 
     // Off: what Tuesday's first moment counted ($8.59 of groceries, $0.41) is dropped, and nothing counts after.
     press('bank.set_round_ups', 'Round-Ups: On');
@@ -661,8 +661,8 @@ describe('bank.set_round_ups', () => {
     sim.advanceTo(at(2026, 8, 25, 0, 1));
     expect(moves(sim)).toEqual([{ at: at(2026, 8, 25), amount: 2_00, from: primary(sim).id, to: savings.id }]);
     const text = words(shown(sim, createElement(BankAccountLife, { bankId: 'us-wells-fargo' })));
-    expect(text).toContain('Last moved: $2.00 into savings, August 25, 2026.');
-    expect(text).toContain('Not in SLATE: Online Bill Pay payments count at Wells Fargo too; SLATE’s bills aren’t paid through Bill Pay.');
+    expect(text).toContain('Last moved to savings: $2.00, on August 25, 2026.');
+    expect(text).toContain('Not in the game: Online Bill Pay payments count at Wells Fargo too; SLATE’s bills aren’t paid through Bill Pay.');
     expect(text).toContain('A day Overdraft Protection was used, Wells Fargo makes no transfer: SLATE doesn’t look for it, and moves it if the account covers it.');
     // Tuesday's groceries, bought at its first moment, are Tuesday's: $1 moved at Wednesday's start, and Monday's not again.
     sim.advanceTo(at(2026, 8, 26, 0, 1));
@@ -794,7 +794,7 @@ describe('card.close', () => {
     expect(stateOf(sim.player, account(sim, card)).closing).toBe(sim.now);
     expect(cardRoom(sim.player, account(sim, card))).toBe(0);
     const text = panel();
-    expect(text).toContain('Closed to anything new. What’s owed is paid down as before, and then the account closes.');
+    expect(text).toContain('It’s closed to new spending. You keep paying off what’s owed as before, and then the account closes.');
     expect(text).toContain('Left To Spend $0 Of a $65,217 limit');
     expect(h.clicks.filter((c) => c.feature === 'card.close')).toEqual([]);
     expect(refusal(sim, 'card.close', { accountId: card })).toBe('It’s already being closed.');
@@ -859,7 +859,7 @@ describe('card.lock', () => {
     press('card.lock', 'Lock It');
     const text = panel();
     expect(h.clicks.filter((c) => c.feature === 'card.lock').map((c) => c.says)).toEqual(['Unlock It', 'Unlock It']);
-    expect(text.split('Locked: nothing new goes on it.')).toHaveLength(3);
+    expect(text.split('Locked: nothing new can go on it until you unlock it.')).toHaveLength(3);
     expect(primary(sim).plastic!.locked).toBe(true);
     expect(cardAt(sim, 'us-chase').plastic!.locked).toBe(true);
 

@@ -1180,11 +1180,11 @@ if (DIR) {
     const last = (await panel().locator('[data-roundups-last]').innerText().catch(() => '')).replace(/\s+/g, ' ');
     const whole = (await panel().locator('[data-roundups-whole]').innerText().catch(() => '')).replace(/\s+/g, ' ');
     if (last) {
-      const moved = Number((last.match(/^Last moved: \$(\d+\.\d\d) into savings/) ?? [])[1] ?? NaN);
+      const moved = Number((last.match(/^Last moved to savings: \$(\d+\.\d\d), on /) ?? [])[1] ?? NaN);
       must(moved > 0 && moved <= 15, `not a transfer of up to $15: ${last}`);
       return last;
     }
-    const n = Number((whole.match(/^(\d+) purchases since the last transfer were already a multiple of \$1\.00, so rounded up to nothing\.$/) ?? [])[1] ?? NaN);
+    const n = Number((whole.match(/^(\d+) purchases since the last transfer were already a multiple of \$1\.00, so they added nothing\.$/) ?? [])[1] ?? NaN);
     must(n >= 7, `a week, and neither a transfer nor whole purchases said: ${whole || '(nothing)'}`);
     return whole;
   });

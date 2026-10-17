@@ -201,10 +201,10 @@ describe('the card’s panel on a hardship plan', () => {
   it('gives the plan’s payment as what the statement asks and the late fee’s measure, and when the plan ends', () => {
     const { sim } = lateThenPlan('plan-least-panel');
     const panel = draw(sim, createElement(BankCard, { bankId: 'us-chase' }));
-    expect(panel).toContain('On a plan since October 11, 2026: no interest, and each statement asks the plan’s $101 in the minimum’s place: $101 on this one. The card can’t be used until the first statement or due date after it’s paid off, when the plan ends.');
-    expect(panel).toContain('The least a statement asks once the plan ends is');
-    expect(panel).not.toMatch(/The least a statement asks once the plan ends is [^.]*on this one/);
-    expect(panel).toContain('A payment short of the plan’s payment costs $30 the first time and $40 again within 6 billing periods, never more than the plan’s payment.');
+    expect(panel).toContain('It’s been on a payment plan since October 11, 2026. There’s no interest, and each statement asks for the plan’s $101 instead of the minimum, $101 on this one. You can’t use the card until the plan ends, at the first statement or due date after it’s paid off.');
+    expect(panel).toContain('The minimum payment once the plan ends is');
+    expect(panel).not.toMatch(/The minimum payment once the plan ends is [^.]*\. On this statement it’s/);
+    expect(panel).toContain('Paying less than the plan’s payment by the due date costs $30 the first time, and $40 if it happens again within 6 billing periods, but never more than the plan’s payment itself.');
     expect(panel).not.toContain('short of the minimum');
     expect(panel).not.toContain('The card can’t be used until then.');
   });

@@ -58,7 +58,7 @@ const { BankPayments } = await import('@/ui/bank/BankPayments');
 
 const LINK = 'Savings Covers The Current Account';
 const NOTHING = 'covers nothing until there is';
-const LEAD = 'On, a payment a current account can’t make comes from easy-access savings at the same bank, as far as savings lets it out.';
+const LEAD = 'When this is on, a payment a current account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows.';
 
 /** How You Pay as the player sees it, as text. */
 function screen(sim: Simulation): string {
@@ -121,7 +121,7 @@ describe('PLAYER JOURNEY: a Citi loan repaid from Chase, with Citi made primary 
     const card = cardOf(sim);
     // The card's autopay stays on Chase, where a change of primary pins it: Chase savings covers it and the loan.
     expect(text).toContain(`${chaseSavings.name} covers ${chase.name}, which pays the ${card.name}’s autopay and the ${loan.name}.`);
-    expect(text).toContain(`${citi.name}, which pays the day’s spending, has no easy-access savings at ${citi.institution} to draw on.`);
+    expect(text).toContain(`${citi.name}, which pays the day’s spending, has no easy-access savings at ${citi.institution} to cover it.`);
     expect(text).not.toContain(NOTHING);
     // The Chase current account down to $100, the rest moved into Chase savings, as Move Money moves it.
     run(sim, 'bank.transfer', { fromId: chase.id, toId: chaseSavings.id, amount: chase.balance - 100_00 });
@@ -181,7 +181,7 @@ describe('PLAYER JOURNEY: the link left On when Citi is made primary, with a Cit
     expect(linkableSavings(sim, sim.player)).toBeUndefined();
     const text = screen(sim);
     expect(text).toContain(`${LINK}: On`);
-    expect(text).toContain(`There’s no easy-access savings at ${citi.institution} for it to draw on, so On ${NOTHING}.`);
+    expect(text).toContain(`There’s no easy-access savings at ${citi.institution}, so turning this on ${NOTHING}.`);
     expect(press(sim)).toBe(true);
     expect(screen(sim)).not.toContain(LINK);
     expect(sim.execute({ kind: 'bank.set_payments', payload: { linkSavings: true } }).error).toBe(`There’s no savings account at ${citi.institution} to cover the current account.`);
@@ -191,7 +191,7 @@ describe('PLAYER JOURNEY: the link left On when Citi is made primary, with a Cit
     const { sim, chase, citi, chaseSavings } = citiLoanRepaidFromChase('r3b-link-closed', true);
     run(sim, 'bank.close_savings', { accountId: chaseSavings.id });
     expect(linkableSavings(sim, sim.player)).toBeUndefined();
-    expect(screen(sim)).toContain(`There’s no easy-access savings at ${citi.institution} or ${chase.institution} for it to draw on, so On ${NOTHING}.`);
+    expect(screen(sim)).toContain(`There’s no easy-access savings at ${citi.institution} or ${chase.institution}, so turning this on ${NOTHING}.`);
     expect(press(sim)).toBe(true);
     // Until group r3b it named the primary account's bank alone: “There’s no savings account at Citi to cover the current account.”
     expect(sim.execute({ kind: 'bank.set_payments', payload: { linkSavings: true } }).error).toBe(`There’s no savings account at ${citi.institution} or ${chase.institution} to cover the current accounts your payments come from.`);

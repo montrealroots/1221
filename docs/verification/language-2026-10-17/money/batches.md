@@ -70,3 +70,56 @@ those files 141 of 141 and `tests/language-money.test.ts` 9 of 9.
 
 **Screens read:** the built app, Money's five tabs on the missed-plan and round-ups saves, at 1440 and 390
 (`walk-b1-1440`, `walk-b1-390` in the scratch folder): see the batch 1 walk note below.
+
+**Batch 1 walk note.** `text-walk.mjs` on the built app (missed-plan and round-ups saves, 1440 and 390), then
+`text-render-check.mjs`: the Accounts tab reads as above, the balance control is "Balance -$3", and the closing line is
+"It’s overdrawn by $3.30. Closing it takes $3.30 from Chase Total Checking to clear it." The check still found "money
+written oddly" in "-$3" (the tile and the From list): batch 2 shows an overdrawn balance as "−$3.30", with "Overdrawn"
+under it. Its other finding, "Sleep owed 1 hours", is the profile area's.
+
+## Batch 2: Cards, Card Offers, Card Security, How You Pay, Cash, Round-Ups
+
+**Sources (12):** `src/ui/bank/BankCard.tsx` (4), `BankCardOffers.tsx` (1), `BankSecurity.tsx` (2), `BankPayments.tsx`
+(2), `BankCash.tsx` (1), `RoundUps.tsx` (1), and `BankWorkspace.tsx#BankWorkspace` again (the overdrawn balance).
+Rewritten And Verified 9 (with the re-marked one, 10), Reviewed And Retained 3.
+
+**What changed.**
+- The card panel speaks to the holder: "Statements come on the 20th, and payment is due 21 days after each one.", "The
+  minimum payment is …", "Paying less than the minimum by the due date costs $30 the first time, and $40 if it happens
+  again within 6 billing periods, but never more than the minimum itself." The plan, the penalty rate, the persistent
+  debt and the suspension lines say who does what and when. The over-limit estimate and the estimated terms went to the
+  foot. Buttons say what they change: Change The Day (was Move It, also Move Money's label), Ask For This Limit, New
+  Limit, Raise My Limit Automatically: Off.
+- Card offers: a payment plan "pays off part of what you owe for purchases in equal monthly amounts"; a plan with no fee
+  says "with no fee and no interest"; nothing to put in a plan says so, where it said "$0 can go into one". A money
+  transfer (decision 4's `card.money_transfer`, its words only) is Transfer It, "Transferred to your account, for a … fee."
+- Security: the rush and replacement lines are sentences ("A rushed one costs $15.00 more."), each law line is "The law
+  on …", and the estimates are said as estimates.
+- How You Pay keeps the label "The Day’s Spending", which `systems/spending.ts` and the health area's guide quote; the
+  savings link reads "When this is on, a payment a current account can’t cover is taken from easy-access savings …".
+- Cash: "You have $0.00 in cash.", field labels that say what goes in, the cash advance's interest said plainly, and
+  the machine owner's unknown fee said as not charged.
+- Round-ups: "Last moved to savings: …", "Not in the game: …", the source line in the house form; the guide's quote of
+  the panel ("Last moved to savings: £2.10") moved with it.
+
+**Kept, and why:** the card's month names, `TERM_WORDS` and `WHY_WORDS` (plain nouns read into sentences).
+
+**Meaning-sensitive changes, and how each was checked.**
+- The card's rate line said "yours opened at this" of the rate charged today, which in the introductory months is 0%
+  (defects.md, d5). It now reads `card.apr`, the rate set at opening, and says the introductory rate's end. The test
+  computes the figure from the card.
+- "The card comes in about a week": `ARRIVES_IN` is seven days exactly; "the card arrives a week later".
+- The machine owner's fee where it isn't known: `withdrawalQuote` charges only an owner's charge it knows
+  (`ownerCharge`), so "That fee isn’t known, so the game doesn’t charge it."
+- The rewards line showed a development date ("since 2026-10-09", defects.md, d6).
+
+**Tests and tool matchers updated:** defects-g15-1, defects-r3b-1, defects-r6-1, evidence-g10-money, evidence-g11-money,
+evidence-g12-money, evidence-g13-money, evidence2-b04, guide-examples-money (the round-ups quote's pattern),
+hardship-plan-minimum, roundups, scope-money (Transfer It), and `tests/language-money.test.ts` (four new cases: the card
+panel, its offers, security and How You Pay with Cash). `tools/acceptance-ui.mjs`: the round-ups matchers "Last moved to
+savings: $…" and "… so they added nothing."
+
+**Checks:** tsc 0; eslint 0; title-case 0; label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0;
+text-inventory --check 0 (the two "to draw on" hits in `coverText` were said another way); doc-refs 0; deciders 0.
+Vitest: the 28 files rendering these panels, 4 failures at first (old words my first pass missed), then 385 of 385, and
+`tests/language-money.test.ts` 13 of 13.

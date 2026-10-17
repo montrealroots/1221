@@ -54,11 +54,11 @@ export function BankPayments() {
     const from = spFrom || current?.id;
     const to = spTo || accounts.find((a) => a.id !== from)?.id;
     const answer = run('bank.schedule_payment', { fromId: from, toId: to, amount: cents(spAmount), at });
-    if (answer.ok) { toast(`Set for ${formatDate(at, sim.zone)}.`, 'positive'); setSpAmount(''); }
+    if (answer.ok) { toast(`Payment set for ${formatDate(at, sim.zone)}.`, 'positive'); setSpAmount(''); }
   };
 
   return (
-    <Panel title="How You Pay" subtitle="The day’s spending, and where it’s paid from." help="bank.payments">
+    <Panel title="How You Pay" subtitle="How the day’s spending is paid, and which account each payment comes from." help="bank.payments">
       <div className="field-row">
         <div className="field">
           <label htmlFor="pay-everyday">The Day’s Spending</label>
@@ -70,7 +70,7 @@ export function BankPayments() {
         </div>
       </div>
       <p className="small" style={{ margin: 'var(--s2) 0' }}>
-        {pay.everyday === 'debit' && ceiling && ceilingRoom !== undefined ? `The debit card pays up to its ceiling ${ceiling.window === 'month' ? 'each calendar month' : 'over any 30 days'}, ${money(ceilingRoom)} still; past it the day’s shopping goes on the credit card, or isn’t bought. ` : ''}
+        {pay.everyday === 'debit' && ceiling && ceilingRoom !== undefined ? `The debit card pays up to its spending limit ${ceiling.window === 'month' ? 'each calendar month' : 'over any 30 days'}, and ${money(ceilingRoom)} of it is left. Past it, the day’s shopping goes on the credit card, or isn’t bought. ` : ''}
       </p>
       {/* Only with savings the link draws on for a current account a payment comes from (`linkCovers`), or while it's
           On, so it can be turned Off. Until 2026-09-27 it was offered with no savings, and On changed nothing; until
@@ -100,7 +100,7 @@ export function BankPayments() {
           ))}
           <div className="field-row">
             <div className="field"><label htmlFor="so-amount">Each Month ({cur})</label><input id="so-amount" inputMode="decimal" value={soAmount} onChange={(e) => setSoAmount(e.target.value)} /></div>
-            <div className="field"><label htmlFor="so-day">On The Day</label><input id="so-day" inputMode="numeric" value={soDay} onChange={(e) => setSoDay(e.target.value)} /></div>
+            <div className="field"><label htmlFor="so-day">Day Of The Month</label><input id="so-day" inputMode="numeric" value={soDay} onChange={(e) => setSoDay(e.target.value)} /></div>
             {savings.length > 1 && (
               <div className="field">
                 <label htmlFor="so-to">Into</label>
@@ -161,13 +161,13 @@ const andList = (items: readonly string[]): string => (items.length < 2 ? items.
  * account's bank, that On covered nothing, which was false with savings at the bank of a loan's repayment account.
  */
 function coverText(covers: LinkCover[]): string {
-  if (!covers.some((one) => one.savings)) return `There’s no easy-access savings at ${coveredBanks(covers)} for it to draw on, so On covers nothing until there is.`;
+  if (!covers.some((one) => one.savings)) return `There’s no easy-access savings at ${coveredBanks(covers)}, so turning this on covers nothing until there is.`;
   const each = covers.map((one) => {
     const name = one.from?.name ?? 'your current account';
     const pays = andList([...(one.primary ? ['the day’s spending'] : []), ...one.cards.map((card) => `the ${card.name}’s autopay`), ...one.loans.map((loan) => `the ${loan.name}`)]);
-    return one.savings ? `${one.savings.name} covers ${name}, which pays ${pays}.` : `${name[0]!.toUpperCase()}${name.slice(1)}, which pays ${pays}, has no easy-access savings at ${one.from?.institution ?? 'your bank'} to draw on.`;
+    return one.savings ? `${one.savings.name} covers ${name}, which pays ${pays}.` : `${name[0]!.toUpperCase()}${name.slice(1)}, which pays ${pays}, has no easy-access savings at ${one.from?.institution ?? 'your bank'} to cover it.`;
   });
-  return ['On, a payment a current account can’t make comes from easy-access savings at the same bank, as far as savings lets it out.', ...each].join(' ');
+  return ['When this is on, a payment a current account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows.', ...each].join(' ');
 }
 
 function ordinal(n: number): string {

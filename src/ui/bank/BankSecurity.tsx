@@ -46,7 +46,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
     && (sim.universe.accounts[one.accountId]?.bankId === bankId || cards.some((c) => c.account.id === one.accountId)));
 
   return (
-    <Panel title="Your Cards" subtitle="Locking, loss and theft, and payments that weren’t yours" help="bank.card-security">
+    <Panel title="Your Cards" subtitle="Lock a card, report it lost or stolen, or report a payment that wasn’t yours" help="bank.card-security">
       <LookRegion className="col gap-3">
         {cards.map(({ which, account }) => {
           const p = plasticView(sim, account, which);
@@ -56,11 +56,11 @@ export function BankSecurity({ bankId }: { bankId: string }) {
           return (
             <div key={account.id} className="col gap-2">
               <div className="strong small"><Open subject={at('account', account.id)}>{which === 'debit' ? 'Debit card' : account.name} ending {p.last4}</Open>, expires <Open subject={at('day', dateKey(p.expiresAt, sim.homeZone))}>{formatDate(p.expiresAt, sim.zone)}</Open></div>
-              {p.stopped && <p className="small" style={{ margin: 0 }}>{p.stopped === 'new' ? 'A new account’s first card' : `${WHY_WORDS[p.stopped]}: stopped`}. {p.stopped === 'new' ? 'It' : 'A new one'} arrives {p.replacementAt ? formatDate(p.replacementAt, sim.zone) : 'soon'}.</p>}
-              {p.locked && !p.stopped && <p className="small" style={{ margin: 0 }}>Locked: nothing new goes on it.</p>}
+              {p.stopped && <p className="small" style={{ margin: 0 }}>{p.stopped === 'new' ? 'This is a new account’s first card' : `${WHY_WORDS[p.stopped]}: stopped`}. {p.stopped === 'new' ? 'It' : 'A new one'} arrives {p.replacementAt ? formatDate(p.replacementAt, sim.zone) : 'soon'}.</p>}
+              {p.locked && !p.stopped && <p className="small" style={{ margin: 0 }}>Locked: nothing new can go on it until you unlock it.</p>}
               {which === 'debit' && ceiling && (
                 <p className="small" style={{ margin: 0 }}>
-                  It pays up to {money(inSaveMoney(sim, ceiling.ceiling, 'EUR'))} {ceiling.window === 'month' ? 'a calendar month' : 'over any 30 days'}, SLATE’s estimate: the lowest the bank sets. {room !== undefined ? `${money(room)} is left. ` : ''}Past it a purchase goes on the credit card, or isn’t made. Source: {FRENCH_CARDS_SOURCE}.
+                  It pays up to {money(inSaveMoney(sim, ceiling.ceiling, 'EUR'))} {ceiling.window === 'month' ? 'a calendar month' : 'over any 30 days'}. {room !== undefined ? `${money(room)} of that is left. ` : ''}Past it, a purchase goes on the credit card, or isn’t made. Source: {FRENCH_CARDS_SOURCE}. Estimated: the lowest limit the bank sets.
                 </p>
               )}
               <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
@@ -76,35 +76,35 @@ export function BankSecurity({ bankId }: { bankId: string }) {
                     </select>
                     <Gated feature="card.report" className="btn btn-sm" onClick={() => {
                       const answer = run<{ arrivesAt: number; fee: number }>('card.report', { which, why, accountId: account.id });
-                      if (answer.ok) toast(`Stopped. The new card arrives ${formatDate(answer.value!.arrivesAt, sim.zone)}${answer.value!.fee ? `, for ${money(answer.value!.fee)}` : ''}.`, 'positive');
+                      if (answer.ok) toast(`The card is stopped. The new one arrives ${formatDate(answer.value!.arrivesAt, sim.zone)}${answer.value!.fee ? `, for ${money(answer.value!.fee)}` : ''}.`, 'positive');
                     }}>Report It</Gated>
                     {/* Where the bank lists a rush fee or rush days, as `card.report` takes it (from 2026-10-13: until
                         then a rush fee alone, and Wells Fargo’s and Capital One’s days drew no button). Wells Fargo’s,
                         a fee it doesn’t publish, draws none again from later that day (`rushUnpublished`). */}
                     {(own?.rushFee !== undefined || own?.rushDays !== undefined) && (
-                      <Gated feature="card.report" className="btn btn-sm btn-ghost" onClick={() => run('card.report', { which, why, rush: true, accountId: account.id })}>Report It, Rush The New One</Gated>
+                      <Gated feature="card.report" className="btn btn-sm btn-ghost" onClick={() => run('card.report', { which, why, rush: true, accountId: account.id })}>Report It And Rush The New One</Gated>
                     )}
                   </>
                 )}
               </div>
               <Fine>
-                {fee === undefined && own?.replaceWords ? `The bank’s terms: ${own.replaceWords} SLATE charges none. ` : ''}
-                {fee === undefined && !own?.replaceWords ? 'The bank lists no fee for a new card, so SLATE charges none.' : fee === undefined ? '' : fee === 0 ? 'A new card is free.' : `A new card costs ${money(inSaveMoney(sim, fee, ownCurrency))}${own?.freeFor?.length ? `, and nothing when it’s ${own.freeFor.map((w) => w).join(' or ')}` : ''}.`}
-                {own?.rushFee !== undefined ? ` Sent in a rush, ${money(inSaveMoney(sim, own.rushFee, ownCurrency))} more.`
-                  : own?.rushDays !== undefined ? ` Sent in a rush, in ${own.rushDays} business ${own.rushDays === 1 ? 'day' : 'days'}; the bank lists no fee for it, so SLATE charges none.`
+                {fee === undefined && own?.replaceWords ? `The bank’s terms: ${own.replaceWords} The game charges nothing for it. ` : ''}
+                {fee === undefined && !own?.replaceWords ? 'The bank lists no fee for a new card, so the game charges nothing for one.' : fee === undefined ? '' : fee === 0 ? 'A new card is free.' : `A new card costs ${money(inSaveMoney(sim, fee, ownCurrency))}${own?.freeFor?.length ? `, or nothing when it’s ${own.freeFor.map((w) => w).join(' or ')}` : ''}.`}
+                {own?.rushFee !== undefined ? ` A rushed one costs ${money(inSaveMoney(sim, own.rushFee, ownCurrency))} more.`
+                  : own?.rushDays !== undefined ? ` A rushed one comes in ${own.rushDays} business ${own.rushDays === 1 ? 'day' : 'days'}. The bank lists no fee for it, so the game charges nothing.`
                   // A rush the bank charges for and doesn’t price (from 2026-10-13): said, and not offered.
-                  : own?.rushUnpublished ? ` ${own.rushUnpublished} With no fee published, SLATE sends none in a rush.` : ''}
-                {(which === 'credit' ? own?.cardYearsCredit ?? own?.cardYears : own?.cardYears) === undefined ? ` Cards last ${ESTIMATE_YEARS} years here, SLATE’s estimate; the bank doesn’t say.` : ''}
+                  : own?.rushUnpublished ? ` ${own.rushUnpublished} With no fee published, the game doesn’t offer a rushed card.` : ''}
+                {(which === 'credit' ? own?.cardYearsCredit ?? own?.cardYears : own?.cardYears) === undefined ? ` Cards last ${ESTIMATE_YEARS} years here. That’s estimated: the bank doesn’t say.` : ''}
               </Fine>
             </div>
           );
         })}
         {learned.map(({ one, index }) => (
           <div key={index} className="row-between small">
-            <span>{money(one.amount)} {one.via === 'number' ? 'taken with your account number' : `on your ${one.which} card`}, {formatDate(one.at, sim.zone)}: not yours?</span>
+            <span>{money(one.amount)} {one.via === 'number' ? 'taken with your account number' : `on your ${one.which} card`}, {formatDate(one.at, sim.zone)}. Wasn’t this you?</span>
             {disputeRefusal(sim, person, index) ? <span className="xs dim">{disputeRefusal(sim, person, index)}</span> : <Gated feature="card.dispute" className="btn btn-sm" onClick={() => {
               const answer = run<{ carried: number; refundAt: number }>('card.dispute', { index });
-              if (answer.ok) toast(`Reported. The refund comes by ${formatDate(answer.value!.refundAt, sim.zone)}${answer.value!.carried ? `, less the ${money(answer.value!.carried)} the law leaves you` : ''}.`, 'positive');
+              if (answer.ok) toast(`Reported. The refund comes by ${formatDate(answer.value!.refundAt, sim.zone)}${answer.value!.carried ? `, less the ${money(answer.value!.carried)} the law leaves you to pay` : ''}.`, 'positive');
             }}>Report It As Not Mine</Gated>}
           </div>
         ))}
@@ -115,16 +115,16 @@ export function BankSecurity({ bankId }: { bankId: string }) {
           const moved = exposed && current?.number !== exposed.number;
           return (
             <div className="col gap-1">
-              <p className="xs" style={{ margin: 0 }}>{!exposed ? 'Your account number isn’t known to be exposed. A new number would cost a new debit card and protect against nothing yet.' : moved ? `Your old number was exposed on ${formatDate(exposed.at, sim.zone)}; it’s moved, and debits tried on the old one are declined until ${formatDate(exposed.until, sim.zone)}.` : `Your account number was exposed when your debit card was used on ${formatDate(exposed.at, sim.zone)}. Debits can be tried on it until ${formatDate(exposed.until, sim.zone)}; a new number closes it to them. It doesn’t stop a card being used: that’s the card’s own risk.`}</p>
+              <p className="xs" style={{ margin: 0 }}>{!exposed ? 'Your account number isn’t known to be exposed. A new number would mean a new debit card, and wouldn’t protect you from anything yet.' : moved ? `Your old number was exposed on ${formatDate(exposed.at, sim.zone)}. The account has moved to a new number, and debits tried on the old one are declined until ${formatDate(exposed.until, sim.zone)}.` : `Your account number was exposed when your debit card was used on ${formatDate(exposed.at, sim.zone)}. Somebody could try debits on it until ${formatDate(exposed.until, sim.zone)}, and a new number stops them. It doesn’t stop a card being misused: that’s a separate risk.`}</p>
               <Gated feature="bank.new_number" className="btn btn-sm btn-ghost" onClick={() => run('bank.new_number', {})}>Move My Account To A New Number</Gated>
             </div>
           );
         })()}
         {rules?.lostCardWords && <p className="xs dim" style={{ margin: 0 }}>{rules.lostCardWords}</p>}
         {rules?.suspectWords && <p className="xs dim" style={{ margin: 0 }}>{rules.suspectWords}</p>}
-        {law?.debitWords && <p className="xs dim" style={{ margin: 0 }}>The law, for the debit card: {law.debitWords}</p>}
-        {law?.creditWords && cards.some((c) => c.which === 'credit') && <p className="xs dim" style={{ margin: 0 }}>For the credit card: {law.creditWords}</p>}
-        {law?.refundWords && <p className="xs dim" style={{ margin: 0 }}>A payment reported as not yours: {law.refundWords}</p>}
+        {law?.debitWords && <p className="xs dim" style={{ margin: 0 }}>The law on the debit card: {law.debitWords}</p>}
+        {law?.creditWords && cards.some((c) => c.which === 'credit') && <p className="xs dim" style={{ margin: 0 }}>The law on the credit card: {law.creditWords}</p>}
+        {law?.refundWords && <p className="xs dim" style={{ margin: 0 }}>The law on a payment you report as not yours: {law.refundWords}</p>}
         {(rules || law) && <Fine>Source: {[rules?.source, law?.source].filter(Boolean).join('; ')}.</Fine>}
       </LookRegion>
     </Panel>

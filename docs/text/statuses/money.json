@@ -131,17 +131,83 @@
   "on": "2026-10-17",
   "reason": "'Yale’s payroll', the one payer a change of deposit names apart: plain"
  },
+ "src/ui/bank/BankCard.tsx#CardApplication": {
+  "status": "Rewritten And Verified",
+  "hash": "ba83d826f713",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says the card’s rate as set when it opened, its fees and its minimum, in the introductory months' (the application paragraph); tests/evidence-g12-money.test.ts (Apply For This Card); tests/evidence-g13-money.test.ts (the approval)"
+ },
+ "src/ui/bank/BankCard.tsx#CardPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "f807a354182b",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says the card’s rate as set when it opened…' (rate, interest, penalty, fee, statement, minimum and late-fee lines, the tiles' names); tests/hardship-plan-minimum.test.ts (on a plan); tests/evidence-g12-money.test.ts (everyday and second card, closing, over the limit, New Limit, Ask For This Limit); tests/evidence-g13-money.test.ts (a payment's hold, today's record)"
+ },
+ "src/ui/bank/BankCard.tsx#MONTH_NAMES": {
+  "status": "Reviewed And Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-17",
+  "reason": "Month names for the month a card's yearly fee is charged; the English names"
+ },
+ "src/ui/bank/BankCard.tsx#TERM_WORDS": {
+  "status": "Reviewed And Retained",
+  "hash": "1cf9b88acca6",
+  "on": "2026-10-17",
+  "reason": "The names of a card's terms as the estimate line lists them ('the rate and the late fee are estimated'): plain nouns, read into a sentence"
+ },
+ "src/ui/bank/BankCardOffers.tsx#CardOffers": {
+  "status": "Rewritten And Verified",
+  "hash": "36d76d5eab24",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says the card’s offers, and that there’s nothing to put in a plan when there isn’t'; tests/defects-g15-1.test.ts (a plan's fee, none and $10.32; the free-in-introduction offer); tests/scope-money.test.ts (Transfer It (3% Fee) pressed)"
+ },
+ "src/ui/bank/BankCash.tsx#BankCash": {
+  "status": "Rewritten And Verified",
+  "hash": "97f3b193f597",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g12-money.test.ts (You have $0.00 in cash; the quote 'It costs $15.00. A cash advance is charged 28.49% a year…'; It’s free.); tests/language-money.test.ts (the subtitle and the field's label)"
+ },
  "src/ui/bank/BankMoves.tsx#BankMoves": {
   "status": "Rewritten And Verified",
   "hash": "0d7d9a037b3f",
   "on": "2026-10-17",
   "evidence": "tests/language-money.test.ts 'says what the bank asks and how long each step takes…'; tests/evidence-g14-money.test.ts (Your Banks lines, opening panel); tests/bank-moves-card-line.test.ts (the card line and its estimate at the foot); tests/defects-g20-1.test.ts, tests/defects-r5-1.test.ts (cut-off lines); tests/scope-money.test.ts (no switching service)"
  },
+ "src/ui/bank/BankPayments.tsx#BankPayments": {
+  "status": "Rewritten And Verified",
+  "hash": "ce7a858743d4",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says how the day’s spending is paid and what savings covers, and what cash is in hand' (the subtitle and labels)"
+ },
+ "src/ui/bank/BankPayments.tsx#coverText": {
+  "status": "Rewritten And Verified",
+  "hash": "ed8dfd232518",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-r6-1.test.ts and tests/defects-r3b-1.test.ts (its lead, each account's line, no savings at one bank and at two); tests/language-money.test.ts (Chase Savings covers Chase Total Checking…)"
+ },
+ "src/ui/bank/BankSecurity.tsx#BankSecurity": {
+  "status": "Rewritten And Verified",
+  "hash": "fbbb7e9e93bb",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says what a new card costs and how long a card lasts, the estimate as one'; tests/evidence-g12-money.test.ts and tests/evidence2-b04.test.ts (Report It And Rush The New One, the rush lines, Locked); tests/evidence-g11-money.test.ts (Locked, Lost: stopped)"
+ },
+ "src/ui/bank/BankSecurity.tsx#WHY_WORDS": {
+  "status": "Reviewed And Retained",
+  "hash": "8ff82f7353ca",
+  "on": "2026-10-17",
+  "reason": "Why a card was stopped, as one word or two before ': stopped' (Lost, Stolen, Damaged, Used by somebody else, Not arrived yet): plain"
+ },
  "src/ui/bank/feeWords.ts#waiverWords": {
   "status": "Rewritten And Verified",
   "hash": "0f1f60a74bd7",
   "on": "2026-10-17",
   "evidence": "tests/language-money.test.ts 'says a fee’s conditions as what the player does in a month…' (Chase Total Checking and Chase Savings, exact); tests/remaining-banking.test.ts (Citi Access Checking, with its age)"
+ },
+ "src/ui/bank/RoundUps.tsx#RoundUps": {
+  "status": "Rewritten And Verified",
+  "hash": "7c8270764bc7",
+  "on": "2026-10-17",
+  "evidence": "tests/roundups.test.ts (not counting, a multiple of $1.00, ×1 just the change, counted but not moved yet, last moved to savings, the source line, another bank's primary); tests/evidence-g11-money.test.ts (Not in the game); tests/guide-examples-money.test.ts 'bank.round-ups: Round-Ups'"
  },
  "src/ui/looks/bank.tsx#movedWords": {
   "status": "Reviewed And Retained",
@@ -169,9 +235,9 @@
  },
  "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace": {
   "status": "Rewritten And Verified",
-  "hash": "f8b255a05c82",
+  "hash": "f2fdd687335d",
   "on": "2026-10-17",
-  "evidence": "tests/language-money.test.ts 'says what closing savings does, above zero, at zero and overdrawn…' and 'says a fee’s conditions as what the player does in a month…'; tests/defects-g14-1.test.ts (savings withdrawal notes, 'At Chase, not open yet'); tests/integration-savings-notice.test.ts (notice and its toast); tests/remaining-09-banking.test.ts (fee due words); the built app's Money, Accounts tab (docs/verification/language-2026-10-17/money/after-1440)"
+  "evidence": "tests/language-money.test.ts 'says what closing savings does, above zero, at zero and overdrawn…' (the tile's −$3.30 Overdrawn, its control's name) and 'says a fee’s conditions as what the player does in a month…'; tests/defects-g14-1.test.ts; tests/integration-savings-notice.test.ts; tests/remaining-09-banking.test.ts; the built app's Money, Accounts tab on the missed-plan save at 1440 and 390 (walk-b1 in the scratch folder)"
  },
  "src/ui/workspaces/BankWorkspace.tsx#BorrowingAt": {
   "status": "Reviewed And Retained",

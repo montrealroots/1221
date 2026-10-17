@@ -38,3 +38,17 @@ column, so nothing on screen moves. `tests/language-money.test.ts` asserts the m
   with the month's interest; `closeSavings` also settles `closingFeesDue`, which is non-zero only for an account that
   closes quarterly with a monthly fee. No German savings account in the game has a monthly fee today, so no figure is
   wrong now; a savings product given one would make it so. For the coordinator: the line could read `closingFeesDue`.
+
+## d5. The card said it "opened at" its introductory 0% (fixed, text)
+
+`src/ui/bank/BankCard.tsx`: "0% a year on a balance carried. Chase prices a card between 18.24% and 27.74% by the
+record when it opens; yours opened at this, and it’s held there." In the introductory months `cardTerms` returns the
+introductory rate as `apr` and the card's own as `standardApr`; the card was set at 18.46% (`card.apr`). Found by
+rendering the panel on a new life. Now "0% … during the introductory months, then 18.46%. … Yours was set at 18.46% when
+it opened, and the bank doesn’t reprice it." `tests/language-money.test.ts`.
+
+## d6. A development date shown to the player (fixed, text)
+
+`src/ui/bank/BankCardOffers.tsx`, a card with grocery bonus categories: "Groceries are what a card buys here: nothing
+pays a bill since 2026-10-09." The date is the scope reset's, an internal one. Now "In the game, groceries are the only
+thing a card buys: no bill is paid by card." Found reading the source.

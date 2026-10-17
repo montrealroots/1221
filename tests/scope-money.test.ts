@@ -1234,7 +1234,7 @@ describe('card.money_transfer', () => {
     const card = mine(sim).find((a) => a.kind === 'credit_card' && !a.closedAt)!;
     expect(card.bankId).toBe('us-chase');
     drawn(sim, createElement(BankCardOffers, { bankId: 'us-chase' }));
-    expect(h.buttons.filter((b) => b.text.startsWith('Move It'))).toEqual([]);
+    expect(h.buttons.filter((b) => b.text.startsWith('Transfer It'))).toEqual([]);
     const before = sim.universe.transactions.length;
     expect(refusal(sim, 'card.money_transfer', { amount: 100_00, accountId: card.id })).toBe(`The ${card.name} doesn’t offer money transfers.`);
     expect(sim.universe.transactions.length).toBe(before);
@@ -1249,7 +1249,7 @@ describe('card.money_transfer', () => {
     type(`card-money-transfer-${card.id}`, '500');
     drawn(sim, createElement(BankCardOffers, { bankId: 'gb-natwest' }));
     // NatWest's summary box: a money transfer for 3%, at 12.9% (CARDS['gb-natwest']).
-    press('Move It (3% Fee)');
+    press('Transfer It (3% Fee)');
     expect(h.answers.at(-1)).toEqual({ kind: 'card.money_transfer', ok: true, error: undefined });
     expect(current.balance - before.current).toBe(500_00);
     expect(card.balance - before.card).toBe(-515_00);

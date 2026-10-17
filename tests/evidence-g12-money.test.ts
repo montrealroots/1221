@@ -359,16 +359,16 @@ describe('card.report', () => {
     const account = checking(sim);
     const before = drawn(sim, () => createElement(BankSecurity, { bankId: 'us-chase' }));
     expect(before.text).toContain('Debit card ending');
-    expect(before.text).toContain('A new card is free. Sent in a rush, $15.00 more.');
+    expect(before.text).toContain('A new card is free. A rushed one costs $15.00 more.');
     expect(before.count('Report It')).toBe(2);
-    expect(before.count('Report It, Rush The New One')).toBe(2);
+    expect(before.count('Report It And Rush The New One')).toBe(2);
     // The first is the debit card's, with Lost chosen as the screen starts.
     before.press('Report It');
     expect(account.plastic!.stopped).toBe('lost');
     const after = drawn(sim, () => createElement(BankSecurity, { bankId: 'us-chase' }));
     expect(after.text).toContain('Lost: stopped. A new one arrives September 2, 2026.');
     expect(after.count('Report It')).toBe(1);
-    expect(after.count('Report It, Rush The New One')).toBe(1);
+    expect(after.count('Report It And Rush The New One')).toBe(1);
   });
 });
 
@@ -554,7 +554,7 @@ describe('card.request_hardship', () => {
     const on = drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }));
     // Until 2026-10-13 this held “… and $100 a month until it’s cleared. The card can’t be used until then.”; a plan ends,
     // and the card works again, only at the first statement or due date after it’s paid off.
-    expect(on.text).toContain('On a plan since August 24, 2026: no interest, and each statement asks the plan’s $100 in the minimum’s place. The card can’t be used until the first statement or due date after it’s paid off, when the plan ends.');
+    expect(on.text).toContain('It’s been on a payment plan since August 24, 2026. There’s no interest, and each statement asks for the plan’s $100 instead of the minimum. You can’t use the card until the plan ends, at the first statement or due date after it’s paid off.');
     expect(on.text).toContain('Left To Spend $0 Of a $65,217 limit');
     expect(on.count('Ask For Help With Payments')).toBe(0);
   });
@@ -653,14 +653,14 @@ describe('card.request_limit', () => {
     const card = chaseCard(sim);
     purchases(sim, card, 500_00); // TEST SETUP
     // TEST SETUP: $1 typed into A Different Limit (the first useState of the card's panel).
-    drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }), ['1', h.keep]).press('Ask For It');
+    drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }), ['1', h.keep]).press('Ask For This Limit');
     expect(card.creditLimit).toBe(500_00);
     const lowered = drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }));
-    expect(lowered.text).toContain('A Different Limit (USD), Now $500');
+    expect(lowered.text).toContain('New Limit (USD), Now $500');
     expect(lowered.text).toContain('Left To Spend $0 Of a $500 limit');
-    expect(lowered.button('Ask For It')!.disabled).toBe(true);
+    expect(lowered.button('Ask For This Limit')!.disabled).toBe(true);
     sim.player.credit!.late = [sim.now - 30 * MS_DAY]; // TEST SETUP: a payment late a month ago
-    drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }), ['1000', h.keep]).press('Ask For It');
+    drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }), ['1000', h.keep]).press('Ask For This Limit');
     expect(card.creditLimit).toBe(500_00);
     expect(notes(sim, 'Limit Increase Declined').map((n) => n.body)).toEqual(['The bank kept the limit at $500.00: it raises one for a record of 700 or more, nothing late in a year, and means to repay.']);
   });
@@ -746,8 +746,8 @@ describe('card.set_everyday', () => {
   it('is offered on the card that isn’t everyday and not on one being closed, and Make It The Everyday Card pressed swaps the two panels’ words', () => {
     const { sim, chase, citi } = twoCards('g12-everyday-screen');
     const before = drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }));
-    expect(before.text).toContain('The everyday card: the day’s spending goes on it.');
-    expect(before.text).toContain('Beside the everyday card: the day’s spending goes on that one, and nothing goes on this unless you make it the everyday card.');
+    expect(before.text).toContain('This is your everyday card: the day’s spending goes on it.');
+    expect(before.text).toContain('The day’s spending goes on your everyday card, not this one, unless you make this the everyday card.');
     expect(before.text).toContain(`The everyday card, ···${chase.last4}`);
     expect(before.count('Make It The Everyday Card')).toBe(1);
     before.press('Make It The Everyday Card');
@@ -764,7 +764,7 @@ describe('card.set_everyday', () => {
     expect(cardsOf(sim, sim.player)[0]!.id).toBe(chase.id);
     must(sim, 'card.close', { accountId: citi.id });
     const closing = drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }));
-    expect(closing.text).toContain('Closed to anything new. What’s owed is paid down as before, and then the account closes.');
+    expect(closing.text).toContain('It’s closed to new spending. You keep paying off what’s owed as before, and then the account closes.');
     expect(closing.count('Make It The Everyday Card')).toBe(0);
   });
 });
@@ -814,7 +814,7 @@ describe('card.set_over_limit', () => {
     expect(stateOf(sim.player, card).overLimitOptIn).toBe(true);
     const after = drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }));
     expect(after.count('Going Over The Limit: Allowed')).toBe(1);
-    expect(after.text).toContain('Opted in to going over the limit: a purchase can take it up to a tenth over, SLATE’s estimate of what a bank allows, and this card charges nothing for it.');
+    expect(after.text).toContain('You’ve opted in to going over the limit: a purchase can take it up to a tenth over, and this card charges nothing for it.');
     expect(after.text).toContain('Left To Spend $50 Of a $500 limit');
   });
 });
@@ -917,11 +917,11 @@ describe('cash.deposit', () => {
     const sim = settled('g12-deposit-screen');
     const account = checking(sim);
     const empty = drawn(sim, () => createElement(BankCash, { bankId: 'us-chase' }));
-    expect(empty.text).toContain('$0.00 in hand.');
+    expect(empty.text).toContain('You have $0.00 in cash.');
     expect(empty.count('Pay It In')).toBe(0);
     must(sim, 'cash.withdraw', { amount: 100_00, from: 'atm' });
     const held = drawn(sim, () => createElement(BankCash, { bankId: 'us-chase' }));
-    expect(held.text).toContain('$100.00 in hand.');
+    expect(held.text).toContain('You have $100.00 in cash.');
     expect(held.text).toContain('Chase Total Checking');
     expect(held.text).toContain('Chase Savings');
     expect(held.text).toContain('An ATM');
@@ -1056,7 +1056,7 @@ describe('cash.withdraw', () => {
     const card = chaseCard(sim);
     // TEST SETUP: $300 typed into Take Out, and A Cash Advance On The Card chosen (the first two useStates).
     const advance = drawn(sim, () => createElement(BankCash, { bankId: 'us-chase' }), ['300', 'card']);
-    expect(advance.text).toContain('$15.00 for it. It draws 28.49% a year from today, with no grace period.');
+    expect(advance.text).toContain('It costs $15.00. A cash advance is charged 28.49% a year from today, with no interest-free period.');
     advance.press('Take It Out');
     expect(stateOf(sim.player, card).cashOwed).toBe(300_00);
     expect(card.balance).toBe(-315_00);
@@ -1065,7 +1065,7 @@ describe('cash.withdraw', () => {
     expect(machine.text).toContain('Your debit card is stopped; the counter can still pay out.');
     expect(machine.button('Take It Out')!.disabled).toBe(true);
     const counter = drawn(sim, () => createElement(BankCash, { bankId: 'us-chase' }), ['20', 'counter']);
-    expect(counter.text).toContain('Free.');
+    expect(counter.text).toContain('It’s free.');
     expect(counter.button('Take It Out')!.disabled).toBe(false);
   });
 });
