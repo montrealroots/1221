@@ -15,7 +15,7 @@
  *   "No account" can't be reached: the bank refuses to close a life's only current account, in its words.
  * - `h-school`: each branch of the line, played: Arriving with the registration booked for 10 AM on 24 August, Year 1
  *   with the next thing booked, a fall played without going to class giving "academic concern" and its alert with
- *   "Next: Classes" the next class day at nine, On Leave with no Next, Left the school with no Next, and a graduate's
+ *   "Next: Classes" the next class day at nine, On Leave with no Next, Left the School (until 2026-10-17 "Left the school") with no Next, and a graduate's
  *   "Graduated" said once; the place in the class counted here from the class's 21 skills; its Yale button and its
  *   LockedPanel before "Drama School".
  * - `h-papers`: the 2026 return the tax season raises for an F-1 student, $165.60 (10% of $1,656.00 of work-study, 72
@@ -336,7 +336,7 @@ describe('h-school', () => {
     sim.must({ kind: 'school.withdraw', payload: { confirm: true } });
     for (const one of [sim, reload(sim)]) {
       const { affairs } = drawn(one);
-      expect(affairs).toContain(`School Left the school, withdrawn, ${rankOf(one)} of 16 in the class. Yale How This Works`);
+      expect(affairs).toContain(`School Left the School, withdrawn, ${rankOf(one)} of 16 in the class. Yale How This Works`);
       expect(affairs).not.toMatch(/Next:|Your standing is/);
     }
   });

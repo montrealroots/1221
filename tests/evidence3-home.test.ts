@@ -449,7 +449,8 @@ const SLICES: [number, number, number][] = [
 const kept: { text?: string; april2027?: string; graduated?: string } = {};
 const statusDecision = (sim: Simulation) => Object.values(sim.universe.decisions).filter((d) => d.refType === 'us-status');
 const optPermits = (sim: Simulation) => documentsOf(sim.player).filter((d) => d.kind === 'permit' && d.name === 'Employment Authorization, OPT');
-const journey = (sim: Simulation) => between(drawn(sim, ProfileWorkspace).text, 'School Journey', 'School');
+// To the paragraph's closing period before the School button (from 2026-10-17): “Left the School” has the word too.
+const journey = (sim: Simulation) => `${between(drawn(sim, ProfileWorkspace).text, 'School Journey', '. School')}.`;
 
 describe('the graduate, played', () => {
   for (const [y, m, d] of SLICES) {

@@ -17,7 +17,7 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { formatDuration, formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
+import { formatDurationWords, formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
 import { spokenList } from '../core/text';
 import type { ScheduledItem } from '../core/scheduler';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
@@ -1453,7 +1453,7 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
       hours: Math.max(SHORTEST_SLEEP, Math.floor(available * 2) / 2),
       reason: next.at <= sim.now
         ? `It’s time for “${next.label}”, and you’re standing at it, so any sleep would go through it.`
-        : `“${next.label}” is in ${formatDuration(away * MS_HOUR)}. Getting up and there takes an hour and a half, so there isn’t time for a full night.`,
+        : `“${next.label}” is in ${formatDurationWords(away * MS_HOUR)}. Getting up and there takes an hour and a half, so there isn’t time for a full night.`,
     };
   }
   return { hours, reason: why };

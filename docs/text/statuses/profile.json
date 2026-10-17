@@ -2131,9 +2131,9 @@
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.genre]": {
   "status": "Rewritten And Verified",
-  "hash": "554114d400f2",
+  "hash": "caa8aebeb183",
   "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md) (Abilities It Uses, the chooser’s column); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-craft.test.ts (every worked example played). Its take is a taped brief’s, the industry’s word Core keeps"
+  "evidence": "tools/guide-quotes.mjs --check (It Asks For's quote names the table's words); its takes are a brief's self-tapes, the glossary's word"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.identity]": {
   "status": "Rewritten And Verified",
@@ -2689,9 +2689,9 @@
  },
  "src/ui/looks/actor.tsx#top": {
   "status": "Rewritten And Verified",
-  "hash": "b976563de028",
+  "hash": "1f14124b1180",
   "on": "2026-10-17",
-  "evidence": "tests/defects-g30-1.test.ts (the genre's Preparation note; a piece's small print, its parts and its genres), tests/evidence2-b08.test.ts (the farce's What a self-tape in it asks), tests/guide-examples-craft.test.ts (the look's parts, the work's provenance and Moment By Moment), tests/decisions-stamina.test.ts (an old ruleset's provenance), tests/attributes-phase-2b.test.ts (the ability look); all three looks rendered in docs/verification/language-2026-10-17/profile/b1-looks.txt, the genre look for five kinds of demand and after study and a take"
+  "evidence": "tests/language-genre-look.test.ts (the ten low genres say low confidence, never single examples; the small print in three paragraphs, Why it’s applied in the game’s words; two mutations killed); json area D1 to D3"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#AbilitiesPanel": {
   "status": "Rewritten And Verified",
@@ -2713,9 +2713,9 @@
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#GenresPanel": {
   "status": "Rewritten And Verified",
-  "hash": "df27852555cc",
+  "hash": "85dd2fae6827",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g31-ui.test.ts (the subtitle, Studied Or Worked In pressed, No more than any self-tape asks, the suggested genre both ways), tests/evidence-g28-ui.test.ts, tests/genre-mastered.test.ts (the Mastered chip)"
+  "evidence": "tests/evidence-g23-school.test.ts (Absurdist: Not established: the research holds it with low confidence); json area D1. Its one take is a brief's self-tape, the glossary's word"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#HistoryPanel": {
   "status": "Rewritten And Verified",
@@ -2731,9 +2731,9 @@
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#JourneyPanel": {
   "status": "Rewritten And Verified",
-  "hash": "f60141086b2e",
+  "hash": "af451a96b0f5",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g32-ui.test.ts (School pressed goes to /workspace/school), tests/evidence2-b11.test.ts and tests/evidence3-home.test.ts (the School Journey panel read to its School button); the Player Profile in the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves)"
+  "evidence": "tests/evidence2-b11.test.ts (School Journey: Left the School, dismissed and withdrawn), one form with the School screen and the notices"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#ListControls": {
   "status": "Reviewed And Retained",

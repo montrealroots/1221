@@ -521,7 +521,7 @@ export const CRAFT: readonly GuideEntry[] = [
       'The next step on a scene, or the next lines learned, from a play of the kind goes faster by it.',
     ],
     interpret: [
-      'It Asks For names each technique with your level against mastery, or says the research didn’t establish one: “Not established: the research rests on one example”, or “No more than any self-tape asks”.',
+      'It Asks For names each technique with your level against mastery, or says the research didn’t establish one: “Not established: the research holds it with low confidence”, or “No more than any self-tape asks”.',
       'A genre’s look gives Familiarity, Work In It and Preparation: how much faster the better of the two makes a scene or a part from a play of its kind, where a brief’s steps speed up with material you’ve met before instead. It gives what the research found the genre asks, and how sure it is.',
       `Knowing The Genre, inside a brief, is the better of the first two against the ${pct(BRIEF.complete.genre)} that completes it.`,
       'The Genre Asks, inside a brief, names each of its genre’s concerns: what it asks, what a self-tape in it is judged more on and calls on, and which part of preparation answers it. A tape held back most by an ability one of those concerns asks for says so: “Your … held back … by … points: …’s … asks for it.”, as when your Composure held back Consistency by 4.2 points and Nordic Noir’s Feeling Held In asks for it.',

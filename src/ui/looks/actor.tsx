@@ -200,9 +200,16 @@ defineLook<TheGenre>('genre', {
                 {applied(id) && demand.tags.length
                   ? <>A self-tape in it calls for {demand.tags.map((t, i) => <span key={t.tag}>{i ? ', ' : ''}{TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]]} (yours: {one(person.craft?.[DEMAND_TECHNIQUE[t.tag]] ?? 0)} of {MASTERED})</span>)}.{demand.basis === 'definition' ? ' This follows from how the genre is defined, not from a source that says so.' : ''} A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.</>
                   : demand.belongsTo ? `What the research found (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ') || 'no technique'}) belongs to ${demand.belongsTo}, not to the genre as a whole, so the genre adds no requirement of its own.`
-                  : demand.tags.length ? `The research found this only in single examples (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ')}), with low confidence, so the game doesn’t treat it as a requirement of the genre.` : 'The research found no requirement of its own.'}
+                  : demand.tags.length ? `The research holds this (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ')}) with low confidence, so the game doesn’t treat it as a requirement of the genre. The small print below says why.` : 'The research found no requirement of its own.'}
               </p>
-              <p className="xs dim">{applied(id) && demand.tags.length ? `Why it’s applied, in the research’s words: ${demand.tags.map((t) => t.why).join(' ')} ` : ''}What the research says: {demand.sourceSupports} ({demand.how}; {demand.confidence} confidence). Still uncertain: {demand.uncertainty}</p>
+              {/* The small print in three paragraphs, each under the words it opens with (from 2026-10-17, brief 14's json
+                  area, D1 to D3): until then one paragraph, about 2,000 characters for adventure, some forty lines at 390
+                  wide; its first heading said "in the research’s words" over the game's wording of the research; and the
+                  sentence above said "only in single examples" of ten genres whose research is low for other reasons,
+                  which this small print gives. Every genre it reaches is low, by `applied`. */}
+              {applied(id) && demand.tags.length ? <p className="xs dim">Why it’s applied: {demand.tags.map((t) => t.why).join(' ')}</p> : null}
+              <p className="xs dim">What the research says: {demand.sourceSupports} ({demand.how}; {demand.confidence} confidence).</p>
+              <p className="xs dim">Still uncertain: {demand.uncertainty}</p>
             </>
           )}
           {/* Its register (from 2026-10-16, `GENRE_REGISTER`): what every take of a brief written for it reads. */}

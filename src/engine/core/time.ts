@@ -389,6 +389,26 @@ export function formatRelative(target: Instant, now: Instant): string {
   return delta > 0 ? `in ${formatDuration(delta)}` : `${formatDuration(delta)} ago`;
 }
 
+/**
+ * A duration as a sentence says it (from 2026-10-17, brief 14's dynamic cases): "15 hours and 59 minutes", "2 days and
+ * 3 hours", and otherwise `formatDuration`'s own words. "15h 59m" is a list's and a clock's form; until then sentences
+ * took it too ("That’s in 15h 59m.", "It came up 2d 3h ago"). The rounding is `formatDuration`'s, so the two never
+ * disagree about the figure.
+ */
+export function formatDurationWords(ms: number): string {
+  const unit = (n: string, one: string) => `${n} ${one}${n === '1' ? '' : 's'}`;
+  return formatDuration(ms)
+    .replace(/^(\d+)h (\d+)m$/, (_, h: string, m: string) => `${unit(h, 'hour')} and ${unit(m, 'minute')}`)
+    .replace(/^(\d+)d (\d+)h$/, (_, d: string, h: string) => `${unit(d, 'day')} and ${unit(h, 'hour')}`);
+}
+
+/** `formatRelative` as a sentence says it: "in 15 hours and 59 minutes", "2 days and 3 hours ago". */
+export function formatRelativeWords(target: Instant, now: Instant): string {
+  const delta = target - now;
+  if (Math.abs(delta) < 45 * MS_SECOND) return 'now';
+  return delta > 0 ? `in ${formatDurationWords(delta)}` : `${formatDurationWords(delta)} ago`;
+}
+
 // ---------------------------------------------------------------------------
 // Seasons and age.
 // ---------------------------------------------------------------------------

@@ -810,7 +810,8 @@ describe('genre demands', () => {
     const combat = `${TECHNIQUE_LABEL.combat} ${sim.player.craft!.combat.toFixed(1)} of 90`;
     expect(text).toContain(`Action Fights And Stunts (${combat})`);
     expect(text).toContain(`Action Comedy Fights And Stunts (${combat}); Comic Timing (${TECHNIQUE_LABEL.comedy} ${sim.player.craft!.comedy.toFixed(1)} of 90)`);
-    expect(text).toContain('Absurdist Not established: the research rests on one example');
+    // Until 2026-10-17 this said “the research rests on one example”, false of many low genres (brief 14's json area, D1).
+    expect(text).toContain('Absurdist Not established: the research holds it with low confidence');
   });
 });
 

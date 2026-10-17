@@ -209,7 +209,9 @@ export function Home() {
               <div className="col gap-2">
                 {soon.filter((entry) => entry.id !== next?.id).slice(0, 5).map((entry) => (
                   <div key={entry.id} className="row-between">
-                    <span className="small truncate">
+                    {/* Two lines before it's cut (from 2026-10-17, brief 14's document journey): one line cut "Yale Cabaret,
+                        Season 59: The Show Ends" short at 390 wide. */}
+                    <span className="small clamp-2" style={{ minWidth: 0 }}>
                       <Open subject={at('entry', entry.id)}>{titleCaseLabel(entry.title)}</Open>
                     </span>
                     <span className="xs dim nowrap">
@@ -527,7 +529,7 @@ function SchoolLine() {
   const classes = enrolled ? nextClasses(sim.now, school) : undefined;
   const next = enrolled ? booked ?? (classes !== undefined ? { label: 'Classes', at: classes } : undefined) : undefined;
   // Left without the degree, not a year of study (from 2026-10-10: until then a dismissed student was "Year 2").
-  const where = school.standing === 'graduated' ? 'Graduated' : !enrolled ? 'Left the school' : school.termsBegun === 0 ? 'Arriving' : school.leave?.status === 'on' ? 'On Leave' : `Year ${yearOfStudy(person)}`;
+  const where = school.standing === 'graduated' ? 'Graduated' : !enrolled ? 'Left the School' : school.termsBegun === 0 ? 'Arriving' : school.leave?.status === 'on' ? 'On Leave' : `Year ${yearOfStudy(person)}`;
   const troubled = school.standing === 'concern' || school.standing === 'warning' || school.standing === 'dismissed';
   // The standing after where they are, except where that already says it: until 2026-10-13 a graduate's line read
   // "Graduated, graduated, …" (found by the review of that day).

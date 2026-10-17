@@ -637,7 +637,7 @@ describe('each academic standing: good standing, academic concern, academic warn
       expect(tab).toContain(`${termLabel(term)}\n${label}\n50%`);
       if (e.standing === 'dismissed') {
         expect(head()).toBe('MFA in Acting, class of 2029. Left the School.');
-        expect(affairs()).toMatch(/^School Left the school, dismissed, \d+ of 16 in the class\. Your standing is dismissed\. The School screen says why\./);
+        expect(affairs()).toMatch(/^School Left the School, dismissed, \d+ of 16 in the class\. Your standing is dismissed\. The School screen says why\./);
       } else {
         expect(head()).toBe(`MFA in Acting, class of 2029. Year ${term < 2 ? 1 : 2} of three, ${label.toLowerCase()}.`);
         expect(affairs()).toContain(`, ${label.toLowerCase()}, `);
@@ -846,7 +846,7 @@ describe('deadlines upcoming, due and missed: coursework, a document’s renewal
     expect(returns).toContain('2026 Return\nDue April 15, 2027\nFile It');
     sound(returns);
     tended(sim, on(2027, 4, 15, 8));
-    expect(opened(sim, 'decision', decision.id).look.summary).toMatch(/^Answer it by April 15, 2027\. That’s in \d+h \d+m\.$/);
+    expect(opened(sim, 'decision', decision.id).look.summary).toMatch(/^Answer it by April 15, 2027\. That’s in \d+ hours?(?: and \d+ minutes?)?\.$/); // in words from 2026-10-17, “15h 59m” until then
     tended(sim, on(2027, 4, 20, 12));
     expect(opened(sim, 'decision', decision.id).look.summary).toBe('It closed after its date had passed, so it isn’t asking you for anything now.');
     const late = titled(sim, 'Your 2026 Return Is Late')[0]!;

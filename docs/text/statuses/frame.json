@@ -2665,9 +2665,9 @@
  },
  "src/ui/screens/Home.tsx#SchoolLine": {
   "status": "Rewritten And Verified",
-  "hash": "328b452b63cd",
+  "hash": "d59e534f85bf",
   "on": "2026-10-17",
-  "evidence": "tests/evidence2-b12.test.ts (on leave, warning, dismissed) and tests/evidence-g33-ui.test.ts (arriving; the Yale button, its breadcrumb School)"
+  "evidence": "tests/evidence-g33-ui.test.ts and tests/evidence2-b12.test.ts (Home's School line: Left the School, withdrawn and dismissed), tests/language-dynamic.test.ts; one form with the School screen"
  },
  "src/ui/shell/destinations.ts#DESTINATIONS": {
   "status": "Rewritten And Verified",

@@ -24,7 +24,7 @@
  */
 
 import { titleCaseLabel } from '@/engine/core/text';
-import { formatDate, formatRelative, MS_DAY } from '@/engine/core/time';
+import { formatDate, formatRelative, formatRelativeWords, MS_DAY } from '@/engine/core/time';
 import { openDecisions, unreadNotifications } from '@/engine/world/world';
 import type { DecisionItem, Notification as Notice } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
@@ -71,7 +71,8 @@ const SMALL = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eig
 const countWord = (n: number): string => SMALL[n] ?? String(n);
 
 /** "3 weeks ago", and "just now" where `formatRelative` says "now". */
-const ago = (at: number, now: number): string => { const r = formatRelative(at, now); return r === 'now' ? 'just now' : r; };
+// In words, as a sentence says it (from 2026-10-17): until then “It came up 2d 3h ago”, the Calendar's form.
+const ago = (at: number, now: number): string => { const r = formatRelativeWords(at, now); return r === 'now' ? 'just now' : r; };
 
 /**
  * What a question or a notice is about, by who raised it, in the player’s words (from 2026-10-17, brief 14). Until then
@@ -190,7 +191,7 @@ function decisionSentence(decision: DecisionItem, stage: Stage, sim: Simulation)
       if (decision.dueAt < sim.now) {
         return `Its date passed ${ago(decision.dueAt, sim.now)}. It stays at the top of What Needs You until it closes by itself, within ${countWord(TICK_DAYS)} days.`;
       }
-      return `Answer it by ${formatDate(decision.dueAt, sim.zone)}. That’s ${formatRelative(decision.dueAt, sim.now)}.`;
+      return `Answer it by ${formatDate(decision.dueAt, sim.zone)}. That’s ${formatRelativeWords(decision.dueAt, sim.now)}.`;
     case 'answered':
       return `It was dealt with ${ago(closedAtOf(decision) ?? sim.now, sim.now)}, so it’s no longer in What Needs You.`;
     case 'ran out':

@@ -16,7 +16,7 @@ import {
 import { missedBy, skipTargets } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
 import {
-  addDays, formatDate, formatDateTime, formatDuration, formatTime, instantFromZoned, zonedParts, MS_HOUR,
+  addDays, formatDate, formatDateTime, formatDuration, formatDurationWords, formatTime, instantFromZoned, zonedParts, MS_HOUR,
   type Instant,
 } from '@/engine/core/time';
 import { PLAN_KIND } from '@/engine/world/plans';
@@ -234,7 +234,7 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
           have said "in less than a minute". */}
       {untilNext !== undefined && (
         <div className="callout" style={{ marginTop: 'var(--s4)' }}>
-          {untilNext <= 0 ? 'Your next commitment is now, and you’re standing at it.' : `Your next commitment is in ${formatDuration(untilNext * MS_HOUR)}.`}
+          {untilNext <= 0 ? 'Your next commitment is now, and you’re standing at it.' : `Your next commitment is in ${formatDurationWords(untilNext * MS_HOUR)}.`}
         </div>
       )}
 
@@ -311,7 +311,7 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
     >
       <p className="small">
         It’s {formatTime(item.at, zone)} on {formatDate(item.at, zone)}, and this needs you now.
-        {' '}Going takes {formatDuration(runs * 60_000)}
+        {' '}Going takes {formatDurationWords(runs * 60_000)}
         {`, and the clock moves on to ${formatDateTime(Math.max(wanted, item.at + runs * 60_000), zone)}.`}
       </p>
       {!mine && !partner && (

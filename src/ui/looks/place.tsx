@@ -30,7 +30,7 @@ import {
   PROPERTY_TAX_RULES, SALES_TAX_RULES, resolveIncomeTaxLayers, resolveRule,
 } from '@/engine/content/tax';
 import { formatDaylight, sunTimes, type SunTimes } from '@/engine/core/sun';
-import { addDays, formatTime, zoneAbbreviation, zonedParts } from '@/engine/core/time';
+import { addDays, formatDurationWords, formatTime, MS_MINUTE, zoneAbbreviation, zonedParts } from '@/engine/core/time';
 import { plural, titleCaseLabel } from '@/engine/core/text';
 import { formatPeople, homeCityOf, placeKindLabel, placeProfile, type PlaceProfile } from '@/engine/world/place';
 import type { Person } from '@/engine/domain/model';
@@ -136,7 +136,8 @@ function lightLine(sun: SunTimes, zone: string): string {
   if (sun.polar === 'day') return 'The sun never sets today';
   if (sun.polar === 'night') return 'The sun doesn’t rise here today';
   if (sun.sunrise === undefined || sun.sunset === undefined) return 'No sunrise on file';
-  return `${formatTime(sun.sunrise, zone)} to ${formatTime(sun.sunset, zone)}, ${formatDaylight(sun.daylightMinutes)} of daylight`;
+  // In words in a sentence (from 2026-10-17): until then “12h 45m of daylight”, the Stat's form below.
+  return `${formatTime(sun.sunrise, zone)} to ${formatTime(sun.sunset, zone)}, ${formatDurationWords(sun.daylightMinutes * MS_MINUTE)} of daylight`;
 }
 
 /** What SLATE thinks a unit of this money is worth, said honestly. */
@@ -632,7 +633,7 @@ defineLook<TheLight>('daylight', {
         ? 'The sun doesn’t set here today, so it’s light all day and all night.'
         : today.polar === 'night'
           ? 'The sun doesn’t rise here today.'
-          : `Daylight runs from ${formatTime(today.sunrise ?? 0, city.timeZone)} to ${formatTime(today.sunset ?? 0, city.timeZone)} today, ${formatDaylight(today.daylightMinutes)}, and ${swingLine(swing)}.`,
+          : `Daylight runs from ${formatTime(today.sunrise ?? 0, city.timeZone)} to ${formatTime(today.sunset ?? 0, city.timeZone)} today, ${formatDurationWords(today.daylightMinutes * MS_MINUTE)}, and ${swingLine(swing)}.`,
       body: (
         <>
           <p className="small muted">

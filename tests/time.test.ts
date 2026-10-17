@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { createSave, defaultConfig } from '@/engine';
 import {
   addDays, addMonths, addYears, ageOn, ageOnDate, dateKey, daysBetween, daysInMonth,
-  endOfDay, formatDate, formatDuration, formatTime, instantFromZoned, isLeapYear,
+  endOfDay, formatDate, formatDuration, formatDurationWords, formatRelativeWords, formatTime, instantFromZoned, isLeapYear,
   nextAnniversary, nthWeekdayOfMonth, parseDateKey, sameLocalDay, seasonOf,
   startOfDay, startOfNextDay, zoneOffsetMs, zonedParts, MS_DAY, MS_HOUR, MS_MINUTE,
 } from '@/engine/core/time';
@@ -326,6 +326,19 @@ describe('durations round to the unit they show', () => {
     expect(formatDuration(45 * MS_MINUTE)).toBe('45 minutes');
     expect(formatDuration(MS_MINUTE)).toBe('1 minute');
     expect(formatDuration(30 * 1000)).toBe('less than a minute');
+  });
+
+  // A sentence's form (from 2026-10-17, brief 14): the same figure as the clock's form, in words, one and many each.
+  it('says a duration in words for a sentence, with the figure the clock’s form rounds to', () => {
+    expect(formatDurationWords(2 * MS_HOUR + 5 * MS_MINUTE)).toBe('2 hours and 5 minutes');
+    expect(formatDurationWords(MS_HOUR + MS_MINUTE)).toBe('1 hour and 1 minute');
+    expect(formatDurationWords(1 * MS_DAY + 22 * MS_HOUR)).toBe('1 day and 22 hours');
+    expect(formatDurationWords(2 * MS_DAY + MS_HOUR)).toBe('2 days and 1 hour');
+    expect(formatDurationWords(22 * MS_HOUR + 59.6 * MS_MINUTE)).toBe('23 hours');
+    expect(formatDurationWords(45 * MS_MINUTE)).toBe('45 minutes');
+    expect(formatRelativeWords(15 * MS_HOUR + 59 * MS_MINUTE, 0)).toBe('in 15 hours and 59 minutes');
+    expect(formatRelativeWords(0, 2 * MS_DAY + 3 * MS_HOUR)).toBe('2 days and 3 hours ago');
+    expect(formatRelativeWords(10_000, 0)).toBe('now');
   });
 });
 

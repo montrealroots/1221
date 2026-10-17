@@ -469,7 +469,7 @@ function GenresPanel() {
                 return (
                   <tr key={g.id}>
                     <td className="nowrap"><Open subject={at('genre', g.id)}>{g.label}</Open>{(person.genres ?? []).includes(g.id) ? ', Loved' : ''}{mastered && <>{' '}<span className="chip chip-positive" title={`${mastered.brief.title} taped at full mastery on ${formatDate(mastered.at, sim.zone)}`}>Mastered</span></>}</td>
-                    <td className="xs">{tags.length ? tags.map((t) => `${DEMAND_LABEL[t]} (${TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t]]} ${one(person.craft![DEMAND_TECHNIQUE[t]])} of ${MASTERED})`).join('; ') : d && !applied(g.id) && d.tags.length ? 'Not established: the research rests on one example' : 'No more than any self-tape asks'}</td>
+                    <td className="xs">{tags.length ? tags.map((t) => `${DEMAND_LABEL[t]} (${TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t]]} ${one(person.craft![DEMAND_TECHNIQUE[t]])} of ${MASTERED})`).join('; ') : d && !applied(g.id) && d.tags.length ? 'Not established: the research holds it with low confidence' : 'No more than any self-tape asks'}</td>
                     <td className="num mono">{one(e?.familiarity ?? 0)}</td>
                     <td className="num mono">{one(e?.practice ?? 0)}</td>
                     <td className="nowrap">
@@ -532,7 +532,7 @@ function JourneyPanel() {
   // until 2026-10-14 a graduate’s read “Graduated, graduated” (found by that day’s third round of evidence).
   const standing = school && school.standing !== 'graduated' ? `, ${STANDING_LABEL[school.standing].toLowerCase()}` : '';
   return (
-    <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left the school' : `Year ${yearOfStudy(person)} of three`}${standing}` : 'No school'} help="look.work">
+    <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left the School' : `Year ${yearOfStudy(person)} of three`}${standing}` : 'No school'} help="look.work">
       <div className="col gap-3">
         {school && <p className="small" style={{ margin: 0 }}>{credits.length ? `On stage: ${credits.map((c) => `${c.role} in ${c.production}, ${c.year}${c.yearAsKept ? ' (as first written down)' : ''}`).join('; ')}.` : school.casting?.performed ? `No production finished yet; ${school.casting.role} in ${school.casting.play ?? school.casting.production} is running.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'School')}>School</button></p>}
         {terms.length > 0 && (

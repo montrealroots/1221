@@ -15,7 +15,7 @@
  *   26 November, the fall recess, nothing the School books wants her, and Next is Monday 30 November at nine; and after
  *   a fall kept up hour by hour, at noon on 12 December, the spring's first class day, 11 January. A leave pinned to
  *   its standing and alert ("On Leave, academic concern" and the concern's alert); a first year left to the clock is
- *   "Year 2, academic warning" in its second fall and "Left the school, dismissed" after it, each with its alert; and
+ *   "Year 2, academic warning" in its second fall and "Left the School, dismissed" after it (until 2026-10-17 "Left the school"), each with its alert; and
  *   the place in the class as a literal, sixth of sixteen, from craft records whose means are set so the rule's own
  *   words give it.
  * - `h-papers`: the Unemployment clause played: a fall kept up, a part in the Summer Cabaret's company paid $375 a
@@ -352,7 +352,7 @@ describe('h-school', () => {
     expect(bookedFor(sim)).toEqual([]);
     for (const one of [sim, reload(sim)]) {
       const { affairs } = drawn(one);
-      expect(affairs).toMatch(/School Left the school, dismissed, \d+ of 16 in the class\. Your standing is dismissed. The School screen says why\. Yale How This Works/);
+      expect(affairs).toMatch(/School Left the School, dismissed, \d+ of 16 in the class\. Your standing is dismissed. The School screen says why\. Yale How This Works/);
       expect(affairs).not.toContain('Next:');
     }
   });

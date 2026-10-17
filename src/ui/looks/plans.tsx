@@ -13,7 +13,7 @@
  */
 
 import { CITIES, type City } from '@/engine/content/geography';
-import { MS_MINUTE, dateKey, formatDate, formatRelative, formatTime, startOfDay, startOfNextDay } from '@/engine/core/time';
+import { MS_MINUTE, dateKey, formatDate, formatRelativeWords, formatTime, startOfDay, startOfNextDay } from '@/engine/core/time';
 import { entriesBetween, upcoming, type CalendarEntry } from '@/engine/world/calendar';
 import { PLAN_KIND } from '@/engine/world/plans';
 import { hoursOn, type HourWeather } from '@/engine/systems/weather';
@@ -169,7 +169,7 @@ defineLook<Plans>('plans', {
       summary: pending.length === 0
         ? 'You haven’t put anything on the calendar yourself, so everything on it was put there for you.'
         : `You’ve put ${said(pending.length, 'thing')} on the calendar yourself. `
-          + `The next is ${formatRelative(next!.at, sim.now)}.`,
+          + `The next is ${formatRelativeWords(next!.at, sim.now)}.`,
       body: (
         <>
           <p className="small">
@@ -189,7 +189,7 @@ defineLook<Plans>('plans', {
       ways: pending.slice(0, 10).map((entry) => ({
         to: at('entry', entry.id),
         label: asName(entry.title),
-        detail: `${formatRelative(entry.at, sim.now)}, ${formatDate(entry.at, zone)} at ${formatTime(entry.at, zone)}`,
+        detail: `${formatRelativeWords(entry.at, sim.now)}, ${formatDate(entry.at, zone)} at ${formatTime(entry.at, zone)}`,
       })),
       provenance: 'Your plans are ordinary items on the calendar, so the clock stops at them and a clash is flagged.',
     };

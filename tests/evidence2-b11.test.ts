@@ -418,7 +418,8 @@ describe('p-abilities', () => {
 // ---------------------------------------------------------------------------
 
 describe('p-journey-history', () => {
-  const journey = (sim: Simulation) => between(drawn(sim, ProfileWorkspace).text, 'School Journey', 'School');
+  // To the paragraph's closing period before the School button (from 2026-10-17): “Left the School” has the word too.
+  const journey = (sim: Simulation) => `${between(drawn(sim, ProfileWorkspace).text, 'School Journey', '. School')}.`;
 
   /**
    * Your Work So Far worked out here from the records it reads, by the rule's own numbers (`ARTISTRY`: a pattern from
@@ -574,7 +575,7 @@ describe('p-journey-history', () => {
     // Both on the record at once: the run closed and kept as the casting, and filed by the dismissal (`keepCredit`).
     expect([casting.role, casting.production, casting.performed, casting.closed !== undefined]).toEqual(['Marie', 'Directors’ Thesis Production I', 8, true]);
     expect(school.credits!.map((c) => [c.role, c.production])).toEqual([['A Leading Part In A New Play', 'Carlotta Festival Of New Plays'], ['Marie', 'Directors’ Thesis Production I']]);
-    const said = 'School Journey Left the school, dismissed How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Marie in Directors’ Thesis Production I, 2027.';
+    const said = 'School Journey Left the School, dismissed How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Marie in Directors’ Thesis Production I, 2027.';
     expect(journey(sim)).toBe(said);
     expect(journey(reload(sim))).toBe(said);
   });
@@ -587,7 +588,7 @@ describe('p-journey-history', () => {
     expect(journey(sim)).toBe('School Journey Year 1 of three, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');
     expect(sim.execute({ kind: 'school.withdraw', payload: { confirm: true } }).ok).toBe(true);
     expect(sim.player.school!.credits!.map((c) => c.role)).toEqual(['A Leading Part In A New Play', 'Nina']);
-    expect(journey(sim)).toBe('School Journey Left the school, withdrawn How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');
+    expect(journey(sim)).toBe('School Journey Left the School, withdrawn How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');
   });
 });
 
