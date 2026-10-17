@@ -16,7 +16,7 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
 import { BRIEFS } from '@/engine/content/briefs';
 import { SCENES, templateFor } from '@/engine/content/coursework';
-import { courseworkOf, noteText, questionsFor, setWork, show } from '@/engine/systems/coursework';
+import { courseworkOf, noteText, questionsFor, setWork, show, whereWords } from '@/engine/systems/coursework';
 import { scenesFor } from '@/engine/systems/learning';
 
 const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation }));
@@ -96,17 +96,17 @@ describe('a class scene’s words, at the table and in the note', () => {
         for (let k = 0; k < most; k += 1) {
           for (const { q, options } of qs) a.answers[q.id] = options[Math.min(k, options.length - 1)]!.id;
           const text = words(renderToStaticMarkup(createElement(CourseworkPane)));
-          expect(text, `${s.id}: summary`).toContain(`${s.where}: you play ${s.roles[role].name}`);
+          expect(text, `${s.id}: summary`).toContain(`${whereWords(s.where)}: you play ${s.roles[role].name}`);
           expect(text, `${s.id}: summary`).toContain(s.summary);
           for (const { options } of qs) {
             const o = options[Math.min(k, options.length - 1)]!;
             expect(text, `${s.id}/${o.id}: its words`).toContain(o.text);
-            if (o.why) expect(text, `${s.id}/${o.id}: its reason`).toContain(`${o.supported ? 'What it rests on' : 'What cuts against it'}: ${o.why}`);
+            if (o.why) expect(text, `${s.id}/${o.id}: its reason`).toContain(`${o.supported ? 'Why the text supports it' : 'Why the text doesn’t support it'}: ${o.why}`);
           }
         }
         for (const { q, options } of qs) for (const o of options.filter((x) => !x.supported)) {
           a.answers[q.id] = o.id;
-          expect(noteText(a, { kind: 'choice', question: q.id }), `${s.id}/${o.id}: the note`).toBe(`${q.label}: ${o.why} As ${s.roles[role].name} in ${s.play}.`);
+          expect(noteText(a, { kind: 'choice', question: q.id }), `${s.id}/${o.id}: the note`).toBe(`${q.label}: ${o.why} You played ${s.roles[role].name} in ${s.play}.`);
         }
       }
       const own = [s.summary, ...(s.facts ?? []), ...[s.circumstances, s.relationship, ...s.roles.flatMap((r) => [r.objective, r.obstacle, r.tactic])].flat().flatMap((o) => [o.text, o.why ?? ''])].filter(Boolean);

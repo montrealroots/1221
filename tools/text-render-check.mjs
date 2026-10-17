@@ -14,7 +14,7 @@ import { join } from 'node:path';
 
 /** Names and forms that look like a fault and aren't, each with why. */
 const ALLOWED = [
-  [/\b(iQIYI|tvN|eBay|iPhone|iPad|YouTube|LinkedIn|McDonald|PayPal|DoorDash|GoFundMe|HealthCare|MasterCard|TikTok|WhatsApp|McKinsey|MacArthur|DeVos|LaGuardia|McCarter|MacDowell|DiCaprio|LeBlanc|DuBois|FedEx|JetBlue|SoHo|NoHo|TriBeCa|DeKalb|McNally|McCann|BlackRock|SmartBank|CaixaBank|ING|HSBC|BBVA|NatWest|BankAmericard|ePass)\w*/g, 'a real name, spelled as its owner spells it'],
+  [/\b(iQIYI|tvN|eBay|iPhone|iPad|YouTube|LinkedIn|McDonald|PayPal|DoorDash|GoFundMe|HealthCare|MasterCard|TikTok|WhatsApp|McKinsey|MacArthur|DeVos|LaGuardia|McCarter|MacDowell|DiCaprio|LeBlanc|DuBois|FedEx|JetBlue|SoHo|NoHo|TriBeCa|DeKalb|McNally|McCann|BlackRock|SmartBank|CaixaBank|ING|HSBC|BBVA|NatWest|BankAmericard|ePass|eSavings)\w*/g, 'a real name, spelled as its owner spells it'],
   [/\b[\w-]+\.(?:com|org|edu|gov|net|co\.uk|ac\.uk|gov\.uk|de|fr|is|mx|ca|jp|kr|es|it|nz|au|ie|nl|se|no|dk|fi|ch|at|be|pt|br|in|cn)\b/g, 'a web address'],
   [/\b(?:e\.g|i\.e|vs|St|Dr|Mr|Mrs|Ms|No|p|pp|a\.m|p\.m|U\.S|U\.K|Jr|Sr|Inc|Co|Ltd|approx|etc|Mt|Ave|Blvd|Rd)\.\s+[a-z]/g, 'an abbreviation, not a sentence’s end'],
 ];
