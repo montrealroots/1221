@@ -358,3 +358,17 @@ them ("About 1.53 to the US dollar, estimated"), and that the missed-plan save's
 
 Tests: home-account-screens (both lines), and `tools/acceptance-ui.mjs`'s home-account matcher. home-account-screens,
 language-money, guide-examples-money and decisions-arion: 55 of 55. tsc 0, eslint 0, text-inventory --check 0.
+
+## The Whole Suite, And The Acceptance Runs
+
+`npx vitest run` on `afa821b7` (`full-suite.txt`): 377 files, 4,607 tests, 4 failed, exit 1. Each was mine and is fixed
+in `c9b3e927`: two stale-claims checks read "that interest" in two guide sentences as naming the removed interests
+(the sentences say "the interest" and "It’s never refunded." now); decisions-arion quoted the Arion sentence as the
+guide said it before batch 5; home-account-screens ran while I was changing the rate's words under it. The four files
+rerun on `c9b3e927` (`full-suite-rerun.txt`): 45 of 45, exit 0.
+
+`tools/acceptance-ui.mjs` on the built app: at 390, 77 passed and 0 failed with 0 overflows (`acceptance-390.log`), and
+at 1440 the same (`acceptance-1440.log`), after its two money matchers learned this pass's words ("only has" for a
+refused move, "Sent $100. It arrives …" for the toast). The first runs failed those two steps on the words alone.
+The walk and the acceptance runs were of the build before the rate's last wording; that wording is checked by
+home-account-screens.
