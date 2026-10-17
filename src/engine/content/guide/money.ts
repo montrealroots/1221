@@ -6,8 +6,9 @@
  * `content/accountlife.ts`) and the systems' constants. The worked examples bank at Chase, the first bank a life in the
  * United States opens at unless another is chosen (`startingBank`), and at the Modest means a life can start with
  * (`wealthIn`). A few numbers the systems keep to themselves are written as text: the record's monthly moves and the
- * card's limits (`systems/credit.ts`, `systems/cardlife.ts`), the day's worry (`systems/spending.ts`) and the hours a
- * standing order, a statement and the month's end run at.
+ * card's opening limits and the fifth a raise adds (`systems/credit.ts`, `systems/cardlife.ts`), the day's worry
+ * (`systems/spending.ts`) and the hours a standing order, a statement and the month's end run at. The score a raise
+ * needs was text too until 2026-10-17; it's the rule's own now (`RAISE_FROM`).
  *
  * The screen's tabs are named through constants: the title-case sweep reads a `tab` property written as a literal as a
  * label, and an id isn't one.
@@ -25,7 +26,7 @@ import { ROUND_UPS, type RoundUpRule } from '../roundups';
 import { US_SAFE_HARBOR } from '../latefees';
 import { CHAPTER_FOR } from '../tutorial';
 import { APPROVE_FROM, INQUIRY } from '../../systems/cardlife';
-import { MARK_GONE_GIVES, MARK_YEARS, MIN_CYCLE_DAYS, NO_CARD, priceWithin } from '../../systems/credit';
+import { MARK_GONE_GIVES, MARK_YEARS, MIN_CYCLE_DAYS, NO_CARD, RAISE_FROM, priceWithin } from '../../systems/credit';
 import { PLAN_FREE_IN_INTRO, PLAN_MONTHS } from '../../systems/cardoffers';
 import { OWNER_SURCHARGE } from '../../systems/cash';
 import { CHEX, ESTIMATE, FRANCE } from '../../systems/lending';
@@ -907,7 +908,7 @@ export const MONEY: readonly GuideEntry[] = [
       { label: 'The Opening Limit', value: '$5,000 for a score of 740 or more, $2,500 from 670, and $1,000 below that, in your currency', estimate: true },
       { label: 'Money To Repay', value: 'Anything in your current and savings accounts at every bank; in the US under 21, money of your own' },
       { label: 'A Month On Your Record', value: '3 points for a month paid as agreed, shared among your cards; 50 off for a late payment once it’s reported; 2 a month for each tenth of all your limits used past 30%', estimate: true },
-      { label: 'A Limit Review', value: 'Every six months: a fifth more for a score of 700 or more with no late payment in a year, unless you turned Raise My Limit Automatically off', estimate: true },
+      { label: 'A Limit Review', value: `Every six months: a fifth more for a score of ${RAISE_FROM} or more with no late payment in a year, unless you turned Raise My Limit Automatically off`, estimate: true },
       { label: 'With No Card Open', value: `${NO_CARD.aging} points a month back, on the 1st, while no payment has been late in a year and no debt is in collections, up to ${NO_CARD.ceiling}`, estimate: true },
       { label: 'How Long A Mark Lasts', value: `A mark leaves your record after ${MARK_YEARS.us} years in the US, ${MARK_YEARS.uk} in Britain, ${MARK_YEARS.ca} in Canada and ${MARK_YEARS.ie} in Ireland, and gives back ${MARK_GONE_GIVES} points` },
       { label: 'Moving The Statement Day', value: `Once a statement cycle, and the next statement comes no sooner than ${MIN_CYCLE_DAYS} days after the last`, estimate: true },
@@ -917,7 +918,7 @@ export const MONEY: readonly GuideEntry[] = [
       `Apply: ${INQUIRY} points come off your score at once. If you’re approved, What Needs You gives the limit and the card arrives in a week. If you’re declined, it says why.`,
       'Pay Card In Full: from your primary account, then savings at its bank, as much as you owe or as much as you have. Paid from another bank, some banks hold back the room it frees for a few days while it clears.',
       'Autopay, Statement Day, Raise My Limit Automatically and Going Over The Limit are saved at once.',
-      'Ask For This Limit: a lower limit is granted at once, but never below what you owe. A higher one, up to a fifth more than now, needs a credit score of 700 or more, no late payment in a year, a card that isn’t suspended, and money in the bank.',
+      `Ask For This Limit: a lower limit is granted at once, but never below what you owe. A higher one, up to a fifth more than now, needs a credit score of ${RAISE_FROM} or more, no late payment in a year, a card that isn’t suspended, and money in the bank.`,
       'Make It The Everyday Card: the day’s spending goes on it from now.',
       'Close The Card: nothing new can go on it, and if you owe nothing it closes at once.',
       'Send The Credit To My Account: a credit balance on the card moves to your primary account.',

@@ -46,6 +46,8 @@ term this area thinks needs a change, are listed at the end for the coordinator 
   exchange rate" there would make the line read as one voice.
 - **The limit review's 700** is a literal in `systems/cardlife.ts` (`credit.score < 700`) and in the guide's prose
   ("a credit score of 700 or more"), as it was before this pass. A shared constant would keep them together.
+  **Done** on 2026-10-17 by the cross-area pass (`crossarea/defects.md`, 3): the ask, its notice and the guide read
+  `RAISE_FROM`, the review's own constant; the literals were there until then.
 - **Engine-speak counts:** money's fell from 45 to 11. I didn't run `--bless`, so another area's counts aren't moved
   in this clone; the coordinator can bless once the areas are merged.
 - **`spending.ts`** keeps "You can’t afford it.", "past its payment ceiling" and "The Day’s Spending" for the health

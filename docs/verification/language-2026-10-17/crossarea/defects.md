@@ -102,3 +102,33 @@ harness that applies it, runs the test file and restores the source byte for byt
   application no longer refuses a second plan: killed by `tests/evidence-g17-papers.test.ts`, "You already have a
   payment plan with the IRS."); the decision refusing nothing; the decision's pending guard dropped (a plan set refused by
   hand was decided anyway, and approved).
+
+## 3. The card limit's 700 was typed in three places beside its constant
+
+- **What:** the score a raised card limit needs. The six-monthly review read `RAISE_FROM` (700, private to
+  `src/engine/systems/credit.ts`). A raise asked for (`card.request_limit`, `src/engine/systems/cardlife.ts`) tested
+  `credit.score < 700`, its Limit Increase Declined notice typed "a credit score of 700 or more", and the guide's card
+  entry (`src/engine/content/guide/money.ts`, `bank.card`) typed 700 in A Limit Review and in Ask For This Limit (money
+  `glossary.md`, For The Coordinator). The guide's header said its card limits were written as text. A change to the
+  rule would have left the ask, the notice and the guide on the old figure.
+- **Confirmed:** `grep` of the score-and-limit 700s in `src/`: those four, and the review's constant. Nothing else
+  says it (`credit.ts`'s header names 700 as the review's figure, still true).
+- **Fix:** `RAISE_FROM` exported from `credit.ts`, with a comment saying who reads it; the ask's test, its notice and
+  the guide's two lines read it. The value is the same, so nothing a player sees or meets changed. The guide's header
+  says the score a raise needs was text until 2026-10-17. Two sources of text changed (700 became `{…}`) and went
+  Pending; both were marked again Rewritten And Verified `--by money`, with their old evidence and the new test.
+- **Test:** `tests/language-crossarea-raise.test.ts`, "is one figure: moved, a raise asked for a point under it is
+  declined and the notice says the moved figure, at it the raise is granted, and the guide says the moved figure for the
+  ask and the six-monthly review". In a file of its own because it moves `RAISE_FROM` to 720 for every module that
+  imports it (a mocked module): a figure that only agreed with the rule by being typed the same can't pass. On a new
+  New Haven life with its Chase card: at 719 the raise is declined and the notice says 720 word for word; at 720 it's
+  granted; the guide's two lines say 720, and no 700 is left in the card entry. The real 700 stays pinned word for word
+  by `tests/evidence-g12-money.test.ts`.
+- **Shown failing without the fix:** `cardlife.ts` and `guide/money.ts` put back as they were, with the constant
+  exported: the raise asked at 719 was granted (`expected { limit: 6531700, granted: true } to deeply equal { limit:
+  6521700, granted: false }`), exit 1. With the fix, exit 0; with the money and guide tests beside it
+  (`evidence-g12-money`, `evidence-g13-money`, `language-money`, `guide`, `help-mechanics`, `guide-examples-money`),
+  119 of 119.
+- **Mutation run** (five mutations, all killed): the ask's check typed 700; the notice typed 700; the guide's review
+  line typed 700; the guide's ask line typed 700; the ask's boundary moved from `<` to `<=` (a score at the figure
+  declined).

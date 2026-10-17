@@ -2569,9 +2569,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card]": {
   "status": "Rewritten And Verified",
-  "hash": "b2140d868d44",
+  "hash": "bca25d73fdc4",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
+  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (money area); A Limit Review and Ask For This Limit read RAISE_FROM, held at a moved figure in tests/language-crossarea-raise.test.ts (the cross-area pass, 2026-10-17)"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.cash]": {
   "status": "Rewritten And Verified",
@@ -3067,9 +3067,9 @@
  },
  "src/engine/systems/cardlife.ts#registerCardLife <card.request_limit>": {
   "status": "Rewritten And Verified",
-  "hash": "1c4a9133c8c8",
+  "hash": "b8bf2a9e626d",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g13-money.test.ts (Enter the limit you want.; Limit Increase Declined: The bank kept your limit at …. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.)"
+  "evidence": "tests/evidence-g12-money.test.ts 'keeps the limit and says the rule for a payment late within the year, a record under 700, nothing in the bank and a card suspended on a plan, and raises it for a payment late more than a year ago' (Limit Increase Declined word for word: … a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.); tests/language-crossarea-raise.test.ts (the figure is RAISE_FROM's, moved to 720 and said so; the cross-area pass, 2026-10-17)"
  },
  "src/engine/systems/cardlife.ts#registerCardLife <card.set_auto_raise>": {
   "status": "Reviewed And Retained",
