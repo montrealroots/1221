@@ -1,0 +1,512 @@
+[
+ {
+  "source": "src/engine/content/genre-demands.json#blaxploitation",
+  "kind": "other",
+  "before": "(Reviewed 2026-10-10: 3 of 3 sources read directly, the rest as search snippets; low confidence)",
+  "after": "(all three of its sources read directly, reviewed 2026-10-10; low confidence)",
+  "why": "How the research was read, said from its own counts: \"the rest\" of none, and the review's date as a note, not a label.",
+  "meaningSensitive": true,
+  "verified": "json/b1-genre-looks.txt, the Blaxploitation look rendered by resolveLook; json-diff-check.mjs parses the count and the date back"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#adventure",
+  "kind": "other",
+  "before": "(Reviewed 2026-10-10: 2 of 3 sources read directly, the rest as search snippets; medium confidence)",
+  "after": "(two of its three sources read directly and the remaining one from a search summary, reviewed 2026-10-10; medium confidence)",
+  "why": "Some read directly, the rest from summaries: the variant with one left over.",
+  "meaningSensitive": true,
+  "verified": "json/b1-genre-looks.txt, the Adventure look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#whodunit",
+  "kind": "other",
+  "before": "(Reviewed 2026-10-10: 1 of 1 sources read directly, the rest as search snippets; low confidence)",
+  "after": "(its one source read directly, reviewed 2026-10-10; low confidence)",
+  "why": "The one-source variant: \"1 of 1 sources\" was a malformed plural.",
+  "meaningSensitive": true,
+  "verified": "json/b1-genre-looks.txt, the Whodunit look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#magical_realism",
+  "kind": "other",
+  "before": "(Reviewed 2026-10-10: 0 of 2 sources read directly, the rest as search snippets; low confidence)",
+  "after": "(neither of its sources read directly, both from search summaries, reviewed 2026-10-10; low confidence)",
+  "why": "The none-read variant.",
+  "meaningSensitive": true,
+  "verified": "json/b1-genre-looks.txt, the Magical Realism look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#absurdist",
+  "kind": "other",
+  "before": "(search snippet; low confidence)",
+  "after": "(from a search summary; low confidence)",
+  "why": "The look's own words for a search's summary (its provenance line says \"taken from a search summary\").",
+  "meaningSensitive": false,
+  "verified": "json/b1-genre-looks.txt, the Absurdist look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#docudrama",
+  "kind": "other",
+  "before": "(abstract only; medium confidence)",
+  "after": "(only the abstract read; medium confidence)",
+  "why": "A clause that says what was read.",
+  "meaningSensitive": false,
+  "verified": "json/b1-genre-looks.txt, the Docudrama look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#alternate_history",
+  "kind": "other",
+  "before": "Source for what it asks: None found. A search for actors' approach on The Man in the High Castle returned only cast lists and low-quality pages..",
+  "after": "Source for what it asks: None found. A search for actors' approach on The Man in the High Castle returned only cast lists and low-quality pages.",
+  "why": "A doubled stop: the source's own full stop and the look's.",
+  "meaningSensitive": false,
+  "verified": "json/genre-looks-before.txt and json/b1-genre-looks.txt, the Alternate History look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#adventure",
+  "kind": "other",
+  "before": "…/action-and-adventure-films [fetched] ; Wisconsin Center for Film and Theater Research…",
+  "after": "…/action-and-adventure-films [read directly]; Wisconsin Center for Film and Theater Research…",
+  "why": "The research's mark of how a source was read, in the look's words, and no space before the semicolon. The citation itself is as the research wrote it.",
+  "meaningSensitive": false,
+  "verified": "json/b1-genre-looks.txt; json-diff-check.mjs finds every URL kept"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#absurdist",
+  "kind": "other",
+  "before": "Ionesco, Pinter and absurdist film are not covered.",
+  "after": "Ionesco, Pinter and absurdist film aren’t covered.",
+  "why": "Contracted, as the house's prose is; only in the research's own sentences, never in a quotation.",
+  "meaningSensitive": false,
+  "verified": "json/b1-genre-looks.txt, the Absurdist look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#blaxploitation",
+  "kind": "other",
+  "before": "Scholarship characterises the blaxploitation movement by, among other things, excessive violence",
+  "after": "Scholarship characterizes the blaxploitation movement by, among other things, excessive violence",
+  "why": "American spelling in the research's sentence; the quotations keep their sources' spelling.",
+  "meaningSensitive": false,
+  "verified": "json/b1-genre-looks.txt, the Blaxploitation look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#biker",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "This is one film's casting rule, not a documented convention of the whole cycle. Riding skill fits 'stunt' only loosely, since the vocabulary has no driving or riding tag. Reviewed 2026-10-10: One film’s casting rule (The Wild Angels). Not applied genre-wide.",
+  "after": "This is one film’s casting rule, not a documented convention of the whole cycle. Riding fits Fights And Stunts only loosely, since none of the requirements the game can ask for is driving or riding. On review (2026-10-10), one film’s casting rule wasn’t enough to make it a requirement of the whole genre.",
+  "why": "The research's working words (a tag id, 'the vocabulary', an appended review note) said as the look says them: the requirement's name, the game's list of requirements, and what the review decided.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Biker look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#alternate_history",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "The genre is defined by its premise, not its performance, and the definition entails no tag. Any period demand would come from the period the story imitates, which costume_drama covers, not from the genre.",
+  "after": "The genre is defined by its premise, not its performance, and its definition calls for none of the requirements the game can ask for. Anything a period asks would come from the period the story imitates, which the Costume Drama genre covers, not from this one.",
+  "why": "'The definition entails no tag' and a raw genre id ('costume_drama') in the player's words: the genre named by its label.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Alternate History look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#art_house",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "Modernist / auteur art cinema (Bresson, Antonioni) and the slow-cinema strand; director-specific methods",
+  "after": "the methods of particular modernist and auteur directors (Bresson, Antonioni) and of slow cinema",
+  "why": "Read inside 'belongs to …, not to the genre as a whole': a capitalized slash list with a semicolon broke the sentence.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Art House look's 'Why it adds no requirement.'"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#cyberpunk",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "Action-led cyberpunk in the mould of The Matrix (martial-arts and wirework set pieces), not the genre as a whole",
+  "after": "action-led cyberpunk in the mold of The Matrix, with its martial-arts and wirework set pieces",
+  "why": "Inside the look's sentence it ended 'not the genre as a whole, not to the genre as a whole'.",
+  "meaningSensitive": false,
+  "verified": "json/b2-genre-looks.txt, the Cyberpunk look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#adventure",
+  "field": "why:stunt",
+  "kind": "other",
+  "before": "genre-wide: Tasker's encyclopedia entry states at the level of the whole form that action and adventure cinema foregrounds the body in motion and in combat, which is a genre-level convention of on-screen combat. One credible source, so medium, not high. Doing one's own stunts (Fairbanks, Flynn) remains a swashbuckler-star matter and is not what the tag is applied for.",
+  "after": "Tasker’s encyclopedia entry says of the whole form that action and adventure cinema foregrounds the body in motion and in combat, which makes on-screen combat a convention of the genre. It’s one credible source, so the research holds it at medium confidence, not high. Stars doing their own stunts (Fairbanks, Flynn) is a matter for swashbuckler stars, and isn’t what the requirement rests on.",
+  "why": "Shown for an applied genre: the review's label ('genre-wide:'), 'the tag' and 'medium, not high' said in full.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Adventure look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#absurdist",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "All of the evidence is Beckett, mostly Godot. Ionesco, Pinter and absurdist film are not covered. The PDF could not be text-extracted, so the quotations come from the search engine's summary of it, not from my own reading. Nothing found covers 'holding comedy and despair together' as an acting demand in so many words. Reviewed 2026-10-10: All of the evidence is Beckett, mostly Godot. Not applied genre-wide.",
+  "after": "All of the evidence is Beckett, mostly Godot. Ionesco, Pinter and absurdist film aren’t covered. The study guide’s PDF couldn’t be read as text, so the quotations come from a search engine’s summary of it, not from a direct reading. Nothing found covers 'holding comedy and despair together' as an acting demand in so many words. On review (2026-10-10), evidence that’s all Beckett wasn’t enough to make it a requirement of the whole genre.",
+  "why": "First person ('my own reading'), an engine-sounding 'text-extracted', and a review note that repeated the first sentence word for word.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Absurdist look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#concert_film",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "No scholarly reference work defining the genre was read; the IDA article is a trade/professional source. The vocabulary has no instrument or live-music tag, so 'song' is a stretch. Whether an actor-character belongs in a concert film at all is a design question.",
+  "after": "No scholarly reference work defining the genre was read: the IDA article is a trade source. None of the requirements the game can ask for is playing an instrument or live music, so Singing is a stretch. Whether an acted character belongs in a concert film at all is a question for the game, not the research.",
+  "why": "'A design question' said as what it is: the game's choice, not the research's.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Concert Film look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#chase",
+  "field": "sourceSupports",
+  "kind": "other",
+  "before": "Early Cinema: In chase films \"large groups of people run from one locale to the next, the cut introducing a new setting while sustaining the sense of frantic movement\"; the effect rests on \"the accelerated sensation of displacement and mobility editing helps to promote.\" Chase film (entry in A Dictionary of Film Studies): Snippet (page returned 403): chase films are films of the early and silent eras in which a chase is the primary element, with precedent in music-hall and vaudeville comedy chase skits 'punctuated with pratfalls and physical comedy'. Slapstick Comedy: Sennett realised \"the comic potential of the chase\"; his films ended with Kops and others who \"careen across the screen, fall over, collide, and generally create mayhem.\"",
+  "after": "Early Cinema: In chase films \"large groups of people run from one locale to the next, the cut introducing a new setting while sustaining the sense of frantic movement\"; the effect rests on \"the accelerated sensation of displacement and mobility editing helps to promote.\" Chase film (entry in A Dictionary of Film Studies): From a search summary, as the page couldn’t be opened: chase films are films of the early and silent eras in which a chase is the primary element, with precedent in music-hall and vaudeville comedy chase skits 'punctuated with pratfalls and physical comedy'. Slapstick Comedy: Sennett realized \"the comic potential of the chase\"; his films ended with Kops and others who \"careen across the screen, fall over, collide, and generally create mayhem.\"",
+  "why": "'Snippet (page returned 403)': an HTTP status and the research's jargon for how it read the page.",
+  "meaningSensitive": false,
+  "verified": "json/b2-genre-looks.txt, the Chase look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#anthology",
+  "field": "claim",
+  "kind": "other",
+  "before": "Some anthology films cast one actor in several roles across segments, but no source treats this as a convention of the form.",
+  "after": "Some anthology films cast one actor in several roles across their stories, but no source treats this as a convention of the form.",
+  "why": "'Segments' is the game's own word for a part of a scene; the genre's own definition calls an anthology's parts stories.",
+  "meaningSensitive": false,
+  "verified": "json/b2-genre-looks.txt, the Anthology look's first line"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#costume_drama",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "RADA's course is evidence that period movement is a taught skill. It does not say every costume drama demands it. Period dance appears in RADA's syllabus, but no dance tag was given because no source says costume dramas require dancing. The fit between 'heightened' and movement, rather than language, is loose. Reviewed 2026-10-10: the heightened tag was removed. Heightened is verse and rhetoric; the research is about period movement and deportment, which no tag in the vocabulary covers.",
+  "after": "RADA’s course is evidence that period movement is a taught skill. It doesn’t say every costume drama demands it. Period dance appears in RADA’s syllabus, but the research didn’t name Dancing, because no source says costume dramas require it. Heightened Language, which is about language, fit this movement only loosely, and the review of 2026-10-10 took it away: it’s verse and rhetoric, and the research is about period movement and deportment, which none of the requirements the game can ask for covers.",
+  "why": "Two tag ids and 'the vocabulary', and a removal said as what the review did.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Costume Drama look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#docudrama",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "The scholarly chapter was read only as an abstract. Whether 'transformation' (mapped to Character Work) is the right skill for impersonation is a judgement; no source mentions prosthetics or makeup for docudrama.",
+  "after": "The scholarly chapter was read only as an abstract. Whether Physical Transformation, which the game trains as Character Work, is the right skill for impersonation is a judgment call; no source mentions prosthetics or makeup for docudrama.",
+  "why": "'transformation (mapped to Character Work)': the requirement and the technique it's trained as, both by the names the player sees.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Docudrama look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#black_comedy",
+  "field": "sourceSupports",
+  "kind": "other",
+  "before": "Black humour: Black humour is writing that juxtaposes morbid or ghastly elements with comical ones; it 'often uses farce and low comedy'. (Fetch returned 403; seen via search snippet.) Defines the genre as comic; says nothing about acting. Black comedy: Treats black comedy as a form of comedy with film examples (Dr. Strangelove, Harold and Maude, Fargo, The Death of Stalin). Contains no discussion of performance, deadpan or timing. Deadpan: Advises sincere commitment to absurd situations ('The more absurd the situation becomes, the more useful sincere commitment can be'). Does not mention black or dark comedy.",
+  "after": "Black humor: Black humor is writing that juxtaposes morbid or ghastly elements with comical ones; it 'often uses farce and low comedy'. (The page couldn’t be opened, so this is from a search summary.) It defines the genre as comic and says nothing about acting. Black comedy: It treats black comedy as a form of comedy with film examples (Dr. Strangelove, Harold and Maude, Fargo, The Death of Stalin). It doesn’t discuss performance, deadpan or timing. Deadpan: It advises sincere commitment to absurd situations ('The more absurd the situation becomes, the more useful sincere commitment can be'). It doesn’t mention black or dark comedy.",
+  "why": "Subjectless fragments ('Defines the genre as comic; says nothing…') and '(Fetch returned 403; seen via search snippet.)'.",
+  "meaningSensitive": false,
+  "verified": "json/b2-genre-looks.txt, the Black Comedy look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#historical_fiction",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "dance: period stories with social-dance scenes (court, Regency, costume romance); heightened: adaptations of period dramatic texts (Shakespeare, Restoration comedy) or scripts written in period verse or rhetoric",
+  "after": "period stories with social-dance scenes (court, Regency, costume romance) for Dancing, and to adaptations of period plays (Shakespeare, Restoration comedy) or scripts written in period verse or rhetoric for Heightened Language",
+  "why": "'dance: …; heightened: …' was two labelled lists inside one sentence; each requirement named where it belongs.",
+  "meaningSensitive": true,
+  "verified": "json/b3-genre-looks.txt, the Historical Fiction look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#horror",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "StageMilk is a practitioner acting-advice site, not a textbook or union source. Screaming is vocal stamina, which has no tag in the fixed vocabulary; voiceWork was not applied because the source is about on-camera screaming, not voice-only performance. The Mandy, StarNow and Backstage horror-acting articles were blocked (403) and were not read. Reviewed 2026-10-10: A practitioner acting-advice site generalising exertion and some fight work to all horror. Not applied genre-wide.",
+  "after": "StageMilk is an acting-advice site written by practitioners, not a textbook or a union source. Screaming is vocal stamina, which isn’t one of the requirements the game can ask for; Voice-Led Performance wasn’t applied, because the source is about screaming on camera, not performing with the voice alone. The Mandy, StarNow and Backstage articles on horror acting couldn’t be opened, and weren’t read. On review (2026-10-10), one advice site generalizing exertion and some fight work to all horror wasn’t enough to make it a requirement of the whole genre.",
+  "why": "Tag ids, 'the fixed vocabulary', '(403)' and a review note restating the first sentence, said plainly; the reason the review gave is kept.",
+  "meaningSensitive": true,
+  "verified": "json/b3-genre-looks.txt, the Horror look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#horror",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "chase-and-struggle roles (see slasher’s final girl)",
+  "after": "chase-and-struggle roles (see the Slasher genre’s final girl)",
+  "why": "A genre's id with a possessive ('slasher’s') named as the genre.",
+  "meaningSensitive": false,
+  "verified": "json/b3-genre-looks.txt, the Horror look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#epic",
+  "field": "sourceSupports",
+  "kind": "other",
+  "before": "Epic Films: Focuses on scale, spectacle, history and technology. On performers only: in Fairbanks's 1920s epics 'the power of the central character to effect change is, however fancifully, bound up with his physical prowess'. Nothing on battles, stunts or training as a genre requirement. Breaking the Physique Barrier: Steve Reeves and the Promotion of Hercules: After Hercules (1958), sword-and-sandal epics starred 'weight-trained actors'. Supports physique for the peplum subgenre, not combat for epics generally. Page returned 403. Russell Crowe interview, Gladiator 20th anniversary: Not read (paywall redirect). Earlier snippets say Crowe trained for fighting and was injured; one film only.",
+  "after": "Epic Films: It focuses on scale, spectacle, history and technology. On performers only: in Fairbanks’s 1920s epics 'the power of the central character to effect change is, however fancifully, bound up with his physical prowess'. It says nothing on battles, stunts or training as a requirement of the genre. Breaking the Physique Barrier: Steve Reeves and the Promotion of Hercules: After Hercules (1958), sword-and-sandal epics starred 'weight-trained actors'. This supports physique for the peplum subgenre, not combat for epics generally. The page couldn’t be opened. Russell Crowe interview, Gladiator 20th anniversary: Not read, as it’s behind a paywall. Earlier search summaries say Crowe trained for fighting and was injured; that’s one film only.",
+  "why": "Fragments and 'Page returned 403', '(paywall redirect)', 'Earlier snippets'.",
+  "meaningSensitive": false,
+  "verified": "json/b3-genre-looks.txt, the Epic look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#giallo",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "The voiceWork tag is weak for the on-screen actor; it is strongest for English-speaking leads who re-voiced themselves, a claim resting on a Backstage snippet. 'Stylised, heightened terror' is unsourced. The CineMedia piece names no author. Reviewed 2026-10-10: The voiceWork tag is weak for the on-screen actor, and rests on a snippet. Not applied genre-wide.",
+  "after": "Voice-Led Performance is weak for the on-screen actor: it’s strongest for English-speaking leads who re-voiced themselves, a claim resting on a search summary of Backstage. 'Stylised, heightened terror' is unsourced. The CineMedia piece names no author. On review (2026-10-10), that wasn’t enough to make it a requirement of the whole genre.",
+  "why": "'The voiceWork tag' (a code identifier) named as the look names the requirement; the review's repeat of the first sentence folded into what the review decided.",
+  "meaningSensitive": true,
+  "verified": "json/b3-genre-looks.txt, the Giallo look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#kitchen_sink",
+  "field": "why:accent",
+  "kind": "other",
+  "before": "genre-wide: Two independent credible sources (BFI and Hanley, the latter drawing on John Hill's scholarship) state that regional accents and regional actors were a defining convention of the cycle as a whole, not of one film.",
+  "after": "Two independent, credible sources (BFI, and Hanley building on John Hill’s scholarship) state that regional accents and regional actors were a defining convention of the cycle as a whole, not of one film.",
+  "why": "Shown for an applied genre: the review's 'genre-wide:' label gone, and the engine's 'drawing on' said another way.",
+  "meaningSensitive": false,
+  "verified": "json/b3-genre-looks.txt, the Kitchen Sink Drama look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#eco_horror",
+  "field": "claim",
+  "kind": "other",
+  "before": "No source found for what eco-horror asks of actors; one production report says the Annihilation cast were not told when a creature would attack, to get real reactions.",
+  "after": "No source was found for what eco-horror asks of actors. One production report says the Annihilation cast weren’t told when a creature would attack, to get real reactions.",
+  "why": "The first line a player reads: 'No source found…; one production…' as two sentences.",
+  "meaningSensitive": false,
+  "verified": "json/b3-genre-looks.txt, the Eco-Horror look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#medical_drama",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "One show's practice. Nothing in the fixed vocabulary covers technical jargon or procedural business, so no tag is applied. 'High-stakes emotion' from the earlier text is not addressed by the source.",
+  "after": "This is one show’s practice. None of the requirements the game can ask for covers technical jargon or procedural business, so none applies. 'High-stakes emotion', from the earlier research, isn’t addressed by the source.",
+  "why": "'Nothing in the fixed vocabulary covers… so no tag is applied' in the player's words.",
+  "meaningSensitive": true,
+  "verified": "json/b3-genre-looks.txt, the Medical Drama look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#jukebox_musical",
+  "field": "why:song",
+  "kind": "other",
+  "before": "Entailed by the cited definition (a musical built on popular songs) and by Bockel's account of singing King's songs without mimicry.",
+  "after": "It follows from the cited definition (a musical built on popular songs), and from Bockel’s account of singing King’s songs without mimicry.",
+  "why": "Shown for an applied genre: a subjectless 'Entailed by…'.",
+  "meaningSensitive": false,
+  "verified": "json/b3-genre-looks.txt, the Jukebox Musical look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#occult",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "Possession / exorcism films: the possessed role and the voice of the possessing entity",
+  "after": "the possessed role, and the voice of the possessing entity, in possession and exorcism films",
+  "why": "'Possession / exorcism films: the possessed role…' made to read inside 'belongs to …'.",
+  "meaningSensitive": false,
+  "verified": "json/b3-genre-looks.txt, the Occult look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#tragedy",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "classical verse tragedy, which a play’s own reads carry (Macbeth reads Classical Text at 3)",
+  "after": "classical verse tragedy, where a play asks for them itself (Macbeth calls for Classical Text most of all)",
+  "why": "'a play’s own reads carry (Macbeth reads Classical Text at 3)': the engine's verb and a weight copied into prose. Macbeth's play reads Classical Text at 3, more than anything else it reads (content/plays.ts), so 'most of all' is true without the figure.",
+  "meaningSensitive": true,
+  "verified": "json/b4-genre-looks.txt, the Tragedy look; content/plays.ts, Macbeth's reads"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#tragedy",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "Both tags hold for classical (Greek and verse) tragedy, not for modern prose or film tragedy. Almeida's page did not mention verse when read; that came from Wikipedia's account of Aristotle. Reviewed 2026-10-10: Both tags hold for classical Greek and verse tragedy, not for modern prose tragedy; applied to every tragedy they asked heightened language of Woyzeck, Miss Julie and Riders To The Sea. Not applied genre-wide.",
+  "after": "Both hold for classical tragedy, Greek and in verse, not for modern prose or film tragedy. Almeida’s page didn’t mention verse when read; that came from Wikipedia’s account of Aristotle. On review (2026-10-10), applying them to every tragedy would have asked Heightened Language of Woyzeck, Miss Julie and Riders To The Sea, so they aren’t requirements of the whole genre.",
+  "why": "A review note that repeated the first sentence, then 'Not applied genre-wide', as one sentence saying why.",
+  "meaningSensitive": true,
+  "verified": "json/b4-genre-looks.txt, the Tragedy look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#sports",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "The NPR page timed out on fetch; headline and snippet only. 'stunt' maps to Stage Combat, which fits combat sports (boxing films) better than rowing or baseball; the fit is partial. Reviewed 2026-10-10: The stunt tag (Stage Combat) fits combat sports, not rowing or baseball. Not applied genre-wide.",
+  "after": "The NPR page timed out; only its headline and a search summary were read. Fights And Stunts is trained as Stage Combat, which fits combat sports (boxing films) better than rowing or baseball, so the fit is partial. On review (2026-10-10), a fit with combat sports alone wasn’t enough to make it a requirement of the whole genre.",
+  "why": "''stunt' maps to Stage Combat' and 'The stunt tag (Stage Combat)': the requirement and its technique by the names the player sees.",
+  "meaningSensitive": true,
+  "verified": "json/b4-genre-looks.txt, the Sports look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#post_apocalyptic",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "stunt: action-led post-apocalyptic films (Mad Max lineage); transformation: individual starving-survivor lead roles",
+  "after": "action-led post-apocalyptic films (the Mad Max line) for Fights And Stunts, and to particular leads playing starving survivors for Physical Transformation",
+  "why": "Tag ids as labels ('stunt: …; transformation: …') inside the look's sentence.",
+  "meaningSensitive": true,
+  "verified": "json/b4-genre-looks.txt, the Post-Apocalyptic look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#science_fiction",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "One actor, read via snippet. It speaks to effects-driven production, not to science fiction as a genre (much science fiction has no green screen). The vocabulary has no tag for effects or green-screen work; 'camera' does not mean that, so no tag was given. Nothing found on technical exposition.",
+  "after": "This is one actor, read in a search summary. It speaks to effects-driven production, not to science fiction as a genre (much science fiction has no green screen). None of the requirements the game can ask for is work with effects or a green screen, and Naturalism On Camera doesn’t mean that, so the research named none. Nothing was found on technical exposition.",
+  "why": "'The vocabulary has no tag…; 'camera' does not mean that, so no tag was given.'",
+  "meaningSensitive": true,
+  "verified": "json/b4-genre-looks.txt, the Science Fiction look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#romance",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "No credible source read. Intimacy was considered: SAG-AFTRA's intimacy-coordinator standards (seen only via snippets; PDF returned 403) cover nudity and simulated sex in any genre, not romance as such, so intimacy is not tagged.",
+  "after": "No credible source was read. Staged Intimacy was considered: SAG-AFTRA’s standards for intimacy coordinators (seen only in search summaries; the PDF couldn’t be opened) cover nudity and simulated sex in any genre, not romance as such, so the research didn’t name it.",
+  "why": "'(seen only via snippets; PDF returned 403)' and 'intimacy is not tagged'.",
+  "meaningSensitive": false,
+  "verified": "json/b4-genre-looks.txt, the Romance look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#stoner_comedy",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "Definition rests on Wikipedia; the comedy-timing source is a Backstage snippet about comedy generally (page 403). Improvisation is documented for Cheech and Chong only and is not tagged. Genre-wide only by definition; no source states a technical convention, so it stays low.",
+  "after": "The definition rests on Wikipedia, and the source on comic timing is a search summary of Backstage about comedy generally (the page couldn’t be opened). Improvisation is documented for Cheech and Chong only, so the research didn’t name it. It holds for the whole genre only by definition, and no source states a technical convention, so it stays at low confidence.",
+  "why": "'(page 403)', 'is not tagged', 'Genre-wide only by definition' in sentences.",
+  "meaningSensitive": true,
+  "verified": "json/b4-genre-looks.txt, the Stoner Comedy look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#sword_and_sorcery",
+  "field": "why:stunt",
+  "kind": "other",
+  "before": "Months of sword training and falls for the genre's touchstone film; the definition itself centres on sword-wielding heroes in violent adventures.",
+  "after": "Its touchstone film took months of sword training and falls, and the genre’s definition itself centers on sword-wielding heroes in violent adventures.",
+  "why": "Shown for an applied genre: a fragment with a semicolon, made two clauses.",
+  "meaningSensitive": false,
+  "verified": "json/b4-genre-looks.txt, the Sword And Sorcery look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#true_crime",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "Dramatised true crime roles portraying real people whose speech differs from the actor's own",
+  "after": "roles in dramatized true crime that portray real people whose speech differs from the actor’s own",
+  "why": "Capitalized mid-sentence and British 'Dramatised' inside the look's sentence.",
+  "meaningSensitive": false,
+  "verified": "json/b4-genre-looks.txt, the True Crime look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#steampunk",
+  "field": "claim",
+  "kind": "other",
+  "before": "No source found on what steampunk asks of actors. Sources describe Victorian-styled costume only.",
+  "after": "No source was found on what steampunk asks of actors. The sources describe only Victorian-styled costume.",
+  "why": "'No source found on…' with no verb, the look's first line.",
+  "meaningSensitive": false,
+  "verified": "json/b4-genre-looks.txt, the Steampunk look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#mumblecore",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "Improvisation is 'some' films, not all; the page notes mostly scripted exceptions. Reviewed 2026-10-10: the improvisation tag was removed. Improvisation is in some mumblecore films, not all; the naturalism (camera) is the convention.",
+  "after": "Improvisation is in 'some' films, not all; the page notes exceptions that are mostly scripted. The review of 2026-10-10 took Improvisation away for that reason: the convention is the naturalism, Naturalism On Camera.",
+  "why": "'Reviewed 2026-10-10: the improvisation tag was removed… the naturalism (camera) is the convention.'",
+  "meaningSensitive": true,
+  "verified": "json/b5-genre-looks.txt, the Mumblecore look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#neorealism",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "non-professional casting, which is the casting’s, not a technique asked of an actor",
+  "after": "non-professional casting, a choice of who’s cast rather than a technique asked of an actor",
+  "why": "'which is the casting’s' inside 'belongs to …' read as nonsense.",
+  "meaningSensitive": true,
+  "verified": "json/b5-genre-looks.txt, the Neorealism look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#farce",
+  "field": "why:comic",
+  "kind": "other",
+  "before": "'requiring the need for adept comic timing by the actors'.",
+  "after": "The page names comic timing as something the form needs: 'requiring the need for adept comic timing by the actors'.",
+  "why": "Shown for an applied genre: a bare quotation as the whole reason.",
+  "meaningSensitive": false,
+  "verified": "json/b5-genre-looks.txt, the Farce look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#found_footage",
+  "field": "why:camera",
+  "kind": "other",
+  "before": "'naturalistic acting' is routine, and actors may operate the camera.",
+  "after": "Naturalistic acting is 'routinely employed', the page says, and actors may operate the camera.",
+  "why": "Shown for an applied genre: a sentence opening on a lowercase quotation.",
+  "meaningSensitive": false,
+  "verified": "json/b5-genre-looks.txt, the Found Footage look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#musical",
+  "field": "why:song",
+  "kind": "other",
+  "before": "Britannica: musical numbers integrated in the plot; characters sing.",
+  "after": "Britannica says musical numbers are integrated in the plot, and characters sing.",
+  "why": "Shown for an applied genre: telegraphic notes made a sentence.",
+  "meaningSensitive": false,
+  "verified": "json/b5-genre-looks.txt, the Musical look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#silent_film",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "No tag in the fixed vocabulary fits wordless pantomime: physicalComedy means slapstick and clowning, and silent drama is not comic. A vocabulary gap, not a lack of evidence. StudioBinder is a production-software blog.",
+  "after": "None of the requirements the game can ask for fits wordless pantomime: Physical Comedy means slapstick and clowning, and silent drama isn’t comic. The gap is in the game’s requirements, not in the evidence. StudioBinder is a production-software blog.",
+  "why": "'No tag in the fixed vocabulary', a tag id, and 'A vocabulary gap' said as what's missing: the game's requirements, not the evidence.",
+  "meaningSensitive": true,
+  "verified": "json/b5-genre-looks.txt, the Silent Film look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#action_comedy",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "The fetch tool summarised the page; its remarks on Jackie Chan may be the summariser's gloss, so no physicalComedy tag was given.",
+  "after": "The tool that read the page summarized it, and its remarks on Jackie Chan may be the summary’s own gloss, so the research didn’t name Physical Comedy.",
+  "why": "'The fetch tool… the summariser's gloss, so no physicalComedy tag was given.'",
+  "meaningSensitive": true,
+  "verified": "json/b5-genre-looks.txt, the Action Comedy look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#kaiju",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "The tag fits suit actors, not the human cast. Reacting to unseen threats was not sourced on this read. Reviewed 2026-10-10: The tag fits suit actors, not the human cast. Not applied genre-wide.",
+  "after": "Physical Transformation fits suit actors, not the human cast. Reacting to unseen threats wasn’t sourced in this reading. On review (2026-10-10), a demand on suit actors alone wasn’t enough to make it a requirement of the whole genre.",
+  "why": "'The tag fits…' and a review note repeating it.",
+  "meaningSensitive": true,
+  "verified": "json/b5-genre-looks.txt, the Kaiju look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#war",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "Military drill and bearing have no exact vocabulary tag; 'stunt' covers the physical-action part only. Snippets.",
+  "after": "None of the requirements the game can ask for is exactly military drill and bearing; Fights And Stunts covers only the physical-action part. These are search summaries.",
+  "why": "'no exact vocabulary tag; 'stunt' covers…' and a one-word fragment, 'Snippets.'",
+  "meaningSensitive": false,
+  "verified": "json/b5-genre-looks.txt, the War look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#sea_adventure",
+  "field": "claim",
+  "kind": "other",
+  "before": "The cited source does not support an actor demand: it is about nautical literature, whose defining trait is nautical detail and seafaring vernacular.",
+  "after": "The cited source doesn’t support anything asked of an actor: it’s about nautical literature, whose defining trait is nautical detail and seafaring vernacular.",
+  "why": "'an actor demand' and 'Downgraded' (in the uncertainty) said plainly; the first line a player reads.",
+  "meaningSensitive": false,
+  "verified": "json/b5-genre-looks.txt, the Sea Adventure look"
+ }
+]

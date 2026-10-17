@@ -1,0 +1,1346 @@
+{
+ "src/engine/content/genre-demands.json#absurdist": {
+  "status": "Rewritten And Verified",
+  "hash": "8f79525b7e5c",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'. Its engine-speak hit (a code name) is a path in a source's URL, which stays as cited."
+ },
+ "src/engine/content/genre-demands.json#action": {
+  "status": "Rewritten And Verified",
+  "hash": "02be94c9abb1",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#action_comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "f40f386bc9e1",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#adventure": {
+  "status": "Rewritten And Verified",
+  "hash": "e3147360bad5",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#alternate_history": {
+  "status": "Rewritten And Verified",
+  "hash": "3f6f9a2dae0d",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#animated": {
+  "status": "Rewritten And Verified",
+  "hash": "3540c485fc6e",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#anime": {
+  "status": "Rewritten And Verified",
+  "hash": "165a86c90328",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#anthology": {
+  "status": "Rewritten And Verified",
+  "hash": "a4a7885c88e6",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'. Its engine-speak hit (a segment) is inside a quotation of the earlier research's claim; its own claim now says stories."
+ },
+ "src/engine/content/genre-demands.json#apocalyptic": {
+  "status": "Rewritten And Verified",
+  "hash": "62c97cece789",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'. Its engine-speak hit (a weight) is weight loss, the actor's body."
+ },
+ "src/engine/content/genre-demands.json#art_house": {
+  "status": "Rewritten And Verified",
+  "hash": "c044fceee4e3",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'. Its engine-speak hit (a code name) is a path in a source's URL, which stays as cited."
+ },
+ "src/engine/content/genre-demands.json#avant_garde": {
+  "status": "Rewritten And Verified",
+  "hash": "7fc04044ca2d",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#backstage_musical": {
+  "status": "Rewritten And Verified",
+  "hash": "e865b18e1ebd",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#biker": {
+  "status": "Rewritten And Verified",
+  "hash": "fe30334aaecb",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#biographical": {
+  "status": "Rewritten And Verified",
+  "hash": "e666b8f51ccf",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#black_comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "a24adc9309e4",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#blaxploitation": {
+  "status": "Rewritten And Verified",
+  "hash": "3224c8a34109",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#body_horror": {
+  "status": "Rewritten And Verified",
+  "hash": "7385454d0cc4",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#buddy_comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "f2fa2bb99476",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#buddy_cop": {
+  "status": "Rewritten And Verified",
+  "hash": "b6b8bb7d2ac0",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#caper": {
+  "status": "Rewritten And Verified",
+  "hash": "e29ab312278a",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#chanbara": {
+  "status": "Rewritten And Verified",
+  "hash": "058c86c8aca6",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#chase": {
+  "status": "Rewritten And Verified",
+  "hash": "35572512def1",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#childrens": {
+  "status": "Rewritten And Verified",
+  "hash": "0cfb309db10c",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#christmas": {
+  "status": "Rewritten And Verified",
+  "hash": "0ec5d7f2e559",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "d3c7d37de338",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#coming_of_age": {
+  "status": "Rewritten And Verified",
+  "hash": "6ceea3717998",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#concert_film": {
+  "status": "Rewritten And Verified",
+  "hash": "a3694f176c8f",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#conspiracy_thriller": {
+  "status": "Rewritten And Verified",
+  "hash": "3c6bb4968581",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#cosmic_horror": {
+  "status": "Rewritten And Verified",
+  "hash": "7832544c2037",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#costume_drama": {
+  "status": "Rewritten And Verified",
+  "hash": "6523ca3695b4",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#courtroom_drama": {
+  "status": "Rewritten And Verified",
+  "hash": "78edee1ba6a6",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#creature_feature": {
+  "status": "Rewritten And Verified",
+  "hash": "1292a23ff16d",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#crime": {
+  "status": "Rewritten And Verified",
+  "hash": "f8b1823c71cf",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#cyberpunk": {
+  "status": "Rewritten And Verified",
+  "hash": "1578ca50ebd6",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#dance": {
+  "status": "Rewritten And Verified",
+  "hash": "e80d39fa481a",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#dark_fantasy": {
+  "status": "Rewritten And Verified",
+  "hash": "07177f57b30a",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#detective": {
+  "status": "Rewritten And Verified",
+  "hash": "5dc5c01ec5f6",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#disaster": {
+  "status": "Rewritten And Verified",
+  "hash": "eb2c7ff45c9c",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'. Its engine-speak hit (a weight) is a weighted chair in the actor's account, in a reason the look doesn't show."
+ },
+ "src/engine/content/genre-demands.json#docudrama": {
+  "status": "Rewritten And Verified",
+  "hash": "2d4e0a0b7cb8",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#docufiction": {
+  "status": "Rewritten And Verified",
+  "hash": "55228c5ac54a",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#documentary": {
+  "status": "Rewritten And Verified",
+  "hash": "63ff18707a49",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#domestic_drama": {
+  "status": "Rewritten And Verified",
+  "hash": "ac5dce996893",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#drama": {
+  "status": "Rewritten And Verified",
+  "hash": "e64d0f7eb1fa",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#dystopian": {
+  "status": "Rewritten And Verified",
+  "hash": "eaf51e699502",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#eco_horror": {
+  "status": "Rewritten And Verified",
+  "hash": "ce739e112186",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#epic": {
+  "status": "Rewritten And Verified",
+  "hash": "03875c095e0a",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#erotic_thriller": {
+  "status": "Rewritten And Verified",
+  "hash": "6071841ffbe5",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#espionage": {
+  "status": "Rewritten And Verified",
+  "hash": "61d62107003b",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#experimental": {
+  "status": "Rewritten And Verified",
+  "hash": "e4b71b638914",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#exploitation": {
+  "status": "Rewritten And Verified",
+  "hash": "a7936773517a",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#fairy_tale": {
+  "status": "Rewritten And Verified",
+  "hash": "ae11799c10d2",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#family": {
+  "status": "Rewritten And Verified",
+  "hash": "5288795a7301",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#fantasy": {
+  "status": "Rewritten And Verified",
+  "hash": "eb07501ca776",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#farce": {
+  "status": "Rewritten And Verified",
+  "hash": "25cab34ca0f9",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#film_noir": {
+  "status": "Rewritten And Verified",
+  "hash": "5487367875bc",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#folk_horror": {
+  "status": "Rewritten And Verified",
+  "hash": "9f8738017186",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#found_footage": {
+  "status": "Rewritten And Verified",
+  "hash": "b68936c20f90",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#gangster": {
+  "status": "Rewritten And Verified",
+  "hash": "0da109b33bab",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#giallo": {
+  "status": "Rewritten And Verified",
+  "hash": "90d2dae9a1b2",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#gothic_horror": {
+  "status": "Rewritten And Verified",
+  "hash": "83e3d477b83b",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#grindhouse": {
+  "status": "Rewritten And Verified",
+  "hash": "25ff2fb33180",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#hangout": {
+  "status": "Rewritten And Verified",
+  "hash": "8953d31b2ae7",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#heist": {
+  "status": "Rewritten And Verified",
+  "hash": "24559ba2a2a5",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#historical_drama": {
+  "status": "Rewritten And Verified",
+  "hash": "80de741e1249",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#historical_fiction": {
+  "status": "Rewritten And Verified",
+  "hash": "e6bcbf4e97bb",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#holiday": {
+  "status": "Rewritten And Verified",
+  "hash": "ff3a015105b9",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#hood_film": {
+  "status": "Rewritten And Verified",
+  "hash": "a8d99ab342c6",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#horror": {
+  "status": "Rewritten And Verified",
+  "hash": "0055b776a242",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#horror_comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "c7001623f9c5",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#isekai": {
+  "status": "Rewritten And Verified",
+  "hash": "663dbad5639c",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#jidaigeki": {
+  "status": "Rewritten And Verified",
+  "hash": "3ff935cf817a",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#jukebox_musical": {
+  "status": "Rewritten And Verified",
+  "hash": "1da1f256b97d",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#kaiju": {
+  "status": "Rewritten And Verified",
+  "hash": "ebeafa941d98",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#kitchen_sink": {
+  "status": "Rewritten And Verified",
+  "hash": "2a33cb6edf64",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#legal_drama": {
+  "status": "Rewritten And Verified",
+  "hash": "2205bc17d9db",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#magical_realism": {
+  "status": "Rewritten And Verified",
+  "hash": "3c3162712300",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#martial_arts": {
+  "status": "Rewritten And Verified",
+  "hash": "c3844afc00a4",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#medical_drama": {
+  "status": "Rewritten And Verified",
+  "hash": "f6250246d32e",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#melodrama": {
+  "status": "Rewritten And Verified",
+  "hash": "0e75b2465389",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#military": {
+  "status": "Rewritten And Verified",
+  "hash": "81d76e927546",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#mockumentary": {
+  "status": "Rewritten And Verified",
+  "hash": "2bb6763c6a57",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#monster_movie": {
+  "status": "Rewritten And Verified",
+  "hash": "4a4ff5532100",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#mumblecore": {
+  "status": "Rewritten And Verified",
+  "hash": "8f976895a69c",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#musical": {
+  "status": "Rewritten And Verified",
+  "hash": "85270c647901",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#mystery": {
+  "status": "Rewritten And Verified",
+  "hash": "d24903a58a2a",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#nature_documentary": {
+  "status": "Rewritten And Verified",
+  "hash": "529680904210",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#neo_noir": {
+  "status": "Rewritten And Verified",
+  "hash": "ca61c8ac64ba",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#neorealism": {
+  "status": "Rewritten And Verified",
+  "hash": "80c4a33ac7cd",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#new_wave": {
+  "status": "Rewritten And Verified",
+  "hash": "013cb7d84ab3",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#nordic_noir": {
+  "status": "Rewritten And Verified",
+  "hash": "5fa4136967ad",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#occult": {
+  "status": "Rewritten And Verified",
+  "hash": "02e8858de100",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#parody": {
+  "status": "Rewritten And Verified",
+  "hash": "97d5658cbfda",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#period_drama": {
+  "status": "Rewritten And Verified",
+  "hash": "296a2512937e",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#picaresque": {
+  "status": "Rewritten And Verified",
+  "hash": "e90ac8788575",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#police_procedural": {
+  "status": "Rewritten And Verified",
+  "hash": "ace86df97f56",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#political_drama": {
+  "status": "Rewritten And Verified",
+  "hash": "85119fcfb4da",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#political_thriller": {
+  "status": "Rewritten And Verified",
+  "hash": "4b4e8448cb4a",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#post_apocalyptic": {
+  "status": "Rewritten And Verified",
+  "hash": "740943915055",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#prison_film": {
+  "status": "Rewritten And Verified",
+  "hash": "e55f795d292d",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#psychological_horror": {
+  "status": "Rewritten And Verified",
+  "hash": "e9be3bc993eb",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#psychological_thriller": {
+  "status": "Rewritten And Verified",
+  "hash": "df90e88f6c46",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#queer_cinema": {
+  "status": "Rewritten And Verified",
+  "hash": "091af2c97140",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#revenge": {
+  "status": "Rewritten And Verified",
+  "hash": "16641f1064f3",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#road_movie": {
+  "status": "Rewritten And Verified",
+  "hash": "fbd33b379ed4",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#rockumentary": {
+  "status": "Rewritten And Verified",
+  "hash": "7fa6b79a8250",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#romance": {
+  "status": "Rewritten And Verified",
+  "hash": "5159accf3c59",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#romantic_comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "086e900a56b9",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#romantic_drama": {
+  "status": "Rewritten And Verified",
+  "hash": "13ea66f983d1",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#samurai": {
+  "status": "Rewritten And Verified",
+  "hash": "775d7decd87f",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#satire": {
+  "status": "Rewritten And Verified",
+  "hash": "67caaeb28de6",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#science_fantasy": {
+  "status": "Rewritten And Verified",
+  "hash": "55b57192e92e",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#science_fiction": {
+  "status": "Rewritten And Verified",
+  "hash": "969d6ffed1c1",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#screwball_comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "dc52d11a6454",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#sea_adventure": {
+  "status": "Rewritten And Verified",
+  "hash": "311802e72987",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#silent_film": {
+  "status": "Rewritten And Verified",
+  "hash": "65bb3759311b",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#slapstick": {
+  "status": "Rewritten And Verified",
+  "hash": "8eb8f6b96314",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#slasher": {
+  "status": "Rewritten And Verified",
+  "hash": "1baa4df9055e",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#slice_of_life": {
+  "status": "Rewritten And Verified",
+  "hash": "b6b74d2b2395",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#social_realism": {
+  "status": "Rewritten And Verified",
+  "hash": "b59faeedee96",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#space_opera": {
+  "status": "Rewritten And Verified",
+  "hash": "87b2d46c5906",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#spaghetti_western": {
+  "status": "Rewritten And Verified",
+  "hash": "5cf86d7222ff",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#splatter": {
+  "status": "Rewritten And Verified",
+  "hash": "9540da4a6dde",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#sports": {
+  "status": "Rewritten And Verified",
+  "hash": "e36f0e4e8281",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#spy": {
+  "status": "Rewritten And Verified",
+  "hash": "9b826ece03b3",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#steampunk": {
+  "status": "Rewritten And Verified",
+  "hash": "c203d4b3ec5a",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#stoner_comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "18c0ec0f3e7f",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#superhero": {
+  "status": "Rewritten And Verified",
+  "hash": "b4df9b4981c7",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#supernatural": {
+  "status": "Rewritten And Verified",
+  "hash": "d68f7d68b2c9",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#surrealist": {
+  "status": "Rewritten And Verified",
+  "hash": "49754fe62676",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#survival": {
+  "status": "Rewritten And Verified",
+  "hash": "e1325eb9bb46",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#swashbuckler": {
+  "status": "Rewritten And Verified",
+  "hash": "680c84f2c31d",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#sword_and_sandal": {
+  "status": "Rewritten And Verified",
+  "hash": "6ce7c43dae26",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#sword_and_sorcery": {
+  "status": "Rewritten And Verified",
+  "hash": "84b1a35f0467",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#techno_thriller": {
+  "status": "Rewritten And Verified",
+  "hash": "5fbb71095932",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#teen": {
+  "status": "Rewritten And Verified",
+  "hash": "798098e37f44",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#thriller": {
+  "status": "Rewritten And Verified",
+  "hash": "544abd2740fc",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#time_travel": {
+  "status": "Rewritten And Verified",
+  "hash": "e8337e1f0143",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#tokusatsu": {
+  "status": "Rewritten And Verified",
+  "hash": "34737e9227d4",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#tragedy": {
+  "status": "Rewritten And Verified",
+  "hash": "80d9d84cf412",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#tragicomedy": {
+  "status": "Rewritten And Verified",
+  "hash": "9a00d39a67bf",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#true_crime": {
+  "status": "Rewritten And Verified",
+  "hash": "999e39ea8f1e",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#vampire": {
+  "status": "Rewritten And Verified",
+  "hash": "d56a5a5cfa53",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#war": {
+  "status": "Rewritten And Verified",
+  "hash": "481599412c49",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#werewolf": {
+  "status": "Rewritten And Verified",
+  "hash": "f64e02a41042",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#western": {
+  "status": "Rewritten And Verified",
+  "hash": "8f6db2ec7be0",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#whodunit": {
+  "status": "Rewritten And Verified",
+  "hash": "254dabb56dc5",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#wuxia": {
+  "status": "Rewritten And Verified",
+  "hash": "132df48c6f35",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#yakuza": {
+  "status": "Rewritten And Verified",
+  "hash": "87d18b72f0f0",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#zombie": {
+  "status": "Rewritten And Verified",
+  "hash": "d854dcf6a982",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/home-accounts.json#banks [au-anz]": {
+  "status": "Reviewed And Retained",
+  "hash": "fa7eb1c0ca19",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [au-commbank]": {
+  "status": "Reviewed And Retained",
+  "hash": "23e3d7a6fcde",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [au-nab]": {
+  "status": "Reviewed And Retained",
+  "hash": "f2f0b97ba2cf",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [au-westpac]": {
+  "status": "Reviewed And Retained",
+  "hash": "a4cd17d1492a",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [ca-bmo]": {
+  "status": "Reviewed And Retained",
+  "hash": "019a48429893",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [ca-cibc]": {
+  "status": "Reviewed And Retained",
+  "hash": "815abcf38004",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [ca-rbc]": {
+  "status": "Reviewed And Retained",
+  "hash": "98cf2e50cee1",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [ca-scotiabank]": {
+  "status": "Reviewed And Retained",
+  "hash": "751ae67a9cf4",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [ca-td]": {
+  "status": "Reviewed And Retained",
+  "hash": "852a5217605e",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [de-berliner-sparkasse]": {
+  "status": "Reviewed And Retained",
+  "hash": "a11cdb546422",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [de-commerzbank]": {
+  "status": "Reviewed And Retained",
+  "hash": "e6a1aee583eb",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [de-deutsche-bank]": {
+  "status": "Reviewed And Retained",
+  "hash": "fa5bbb947a30",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [de-ing]": {
+  "status": "Reviewed And Retained",
+  "hash": "e05dbd0d4231",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [de-postbank]": {
+  "status": "Reviewed And Retained",
+  "hash": "2bda7293b85b",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [es-bankinter]": {
+  "status": "Reviewed And Retained",
+  "hash": "903c552f4875",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [es-bbva]": {
+  "status": "Reviewed And Retained",
+  "hash": "c45d24d8b433",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [es-caixabank]": {
+  "status": "Reviewed And Retained",
+  "hash": "3ebc4eab8f71",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [es-sabadell]": {
+  "status": "Reviewed And Retained",
+  "hash": "9200a86b6c2b",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [es-santander]": {
+  "status": "Reviewed And Retained",
+  "hash": "f82303725b16",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [fr-bnp-paribas]": {
+  "status": "Reviewed And Retained",
+  "hash": "b1b95adb3151",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [fr-credit-agricole]": {
+  "status": "Reviewed And Retained",
+  "hash": "fa4adb1fb0fb",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [fr-la-banque-postale]": {
+  "status": "Reviewed And Retained",
+  "hash": "9b3e3a6a10ec",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [fr-lcl]": {
+  "status": "Reviewed And Retained",
+  "hash": "029dcd00cad5",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [fr-societe-generale]": {
+  "status": "Reviewed And Retained",
+  "hash": "c5a662fc7110",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [gb-barclays]": {
+  "status": "Reviewed And Retained",
+  "hash": "b2e16c37c365",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [gb-hsbc]": {
+  "status": "Reviewed And Retained",
+  "hash": "6913665c2ae3",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [gb-lloyds]": {
+  "status": "Reviewed And Retained",
+  "hash": "bc3420c0acdf",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [gb-nationwide]": {
+  "status": "Reviewed And Retained",
+  "hash": "98ee7d1d0e99",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [gb-natwest]": {
+  "status": "Reviewed And Retained",
+  "hash": "31aefc6b214b",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [gb-santander]": {
+  "status": "Reviewed And Retained",
+  "hash": "7de9a5113d76",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [ie-aib]": {
+  "status": "Reviewed And Retained",
+  "hash": "c0465ebf2917",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [ie-bank-of-ireland]": {
+  "status": "Reviewed And Retained",
+  "hash": "e36a403b9243",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [ie-ptsb]": {
+  "status": "Reviewed And Retained",
+  "hash": "4239f69470fb",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [is-arion]": {
+  "status": "Reviewed And Retained",
+  "hash": "b35f442477a7",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [is-islandsbanki]": {
+  "status": "Reviewed And Retained",
+  "hash": "8780fe0cefd8",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [is-landsbankinn]": {
+  "status": "Reviewed And Retained",
+  "hash": "ba5779eb005a",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [jp-japan-post-bank]": {
+  "status": "Reviewed And Retained",
+  "hash": "2adaecc6d7a9",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [jp-mizuho]": {
+  "status": "Reviewed And Retained",
+  "hash": "652343955003",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [jp-mufg]": {
+  "status": "Reviewed And Retained",
+  "hash": "2fc94c84c675",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [jp-resona]": {
+  "status": "Reviewed And Retained",
+  "hash": "9eb505a3a3bd",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [jp-smbc]": {
+  "status": "Reviewed And Retained",
+  "hash": "362918db5d9e",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [kr-hana]": {
+  "status": "Reviewed And Retained",
+  "hash": "b5a75c78e822",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [kr-kakaobank]": {
+  "status": "Reviewed And Retained",
+  "hash": "8f3e9df0c89d",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [kr-kb-kookmin]": {
+  "status": "Reviewed And Retained",
+  "hash": "05c20b68a54b",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [kr-nh]": {
+  "status": "Reviewed And Retained",
+  "hash": "dc35266a3754",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [kr-shinhan]": {
+  "status": "Reviewed And Retained",
+  "hash": "4e4340c145bf",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [mx-banamex]": {
+  "status": "Reviewed And Retained",
+  "hash": "7203f8d82bc6",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [mx-banorte]": {
+  "status": "Reviewed And Retained",
+  "hash": "5836bf972d6d",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [mx-bbva]": {
+  "status": "Reviewed And Retained",
+  "hash": "d4c7e61e408c",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [mx-santander]": {
+  "status": "Reviewed And Retained",
+  "hash": "d56b94d7fbb8",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [nz-anz]": {
+  "status": "Reviewed And Retained",
+  "hash": "6328528c5b53",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [nz-asb]": {
+  "status": "Reviewed And Retained",
+  "hash": "3a02bb69ec55",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [nz-bnz]": {
+  "status": "Reviewed And Retained",
+  "hash": "9b9a682799a8",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [nz-kiwibank]": {
+  "status": "Reviewed And Retained",
+  "hash": "fd3f92c28c7e",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [nz-westpac]": {
+  "status": "Reviewed And Retained",
+  "hash": "a8741499e10c",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [us-bank-of-america]": {
+  "status": "Reviewed And Retained",
+  "hash": "278b0a773eef",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [us-capital-one]": {
+  "status": "Reviewed And Retained",
+  "hash": "c7b203dd2ccb",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [us-chase]": {
+  "status": "Reviewed And Retained",
+  "hash": "507b0a9a9ed5",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [us-citi]": {
+  "status": "Reviewed And Retained",
+  "hash": "fb2e830b8cae",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#banks [us-wells-fargo]": {
+  "status": "Reviewed And Retained",
+  "hash": "8b78d2c110f8",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words. Of a bank's research the game reads only whether it keeps or closes an account, its notice in days and its sources (termsFrom in content/homeaccounts.ts), and the source and date it builds from them are read by nothing; the bank's conditions, fees, card and payment terms abroad, opening, identification, tax and assumptions were read by hand into homeaccounts.ts's own sentences (READ, ABROAD), which the money area reviewed. Shown two ways: typechecking with those fields hidden from the type found no reader but a test's length check, and print-home-accounts.ts.txt found none of the file's 2,410 sentences among the 209 lines every bank's creation offer and five kept accounts show (json/home-accounts-shown.txt). Its product names and fee wording stay as the research quoted the bank."
+ },
+ "src/engine/content/home-accounts.json#countries [AU]": {
+  "status": "Reviewed And Retained",
+  "hash": "4bad036b2385",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#countries [CA]": {
+  "status": "Reviewed And Retained",
+  "hash": "30ffaa6a915b",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#countries [DE]": {
+  "status": "Reviewed And Retained",
+  "hash": "47a9ab68422d",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#countries [ES]": {
+  "status": "Reviewed And Retained",
+  "hash": "7f63423e1f5d",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#countries [FR]": {
+  "status": "Reviewed And Retained",
+  "hash": "6cbf6f5fd197",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#countries [GB]": {
+  "status": "Reviewed And Retained",
+  "hash": "b4251787d9fc",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#countries [IE]": {
+  "status": "Reviewed And Retained",
+  "hash": "954c53ee350f",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#countries [IS]": {
+  "status": "Reviewed And Retained",
+  "hash": "9e784eb3a707",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#countries [JP]": {
+  "status": "Reviewed And Retained",
+  "hash": "2325f81eb8d3",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#countries [KR]": {
+  "status": "Reviewed And Retained",
+  "hash": "435b50dbcb8d",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#countries [MX]": {
+  "status": "Reviewed And Retained",
+  "hash": "1fa7a0ba5b71",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#countries [NZ]": {
+  "status": "Reviewed And Retained",
+  "hash": "a5f39935fe3a",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#countries [US]": {
+  "status": "Reviewed And Retained",
+  "hash": "963951d73e8f",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: each country's tax at source on a non-resident's interest was read by hand into NON_RESIDENT_TAX's own notes in content/homeaccounts.ts (the money and papers areas' words), and nothing reads this field or its sources. Typechecking with the countries hidden from RESEARCH's type found no reader, and print-home-accounts.ts.txt found none of the file's sentences on the screens it prints (json/home-accounts-shown.txt). The statutes and rates stay as the research quoted them."
+ },
+ "src/engine/content/home-accounts.json#us": {
+  "status": "Reviewed And Retained",
+  "hash": "269dc5f6a8cc",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: America's rules on a student's accounts abroad (an F-1's foreign interest, US persons, the FBAR, Form 8938, FATCA) were read by hand into US_REPORTS in content/homeaccounts.ts and the papers area's own sentences, and nothing reads this field. Typechecking with it hidden from RESEARCH's type found no reader. The forms' names and thresholds stay as the research quoted the IRS and FinCEN."
+ },
+ "src/engine/content/home-accounts.json#world": {
+  "status": "Reviewed And Retained",
+  "hash": "67bdf2db5612",
+  "on": "2026-10-17",
+  "reason": "No screen shows these words: the research's assumptions for the countries it didn't read bank by bank aren't read at all. A bank there has no terms, and the rule says so in its own words (homeAccountRefusal: There's no research on what the bank does when a customer moves to America, so the game can't offer it). Typechecking with the field hidden from RESEARCH's type found no reader. It stays as the research's own record, including its one 'SLATE does not invent' clause, which no player reads."
+ }
+}

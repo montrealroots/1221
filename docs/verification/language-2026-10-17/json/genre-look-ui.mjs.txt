@@ -1,0 +1,48 @@
+// Kept as .txt so the lint and the typecheck leave it be: copy it to probe/genre-look-ui.mjs in the clone, serve the built app, then
+// SLATE_BASE=http://localhost:<port> node probe/genre-look-ui.mjs <out dir> <width> <save.json> <genre label> ...
+// Opens genre looks in the built app at a width: Player Profile, then a genre's name in the Genres table. Records the
+// look's text, whether anything overflows the viewport sideways, and a screenshot. Read only: it presses no command.
+import { chromium } from 'playwright';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { launchOptions } from '../tools/browser.mjs';
+const [OUT, W, SAVE, ...GENRES] = process.argv.slice(2);
+const WIDTH = Number(W), PHONE = WIDTH < 600;
+mkdirSync(OUT, { recursive: true });
+const browser = await chromium.launch(launchOptions());
+const page = await browser.newPage({ viewport: { width: WIDTH, height: PHONE ? 844 : 900 } });
+const wait = (ms) => page.waitForTimeout(ms);
+await page.goto(process.env.SLATE_BASE, { waitUntil: 'networkidle' });
+const text = readFileSync(SAVE, 'utf8');
+// The walk's own way of putting a save in the browser's store (tools/text-walk.mjs).
+await page.evaluate((t) => new Promise((res, rej) => { const r = indexedDB.open('slate', 1); r.onupgradeneeded = () => r.result.createObjectStore('saves'); r.onerror = () => rej(r.error); r.onsuccess = () => { const tx = r.result.transaction('saves', 'readwrite'); tx.objectStore('saves').put(t, 'slate.save.1'); tx.oncomplete = () => res(undefined); }; }), text);
+await page.reload({ waitUntil: 'networkidle' }); await wait(1500);
+await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(3500);
+if (PHONE) { await page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).first().click().catch(() => {}); await wait(400); }
+await page.locator('#rail').getByRole('button', { name: /^Player Profile/ }).first().click(); await wait(1200);
+const out = [];
+for (const g of GENRES) {
+  const link = page.locator('main table').getByRole('button', { name: new RegExp(`^${g}$`) }).first();
+  await link.scrollIntoViewIfNeeded().catch(() => {});
+  await link.click(); await wait(900);
+  const look = await page.evaluate(() => {
+    const d = [...document.querySelectorAll('[role=dialog], aside, .look')].map((x) => x.innerText).filter((t) => /What it asks of an actor/.test(t))[0] ?? '';
+    const sw = document.documentElement.scrollWidth, cw = document.documentElement.clientWidth;
+    const wide = [...document.querySelectorAll('*')].filter((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && (r.right > cw + 1 || r.left < -1) && getComputedStyle(el).position !== 'fixed'; }).slice(0, 5).map((el) => `${el.tagName.toLowerCase()}.${el.className}`.slice(0, 60));
+    return { text: d, pageScrollsSideways: sw > cw, scrollWidth: sw, clientWidth: cw, outside: wide };
+  });
+  // The look itself: the nearest container of its first line that holds its source line too.
+  const lookBox = page.locator('div, section, aside, article').filter({ hasText: 'What it asks of an actor.' }).filter({ hasText: 'Source for what it asks:' }).last();
+  await lookBox.scrollIntoViewIfNeeded().catch(() => {});
+  look.where = await lookBox.evaluate((el) => { const r = el.getBoundingClientRect(); return { tag: el.tagName.toLowerCase(), className: el.className, width: Math.round(r.width), left: Math.round(r.left), dialog: !!el.closest('[role=dialog]') }; }).catch((e) => String(e).slice(0, 120));
+  const slug = g.toLowerCase().replace(/\W+/g, '-');
+  for (const [part, words] of [['top', 'What it asks of an actor.'], ['small-print', 'What the research says:']]) {
+    await page.getByText(words, { exact: false }).last().evaluate((el) => el.scrollIntoView({ block: 'start' })).catch(() => {});
+    await wait(300);
+    await page.screenshot({ path: `${OUT}/genre-look-${slug}-${WIDTH}-${part}.png` }).catch((e) => { look.shot = String(e).slice(0, 120); });
+  }
+  out.push({ genre: g, width: WIDTH, ...look });
+  await page.keyboard.press('Escape').catch(() => {}); await wait(500);
+}
+writeFileSync(`${OUT}/genre-look-ui-${WIDTH}.json`, `${JSON.stringify(out, null, 1)}\n`);
+for (const o of out) console.log(`${o.genre} at ${o.width}: look text ${o.text.length} chars; page scrolls sideways: ${o.pageScrollsSideways} (${o.scrollWidth}/${o.clientWidth}); outside the viewport: ${o.outside.join(', ') || 'nothing'}; the look: ${JSON.stringify(o.where)}${o.shot ? ` (${o.shot})` : ''}`);
+await browser.close();
