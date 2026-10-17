@@ -1025,13 +1025,38 @@ export function playingPreview(sim: Simulation, person: Person, a: Assignment, o
   return piece ? judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, piece) : evaluate(sim, person, ctx);
 }
 
-/** Why a way of playing can't be chosen for a piece now, or nothing. */
+/**
+ * Why a way of playing can't be chosen for a piece now, or nothing. Not for written work (from 2026-10-17, brief 13's
+ * journeys): Table Work sets a scene, but its task, written work, isn't performed (`UNPERFORMED`), and no step of it is on
+ * its feet to rehearse a way in (`rehearseChoice`); the other written work, A Play In Its Context, sets none. Until then one could be chosen, its preview read it as
+ * rehearsed in full, and it came to the showing at nothing: J12 (seed j13-6) chose a way of playing on seven pieces of
+ * written work; played again on seed written-playing, a Table Work previewed 64.6 left open and 64.9 played expansive,
+ * and was shown at 44.4 left open against 44.2 with the choice.
+ */
 export function playingRefusal(a: Assignment | undefined): string | undefined {
   if (!a) return 'There’s no such work.';
   if (a.status !== 'open' && a.status !== 'revising') return 'It’s been shown.';
   const t = templateById(a.template);
   if (!t || t.material === 'none') return 'There’s no scene in it to play one way or another.';
+  if (UNPERFORMED.has(TEMPLATE_TASK[t.id] ?? 'scene')) return 'It’s written work, presented at the table and never played: there’s no way of playing it to choose.';
   return undefined;
+}
+
+/**
+ * A way of playing a save from before 2026-10-17 kept on written work still to be shown, taken off on opening, once
+ * (`ONCE_ON_OPENING`, `engine/index.ts`): `playingRefusal` refuses one now, so the player couldn't take it off, and it came
+ * to the showing unrehearsed. Work already shown keeps its record as it was judged. Returns how many were taken off.
+ */
+export function writtenUnplayed(sim: Simulation): number {
+  let off = 0;
+  for (const person of Object.values(sim.universe.people)) {
+    for (const a of courseworkOf(sim, person)?.assignments ?? []) {
+      if ((a.status !== 'open' && a.status !== 'revising') || !a.playing || !UNPERFORMED.has(TEMPLATE_TASK[a.template] ?? 'scene')) continue;
+      delete a.playing;
+      off += 1;
+    }
+  }
+  return off;
 }
 
 /** A showing's band from its whole, a smaller piece no better than Working (`approach`). */

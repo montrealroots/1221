@@ -461,6 +461,8 @@ export const COURSEWORK: readonly GuideEntry[] = [
     unavailable: [
       '“It’s been shown.”',
       '“There’s no scene in it to play one way or another.”',
+      // From 2026-10-17 (brief 13's journeys): written work isn't performed, and nothing of it rehearses a way in.
+      '“It’s written work, presented at the table and never played: there’s no way of playing it to choose.”: Table Work, whose scene is read at the table.',
       LOCKED,
     ],
     mistakes: [

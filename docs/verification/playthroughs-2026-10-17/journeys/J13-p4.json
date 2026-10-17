@@ -14,21 +14,21 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 17,
+   "secs": 15,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 59,
+   "secs": 57,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 84,
+   "secs": 86,
    "reloads": 12
   },
   {
@@ -483,7 +483,7 @@
   "8 warnings": {
    "pass": true,
    "evidence": [
-    "coursework warnings 2028-09-29 \"3 of the 8 pieces shown this term so far were Unready. Most often short on them: the turn found, on 2 of the 3\"",
+    "coursework warnings 2028-09-29 \"3 of the 8 pieces shown this term so far were Unready. On each of them every part was short of complete: it’s \"",
     "reviews 0 2026-12-11 good (0/47 unready); 1 2027-04-23 good (1/45 unready); 2 2027-12-10 good (1/46 unready); 3 2028-04-28 good (2/46 unready); 4 2028-12-08 good (9/45 unready); 5 2029-04-27 good (1/46 unready)",
     "missed classes notices 0, not registered 0, not passed 0"
    ],
@@ -3438,7 +3438,7 @@
   [
    "2028-09-29",
    "A Word On Your Coursework",
-   "3 of the 8 pieces shown this term so far were Unready. Most often short on them: the turn found, on 2 of the 3 shown. Find The Turn answers it. Of the work set so far, 9 pieces are still to be shown. The faculty reviews "
+   "3 of the 8 pieces shown this term so far were Unready. On each of them every part was short of complete: it’s the preparation as a whole, not one part, and each one’s steps answer it. Of the work set so far, 9 pieces are"
   ],
   [
    "2028-09-29",

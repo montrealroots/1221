@@ -21,14 +21,14 @@
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 59,
+   "secs": 60,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 84,
+   "secs": 83,
    "reloads": 12
   },
   {
@@ -512,7 +512,7 @@
    "evidence": [
     "153 weekly reads, 5 first targets: imagination, physical, focus, vocal, composure",
     "all full said in 0 weeks",
-    "1 weeks the same words over a move under what's shown",
+    "6 weeks the same words over a move under what's shown",
     "standing said in 0 weeks (noted where the player practices or tapes)"
    ],
    "fails": []
@@ -547,7 +547,7 @@
   "8 warnings": {
    "pass": true,
    "evidence": [
-    "coursework warnings 2028-02-02 \"3 of the 6 pieces shown this term so far were Unready. Most often short on them: rehearsal, on 1 of the 3 show\" | 2028-11-17 \"13 of the 37 pieces shown this term so far were Unready. Most often short on them: drills, on 3 of the 13 show\" | 2029-02-09 \"3 of the 8 pieces shown this term so far were Unready. Most often short on them: takes recorded, on 2 of the 3\"",
+    "coursework warnings 2028-02-02 \"3 of the 6 pieces shown this term so far were Unready. No one part was short on more than one of them: each on\" | 2028-11-17 \"13 of the 37 pieces shown this term so far were Unready. Most often short on them: drills, on 3 of the 13 show\" | 2029-02-09 \"3 of the 8 pieces shown this term so far were Unready. Most often short on them: takes recorded, on 2 of the 3\"",
     "reviews 0 2026-12-11 good (2/47 unready); 1 2027-04-23 good (1/45 unready); 2 2027-12-10 good (7/46 unready); 3 2028-04-28 good (5/46 unready); 4 2028-12-08 good (13/45 unready); 5 2029-04-27 good (5/46 unready)",
     "missed classes notices 0, not registered 0, not passed 0"
    ],
@@ -682,7 +682,7 @@
      "target": "composure",
      "weeks": 9,
      "newWords": 3,
-     "moved": 3,
+     "moved": 4,
      "stripped": 0
     },
     {
@@ -705,7 +705,7 @@
     }
    ],
    "runs": 30,
-   "staleRuns": 0,
+   "staleRuns": 1,
    "wordsOnlyChanges": 35
   },
   "feedback": {
@@ -2840,7 +2840,7 @@
   [
    "2028-02-02",
    "A Word On Your Coursework",
-   "3 of the 6 pieces shown this term so far were Unready. Most often short on them: rehearsal, on 1 of the 3 shown. Rehearse Alone answers it. Of the work set so far, 8 pieces are still to be shown. The faculty reviews the "
+   "3 of the 6 pieces shown this term so far were Unready. No one part was short on more than one of them: each one’s own forecast says what held it back. Of the work set so far, 8 pieces are still to be shown. The faculty r"
   ],
   [
    "2028-02-02",
@@ -7228,7 +7228,7 @@
   [
    "2026-09-13",
    "imagination",
-   54.6,
+   54.57,
    0.67,
    0,
    "imagination 0.67 focus 0.63 vocal 0.6 physical 0.51 dance 0.46"
@@ -7236,7 +7236,7 @@
   [
    "2026-09-20",
    "imagination",
-   54.8,
+   54.84,
    0.73,
    0,
    "imagination 0.73 focus 0.66 vocal 0.53 physical 0.51 script 0.49"
@@ -7244,7 +7244,7 @@
   [
    "2026-09-27",
    "physical",
-   52.7,
+   52.67,
    0.6,
    0,
    "prep:rehearsal physical 0.6 focus 0.59 vocal 0.57 imagination 0.55"
@@ -7252,7 +7252,7 @@
   [
    "2026-10-04",
    "focus",
-   55.8,
+   55.82,
    0.68,
    0,
    "prep:rehearsal prep:revision focus 0.68 physical 0.67 imagination 0.62"
@@ -7260,7 +7260,7 @@
   [
    "2026-10-11",
    "vocal",
-   61.2,
+   61.19,
    0.61,
    0,
    "prep:rehearsal prep:revision vocal 0.61 focus 0.6 imagination 0.58"
@@ -7268,7 +7268,7 @@
   [
    "2026-10-18",
    "focus",
-   56.2,
+   56.18,
    0.69,
    0,
    "prep:rehearsal focus 0.69 imagination 0.66 physical 0.64 vocal 0.58"
@@ -7276,7 +7276,7 @@
   [
    "2026-10-25",
    "focus",
-   56.3,
+   56.26,
    0.65,
    0,
    "focus 0.65 imagination 0.64 physical 0.62 prep:rehearsal vocal 0.56"
@@ -7284,7 +7284,7 @@
   [
    "2026-11-01",
    "focus",
-   56.4,
+   56.42,
    0.75,
    0,
    "focus 0.75 imagination 0.66 vocal 0.66 physical 0.62 composure 0.58"
@@ -7292,7 +7292,7 @@
   [
    "2026-11-08",
    "physical",
-   54.6,
+   54.57,
    0.63,
    0,
    "physical 0.63 focus 0.62 imagination 0.59 listening 0.55 composure 0.53"
@@ -7300,7 +7300,7 @@
   [
    "2026-11-15",
    "focus",
-   56.7,
+   56.74,
    0.68,
    0,
    "focus 0.68 imagination 0.65 vocal 0.62 composure 0.54 listening 0.52"
@@ -7308,7 +7308,7 @@
   [
    "2026-11-22",
    "focus",
-   56.9,
+   56.88,
    0.64,
    0,
    "focus 0.64 imagination 0.62 physical 0.6 composure 0.59 vocal 0.55"
@@ -7316,7 +7316,7 @@
   [
    "2026-11-29",
    "focus",
-   57.1,
+   57.06,
    0.74,
    0,
    "focus 0.74 imagination 0.68 composure 0.56 physical 0.56 vocal 0.53"
@@ -7324,7 +7324,7 @@
   [
    "2026-12-06",
    "focus",
-   57.2,
+   57.18,
    0.75,
    0,
    "focus 0.75 physical 0.67 imagination 0.66 vocal 0.64 listening 0.62"
@@ -7332,7 +7332,7 @@
   [
    "2026-12-13",
    "focus",
-   57.3,
+   57.26,
    0.7,
    0,
    "focus 0.7 imagination 0.64 physical 0.63 listening 0.6 vocal 0.58"
@@ -7340,7 +7340,7 @@
   [
    "2026-12-20",
    "focus",
-   57.3,
+   57.26,
    0.7,
    0,
    "focus 0.7 imagination 0.64 physical 0.63 listening 0.6 vocal 0.58"
@@ -7348,7 +7348,7 @@
   [
    "2026-12-27",
    "focus",
-   57.3,
+   57.26,
    0.7,
    0,
    "focus 0.7 imagination 0.64 physical 0.63 listening 0.6 vocal 0.58"
@@ -7356,7 +7356,7 @@
   [
    "2027-01-03",
    "focus",
-   57.3,
+   57.26,
    0.7,
    0,
    "focus 0.7 imagination 0.64 physical 0.63 listening 0.6 vocal 0.58"
@@ -7364,7 +7364,7 @@
   [
    "2027-01-10",
    "focus",
-   57.3,
+   57.26,
    0.7,
    0,
    "focus 0.7 imagination 0.64 physical 0.63 listening 0.6 vocal 0.58"
@@ -7380,7 +7380,7 @@
   [
    "2027-01-24",
    "focus",
-   57.6,
+   57.65,
    0.7,
    0,
    "focus 0.7 composure 0.69 imagination 0.61 physical 0.57 listening 0.54"
@@ -7388,7 +7388,7 @@
   [
    "2027-01-31",
    "physical",
-   56.9,
+   56.88,
    0.73,
    0,
    "physical 0.73 vocal 0.72 focus 0.71 composure 0.64 imagination 0.61"
@@ -7396,7 +7396,7 @@
   [
    "2027-02-07",
    "focus",
-   58,
+   58.03,
    0.86,
    0,
    "focus 0.86 imagination 0.69 script 0.62 composure 0.61 vocal 0.56"
@@ -7404,7 +7404,7 @@
   [
    "2027-02-14",
    "focus",
-   58.2,
+   58.21,
    0.84,
    0,
    "focus 0.84 imagination 0.66 physical 0.64 vocal 0.59 script 0.56"
@@ -7412,7 +7412,7 @@
   [
    "2027-02-21",
    "focus",
-   58.3,
+   58.34,
    0.81,
    0,
    "focus 0.81 imagination 0.69 composure 0.69 physical 0.67 vocal 0.63"
@@ -7420,7 +7420,7 @@
   [
    "2027-02-28",
    "focus",
-   58.5,
+   58.55,
    0.82,
    0,
    "focus 0.82 imagination 0.73 physical 0.67 vocal 0.65 composure 0.64"
@@ -7428,7 +7428,7 @@
   [
    "2027-03-07",
    "focus",
-   58.7,
+   58.72,
    0.86,
    0,
    "focus 0.86 imagination 0.75 composure 0.63 script 0.62 vocal 0.6"
@@ -7436,7 +7436,7 @@
   [
    "2027-03-14",
    "focus",
-   58.8,
+   58.75,
    0.86,
    0,
    "focus 0.86 imagination 0.75 composure 0.63 script 0.62 vocal 0.6"
@@ -7444,7 +7444,7 @@
   [
    "2027-03-21",
    "focus",
-   58.9,
+   58.88,
    0.76,
    0,
    "focus 0.76 imagination 0.69 composure 0.69 vocal 0.64 physical 0.58"
@@ -7452,7 +7452,7 @@
   [
    "2027-03-28",
    "focus",
-   59.1,
+   59.07,
    0.76,
    0,
    "focus 0.76 composure 0.68 imagination 0.65 vocal 0.62 physical 0.6"
@@ -7460,7 +7460,7 @@
   [
    "2027-04-04",
    "focus",
-   59.2,
+   59.19,
    0.85,
    0,
    "focus 0.85 imagination 0.69 composure 0.63 script 0.6 vocal 0.57"
@@ -7468,7 +7468,7 @@
   [
    "2027-04-11",
    "focus",
-   59.3,
+   59.34,
    0.82,
    0,
    "focus 0.82 imagination 0.68 vocal 0.68 physical 0.62 composure 0.6"
@@ -7476,7 +7476,7 @@
   [
    "2027-04-18",
    "focus",
-   59.5,
+   59.48,
    0.76,
    0,
    "focus 0.76 imagination 0.61 vocal 0.6 physical 0.59 composure 0.56"
@@ -7484,7 +7484,7 @@
   [
    "2027-04-25",
    "focus",
-   59.6,
+   59.62,
    0.85,
    0,
    "prep:rehearsal focus 0.85 imagination 0.69 vocal 0.63 physical 0.61"
@@ -7492,7 +7492,7 @@
   [
    "2027-05-02",
    "focus",
-   59.6,
+   59.62,
    0.85,
    0,
    "prep:rehearsal focus 0.85 imagination 0.69 vocal 0.63 physical 0.61"
@@ -7500,7 +7500,7 @@
   [
    "2027-05-09",
    "focus",
-   59.6,
+   59.62,
    0.67,
    0,
    "condition:injury prep:rehearsal focus 0.67 imagination 0.63 script 0.51"
@@ -7508,7 +7508,7 @@
   [
    "2027-05-16",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7516,7 +7516,7 @@
   [
    "2027-05-23",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7524,7 +7524,7 @@
   [
    "2027-05-30",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7532,7 +7532,7 @@
   [
    "2027-06-06",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7540,7 +7540,7 @@
   [
    "2027-06-13",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7548,7 +7548,7 @@
   [
    "2027-06-20",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7556,7 +7556,7 @@
   [
    "2027-06-27",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7564,7 +7564,7 @@
   [
    "2027-07-04",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7572,7 +7572,7 @@
   [
    "2027-07-11",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7580,7 +7580,7 @@
   [
    "2027-07-18",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7588,7 +7588,7 @@
   [
    "2027-07-25",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7596,7 +7596,7 @@
   [
    "2027-08-01",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7604,7 +7604,7 @@
   [
    "2027-08-08",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7612,7 +7612,7 @@
   [
    "2027-08-15",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7620,7 +7620,7 @@
   [
    "2027-08-22",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7628,7 +7628,7 @@
   [
    "2027-08-29",
    "imagination",
-   61.1,
+   61.11,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.68 composure 0.61"
@@ -7636,7 +7636,7 @@
   [
    "2027-09-05",
    "imagination",
-   61.3,
+   61.32,
    0.73,
    0,
    "condition:injury prep:rehearsal imagination 0.73 focus 0.67 composure 0.61"
@@ -7644,7 +7644,7 @@
   [
    "2027-09-12",
    "imagination",
-   61.4,
+   61.45,
    0.72,
    0,
    "condition:injury prep:rehearsal imagination 0.72 composure 0.67 focus 0.67"
@@ -7652,7 +7652,7 @@
   [
    "2027-09-19",
    "vocal",
-   65.1,
+   65.12,
    0.87,
    0,
    "condition:injury vocal 0.87 composure 0.76 imagination 0.73 focus 0.7"
@@ -7660,7 +7660,7 @@
   [
    "2027-09-26",
    "imagination",
-   61.9,
+   61.87,
    0.65,
    0,
    "imagination 0.65 vocal 0.6 adaptability 0.58 listening 0.57 focus 0.54"
@@ -7668,7 +7668,7 @@
   [
    "2027-10-03",
    "physical",
-   60.6,
+   60.58,
    0.68,
    0,
    "prep:rehearsal prep:interpretation physical 0.68 prep:partner focus 0.6"
@@ -7676,7 +7676,7 @@
   [
    "2027-10-10",
    "composure",
-   46.1,
+   46.07,
    0.79,
    0,
    "prep:rehearsal prep:interpretation composure 0.79 physical 0.63 vocal 0.59"
@@ -7684,7 +7684,7 @@
   [
    "2027-10-17",
    "composure",
-   48.1,
+   48.09,
    0.99,
    0,
    "composure 0.99 listening 0.62 adaptability 0.58 imagination 0.58 vocal 0.57"
@@ -7692,7 +7692,7 @@
   [
    "2027-10-24",
    "composure",
-   48.1,
+   48.09,
    0.97,
    0,
    "prep:partner composure 0.97 listening 0.59 vocal 0.58 imagination 0.57"
@@ -7708,7 +7708,7 @@
   [
    "2027-11-07",
    "focus",
-   60.8,
+   60.79,
    0.61,
    0,
    "prep:rehearsal prep:partner focus 0.61 imagination 0.58 vocal 0.52"
@@ -7716,7 +7716,7 @@
   [
    "2027-11-14",
    "vocal",
-   66.4,
+   66.44,
    0.61,
    0,
    "prep:rehearsal vocal 0.61 focus 0.57 listening 0.51 imagination 0.49"
@@ -7724,7 +7724,7 @@
   [
    "2027-11-21",
    "vocal",
-   66.5,
+   66.55,
    0.61,
    0,
    "prep:rehearsal vocal 0.61 listening 0.49 adaptability 0.49 focus 0.48"
@@ -7732,7 +7732,7 @@
   [
    "2027-11-28",
    "focus",
-   61.1,
+   61.06,
    0.54,
    0,
    "focus 0.54 composure 0.54 vocal 0.5 listening 0.49 adaptability 0.47"
@@ -7740,7 +7740,7 @@
   [
    "2027-12-05",
    "physical",
-   61.9,
+   61.88,
    0.62,
    0,
    "physical 0.62 focus 0.61 vocal 0.55 imagination 0.54 listening 0.51"
@@ -7748,7 +7748,7 @@
   [
    "2027-12-12",
    "composure",
-   48.1,
+   48.09,
    0.64,
    0,
    "composure 0.64 vocal 0.63 physical 0.6 focus 0.6 imagination 0.59"
@@ -7756,7 +7756,7 @@
   [
    "2027-12-19",
    "composure",
-   48.1,
+   48.09,
    0.64,
    0,
    "composure 0.64 vocal 0.63 physical 0.61 focus 0.6 imagination 0.59"
@@ -7764,7 +7764,7 @@
   [
    "2027-12-26",
    "composure",
-   48.1,
+   48.09,
    0.64,
    0,
    "composure 0.64 vocal 0.63 physical 0.61 focus 0.6 imagination 0.59"
@@ -7772,7 +7772,7 @@
   [
    "2028-01-02",
    "composure",
-   48.1,
+   48.09,
    0.64,
    0,
    "composure 0.64 vocal 0.63 physical 0.61 focus 0.6 imagination 0.59"
@@ -7780,7 +7780,7 @@
   [
    "2028-01-09",
    "composure",
-   48.1,
+   48.09,
    0.64,
    0,
    "composure 0.64 vocal 0.63 physical 0.61 focus 0.6 imagination 0.59"
@@ -7788,7 +7788,7 @@
   [
    "2028-01-16",
    "composure",
-   48.1,
+   48.12,
    0.64,
    0,
    "composure 0.64 vocal 0.63 physical 0.6 focus 0.6 imagination 0.59"
@@ -7796,7 +7796,7 @@
   [
    "2028-01-23",
    "composure",
-   48.2,
+   48.15,
    0.79,
    0,
    "prep:rehearsal composure 0.79 imagination 0.58 vocal 0.56 physical 0.55"
@@ -7804,7 +7804,7 @@
   [
    "2028-01-30",
    "composure",
-   50,
+   49.97,
    1.1,
    0,
    "prep:rehearsal composure 1.1 vocal 0.67 focus 0.65 memory 0.63"
@@ -7812,7 +7812,7 @@
   [
    "2028-02-06",
    "composure",
-   50,
+   49.97,
    0.82,
    0,
    "prep:rehearsal prep:partner composure 0.82 adaptability 0.58 listening 0.46"
@@ -7820,7 +7820,7 @@
   [
    "2028-02-13",
    "vocal",
-   68.3,
+   68.34,
    0.59,
    0,
    "prep:rehearsal prep:partner vocal 0.59 composure 0.56 focus 0.46"
@@ -7828,7 +7828,7 @@
   [
    "2028-02-20",
    "composure",
-   50,
+   49.97,
    0.63,
    0,
    "prep:rehearsal prep:partner composure 0.63 prep:interpretation adaptability 0.5"
@@ -7836,7 +7836,7 @@
   [
    "2028-02-27",
    "composure",
-   50,
+   49.97,
    0.59,
    0,
    "prep:rehearsal prep:partner composure 0.59 vocal 0.56 adaptability 0.52"
@@ -7844,7 +7844,7 @@
   [
    "2028-03-05",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "prep:rehearsal prep:partner composure 0.62 adaptability 0.59 vocal 0.56"
@@ -7852,7 +7852,7 @@
   [
    "2028-03-12",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "prep:rehearsal prep:partner composure 0.62 adaptability 0.59 vocal 0.56"
@@ -7860,7 +7860,7 @@
   [
    "2028-03-19",
    "composure",
-   50,
+   49.97,
    0.68,
    0,
    "prep:rehearsal composure 0.68 vocal 0.61 focus 0.53 imagination 0.52"
@@ -7868,7 +7868,7 @@
   [
    "2028-03-26",
    "composure",
-   50,
+   49.97,
    0.69,
    0,
    "composure 0.69 adaptability 0.48 listening 0.48 vocal 0.44 focus 0.43"
@@ -7876,7 +7876,7 @@
   [
    "2028-04-02",
    "composure",
-   50,
+   49.97,
    0.6,
    0,
    "composure 0.6 vocal 0.55 adaptability 0.47 listening 0.45 imagination 0.42"
@@ -7884,7 +7884,7 @@
   [
    "2028-04-09",
    "composure",
-   50,
+   49.97,
    0.6,
    0,
    "composure 0.6 vocal 0.55 adaptability 0.47 listening 0.45 imagination 0.42"
@@ -7892,7 +7892,7 @@
   [
    "2028-04-16",
    "composure",
-   50,
+   49.97,
    0.6,
    0,
    "composure 0.6 vocal 0.59 listening 0.5 adaptability 0.49 focus 0.48"
@@ -7900,7 +7900,7 @@
   [
    "2028-04-23",
    "composure",
-   50,
+   49.97,
    0.6,
    0,
    "composure 0.6 vocal 0.5 listening 0.46 focus 0.46 adaptability 0.46"
@@ -7908,7 +7908,7 @@
   [
    "2028-04-30",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.5 physical 0.49"
@@ -7916,7 +7916,7 @@
   [
    "2028-05-07",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.5 physical 0.49"
@@ -7924,7 +7924,7 @@
   [
    "2028-05-14",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.5 physical 0.49"
@@ -7932,7 +7932,7 @@
   [
    "2028-05-21",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.5 physical 0.49"
@@ -7940,7 +7940,7 @@
   [
    "2028-05-28",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.5 physical 0.49"
@@ -7948,7 +7948,7 @@
   [
    "2028-06-04",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.5 physical 0.49"
@@ -7956,7 +7956,7 @@
   [
    "2028-06-11",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.51 physical 0.49"
@@ -7964,7 +7964,7 @@
   [
    "2028-06-18",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.51 physical 0.49"
@@ -7972,7 +7972,7 @@
   [
    "2028-06-25",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.51 physical 0.49"
@@ -7980,7 +7980,7 @@
   [
    "2028-07-02",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.51 physical 0.49"
@@ -7988,7 +7988,7 @@
   [
    "2028-07-09",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.51 physical 0.49"
@@ -7996,7 +7996,7 @@
   [
    "2028-07-16",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.51 physical 0.49"
@@ -8004,7 +8004,7 @@
   [
    "2028-07-23",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.51 physical 0.49"
@@ -8012,7 +8012,7 @@
   [
    "2028-07-30",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.51 physical 0.49"
@@ -8020,7 +8020,7 @@
   [
    "2028-08-06",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.51 physical 0.49"
@@ -8028,7 +8028,7 @@
   [
    "2028-08-13",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.51 physical 0.49"
@@ -8036,7 +8036,7 @@
   [
    "2028-08-20",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.51 physical 0.49"
@@ -8044,7 +8044,7 @@
   [
    "2028-08-27",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.51 physical 0.49"
@@ -8052,7 +8052,7 @@
   [
    "2028-09-03",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.5 physical 0.49"
@@ -8060,7 +8060,7 @@
   [
    "2028-09-10",
    "composure",
-   50,
+   49.97,
    0.62,
    0,
    "composure 0.62 vocal 0.62 focus 0.53 imagination 0.5 physical 0.49"
@@ -8076,7 +8076,7 @@
   [
    "2028-09-24",
    "vocal",
-   71.1,
+   71.06,
    0.69,
    0,
    "vocal 0.69 composure 0.63 imagination 0.52 focus 0.5 adaptability 0.49"
@@ -8084,7 +8084,7 @@
   [
    "2028-10-01",
    "composure",
-   50,
+   49.97,
    0.66,
    0,
    "composure 0.66 adaptability 0.53 listening 0.49 imagination 0.43 emotionalDepth 0.42"
@@ -8092,7 +8092,7 @@
   [
    "2028-10-08",
    "vocal",
-   71.4,
+   71.38,
    0.5,
    0,
    "prep:rehearsal vocal 0.5 composure 0.48 adaptability 0.46 imagination 0.42"
@@ -8100,7 +8100,7 @@
   [
    "2028-10-15",
    "composure",
-   50,
+   49.97,
    0.52,
    0,
    "composure 0.52 adaptability 0.51 vocal 0.49 listening 0.42 imagination 0.42"
@@ -8108,7 +8108,7 @@
   [
    "2028-10-22",
    "composure",
-   50.2,
+   50.23,
    0.66,
    0,
    "prep:rehearsal prep:interpretation composure 0.66 adaptability 0.59 vocal 0.57"
@@ -8116,7 +8116,7 @@
   [
    "2028-10-29",
    "composure",
-   50.2,
+   50.23,
    0.55,
    0,
    "prep:rehearsal prep:interpretation composure 0.55 adaptability 0.54 vocal 0.48"
@@ -8124,7 +8124,7 @@
   [
    "2028-11-05",
    "composure",
-   50.2,
+   50.23,
    0.7,
    0,
    "prep:rehearsal prep:interpretation composure 0.7 vocal 0.64 imagination 0.55"
@@ -8132,7 +8132,7 @@
   [
    "2028-11-12",
    "composure",
-   50.3,
+   50.29,
    0.6,
    0,
    "prep:rehearsal composure 0.6 adaptability 0.56 listening 0.51 imagination 0.49"
@@ -8140,7 +8140,7 @@
   [
    "2028-11-19",
    "composure",
-   51.5,
+   51.54,
    1.01,
    0,
    "prep:rehearsal composure 1.01 adaptability 0.75 vocal 0.74 physical 0.7"
@@ -8148,7 +8148,7 @@
   [
    "2028-11-26",
    "composure",
-   52,
+   52.04,
    1.09,
    0,
    "prep:rehearsal composure 1.09 prep:interpretation prep:partner adaptability 0.78"
@@ -8156,7 +8156,7 @@
   [
    "2028-12-03",
    "composure",
-   52,
+   52.04,
    0.85,
    0,
    "prep:rehearsal composure 0.85 prep:interpretation prep:partner vocal 0.7"
@@ -8164,7 +8164,7 @@
   [
    "2028-12-10",
    "composure",
-   52,
+   52.04,
    0.68,
    0,
    "composure 0.68 vocal 0.62 adaptability 0.51 imagination 0.48 focus 0.47"
@@ -8172,7 +8172,7 @@
   [
    "2028-12-17",
    "composure",
-   52,
+   52.04,
    0.68,
    0,
    "composure 0.68 vocal 0.62 adaptability 0.51 imagination 0.48 focus 0.47"
@@ -8180,7 +8180,7 @@
   [
    "2028-12-24",
    "composure",
-   52,
+   52.04,
    0.68,
    0,
    "composure 0.68 vocal 0.62 adaptability 0.51 imagination 0.48 focus 0.47"
@@ -8188,7 +8188,7 @@
   [
    "2028-12-31",
    "composure",
-   52,
+   52.04,
    0.68,
    0,
    "composure 0.68 vocal 0.62 adaptability 0.51 imagination 0.48 focus 0.47"
@@ -8196,7 +8196,7 @@
   [
    "2029-01-07",
    "composure",
-   52,
+   52.04,
    0.68,
    0,
    "composure 0.68 vocal 0.62 adaptability 0.51 imagination 0.48 focus 0.47"
@@ -8204,7 +8204,7 @@
   [
    "2029-01-14",
    "composure",
-   52,
+   52.04,
    0.67,
    0,
    "composure 0.67 vocal 0.61 adaptability 0.51 imagination 0.48 focus 0.47"
@@ -8212,7 +8212,7 @@
   [
    "2029-01-21",
    "composure",
-   52.3,
+   52.28,
    0.74,
    0,
    "composure 0.74 vocal 0.62 imagination 0.54 adaptability 0.54 emotionalDepth 0.51"
@@ -8220,7 +8220,7 @@
   [
    "2029-01-28",
    "composure",
-   52.3,
+   52.28,
    0.69,
    0,
    "composure 0.69 vocal 0.58 adaptability 0.52 imagination 0.51 emotionalDepth 0.49"
@@ -8228,7 +8228,7 @@
   [
    "2029-02-04",
    "composure",
-   52.3,
+   52.28,
    0.73,
    0,
    "prep:rehearsal composure 0.73 vocal 0.63 imagination 0.51 focus 0.49"
@@ -8236,7 +8236,7 @@
   [
    "2029-02-11",
    "composure",
-   52.8,
+   52.77,
    0.93,
    0,
    "prep:rehearsal composure 0.93 prep:partner adaptability 0.68 emotionalDepth 0.66"
@@ -8244,7 +8244,7 @@
   [
    "2029-02-18",
    "composure",
-   52.8,
+   52.77,
    0.7,
    0,
    "prep:rehearsal composure 0.7 vocal 0.65 physical 0.63 focus 0.63"
@@ -8252,7 +8252,7 @@
   [
    "2029-02-25",
    "composure",
-   52.8,
+   52.77,
    0.83,
    0,
    "prep:rehearsal prep:partner composure 0.83 focus 0.59 physical 0.57"
@@ -8260,7 +8260,7 @@
   [
    "2029-03-04",
    "composure",
-   52.8,
+   52.77,
    0.96,
    0,
    "prep:rehearsal composure 0.96 prep:partner focus 0.57 vocal 0.48"
@@ -8268,7 +8268,7 @@
   [
    "2029-03-11",
    "composure",
-   52.8,
+   52.77,
    0.96,
    0,
    "prep:rehearsal composure 0.96 prep:partner focus 0.57 vocal 0.48"
@@ -8276,7 +8276,7 @@
   [
    "2029-03-18",
    "composure",
-   52.8,
+   52.77,
    1.01,
    0,
    "prep:rehearsal composure 1.01 prep:partner focus 0.56 imagination 0.45"
@@ -8284,7 +8284,7 @@
   [
    "2029-03-25",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "prep:rehearsal composure 0.76 physical 0.55 focus 0.54 vocal 0.49"
@@ -8292,7 +8292,7 @@
   [
    "2029-04-01",
    "composure",
-   52.8,
+   52.77,
    0.9,
    0,
    "composure 0.9 vocal 0.57 focus 0.57 imagination 0.56 emotionalDepth 0.55"
@@ -8300,7 +8300,7 @@
   [
    "2029-04-08",
    "composure",
-   52.8,
+   52.77,
    0.82,
    0,
    "composure 0.82 condition:stamina focus 0.61 vocal 0.58 physical 0.53"
@@ -8308,7 +8308,7 @@
   [
    "2029-04-15",
    "composure",
-   52.8,
+   52.77,
    0.83,
    0,
    "composure 0.83 focus 0.61 vocal 0.6 condition:stamina imagination 0.49"
@@ -8316,7 +8316,7 @@
   [
    "2029-04-22",
    "composure",
-   52.8,
+   52.77,
    0.8,
    0,
    "composure 0.8 focus 0.62 physical 0.53 imagination 0.53 vocal 0.52"
@@ -8324,7 +8324,7 @@
   [
    "2029-04-29",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8332,7 +8332,7 @@
   [
    "2029-05-06",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8340,7 +8340,7 @@
   [
    "2029-05-13",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8348,7 +8348,7 @@
   [
    "2029-05-20",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8356,7 +8356,7 @@
   [
    "2029-05-27",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8364,7 +8364,7 @@
   [
    "2029-06-03",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8372,7 +8372,7 @@
   [
    "2029-06-10",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8380,7 +8380,7 @@
   [
    "2029-06-17",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8388,7 +8388,7 @@
   [
    "2029-06-24",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8396,7 +8396,7 @@
   [
    "2029-07-01",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8404,7 +8404,7 @@
   [
    "2029-07-08",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8412,7 +8412,7 @@
   [
    "2029-07-15",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8420,7 +8420,7 @@
   [
    "2029-07-22",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"
@@ -8428,7 +8428,7 @@
   [
    "2029-07-29",
    "composure",
-   52.8,
+   52.77,
    0.76,
    0,
    "composure 0.76 focus 0.52 adaptability 0.48 emotionalDepth 0.47 vocal 0.47"

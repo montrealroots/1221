@@ -3,8 +3,16 @@
  "part": 1,
  "from": "2026-08-24",
  "to": "2027-06-01",
- "secs": 17,
+ "secs": 15,
  "reloads": 9,
  "done": false,
- "rewritten": "from the finished record; the counts at the part’s end are in its log"
+ "standing": "good",
+ "notSame": 0,
+ "notices": 251,
+ "showings": 92,
+ "work": 116,
+ "reviews": [
+  "0 2026-12-11 good",
+  "1 2027-04-23 good"
+ ]
 }

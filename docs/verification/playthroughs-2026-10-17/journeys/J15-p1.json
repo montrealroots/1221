@@ -3,8 +3,16 @@
  "part": 1,
  "from": "2026-08-24",
  "to": "2027-06-01",
- "secs": 6,
+ "secs": 7,
  "reloads": 9,
  "done": false,
- "rewritten": "from the finished record; the counts at the part’s end are in its log"
+ "standing": "warning",
+ "notSame": 0,
+ "notices": 228,
+ "showings": 92,
+ "work": 115,
+ "reviews": [
+  "0 2026-12-11 concern",
+  "1 2027-04-23 warning"
+ ]
 }

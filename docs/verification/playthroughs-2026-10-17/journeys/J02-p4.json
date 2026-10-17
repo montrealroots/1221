@@ -21,14 +21,14 @@
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 65,
+   "secs": 61,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 81,
+   "secs": 84,
    "reloads": 12
   },
   {
@@ -583,7 +583,7 @@
   "8 warnings": {
    "pass": true,
    "evidence": [
-    "coursework warnings 2028-02-02 \"4 of the 6 pieces shown this term so far were Unready. Most often short on them: with your partner, on 2 of th\" | 2029-02-09 \"3 of the 8 pieces shown this term so far were Unready. Most often short on them: lines, on 1 of the 3 shown. L\"",
+    "coursework warnings 2028-02-02 \"4 of the 6 pieces shown this term so far were Unready. Most often short on them: with your partner, on 2 of th\" | 2029-02-09 \"3 of the 8 pieces shown this term so far were Unready. No one part was short on more than one of them: each on\"",
     "reviews 0 2026-12-11 good (7/47 unready); 1 2027-04-23 good (4/45 unready); 2 2027-12-10 concern (9/46 unready); 3 2028-04-28 warning (9/46 unready); 4 2028-12-08 good (10/44 unready); 5 2029-04-27 concern (12/45 unready)",
     "missed classes notices 0, not registered 0, not passed 0"
    ],
@@ -4158,7 +4158,7 @@
   [
    "2029-02-09",
    "A Word On Your Coursework",
-   "3 of the 8 pieces shown this term so far were Unready. Most often short on them: lines, on 1 of the 3 shown. Learn Lines answers it. Of the work set so far, 8 pieces are still to be shown. The faculty reviews the term on"
+   "3 of the 8 pieces shown this term so far were Unready. No one part was short on more than one of them: each one’s own forecast says what held it back. Of the work set so far, 8 pieces are still to be shown. The faculty r"
   ],
   [
    "2029-02-09",
