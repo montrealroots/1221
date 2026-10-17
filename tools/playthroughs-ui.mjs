@@ -234,6 +234,20 @@ async function openLook(button) {
   said(`look “${name}” (${kind}): ${summary}`);
   return { look: lookNamed(name), name, kind, summary };
 }
+/** The first way further in a look offers, followed: the look inside it, its trail naming the outer. */
+async function wayIn(outer) {
+  const way = outer.look.locator(':scope > .look-inner .look-way button.link').first();
+  must(await way.count(), `“${outer.name}” offers no way further in`);
+  const label = clean(await way.innerText());
+  await press(way, label); await wait(500);
+  const inner = outer.look.locator('.look').filter({ has: page.locator(':scope > .look-head .look-name') }).first();
+  must(await inner.count(), `“${label}” didn’t open inside “${outer.name}”`);
+  const name = clean(await inner.locator(':scope > .look-head .look-name').innerText());
+  const trail = clean(await inner.locator(':scope > .look-head .look-trail').innerText().catch(() => ''));
+  must(trail.includes(outer.name), `the inner look’s trail is “${trail}”, not naming “${outer.name}”`);
+  said(`inside “${outer.name}”: “${name}”: ${clean(await inner.locator(':scope > .look-inner > .look-summary').innerText().catch(() => '')).slice(0, 200)}; trail “${trail}”`);
+  return name;
+}
 async function closeLook(name) {
   const before = await when();
   await press(page.getByRole('button', { name: `Close ${name}` }).first(), `Close ${name}`); await wait(400);
@@ -643,6 +657,34 @@ async function setback() {
     await shot('scene-before-the-remedy');
     return `${sceneTitle}, ${clean(await cardOf(scene).locator('.panel-head p').first().innerText())}: ${start} (Unready)`;
   });
+  // The warning's look offers no way further in (it says so: nothing in the world names what a notice is about yet), so
+  // the way further in is the scene's own How This Works, as the criteria allow: its entry, a connected system and Back.
+  await step('the scene’s How This Works: its entry, a connected system followed and Back, then closed with the tab and the clock as they were', ['drill-down'], async () => {
+    const help = () => page.getByRole('dialog', { name: /How This Works/ }).last();
+    const title = async () => clean(await help().locator('article.help-entry h3').first().innerText().catch(() => ''));
+    const how = cardOf(scene).locator('button[aria-label^="How This Works:"]').first();
+    must(await how.count(), 'no How This Works on the scene’s card');
+    const t0 = await when();
+    await press(how, clean(await how.getAttribute('aria-label'))); await wait(700);
+    const first = await title();
+    must(first, 'How This Works opened no entry');
+    const connected = help().locator('details.help-section', { hasText: /^Connected Systems/ }).first();
+    must(await connected.count(), `“${first}” shows no Connected Systems`);
+    await press(connected.locator('summary'), 'Connected Systems'); await wait(300);
+    const link = connected.locator('button.help-link').first();
+    const to = clean(await link.innerText());
+    await press(link, to); await wait(500);
+    must((await title()) === to, `followed “${to}”, showing “${await title()}”`);
+    const trail = clean(await help().getByRole('navigation', { name: 'Help Trail' }).innerText());
+    must(trail.includes(first) && trail.includes(to), `the trail says “${trail}”`);
+    await press(help().getByRole('button', { name: /^Back$/ }), 'Back'); await wait(400);
+    must((await title()) === first, `Back went to “${await title()}”`);
+    await page.keyboard.press('Escape'); cur.pressed.push('Escape'); await wait(500);
+    must(!(await help().isVisible().catch(() => false)), 'Escape didn’t close the help');
+    must(/^Coursework/.test(await selectedTab()), `the tab came back as ${await selectedTab()}`);
+    must((await when()) === t0, `the clock moved while reading: ${t0} → ${await when()}`);
+    return `${first} → ${to} → Back; trail “${trail}”; Coursework and ${t0} kept`;
+  });
   await step('Run It With A Reader: an hour, Shown Today rises; again the same day it’s refused, its reason on the card', ['unavailable'], async () => {
     const reader = cardOf(scene).getByRole('button', { name: /^Run It With A Reader$/ }).first();
     must(await reader.count(), 'no Run It With A Reader on the scene');
@@ -763,7 +805,7 @@ async function specialist() {
     must(/was there|wasn’t there|The note/.test(body), `the showing’s words: ${body.slice(0, 200)}`);
     return title;
   });
-  await step('the Player Profile: the four strengths at 90.0 and the rest about 49; Composure opened, its look, Close', ['navigation', 'drill-down'], async () => {
+  await step('the Player Profile: the four strengths at 90.0 and the rest about 49; Composure opened, its look, a way further in, Close', ['navigation', 'drill-down'], async () => {
     await rail('Player Profile');
     must(hash().startsWith('#/workspace/profile'), `the Profile at ${hash()}`);
     const levels = {};
@@ -776,7 +818,9 @@ async function specialist() {
     must(look.name === 'Composure' && /^You’re at 90\.0 of 100/.test(look.summary), `Composure’s look: ${look.summary}`);
     const body = clean(await look.look.locator(':scope > .look-inner').innerText());
     must(/What develops it\./.test(body) && /To practice it\./.test(body), `the look doesn’t say what develops it or how to practice it: ${body.slice(0, 200)}`);
+    await wayIn(look);
     await closeLook('Composure');
+    must(!(await page.locator('.look').count()), 'a look still open after Composure’s Close');
   });
   await step('Nordic Noir’s brief: the scene, what the take weighs, its readings; Tape It refused until a reading is chosen', ['unavailable'], async () => {
     await openBrief('Nordic Noir');
