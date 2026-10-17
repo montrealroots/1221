@@ -1,0 +1,1293 @@
+{
+ "area": "advice",
+ "on": "2026-10-17",
+ "against": "7572578b (the frozen baseline and these instructions), in the advice area’s clone, branch advice11",
+ "commits": [
+  "ab7fcabc L1, F2-A10 (f) and (h) clarified against what the owner approved, before any test changes",
+  "f46db2b0 The harness's seed split, its held-out refusal and its hospital wait made reachable by a gate test",
+  "abeb23ab Repeated advice says how long it has stood and what has moved; preparation's gain said apart; a rise explained",
+  "40da45b5 L1, F2-A10 (f) and (h) and the harness held by gate tests, played through the commands on tuning seeds",
+  "44ec1548 A fall isn't said as a rise: the follower whose forecast fell is held to no word of one",
+  "31ca3b0a The hospital wait is held to a stay alone: a take refused otherwise isn't tried again",
+  "e3050f4b The advice noted as a brief is taped, not before every day's first judged piece: a school year three times as long",
+  "c1dd1650 The measure itself held by a gate test: every clause worked out on a tuning case, and its run said",
+  "2ff661c1 The F2-A measure reads (f) and (h) as clarified, beside each as written, for the held-out run on the tested commit",
+  "f3f9419e The advice area's measurements and mutations on its own code, kept beside the result",
+  "eb0b815d L1's record corrected: the journeys' student does train the named input, as the school's hours allow"
+ ],
+ "rows": [
+  {
+   "id": "L1",
+   "group": "Criteria: Long-Term Continuity",
+   "baselineStatus": "Decision Required",
+   "status": "Implemented And Verified",
+   "criterion": "As clarified before its tests changed (docs/verification/completion-2026-10-16/clarifications.md, L1, ab7fcabc), mapped to brief 10 section 2 and brief 11 section 8; as written it stays not met (specialist 8, beginner 6 weeks), kept as the earlier result.",
+   "notProved": "The week’s first-named input stayed 8 weeks (specialist) and 6 (beginner) on the 120-day journeys, where L1 allows 4 without a 5-point rise; no test played a player who follows the advice and one who ignores it; and a repeated recommendation said the same sentence each week but for its figures, with nothing of how long it had stood or what had moved since.",
+   "exercised": "The advice now notes what’s first (Experience.advised) as the player tapes a brief (once a day) and practices after new work, and the first recommendation says since when, how far its level and forecast moved, the pieces since and how many it held back, the hours practiced since, what twenty sessions did, what was first before it, and a next action (the exercise, where, an hour’s energy and what it would bring now, or the practice command’s own refusal). Played on tuning seeds through brief.choose, brief.prepare, genre.study, practice.self_tape and practice.exercise: an ignorer taping two new briefs a week for five weeks (adv-t-5), and followers playing twenty sessions one a day (adv-t-5 from the ignorer’s save, adv-0, adv-t-19), each across a save and a load (serialise, deserialise, loadSave), the Player Profile drawn with renderToStaticMarkup. The 120-day journeys run again with each week’s message kept.",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought",
+     "kind": "player journey",
+     "proves": "The ignorer: one input first all five weeks and every week the forecast’s largest of what passes the floor (no rotation); each week’s standing new, with two more pieces since and the count of them it held back worked from the records; never practiced, said; the same words after a save and a load; the Profile shows the standing and the next action. The follower from the same save: still first, risen by what twenty sessions brought, its level and forecast before and after said, nothing said of a rise where its forecast fell."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why",
+     "kind": "player journey",
+     "proves": "The follower inside L1’s four weeks (adv-0): another input now brings more and is named first; the advice says what was first, how far its level and its forecast moved, and that the new one’s forecast is the larger; the same after a save and a load. The next action names the exercise and what an hour brings, and once the day’s four hours are used says the practice command’s refusal instead."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+     "kind": "player journey",
+     "proves": "Near mastery (adv-t-19) the follower’s input stays first and the twenty sessions are said: its level 88 to 90.5, its forecast, and discipline’s part of the change."
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/journey-specialist-bj-0.json",
+     "title": "npx vite-node tools/brief-journeys.ts -- --profile specialist --seed bj-0 --days 120 --write docs/verification/completion-2026-10-16/advice/journey-specialist-bj-0.json (on 2ff661c1, clean)",
+     "kind": "measurement",
+     "proves": "Targets week for week as brief 10’s final run (focus days 56 to 105, 51 to 55: longestSameTarget 8, L1 as written unchanged); longestSameMessage 1 and longestSameState 1: in the 8-week run 7 of 7 week-to-week messages and stated states new. Every field but the new message ones byte for byte as decisions-2026-10-16/final/journey-specialist-bj-0.json."
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/journey-beginner-bj-0.json",
+     "title": "npx vite-node tools/brief-journeys.ts -- --profile beginner --seed bj-0 --days 120 --write docs/verification/completion-2026-10-16/advice/journey-beginner-bj-0.json (on 2ff661c1, clean)",
+     "kind": "measurement",
+     "proves": "focus days 56 to 91, 55 to 56: longestSameTarget 6 (as written, unchanged); longestSameMessage 1, longestSameState 1: 5 of 5 new. Every other field byte for byte as brief 10’s final run."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The repeated advice made state-aware: what was first noted on the save, and the first recommendation’s standing and next action, on the Profile and a brief’s pane",
+     "where": "src/engine/systems/next-steps.ts (noteAdvice, standingOf, nextOf), src/engine/systems/experience.ts (Advised, Recommendation.standing and next), src/engine/systems/briefs.ts (tapeBrief notes first), src/engine/systems/practice.ts (practice.exercise notes after new work), src/ui/workspaces/ProfileWorkspace.tsx, src/ui/components/BriefPane.tsx, src/engine/content/guide/craft.ts",
+     "failingTest": "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought and L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why fail on 7572578b (no standing, no next action); mutation M1 (nothing noted) fails both"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "nothing noted",
+     "where": "src/engine/systems/next-steps.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why",
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "last never refreshed after new work",
+     "where": "src/engine/systems/next-steps.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "practice notes every day",
+     "where": "src/engine/systems/next-steps.ts",
+     "caughtBy": [
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "held back counts every piece",
+     "where": "src/engine/systems/next-steps.ts",
+     "caughtBy": [
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "rotation after four weeks",
+     "where": "src/engine/systems/next-steps.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "discipline part said whatever the forecast did",
+     "where": "src/engine/systems/next-steps.ts",
+     "caughtBy": [
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+     ],
+     "killed": true,
+     "on": "c1dd1650",
+     "before": {
+      "on": "40da45b5",
+      "killed": false,
+      "by": [],
+      "note": "survived until 44ec1548 held the follower whose forecast fell to no word of a rise"
+     }
+    },
+    {
+     "what": "next action ignores the refusal",
+     "where": "src/engine/systems/next-steps.ts",
+     "caughtBy": [
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "the Profile doesn't show the standing",
+     "where": "src/ui/workspaces/ProfileWorkspace.tsx",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    }
+   ],
+   "earlierResult": "Brief 09 (c9cba9c8): specialist 4, beginner 3 weeks. Brief 10’s tested commit (567d27dd): specialist 8, beginner 6, not met as written; kept in clarifications.md and decisions-2026-10-16/l1/README.md.",
+   "missing": "Nothing for this area. The coordinator runs the two journeys again on the tested commit (commands below) and records L1 as clarified (every run past four weeks: newStates equal to its weeks less one; longestSameState 1) beside L1 as written (longestSameTarget)."
+  },
+  {
+   "id": "advice.F2A10-f",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Decision Required",
+   "status": "Implemented And Verified",
+   "criterion": "As clarified before its tests changed (clarifications.md, F2-A10 (f)): preparation is the take’s own, its gain said apart; training compared on the same hours; diminishing returns asserted below three quarters of full, the model’s constant rate held past it. Mapped to brief 10 section 2 and brief 11 section 8. The earlier result (ladder 30 of 30 by a median 0.0010; every candidate 277 of 287, 276 on the integrated code; the three preparation readings) kept.",
+   "notProved": "Which preparation the criterion means; the predicted gain from preparation said nowhere apart from training’s; diminishing returns near mastery a thousandth of a point, where the model grows practice at a constant rate past three quarters of full.",
+   "exercised": "Forecast.preparation added: what completing their own preparation would bring the pieces read as prepared, weighted as the work is, never in training’s figure, said once on the first recommendation. Played on tuning seeds: adv-t-15 with The Spare Key taped cold (its rehearsal held it back most), its figure worked independently from the judge’s replay (performerOf, replayAs) of the piece as prepared less as taped; adv-t-1’s first-named input at six levels (TEST SETUP), each copy playing the same twenty sessions through practice.exercise.",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+     "kind": "player journey",
+     "proves": "Every input’s forecast carries the same preparation figure, equal to the judge’s replay worked by hand to 1e-9; every training figure is the input’s own and the days’ alone; all on twenty hours; the first recommendation and the Profile say it as preparation’s, apart from training’s; with that take’s own steps complete there’s no piece left to say it of."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate",
+     "kind": "player journey",
+     "proves": "Below three quarters of full (40, 55, 70) twenty played sessions bring less at each rung, and the forecast’s growth and points fall with them; past it (76, 84, 92) the played gain and the forecast’s growth are the same at every rung to 1e-9, in the same ratio, and the forecast’s points move by under a hundredth where below they fell by more than half a point."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision",
+     "kind": "player journey",
+     "proves": "Kept as it was: near mastery (adv-t-19) the first-named input’s forecast falls at full precision at a third and two thirds of the way to full."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today",
+     "kind": "player journey",
+     "proves": "Kept as it was: a take its own preparation held back most is read with its steps complete; knowing the genre read as known today; a take an ability held back is read as taped."
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/tuning.json",
+     "title": "npx vite-node tools/advice.ts -- --cases tuning --out docs/verification/completion-2026-10-16/advice/tuning.json (on 2ff661c1, clean); the same command on 7572578b gave tuning-7572578b.json",
+     "kind": "measurement",
+     "proves": "30 tuning cases: training’s figure the input’s own and the days’ alone on 30 of 30 (prepApart), preparation’s figure as worked on 30 of 30 (no case ended with a piece its own preparation held back); ladder as written 5 of 5 near mastery, every candidate 44 of 44; every as-written figure the same as tuning-7572578b.json, case for case."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Preparation’s predicted gain said apart from training’s, in the forecast and on the screen",
+     "where": "src/engine/systems/advice.ts (Forecast.preparation, forecastFor), src/engine/systems/experience.ts (recommendations: the first’s sentence)",
+     "failingTest": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s fails on 7572578b (no preparation figure)"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "preparation added into training's figure",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "preparation unweighted",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "preparation's sentence dropped",
+     "where": "src/engine/systems/experience.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "the forecast's growth slows past three quarters",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "each replay its shown tenth",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate",
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "knowing the genre read as at the take",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "a take its own preparation held back read as it was",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    }
+   ],
+   "missing": "Nothing for this area. The held-out set run on the tested commit gives the clarified figures on every case (summary group f: prepPieces, prepSaid, prepSameEvery, prepApart) beside the ladder as written."
+  },
+  {
+   "id": "advice.F2A10-h",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Decision Required",
+   "status": "Implemented And Verified",
+   "criterion": "As clarified before its tests changed (clarifications.md, F2-A10 (h)): the input’s own part falls on every case (its forecast at the discipline it had); a rise is no more than discipline’s lift and is said; the first-named changes wherever another leads. Mapped to brief 10 section 2 and brief 11 section 8. Earlier result kept: 141 of 150 fell (111 of 120 fresh; 113 of 120 on the integrated code), the nine near mastery and within a thousandth.",
+   "notProved": "Nine held-out cases whose trained input’s forecast rose by up to 0.001 after twenty sessions, from discipline’s lift; nothing said why.",
+   "exercised": "forecastAtDiscipline added (an input’s forecast with discipline set where it was, on a scratch copy), and where the forecast rose since the player’s latest work and discipline rose, the standing says how much is discipline’s. Played on adv-t-19 (near mastery): twenty sessions through practice.exercise, the forecast read before and after, and at the discipline it had (TEST SETUP).",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+     "kind": "player journey",
+     "proves": "Discipline rose; the forecast at the discipline it had fell (the input’s own part); the forecast rose by under a thousandth (0.5465 to 0.5470) and by no more than discipline’s lift; the advice and the Profile say both figures, discipline then and now, the forecast at discipline 80 (0.5451) and the part that is discipline’s (+0.0019)."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the trained input’s forecast falls, and with another’s now ahead, another is named first",
+     "kind": "player journey",
+     "proves": "Kept as it was: once followed (adv-0) the trained input’s forecast falls and another, now ahead, is named first."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one",
+     "kind": "fixture",
+     "proves": "Kept as it was: the recurring weakness is said where its forecast puts it."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why",
+     "kind": "player journey",
+     "proves": "The first-named changes where another now leads, and says so."
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/tuning.json",
+     "title": "npx vite-node tools/advice.ts -- --cases tuning --out docs/verification/completion-2026-10-16/advice/tuning.json (on 2ff661c1, clean); the same command on 7572578b gave tuning-7572578b.json",
+     "kind": "measurement",
+     "proves": "30 tuning cases: as written fell 28 of 30 and changed where another led 10 of 10 (the same as on 7572578b); as clarified the own part fell 30 of 30, 2 rose (adv-t-15, adv-t-19), both within the lift (30 of 30) and both said."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A small rise in the trained input’s forecast explained by discipline’s lift",
+     "where": "src/engine/systems/advice.ts (forecastAtDiscipline), src/engine/systems/next-steps.ts (standingOf, disciplinePart)",
+     "failingTest": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so fails on 7572578b (no standing)"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "forecast at another discipline ignores it",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "last never refreshed after new work",
+     "where": "src/engine/systems/next-steps.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "discipline part said whatever the forecast did",
+     "where": "src/engine/systems/next-steps.ts",
+     "caughtBy": [
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+     ],
+     "killed": true,
+     "on": "c1dd1650",
+     "before": {
+      "on": "40da45b5",
+      "killed": false,
+      "by": [],
+      "note": "survived until 44ec1548 held the follower whose forecast fell to no word of a rise"
+     }
+    },
+    {
+     "what": "discipline held still through the twenty days",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > grows the twenty sessions as the engine grows them: the discipline a played copy keeps is the forecast’s to the last digit, and what the days bring is said apart, nothing at full discipline",
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "the recurring weakness put first when tied, as before brief 10",
+     "where": "src/engine/systems/experience.ts",
+     "caughtBy": [
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    }
+   ],
+   "missing": "Nothing for this area. The held-out set run on the tested commit gives the clarified figures on every case (summary group h: ownFell, rose, withinLift, roseSinceNote, explained) beside fell as written."
+  },
+  {
+   "id": "advice.harness",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "No gate test held the harness’s structure: the tuning and held-out seeds apart, four bands and three stages built through the commands, every measure the criteria name; the area called it implemented and cited measurements only.",
+   "exercised": "The harness made reachable without changing what it builds (casesOf and the held-out refusal moved from tools/advice.ts to tools/advice-harness.ts unchanged; tapeWaiting exported; buildCase also returns what each input was drawn at). Then: the seed sets read; three tuning cases built through createSave, brief.choose, brief.prepare, genre.study and practice.self_tape; tools/advice.ts run as the measure is run (a child process) on adv-t-0.",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out",
+     "kind": "guard",
+     "proves": "30 tuning and 150 held-out cases, never the same seed; F2-A’s adv-0 to 9 tuning and 10 to 39 held out; the bands and stages as the criterion sets them; the 120 fresh held-out cases ten to each of the twelve strata, and the tuning cases in every stratum; nothing outside; a held-out seed refused without --held-out."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built",
+     "kind": "guard",
+     "proves": "The measure’s own run writes F2-A’s pass and (b) to (i) on the case, its set, band and stage, the summary’s groups, the commit (40 hex) and whether the tree was clean, and the command; a held-out seed without the flag is refused and writes nothing."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a case is built through the game’s commands: every input drawn within its band, near mastery at least two at full, the stage’s takes taped as its work in its days, each in one of the 149 genres",
+     "kind": "player journey",
+     "proves": "adv-t-0 (beginner, first week), adv-t-5 (developing, mid-term) and adv-t-11 (near mastery, later): every input drawn within its band (near mastery at least two at full and none otherwise), the stage’s takes in its range, each a taped brief kept as the case’s work in order and on its brief’s record, each genre one of the 149 and its brief’s, inside the stage’s days, later at least ten genres."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a take refused in hospital waits the stay out, is prepared again and taped once she’s out, where until brief 10 the harness threw and the case was never built (adv-h-10, adv-h-57)",
+     "kind": "player journey",
+     "proves": "A take refused in hospital waits the stay out (below)."
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/tuning.json",
+     "title": "npx vite-node tools/advice.ts -- --cases tuning --out docs/verification/completion-2026-10-16/advice/tuning.json (on 2ff661c1, clean); the same command on 7572578b gave tuning-7572578b.json",
+     "kind": "measurement",
+     "proves": "The thirty tuning cases built and measured on 2ff661c1, every clause, the same as on 7572578b."
+    }
+   ],
+   "fixes": [],
+   "mutations": [
+    {
+     "what": "held-out seeds run without --held-out",
+     "where": "tools/advice-harness.ts",
+     "caughtBy": [
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built",
+      "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "held-out stages mapped wrong",
+     "where": "tools/advice-harness.ts",
+     "caughtBy": [
+      "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "a tuning seed in the held-out set",
+     "where": "tools/advice-harness.ts",
+     "caughtBy": [
+      "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "a band drawn wider than the criterion",
+     "where": "tools/advice-harness.ts",
+     "caughtBy": [
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: followed for twenty sessions through practice.exercise, the advised input brings what it forecast, within 0.3 points or a quarter, from a beginner to near mastery",
+      "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a case is built through the game’s commands: every input drawn within its band, near mastery at least two at full, the stage’s takes taped as its work in its days, each in one of the 149 genres"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "near mastery drawn with none at full",
+     "where": "tools/advice-harness.ts",
+     "caughtBy": [],
+     "killed": false,
+     "on": "c1dd1650",
+     "survives": "A redundant guard on every tuning seed: the near-mastery draw (one chance in four for each of sixteen inputs) leaves 4 to 11 at full on adv-t-3, 7, 11, 15 and 19, so the top-up to two never runs on a seed a test may build; no held-out seed is built in a test."
+    },
+    {
+     "what": "the measure doesn't say the commit it ran on",
+     "where": "tools/advice.ts",
+     "caughtBy": [
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ],
+     "killed": true,
+     "on": "c1dd1650",
+     "rerun": {
+      "on": "2ff661c1",
+      "killed": true,
+      "by": [
+       "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+      ]
+     }
+    },
+    {
+     "what": "the measure leaves (h) out",
+     "where": "tools/advice.ts",
+     "caughtBy": [
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ],
+     "killed": true,
+     "on": "c1dd1650",
+     "rerun": {
+      "on": "2ff661c1",
+      "killed": true,
+      "by": [
+       "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+      ]
+     }
+    }
+   ],
+   "missing": "Nothing for this area: the held-out set is measured once, by the coordinator, on the tested commit."
+  },
+  {
+   "id": "advice.F2A10-a",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "No gate test held the cases’ split: tuning apart from held out, 120 fresh held-out cases stratified four bands by three stages by ten seeds, genres across the 149, the held-out run recording its commit.",
+   "exercised": "As advice.harness: the seed sets read, cases built through the commands, the measure run on a tuning case and refused a held-out one.",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out",
+     "kind": "guard",
+     "proves": "The split and the strata: 120 fresh held-out cases, 10 to each band and stage; the tuning set apart and in every stratum; the refusal."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built",
+     "kind": "guard",
+     "proves": "A run records its commit, whether the tree was clean and its command; a held-out seed without --held-out writes nothing."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a case is built through the game’s commands: every input drawn within its band, near mastery at least two at full, the stage’s takes taped as its work in its days, each in one of the 149 genres",
+     "kind": "player journey",
+     "proves": "Each take’s genre one of the 149 and its brief’s, through the commands."
+    }
+   ],
+   "fixes": [],
+   "mutations": [
+    {
+     "what": "held-out seeds run without --held-out",
+     "where": "tools/advice-harness.ts",
+     "caughtBy": [
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built",
+      "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "held-out stages mapped wrong",
+     "where": "tools/advice-harness.ts",
+     "caughtBy": [
+      "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "a tuning seed in the held-out set",
+     "where": "tools/advice-harness.ts",
+     "caughtBy": [
+      "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "the measure doesn't say the commit it ran on",
+     "where": "tools/advice.ts",
+     "caughtBy": [
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ],
+     "killed": true,
+     "on": "c1dd1650",
+     "rerun": {
+      "on": "2ff661c1",
+      "killed": true,
+      "by": [
+       "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+      ]
+     }
+    }
+   ],
+   "missing": "The clause’s “first run on the code to be reported” is the coordinator’s held-out run on the tested commit (commands below); its structure is held here."
+  },
+  {
+   "id": "advice.harness-hospital",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "adv-h-10 and adv-h-57 threw “Not from a hospital bed.” and were never built; the fix (tapeWaiting) was cited by two held-out measurements, held by no gate test.",
+   "exercised": "On tuning case adv-t-0: a brief chosen and prepared, a hospital stay brought on through the function the life’s own health brings one through (careFor, care stay: FIXTURE), the game’s own refusal read, then tapeWaiting; and a take refused for another reason that preparing again would let through. No held-out case is built in a test.",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a take refused in hospital waits the stay out, is prepared again and taped once she’s out, where until brief 10 the harness threw and the case was never built (adv-h-10, adv-h-57)",
+     "kind": "player journey",
+     "proves": "The tape is refused “Not from a hospital bed.”; tapeWaiting waits the stay out a day at a time, prepares again and tapes: one more piece of work, the brief’s, taped after the stay ended and out of hospital; a take refused because no reading was chosen isn’t waited on or tried again, and throws with its reason."
+    }
+   ],
+   "fixes": [],
+   "mutations": [
+    {
+     "what": "the hospital stay not waited out",
+     "where": "tools/advice-harness.ts",
+     "caughtBy": [
+      "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a take refused in hospital waits the stay out, is prepared again and taped once she’s out, where until brief 10 the harness threw and the case was never built (adv-h-10, adv-h-57)"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "a refused take waited on whatever refused it",
+     "where": "tools/advice-harness.ts",
+     "caughtBy": [
+      "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a take refused in hospital waits the stay out, is prepared again and taped once she’s out, where until brief 10 the harness threw and the case was never built (adv-h-10, adv-h-57)"
+     ],
+     "killed": true,
+     "on": "c1dd1650",
+     "before": {
+      "on": "44ec1548",
+      "killed": false,
+      "note": "survived: the old falsifiability check used a take that could never pass on a second try; 31ca3b0a made it one that preparing again would let through"
+     }
+    }
+   ],
+   "missing": "Nothing for this area. adv-h-10 and adv-h-57 are built in the coordinator’s held-out run (batches adv-h-10..19 and adv-h-50..59)."
+  },
+  {
+   "id": "advice.tests",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "tests/decisions-advice.test.ts cited by file, not by title; its mutations made on 0afc7914.",
+   "exercised": "The file run on 2ff661c1 (19 tests, the ten of brief 10 unchanged), each cited by its title; brief 10’s ten mutations made again in a copy of the clone (one, B10-4, whose text moved with brief 11’s advised(), made at its new place).",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "ran": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-advice.test.ts --reporter=verbose: 19 passed, exit 0, on 2ff661c1"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: followed for twenty sessions through practice.exercise, the advised input brings what it forecast, within 0.3 points or a quarter, from a beginner to near mastery",
+     "kind": "player journey",
+     "proves": "Followed for twenty sessions through practice.exercise, the advised input brings what it forecast within 0.3 or a quarter (adv-0, adv-t-0, adv-t-15)."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the trained input’s forecast falls, and with another’s now ahead, another is named first",
+     "kind": "player journey",
+     "proves": "Once followed, the trained input’s forecast falls and another is named first."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > grows the twenty sessions as the engine grows them: the discipline a played copy keeps is the forecast’s to the last digit, and what the days bring is said apart, nothing at full discipline",
+     "kind": "player journey",
+     "proves": "The forecast grows the hours as the engine does; the days’ discipline said apart."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains",
+     "kind": "player journey",
+     "proves": "Names nothing at full; says so where everything is."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > says why: each recommendation’s figure, how many of the last pieces read it, and the piece it gains most on, by the records",
+     "kind": "player journey",
+     "proves": "Says why: its figure, the pieces that read it, the piece it gains most on."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today",
+     "kind": "player journey",
+     "proves": "A take its own preparation held back read as prepared; the genre as known today."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision",
+     "kind": "player journey",
+     "proves": "Near mastery the forecast falls as the level rises, at full precision."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one",
+     "kind": "fixture",
+     "proves": "The forecast’s order kept."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > passes the floor on the input’s own share: the discipline twenty days keep isn’t advice to train what moves nothing",
+     "kind": "fixture",
+     "proves": "The floor on the input’s own share."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads no seed: the case renamed, its save’s seed and every piece’s, gets the same advice",
+     "kind": "player journey",
+     "proves": "Reads no seed."
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/mutations.json",
+     "title": "brief 10’s ten mutations made again in a copy of the clone at c1dd1650",
+     "kind": "measurement",
+     "proves": "All ten killed (B10-1 to B10-10), by the tests named in the file."
+    }
+   ],
+   "fixes": [],
+   "mutations": [
+    {
+     "what": "each replay its shown tenth",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate",
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "discipline held still through the twenty days",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > grows the twenty sessions as the engine grows them: the discipline a played copy keeps is the forecast’s to the last digit, and what the days bring is said apart, nothing at full discipline",
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "the recurring weakness put first when tied, as before brief 10",
+     "where": "src/engine/systems/experience.ts",
+     "caughtBy": [
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "nothing said where everything is at full (its find moved with brief 11's advised())",
+     "where": "src/engine/systems/next-steps.ts",
+     "caughtBy": [
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "a technique full at 100, not MASTERED",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "knowing the genre read as at the take",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "a take its own preparation held back read as it was",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "the advice reads the seed",
+     "where": "src/engine/systems/next-steps.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads no seed: the case renamed, its save’s seed and every piece’s, gets the same advice",
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "the floor on the whole figure, the days included",
+     "where": "src/engine/systems/experience.ts",
+     "caughtBy": [
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > passes the floor on the input’s own share: the discipline twenty days keep isn’t advice to train what moves nothing"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    },
+    {
+     "what": "the twenty sessions counted as repeats of one day",
+     "where": "src/engine/systems/advice.ts",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate",
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: followed for twenty sessions through practice.exercise, the advised input brings what it forecast, within 0.3 points or a quarter, from a beginner to near mastery",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the trained input’s forecast falls, and with another’s now ahead, another is named first",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > grows the twenty sessions as the engine grows them: the discipline a played copy keeps is the forecast’s to the last digit, and what the days bring is said apart, nothing at full discipline",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > says why: each recommendation’s figure, how many of the last pieces read it, and the piece it gains most on, by the records",
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why",
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought",
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ],
+     "killed": true,
+     "on": "c1dd1650"
+    }
+   ],
+   "missing": "Nothing."
+  }
+ ],
+ "added": [
+  {
+   "id": "advice.state-aware-repeat",
+   "reason": "To complete L1 as clarified (brief 11, section 8: state-aware explanations, progress and useful next actions rather than an identical recurring message).",
+   "impact": "A new optional record on the save (Experience.advised; the save schema stays 94, no field’s meaning changed, a save from before starts one at its next take or practice); the first recommendation’s standing and next action on the Profile and a brief’s pane; a forecast worked out once a day at most before a take and before practice after new work (the F2-A measure of two tuning cases 9 s to 11, the 120-day journeys 14.6 s to 15, tests/remaining-school.test.ts unchanged at 34 s). No judged figure, target, forecast or order moved: RULESET stays evaluation-11."
+  },
+  {
+   "id": "advice.preparation-apart",
+   "reason": "To complete F2-A10 (f) as clarified (brief 11: separate preparation improvements from ability-training benefits).",
+   "impact": "Forecast.preparation and one sentence on the first recommendation where a recent piece was held back most by its own preparation. Training’s figures unchanged."
+  },
+  {
+   "id": "advice.discipline-part",
+   "reason": "To complete F2-A10 (h) as clarified (brief 11: explain small increases in predicted benefit when another relevant factor improves).",
+   "impact": "forecastAtDiscipline, and the standing’s discipline part where a forecast rose since the latest work. One extra single-input forecast where it’s said."
+  },
+  {
+   "id": "advice.next-action-refusal",
+   "reason": "Part of L1’s next action; it also answers brief 10’s finding that an exercise on the feet refused while an injury mends wasn’t said where the advice named it.",
+   "impact": "The next action reads the practice command’s own refusal (practiceRefusal, which includes the injury’s trainingRefusal); the test exercises it through the day’s four hours, not an injury."
+  },
+  {
+   "id": "advice.harness-testable",
+   "reason": "To hold advice.harness, F2-A10 (a) and the hospital fix by gate tests.",
+   "impact": "casesOf and heldOutRefusal moved to tools/advice-harness.ts unchanged; tapeWaiting exported; buildCase returns its draw. The same seed builds the same case (the tuning set identical case for case)."
+  },
+  {
+   "id": "advice.measure-clarified",
+   "reason": "So the held-out run on the tested commit reads (f) and (h) as clarified on every case.",
+   "impact": "tools/advice.ts writes h.atBeforeDiscipline, ownFell, rose, withinLift, roseSinceNote, explained and f.prep.preparation, with summary counts; every figure as written unchanged."
+  },
+  {
+   "id": "advice.journeys-messages",
+   "reason": "So the 120-day journeys read L1 as clarified.",
+   "impact": "tools/brief-journeys.ts keeps each week’s message and stated state, and writes longestSameMessage, longestSameState and longRuns beside longestSameTarget; the journeys’ play unchanged (every other field byte for byte)."
+  },
+  {
+   "id": "advice.l1-record-corrected",
+   "reason": "Brief 10’s L1 record said the journeys’ student never trained the named input; it does, as the school’s hours allow.",
+   "impact": "decisions-2026-10-16/l1/README.md corrected in the past tense with the hours counted; its figures unchanged."
+  }
+ ],
+ "defectsFound": [
+  {
+   "what": "Brief 10’s L1 record (decisions-2026-10-16/l1/README.md) said the journeys’ student never trained the input the advice named; tools/policy.ts practiceHour practices it in every other free hour the school leaves (logged on 7572578b: the specialist 29 hours of Circles Of Attention in focus’s eight weeks, 21 in the last two; the beginner 3 in six). Corrected in eb0b815d.",
+   "blocksCompletion": false
+  },
+  {
+   "what": "Introduced here and fixed before this result: noting the advice before every day’s first judged piece of any kind (recordWork, abeb23ab) tripled a school year of class scenes (tests/remaining-school.test.ts 34 s to 99 s); from e3050f4b it’s noted as a brief is taped, and the file takes 34 s again.",
+   "blocksCompletion": false
+  }
+ ],
+ "judgedMoved": "No. On the thirty tuning cases, tools/advice.ts on 7572578b and on 2ff661c1 gives every case the same advice (targets, figures, ties, reasons) and every clause (b) to (i) the same; the 120-day journeys play the same, every field but the new message ones byte for byte as brief 10’s final runs. RULESET stays evaluation-11 (2026-10-16), the save schema 94; nothing in ONCE_ON_OPENING.",
+ "clarifications": [
+  "docs/verification/completion-2026-10-16/clarifications.md: L1; F2-A10 (f); F2-A10 (h) (ab7fcabc, before any test changed)"
+ ],
+ "checks": [
+  {
+   "cmd": "npm run typecheck",
+   "exit": 0,
+   "on": "f3f9419e"
+  },
+  {
+   "cmd": "npm run lint",
+   "exit": 0,
+   "on": "f3f9419e"
+  },
+  {
+   "cmd": "npx tsc -p <a temporary config extending tsconfig.app.json with node and vite/client types, including tools/advice.ts, tools/advice-harness.ts, tools/brief-journeys.ts> (tools/advice.ts isn’t in the app config)",
+   "exit": 0,
+   "on": "2ff661c1’s tree"
+  },
+  {
+   "cmd": "node tools/doc-refs.mjs --check",
+   "exit": 0,
+   "on": "eb0b815d"
+  },
+  {
+   "cmd": "node tools/tics.mjs --check",
+   "exit": 0,
+   "on": "eb0b815d"
+  },
+  {
+   "cmd": "node tools/voice-check.mjs --check",
+   "exit": 0,
+   "on": "eb0b815d"
+  },
+  {
+   "cmd": "node tools/spelling.mjs",
+   "exit": 0,
+   "on": "eb0b815d"
+  },
+  {
+   "cmd": "node tools/typos.mjs",
+   "exit": 0,
+   "on": "eb0b815d"
+  },
+  {
+   "cmd": "node tools/title-case.mjs --check",
+   "exit": 0,
+   "on": "eb0b815d"
+  },
+  {
+   "cmd": "node tools/label-sweep.mjs",
+   "exit": 0,
+   "on": "eb0b815d"
+  },
+  {
+   "cmd": "node tools/plural-check.mjs",
+   "exit": 0,
+   "on": "f3f9419e"
+  },
+  {
+   "cmd": "node tools/wired.mjs --check",
+   "exit": 0,
+   "on": "f3f9419e"
+  },
+  {
+   "cmd": "node tools/deciders.mjs --check",
+   "exit": 0,
+   "on": "f3f9419e"
+  },
+  {
+   "cmd": "npx vite-node tools/geo-check.mjs",
+   "exit": 0,
+   "on": "f3f9419e"
+  },
+  {
+   "cmd": "node tools/inventory.mjs --check",
+   "exit": 0,
+   "on": "f3f9419e"
+  },
+  {
+   "cmd": "node tools/devmap.mjs --check",
+   "exit": 0,
+   "on": "f3f9419e"
+  },
+  {
+   "cmd": "node tools/traceability.mjs",
+   "exit": 0,
+   "on": "f3f9419e"
+  },
+  {
+   "cmd": "node tools/capabilities.mjs --check",
+   "exit": 0,
+   "on": "f3f9419e"
+  },
+  {
+   "cmd": "node tools/coverage.mjs --check",
+   "exit": 0,
+   "on": "f3f9419e"
+  },
+  {
+   "cmd": "node tools/student-matrix.mjs --check",
+   "exit": 0,
+   "on": "f3f9419e"
+  },
+  {
+   "cmd": "node tools/completion-matrix.mjs --check",
+   "exit": 1,
+   "on": "f3f9419e",
+   "why": "The coordinator’s: the matrix’s measured rows read as stale once a file they watch changes. This area changed src/engine/systems/briefs.ts (tapeBrief’s first line notes the advice), which the judge watch includes, and src/engine, which the engine and app watches include: 41 of the 42 measured rows (530 to 489 by the check’s count). No judged figure moved (the tuning set and the journeys above); the rows need measuring again on the tested commit, as section 10 asks anyway."
+  },
+  {
+   "cmd": "node tools/devmap.mjs --write; node tools/traceability.mjs --write",
+   "exit": 0,
+   "on": "40da45b5",
+   "why": "docs/DEVMAP.md and docs/TRACEABILITY.md count the commands the new tests play (brief.prepare, practice.exercise)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-advice.test.ts --reporter=verbose",
+   "exit": 0,
+   "on": "2ff661c1",
+   "tests": "19 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/ability-mastered.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/advice.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/attributes-complete.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/cross-journeys.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-arion.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-judge.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g21-1.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g3-1.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g7-1.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-r8-1.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects3-unread.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/development.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/engagement.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/engine-properties.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evaluation.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g06-life.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g07-life.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g20-school.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g23-school.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g24-school.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g27-ui.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g31-ui.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g32-ui.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g34-ui.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b07.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b08.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b13.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/genre-coverage.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-coursework.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-craft.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-money.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-papers.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-productions.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-school.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-start-day-body.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/help-mechanics.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/history-continuity.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/integration-mastery.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/interpretation-journey.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/material.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-school.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/whynot-profile.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/attributes-phase-2a.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/variety.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/briefs.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/determinism-played.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-09-journeys.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/base44-adapter.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/base44-contract.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/migration-94.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/persistence.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/save-migration.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/server-guards.test.ts",
+   "exit": 0,
+   "on": "f3f9419e (the engine and tests as at 2ff661c1)"
+  }
+ ],
+ "forTheCoordinator": {
+  "heldOut": [
+   "npx vite-node tools/advice.ts -- --cases adv-10..19 --held-out --out held-out-00.json",
+   "npx vite-node tools/advice.ts -- --cases adv-20..29 --held-out --out held-out-01.json",
+   "npx vite-node tools/advice.ts -- --cases adv-30..39 --held-out --out held-out-02.json",
+   "npx vite-node tools/advice.ts -- --cases adv-h-0..9 --held-out --out held-out-03.json",
+   "npx vite-node tools/advice.ts -- --cases adv-h-10..19 --held-out --out held-out-04.json",
+   "npx vite-node tools/advice.ts -- --cases adv-h-20..29 --held-out --out held-out-05.json",
+   "npx vite-node tools/advice.ts -- --cases adv-h-30..39 --held-out --out held-out-06.json",
+   "npx vite-node tools/advice.ts -- --cases adv-h-40..49 --held-out --out held-out-07.json",
+   "npx vite-node tools/advice.ts -- --cases adv-h-50..59 --held-out --out held-out-08.json",
+   "npx vite-node tools/advice.ts -- --cases adv-h-60..69 --held-out --out held-out-09.json",
+   "npx vite-node tools/advice.ts -- --cases adv-h-70..79 --held-out --out held-out-10.json",
+   "npx vite-node tools/advice.ts -- --cases adv-h-80..89 --held-out --out held-out-11.json",
+   "npx vite-node tools/advice.ts -- --cases adv-h-90..99 --held-out --out held-out-12.json",
+   "npx vite-node tools/advice.ts -- --cases adv-h-100..109 --held-out --out held-out-13.json",
+   "npx vite-node tools/advice.ts -- --cases adv-h-110..119 --held-out --out held-out-14.json",
+   "npx vite-node tools/advice.ts -- --summarize held-out-00.json … held-out-14.json --out held-out-summary.json"
+  ],
+  "heldOutReads": "As written: (b) to (i) as brief 10 read them (decisions-2026-10-16/advice/final/). As clarified: summary “held-out F2-A10” f.prepPieces, f.prepSaid, f.prepApart (preparation’s figure apart, on every case) and h.ownFell (= h.cases), h.withinLift (= h.cases), h.rose and h.explained (= h.roseSinceNote).",
+  "tuning": "npx vite-node tools/advice.ts -- --cases tuning --out tuning.json (about a minute; docs/verification/completion-2026-10-16/advice/tuning.json is this area’s on 2ff661c1)",
+  "journeys": [
+   "npx vite-node tools/brief-journeys.ts -- --profile specialist --seed bj-0 --days 120 --write journey-specialist-bj-0.json",
+   "npx vite-node tools/brief-journeys.ts -- --profile beginner --seed bj-0 --days 120 --write journey-beginner-bj-0.json"
+  ],
+  "journeysRead": "L1 as written: recommendations.longestSameTarget (8 and 6 here). As clarified: every entry of recommendations.longRuns has newStates equal to weeks − 1, and longestSameState is 1.",
+  "tests": "tests/decisions-advice.test.ts in the gate, about 25 s."
+ },
+ "sharedRecords": "For the coordinator to write: criteria.py’s L1 row as clarified (the journeys’ new fields), with L1 as written kept (8 and 6); the matrix’s rows above; the advice rows of the handoff; GAMEPLAY-COVERAGE and the pipeline inputs if they cite these tests (no test was renamed: renames.json unchanged)."
+}
