@@ -201,7 +201,9 @@ On the area's last words (the commits after `01030ec1`), in the clone:
   `life.sleep` and `tutorial.read`, and the refusal's words are new) and pass once their tables were written again with
   their own `--write`. `completion-matrix --check` fails as it did at the baseline (`defects.md`, 6), and was left for
   the coordinator.
-- **The built app** (`npm run build`, served on 4202): the text walk of all 14 scenario saves at 1440 and 390, 350
+- **The built app** (`npm run build`, served on 4202 by the one `vite preview` started first, which serves `dist` as each
+  build rewrote it: the later starts found the port taken; the capture matching the final words, 271 of 271, shows it
+  served the last build): the text walk of all 14 scenario saves at 1440 and 390, 350
   screens each, none it couldn't reach. `tools/text-render-check.mjs` finds the same six faults on both widths as on the
   before walk (a plural in the Profile and in a coursework note, money written "-$3" on Money), none in this area's
   words. The capture (`tools/tutorial-routes.mjs --capture`, 14 saves): every paragraph, detail and name of the 17
