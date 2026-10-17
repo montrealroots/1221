@@ -239,25 +239,6 @@
   "killed": true
  },
  {
-  "id": "g12",
-  "clause": "ST6-R2 (a4)",
-  "edits": [
-   {
-    "file": "src/engine/systems/evaluation.ts",
-    "find": "    const now = dimensionQuality(terms, diff, prepared, condition, dr, f, spread);",
-    "replace": "    const now = dimensionQuality(terms, diff, prepared, condition, dr, f, spread);\n    if (g && g.d > 0) now.quality = Math.min(now.quality, 99);"
-   }
-  ],
-  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
-  "exit": 1,
-  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
-  "verdict": false,
-  "figure": [
-   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a4), the guarantee kept: a mastered actor, fully prepared, played restrained, on a sufficient day, comes to 100 on every class scene, play, night and brief reading, with no draw and with one"
-  ],
-  "killed": true
- },
- {
   "id": "g11b",
   "clause": "ST6-R2 (c4)",
   "edits": [
@@ -280,6 +261,25 @@
    "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it",
    "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a3), more is better up to the cap: each of the three set to 0, 20, 40, 60, 80 and 100, everything else held, raises the restrained take at every step, on every piece for every actor; set past its full it moves nothing, the cap `termsOf` documents",
    "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g12",
+  "clause": "ST6-R2 (a4)",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "    const now = dimensionQuality(terms, diff, prepared, condition, dr, f, spread);",
+    "replace": "    const now = dimensionQuality(terms, diff, prepared, condition, dr, f, spread);\n    if (g && g.d > 0) now.quality = Math.min(now.quality, 99);"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a4), the guarantee kept: a mastered actor, fully prepared, played restrained, on a sufficient day, comes to 100 on every class scene, play, night and brief reading, with no draw and with one"
   ],
   "killed": true
  }
