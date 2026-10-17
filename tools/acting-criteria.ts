@@ -287,7 +287,8 @@ export function measureST6R(budgetFill = (n: number) => (600 - n) / 9) {
   // - `share`: what restraint's three carry of a restrained take's ability effects, each +10 from the even actor.
   // - `grain`: (a) as the grain's strength rises from nothing to its own; `budget`: (a) as the nine rise from 40.56.
   // - `ownChoice`: against the grain, a restrained take ahead of the same actor's expansive one (ST6 as written's frame,
-  //   at full precision by more than 0.05), for the specialist, its twin and the even actor.
+  //   at full precision by more than 0.05), for the specialist, its twin and the even actor; for the specialist, (c)'s and
+  //   (e)'s questions asked of it in that frame, and its count with the grain at nothing and with restraint's draws out.
   const TWIN = actor({ emotionalDepth: 50, composure: 50, focus: 50 }, budgetFill(235));
   const take = (m: MaterialProfile, p: Performer, scale: Scale) => judgeOn(m, p, scale).exact!;
   const twinGap = both.map((m) => ({ id: m.id, r: take(m, RES, 'restrained') - take(m, TWIN, 'restrained'), e: take(m, RES, 'expansive') - take(m, TWIN, 'expansive') }));
@@ -303,7 +304,11 @@ export function measureST6R(budgetFill = (n: number) => (600 - n) / 9) {
   const aAt = (p: Performer) => against.filter((m) => take(m, p, 'restrained') - take(m, EVEN, 'expansive') > 0.05);
   const strengths = [0, 0.1, 0.2, GRAIN.strength];
   const byStrength = against.map((m) => strengths.map((s) => withGrain(s, () => take(m, RES, 'restrained') - take(m, EVEN, 'expansive'))));
-  const ownChoice = (p: Performer) => against.filter((m) => take(m, p, 'restrained') - take(m, p, 'expansive') > 0.05).length;
+  const choiceOf = (p: Performer, prep = 1) => against.filter((m) => judgeOn(m, p, 'restrained', { prep }).exact! - take(m, p, 'expansive') > 0.05);
+  const chosen = choiceOf(RES);
+  const chosenWorks = byWork(chosen);
+  const chosenRate = (ms: MaterialProfile[]) => r4(pct(ms.filter((m) => chosen.includes(m)).length, ms.length));
+  const withoutDrawsChosen = (() => { R.inputs = {}; try { return choiceOf(RES).length; } finally { R.inputs = asBuilt; } })();
   const sorting = {
     budgets: { twin: budgetOf(TWIN) },
     ownAbilities: {
@@ -319,7 +324,12 @@ export function measureST6R(budgetFill = (n: number) => (600 - n) / 9) {
       winsWithNoGrain: against.filter((_m, i) => byStrength[i]![0]! > 0.05).map((m) => `${m.id} (${r4(suit(m).e - suit(m).r)})`),
     },
     budget: [(600 - 235) / 9, 41, 42, 43, 44, 45, (600 - 235) / 8].map((f) => { const P = actor({ emotionalDepth: 85, composure: 75, focus: 75 }, f); return { budget: r4(budgetOf(P)), winsInA: aAt(P).length, aheadBothRestrainedWhereRestraintSuits: withIt.filter((m) => take(m, P, 'restrained') - take(m, EVEN, 'restrained') > 0.05).length }; }),
-    ownChoice: { specialist: ownChoice(RES), twin: ownChoice(TWIN), evenActor: ownChoice(EVEN), of: against.length },
+    ownChoice: {
+      specialist: chosen.length, twin: choiceOf(TWIN).length, evenActor: choiceOf(EVEN).length, of: against.length, materials: chosen.map((m) => m.id),
+      halfRehearsed: choiceOf(RES, 0.5).length, smallerGapRate: chosenRate(smaller), largerGapRate: chosenRate(largerGap),
+      works: Object.keys(chosenWorks).length, mostFromOneWork: Math.max(0, ...Object.values(chosenWorks)), families: [...new Set(chosen.map(familyOf))],
+      withNoGrain: withGrain(0, () => choiceOf(RES).length), withoutRestraintsDraws: withoutDrawsChosen,
+    },
   };
   return {
     criterion: 'ST6-R (docs/verification/decisions-2026-10-16/criteria.md)', diagnostics, sorting,
