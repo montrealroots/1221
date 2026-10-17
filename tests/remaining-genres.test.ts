@@ -17,6 +17,7 @@
  * heaviest lean and draw), written as literals. Feedback (who a take rewards and what it names as the limit) is the
  * judge's, read through `judgePiece` as the engine stands (evaluation-9): where the judge changes, that one part may.
  */
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { createSave, loadSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
@@ -27,7 +28,7 @@ import { GENRE_REGISTER } from '@/engine/content/genre-register';
 import { registerOf, suggestions, type BriefRecord } from '@/engine/systems/briefs';
 import { identityOf } from '@/engine/systems/artistry';
 import { workPiece } from '@/engine/systems/workpieces';
-import { PARTS, REPETITIVE_AT, compare, pairOf, readOf, type Part } from '../tools/genre-pairs';
+import { PARTS, REPETITIVE_AT, betterSides, compare, pairOf, readOf, type Part } from '../tools/genre-pairs';
 import '@/ui/looks/all';
 import { resolveLook, type Looked } from '@/ui/looks/registry';
 
@@ -177,5 +178,52 @@ describe('a save that prepared a retired brief', () => {
     for (const [id, r] of Object.entries(RETIRED_BRIEFS)) expect(briefKinds(id), id).toEqual(r.kinds);
     expect(briefKinds('brief-yakuza-3')).toEqual(['yakuza']);
     expect(briefKinds('brief-nothing-9')).toEqual([]);
+  });
+});
+
+/**
+ * genres-09.md §4, the table of the 55, read against the engine as it stands (from 2026-10-16, brief 11: the genres
+ * area's genres.4-kept and genres.6-table, which until then were a document held by nothing). Each row's parts the
+ * same, a kept genre's parts that differ, and what carries each of its sides are worked here from `tools/genre-pairs.ts`,
+ * so the table can't fall behind the code unseen: where the judge or a brief moves one, the table is corrected with it.
+ */
+describe('genres-09.md’s table of the 55, against the code', () => {
+  const md = readFileSync('docs/verification/integration-2026-10-16/genres-09.md', 'utf8');
+  const section = md.split('## 4. Every Genre, Before And After')[1]!.split('\n## 5.')[0]!;
+  // Genre, before, decision, what changed, what the engine reads, after, evidence.
+  const table = section.split('\n').filter((l) => /^\| [a-z_]+ \|/.test(l)).map((l) => l.split('|').slice(1, -1).map((c) => c.trim()));
+  const NAMES: Readonly<Record<Part, string>> = { circumstances: 'circumstances', obstacles: 'objectives and obstacles', techniques: 'technique demands', preparation: 'preparation', readings: 'interpretations', feedback: 'feedback' };
+
+  it('GUARD: lists the 55 and no other, the fourteen revised and the 41 kept', () => {
+    expect(table.map((c) => c[0]).sort()).toEqual([...SAME_SIDES_BEFORE].sort());
+    expect(table.filter((c) => c[2] === 'Revised').map((c) => c[0]).sort()).toEqual(Object.keys(REVISED).sort());
+    expect(table.filter((c) => c[2] === 'Kept')).toHaveLength(41);
+  });
+
+  it('GUARD: says each genre’s two briefs are the same in the parts the engine reads now, and a kept one differs in the rest', () => {
+    for (const [genre, , decision, , reads, after] of table) {
+      const p = pairOf(genre!)!;
+      const same = PARTS.filter((x) => p.same[x]).map((x) => NAMES[x]);
+      expect(after!.match(/^(\d+)(?: \(([^)]*)\))?/)?.slice(1), genre).toEqual([String(same.length), same.length ? same.join(', ') : undefined]);
+      if (decision === 'Kept') expect(reads!.match(/^Differs in ([^:]*):/)?.[1], genre).toBe(PARTS.filter((x) => !p.same[x]).map((x) => NAMES[x]).join(', '));
+    }
+  });
+
+  it('GUARD: gives each kept genre’s sides and what carries each: its register where either brief’s side moves with its concerns set aside, else its scenes', () => {
+    let decided = 0;
+    for (const [genre, , decision, , reads] of table.filter((c) => c[2] === 'Kept')) {
+      const [x, y] = BRIEFS.filter((b) => b.kinds[0] === genre);
+      const withIt = [betterSides(x!), betterSides(y!)].map((s) => s.split(', '));
+      const withoutIt = [betterSides(x!, false), betterSides(y!, false)].map((s) => s.split(', '));
+      const said = [...reads!.matchAll(/(pace|scale|structure) ([a-z]+), (the register decides it|the scenes agree without the register too)/g)];
+      expect(said.map((m) => m[1]), `${genre} (${decision})`).toEqual(['pace', 'scale', 'structure']);
+      said.forEach((m, i) => {
+        const register = withoutIt[0]![i] !== withIt[0]![i] || withoutIt[1]![i] !== withIt[1]![i];
+        expect(m[2], `${genre}’s ${m[1]}`).toBe(withIt[0]![i]);
+        expect(m[3], `${genre}’s ${m[1]}`).toBe(register ? 'the register decides it' : 'the scenes agree without the register too');
+        if (register) decided += 1;
+      });
+    }
+    expect(decided).toBe(29);
   });
 });

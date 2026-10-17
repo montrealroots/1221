@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 530 of 599 rows in scope Implemented And Verified (88.4%); 58 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 535 of 599 rows in scope Implemented And Verified (89.3%); 53 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -9738,9 +9738,9 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/pipeline/remaining-fold.cjs ‘reads remaining/ and then remaining-09/’ (static (tools))",
    "sourceStatus": "implemented",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "implemented",
-   "missing": "the area called it implemented and cites no gate test that holds it"
+   "override": "The pipeline run in a copy makes the committed audit byte for byte, and every test remaining-09’s fold records add reaches the row it names (brief 11)"
   },
   {
    "id": "coverage09.5-journeys-fold",
@@ -9762,9 +9762,9 @@
    "implementation": "docs/verification/pipeline/remaining-fold.cjs",
    "evidence": "docs/verification/pipeline/remaining-fold.cjs ‘a test of an item mapped to rows of its own (byTest)’ (static (tools)); tests/remaining-09-journeys.test.ts (read)",
    "sourceStatus": "implemented",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "implemented",
-   "missing": "the area called it implemented and cites no gate test that holds it"
+   "override": "Each test mapped by itself (byTest) reaches the rows its own map names and no other, a row already citing it not given it twice (brief 11)"
   },
   {
    "id": "coverage09.6-journeys-followup-fold",
@@ -9786,9 +9786,9 @@
    "implementation": "docs/verification/pipeline/resolve-titles.cjs; docs/verification/pipeline/remaining-fold.cjs; docs/verification/pipeline/merge-review.cjs",
    "evidence": "Not recorded",
    "sourceStatus": "implemented",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "implemented",
-   "missing": "the area called it implemented and cites no gate test that holds it"
+   "override": "Each field an area added to and each deferred row’s settled is placed in its row once, put back byte for byte when taken out of the fold’s own last output; tools/coverage.mjs --check holds each cited title (brief 11)"
   },
   {
    "id": "genres.1-count",
@@ -10178,9 +10178,9 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/integration-2026-10-16/genres-09.md ‘§4, the per-genre table’ (static)",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "verified as it stands",
-   "missing": "the area called it verified as it stands and cites no gate test that holds it"
+   "override": "Each of the 41 kept genres’ parts the same and the parts that differ, and what carries each of its sides, read against tools/genre-pairs.ts as the engine stands (brief 11)"
   },
   {
    "id": "genres.5-saves",
@@ -10225,9 +10225,9 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/integration-2026-10-16/genres-09/after/genre-pairs.json ‘npx vite-node tools/genre-pairs.ts -- --genres <the 55> --json …’ (static)",
    "sourceStatus": "implemented",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "implemented",
-   "missing": "the area called it implemented and cites no gate test that holds it"
+   "override": "The per-genre table holds the 55 and no other, each row’s after read against the engine as it stands (brief 11)"
   },
   {
    "id": "genres.7-measured",

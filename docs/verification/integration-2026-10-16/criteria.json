@@ -2853,6 +2853,84 @@
      "file": "docs/verification/completion-2026-10-16/classification.json"
     }
    ]
+  },
+  {
+   "id": "coverage09.4-fold",
+   "status": "Implemented And Verified",
+   "why": "The pipeline run in a copy makes the committed audit byte for byte, and every test remaining-09’s fold records add reaches the row it names (brief 11)",
+   "citations": [
+    {
+     "file": "tests/audit-pipeline.test.ts",
+     "title": "the audit pipeline, run in a copy > GUARD: makes the committed audit and the merge’s inputs, byte for byte"
+    },
+    {
+     "file": "tests/audit-pipeline.test.ts",
+     "title": "the audit pipeline, run in a copy > GUARD: coverage09.4, every test a fold record adds reaches the row it names, remaining-09’s results among them"
+    }
+   ]
+  },
+  {
+   "id": "coverage09.5-journeys-fold",
+   "status": "Implemented And Verified",
+   "why": "Each test mapped by itself (byTest) reaches the rows its own map names and no other, a row already citing it not given it twice (brief 11)",
+   "citations": [
+    {
+     "file": "tests/audit-pipeline.test.ts",
+     "title": "the audit pipeline, run in a copy > GUARD: makes the committed audit and the merge’s inputs, byte for byte"
+    },
+    {
+     "file": "tests/audit-pipeline.test.ts",
+     "title": "the audit pipeline, run in a copy > GUARD: coverage09.5, a test mapped by itself reaches the rows its own map names and no other"
+    }
+   ]
+  },
+  {
+   "id": "coverage09.6-journeys-followup-fold",
+   "status": "Implemented And Verified",
+   "why": "Each field an area added to and each deferred row’s settled is placed in its row once, put back byte for byte when taken out of the fold’s own last output; tools/coverage.mjs --check holds each cited title (brief 11)",
+   "citations": [
+    {
+     "file": "tests/audit-pipeline.test.ts",
+     "title": "the audit pipeline, run in a copy > GUARD: coverage09.6, each field an area added to and each deferred row’s settled are placed in their rows once"
+    },
+    {
+     "file": "tools/coverage.mjs"
+    }
+   ]
+  },
+  {
+   "id": "genres.4-kept",
+   "status": "Implemented And Verified",
+   "why": "Each of the 41 kept genres’ parts the same and the parts that differ, and what carries each of its sides, read against tools/genre-pairs.ts as the engine stands (brief 11)",
+   "citations": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "genres-09.md’s table of the 55, against the code > GUARD: lists the 55 and no other, the fourteen revised and the 41 kept"
+    },
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "genres-09.md’s table of the 55, against the code > GUARD: says each genre’s two briefs are the same in the parts the engine reads now, and a kept one differs in the rest"
+    },
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "genres-09.md’s table of the 55, against the code > GUARD: gives each kept genre’s sides and what carries each: its register where either brief’s side moves with its concerns set aside, else its scenes"
+    }
+   ]
+  },
+  {
+   "id": "genres.6-table",
+   "status": "Implemented And Verified",
+   "why": "The per-genre table holds the 55 and no other, each row’s after read against the engine as it stands (brief 11)",
+   "citations": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "genres-09.md’s table of the 55, against the code > GUARD: lists the 55 and no other, the fourteen revised and the 41 kept"
+    },
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "genres-09.md’s table of the 55, against the code > GUARD: says each genre’s two briefs are the same in the parts the engine reads now, and a kept one differs in the rest"
+    }
+   ]
   }
  ]
 }

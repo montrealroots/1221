@@ -313,5 +313,26 @@ B11_ADMIN = {
 }
 for id, why in B11_ADMIN.items():
     OVERRIDES.append({'id': id, 'status': ED, 'deferredBy': why, 'why': 'Reconciled administratively under brief 11, section 3; not counted as progress', 'citations': [{'file': f'{B11}/classification.json'}]})
+# Brief 11's rows closed by work, each with the gate tests that hold its acceptance (completion-2026-10-16/
+# integration-result.json says what each was missing and what broke each test in a copy). Until brief 11 each was
+# Implemented, Verification Incomplete: its area had verified it by reading, or by a regeneration checked once by hand.
+AP = 'tests/audit-pipeline.test.ts'
+APD = 'the audit pipeline, run in a copy'
+RG = 'tests/remaining-genres.test.ts'
+RGD = 'genres-09.md’s table of the 55, against the code'
+B11_VERIFIED = {
+  'coverage09.4-fold': ('The pipeline run in a copy makes the committed audit byte for byte, and every test remaining-09’s fold records add reaches the row it names (brief 11)',
+    [cite(AP, f'{APD} > GUARD: makes the committed audit and the merge’s inputs, byte for byte'), cite(AP, f'{APD} > GUARD: coverage09.4, every test a fold record adds reaches the row it names, remaining-09’s results among them')]),
+  'coverage09.5-journeys-fold': ('Each test mapped by itself (byTest) reaches the rows its own map names and no other, a row already citing it not given it twice (brief 11)',
+    [cite(AP, f'{APD} > GUARD: makes the committed audit and the merge’s inputs, byte for byte'), cite(AP, f'{APD} > GUARD: coverage09.5, a test mapped by itself reaches the rows its own map names and no other')]),
+  'coverage09.6-journeys-followup-fold': ('Each field an area added to and each deferred row’s settled is placed in its row once, put back byte for byte when taken out of the fold’s own last output; tools/coverage.mjs --check holds each cited title (brief 11)',
+    [cite(AP, f'{APD} > GUARD: coverage09.6, each field an area added to and each deferred row’s settled are placed in their rows once'), cite('tools/coverage.mjs')]),
+  'genres.4-kept': ('Each of the 41 kept genres’ parts the same and the parts that differ, and what carries each of its sides, read against tools/genre-pairs.ts as the engine stands (brief 11)',
+    [cite(RG, f'{RGD} > GUARD: lists the 55 and no other, the fourteen revised and the 41 kept'), cite(RG, f'{RGD} > GUARD: says each genre’s two briefs are the same in the parts the engine reads now, and a kept one differs in the rest'), cite(RG, f'{RGD} > GUARD: gives each kept genre’s sides and what carries each: its register where either brief’s side moves with its concerns set aside, else its scenes')]),
+  'genres.6-table': ('The per-genre table holds the 55 and no other, each row’s after read against the engine as it stands (brief 11)',
+    [cite(RG, f'{RGD} > GUARD: lists the 55 and no other, the fourteen revised and the 41 kept'), cite(RG, f'{RGD} > GUARD: says each genre’s two briefs are the same in the parts the engine reads now, and a kept one differs in the rest')]),
+}
+for id, (why, cites) in B11_VERIFIED.items():
+    OVERRIDES.append({'id': id, 'status': IAV, 'why': why, 'citations': cites})
 json.dump({'rows': rows, 'overrides': OVERRIDES}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))

@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 530 of 599 rows in scope Implemented And Verified (88.4%); 58 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 535 of 599 rows in scope Implemented And Verified (89.3%); 53 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.
 
 ## Totals
 
@@ -36,8 +36,8 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Remaining Area: school | 10 | 10 |  |  |  |  |  |  |
 | Remaining Area: tax | 18 | 11 | 5 |  |  |  |  | 2 |
 | Brief 09 Area: banking | 18 | 9 | 8 |  |  |  | 1 |  |
-| Brief 09 Area: coverage | 14 | 10 | 3 |  |  |  | 1 |  |
-| Brief 09 Area: genres | 21 | 18 | 3 |  |  |  |  |  |
+| Brief 09 Area: coverage | 14 | 13 |  |  |  |  | 1 |  |
+| Brief 09 Area: genres | 21 | 20 | 1 |  |  |  |  |  |
 | Brief 09 Area: journeys | 21 | 21 |  |  |  |  |  |  |
 | Brief 09 Area: judge | 10 | 3 | 1 |  |  |  |  | 6 |
 | Brief 10 Area: advice | 14 | 5 | 7 |  |  |  | 2 |  |
@@ -52,7 +52,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
 | Integration | 9 | 9 |  |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 4 | 2 |  |  |  | 1 |  |
-| **All** | **635** | **530** | **58** | **0** | **0** | **0** | **11** | **36** |
+| **All** | **635** | **535** | **53** | **0** | **0** | **0** | **11** | **36** |
 
 ## Life, Health And Time
 
@@ -551,9 +551,9 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `coverage09.1-life.look_after` | An audit row for life.look_after as a command (the audit keys it by its five actions) | Implemented And Verified | implemented | tests/remaining-09-coverage.test.ts ‘life.look_after, as a command > PLAYER JOURNEY: an action not on the menu is refused in its words with the save as it was;… |
 | `coverage09.2-hardship-renewal` | health.request_hardship's renewal branch played: a member's renewal notice answered by a hardship (the notice, the command as Papers issues… | Implemented And Verified | verified as it stands | tests/remaining-09-hardship.test.ts ‘health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: a stay in hospital in … |
 | `coverage09.3-unresolved` | The 13 unresolved rows, each read again: what a Yale player meets now, what can be implemented in scope, and what's unreachable because the… | Decision Required | implemented (tax.federal_lien_withdraw,… | tests/remaining-09-coverage.test.ts ‘tax.federal_lien_withdraw: an Inherited family’s student who files nothing > PLAYER JOURNEY: at Capital One’s 3.00% on the… |
-| `coverage09.4-fold` | The banking area's result (docs/verification/remaining-09/banking-result.json) and the others in remaining-09/ folded in: remaining-fold.cj… | Implemented, Verification Incomplete | implemented | docs/verification/pipeline/remaining-fold.cjs ‘reads remaining/ and then remaining-09/’ (static (tools)) |
-| `coverage09.5-journeys-fold` | The journeys area’s 17 items (journeys-result.json, committed at 11933d55) were unmapped: remaining-fold.cjs listed each, and none of their… | Implemented, Verification Incomplete | implemented | docs/verification/pipeline/remaining-fold.cjs ‘a test of an item mapped to rows of its own (byTest)’ (static (tools)); tests/remaining-09-journeys.test.ts (rea… |
-| `coverage09.6-journeys-followup-fold` | At bcd75970 the audit hadn’t been regenerated since the journeys’ follow-up: tools/coverage.mjs --check exited 1 on 32 citations that didn’… | Implemented, Verification Incomplete | implemented | Not recorded |
+| `coverage09.4-fold` | The banking area's result (docs/verification/remaining-09/banking-result.json) and the others in remaining-09/ folded in: remaining-fold.cj… | Implemented And Verified | implemented | docs/verification/pipeline/remaining-fold.cjs ‘reads remaining/ and then remaining-09/’ (static (tools)) |
+| `coverage09.5-journeys-fold` | The journeys area’s 17 items (journeys-result.json, committed at 11933d55) were unmapped: remaining-fold.cjs listed each, and none of their… | Implemented And Verified | implemented | docs/verification/pipeline/remaining-fold.cjs ‘a test of an item mapped to rows of its own (byTest)’ (static (tools)); tests/remaining-09-journeys.test.ts (rea… |
+| `coverage09.6-journeys-followup-fold` | At bcd75970 the audit hadn’t been regenerated since the journeys’ follow-up: tools/coverage.mjs --check exited 1 on 32 citations that didn’… | Implemented And Verified | implemented | Not recorded |
 
 ## Brief 09 Area: genres
 
@@ -575,9 +575,9 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `genres.3-sword_and_sorcery` | sword_and_sorcery: two briefs substantively repetitive as the engine reads them | Implemented And Verified | implemented | tests/remaining-genres.test.ts ‘the genres revised on 2026-10-16 > sword_and_sorcery: its second situation is The Oath In The Old Tongue, under a new id, and i… |
 | `genres.3-tragicomedy` | tragicomedy: two briefs substantively repetitive as the engine reads them | Implemented And Verified | implemented | tests/remaining-genres.test.ts ‘the genres revised on 2026-10-16 > tragicomedy: its second situation is Episode Two Hundred, under a new id, and its two briefs… |
 | `genres.3-yakuza` | yakuza: two briefs substantively repetitive as the engine reads them | Implemented And Verified | implemented | tests/remaining-genres.test.ts ‘the genres revised on 2026-10-16 > yakuza: its second situation is The Cups At The Ferry House, under a new id, and its two bri… |
-| `genres.4-kept` | The 41 genres kept as they were, each with its reason | Implemented, Verification Incomplete | verified as it stands | docs/verification/integration-2026-10-16/genres-09.md ‘§4, the per-genre table’ (static) |
+| `genres.4-kept` | The 41 genres kept as they were, each with its reason | Implemented And Verified | verified as it stands | docs/verification/integration-2026-10-16/genres-09.md ‘§4, the per-genre table’ (static) |
 | `genres.5-saves` | An older save that prepared or taped a retired brief | Implemented And Verified | older-save compatibility kept and tested | tests/remaining-genres.test.ts ‘a save that prepared a retired brief > keeps its record as it was across a reload, and nothing offers it or reads it as the new… |
-| `genres.6-table` | The per-genre table, before and after | Implemented, Verification Incomplete | implemented | docs/verification/integration-2026-10-16/genres-09/after/genre-pairs.json ‘npx vite-node tools/genre-pairs.ts -- --genres <the 55> --json …’ (static) |
+| `genres.6-table` | The per-genre table, before and after | Implemented And Verified | implemented | docs/verification/integration-2026-10-16/genres-09/after/genre-pairs.json ‘npx vite-node tools/genre-pairs.ts -- --genres <the 55> --json …’ (static) |
 | `genres.7-measured` | Measured again after the changes | Implemented, Verification Incomplete | verified as it stands | docs/verification/integration-2026-10-16/genres-09/after/signature.json ‘npx vite-node tools/genre-signature.ts -- --out …’ (static); docs/verification/integra… |
 | `genres.8-docs` | docs/GENRE-COVERAGE.md and guide text that names a brief’s scene | Implemented And Verified | verified as it stands | tests/genre-coverage.test.ts ‘the coverage record > is what the tables say, and accounts for every genre once’ (static) |
 
@@ -833,7 +833,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (58)
+### Implemented, Verification Incomplete (53)
 
 - **`health.enroll`** (Life, Health And Time): Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). / The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through t…
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
@@ -862,11 +862,6 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`banking.2.stop_balance_transfer`** (Brief 09 Area: banking): owner decision
 - **`banking.2.take_overrun_loan`** (Brief 09 Area: banking): owner decision
 - **`banking.2.money_transfer`** (Brief 09 Area: banking): owner decision
-- **`coverage09.4-fold`** (Brief 09 Area: coverage): the area called it implemented and cites no gate test that holds it
-- **`coverage09.5-journeys-fold`** (Brief 09 Area: coverage): the area called it implemented and cites no gate test that holds it
-- **`coverage09.6-journeys-followup-fold`** (Brief 09 Area: coverage): the area called it implemented and cites no gate test that holds it
-- **`genres.4-kept`** (Brief 09 Area: genres): the area called it verified as it stands and cites no gate test that holds it
-- **`genres.6-table`** (Brief 09 Area: genres): the area called it implemented and cites no gate test that holds it
 - **`genres.7-measured`** (Brief 09 Area: genres): the area called it verified as it stands and cites no gate test that holds it / The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sides and their rewarded specialist than the retired ones’ did (§5).
 - **`judge.coverage-row`** (Brief 09 Area: judge): the area called it corrected to 65, read from SCENES, with what 2026-10-16 added and cites no gate test that holds it
 - **`advice.harness`** (Brief 10 Area: advice): the area called it implemented and cites no gate test that holds it / TEST SETUP: abilities, techniques and stamina’s fitness drawn within the band and set where each is kept; every calendar hour cleared and the student rested before every command, as F2-A’s set-up does; F2-A’s own adv-N set-up kept exactly as it was, including that it never set the four abilities kept in the craft (it wrote them into attrs, where nothing reads them)

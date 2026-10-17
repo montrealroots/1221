@@ -27,9 +27,10 @@ kept verbatim) is being worked on `claude/peaceful-hamilton-59zdbb`, restarted f
 - **The matrix** may now carry an area item's measurement through an override (`measured`), held current as a
   criterion's is.
 
-**Completion, by the matrix:** 530 of 599 rows in scope Implemented And Verified (88.4%); 58 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 535 of 599 rows in scope Implemented And Verified (89.3%); 53 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.
 
-Against the frozen baseline's 608: 530 (87.1%), none yet closed by this pass's work.
+Against the frozen baseline's 608: 535 (88.0%). Five were closed by this pass's work: coverage09.4 to 09.6, by
+`tests/audit-pipeline.test.ts`, and genres.4 and 6, by `tests/remaining-genres.test.ts` (`integration-result.json`).
 
 # Brief 10: The Approved Decisions, 2026-10-16
 
