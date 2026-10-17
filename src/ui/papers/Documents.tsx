@@ -129,11 +129,14 @@ export function PassportPane() {
             <Stat label="A New One" value={rule && office ? money(inSaveMoney(sim, Math.round(office.fee * 100), office.currency)) : '—'} note={rule && office ? `${office.daysEstimated ? 'About ' : 'Up to '}${office.days} days; good for ${office.years} years${office.abroad ? '; from abroad' : office.renewal ? '; renewed by mail' : ''}` : 'Your country’s passport office isn’t in the game'} />
             <Stat label="Faster" value={office?.expedite ? money(inSaveMoney(sim, Math.round((office.fee + office.expedite.extra) * 100), office.currency)) : 'Not Offered'} note={office?.expedite ? `${office.expedite.days === 0 ? 'The same day' : `${office.expedite.days} days`}${office.expedite.renewalOnly ? ', renewals only' : ''}` : `${rule?.issuer ?? 'The office'} offers no faster service${office?.abroad ? ' to applicants abroad' : ''}`} />
           </div>
-          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+          <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
             <Gated feature="documents.apply_passport" className="btn btn-sm" disabled={Boolean(passportRefusal(person))} title={passportRefusal(person)} onClick={() => apply(false)}>{passport ? 'Renew It' : 'Apply For One'}</Gated>
             {office?.expedite && (
               <Gated feature="documents.apply_passport" className="btn btn-sm btn-ghost" disabled={Boolean(passportRefusal(person, true))} title={passportRefusal(person, true)} onClick={() => apply(true)}>{passport ? 'Renew It Faster' : 'Apply Faster'}</Gated>
             )}
+            {/* Why they're grayed, in words beside them, once where both say the same (from 2026-10-17, as Your ID's below):
+                until then only their tooltips said it, which a phone never shows. */}
+            {[...new Set([passportRefusal(person), office?.expedite ? passportRefusal(person, true) : undefined])].filter(Boolean).map((no) => <span key={no} className="xs dim">{no}</span>)}
           </div>
           <p className="small" style={{ margin: 0 }}>A new passport replaces the one before it, which is canceled, and a travel authorization issued on the old one ends with it.</p>
           <DocumentList kinds={['passport', 'visa', 'authorization']} />
@@ -179,12 +182,15 @@ function IdPanel() {
   return (
     <Panel title="Your ID" subtitle={card ? card.card.name : 'None issued where you live'} help="documents.passport-id">
       <LookRegion className="col gap-3">
-        <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
           <Gated feature="documents.apply_idcard" className="btn btn-sm" disabled={Boolean(idNo)} title={idNo} onClick={() => {
             const a = run<{ expiresAt?: number; fee: number; readyAt?: number }>('documents.apply_idcard', {});
             // The day a card on its way comes, where it isn't handed over (from 2026-10-17: Connecticut mails it).
             if (a.ok) toast(`${card?.card.name ?? 'An ID card'}: you paid ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}.${a.value!.readyAt ? ` The card comes ${formatDate(a.value!.readyAt, sim.zone)}.` : ''}${a.value!.expiresAt ? ` It’s good until ${formatDate(a.value!.expiresAt, sim.zone)}.` : ''}`, 'positive');
           }}>Get {card?.card.name ?? 'An ID Card'}</Gated>
+          {/* Why it's grayed, in words beside it (from 2026-10-17, brief 14's document journey): until then only its tooltip
+              said "One is already on its way." or "You already hold one in force.", which a phone never shows. */}
+          {idNo && <span className="xs dim">{idNo}</span>}
         </div>
         <DocumentList kinds={['idcard', 'license', 'idp']} />
         {/* Where the card's term is SLATE's assumption, said (from 2026-10-17, brief 12's KS-ct-idcard: until then only the guide said it). */}
@@ -233,9 +239,11 @@ export function WorkPane() {
       <Panel title="OPT" subtitle={`${opt.form}, after your degree`} help="documents.apply_opt">
         <div className="col gap-3">
           <p className="small" style={{ margin: 0 }}>OPT gives you up to twelve months to work in your field, from the later of your program’s end and the approval, with no more than {opt.unemploymentDays} days without work in total. The game has no work after the degree, so an approved OPT ends after its {opt.unemploymentDays} days without work, and your US status ends with it. In practice it keeps you in the US about {opt.unemploymentDays} days from its start. It costs {usd(opt.fee)}. Premium processing adds {usd(opt.premiumFee)} and gets a decision within {opt.premiumBusinessDays} business days.</p>
-          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+          <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
             <Gated feature="documents.apply_opt" className="btn btn-sm" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', {}, 'Applied for OPT')}>Apply For OPT</Gated>
             <Gated feature="documents.apply_opt" className="btn btn-sm btn-ghost" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', { premium: true }, 'Applied for OPT with premium processing')}>Apply With Premium Processing</Gated>
+            {/* Why both are grayed, in words beside them (from 2026-10-17, as Your ID's): until then only their tooltips said it. */}
+            {optNo && <span className="xs dim">{optNo}</span>}
           </div>
           <Fine>USCIS publishes no standard processing time, so it’s estimated at {opt.standardDays} days. Source: {opt.source}.</Fine>
         </div>

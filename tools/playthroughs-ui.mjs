@@ -8,15 +8,27 @@
  * - `setback`: the `workload` scenario's save, the term's warning on coursework answered through to the scene's showing;
  * - `specialist`: the `specialist` scenario's save, a brief prepared, played, taped, its advice followed, and taped again.
  *
+ * From 2026-10-17, brief 14's section 9 adds the three journeys those don't carry, written first in
+ * `docs/verification/language-2026-10-17/journeys/criteria.md`, and its language checks, which only they run:
+ *
+ * - `banking`: the `roundups` save, a transfer refused for more than the account holds and then made, a meal paid by card
+ *   pending until it posts, saved and continued, and the month's statement;
+ * - `document`: the `brief` save, Connecticut's ID card applied for, on its way, saved and continued, and held;
+ * - `health`: the `health` scenario's save, a sprained ankle, what it refuses, its care, the days it mends.
+ *
  *   npm run build && npx vite preview --port 4187 --strictPort
  *   npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json
  *   npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json
+ *   npx vite-node tools/scenarios.ts -- --scenario roundups --seed sc-0 --save SAVEDIR/roundups.json
+ *   npx vite-node tools/scenarios.ts -- --scenario brief --seed sc-0 --save SAVEDIR/brief.json
+ *   npx vite-node tools/scenarios.ts -- --scenario health --seed sc-0 --save SAVEDIR/health.json
  *   SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs PLAYTHROUGH WIDTH [SAVEDIR] [OUTROOT]
  *
  * It writes OUTROOT/PLAYTHROUGH-WIDTH/trace.json (OUTROOT is `docs/verification/playthroughs-2026-10-17/interface` unless
  * given) and a few milestone screenshots beside it, small: the viewport alone, as JPEG. A step that fails is recorded with
  * a screenshot and the run goes on, so what came after is seen. It exits 1 where a step failed, where any of the six things
- * the brief names has no passed step, or on a page error or a screen past the right edge. Nothing is called on the
+ * the brief names has no passed step, or on a page error or a screen past the right edge, and for brief 14's journeys on
+ * a language check that fails (a label broken mid-word, a clipped control, a wall of text, a nameless control). Nothing is called on the
  * engine: a save is put in the browser's own store and opened with Continue, as `tools/acceptance-ui.mjs` opens one, and
  * that file's helpers are copied here rather than shared, so its 76 steps are as they were.
  */
@@ -30,8 +42,10 @@ import { launchOptions } from './browser.mjs';
 const BASE = process.env.SLATE_BASE ?? 'http://localhost:4187';
 const [WHICH, W = '1440', DIR = '', ROOT = 'docs/verification/playthroughs-2026-10-17/interface'] = process.argv.slice(2);
 const SIX = ['navigation', 'drill-down', 'unavailable', 'confirmation', 'notification', 'save-continue'];
-if (!['normal', 'setback', 'specialist'].includes(WHICH)) {
-  console.error('Usage: node tools/playthroughs-ui.mjs normal|setback|specialist WIDTH [SAVEDIR] [OUTROOT]');
+/** Brief 14's journeys (from 2026-10-17): the three that also run section 9's language checks. */
+const JOURNEYS = ['banking', 'document', 'health'];
+if (!['normal', 'setback', 'specialist', ...JOURNEYS].includes(WHICH)) {
+  console.error('Usage: node tools/playthroughs-ui.mjs normal|setback|specialist|banking|document|health WIDTH [SAVEDIR] [OUTROOT]');
   process.exit(2);
 }
 const WIDTH = Number(W);
@@ -964,18 +978,726 @@ async function specialist() {
   });
 }
 
+// ===========================================================================================================
+// Brief 14's journeys (from 2026-10-17): section 9's banking, document and health journeys, and its language checks.
+// They find a control by its role, its element id or its place in a panel, and check a sentence against what it must
+// agree with elsewhere (a figure, a date, a name, the same refusal word for word), since the money, school and profile
+// areas merge their new words after these were written. Each word they still match is listed in
+// `docs/verification/language-2026-10-17/journeys/README.md`, Matchers.
+// ===========================================================================================================
+
+/** What section 9's checks found, each once a run: `fails` fail the run, `recorded` are for a reader to judge. */
+const lang = { fails: [], recorded: [] };
+const langSeen = new Set();
+function langNote(fail, kind, where, what) {
+  const key = `${kind}|${what}`;
+  if (langSeen.has(key)) return;
+  langSeen.add(key);
+  (fail ? lang.fails : lang.recorded).push({ kind, step: cur?.n, where, what });
+}
+/** The roles a control or a container a player reaches must be named in (Playwright's ARIA snapshot names them as the browser does). */
+const NAMED_ROLES = 'button|link|tab|menuitem|menuitemcheckbox|menuitemradio|textbox|searchbox|combobox|listbox|option|checkbox|radio|switch|slider|spinbutton|dialog';
+/**
+ * Section 9's language checks on the screen as it stands, with any dialog or menu open (criteria.md, The Language
+ * Checks): a label's word split across two lines; a control past the screen's edge outside a region made to scroll, cut
+ * off by its container, or with its words wider than it; a block of running text over 120 words (80 to 120 recorded as
+ * long); a control with no accessible name. A label that wraps between words is recorded, not failed.
+ */
+async function language(where) {
+  const found = await page.evaluate(() => {
+    const vw = document.documentElement.clientWidth;
+    const out = { broken: [], wrapped: [], clipped: [], walls: [], long: [] };
+    const shown = (el) => { const r = el.getBoundingClientRect(); if (!(r.width > 0 && r.height > 0)) return false; const s = getComputedStyle(el); return s.visibility !== 'hidden' && s.display !== 'none'; };
+    const words = (s) => (s.match(/\S+/g) ?? []).length;
+    const said = (el) => (el.innerText ?? '').replace(/\s+/g, ' ').trim();
+    const tag = (el) => (el.getAttribute('role') ?? el.tagName.toLowerCase());
+    // A label's words, each read for the lines it lies on.
+    for (const el of document.querySelectorAll('button, [role=tab], [role=menuitem], a, h1, h2, h3, h4, label, th, summary, .eyebrow, .stat-label, .chip')) {
+      if (!shown(el)) continue;
+      const scope = el.matches('[role=menuitem]') ? (el.querySelector('.menu-item-label') ?? el) : el;
+      const label = said(scope).slice(0, 90);
+      if (!label) continue;
+      // Each run of its words read for the lines it lies on: a label laid out in two parts, a name over a subtitle, isn't
+      // a label that wraps; one run of words on two lines is.
+      let wraps = 0;
+      let broken = '';
+      const walk = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT);
+      for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+        const tops = new Set();
+        for (const m of (n.textContent ?? '').matchAll(/\S+/g)) {
+          const r = document.createRange();
+          r.setStart(n, m.index); r.setEnd(n, m.index + m[0].length);
+          const lines = new Set([...r.getClientRects()].filter((x) => x.width > 0.5).map((x) => Math.round(x.top)));
+          lines.forEach((y) => tops.add(y));
+          if (lines.size > 1 && !broken) broken = m[0];
+        }
+        wraps = Math.max(wraps, tops.size);
+      }
+      // A break at a hyphen or a slash is where a word may wrap; anywhere else, it breaks the label.
+      if (broken && !/[-‐–—/]/.test(broken)) out.broken.push(`${tag(el)} “${label}”: “${broken}” split across two lines`);
+      else if (wraps > 1 && el.matches('button:not(.link), [role=tab], [role=menuitem], th, .stat-label, .chip, .eyebrow')) out.wrapped.push(`${tag(el)} “${label}” on ${wraps} lines`);
+    }
+    // A control past the edge, cut off, or with its words wider than it.
+    for (const el of document.querySelectorAll('button, [role=tab], [role=menuitem], select, input:not([type=hidden]):not([type=radio]):not([type=checkbox]), textarea')) {
+      if (!shown(el)) continue;
+      const r = el.getBoundingClientRect();
+      const name = (said(el) || el.getAttribute('aria-label') || el.id || tag(el)).slice(0, 80);
+      let scrolls = false;
+      for (let p = el.parentElement; p; p = p.parentElement) {
+        const o = getComputedStyle(p).overflowX;
+        if (o === 'auto' || o === 'scroll') { scrolls = true; break; }
+        if (o === 'hidden' || o === 'clip') {
+          const pr = p.getBoundingClientRect();
+          if (r.right > pr.right + 1 || r.left < pr.left - 1) out.clipped.push(`${tag(el)} “${name}” cut off by the ${p.tagName.toLowerCase()}${p.className ? `.${String(p.className).split(' ')[0]}` : ''} around it`);
+          break;
+        }
+      }
+      if (!scrolls && getComputedStyle(el).position !== 'fixed' && (r.right > vw + 1 || r.left < -1)) out.clipped.push(`${tag(el)} “${name}” past the screen’s edge`);
+      const s = getComputedStyle(el);
+      if (!el.matches('select, input, textarea') && el.scrollWidth > el.clientWidth + 1 && (s.overflowX === 'hidden' || s.overflowX === 'clip' || s.textOverflow === 'ellipsis')) out.clipped.push(`${tag(el)} “${name}”: its words wider than it`);
+    }
+    // Running text: each block that holds no other block, its words counted.
+    const BLOCK = new Set(['block', 'list-item', 'table-cell', 'flex', 'grid', 'table', 'flow-root']);
+    const all = [...document.body.querySelectorAll('*')].filter((el) => shown(el) && BLOCK.has(getComputedStyle(el).display));
+    const parents = new Set();
+    for (const el of all) for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) { if (parents.has(p)) break; parents.add(p); }
+    for (const el of all) {
+      if (parents.has(el) || el.matches('button, [role=menuitem], select, option, script, style')) continue;
+      const t = said(el);
+      const n = words(t);
+      if (n > 120) out.walls.push(`${n} words in one ${tag(el)}: “${t.slice(0, 110)}…”`);
+      else if (n >= 80) out.long.push(`${n} words in one ${tag(el)}: “${t.slice(0, 110)}…”`);
+    }
+    return out;
+  }).catch((e) => ({ error: String(e).slice(0, 200) }));
+  if (found.error) { langNote(true, 'check failed', where, found.error); return; }
+  for (const w of found.broken) langNote(true, 'label broken', where, w);
+  for (const w of found.clipped) langNote(true, 'control clipped', where, w);
+  for (const w of found.walls) langNote(true, 'wall of text', where, w);
+  for (const w of found.wrapped) langNote(false, 'label wraps', where, w);
+  for (const w of found.long) langNote(false, 'long text', where, w);
+  const snap = await page.locator('body').ariaSnapshot({ timeout: 8000 }).catch(() => '');
+  const lines = snap.split('\n');
+  lines.forEach((line, i) => {
+    const m = line.match(new RegExp(`^\\s*- (${NAMED_ROLES})(\\s*$|\\s*\\[|:)`));
+    if (m) langNote(true, 'no accessible name', where, `a ${m[1]}${line.includes('[') ? ` ${line.slice(line.indexOf('['))}` : ''}, after “${clean(lines.slice(Math.max(0, i - 2), i).join(' ')).slice(0, 120)}”`);
+  });
+}
+/** A journey's step, and section 9's checks on the screen it ends on. */
+async function play(name, six, fn) {
+  const ok = await step(name, six, fn);
+  await language(`after step ${trace.steps.length}`);
+  await overflow(`after step ${trace.steps.length}`);
+  return ok;
+}
+
+/** Money as the screen writes it, as a number of its units: “−$1,234.50” is −1234.5. */
+const amountOf = (s) => { const m = String(s).match(/([−-])?\s*[$£€]\s?([\d,]+(?:\.\d+)?)/); return m ? (m[1] ? -1 : 1) * Number(m[2].replace(/,/g, '')) : NaN; };
+/** Every amount of money a text gives, in its order. */
+const amountsIn = (s) => [...String(s).matchAll(/[$£€]\s?[\d,]+(?:\.\d\d)?/g)].map((m) => amountOf(m[0]));
+const DATE = /[A-Z][a-z]+ \d{1,2}, \d{4}/g;
+/** Every date a text gives, as the game writes one (“October 9, 2026”), in its order. */
+const datesIn = (s) => String(s).match(DATE) ?? [];
+const dayOf = (d) => Date.parse(`${d} 12:00 UTC`);
+const escapeRe = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+/** A screen's tab by its element id (`<screen>-tab-<id>`), checked selected: the tab's words are the area's to change. */
+async function tabById(screen, id) {
+  const t = page.locator(`#${screen}-tab-${id}`).first();
+  must(await t.count(), `no tab #${screen}-tab-${id}`);
+  await press(t, `${clean(await t.innerText())} (tab)`); await wait(700);
+  must(await t.getAttribute('aria-selected') === 'true', `#${screen}-tab-${id} isn’t selected after pressing it`);
+}
+const panelWith = (inner) => page.locator('section.card', { has: inner }).first();
+const panelHeaded = (title) => page.locator('section.card', { has: page.getByRole('heading', { name: title, exact: true }) }).first();
+/** The newest toast's words and its tone (`data-tone`, positive or negative): a refusal is told by its tone, not its words. */
+async function newestToastWithTone() {
+  const t = page.locator('.toasts > .toast').last();
+  if (!(await t.count())) return { text: '', tone: '' };
+  return { text: clean(await t.innerText().catch(() => '')), tone: (await t.getAttribute('data-tone').catch(() => '')) ?? '' };
+}
+/** A notice on Home by its title, or nothing: Show All pressed where it's past the six heaviest. */
+async function findNotice(re) {
+  await rail('Home');
+  if (await noticeRow(re).count()) return noticeRow(re);
+  const all = needsPanel().getByRole('button', { name: /^Show All \d+$/ });
+  if (await all.count()) { await press(all); await wait(500); }
+  return (await noticeRow(re).count()) ? noticeRow(re) : undefined;
+}
+/** Look After Yourself opened: the menu, for a step to read and press in. */
+async function lookAfterMenu() {
+  await press(page.getByRole('button', { name: /^Look After Yourself/ }).first(), 'Look After Yourself'); await wait(500);
+  const menu = page.getByRole('menu', { name: 'Look After Yourself' }).first();
+  must(await menu.isVisible().catch(() => false), 'Look After Yourself didn’t open');
+  return menu;
+}
+/** A menu item's reason, or what it would do: its last part after the time and the price (“1 hr · <reason>”). */
+const itemWhy = async (item) => clean(await item.locator('.menu-item-detail').first().innerText().catch(() => '')).split(' · ').at(-1) ?? '';
+/** Work Out in Look After Yourself, read and closed: offered or not, and its reason. */
+async function workOut() {
+  const menu = await lookAfterMenu();
+  const item = menu.getByRole('menuitem', { name: /^Work Out/ }).first();
+  must(await item.count(), 'no Work Out in Look After Yourself');
+  const state = { refused: await item.isDisabled(), why: await itemWhy(item) };
+  await page.keyboard.press('Escape'); await wait(300);
+  if (await menu.isVisible().catch(() => false)) await press(page.getByRole('button', { name: /^Look After Yourself/ }).first(), 'Look After Yourself');
+  return state;
+}
+/** How This Works from a panel: its entry, a connected entry from How It Connects and Back, closed with the tab and the clock as they were. */
+async function helpRoundTrip(button, tabSelected) {
+  const help = () => page.getByRole('dialog', { name: /How This Works/ }).last();
+  const title = async () => clean(await help().locator('article.help-entry h3').first().innerText().catch(() => ''));
+  must(await button.count(), 'no How This Works here');
+  const t0 = await when();
+  await press(button, clean(await button.getAttribute('aria-label'))); await wait(700);
+  const first = await title();
+  must(first, 'How This Works opened no entry');
+  await language('How This Works, its entry');
+  const connected = help().locator('details.help-section', { hasText: /^How It Connects/ }).first();
+  must(await connected.count(), `“${first}” shows no How It Connects`);
+  await press(connected.locator('summary'), 'How It Connects'); await wait(300);
+  const link = connected.locator('button.help-link').first();
+  must(await link.count(), `“${first}” connects to nothing`);
+  const to = clean(await link.innerText());
+  await press(link, to); await wait(500);
+  must((await title()) === to, `followed “${to}”, showing “${await title()}”`);
+  const trail = clean(await help().getByRole('navigation', { name: 'Help Trail' }).innerText());
+  must(trail.includes(first) && trail.includes(to), `the trail says “${trail}”`);
+  await language('How This Works, a connected entry');
+  await press(help().getByRole('button', { name: /^Back$/ }), 'Back'); await wait(400);
+  must((await title()) === first, `Back went to “${await title()}”`);
+  await page.keyboard.press('Escape'); cur.pressed.push('Escape'); await wait(500);
+  must(!(await help().isVisible().catch(() => false)), 'Escape didn’t close the help');
+  must(await tabSelected(), 'the tab came back changed');
+  must((await when()) === t0, `the clock moved while reading: ${t0} → ${await when()}`);
+  return `${first} → ${to} → Back; trail “${trail}”`;
+}
+/**
+ * On The Way asked before an advance, as `onTheWayCancelled` asks it, then Cancel and the clock where it was. Where the
+ * advance isn't asked first and the clock runs to a commitment and stops there, Stand Here leaves it waiting at that stop
+ * and the step fails, saying so, so the journey goes on from a moment it can name.
+ */
+async function askedFirst(item) {
+  const before = await when();
+  await openAdvance(item);
+  const d = page.getByRole('dialog', { name: 'On The Way' }).first();
+  if (!(await d.isVisible().catch(() => false))) {
+    const stop = page.locator('[role=dialog]:visible').last();
+    const words = clean(await stop.innerText().catch(() => '')) || 'no dialog';
+    const stand = stop.getByRole('button', { name: /^Stand Here$/ }).first();
+    const stood = (await stand.count()) > 0;
+    if (stood) { await press(stand, 'Stand Here'); await wait(700); }
+    throw new Error(`${item} wasn’t asked first: the clock ran from ${before} to ${await when()} and stopped at “${words.slice(0, 220)}”${stood ? '; Stand Here pressed' : ''}`);
+  }
+  await language('On The Way');
+  const words = clean(await d.innerText());
+  must(/passes \w+ commitments?, and the clock stops at each one\./.test(words), `On The Way says: ${words.slice(0, 240)}`);
+  said(`On The Way: ${words.replace(/^On The Way /, '').slice(0, 400)}`);
+  await press(d.getByRole('button', { name: /^Cancel$/ }).first(), 'Cancel'); await wait(600);
+  must(!(await page.locator('[role=dialog]:visible').count()), 'a dialog still open after Cancel');
+  must((await when()) === before, `Cancel moved the clock: ${before} → ${await when()}`);
+  return words;
+}
+/** Each morning by Tomorrow Morning, every stop gone to, until `done` says so or the days run out: the mornings taken. */
+async function mornings(most, done) {
+  for (let i = 1; i <= most; i += 1) {
+    await advance('Tomorrow Morning');
+    if (await done(i)) return i;
+  }
+  return most + 1;
+}
+
+// ===========================================================================================================
+// Playthrough 4: a banking action with a restriction and a pending state.
+// ===========================================================================================================
+
+const movePanel = () => panelWith(page.locator('#move-amount'));
+/** Each everyday account by Move Money's From list, which gives each one's balance: name → balance. */
+async function balances() {
+  const options = (await page.locator('#move-from option').allInnerTexts()).map(clean);
+  return Object.fromEntries(options.map((o) => [o.split(' ···')[0], amountsIn(o).at(-1)]));
+}
+const statementPanel = () => panelWith(page.locator('#statement-account'));
+/** The statement on screen: its figures by label, and its lines, each with its date, what, amount, the balance after, and the day it posts where it's pending. */
+async function statementNow() {
+  const panel = statementPanel();
+  const figures = Object.fromEntries((await panel.locator('.stat').evaluateAll((els) => els.map((e) => [e.querySelector('.stat-label')?.textContent ?? '', e.querySelector('.stat-value')?.textContent ?? '']))).map(([k, v]) => [clean(k), clean(v)]));
+  const rows = panel.locator('.statement-lines > .row-between.small');
+  const lines = [];
+  for (let i = 0; i < await rows.count(); i += 1) {
+    const cells = (await rows.nth(i).locator(':scope > span').allInnerTexts()).map(clean);
+    const note = clean(await rows.nth(i).locator(':scope > span').nth(1).locator('.xs').first().innerText({ timeout: 500 }).catch(() => ''));
+    const memo = clean(await rows.nth(i).locator(':scope > span').nth(1).locator('button.link').first().innerText({ timeout: 500 }).catch(() => cells[1]));
+    lines.push({ i, date: cells[0], memo, what: cells[1], amount: amountOf(cells[2]), after: amountOf(cells[3]), pending: /Pending/i.test(note), posts: /Pending/i.test(note) ? datesIn(note)[0] ?? '' : '' });
+  }
+  return { figures, lines, period: clean(await page.locator('#statement-period option:checked').innerText().catch(() => '')) };
+}
+const figure = (st, re) => amountOf(Object.entries(st.figures).find(([k]) => re.test(k))?.[1] ?? '');
+/** Statements, the current account (`name`), the period at `index` (0 is this month's). */
+async function toStatement(name, index = 0) {
+  await rail('Money'); await tabById('bank', 'statements');
+  const value = await page.locator('#statement-account option').evaluateAll((os, n) => os.find((o) => (o.textContent ?? '').startsWith(n))?.value ?? '', name);
+  must(value, `no ${name} among the statements’ accounts`);
+  await page.locator('#statement-account').selectOption(value); cur.pressed.push(`Account: ${name}`); await wait(400);
+  await page.locator('#statement-period').selectOption({ index }); cur.pressed.push(`Period: ${clean(await page.locator('#statement-period option:checked').innerText())}`); await wait(400);
+  return statementNow();
+}
+
+async function banking() {
+  let from = '';
+  let to = '';
+  let price = NaN;
+  let posts = '';
+  let held = {};
+  // The payment's line by its day and its words as the statement gives them, so a fee of the same amount isn't taken for it.
+  let paid = { date: '', memo: '' };
+  await play('[save: roundups scenario] Money by the rail: Accounts, each account’s balance, Move Money offered', ['navigation'], async () => {
+    await openSave('roundups.json');
+    trace.startingPoint.command = 'npx vite-node tools/scenarios.ts -- --scenario roundups --seed sc-0 --save SAVEDIR/roundups.json';
+    await rail('Money');
+    must(hash().startsWith('#/workspace/bank'), `Money at ${hash()}`);
+    await tabById('bank', 'accounts');
+    must(await page.locator('#move-amount').count(), 'no Move Money');
+    from = clean(await page.locator('#move-from option:checked').innerText()).split(' ···')[0];
+    to = clean(await page.locator('#move-to option:checked').innerText()).split(' ···')[0];
+    held = await balances();
+    must(from && to && Number.isFinite(held[from]) && Number.isFinite(held[to]), `balances read: ${JSON.stringify(held)}`);
+    return `${Object.entries(held).map(([k, v]) => `${k} $${v.toLocaleString('en-US')}`).join(', ')}; Move Money from ${from} to ${to}`;
+  });
+  await play('more than the current account holds, refused in words, naming what it holds; nothing moved, the clock as it was', ['unavailable'], async () => {
+    const t0 = await when();
+    const asked = held[from] + 1000;
+    await page.locator('#move-amount').fill(String(asked)); cur.pressed.push(`Amount: ${asked}`); await wait(300);
+    await press(movePanel().locator('button.btn-primary').first(), 'Move It'); await wait(900);
+    const { text, tone } = await newestToastWithTone();
+    said(`refused (${tone}): ${text}`);
+    must(tone === 'negative', `the press wasn’t refused: “${text}” (${tone || 'no toast'})`);
+    must(amountsIn(text).includes(held[from]), `the refusal doesn’t name the $${held[from].toLocaleString('en-US')} ${from} holds: ${text}`);
+    await movePanel().scrollIntoViewIfNeeded().catch(() => {});
+    await shot('transfer-refused');
+    const now = await balances();
+    must(JSON.stringify(now) === JSON.stringify(held), `a balance moved: ${JSON.stringify(held)} → ${JSON.stringify(now)}`);
+    must((await when()) === t0, `the clock moved: ${t0} → ${await when()}`);
+    return text;
+  });
+  await play('$500 moved: the toast says it, the current account $500 less and savings $500 more, the clock as it was', [], async () => {
+    const t0 = await when();
+    await page.locator('#move-amount').fill('500'); cur.pressed.push('Amount: 500'); await wait(300);
+    await press(movePanel().locator('button.btn-primary').first(), 'Move It'); await wait(900);
+    const { text, tone } = await newestToastWithTone();
+    must(tone === 'positive' && amountsIn(text).includes(500), `the toast: “${text}” (${tone})`);
+    const now = await balances();
+    must(now[from] === held[from] - 500 && now[to] === held[to] + 500, `${from} $${held[from]} → $${now[from]}, ${to} $${held[to]} → $${now[to]}`);
+    must((await when()) === t0, `the clock moved: ${t0} → ${await when()}`);
+    held = now;
+    return `${text} ${from} $${now[from].toLocaleString('en-US')}, ${to} $${now[to].toLocaleString('en-US')}`;
+  });
+  await play('a card payment: Look After Yourself, the first item with a price and offered, pressed', [], async () => {
+    const menu = await lookAfterMenu();
+    await language('Look After Yourself, open');
+    const items = menu.getByRole('menuitem');
+    let chosen;
+    for (let i = 0; i < await items.count(); i += 1) {
+      const it = items.nth(i);
+      if (await it.isDisabled()) continue;
+      const cost = amountsIn(clean(await it.locator('.menu-item-detail').first().innerText().catch(() => '')))[0];
+      if (cost > 0) { chosen = it; price = cost; break; }
+    }
+    must(chosen, 'nothing in Look After Yourself costs money and is offered now');
+    const label = clean(await chosen.locator('.menu-item-label').innerText().catch(() => '')).replace(/(Needed Now|Most Worth It)$/, '').trim();
+    await press(chosen, label); await wait(1000); await settle();
+    const { text, tone } = await newestToastWithTone();
+    must(tone === 'positive', `“${label}” said: ${text} (${tone})`);
+    return `${label}, $${price.toFixed(2)}: ${text}`;
+  });
+  await play('pending, not available: Statements, the current account this month; what’s available and the posted balance differ by what’s pending; the payment pending, its day to post; its line’s look says so', ['navigation', 'drill-down'], async () => {
+    const st = await toStatement(from, 0);
+    const pending = st.lines.filter((l) => l.pending);
+    const avail = figure(st, /Available/i);
+    const posted = figure(st, /Posted/i);
+    said(`${st.period}: ${Object.entries(st.figures).map(([k, v]) => `${k} ${v}`).join(', ')}; pending: ${pending.map((l) => `${l.what} ${l.amount}`).join('; ')}`);
+    must(pending.length > 0, 'no line marked pending');
+    must(Number.isFinite(avail) && Number.isFinite(posted), `no available and posted figures: ${JSON.stringify(st.figures)}`);
+    const sum = pending.reduce((s, l) => s + l.amount, 0);
+    must(Math.abs(posted + sum - avail) < 0.005, `available ${avail} isn’t the posted ${posted} less what’s pending (${sum.toFixed(2)})`);
+    const today = await dateText();
+    const meal = pending.find((l) => Math.abs(-l.amount - price) < 0.005 && l.date === today);
+    must(meal, `no pending line of $${price.toFixed(2)} dated ${today}: ${pending.map((l) => `${l.date} ${l.what} ${l.amount}`).join('; ')}`);
+    paid = { date: meal.date, memo: meal.memo };
+    posts = meal.posts;
+    must(posts, `the payment’s line gives no day it posts: ${meal.what}`);
+    await statementPanel().scrollIntoViewIfNeeded().catch(() => {});
+    await shot('statement-pending');
+    const row = statementPanel().locator('.statement-lines > .row-between.small').nth(meal.i);
+    const look = await openLook(row.locator(':scope > span').nth(1).locator('button.link').first());
+    const words = clean(await look.look.innerText());
+    must(words.includes(posts), `the line’s look doesn’t give the day it posts (${posts}): ${words.slice(0, 300)}`);
+    await language('a statement line’s look');
+    await closeLook(look.name);
+    return `${meal.what}, −$${price.toFixed(2)}, posts ${posts}; available $${avail}, posted $${posted}`;
+  });
+  await play('Statement Ready turned on, the clock as it was', [], async () => {
+    const t0 = await when();
+    const toggle = page.getByRole('button', { name: /^Statement Ready:/ }).first();
+    must(await toggle.count(), 'no Statement Ready');
+    const was = clean(await toggle.innerText());
+    must(/Off$/.test(was), `Statement Ready reads “${was}”`);
+    await press(toggle, was); await wait(600);
+    const now = clean(await page.getByRole('button', { name: /^Statement Ready:/ }).first().innerText());
+    must(/On$/.test(now), `after pressing it reads “${now}”`);
+    must((await when()) === t0, `the clock moved: ${t0} → ${await when()}`);
+    return `${was} → ${now}`;
+  });
+  await play('Save & Exit; Delete asked and kept; Continue: the same moment, the same lines pending on the same days, the same figures, Statement Ready still on', ['confirmation', 'save-continue'], async () => {
+    const before = await statementNow();
+    const at = await deleteKeptThenContinue();
+    const after = await toStatement(from, 0);
+    must(JSON.stringify(after.figures) === JSON.stringify(before.figures), `the figures read differently: ${JSON.stringify(after.figures)}`);
+    must(JSON.stringify(after.lines.filter((l) => l.pending)) === JSON.stringify(before.lines.filter((l) => l.pending)), 'the pending lines read differently');
+    must(/On$/.test(clean(await page.getByRole('button', { name: /^Statement Ready:/ }).first().innerText())), 'Statement Ready isn’t on after Continue');
+    return `${at}; ${after.lines.filter((l) => l.pending).length} lines pending as they were`;
+  });
+  await play('One Week, asked: On The Way names what’s on the way, Cancel leaves the clock', ['confirmation'], async () => {
+    const words = await askedFirst('One Week');
+    must(datesIn(words).length > 0, `On The Way lists nothing dated: ${words.slice(0, 200)}`);
+  });
+  let notice = NaN;
+  await play('to the day after the payment posts, each stop gone to: the month’s statement for the current account on Home, its balance at the close; Go There opens Money', ['notification', 'navigation'], async () => {
+    must(posts, 'no posting day was read before');
+    const days = await mornings(8, async () => dayOf(await dateText()) > dayOf(posts));
+    must(days <= 8, `still not past ${posts} after 8 mornings: ${await when()}`);
+    const re = new RegExp(`Statement.*${escapeRe(from)}|${escapeRe(from)}.*Statement`);
+    const row = await findNotice(re);
+    must(row, `no statement for ${from} among Home’s notices: ${(await notices()).map((n) => n.slice(0, 50)).join(' | ')}`);
+    const { title, body } = await readNotice(re);
+    notice = amountsIn(body)[0];
+    must(Number.isFinite(notice), `the notice gives no balance: ${body}`);
+    await shot('statement-notice');
+    await press(noticeRow(re).getByRole('button', { name: /^Go There$/ }), 'Go There'); await wait(1200);
+    must(hash().startsWith('#/workspace/bank'), `Go There opened ${hash()}`);
+    return `${days} mornings, to ${await when()}: “${title}”: ${body}`;
+  });
+  await play('posted: the payment’s line no longer pending; the closed month’s closing balance is the notice’s figure, to the cent', ['drill-down'], async () => {
+    const st = await toStatement(from, 1);
+    const meal = st.lines.find((l) => l.date === paid.date && l.memo === paid.memo && Math.abs(-l.amount - price) < 0.005);
+    must(meal, `no line “${paid.memo}” of $${price.toFixed(2)} dated ${paid.date} in ${st.period}: ${st.lines.map((l) => `${l.date} ${l.what} ${l.amount}`).join('; ').slice(0, 300)}`);
+    must(!meal.pending, `the payment is still pending: ${meal.what}`);
+    const closing = figure(st, /Closing/i);
+    said(`${st.period}: ${Object.entries(st.figures).map(([k, v]) => `${k} ${v}`).join(', ')}`);
+    must(Math.abs(closing - notice) < 0.005, `${st.period}’s closing balance $${closing} isn’t the notice’s $${notice}`);
+    await statementPanel().scrollIntoViewIfNeeded().catch(() => {});
+    await shot('statement-posted');
+    return `${st.period}: ${meal.what} posted; closing $${closing}, the notice’s $${notice}`;
+  });
+}
+
+// ===========================================================================================================
+// Playthrough 5: a document applied for, on its way, and held.
+// ===========================================================================================================
+
+const idPanel = () => panelHeaded('Your ID');
+const getButton = () => idPanel().getByRole('button', { name: /^Get / }).first();
+/** A grayed control's reason, where it's in words on the screen beside it: its tooltip's words found in the panel's own text, outside the button. */
+async function reasonOnScreen(panel, button) {
+  const tip = clean(await button.getAttribute('title').catch(() => '') ?? '');
+  const inside = clean(await button.innerText());
+  const text = clean(await panel.innerText()).replace(inside, '');
+  return tip && text.includes(tip) ? tip : '';
+}
+async function cardRow() {
+  const row = idPanel().locator('tbody tr').first();
+  must(await row.count(), 'no card in Your ID’s list');
+  const cells = (await row.locator('td').allInnerTexts()).map(clean);
+  return { row, name: cells[0], issued: cells[2], runsOut: cells[3], status: cells[4] };
+}
+async function primaryBalance() {
+  await rail('Money'); await tabById('bank', 'accounts');
+  const o = clean(await page.locator('#move-from option:checked').innerText());
+  return { name: o.split(' ···')[0], balance: amountsIn(o).at(-1) };
+}
+
+async function documentJourney() {
+  let card = '';
+  let comes = '';
+  let until = '';
+  let pendingStatus = '';
+  let refusal = '';
+  let paid = NaN;
+  const toPassport = async () => { await rail('Papers'); await tabById('papers', 'passport'); };
+  await play('[save: brief scenario] Papers by the rail, Passport And ID: Your ID names the card, none held, Get offered', ['navigation'], async () => {
+    await openSave('brief.json');
+    trace.startingPoint.command = 'npx vite-node tools/scenarios.ts -- --scenario brief --seed sc-0 --save SAVEDIR/brief.json';
+    const bank = await primaryBalance();
+    paid = bank.balance;
+    await toPassport();
+    must(hash().startsWith('#/workspace/papers'), `Papers at ${hash()}`);
+    must(await idPanel().count(), 'no Your ID panel');
+    card = clean(await idPanel().locator('.panel-head p').first().innerText());
+    must(card && clean(await getButton().innerText()).endsWith(card), `the subtitle names “${card}”, the button “${clean(await getButton().innerText().catch(() => ''))}”`);
+    must(!(await idPanel().locator('tbody tr').count()), 'a card is already listed');
+    must(!(await getButton().isDisabled()), `Get is grayed: ${await getButton().getAttribute('title')}`);
+    return `${card}; ${bank.name} $${bank.balance.toLocaleString('en-US')} before`;
+  });
+  await play('Your ID’s How This Works: its entry, a connected entry and Back, closed with the tab and the clock as they were', ['drill-down'], async () => {
+    return helpRoundTrip(idPanel().locator('button[aria-label^="How This Works:"]').first(), async () => (await page.locator('#papers-tab-passport').getAttribute('aria-selected')) === 'true');
+  });
+  await play('applied: the toast names the card, its fee, the day it comes and the day it’s good until; the fee off the current account', [], async () => {
+    await press(getButton(), `Get ${card}`); await wait(1000);
+    const { text, tone } = await newestToastWithTone();
+    must(tone === 'positive', `Get said: ${text} (${tone})`);
+    must(text.includes(card), `the toast doesn’t name ${card}: ${text}`);
+    const fee = amountsIn(text)[0];
+    [comes, until] = datesIn(text);
+    must(fee === 28 && comes === 'October 9, 2026' && until === 'June 14, 2034', `expected $28.00, October 9, 2026 and June 14, 2034: ${text}`);
+    await idPanel().scrollIntoViewIfNeeded().catch(() => {});
+    await shot('applied');
+    const bank = await primaryBalance();
+    must(bank.balance === paid - fee, `${bank.name} $${paid} → $${bank.balance}, where the fee was $${fee}`);
+    paid = fee;
+    return text;
+  });
+  await play('applied isn’t held: the row not in force and not issued; Get grayed, its reason on the screen; the card’s look gives the day it comes and isn’t issued', ['unavailable', 'drill-down'], async () => {
+    await toPassport();
+    const r = await cardRow();
+    pendingStatus = r.status;
+    said(`row: ${r.name} | ${r.issued} | ${r.runsOut} | ${r.status}`);
+    must(r.name.startsWith(card), `the row is “${r.name}”`);
+    must(!/In Force/i.test(r.status) && !datesIn(r.issued).length, `the row reads ${r.status}, issued ${r.issued}`);
+    await idPanel().scrollIntoViewIfNeeded().catch(() => {});
+    await shot('on-its-way');
+    refusal = await refused(getButton(), async () => reasonOnScreen(idPanel(), getButton())).catch(async (e) => { throw new Error(`${e.message}${/no reason/.test(e.message) ? ` (its tooltip: “${await getButton().getAttribute('title')}”)` : ''}`); });
+    const look = await openLook(r.row.locator('td').first().locator('button.link').first());
+    must(look.summary.includes(comes), `its look doesn’t give ${comes}: ${look.summary}`);
+    const issued = clean(await look.look.locator('.stat', { has: page.locator('.stat-label', { hasText: /Issued/i }) }).first().locator('.stat-value').innerText().catch(() => ''));
+    must(issued && !datesIn(issued).length, `its look says issued “${issued}”`);
+    await language('the card’s look');
+    await closeLook(look.name);
+    return `${r.status}; refused: ${refusal}; look: ${look.summary}`;
+  });
+  await play('Save & Exit; Delete asked and kept; Continue: the same moment, the row, the look’s day and Get’s refusal as they were', ['confirmation', 'save-continue'], async () => {
+    const before = await cardRow();
+    const at = await deleteKeptThenContinue();
+    await toPassport();
+    const after = await cardRow();
+    must(after.status === before.status && after.issued === before.issued && after.runsOut === before.runsOut, `the row reads ${after.status}, ${after.issued}, ${after.runsOut}`);
+    must((await getButton().isDisabled()) && (await reasonOnScreen(idPanel(), getButton())) === refusal, `Get after Continue: ${await getButton().isDisabled() ? 'grayed' : 'offered'}, “${await reasonOnScreen(idPanel(), getButton())}”`);
+    const look = await openLook(after.row.locator('td').first().locator('button.link').first());
+    must(look.summary.includes(comes), `its look after Continue: ${look.summary}`);
+    await closeLook(look.name);
+    return `${at}; still ${after.status}`;
+  });
+  await play('One Week, asked: On The Way names the week’s commitments, Cancel leaves the clock', ['confirmation'], async () => {
+    const words = await askedFirst('One Week');
+    must(datesIn(words).length > 0, `On The Way lists nothing dated: ${words.slice(0, 200)}`);
+  });
+  let arrived = '';
+  await play('the days to its coming, each stop gone to: Home lists its arrival, naming the card, on the day the toast gave', ['notification'], async () => {
+    const re = new RegExp(`^${escapeRe(card)}`);
+    const days = await mornings(35, async () => Boolean(await findNotice(re)));
+    must(days <= 35, `no arrival after 35 mornings: ${await when()}`);
+    arrived = await dateText();
+    const { title, body } = await readNotice(re);
+    must(body.length > 0, 'the notice has no words');
+    const late = (dayOf(arrived) - dayOf(comes)) / 86_400_000;
+    must(late >= 0 && late <= 1, `listed first on ${arrived}, where it was to come ${comes}`);
+    await shot('arrived');
+    return `${days} mornings; on ${arrived}: “${title}”: ${body}`;
+  });
+  await play('held: Go There opens Papers; the row in force from the day it came, to the day the toast gave; Get grayed with its reason on the screen; the look says so', ['navigation', 'unavailable'], async () => {
+    const re = new RegExp(`^${escapeRe(card)}`);
+    await findNotice(re);
+    await press(noticeRow(re).getByRole('button', { name: /^Go There$/ }), 'Go There'); await wait(1200);
+    must(hash().startsWith('#/workspace/papers'), `Go There opened ${hash()}`);
+    await tabById('papers', 'passport');
+    const r = await cardRow();
+    said(`row: ${r.name} | ${r.issued} | ${r.runsOut} | ${r.status}`);
+    must(r.status !== pendingStatus && r.issued === comes && r.runsOut === until, `the row reads ${r.status}, issued ${r.issued}, runs out ${r.runsOut}`);
+    const why = await refused(getButton(), async () => reasonOnScreen(idPanel(), getButton())).catch(async (e) => { throw new Error(`${e.message}${/no reason/.test(e.message) ? ` (its tooltip: “${await getButton().getAttribute('title')}”)` : ''}`); });
+    must(why !== refusal, `the reason is still “${why}”`);
+    const look = await openLook(r.row.locator('td').first().locator('button.link').first());
+    must(look.summary.includes(until), `its look doesn’t give ${until}: ${look.summary}`);
+    await closeLook(look.name);
+    await idPanel().scrollIntoViewIfNeeded().catch(() => {});
+    await shot('held');
+    return `${r.status} from ${r.issued} to ${r.runsOut}; refused: ${why}; look: ${look.summary}`;
+  });
+}
+
+// ===========================================================================================================
+// Playthrough 6: a health interruption and its consequences.
+// ===========================================================================================================
+
+async function health() {
+  let injury = '';
+  let days = NaN;
+  let refusal = '';
+  let mends = '';
+  let hurtOn = '';
+  const INJURY = /^A Sprained Ankle$/;
+  await play('[save: health scenario] the injury’s notice on Home: its name, the days it takes to mend and what it keeps you from', ['notification'], async () => {
+    await openSave('health.json');
+    trace.startingPoint.command = 'npx vite-node tools/scenarios.ts -- --scenario health --seed sc-0 --save SAVEDIR/health.json';
+    trace.startingPoint.testSetup = 'a fall forced through the game’s own mayHurt, with a chance of one, on the first morning from Saturday 12 September 2026 at nine on which a fall would be a sprained ankle (tools/scenarios.ts, health); the run stopped right after it';
+    const { title, body } = await readNotice(INJURY);
+    injury = title;
+    hurtOn = await dateText();
+    days = Number((body.match(/(\d+) days?/) ?? [])[1] ?? NaN);
+    must(days === 7, `the notice gives ${days} days to mend, where 7 were expected: ${body}`);
+    must(/work out/i.test(body), `the notice doesn’t say it keeps you from working out: ${body}`);
+    await shot('injury-notice');
+    return `“${title}”: ${body}`;
+  });
+  await play('the notice opened in place: its look, Close, the clock as it was', ['drill-down'], async () => {
+    const look = await openLook(noticeRow(INJURY).locator('.strong button.link').first());
+    must(look.kind.toLowerCase() === 'notice' && look.name === injury, `opened “${look.name}” (${look.kind})`);
+    await language('the notice’s look');
+    await closeLook(look.name);
+  });
+  await play('How You Are into the injury: your look, its way to the injury, the day it mends and what it keeps you from, a way further in, the outer Close shutting all', ['drill-down'], async () => {
+    const t0 = await when();
+    const how = panelHeaded('How You Are');
+    const outer = await openLook(how.locator('p button.link').first());
+    const way = outer.look.locator(':scope > .look-inner .look-way button.link', { hasText: /Injury/i }).first();
+    must(await way.count(), `“${outer.name}” offers no way to the injury`);
+    await press(way, clean(await way.innerText())); await wait(500);
+    const inner = outer.look.locator('.look').filter({ has: page.locator(':scope > .look-head .look-name', { hasText: new RegExp(`^${escapeRe(injury)}$`) }) }).first();
+    must(await inner.count(), `no look named ${injury} opened inside “${outer.name}”`);
+    const summary = clean(await inner.locator(':scope > .look-inner > .look-summary').innerText());
+    const trail = clean(await inner.locator(':scope > .look-head .look-trail').innerText().catch(() => ''));
+    mends = datesIn(summary)[0] ?? '';
+    must(mends === 'September 19, 2026', `its look gives “${mends}” for the day it mends: ${summary}`);
+    must(/work out/i.test(summary), `its look doesn’t say what it keeps you from: ${summary}`);
+    must(trail.includes(outer.name), `its trail is “${trail}”`);
+    said(`“${injury}”: ${summary}; trail “${trail}”`);
+    await shot('injury-look');
+    const further = await wayIn({ look: inner, name: injury });
+    await language('your look, the injury’s look inside it');
+    await closeLook(outer.name);
+    must(!(await page.locator('.look').count()), 'a look still open after the outer Close');
+    must((await when()) === t0, `the clock moved: ${t0} → ${await when()}`);
+    return `${outer.name} → ${injury} → ${further}`;
+  });
+  await play('Work Out refused: grayed in Look After Yourself, its reason in its own line naming the injury and its days; forced, the clock stays', ['unavailable'], async () => {
+    const menu = await lookAfterMenu();
+    const item = menu.getByRole('menuitem', { name: /^Work Out/ }).first();
+    must(await item.count(), 'no Work Out');
+    refusal = await refused(item, async () => itemWhy(item));
+    await language('Look After Yourself, Work Out refused');
+    await shot('work-out-refused');
+    if (await menu.isVisible().catch(() => false)) await page.keyboard.press('Escape');
+    await wait(300);
+    must(refusal.toLowerCase().includes(injury.toLowerCase()), `the reason doesn’t name ${injury}: ${refusal}`);
+    must(new RegExp(`\\b${days} days?\\b`).test(refusal), `the reason doesn’t give the notice’s ${days} days: ${refusal}`);
+    return refusal;
+  });
+  await play('a class’s work refused for it: School, Coursework, a step on the feet refused with Work Out’s words; forced, the clock stays', ['navigation', 'unavailable'], async () => {
+    await rail('School'); await tabById('school', 'coursework');
+    const ids = await page.locator('[data-shown-today]').evaluateAll((els) => els.map((e) => e.getAttribute('data-shown-today')));
+    const hits = [];
+    for (const id of ids) {
+      const card = cardOf(id);
+      const why = await whyOf(card);
+      if (!why.includes(refusal)) continue;
+      for (let i = 0; i < await stepsOf(card).count(); i += 1) {
+        const b = stepsOf(card).nth(i);
+        const label = clean(await b.innerText());
+        if ((await b.isDisabled()) && why.includes(`${label}: ${refusal}`)) hits.push({ id, label, title: await titleOf(card) });
+      }
+    }
+    must(hits.length, `no step on Coursework refused with “${refusal}”`);
+    const first = hits[0];
+    const b = stepsOf(cardOf(first.id)).filter({ hasText: new RegExp(`^${escapeRe(first.label)}$`) }).first();
+    await refused(b, async () => (await whyOf(cardOf(first.id))).includes(refusal) ? refusal : '');
+    await cardOf(first.id).scrollIntoViewIfNeeded().catch(() => {});
+    await shot('coursework-refused');
+    return hits.map((h) => `${h.title}: ${h.label}`).join('; ');
+  });
+  await play('its care and its cost: the notice’s Go There opens Papers; Health Cover; what urgent care costs you now, and no bill for it unless the notice named a share', ['navigation'], async () => {
+    const { body } = await readNotice(INJURY);
+    await press(noticeRow(INJURY).getByRole('button', { name: /^Go There$/ }), 'Go There'); await wait(1200);
+    must(hash().startsWith('#/workspace/papers'), `Go There opened ${hash()}`);
+    await tabById('papers', 'health');
+    const doctor = clean(await panelHeaded('Your Doctor').innerText().catch(() => ''));
+    const line = doctor.match(/urgent care[^,.·]*?([$£€][\d,]+\.\d\d)/i);
+    must(line, `Your Doctor gives no price for urgent care: ${doctor.slice(0, 300)}`);
+    const urgent = amountOf(line[1]);
+    const share = amountsIn(body)[0];
+    const bills = (await panelHeaded('Care And Its Bills').locator('tbody tr').allInnerTexts().catch(() => [])).map(clean);
+    const thatDay = bills.filter((b) => b.includes(hurtOn));
+    said(`urgent care now $${urgent.toFixed(2)}; the notice’s share: ${Number.isFinite(share) ? `$${share}` : 'none'}; bills that day: ${thatDay.join(' | ') || 'none'}`);
+    if (Number.isFinite(share)) must(thatDay.some((b) => amountsIn(b).includes(share)), `the notice’s $${share} isn’t a bill from that day: ${bills.join(' | ')}`);
+    else must(urgent === 0 && !thatDay.some((b) => amountsIn(b).some((a) => a > 0)), `the notice names no share, yet urgent care is $${urgent} and that day’s bills are ${thatDay.join(' | ') || 'none'}`);
+    await panelHeaded('Your Doctor').scrollIntoViewIfNeeded().catch(() => {});
+    await shot('health-cover');
+    return `urgent care $${urgent.toFixed(2)}; ${Number.isFinite(share) ? `a share of $${share}` : 'no share, no bill'}`;
+  });
+  await play('Tomorrow Morning, asked: On The Way names the 10:00 AM work-study shift, Cancel leaves the clock', ['confirmation'], async () => {
+    const words = await askedFirst('Tomorrow Morning');
+    must(/10:00\s?AM/.test(words), `On The Way doesn’t name the 10:00 AM shift: ${words.slice(0, 300)}`);
+  });
+  await play('a day on, saved and continued: Work Out’s refusal the same, word for word', ['save-continue'], async () => {
+    await advance('Tomorrow Morning');
+    const before = await workOut();
+    must(before.refused, `Work Out offered the next morning: ${before.why}`);
+    const at = await saveAndContinue();
+    const after = await workOut();
+    must(after.refused && after.why === before.why, `after Continue: ${after.refused ? 'refused' : 'offered'}, “${after.why}”, where it was “${before.why}”`);
+    return `${at}: “${after.why}”`;
+  });
+  await play('the days it mends: each morning Work Out’s days never rise, and it’s offered the first morning after the day the look gave; your look then offers no way to an injury', [], async () => {
+    must(mends, 'no mending day was read before');
+    const seen = [];
+    let last = Infinity;
+    const took = await mornings(10, async () => {
+      const w = await workOut();
+      const left = Number((w.why.match(/(\d+) days?/) ?? [])[1] ?? NaN);
+      seen.push(`${await dateText()}: ${w.refused ? `refused, “${w.why}”` : 'offered'}`);
+      if (w.refused) {
+        must(w.why.toLowerCase().includes(injury.toLowerCase()), `refused on ${await dateText()} for another reason: ${w.why}`);
+        must(!(left > last), `${await dateText()}: ${left} days, up from ${last}`);
+        last = left;
+        return false;
+      }
+      return true;
+    });
+    said(seen.join('; '));
+    must(took <= 10, `Work Out still refused after 10 mornings: ${seen.at(-1)}`);
+    const first = await dateText();
+    must(dayOf(first) > dayOf(mends) && dayOf(first) - dayOf(mends) <= 86_400_000, `offered first on ${first}, where it mends ${mends}`);
+    await rail('Home');
+    const outer = await openLook(panelHeaded('How You Are').locator('p button.link').first());
+    must(!(await outer.look.locator(':scope > .look-inner .look-way button.link', { hasText: /Injury/i }).count()), 'your look still offers a way to an injury');
+    await closeLook(outer.name);
+    return `offered on ${first}, after ${took} mornings`;
+  });
+  await play('Save & Exit; Delete asked and kept; Continue: the same moment, Work Out still offered, Home’s notices as they were', ['confirmation', 'save-continue'], async () => {
+    const before = await homeAsOpened();
+    const at = await deleteKeptThenContinue();
+    const after = await homeAsOpened();
+    must(JSON.stringify(after) === JSON.stringify(before), `Home’s notices read differently after Continue: ${after.length} for ${before.length}`);
+    const w = await workOut();
+    must(!w.refused, `Work Out refused after Continue: ${w.why}`);
+    return `${at}; Work Out offered`;
+  });
+}
+
 // --- Run it, and write the trace.
 
 if (WHICH === 'normal') await normal();
 else if (WHICH === 'setback') await setback();
-else await specialist();
+else if (WHICH === 'specialist') await specialist();
+else if (WHICH === 'banking') await banking();
+else if (WHICH === 'document') await documentJourney();
+else await health();
 
 const failed = trace.steps.filter((s) => !s.ok);
 trace.exercised = Object.fromEntries(SIX.map((k) => [k, trace.steps.filter((s) => s.ok && s.exercises.includes(k)).map((s) => s.n)]));
 const missing = SIX.filter((k) => trace.exercised[k].length === 0);
 trace.summary = { steps: trace.steps.length, passed: trace.steps.length - failed.length, failed: failed.length, sixMissing: missing, errors: trace.errors.length, overflows: trace.overflows.length };
+// Section 9's language checks, which brief 14's journeys alone run (from 2026-10-17).
+const journey = JOURNEYS.includes(WHICH);
+if (journey) { trace.language = lang; trace.summary.languageFails = lang.fails.length; trace.summary.languageRecorded = lang.recorded.length; }
 trace.finishedAt = new Date().toISOString();
 writeFileSync(`${OUT}/trace.json`, `${JSON.stringify(trace, null, 1)}\n`);
-console.log(`\n${WHICH} at ${WIDTH}: ${trace.summary.passed} of ${trace.summary.steps} passed; six missing: ${missing.join(', ') || 'none'}; ${trace.errors.length} errors; ${trace.overflows.length} overflows`);
+console.log(`\n${WHICH} at ${WIDTH}: ${trace.summary.passed} of ${trace.summary.steps} passed; six missing: ${missing.join(', ') || 'none'}; ${trace.errors.length} errors; ${trace.overflows.length} overflows${journey ? `; ${lang.fails.length} language checks failed, ${lang.recorded.length} recorded` : ''}`);
 await browser.close();
-process.exit(failed.length || missing.length || trace.errors.length || trace.overflows.length ? 1 : 0);
+process.exit(failed.length || missing.length || trace.errors.length || trace.overflows.length || (journey && lang.fails.length) ? 1 : 0);

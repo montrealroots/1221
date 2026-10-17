@@ -154,7 +154,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:1271 'gives a save written under 80 a title from its pronouns'",
+            "where": "tests/simulation.test.ts:1334 'gives a save written under 80 a title from its pronouns'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -2994,14 +2994,14 @@
           },
           {
             "kind": "command",
-            "where": "tests/tutorial.test.ts:107 'refuses a command until its chapter is read, and names the chapter'",
+            "where": "tests/tutorial.test.ts:108 'refuses a command until its chapter is read, and names the chapter'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true
           },
           {
             "kind": "command",
-            "where": "tests/tutorial.test.ts:176 'leaves a life without the guide wholly open'",
+            "where": "tests/tutorial.test.ts:177 'leaves a life without the guide wholly open'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -3468,7 +3468,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:767-779 'puts nobody to bed once a sound sleeper would be up, however long they would lie in'",
+            "where": "tests/simulation.test.ts:768-780 'puts nobody to bed once a sound sleeper would be up, however long they would lie in'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -8468,7 +8468,7 @@
           },
           {
             "kind": "fixture",
-            "where": "tests/simulation.test.ts:1401-1420",
+            "where": "tests/simulation.test.ts:1464-1483",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": false,
@@ -9282,7 +9282,7 @@
           },
           {
             "kind": "fixture",
-            "where": "tests/migration-94.test.ts:48-61 'changes nothing on a second open, and opens into a game that runs'",
+            "where": "tests/migration-94.test.ts:48-63 'changes nothing on a second open, and opens into a game that runs'",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": true,

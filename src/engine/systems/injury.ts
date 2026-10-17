@@ -31,6 +31,7 @@ import { plural } from '../core/text';
 import { personalityOf } from './personality';
 import { billCare, dueWords, healthOf, shareOf } from './health';
 import { payeeAccount } from './cash';
+import { schoolEnded } from './school';
 
 export const COMP_KIND = 'injury.comp';
 
@@ -78,6 +79,9 @@ export function trainingRefusal(person: Person, at: Instant): string | undefined
   return `Not with ${INJURY_KIND[injury.kind].label.toLowerCase()}; it has ${days} ${days === 1 ? 'day' : 'days'} yet to mend.`;
 }
 
+/** The care an injury needs (`INJURY_KIND[].care`), as a notice names it. */
+const CARE_WORDS: Readonly<Record<'visit' | 'urgent' | 'emergency', string>> = { visit: 'a doctor’s visit', urgent: 'a visit to urgent care', emergency: 'a trip to the emergency room' };
+
 /** The chance of an injury over so many hours of a thing at its rate a thousand hours. */
 export const chanceOver = (perThousand: number, hours: number): number => 1 - Math.exp(-(perThousand * hours) / 1000);
 
@@ -120,7 +124,11 @@ export function mayHurt(sim: Simulation, person: Person, source: InjurySource, c
       // in a space, “19 days to mend. ”; found playing a withdrawal, brief 09's journeys).
       // What it keeps them from, from 2026-10-17 (brief 14): until then a sprain, which stops a workout (`trainingRefusal`),
       // said only its days, and the bill said "due in 30 days", not its date and what follows it (`dueWords`).
-      body: [`It takes ${plural(days, 'day')} to mend${spec.offWork ? ', and you’re laid up until then, kept from classes, work and training' : spec.limits !== 'none' ? ', and you can’t work out until then' : ''}.`, work ? 'It happened at work, so workers’ compensation pays for the care' + (spec.offWork && rules ? `, and ${shareWords(rules, weekly, work.weeklyWage)} while you’re off.` : '.') : bill ? `Your share of its care is ${formatMoney(care, cur)}, ${dueWords(sim, bill.dueAt)}` : ''].filter(Boolean).join(' '),
+      // From 2026-10-17 (brief 14's health journey): a care the plan paid whole said nothing, so a player couldn't tell
+      // whether care was had or what it cost, where the flu's notice says there's nothing to pay; and an injury that
+      // limits the work didn't say Call In Sick excuses a day of classes for it (`sickRefusal`'s doctor's note), where
+      // the flu's does. An injury that lays them up already says it keeps them from classes.
+      body: [`It takes ${plural(days, 'day')} to mend${spec.offWork ? ', and you’re laid up until then, kept from classes, work and training' : spec.limits !== 'none' ? ', and you can’t work out until then' : ''}.`, work ? 'It happened at work, so workers’ compensation pays for the care' + (spec.offWork && rules ? `, and ${shareWords(rules, weekly, work.weeklyWage)} while you’re off.` : '.') : bill ? `Your share of its care is ${formatMoney(care, cur)}, ${dueWords(sim, bill.dueAt)}` : `Its care, ${CARE_WORDS[spec.care]}${spec.therapy ? ` and ${plural(spec.therapy, 'session')} of physical therapy` : ''}, costs you nothing.`, !spec.offWork && spec.limits !== 'none' && person.school && !schoolEnded(person.school.standing) ? 'Call In Sick, on School, excuses a day of classes while it mends.' : ''].filter(Boolean).join(' '),
       importance: 80, route: '/workspace/papers',
     });
   }

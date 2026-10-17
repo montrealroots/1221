@@ -593,8 +593,9 @@ describe('life.day_rollover', () => {
     sim.advanceTo(midnight);
     expect(healthOf(sim.player).injury).toEqual({ kind: 'bruise', at: midnight, until: midnight + 5 * MS_DAY });
     // Yale Health leaves nothing to pay for it, so the notice names no bill. Until 2026-10-16 this read '5 days to mend. ',
-    // the space the empty second sentence left behind it, which the notice had (brief 09's journeys, injury.ts).
-    expect(titled(sim, 'A Bad Knock').map((n) => [n.at, n.body])).toEqual([[midnight, 'It takes 5 days to mend.']]);
+    // the space the empty second sentence left behind it, which the notice had (brief 09's journeys, injury.ts). Until
+    // 2026-10-17 it said nothing of the care; it now says what it was and that it cost nothing (brief 14's health journey).
+    expect(titled(sim, 'A Bad Knock').map((n) => [n.at, n.body])).toEqual([[midnight, 'It takes 5 days to mend. Its care, a doctor’s visit, costs you nothing.']]);
     sim.advanceTo(EST(2026, 11, 25, 12));
     expect(titled(sim, 'A Bad Knock')).toHaveLength(1);
   });

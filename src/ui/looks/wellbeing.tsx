@@ -26,7 +26,7 @@ import { EVALUATION } from '@/engine/content/tasks';
 import { theCountry } from '@/engine/systems/documents';
 import { plural } from '@/engine/core/text';
 import type { Person, Wellbeing } from '@/engine/domain/model';
-import { ESTIMATE as SCHOOL_ESTIMATE } from '@/engine/systems/school';
+import { ESTIMATE as SCHOOL_ESTIMATE, schoolEnded } from '@/engine/systems/school';
 import type { Simulation } from '@/engine';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
@@ -542,10 +542,11 @@ defineLook<Carried>('condition', {
         name: INJURY_KIND[hurt.kind].label,
         kind: 'An Injury',
         // What it keeps them from, by what it limits (from 2026-10-17, brief 14): until then only an injury that lays them
-        // up said so, and a sprained ankle, which keeps them from training too (`trainingRefusal`), said nothing.
+        // up said so, and a sprained ankle, which keeps them from training too (`trainingRefusal`), said nothing. The same
+        // day, the health journey found it didn't say Call In Sick excuses a day of classes for it, as the flu's notice does.
         summary: `It mends by ${formatDate(hurt.until, sim.zone)}.${hurt.offWorkUntil
           ? ` Until then ${theyAre} laid up, kept from classes, work and training.`
-          : INJURY_KIND[hurt.kind].limits !== 'none' ? ` Until then ${p.they} can’t work out, and it holds back the physical side of ${p.their} work.` : ''}`,
+          : INJURY_KIND[hurt.kind].limits !== 'none' ? ` Until then ${p.they} can’t work out, and it holds back the physical side of ${p.their} work.${isYou && person.school && !schoolEnded(person.school.standing) ? ' Call In Sick, on School, excuses a day of classes while it mends.' : ''}` : ''}`,
         parent: at('person', person.id),
         ways: [{ to: at('dial', `${person.id}/condition`), label: 'Condition', detail: `How sound ${p.their} body is. An injury doesn’t lower it, but it adds to ${p.their} stress and lowers ${p.their} mood each day.` }],
         provenance: 'How long it takes depends on the injury, and it’s longer for somebody illness hits harder.',
