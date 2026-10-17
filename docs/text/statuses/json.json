@@ -5,6 +5,18 @@
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'. Its engine-speak hit (a code name) is a path in a source's URL, which stays as cited."
  },
+ "src/engine/content/genre-demands.json#action": {
+  "status": "Rewritten And Verified",
+  "hash": "02be94c9abb1",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#action_comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "f40f386bc9e1",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
  "src/engine/content/genre-demands.json#adventure": {
   "status": "Rewritten And Verified",
   "hash": "e3147360bad5",
@@ -52,6 +64,12 @@
   "hash": "7fc04044ca2d",
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#backstage_musical": {
+  "status": "Rewritten And Verified",
+  "hash": "e865b18e1ebd",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#biker": {
   "status": "Rewritten And Verified",
@@ -124,6 +142,12 @@
   "hash": "0ec5d7f2e559",
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "d3c7d37de338",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#coming_of_age": {
   "status": "Rewritten And Verified",
@@ -209,6 +233,12 @@
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
+ "src/engine/content/genre-demands.json#docufiction": {
+  "status": "Rewritten And Verified",
+  "hash": "55228c5ac54a",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
  "src/engine/content/genre-demands.json#documentary": {
   "status": "Rewritten And Verified",
   "hash": "63ff18707a49",
@@ -287,6 +317,12 @@
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
+ "src/engine/content/genre-demands.json#farce": {
+  "status": "Rewritten And Verified",
+  "hash": "25cab34ca0f9",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
  "src/engine/content/genre-demands.json#film_noir": {
   "status": "Rewritten And Verified",
   "hash": "5487367875bc",
@@ -298,6 +334,12 @@
   "hash": "9f8738017186",
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#found_footage": {
+  "status": "Rewritten And Verified",
+  "hash": "b68936c20f90",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#gangster": {
   "status": "Rewritten And Verified",
@@ -377,11 +419,23 @@
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
+ "src/engine/content/genre-demands.json#jidaigeki": {
+  "status": "Rewritten And Verified",
+  "hash": "3ff935cf817a",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
  "src/engine/content/genre-demands.json#jukebox_musical": {
   "status": "Rewritten And Verified",
   "hash": "1da1f256b97d",
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#kaiju": {
+  "status": "Rewritten And Verified",
+  "hash": "ebeafa941d98",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#kitchen_sink": {
   "status": "Rewritten And Verified",
@@ -401,11 +455,23 @@
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
+ "src/engine/content/genre-demands.json#martial_arts": {
+  "status": "Rewritten And Verified",
+  "hash": "c3844afc00a4",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
  "src/engine/content/genre-demands.json#medical_drama": {
   "status": "Rewritten And Verified",
   "hash": "f6250246d32e",
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#melodrama": {
+  "status": "Rewritten And Verified",
+  "hash": "0e75b2465389",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#military": {
   "status": "Rewritten And Verified",
@@ -413,11 +479,29 @@
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
+ "src/engine/content/genre-demands.json#mockumentary": {
+  "status": "Rewritten And Verified",
+  "hash": "2bb6763c6a57",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
  "src/engine/content/genre-demands.json#monster_movie": {
   "status": "Rewritten And Verified",
   "hash": "4a4ff5532100",
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#mumblecore": {
+  "status": "Rewritten And Verified",
+  "hash": "8f976895a69c",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#musical": {
+  "status": "Rewritten And Verified",
+  "hash": "85270c647901",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#mystery": {
   "status": "Rewritten And Verified",
@@ -425,11 +509,29 @@
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
+ "src/engine/content/genre-demands.json#nature_documentary": {
+  "status": "Rewritten And Verified",
+  "hash": "529680904210",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
  "src/engine/content/genre-demands.json#neo_noir": {
   "status": "Rewritten And Verified",
   "hash": "ca61c8ac64ba",
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#neorealism": {
+  "status": "Rewritten And Verified",
+  "hash": "80c4a33ac7cd",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#new_wave": {
+  "status": "Rewritten And Verified",
+  "hash": "013cb7d84ab3",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#nordic_noir": {
   "status": "Rewritten And Verified",
@@ -448,6 +550,12 @@
   "hash": "97d5658cbfda",
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#period_drama": {
+  "status": "Rewritten And Verified",
+  "hash": "296a2512937e",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#picaresque": {
   "status": "Rewritten And Verified",
@@ -527,11 +635,23 @@
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
+ "src/engine/content/genre-demands.json#romantic_comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "086e900a56b9",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
  "src/engine/content/genre-demands.json#romantic_drama": {
   "status": "Rewritten And Verified",
   "hash": "13ea66f983d1",
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#samurai": {
+  "status": "Rewritten And Verified",
+  "hash": "775d7decd87f",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#satire": {
   "status": "Rewritten And Verified",
@@ -551,6 +671,24 @@
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
+ "src/engine/content/genre-demands.json#screwball_comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "dc52d11a6454",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#sea_adventure": {
+  "status": "Rewritten And Verified",
+  "hash": "311802e72987",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#silent_film": {
+  "status": "Rewritten And Verified",
+  "hash": "65bb3759311b",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
  "src/engine/content/genre-demands.json#slapstick": {
   "status": "Rewritten And Verified",
   "hash": "8eb8f6b96314",
@@ -568,6 +706,12 @@
   "hash": "b6b74d2b2395",
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#social_realism": {
+  "status": "Rewritten And Verified",
+  "hash": "b59faeedee96",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#space_opera": {
   "status": "Rewritten And Verified",
@@ -635,6 +779,12 @@
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
+ "src/engine/content/genre-demands.json#swashbuckler": {
+  "status": "Rewritten And Verified",
+  "hash": "680c84f2c31d",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
  "src/engine/content/genre-demands.json#sword_and_sandal": {
   "status": "Rewritten And Verified",
   "hash": "6ce7c43dae26",
@@ -671,17 +821,77 @@
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
+ "src/engine/content/genre-demands.json#tokusatsu": {
+  "status": "Rewritten And Verified",
+  "hash": "34737e9227d4",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
  "src/engine/content/genre-demands.json#tragedy": {
   "status": "Rewritten And Verified",
   "hash": "80d9d84cf412",
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
+ "src/engine/content/genre-demands.json#tragicomedy": {
+  "status": "Rewritten And Verified",
+  "hash": "9a00d39a67bf",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
  "src/engine/content/genre-demands.json#true_crime": {
   "status": "Rewritten And Verified",
   "hash": "999e39ea8f1e",
   "on": "2026-10-17",
   "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#vampire": {
+  "status": "Rewritten And Verified",
+  "hash": "d56a5a5cfa53",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#war": {
+  "status": "Rewritten And Verified",
+  "hash": "481599412c49",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#werewolf": {
+  "status": "Rewritten And Verified",
+  "hash": "f64e02a41042",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#western": {
+  "status": "Rewritten And Verified",
+  "hash": "8f6db2ec7be0",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#whodunit": {
+  "status": "Rewritten And Verified",
+  "hash": "254dabb56dc5",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#wuxia": {
+  "status": "Rewritten And Verified",
+  "hash": "132df48c6f35",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#yakuza": {
+  "status": "Rewritten And Verified",
+  "hash": "87d18b72f0f0",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+ },
+ "src/engine/content/genre-demands.json#zombie": {
+  "status": "Rewritten And Verified",
+  "hash": "d854dcf6a982",
+  "on": "2026-10-17",
+  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/home-accounts.json#banks [au-anz]": {
   "status": "Reviewed And Retained",

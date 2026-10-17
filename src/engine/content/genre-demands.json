@@ -1420,30 +1420,30 @@
  "vampire": {
   "claim": "Actors in vampire roles may have to learn to speak clearly in prosthetic fangs; several notable Draculas wore none.",
   "source": "TV Tropes, 'Fang Thpeak', https://tvtropes.org/pmwiki/pmwiki.php/Main/FangThpeak (pointer only)",
-  "sourceSupports": "Snippet: prosthetic fangs make some sounds hard to pronounce; Juliet Landau wore hers for a long period before playing Drusilla to learn to speak with them; Langella and Lugosi wore no fangs as Dracula.",
+  "sourceSupports": "From a search summary: prosthetic fangs make some sounds hard to pronounce; Juliet Landau wore hers for a long period before playing Drusilla to learn to speak with them; Langella and Lugosi wore no fangs as Dracula.",
   "how": "from a search summary",
   "confidence": "low",
   "tags": [],
-  "uncertainty": "TV Tropes isn’t credible enough to carry a tag. The Stan Winston School page on Interview with the Vampire returned no text on fetch. Fang work is minor prosthetics, not heavy transformation."
+  "uncertainty": "TV Tropes isn’t credible enough to support a requirement. The Stan Winston School page on Interview with the Vampire returned no text when opened. Fang work is minor prosthetics, not heavy Physical Transformation."
  },
  "war": {
   "claim": "War films routinely put casts through military boot camps run by advisers so they can play soldiers credibly.",
   "source": "Military.com, 'Meet the Man Who Puts Movie Stars Through Boot Camp', https://www.military.com/podcasts/left-of-boom/2021/02/16/dale-dyes-movie-stars-boot-camp.html; Coffee or Die, 'These Acclaimed War Movies Took Realistic Preparation to Extreme Levels', https://www.coffeeordie.com/article/platoon-movie-boot-camps",
-  "sourceSupports": "Snippets: Dale Dye ran a 30-day military-style boot camp for the Platoon cast and an intensive one for Saving Private Ryan (sleeping in rain, 5-mile runs); his company Warriors Inc. trains actors for war films.",
+  "sourceSupports": "From search summaries: Dale Dye ran a 30-day military-style boot camp for the Platoon cast and an intensive one for Saving Private Ryan (sleeping in rain, 5-mile runs); his company Warriors Inc. trains actors for war films.",
   "how": "from a search summary",
   "confidence": "medium",
   "tags": [
    {
     "tag": "stunt",
-    "why": "Sources document sustained military physical training for combat roles as standard preparation."
+    "why": "The sources document sustained military physical training for combat roles as standard preparation."
    }
   ],
-  "uncertainty": "Military drill and bearing have no exact vocabulary tag; 'stunt' covers the physical-action part only. Snippets."
+  "uncertainty": "None of the requirements the game can ask for is exactly military drill and bearing; Fights And Stunts covers only the physical-action part. These are search summaries."
  },
  "western": {
   "claim": "Western productions run 'cowboy camps' that teach actors horse riding and gun handling.",
   "source": "CinemaBlend, 'I Thought Yellowstone's Cowboy Camp Was About Learning To Rope And Ride...', https://www.cinemablend.com/interviews/i-thought-yellowstone-cowboy-camp-learning-rope-ride-marshals-star-schooled-me-what-actors-really-need-know; Netflix Tudum, 'Ransom Canyon cast cowboy boot camp', https://www.netflix.com/tudum/videos/ransom-canyon-behind-the-scenes-cowboy-boot-camp",
-  "sourceSupports": "Snippets: camps teach riding, mounting and dismounting, roping and firearm handling; Tim Blake Nelson trained with guns for about five months for gun tricks in The Ballad of Buster Scruggs.",
+  "sourceSupports": "From search summaries: camps teach riding, mounting and dismounting, roping and firearm handling; Tim Blake Nelson trained with guns for about five months for gun tricks in The Ballad of Buster Scruggs.",
   "how": "from a search summary",
   "confidence": "medium",
   "tags": [
@@ -1452,7 +1452,7 @@
     "why": "Riding and gun handling are trained physical-action skills the sources show westerns requiring; firearms handling falls within stage-combat training."
    }
   ],
-  "uncertainty": "The examples are mostly recent TV westerns. Horsemanship isn’t stage combat, so the stunt tag fits only part. Laconic manner wasn’t sourced."
+  "uncertainty": "The examples are mostly recent TV westerns. Horsemanship isn’t stage combat, so Fights And Stunts fits only part of it. Laconic manner wasn’t sourced."
  },
  "whodunit": {
   "claim": "For Murder on the Orient Express (2017), Kenneth Branagh worked with a dialect coach three times a week and listened to recordings of 27 Belgian accents to play Poirot. The accent belongs to that detective role, not to the whodunit form.",
@@ -1467,7 +1467,7 @@
    }
   ],
   "uncertainty": "The source is the rights-holder’s promotional site, reliable for the facts but about one film. Ensemble suspect-playing wasn’t sourced.",
-  "belongsTo": "Foreign-detective roles such as Poirot"
+  "belongsTo": "foreign-detective roles such as Poirot"
  },
  "yakuza": {
   "claim": "The 1960s ninkyo (chivalry) yakuza film formulaically climaxed in the hero’s katana showdown against a rival gang. The 1970s jitsuroku cycle replaced it with chaotic, unheroic brawls and gunplay. Sources describe the fights, not actors' training.",
@@ -1481,8 +1481,8 @@
     "why": "subgenre-or-role: Two independent critics state the climactic sword fight as a formula of the ninkyo cycle, so the demand is supported for that subgenre and its leads. No source states fight work as a convention of yakuza film overall; jitsuroku and later films are described by violence and gunplay, not choreographed combat."
    }
   ],
-  "uncertainty": "The sources are film criticism about screen content, not about what actors trained for. A whole-genre combat demand might be argued from violence across cycles, but no source says it, and much later yakuza cinema (e.g. Kitano) isn’t fight-choreography-led.",
-  "belongsTo": "ninkyo eiga (1960s chivalry yakuza films), the lead’s climactic sword fight"
+  "uncertainty": "The sources are film criticism about screen content, not about what actors trained for. A whole-genre combat demand might be argued from violence across cycles, but no source says it, and much later yakuza cinema (Kitano’s, for one) isn’t led by fight choreography.",
+  "belongsTo": "the lead’s climactic sword fight in ninkyo eiga, the chivalry yakuza films of the 1960s"
  },
  "action": {
   "claim": "The action genre is defined by fights, chases, shootouts and stunt work.",
@@ -1496,12 +1496,12 @@
     "why": "The definition names fights and stunt work as what the genre predominantly features."
    }
   ],
-  "uncertainty": "Wikipedia is a pointer. Stunt work is often done by doubles, so the page doesn’t say the actor does it."
+  "uncertainty": "Wikipedia was used only as a lead. Stunt work is often done by doubles, so the page doesn’t say the actor does it."
  },
  "action_comedy": {
   "claim": "Action comedy combines action with humor that plays a central role, descended from silent comedians' chases, gags and stunts.",
   "source": "Wikipedia, 'Action comedy', https://en.wikipedia.org/wiki/Action_comedy (pointer)",
-  "sourceSupports": "Read via a summarizing fetch: humor 'plays a relatively central role'; silent comedians such as Chaplin and Keaton featured 'chases, gags and stunts'. The earlier quoted phrase 'relies on the characters to bring out the humor' didn’t come back in this read.",
+  "sourceSupports": "Read through an automatic summary of the page: humor 'plays a relatively central role'; silent comedians such as Chaplin and Keaton featured 'chases, gags and stunts'. The earlier quoted phrase 'relies on the characters to bring out the humor' didn’t come back in this reading.",
   "how": "read directly",
   "confidence": "medium",
   "tags": [
@@ -1511,10 +1511,10 @@
    },
    {
     "tag": "comic",
-    "why": "Humour 'plays a relatively central role' by definition."
+    "why": "Humor 'plays a relatively central role' by definition."
    }
   ],
-  "uncertainty": "The fetch tool summarized the page; its remarks on Jackie Chan may be the summarizer’s gloss, so no physicalComedy tag was given."
+  "uncertainty": "The tool that read the page summarized it, and its remarks on Jackie Chan may be the summary’s own gloss, so the research didn’t name Physical Comedy."
  },
  "backstage_musical": {
   "claim": "In a backstage musical the story stops for diegetic performance numbers in a show being produced.",
@@ -1537,7 +1537,7 @@
  "comedy": {
   "claim": "Comic timing, the use of pauses, cadence, delivery and pacing to land a joke, is the core comic skill.",
   "source": "MasterClass, 'Guide to Comedic Timing', https://www.masterclass.com/articles/guide-to-comedic-timing",
-  "sourceSupports": "Snippet: 'Comedic timing is the use of pauses, cadence, delivery, and pacing to land a joke.'",
+  "sourceSupports": "From a search summary: 'Comedic timing is the use of pauses, cadence, delivery, and pacing to land a joke.'",
   "how": "from a search summary",
   "confidence": "medium",
   "tags": [
@@ -1546,7 +1546,7 @@
     "why": "The source defines comic timing as the craft comedy rests on."
    }
   ],
-  "uncertainty": "MasterClass returned HTTP 403 on fetch; the definition came back in search. The 'listening to scene partners' part of the earlier claim wasn’t re-confirmed."
+  "uncertainty": "MasterClass’s page couldn’t be opened; the definition came back in a search. The 'listening to scene partners' part of the earlier claim wasn’t confirmed again."
  },
  "docufiction": {
   "claim": "Docufiction’s main characters are often non-professionals essentially playing themselves, unscripted, with improvised dialogue and genuine reactions.",
@@ -1564,7 +1564,7 @@
     "why": "Participants portray 'their own genuine reactions' on camera, which is naturalistic on-camera behavior as a convention."
    }
   ],
-  "uncertainty": "The participants are often not actors at all, so 'demand on an actor' applies loosely."
+  "uncertainty": "The participants are often not actors at all, so what it asks of an actor applies loosely."
  },
  "farce": {
   "claim": "Farce calls for highly stylized performances and dramatic reactions, with adept comic timing for wordplay, visual gags and slapstick.",
@@ -1575,14 +1575,14 @@
   "tags": [
    {
     "tag": "comic",
-    "why": "'requiring the need for adept comic timing by the actors'."
+    "why": "The page names comic timing as something the form needs: 'requiring the need for adept comic timing by the actors'."
    },
    {
     "tag": "physicalComedy",
     "why": "Visual gags and slapstick are named conventions of the form."
    }
   ],
-  "uncertainty": "'Highly stylized performances' is about physical and emotional style, not language, so no heightened tag."
+  "uncertainty": "'Highly stylized performances' is about physical and emotional style, not language, so the research didn’t name Heightened Language."
  },
  "found_footage": {
   "claim": "Found-footage films routinely use improvisation and naturalistic acting, and the actors may shoot the film themselves as they perform.",
@@ -1593,14 +1593,14 @@
   "tags": [
    {
     "tag": "improvisation",
-    "why": "'improvisation ... routinely employed'."
+    "why": "The page says improvisation is 'routinely employed'."
    },
    {
     "tag": "camera",
-    "why": "'naturalistic acting' is routine, and actors may operate the camera."
+    "why": "Naturalistic acting is 'routinely employed', the page says, and actors may operate the camera."
    }
   ],
-  "uncertainty": "Wikipedia is a pointer."
+  "uncertainty": "Wikipedia was used only as a lead."
  },
  "jidaigeki": {
   "claim": "Jidaigeki uses a contrived, formal, archaic register of Japanese speech, stock makeup and catchphrases, and stylized sword fights.",
@@ -1618,7 +1618,7 @@
     "why": "Sword fights are a standing convention; chambara is the sword-fighting branch."
    }
   ],
-  "uncertainty": "Read through a summarizing fetch. The page doesn’t say how much of the swordplay the lead actors do themselves."
+  "uncertainty": "The page was read through an automatic summary. It doesn’t say how much of the swordplay the lead actors do themselves."
  },
  "kaiju": {
   "claim": "Japanese kaiju films used suit actors performing inside stiff latex or rubber creature suits on miniature sets.",
@@ -1632,7 +1632,7 @@
     "why": "Suit actors perform as the creature inside full creature suits."
    }
   ],
-  "uncertainty": "The tag fits suit actors, not the human cast. Reacting to unseen threats wasn’t sourced on this read. Reviewed 2026-10-10: The tag fits suit actors, not the human cast. Not applied genre-wide.",
+  "uncertainty": "Physical Transformation fits suit actors, not the human cast. Reacting to unseen threats wasn’t sourced in this reading. On review (2026-10-10), a demand on suit actors alone wasn’t enough to make it a requirement of the whole genre.",
   "belongsTo": "the suit actor playing the creature"
  },
  "martial_arts": {
@@ -1647,7 +1647,7 @@
     "why": "Real martial-arts skill or role-specific fight training is stated as the norm."
    }
   ],
-  "uncertainty": "Wikipedia is a pointer."
+  "uncertainty": "Wikipedia was used only as a lead."
  },
  "melodrama": {
   "claim": "Film melodrama uses exaggerated staging, score and performance; characters wear their hearts on their sleeves.",
@@ -1656,7 +1656,7 @@
   "how": "read directly",
   "confidence": "medium",
   "tags": [],
-  "uncertainty": "The source supports exaggerated emotional performance, but the vocabulary’s 'heightened' tag means heightened or stylized language, which the BFI doesn’t mention. No tag fits, and none was forced."
+  "uncertainty": "The source supports exaggerated emotional performance, but Heightened Language means heightened or stylized language, which the BFI doesn’t mention. None of the requirements the game can ask for fits, and none was forced."
  },
  "mockumentary": {
   "claim": "Mockumentaries can be partly or wholly improvised and are presented through documentary devices such as talking heads and cinéma vérité.",
@@ -1670,7 +1670,7 @@
     "why": "The page states mockumentaries can be partly or wholly improvised."
    }
   ],
-  "uncertainty": "Deadpan naturalism wasn’t explicitly stated, so no camera tag. The page didn’t establish that mockumentaries are always comic, so no comic tag."
+  "uncertainty": "Deadpan naturalism wasn’t stated outright, so the research didn’t name Naturalism On Camera. The page didn’t establish that mockumentaries are always comic, so it didn’t name Comic Timing either."
  },
  "mumblecore": {
   "claim": "Naturalism in performance and dialogue is a key feature of almost all mumblecore; early films used non-professionals and some used prominent improvisation.",
@@ -1684,25 +1684,25 @@
     "why": "Naturalistic performance is called a key feature of almost all mumblecore films."
    }
   ],
-  "uncertainty": "Improvisation is 'some' films, not all; the page notes mostly scripted exceptions. Reviewed 2026-10-10: the improvisation tag was removed. Improvisation is in some mumblecore films, not all; the naturalism (camera) is the convention."
+  "uncertainty": "Improvisation is in 'some' films, not all; the page notes exceptions that are mostly scripted. The review of 2026-10-10 took Improvisation away for that reason: the convention is the naturalism, Naturalism On Camera."
  },
  "musical": {
   "claim": "A musical film integrates musical numbers into the plot; characters sing and dance.",
   "source": "Encyclopaedia Britannica, 'Musical film', https://www.britannica.com/art/musical-film",
-  "sourceSupports": "Snippet: a musical film 'integrates musical numbers within the plot'; characters often sing and dance to express emotion and advance the plot.",
+  "sourceSupports": "From a search summary: a musical film 'integrates musical numbers within the plot'; characters often sing and dance to express emotion and advance the plot.",
   "how": "from a search summary",
   "confidence": "medium",
   "tags": [
    {
     "tag": "song",
-    "why": "Britannica: musical numbers integrated in the plot; characters sing."
+    "why": "Britannica says musical numbers are integrated in the plot, and characters sing."
    },
    {
     "tag": "dance",
-    "why": "Britannica (snippet): characters sing and dance."
+    "why": "Britannica, in a search summary, says characters sing and dance."
    }
   ],
-  "uncertainty": "Britannica pages return HTTP 403 to fetch; the search summary may blend Britannica with other results, especially the sing-and-dance sentence."
+  "uncertainty": "Britannica’s pages couldn’t be opened; the search summary may blend Britannica with other results, especially the sentence about singing and dancing."
  },
  "nature_documentary": {
   "claim": "Nature documentaries almost all have a human presenter, whose role ranges from explanatory voice-over to on-camera interaction with animals.",
@@ -1716,12 +1716,12 @@
     "why": "Explanatory voice-over is named as a standard presenter role."
    }
   ],
-  "uncertainty": "Presenting isn’t acting in the usual sense; on-camera presenting has no exact tag."
+  "uncertainty": "Presenting isn’t acting in the usual sense, and presenting on camera isn’t exactly one of the requirements the game can ask for."
  },
  "neorealism": {
   "claim": "Italian neorealism was filmed on location among the poor and working class, frequently with non-professional actors.",
   "source": "Wikipedia, 'Italian neorealism', https://en.wikipedia.org/wiki/Italian_neorealism (pointer); previously cited: Britannica, 'Neorealism', https://www.britannica.com/art/Neorealism-Italian-art (not reachable)",
-  "sourceSupports": "Wikipedia snippet: 'a style of film characterized by stories set amongst the poor and working class, filmed on location, frequently using nonprofessional actors'; where known actors were cast they played 'strongly against their normal character types'.",
+  "sourceSupports": "A search summary of Wikipedia: 'a style of film characterized by stories set amongst the poor and working class, filmed on location, frequently using nonprofessional actors'; where known actors were cast they played 'strongly against their normal character types'.",
   "how": "from a search summary",
   "confidence": "low",
   "tags": [
@@ -1730,8 +1730,8 @@
     "why": "Non-professionals playing ordinary people on location is the movement’s defining convention, which implies unadorned on-camera naturalism."
    }
   ],
-  "uncertainty": "The Britannica page couldn’t be read (403), and searches returned Wikipedia and others instead. The camera tag is inferred from casting and location practice; no source here states a performance style in so many words. Reviewed 2026-10-10: The camera tag is inferred from casting and location practice; no source states a performance style. Not applied genre-wide.",
-  "belongsTo": "non-professional casting, which is the casting’s, not a technique asked of an actor"
+  "uncertainty": "The Britannica page couldn’t be opened, and searches returned Wikipedia and others instead. Naturalism On Camera is inferred from casting and location practice; no source here states a performance style in so many words. On review (2026-10-10), an inference wasn’t enough to make it a requirement of the whole genre.",
+  "belongsTo": "non-professional casting, a choice of who’s cast rather than a technique asked of an actor"
  },
  "new_wave": {
   "claim": "The New Wave promoted a naturalistic style with location shooting, improvised dialogue and natural light.",
@@ -1749,21 +1749,21 @@
     "why": "The movement is described as promoting a naturalistic style."
    }
   ],
-  "uncertainty": "The Britannica page couldn’t be fetched, and the search didn’t return the New Wave page itself, so the attribution is unconfirmed. Treat as secondhand."
+  "uncertainty": "The Britannica page couldn’t be opened, and the search didn’t return the New Wave page itself, so the attribution is unconfirmed, and this is secondhand."
  },
  "period_drama": {
   "claim": "Period dramas employ historical advisers who teach actors how to speak, stand, sit, eat and gesture in the manner of the era.",
   "source": "Detroit News, 'PBS special examines the etiquette of Downton Abbey', https://eu.detroitnews.com/story/entertainment/television/2015/01/04/downton-abbey-pbs-special/21210235/; PBS, 'The Manners of Downton Abbey', https://cm-pressroom.pbs.org/programs/m/manners-of-downton-abbey; previously cited: DataCalculus, 'Dialect coaching for actors in period pieces'",
-  "sourceSupports": "Snippets: Alastair Bruce advised Downton Abbey actors 'on how to speak, stand, sit, eat, drink, dress', posture and 'the use of vocabulary'; Lily James: 'The main thing I had to learn was posture'. DataCalculus (read) says dialect coaches evoke 'the culture, education, and social class of the period'.",
+  "sourceSupports": "From search summaries: Alastair Bruce advised Downton Abbey actors 'on how to speak, stand, sit, eat, drink, dress', posture and 'the use of vocabulary'; Lily James: 'The main thing I had to learn was posture'. DataCalculus (read directly) says dialect coaches evoke 'the culture, education, and social class of the period'.",
   "how": "from a search summary",
   "confidence": "medium",
   "tags": [],
-  "uncertainty": "The earlier source, DataCalculus, is a data-analytics company’s blog and too weak to carry a tag, so no accent tag was given. The Downton evidence is one series. Reviewed 2026-10-10: the heightened tag was removed. Heightened is verse and rhetoric; the research is about period speech, bearing and manners in one series, which the tag doesn’t fit."
+  "uncertainty": "The earlier source, DataCalculus, is a data-analytics company’s blog and too weak to support a requirement, so the research didn’t name Accents. The Downton evidence is one series. The review of 2026-10-10 took Heightened Language away: it’s verse and rhetoric, and the research is about period speech, bearing and manners in one series, which it doesn’t fit."
  },
  "romantic_comedy": {
   "claim": "Under the Hays Code, romantic comedies relied on verbal sparring and physical comedy.",
   "source": "Encyclopaedia Britannica, 'Romantic comedy', https://www.britannica.com/art/romantic-comedy-film",
-  "sourceSupports": "Snippet: the Hays Code 'prohibited explicit mention of sexual relationships, leading to films' relying on verbal sparring and physical comedy instead'; the genre is defined by the lighthearted pursuit of love.",
+  "sourceSupports": "From a search summary: the Hays Code 'prohibited explicit mention of sexual relationships, leading to films' relying on verbal sparring and physical comedy instead'; the genre is defined by the lighthearted pursuit of love.",
   "how": "from a search summary",
   "confidence": "medium",
   "tags": [
@@ -1772,7 +1772,7 @@
     "why": "The genre is comedy, and Britannica names verbal sparring as a defining resource."
    }
   ],
-  "uncertainty": "Britannica couldn’t be fetched (403). Physical comedy is tied to the Hays-era films, so no physicalComedy tag for the genre as a whole. Chemistry has no tag.",
+  "uncertainty": "Britannica couldn’t be opened. Physical comedy is tied to the Hays-era films, so the research didn’t name Physical Comedy for the genre as a whole. Chemistry isn’t one of the requirements the game can ask for.",
   "basis": "definition"
  },
  "samurai": {
@@ -1787,7 +1787,7 @@
     "why": "The page describes learned, choreographed stage swordplay for film and stage."
    }
   ],
-  "uncertainty": "The Gate is a Japan-culture travel site describing a tate experience, not an academic source. Period bearing has no exact tag."
+  "uncertainty": "The Gate is a Japan-culture travel site describing a tate experience, not an academic source. Period bearing isn’t exactly one of the requirements the game can ask for."
  },
  "screwball_comedy": {
   "claim": "Screwball comedy is built on fast-paced, overlapping repartee combined with slapstick.",
@@ -1805,16 +1805,16 @@
     "why": "Slapstick elements and pratfalls are named."
    }
   ],
-  "uncertainty": "Read through a summarizing fetch."
+  "uncertainty": "The page was read through an automatic summary."
  },
  "sea_adventure": {
-  "claim": "The cited source doesn’t support an actor demand: it is about nautical literature, whose defining trait is nautical detail and seafaring vernacular.",
+  "claim": "The cited source doesn’t support anything asked of an actor: it’s about nautical literature, whose defining trait is nautical detail and seafaring vernacular.",
   "source": "Wikipedia, 'Nautical fiction', https://en.wikipedia.org/wiki/Nautical_fiction (pointer)",
   "sourceSupports": "The page discusses 'nautical language' and 'the vernacular expression of seafaring men' in fiction such as Cooper’s The Pilot. It says nothing about film actors or physical work in water.",
   "how": "read directly",
   "confidence": "low",
   "tags": [],
-  "uncertainty": "Downgraded from medium: the earlier source doesn’t discuss actors at all. Nautical jargon isn’t heightened language in the vocabulary’s sense. No acting source found."
+  "uncertainty": "This was lowered from medium confidence: the earlier source doesn’t discuss actors at all. Nautical jargon isn’t Heightened Language in the game’s sense. No acting source was found."
  },
  "silent_film": {
   "claim": "Silent-film actors conveyed story and emotion through mime, pantomime and exaggerated gesture and expression.",
@@ -1823,12 +1823,12 @@
   "how": "read directly",
   "confidence": "medium",
   "tags": [],
-  "uncertainty": "No tag in the fixed vocabulary fits wordless pantomime: physicalComedy means slapstick and clowning, and silent drama isn’t comic. A vocabulary gap, not a lack of evidence. StudioBinder is a production-software blog."
+  "uncertainty": "None of the requirements the game can ask for fits wordless pantomime: Physical Comedy means slapstick and clowning, and silent drama isn’t comic. The gap is in the game’s requirements, not in the evidence. StudioBinder is a production-software blog."
  },
  "social_realism": {
   "claim": "Ken Loach, the touchstone of British social realism, casts non-professionals alongside actors, withholds the full script, shoots in sequence and encourages improvisation.",
   "source": "No Film School, 'Ten Directing Lessons Inspired by Ken Loach', https://nofilmschool.com/directed-by-ken-loach; Into Film, 'Ken Loach, social realism...', https://www.intofilm.org/news-and-views/articles/ken-loach-feature",
-  "sourceSupports": "Snippets: Loach uses non-professionals, limits actors' access to the script, shoots chronologically, 'avoids extensive rehearsals and encourages actors to improvise as a way of achieving spontaneity'.",
+  "sourceSupports": "From search summaries: Loach uses non-professionals, limits actors' access to the script, shoots chronologically, 'avoids extensive rehearsals and encourages actors to improvise as a way of achieving spontaneity'.",
   "how": "from a search summary",
   "confidence": "low",
   "tags": [
@@ -1841,7 +1841,7 @@
     "why": "The method aims at spontaneous, naturalistic on-camera behavior."
    }
   ],
-  "uncertainty": "The Into Film page returned no text when fetched. One director’s method stands for the genre. Reviewed 2026-10-10: One director’s method (Ken Loach) stands for the genre. Not applied genre-wide.",
+  "uncertainty": "The Into Film page returned no text when opened. One director’s method stands in for the genre. On review (2026-10-10), one director’s method wasn’t enough to make it a requirement of the whole genre.",
   "belongsTo": "Ken Loach’s productions and those that work his way"
  },
  "swashbuckler": {
@@ -1874,13 +1874,13 @@
     "why": "Full-costume performance with the face hidden, conveyed through body language."
    }
   ],
-  "uncertainty": "Applies to suit actors, not the unmasked cast. Voice dubbing is done to the suit actor, not by them, so no voiceWork tag. Reviewed 2026-10-10: Suit actors, not the unmasked cast. Not applied genre-wide.",
+  "uncertainty": "It applies to suit actors, not the unmasked cast. Voice dubbing is done to the suit actor, not by them, so the research didn’t name Voice-Led Performance. On review (2026-10-10), a demand on suit actors alone wasn’t enough to make it a requirement of the whole genre.",
   "belongsTo": "the suit actor"
  },
  "tragicomedy": {
   "claim": "Tragicomedy holds tragic and comic elements side by side, with tone shifting between serious and comic, often within a scene.",
   "source": "StudioBinder, 'What is Tragicomedy', https://www.studiobinder.com/blog/what-is-tragicomedy-definition/; Fiveable, 'Tragicomedy', https://fiveable.me/english-12/key-terms/tragicomedy",
-  "sourceSupports": "Snippets: tragicomedies 'hold comedy and tragedy side by side in balance'; the tone 'shifts between serious and comic, often within the same scene'. A Semantic Scholar paper notes Chekhov asked the Moscow Art Theatre for 'a lighter touch'.",
+  "sourceSupports": "From search summaries: tragicomedies 'hold comedy and tragedy side by side in balance'; the tone 'shifts between serious and comic, often within the same scene'. A Semantic Scholar paper notes Chekhov asked the Moscow Art Theatre for 'a lighter touch'.",
   "how": "from a search summary",
   "confidence": "medium",
   "tags": [
@@ -1889,13 +1889,13 @@
     "why": "By definition the form contains comedy the actor must play alongside tragic stakes."
    }
   ],
-  "uncertainty": "These are genre guides, not acting sources. The tag comes from the definition.",
+  "uncertainty": "These are genre guides, not acting sources. The requirement comes from the definition.",
   "basis": "definition"
  },
  "werewolf": {
   "claim": "Werewolf roles can require long prosthetic transformations that the actor must perform through.",
   "source": "The Hollywood Reporter, 'Wolf Man Star Christopher Abbott Talks His 7-Hour Transformation', https://www.hollywoodreporter.com/movies/movie-features/wolf-man-star-christopher-abbott-1236109770/; IndieWire, 'Wolf Man: Christopher Abbott Needed 650 Prosthetic Pieces', https://www.indiewire.com/features/craft/wolf-man-christopher-abbott-650-prosthetic-pieces-interview-1235085626/",
-  "sourceSupports": "Snippets: the final transformation stage took up to seven hours; Abbott called it 'tedious and arduous' and practiced lines in a mirror to see 'how your face moves underneath the prosthetics'.",
+  "sourceSupports": "From search summaries: the final transformation stage took up to seven hours; Abbott called it 'tedious and arduous' and practiced lines in a mirror to see 'how your face moves underneath the prosthetics'.",
   "how": "from a search summary",
   "confidence": "low",
   "tags": [
@@ -1904,12 +1904,12 @@
     "why": "Heavy multi-stage prosthetic transformation the actor performs through."
    }
   ],
-  "uncertainty": "One film; earlier werewolf films vary (some used CGI). Reviewed 2026-10-10: One film’s prosthetic transformation; others used digital effects. Not applied genre-wide.",
+  "uncertainty": "It’s one film; earlier werewolf films vary, and some used CGI. On review (2026-10-10), one film’s prosthetic transformation wasn’t enough to make it a requirement of the whole genre.",
   "belongsTo": "the werewolf role in practical-effects productions"
  },
  "wuxia": {
   "claim": "Wuxia films by King Hu and the Shaw Brothers used wire- and trampoline-assisted acrobatics and choreographed sword action.",
-  "source": "Wikipedia, 'Wuxia', https://en.wikipedia.org/wiki/Wuxia (pointer); Wikipedia, 'Wire fu' (snippet only)",
+  "source": "Wikipedia, 'Wuxia', https://en.wikipedia.org/wiki/Wuxia (pointer); Wikipedia, 'Wire fu' (from a search summary only)",
   "sourceSupports": "'sophisticated action choreography using wire and trampoline assisted acrobatics combined with sped-up camera techniques'; Yuen Woo-ping became famous as a wuxia action choreographer.",
   "how": "read directly",
   "confidence": "medium",
@@ -1924,7 +1924,7 @@
  "zombie": {
   "claim": "Zombie productions train performers to move consistently as the undead, taught by the stunt team.",
   "source": "TheWrap, 'Army of the Dead: Zack Snyder Sent Hundreds of Extras to Zombie School', https://www.thewrap.com/army-of-the-dead-zack-snyder-extras-zombie-school/",
-  "sourceSupports": "Snippet: about 200 extras attended 'Zombie School', where the stunt team taught them 'how to move and act like a zombie'. Walking Dead extras also attended a zombie school (Collider).",
+  "sourceSupports": "From a search summary: about 200 extras attended 'Zombie School', where the stunt team taught them 'how to move and act like a zombie'. Walking Dead extras also attended a zombie school (Collider).",
   "how": "from a search summary",
   "confidence": "low",
   "tags": [
@@ -1933,7 +1933,7 @@
     "why": "Trained creature movement for undead roles, under makeup."
    }
   ],
-  "uncertainty": "Applies to undead performers (largely extras), not the living leads. Survival physicality for the living cast wasn’t sourced. Reviewed 2026-10-10: Undead performers, largely extras, not the living leads. Not applied genre-wide.",
+  "uncertainty": "It applies to the undead performers, largely extras, not the living leads. Survival physicality for the living cast wasn’t sourced. On review (2026-10-10), a demand on the undead performers alone wasn’t enough to make it a requirement of the whole genre.",
   "belongsTo": "the performers playing the undead"
  }
 }

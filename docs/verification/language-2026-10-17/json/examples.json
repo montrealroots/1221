@@ -408,5 +408,105 @@
   "why": "'No source found on…' with no verb, the look's first line.",
   "meaningSensitive": false,
   "verified": "json/b4-genre-looks.txt, the Steampunk look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#mumblecore",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "Improvisation is 'some' films, not all; the page notes mostly scripted exceptions. Reviewed 2026-10-10: the improvisation tag was removed. Improvisation is in some mumblecore films, not all; the naturalism (camera) is the convention.",
+  "after": "Improvisation is in 'some' films, not all; the page notes exceptions that are mostly scripted. The review of 2026-10-10 took Improvisation away for that reason: the convention is the naturalism, Naturalism On Camera.",
+  "why": "'Reviewed 2026-10-10: the improvisation tag was removed… the naturalism (camera) is the convention.'",
+  "meaningSensitive": true,
+  "verified": "json/b5-genre-looks.txt, the Mumblecore look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#neorealism",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "non-professional casting, which is the casting’s, not a technique asked of an actor",
+  "after": "non-professional casting, a choice of who’s cast rather than a technique asked of an actor",
+  "why": "'which is the casting’s' inside 'belongs to …' read as nonsense.",
+  "meaningSensitive": true,
+  "verified": "json/b5-genre-looks.txt, the Neorealism look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#farce",
+  "field": "why:comic",
+  "kind": "other",
+  "before": "'requiring the need for adept comic timing by the actors'.",
+  "after": "The page names comic timing as something the form needs: 'requiring the need for adept comic timing by the actors'.",
+  "why": "Shown for an applied genre: a bare quotation as the whole reason.",
+  "meaningSensitive": false,
+  "verified": "json/b5-genre-looks.txt, the Farce look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#found_footage",
+  "field": "why:camera",
+  "kind": "other",
+  "before": "'naturalistic acting' is routine, and actors may operate the camera.",
+  "after": "Naturalistic acting is 'routinely employed', the page says, and actors may operate the camera.",
+  "why": "Shown for an applied genre: a sentence opening on a lowercase quotation.",
+  "meaningSensitive": false,
+  "verified": "json/b5-genre-looks.txt, the Found Footage look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#musical",
+  "field": "why:song",
+  "kind": "other",
+  "before": "Britannica: musical numbers integrated in the plot; characters sing.",
+  "after": "Britannica says musical numbers are integrated in the plot, and characters sing.",
+  "why": "Shown for an applied genre: telegraphic notes made a sentence.",
+  "meaningSensitive": false,
+  "verified": "json/b5-genre-looks.txt, the Musical look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#silent_film",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "No tag in the fixed vocabulary fits wordless pantomime: physicalComedy means slapstick and clowning, and silent drama is not comic. A vocabulary gap, not a lack of evidence. StudioBinder is a production-software blog.",
+  "after": "None of the requirements the game can ask for fits wordless pantomime: Physical Comedy means slapstick and clowning, and silent drama isn’t comic. The gap is in the game’s requirements, not in the evidence. StudioBinder is a production-software blog.",
+  "why": "'No tag in the fixed vocabulary', a tag id, and 'A vocabulary gap' said as what's missing: the game's requirements, not the evidence.",
+  "meaningSensitive": true,
+  "verified": "json/b5-genre-looks.txt, the Silent Film look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#action_comedy",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "The fetch tool summarised the page; its remarks on Jackie Chan may be the summariser's gloss, so no physicalComedy tag was given.",
+  "after": "The tool that read the page summarized it, and its remarks on Jackie Chan may be the summary’s own gloss, so the research didn’t name Physical Comedy.",
+  "why": "'The fetch tool… the summariser's gloss, so no physicalComedy tag was given.'",
+  "meaningSensitive": true,
+  "verified": "json/b5-genre-looks.txt, the Action Comedy look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#kaiju",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "The tag fits suit actors, not the human cast. Reacting to unseen threats was not sourced on this read. Reviewed 2026-10-10: The tag fits suit actors, not the human cast. Not applied genre-wide.",
+  "after": "Physical Transformation fits suit actors, not the human cast. Reacting to unseen threats wasn’t sourced in this reading. On review (2026-10-10), a demand on suit actors alone wasn’t enough to make it a requirement of the whole genre.",
+  "why": "'The tag fits…' and a review note repeating it.",
+  "meaningSensitive": true,
+  "verified": "json/b5-genre-looks.txt, the Kaiju look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#war",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "Military drill and bearing have no exact vocabulary tag; 'stunt' covers the physical-action part only. Snippets.",
+  "after": "None of the requirements the game can ask for is exactly military drill and bearing; Fights And Stunts covers only the physical-action part. These are search summaries.",
+  "why": "'no exact vocabulary tag; 'stunt' covers…' and a one-word fragment, 'Snippets.'",
+  "meaningSensitive": false,
+  "verified": "json/b5-genre-looks.txt, the War look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#sea_adventure",
+  "field": "claim",
+  "kind": "other",
+  "before": "The cited source does not support an actor demand: it is about nautical literature, whose defining trait is nautical detail and seafaring vernacular.",
+  "after": "The cited source doesn’t support anything asked of an actor: it’s about nautical literature, whose defining trait is nautical detail and seafaring vernacular.",
+  "why": "'an actor demand' and 'Downgraded' (in the uncertainty) said plainly; the first line a player reads.",
+  "meaningSensitive": false,
+  "verified": "json/b5-genre-looks.txt, the Sea Adventure look"
  }
 ]

@@ -1,0 +1,244 @@
+## Vampire (vampire; low confidence; not applied)
+  What it asks of an actor. Actors in vampire roles may have to learn to speak clearly in prosthetic fangs; several notable Draculas wore none.
+  Why it adds no requirement. The research found no requirement of its own.
+  What the research says: From a search summary: prosthetic fangs make some sounds hard to pronounce; Juliet Landau wore hers for a long period before playing Drusilla to learn to speak with them; Langella and Lugosi wore no fangs as Dracula. (from a search summary; low confidence). Still uncertain: TV Tropes isn’t credible enough to support a requirement. The Stan Winston School page on Interview with the Vampire returned no text when opened. Fang work is minor prosthetics, not heavy Physical Transformation.
+  Source for what it asks: TV Tropes, 'Fang Thpeak', https://tvtropes.org/pmwiki/pmwiki.php/Main/FangThpeak (pointer only).
+  provenance: Its definition was taken from a search summary, and what it asks is held with low confidence.
+
+## War (war; medium confidence; applied)
+  What it asks of an actor. War films routinely put casts through military boot camps run by advisers so they can play soldiers credibly.
+  What a self-tape in it asks. A self-tape in it calls for Stage Combat (yours: 57.2 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: The sources document sustained military physical training for combat roles as standard preparation. What the research says: From search summaries: Dale Dye ran a 30-day military-style boot camp for the Platoon cast and an intensive one for Saving Private Ryan (sleeping in rain, 5-mile runs); his company Warriors Inc. trains actors for war films. (from a search summary; medium confidence). Still uncertain: None of the requirements the game can ask for is exactly military drill and bearing; Fights And Stunts covers only the physical-action part. These are search summaries.
+  Source for what it asks: Military.com, 'Meet the Man Who Puts Movie Stars Through Boot Camp', https://www.military.com/podcasts/left-of-boom/2021/02/16/dale-dyes-movie-stars-boot-camp.html; Coffee or Die, 'These Acclaimed War Movies Took Realistic Preparation to Extreme Levels', https://www.coffeeordie.com/article/platoon-movie-boot-camps.
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Western (western; medium confidence; applied)
+  What it asks of an actor. Western productions run 'cowboy camps' that teach actors horse riding and gun handling.
+  What a self-tape in it asks. A self-tape in it calls for Stage Combat (yours: 57.2 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: Riding and gun handling are trained physical-action skills the sources show westerns requiring; firearms handling falls within stage-combat training. What the research says: From search summaries: camps teach riding, mounting and dismounting, roping and firearm handling; Tim Blake Nelson trained with guns for about five months for gun tricks in The Ballad of Buster Scruggs. (from a search summary; medium confidence). Still uncertain: The examples are mostly recent TV westerns. Horsemanship isn’t stage combat, so Fights And Stunts fits only part of it. Laconic manner wasn’t sourced.
+  Source for what it asks: CinemaBlend, 'I Thought Yellowstone's Cowboy Camp Was About Learning To Rope And Ride...', https://www.cinemablend.com/interviews/i-thought-yellowstone-cowboy-camp-learning-rope-ride-marshals-star-schooled-me-what-actors-really-need-know; Netflix Tudum, 'Ransom Canyon cast cowboy boot camp', https://www.netflix.com/tudum/videos/ransom-canyon-behind-the-scenes-cowboy-boot-camp.
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Whodunit (whodunit; low confidence; not applied; belongs elsewhere)
+  What it asks of an actor. For Murder on the Orient Express (2017), Kenneth Branagh worked with a dialect coach three times a week and listened to recordings of 27 Belgian accents to play Poirot. The accent belongs to that detective role, not to the whodunit form.
+  Why it adds no requirement. What the research found (Accents) belongs to foreign-detective roles such as Poirot, not to the genre as a whole, so the genre adds no requirement of its own.
+  What the research says: 9 Preparatory Steps Branagh Took To Play Hercule Poirot: 'He met with a dialect coach three times a week to study and practice Poirot’s accent'; he 'listened to recordings of 27 different Belgian accents'; he began learning French 'after Wallonian dialect defeated him'. (its one source read directly, reviewed 2026-10-10; low confidence). Still uncertain: The source is the rights-holder’s promotional site, reliable for the facts but about one film. Ensemble suspect-playing wasn’t sourced.
+  Source for what it asks: Agatha Christie Ltd (no byline), 9 Preparatory Steps Branagh Took To Play Hercule Poirot (agathachristie.com, 2017), https://www.agathachristie.com/film-and-tv/murder-on-the-orient-express/9-preparatory-steps-branagh-took-to-play-hercule-poirot [read directly].
+  provenance: Its definition was taken from a search summary, and what it asks is held with low confidence.
+
+## Yakuza (yakuza; low confidence; not applied; belongs elsewhere)
+  What it asks of an actor. The 1960s ninkyo (chivalry) yakuza film formulaically climaxed in the hero’s katana showdown against a rival gang. The 1970s jitsuroku cycle replaced it with chaotic, unheroic brawls and gunplay. Sources describe the fights, not actors' training.
+  Why it adds no requirement. What the research found (Fights And Stunts) belongs to the lead’s climactic sword fight in ninkyo eiga, the chivalry yakuza films of the 1960s, not to the genre as a whole, so the genre adds no requirement of its own.
+  What the research says: Tradition and Modernity in Japanese Yakuza Films of the 1960s and 70s: Ninkyo climaxes feature 'the hero armed only with a traditional katana sword slicing his way through a gang of bad yakuza with guns'; in Battles Without Honor and Humanity yakuza’s 'hands shake when they fire a gun'; 'a free-for-all brawl, with Tetsuya Watari fighting in a downpour'. Yakuza Films at the Asia Society: 1960s yakuza films were 'always climaxing in a showdown where the anti-hero takes down all nemeses with a katana', 'a bloody ballet of sword swinging'. 10 great Japanese gangster films: Ken Takakura as 'the stoic, tattooed, katana-wielding tough guy'; Fukasaku’s jitsuroku style 'stripped away the mythos and surface sheen of the old-school ninkyo eiga of the 1960s'. (all three of its sources read directly, reviewed 2026-10-10; low confidence). Still uncertain: The sources are film criticism about screen content, not about what actors trained for. A whole-genre combat demand might be argued from violence across cycles, but no source says it, and much later yakuza cinema (Kitano’s, for one) isn’t led by fight choreography.
+  Source for what it asks: David Hanley, Tradition and Modernity in Japanese Yakuza Films of the 1960s and 70s (Offscreen, 2011), https://offscreen.com/view/japanese_yakuza_films [read directly]; David Wilentz, Yakuza Films at the Asia Society (The Brooklyn Rail, 2008), https://brooklynrail.org/2008/03/film/yakuza-films-at-the-asia-society/ [read directly]; Jasper Sharp, 10 great Japanese gangster films (BFI, 2013), https://www.bfi.org.uk/lists/10-great-japanese-gangster-films [read directly].
+  provenance: Its definition was read at the source, and what it asks is held with low confidence.
+
+## Action (action; medium confidence; applied)
+  What it asks of an actor. The action genre is defined by fights, chases, shootouts and stunt work.
+  What a self-tape in it asks. A self-tape in it calls for Stage Combat (yours: 57.2 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: The definition names fights and stunt work as what the genre predominantly features. What the research says: 'Action film is a film genre that predominantly features chase sequences, fights, shootouts, explosions, and stunt work.' Actor preparation isn’t discussed. (read directly; medium confidence). Still uncertain: Wikipedia was used only as a lead. Stunt work is often done by doubles, so the page doesn’t say the actor does it.
+  Source for what it asks: Wikipedia, 'Action film', https://en.wikipedia.org/wiki/Action_film (pointer).
+  provenance: Its definition was read at the source, and what it asks is held with medium confidence.
+
+## Action Comedy (action_comedy; medium confidence; applied)
+  What it asks of an actor. Action comedy combines action with humor that plays a central role, descended from silent comedians' chases, gags and stunts.
+  What a self-tape in it asks. A self-tape in it calls for Stage Combat (yours: 57.2 of 90), Comedy (yours: 50.3 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: The genre is action plus comedy; the page links its roots to chases and stunts. Humor 'plays a relatively central role' by definition. What the research says: Read through an automatic summary of the page: humor 'plays a relatively central role'; silent comedians such as Chaplin and Keaton featured 'chases, gags and stunts'. The earlier quoted phrase 'relies on the characters to bring out the humor' didn’t come back in this reading. (read directly; medium confidence). Still uncertain: The tool that read the page summarized it, and its remarks on Jackie Chan may be the summary’s own gloss, so the research didn’t name Physical Comedy.
+  Source for what it asks: Wikipedia, 'Action comedy', https://en.wikipedia.org/wiki/Action_comedy (pointer).
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Backstage Musical (backstage_musical; medium confidence; applied)
+  What it asks of an actor. In a backstage musical the story stops for diegetic performance numbers in a show being produced.
+  What a self-tape in it asks. A self-tape in it calls for Singing (yours: 47.3 of 90), Dance (yours: 47.8 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: Performance numbers with songs are the genre’s defining feature. The plots stage musical revues and the genre is typified by Busby Berkeley’s production numbers. What the research says: 'The film’s narrative trajectory often comes to a halt one or more times to allow a performance'; the songs are 'diegetic numbers'; plots revolve around 'the production of a play or musical revue'; Busby Berkeley typified the genre. (read directly; medium confidence). Still uncertain: The page names 'songs' and 'performances' explicitly; dance follows from 'musical revue' and Berkeley rather than from an explicit sentence about dancing.
+  Source for what it asks: Wikipedia, 'Backstage musical', https://en.wikipedia.org/wiki/Backstage_musical (pointer).
+  provenance: Its definition was read at the source, and what it asks is held with medium confidence.
+
+## Comedy (comedy; medium confidence; applied)
+  What it asks of an actor. Comic timing, the use of pauses, cadence, delivery and pacing to land a joke, is the core comic skill.
+  What a self-tape in it asks. A self-tape in it calls for Comedy (yours: 50.3 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: The source defines comic timing as the craft comedy rests on. What the research says: From a search summary: 'Comedic timing is the use of pauses, cadence, delivery, and pacing to land a joke.' (from a search summary; medium confidence). Still uncertain: MasterClass’s page couldn’t be opened; the definition came back in a search. The 'listening to scene partners' part of the earlier claim wasn’t confirmed again.
+  Source for what it asks: MasterClass, 'Guide to Comedic Timing', https://www.masterclass.com/articles/guide-to-comedic-timing.
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Docufiction (docufiction; medium confidence; applied)
+  What it asks of an actor. Docufiction’s main characters are often non-professionals essentially playing themselves, unscripted, with improvised dialogue and genuine reactions.
+  What a self-tape in it asks. A self-tape in it calls for Improvisation (yours: 53.2 of 90), On Camera (yours: 56.3 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: The page says docufictions are usually unscripted, with improvisational dialogue. Participants portray 'their own genuine reactions' on camera, which is naturalistic on-camera behavior as a convention. What the research says: 'The main character or characters—often portrayed by non-professional or amateur actors—are essentially playing themselves'; docufictions 'are usually not scripted' and use participants' 'own genuine reactions and their own improvisational dialogue'. (read directly; medium confidence). Still uncertain: The participants are often not actors at all, so what it asks of an actor applies loosely.
+  Source for what it asks: Wikipedia, 'Docufiction', https://en.wikipedia.org/wiki/Docufiction (pointer).
+  provenance: Its definition was read at the source, and what it asks is held with medium confidence.
+
+## Farce (farce; medium confidence; applied)
+  What it asks of an actor. Farce calls for highly stylized performances and dramatic reactions, with adept comic timing for wordplay, visual gags and slapstick.
+  What a self-tape in it asks. A self-tape in it calls for Comedy (yours: 50.3 of 90), Clown And Mask (yours: 56.1 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: The page names comic timing as something the form needs: 'requiring the need for adept comic timing by the actors'. Visual gags and slapstick are named conventions of the form. What the research says: 'broad, larger-than-life characters, often calling for highly stylized performances and dramatic reactions'; 'There may be wordplay, visual gags and slapstick, requiring the need for adept comic timing by the actors.' (read directly; medium confidence). Still uncertain: 'Highly stylized performances' is about physical and emotional style, not language, so the research didn’t name Heightened Language.
+  Source for what it asks: Wikipedia, 'Farce', https://en.wikipedia.org/wiki/Farce (pointer).
+  provenance: Its definition was read at the source, and what it asks is held with medium confidence.
+
+## Found Footage (found_footage; medium confidence; applied)
+  What it asks of an actor. Found-footage films routinely use improvisation and naturalistic acting, and the actors may shoot the film themselves as they perform.
+  What a self-tape in it asks. A self-tape in it calls for Improvisation (yours: 53.2 of 90), On Camera (yours: 56.3 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: The page says improvisation is 'routinely employed'. Naturalistic acting is 'routinely employed', the page says, and actors may operate the camera. What the research says: 'the cinematography may be done by the actors themselves as they perform'; 'shaky camera work, improvisation and naturalistic acting are routinely employed'. (read directly; medium confidence). Still uncertain: Wikipedia was used only as a lead.
+  Source for what it asks: Wikipedia, 'Found footage (film technique)', https://en.wikipedia.org/wiki/Found_footage_(film_technique) (pointer).
+  provenance: Its definition was read at the source, and what it asks is held with medium confidence.
+
+## Jidaigeki (jidaigeki; medium confidence; applied)
+  What it asks of an actor. Jidaigeki uses a contrived, formal, archaic register of Japanese speech, stock makeup and catchphrases, and stylized sword fights.
+  What a self-tape in it asks. A self-tape in it calls for Classical Text (yours: 54.4 of 90), Stage Combat (yours: 57.2 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: The page describes a formal, archaic stylized speech register as a convention. Sword fights are a standing convention; chambara is the sword-fighting branch. What the research says: 'A contrived form of old-fashioned Japanese speech, using modern pronunciation and grammar with a high degree of formality and frequent archaisms'; heroes wear eye makeup; protagonists deliver set catchphrases (kimarizerifu); sword fights follow set conventions, and chambara films use stylized violence. (read directly; medium confidence). Still uncertain: The page was read through an automatic summary. It doesn’t say how much of the swordplay the lead actors do themselves.
+  Source for what it asks: Wikipedia, 'Jidaigeki', https://en.wikipedia.org/wiki/Jidaigeki (pointer).
+  provenance: Its definition was read at the source, and what it asks is held with medium confidence.
+
+## Kaiju (kaiju; low confidence; not applied; belongs elsewhere)
+  What it asks of an actor. Japanese kaiju films used suit actors performing inside stiff latex or rubber creature suits on miniature sets.
+  Why it adds no requirement. What the research found (Physical Transformation) belongs to the suit actor playing the creature, not to the genre as a whole, so the genre adds no requirement of its own.
+  What the research says: Tsuburaya 'decided to attempt to create suits, called creature suits, for a human (suit actor) to wear and act in'; 'Due to the extreme stiffness of the latex or rubber suits, filming would often be done at double speed'; combined with miniature city sets. (read directly; low confidence). Still uncertain: Physical Transformation fits suit actors, not the human cast. Reacting to unseen threats wasn’t sourced in this reading. On review (2026-10-10), a demand on suit actors alone wasn’t enough to make it a requirement of the whole genre.
+  Source for what it asks: Wikipedia, 'Kaiju', https://en.wikipedia.org/wiki/Kaiju (pointer).
+  provenance: Its definition was read at the source, and what it asks is held with low confidence.
+
+## Martial Arts (martial_arts; medium confidence; applied)
+  What it asks of an actor. Martial-arts roles are often played by real martial artists; otherwise actors train for the role, helped by doubles, wire work and camera tricks.
+  What a self-tape in it asks. A self-tape in it calls for Stage Combat (yours: 57.2 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: Real martial-arts skill or role-specific fight training is stated as the norm. What the research says: 'these roles are often played by actors who are real martial artists. If not, actors frequently train in preparation for their roles or the action director may rely more on stylized action or film making tricks'; techniques include 'doubles, undercranking, wire work'. (read directly; medium confidence). Still uncertain: Wikipedia was used only as a lead.
+  Source for what it asks: Wikipedia, 'Martial arts film', https://en.wikipedia.org/wiki/Martial_arts_film (pointer).
+  provenance: Its definition was read at the source, and what it asks is held with medium confidence.
+
+## Melodrama (melodrama; medium confidence; applied)
+  What it asks of an actor. Film melodrama uses exaggerated staging, score and performance; characters wear their hearts on their sleeves.
+  Why it adds no requirement. The research found no requirement of its own.
+  What the research says: Melodrama 'employs exaggerated staging, score and performance to create the ultimate spectacle'; 'a passionate purge of emotion'; 'heightened dramatics'; characters 'rarely behave rationally'. (read directly; medium confidence). Still uncertain: The source supports exaggerated emotional performance, but Heightened Language means heightened or stylized language, which the BFI doesn’t mention. None of the requirements the game can ask for fits, and none was forced.
+  Source for what it asks: BFI, 'Too Much: Melodrama on Film', https://www.bfi.org.uk/too-much.
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Mockumentary (mockumentary; medium confidence; applied)
+  What it asks of an actor. Mockumentaries can be partly or wholly improvised and are presented through documentary devices such as talking heads and cinéma vérité.
+  What a self-tape in it asks. A self-tape in it calls for Improvisation (yours: 53.2 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: The page states mockumentaries can be partly or wholly improvised. What the research says: 'Mockumentaries can be partly or wholly improvised'; 'often presented as historical documentaries, with B roll and talking heads ... or as cinéma vérité pieces'. (read directly; medium confidence). Still uncertain: Deadpan naturalism wasn’t stated outright, so the research didn’t name Naturalism On Camera. The page didn’t establish that mockumentaries are always comic, so it didn’t name Comic Timing either.
+  Source for what it asks: Wikipedia, 'Mockumentary', https://en.wikipedia.org/wiki/Mockumentary (pointer).
+  provenance: Its definition was read at the source, and what it asks is held with medium confidence.
+
+## Mumblecore (mumblecore; medium confidence; applied)
+  What it asks of an actor. Naturalism in performance and dialogue is a key feature of almost all mumblecore; early films used non-professionals and some used prominent improvisation.
+  What a self-tape in it asks. A self-tape in it calls for On Camera (yours: 56.3 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: Naturalistic performance is called a key feature of almost all mumblecore films. What the research says: 'Naturalism – both in performance and dialogue – is a key feature of almost all mumblecore films'; 'Early mumblecore films tended to feature non-professional actors'; 'Some mumblecore films feature a prominent use of improvisation, with the cast sharing script credits'; Bujalski’s are 'mostly scripted'. (read directly; medium confidence). Still uncertain: Improvisation is in 'some' films, not all; the page notes exceptions that are mostly scripted. The review of 2026-10-10 took Improvisation away for that reason: the convention is the naturalism, Naturalism On Camera.
+  Source for what it asks: Wikipedia, 'Mumblecore', https://en.wikipedia.org/wiki/Mumblecore (pointer).
+  provenance: Its definition was read at the source, and what it asks is held with medium confidence.
+
+## Musical (musical; medium confidence; applied)
+  What it asks of an actor. A musical film integrates musical numbers into the plot; characters sing and dance.
+  What a self-tape in it asks. A self-tape in it calls for Singing (yours: 47.3 of 90), Dance (yours: 47.8 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: Britannica says musical numbers are integrated in the plot, and characters sing. Britannica, in a search summary, says characters sing and dance. What the research says: From a search summary: a musical film 'integrates musical numbers within the plot'; characters often sing and dance to express emotion and advance the plot. (from a search summary; medium confidence). Still uncertain: Britannica’s pages couldn’t be opened; the search summary may blend Britannica with other results, especially the sentence about singing and dancing.
+  Source for what it asks: Encyclopaedia Britannica, 'Musical film', https://www.britannica.com/art/musical-film.
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Nature Documentary (nature_documentary; medium confidence; applied)
+  What it asks of an actor. Nature documentaries almost all have a human presenter, whose role ranges from explanatory voice-over to on-camera interaction with animals.
+  What a self-tape in it asks. A self-tape in it calls for Voice-Over (yours: 52.9 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: Explanatory voice-over is named as a standard presenter role. What the research says: 'Almost all have a human presenter, the role varies widely, ranging from explanatory voice-overs to extensive interaction or even confrontation with animals.' (read directly; medium confidence). Still uncertain: Presenting isn’t acting in the usual sense, and presenting on camera isn’t exactly one of the requirements the game can ask for.
+  Source for what it asks: Wikipedia, 'Nature documentary', https://en.wikipedia.org/wiki/Nature_documentary (pointer).
+  provenance: Its definition was read at the source, and what it asks is held with medium confidence.
+
+## Neorealism (neorealism; low confidence; not applied; belongs elsewhere)
+  What it asks of an actor. Italian neorealism was filmed on location among the poor and working class, frequently with non-professional actors.
+  Why it adds no requirement. What the research found (Naturalism On Camera) belongs to non-professional casting, a choice of who’s cast rather than a technique asked of an actor, not to the genre as a whole, so the genre adds no requirement of its own.
+  What the research says: A search summary of Wikipedia: 'a style of film characterized by stories set amongst the poor and working class, filmed on location, frequently using nonprofessional actors'; where known actors were cast they played 'strongly against their normal character types'. (from a search summary; low confidence). Still uncertain: The Britannica page couldn’t be opened, and searches returned Wikipedia and others instead. Naturalism On Camera is inferred from casting and location practice; no source here states a performance style in so many words. On review (2026-10-10), an inference wasn’t enough to make it a requirement of the whole genre.
+  Source for what it asks: Wikipedia, 'Italian neorealism', https://en.wikipedia.org/wiki/Italian_neorealism (pointer); previously cited: Britannica, 'Neorealism', https://www.britannica.com/art/Neorealism-Italian-art (not reachable).
+  provenance: Its definition was taken from a search summary, and what it asks is held with low confidence.
+
+## New Wave (new_wave; medium confidence; applied)
+  What it asks of an actor. The New Wave promoted a naturalistic style with location shooting, improvised dialogue and natural light.
+  What a self-tape in it asks. A self-tape in it calls for Improvisation (yours: 53.2 of 90), On Camera (yours: 56.3 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: Improvised dialogue is named as a convention. The movement is described as promoting a naturalistic style. What the research says: Search summary attributed to Britannica: 'The New Wave movement promoted a more naturalistic filmmaking style, with location shoots, improvised dialogue, and natural lighting.' (from a search summary; medium confidence). Still uncertain: The Britannica page couldn’t be opened, and the search didn’t return the New Wave page itself, so the attribution is unconfirmed, and this is secondhand.
+  Source for what it asks: Encyclopaedia Britannica, 'New Wave', https://www.britannica.com/art/New-Wave-film.
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Period Drama (period_drama; medium confidence; applied)
+  What it asks of an actor. Period dramas employ historical advisers who teach actors how to speak, stand, sit, eat and gesture in the manner of the era.
+  Why it adds no requirement. The research found no requirement of its own.
+  What the research says: From search summaries: Alastair Bruce advised Downton Abbey actors 'on how to speak, stand, sit, eat, drink, dress', posture and 'the use of vocabulary'; Lily James: 'The main thing I had to learn was posture'. DataCalculus (read directly) says dialect coaches evoke 'the culture, education, and social class of the period'. (from a search summary; medium confidence). Still uncertain: The earlier source, DataCalculus, is a data-analytics company’s blog and too weak to support a requirement, so the research didn’t name Accents. The Downton evidence is one series. The review of 2026-10-10 took Heightened Language away: it’s verse and rhetoric, and the research is about period speech, bearing and manners in one series, which it doesn’t fit.
+  Source for what it asks: Detroit News, 'PBS special examines the etiquette of Downton Abbey', https://eu.detroitnews.com/story/entertainment/television/2015/01/04/downton-abbey-pbs-special/21210235/; PBS, 'The Manners of Downton Abbey', https://cm-pressroom.pbs.org/programs/m/manners-of-downton-abbey; previously cited: DataCalculus, 'Dialect coaching for actors in period pieces'.
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Romantic Comedy (romantic_comedy; medium confidence; applied; basis definition)
+  What it asks of an actor. Under the Hays Code, romantic comedies relied on verbal sparring and physical comedy.
+  What a self-tape in it asks. A self-tape in it calls for Comedy (yours: 50.3 of 90). This follows from how the genre is defined, not from a source that says so. A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: The genre is comedy, and Britannica names verbal sparring as a defining resource. What the research says: From a search summary: the Hays Code 'prohibited explicit mention of sexual relationships, leading to films' relying on verbal sparring and physical comedy instead'; the genre is defined by the lighthearted pursuit of love. (from a search summary; medium confidence). Still uncertain: Britannica couldn’t be opened. Physical comedy is tied to the Hays-era films, so the research didn’t name Physical Comedy for the genre as a whole. Chemistry isn’t one of the requirements the game can ask for.
+  Source for what it asks: Encyclopaedia Britannica, 'Romantic comedy', https://www.britannica.com/art/romantic-comedy-film.
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Samurai (samurai; medium confidence; applied)
+  What it asks of an actor. Samurai films use tate, a stage swordplay of fixed forms that actors memorize and combine, with strict posture and etiquette.
+  What a self-tape in it asks. A self-tape in it calls for Stage Combat (yours: 57.2 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: The page describes learned, choreographed stage swordplay for film and stage. What the research says: Tate is 'stage fighting in brawls or with swords, in stage plays and movies' using fixed forms actors memorize and combine; it requires straight back and planted heels, proper kimono wear and sword etiquette. (read directly; medium confidence). Still uncertain: The Gate is a Japan-culture travel site describing a tate experience, not an academic source. Period bearing isn’t exactly one of the requirements the game can ask for.
+  Source for what it asks: The Gate (thegate12.com), article on tate, https://thegate12.com/article/283.
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Screwball Comedy (screwball_comedy; medium confidence; applied)
+  What it asks of an actor. Screwball comedy is built on fast-paced, overlapping repartee combined with slapstick.
+  What a self-tape in it asks. A self-tape in it calls for Comedy (yours: 50.3 of 90), Clown And Mask (yours: 56.1 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: Fast, overlapping verbal repartee is the genre’s defining feature. Slapstick elements and pratfalls are named. What the research says: 'fast-paced, overlapping repartee'; 'slapstick elements'; Henry Fonda performs 'numerous pratfalls' in The Lady Eve. (read directly; medium confidence). Still uncertain: The page was read through an automatic summary.
+  Source for what it asks: Wikipedia, 'Screwball comedy', https://en.wikipedia.org/wiki/Screwball_comedy (pointer).
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Sea Adventure (sea_adventure; low confidence; not applied)
+  What it asks of an actor. The cited source doesn’t support anything asked of an actor: it’s about nautical literature, whose defining trait is nautical detail and seafaring vernacular.
+  Why it adds no requirement. The research found no requirement of its own.
+  What the research says: The page discusses 'nautical language' and 'the vernacular expression of seafaring men' in fiction such as Cooper’s The Pilot. It says nothing about film actors or physical work in water. (read directly; low confidence). Still uncertain: This was lowered from medium confidence: the earlier source doesn’t discuss actors at all. Nautical jargon isn’t Heightened Language in the game’s sense. No acting source was found.
+  Source for what it asks: Wikipedia, 'Nautical fiction', https://en.wikipedia.org/wiki/Nautical_fiction (pointer).
+  provenance: Its definition was taken from a search summary, and what it asks is held with low confidence.
+
+## Silent Film (silent_film; medium confidence; applied)
+  What it asks of an actor. Silent-film actors conveyed story and emotion through mime, pantomime and exaggerated gesture and expression.
+  Why it adds no requirement. The research found no requirement of its own.
+  What the research says: 'Actors in silent films often used techniques of mime and pantomime to convey emotions and actions, making performances highly expressive and physical'; 'exaggerated expressions and gestures'. (read directly; medium confidence). Still uncertain: None of the requirements the game can ask for fits wordless pantomime: Physical Comedy means slapstick and clowning, and silent drama isn’t comic. The gap is in the game’s requirements, not in the evidence. StudioBinder is a production-software blog.
+  Source for what it asks: StudioBinder, 'What is a Silent Film', https://www.studiobinder.com/blog/what-is-a-silent-film-definition/.
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Social Realism (social_realism; low confidence; not applied; belongs elsewhere)
+  What it asks of an actor. Ken Loach, the touchstone of British social realism, casts non-professionals alongside actors, withholds the full script, shoots in sequence and encourages improvisation.
+  Why it adds no requirement. What the research found (Improvisation, Naturalism On Camera) belongs to Ken Loach’s productions and those that work his way, not to the genre as a whole, so the genre adds no requirement of its own.
+  What the research says: From search summaries: Loach uses non-professionals, limits actors' access to the script, shoots chronologically, 'avoids extensive rehearsals and encourages actors to improvise as a way of achieving spontaneity'. (from a search summary; low confidence). Still uncertain: The Into Film page returned no text when opened. One director’s method stands in for the genre. On review (2026-10-10), one director’s method wasn’t enough to make it a requirement of the whole genre.
+  Source for what it asks: No Film School, 'Ten Directing Lessons Inspired by Ken Loach', https://nofilmschool.com/directed-by-ken-loach; Into Film, 'Ken Loach, social realism...', https://www.intofilm.org/news-and-views/articles/ken-loach-feature.
+  provenance: Its definition was taken from a search summary, and what it asks is held with low confidence.
+
+## Swashbuckler (swashbuckler; medium confidence; applied)
+  What it asks of an actor. Fight directors such as Paddy Crean staged swashbuckler swordplay and taught actors sword work for stage and film.
+  What a self-tape in it asks. A self-tape in it calls for Stage Combat (yours: 57.2 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: Staged swordplay taught by a fight director is documented for the genre’s films. What the research says: Crean ran a London fencing school 'used ... to teach many celebrities sword work for stage and films', often doubled for Errol Flynn, and choreographed films such as The Master of Ballantrae (1953). (read directly; medium confidence). Still uncertain: Crean often doubled Flynn, so some swordplay wasn’t performed by the star.
+  Source for what it asks: Wikipedia, 'Paddy Crean', https://en.wikipedia.org/wiki/Paddy_Crean (pointer).
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Tokusatsu (tokusatsu; low confidence; not applied; belongs elsewhere)
+  What it asks of an actor. Tokusatsu suit actors do their stunts and sword fights inside full costumes that hide their faces, acting through body language, with voices dubbed later.
+  Why it adds no requirement. What the research found (Fights And Stunts, Physical Transformation) belongs to the suit actor, not to the genre as a whole, so the genre adds no requirement of its own.
+  What the research says: 'the suit actor does all of their stunts while in a full costume that normally obscures their identity'; roles 'may require extensive sword fights, actions and stunts within a physically restrictive environment'; 'extensive body language and pantomime are crucial'; 'the actor’s voice is dubbed during after-recording'. (read directly; low confidence). Still uncertain: It applies to suit actors, not the unmasked cast. Voice dubbing is done to the suit actor, not by them, so the research didn’t name Voice-Led Performance. On review (2026-10-10), a demand on suit actors alone wasn’t enough to make it a requirement of the whole genre.
+  Source for what it asks: Wikipedia, 'Suit actor', https://en.wikipedia.org/wiki/Suit_actor (pointer).
+  provenance: Its definition was read at the source, and what it asks is held with low confidence.
+
+## Tragicomedy (tragicomedy; medium confidence; applied; basis definition)
+  What it asks of an actor. Tragicomedy holds tragic and comic elements side by side, with tone shifting between serious and comic, often within a scene.
+  What a self-tape in it asks. A self-tape in it calls for Comedy (yours: 50.3 of 90). This follows from how the genre is defined, not from a source that says so. A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: By definition the form contains comedy the actor must play alongside tragic stakes. What the research says: From search summaries: tragicomedies 'hold comedy and tragedy side by side in balance'; the tone 'shifts between serious and comic, often within the same scene'. A Semantic Scholar paper notes Chekhov asked the Moscow Art Theatre for 'a lighter touch'. (from a search summary; medium confidence). Still uncertain: These are genre guides, not acting sources. The requirement comes from the definition.
+  Source for what it asks: StudioBinder, 'What is Tragicomedy', https://www.studiobinder.com/blog/what-is-tragicomedy-definition/; Fiveable, 'Tragicomedy', https://fiveable.me/english-12/key-terms/tragicomedy.
+  provenance: Its definition was taken from a search summary, and what it asks is held with medium confidence.
+
+## Werewolf (werewolf; low confidence; not applied; belongs elsewhere)
+  What it asks of an actor. Werewolf roles can require long prosthetic transformations that the actor must perform through.
+  Why it adds no requirement. What the research found (Physical Transformation) belongs to the werewolf role in practical-effects productions, not to the genre as a whole, so the genre adds no requirement of its own.
+  What the research says: From search summaries: the final transformation stage took up to seven hours; Abbott called it 'tedious and arduous' and practiced lines in a mirror to see 'how your face moves underneath the prosthetics'. (from a search summary; low confidence). Still uncertain: It’s one film; earlier werewolf films vary, and some used CGI. On review (2026-10-10), one film’s prosthetic transformation wasn’t enough to make it a requirement of the whole genre.
+  Source for what it asks: The Hollywood Reporter, 'Wolf Man Star Christopher Abbott Talks His 7-Hour Transformation', https://www.hollywoodreporter.com/movies/movie-features/wolf-man-star-christopher-abbott-1236109770/; IndieWire, 'Wolf Man: Christopher Abbott Needed 650 Prosthetic Pieces', https://www.indiewire.com/features/craft/wolf-man-christopher-abbott-650-prosthetic-pieces-interview-1235085626/.
+  provenance: Its definition was taken from a search summary, and what it asks is held with low confidence.
+
+## Wuxia (wuxia; medium confidence; applied)
+  What it asks of an actor. Wuxia films by King Hu and the Shaw Brothers used wire- and trampoline-assisted acrobatics and choreographed sword action.
+  What a self-tape in it asks. A self-tape in it calls for Stage Combat (yours: 57.2 of 90). A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.
+  Why it’s applied, in the research’s words: Choreographed, wire-assisted acrobatic fight action is a defining convention. What the research says: 'sophisticated action choreography using wire and trampoline assisted acrobatics combined with sped-up camera techniques'; Yuen Woo-ping became famous as a wuxia action choreographer. (read directly; medium confidence). Still uncertain: The page doesn’t say how much the actors perform themselves rather than doubles.
+  Source for what it asks: Wikipedia, 'Wuxia', https://en.wikipedia.org/wiki/Wuxia (pointer); Wikipedia, 'Wire fu' (from a search summary only).
+  provenance: Its definition was read at the source, and what it asks is held with medium confidence.
+
+## Zombie (zombie; low confidence; not applied; belongs elsewhere)
+  What it asks of an actor. Zombie productions train performers to move consistently as the undead, taught by the stunt team.
+  Why it adds no requirement. What the research found (Physical Transformation) belongs to the performers playing the undead, not to the genre as a whole, so the genre adds no requirement of its own.
+  What the research says: From a search summary: about 200 extras attended 'Zombie School', where the stunt team taught them 'how to move and act like a zombie'. Walking Dead extras also attended a zombie school (Collider). (from a search summary; low confidence). Still uncertain: It applies to the undead performers, largely extras, not the living leads. Survival physicality for the living cast wasn’t sourced. On review (2026-10-10), a demand on the undead performers alone wasn’t enough to make it a requirement of the whole genre.
+  Source for what it asks: TheWrap, 'Army of the Dead: Zack Snyder Sent Hundreds of Extras to Zombie School', https://www.thewrap.com/army-of-the-dead-zack-snyder-extras-zombie-school/.
+  provenance: Its definition was taken from a search summary, and what it asks is held with low confidence.

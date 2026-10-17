@@ -230,3 +230,41 @@ satire's, time travel's, tragedy's and true crime's `belongsTo` changed there).
 plural-check 0, voice-check 0, tics 0, spelling 0, typos 0, text-inventory 0, doc-refs 0, deciders 0.
 
 **Screens verified:** `b4-genre-looks.txt`, all 38 rendered at this batch's commit and read whole.
+
+## Batch 5: Vampire To Zombie
+
+**Sources read (35):** `genre-demands.json#` vampire, war, western, whodunit, yakuza, action, action_comedy,
+backstage_musical, comedy, docufiction, farce, found_footage, jidaigeki, kaiju, martial_arts, melodrama, mockumentary,
+mumblecore, musical, nature_documentary, neorealism, new_wave, period_drama, romantic_comedy, samurai, screwball_comedy,
+sea_adventure, silent_film, social_realism, swashbuckler, tokusatsu, tragicomedy, werewolf, wuxia and zombie. Half the
+applied genres are here (25 of 51), and 31 of the 52 reasons the look shows.
+
+**Rewritten (33; backstage musical and swashbuckler by the rules alone):** the same translations, and:
+- The applied genres' reasons, as sentences: farce's was a bare quotation ("'requiring the need for adept comic timing by
+  the actors'."), found footage's two opened on lowercase quotations, musical's were notes ("Britannica: musical numbers
+  integrated in the plot; characters sing.").
+- Mumblecore's review, "the improvisation tag was removed … the naturalism (camera) is the convention", as "The review of
+  2026-10-10 took Improvisation away for that reason: the convention is the naturalism, Naturalism On Camera."
+- Silent film's "A vocabulary gap, not a lack of evidence." as "The gap is in the game’s requirements, not in the
+  evidence."
+- Neorealism's `belongsTo`, "non-professional casting, which is the casting’s, not a technique asked of an actor", which
+  read as nonsense inside the look's sentence; yakuza's and whodunit's read inside it.
+- New wave's "read it as secondhand" first, which the inventory's ratchet counts as engine-speak ("reads it as"), then
+  "and this is secondhand".
+
+**Meaning-sensitive, and how each was held:**
+- *Every applied genre's reason* says what its source says: each was read against `sourceSupports` in the same look.
+  Farce's quotation is kept whole, after a clause that says it's the page's.
+- *War's* "no exact vocabulary tag; 'stunt' covers the physical-action part only" keeps both halves: drill and bearing
+  aren't a requirement, and Fights And Stunts covers only the physical part.
+- *Sea adventure*: "Downgraded from medium" as "This was lowered from medium confidence": its confidence is low.
+- `json-diff-check.mjs`: 0 problems; the HTTP code 403 left four more fields (27 in all), and wuxia's source line its
+  "(snippet only)" (20 source lines' prose in all, every URL kept).
+
+**Tests and tool matchers updated:** none. `docs/GENRE-COVERAGE.md` regenerated (neorealism's, whodunit's and yakuza's
+`belongsTo` changed there).
+
+**Checks** (the same script): tsc 0; eslint 0; vitest on the same 14 files, 656 of 656, 0; title-case 0, label-sweep 0,
+plural-check 0, voice-check 0, tics 0, spelling 0, typos 0, text-inventory 0, doc-refs 0, deciders 0.
+
+**Screens verified:** `b5-genre-looks.txt`, all 35 rendered at this batch's commit and read whole.
