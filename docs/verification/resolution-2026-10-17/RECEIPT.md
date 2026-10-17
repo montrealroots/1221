@@ -3,7 +3,7 @@
 Written by `receipt.py` from brief 11’s frozen baseline (the matrix at `main`’s `0e7ff7c2`), its classification, brief 12’s results and the matrix as it stands. Nothing here is typed.
 
 - **Against the original full baseline:** 561 of 608 (92.2%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
-- **The 46 actionable rows, each in one category:** closed 35; superseded 0; scope resolution 0; research assumption 2; remaining 9.
+- **The 46 actionable rows, each in one category:** closed 35; superseded 0; scope resolution 1; research assumption 2; remaining 8.
 - **Outside them:** decision 4’s 23 rows, unchanged; brief 11’s 9 administrative rows.
 - **The matrix’s own count:** 561 of 599 rows in scope Implemented And Verified (93.6%); 29 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.
 
@@ -11,7 +11,7 @@ Written by `receipt.py` from brief 11’s frozen baseline (the matrix at `main`�
 
 | Row | Group | At The Baseline | Now | Category | By |
 |---|---|---|---|---|---|
-| `health.enroll` | Life, Health And Time | Implemented, Verification Incomplete | Implemented, Verification Incomplete | remaining | nothing yet |
+| `health.enroll` | Life, Health And Time | Implemented, Verification Incomplete | Implemented, Verification Incomplete | scope resolution | docs/verification/resolution-2026-10-17/health-result.json |
 | `l-actor` | Creation, Profile, Home And The Looks | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `tax.s8.f1_status` | Remaining Area: tax | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `tax.s8.ssn` | Remaining Area: tax | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
@@ -65,11 +65,10 @@ Written by `receipt.py` from brief 11’s frozen baseline (the matrix at `main`�
 
 ## What Remains
 
-- `health.enroll` (Life, Health And Time): Implemented, Verification Incomplete: Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at rene
-- `advice.F2A10-c` (Brief 10 Area: advice): Implemented, Verification Incomplete: It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again
+- `advice.F2A10-c` (Brief 10 Area: advice): Implemented, Verification Incomplete: It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again
 - `advice.F2A10-f` (Brief 10 Area: advice): Decision Required: F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth
 - `advice.F2A10-h` (Brief 10 Area: advice): Decision Required: F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 foc
-- `advice.heldout` (Brief 10 Area: advice): Implemented, Verification Incomplete: It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again
+- `advice.heldout` (Brief 10 Area: advice): Implemented, Verification Incomplete: It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again
 - `ST6-R.a` (Brief 10 Area: judge): Decision Required: ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the nine others 40.56, 600 in all) to be ahead of the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of the 44 materials. Measured, it isn’t (2 of 44), and the sorting brief 11 asked for says why: nothing in the game is missing, and the clause, with (c), (e) and (g)’
 - `ST6-R.c` (Brief 10 Area: judge): Decision Required: Rests on ST6-R (a): see its decision. Abilities and circumstances fail only for want of (a)’s wins; preparation and interpretation hold.
 - `ST6-R.e` (Brief 10 Area: judge): Decision Required: Rests on ST6-R (a): see its decision.
@@ -103,8 +102,9 @@ Written by `receipt.py` from brief 11’s frozen baseline (the matrix at `main`�
 | `coverage09.3-unresolved` | Brief 09 Area: coverage | Decision Required | Decision Required |
 | `KS-bank-rows-scope` | Known Shortfalls And Missing Tests | Decision Required | Decision Required |
 
-## What The Receipt Found (6)
+## What The Receipt Found (7)
 
+- health.enroll (Life, Health And Time): called scope resolution, Implemented, Verification Incomplete in the matrix
 - F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now
 - MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now
 - INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now

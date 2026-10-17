@@ -19,15 +19,16 @@
  "actionable": {
   "closed": 35,
   "superseded": 0,
-  "scope resolution": 0,
+  "scope resolution": 1,
   "research assumption": 2,
-  "remaining": 9,
+  "remaining": 8,
   "of": 46
  },
  "decision4": 23,
  "administrative": 9,
  "replacements": [],
  "problems": [
+  "health.enroll (Life, Health And Time): called scope resolution, Implemented, Verification Incomplete in the matrix",
   "F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now",
   "MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now",
   "INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now",
@@ -202,9 +203,9 @@
    "group": "Life, Health And Time",
    "baseline": "Implemented, Verification Incomplete",
    "now": "Implemented, Verification Incomplete",
-   "disposition": "remaining",
-   "by": "nothing yet",
-   "lacks": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at renewal and at an application, is unreachable in play, since the owner’s scope reset of 2026-10-09 left wages only on the School (work-study, the Summer Cabaret) and a month at the School counts as the School before work; where a fixture reaches it, it changes only the notice’s words, as 80 paid hours always pass the $580 income test. Whether to cut it or keep it as a guard is the owner’s (THE ONE RULE); the row stays partial on it | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
+   "disposition": "scope resolution",
+   "by": "docs/verification/resolution-2026-10-17/health-result.json",
+   "lacks": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-17 (brief 12, section 3, a scope resolution): the work arm, unreachable in play since the owner’s scope reset of 2026-10-09 and deciding no outcome where reached, was found to serve no necessary purpose (no save holds 80 paid hours under $580: docs/verification/resolution-2026-10-17/health-criteria.md) and cut, alone (15a24e9d); the notices, Papers, the guide and the tutorial name the routes a player has, a month at the School, $580 of income or an exception, and none names hours of work (ab990173, 1d25b4ec); a renewal kept by a month at the School is played (c8c0b39f). Until then the row stayed partial on the work arm, as brief 11’s second reader decided | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
   },
   {
    "id": "health.apply",
@@ -3505,7 +3506,7 @@
    "now": "Implemented, Verification Incomplete",
    "disposition": "remaining",
    "by": "nothing yet",
-   "lacks": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "lacks": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -3568,7 +3569,7 @@
    "now": "Implemented, Verification Incomplete",
    "disposition": "remaining",
    "by": "nothing yet",
-   "lacks": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "lacks": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",

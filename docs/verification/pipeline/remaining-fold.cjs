@@ -45,13 +45,15 @@
 // then brief 11's tests of the audit's rows (health.enroll, l-actor) would have gone nowhere. Brief 10's results
 // (remaining-10/) were never read, and still aren't: none of its items is an audit row, and its one row text (Arion's
 // close, an `evidence (add)` on bank.close_current) names a test its item's tests don't reach.
+// From later on 2026-10-17 (brief 12) it reads docs/verification/resolution-2026-10-17/ too, after brief 11's folder, keyed
+// `12-<area>`, the same way: health.enroll's tests and its corrected words, its scope resolved by the owner, reach it.
 //   node remaining-fold.cjs        (from inputs/, after scope-fold.cjs)
 const fs = require('fs');
 const path = require('path');
 const S = path.join(__dirname, 'inputs') + '/';
 const ROOT = path.join(__dirname, '../../..') + '/';
 /** Each pass's results, in order, and the prefix its keys take. */
-const DIRS = [['docs/verification/remaining/', ''], ['docs/verification/remaining-09/', '09-'], ['docs/verification/completion-2026-10-16/', '11-']];
+const DIRS = [['docs/verification/remaining/', ''], ['docs/verification/remaining-09/', '09-'], ['docs/verification/completion-2026-10-16/', '11-'], ['docs/verification/resolution-2026-10-17/', '12-']];
 const FIELDS = ['entry', 'reads', 'changes', 'downstream', 'persistent', 'explanation', 'tests', 'issue', 'corrected.now', 'settled'];
 const added = new Set(Object.keys(fs.existsSync(S + 'added-rows.json') ? JSON.parse(fs.readFileSync(S + 'added-rows.json', 'utf8')).rows : {}));
 const ids = new Set([...JSON.parse(fs.readFileSync(S + 'row-review.json', 'utf8')).map((r) => r.id), ...added]);
@@ -219,7 +221,7 @@ for (const { resultFile, key } of files) {
         // A test the row already cites, in its review or an earlier round's record, isn't added again by brief 09's results
         // (from 2026-10-16): the banking area's readings of the eight bank rows cite the rows' own tests beside the one they
         // added. The last pass's records are folded as they were.
-        if (/^(09|11)-/.test(key) && citedBefore(row, String(e.title))) { said.alreadyCited.push(`${key}/${item.id}: ${row} ‘${String(e.title).split(' > ').pop().slice(0, 70)}’`); continue; }
+        if (/^(09|11|12)-/.test(key) && citedBefore(row, String(e.title))) { said.alreadyCited.push(`${key}/${item.id}: ${row} ‘${String(e.title).split(' > ').pop().slice(0, 70)}’`); continue; }
         rec.testsAdded.push({ title: e.title, closes: e.proves, evidenceKind: kindOf(e.kind, e.title) });
       }
     }

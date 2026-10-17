@@ -542,7 +542,7 @@
    "goal": "Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt | Enroll checks mayEnroll (state, Yale Health, already enrolled or enrolled ahead, programFor, lawful presence, windows). It enrolls in the state's program, or the marketplace, from the first of next month, or from when Yale Health's cover ends where that is later. coverOn and planOf then read it for every share, and healthMonth renews a program or charges the marketplace premium.",
    "entry": "PapersWorkspace.tsx:561 (Enroll). Until 2026-10-13 this said :216, and until 2026-10-17 :548 | guide: Cover, Benefits And Returns | PapersWorkspace.tsx",
    "preconditions": "mayEnroll (HUSKY D in Connecticut on last month’s income, or the marketplace); a denied bill for an appeal; a bill in the charity window for aid; medical debt to pay | refused where: —",
-   "reads": "mayEnroll, programFor; the marketplace’s 60 days from the loss (marketplaceOpen, health.ts:696-722: Yale Health’s end at its hour, or a lapse reaching back from when it was made, lapseKnown, health.ts:724-731), from 2026-10-16: until then the month’s look’s hour was kept as the loss for Yale Health’s too, so a student withdrawn on 15 February 2027, uncovered from 17 March, was sold a plan until 31 May, not 16 May",
+   "reads": "mayEnroll, programFor; HUSKY D’s work rules from 2027 (monthEngagement, health.ts:439-458: a month at the School, $580 of income of any kind with wages posted the record doesn’t hold, 65 or over or under 19, SNAP under its work rules, a stay in hospital asked for); the marketplace’s 60 days from the loss (marketplaceOpen, health.ts:699-719: Yale Health’s end at its hour, or a lapse reaching back from when it was made, lapseKnown, health.ts:727-734), from 2026-10-16: until then the month’s look’s hour was kept as the loss for Yale Health’s too, so a student withdrawn on 15 February 2027, uncovered from 17 March, was sold a plan until 31 May, not 16 May. Until 2026-10-17 monthEngagement read 80 hours’ work first, a branch brief 12 had cut (docs/verification/resolution-2026-10-17/health-criteria.md)",
    "decisions": "issued with no choice beyond the control",
    "validation": "refusals: — | costs: Cover from the next month, HUSKY D from the first of the month of application and back to an earlier month she was eligible in and had care in uncovered, its care priced again (from 2026-10-16, brief 09’s journeys’ follow-up: until then from the next month too); dropped, it ends at the month’s end. From 2026-10-16 HUSKY D applied for where its work rules weren’t met: a notice of noncompliance, thirty days from its receipt to answer, then decided, or granted at once on a stay in hospital asked for as a hardship. Yale’s dental plan paid for the year at once. An appeal decided after DENIALS.decideDays, overturned or upheld at its published rate. Connecticut’s charity care makes a bill free or discounted by income. An unpaid bill becomes medical debt, paid down from the current account",
    "changes": "the marketplace or Covered Connecticut from next month’s first; HUSKY D from the first of the month of application, reaching back to the first of an earlier month (three for an application in 2026, one from 2027) she was eligible in and had care in with nothing covering her, that care priced again (programStart, retroStart, repriceCare; from 2026-10-16, brief 09’s journeys: until then HUSKY D too began on next month’s first)",
@@ -552,10 +552,10 @@
    "saveLoad": "cover | HealthRecord.program, marketplace, dental, bills, debtSince; the medical debt account",
    "failure": "each refusal said in the player's words (above) | Open: The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute.",
    "implementation": "`systems/health.ts` | PapersWorkspace.tsx:561 (Enroll). Until 2026-10-13 this said :216, and until 2026-10-17 :548",
-   "evidence": "tests/evidence-g03-life.test.ts ‘at school, refused through the command in Yale Health’s words, and Papers offers no Enroll’, ‘PLAYER JOURNEY: withdrawn, Enroll pressed puts them in HUSKY D from 1 November…’ (the duplicate refusal before and after a reload), ‘PLAYER JOURNEY: withdrawn with September’s wages over every program’s limit, Enroll puts them in the marketplace from 1 November…’; tests/evidence3-lifepapers.test.ts ‘PLAYER JOURNEY: the Inherited student’s marketplace, Enrolled from 1 November on Papers, is charged $706 on 1 November and 1 December and $786 on 1 January 2027…’; tests/need-paths.test.ts ‘PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026 and covered from 1 August, the month of the generic she filled uninsured, comes to its renewal on 1 October 2027: September’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload’ (renewal 1 October 2027 reading April to September; a notice on 1 October, covered to 30 November, the end said on 5 November, across a reload; renamed, inputs/renames.json); tests/remaining-09-journeys.test.ts journeys.d-medicaid-start and x3’s DEFECT. Until 2026-10-17 this cited need-paths and remaining-09-journeys alone",
+   "evidence": "Playable journeys, by path (docs/verification/resolution-2026-10-17/health-result.json, playableJourneys): the student, tests/evidence-g03-life.test.ts ‘at school, refused through the command in Yale Health’s words, and Papers offers no Enroll’, tests/scope-cover.test.ts ‘PLAYER JOURNEY: at the School all of January 2027 and withdrawn on 1 February…’ and ‘PLAYER JOURNEY: on a personal leave from 20 January 2027, she enrolls in HUSKY D on Papers on 21 January, from 1 January…’; eligibility, tests/need-paths.test.ts ‘PLAYER JOURNEY: an Inherited family’s savings at Capital One earn $6,436.10…’, tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000…’, ‘PLAYER JOURNEY: a student born in 1960, 66…’, ‘PLAYER JOURNEY: withdrawn, she applies for SNAP on Papers on 20 November 2026…’; enrollment, tests/evidence-g03-life.test.ts ‘PLAYER JOURNEY: withdrawn, Enroll pressed puts them in HUSKY D from 1 November…’, tests/evidence3-lifepapers.test.ts ‘PLAYER JOURNEY: the Inherited student’s marketplace, Enrolled from 1 November on Papers…’, tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026…’; renewal, tests/need-paths.test.ts ‘PLAYER JOURNEY: on HUSKY D from 1 October 2026 on September’s $900.00…’, ‘PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026…’, tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: with no work and under $580 of income in April to September 2027…’; hardship, tests/remaining-09-hardship.test.ts ‘PLAYER JOURNEY: a stay in hospital in September 2027…’, tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026…’. Internal safeguards, apart: tests/defects-g8-4.test.ts ‘…since then the hours aren’t read: 80 hours paid $400 in June bring a notice of noncompliance…’, tests/remaining-health-billing.test.ts ‘FIXTURE: 80 hours’ work in November 2026 (posted by hand)…’, and the GUARD tests the result lists. Until 2026-10-17 this cited the work arm’s FIXTURE as its evidence for HUSKY D kept through work",
    "sourceStatus": "partial",
    "status": "Implemented, Verification Incomplete",
-   "missing": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at renewal and at an application, is unreachable in play, since the owner’s scope reset of 2026-10-09 left wages only on the School (work-study, the Summer Cabaret) and a month at the School counts as the School before work; where a fixture reaches it, it changes only the notice’s words, as 80 paid hours always pass the $580 income test. Whether to cut it or keep it as a guard is the owner’s (THE ONE RULE); the row stays partial on it | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
+   "missing": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-17 (brief 12, section 3, a scope resolution): the work arm, unreachable in play since the owner’s scope reset of 2026-10-09 and deciding no outcome where reached, was found to serve no necessary purpose (no save holds 80 paid hours under $580: docs/verification/resolution-2026-10-17/health-criteria.md) and cut, alone (15a24e9d); the notices, Papers, the guide and the tutorial name the routes a player has, a month at the School, $580 of income or an exception, and none names hours of work (ab990173, 1d25b4ec); a renewal kept by a month at the School is played (c8c0b39f). Until then the row stayed partial on the work arm, as brief 11’s second reader decided | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
   },
   {
    "id": "health.apply",
@@ -11131,7 +11131,7 @@
     "commit": "3de26e0b",
     "watch": "engine"
    },
-   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11334,7 +11334,7 @@
     "commit": "3de26e0b",
     "watch": "engine"
    },
-   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -13758,7 +13758,7 @@
     "commit": "3de26e0b",
     "watch": "engine"
    },
-   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14177,7 +14177,7 @@
     "commit": "3de26e0b",
     "watch": "engine"
    },
-   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14478,7 +14478,7 @@
     "commit": "43a82efa",
     "watch": "app"
    },
-   "missing": "It was measured on 43a82efa, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 43a82efa, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14505,7 +14505,7 @@
     "commit": "43a82efa",
     "watch": "app"
    },
-   "missing": "It was measured on 43a82efa, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 43a82efa, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14532,7 +14532,7 @@
     "commit": "3de26e0b",
     "watch": "engine"
    },
-   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14559,7 +14559,7 @@
     "commit": "12f58cec",
     "watch": "app"
    },
-   "missing": "It was measured on 12f58cec, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again"
+   "missing": "It was measured on 12f58cec, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
