@@ -540,7 +540,7 @@ describe('documents.report_lost', () => {
     expect(named(first, 'Report Stolen…')).toHaveLength(2);
     expect(press(named(first, 'Report Stolen…')[0])).toEqual([]);
     const asked = papers(sim, 'passport');
-    expect(rowOf(asked, passport)).toMatch(/In Force Reported stolen, it’s canceled for good, even if it turns up, with any visa or authorization issued on it \(the F-1 status holds\)\. Cancel It Keep It$/);
+    expect(rowOf(asked, passport)).toMatch(/In Force If you report it stolen, it’s canceled for good, even if it turns up, along with any visa or travel authorization issued on it\. An F-1 status you hold continues\. Cancel It Keep It$/);
     expect(rowOf(asked, license)).toMatch(/In Force Report Lost… Report Stolen…$/);
     expect(press(named(asked, 'Keep It')[0])).toEqual([]);
     const kept = papers(sim, 'passport');
@@ -550,7 +550,7 @@ describe('documents.report_lost', () => {
     // The second Report Lost… is the license's.
     expect(press(named(kept, 'Report Lost…')[1])).toEqual([]);
     const confirm = papers(sim, 'passport');
-    expect(rowOf(confirm, license)).toMatch(/In Force Reported lost, it’s canceled for good, even if it turns up\. Cancel It Keep It$/);
+    expect(rowOf(confirm, license)).toMatch(/In Force If you report it lost, it’s canceled for good, even if it turns up\. Cancel It Keep It$/);
     expect(rowOf(confirm, passport)).toMatch(/In Force Report Lost… Report Stolen…$/);
     expect(press(named(confirm, 'Cancel It')[0])).toEqual(['Driving License reported lost and canceled.']);
     expect(license.status).toBe('lost');
@@ -593,7 +593,7 @@ describe('documents.report_lost', () => {
     const shown = papers(sim, 'passport');
     // From 2026-10-16 the row says what replaces it after Run Out (brief 09's journeys, tests/remaining-09-journeys.test.ts):
     // until then nothing came after it, and this read the row's end there.
-    expect(rowOf(shown, license)).toMatch(/June 14, 2028 Run Out Nothing in SLATE renews a license since the cars went: a passport or an ID card in force is your photo ID, under Your Passport and Your ID\.$/);
+    expect(rowOf(shown, license)).toMatch(/June 14, 2028 Run Out A driving license can’t be renewed in the game\. A passport or ID card in force is your photo ID: see Your Passport and Your ID\.$/);
     expect([named(shown, 'Report Lost…'), named(shown, 'Report Stolen…')]).toEqual([[], []]);
   }, 60_000);
 

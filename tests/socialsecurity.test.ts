@@ -41,7 +41,7 @@ describe('Social Security', () => {
     expect(claimFactor(0)).toBe(1);
     const short = worker('ss-short', 50_000, 9);
     short.sim.universe.now = short.sim.player.birthInstant + 67.1 * 365.2425 * MS_DAY;
-    expect(socialSecurityRefusal(short.sim, short.sim.player)).toMatch(/Forty credits/);
+    expect(socialSecurityRefusal(short.sim, short.sim.player)).toMatch(/forty credits to qualify/);
   });
 
   it('is paid monthly once claimed at full retirement age', () => {

@@ -104,9 +104,9 @@ export const nhsByRoute = (person: Person, at: Instant): boolean => {
 
 const pesosOf = (units: number) => `MXN ${units.toLocaleString('en-US', { minimumFractionDigits: units % 1 ? 2 : 0, maximumFractionDigits: 2 })}`;
 /** Why SLATE grants none of Mexico's papers, said after each of its rules (from 2026-10-16). */
-export const MEXICO_UNREAD = 'Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.';
+export const MEXICO_UNREAD = 'Moving abroad isn’t part of the game, so it grants none of Mexico’s papers.';
 /** Mexico's rule for temporary residence by solvency, in its own figures. */
-export const MEXICO_RULE = `Mexico grants temporary residence on savings of ${pesosOf(Math.round(MEXICAN_RESIDENCE.savingsUma * MEXICAN_RESIDENCE.uma))} or an income of ${pesosOf(Math.round(MEXICAN_RESIDENCE.incomeUma * MEXICAN_RESIDENCE.uma))} a month over six months, the card ${pesosOf(MEXICAN_RESIDENCE.temporary)} a year and the consulate’s visa US$${MEXICAN_RESIDENCE.consularVisaUsd}.`;
+export const MEXICO_RULE = `Mexico grants temporary residence on savings of ${pesosOf(Math.round(MEXICAN_RESIDENCE.savingsUma * MEXICAN_RESIDENCE.uma))} or an income of ${pesosOf(Math.round(MEXICAN_RESIDENCE.incomeUma * MEXICAN_RESIDENCE.uma))} a month over six months, with the card at ${pesosOf(MEXICAN_RESIDENCE.temporary)} a year and the consulate’s visa at US$${MEXICAN_RESIDENCE.consularVisaUsd}.`;
 /** Why a Mexican card isn't renewed (from 2026-10-16), its rule and the reason. */
 export const MEXICO_RENEWAL = `Mexico renews temporary residence a year at a time, in the card’s last 30 days, for ${pesosOf(MEXICAN_RESIDENCE.temporary)}. ${MEXICO_UNREAD}`;
 
@@ -114,28 +114,28 @@ export const MEXICO_RENEWAL = `Mexico renews temporary residence a year at a tim
 export function routeRefusal(sim: Simulation, person: Person, iso: string): string {
   const own = isoOfCountry(person.citizenshipId);
   if (citizenOf(person, iso)) return 'You’re a citizen there.';
-  if (iso === 'CA') return 'Canada has no route for a freelance actor: its Self-Employed Persons Program is paused until further notice, and Express Entry has no category for the arts.';
-  if (iso === 'IE') return 'Ireland has no route for a freelance actor: an employment permit needs an employer’s offer.';
+  if (iso === 'CA') return 'Canada has no route for a freelance actor. Its Self-Employed Persons Program is paused until further notice, and Express Entry has no category for the arts.';
+  if (iso === 'IE') return 'Ireland has no route for a freelance actor, because an employment permit needs an employer’s offer.';
   if (iso === 'US') {
     if (residenceIn(person, 'US', sim.now)) return 'You hold a green card.';
     if (documentsOf(person).some((d) => d.route === 'us-green-card' && d.status === 'pending')) return 'Your petition is being decided.';
-    if (CITIES.get(homeOf(person))?.countryId !== 'us') return 'A green card is applied for from inside the United States, in status.';
+    if (CITIES.get(homeOf(person))?.countryId !== 'us') return 'A green card is applied for from inside the United States, while you’re in status.';
     // Extraordinary ability was read on the O-1's record, the career's credits, until the career went in the scope reset of 2026-10-09.
-    return 'Extraordinary ability is shown on a career’s record, and there’s none to show.';
+    return 'A green card for extraordinary ability needs a record of professional work, and the game has none to show.';
   }
   if (iso === 'GB') {
     if (own === 'IE') return 'An Irish citizen lives in Britain under the Common Travel Area.';
     if (residenceIn(person, 'GB', sim.now)) return 'You hold permission to live there.';
-    if (documentsOf(person).some((d) => d.destination === 'GB' && d.route === 'global-talent' && d.status === 'pending')) return 'Your application waits on its biometrics.';
+    if (documentsOf(person).some((d) => d.destination === 'GB' && d.route === 'global-talent' && d.status === 'pending')) return 'Your application is waiting on your biometrics appointment.';
     // Endorsed on the O-1's record, the career's credits, until the career went in the scope reset of 2026-10-09.
-    return 'Arts Council England endorses talent shown in a career’s record, and there’s none to show.';
+    return 'Arts Council England endorses talent shown in a record of professional work, and the game has none to show.';
   }
   if (iso === 'MX') {
     if (residenceIn(person, 'MX', sim.now)) return 'You hold residence there.';
     // Until 2026-10-16 one meeting the solvency test was refused nothing here, and Papers sold the card for $674.93.
     return `${MEXICO_RULE} ${MEXICO_UNREAD}`;
   }
-  return 'SLATE keeps routes to residence in Britain, Mexico and the United States.';
+  return 'The game has routes to residence only in Britain, Mexico and the United States.';
 }
 
 // What applying cost in the save's money, the card and the visa (`residenceFee`), went with the sale on 2026-10-16.
@@ -167,12 +167,12 @@ export function settleRefusal(sim: Simulation, person: Person, iso: string): str
   if (now.route === 'uk-settled' || now.route === 'mx-permanent') return 'You’re settled there.';
   if (iso === 'GB') {
     if (sim.now - first < GLOBAL_TALENT.settleAfter * YEAR_MS - MS_DAY) return 'Settlement comes after five years on the Global Talent visa.';
-    if (!(Object.values(earningsOf(person).years).some((y) => (y.bySource?.uk ?? 0) > 0))) return 'Settlement asks that you’ve earned money in Britain in your field.';
+    if (!(Object.values(earningsOf(person).years).some((y) => (y.bySource?.uk ?? 0) > 0))) return 'Settlement asks that you’ve earned money in Britain in your field, and you haven’t.';
     return undefined;
   }
   // Granted past the four years until 2026-10-16, for MXN 13,578.96; from then the rule, and past it the reason.
-  if (iso === 'MX') return sim.now - first < MEXICAN_RESIDENCE.permanentAfter * YEAR_MS - MS_DAY ? 'Permanent residence comes after four years’ temporary.' : `Mexico grants permanent residence after four years’ temporary, for ${pesosOf(MEXICAN_RESIDENCE.permanent)}. ${MEXICO_UNREAD}`;
-  return 'SLATE keeps settlement in Britain and Mexico.';
+  if (iso === 'MX') return sim.now - first < MEXICAN_RESIDENCE.permanentAfter * YEAR_MS - MS_DAY ? 'Permanent residence comes after four years of temporary residence.' : `Mexico grants permanent residence after four years of temporary residence, for ${pesosOf(MEXICAN_RESIDENCE.permanent)}. ${MEXICO_UNREAD}`;
+  return 'The game has settlement only in Britain and Mexico.';
 }
 
 /** Britain's settlement, the one grant left (from 2026-10-16: Mexico's cards, a visa a year or for good, were granted here until then). */
@@ -195,7 +195,7 @@ export function registerResidence(sim: Simulation): void {
     if (no) throw new CommandError(no);
     // Britain's alone since 2026-10-16: Mexico's permanent residence, MXN 13,578.96, was granted until then.
     const fee = inSave(s, GLOBAL_TALENT.ilr, 'GBP');
-    if (!payFromBank(s, person, fee, 'Indefinite leave to remain', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (!payFromBank(s, person, fee, 'Indefinite leave to remain', 'documents')) throw new CommandError(`Your bank can’t cover ${formatMoney(fee, saveCurrency(s.universe))}, so nothing was charged.`);
     for (const d of documentsOf(person)) if (d.destination === iso && d.route !== undefined && d.status === 'valid') d.status = 'cancelled';
     grant(s, person, iso, 'uk-settled', 'Indefinite Leave To Remain');
     return { paid: fee };

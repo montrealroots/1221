@@ -29,7 +29,7 @@ const US_B1B2 = (who: string): VisaRule => ({
   fee: 185, currency: 'USD',
   days: 150 + 7,
   years: 10,
-  basis: `The $185 application fee; the interview about five months out at the Mexico City consulate (29 September 2026, read secondhand)${who === 'BR' ? ', which SLATE takes for Brazil’s posts too, theirs not read' : ''}, and SLATE’s week to issue; ten years, multiple entry, by reciprocity.`,
+  basis: `The $185 application fee; the interview about five months out at the Mexico City consulate (29 September 2026, read secondhand)${who === 'BR' ? ', taken for Brazil’s posts too, since theirs weren’t read' : ''}, and a week to issue it (estimated); good for ten years, multiple entry, by reciprocity.`,
   source: 'https://travel.state.gov (fees); waitvisa.com (the wait, citing the State Department)',
 });
 const CA_TRV = (who: string): VisaRule => ({
@@ -37,7 +37,7 @@ const CA_TRV = (who: string): VisaRule => ({
   fee: 100 + 85, currency: 'CAD',
   days: 18,
   years: 10,
-  basis: `CAD 100 and CAD 85 for biometrics; about 18 days after biometrics for a Mexican applicant (read secondhand)${who === 'BR' ? ', which SLATE takes for a Brazilian too' : ''}; up to ten years or the passport’s end.`,
+  basis: `CAD 100 and CAD 85 for biometrics; about 18 days after biometrics for a Mexican applicant (read secondhand)${who === 'BR' ? ', taken for a Brazilian too' : ''}; up to ten years or the passport’s end.`,
   source: 'IRCC fee schedule; immigration.ca',
 });
 const AU_600: VisaRule = {
@@ -45,7 +45,7 @@ const AU_600: VisaRule = {
   fee: 250, currency: 'AUD',
   days: 30,
   years: 1,
-  basis: 'AUD 250 from 1 July 2026 (read secondhand, Home Affairs refusing automated reading); SLATE’s 30 days to decide and a year’s grant, the longest of the three, six and twelve months it gives.',
+  basis: 'AUD 250 from 1 July 2026 (read secondhand, Home Affairs refusing automated reading); 30 days to decide and a one-year grant, the longest of the three, six and twelve months it gives (both estimated).',
   source: 'austmss.com.au, July 2026',
 };
 const BR_EVISA: VisaRule = {
@@ -53,7 +53,7 @@ const BR_EVISA: VisaRule = {
   fee: 80.9, currency: 'USD',
   days: 14,
   years: 10,
-  basis: 'US$80.90 through VFS Global, decided within ten business days; ten years, multiple entry, for a US citizen (read secondhand), which SLATE takes for Canadians and Australians too.',
+  basis: 'US$80.90 through VFS Global, decided within ten business days; ten years, multiple entry, for a US citizen (read secondhand), taken for Canadians and Australians too.',
   source: 'https://brazil.vfsevisa.com; press guides, 2026',
 };
 
@@ -69,7 +69,7 @@ export const VISAS: Readonly<Record<string, VisaRule>> = {
     fee: 10, currency: 'USD',
     days: 3,
     validDays: 180,
-    basis: 'US$10 from 5 February 2026, for a stay under 180 days, flying in (Deloitte and the press, read secondhand); SLATE’s three days to decide.',
+    basis: 'US$10 from 5 February 2026, for a stay under 180 days, flying in (Deloitte and the press, read secondhand); three days to decide (estimated).',
     source: 'https://www.deloitte.com/latam/es/services/legal/perspectives/restablecimiento-de-la-visa-electronica-de-visitante-de-visa-para-nacionales-de-brasil.html',
   },
   'BR<US': BR_EVISA,

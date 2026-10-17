@@ -70,7 +70,7 @@ describe('PLAYER JOURNEY: a passport applied for and issued, and its page', () =
     expect(passportOf(sim.player, sim.now)).toBeUndefined();
     const before = papers(sim);
     expect(before).not.toMatch(/cross a border/i);
-    expect(before).toContain('Asked by a new bank and the Social Security office');
+    expect(before).toContain('A new bank and the Social Security office ask for one');
     const applied = sim.must<{ readyAt: number }>({ kind: 'documents.apply_passport', payload: {} });
     rest(sim);
     sim.advanceTo(applied.readyAt + MS_HOUR);
@@ -82,7 +82,7 @@ describe('PLAYER JOURNEY: a passport applied for and issued, and its page', () =
     expect(ssnRefusal(sim, sim.player) ?? '').not.toMatch(/passport/);
     const words = page(sim, passport.id);
     expect(words).not.toMatch(/you travel on/);
-    expect(words).toMatch(/It’s the passport in force in your name\. Of the \d+ countries SLATE has entry rules for, \d+ would let you in on it today for a week’s visit; nothing in SLATE travels since 2026-10-09\./);
+    expect(words).toMatch(/It’s the passport in force in your name\. Of the \d+ countries the game has entry rules for, \d+ would let you in on it today for a week’s visit\. Travel isn’t part of the game, so this is for reference\./);
     // Once it's in force, Papers' note is its number and end, as before.
     expect(papers(sim)).toContain(passport.number);
   });
@@ -126,7 +126,7 @@ describe('FIXTURE: a travel authorization held from before 2026-10-09', () => {
     eta.passportId = 'pp-replaced';
     const short = page(sim, eta.id);
     expect(short).not.toMatch(/the visit still asks/);
-    expect(short).toMatch(/It’s in force for the United Kingdom, but a week’s visit there would still ask more: /);
+    expect(short).toMatch(/It’s in force for the United Kingdom, but a week’s visit there would still need more: /);
   });
 
   it('on Papers, Going Abroad says the country would let you in, not that you may go', () => {
@@ -147,7 +147,7 @@ describe('FIXTURE: a travel authorization held from before 2026-10-09', () => {
   it('GUARD: Going Abroad says a visa or an authorization isn’t applied for here, and the rule it shows decides nothing: `mayEnter` is read by Papers and a document’s page alone, by no system of the engine (brief 11, tax.s8.visas_authorizations, 2026-10-17)', () => {
     const sim = life('g25-abroad-rule');
     rest(sim);
-    expect(papers(sim)).toContain('There’s no travel in SLATE since 2026-10-09, so a visa or an authorization isn’t applied for here: what each country asks is kept as what it is.');
+    expect(papers(sim)).toContain('Travel isn’t part of the game, so you can’t apply for a visa or travel authorization here. Each country’s rules are shown as they stand, for reference.');
     const files = (dir: string): string[] => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? files(`${dir}/${e.name}`) : /\.tsx?$/.test(e.name) ? [`${dir}/${e.name}`] : []));
     const readers = files('src').filter((f) => readFileSync(f, 'utf8').split('\n').some((line) => /\bmayEnter\(/.test(line) && !/function mayEnter\(/.test(line)));
     expect(readers.sort()).toEqual(['src/ui/looks/papers.tsx', 'src/ui/papers/Documents.tsx']);
@@ -161,6 +161,6 @@ describe('PLAYER JOURNEY: Residence Abroad, on Papers’ Permission To Work', ()
     const shown = markup(sim, WorkPane);
     expect(shown).toContain('Residence Abroad');
     expect(shown).not.toMatch(/you travel on/);
-    expect(shown).toContain('Naturalizing keeps the citizenship you were born with, and its passport stays the one in force in your name.');
+    expect(shown).toContain('Naturalizing keeps the citizenship you were born with, and that passport stays the one in force in your name.');
   });
 });

@@ -20,7 +20,7 @@ describe('a lost ID card', () => {
     // An ID card of theirs, issued there.
     documentsOf(p).push({ id: 'idc', kind: 'idcard', issuer: 'us-ny', name: 'ID Card', number: 'I1', status: 'valid', issuedAt: sim.now - MS_DAY, expiresAt: sim.now + 3e11 });
     const card = documentsOf(p).find((d) => d.id === 'idc')!;
-    expect(idReplaceRefusal(p, card.id, sim.now)).toBe('It isn’t lost: report it lost first.');
+    expect(idReplaceRefusal(p, card.id, sim.now)).toBe('It isn’t lost. Report it lost first.');
     sim.must({ kind: 'documents.report_lost', payload: { documentId: card.id } });
     expect(idReplaceFee(sim, p, 'us-ny')).toBe(inSaveMoney(sim, 8_00, 'USD'));
     const r = sim.must<{ readyAt: number }>({ kind: 'documents.replace_idcard', payload: { documentId: card.id } });

@@ -99,7 +99,7 @@ describe('leaving the School: withdrawal, dismissal, a degree withheld and the d
     expect(yaleUntil(sim.player)).toBe(school.endedAt);
     expect(graceDays(sim.player)).toBe(15);
     expect(usStatusEnds(sim.player)).toBe(school.endedAt! + 15 * MS_DAY);
-    expect(optRefusal(sim, sim.player)).toMatch(/degree completed/);
+    expect(optRefusal(sim, sim.player)).toMatch(/completed degree/);
     // Nothing of the student's own is left on the calendar but a classmate’s moment brought in that day’s class, which
     // lapses at its hour as one does at the School. Until 2026-10-13 this held nothing at all: the moment was called off
     // with the rest and stayed open for good (tests/evidence2-b07.test.ts, school.respond). The class they left keeps
@@ -132,11 +132,11 @@ describe('leaving the School: withdrawal, dismissal, a degree withheld and the d
     expect(yaleUntil(sim.player)).toBe(school.endedAt! + 30 * MS_DAY);
     Object.assign(school, { standing: 'withheld', endedAt: at(2029, 4, 30) });
     expect(graceDays(sim.player)).toBe(15);
-    expect(optRefusal(sim, sim.player)).toMatch(/degree completed/);
+    expect(optRefusal(sim, sim.player)).toMatch(/completed degree/);
     expect(yaleUntil(sim.player)).toBe(instantFromZoned({ year: 2029, month: 8, day: 1, hour: 0 }, zone));
     Object.assign(school, { standing: 'graduated', endedAt: at(2029, 5, 21) });
     expect(graceDays(sim.player)).toBe(60);
-    expect(optRefusal(sim, sim.player) ?? '').not.toMatch(/degree completed/);
+    expect(optRefusal(sim, sim.player) ?? '').not.toMatch(/completed degree/);
   });
 });
 

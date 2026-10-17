@@ -180,7 +180,7 @@ function close(sim: Simulation, person: Person, why: string): void {
 export function studentUnavailable(person: Person, state: BenefitState): string | undefined {
   const s = person.school;
   if (state !== 'ct' || !s || schoolEnded(s.standing)) return undefined;
-  return 'Connecticut takes a full-time student as not available for work (CGS 31-235(b)): a claim pays once you’ve left school.';
+  return 'Connecticut treats a full-time student as not available for work (CGS 31-235(b)), so a claim pays only once you’ve left school.';
 }
 
 /** Not in hospital and not laid up by an injury at a moment: what can change from day to day within a claim’s week. */
@@ -216,9 +216,9 @@ export function registerUnemployment(sim: Simulation): void {
     // In Ireland, Jobseeker's Allowance; in Mexico City, its Seguro de Desempleo (`systems/homebenefits.ts`).
     if (livesInIreland(person) || livesInMexicoCity(person)) { const home = claimAtHome(s, person); return { weekly: 0, maxTotal: 0, firstPaymentAt: home.firstPaymentAt }; }
     const state = claimStateFor(person, s.now) ?? BENEFIT_STATE[homeOf(person)];
-    if (!state) throw new CommandError('SLATE pays unemployment in New York, California and Connecticut, where you’d have to have worked or live.');
+    if (!state) throw new CommandError('Unemployment is paid in the game only in New York, California and Connecticut, and you’d need to have worked or to live in one of them.');
     const record = unemploymentOf(person);
-    if (record.claim) throw new CommandError('You have a claim open.');
+    if (record.claim) throw new CommandError('You already have a claim open.');
     // A claim was refused on a job until the career went in the scope reset of 2026-10-09; there are no jobs to be on.
     // In Connecticut a full-time student isn't available for work (from 2026-10-10, `studentUnavailable`).
     const studying = studentUnavailable(person, state);

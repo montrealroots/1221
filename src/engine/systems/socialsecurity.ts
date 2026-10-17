@@ -117,11 +117,11 @@ export function monthsFromFull(person: Person, at: Instant): number {
 }
 
 export function socialSecurityRefusal(sim: Simulation, person: Person): string | undefined {
-  if (person.socialSecurity) return 'You’re drawing it.';
+  if (person.socialSecurity) return 'You’ve already claimed it.';
   const age = (sim.now - person.birthInstant) / YEAR_MS;
-  if (age < SOCIAL_SECURITY.earliestAge) return `From 62; full at ${SOCIAL_SECURITY.fullAge}, and more if you wait to 70.`;
+  if (age < SOCIAL_SECURITY.earliestAge) return `You can claim it from 62. It’s full at ${SOCIAL_SECURITY.fullAge}, and more if you wait until 70.`;
   const record = socialSecurityOf(person, saveCurrency(sim.universe));
-  if (record.credits < SOCIAL_SECURITY.creditsNeeded) return `Forty credits qualify; your US work earned ${record.credits}.`;
+  if (record.credits < SOCIAL_SECURITY.creditsNeeded) return `It takes forty credits to qualify, and your US work has earned ${record.credits}.`;
   return undefined;
 }
 

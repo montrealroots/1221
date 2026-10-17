@@ -478,7 +478,7 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
     // The 2026 return, filed on 1 March would have been the same: the withdrawal reaches 2027's, not 2026's. Filed now.
     const filed = ok<{ balance: number; paid: boolean }>(sim, 'tax.file', { year: 2026 });
     expect(filed.paid).toBe(true);
-    expect(refused(sim, 'tax.file', { year: 2026 })).toBe('You’ve filed it. A change is an amended return.');
+    expect(refused(sim, 'tax.file', { year: 2026 })).toBe('You’ve already filed it. To change it, file an amended return.');
     const twin = reload(sim);
     tend(twin, at(2027, 5, 10, 12));
     expect(ok<{ kind: string; from: Instant }>(twin, 'health.enroll')).toEqual({ kind: 'marketplace', from: at(2027, 6, 1, 0) });
@@ -548,12 +548,12 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
     jump.advanceTo(at(2026, 12, 2, 12));
     const said = (s: Simulation) => s.universe.notifications.filter((n) => ['Out Of Status', 'Your Health Cover Ended'].includes(n.title)).map((n) => [dated(n.at), n.title, n.body]);
     expect(said(sim)).toEqual([
-      ['October 20, 2026', 'Out Of Status', 'You stayed in the United States past your status. Your US visa is void, and the Visa Waiver Program is closed to you for good.'],
+      ['October 20, 2026', 'Out Of Status', 'You stayed in the United States past the end of your status, so you’re now out of status. In the game, your US visa is canceled and the Visa Waiver Program is closed to you from now on.'],
       ['December 1, 2026', 'Your Health Cover Ended', 'You’re uncovered from November 4, 2026. Out of status, neither the marketplace nor Covered Connecticut will take you.'],
     ]);
     expect(said(jump)).toEqual(said(sim));
     expect(refused(sim, 'health.enroll')).toBe('The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.');
-    expect(refused(sim, 'documents.apply_idcard')).toBe('The DMV checks lawful presence through SAVE, and you stayed past your status.');
+    expect(refused(sim, 'documents.apply_idcard')).toBe('The DMV checks lawful presence through SAVE, and you stayed past the end of your status.');
     tend(sim, at(2027, 3, 1, 12));
     const filed = ok<{ balance: number; refundAt?: Instant; irs: number }>(sim, 'tax.file', { year: 2026 });
     // The 14% withheld at source on her taxable scholarship is more than the 1040-NR's tax: a refund, seventy days on.
@@ -596,7 +596,7 @@ describe('journeys.x4: a document running out under a payment', () => {
     tend(sim, at(2028, 6, 20, 12));
     expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
     const papers = drawn(sim, PapersWorkspace, 'passport');
-    expect(papers).toContain('June 14, 2028 Run Out Nothing in SLATE renews a license since the cars went: a passport or an ID card in force is your photo ID, under Your Passport and Your ID.');
+    expect(papers).toContain('June 14, 2028 Run Out A driving license can’t be renewed in the game. A passport or ID card in force is your photo ID: see Your Passport and Your ID.');
     // A new bank asks for a photo ID in force.
     const chase = account(sim, 'Chase Total Checking');
     const before = still(sim);
@@ -610,11 +610,11 @@ describe('journeys.x4: a document running out under a payment', () => {
     expect(got).toMatchObject({ fee: 28_00 });
     expect(dated(got.readyAt)).toBe('July 19, 2028');
     expect(held - chase.balance).toBe(28_00);
-    expect(refused(sim, 'documents.apply_idcard')).toBe('One is on its way.');
+    expect(refused(sim, 'documents.apply_idcard')).toBe('One is already on its way.');
     expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase.id, amount: 100_00 })).toBe('Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
     sim = reload(sim);
     tend(sim, got.readyAt + MS_HOUR);
-    expect(refused(sim, 'documents.apply_idcard')).toBe('You hold one in force.');
+    expect(refused(sim, 'documents.apply_idcard')).toBe('You already hold one in force.');
     const card = photoIdOf(sim.player, sim.now)!;
     expect(card).toMatchObject({ kind: 'idcard', issuer: 'us-ct' });
     expect(dated(card.expiresAt!)).toBe('June 14, 2036');
@@ -731,7 +731,7 @@ describe('journeys.d-hardship-ended-renewal: a renewal’s notice once the progr
     expect(healthOf(sim.player).pending).toBeUndefined();
     expect(sim.universe.scheduled.filter((i) => i.kind === WORK_DECIDED_KIND && i.status === 'pending')).toEqual([]);
     const page = drawn(sim, PapersWorkspace, 'health');
-    expect(page).not.toContain('A notice of noncompliance of');
+    expect(page).not.toContain('A notice of noncompliance dated');
     expect(h.clicks.filter((c) => c.feature === 'health.request_hardship')).toEqual([]);
     expect(h.clicks.filter((c) => c.feature === 'health.drop')).toEqual([]);
     expect(page).toContain('Dropped: it ends on November 1, 2027.');
@@ -803,8 +803,8 @@ describe('journeys.f-mexico-residence: Residence Abroad’s Mexico row, which so
     const sim = life('jm-1', 'wealthy', {}, false);
     // Mexico's rule by hand: 11,460 UMA and 680 UMA at 2026's MXN 117.31, MXN 1,344,372.6 and 79,770.8 to the peso; the
     // card's MXN 11,140.74 a year and the consulate's US$56 (the guidelines of 25 July 2025, the Ley Federal de Derechos).
-    const why = 'Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.';
-    const rule = `Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. ${why}`;
+    const why = 'Moving abroad isn’t part of the game, so it grants none of Mexico’s papers.';
+    const rule = `Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, with the card at MXN 11,140.74 a year and the consulate’s visa at US$56. ${why}`;
     const page = drawn(sim, PapersWorkspace, 'work');
     expect(page).toContain(` Mexico ${rule} `);
     expect(page).not.toContain('Open to you');
@@ -822,8 +822,8 @@ describe('journeys.f-mexico-residence: Residence Abroad’s Mexico row, which so
     expect(h.clicks.filter((c) => c.feature === 'documents.residence' || c.feature === 'documents.renew_residence' || c.feature === 'documents.settle' || c.feature === 'documents.naturalize').map((c) => [c.feature, c.label, c.disabled, c.title])).toEqual([['documents.renew_residence', 'Renew', true, renewal]]);
     const held = still(back);
     expect(refused(back, 'documents.renew_residence', { country: 'MX' })).toBe(renewal);
-    expect(refused(back, 'documents.settle', { country: 'MX' })).toBe('Permanent residence comes after four years’ temporary.');
-    expect(refused(back, 'documents.naturalize', { country: 'MX' })).toBe('It asks five years’ residence in Mexico.');
+    expect(refused(back, 'documents.settle', { country: 'MX' })).toBe('Permanent residence comes after four years of temporary residence.');
+    expect(refused(back, 'documents.naturalize', { country: 'MX' })).toBe('It needs five years’ residence in Mexico.');
     expect(still(back)).toBe(held);
     // Run out at its year's end: the row reads Mexico's rule again.
     tend(back, at(2026, 9, 4, 12));

@@ -640,7 +640,7 @@ describe('h-needs: What Needs You on Home', () => {
     const shown = needs(sim);
     // 15 April at 11:59 PM is 73 days and twelve hours on: two months, as a month is 30.44 days.
     expect(shown.startsWith(`What Needs You 1 open Mark ${n} Read How This Works Your 2026 Tax Return in 2 months ${decision.detail} File It Go There Dismiss`)).toBe(true);
-    expect(decision.detail).toContain('File by April 15, 2027.');
+    expect(decision.detail).toContain('File it by April 15, 2027.');
     // Urgency 70: past the 65 that's high, short of the 85 that's critical.
     expect(html.match(/data-urgency="\w+"/g)).toEqual(['data-urgency="high"']);
     expect(html.match(/<div class="list-item list-static">/g)).toHaveLength(6);

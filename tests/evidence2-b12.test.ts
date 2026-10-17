@@ -672,7 +672,7 @@ describe('n-decision-us-status', () => {
     const [d] = statusDecision(sim);
     expect(d).toMatchObject({
       title: 'Your US Status Is Ending', createdAt: Date.UTC(2029, 4, 31, 12), dueAt: Date.UTC(2029, 6, 30, 12), route: '/workspace/papers',
-      detail: 'Your permission to work in the United States has ended, and your status ends July 30, 2029. OPT can still be applied for before then. After it, you’re out of status: no work can be had here, a US visa you hold is void, and the Visa Waiver Program is closed to you for good.',
+      detail: 'Your permission to work in the United States has ended, and your status ends July 30, 2029. You can still apply for OPT before then. If you’re still here after that, you’ll be out of status. In the game, that means you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you from then on.',
       actions: [{ label: 'Apply For OPT', commandKind: 'documents.apply_opt', payload: {} }, { label: 'Apply For OPT, Premium Processing', commandKind: 'documents.apply_opt', payload: { premium: true } }],
     });
     drawn(sim);
@@ -691,7 +691,7 @@ describe('n-decision-us-status', () => {
     expect(titled(kept, 'Out Of Status')).toEqual([]);
     kept.advanceTo(at(2029, 8, 30, 13));
     expect(optPermits(kept)[0]).toMatchObject({ status: 'valid', issuedAt: at(2029, 8, 30, 12), expiresAt: at(2030, 8, 30, 12) });
-    expect(titled(kept, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from August 30, 2029 to August 30, 2030, with no more than 90 days between jobs in all.']);
+    expect(titled(kept, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from August 30, 2029 to August 30, 2030, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.']);
   });
 
   it('Apply For OPT, Premium Processing pressed on Home on Friday 1 June 2029 pays $2,250, and is decided in thirty business days with Juneteenth and Independence Day not among them, on Tuesday 17 July', () => {
@@ -719,11 +719,11 @@ describe('n-decision-us-status', () => {
     // Fifteen days' grace after a withdrawal the school authorizes (8 CFR 214.2(f)(5)(iv)): Wednesday 16 September.
     expect(statusDecision(sim)[0]).toMatchObject({
       title: 'Your US Status Is Ending', createdAt: at(2026, 9, 1, 12, 1), dueAt: at(2026, 9, 16, 12), actions: [],
-      detail: 'Your permission to work in the United States has ended, and your status ends September 16, 2026. After it, you’re out of status: no work can be had here, a US visa you hold is void, and the Visa Waiver Program is closed to you for good.',
+      detail: 'Your permission to work in the United States has ended, and your status ends September 16, 2026. If you’re still here after that, you’ll be out of status. In the game, that means you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you from then on.',
     });
     const { text } = drawn(sim);
     expect(text).toContain('Your US Status Is Ending');
-    expect(text).toContain('your status ends September 16, 2026. After it, you’re out of status');
+    expect(text).toContain('your status ends September 16, 2026. If you’re still here after that, you’ll be out of status.');
     expect(h.buttons.filter((b) => b.text.startsWith('Apply For OPT'))).toEqual([]);
     const kept = reload(sim);
     kept.advanceTo(at(2026, 9, 19, 12));

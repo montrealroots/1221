@@ -45,10 +45,10 @@ describe('PLAYER JOURNEY: Connecticut’s ID card for a graduate on OPT', () => 
     const sim = graduate('g24-opt');
     fund(sim, 5_000_00);
     // Without OPT, school over, the F-1 alone is no longer proof: the DMV asks for enrollment.
-    expect(idCardRefusal(sim.player, sim.now)).toMatch(/proof you’re enrolled/);
+    expect(idCardRefusal(sim.player, sim.now)).toMatch(/proof that you’re enrolled/);
     const asked = sim.must<{ readyAt: number }>({ kind: 'documents.apply_opt', payload: { premium: true } });
     // Pending, it isn't lawful presence the DMV can check yet.
-    expect(idCardRefusal(sim.player, sim.now)).toMatch(/proof you’re enrolled/);
+    expect(idCardRefusal(sim.player, sim.now)).toMatch(/proof that you’re enrolled/);
     tended(sim, asked.readyAt + MS_HOUR);
     const opt = optOf(sim)!;
     expect(inForce(opt, sim.now)).toBe(true);

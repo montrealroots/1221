@@ -493,7 +493,7 @@ PLAYS['papers.conditions'] = () => {
   expect(keptUp(depression(), sim.now)).toBe(true);
   expect(depression()!.supplyUntil).toBeGreaterThan(sim.now);
   const yale = THERAPISTS.find((t) => t.yale && t.cityId === sim.player.currentLocationId)!;
-  expect(ex.steps[1]).toContain(`Choose ${yale.name}, Free With Yale Health, and press Begin A Course Of ${THERAPY.sessions}.`);
+  expect(ex.steps[1]).toContain(`Choose ${yale.name}, Free With Yale Health, and press Begin A Course Of ${THERAPY.sessions} Sessions.`);
   const begun = sim.now;
   const course = sim.must<{ first: number }>({ kind: 'health.therapy', payload: { therapist: yale.name } });
   expect(zonedParts(course.first, NY).hour).toBe(SESSION_HOUR);
@@ -544,7 +544,7 @@ PLAYS['papers.benefits'] = () => {
   const filed = sim.must<{ weekly: number; maxTotal: number }>({ kind: 'benefits.claim', payload: {} });
   expect(filed).toMatchObject({ weekly: preview.result.weekly, maxTotal: preview.result.maxTotal });
   // The toast as the screen words it, and the figures the example gives.
-  expect(ex.result).toContain(`The toast says “Filed: ${formatMoney(filed.weekly, 'USD')} a week.”`);
+  expect(ex.result).toContain(`The toast says “Claim filed: ${formatMoney(filed.weekly, 'USD')} a week.”`);
   expect(ex.result).toContain(`Each Sunday ${usd(filed.weekly)} goes into your account, with no waiting week first, until ${usd(filed.maxTotal)} has been paid or a year has passed`);
   const claim = unemploymentOf(sim.player).claim!;
   expect(claim.endsAt - claim.filedAt).toBe(365 * MS_DAY);
@@ -604,7 +604,7 @@ PLAYS['taxes.return'] = () => {
   expect(onTime.r.penalty).toBe(0);
   const paidOnTime = memos(onTime.sim, /income tax, 2026/, filedOnTime);
   expect(paidOnTime.map((t) => taken(onTime.sim, t))).toEqual([owed]);
-  expect(ex.result).toContain(`On time, it costs the ${usd(owed)} and no more.`);
+  expect(ex.result).toContain(`On time, it costs the ${usd(owed)} and nothing more.`);
   // Late: the penalties as `latePenalty` adds them, and interest from the due date.
   const lateOne = ready('guide-papers-return');
   tended(lateOne.sim, lateOne.r.due + late * MS_DAY);
@@ -623,7 +623,7 @@ PLAYS['taxes.return'] = () => {
   expect(late).toBeGreaterThan(RETURN.lateMinimumAfterDays);
   expect(owed).toBeLessThan(RETURN.lateMinimum);
   expect(penalty - payLate).toBe(owed);
-  expect(ex.result).toContain(`(past ${RETURN.lateMinimumAfterDays} days the filing share is at least ${usd(owed)}, the whole balance, since that’s under ${usd(RETURN.lateMinimum)})`);
+  expect(ex.result).toContain(`(after ${RETURN.lateMinimumAfterDays} days the filing share is at least ${usd(owed)}, the whole balance, since that’s under ${usd(RETURN.lateMinimum)})`);
   expect(ex.result).toContain(`about ${usd(interest)} of interest: ${usd(total)} in all.`);
 };
 
@@ -658,22 +658,22 @@ PLAYS['taxes.pay'] = () => {
   const month = 30.4375 * MS_DAY;
   const monthly = partsOn(r, sim.now + month, true).penalty - partsOn(r, sim.now, true).penalty;
   expect(Math.round(monthly)).toBe(Math.round((irs - toIrs) * RETURN.payLateMonthly));
-  expect(ex.result).toContain(`All ${usd(toIrs)} goes to the IRS’s tax, leaving ${usd(irs - toIrs)}, so each month’s penalty from then is ${usd(Math.round(monthly))} where it was ${usd(irsBefore.penalty)}.`);
+  expect(ex.result).toContain(`All ${usd(toIrs)} goes to the IRS’s tax, leaving ${usd(irs - toIrs)}, so each month’s penalty from then on is ${usd(Math.round(monthly))} instead of ${usd(irsBefore.penalty)}.`);
   // Connecticut's, by then, and its part paid in Connecticut's order.
   const ctBefore = statePartsOn(sd, r.due, sim.now);
   expect(ctBefore.tax).toBe(ct);
-  expect(ex.result).toContain(`Connecticut has added ${usd(ctBefore.penalty)} of penalty and ${usd(ctBefore.interest)} of interest by then`);
+  expect(ex.result).toContain(`By then Connecticut has added ${usd(ctBefore.penalty)} of penalty and ${usd(ctBefore.interest)} of interest.`);
   const split = sim.must<{ tax: number; penalty: number; interest: number }>({ kind: 'tax.pay_state', payload: { state: 'us-ct', year: 2026, amount: toCt } });
   const order = STATE_TAX['us-ct'].order;
   expect(order).toEqual(['penalty', 'interest', 'tax']);
-  expect(ex.result).toContain(`its ${usd(toCt)} pays the penalty, then the interest, then the tax: ${usd(split.penalty)}, ${usd(split.interest)} and ${usd(split.tax)}, leaving ${usd(sd.parts!.tax)} of tax.`);
+  expect(ex.result).toContain(`Its ${usd(toCt)} pays the penalty, then the interest, then the tax: ${usd(split.penalty)}, ${usd(split.interest)} and ${usd(split.tax)}, leaving ${usd(sd.parts!.tax)} of tax.`);
   expect(split.penalty + split.interest + split.tax).toBe(toCt);
 };
 
 PLAYS['taxes.plan'] = () => {
   const ex = example('taxes.plan');
   const total = centsOf(grab(ex.setup, /You owe the IRS (\$[\d,.]+) across two years/));
-  const lowShare = Number(grab(ex.setup, /income under (\d+)% of the poverty line/)) / 100;
+  const lowShare = Number(grab(ex.setup, /income is under (\d+)% of the poverty line/)) / 100;
   expect(lowShare).toBe(PLAN.lowIncomeShare);
   const sim = student('guide-papers-plan');
   // 2026: a balance to the IRS, filed on its day with nothing in the bank.
@@ -697,7 +697,7 @@ PLAYS['taxes.plan'] = () => {
   const latest = returnsOf(sim.player)['2027']!;
   expect(latest.figures.income).toBeLessThan(lowShare * byYear(POVERTY_LINE, latest.year));
   // The later return filed in the month the setup names, before its due date.
-  const filedIn = grab(ex.setup, /the later one in ([A-Z][a-z]+) before it’s due/);
+  const filedIn = grab(ex.setup, /the later one in ([A-Z][a-z]+) before it was due/);
   expect(zonedParts(latest.filedAt!, NY).month).toBe(MONTHS.indexOf(filedIn) + 1);
   expect(latest.filedAt!).toBeLessThan(latest.due);
   // Monthly Payments, Each Month at its least, By Direct Debit ticked.
@@ -705,13 +705,13 @@ PLAYS['taxes.plan'] = () => {
   const plan = sim.must<{ decideAt: number; fee: number }>({ kind: 'tax.apply_plan', payload: { kind: 'long', directDebit: true } });
   expect(plan.decideAt - applied).toBeLessThanOrEqual(60_000);
   expect(plan.fee).toBe(PLAN.fee.lowIncomeDebit);
-  expect(ex.result).toContain(plan.fee ? `Approved within the minute, for a ${usd(plan.fee)} setup fee` : 'Approved within the minute, with no setup fee at the low-income rate');
+  expect(ex.result).toContain(plan.fee ? `It’s approved within a minute, for a ${usd(plan.fee)} setup fee` : 'It’s approved within a minute, with no setup fee at the low-income rate');
   tended(sim, applied + 2 * 60_000);
   const p = sim.player.taxPlan!;
   expect(p.status).toBe('active');
   expect(p.monthly).toBe(leastMonthly(total));
   expect(p.nextDue! - p.startedAt!).toBe(30 * MS_DAY);
-  expect(ex.result).toContain(`${usd(p.monthly!)} a month, the ${usd(total)} over ${PLAN.leastMonths} months, the first 30 days on.`);
+  expect(ex.result).toContain(`${usd(p.monthly!)} a month, the ${usd(total)} over ${PLAN.leastMonths} months, with the first payment 30 days later.`);
   // The letters stop.
   expect(ex.result).toContain('The IRS’s letters stop.');
   expect(sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === TAX_NOTICE_KIND && i.payload.personId === sim.player.id)).toEqual([]);
@@ -721,8 +721,8 @@ PLAYS['taxes.plan'] = () => {
   // the plan's rate month by month (tests/plan-rate.test.ts). Until then this read the later year's rate as nothing
   // at first, its months before the due date counted against those after, and the example said so; and it read each
   // year at whole months only, where the rate stood a step higher for about half of each month and then fell back.
-  const planRate = Number(grab(ex.result, /each month of the penalty that begins under the plan is charged ([\d.]+)% where it would be/)) / 100;
-  const fullRate = Number(grab(ex.result, /under the plan is charged [\d.]+% where it would be ([\d.]+)%:/)) / 100;
+  const planRate = Number(grab(ex.result, /each month of penalty that begins under the plan is ([\d.]+)% instead of/)) / 100;
+  const fullRate = Number(grab(ex.result, /under the plan is [\d.]+% instead of ([\d.]+)%:/)) / 100;
   expect(planRate).toBeCloseTo(PLAN.reducedRate, 12);
   expect(fullRate).toBeCloseTo(RETURN.payLateMonthly, 12);
   expect(ex.result).toContain('On both years’ returns, filed on time,');
@@ -732,14 +732,14 @@ PLAYS['taxes.plan'] = () => {
   }
   // The earlier year's return, past its due date when the plan began: the month in progress at the rate the example
   // says it stays at, and the months begun after it at the plan's, the rate never falling between.
-  const stays = Number(grab(ex.result, /on the earlier year’s from its next month, the month already begun staying at ([\d.]+)%/)) / 100;
+  const stays = Number(grab(ex.result, /on the earlier year from its next month \(the month already begun stays at ([\d.]+)%\)/)) / 100;
   expect(first.due).toBeLessThan(p.startedAt!);
   const begun = Math.ceil((p.startedAt! - first.due) / month);
   expect(payLateRateAt(first, p.startedAt!) - payLateRateAt(first, first.due + (begun - 1) * month - MS_HOUR)).toBeCloseTo(stays, 10);
   for (const ahead of [0.1, 0.5, 0.9, 1.5, 5.5]) expect(payLateRateAt(first, first.due + (begun + ahead) * month) - payLateRateAt(first, p.startedAt!), `${ahead} months on`).toBeCloseTo(planRate * Math.ceil(ahead), 10);
   // The later year's, not yet due when the plan began: the plan's rate from its first month past due, a step as each
   // month begins.
-  expect(ex.result).toContain('and on the later one from its first month past its due date.');
+  expect(ex.result).toContain('and on the later year from its first month past its due date.');
   expect(p.startedAt!).toBeLessThan(latest.due);
   expect(payLateRateAt(latest, latest.due)).toBe(0);
   for (const past of [0.1, 0.5, 0.9, 1.5, 6.5]) expect(payLateRateAt(latest, latest.due + past * month), `${past} months past due`).toBeCloseTo(planRate * Math.ceil(past), 10);
@@ -790,7 +790,7 @@ PLAYS['taxes.lien'] = () => {
   // Left unpaid, the levy is on the calendar.
   const levy = sim.universe.scheduled.find((i) => i.status === 'pending' && i.kind === STATE_NOTICE_KIND && i.payload.personId === sim.player.id && i.payload.state === 'us-ct')!;
   expect(levy.at - lien.filedAt!).toBe(rules.levy.afterDays * MS_DAY);
-  expect(ex.result).toContain(`left unpaid, the levy follows ${rules.levy.afterDays} days after it.`);
+  expect(ex.result).toContain(`Left unpaid, the levy follows ${rules.levy.afterDays} days after it.`);
   // Paid in full, then asked: released on its date.
   fund(sim, 1_000_00);
   sim.must({ kind: 'tax.pay_state', payload: { state: 'us-ct', year: 2026 } });
@@ -798,7 +798,7 @@ PLAYS['taxes.lien'] = () => {
   const asked = sim.now;
   const release = sim.must<{ releaseDue: number }>({ kind: 'tax.lien_release', payload: { state: 'us-ct', year: 2026 } });
   expect(release.releaseDue - asked).toBe(rules.lien!.releaseDays * MS_DAY);
-  expect(ex.result).toContain(`The lien reads Paid: Release To Come, then gets a date ${(release.releaseDue - asked) / MS_DAY} days on, when it reads Released.`);
+  expect(ex.result).toContain(`The lien reads Paid: Release To Come, then shows a date ${(release.releaseDue - asked) / MS_DAY} days later, when it reads Released.`);
   tended(sim, release.releaseDue + MS_HOUR);
   expect(lien.status).toBe('released');
   // Paid before its day, none is filed.
@@ -846,7 +846,7 @@ PLAYS['documents.passport-id'] = () => {
   const mine = without.universe.accounts[without.player.primaryAccountId!]!.bankId;
   const other = banksFor(without.player.currentLocationId).find((b) => b.id !== mine)!;
   expect(openRefusal(without, without.player, other.id)).toMatch(/asks a new customer for a photo ID in force/);
-  expect(ex.result).toContain('without one, a new bank would turn you away.');
+  expect(ex.result).toContain('Without one, a new bank would turn you away.');
 };
 
 PLAYS['documents.work'] = () => {
@@ -864,7 +864,7 @@ PLAYS['documents.work'] = () => {
   tended(sim, applyOn);
   // Without OPT, the status's end: the program's, and its grace.
   const without = usStatusEnds(sim.player)!;
-  expect(ex.result).toContain(`Without it, your status would have ended on ${day(without)}.`);
+  expect(ex.result).toContain(`Without OPT, your status would have ended on ${day(without)}.`);
   const applied = sim.now;
   const v = sim.must<{ readyAt: number; fee: number }>({ kind: 'documents.apply_opt', payload: {} });
   expect(memos(sim, /, OPT$/, applied).map((t) => taken(sim, t))).toEqual([v.fee]);
@@ -876,7 +876,7 @@ PLAYS['documents.work'] = () => {
   for (let week = 0; week < 20 && permit.status === 'valid'; week += 1) tended(sim, sim.now + 7 * MS_DAY);
   expect(permit.status).toBe('cancelled');
   expect(sim.player.usOutOfStatus).toBe(permit.endedAt);
-  expect(ex.result).toBe(`${usd(v.fee)} leaves the bank. OPT is decided on ${day(v.readyAt)} and runs from ${day(permit.issuedAt!)}; with no work, it ends on ${day(permit.endedAt!)}, past its ${opt.unemploymentDays} days, and your status with it. Without it, your status would have ended on ${day(without)}.`);
+  expect(ex.result).toBe(`${usd(v.fee)} leaves the bank. OPT is decided on ${day(v.readyAt)} and runs from ${day(permit.issuedAt!)}. With no work, it ends on ${day(permit.endedAt!)}, past its ${opt.unemploymentDays} days, and your status ends with it. Without OPT, your status would have ended on ${day(without)}.`);
 };
 
 PLAYS['documents.residence'] = () => {
@@ -885,10 +885,10 @@ PLAYS['documents.residence'] = () => {
   const threshold = Math.round(mx.savingsUma * mx.uma);
   const income = Math.round(mx.incomeUma * mx.uma);
   const pesos = (units: number) => `MXN ${units.toLocaleString('en-US', { minimumFractionDigits: units % 1 ? 2 : 0, maximumFractionDigits: 2 })}`;
-  expect(ex.setup).toContain(`with ${pesos(threshold)}, about ${usd(Math.round(exchange(threshold * 100, 'MXN', 'USD')! / 100) * 100)}, in the bank: Mexico’s savings test met.`);
+  expect(ex.setup).toContain(`with ${pesos(threshold)}, about ${usd(Math.round(exchange(threshold * 100, 'MXN', 'USD')! / 100) * 100)}, in the bank, which meets Mexico’s savings test.`);
   // The row's words by hand: 11,460 UMA and 680 at MXN 117.31, MXN 1,344,372.6 and 79,770.8, rounded to the peso; the
   // card's MXN 11,140.74 and the visa's US$56 as the guidelines and the Ley Federal de Derechos give them.
-  const words = 'Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.';
+  const words = 'Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, with the card at MXN 11,140.74 a year and the consulate’s visa at US$56. Moving abroad isn’t part of the game, so it grants none of Mexico’s papers.';
   expect([pesos(threshold), pesos(income)]).toEqual(['MXN 1,344,373', 'MXN 79,771']);
   // TEST SETUP: the bank holding the savings test's figure, and a twin a hundred dollars short of it. Until 2026-10-16
   // the first was offered the card and the second refused; from then both read Mexico's rule and the same reason.
@@ -913,7 +913,7 @@ PLAYS['documents.residence'] = () => {
     expect(memos(sim, /Mexican/)).toEqual([]);
     expect(sim.player.currentLocationId).toBe('us-ct-newhaven');
   }
-  expect(ex.result).toBe(`Mexico’s row says its rule, savings of ${pesos(threshold)} or an income of ${pesos(income)} a month over six months, and that SLATE grants none, living there having gone with moving. Apply is grayed with those words, nothing leaves the bank, and a student short of the savings reads the same row.`);
+  expect(ex.result).toBe(`Mexico’s row gives its rule, savings of ${pesos(threshold)} or an income of ${pesos(income)} a month over six months, and says the game grants none of its papers, because moving abroad isn’t part of the game. Apply is grayed out with those words, nothing leaves the bank, and a student without the savings sees the same row.`);
 };
 
 // ---------------------------------------------------------------------------

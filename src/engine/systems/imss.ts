@@ -126,12 +126,12 @@ export function imssMonthly(record: ImssRecord, at: Instant): Money {
 
 export function imssRefusal(sim: Simulation, person: Person): string | undefined {
   const r = person.imss;
-  if (r?.claimedAt !== undefined) return 'You’re drawing it.';
-  if (!r || r.days === 0) return 'It’s for someone with IMSS contributions: work in Mexico.';
-  if ((sim.now - person.birthInstant) / YEAR_MS < IMSS.age) return 'From 65.';
+  if (r?.claimedAt !== undefined) return 'You’ve already claimed it.';
+  if (!r || r.days === 0) return 'It’s for someone with IMSS contributions, which come from work in Mexico.';
+  if ((sim.now - person.birthInstant) / YEAR_MS < IMSS.age) return 'You can claim it from 65.';
   const need = weeksNeeded(new Date(sim.now).getUTCFullYear());
   const weeks = Math.floor(r.days / 7);
-  if (weeks < need) return `It takes ${need} weeks this year; your IMSS record has ${weeks}. The Pensión para el Bienestar is for every Mexican from 65.`;
+  if (weeks < need) return `It takes ${need} weeks this year, and your IMSS record has ${weeks}. The Pensión para el Bienestar is for every Mexican from 65.`;
   return undefined;
 }
 

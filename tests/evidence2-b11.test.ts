@@ -682,7 +682,7 @@ describe('h-needs', () => {
       sim.advanceTo(at(2027, 2, 1, 12));
       const decision = openDecisions(sim)[0]!;
       // $1,656 of income at the first bracket's 10%: $165.60, as the row says.
-      expect(decision.detail).toContain('You owe $165.60 on $1,656.00 of income.');
+      expect(decision.detail).toContain('You owe $165.60, on $1,656.00 of income.');
       expect(Math.round(1656_00 * 0.1)).toBe(165_60);
       const mine = Object.values(sim.universe.accounts).filter((x) => x.ownerId === sim.player.id && !x.nominal && (x.kind === 'checking' || x.kind === 'savings'));
       expect(mine).toHaveLength(2);

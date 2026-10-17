@@ -312,7 +312,7 @@ describe('tax.pay', () => {
     // $200.00, typed: all of the tax, then $34.40 of the penalty, none to the interest.
     const first = payTyped(sim, '200.00');
     expect(first.result).toMatchObject({ ok: true, value: { paid: 200_00, tax: 165_60, penalty: 34_40, interest: 0 } });
-    expect(first.toasts).toEqual([`Paid: $165.60 to the tax, $34.40 to penalties, $0.00 to interest. ${usd(shown - 200_00)} still owed.`]);
+    expect(first.toasts).toEqual([`Paid the IRS: $165.60 to the tax, $34.40 to penalties and $0.00 to interest. You still owe ${usd(shown - 200_00)}.`]);
     expect(before - account.balance).toBe(200_00);
     expect(r.parts).toMatchObject({ tax: 0, penalty: penalty - 34_40 });
     const interest = r.parts!.interest;
@@ -322,12 +322,12 @@ describe('tax.pay', () => {
     expect(second.result).toMatchObject({ ok: true, value: { paid: 100_00, tax: 0, penalty: 100_00, interest: 0 } });
     expect(r.parts).toEqual({ tax: 0, penalty: penalty - 134_40, interest });
     // Nothing, typed: refused, nothing taken.
-    expect(payTyped(sim, '0').result).toMatchObject({ ok: false, error: 'Pay something.' });
+    expect(payTyped(sim, '0').result).toMatchObject({ ok: false, error: 'Enter an amount above zero.' });
     expect(before - account.balance).toBe(300_00);
 
     // Blank: the rest, the penalty's $45.28 first, then the interest.
     const rest = drawn(sim, PapersWorkspace, 'returns').press('Pay');
-    expect(rest.toasts).toEqual(['Paid in full.']);
+    expect(rest.toasts).toEqual(['Paid the IRS in full.']);
     expect(rest.result).toMatchObject({ ok: true, value: { paid: shown - 300_00, tax: 0, penalty: 45_28, interest: shown - 300_00 - 45_28 } });
     expect(interest).toBe(shown - 300_00 - 45_28);
     expect(before - account.balance).toBe(shown);
@@ -342,7 +342,7 @@ describe('tax.pay', () => {
     const paid = drawn(sim, PapersWorkspace, 'returns');
     expect(paid.text).not.toContain('Still Owed To The IRS');
     expect(paid.has('Pay')).toBe(false);
-    expect(run(sim, 'tax.pay', { year: 2026 })).toMatchObject({ ok: false, error: 'That year is paid.' });
+    expect(run(sim, 'tax.pay', { year: 2026 })).toMatchObject({ ok: false, error: 'That year is already paid.' });
 
     // What reads it: 200 days on, across a reload, no word from the IRS on 2026 and no levy; a twin left unpaid at the
     // same moment is reminded four times and levied.
@@ -369,7 +369,7 @@ describe('tax.pay', () => {
     const interest = Math.round(33_120 * ((1 + 0.07 / 365) ** 260 * (1 + 0.07 / 366) ** 225 - 1));
     expect(interest).toBe(32_24);
     expect(r.parts).toEqual({ tax: 165_60, penalty: 178_85, interest: 32_24 });
-    expect(titled(sim, 'The IRS Assessed Your 2026 Return').map((n) => n.body)).toEqual(['$376.69 is owed as the IRS figured it, and its collection begins.']);
+    expect(titled(sim, 'The IRS Assessed Your 2026 Return').map((n) => n.body)).toEqual(['You owe $376.69 as the IRS worked it out, and its collection begins. You can still file your own return to replace it.']);
     expect(stillOwed(drawn(sim, PapersWorkspace, 'returns').html)).toBe(376_69);
   }, 60_000);
 
@@ -393,7 +393,7 @@ describe('tax.pay', () => {
       const r = returnsOf(sim.player)['2026']!;
       expect(stillOwed(drawn(sim, PapersWorkspace, 'returns').html)).toBe(owed);
       const paid = drawn(sim, PapersWorkspace, 'returns').press('Pay');
-      expect(paid.toasts).toEqual(['Paid in full.']);
+      expect(paid.toasts).toEqual(['Paid the IRS in full.']);
       expect(paid.result).toMatchObject({ ok: true, value: { paid: owed, tax: 165_60, penalty: Math.round(penalty) } });
       expect(r.owed).toBeUndefined();
     }
@@ -428,7 +428,7 @@ describe('documents.permission', () => {
     expect(pane.button('Apply For OPT').disabled).toBe(false);
     const before = current(sim).balance;
     // USCIS's online fee for Form I-765, $470; ninety days to a decision.
-    expect(pane.press('Apply For OPT').toasts).toEqual(['Applied for OPT, for $470.00. Decided by June 3, 2029.']);
+    expect(pane.press('Apply For OPT').toasts).toEqual(['Applied for OPT and paid $470.00. It’s decided by June 3, 2029.']);
     expect(before - current(sim).balance).toBe(470_00);
 
     // Commencement, by the clock: the degree, and with it the look at her status rescheduled, still at the program's end.
@@ -445,7 +445,7 @@ describe('documents.permission', () => {
     later.advanceTo(Date.UTC(2029, 5, 3, 16));
     const opt = documentsOf(later.player).find((d) => d.kind === 'permit')!;
     expect(opt).toMatchObject({ status: 'valid', issuedAt: Date.UTC(2029, 5, 3, 15), expiresAt: Date.UTC(2030, 5, 3, 15), idleDays: 0 });
-    expect(titled(later, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from June 3, 2029 to June 3, 2030, with no more than 90 days between jobs in all.']);
+    expect(titled(later, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from June 3, 2029 to June 3, 2030, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.']);
     // The pending application held her status at the program's end: no "Your US Status Is Ending".
     expect(Object.values(later.universe.decisions).filter((d) => d.title === 'Your US Status Is Ending')).toEqual([]);
     expect(pendingOf(later, 'documents.us_status').map((i) => i.at)).toEqual([Date.UTC(2030, 5, 3, 15)]);
@@ -453,7 +453,7 @@ describe('documents.permission', () => {
     // from 3 June, 91 days, past its 90, 2 September, with no grace after. Until 2026-10-13 it gave the expiry’s sixty
     // days on, 2 August 2030, which no played OPT reaches (found by that day’s third round; this failed before the fix).
     const status = drawn(later, WorkPane);
-    expect(status.text).toContain('Your US Status Ends September 2, 2029 When your OPT’s 90 days without work run out, with no grace after; stay past it and you’re out of status');
+    expect(status.text).toContain('Your US Status Ends September 2, 2029 When your OPT’s 90 days without work run out. There’s no grace period after it, and staying past it puts you out of status');
     expect(status.text).not.toContain('August 2, 2030');
     // Past the degree’s own sixty days, 30 July, still in status, and Papers says the same day; ended on its 91st day
     // without work, 2 September, the day Papers gave.
@@ -622,7 +622,7 @@ describe('benefits.assistance_month', () => {
     expect(twin.player.assistance).toMatchObject({ months: 3, counted: ['2028-02', '2028-03', '2028-04'] });
     expect(titled(twin, 'SNAP Time Limit Reached').map((n) => n.at)).toEqual([Date.UTC(2028, 4, 8, 17)]);
     // It says what would lift the limit and she can reach, not work she has no way to take (from 2026-10-17, brief 12).
-    expect(titled(twin, 'SNAP Time Limit Reached').map((n) => n.body)).toEqual(['Three months in three years without 80 hours of work a month: SNAP pays no more until an exemption applies, as study at least half-time or an unemployment claim does.']);
+    expect(titled(twin, 'SNAP Time Limit Reached').map((n) => n.body)).toEqual(['You’ve had three months of SNAP in three years without 80 hours of work a month, so SNAP pays nothing more until an exemption applies, such as studying at least half-time or having an unemployment claim open.']);
   }, 60_000);
 
   it('DEFECT: a claim made at nine on the evening of 24 January is paid at nine on the 31st, still January in New Haven: it reads December, $306, not January’s weeks, which are the month before only in UTC', () => {
@@ -698,7 +698,7 @@ describe('benefits.assistance_month', () => {
     expect(sim.player.assistance!.months).toBe(2);
     // Said each month; the same words while the last is unread are brought up to now, not said twice.
     expect(titled(sim, 'Assistance Paid').map((n) => [n.at, n.body])).toEqual([[asked + 51 * MS_DAY, 'C$560.00 for the month.']]);
-    expect(run(elsewhere('b06-bc-rich', 'ca-bc-vancouver'), 'benefits.assistance')).toMatchObject({ ok: false, error: 'Income assistance asks assets under CAD 5,000.' });
+    expect(run(elsewhere('b06-bc-rich', 'ca-bc-vancouver'), 'benefits.assistance')).toMatchObject({ ok: false, error: 'Income assistance asks for assets under CAD 5,000.' });
   }, 60_000);
 });
 
@@ -719,7 +719,7 @@ describe('tax.due', () => {
     expect(Object.keys(r.figures.owedTo!.states).sort()).toEqual(['us-ct', 'us-ny']);
     // Past 60 days, at least the lesser of $535 and the tax (IRC 6651(a); $535 for returns required to be filed in 2027,
     // Rev. Proc. 2025-32).
-    expect(titled(sim, LATE).map((n) => [n.at, n.body])).toEqual([[DUE_2026, 'Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least $535.00. New York and Connecticut each charge their own on what they’re owed.']]);
+    expect(titled(sim, LATE).map((n) => [n.at, n.body])).toEqual([[DUE_2026, 'Each month it’s late adds 5% of what you owe the IRS, up to a quarter of it, and after 60 days the penalty is at least $535.00. New York and Connecticut each charge their own penalty on what you owe them. File it on Papers, under Tax Returns.']]);
     expect(pendingOf(sim, TAX_SFR_KIND).map((i) => i.at)).toEqual([DUE_2026 + 365 * MS_DAY]);
     expect(pendingOf(sim, STATE_NONFILER_KIND).map((i) => i.payload.state).sort()).toEqual(['us-ct', 'us-ny']);
   }, 60_000);
@@ -742,7 +742,7 @@ describe('tax.due', () => {
     const r0 = returnsOf(none.player)['2026']!;
     expect(r0.figures.owedTo!.irs).toBe(0);
     expect(r0.figures.owedTo!.states['us-ny']).toBeGreaterThan(0);
-    expect(titled(none, LATE).map((n) => n.body)).toEqual(['The IRS is owed nothing on it. New York charges its own on what it’s owed.']);
+    expect(titled(none, LATE).map((n) => n.body)).toEqual(['You owe the IRS nothing on it. New York charges its own penalty on what you owe it. File it on Papers, under Tax Returns.']);
     expect(pendingOf(none, TAX_SFR_KIND)).toEqual([]);
     expect(pendingOf(none, STATE_NONFILER_KIND).map((i) => i.payload.state)).toEqual(['us-ny']);
 
@@ -750,7 +750,7 @@ describe('tax.due', () => {
     play(some, on(2027, 4, 17));
     const r = returnsOf(some.player)['2026']!;
     expect(r.figures.owedTo!.irs).toBe(1_000_00);
-    expect(titled(some, LATE).map((n) => n.body)).toEqual(['Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least $535.00. New York charges its own on what it’s owed.']);
+    expect(titled(some, LATE).map((n) => n.body)).toEqual(['Each month it’s late adds 5% of what you owe the IRS, up to a quarter of it, and after 60 days the penalty is at least $535.00. New York charges its own penalty on what you owe it. File it on Papers, under Tax Returns.']);
     // Filed seventy days late: three months begun. Paying late, 1.5% of $1,000 = $15; filing late, three months' 4.5%,
     // $135, or past 60 days the lesser of $535 and the $1,000, so $535: $550.
     play(some, DUE_2026 + 70 * MS_DAY);
@@ -764,7 +764,7 @@ describe('tax.due', () => {
     recordWages(sim.player, on(2026, 10, 1, 9), NY, { gross: 1_000_00, withheld: 120_00, workStudy: true, employer: 'yale-payroll' });
     sim.advanceTo(on(2027, 4, 16));
     expect(returnsOf(sim.player)['2026']!.figures.owedTo).toEqual({ irs: -120_00, states: {} });
-    expect(titled(sim, LATE).map((n) => [n.at, n.body])).toEqual([[DUE_2026, 'A refund waits for the return; there’s no penalty on one.']]);
+    expect(titled(sim, LATE).map((n) => [n.at, n.body])).toEqual([[DUE_2026, 'Your refund waits until you file it. There’s no penalty when you’re due a refund.']]);
     const again = reload(sim);
     again.advanceTo(DUE_2026 + 366 * MS_DAY);
     // Done items are kept 400 days: one set at the year and run would still be here.

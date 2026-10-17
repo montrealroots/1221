@@ -172,7 +172,7 @@ describe('from America to home', () => {
     sim.advanceTo(day(sim, 8, 28));
     const quote = abroadQuote(sim, sim.player, chase, hsbc, 100_000);
     expect(quote).toMatchObject({ fee: 500, marginSave: 2_600, marginAssumed: true, incoming: 500, incomingSave: 633, received: 76_446, receivedSave: 96_767, daysAssumed: true });
-    expect(quoteWords(sim, quote as never)).toBe('Chase sends $1,000.00 for a $5.00 fee. At 2.6% under SLATE’s rate (SLATE’s assumption: the bank publishes no margin, so SLATE takes the FSB’s 2024 average cost of a payment abroad, 2.6%), HSBC UK receives £764.46 after its £5.00 fee for a payment from abroad, on Thursday, September 3, 2026 (SLATE’s assumption: the bank publishes no time, so SLATE takes three business days).');
+    expect(quoteWords(sim, quote as never)).toBe('Chase sends $1,000.00 for a $5.00 fee. At 2.6% under the game’s exchange rate (SLATE’s assumption: the bank publishes no margin, so SLATE takes the FSB’s 2024 average cost of a payment abroad, 2.6%), HSBC UK receives £764.46 after its £5.00 fee for a payment from abroad, on Thursday, September 3, 2026 (SLATE’s assumption: the bank publishes no time, so SLATE takes three business days).');
     const before = chase.balance;
     const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase.id, toId: hsbc.id, amount: 100_000 });
     expect(iso(sent.arrivesAt)).toBe('2026-09-03T21:00:00.000Z');
@@ -222,10 +222,10 @@ describe('refusals, in words', () => {
       .toBe('Mizuho’s app and Direct banking aren’t open to a non-resident, and its counters are in Japan.');
     const auckland = await make(life({ homeRegionId: 'nz-akl-auckland', priorResidence: { cityId: 'nz-akl-auckland', fromYear: 2005, fromMonth: 4 }, homeBankId: 'nz-asb' }));
     expect(refused(auckland, 'bank.transfer', { fromId: at(auckland, 'nz-asb', 'savings').id, toId: at(auckland, 'us-chase', 'checking').id, amount: 100_000, in: 'NZD' }))
-      .toBe('SLATE has no research on what ASB charges to send a payment abroad.');
+      .toBe('What ASB charges to send a payment abroad isn’t known to the game.');
     const dublin = await make(life({ homeRegionId: 'ie-lei-dublin', priorResidence: { cityId: 'ie-lei-dublin', fromYear: 2002, fromMonth: 6 }, homeBankId: 'ie-ptsb' }));
     expect(refused(dublin, 'bank.transfer', { fromId: at(dublin, 'us-chase', 'checking').id, toId: at(dublin, 'ie-ptsb', 'checking').id, amount: 10_000 }))
-      .toBe('SLATE has no research on what PTSB charges for a payment received from abroad.');
+      .toBe('What PTSB charges for a payment received from abroad isn’t known to the game.');
     // The whole of SMBC's savings, and its fee beside it, is more than they hold: ¥1,059,750 less the ¥7,480 its
     // current account opens with (from 2026-10-16), and ¥3,500 more.
     const tokyo = await make(life({ homeRegionId: 'jp-13-tokyo', priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: 'jp-smbc' }));
@@ -248,7 +248,7 @@ describe('the Move Money panel', () => {
     const words = renderToStaticMarkup(createElement(BankWorkspace)).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, '\'').replace(/\s+/g, ' ');
     expect(words).toContain('Amount (GBP)');
     expect(words).toContain('Barclays Bank Account ···');
-    expect(words).toContain('Barclays sends £1,000.00 for no fee. At its rate, 2.75% under SLATE’s, Chase receives $1,216.01 after its $15.00 fee for a payment from abroad, on Wednesday, September 2, 2026.');
+    expect(words).toContain('Barclays sends £1,000.00 for no fee. At its rate, 2.75% under the game’s exchange rate, Chase receives $1,216.01 after its $15.00 fee for a payment from abroad, on Wednesday, September 2, 2026.');
     const press = h.elements.find((e) => e.text === 'Move It')!;
     (press.props.onClick as () => void)();
     expect(h.toasts.at(-1)).toBe('Sent £1,000.00: it arrives September 2, 2026.');

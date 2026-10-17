@@ -28,11 +28,11 @@ function LienFacts({ l, money, zone }: { l: Lien; money: (c: number) => string; 
   return (
     <>
       <p className="small" style={{ margin: 0 }}>
-        <strong>{l.name}</strong> · {STATUS[l.status]}. {l.trigger === 'plan' ? 'Filed as its payment plan asks.' : 'Filed as its collection reached that step.'} It secured {money(l.amount)}, recorded with {l.recordedAt}
-        {l.filedAt !== undefined ? ` on ${formatDate(l.filedAt, zone)}` : ''}{l.fee ? `, its recording fee ${money(l.fee)} added to what’s owed` : ''}.
-        {l.releaseDue !== undefined && l.status === 'paid' ? ` To be released by ${formatDate(l.releaseDue, zone)}.` : ''}
+        <strong>{l.name}</strong> · {STATUS[l.status]}. It was filed for {money(l.amount)} {l.trigger === 'plan' ? 'because the payment plan requires one' : 'when collection reached that stage'}, and recorded in {l.recordedAt}
+        {l.filedAt !== undefined ? ` on ${formatDate(l.filedAt, zone)}` : ''}.{l.fee ? ` Its recording fee of ${money(l.fee)} was added to what you owe.` : ''}
+        {l.releaseDue !== undefined && l.status === 'paid' ? ` It’s to be released by ${formatDate(l.releaseDue, zone)}.` : ''}
         {l.releasedAt !== undefined ? ` Released ${formatDate(l.releasedAt, zone)}.` : ''}
-        {l.decideAt !== undefined && l.status === 'disputed' ? ` A decision by ${formatDate(l.decideAt, zone)}.` : ''}
+        {l.decideAt !== undefined && l.status === 'disputed' ? ` A decision is due by ${formatDate(l.decideAt, zone)}.` : ''}
         {l.withdrawnAt !== undefined ? ` Withdrawn ${formatDate(l.withdrawnAt, zone)}.` : ''}
       </p>
       {l.history.length > 0 && (
@@ -72,10 +72,10 @@ export function StateLienAndPenalty({ year, state }: { year: number; state: stri
         <div className="col gap-1">
           <div className="eyebrow">{`${agencyOf(state)}’s Lien`}</div>
           <LienFacts l={l} money={money} zone={sim.zone} />
-          <p className="xs dim" style={{ margin: 0 }}>{rules.lien.effect} It’s released {lienReleaseWords(rules.lien)}.{inError ? ` Filed in error, it’s withdrawn on request: ${rules.lien.error.how}.` : secured ? ` ${secured}` : ''}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{rules.lien.effect} It’s released {lienReleaseWords(rules.lien)}.{inError ? ` Because it was filed in error, you can ask for it to be withdrawn: ${rules.lien.error.how}.` : secured ? ` ${secured}` : ''}</p>
           <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-            <Gated feature="tax.lien_release" className="btn btn-sm btn-ghost" disabled={Boolean(release)} title={release} onClick={() => { const a = run<{ releaseDue?: number }>('tax.lien_release', { state, year }); if (a.ok) toast(a.value!.releaseDue !== undefined ? `Asked: released by ${formatDate(a.value!.releaseDue, sim.zone)}.` : 'Released.', 'positive'); }}>Ask For Its Release</Gated>
-            {inError && <Gated feature="tax.lien_dispute" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ decideAt: number }>('tax.lien_dispute', { state, year }); if (a.ok) toast(`Asked: ${agencyOf(state)} decides by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For Its Withdrawal As Filed In Error</Gated>}
+            <Gated feature="tax.lien_release" className="btn btn-sm btn-ghost" disabled={Boolean(release)} title={release} onClick={() => { const a = run<{ releaseDue?: number }>('tax.lien_release', { state, year }); if (a.ok) toast(a.value!.releaseDue !== undefined ? `Asked. It’s to be released by ${formatDate(a.value!.releaseDue, sim.zone)}.` : 'Released.', 'positive'); }}>Ask For Its Release</Gated>
+            {inError && <Gated feature="tax.lien_dispute" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ decideAt: number }>('tax.lien_dispute', { state, year }); if (a.ok) toast(`Asked. ${agencyOf(state)} decides by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For Its Withdrawal As Filed In Error</Gated>}
             <HowItWorks help="taxes.lien" />
           </div>
           <WhyNot reasons={[['Ask For Its Release', release]]} />
@@ -85,8 +85,8 @@ export function StateLienAndPenalty({ year, state }: { year: number; state: stri
         <div className="col gap-1">
           <div className="eyebrow">Three Years Unfiled</div>
           <p className="small" style={{ margin: 0 }}>
-            {money(sd.threeYear.amount)} added on {formatDate(sd.threeYear.at, sim.zone)}: {Math.round(rules.threeYear.share * 100)}% of the year’s tax, with no {stateName(state)} return for three years running (ORS 305.992), the year’s penalties held to its tax.
-            {sd.threeYear.waived !== undefined ? ` ${money(sd.threeYear.waived)} of it waived ${formatDate(sd.threeYear.waivedAt!, sim.zone)}.` : ` Its waiver, asked now, would be ${Math.round(waiverShare(r, state) * 100)}% by its schedule.`}
+            {money(sd.threeYear.amount)} was added on {formatDate(sd.threeYear.at, sim.zone)}: a penalty of {Math.round(rules.threeYear.share * 100)}% of the year’s tax, because no {stateName(state)} return was filed for three years in a row (ORS 305.992). The year’s penalties are capped at its tax.
+            {sd.threeYear.waived !== undefined ? ` ${money(sd.threeYear.waived)} of it was waived on ${formatDate(sd.threeYear.waivedAt!, sim.zone)}.` : ` If you ask for a waiver now, its schedule waives ${Math.round(waiverShare(r, state) * 100)}%.`}
           </p>
           <div className="row gap-2"><Gated feature="tax.request_waiver" className="btn btn-sm btn-ghost" disabled={Boolean(waive)} title={waive} onClick={() => { const a = run<{ waived: number }>('tax.request_waiver', { state, year }); if (a.ok) toast(`Waived: ${money(a.value!.waived)}.`, 'positive'); }}>Ask For Its Waiver</Gated><HowItWorks help="tax.request_waiver" /></div>
           <WhyNot reasons={[['Ask For Its Waiver', waive]]} />
@@ -110,8 +110,8 @@ export function FederalLien({ year }: { year: number }) {
     <div className="col gap-1">
       <div className="eyebrow">The IRS’s Lien</div>
       <LienFacts l={r.lien} money={money} zone={sim.zone} />
-      <p className="xs dim" style={{ margin: 0 }}>{FEDERAL_LIEN.effect} It’s released within {FEDERAL_LIEN.releaseDays} days of payment in full; you can then ask for it to be withdrawn on Form 12277, with your last three years’ returns filed. One filed in error is released as erroneous within {FEDERAL_LIEN.errorDays} days.</p>
-      <div className="row gap-2"><Gated feature="tax.federal_lien_withdraw" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ decideAt: number; error: boolean }>('tax.federal_lien_withdraw', { year }); if (a.ok) toast(`${a.value!.error ? 'Asked as erroneous' : 'Form 12277 sent'}: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>{error ? 'Ask For Its Release As Erroneous' : 'Ask For Its Withdrawal (Form 12277)'}</Gated><HowItWorks help="taxes.lien" /></div>
+      <p className="xs dim" style={{ margin: 0 }}>{FEDERAL_LIEN.effect} It’s released within {FEDERAL_LIEN.releaseDays} days of payment in full. After that, you can ask for it to be withdrawn on Form 12277, if your last three years’ returns are filed. A lien filed in error is released as erroneous within {FEDERAL_LIEN.errorDays} days.</p>
+      <div className="row gap-2"><Gated feature="tax.federal_lien_withdraw" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ decideAt: number; error: boolean }>('tax.federal_lien_withdraw', { year }); if (a.ok) toast(`${a.value!.error ? 'Asked for its release as erroneous' : 'Form 12277 sent'}. The IRS decides by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>{error ? 'Ask For Its Release As Erroneous' : 'Ask For Its Withdrawal (Form 12277)'}</Gated><HowItWorks help="taxes.lien" /></div>
       <WhyNot reasons={[['Ask For Its Withdrawal', no]]} />
       <Fine>Source: {FEDERAL_LIEN.source}.</Fine>
     </div>

@@ -212,7 +212,7 @@ describe('health.book', () => {
     // she picks Fair Haven on Papers' Your Doctor, as the player does, before the week books.
     h.toasts = [];
     pick(shown(sim), 'own-doctor', 'us-ct-fhchc-grand');
-    expect(h.toasts).toEqual(['Your doctor, chosen.']);
+    expect(h.toasts).toEqual(['Fair Haven Community Health Care is now your doctor.']);
     expect(healthOf(sim.player).clinicId).toBe('us-ct-fhchc-grand');
     // The first health week, Monday 31 August, books a doctor's visit: AMN's 23.5 days for a metro it doesn't survey,
     // rounded, is 24 days on, Thursday 24 September, at the practice's 10 o'clock.
@@ -368,7 +368,7 @@ describe('health.choose_clinic', () => {
         expect(before.text).toContain('A doctor’s visit: Soho Square General Practice');
         h.toasts = [];
         pick(before, 'own-doctor', 'uk-ldn-bupa-gp');
-        expect(h.toasts).toEqual(['Your doctor, chosen.']);
+        expect(h.toasts).toEqual(['Bupa Private GP (pay-as-you-go) is now your doctor.']);
         expect(healthOf(sim.player).clinicId).toBe('uk-ldn-bupa-gp');
         sim = reload(sim);
         expect(shown(sim).text).toContain('A doctor’s visit: Bupa Private GP (pay-as-you-go)');
@@ -430,7 +430,7 @@ describe('health.choose_pharmacy', () => {
       if (choose) {
         h.toasts = [];
         pick(shown(sim), 'own-pharmacy', 'walmart');
-        expect(h.toasts).toEqual(['Your pharmacy, chosen.']);
+        expect(h.toasts).toEqual(['Walmart Pharmacy is now your pharmacy.']);
         sim = reload(sim);
         expect(healthOf(sim.player).pharmacy).toBe('walmart');
       }

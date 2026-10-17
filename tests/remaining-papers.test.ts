@@ -169,7 +169,7 @@ describe('tax.s8.inventory', () => {
     expect([passport.status, f1Of(sim.player)?.status]).toEqual(['lost', 'valid']);
     expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
     expect(refusal(sim, 'bank.open_current', { bankId: 'us-wells-fargo' })).toBe('Wells Fargo asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
-    expect(idCardRefusal(sim.player, sim.now)).toBe('The DMV asks for a primary identity document in force: your passport, with your I-94 and I-20. Apply for or renew it on Papers first.');
+    expect(idCardRefusal(sim.player, sim.now)).toBe('The DMV asks for a primary identity document in force: your passport, with your I-94 and I-20. Apply for a passport or renew it under Your Passport first.');
   });
 
   it('PLAYER JOURNEY: a New York-born student’s papers are her license alone: a new bank takes it until it runs out on 14 June 2028, and then turns her away, the state ID card on Papers the next step, which it then takes', () => {
@@ -182,14 +182,14 @@ describe('tax.s8.inventory', () => {
     expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
     expect(refusal(sim, 'bank.open_current', { bankId: 'us-wells-fargo' })).toBe('Wells Fargo asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
     // Its page says it's out of force; nothing in SLATE renews a license since the cars went, and the ID card is drawn.
-    expect(page(sim, license.id)).toContain('Run out on June 14, 2028, it no longer counts for anything.');
+    expect(page(sim, license.id)).toContain('It ran out on June 14, 2028 and no longer counts for anything.');
     const screen = drawn(sim, PassportPane);
     expect(screen).toContain('Run Out');
     expect(drew('documents.apply_idcard').map((c) => [c.label, c.disabled])).toEqual([['Get Non-Driver Identification Card', false]]);
     const before = held(sim);
     // Asked for an hour after the license ran out, on her birthday, Wednesday 14 June 2028: mailed within twenty business
     // days, Juneteenth and the Fourth not among them, Friday 14 July; to her birthday seven years on, 14 June 2035.
-    expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card, for $28.00; the card comes July 14, 2028; good until June 14, 2035.']);
+    expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card: you paid $28.00. The card comes July 14, 2028. It’s good until June 14, 2035.']);
     expect(before - held(sim)).toBe(28_00);
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
     // On its way, it isn't a photo ID yet, and Wells Fargo still turns her away (from 2026-10-17: until then it was in
@@ -218,14 +218,14 @@ describe('tax.s8.passport', () => {
     expect(fee).not.toBe(usdOf(102_00, 'GBP'));
     const screen = drawn(sim, PassportPane);
     expect(screen).toContain(`A New One ${'$' + (fee / 100).toFixed(2)} About 21 days; good for 10 years; from abroad`);
-    expect(screen).toContain('Faster Not Offered HM Passport Office (Home Office) sells no faster service to an applicant abroad');
+    expect(screen).toContain('Faster Not Offered HM Passport Office (Home Office) offers no faster service to applicants abroad');
     expect(screen).toContain('An adult passport applied for online from outside the UK: £116.50 from 8 April 2026 (£130 on paper).');
     expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It']);
     const before = held(sim);
-    expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe('HM Passport Office (Home Office) sells no faster service to an applicant abroad.');
+    expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe('HM Passport Office (Home Office) offers no faster service to applicants abroad.');
     expect(held(sim)).toBe(before);
     const applied = sim.now;
-    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied, for \$/)]);
+    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied and paid \$/)]);
     expect(taken(sim, 'British Passport (Standard 34-Page)')).toEqual([fee]);
     // While it's decided the old one stands: the Social Security office and a new bank still take it.
     expect(photoIdOf(sim.player, sim.now)?.id).toBe(old.id);
@@ -248,14 +248,14 @@ describe('tax.s8.passport', () => {
     expect([old.issuer, new Date(old.issuedAt!).toISOString().slice(0, 10)]).toEqual(['US', '2026-05-23']);
     const screen = drawn(sim, PassportPane);
     expect(screen).toContain('A New One $130.00 Up to 42 days; good for 10 years; renewed by mail');
-    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied, for \$130\.00\. /)]);
+    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied and paid \$130\.00\. /)]);
     expect(taken(sim, 'U.S. Passport Book, renewed on Form DS-82')).toEqual([130_00]);
     sim.advanceTo(sim.now + 43 * MS_DAY);
     const renewed = passportOf(sim.player, sim.now)!;
     expect(renewed.id).not.toBe(old.id);
     sim.must({ kind: 'documents.report_lost', payload: { documentId: renewed.id } });
     drawn(sim, PassportPane);
-    expect(press('documents.apply_passport', 'Apply For One')).toEqual([expect.stringMatching(/^Applied, for \$165\.00\. /)]);
+    expect(press('documents.apply_passport', 'Apply For One')).toEqual([expect.stringMatching(/^Applied and paid \$165\.00\. /)]);
     expect(taken(sim, 'U.S. Passport Book')).toEqual([165_00]);
   });
 
@@ -276,10 +276,10 @@ describe('tax.s8.passport', () => {
     expect(NZ_FROM_ABROAD).toEqual({ feeBeforeGst: 214.78, urgentBeforeGst: 214.78, gstRate: 0.15, gstCharged: true });
     expect(PASSPORTS_ABROAD['NZ']).toMatchObject({ fee: 247, currency: 'NZD', days: 28, expedite: { extra: 247, days: 5 } });
     expect(PASSPORTS_ABROAD['NZ']!.assumed.slice(0, 2)).toEqual([
-      'SLATE’s assumption, not DIA’s published policy: GST is charged. DIA charges none to a non-resident for New Zealand tax applying online, and whether you’re one turns on a home in New Zealand that SLATE doesn’t keep.',
-      'SLATE’s assumption: the urgent fee from overseas is the standard fee, as DIA’s 2022 schedule set it for an application online.',
+      'GST is charged. DIA charges none to a non-resident for New Zealand tax applying online, and whether you’re one turns on a home in New Zealand, which the game doesn’t keep.',
+      'The urgent fee from overseas is the standard fee, as DIA’s 2022 schedule set it for an application online.',
     ]);
-    for (const iso of ['IS', 'BR', 'LV', 'JP']) expect(PASSPORTS_ABROAD[iso]!.assumed.join(' ')).not.toMatch(/fees? (charged|wasn’t|weren’t)|SLATE’s assumption/);
+    for (const iso of ['IS', 'BR', 'LV', 'JP']) expect(PASSPORTS_ABROAD[iso]!.assumed.join(' ')).not.toMatch(/fees? (charged|wasn’t|weren’t)|assumed/);
   });
 
   it('PLAYER JOURNEY: a Tokyo-born student renews her Japanese passport on Papers from New Haven: US$62, the fee MOFA’s ordinance sets for the United States from 1 July 2026; no faster service, the command refused; a second application refused while hers is decided; charged once and issued on its day across a reload, the old one canceled then; until later on 2026-10-17 the window fee in Japan, 9,300 yen, at SLATE’s rate, the same $62.00 said to be SLATE’s', () => {
@@ -292,17 +292,17 @@ describe('tax.s8.passport', () => {
     const { issuer, name } = PASSPORTS['JP']!;
     const screen = drawn(sim, PassportPane);
     expect(screen).toContain('A New One $62.00 About 30 days; good for 10 years; from abroad');
-    expect(screen).toContain(`Faster Not Offered ${issuer} sells no faster service to an applicant abroad`);
+    expect(screen).toContain(`Faster Not Offered ${issuer} offers no faster service to applicants abroad`);
     expect(screen).toContain('At a Japanese embassy or consulate in the US, on paper: US$62 from 1 July 2026, the fee MOFA’s ordinance on passport fees abroad sets for the United States (US$60 applied for online)');
     expect(screen).not.toContain('yen fee');
     expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It']);
     const before = held(sim);
-    expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe(`${issuer} sells no faster service to an applicant abroad.`);
+    expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe(`${issuer} offers no faster service to applicants abroad.`);
     expect(held(sim)).toBe(before);
     const applied = sim.now;
-    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied, for \$62\.00\. It comes by /)]);
+    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied and paid \$62\.00\. It should arrive by /)]);
     expect([taken(sim, name), before - held(sim)]).toEqual([[62_00], 62_00]);
-    expect(refusal(sim, 'documents.apply_passport')).toBe('An application is in already.');
+    expect(refusal(sim, 'documents.apply_passport')).toBe('You’ve already applied, and it’s being decided.');
     expect(taken(sim, name)).toEqual([62_00]);
     const again = reload(sim);
     again.advanceTo(applied + 30 * MS_DAY - MS_HOUR);
@@ -325,13 +325,13 @@ describe('tax.s8.passport', () => {
     expect(screen).toContain(`A New One ${'$' + (fee / 100).toFixed(2)} Up to 28 days; good for 10 years; from abroad`);
     expect(screen).toContain(`Faster ${'$' + (faster / 100).toFixed(2)} 5 days`);
     expect(screen).toContain('Online to DIA from overseas: NZ$214.78 before GST, NZ$247.00 with it, from 2 May 2025.');
-    expect(screen).toContain('Not confirmed: SLATE’s assumption, not DIA’s published policy: GST is charged.');
-    expect(screen).toContain('SLATE’s assumption: the urgent fee from overseas is the standard fee');
+    expect(screen).toContain('Assumed in the game: GST is charged. DIA charges none to a non-resident for New Zealand tax applying online');
+    expect(screen).toContain('The urgent fee from overseas is the standard fee');
     expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It', 'Renew It Faster']);
     const applied = sim.now;
-    expect(press('documents.apply_passport', 'Renew It Faster')).toEqual([expect.stringMatching(/^Applied, for \$[\d,]+\.\d\d\. It comes by /)]);
+    expect(press('documents.apply_passport', 'Renew It Faster')).toEqual([expect.stringMatching(/^Applied and paid \$[\d,]+\.\d\d\. It should arrive by /)]);
     expect(taken(sim, 'New Zealand passport, expedited')).toEqual([faster]);
-    expect(refusal(sim, 'documents.apply_passport')).toBe('An application is in already.');
+    expect(refusal(sim, 'documents.apply_passport')).toBe('You’ve already applied, and it’s being decided.');
     const again = reload(sim);
     again.advanceTo(applied + 5 * MS_DAY - MS_HOUR);
     expect(passportOf(again.player, again.now)?.id).toBe(old.id);
@@ -371,7 +371,7 @@ describe('tax.s8.passport', () => {
       const screen = drawn(again, PassportPane);
       expect(screen).toContain(`A New One ${'$' + (without / 100).toFixed(2)} Up to 28 days`);
       expect(screen).toContain(`Faster ${'$' + (faster / 100).toFixed(2)} 5 days`);
-      expect(screen).toContain('SLATE’s assumption, not DIA’s published policy: no GST is charged, taking you as a non-resident for New Zealand tax.');
+      expect(screen).toContain('Assumed in the game: No GST is charged, as you’re taken to be a non-resident for New Zealand tax.');
       expect(screen).not.toContain('GST is charged.');
       press('documents.apply_passport', 'Apply Faster');
       expect(taken(again, 'New Zealand passport, expedited')).toEqual([faster]);
@@ -389,14 +389,14 @@ describe('tax.s8.passport', () => {
     const issuer = 'Polícia Federal (Departamento de Polícia Federal), Ministério da Justiça e Segurança Pública';
     const screen = drawn(sim, PassportPane);
     expect(screen).toContain('A New One $60.00 About 8 days; good for 10 years; from abroad');
-    expect(screen).toContain(`Faster Not Offered ${issuer} sells no faster service to an applicant abroad`);
+    expect(screen).toContain(`Faster Not Offered ${issuer} offers no faster service to applicants abroad`);
     expect(screen).toContain('at the consular fee from 1 June 2026: 60 reais-ouro, a real-ouro being a dollar, so US$60.');
     expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It']);
     const before = held(sim);
-    expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe(`${issuer} sells no faster service to an applicant abroad.`);
+    expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe(`${issuer} offers no faster service to applicants abroad.`);
     expect(held(sim)).toBe(before);
     const applied = sim.now;
-    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied, for \$60\.00\. It comes by /)]);
+    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied and paid \$60\.00\. It should arrive by /)]);
     expect(taken(sim, 'Passaporte comum')).toEqual([60_00]);
     const again = reload(sim);
     again.advanceTo(applied + 8 * MS_DAY - MS_HOUR);
@@ -421,9 +421,9 @@ describe('tax.s8.passport', () => {
     expect(screen).toContain('At the Embassy of Iceland in Washington, the only post in the US that takes it, at the fee in Iceland: 19,000 ISK, or 39,200 ISK for express');
     expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It', 'Renew It Faster']);
     const applied = sim.now;
-    expect(press('documents.apply_passport', 'Renew It Faster')).toEqual([expect.stringMatching(/^Applied, for \$[\d,]+\.\d\d\. It comes by /)]);
+    expect(press('documents.apply_passport', 'Renew It Faster')).toEqual([expect.stringMatching(/^Applied and paid \$[\d,]+\.\d\d\. It should arrive by /)]);
     expect(taken(sim, 'Íslenskt vegabréf (Icelandic passport), expedited')).toEqual([faster]);
-    expect(refusal(sim, 'documents.apply_passport')).toBe('An application is in already.');
+    expect(refusal(sim, 'documents.apply_passport')).toBe('You’ve already applied, and it’s being decided.');
     const again = reload(sim);
     again.advanceTo(applied + 2 * MS_DAY - MS_HOUR);
     expect(passportOf(again.player, again.now)?.id).toBe(old.id);
@@ -443,14 +443,14 @@ describe('tax.s8.passport', () => {
     const issuer = 'Pilsonības un migrācijas lietu pārvalde (Office of Citizenship and Migration Affairs, PMLP/OCMA), under the Ministry of the Interior';
     const screen = drawn(sim, PassportPane);
     expect(screen).toContain(`A New One ${'$' + (fee / 100).toFixed(2)} Up to 56 days; good for 10 years; from abroad`);
-    expect(screen).toContain(`Faster Not Offered ${issuer} sells no faster service to an applicant abroad`);
+    expect(screen).toContain(`Faster Not Offered ${issuer} offers no faster service to applicants abroad`);
     expect(screen).toContain('In person at the Embassy of Latvia in Washington, at its own fees from 1 May 2026: €140 (€115 under 20), in about eight weeks on average; no urgent service.');
     expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It']);
     const before = held(sim);
-    expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe(`${issuer} sells no faster service to an applicant abroad.`);
+    expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe(`${issuer} offers no faster service to applicants abroad.`);
     expect(held(sim)).toBe(before);
     const applied = sim.now;
-    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied, for \$[\d,]+\.\d\d\. It comes by /)]);
+    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied and paid \$[\d,]+\.\d\d\. It should arrive by /)]);
     expect(taken(sim, 'Latvijas Republikas pilsoņa pase (Latvian citizen\'s passport)')).toEqual([fee]);
     const again = reload(sim);
     again.advanceTo(applied + 56 * MS_DAY - MS_HOUR);
@@ -480,7 +480,7 @@ describe('tax.s8.idcard', () => {
     const ssn = sim.must<{ arrivesAt: number }>({ kind: 'documents.apply_ssn', payload: {} });
     sim.advanceTo(ssn.arrivesAt + MS_HOUR);
     sim.must({ kind: 'documents.report_lost', payload: { documentId: passport.id } });
-    const why = 'The DMV asks for a primary identity document in force: your passport, with your I-94 and I-20. Apply for or renew it on Papers first.';
+    const why = 'The DMV asks for a primary identity document in force: your passport, with your I-94 and I-20. Apply for a passport or renew it under Your Passport first.';
     drawn(sim, PassportPane);
     expect(drew('documents.apply_idcard').map((c) => [c.disabled, c.title])).toEqual([[true, why]]);
     const before = held(sim);
@@ -496,7 +496,7 @@ describe('tax.s8.idcard', () => {
     // Asked for on Sunday 11 October 2026, 3 PM: SAVE's ten federal workdays, Columbus Day not among them, to Monday 26
     // October, then the mail's twenty, Veterans Day not among them, to Tuesday 24 November.
     expect(sim.now).toBe(Date.UTC(2026, 9, 11, 19));
-    expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card, for $28.00; the card comes November 24, 2026; good until May 31, 2029.']);
+    expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card: you paid $28.00. The card comes November 24, 2026. It’s good until May 31, 2029.']);
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
     expect([card.name, card.status, card.realId, card.readyAt]).toEqual(['Non-Driver Identification Card, Limited Term', 'pending', false, Date.UTC(2026, 10, 24, 19)]);
     const again = reload(sim);
@@ -630,7 +630,7 @@ describe('tax.s8.idcard, its term', () => {
     sim.advanceTo(ssn.arrivesAt + MS_HOUR);
     return sim;
   };
-  const TERM_NOTE = 'You’re not a US citizen, so your card runs to the end of your lawful presence: the program’s end at school, OPT’s end on OPT. That’s SLATE’s assumption, not the state’s published policy: the state publishes no term for a card it doesn’t verify. A card already issued keeps its date if that’s ever corrected.';
+  const TERM_NOTE = 'You’re not a US citizen, so your card runs to the end of your lawful presence: your program’s end while you’re at school, or your OPT’s end while you’re on OPT. The state publishes no term for a card it doesn’t verify, so this term is assumed. A card already issued keeps its date if the assumption is ever corrected.';
 
   it('PLAYER JOURNEY: Your ID on Papers tells a British student that her card’s term, to the end of her lawful presence, is SLATE’s assumption, not the state’s published policy, and that a card already issued keeps its date if that’s corrected; a New York-born citizen is told nothing of it', () => {
     expect(drawn(life('rp-uk-a', 'uk-eng-london'), PassportPane)).toContain(TERM_NOTE);
@@ -643,7 +643,7 @@ describe('tax.s8.idcard, its term', () => {
   it('PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so', () => {
     const sim = withNumber(life('rp-uk-a', 'uk-eng-london'));
     drawn(sim, PassportPane);
-    expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card, for $28.00; the card comes November 2, 2026; good until May 31, 2029.']);
+    expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card: you paid $28.00. The card comes November 2, 2026. It’s good until May 31, 2029.']);
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
     expect([card.status, card.name, card.realId, card.expiresAt]).toEqual(['pending', 'Non-Driver Identification Card, Limited Term', false, Date.UTC(2029, 4, 31, 12)]);
     expect(taken(sim, 'Non-Driver Identification Card')).toEqual([28_00]);
@@ -658,13 +658,13 @@ describe('tax.s8.idcard, its term', () => {
       expect([kept.status, kept.name, kept.realId, kept.expiresAt]).toEqual(['valid', 'Non-Driver Identification Card, Limited Term', false, Date.UTC(2029, 4, 31, 12)]);
       expect(titled(again, 'Non-Driver Identification Card, Limited Term Arrived')).toHaveLength(1);
       expect(taken(again, 'Non-Driver Identification Card')).toEqual([28_00]);
-      expect(refusal(again, 'documents.apply_idcard')).toBe('You hold one in force.');
-      expect(drawn(again, PassportPane)).toContain('You’re not a US citizen, and your card runs its years to a birthday as anyone’s does. That’s SLATE’s assumption, not the state’s published policy');
+      expect(refusal(again, 'documents.apply_idcard')).toBe('You already hold one in force.');
+      expect(drawn(again, PassportPane)).toContain('You’re not a US citizen, and your card runs its full term to a birthday, as anyone’s does. The state publishes no term for a card it doesn’t verify, so this term is assumed.');
       // Reported lost, a new card is applied for, and takes the term as it now stands.
       again.must({ kind: 'documents.report_lost', payload: { documentId: kept.id } });
       const asked = again.now;
       drawn(again, PassportPane);
-      expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card, for $28.00; the card comes December 16, 2026; good until June 14, 2034.']);
+      expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card: you paid $28.00. The card comes December 16, 2026. It’s good until June 14, 2034.']);
       const next = documentsOf(again.player).find((d) => d.kind === 'idcard' && d.status === 'pending')!;
       expect([next.name, next.realId]).toEqual(['Non-Driver Identification Card', false]);
       // Her birthday, 14 June, the first at least seven years on from 2 November 2026; SAVE to Tuesday 17 November,
@@ -700,9 +700,9 @@ describe('tax.s8.idcard, its term', () => {
     expect(photoIdOf(sim.player, sim.now)?.kind).toBe('passport');
     const screen = drawn(sim, PassportPane);
     expect(screen).toContain('Run Out');
-    expect(idCardRefusal(sim.player, sim.now)).toBe('On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.');
-    expect(drew('documents.apply_idcard').map((c) => [c.disabled, c.title])).toEqual([[true, 'On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.']]);
-    expect(refusal(sim, 'documents.apply_idcard')).toBe('On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.');
+    expect(idCardRefusal(sim.player, sim.now)).toBe('On an F-1, the DMV asks for your I-20 and proof that you’re enrolled, and you’re not at school.');
+    expect(drew('documents.apply_idcard').map((c) => [c.disabled, c.title])).toEqual([[true, 'On an F-1, the DMV asks for your I-20 and proof that you’re enrolled, and you’re not at school.']]);
+    expect(refusal(sim, 'documents.apply_idcard')).toBe('On an F-1, the DMV asks for your I-20 and proof that you’re enrolled, and you’re not at school.');
     expect(taken(sim, 'Non-Driver Identification Card')).toEqual([28_00]);
   });
 });

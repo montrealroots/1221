@@ -16,6 +16,6 @@ describe('a green card', () => {
     const sim = bornIn('mx-cmx-mexicocity', 'gc-none');
     const r = sim.execute({ kind: 'documents.residence', payload: { country: 'US' } });
     expect(r.ok).toBe(false);
-    expect(r.error).toMatch(/career/);
+    expect(r.error).toMatch(/record of professional work/);
   });
 });

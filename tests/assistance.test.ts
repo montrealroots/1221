@@ -77,6 +77,6 @@ describe('a claim', () => {
     // A Canadian isn't kept for SNAP.
     const other = life('us-ny-newyork', 'assist-ny-ca');
     other.player.citizenshipId = 'ca';
-    expect(assistanceRefusal(other, other.player)).toMatch(/non-citizen/);
+    expect(assistanceRefusal(other, other.player)).toMatch(/noncitizen/);
   });
 });

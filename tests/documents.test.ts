@@ -75,7 +75,7 @@ describe('entering a country', () => {
     // A British citizen, to Australia: its eVisitor, which costs nothing.
     const gb = life('entry-gb-au', 'uk-eng-london');
     holds(gb, { kind: 'passport', issuer: 'GB' });
-    expect(mayEnter(gb.player, 'AU', gb.now).missing.join(' ')).toMatch(/citizens of the United Kingdom: no fee/);
+    expect(mayEnter(gb.player, 'AU', gb.now).missing.join(' ')).toMatch(/citizens of the United Kingdom for [^:]+: no fee/);
   });
 });
 
@@ -106,7 +106,7 @@ describe('a passport', () => {
     expect(a.value!.fee).toBe(165_00);
     expect(before - bank()).toBe(165_00);
     expect(Math.round((a.value!.readyAt - sim.now) / MS_DAY)).toBe(42);
-    expect(sim.execute({ kind: 'documents.apply_passport', payload: {} }).error).toMatch(/in already/);
+    expect(sim.execute({ kind: 'documents.apply_passport', payload: {} }).error).toMatch(/already applied/);
     sim.advanceBy(43 * MS_DAY);
     const first = passportOf(sim.player, sim.now)!;
     expect(Math.round((first.expiresAt! - first.issuedAt!) / YEAR)).toBe(10);
