@@ -7925,7 +7925,7 @@
     {
       "id": "l-actor",
       "kind": "look",
-      "entry": "looks/actor.tsx sourceWords ‘interest’ branch (actor.tsx:69). Until 2026-10-17 this said :66",
+      "entry": "looks/actor.tsx sourceWords ‘interest’ branch (actor.tsx:65). Until 2026-10-17 this said :66",
       "reads": "development history source",
       "changes": "none",
       "downstream": "",

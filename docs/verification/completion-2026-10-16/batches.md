@@ -103,3 +103,30 @@ and the 9 administrative rows are outside it.
 - **Tests:** the research area's 19 files, each exit 0 on its clone. Here, `tests/remaining-papers.test.ts` gave 14
   passed after the merge of the two areas' imports; `tsc -p tsconfig.app.json` and `tsconfig.node.json` 0;
   `tools/coverage.mjs --check` 0, `tools/capabilities.mjs --check` 0, `tests/audit-pipeline.test.ts` 0.
+
+## Batch 5: The Attributes Area (`f7341c23` to `4284e869`, as cherry-picked)
+
+- **Rows addressed:** A4, A5, T1, O3, F1, F3, A1 (brief 10's judge item), stamina.A1, and section 7.
+- **Actionable incomplete:** 28 before, 21 after.
+- **Implemented and verified:** all eight, by 22 new tests in `tests/attributes-phase-2b.test.ts`, every one cited by
+  title (`attributes-result.json`). Each criterion that covers all twelve abilities is tested on all twelve. 30
+  mutations were made in a copy, and each was caught.
+- **Added work, six defects each blocking a row:**
+  - the ability look's own sentence was shown nowhere;
+  - stamina's readers were said as consistency, not the drain;
+  - four ability sentences contradicted the code: presence, memory, composure and discipline, each old clause kept dated;
+  - the Profile's Last Change rounded the history twice (+0.24 against the toast's +0.25);
+  - the Look After menu said fitness to the whole point ("51 → 51" for 0.8);
+  - stamina's drain was advised as rest, not fitness.
+
+  None changes what the game judges, so RULESET is unchanged; the final measurement holds that.
+- **Section 7:**
+  - The flu takes condition and energy, is told, and leaves fitness.
+  - It reaches a night once, through readiness, with no second count.
+  - Rest restores energy without curing the flu or building fitness.
+- **Regressions in verification, not behavior:** `systems/material.ts` is in every judge measurement's watch, so 41
+  measured rows are stale until the final run, and the matrix's figure fell to 514.
+- **Administrative:** l-actor's line reference moved again with `actor.tsx` (now :65).
+- **Tests:** the area's 50 files, each exit 0 on its clone. On the combined tree: `tsc -p tsconfig.app.json` 0, lint 0,
+  and sixteen of the gate's checks each 0 (devmap, traceability, the document checks, wired, deciders, inventory,
+  capabilities, coverage, student-matrix); `tests/audit-pipeline.test.ts` 0.

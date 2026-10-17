@@ -1438,11 +1438,42 @@
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
    "failure": "Before: met by review; after: met by review; A4 brought to restraint’s new draw (composure, focus)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A4)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A4); docs/verification/completion-2026-10-16/attributes-result.json",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "A4: what the game says each ability does and what develops it, it does (brief 11) > the ability’s look says what develops it, what it does and which work reads it, and every task and dimension it names moves with it on every piece of that task; stamina’s are the drain’s, exactly, all twelve"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "A4: what the game says each ability does and what develops it, it does (brief 11) > GUARD: every clause of every ability’s two sentences is its own words and is held by a check, all twelve"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "A4: what the game says each ability does and what develops it, it does (brief 11) > PLAYER JOURNEY: every activity each ability’s develops sentence names grows it, on one save played through its commands and its clock"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "A4: what the game says each ability does and what develops it, it does (brief 11) > every effect each ability’s affects sentence names, it has, clause by clause, all twelve"
+    },
+    {
+     "file": "tests/evidence2-b11.test.ts"
+    },
+    {
+     "file": "tests/evidence-g31-ui.test.ts"
+    },
+    {
+     "file": "tests/attributes-matrix.test.ts"
+    },
+    {
+     "file": "tests/guide-examples-craft.test.ts"
+    },
+    {
+     "file": "tests/ability-mastered.test.ts"
     }
    ],
    "before": "met by review",
@@ -1467,11 +1498,37 @@
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A5)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A5); docs/verification/completion-2026-10-16/attributes-result.json",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "A5: an action the player chooses develops each ability, and says what moved (brief 11) > PLAYER JOURNEY: an hour of each of the ten abilities’ exercises, pressed on its control, grows it, its words and the toast say by how much, and the Profile’s row says the last change, across a save and a load"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "A5: an action the player chooses develops each ability, and says what moved (brief 11) > PLAYER JOURNEY: discipline grows from a day’s practice kept, once a day, said before the hour and on its row after; stamina from a Work Out, said on its row and its look"
+    },
+    {
+     "file": "tests/evidence2-b08.test.ts"
+    },
+    {
+     "file": "tests/evidence-g22-school.test.ts"
+    },
+    {
+     "file": "tests/evidence-g20-school.test.ts"
+    },
+    {
+     "file": "tests/evidence-g31-ui.test.ts"
+    },
+    {
+     "file": "tests/development.test.ts"
+    },
+    {
+     "file": "tests/history-continuity.test.ts"
     }
    ],
    "before": "met by review",
@@ -1496,11 +1553,32 @@
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T1)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T1); docs/verification/completion-2026-10-16/attributes-result.json",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: each of the ten abilities’ controls says the hour’s gain and its tier before it, the hour’s words the same gain, the tier and that it’s pitched where you are after; a second hour the same day is said a repeat before and after, at half"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: stamina’s training, Work Out, says the fitness it builds before the hour, to a tenth, and its row the same after; a gain under a point isn’t said as none"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: every technique past 90 is said to move no result, on its control before the hour and in the hour’s words after; at 85, neither says it"
+    },
+    {
+     "file": "tests/evidence-g29-ui.test.ts"
+    },
+    {
+     "file": "tests/evidence-g30-ui.test.ts"
+    },
+    {
+     "file": "tests/fitness.test.ts"
     }
    ],
    "before": "met by review",
@@ -1525,11 +1603,23 @@
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O3)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O3); docs/verification/completion-2026-10-16/attributes-result.json",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "O3: bands, grades and casting read the player’s own result, and preparation and condition are limits of their own (brief 11) > PLAYER JOURNEY: a paired scene shown at Acting I’s meeting is banded by the player’s own result, Exceptional, while the scene together, said beside it, is Strong; a partner who reads it apart moves the scene together and nothing of the player’s own"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "O3: bands, grades and casting read the player’s own result, and preparation and condition are limits of their own (brief 11) > PLAYER JOURNEY: a night is banded by the player’s own night while the company’s, said apart, moves the mood alone; casting reads the expected personal result, no draw and no company in it"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "O3: bands, grades and casting read the player’s own result, and preparation and condition are limits of their own (brief 11) > PLAYER JOURNEY: a take taped cold names its preparation short as limits of their own, in the task’s words, and a take with the flu names the flu, while the abilities each read stand as they are"
     }
    ],
    "before": "met by review",
@@ -1554,11 +1644,19 @@
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (F1)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (F1); docs/verification/completion-2026-10-16/attributes-result.json",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "F1: every note names what the evaluation found (brief 11) > PLAYER JOURNEY: twins taping the same prepared brief, one weak in imagination and one in emotional depth: each take’s chief limit, its look, What To Work On Next and the brief suggested for it name what each one’s evaluation found"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "F1: every note names what the evaluation found (brief 11) > PLAYER JOURNEY: a scene shown at Acting I’s meeting by a craft behind the year gets its note on the craft skill its judged result’s limits say held it most, the voice for one twin and emotional access for the other"
     }
    ],
    "before": "met by review",
@@ -1583,11 +1681,36 @@
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (F3)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (F3); docs/verification/completion-2026-10-16/attributes-result.json",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: takes taped cold are advised as preparation, in its words, with no exercise; the same briefs prepared aren’t"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: takes with the flu are advised as the day’s condition, in its words, with no exercise; a well twin’s aren’t"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: takes played a way the scene doesn’t allow are advised as the choice, in its words, with no exercise"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: stamina draining through long takes is advised as stamina, built by a Work Out, never as rest; a fitter twin isn’t advised it"
+    },
+    {
+     "file": "tests/defects-g3-1.test.ts"
+    },
+    {
+     "file": "tests/advice.test.ts"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts"
     }
    ],
    "before": "met by review",
@@ -3357,6 +3480,32 @@
     {
      "file": "tests/scenes.test.ts",
      "title": "the scene bank > GUARD: the coverage matrix’s scene bank row states the bank as the code holds it, its scenes, its plays and its exercises, so a scene added or taken away fails here until the row says so"
+    }
+   ]
+  },
+  {
+   "id": "A1",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the attributes area (docs/verification/completion-2026-10-16/attributes-result.json): tools/ag-baseline.ts’s quantity held in a gate test on its own constructions (tools/pieces.ts): every class scene (SCENE_MATERIAL), every play as a night and as casting’s read (PLAY_MATERIAL), every coursework template not judged as a scene; each ability +10 from the even actor of 50s. The largest kind per ability in the test: emotional depth scene 0.60, presence casting 0.68, listening casting 0.93, imagination coursework 0.88, focus coursework 0.69, memory casting 0.62, adaptability casting 0.68, composure casting 0.72, vocal coursework 0.58, physical coursework 0.61, discipline night 0.69, stamina scene 0.54.",
+   "citations": [
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "A1: every ability is causal somewhere, at half a point or more (brief 11) > gives each of the twelve a kind of work where +10 moves the mean result half a point or more, and stamina half a point on the class scenes"
+    }
+   ]
+  },
+  {
+   "id": "stamina.A1",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the attributes area (docs/verification/completion-2026-10-16/attributes-result.json): Stamina +10 from the even actor on every class scene, the drain through a scene’s later units, held at 0.5 or more in the gate; and its night effect at a lead’s part, a smaller part and a light brief, held by the test brief 10 left.",
+   "citations": [
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "A1: every ability is causal somewhere, at half a point or more (brief 11) > gives each of the twelve a kind of work where +10 moves the mean result half a point or more, and stamina half a point on the class scenes"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "stamina counts by how long and how hard a piece is > gives +10 stamina half a point or more on a lead’s night, on the mean of the plays, less in a smaller part, and a tenth or less on a light brief"
     }
    ]
   },

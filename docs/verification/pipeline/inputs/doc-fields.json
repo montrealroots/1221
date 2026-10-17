@@ -1770,7 +1770,7 @@
   "issue": ""
  },
  "l-actor": {
-  "entry": "looks/actor.tsx sourceWords ‘interest’ branch (actor.tsx:69). Until 2026-10-17 this said :66",
+  "entry": "looks/actor.tsx sourceWords ‘interest’ branch (actor.tsx:65). Until 2026-10-17 this said :66",
   "tests": "tests/evidence2-b13.test.ts ‘PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense…’ (a save as 93 wrote it, migrated through openSlot, the line twice on each and nowhere else, its twin without the hour saying none). Until 2026-10-17 this said none reached the branch, which was so when the row was read",
   "issue": "None. The header (actor.tsx:1-4) said 'an interest' was among what it opens until the interests went on 2026-10-10; it now says so in the past tense."
  },

@@ -31,13 +31,19 @@ kept verbatim) is being worked on `claude/peaceful-hamilton-59zdbb`, restarted f
 - **The matrix** may now carry an area item's measurement through an override (`measured`), held current as a
   criterion's is.
 
-**Completion, by the matrix:** 542 of 599 rows in scope Implemented And Verified (90.4%); 45 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 514 of 599 rows in scope Implemented And Verified (85.8%); 73 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.
 
-Against the frozen baseline's 608, the figure is 542 (89.1%), and 18 of the 46 actionable rows are closed by this pass's work:
+Against the frozen baseline's 608, the figure is 514 (84.5%): it fell from 542 because the attributes' change to
+`systems/material.ts` left 41 judge measurements stale until the final run. 25 of the 46 actionable rows are closed by this
+pass's work:
 - coverage09.4 to 09.6, genres.4 and genres.6 (`integration-result.json`);
 - the five tax.s8 items (`journeys-result.json`);
 - ST6-R.bPrime, ST3-R.e, H4-R.e, L3-R.a, L3-R.e, judge.tests and judge.coverage-row (`acting-result.json`);
-- l-actor, Older Saves Only, its test now cited (a second reader's check, `inputs/final-checks/brief11-journeys.json`).
+- l-actor, Older Saves Only, its test now cited (a second reader's check, `inputs/final-checks/brief11-journeys.json`);
+- A4, A5, T1, O3, F1, F3, A1 and stamina.A1 (`attributes-result.json`), with six defects fixed on the way: the ability
+  look's own sentence shown nowhere; stamina's readers said as consistency; four ability sentences the code contradicted;
+  the history rounded twice; fitness said to the whole point; stamina's drain advised as rest. Health, stamina and
+  energy are checked apart (section 7).
 
 **Blocked Externally** (`research-result.json`):
 - **KS-ct-idcard.** The Connecticut ID card's term (seven years to a birthday) and its mailing now follow the DMV's
@@ -56,8 +62,8 @@ restate (a) in the restrained choice's own frame, at a floor the owner sets: 10 
 replaced (b) under clarification A1 (`clarifications.md`), mapped to the owner's brief 10 words: "a revised test must
 still catch a system where restraint is effectively useless". L3-R.b and judge.together wait on the final measurement.
 
-The engine change behind the Yale fix left six measured rows stale: F2-A, MA5, INT-skipped, INT-navigation, INT-long-runs
-and INT-gate. They're measured again on the final commit. health.enroll and l-actor wait on a second reader's check
+The engine changes left measured rows stale: six with the Yale fix (F2-A, MA5 and four INT rows), and every judge
+criterion with the attributes' `material.ts`, 41 in all. They're measured again on the final commit. health.enroll and l-actor wait on a second reader's check
 before the audit moves them. `RECEIPT.md`, by `receipt.py`, has every row.
 
 # Brief 10: The Approved Decisions, 2026-10-16
