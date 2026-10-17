@@ -3,8 +3,8 @@
 **This section is the current status, and where a new session starts.** Every section below is history. It was written
 at the end of the owner's "Resolve The Remaining Decisions And Complete The Authorized Build"
 (`docs/verification/briefs-2026-10-16/12-resolve-the-remaining-decisions-and-complete-the-authorized-build.txt`, kept
-verbatim), worked on `claude/peaceful-hamilton-59zdbb` from `main` at `9302b29c` (#38's merge). It is pushed and in a
-pull request for the owner. **Nothing of it is merged, and nothing is deployed:** each is the owner's word.
+verbatim), worked on `claude/peaceful-hamilton-59zdbb` from `main` at `9302b29c` (#38's merge). It is pushed and in
+pull request #39 (https://github.com/yvcbcjhsy7-prog/1221/pull/39) for the owner. **Nothing of it is merged, and nothing is deployed:** each is the owner's word.
 
 ## 1. The Repository
 
