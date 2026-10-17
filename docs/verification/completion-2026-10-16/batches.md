@@ -168,3 +168,38 @@ and the 9 administrative rows are outside it.
   `--write`); `decisions-advice` 19, `attributes-phase-2b` 35, `guide-examples-craft` 10, `whynot-profile` 3, `guide` 12,
   `ability-mastered` 2, `genre-mastered` 5 and `remaining-school` 33 passed, each exit 0. The area ran 55 more files, each
   exit 0, on its clone.
+
+## Batch 7: Final Validation On The Tested Commits (`81eadac9` to `12f58cec`)
+
+- **Rows addressed:** the measured rows the areas left to the coordinator: genres.7, L3-R.b, judge.together, advice.F2,
+  advice.F2A10-c and advice.heldout. Also every criterion and run row the pass's engine changes left stale, 41 by the
+  matrix's watch.
+- **Actionable incomplete:** 13 before, 9 after. advice.F2A10-f and advice.F2A10-h went back to Decision Required, so the
+  six measured rows closed nets four.
+- **Implemented and verified, by measurement:**
+  - **genres.7, L3-R.b, judge.together, advice.F2:** the judge's criteria on `81eadac9`, every output byte for byte
+    brief 10's but for the two tools' added fields (`final/README.md`).
+  - **advice.F2A10-c, advice.heldout:** the held-out set on `3de26e0b`, (c) 120 of 120 at or above the median, 1.965
+    times random.
+  - **Every stale criterion and run row,** made again:
+    - the 24 lives, the workloads, the mastery plans, variety and freshness on `3de26e0b`, each byte for byte brief 10's;
+    - the built app on `43a82efa`, 72 of 72 at 1440 and at 390;
+    - the gate on `12f58cec`, 376 of 376 files, 4,537 of 4,537 tests, exit 0.
+- **Not borne out, for the owner:** F2-A10 (f) and (h) as clarified, on the held-out set. (f) holds on 110 of 111 below
+  three quarters of full, (h)'s own part on 116 of 120. The cause is one, the judge's curve in the forecast's points.
+  Each clarification records it.
+- **Added work:**
+  - **The tutorial** said What To Work On forecast an hour of practice; it has forecast twenty sessions since brief 10,
+    and now says so, with the repeated advice's state and preparation's figure.
+  - **`PUBLIC_COVER`'s comment** said "$580 of earnings" where the month's test reads income.
+  - **The gate found two failures no area ran:**
+    - a journey test expecting the old refusal on a leave;
+    - three straight apostrophes in the ability look.
+
+  Each was fixed. Two source changes made the runs on `81eadac9` stale, so they were made again.
+- **New defects:** the two the gate found; neither blocks completion.
+- **Tests and evidence:**
+  - `final/exits.txt`: 23 of 23 parts exit 0;
+  - `runs/exits-A.txt` to `exits-D.txt` and `advice/exits.txt`: every step exit 0;
+  - `runs/gate.txt`: exit 0;
+  - `RECEIPT.md`: 0 problems.

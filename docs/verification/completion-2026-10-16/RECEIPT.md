@@ -2,17 +2,17 @@
 
 Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0e7ff7c2`) and the matrix as it stands. Nothing here is typed.
 
-- **Against the original full baseline:** 561 of 608 (92.2%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
+- **Against the original full baseline:** 567 of 608 (93.2%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
 - **Of the actionable portion:** 37 of 46 (80.4%) closed by implementation or verification.
-- **The matrix’s own count:** 561 of 599 rows in scope Implemented And Verified (93.6%); 27 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
+- **The matrix’s own count:** 567 of 599 rows in scope Implemented And Verified (94.6%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
 - **Not complete:** decision 4’s rows stay as authorized, and every remaining row is listed below with what it lacks.
 
 ## Status Now, Of The Baseline’s Rows
 
 | Status | At The Baseline | Now |
 |---|---|---|
-| Implemented And Verified | 530 | 561 |
-| Implemented, Verification Incomplete | 63 | 27 |
+| Implemented And Verified | 530 | 567 |
+| Implemented, Verification Incomplete | 63 | 21 |
 | Partially Implemented | 0 | 0 |
 | Not Implemented | 4 | 0 |
 | Blocked Externally | 0 | 2 |
@@ -121,14 +121,9 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 
 None: the baseline wasn’t changed.
 
-## What The Receipt Found (6)
+## What The Receipt Found (0)
 
-- F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g
-- MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g
-- INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g
-- INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g
-- INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g
-- INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on d9b631ba, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g
+Nothing: no baseline row is missing, decision 4’s rows are unchanged, no administrative row is counted verified, and no row verified at the baseline has fallen back.
 
 ## Every Baseline Row
 
@@ -729,7 +724,7 @@ None: the baseline wasn’t changed.
 | `H7` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `H4` | Criteria: The Attributes | deferred at the baseline | Explicitly Deferred | Explicitly Deferred |
 | `F2` | Criteria: The Attributes | deferred at the baseline | Explicitly Deferred | Explicitly Deferred |
-| `F2-A` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
+| `F2-A` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `G1` | Criteria: The Attributes | deferred at the baseline | Explicitly Deferred | Explicitly Deferred |
 | `A4` | Criteria: The Attributes | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `A5` | Criteria: The Attributes | verification | Implemented, Verification Incomplete | Implemented And Verified |
@@ -746,7 +741,7 @@ None: the baseline wasn’t changed.
 | `MA4` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `MA6` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `MA7` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `MA5` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
+| `MA5` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `MA8` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `S1` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `S2` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented And Verified |
@@ -758,10 +753,10 @@ None: the baseline wasn’t changed.
 | `INT-duplicates` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `INT-migration` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `INT-missed-term` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `INT-skipped` | Integration | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `INT-navigation` | Integration | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `INT-long-runs` | Integration | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `INT-gate` | Integration | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
+| `INT-skipped` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `INT-navigation` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `INT-long-runs` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `INT-gate` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `KS-matrix-gate` | Known Shortfalls And Missing Tests | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `KS-degree-text` | Known Shortfalls And Missing Tests | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `KS-genres-54` | Known Shortfalls And Missing Tests | verified at the baseline | Implemented And Verified | Implemented And Verified |

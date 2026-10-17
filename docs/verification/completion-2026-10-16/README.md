@@ -150,6 +150,16 @@ Each recorded with its reason and impact, and kept apart from the baseline's row
 - **`defect.yale-credit-hold`**: brief 11, section 5, and the handoff’s open list: a credit that clears a held Yale account leaves the hold. A defect fix outside the baseline’s rows.
 - **`defect.personality-year`**: brief 11, section 5, and the handoff’s open list: tests/personality.test.ts’s year on autopilot ends 16 days in. A test defect outside the baseline’s rows.
 
+## Where It Ended
+
+The pass's close is `RECEIPT.md` (every row, by `receipt.py`) and `batches.md` (each batch):
+- **Against the frozen baseline:** 567 of 608 Implemented And Verified (93.2%), up from 530.
+- **Of the actionable portion:** 37 of 46 (80.4%).
+
+What remains, and what each waits on, is the handoff's section 4: decision 4's 23 rows, unchanged; ST6-R's four
+clauses, F2-A10 (f) and (h), and health.enroll's work arm, each the owner's decision; and the two rows blocked
+externally.
+
 ## Amendments
 
 Each change to the classification after it was frozen, said where it was made. The baseline itself is never amended.

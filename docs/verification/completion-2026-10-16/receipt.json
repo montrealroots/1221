@@ -14,9 +14,9 @@
    "Explicitly Deferred": 27
   }
  },
- "matrix": "Completion, by the matrix: 561 of 599 rows in scope Implemented And Verified (93.6%); 27 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.",
+ "matrix": "Completion, by the matrix: 567 of 599 rows in scope Implemented And Verified (94.6%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.",
  "completion": {
-  "againstTheFullBaseline": "561 of 608 (92.2%)",
+  "againstTheFullBaseline": "567 of 608 (93.2%)",
   "ofTheActionablePortion": "37 of 46 (80.4%)",
   "verifiedAtTheBaseline": 530
  },
@@ -469,14 +469,7 @@
   }
  ],
  "addedRows": [],
- "problems": [
-  "F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
-  "MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
-  "INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
-  "INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
-  "INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
-  "INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on d9b631ba, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g"
- ],
+ "problems": [],
  "rows": [
   {
    "id": "life.sleep",
@@ -4720,8 +4713,7 @@
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/guide/craft.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "G1",
@@ -4842,8 +4834,7 @@
    "group": "Criteria: Mastery Through Play",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/guide/craft.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "MA8",
@@ -4927,32 +4918,28 @@
    "group": "Integration",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/guide/craft.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "INT-navigation",
    "group": "Integration",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/guide/craft.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "INT-long-runs",
    "group": "Integration",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/guide/craft.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "INT-gate",
    "group": "Integration",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on d9b631ba, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/guide/craft.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "KS-matrix-gate",
