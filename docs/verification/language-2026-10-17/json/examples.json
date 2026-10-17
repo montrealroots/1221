@@ -208,5 +208,105 @@
   "why": "Subjectless fragments ('Defines the genre as comic; says nothing…') and '(Fetch returned 403; seen via search snippet.)'.",
   "meaningSensitive": false,
   "verified": "json/b2-genre-looks.txt, the Black Comedy look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#historical_fiction",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "dance: period stories with social-dance scenes (court, Regency, costume romance); heightened: adaptations of period dramatic texts (Shakespeare, Restoration comedy) or scripts written in period verse or rhetoric",
+  "after": "period stories with social-dance scenes (court, Regency, costume romance) for Dancing, and to adaptations of period plays (Shakespeare, Restoration comedy) or scripts written in period verse or rhetoric for Heightened Language",
+  "why": "'dance: …; heightened: …' was two labelled lists inside one sentence; each requirement named where it belongs.",
+  "meaningSensitive": true,
+  "verified": "json/b3-genre-looks.txt, the Historical Fiction look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#horror",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "StageMilk is a practitioner acting-advice site, not a textbook or union source. Screaming is vocal stamina, which has no tag in the fixed vocabulary; voiceWork was not applied because the source is about on-camera screaming, not voice-only performance. The Mandy, StarNow and Backstage horror-acting articles were blocked (403) and were not read. Reviewed 2026-10-10: A practitioner acting-advice site generalising exertion and some fight work to all horror. Not applied genre-wide.",
+  "after": "StageMilk is an acting-advice site written by practitioners, not a textbook or a union source. Screaming is vocal stamina, which isn’t one of the requirements the game can ask for; Voice-Led Performance wasn’t applied, because the source is about screaming on camera, not performing with the voice alone. The Mandy, StarNow and Backstage articles on horror acting couldn’t be opened, and weren’t read. On review (2026-10-10), one advice site generalizing exertion and some fight work to all horror wasn’t enough to make it a requirement of the whole genre.",
+  "why": "Tag ids, 'the fixed vocabulary', '(403)' and a review note restating the first sentence, said plainly; the reason the review gave is kept.",
+  "meaningSensitive": true,
+  "verified": "json/b3-genre-looks.txt, the Horror look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#horror",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "chase-and-struggle roles (see slasher’s final girl)",
+  "after": "chase-and-struggle roles (see the Slasher genre’s final girl)",
+  "why": "A genre's id with a possessive ('slasher’s') named as the genre.",
+  "meaningSensitive": false,
+  "verified": "json/b3-genre-looks.txt, the Horror look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#epic",
+  "field": "sourceSupports",
+  "kind": "other",
+  "before": "Epic Films: Focuses on scale, spectacle, history and technology. On performers only: in Fairbanks's 1920s epics 'the power of the central character to effect change is, however fancifully, bound up with his physical prowess'. Nothing on battles, stunts or training as a genre requirement. Breaking the Physique Barrier: Steve Reeves and the Promotion of Hercules: After Hercules (1958), sword-and-sandal epics starred 'weight-trained actors'. Supports physique for the peplum subgenre, not combat for epics generally. Page returned 403. Russell Crowe interview, Gladiator 20th anniversary: Not read (paywall redirect). Earlier snippets say Crowe trained for fighting and was injured; one film only.",
+  "after": "Epic Films: It focuses on scale, spectacle, history and technology. On performers only: in Fairbanks’s 1920s epics 'the power of the central character to effect change is, however fancifully, bound up with his physical prowess'. It says nothing on battles, stunts or training as a requirement of the genre. Breaking the Physique Barrier: Steve Reeves and the Promotion of Hercules: After Hercules (1958), sword-and-sandal epics starred 'weight-trained actors'. This supports physique for the peplum subgenre, not combat for epics generally. The page couldn’t be opened. Russell Crowe interview, Gladiator 20th anniversary: Not read, as it’s behind a paywall. Earlier search summaries say Crowe trained for fighting and was injured; that’s one film only.",
+  "why": "Fragments and 'Page returned 403', '(paywall redirect)', 'Earlier snippets'.",
+  "meaningSensitive": false,
+  "verified": "json/b3-genre-looks.txt, the Epic look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#giallo",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "The voiceWork tag is weak for the on-screen actor; it is strongest for English-speaking leads who re-voiced themselves, a claim resting on a Backstage snippet. 'Stylised, heightened terror' is unsourced. The CineMedia piece names no author. Reviewed 2026-10-10: The voiceWork tag is weak for the on-screen actor, and rests on a snippet. Not applied genre-wide.",
+  "after": "Voice-Led Performance is weak for the on-screen actor: it’s strongest for English-speaking leads who re-voiced themselves, a claim resting on a search summary of Backstage. 'Stylised, heightened terror' is unsourced. The CineMedia piece names no author. On review (2026-10-10), that wasn’t enough to make it a requirement of the whole genre.",
+  "why": "'The voiceWork tag' (a code identifier) named as the look names the requirement; the review's repeat of the first sentence folded into what the review decided.",
+  "meaningSensitive": true,
+  "verified": "json/b3-genre-looks.txt, the Giallo look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#kitchen_sink",
+  "field": "why:accent",
+  "kind": "other",
+  "before": "genre-wide: Two independent credible sources (BFI and Hanley, the latter drawing on John Hill's scholarship) state that regional accents and regional actors were a defining convention of the cycle as a whole, not of one film.",
+  "after": "Two independent, credible sources (BFI, and Hanley building on John Hill’s scholarship) state that regional accents and regional actors were a defining convention of the cycle as a whole, not of one film.",
+  "why": "Shown for an applied genre: the review's 'genre-wide:' label gone, and the engine's 'drawing on' said another way.",
+  "meaningSensitive": false,
+  "verified": "json/b3-genre-looks.txt, the Kitchen Sink Drama look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#eco_horror",
+  "field": "claim",
+  "kind": "other",
+  "before": "No source found for what eco-horror asks of actors; one production report says the Annihilation cast were not told when a creature would attack, to get real reactions.",
+  "after": "No source was found for what eco-horror asks of actors. One production report says the Annihilation cast weren’t told when a creature would attack, to get real reactions.",
+  "why": "The first line a player reads: 'No source found…; one production…' as two sentences.",
+  "meaningSensitive": false,
+  "verified": "json/b3-genre-looks.txt, the Eco-Horror look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#medical_drama",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "One show's practice. Nothing in the fixed vocabulary covers technical jargon or procedural business, so no tag is applied. 'High-stakes emotion' from the earlier text is not addressed by the source.",
+  "after": "This is one show’s practice. None of the requirements the game can ask for covers technical jargon or procedural business, so none applies. 'High-stakes emotion', from the earlier research, isn’t addressed by the source.",
+  "why": "'Nothing in the fixed vocabulary covers… so no tag is applied' in the player's words.",
+  "meaningSensitive": true,
+  "verified": "json/b3-genre-looks.txt, the Medical Drama look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#jukebox_musical",
+  "field": "why:song",
+  "kind": "other",
+  "before": "Entailed by the cited definition (a musical built on popular songs) and by Bockel's account of singing King's songs without mimicry.",
+  "after": "It follows from the cited definition (a musical built on popular songs), and from Bockel’s account of singing King’s songs without mimicry.",
+  "why": "Shown for an applied genre: a subjectless 'Entailed by…'.",
+  "meaningSensitive": false,
+  "verified": "json/b3-genre-looks.txt, the Jukebox Musical look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#occult",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "Possession / exorcism films: the possessed role and the voice of the possessing entity",
+  "after": "the possessed role, and the voice of the possessing entity, in possession and exorcism films",
+  "why": "'Possession / exorcism films: the possessed role…' made to read inside 'belongs to …'.",
+  "meaningSensitive": false,
+  "verified": "json/b3-genre-looks.txt, the Occult look"
  }
 ]

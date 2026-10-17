@@ -147,3 +147,47 @@ label-sweep 0, plural-check 0, voice-check 0, tics 0, spelling 0, typos 0, text-
 **Screens verified:** `b2-genre-looks.txt`, all 38 looks rendered at this batch's commit, read whole; `sweep-words.mjs`
 finds none of the research's working words in them outside quotations, and every ".." in the file is an ellipsis inside
 a quotation.
+
+## Batch 3: Dystopian To Picaresque
+
+**Sources read (38):** `genre-demands.json#` dystopian, eco_horror, epic, erotic_thriller, espionage, experimental,
+exploitation, fairy_tale, family, fantasy, film_noir, folk_horror, gangster, giallo, gothic_horror, grindhouse, hangout,
+heist, historical_drama, historical_fiction, holiday, hood_film, horror, horror_comedy, isekai, jukebox_musical,
+kitchen_sink, legal_drama, magical_realism, medical_drama, military, monster_movie, mystery, neo_noir, nordic_noir,
+occult, parody and picaresque.
+
+**Rewritten (all 38, in `genre-demands-words.txt`'s batch 3):** the same translations as batch 2, and:
+- What a demand belongs to where it was two labelled lists in one sentence: historical fiction's "dance: period
+  stories …; heightened: adaptations …" as "period stories with social-dance scenes … for Dancing, and to adaptations of
+  period plays … for Heightened Language". Folk horror's, neo-noir's, epic's, occult's and experimental's read inside the
+  look's sentence, lowercase, with an article.
+- Four first lines a player reads that had no verb (dystopian's, eco-horror's, fairy tale's and family's): "No source
+  found for what dystopian fiction as a genre asks of actors; one production …" as two sentences.
+- Source lines' prose marks: "(paywalled; search snippet)", "(blocked; search snippet)", "(403; search snippet)",
+  "(certificate error; search snippet)" as "(behind a paywall; from a search summary)", "(couldn’t be opened; …)", "(the
+  site’s certificate failed; …)"; "e.g." as "such as". The citations themselves are untouched.
+- The applied genres' reasons, shown: kitchen sink drama's "genre-wide:" label gone; jukebox musical's subjectless
+  "Entailed by…"; horror comedy's and erotic thriller's "entails" as "calls for".
+- Hood film's "draws on" (the inventory's engine-speak for what a scene asks of an actor) as "builds on". Picaresque's
+  "generalises" is made American by the builder's spelling map, which has "generalise" and its forms from batch 1.
+
+**Meaning-sensitive, and how each was held:**
+- *Every "Not applied genre-wide" as "wasn’t enough to make it a requirement of the whole genre"*: each such genre is low
+  confidence (`json-diff-check.mjs` compares every confidence).
+- *Giallo's review note*, which repeated its first sentence, says the review's decision once: the reason (Voice-Led
+  Performance weak for the on-screen actor, resting on a search summary) is in the sentence before it.
+- *Monster movie's "non-monster-movie snippets (Casper, Hobbit)"* as "search summaries about other kinds of film (Casper,
+  Hobbit)": the same two films, the same reason they weren't used.
+- *Exploitation, gangster, hood film*: "so no stunt tag", "so no accent tag" as "the research didn’t name Fights And
+  Stunts", "… Accents": what the research proposed, not what the game applies, which the look says separately.
+- `json-diff-check.mjs`: 0 problems; the HTTP code 403 left eight more fields, said as "couldn’t be opened", and twelve
+  more source lines' prose changed, all of it the research's marks of how a source was read, every URL kept.
+
+**Tests and tool matchers updated:** none assert these words. `docs/GENRE-COVERAGE.md` regenerated (epic's,
+experimental's, folk horror's, giallo's, historical fiction's, horror's, military's, neo-noir's and occult's
+`belongsTo` changed there).
+
+**Checks** (the same script): tsc 0; eslint 0; vitest on the same 14 files, 656 of 656, 0; title-case 0, label-sweep 0,
+plural-check 0, voice-check 0, tics 0, spelling 0, typos 0, text-inventory 0, doc-refs 0, deciders 0.
+
+**Screens verified:** `b3-genre-looks.txt`, all 38 rendered at this batch's commit and read whole.
