@@ -17,7 +17,7 @@ is being worked. Brief 13's section below was the status until it began. Nothing
   the engine went stale: 46 rows, from 612 of 636 to 566. The pass changes `src/`, so they stay stale until its final
   runs measure them again on the merged code (`before/gate-baseline.txt`).
 
-**Completion, by the matrix:** 566 of 636 rows in scope Implemented And Verified (88.9%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 527 of 636 rows in scope Implemented And Verified (82.8%); 105 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
 # Earlier: Brief 13, The Final Acting Clauses And The Playthroughs, 2026-10-17
 
