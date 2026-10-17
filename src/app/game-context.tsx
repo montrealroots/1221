@@ -459,7 +459,7 @@ export function GameProvider({
 const ROUTE_LABELS: Record<string, string> = {
   '/home': 'Home',
   '/workspace/calendar': 'Calendar',
-  '/workspace/school': 'Your School',
+  '/workspace/school': 'School',
   '/workspace/bank': 'Money',
   '/workspace/papers': 'Papers',
   '/workspace/profile': 'Player Profile',

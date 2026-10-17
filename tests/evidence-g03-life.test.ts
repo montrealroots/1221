@@ -180,7 +180,7 @@ function homeSays(sim: Simulation): string {
   const mark = first.buttons.filter((b) => /^Mark \d+ Read$/.test(b.text));
   if (mark.length) press(first, mark[0]!.text);
   const text = shown(sim, Home).text;
-  expect(text).toContain('What Needs You No decision is waiting on you.');
+  expect(text).toContain('What Needs You No questions are waiting on you.');
   return text;
 }
 /** The select with this id, changed to a value as the player picks it. */
@@ -723,7 +723,7 @@ describe('health.pay_bill', () => {
       const owing = shown(sim);
       expect(owing.text).toMatch(/A Care Bill August 24, 2026 \$900\.00 Owed As Debt/);
       const worries = homeSays(sim);
-      expect(worries).toContain('No Decisions Waiting');
+      expect(worries).toContain('No Questions Waiting');
       expect(worries).toContain('You owe $900 for medical care.');
       if (pay) {
         const was = current(sim).balance;

@@ -325,7 +325,7 @@ describe('c-performerTitle', () => {
     const open = creation(STEP.Identity, answers({ pronouns: 'they/them', performerTitle: undefined }));
     expect(open.button('Actor').props['aria-pressed']).toBe(false);
     expect(open.button('Actress').props['aria-pressed']).toBe(false);
-    expect(open.text).toContain('at school you’re cast in the parts a play writes for it, or for anyone.');
+    expect(open.text).toContain('at school you’re cast in parts written for it, or written for anyone.');
     expect(issuesOn(open.html)).toEqual(['Choose whether you’re billed as an actor or an actress.']);
     expect(open.continues()).toBe(false);
     expect(open.text).toContain('This is the actor or actress you play.');
@@ -380,7 +380,7 @@ describe('c-birthdate', () => {
     expect(leap.continues()).toBe(true);
     expect(leap.els.find((e) => e.type === 'input' && e.props.id === 'birth-day')!.props.max).toBe(29);
     // 29 February 2004 to Monday 24 August 2026: 22, the birthday in February already had.
-    expect(leap.text).toContain('You will be 22 when the save begins.');
+    expect(leap.text).toContain('You’ll be 22 when this life begins.');
     // And 30 April, which April hasn't.
     expect(issuesOn(creation(STEP.Identity, answers({ birthYear: 2002, birthMonth: 4, birthDay: 31 })).html)).toEqual(['April 2002 has no day 31.']);
   });
@@ -393,9 +393,9 @@ describe('c-birthdate', () => {
     expect(late.els.find((e) => e.type === 'input' && e.props.id === 'birth-year')!.props.max).toBe(2005);
     const year = creation(STEP.Identity, answers({ birthYear: 2005, birthMonth: 12, birthDay: 31 }));
     expect(issuesOn(year.html)).toEqual([]);
-    expect(year.text).toContain('You will be 20 when the save begins.');
+    expect(year.text).toContain('You’ll be 20 when this life begins.');
     // 14 June 1930 is 96 on 24 August 2026; 14 June 1931 is 95.
-    expect(issuesOn(creation(STEP.Identity, answers({ birthYear: 1930 })).html)).toEqual(['That start date would make your character over 95.']);
+    expect(issuesOn(creation(STEP.Identity, answers({ birthYear: 1930 })).html)).toEqual(['Your character would be over 95 when this life begins. Choose a later year of birth.']);
     expect(issuesOn(creation(STEP.Identity, answers({ birthYear: 1931 })).html)).toEqual([]);
     // Review says the date as it was entered.
     expect(creation(STEP.Review, answers({ birthYear: 2004, birthMonth: 2, birthDay: 29 })).text).toContain('Born February 29, 2004');
@@ -500,7 +500,7 @@ describe('c-birthplace', () => {
     const taller = us.press(() => (us.els.find((e) => e.type === 'input' && e.props.id === 'height-ft')!.props.onChange as (e: unknown) => void)({ target: { value: '6' } }));
     expect(taller.heightCm).toBe(208.3);
     // Left blank, the step says where the body comes from.
-    expect(creation(STEP.StartingPoint, answers({ homeRegionId: 'jp-13-tokyo' })).text).toContain('Leave them blank to be drawn from where you were born.');
+    expect(creation(STEP.StartingPoint, answers({ homeRegionId: 'jp-13-tokyo' })).text).toContain('Leave them blank and your body is drawn from the averages where you were born.');
   });
 
   it('PLAYER JOURNEY: gives a license from the birth state, California not Connecticut, and a Tokyo-born student a Japanese passport and an F-1 to 30 July 2029', () => {
@@ -614,8 +614,8 @@ describe('c-disp-emotionalStability', () => {
     expect(ada('g27-calm', leaning('emotionalStability', 95)).player.attrs!.composure).toBe(58.3);
     const shown = dispositionsShown(answers(leaning('emotionalStability', 5)));
     expect(shown.step).toContain('Emotional Stability 5 Volatile Steady');
-    expect(shown.step).toContain('Emotional Stability sets how quickly stress arrives and how quickly it clears');
-    expect(shown.step).toContain('Two set where an ability starts: Conscientiousness your discipline, and Emotional Stability your composure, which the work’s judging reads.');
+    expect(shown.step).toContain('Emotional Stability: how quickly stress builds and how quickly it clears, and where your Composure starts.');
+    expect(shown.step).toContain('Composure is an ability your work is judged on. Apart from where Composure and Discipline start, none of these makes you better or worse at anything.');
     expect(shown.profile).toContain('Emotional Stability 5, how fast stress comes and clears, and where composure starts');
   });
 
@@ -657,7 +657,7 @@ describe('c-disp-conscientiousness', () => {
     expect(ada('g27-order', leaning('conscientiousness', 95)).player.attrs!.discipline).toBe(77.5);
     const shown = dispositionsShown(answers(leaning('conscientiousness', 95)));
     expect(shown.step).toContain('Conscientiousness 95 Loose Meticulous');
-    expect(shown.step).toContain('Conscientiousness sets how well the nights go');
+    expect(shown.step).toContain('Conscientiousness: how well you sleep, and where your Discipline starts.');
     expect(shown.profile).toContain('Conscientiousness 95, how well a night’s sleep restores you, and where discipline starts');
   });
 
@@ -733,7 +733,7 @@ describe('c-disp-ambition', () => {
   it('says what ambition does on the Dispositions step and the Profile, by the slider’s number', () => {
     const shown = dispositionsShown(answers(leaning('ambition', 95)));
     expect(shown.step).toContain('Ambition 95 Content Driven');
-    expect(shown.step).toContain('Ambition adds to how quickly every stress arrives, work’s and money’s alike');
+    expect(shown.step).toContain('Ambition: how quickly stress builds, from work and from money alike.');
     expect(shown.profile).toContain('Ambition 95, how fast every stress comes');
   });
 });

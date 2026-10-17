@@ -298,7 +298,7 @@ describe('h-school', () => {
     expect(affairs).toContain(`School Arriving, good standing, ${rankOf(sim)} of 16 in the class. Next: Registration And Your Account, August 24, 2026 at 10:00 AM. Yale How This Works`);
     expect(affairs).not.toContain('Your standing is');
     press('Yale');
-    expect(h.went).toEqual([['/workspace/school', 'Your School']]);
+    expect(h.went).toEqual([['/workspace/school', 'School']]);
   });
 
   it('a day in, “Year 1, good standing”, and Next is the next thing booked: “Meeting The Acting Faculty, August 26, 2026 at 10:00 AM.”', () => {
@@ -312,7 +312,7 @@ describe('h-school', () => {
     expect(sim.player.school!.standing).toBe('concern');
     expect(titled(sim, 'A Notice Of Academic Concern')).toHaveLength(1);
     // Classes run nine to three on the class days: at noon on Monday 1 February, Monday's began at nine.
-    const line = `School Year 1, academic concern, ${rankOf(sim)} of 16 in the class. Next: Classes, February 2, 2027 at 9:00 AM. Your standing is academic concern: the School screen says why. Yale How This Works`;
+    const line = `School Year 1, academic concern, ${rankOf(sim)} of 16 in the class. Next: Classes, February 2, 2027 at 9:00 AM. Your standing is academic concern. The School screen says why. Yale How This Works`;
     expect(drawn(sim).affairs).toContain(line);
     expect(drawn(reload(sim)).affairs).toContain(line);
   });
@@ -325,7 +325,7 @@ describe('h-school', () => {
     sim.advanceTo(asked.decideAt + MS_HOUR);
     expect(sim.player.school!.leave!.status).toBe('on');
     const { affairs } = drawn(sim);
-    expect(affairs).toMatch(new RegExp(`School On Leave, [a-z ]+, ${rankOf(sim)} of 16 in the class\\.( Your standing is [a-z ]+: the School screen says why\\.)? Yale How This Works`));
+    expect(affairs).toMatch(new RegExp(`School On Leave, [a-z ]+, ${rankOf(sim)} of 16 in the class\\.( Your standing is [a-z ]+\\. The School screen says why\\.)? Yale How This Works`));
     expect(affairs).not.toContain('Next:');
   });
 
@@ -388,7 +388,7 @@ describe('h-papers', () => {
     const mark = h.buttons.filter((b) => /^Mark \d+ Read$/.test(b.text));
     expect(mark).toHaveLength(1);
     (mark[0]!.props.onClick as () => void)();
-    expect(drawn(sim).text).toContain('No Decisions Waiting A tax return is past its day, unfiled, $174 with its penalty so far.');
+    expect(drawn(sim).text).toContain('No Questions Waiting A tax return is past its due date and unfiled: $174, with its penalty so far.');
   });
 
   it('filed on 1 February with nothing in the bank: “$166 of tax owed” to the due date, nothing accruing before it, and $169 sixty days past it, where the balance last stored reads $168; a reload says the same', () => {

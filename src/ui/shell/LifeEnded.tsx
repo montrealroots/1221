@@ -26,7 +26,8 @@ export function LifeEnded() {
   const town = CITIES.get(homeOf(player))?.name ?? 'where they lived';
   const worth = netWorth(sim, player.id);
   // What the work paid, from the record the returns read (`systems/earnings.ts`): acting's wages, since the career went
-  // on 2026-10-09 the Summer Cabaret's stipend alone, and work-study's, before tax and commission. Until 2026-10-13
+  // on 2026-10-09 the Summer Cabaret's stipend alone, and work-study's, before tax. Until 2026-10-17 the note said
+  // "before tax and commission", and no commission has been taken since the agent went with the career. Until 2026-10-13
   // this said residuals were among them; nothing has recorded one since the career went. Until 2026-09-27 it summed
   // what the bank was paid under a "tips" category that no longer existed, per diem and stipends among the wages.
   const earned = Object.values(player.earnings?.years ?? {}).reduce((sum, y) => sum + y.acting + y.workStudy, 0);
@@ -53,7 +54,7 @@ export function LifeEnded() {
           <div className="stat">
             <span className="stat-label">Earned</span>
             <span className="stat-value mono">{money(earned)}</span>
-            <span className="stat-note">Wages, before tax and commission</span>
+            <span className="stat-note">Wages, before tax</span>
           </div>
           <div className="stat">
             <span className="stat-label">Left Behind</span>
@@ -62,7 +63,7 @@ export function LifeEnded() {
           </div>
         </div>
         <p className="small muted">
-          The clock has stopped for this life. It stays in its slot until you delete it, and another can begin in any slot that's free.
+          The clock has stopped for this life. It stays in its slot until you delete it, and another can begin in any slot that’s free.
         </p>
         <button className="btn btn-primary" style={{ marginTop: 'var(--s4)' }} onClick={exitToMenu}>
           Back To The Slots

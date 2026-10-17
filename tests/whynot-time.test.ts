@@ -173,8 +173,8 @@ describe('Skip To Event’s Skip, grayed out', () => {
     expect(skipTargets(sim, 14)).toEqual([]);
     const { html, text } = skipDialog(sim);
     expect(skipButton(html)).toContain('disabled=""');
-    expect(text).toContain('You’ve got nothing scheduled ahead of you.');
-    expect(text.split('You’ve got nothing scheduled ahead of you.').length - 1).toBe(1);
+    expect(text).toContain('There’s nothing on your calendar ahead of you.');
+    expect(text.split('There’s nothing on your calendar ahead of you.').length - 1).toBe(1);
     expect(text).not.toMatch(/Skip: |Not now/);
   });
 });

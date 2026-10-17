@@ -7,7 +7,7 @@
  *
  * - `trait-spending`: the first round evidenced every behavior; what stayed open was a comment, Review's at
  *   CharacterCreation.tsx:1023, naming an engine sum (`costsAt`) that doesn't exist. Here the claim that comment exists
- *   to make is held instead: Going Out A Month on Review is the day's groceries the clock first posts for the same
+ *   to make is held instead: Food Each Month (Going Out A Month until 2026-10-17) on Review is the day's groceries the clock first posts for the same
  *   pick, 365/12 days of them, to the dollar ($261, $304, $370, $334 for 859, 1000, 1216 and 1097 cents). The comment
  *   itself needed a source change, and was reported; later on 2026-10-13 it was corrected to name `foodAt`, `spending`
  *   and `foodOf`.
@@ -234,7 +234,7 @@ describe('trait-spending', () => {
       h.sim = sim;
       h.calls = 0;
       const text = words(renderToStaticMarkup(createElement(CharacterCreation, { slot: 1 as never, onCancel: () => undefined, onStart: () => undefined })).replace(/<!-- -->/g, ''));
-      shown[who] = text.match(/Going Out A Month \$([\d,]+)/)![1]!;
+      shown[who] = text.match(/Food Each Month \$([\d,]+)/)![1]!;
       // The same pick played: the first midnight's groceries, as they went out of the bank.
       sim.advanceTo(at(2026, 8, 25, 1));
       const groceries = sim.universe.transactions.filter((t) => t.memo === 'Groceries');
@@ -663,14 +663,14 @@ describe('h-needs', () => {
     markRead(sim);
     // New Haven's $10.00 of groceries on the card each midnight from 25 August to 11 October, 48 of them, and the late
     // fee: Regulation Z's safe harbor, $30 for a first, never over the $40 minimum it was late on.
-    expect(needs(sim)).toBe(`What Needs You No decision is waiting on you. How This Works No Decisions Waiting Your card is a payment behind, owing $${48 * 10 + 30}.`);
+    expect(needs(sim)).toBe(`What Needs You No questions are waiting on you. How This Works No Questions Waiting Your card is a payment behind, owing $${48 * 10 + 30}.`);
     const second = toDue();
     expect(written(second)).toBe('November 10, 2026');
     expect(needs(sim)).toContain('Your Card Is Suspended 2 payments missed in a row. Chase has stopped the Chase Freedom Unlimited until it’s brought up to date.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     markRead(sim);
     // 78 days of groceries to 10 November, the first fee and a repeat within six cycles: the safe harbor's $41, held to
     // the $40 minimum.
-    const said = `What Needs You No decision is waiting on you. How This Works No Decisions Waiting Your card is suspended, owing $${78 * 10 + 30 + 40}.`;
+    const said = `What Needs You No questions are waiting on you. How This Works No Questions Waiting Your card is suspended, owing $${78 * 10 + 30 + 40}.`;
     expect(needs(sim)).toBe(said);
     expect(stateOf(sim.player, card)).toMatchObject({ missed: 2, suspended: 'late' });
     expect(needs(reload(sim))).toBe(said);
@@ -697,12 +697,12 @@ describe('h-needs', () => {
     };
     const unpaid = filed(true);
     expect(returnsOf(unpaid.player)['2026']!.owed).toBe(165_60);
-    expect(needs(unpaid)).toBe('What Needs You No decision is waiting on you. How This Works No Decisions Waiting You owe $166 of income tax.');
+    expect(needs(unpaid)).toBe('What Needs You No questions are waiting on you. How This Works No Questions Waiting You owe $166 of income tax.');
     unpaid.advanceTo(at(2027, 2, 1, 23));
     expect(needs(unpaid)).toContain('You owe $166 of income tax.');
     const paid = filed(false);
     expect(returnsOf(paid.player)['2026']!.owed).toBeUndefined();
-    expect(needs(paid)).toBe('What Needs You No decision is waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.');
+    expect(needs(paid)).toBe('What Needs You No questions are waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.');
   });
 });
 

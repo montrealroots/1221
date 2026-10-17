@@ -251,7 +251,7 @@ function sleepDialog(sim: Simulation): { text: string; press: () => void } {
   h.states = [true, false, null, false, false, h.keep];
   const text = onScreen(renderToStaticMarkup(createElement(TimeControls)));
   expect(h.states).toHaveLength(0);
-  const button = h.elements.find((e) => e.type === 'button' && /^Sleep [\d.]+ Hours$/.test(e.text));
+  const button = h.elements.find((e) => e.type === 'button' && /^Sleep [\d.]+ Hours?$/.test(e.text));
   expect(button, 'the dialog’s Sleep button').toBeDefined();
   return { text, press: button!.props.onClick as () => void };
 }
@@ -585,7 +585,7 @@ describe('c-tutorial', () => {
     // And Money opens as Locked, naming its chapter.
     const bank = screenAt(sim, '/workspace/bank');
     expect(bank).toContain('Money, Locked');
-    expect(bank).toContain('It opens with “Your Bank” in the guide');
+    expect(bank).toContain('It opens once you read “Your Bank” in the guide.');
     expect(bank).not.toContain('Your Bank Chase');
   });
 

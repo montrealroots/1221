@@ -62,7 +62,7 @@ export function deserialise(raw: string): SaveUniverse {
     throw new PersistenceError('That save file is damaged and can’t be read.', false);
   }
   if (!parsed || typeof parsed !== 'object' || !parsed.meta) {
-    throw new PersistenceError('That save file isn’t a SLATE universe.', false);
+    throw new PersistenceError('That file isn’t a SLATE save.', false);
   }
   return parsed;
 }

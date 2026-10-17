@@ -198,7 +198,7 @@ const needsPanel = () => page.locator('section.card', { has: page.getByRole('hea
 const notices = async () => (await needsPanel().locator('.list-item').allInnerTexts().catch(() => [])).map(clean);
 /** Home's notices as a fresh Home draws them, the six heaviest: Show All is the panel's own, and a screen opened again starts without it. */
 async function homeAsOpened() {
-  const back = needsPanel().getByRole('button', { name: /^Show The Heaviest Six$/ });
+  const back = needsPanel().getByRole('button', { name: /^Show The Six Most Important$/ });
   if (await back.count()) await press(back);
   await rail('Home');
   return notices();
@@ -326,7 +326,7 @@ async function onTheWayCancelled(item) {
   const d = page.getByRole('dialog', { name: 'On The Way' }).first();
   must(await d.isVisible().catch(() => false), `no On The Way before ${item}: ${clean(await page.locator('[role=dialog]:visible').first().innerText().catch(() => 'no dialog'))}`);
   const words = clean(await d.innerText());
-  must(/comes to \d+ commitments? on the way\. The clock stops at each\./.test(words), `On The Way says: ${words.slice(0, 240)}`);
+  must(/passes \w+ commitments?, and the clock stops at each one\./.test(words), `On The Way says: ${words.slice(0, 240)}`);
   said(`On The Way: ${words.replace(/^On The Way /, '').slice(0, 400)}`);
   await press(d.getByRole('button', { name: /^Cancel$/ }).first(), 'Cancel'); await wait(600);
   must(!(await page.locator('[role=dialog]:visible').count()), 'a dialog still open after Cancel');
@@ -354,7 +354,7 @@ async function deleteKeptThenContinue() {
   const d = page.getByRole('dialog', { name: 'Confirm Deletion' });
   must(await d.isVisible().catch(() => false), 'no Confirm Deletion');
   const words = clean(await d.innerText());
-  must(/^Delete Slot 1\?/.test(words) && /This ends that universe\./.test(words) && /(A backup is kept|There’s no backup of this slot)/.test(words), `Confirm Deletion says: ${words.slice(0, 300)}`);
+  must(/^Delete Slot 1\?/.test(words) && /This ends that universe\./.test(words) && /(A backup is kept|This slot has no backup)/.test(words), `Confirm Deletion says: ${words.slice(0, 300)}`);
   said(`Confirm Deletion: ${words}`);
   await shot('confirm-deletion');
   await press(d.getByRole('button', { name: /^Keep It$/ }), 'Keep It'); await wait(600);
@@ -468,7 +468,7 @@ async function normal() {
     const stop = page.locator('[role=dialog]:visible').last();
     must(await stop.count(), 'the clock didn’t stop at the orientation');
     const words = clean(await stop.innerText());
-    must(/this is what wanted you/.test(words) && await stop.getByRole('button', { name: /^Go$/ }).count() && await stop.getByRole('button', { name: /^Stand Here$/ }).count(), `the stop says: ${words.slice(0, 240)}`);
+    must(/this needs you now/.test(words) && await stop.getByRole('button', { name: /^Go$/ }).count() && await stop.getByRole('button', { name: /^Stand Here$/ }).count(), `the stop says: ${words.slice(0, 240)}`);
     said(`stopped: ${words.slice(0, 300)}`);
     await press(stop.getByRole('button', { name: /^Go$/ }), 'Go'); await wait(1500); await settle();
     must((await dateText()) !== day && /^7:00\s?AM$/.test(await clock()), `after Go: ${await when()}`);

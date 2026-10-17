@@ -47,23 +47,23 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
   {
     label: 'Your Day',
     items: [
-      { route: '/workspace/calendar', label: 'Calendar', detail: 'Every commitment you have', feature: 'ui.calendar', homeOnly: true },
+      { route: '/workspace/calendar', label: 'Calendar', detail: 'Your plans and commitments, month by month', feature: 'ui.calendar', homeOnly: true },
       // Travel, Cars and Land were opened from their panels here until the scope reset of 2026-10-09.
     ],
   },
   {
     label: 'Your Training',
     items: [
-      { route: '/workspace/school', label: 'School', detail: 'Your standing, classes, coursework, casting and terms', feature: 'ui.school' },
+      { route: '/workspace/school', label: 'School', detail: 'Your standing, classes, coursework, casting, shifts and terms', feature: 'ui.school' },
     ],
   },
   // Your Work, the career’s, went in the scope reset of 2026-10-09.
   {
     label: 'Your Affairs',
     items: [
-      { route: '/workspace/bank', label: 'Money', detail: 'Your accounts, and moving money between them', feature: 'ui.bank' },
+      { route: '/workspace/bank', label: 'Money', detail: 'Your accounts, cards, payments, borrowing and statements', feature: 'ui.bank' },
       // Until 2026-09-29 Papers sat under Your Money; with the passport and the license it’s more than money.
-      { route: '/workspace/papers', label: 'Papers', detail: 'Your returns, health cover, unemployment, passport and ID', feature: 'ui.papers' },
+      { route: '/workspace/papers', label: 'Papers', detail: 'Your tax returns, health cover, unemployment, passport, ID and permission to work', feature: 'ui.papers' },
       // Homes, opened from the Home panel, went in the scope reset of 2026-10-09.
     ],
   },

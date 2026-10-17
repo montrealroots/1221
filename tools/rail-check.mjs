@@ -26,7 +26,7 @@ for (const vp of [{ n: 'wide', width: 1440, height: 900 }, { n: 'laptop', width:
   await page.waitForTimeout(2500);
   await page.keyboard.press('Escape');
   const drawer = vp.width <= 900;
-  const openRail = async () => { if (drawer) { await page.getByRole('button', { name: /Toggle Navigation/ }).click(); await page.waitForTimeout(400); } };
+  const openRail = async () => { if (drawer) { await page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).click(); await page.waitForTimeout(400); } };
   await openRail();
   const measure = async (where) => {
     const m = await page.evaluate(() => {

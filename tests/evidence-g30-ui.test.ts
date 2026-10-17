@@ -27,7 +27,7 @@
  *   Look After menu prices Eat A Meal at $4.29, $5.00, $6.08 and $5.49, and pressed it posts that; the midnight's
  *   groceries are $8.59, $10.00, $12.16 and $10.97, once a midnight across a save and a load; a meal ordered in is
  *   LendingTree's 21/3.03 of each; on $5.50 the spender is refused in `spendRefusal`'s words and grayed on the menu
- *   where the generous life eats to its last cent; and creation's Review shows Going Out A Month as $261, $304, $370
+ *   where the generous life eats to its last cent; and creation's Review shows Food Each Month (Going Out A Month until 2026-10-17) as $261, $304, $370
  *   and $334.
  * - `trait-illnessToll` (resilient 0.6 → 0.6474, inside [0.5, 1.5]): the same first-morning workout sprains the same
  *   ankle, seven days to mend for a plain body and four for a resilient one, and Work Out is refused in
@@ -626,7 +626,7 @@ describe('trait-spending', () => {
       expect(h.states).toHaveLength(0);
       return text;
     };
-    const month = (text: string) => text.match(/Going Out A Month \$([\d,]+)/)?.[1];
+    const month = (text: string) => text.match(/Food Each Month \$([\d,]+)/)?.[1];
     // A day's $10.00 of groceries in New Haven at the knob, 365/12 days: $261.24, $304.17, $369.77 and $333.76, to the dollar.
     expect(month(review(['frugal']))).toBe('261');
     expect(month(review([]))).toBe('304');

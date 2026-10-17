@@ -137,3 +137,25 @@ describe('a notice, opened', () => {
     expect(words(seen.body)).toContain('Status Read No longer listed on Home');
   });
 });
+
+describe('a life’s own words: the night, a failure to start or open', () => {
+  it('says when not even the longest night would make up a day, late and not, from LONGEST_NIGHT', async () => {
+    const { suggestedSleep, LONGEST_NIGHT } = await import('@/engine/systems/life');
+    const sim = quickSave({}, 'frame-long-night');
+    for (const i of sim.universe.scheduled) if (i.status === 'pending' && i.requiresPlayer) sim.timeline.cancel(i.id, sim.now);
+    // TEST SETUP: a body owed more sleep than any night can repay, as weeks of short nights leave one.
+    Object.assign(sim.player.wellbeing, { sleepDebt: 100, stress: 95 });
+    const said = suggestedSleep(sim).reason;
+    expect(LONGEST_NIGHT).toBe(14);
+    expect(['Going to bed this late, not even fourteen hours of sleep would make up for a whole day. An earlier night would.', 'Not even fourteen hours of sleep would make up for a whole day tonight.']).toContain(said);
+  });
+
+  it('says a life that couldn’t start what the slot holds, and a save that couldn’t open what to do', async () => {
+    const { startFailure, OPEN_FAILURE } = await import('@/app/SlateApp');
+    const { PersistenceError } = await import('@/engine/persistence/adapter');
+    expect(startFailure(new PersistenceError('There isn’t enough storage space on this device to save, so the slot still holds what it held before. Free some space, or delete a save you no longer want, then try again.', true)))
+      .toBe('That life couldn’t be saved, so it wasn’t started. There isn’t enough storage space on this device to save, so the slot still holds what it held before. Free some space, or delete a save you no longer want, then try again.');
+    expect(startFailure(new TypeError('Cannot read properties of undefined (reading \'countryId\')'))).toBe('That life couldn’t be started because of an error in the game, so nothing was saved to the slot.');
+    expect(OPEN_FAILURE).toBe('That save couldn’t be opened because of an error in the game. Restart SLATE to try again, or restore the slot’s backup if it has one.');
+  });
+});

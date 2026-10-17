@@ -55,7 +55,7 @@ async function pack(json: string): Promise<string> {
 
 async function unpack(raw: string): Promise<string> {
   if (!raw.startsWith(PACKED)) return raw;
-  if (!canPack()) throw new PersistenceError('This save is packed and this browser can’t unpack it. Open it in a current browser.', false);
+  if (!canPack()) throw new PersistenceError('This save is compressed, and this browser can’t open it. Open SLATE in an up-to-date browser.', false);
   const bytes = fromBase64(raw.slice(PACKED.length));
   const stream = new Blob([bytes as unknown as BlobPart]).stream().pipeThrough(new DecompressionStream('gzip'));
   return new Response(stream).text();
@@ -70,7 +70,7 @@ export interface SaveStore {
 
 function localStore(): Storage {
   if (typeof localStorage === 'undefined') {
-    throw new PersistenceError('This browser has no local storage available, so saves can’t be kept here.', false);
+    throw new PersistenceError('This browser has no storage SLATE can use, so saves can’t be kept here. Check that this site is allowed to store data.', false);
   }
   return localStorage;
 }
@@ -151,7 +151,7 @@ export class LocalSaveAdapter implements SaveAdapter {
       try {
         raw = await this.store.getItem(KEY(slot));
       } catch {
-        slots.push({ slot, occupied: false, hasBackup: false, error: 'This device’s storage is unavailable.' });
+        slots.push({ slot, occupied: false, hasBackup: false, error: 'This device’s storage couldn’t be read just now. Reload SLATE to try again.' });
         continue;
       }
       // A backup is only a backup if it can be read. Advertising one that
@@ -194,10 +194,13 @@ export class LocalSaveAdapter implements SaveAdapter {
       }
       await this.store.setItem(KEY(slot), next);
     } catch (error) {
-      const message = (error as Error).name === 'QuotaExceededError'
-        ? 'There isn’t enough storage space left on this device to save. Free some space, or delete a save you no longer want.'
-        : `The save couldn’t be written: ${(error as Error).message}`;
-      throw new PersistenceError(message, true);
+      // The slot's own key is written last and whole, so a failure leaves it as it was (from 2026-10-17, brief 14, the
+      // words say so; until then the second said `The save couldn’t be written: <the storage's own message>`).
+      const full = (error as Error).name === 'QuotaExceededError';
+      if (!full) console.error(error);
+      throw new PersistenceError(full
+        ? 'There isn’t enough storage space on this device to save, so the slot still holds what it held before. Free some space, or delete a save you no longer want, then try again.'
+        : 'The save couldn’t be written to this device, so the slot still holds what it held before. Try again in a moment.', true);
     }
   }
 

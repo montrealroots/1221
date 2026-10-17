@@ -55,3 +55,13 @@ export function titleCaseLabel(value: string): string {
 export function plural(count: number, one: string, many = `${one}s`): string {
   return `${count} ${count === 1 ? one : many}`;
 }
+
+/**
+ * "a", "a and b", "a, b and c". No Oxford comma; the house does not use one. Moved here from `ui/looks/words.ts` on
+ * 2026-10-17 (brief 14), so the engine's sentences join a list as the screens' do; the looks import it from there still.
+ */
+export function spokenList(items: readonly string[]): string {
+  if (items.length === 0) return '';
+  if (items.length === 1) return items[0]!;
+  return `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
+}

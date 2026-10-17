@@ -54,33 +54,34 @@ const STAGES: Stage[] = [
   {
     id: 'saves', label: 'Reading Save Slots', weight: 25,
     run: async (context) => {
-      if (!context.adapter) throw new Error('Storage wasn’t resolved.');
+      if (!context.adapter) throw new Error('SLATE couldn’t find where your saves are kept.');
       context.slots = await context.adapter.listSlots();
     },
   },
   {
-    id: 'validate', label: 'Saying What Won’t Read', weight: 25,
+    id: 'validate', label: 'Checking Each Save', weight: 25,
     run: async (context) => {
       for (const slot of context.slots ?? []) {
         if (slot.error) {
-          context.warnings.push(`Slot ${slot.slot}: ${slot.error}${slot.hasBackup ? ' A backup is available.' : ''}`);
+          context.warnings.push(`Slot ${slot.slot}: ${slot.error}${slot.hasBackup ? ' Its backup can be restored from the save slots.' : ''}`);
         }
       }
     },
   },
   {
-    id: 'migrations', label: 'Checking Schema Versions', weight: 20,
+    id: 'migrations', label: 'Checking Save Versions', weight: 20,
     run: async (context) => {
       for (const slot of context.slots ?? []) {
         const version = slot.meta?.schemaVersion;
         if (version === undefined) continue;
         if (version > SAVE_SCHEMA_VERSION) {
           context.warnings.push(
-            `Slot ${slot.slot} was written by a newer version of SLATE and won’t be opened, to avoid damaging it.`,
+            `Slot ${slot.slot} was saved by a newer version of SLATE. This version won’t open it, so it can’t be damaged.`,
           );
         } else if (version < SAVE_SCHEMA_VERSION) {
           context.warnings.push(
-            `Slot ${slot.slot} will be brought forward from schema ${version} to ${SAVE_SCHEMA_VERSION} when you open it. A checkpoint is taken first.`,
+            // `openSlot` keeps a backup of the slot before it writes the save brought forward.
+            `Slot ${slot.slot} was saved by an older version of SLATE. It’s updated when you open it, and a backup of it is kept first.`,
           );
         }
       }
@@ -121,7 +122,7 @@ export function StartupSequence({ onReady }: { onReady: (result: StartupResult) 
 
     setWarnings(context.warnings);
     if (!context.adapter || !context.slots) {
-      setFailure({ stage: 'Startup', message: 'Storage didn’t report back.' });
+      setFailure({ stage: 'Startup', message: 'Your saves’ storage didn’t answer.' });
       return;
     }
 
@@ -169,7 +170,7 @@ export function StartupSequence({ onReady }: { onReady: (result: StartupResult) 
           <span style={{ width: `${progress}%` }} />
         </div>
         <div className="startup-status">
-          <span>{failure ? 'Startup stopped' : progress >= 100 ? 'Ready' : currentLabel(states)}</span>
+          <span>{failure ? 'Startup Stopped' : progress >= 100 ? 'Ready' : currentLabel(states)}</span>
           <span className="mono">{progress}%</span>
         </div>
 
@@ -201,7 +202,7 @@ export function StartupSequence({ onReady }: { onReady: (result: StartupResult) 
 
         {warnings.length > 0 && !failure && (
           <div className="callout callout-warning" style={{ marginTop: 'var(--s5)', textAlign: 'left' }}>
-            <strong>Before you continue</strong>
+            <strong>Before You Continue</strong>
             <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
               {warnings.map((warning) => <li key={warning}>{warning}</li>)}
             </ul>
@@ -212,7 +213,7 @@ export function StartupSequence({ onReady }: { onReady: (result: StartupResult) 
         )}
 
         <div className="dim xs" style={{ marginTop: 'var(--s6)' }}>
-          Version {APP_VERSION} · Schema {SAVE_SCHEMA_VERSION}
+          Version {APP_VERSION} · Save Format {SAVE_SCHEMA_VERSION}
         </div>
       </div>
     </div>

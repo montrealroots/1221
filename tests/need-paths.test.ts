@@ -276,7 +276,7 @@ const MONEY: Record<StartingWealth, { label: string; checking: string; savings: 
 describe('the family a new life comes from (c-family, c-wealth)', () => {
   it('Genres & Background offers the six families, Wealthy chosen as creation chose before; each, chosen on the select, is what Review says and what the save opens', () => {
     const step = creation(STEP.Background, answers());
-    expect(step.text).toContain('Your Family The family you come from: the money in your name on the first morning, and what Yale’s need assessment reads.');
+    expect(step.text).toContain('Your Family The family you come from decides the money in your name on the first morning, and whether Yale’s needs assessment finds you need aid.');
     const select = step.control('family');
     expect(select.props.value).toBe('wealthy');
     expect(step.html).toContain('<option value="nothing">Nothing</option><option value="scraping">Scraping</option><option value="modest">Modest</option><option value="comfortable">Comfortable</option><option value="wealthy" selected="">Wealthy</option><option value="inherited">Inherited</option>');
@@ -288,8 +288,8 @@ describe('the family a new life comes from (c-family, c-wealth)', () => {
       const callout = creation(STEP.Background, config).text;
       expect(callout).toContain(`${m.checking} in checking and ${m.savings} in savings`);
       expect(callout).toContain(m.need
-        ? 'Yale finds need: its living-expense scholarship, $15,200.50 a term, meets the term’s Yale Health plan, $1,882.00, and pays the rest, $13,318.50, into your bank each fall and spring.'
-        : 'Yale finds no need: the family’s means rule it out, so there’s no aid for living costs, and the term’s Yale Health plan, $1,882.00, comes from your bank each fall and spring.');
+        ? 'Yale finds that you need aid. Its living-expense scholarship, $15,200.50 a term, pays the term’s Yale Health plan, $1,882.00, and the rest, $13,318.50, goes into your bank each fall and spring.'
+        : 'Yale finds that you don’t need aid, because of your family’s means. There’s no aid for living costs, and the term’s Yale Health plan, $1,882.00, comes out of your bank each fall and spring.');
       const review = creation(STEP.Review, config).text;
       expect(review).toContain(`Family ${m.label}, ${m.need ? 'Need Found' : 'No Need Found'}`);
       expect(review).toContain(`Checking ${m.checking}`);

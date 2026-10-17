@@ -231,7 +231,7 @@ describe('n-dismiss-expire', () => {
     expect(sim.universe.decisions[row.id]!.resolvedAt).toBeUndefined();
     expect(openDecisions(sim)).toEqual([]);
     const after = drawn(sim, Home);
-    expect(needs(after.text)).toContain('What Needs You No decision is waiting on you.');
+    expect(needs(after.text)).toContain('What Needs You No questions are waiting on you.');
     expect(after.text).not.toContain('Your 2026 Tax Return');
     expect(after.controls.some((c) => c.type === 'button' && c.text === 'Dismiss')).toBe(false);
 

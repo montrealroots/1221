@@ -284,7 +284,7 @@ describe('c-disp-riskTolerance', () => {
     ] as const) {
       const { sim, page } = slidTo(`g28-risk-page-${risk}`, 'riskTolerance', risk);
       // With a curly apostrophe from 2026-10-13, as the page’s other words have it; until then this held the straight one.
-      expect(page).toContain('Risk Tolerance over 65 starts your card’s autopay on the minimum, so a balance is carried.');
+      expect(page).toContain('Risk Tolerance: over 65, your card’s autopay starts on the minimum payment, so you carry a balance.');
       expect(sim.player.credit!.autopay, String(risk)).toBe(autopay);
       expect(profile(sim)).toContain(`Risk Tolerance ${risk}, ${said};`);
       const shown = bankCard(sim);
@@ -391,7 +391,7 @@ describe('c-disp-extraversion', () => {
 
   it('PLAYER JOURNEY: says on Dispositions & Traits and on the Profile what Extraversion sets, how a house watching sits with you', () => {
     const { sim, page } = slidTo('g28-house-page', 'extraversion', 5);
-    expect(page).toContain('Extraversion sets how a house watching you sits with you');
+    expect(page).toContain('Extraversion: how being watched as you perform, by an audience or a class, affects your stress.');
     expect(profile(sim)).toContain('Extraversion 5, how a house watching sits with you;');
   });
 });
@@ -441,7 +441,7 @@ describe('c-disp-openness', () => {
 
   it('PLAYER JOURNEY: Openness slid to 90 reads 90/100 on Review, and the page and the Profile say it’s how rehearsing new work does', () => {
     const { sim, page, review } = slidTo('g28-new-work-page', 'openness', 90);
-    expect(page).toContain('Openness how rehearsing new work does, a festival’s new play or a Cabaret piece');
+    expect(page).toContain('Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood.');
     expect(review).toContain('Openness 90/100');
     expect(profile(sim)).toContain('Openness 90, how rehearsing new work does;');
   });
@@ -477,7 +477,7 @@ describe('c-disp-agreeableness', () => {
 
   it('PLAYER JOURNEY: Agreeableness slid to 10 reads 10/100 on Review, and the page and the Profile say it’s how a rehearsal does', () => {
     const { sim, page, review } = slidTo('g28-company-page', 'agreeableness', 10);
-    expect(page).toContain('and Agreeableness how a rehearsal does.');
+    expect(page).toContain('Agreeableness: how a day of rehearsal affects your mood.');
     expect(review).toContain('Agreeableness 10/100');
     expect(profile(sim)).toContain('Agreeableness 10, how a rehearsal does.');
   });
@@ -632,11 +632,11 @@ describe('c-genres', () => {
   it('PLAYER JOURNEY: Genres & Background marks every chip no play’s kind names with ·, a chip pressed is chosen, Select All takes all 149 and Clear These puts them back; Review, the Profile and Yourself say the one loved back', () => {
     let config = ada();
     let page = creation(STEP.genres, config);
-    expect(page.text).toContain('A rehearsal or a show of a play of that kind, a comedy or a tragedy, lifts your mood and eases your stress; it doesn’t make you any better in it. One marked · has no play of its kind here, and is said back only.');
+    expect(page.text).toContain('Rehearsing or performing a play of a genre you love, a comedy or a tragedy, lifts your mood and eases your stress. It doesn’t make you any better at it. A genre marked · has no plays of its kind here, so it’s only shown on your page.');
     expect(chips(page)).toHaveLength(149);
     expect(chips(page).filter((c) => !c.text.endsWith(' ·')).map((c) => c.first)).toEqual(READ);
     const western = chips(page).find((c) => c.first === 'Western')!;
-    expect([western.text, western.props.title]).toEqual(['Western ·', 'Said back on your page; nothing in a student’s life reads it now']);
+    expect([western.text, western.props.title]).toEqual(['Western ·', 'Shown on your page, but nothing in a student’s life uses it']);
     expect(chips(page).find((c) => c.first === 'Drama')!.props.title).toBeUndefined();
     expect(page.text).toContain('0 Chosen');
 
@@ -794,7 +794,7 @@ describe('c-body', () => {
     config = typeInto(config, page, 'height-ft', '7');
     expect(config.heightCm).toBe(213.4);
     page = creation(STEP.starting, config);
-    expect(page.text).toContain('Give both, or neither: with one of them, the body is drawn from where you were born.');
+    expect(page.text).toContain('Give both, or neither. With only one, your body is drawn from the averages where you were born.');
     config = typeInto(config, page, 'height-in', '11');
     expect(config.heightCm).toBe(241.3);
     page = creation(STEP.starting, config);
@@ -802,12 +802,12 @@ describe('c-body', () => {
     expect(config.weightKg).toBe(89.8);
     page = creation(STEP.starting, config);
     // 120 cm is 47.2 inches, so 4′0″ the least whole; 230 cm, 90.6, so 7′6″ the most; 35 kg 77.2 pounds and 250 kg 551.2.
-    expect(page.text).toContain('Out of range, so the body will be drawn instead: a height from 4′0″ to 7′6″, and a weight from 78 to 551 pounds.');
+    expect(page.text).toContain('That’s out of range, so your body will be drawn instead. Use a height from 4′0″ to 7′6″ and a weight from 78 to 551 pounds.');
     expect(begun('g28-body-page', config).sim.player.body).toEqual(drawnTwin);
     config = typeInto(config, page, 'weight-lb', '');
     expect(config.weightKg).toBeUndefined();
     page = creation(STEP.starting, config);
-    expect(page.text).toContain('Give both, or neither: with one of them, the body is drawn from where you were born.');
+    expect(page.text).toContain('Give both, or neither. With only one, your body is drawn from the averages where you were born.');
     expect(begun('g28-body-page', config).sim.player.body).toEqual(drawnTwin);
 
     // 5 feet 7, 67 inches, 170.2 cm; 145 pounds, 65.8 kg; 65.8 / 1.702² = 22.7.
@@ -842,13 +842,13 @@ describe('c-body', () => {
     page = creation(STEP.starting, config);
     config = typeInto(config, page, 'weight-kg', '90');
     page = creation(STEP.starting, config);
-    expect(page.text).toContain('Out of range, so the body will be drawn instead: a height from 120 to 230 centimeters, and a weight from 35 to 250 kilograms.');
+    expect(page.text).toContain('That’s out of range, so your body will be drawn instead. Use a height from 120 to 230 centimeters and a weight from 35 to 250 kilograms.');
     // 90 / 2.41² = 15.5.
     expect(inputOf(page, 'bmi').props.value).toBe('15.5');
     expect(begun('g28-body-london', config).sim.player.body).toEqual(drawnTwin);
     config = typeInto(config, page, 'weight-kg', '');
     page = creation(STEP.starting, config);
-    expect(page.text).toContain('Give both, or neither: with one of them, the body is drawn from where you were born.');
+    expect(page.text).toContain('Give both, or neither. With only one, your body is drawn from the averages where you were born.');
     expect(inputOf(page, 'bmi').props.value).toBe('');
   });
 });

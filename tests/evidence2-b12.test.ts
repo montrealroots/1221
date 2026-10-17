@@ -331,7 +331,7 @@ describe('h-school', () => {
     sim.advanceTo(asked.decideAt + MS_HOUR);
     expect(sim.player.school!.leave!.status).toBe('on');
     const { affairs } = drawn(sim);
-    expect(affairs).toMatch(/School On Leave, academic concern, \d+ of 16 in the class\. Your standing is academic concern: the School screen says why\. Yale How This Works/);
+    expect(affairs).toMatch(/School On Leave, academic concern, \d+ of 16 in the class\. Your standing is academic concern. The School screen says why\. Yale How This Works/);
     expect(affairs).not.toContain('Next:');
   });
 
@@ -342,7 +342,7 @@ describe('h-school', () => {
     expect(titled(sim, 'Academic Warning')).toHaveLength(1);
     // The second fall's classes from the Monday a week after the fourth Monday of August, 30 August 2027; Wednesday
     // 1 September at noon, the next is Thursday's.
-    expect(drawn(sim).affairs).toMatch(/School Year 2, academic warning, \d+ of 16 in the class\. Next: Classes, September 2, 2027 at 9:00 AM\. Your standing is academic warning: the School screen says why\. Yale How This Works/);
+    expect(drawn(sim).affairs).toMatch(/School Year 2, academic warning, \d+ of 16 in the class\. Next: Classes, September 2, 2027 at 9:00 AM\. Your standing is academic warning. The School screen says why\. Yale How This Works/);
   });
 
   it('PLAYER JOURNEY: left to the clock, the warning unmet, the second fall’s evaluation dismisses her: “Left the school, dismissed”, with the dismissal’s alert and no Next, across a reload', () => {
@@ -352,7 +352,7 @@ describe('h-school', () => {
     expect(bookedFor(sim)).toEqual([]);
     for (const one of [sim, reload(sim)]) {
       const { affairs } = drawn(one);
-      expect(affairs).toMatch(/School Left the school, dismissed, \d+ of 16 in the class\. Your standing is dismissed: the School screen says why\. Yale How This Works/);
+      expect(affairs).toMatch(/School Left the school, dismissed, \d+ of 16 in the class\. Your standing is dismissed. The School screen says why\. Yale How This Works/);
       expect(affairs).not.toContain('Next:');
     }
   });

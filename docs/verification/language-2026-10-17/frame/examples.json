@@ -268,5 +268,446 @@
   "why": "Two short sentences; 500 read from NOTICES_KEPT.",
   "meaningSensitive": false,
   "verified": "tests/language-frame.test.ts (gone)"
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#TimeControls",
+  "kind": "confirmation",
+  "before": "Advancing to One Week (February 18, 2027 at 8:10 PM) comes to 1 commitment on the way. The clock stops at each. A plan of your own you can skip; the school’s calls and classes you go to, or stand where you are and the clock waits, and a rehearsal with a partner you go to or call off, which they’ll mind at short notice.",
+  "after": "Moving the clock to One Week (February 18, 2027 at 8:10 PM) passes one commitment, and the clock stops at each one. At each, you can go, or press Stand Here and the clock waits. A plan of your own can also be skipped, and a rehearsal with a partner called off, though at short notice that costs their trust.",
+  "why": "Says what each stop offers in the stop's own button labels, as DueNow draws them; 'the school’s calls and classes' left out the doctor's appointments and paper visits that stop the clock too.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'On The Way says how many commitments the clock stops at…' (one and two)"
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#DueNow",
+  "kind": "other",
+  "before": "It’s 9:00 AM on February 12, 2027, and this is what wanted you. Going takes 1 hour of the day, and the clock goes on to February 12, 2027 at 10:00 AM.",
+  "after": "It’s 9:00 AM on February 12, 2027, and this needs you now. Going takes 1 hour, and the clock moves on to February 12, 2027 at 10:00 AM.",
+  "why": "Plain subject and verb.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'the stop says it needs you now…'"
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#DueNow",
+  "kind": "other",
+  "before": "The school’s, not yours to skip: go, or stand here and the clock waits. Whatever moves it next runs it, with you there if you’re awake and in town.",
+  "after": "Only a plan of your own can be skipped. Go, or press Stand Here and the clock waits. Whatever moves the clock next runs this, with you there if you’re awake and in the right city.",
+  "why": "The line is drawn for every stop that isn't a plan or a partner's rehearsal: a doctor's appointment, a paper visit, therapy, a welfare check, a study session. It called each of them the school's.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts (a visit to the passport office's stop); grep of requiresPlayer in src/engine"
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#DueNow",
+  "kind": "notification",
+  "before": "Called off, late: they’ll mind.",
+  "after": "Rehearsal called off. At this short notice, it costs your partner’s trust.",
+  "why": "Says what the late call-off does: school.cancel_rehearsal moves the partner's trust when it's under a day ahead, which at the stop it always is.",
+  "meaningSensitive": true,
+  "verified": "read school.cancel_rehearsal (coursework.ts: late = under MS_DAY; moveTrust); toast drawn only after r.ok"
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#SleepDialog",
+  "kind": "button",
+  "before": "Sleep 1 Hours",
+  "after": "Sleep 1 Hour",
+  "why": "A plural that disagreed at one hour; the slider goes from half an hour.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'Sleep names the hours on its button, one and many…'"
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#SleepDialog",
+  "kind": "other",
+  "before": "You would sleep through 1 commitment:",
+  "after": "You’d sleep through one commitment:",
+  "why": "Contracted, and a number under ten in words.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g01-life.test.ts, 'the Sleep dialog over a plan shows it will be slept through…'"
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#SkipDialog",
+  "kind": "other",
+  "before": "3 scheduled things will be processed in order on the way. Time only moves forwards.",
+  "after": "Three things on your calendar happen on the way, in order. The clock only moves forward.",
+  "why": "No 'processed'; and with none on the way it says 'It’s the next thing on your calendar.'",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'Skip To Event says what the clock stops at on the way…'"
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#SkipDialog",
+  "kind": "empty",
+  "before": "You’ve got nothing scheduled ahead of you.",
+  "after": "There’s nothing on your calendar ahead of you.",
+  "why": "Names the calendar, where the player sees what's ahead.",
+  "meaningSensitive": false,
+  "verified": "tests/whynot-time.test.ts, 'says there’s nothing ahead, in the list’s place, once…'"
+ },
+ {
+  "source": "src/ui/shell/GameShell.tsx#GameShell",
+  "kind": "accessible",
+  "before": "Toggle Navigation (the accessible name of a button that says Menu)",
+  "after": "Menu",
+  "why": "A control's accessible name is its visible word, so a player who speaks 'Menu' to press it can reach it.",
+  "meaningSensitive": false,
+  "verified": "the built app at 390 wide (the text walk opens the rail by /^(Toggle Navigation|Menu)$/)"
+ },
+ {
+  "source": "src/ui/shell/GameShell.tsx#SaveIndicator",
+  "kind": "button",
+  "before": "Save Failed — Retry",
+  "after": "Save Failed: Try Again",
+  "why": "A plain verb.",
+  "meaningSensitive": false,
+  "verified": "read in GameShell: drawn only while saveError is set, its press saveNow()"
+ },
+ {
+  "source": "src/ui/shell/LifeEnded.tsx#LifeEnded",
+  "kind": "label",
+  "before": "Wages, before tax and commission",
+  "after": "Wages, before tax",
+  "why": "No commission has been taken since the agent went with the career on 2026-10-09; the figure is acting's and work-study's gross pay (earnings.ts).",
+  "meaningSensitive": true,
+  "verified": "tests/evidence2-b03.test.ts, 'the end her 86th birthday drew…' (Earned and its note)"
+ },
+ {
+  "source": "src/ui/workspaces/WorkspaceRouter.tsx#LockedScreen",
+  "kind": "other",
+  "before": "It opens with “Your Bank” in the guide: everything you have and owe, at a glance.",
+  "after": "It opens once you read “Your Bank” in the guide. Everything you have and owe, at a glance.",
+  "why": "Says the reader's action; the chapter's lead stands as its own sentence, not lowercased into this one.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g31-ui.test.ts (Money and Papers locked); tests/evidence-g29-ui.test.ts"
+ },
+ {
+  "source": "src/ui/shell/destinations.ts#DESTINATIONS",
+  "kind": "label",
+  "before": "Your accounts, and moving money between them",
+  "after": "Your accounts, cards, payments, borrowing and statements",
+  "why": "The rail's description of Money named one of its five tabs.",
+  "meaningSensitive": false,
+  "verified": "read against sections.ts: Money's tabs are Accounts, Cards, Payments And Cash, Borrowing and Statements"
+ },
+ {
+  "source": "src/app/game-context.tsx#ROUTE_LABELS",
+  "kind": "label",
+  "before": "Your School (the breadcrumb for School when a notice's Go There gives no label)",
+  "after": "School",
+  "why": "One name for one thing: the rail calls it School.",
+  "meaningSensitive": false,
+  "verified": "read in game-context: labelForRoute is used only when navigate is given no label"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "other",
+  "before": "Three slots, Three separate lives. Neither of the others knows this one exists.",
+  "after": "Three slots, three separate lives. What happens in one never touches the others.",
+  "why": "A capital mid-sentence, and a line that personified the saves.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'says what each slot holds…'"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "empty",
+  "before": "An empty universe, waiting for somebody to live in it.",
+  "after": "An empty slot. Press New Save to start a life here.",
+  "why": "An empty state says what to do, with the button's label.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'says what each slot holds…'"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "error",
+  "before": "That save didn’t pass validation: Player is in an unknown location 'xx-nowhere'. A backup is available to restore from.",
+  "after": "The save in Slot 1 is damaged, so it can’t be opened. Its backup can be restored instead: press Restore Backup. [What’s Wrong With It: Player is in an unknown location 'xx-nowhere'.]",
+  "why": "The obstacle and the way on first; the check's own words, a developer's, kept behind a disclosure. It makes no claim about the slot being unchanged: openSlot may have brought it forward, and kept a backup first.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'says a damaged save can’t be opened, its backup the way on…' (Continue pressed)"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "label",
+  "before": "Version 1.1.0 · Schema 93 · Updates On Load",
+  "after": "Version 1.1.0 · Save Format 93 · Updated When Opened",
+  "why": "Schema is a developer's word.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'says what each slot holds…' (a save at the schema before this build's)"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "confirmation",
+  "before": "This ends that universe. The character, everywhere they have been and everything that happened to them stops existing. / A backup is kept, so this can be undone from this screen if you change your mind.",
+  "after": "This ends that universe. The character, everywhere they’ve been and everything that happened to them is gone from the slot. / A backup is kept, so if you change your mind you can bring it back here with Restore Backup.",
+  "why": "Names the button that undoes it; a readable save becomes its own backup on the way out (LocalSaveAdapter.remove).",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts (Delete pressed, for a readable save and an unreadable one with no backup)"
+ },
+ {
+  "source": "src/engine/persistence/local.ts#LocalSaveAdapter",
+  "kind": "error",
+  "before": "There isn’t enough storage space left on this device to save. Free some space, or delete a save you no longer want.",
+  "after": "There isn’t enough storage space on this device to save, so the slot still holds what it held before. Free some space, or delete a save you no longer want, then try again.",
+  "why": "Says what was and wasn't saved: the slot's key is written last and whole, so it keeps the last save.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'says a save the device couldn’t write left the slot as it was…' (the slot's text unchanged after the failure)"
+ },
+ {
+  "source": "src/engine/persistence/local.ts#LocalSaveAdapter",
+  "kind": "error",
+  "before": "The save couldn’t be written: IDBDatabase: the connection is closing.",
+  "after": "The save couldn’t be written to this device, so the slot still holds what it held before. Try again in a moment.",
+  "why": "No storage engine's message in the player's sentence; it goes to the console.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts (the broken store, and the provider's toast and Save Failed: Try Again)"
+ },
+ {
+  "source": "src/engine/persistence/base44.ts#Base44SaveAdapter",
+  "kind": "error",
+  "before": "The save couldn’t be written to Base44: <message>. A copy has been kept on this device and will sync when the connection returns.",
+  "after": "The save couldn’t reach the server. A copy is kept on this device, and the next save tries the server again.",
+  "why": "No platform name or raw message; and no promise of a sync the adapter doesn't run: what happens is that the next save writes the whole save again.",
+  "meaningSensitive": true,
+  "verified": "read in Base44SaveAdapter.save (the fallback written, the next save a whole write); tests/base44-adapter.test.ts"
+ },
+ {
+  "source": "src/ui/startup/StartupSequence.tsx#STAGES [migrations]",
+  "kind": "other",
+  "before": "Slot 1 will be brought forward from schema 93 to 94 when you open it. A checkpoint is taken first.",
+  "after": "Slot 1 was saved by an older version of SLATE. It’s updated when you open it, and a backup of it is kept first.",
+  "why": "'Checkpoint' is the backup openSlot keeps before it writes the save brought forward.",
+  "meaningSensitive": true,
+  "verified": "read in openSlot (adapter.backup before adapter.save when migrated); the built app's startup at the area's end"
+ },
+ {
+  "source": "src/ui/startup/StartupSequence.tsx#STAGES [validate]",
+  "kind": "label",
+  "before": "Saying What Won’t Read",
+  "after": "Checking Each Save",
+  "why": "A stage label in plain words.",
+  "meaningSensitive": false,
+  "verified": "the built app's startup at the area's end"
+ },
+ {
+  "source": "src/app/SlateApp.tsx#SlateApp",
+  "kind": "error",
+  "before": "That save couldn’t be created: Cannot read properties of undefined (reading 'countryId')",
+  "after": "That life couldn’t be started because of an error in the game, so nothing was saved to the slot.",
+  "why": "A storage failure keeps its own words after 'That life couldn’t be saved, so it wasn’t started.'; anything else is a fault, its message in the console.",
+  "meaningSensitive": true,
+  "verified": "read in SlateApp.start: createSave, the places, then adapter.save, so a fault before the save leaves the slot empty"
+ },
+ {
+  "source": "src/engine/index.ts#migrate",
+  "kind": "error",
+  "before": "This save’s money doesn’t reconcile (Account x (Chase Total Checking) cached balance 100 != posted total 90.), so it can’t be brought forward safely. It hasn’t been changed.",
+  "after": "This save’s accounts don’t add up, so it can’t be updated safely. It hasn’t been changed. If the slot has a backup, you can restore that instead.",
+  "why": "The ledger audit's words go to the console; the player is told the obstacle and the way on.",
+  "meaningSensitive": false,
+  "verified": "read in migrate: a problem returns before openSlot writes anything"
+ },
+ {
+  "source": "src/engine/index.ts#openSlot",
+  "kind": "error",
+  "before": "Slot 2 was written by a newer version of SLATE (schema 95). Opening it here could damage it, so it hasn’t been loaded.",
+  "after": "Slot 2 was saved by a newer version of SLATE, so this version won’t open it: that could damage it. It hasn’t been opened or changed.",
+  "why": "No schema number; says what was and wasn't done.",
+  "meaningSensitive": false,
+  "verified": "tests/persistence.test.ts (/newer version of SLATE/)"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "empty",
+  "before": "No decision is waiting on you.",
+  "after": "No questions are waiting on you.",
+  "why": "One name for one thing: the guide and the refusals call a row with answers a question.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts, 'PLAYER JOURNEY: Dismiss and Mark N Read, pressed on the panel…'; tests/evidence2-b11.test.ts; tests/evidence3-home.test.ts"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "other",
+  "before": "1 more waiting.",
+  "after": "1 more waiting. Each one comes up here as one above it closes.",
+  "why": "Past the sixth question there's nothing to open; says when they appear.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g32-ui.test.ts, 'more than six questions: six rows and 1 more waiting…' (openDecisions' order)"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "button",
+  "before": "Show The Heaviest Six",
+  "after": "Show The Six Most Important",
+  "why": "'Heaviest' was the code's word for importance.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts, 'PLAYER JOURNEY: more unread than the panel’s six…' (pressed)"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "other",
+  "before": "All 195 unread, the heaviest first.",
+  "after": "All 195 unread, the most important first.",
+  "why": "The same word as the button.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "other",
+  "before": "Two things on your calendar in the next month want you at once.",
+  "after": "Two things on your calendar in the next month are at the same time.",
+  "why": "No calendar entry wants anything; it's a clash.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts (what weighs, each in its own sentence)"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "other",
+  "before": "$800 is with collections.",
+  "after": "$800 you owe is with a collection agency.",
+  "why": "Says whose money and who has it.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts; tests/evidence3-home.test.ts"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#SchoolLine",
+  "kind": "other",
+  "before": "Your standing is academic concern: the School screen says why.",
+  "after": "Your standing is academic concern. The School screen says why.",
+  "why": "Two sentences.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b12.test.ts; tests/evidence-g33-ui.test.ts"
+ },
+ {
+  "source": "src/engine/systems/life.ts#wellbeingSummary",
+  "kind": "other",
+  "before": "Holding up, and no dial is far enough out to be worth naming.",
+  "after": "Holding up, with nothing out of the ordinary to worry about.",
+  "why": "'Dial' is engine-speak for a wellbeing measure.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts (How You Are's summary); tests/evidence-g06-life.test.ts"
+ },
+ {
+  "source": "src/engine/systems/life.ts#suggestedSleep",
+  "kind": "other",
+  "before": "\"Gym\" is in 2.0 hours, and getting up and there takes an hour and a half, so a full night isn’t available.",
+  "after": "“Gym” is in 2 hours. Getting up and there takes an hour and a half, so there isn’t time for a full night.",
+  "why": "A duration as the clock says it, not a decimal; the house's quotation marks.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g01-life.test.ts (the Sleep dialog over a plan); tests/defects-g4-2.test.ts"
+ },
+ {
+  "source": "src/engine/systems/life.ts#registerLife <life.sleep>",
+  "kind": "notification",
+  "before": "You Slept Through 2 Commitments / Gym, Lunch",
+  "after": "You Slept Through 2 Commitments / You were asleep for Gym and Lunch, so you missed them.",
+  "why": "A notice's body is a sentence, with the consequence: every handler of an item that wants the player finds them asleep and misses it (present, presentForCare, the plan's own check).",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g01-life.test.ts (one and two); tests/evidence-g04-life.test.ts"
+ },
+ {
+  "source": "src/engine/systems/life.ts#sleepReason",
+  "kind": "other",
+  "before": "Not even fourteen hours makes up a whole day for you tonight.",
+  "after": "Not even fourteen hours of sleep would make up for a whole day tonight.",
+  "why": "The figure is read from LONGEST_NIGHT now, not typed.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts, 'says when not even the longest night would make up a day…'"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+  "kind": "tutorial",
+  "before": "How you lean, not what you can do. Each of them does something: Emotional Stability sets how quickly stress arrives and how quickly it clears, Conscientiousness sets how well the nights go, Ambition adds to how quickly every stress arrives, work’s and money’s alike, and Risk Tolerance over 65 starts your card’s autopay on the minimum, so a balance is carried. Extraversion sets how a house watching you sits with you, …",
+  "after": "How you lean, not what you can do. Each one shapes a part of your life: [a list] Emotional Stability: how quickly stress builds and how quickly it clears, and where your Composure starts. … Risk Tolerance: over 65, your card’s autopay starts on the minimum payment, so you carry a balance. Extraversion: how being watched as you perform, by an audience or a class, affects your stress. …",
+  "why": "A wall of mechanics, made a short overview and a list. Each line says what the code moves, and 'affects' where the lean works both ways (enjoyment.ts: lean() is negative under 50); 65 is read from CARRIES_A_BALANCE.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'creation, step by step' (the Dispositions step drawn)"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#ReviewStep",
+  "kind": "other",
+  "before": "Once this save begins, the world starts running. Time passes and the calendar fills, whether you’re watching or not.",
+  "after": "This life begins with the clock paused. Once you press Play, time passes a minute for every minute, and the calendar fills whether you’re watching or not.",
+  "why": "Wrong before: every new life starts paused (SlateApp's createSave, paused: true), guided or not.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts (Review drawn); read in SlateApp.start"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#ReviewStep",
+  "kind": "label",
+  "before": "Going Out A Month",
+  "after": "Food Each Month",
+  "why": "What goes out a month is the food (monthOf); 'going out' read as an evening out.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b11.test.ts and tests/evidence-g09-life.test.ts (its figure, $261, $304, $370)"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#BodyFields",
+  "kind": "error",
+  "before": "Out of range, so the body will be drawn instead: a height from 4′0″ to 7′6″, and a weight from 78 to 551 pounds.",
+  "after": "That’s out of range, so your body will be drawn instead. Use a height from 4′0″ to 7′6″ and a weight from 78 to 551 pounds.",
+  "why": "The obstacle, then what to do.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g28-ui.test.ts (feet and pounds, and centimeters and kilograms)"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#IdentityStep",
+  "kind": "tutorial",
+  "before": "He/Him settles this by itself, and so does She/Her. They/Them doesn’t, so the choice is yours. Actor and Actress are two words for the same craft and the game treats them as equals. Pick the one you want to be called: the game calls you by it, and at school you’re cast in the parts a play writes for it, or for anyone.",
+  "after": "With They/Them, the choice is yours. Actor and Actress are two words for the same craft, and the game treats them as equals. Pick the one you want to be called: the game calls you by it, and at school you’re cast in parts written for it, or written for anyone.",
+  "why": "It's drawn only under They/Them, so it starts there.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts (Identity under They/Them)"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#FamilyChoice",
+  "kind": "other",
+  "before": "Yale finds need: its living-expense scholarship, $15,200.50 a term, meets the term’s Yale Health plan, $1,882.00, and pays the rest, $13,318.50, into your bank each fall and spring.",
+  "after": "Yale finds that you need aid. Its living-expense scholarship, $15,200.50 a term, pays the term’s Yale Health plan, $1,882.00, and the rest, $13,318.50, goes into your bank each fall and spring.",
+  "why": "Plain subject and verb; the amounts unchanged.",
+  "meaningSensitive": false,
+  "verified": "tests/need-paths.test.ts (each family's callout)"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalStep",
+  "kind": "accessible",
+  "before": ", said back only (and the tooltip 'Said back on your page; nothing in a student’s life reads it now')",
+  "after": ", shown on your page only (and 'Shown on your page, but nothing in a student’s life uses it')",
+  "why": "'Said back' and 'reads' were the code's words.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g28-ui.test.ts (Western ·, its title)"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#validate",
+  "kind": "error",
+  "before": "This draft’s start date isn’t one SLATE can start on. Start the character again.",
+  "after": "This saved draft has a start date SLATE can’t use. Go back to Identity and press Start Over.",
+  "why": "Names the one way out: Start Over shows on Identity for a restored draft.",
+  "meaningSensitive": true,
+  "verified": "read in CharacterCreation: the callout with Start Over shows when restored and step is 0"
+ },
+ {
+  "source": "src/engine/content/ethnicity.ts#ETHNICITY_NOTE",
+  "kind": "other",
+  "before": "Tick as many as are true. This is who your character is and nothing more: no attribute or skill hangs off it, nothing in the simulation reads it, and the game never guesses it from a name or a country.",
+  "after": "Choose as many as are true. It’s part of who your character is and nothing more: it changes no ability, nothing in the game uses it, and the game never guesses it from a name or a country.",
+  "why": "The choices are buttons, not boxes; 'ability' is the glossary's word.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts (Identity drawn)"
+ },
+ {
+  "source": "src/ui/creation/LocationPicker.tsx#LocationPicker",
+  "kind": "error",
+  "before": "Failed to fetch (the fetch's own message)",
+  "after": "That country’s towns couldn’t be loaded. Reload SLATE to try again: your answers so far are kept.",
+  "why": "The way on, and what isn't lost: the draft is saved on every change.",
+  "meaningSensitive": true,
+  "verified": "read in CharacterCreation (saveDraft on every change) and LocationPicker"
+ },
+ {
+  "source": "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [sleeps_anywhere]",
+  "kind": "other",
+  "before": "None that SLATE draws. Like resilience, it’s luck.",
+  "after": "None. Like Resilient, it’s simply luck.",
+  "why": "Its only change is a better night (sleepQuality 1.18): no cost is modeled.",
+  "meaningSensitive": false,
+  "verified": "read: its systemMods"
  }
 ]

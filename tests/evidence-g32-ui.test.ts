@@ -546,7 +546,7 @@ describe('h-calendar: the Calendar section of Home', () => {
     const read = plan(sim, { title: 'table read', at: sim.now + 2 * MS_DAY, durationMinutes: 120 });
     expect(read.ok).toBe(true);
     let shown = calendar(sim);
-    expect(shown.startsWith('Calendar What is coming, and when. Open Calendar How This Works in 2 days Table Read August 26, 2026 at 7:30 AM')).toBe(true);
+    expect(shown.startsWith('Calendar What’s coming up, and when. Open Calendar How This Works in 2 days Table Read August 26, 2026 at 7:30 AM')).toBe(true);
     const coffee = plan(sim, { title: 'Coffee With Sam', at: sim.now + 3 * MS_DAY + 2 * MS_HOUR, durationMinutes: 60 });
     shown = calendar(sim);
     expect(shown).toContain('in 2 days Table Read August 26, 2026 at 7:30 AM');
@@ -662,12 +662,12 @@ describe('h-needs: What Needs You on Home', () => {
     expect(press(button('Dismiss'))).toMatchObject({ ok: true, value: { dismissed: true } });
     expect(sim.universe.decisions[decision.id]!.dismissedAt).toBe(sim.now);
     let shown = needs(sim);
-    expect(shown.startsWith(`What Needs You No decision is waiting on you. Mark ${n} Read`)).toBe(true);
+    expect(shown.startsWith(`What Needs You No questions are waiting on you. Mark ${n} Read`)).toBe(true);
     expect(shown).not.toContain('Your 2026 Tax Return');
     expect(shown).not.toContain('All Clear');
     expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
     shown = needs(sim);
-    expect(shown).toBe(`What Needs You No decision is waiting on you. How This Works ${ALL_CLEAR}`);
+    expect(shown).toBe(`What Needs You No questions are waiting on you. How This Works ${ALL_CLEAR}`);
     const back = reload(sim);
     expect(needs(back)).toBe(shown);
     expect(openDecisions(back)).toHaveLength(0);
@@ -710,20 +710,20 @@ describe('h-needs: What Needs You on Home', () => {
     const seventh = [...sim.universe.notifications].filter((x) => !x.read).sort((a, b) => b.importance - a.importance || b.at - a.at)[6]!;
     const rows = (html: string) => html.match(/<div class="list-item list-static">/g)?.length ?? 0;
     expect(rows(drawn(sim, Home).html)).toBe(6);
-    expect(needs(sim)).toContain(`${n - 6} more waiting. Show All ${n}`);
+    expect(needs(sim)).toContain(`${n - 6} more unread. Show All ${n}`);
     expect(needs(sim)).not.toContain(seventh.body);
     drawn(sim, Home);
     press(button(`Show All ${n}`));
     expect(rows(drawn(sim, Home).html)).toBe(n);
     expect(needs(sim)).toContain(seventh.body);
-    expect(needs(sim)).toContain(`All ${n} unread, the heaviest first. Show The Heaviest Six`);
+    expect(needs(sim)).toContain(`All ${n} unread, the most important first. Show The Six Most Important`);
     drawn(sim, Home);
     expect(h.buttons.filter((b) => b.text === 'Go There').length).toBe(1 + sim.universe.notifications.filter((x) => !x.read && x.route).length);
-    press(button('Show The Heaviest Six'));
+    press(button('Show The Six Most Important'));
     expect(rows(drawn(sim, Home).html)).toBe(6);
     expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
     expect(rows(drawn(sim, Home).html)).toBe(0);
-    expect(needs(sim)).not.toContain('more waiting');
+    expect(needs(sim)).not.toContain('more unread');
   });
 
   it('PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused in the guide’s words and the row stays; read, it files the return and pays what the row said was owed', () => {
@@ -768,7 +768,7 @@ describe('h-needs: What Needs You on Home', () => {
     sim.must({ kind: 'world.mark_read', payload: {} });
     // 4.5% for filing late and 0.5% for paying late, the first month or part of one: 5% of what it owed, to the dollar.
     const late = `$${Math.round((r.figures.balance * 1.05) / 100)}`;
-    const said = `What Needs You No decision is waiting on you. How This Works No Decisions Waiting A tax return is past its day, unfiled, ${late} with its penalty so far.`;
+    const said = `What Needs You No questions are waiting on you. How This Works No Questions Waiting A tax return is past its due date and unfiled: ${late}, with its penalty so far.`;
     expect(needs(sim)).toBe(said);
     expect(needs(reload(sim))).toBe(said);
   });
@@ -782,7 +782,7 @@ describe('h-needs: What Needs You on Home', () => {
       expect(needs(sim)).toContain(ALL_CLEAR);
       return sim;
     };
-    const weighs = (sim: Simulation) => needs(sim).replace('What Needs You No decision is waiting on you. How This Works ', '');
+    const weighs = (sim: Simulation) => needs(sim).replace('What Needs You No questions are waiting on you. How This Works ', '');
     /** TEST SETUP: an account set to a balance by a posting against a test equity line, as tests/defects-g18-1.test.ts sets one. */
     const setBalance = (sim: Simulation, id: string, to: number) => {
       const a = sim.universe.accounts[id]!;
@@ -798,13 +798,13 @@ describe('h-needs: What Needs You on Home', () => {
     it('something gone unpaid: You owe $120 that went unpaid.', () => {
       const sim = clear('g32-weigh-owed');
       debt(sim, 'arrears', 'Bills Owed', 120_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting You owe $120 that went unpaid.');
+      expect(weighs(sim)).toBe('No Questions Waiting You owe $120 that went unpaid.');
     });
 
     it('the current account overdrawn: Your current account is $250 overdrawn.', () => {
       const sim = clear('g32-weigh-overdrawn');
       setBalance(sim, sim.player.primaryAccountId!, -250_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting Your current account is $250 overdrawn.');
+      expect(weighs(sim)).toBe('No Questions Waiting Your account is $250 overdrawn.');
     });
 
     it('the card at nine-tenths of its limit and over: Your card is nearly at its limit, owing $59,000; under it, nothing', () => {
@@ -814,7 +814,7 @@ describe('h-needs: What Needs You on Home', () => {
       setBalance(sim, card(sim).id, -58_000_00); // TEST SETUP
       expect(weighs(sim)).toBe(ALL_CLEAR);
       setBalance(sim, card(sim).id, -59_000_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting Your card is nearly at its limit, owing $59,000.');
+      expect(weighs(sim)).toBe('No Questions Waiting Your card is nearly at its limit, owing $59,000.');
     });
 
     it('the card behind: a payment, and suspended', () => {
@@ -822,11 +822,11 @@ describe('h-needs: What Needs You on Home', () => {
       setBalance(sim, card(sim).id, -500_00); // TEST SETUP
       expect(weighs(sim)).toBe(ALL_CLEAR);
       Object.assign(sim.player.credit!, { missed: 1 }); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting Your card is a payment behind, owing $500.');
+      expect(weighs(sim)).toBe('No Questions Waiting Your card is a payment behind, owing $500.');
       // Until 2026-10-13 two missed and unsuspended read “Your card is 2 payments behind”, set here by hand: no played life
       // reaches it, the second miss suspending the card (`SUSPEND_AFTER`), and the words went.
       Object.assign(sim.player.credit!, { missed: 0, suspended: true }); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting Your card is suspended, owing $500.');
+      expect(weighs(sim)).toBe('No Questions Waiting Your card is suspended, owing $500.');
     });
 
     it('PLAYER JOURNEY: with a second card, applied for at Capital One and arrived a week on, the card behind is named: The Platinum from Capital One is a payment behind', () => {
@@ -839,29 +839,29 @@ describe('h-needs: What Needs You on Home', () => {
       expect(weighs(sim)).toBe(ALL_CLEAR);
       setBalance(sim, cards[1]!.id, -80_00); // TEST SETUP
       Object.assign(sim.player.credit!.cards![cards[1]!.id]!, { missed: 1 }); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting The Platinum from Capital One is a payment behind, owing $80.');
+      expect(weighs(sim)).toBe('No Questions Waiting The Platinum from Capital One is a payment behind, owing $80.');
     });
 
     it('medical care owed, and a debt with collections', () => {
       const sim = clear('g32-weigh-medical');
       debt(sim, 'medical', 'Owed For Medical Care', 350_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting You owe $350 for medical care.');
+      expect(weighs(sim)).toBe('No Questions Waiting You owe $350 for medical care.');
       debt(sim, 'collections', 'In Collections', 800_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting You owe $350 for medical care. $800 is with collections.');
+      expect(weighs(sim)).toBe('No Questions Waiting You owe $350 for medical care. $800 you owe is with a collection agency.');
     });
 
     it('income tax owed on a return filed: You owe $1,234 of income tax.', () => {
       const sim = clear('g32-weigh-tax');
       // TEST SETUP: a 2026 return filed before its day, $1,234 of it owed and nothing charged on it yet.
       returnsOf(sim.player)['2026'] = { year: 2026, due: APRIL_15, filedAt: sim.now, figures: { income: 50_000_00, balance: 1_234_00, owedTo: { irs: 1_234_00, states: {} } }, owed: 1_234_00, parts: { tax: 1_234_00, penalty: 0, interest: 0 }, base: 1_234_00, accruedAt: sim.now } as unknown as TaxReturn;
-      expect(weighs(sim)).toBe('No Decisions Waiting You owe $1,234 of income tax.');
+      expect(weighs(sim)).toBe('No Questions Waiting You owe $1,234 of income tax.');
     });
 
     it('PLAYER JOURNEY: two of her plans a week out wanting her at once: the calendar clashes; the same two a month and a day out don’t weigh yet', () => {
       const sim = clear('g32-weigh-clash');
       sim.must({ kind: 'calendar.schedule', payload: { title: 'Rehearsal With Theo', at: at(2026, 8, 31, 19), durationMinutes: 120 } });
       sim.must({ kind: 'calendar.schedule', payload: { title: 'Dinner With Sam', at: at(2026, 8, 31, 20), durationMinutes: 60 } });
-      expect(weighs(sim)).toBe('No Decisions Waiting Two things on your calendar in the next month want you at once.');
+      expect(weighs(sim)).toBe('No Questions Waiting Two things on your calendar in the next month are at the same time.');
       const later = clear('g32-weigh-clash-later');
       later.must({ kind: 'calendar.schedule', payload: { title: 'Rehearsal With Theo', at: at(2026, 9, 24, 19), durationMinutes: 120 } });
       later.must({ kind: 'calendar.schedule', payload: { title: 'Dinner With Sam', at: at(2026, 9, 24, 20), durationMinutes: 60 } });
@@ -886,7 +886,7 @@ describe('h-needs: What Needs You on Home', () => {
     expect([...shown.matchAll(/Question (\d)/g)].map((m) => m[1])).toEqual(['5', '1', '2', '3', '4', '6']);
     expect(shown).toContain('Question 5 Overdue Detail 5.');
     expect(html.match(/data-urgency="\w+"/g)).toEqual(['normal', 'critical', 'critical', 'high', 'high', 'normal'].map((u) => `data-urgency="${u}"`));
-    expect(shown).toContain('1 more waiting.');
+    expect(shown).toContain('1 more waiting. Each one comes up here as one above it closes.');
     expect(h.buttons.filter((b) => b.text === 'Go There')).toHaveLength(1);
     press(button('Go There'));
     expect(h.went).toEqual(['/workspace/bank']);
@@ -945,7 +945,7 @@ describe('h-how: How You Are on Home', () => {
     expect(shown({ stress: 79 }).summary).toBe('Stretched very thin. Something is going to give.');
     expect(shown({ nourishment: 24 }).summary).toBe('Hungry, and it’s starting to show.');
     expect(shown({ energy: 70, morale: 29 }).summary).toBe('Flat. The work is fine, the feeling isn’t.');
-    expect(shown({ energy: 70, stress: 40 }).summary).toBe('Holding up, and no dial is far enough out to be worth naming.');
+    expect(shown({ energy: 70, stress: 40 }).summary).toBe('Holding up, with nothing out of the ordinary to worry about.');
     // Readiness has no line of its own: red under a quarter, amber under a half. Every dial at its worst is
     // 0.45 × 0.62 × 0.66 × 0.78 × 0.82 × 0.92 × 0.7 = 0.07585, over 1.35: 5.6, red; at 40 by hand, amber.
     s = shown({ energy: 0, stress: 100, sleepDebt: 30, nourishment: 0, morale: 0, hygiene: 0, condition: 0 });

@@ -5,11 +5,1241 @@
   "on": "2026-10-17",
   "evidence": "tests/language-frame-ui.test.ts 'says a command’s fault in words, its detail in the console, and a refusal in the world’s own; and a clock that threw in words' (the provider's own toast, the clock asked backwards)"
  },
+ "src/app/game-context.tsx#GameProvider": {
+  "status": "Rewritten And Verified",
+  "hash": "558f1ca1c430",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts (the provider's own toasts: a fault, a refusal, a clock that threw, a save that failed). Its labels, Home, Calendar and Player Profile, are the keyboard shortcuts' breadcrumbs, the rail's own names."
+ },
  "src/app/game-context.tsx#useGame": {
   "status": "Reviewed And Retained",
   "hash": "096c46174044",
   "on": "2026-10-17",
   "reason": "An internal error a developer reads: thrown only when a component is drawn outside the provider, which SlateApp never does."
+ },
+ "src/app/SlateApp.tsx#OPEN_FAILURE": {
+  "status": "Rewritten And Verified",
+  "hash": "fbc4c36e2d68",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame.test.ts 'says a life that couldn’t start what the slot holds, and a save that couldn’t open what to do'"
+ },
+ "src/app/SlateApp.tsx#SlateApp": {
+  "status": "Reviewed And Retained",
+  "hash": "498962c834a9",
+  "on": "2026-10-17",
+  "reason": "'Something went wrong.' over the failure's own sentence (startFailure, OPEN_FAILURE) is plain, and the tools (cohesion-walk, screens-check) find a crash by it; Restart SLATE says what the button does."
+ },
+ "src/app/SlateApp.tsx#startFailure": {
+  "status": "Rewritten And Verified",
+  "hash": "0f7d01e38b04",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame.test.ts 'says a life that couldn’t start what the slot holds…' (a storage failure and a fault)"
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [american-indian]": {
+  "status": "Reviewed And Retained",
+  "hash": "8514eaaa4518",
+  "on": "2026-10-17",
+  "reason": "The race and ethnicity categories as the US census names them (Hispanic Or Latino, Native Hawaiian Or Pacific Islander), in Title Case."
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [asian]": {
+  "status": "Reviewed And Retained",
+  "hash": "652670c84ed3",
+  "on": "2026-10-17",
+  "reason": "The race and ethnicity categories as the US census names them (Hispanic Or Latino, Native Hawaiian Or Pacific Islander), in Title Case."
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [black]": {
+  "status": "Reviewed And Retained",
+  "hash": "e52560746927",
+  "on": "2026-10-17",
+  "reason": "The race and ethnicity categories as the US census names them (Hispanic Or Latino, Native Hawaiian Or Pacific Islander), in Title Case."
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [hispanic]": {
+  "status": "Reviewed And Retained",
+  "hash": "b56843dc496b",
+  "on": "2026-10-17",
+  "reason": "The race and ethnicity categories as the US census names them (Hispanic Or Latino, Native Hawaiian Or Pacific Islander), in Title Case."
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [mena]": {
+  "status": "Reviewed And Retained",
+  "hash": "54fb34963338",
+  "on": "2026-10-17",
+  "reason": "The race and ethnicity categories as the US census names them (Hispanic Or Latino, Native Hawaiian Or Pacific Islander), in Title Case."
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [other]": {
+  "status": "Reviewed And Retained",
+  "hash": "f5453140efc5",
+  "on": "2026-10-17",
+  "reason": "The race and ethnicity categories as the US census names them (Hispanic Or Latino, Native Hawaiian Or Pacific Islander), in Title Case."
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [pacific]": {
+  "status": "Reviewed And Retained",
+  "hash": "d99f9e5595ac",
+  "on": "2026-10-17",
+  "reason": "The race and ethnicity categories as the US census names them (Hispanic Or Latino, Native Hawaiian Or Pacific Islander), in Title Case."
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [white]": {
+  "status": "Reviewed And Retained",
+  "hash": "37619fc13053",
+  "on": "2026-10-17",
+  "reason": "The race and ethnicity categories as the US census names them (Hispanic Or Latino, Native Hawaiian Or Pacific Islander), in Title Case."
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITY_NOTE": {
+  "status": "Rewritten And Verified",
+  "hash": "345f89e6ab6b",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'creation, step by step' (Identity drawn, the note under the choices)"
+ },
+ "src/engine/content/identity.ts#ID_CARDS": {
+  "status": "Reviewed And Retained",
+  "hash": "ef19e6e2e2cd",
+  "on": "2026-10-17",
+  "reason": "Real ID cards' names as each issuer spells them (Non-Driver ID Card, Ontario Photo Card, Credencial Para Votar (INE))."
+ },
+ "src/engine/content/languages.ts#NAMES .aa": {
+  "status": "Reviewed And Retained",
+  "hash": "5a209a74a1b6",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ab": {
+  "status": "Reviewed And Retained",
+  "hash": "03c80eef8587",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .af": {
+  "status": "Reviewed And Retained",
+  "hash": "40604522f225",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ak": {
+  "status": "Reviewed And Retained",
+  "hash": "b42c988b75b2",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .am": {
+  "status": "Reviewed And Retained",
+  "hash": "13bf461c7432",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ar": {
+  "status": "Reviewed And Retained",
+  "hash": "af4f4762f9bd",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .as": {
+  "status": "Reviewed And Retained",
+  "hash": "a1f73fc9077d",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ay": {
+  "status": "Reviewed And Retained",
+  "hash": "b92b66b38efc",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .az": {
+  "status": "Reviewed And Retained",
+  "hash": "68852895e057",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ba": {
+  "status": "Reviewed And Retained",
+  "hash": "06e28ce784d9",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .be": {
+  "status": "Reviewed And Retained",
+  "hash": "2c7205595032",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .bg": {
+  "status": "Reviewed And Retained",
+  "hash": "cebed7688a5b",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .bi": {
+  "status": "Reviewed And Retained",
+  "hash": "634aef873fe4",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .bm": {
+  "status": "Reviewed And Retained",
+  "hash": "89d821a9a2d3",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .bn": {
+  "status": "Reviewed And Retained",
+  "hash": "198e9c0851a2",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .bo": {
+  "status": "Reviewed And Retained",
+  "hash": "8b6a4f79c67e",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .bs": {
+  "status": "Reviewed And Retained",
+  "hash": "71d67418f341",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ca": {
+  "status": "Reviewed And Retained",
+  "hash": "2c5e77fc08a7",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ch": {
+  "status": "Reviewed And Retained",
+  "hash": "a08119acc386",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ckb": {
+  "status": "Reviewed And Retained",
+  "hash": "a0220001c7a2",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .crs": {
+  "status": "Reviewed And Retained",
+  "hash": "0b5fb20ff92d",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .cs": {
+  "status": "Reviewed And Retained",
+  "hash": "eea467c6cfe0",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .cy": {
+  "status": "Reviewed And Retained",
+  "hash": "e71d224a2fc2",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .da": {
+  "status": "Reviewed And Retained",
+  "hash": "9f9f264815f8",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .de": {
+  "status": "Reviewed And Retained",
+  "hash": "da91388c72d3",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .dv": {
+  "status": "Reviewed And Retained",
+  "hash": "bcf95f225aa6",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .dz": {
+  "status": "Reviewed And Retained",
+  "hash": "579a26333f44",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .el": {
+  "status": "Reviewed And Retained",
+  "hash": "59d5f5b13f13",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .en": {
+  "status": "Reviewed And Retained",
+  "hash": "649df08a448e",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .es": {
+  "status": "Reviewed And Retained",
+  "hash": "8df7f1b361b2",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .et": {
+  "status": "Reviewed And Retained",
+  "hash": "3cffdaf0e846",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .eu": {
+  "status": "Reviewed And Retained",
+  "hash": "c87df04a6212",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .fa": {
+  "status": "Reviewed And Retained",
+  "hash": "1ab65965d820",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ff": {
+  "status": "Reviewed And Retained",
+  "hash": "7b5e13449f10",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .fi": {
+  "status": "Reviewed And Retained",
+  "hash": "57eef27b1643",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .fil": {
+  "status": "Reviewed And Retained",
+  "hash": "cd9a55543561",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .fj": {
+  "status": "Reviewed And Retained",
+  "hash": "6aecb90f2b00",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .fo": {
+  "status": "Reviewed And Retained",
+  "hash": "0e9430a5c15a",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .fr": {
+  "status": "Reviewed And Retained",
+  "hash": "44389f6a466e",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ga": {
+  "status": "Reviewed And Retained",
+  "hash": "2bddaea17434",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .gd": {
+  "status": "Reviewed And Retained",
+  "hash": "28804ff5d9f3",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .gil": {
+  "status": "Reviewed And Retained",
+  "hash": "0069d707cfad",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .gl": {
+  "status": "Reviewed And Retained",
+  "hash": "ccece2966ff8",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .gn": {
+  "status": "Reviewed And Retained",
+  "hash": "e96b7da29181",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .gsw": {
+  "status": "Reviewed And Retained",
+  "hash": "3602ea2c46bb",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .gu": {
+  "status": "Reviewed And Retained",
+  "hash": "c06c55a5bcd0",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .gv": {
+  "status": "Reviewed And Retained",
+  "hash": "a27665e6323c",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ha": {
+  "status": "Reviewed And Retained",
+  "hash": "c6198e106567",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .hak": {
+  "status": "Reviewed And Retained",
+  "hash": "79556c367c90",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .haw": {
+  "status": "Reviewed And Retained",
+  "hash": "cd7668c561bd",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .he": {
+  "status": "Reviewed And Retained",
+  "hash": "348d00693e12",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .hi": {
+  "status": "Reviewed And Retained",
+  "hash": "c9e6b253fc34",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .hr": {
+  "status": "Reviewed And Retained",
+  "hash": "3e5488aa8c48",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ht": {
+  "status": "Reviewed And Retained",
+  "hash": "59269e099c20",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .hu": {
+  "status": "Reviewed And Retained",
+  "hash": "80cb96f852d1",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .hy": {
+  "status": "Reviewed And Retained",
+  "hash": "1a0d21145500",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .id": {
+  "status": "Reviewed And Retained",
+  "hash": "2339b8ad3625",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ig": {
+  "status": "Reviewed And Retained",
+  "hash": "99db9970ef63",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .is": {
+  "status": "Reviewed And Retained",
+  "hash": "4908b12c142b",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .it": {
+  "status": "Reviewed And Retained",
+  "hash": "485b57adcc80",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ja": {
+  "status": "Reviewed And Retained",
+  "hash": "9239c22d1d1c",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .jv": {
+  "status": "Reviewed And Retained",
+  "hash": "4d3bb51ea74d",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ka": {
+  "status": "Reviewed And Retained",
+  "hash": "aca441ddd2e8",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .kg": {
+  "status": "Reviewed And Retained",
+  "hash": "16d15b76add1",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .kk": {
+  "status": "Reviewed And Retained",
+  "hash": "b9fedaa07b20",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .kl": {
+  "status": "Reviewed And Retained",
+  "hash": "4f3cadca02ab",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .km": {
+  "status": "Reviewed And Retained",
+  "hash": "3db4bac2e32c",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .kn": {
+  "status": "Reviewed And Retained",
+  "hash": "c3ed665577f9",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ko": {
+  "status": "Reviewed And Retained",
+  "hash": "dec66c5bf0f7",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ku": {
+  "status": "Reviewed And Retained",
+  "hash": "a06efeaf4455",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ky": {
+  "status": "Reviewed And Retained",
+  "hash": "5aea8700748f",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .la": {
+  "status": "Reviewed And Retained",
+  "hash": "9bde795b72be",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .lb": {
+  "status": "Reviewed And Retained",
+  "hash": "7f9d01a36854",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ln": {
+  "status": "Reviewed And Retained",
+  "hash": "bdf581cc1c81",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .lo": {
+  "status": "Reviewed And Retained",
+  "hash": "c1439807deac",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .lt": {
+  "status": "Reviewed And Retained",
+  "hash": "553c519c9add",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .lv": {
+  "status": "Reviewed And Retained",
+  "hash": "9ed6ae997b16",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .mg": {
+  "status": "Reviewed And Retained",
+  "hash": "83037e8cfdd2",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .mh": {
+  "status": "Reviewed And Retained",
+  "hash": "ab2813b7a83c",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .mi": {
+  "status": "Reviewed And Retained",
+  "hash": "5ef5762b0da0",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .mk": {
+  "status": "Reviewed And Retained",
+  "hash": "b3fe571f349f",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ml": {
+  "status": "Reviewed And Retained",
+  "hash": "c730df3afaaa",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .mn": {
+  "status": "Reviewed And Retained",
+  "hash": "c3bdbab40a4b",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .mr": {
+  "status": "Reviewed And Retained",
+  "hash": "6bb4b981fc36",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ms": {
+  "status": "Reviewed And Retained",
+  "hash": "08f0c0cf5188",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .mt": {
+  "status": "Reviewed And Retained",
+  "hash": "cfb5310c4958",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .my": {
+  "status": "Reviewed And Retained",
+  "hash": "460ce8e9a083",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .na": {
+  "status": "Reviewed And Retained",
+  "hash": "77e63f92fc93",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .nan": {
+  "status": "Reviewed And Retained",
+  "hash": "4afe98825485",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .nb": {
+  "status": "Reviewed And Retained",
+  "hash": "e33f6153e1a6",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .nd": {
+  "status": "Reviewed And Retained",
+  "hash": "41369887d4bb",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ne": {
+  "status": "Reviewed And Retained",
+  "hash": "16e340746126",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .niu": {
+  "status": "Reviewed And Retained",
+  "hash": "a63009ebc630",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .nl": {
+  "status": "Reviewed And Retained",
+  "hash": "334a85f1b16e",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .nn": {
+  "status": "Reviewed And Retained",
+  "hash": "0b68ece2bf15",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .no": {
+  "status": "Reviewed And Retained",
+  "hash": "79b723002f87",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .nso": {
+  "status": "Reviewed And Retained",
+  "hash": "2557a704b85e",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ny": {
+  "status": "Reviewed And Retained",
+  "hash": "eba66d78c177",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .om": {
+  "status": "Reviewed And Retained",
+  "hash": "cdde40b7cdbd",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .or": {
+  "status": "Reviewed And Retained",
+  "hash": "3ef1f1886f82",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .pa": {
+  "status": "Reviewed And Retained",
+  "hash": "feaafc60ba98",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .pap": {
+  "status": "Reviewed And Retained",
+  "hash": "5db30345f511",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .pl": {
+  "status": "Reviewed And Retained",
+  "hash": "d011986407b1",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .prs": {
+  "status": "Reviewed And Retained",
+  "hash": "b7170c965050",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ps": {
+  "status": "Reviewed And Retained",
+  "hash": "cc50b3253c9e",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .pt": {
+  "status": "Reviewed And Retained",
+  "hash": "23882c575954",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .qu": {
+  "status": "Reviewed And Retained",
+  "hash": "2307d71ee74a",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .rm": {
+  "status": "Reviewed And Retained",
+  "hash": "409295866100",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .rn": {
+  "status": "Reviewed And Retained",
+  "hash": "ce155817c569",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ro": {
+  "status": "Reviewed And Retained",
+  "hash": "cfd5233f6c25",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ru": {
+  "status": "Reviewed And Retained",
+  "hash": "74ad93cbebf5",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .rw": {
+  "status": "Reviewed And Retained",
+  "hash": "d628ecf3df69",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .sd": {
+  "status": "Reviewed And Retained",
+  "hash": "e0330c530209",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .sg": {
+  "status": "Reviewed And Retained",
+  "hash": "92abd78f9709",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .si": {
+  "status": "Reviewed And Retained",
+  "hash": "0d8bc28bd230",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .sk": {
+  "status": "Reviewed And Retained",
+  "hash": "d6a8b06eb489",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .sl": {
+  "status": "Reviewed And Retained",
+  "hash": "e1c6d823cb20",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .sm": {
+  "status": "Reviewed And Retained",
+  "hash": "c95fa4a5fe1a",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .sn": {
+  "status": "Reviewed And Retained",
+  "hash": "5b84cc8c584f",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .so": {
+  "status": "Reviewed And Retained",
+  "hash": "2ed94ff47ed1",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .sq": {
+  "status": "Reviewed And Retained",
+  "hash": "d71c45b3d8a8",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .sr": {
+  "status": "Reviewed And Retained",
+  "hash": "a75ee8482a2c",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ss": {
+  "status": "Reviewed And Retained",
+  "hash": "a223186bc523",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .st": {
+  "status": "Reviewed And Retained",
+  "hash": "3e8e2c04f6c6",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .su": {
+  "status": "Reviewed And Retained",
+  "hash": "14bb55d7d743",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .sv": {
+  "status": "Reviewed And Retained",
+  "hash": "04a422d38c95",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .sw": {
+  "status": "Reviewed And Retained",
+  "hash": "4d07764fc120",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ta": {
+  "status": "Reviewed And Retained",
+  "hash": "86c2b6275f07",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .te": {
+  "status": "Reviewed And Retained",
+  "hash": "ea6c03461dc3",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .tet": {
+  "status": "Reviewed And Retained",
+  "hash": "6ccaaacc2aa2",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .tg": {
+  "status": "Reviewed And Retained",
+  "hash": "e301d53adc28",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .th": {
+  "status": "Reviewed And Retained",
+  "hash": "c32767e0541f",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ti": {
+  "status": "Reviewed And Retained",
+  "hash": "671d7b141c95",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .tk": {
+  "status": "Reviewed And Retained",
+  "hash": "24a49d0317fb",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .tkl": {
+  "status": "Reviewed And Retained",
+  "hash": "f10261ef2104",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .tl": {
+  "status": "Reviewed And Retained",
+  "hash": "68ddd91d0b96",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .tn": {
+  "status": "Reviewed And Retained",
+  "hash": "5b95a8145a01",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .to": {
+  "status": "Reviewed And Retained",
+  "hash": "4d339fb58043",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .tr": {
+  "status": "Reviewed And Retained",
+  "hash": "ab650a1a4b8f",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ts": {
+  "status": "Reviewed And Retained",
+  "hash": "1183487f6492",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .tt": {
+  "status": "Reviewed And Retained",
+  "hash": "586e90006bbb",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .tvl": {
+  "status": "Reviewed And Retained",
+  "hash": "c09bf38c8cbe",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ty": {
+  "status": "Reviewed And Retained",
+  "hash": "cded132a0b13",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .uk": {
+  "status": "Reviewed And Retained",
+  "hash": "515451058797",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ur": {
+  "status": "Reviewed And Retained",
+  "hash": "412e31909b8a",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .uz": {
+  "status": "Reviewed And Retained",
+  "hash": "d67a39a9d54b",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .ve": {
+  "status": "Reviewed And Retained",
+  "hash": "928ceab09c23",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .vi": {
+  "status": "Reviewed And Retained",
+  "hash": "1d6b8a691f0d",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .wo": {
+  "status": "Reviewed And Retained",
+  "hash": "552dd93788f9",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .xh": {
+  "status": "Reviewed And Retained",
+  "hash": "97f5bcf8cd35",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .yo": {
+  "status": "Reviewed And Retained",
+  "hash": "e5a54e6915f5",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .yue": {
+  "status": "Reviewed And Retained",
+  "hash": "b75dba358e03",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .zh": {
+  "status": "Reviewed And Retained",
+  "hash": "15dc18865567",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/languages.ts#NAMES .zu": {
+  "status": "Reviewed And Retained",
+  "hash": "ea200453e7bf",
+  "on": "2026-10-17",
+  "reason": "Language names in English, from the ISO 639 list."
+ },
+ "src/engine/content/personality-traits.ts#KNOB_READS": {
+  "status": "Reviewed And Retained",
+  "hash": "f6fc77e43a7f",
+  "on": "2026-10-17",
+  "reason": "What each of a trait's effects moves, as the trait's look lists it ('How good a night’s sleep is', 'How sharp you are before noon, at classes, calls and preparation'): plain."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_GROUPS": {
+  "status": "Reviewed And Retained",
+  "hash": "915a2b223c99",
+  "on": "2026-10-17",
+  "reason": "The six groups' names, Temperament to Mind: plain labels."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [burns_out]": {
+  "status": "Reviewed And Retained",
+  "hash": "5edcd43b9467",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [chaotic]": {
+  "status": "Reviewed And Retained",
+  "hash": "956f7a1ce379",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [curious]": {
+  "status": "Reviewed And Retained",
+  "hash": "e994e8eb2651",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [detached]": {
+  "status": "Reviewed And Retained",
+  "hash": "050b6fe025ae",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [disciplined_body]": {
+  "status": "Reviewed And Retained",
+  "hash": "047ed9dde659",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [early_riser]": {
+  "status": "Reviewed And Retained",
+  "hash": "f6cef50e25b8",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [even_tempered]": {
+  "status": "Reviewed And Retained",
+  "hash": "5d9f6d37c401",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [forgiving]": {
+  "status": "Reviewed And Retained",
+  "hash": "7e20b6bb8829",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [frugal]": {
+  "status": "Reviewed And Retained",
+  "hash": "38d0bcea1e66",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [generous]": {
+  "status": "Reviewed And Retained",
+  "hash": "05d8e348e589",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [guarded]": {
+  "status": "Reviewed And Retained",
+  "hash": "2372ac263356",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [highly_strung]": {
+  "status": "Reviewed And Retained",
+  "hash": "5165f2cf345f",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [holds_grudges]": {
+  "status": "Reviewed And Retained",
+  "hash": "266b95072645",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [homebody]": {
+  "status": "Reviewed And Retained",
+  "hash": "3492d57e5d17",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [independent]": {
+  "status": "Reviewed And Retained",
+  "hash": "468e0bf3bdf0",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [indulgent]": {
+  "status": "Reviewed And Retained",
+  "hash": "7648cf48b38b",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [keeps_accounts]": {
+  "status": "Reviewed And Retained",
+  "hash": "e19b7cfc8335",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [light_sleeper]": {
+  "status": "Reviewed And Retained",
+  "hash": "96efeda95d6e",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [loyal]": {
+  "status": "Reviewed And Retained",
+  "hash": "38d44f80fe4b",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [needs_people]": {
+  "status": "Reviewed And Retained",
+  "hash": "c4df945245ff",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [night_owl]": {
+  "status": "Reviewed And Retained",
+  "hash": "f196fb813896",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [open_book]": {
+  "status": "Reviewed And Retained",
+  "hash": "d73fd8e17302",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [orderly]": {
+  "status": "Reviewed And Retained",
+  "hash": "a1e381023aad",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [peacemaker]": {
+  "status": "Reviewed And Retained",
+  "hash": "e818dc86a720",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [quick_tempered]": {
+  "status": "Reviewed And Retained",
+  "hash": "f4dad8e2d540",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [resilient]": {
+  "status": "Rewritten And Verified",
+  "hash": "56f66113fcf2",
+  "on": "2026-10-17",
+  "evidence": "read against its systemMods (stress recovery, energy, illness toll: no downside), and drawn on Review in tests/language-frame-ui.test.ts's harness"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [restless]": {
+  "status": "Reviewed And Retained",
+  "hash": "a3e2347e986c",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [scattered]": {
+  "status": "Reviewed And Retained",
+  "hash": "4ca6ec81cfc0",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [self_assured]": {
+  "status": "Reviewed And Retained",
+  "hash": "1f8b9d41bf79",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [self_critical]": {
+  "status": "Reviewed And Retained",
+  "hash": "77fdb4187ac0",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [sentimental]": {
+  "status": "Reviewed And Retained",
+  "hash": "9ec6102da8d7",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [single_minded]": {
+  "status": "Reviewed And Retained",
+  "hash": "9a7ae8a636af",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [sleeps_anywhere]": {
+  "status": "Rewritten And Verified",
+  "hash": "825876a29ca8",
+  "on": "2026-10-17",
+  "evidence": "read against its systemMods (sleepQuality 1.18 alone: no downside modeled)"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [spender]": {
+  "status": "Reviewed And Retained",
+  "hash": "8547b34963f0",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [unshakeable]": {
+  "status": "Reviewed And Retained",
+  "hash": "3d49779793ef",
+  "on": "2026-10-17",
+  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
  },
  "src/engine/core/events.ts#EventBus": {
   "status": "Reviewed And Retained",
@@ -40,6 +1270,390 @@
   "hash": "5f89c1bfa3e0",
   "on": "2026-10-17",
   "evidence": "tests/simulation.test.ts 'rejects an unknown command instead of failing silently'; tests/integrity.test.ts 'refuses a command that does not exist rather than doing nothing quietly'"
+ },
+ "src/engine/decided.ts#skyFor": {
+  "status": "Reviewed And Retained",
+  "hash": "ad07cf6a779e",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#SPREAD_OF_BANKS": {
+  "status": "Reviewed And Retained",
+  "hash": "2a643084dc86",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#SPREAD_OF_PLACES": {
+  "status": "Reviewed And Retained",
+  "hash": "18fa3c14b79f",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [attributes.presence]": {
+  "status": "Reviewed And Retained",
+  "hash": "219444ef6bd2",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [bank.chex]": {
+  "status": "Reviewed And Retained",
+  "hash": "f3a7ddfe3175",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [bank.fraud]": {
+  "status": "Reviewed And Retained",
+  "hash": "f9ddaf25507a",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [bank.number]": {
+  "status": "Reviewed And Retained",
+  "hash": "3552d8876da8",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [body.draw]": {
+  "status": "Reviewed And Retained",
+  "hash": "17cb5465c2ae",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [documents.start]": {
+  "status": "Reviewed And Retained",
+  "hash": "ec9e351ba863",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [health.appointment]": {
+  "status": "Reviewed And Retained",
+  "hash": "26588c90f528",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [health.chronic]": {
+  "status": "Reviewed And Retained",
+  "hash": "e5daa11c778c",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [health.illness]": {
+  "status": "Reviewed And Retained",
+  "hash": "899db6c87991",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [health.injury]": {
+  "status": "Reviewed And Retained",
+  "hash": "0c46b97e8b24",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [health.onset]": {
+  "status": "Reviewed And Retained",
+  "hash": "1cceb555e2f5",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [health.referral]": {
+  "status": "Reviewed And Retained",
+  "hash": "5b111fbd3254",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [health.therapy]": {
+  "status": "Reviewed And Retained",
+  "hash": "18b03cbd2ed1",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [life.end]": {
+  "status": "Reviewed And Retained",
+  "hash": "8d27bf139d96",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [production.direction]": {
+  "status": "Reviewed And Retained",
+  "hash": "9ce9ed69790f",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [school.attendance]": {
+  "status": "Reviewed And Retained",
+  "hash": "75d7a17ca97b",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [school.cabaret_mates]": {
+  "status": "Reviewed And Retained",
+  "hash": "5cc4384b8f71",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [school.class]": {
+  "status": "Reviewed And Retained",
+  "hash": "f861f853ac35",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [school.classmates]": {
+  "status": "Reviewed And Retained",
+  "hash": "0bed2444b290",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [school.coursework]": {
+  "status": "Reviewed And Retained",
+  "hash": "f16687a6a3b6",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [school.night]": {
+  "status": "Reviewed And Retained",
+  "hash": "6ae632d4629e",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [school.partner]": {
+  "status": "Reviewed And Retained",
+  "hash": "25eada5b9392",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [school.understudy]": {
+  "status": "Reviewed And Retained",
+  "hash": "3047eed0a857",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/decided.ts#top [weather.day]": {
+  "status": "Reviewed And Retained",
+  "hash": "c083d52cd3c3",
+  "on": "2026-10-17",
+  "reason": "The registry of the game's random draws, read only by tests/deciders.test.ts and tools/deciders.mjs: nothing in the game imports it (its header), so no player sees these words."
+ },
+ "src/engine/index.ts#armWorldClock [life.day_rollover]": {
+  "status": "Reviewed And Retained",
+  "hash": "f83957f209ca",
+  "on": "2026-10-17",
+  "reason": "New Day and World Simulation, the labels of background items (category system), which no calendar surface shows (world/calendar.ts)."
+ },
+ "src/engine/index.ts#armWorldClock [world.tick]": {
+  "status": "Reviewed And Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-17",
+  "reason": "New Day and World Simulation, the labels of background items (category system), which no calendar surface shows (world/calendar.ts)."
+ },
+ "src/engine/index.ts#loadSave": {
+  "status": "Reviewed And Retained",
+  "hash": "ede827ce7502",
+  "on": "2026-10-17",
+  "reason": "New Day and World Simulation, background items' labels no calendar surface shows; 'Still: I' is a note's text put right on opening a save from before 2026-10-13."
+ },
+ "src/engine/index.ts#loadSave [life.day_rollover]": {
+  "status": "Reviewed And Retained",
+  "hash": "f83957f209ca",
+  "on": "2026-10-17",
+  "reason": "New Day and World Simulation, background items' labels no calendar surface shows; 'Still: I' is a note's text put right on opening a save from before 2026-10-13."
+ },
+ "src/engine/index.ts#loadSave [world.tick]": {
+  "status": "Reviewed And Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-17",
+  "reason": "New Day and World Simulation, background items' labels no calendar surface shows; 'Still: I' is a note's text put right on opening a save from before 2026-10-13."
+ },
+ "src/engine/index.ts#migrate": {
+  "status": "Rewritten And Verified",
+  "hash": "3a80fd1498a3",
+  "on": "2026-10-17",
+  "evidence": "tests/simulation.test.ts 'refuses a save from a newer build rather than damaging it' (/newer version/). Its steps ('Created …', 'Dropped …', 'Let go …') are a log in MigrationResult.steps that no screen shows (grep .steps in src/ui), kept for a developer; its two problems are said in the player's words."
+ },
+ "src/engine/index.ts#openSlot": {
+  "status": "Rewritten And Verified",
+  "hash": "c82d1c164e24",
+  "on": "2026-10-17",
+  "evidence": "tests/persistence.test.ts (a newer version's save refused, /newer version of SLATE/); tests/language-frame-ui.test.ts (a damaged save opened)"
+ },
+ "src/engine/index.ts#populateWorld": {
+  "status": "Reviewed And Retained",
+  "hash": "779c46efb0a2",
+  "on": "2026-10-17",
+  "reason": "The accounts a life opens with where its bank names none (Current Account, Savings Account, Credit Card), names lending.ts and the screens match, and the opening memos a statement shows: plain."
+ },
+ "src/engine/index.ts#populateWorld [checking]": {
+  "status": "Reviewed And Retained",
+  "hash": "6948a99daab5",
+  "on": "2026-10-17",
+  "reason": "The accounts a life opens with where its bank names none (Current Account, Savings Account, Credit Card), names lending.ts and the screens match, and the opening memos a statement shows: plain."
+ },
+ "src/engine/index.ts#populateWorld [credit_card]": {
+  "status": "Reviewed And Retained",
+  "hash": "0395bef39412",
+  "on": "2026-10-17",
+  "reason": "The accounts a life opens with where its bank names none (Current Account, Savings Account, Credit Card), names lending.ts and the screens match, and the opening memos a statement shows: plain."
+ },
+ "src/engine/index.ts#populateWorld [savings]": {
+  "status": "Reviewed And Retained",
+  "hash": "e1d97947ab43",
+  "on": "2026-10-17",
+  "reason": "The accounts a life opens with where its bank names none (Current Account, Savings Account, Credit Card), names lending.ts and the screens match, and the opening memos a statement shows: plain."
+ },
+ "src/engine/index.ts#refreshMeta": {
+  "status": "Reviewed And Retained",
+  "hash": "1eecd6680581",
+  "on": "2026-10-17",
+  "reason": "The slot card's line (', Yale Drama Year 2', ', Died At 86'): SaveSlots reads ', Died At <n>' back to know a life has ended, so it's a key; plain and accurate."
+ },
+ "src/engine/index.ts#returnTheHomesMoney": {
+  "status": "Reviewed And Retained",
+  "hash": "947aac0df2f9",
+  "on": "2026-10-17",
+  "reason": "The memos of a deposit and rent paid ahead given back to a save from before the home went (2026-10-09): a statement's lines, plain."
+ },
+ "src/engine/index.ts#validateUniverse": {
+  "status": "Reviewed And Retained",
+  "hash": "31162146a2d1",
+  "on": "2026-10-17",
+  "reason": "A structural check's findings, a developer's words: from 2026-10-17 the save slots say a damaged save in the player's words and show these only behind What’s Wrong With It (tests/language-frame-ui.test.ts)."
+ },
+ "src/engine/persistence/adapter.ts#deserialise": {
+  "status": "Rewritten And Verified",
+  "hash": "53d7ecd485e1",
+  "on": "2026-10-17",
+  "evidence": "tests/persistence.test.ts ('That save file is damaged and can’t be read.', kept; /isn’t a SLATE save/)"
+ },
+ "src/engine/persistence/base44.ts#Base44SaveAdapter": {
+  "status": "Rewritten And Verified",
+  "hash": "caa81ce5fe28",
+  "on": "2026-10-17",
+  "evidence": "tests/base44-adapter.test.ts (the connection failed and an empty reply, word for word) and tests/language-frame-ui.test.ts 'says a server that couldn’t be reached…' (the records unreachable, and a save that couldn’t reach it). 'what' names the action in the sentences ('Saving', 'Loading that save'); the function-less path is unreachable, call() being asked only where functions exist."
+ },
+ "src/engine/persistence/local.ts#BACKUP_KEY": {
+  "status": "Reviewed And Retained",
+  "hash": "5c85c5822a35",
+  "on": "2026-10-17",
+  "reason": "A storage key, slate.backup.<slot>, never shown."
+ },
+ "src/engine/persistence/local.ts#KEY": {
+  "status": "Reviewed And Retained",
+  "hash": "24d264d4eefd",
+  "on": "2026-10-17",
+  "reason": "A storage key, slate.save.<slot>, never shown."
+ },
+ "src/engine/persistence/local.ts#LocalSaveAdapter": {
+  "status": "Rewritten And Verified",
+  "hash": "6abebddf7edf",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'says a save the device couldn’t write left the slot as it was…' (full and broken, the slot's text unchanged) and 'says what a browser that can’t keep…' (storage unreadable); This Device in 'says what each slot holds…'"
+ },
+ "src/engine/persistence/local.ts#localStore": {
+  "status": "Rewritten And Verified",
+  "hash": "8870dee79d6e",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'says what a browser that can’t keep or open saves lacks…' (no local storage)"
+ },
+ "src/engine/persistence/local.ts#unpack": {
+  "status": "Rewritten And Verified",
+  "hash": "4d6e1875f983",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'says what a browser that can’t keep or open saves lacks…' (a compressed save, the streams taken away)"
+ },
+ "src/engine/systems/life.ts#commitmentWithin": {
+  "status": "Reviewed And Retained",
+  "hash": "7048358356d0",
+  "on": "2026-10-17",
+  "reason": "'<Commitment> starts at <time>: there isn’t the time before it.': names the obstacle and its time; shared by many commands, held in tests/evidence-g25-school.test.ts, tests/whynot-school.test.ts and others."
+ },
+ "src/engine/systems/life.ts#lookAfterRefusal": {
+  "status": "Reviewed And Retained",
+  "hash": "a329c223d1fa",
+  "on": "2026-10-17",
+  "reason": "Each says the obstacle in the player's terms (You aren’t hungry, You’re already clean, too tired to train, Not with the flu); held in tests/evidence-g01-life.test.ts, tests/life-fixes.test.ts, tests/looking-after.test.ts."
+ },
+ "src/engine/systems/life.ts#LOOKING_AFTER": {
+  "status": "Reviewed And Retained",
+  "hash": "4b9854d7af16",
+  "on": "2026-10-17",
+  "reason": "The Look After Yourself menu's items, Eat A Meal, Order In, Shower, Work Out and Unwind: plain Title Case verbs."
+ },
+ "src/engine/systems/life.ts#registerLife [life.day_rollover]": {
+  "status": "Reviewed And Retained",
+  "hash": "f83957f209ca",
+  "on": "2026-10-17",
+  "reason": "New Day, a background item's label no calendar surface shows."
+ },
+ "src/engine/systems/life.ts#registerLife <life.look_after>": {
+  "status": "Reviewed And Retained",
+  "hash": "0516016b1353",
+  "on": "2026-10-17",
+  "reason": "'That isn’t something you can do for yourself here.' and 'The payment didn’t go through.' (refused before its hour, as the command's comment says, so nothing is lived or charged); the meal memos are a statement's lines. Plain."
+ },
+ "src/engine/systems/life.ts#registerLife <life.sleep>": {
+  "status": "Rewritten And Verified",
+  "hash": "d3937a9ef2a9",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g01-life.test.ts (You Slept Through 1 Commitment and 2 Commitments, their bodies) and tests/evidence-g04-life.test.ts; tests/simulation.test.ts (can’t go to sleep in the past)"
+ },
+ "src/engine/systems/life.ts#sleepReason": {
+  "status": "Rewritten And Verified",
+  "hash": "6104fe975954",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame.test.ts 'says when not even the longest night would make up a day…'; the shorter reasons, unchanged, in tests/simulation.test.ts"
+ },
+ "src/engine/systems/life.ts#startRefusal": {
+  "status": "Reviewed And Retained",
+  "hash": "684fd4e984b4",
+  "on": "2026-10-17",
+  "reason": "'Not from a hospital bed.' and 'You’re at <it> until <time>.': short and specific; held in tests/evidence-g01-life.test.ts and tests/evidence3-lifepapers.test.ts."
+ },
+ "src/engine/systems/life.ts#suggestedSleep": {
+  "status": "Rewritten And Verified",
+  "hash": "05516ff8b442",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g01-life.test.ts (“Gym” is in 2 hours…) and tests/defects-g4-2.test.ts (standing at it; two hours before it)"
+ },
+ "src/engine/systems/life.ts#wellbeingSummary": {
+  "status": "Rewritten And Verified",
+  "hash": "04c1c6188bde",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g32-ui.test.ts (How You Are's summary, each) and tests/evidence-g06-life.test.ts"
+ },
+ "src/engine/systems/life.ts#WET": {
+  "status": "Reviewed And Retained",
+  "hash": "dbdd19bbdf67",
+  "on": "2026-10-17",
+  "reason": "Weather condition names compared to decide a run is indoors: keys, as the weather names them."
+ },
+ "src/engine/systems/life.ts#whyNow": {
+  "status": "Reviewed And Retained",
+  "hash": "f99ef29487a9",
+  "on": "2026-10-17",
+  "reason": "Look After Yourself's details: the wellbeing figure that makes an item worth doing, and what a workout builds and costs, each with its figure. Compact and accurate for a menu line; held in tests/evidence-g01-life.test.ts and tests/look-after.test.ts."
+ },
+ "src/engine/systems/life.ts#WORKOUTS_TODAY": {
+  "status": "Reviewed And Retained",
+  "hash": "3eaa433b25df",
+  "on": "2026-10-17",
+  "reason": "A repeat counter's key, never shown."
+ },
+ "src/engine/world/bootstrap.ts#createUniverse": {
+  "status": "Reviewed And Retained",
+  "hash": "4e72d5095744",
+  "on": "2026-10-17",
+  "reason": "An internal error: a place id no country holds, which creation's picker can't produce."
+ },
+ "src/engine/world/bootstrap.ts#defaultConfig": {
+  "status": "Reviewed And Retained",
+  "hash": "083dd9c6392c",
+  "on": "2026-10-17",
+  "reason": "Alex Rivera, a quick life's name, never offered on creation."
+ },
+ "src/engine/world/bootstrap.ts#WEALTH_PROFILE": {
+  "status": "Reviewed And Retained",
+  "hash": "4631a6329f5d",
+  "on": "2026-10-17",
+  "reason": "Each family's one line ('A small cushion and clean credit.'), shown beside its figures on creation: plain, in the narrator's voice."
  },
  "src/engine/world/place.ts#placeKindLabel": {
   "status": "Reviewed And Retained",
@@ -125,6 +1739,228 @@
   "on": "2026-10-17",
   "evidence": "tests/evidence-g02-life.test.ts, tests/evidence2-b01.test.ts, tests/life-fixes.test.ts, tests/evidence-g33-ui.test.ts, tests/evidence-g29-ui.test.ts, tests/evidence-g34-ui.test.ts, tests/defects-g6-1.test.ts (each refusal word for word); tests/language-frame-ui.test.ts (the speed refusal in the provider's toast)"
  },
+ "src/main.tsx#top": {
+  "status": "Reviewed And Retained",
+  "hash": "f86945acdc94",
+  "on": "2026-10-17",
+  "reason": "An internal error, thrown only if index.html has no mount point."
+ },
+ "src/ui/components/primitives.tsx#Empty": {
+  "status": "Reviewed And Retained",
+  "hash": "5a603280a77f",
+  "on": "2026-10-17",
+  "reason": "A CSS margin value, not words."
+ },
+ "src/ui/components/primitives.tsx#Fine": {
+  "status": "Reviewed And Retained",
+  "hash": "7c989d88af67",
+  "on": "2026-10-17",
+  "reason": "Sources And Estimates, the disclosure's Title Case label: says what's behind it, as docs/STYLE.md's Truth in the text has a source line."
+ },
+ "src/ui/components/primitives.tsx#FOCUSABLE": {
+  "status": "Reviewed And Retained",
+  "hash": "2eca2fc5368c",
+  "on": "2026-10-17",
+  "reason": "A CSS selector, not words."
+ },
+ "src/ui/components/primitives.tsx#Modal": {
+  "status": "Reviewed And Retained",
+  "hash": "e7ba1e2bd479",
+  "on": "2026-10-17",
+  "reason": "Close is the accessible name of the dialog's ✕, saying what it does; the rest are CSS values and a selector."
+ },
+ "src/ui/components/primitives.tsx#WhyNot": {
+  "status": "Reviewed And Retained",
+  "hash": "db15620b9e5e",
+  "on": "2026-10-17",
+  "reason": "'Not now: <the reason>' where every control has the same reason, else each labelled: short and plain, the reasons the callers' own. Held in tests/whynot-time.test.ts."
+ },
+ "src/ui/creation/CharacterCreation.tsx#BankChoice": {
+  "status": "Rewritten And Verified",
+  "hash": "bbf61ffffc3e",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'creation, step by step' (Starting Point drawn with its bank line); '(estimated)' where a savings rate is"
+ },
+ "src/ui/creation/CharacterCreation.tsx#BeforeYale": {
+  "status": "Rewritten And Verified",
+  "hash": "b3156e06d884",
+  "on": "2026-10-17",
+  "evidence": "tests/home-account-creation.test.ts (Before Yale drawn: its labels, a bank refused, the savings kept or moved)"
+ },
+ "src/ui/creation/CharacterCreation.tsx#billedAs": {
+  "status": "Reviewed And Retained",
+  "hash": "41ff8a99f1fc",
+  "on": "2026-10-17",
+  "reason": "'Actor Or Actress', the label while They/Them hasn't chosen."
+ },
+ "src/ui/creation/CharacterCreation.tsx#blockedTraitReason": {
+  "status": "Reviewed And Retained",
+  "hash": "b6da54d9e1d5",
+  "on": "2026-10-17",
+  "reason": "'Can’t be held with Even Tempered or Highly Strung.' and 'You already hold four traits.': each names the obstacle on the trait itself."
+ },
+ "src/ui/creation/CharacterCreation.tsx#BodyFields": {
+  "status": "Rewritten And Verified",
+  "hash": "dea1d6b29608",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g28-ui.test.ts (one given, out of range in feet and pounds and in centimeters and kilograms) and tests/evidence-g27-ui.test.ts (left blank); tests/language-frame-ui.test.ts"
+ },
+ "src/ui/creation/CharacterCreation.tsx#CharacterCreation": {
+  "status": "Rewritten And Verified",
+  "hash": "be8dbd02cda4",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'creation, step by step' (the header, Continue's reasons); tests/evidence-g27-ui.test.ts (the restored draft, Start Over)"
+ },
+ "src/ui/creation/CharacterCreation.tsx#DRAFT_KEY": {
+  "status": "Reviewed And Retained",
+  "hash": "e0f2c11f747f",
+  "on": "2026-10-17",
+  "reason": "A storage key, never shown."
+ },
+ "src/ui/creation/CharacterCreation.tsx#FamilyChoice": {
+  "status": "Rewritten And Verified",
+  "hash": "2ca49fb9b1b7",
+  "on": "2026-10-17",
+  "evidence": "tests/need-paths.test.ts (each family's callout, need and no need, word for word)"
+ },
+ "src/ui/creation/CharacterCreation.tsx#IdentityStep": {
+  "status": "Rewritten And Verified",
+  "hash": "70561a404645",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'creation, step by step' (She/Her and They/Them) and tests/evidence-g27-ui.test.ts (You’ll be 22 when this life begins)"
+ },
+ "src/ui/creation/CharacterCreation.tsx#MONTHS": {
+  "status": "Reviewed And Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-17",
+  "reason": "Month names."
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [agreeableness]": {
+  "status": "Reviewed And Retained",
+  "hash": "b743caf6e3b8",
+  "on": "2026-10-17",
+  "reason": "Each disposition's name and its two ends (Conventional to Experimental, Cautious to Reckless): plain labels."
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [ambition]": {
+  "status": "Reviewed And Retained",
+  "hash": "cf3674dcbf6f",
+  "on": "2026-10-17",
+  "reason": "Each disposition's name and its two ends (Conventional to Experimental, Cautious to Reckless): plain labels."
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [conscientiousness]": {
+  "status": "Reviewed And Retained",
+  "hash": "af473d7a0f9d",
+  "on": "2026-10-17",
+  "reason": "Each disposition's name and its two ends (Conventional to Experimental, Cautious to Reckless): plain labels."
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [emotionalStability]": {
+  "status": "Reviewed And Retained",
+  "hash": "84c8b8218862",
+  "on": "2026-10-17",
+  "reason": "Each disposition's name and its two ends (Conventional to Experimental, Cautious to Reckless): plain labels."
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [extraversion]": {
+  "status": "Reviewed And Retained",
+  "hash": "f7e22dedf0c7",
+  "on": "2026-10-17",
+  "reason": "Each disposition's name and its two ends (Conventional to Experimental, Cautious to Reckless): plain labels."
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [openness]": {
+  "status": "Reviewed And Retained",
+  "hash": "91f5ed432af0",
+  "on": "2026-10-17",
+  "reason": "Each disposition's name and its two ends (Conventional to Experimental, Cautious to Reckless): plain labels."
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [riskTolerance]": {
+  "status": "Reviewed And Retained",
+  "hash": "88ba91074d07",
+  "on": "2026-10-17",
+  "reason": "Each disposition's name and its two ends (Conventional to Experimental, Cautious to Reckless): plain labels."
+ },
+ "src/ui/creation/CharacterCreation.tsx#PersonalityStep": {
+  "status": "Rewritten And Verified",
+  "hash": "73063186c932",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'creation, step by step' (the Dispositions list, CARRIES_A_BALANCE, the traits' paragraphs)"
+ },
+ "src/ui/creation/CharacterCreation.tsx#PersonalStep": {
+  "status": "Rewritten And Verified",
+  "hash": "87ab7912ae10",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g28-ui.test.ts (the Genres paragraph, a genre marked · and its title)"
+ },
+ "src/ui/creation/CharacterCreation.tsx#ReviewStep": {
+  "status": "Rewritten And Verified",
+  "hash": "39da800d0393",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'creation, step by step' (Ready To Begin, Food Each Month, no traits, the clock paused); tests/evidence2-b11.test.ts and tests/evidence-g09-life.test.ts (Food Each Month's figure)"
+ },
+ "src/ui/creation/CharacterCreation.tsx#StartingPointStep": {
+  "status": "Rewritten And Verified",
+  "hash": "adb12bbc941d",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'creation, step by step' (Where It Begins, the money's currency line); tests/home-account-creation.test.ts (a home bank's stats)"
+ },
+ "src/ui/creation/CharacterCreation.tsx#STEPS": {
+  "status": "Reviewed And Retained",
+  "hash": "0cd110b3c044",
+  "on": "2026-10-17",
+  "reason": "The five steps' Title Case names, which the code also reads as the step keys (STEP['Dispositions & Traits'])."
+ },
+ "src/ui/creation/CharacterCreation.tsx#validate": {
+  "status": "Rewritten And Verified",
+  "hash": "cbc1b2357b85",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts (Enter a first name. Enter a last name.; billed as) and tests/evidence-g27-ui.test.ts (over 95); tests/home-account-creation.test.ts (lived there before you were born)"
+ },
+ "src/ui/creation/LocationPicker.tsx#LocationPicker": {
+  "status": "Rewritten And Verified",
+  "hash": "eaadc74e49ba",
+  "on": "2026-10-17",
+  "evidence": "tests/world-map.test.ts and tests/home-account-creation.test.ts (the picker drawn: its prompts, counts and no match); the load failure read in LocationPicker and CharacterCreation's saveDraft"
+ },
+ "src/ui/creation/portrait.ts#CANNOT_DECODE": {
+  "status": "Reviewed And Retained",
+  "hash": "99cfe583cda6",
+  "on": "2026-10-17",
+  "reason": "Each photo refusal names the problem and the limit ('That photo is 12MB. The limit is 10MB.', 'HEIC images aren’t supported. Try a JPEG, PNG or WebP.'): plain. Held in tests/portrait.test.ts."
+ },
+ "src/ui/creation/portrait.ts#CANNOT_ENCODE": {
+  "status": "Reviewed And Retained",
+  "hash": "78d2b0edc357",
+  "on": "2026-10-17",
+  "reason": "Each photo refusal names the problem and the limit ('That photo is 12MB. The limit is 10MB.', 'HEIC images aren’t supported. Try a JPEG, PNG or WebP.'): plain. Held in tests/portrait.test.ts."
+ },
+ "src/ui/creation/portrait.ts#describeRejection": {
+  "status": "Reviewed And Retained",
+  "hash": "b26f03368253",
+  "on": "2026-10-17",
+  "reason": "Each photo refusal names the problem and the limit ('That photo is 12MB. The limit is 10MB.', 'HEIC images aren’t supported. Try a JPEG, PNG or WebP.'): plain. Held in tests/portrait.test.ts."
+ },
+ "src/ui/creation/PortraitPicker.tsx#PortraitPicker": {
+  "status": "Rewritten And Verified",
+  "hash": "036056d24819",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'creation, step by step' (Identity drawn, the photo note)"
+ },
+ "src/ui/creation/world-map.ts#loadWorldMap": {
+  "status": "Reviewed And Retained",
+  "hash": "56b043b6bdf8",
+  "on": "2026-10-17",
+  "reason": "The map file's path and its loading errors, which WorldMap says in its own words; internal."
+ },
+ "src/ui/creation/world-map.ts#MAP_URL": {
+  "status": "Reviewed And Retained",
+  "hash": "7260c3e9c686",
+  "on": "2026-10-17",
+  "reason": "The map file's path and its loading errors, which WorldMap says in its own words; internal."
+ },
+ "src/ui/creation/WorldMap.tsx#WorldMap": {
+  "status": "Reviewed And Retained",
+  "hash": "621e60c2a71f",
+  "on": "2026-10-17",
+  "reason": "The map's prompts ('Tap anywhere on the map', 'Whole World', 'Zoom In'), its accessible name, its credit line and its failure ('The world map couldn’t be loaded. Use the country list below instead.'): plain, with the way on."
+ },
  "src/ui/looks/attention.tsx#ABOUT": {
   "status": "Rewritten And Verified",
   "hash": "245fd2b92d35",
@@ -184,5 +2020,239 @@
   "hash": "515f8bb758a3",
   "on": "2026-10-17",
   "evidence": "tests/language-frame.test.ts: a question opened (one, seven, overdue, closed after its date, dealt with, dismissed, gone; each urgency band) and a notice opened (one, three, read, an unknown category, gone), word for word; tests/evidence-g32-ui.test.ts (the notice look's kind and name)"
+ },
+ "src/ui/looks/Look.tsx#LookHeader": {
+  "status": "Reviewed And Retained",
+  "hash": "bbfa773e5a63",
+  "on": "2026-10-17",
+  "reason": "Close, the look's own control, and ', where you are', a screen reader's word for the marked cell: plain and accurate."
+ },
+ "src/ui/looks/Look.tsx#LookPanel": {
+  "status": "Reviewed And Retained",
+  "hash": "bbfa773e5a63",
+  "on": "2026-10-17",
+  "reason": "Close, the look's own control, and ', where you are', a screen reader's word for the marked cell: plain and accurate."
+ },
+ "src/ui/looks/Look.tsx#Ways": {
+  "status": "Reviewed And Retained",
+  "hash": "fda8460f766d",
+  "on": "2026-10-17",
+  "reason": "Close, the look's own control, and ', where you are', a screen reader's word for the marked cell: plain and accurate."
+ },
+ "src/ui/looks/registry.ts#defineLook": {
+  "status": "Reviewed And Retained",
+  "hash": "78ef50f62edd",
+  "on": "2026-10-17",
+  "reason": "Internal errors for a developer (two declarations of one kind, a look that parents itself), thrown while the looks register, never in play."
+ },
+ "src/ui/looks/registry.ts#trailTo": {
+  "status": "Reviewed And Retained",
+  "hash": "f44a5d98177a",
+  "on": "2026-10-17",
+  "reason": "Internal errors for a developer (two declarations of one kind, a look that parents itself), thrown while the looks register, never in play."
+ },
+ "src/ui/saves/SaveSlots.tsx#BackupNote": {
+  "status": "Reviewed And Retained",
+  "hash": "083512ad0817",
+  "on": "2026-10-17",
+  "reason": "'Backup from <the date>' or 'Backup from an unrecorded date': plain, and the date is what a player weighs a restore by. Drawn in tests/language-frame-ui.test.ts."
+ },
+ "src/ui/saves/SaveSlots.tsx#formatPlaytime": {
+  "status": "Reviewed And Retained",
+  "hash": "7ccd3730eb99",
+  "on": "2026-10-17",
+  "reason": "A duration as a figure, '3h 25m': the slot's Played tile."
+ },
+ "src/ui/saves/SaveSlots.tsx#SaveSlots": {
+  "status": "Rewritten And Verified",
+  "hash": "a0502722e1f3",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'says what each slot holds…' (an empty slot, an older version's save, Delete for a readable save and an unreadable one) and 'says a damaged save can’t be opened…' (Continue pressed, its disclosure)"
+ },
+ "src/ui/screens/Home.tsx#Home": {
+  "status": "Rewritten And Verified",
+  "hash": "2eb9893b5e1c",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g32-ui.test.ts (the head at every part of the day, the Calendar, What Needs You with seven questions, Show All and Show The Six Most Important pressed, each weighing sentence, How You Are, Where You Are, the weather), tests/evidence2-b11.test.ts, tests/evidence3-home.test.ts, tests/evidence-g33-ui.test.ts, tests/evidence-g03-life.test.ts, tests/evidence-g34-ui.test.ts"
+ },
+ "src/ui/screens/Home.tsx#PapersLine": {
+  "status": "Reviewed And Retained",
+  "hash": "a20cd8938d32",
+  "on": "2026-10-17",
+  "reason": "Cover, the return due or past due with what's to pay and its penalty, tax owed and whether it's growing, and a claim's weekly sum: plain, each figure the Papers screen's. Held in tests/evidence-g32-ui.test.ts and tests/evidence-g33-ui.test.ts."
+ },
+ "src/ui/screens/Home.tsx#partOfDay": {
+  "status": "Reviewed And Retained",
+  "hash": "eede2a706b4a",
+  "on": "2026-10-17",
+  "reason": "Night, Morning, Afternoon and Evening, the greeting's word by the hour: held at every boundary in tests/evidence-g32-ui.test.ts ('Good Night, Ada.' from midnight to 4:59)."
+ },
+ "src/ui/screens/Home.tsx#SchoolLine": {
+  "status": "Rewritten And Verified",
+  "hash": "328b452b63cd",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b12.test.ts (on leave, warning, dismissed) and tests/evidence-g33-ui.test.ts (arriving; the Yale button, its breadcrumb School)"
+ },
+ "src/ui/shell/LifeEnded.tsx#LifeEnded": {
+  "status": "Rewritten And Verified",
+  "hash": "d4a50856142b",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b03.test.ts 'the end her 86th birthday drew…' (Earned, Wages, before tax; Years In The World 1 Month) and tests/evidence-g04-life.test.ts (A Life, Ended, the clock has stopped, Back To The Slots)"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [accounts]": {
+  "status": "Reviewed And Retained",
+  "hash": "36bae31694f8",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [benefits]": {
+  "status": "Reviewed And Retained",
+  "hash": "0ae981803c85",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [borrowing]": {
+  "status": "Reviewed And Retained",
+  "hash": "9f5c5c049105",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [cards]": {
+  "status": "Reviewed And Retained",
+  "hash": "0f830bc25e52",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [casting]": {
+  "status": "Reviewed And Retained",
+  "hash": "e0f540f92c72",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [classes]": {
+  "status": "Reviewed And Retained",
+  "hash": "ed1846afee3b",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [coursework]": {
+  "status": "Reviewed And Retained",
+  "hash": "a1da98d95263",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [health]": {
+  "status": "Reviewed And Retained",
+  "hash": "5fdbe30e8fb0",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [passport]": {
+  "status": "Reviewed And Retained",
+  "hash": "83e5e372ec2f",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [payments]": {
+  "status": "Reviewed And Retained",
+  "hash": "0be4502f405a",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [returns]": {
+  "status": "Reviewed And Retained",
+  "hash": "c294c31ec89f",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [standing]": {
+  "status": "Reviewed And Retained",
+  "hash": "f726693805de",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [statements]": {
+  "status": "Reviewed And Retained",
+  "hash": "5653cebc057d",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [terms]": {
+  "status": "Reviewed And Retained",
+  "hash": "7924ffbc22e7",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/sections.ts#SECTIONS [work]": {
+  "status": "Reviewed And Retained",
+  "hash": "f29c41d765fd",
+  "on": "2026-10-17",
+  "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
+ },
+ "src/ui/shell/TimeControls.tsx#AdvanceMenu": {
+  "status": "Reviewed And Retained",
+  "hash": "7e7c30347de5",
+  "on": "2026-10-17",
+  "reason": "Its items (One Hour, This Evening, Tonight, Tomorrow Morning, Next Event, Next Monday, One Week, Choose An Event…) say where the clock goes, each with its time, and Locked and How Play And Pause Work are the guide's own words; plain Title Case. Pressed in tests/language-frame-ui.test.ts; held in tests/help-mechanics.test.ts."
+ },
+ "src/ui/shell/TimeControls.tsx#DIAL_LABEL": {
+  "status": "Reviewed And Retained",
+  "hash": "61e8509e7a0b",
+  "on": "2026-10-17",
+  "reason": "The wellbeing labels as every screen names them (docs/GLOSSARY.md, wellbeing): Energy, Stress, Sleep Debt, Nourishment, Morale, Hygiene, Condition, Fitness."
+ },
+ "src/ui/shell/TimeControls.tsx#DueNow": {
+  "status": "Rewritten And Verified",
+  "hash": "426db766618e",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'the stop says it needs you now…' (a plan of your own, and a visit to the passport office) and 'PLAYER JOURNEY: the stop says the partner is expecting you…' (Call It Off pressed, its toast, the partner's trust lower)"
+ },
+ "src/ui/shell/TimeControls.tsx#LookAfterMenu": {
+  "status": "Reviewed And Retained",
+  "hash": "e769051550bd",
+  "on": "2026-10-17",
+  "reason": "Its toast says what was done and the time the clock stands at ('Shower: done at 7:50 AM.'), and its chips, Needed Now and Most Worth It, are plain; each item's own words are life.ts's. Held in tests/evidence-g01-life.test.ts and tests/evidence2-b01.test.ts."
+ },
+ "src/ui/shell/TimeControls.tsx#MENU_FOOT": {
+  "status": "Reviewed And Retained",
+  "hash": "a08a4ddfa5d5",
+  "on": "2026-10-17",
+  "reason": "A CSS border value, not words."
+ },
+ "src/ui/shell/TimeControls.tsx#SkipDialog": {
+  "status": "Rewritten And Verified",
+  "hash": "60a6ec4e51e0",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'Skip To Event says what the clock stops at on the way and what else happens…'; tests/whynot-time.test.ts (nothing ahead, once; Skip: Pick an event from the list.)"
+ },
+ "src/ui/shell/TimeControls.tsx#SleepDialog": {
+  "status": "Rewritten And Verified",
+  "hash": "7dd33eebc608",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'Sleep names the hours on its button, one and many, and when you’d wake'; tests/evidence-g01-life.test.ts 'the Sleep dialog over a plan shows it will be slept through…' (You’d sleep through one commitment)"
+ },
+ "src/ui/shell/TimeControls.tsx#TimeControls": {
+  "status": "Rewritten And Verified",
+  "hash": "d32ac9607779",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'On The Way says how many commitments the clock stops at and what each stop offers, for one and for two' (drawn under the real provider, the Advance menu pressed); tests/whynot-time.test.ts (Sleep's reason on the bar)"
+ },
+ "src/ui/workspaces/cell.ts#dayLabel": {
+  "status": "Reviewed And Retained",
+  "hash": "0f31a0ab0947",
+  "on": "2026-10-17",
+  "reason": "A calendar cell's accessible name: the date, its holidays and 'One thing on it.', '<n> things on it.' or 'No plans on it.': plain, and it says everything the cell prints."
+ },
+ "src/ui/workspaces/WorkspaceRouter.tsx#LockedScreen": {
+  "status": "Rewritten And Verified",
+  "hash": "a3c61d65f7b1",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g31-ui.test.ts (Money, Locked and Papers, Locked, each with its chapter and lead) and tests/evidence-g29-ui.test.ts (Money, Locked, Your Bank)"
+ },
+ "src/ui/workspaces/WorkspaceRouter.tsx#NoSuchScreen": {
+  "status": "Reviewed And Retained",
+  "hash": "3a463e4b5a94",
+  "on": "2026-10-17",
+  "reason": "No Such Screen, 'That address isn’t a screen in this game.' and Go Home: plain, and it says the one way on. Reached only by an old bookmark's address."
  }
 }

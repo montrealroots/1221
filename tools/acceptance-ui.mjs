@@ -200,8 +200,8 @@ await step('home: what needs you on the first day: no decision waiting, in the p
   must(n === 0, `${n} decision cards on the first day`);
   const panel = page.locator('section.card', { has: page.getByRole('heading', { name: 'What Needs You', exact: true }) }).first();
   must(await panel.count(), 'no What Needs You on Home');
-  must(await panel.getByText('No decision is waiting on you.', { exact: true }).count(), `What Needs You says “${(await panel.innerText()).replace(/\s+/g, ' ').slice(0, 160)}”`);
-  return 'No decision is waiting on you.';
+  must(await panel.getByText('No questions are waiting on you.', { exact: true }).count(), `What Needs You says “${(await panel.innerText()).replace(/\s+/g, ' ').slice(0, 160)}”`);
+  return 'No questions are waiting on you.';
 });
 await step('advance: One Hour moves the clock an hour', async () => {
   const before = await clock();
@@ -741,7 +741,7 @@ await step('interruption: an advance past a commitment stops at it and asks; Sta
   if (!(await d.count())) skip('nothing on the way to Next Monday');
   const title = ((await d.innerText()).split('\n')[0] ?? '').slice(0, 60);
   if (/^On The Way/.test(title)) {
-    must(/on the way\. The clock stops at\s+each/.test(await d.innerText()), 'On The Way doesn’t say the clock stops');
+    must(/and the clock stops at\s+each one/.test(await d.innerText()), 'On The Way doesn’t say the clock stops');
     await d.getByRole('button', { name: /^Advance$/ }).first().click(); await wait(1500);
   }
   const due = page.locator('[role=dialog]:visible').last();
