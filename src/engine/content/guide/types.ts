@@ -78,6 +78,11 @@ export interface GuideEntry {
   unavailable: readonly string[];
   /** Common mistakes, and how to recover. */
   mistakes: readonly string[];
+  /**
+   * What to do next, once it's done: the brief 14 tutorial's seventh question (from 2026-10-17). Optional while the
+   * pass's areas write it entry by entry; the guide's test asks it of every entry once they're merged.
+   */
+  next?: readonly string[];
   /** Other entries worth reading with it. */
   related: readonly string[];
   connections: readonly Connection[];

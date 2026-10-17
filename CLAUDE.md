@@ -108,7 +108,7 @@ npm run gate
 ```
 
 It runs `npm run validate` (typecheck, lint, the full vitest suite) followed by
-eighteen checks: title-case, label-sweep, plural-check, voice-check, tics,
+nineteen checks: title-case, label-sweep, plural-check, voice-check, tics,
 doc-refs, wired, deciders, spelling, typos, geo-check, inventory, devmap,
 traceability, capabilities (added 2026-10-08), coverage (added 2026-10-13,
 which fails an audit row whose cited test or line doesn't hold, and
@@ -118,7 +118,12 @@ completion-matrix (added 2026-10-16 at the owner's brief 09, which fails a row
 whose status isn't one of the owner's seven or lacks what that status needs, a
 row called verified on a test it can't find or a measurement made before the
 code it reads last changed, and a handoff whose completion line isn't the
-matrix's). This said seventeen until 2026-10-16, sixteen until 2026-10-13, fifteen until 2026-10-10, and fourteen until
+matrix's) and text-inventory (added 2026-10-17 at the owner's brief 14, before
+completion-matrix: it fails a source of player-facing text that no status in
+`docs/text/statuses/` names, a source two areas both claim, a status for a
+source that's gone, and a rise in the engine-speak `docs/text/engine-speak.json`
+counts, which may fall and may not rise; `docs/STYLE.md` and `docs/GLOSSARY.md`
+are the standard it serves). This said eighteen until 2026-10-17, seventeen until 2026-10-16, sixteen until 2026-10-13, fifteen until 2026-10-10, and fourteen until
 2026-10-08, leaving out traceability, which the gate already ran, and sixteen
 until 2026-10-09, when catalog-coverage (added 2026-10-03) left the gate with
 the catalogs it counted in the owner's scope reset. Read its exit
@@ -225,6 +230,14 @@ present-tense claim that the code contradicted. This line doesn't have it, so he
 review holds the line.
 
 **A ledger balance is never a number somebody typed.** It is the sum of postings.
+
+**Player-facing text is written for the player** (from 2026-10-17, the owner's brief 14). Every string the game shows
+follows `docs/STYLE.md` ("Talking to the player") and uses `docs/GLOSSARY.md`'s words. A new feature's text is
+plain, specific and true, and it never shows the player the engine: inputs, weights, dimensions, segments, a
+"take" for anything but a tape, a command's id or a file name. A new source of text is read, then given a status
+with `node tools/text-inventory.mjs --mark <source> "<status>" --by <area> --reason|--evidence …`. The gate's
+text-inventory check fails a source with none, and a rise in engine-speak. Comments keep this project's voice;
+player text keeps the player's.
 
 **Mutation-test every claim a test protects.** A surviving mutation usually means a
 redundant guard that an earlier clamp already settles.
