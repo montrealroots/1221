@@ -226,7 +226,9 @@ describe('a program is called by its own name', () => {
     const husky = holding(graduate('g84-label-husky'), 'ct', 'medicaid');
     const papers = drawn(husky, PapersWorkspace, healthTab).text;
     expect(papers).toMatch(/This Month HUSKY D/);
-    expect(papers).toMatch(/Care And Its Bills HUSKY D: \$0\.00 of/);
+    expect(papers).toMatch(/Care And Its Bills HUSKY D: \$0\.00 paid this year /);
+    // From 2026-10-17 a plan with no most a year says none: until then “HUSKY D: $20.00 of $0.00 paid this year”.
+    expect(papers).not.toMatch(/of \$0\.00 paid this year/);
     expect(papers).not.toMatch(/Essential Plan:|This Month Medicaid/);
     expect(drawn(husky, Home).text).toMatch(/Cover: HUSKY D\./);
     const covered = holding(graduate('g84-label-covered'), 'ct', 'essential');

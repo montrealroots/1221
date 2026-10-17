@@ -315,9 +315,9 @@ describe('trait-hygieneDrift', () => {
     expect(out.chaotic.lost).toBeCloseTo(0.4 * (6 - 8 / (1.6 * K.chaotic)), 9);
     expect(out.chaotic.lost).toBeCloseTo(0.78066336, 7);
     // The menu reads it too: the Shower is needed now for the two past the line, and not for the orderly body.
-    expect(out.orderly.says).not.toContain('wears on the mood');
-    expect(out.plain.says).toContain('Hygiene at 48: every hour under 50 wears on the mood.');
-    expect(out.chaotic.says).toContain('Hygiene at 46: every hour under 50 wears on the mood.');
+    expect(out.orderly.says).not.toContain('wears on your morale');
+    expect(out.plain.says).toContain('Hygiene at 48: every hour under 50 wears on your morale.');
+    expect(out.chaotic.says).toContain('Hygiene at 46: every hour under 50 wears on your morale.');
   });
 
   it('takes 17.92 hygiene off an orderly body with a workout through life.look_after, 21.6 off a plain one and 26.68 off a chaotic one: the hour’s 1.6 and the sweat’s 20, by the knob', () => {

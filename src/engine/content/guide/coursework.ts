@@ -303,11 +303,11 @@ export const COURSEWORK: readonly GuideEntry[] = [
     unavailable: [
       '“That work is finished.”',
       `“${LEARN.requires!.why}” and “${ALONE.requires!.why}”: a step that builds on another.`,
-      '“There’s no note to work on until it’s been shown.”',
+      '“You can revise once it’s been shown and you have a note to work on.”',
       '“There’s new feedback on this piece. Read it, then press Mark As Read.”',
-      '“… asked to rehearse: answer first.” and “… reads the scene another way: answer first.”',
+      '“… has asked to rehearse. Answer them first.” and “… reads the scene differently from you. Answer them first.”',
       '“You’ve done all this step can do.” and “You’ve done this today. It builds over several days, not in one long session.”',
-      `“You’re too tired to work on your feet. Sleep first.” and an injury’s “Not with …; it has … days yet to mend.”: a step in a studio or on your feet${ALONE_ON_FEET ? `, ${ALONE.label} among them` : ''}.`,
+      `“You’re too tired to work on your feet. Sleep first.” and an injury’s “Not with …; it has … yet to mend.”: a step in a studio or on your feet${ALONE_ON_FEET ? `, ${ALONE.label} among them` : ''}.`,
       '“Not from a hospital bed.”: a step in a studio, on your feet or at the library.',
       '“You don’t know where the studios are yet. The building tour in Orientation shows you.”, and the same for the library.',
       'At something else, or due somewhere before it would end: it names what, and when.',
@@ -452,7 +452,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       { label: 'The Scene', value: `How well each way suits the scene, from what the scene is: its genre’s register, its tones and turns, its features, its language and its medium, and for a practice brief its reader and the reading you’ve taken. The register’s concerns and the reader each count for ${pct(GRAIN.reader)} of how they lean, the same, so neither settles it alone. A class scene and a play also say what their circumstances ask of the scale: what a character keeps hidden and a private exchange argue for ${APPROACH_EFFECT.restrained.label}; speaking to many and a conflict brought out loud argue for ${APPROACH_EFFECT.expansive.label}. A stage’s house asks your voice and body to reach the back row whichever way you play it: that counts in how cleanly you perform, and it doesn’t make playing large the better choice. ${GRAIN_LABEL.suits} makes the way easier to make work on the qualities it favors, by up to ${pct(GRAIN.strength)} of the piece’s difficulty, and asks less rehearsal, complete at down to ${pct(PLAYING.complete - GRAIN.prep)}; ${GRAIN_LABEL.against} makes it harder and asks more, up to ${pct(Math.min(1, PLAYING.complete + GRAIN.prep))}. At full ability every way that fits still reaches 100`, estimate: true },
     ],
     now: [
-      `“Chosen. You’ve rehearsed this way of playing it to …% so far.” A first choice starts at 0%; the same choice again keeps all of it; a different one keeps ${pct(PLAYING.keptOnChange)}.`,
+      `“Chosen. You’ve rehearsed this way of playing it to … so far.” A first choice starts at 0%; the same choice again keeps all of it; a different one keeps ${pct(PLAYING.keptOnChange)}.`,
       'Leaving every aspect open takes the choice away.',
       'The ways you choose are kept on your record of how you play.',
     ],
@@ -698,7 +698,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       'If you’re not there for the showing and have no excuse, their trust and the bond fall as for a missed rehearsal.',
     ],
     interpret: [
-      '“Trust … of 100 · Came to … of … agreed” is how they stand with you, and how often they’ve come.',
+      '“Trust … of 100” is how they stand with you, and “Came to … of … rehearsals agreed” how often they’ve come (“No rehearsals agreed yet” before any).',
       'Their name, under Your Partners, opens them: what the scene together showed of them on each piece you share (their preparation, their timing, whether your answers agree), and what’s happened between you.',
       'After a rehearsal they say what held the scene back: not knowing it, being on book, unclear choices, or not enough time on its feet; or that it’s coming together. The choices are judged as the showing judges the table work: your answers at the table, and where the course has a step of its own there, that step too. These are the game’s words, labeled simulated.',
       'The Scene Together, under the feedback, says how it compared with your own work, and why. Your own result stands as it is.',
@@ -709,7 +709,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       '“That’s after the piece is due.”',
       '“You’re already rehearsing then.” and “You have … then.”',
       // From 2026-10-17 (brief 13's journeys): an evening the School already knows it would excuse isn't asked for.
-      '“You’ll still be in hospital then, so the rehearsal would be called off.”, “You’ll still be laid up with … then, so the rehearsal would be called off.”, and for work on its feet “Not with …; it has … days yet to mend. Rehearsing on your feet with your partner has to wait for that too.”',
+      '“You’ll still be in hospital then, so the rehearsal would be called off.”, “You’ll still be laid up with … then, so the rehearsal would be called off.”, and for work on its feet an injury’s “Not with …; it has … yet to mend.”, followed by “Rehearsing on your feet with your partner has to wait for that too.”',
       'A no in their own words: in class until three, a work-study shift, rehearsal calls, a Cabaret show, outside their hours, would rather work on it alone, or asked to be asked a day ahead.',
       '“You didn’t answer in time.” and “You’ve answered it.”',
       '“There’s no such rehearsal booked.”',

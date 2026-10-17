@@ -25,6 +25,7 @@
 import { ID_CARD_REPLACEMENT } from '@/engine/content/replacements';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
+import { plural } from '@/engine/core/text';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -126,8 +127,8 @@ export function PassportPane() {
         <div className="col gap-3">
           <div className="grid grid-3">
             <Stat label="Passport" look={passport ? at('document', passport.id) : undefined} value={passport ? 'In Force' : 'None In Force'} note={passport ? `${passport.number}, runs out ${formatDate(passport.expiresAt!, sim.zone)}` : 'A new bank and the Social Security office ask for one'} />
-            <Stat label="A New One" value={rule && office ? money(inSaveMoney(sim, Math.round(office.fee * 100), office.currency)) : '—'} note={rule && office ? `${office.daysEstimated ? 'About ' : 'Up to '}${office.days} days; good for ${office.years} years${office.abroad ? '; from abroad' : office.renewal ? '; renewed by mail' : ''}` : 'Your country’s passport office isn’t in the game'} />
-            <Stat label="Faster" value={office?.expedite ? money(inSaveMoney(sim, Math.round((office.fee + office.expedite.extra) * 100), office.currency)) : 'Not Offered'} note={office?.expedite ? `${office.expedite.days === 0 ? 'The same day' : `${office.expedite.days} days`}${office.expedite.renewalOnly ? ', renewals only' : ''}` : `${rule?.issuer ?? 'The office'} offers no faster service${office?.abroad ? ' to applicants abroad' : ''}`} />
+            <Stat label="A New One" value={rule && office ? money(inSaveMoney(sim, Math.round(office.fee * 100), office.currency)) : '—'} note={rule && office ? `${office.daysEstimated ? 'About ' : 'Up to '}${plural(office.days, 'day')}; good for ${plural(office.years, 'year')}${office.abroad ? '; from abroad' : office.renewal ? '; renewed by mail' : ''}` : 'Your country’s passport office isn’t in the game'} />
+            <Stat label="Faster" value={office?.expedite ? money(inSaveMoney(sim, Math.round((office.fee + office.expedite.extra) * 100), office.currency)) : 'Not Offered'} note={office?.expedite ? `${office.expedite.days === 0 ? 'The same day' : plural(office.expedite.days, 'day')}${office.expedite.renewalOnly ? ', renewals only' : ''}` : `${rule?.issuer ?? 'The office'} offers no faster service${office?.abroad ? ' to applicants abroad' : ''}`} />
           </div>
           <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
             <Gated feature="documents.apply_passport" className="btn btn-sm" disabled={Boolean(passportRefusal(person))} title={passportRefusal(person)} onClick={() => apply(false)}>{passport ? 'Renew It' : 'Apply For One'}</Gated>

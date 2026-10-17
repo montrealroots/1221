@@ -158,6 +158,21 @@ describe('F2-A10: What To Improve Next, followed through the commands (brief 10)
     expect(again.find((x) => x.exercise)?.target).toBe(back);
   }, 240_000);
 
+  // From 2026-10-17 (brief 14's cross-area pass): a forecast on one piece read “1 of your last 1 piece calls on it”, and
+  // one piece of several “1 of your last 5 pieces call on it”. The profile area found the first on this case.
+  it('says one piece read as “your last piece”, and agrees the verb with the pieces that call on it', () => {
+    const { sim } = tuning('adv-t-0');
+    const training = adviceFor(sim, sim.player).filter((x) => x.forecast);
+    expect(training.length).toBeGreaterThan(0);
+    for (const r of training) {
+      const f = r.forecast!;
+      if (f.of === 1) expect(r.why, r.target).toContain('(your last piece calls on it');
+      else expect(r.why, r.target).toContain(`(${f.pieces} of your last ${f.of} pieces ${f.pieces === 1 ? 'calls' : 'call'} on it`);
+      expect(r.why, r.target).not.toMatch(/\b1 of your last 1 piece|\b1 of your last \d+ pieces call\b/);
+    }
+    expect(training.some((r) => r.forecast!.of === 1)).toBe(true);
+  }, 240_000);
+
   it('says why: each recommendation’s figure, how many of the last pieces read it, and the piece it gains most on, by the records', () => {
     const { sim } = tuning('adv-t-8');
     const latest = [...(sim.player.work ?? [])].sort((a, b) => a.at - b.at).slice(-ADVICE.recent);
@@ -169,7 +184,7 @@ describe('F2-A10: What To Improve Next, followed through the commands (brief 10)
       expect(f.pieces, r.target).toBe(n);
       expect(f.of).toBe(latest.length);
       expect(r.why).toContain(`worth about ${r.points} point`);
-      expect(r.why).toContain(`(${n} of your last ${latest.length} pieces call on it; ${f.most!.what} would gain most`);
+      expect(r.why).toContain(`(${n} of your last ${latest.length} pieces ${n === 1 ? 'calls' : 'call'} on it; ${f.most!.what} would gain most`);
       expect(latest.filter((w) => reads(w, r.target)).map((w) => w.what)).toContain(f.most!.what);
     }
   }, 240_000);

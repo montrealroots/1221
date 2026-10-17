@@ -640,8 +640,8 @@ function PersonalityStep({ config, setConfig }: {
               <li>Ambition: how quickly stress builds, from work and from money alike.</li>
               <li>Risk Tolerance: over {CARRIES_A_BALANCE}, your card’s autopay starts on the minimum payment, so you carry a balance.</li>
               <li>Extraversion: how being watched as you perform, by an audience or a class, affects your stress.</li>
-              <li>Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood.</li>
-              <li>Agreeableness: how a day of rehearsal affects your mood.</li>
+              <li>Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale.</li>
+              <li>Agreeableness: how a day of rehearsal affects your morale.</li>
             </ul>
             <p className="muted small" style={{ marginTop: 'var(--s2)' }}>
               Composure is an ability your work is judged on. Apart from where Composure and Discipline start, none of
@@ -682,7 +682,7 @@ function PersonalityStep({ config, setConfig }: {
             <p className="muted small">
               Pick up to four. Traits come in opposing pairs, and you can’t hold both sides of a pair. For now
               they change how stress builds and clears, how well you sleep and how much a night restores, how
-              quickly you need a shower, how far your mood swings, how hard an illness hits, how sharp you are
+              quickly you need a shower, how far your morale swings, how hard an illness hits, how sharp you are
               in the morning or the evening, which part of preparing a scene goes furthest, and how you warm to
               classmates and how much a slight from one hurts. Frugal, Spender and Generous also change what
               your food costs and how much a meal lifts you.
@@ -810,7 +810,7 @@ function PersonalStep({
             <h2>Genres</h2>
             <p className="muted small">
               The films you love. Pick as many as are true: there’s no limit. Rehearsing or performing a
-              play of a genre you love, a comedy or a tragedy, lifts your mood and eases your stress. It
+              play of a genre you love, a comedy or a tragedy, lifts your morale and eases your stress. It
               doesn’t make you any better at it. A genre marked · has no plays of its kind here, so it’s
               only shown on your page.
             </p>
@@ -1026,14 +1026,14 @@ export function StartingPointStep({ config, set, setConfig }: {
             <div className="stat">
               <span className="stat-label">{home.current.name} At {home.name}</span>
               <span className="stat-value mono">{formatMoney(split.homeCurrentHeld, home.currency)}</span>
-              <span className="stat-note">{money(split.homeCurrent)} at the estimated rate</span>
+              <span className="stat-note">About {money(split.homeCurrent)} at an estimated exchange rate</span>
             </div>
           )}
           {home && split.homeSavings > 0 && (
             <div className="stat">
               <span className="stat-label">Savings At {home.name}</span>
               <span className="stat-value mono">{formatMoney(split.homeSavingsHeld, home.currency)}</span>
-              <span className="stat-note">{money(split.homeSavings)} at the estimated rate</span>
+              <span className="stat-note">About {money(split.homeSavings)} at an estimated exchange rate</span>
             </div>
           )}
           <div className="stat">

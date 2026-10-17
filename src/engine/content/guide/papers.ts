@@ -240,7 +240,7 @@ export const PAPERS: readonly GuideEntry[] = [
       'Open Papers, then Health Cover. Your Cover says what covers you This Month.',
       'Read the line under The Marketplace: it says whether you may enroll now, and why. When Enroll shows beside the title, press it. The toast names what you’re enrolled in and the day it starts.',
       'Once you’re enrolled, Drop The Plan, in the same place, ends a plan of your own at the end of the month.',
-      'In Care And Its Bills, each row has its care, its date, Your Share and Due. In the Assistance column, Appeal It answers a denied claim, and Apply For Assistance asks a Connecticut hospital to apply its charity care to a bill.',
+      'In Care And Its Bills, each row has its care, its date, Your Share and Due. In the Assistance column, Appeal It answers a denied claim, and Apply For Assistance asks a Connecticut hospital to apply its financial assistance to a bill.',
       'When a bill has gone to medical debt, Pay It Off beside the panel’s title pays all of it.',
       'While Yale Health covers you, A Dental Plan offers Buy Dental: Yale Delta Dental Basic, paid once for Yale’s plan year, to 30 September.',
     ],
@@ -261,7 +261,7 @@ export const PAPERS: readonly GuideEntry[] = [
       { label: 'HUSKY D And Covered Connecticut', value: 'No premium, and $0 for a visit, urgent care, the emergency room, a stay and a prescription' },
       { label: 'The Marketplace Premium', value: `The benchmark silver plan, ${BENCH_WORDS}, taken in full on the first of each month`, estimate: true },
       { label: 'Access Health CT Standard Silver', value: `${usd(SILVER.visit)} a visit, ${usd(SILVER.urgent)} urgent care, ${usd(SILVER.emergency)} the emergency room, a stay ${usd(SILVER.stayCopay ?? 0)} after a ${usd(SILVER.deductible)} deductible, ${usd(SILVER.outOfPocket)} a year at most` },
-      { label: 'Uninsured', value: `The commercial price times ${MARKUP}: a visit ${usd(CARE.price.visit * MARKUP)} at ${MEDICAL_CPI.base.visit[0]}’s prices and an emergency ${usd(CARE.price.emergency * MARKUP)} at ${MEDICAL_CPI.base.emergency[0]}’s, each grown since by its price index. An emergency or a stay at a Connecticut hospital has its charity taken off as it’s billed: free to ${pct(CT_CHARITY.freeTo)} of the poverty line, ${pct(CT_CHARITY.discount)} off to ${pct(CT_CHARITY.discountTo)}`, estimate: true },
+      { label: 'Uninsured', value: `The commercial price times ${MARKUP}: a visit ${usd(CARE.price.visit * MARKUP)} at ${MEDICAL_CPI.base.visit[0]}’s prices and an emergency ${usd(CARE.price.emergency * MARKUP)} at ${MEDICAL_CPI.base.emergency[0]}’s, each grown since by its price index. An emergency or a stay at a Connecticut hospital has its financial assistance taken off as it’s billed: free to ${pct(CT_CHARITY.freeTo)} of the poverty line, ${pct(CT_CHARITY.discount)} off to ${pct(CT_CHARITY.discountTo)}`, estimate: true },
       { label: 'Yale Delta Dental Basic', value: `${usd(YALE_DENTAL.premium)} for Yale’s plan year, paid at once and covering from that day: bought in August or September, to 30 September a year on; bought from October to July, to the next 30 September. Cleanings in full, and ${pct(YALE_DENTAL.basic)} of a filling paid by the plan after a ${usd(YALE_DENTAL.deductible)} deductible, to ${usd(YALE_DENTAL.max)}, both kept by Yale’s plan year, 1 October to 30 September: bought in August or September, the weeks before 1 October are the plan year then ending, with a deductible and a maximum of their own` },
       { label: 'Time', value: 'None: enrolling, appealing, applying and paying move no clock' },
     ],
@@ -277,7 +277,7 @@ export const PAPERS: readonly GuideEntry[] = [
       { label: 'The Work Rules’ Months', value: `For HUSKY D’s work rules: the calendar month before you enroll, and at renewal any one of the ${PUBLIC_COVER.workLookBack.ct.renew} calendar months before the renewal’s. A month meets them with any of it spent at the School (the month you leave it, on a leave, by withdrawing or with the degree, counts whole, and so does the month you come back), ${usd(PUBLIC_COVER.workEarnings)} of income of any kind (pay, an unemployment benefit, interest or a pension), being 65 or over for any of it, SNAP received in it while you were under SNAP’s work rules (out of school, no unemployment claim, 18 to 64), or a stay in hospital in it, if you ask` },
       { label: 'Your Status', value: 'US citizenship or five years with a green card for HUSKY D from 1 October 2026; lawful presence for the marketplace, and for Covered Connecticut until 2027, when it’s a citizen’s or a green card holder’s', estimate: false },
       { label: 'A Denied Claim', value: `${pct(DENIALS.rate)} of a marketplace plan’s claims, billed as if you were uninsured; insurers uphold ${pct(DENIALS.upheld)} of appeals`, estimate: true },
-      { label: 'The Hospital’s Charity', value: `Your last twelve months’ income against the poverty line: free to ${pct(CT_CHARITY.freeTo)}, ${pct(CT_CHARITY.discount)} off to ${pct(CT_CHARITY.discountTo)}` },
+      { label: 'The Hospital’s Financial Assistance', value: `Your last twelve months’ income against the poverty line: free to ${pct(CT_CHARITY.freeTo)}, ${pct(CT_CHARITY.discount)} off to ${pct(CT_CHARITY.discountTo)}` },
       { label: 'Medical Debt On Your Record', value: `${usd(MEDICAL_DEBT.reportAt)} or more, unpaid ${MEDICAL_DEBT.reportAfterDays} days, and you living outside New York and California` },
     ],
     now: [
@@ -289,7 +289,7 @@ export const PAPERS: readonly GuideEntry[] = [
       `Apply For HUSKY D: the notice “A Notice Of Noncompliance” comes at once, naming the month read, the day to answer by (${PUBLIC_COVER.noticeReceivedDays} days for it to reach you, then ${PUBLIC_COVER.answerDays} more) and what follows. Applying isn’t being covered: you aren’t covered by HUSKY D yet, and you can still buy a marketplace plan.`,
       'Request A Hardship Exception: decided at once. A renewal is renewed, with “Your Public Cover Is Renewed” or, moving from Covered Connecticut, “Your Public Cover Changed At Renewal”; an application is approved, “Public Cover Approved”, from the first of the month you applied in, or of an earlier month with care in it as Enroll reaches back, and a marketplace plan bought meanwhile ends as it begins.',
       `Appeal It: the bill reads Appealed, and its answer comes ${DENIALS.decideDays} days on.`,
-      `Apply For Assistance: decided at once. Free Care clears the bill, ${pct(CT_CHARITY.discount)} Off cuts it, and Over The Limit leaves it as it was. The toast for a bill helped says “The hospital applied its charity care to this bill.”`,
+      `Apply For Assistance: decided at once. Free Care clears the bill, ${pct(CT_CHARITY.discount)} Off cuts it, and Over The Limit leaves it as it was. The toast for a bill helped says “The hospital applied its financial assistance to this bill.”`,
       'Pay It Off: the whole debt is paid from your current account, and every bill that went to it reads Settled.',
       'Buy Dental: Yale’s year is paid at once, and the dentist is covered from today.',
     ],
@@ -321,10 +321,10 @@ export const PAPERS: readonly GuideEntry[] = [
     ],
     interpret: [
       'Your Cover, This Month, reads None, in amber, when nothing covers you.',
-      'The subtitle of Care And Its Bills shows what you’ve paid toward the year’s most; past it, your plan leaves you nothing more for care.',
+      'The subtitle of Care And Its Bills shows what you’ve paid this year toward the year’s most; past it, your plan leaves you nothing more for care. HUSKY D and Covered Connecticut have no most: care costs you nothing on them, a prescription costs only its copay where the program has one, and the subtitle says only what you’ve paid.',
       // From 2026-10-16 a prescription filled in a lapse is priced again with the care (brief 09's journeys): until then it kept
       // the pharmacy's cash price after Affiliate cover was bought back to the lapse's start.
-      `In the bills table, Due shows a date, Settled, Owed As Debt or Credited. A change of cover back in time, a withdrawal by the fifteenth day of classes or Affiliate cover bought on a leave, leaves each bill as it was issued and adds a line of its own: more owed is billed on it; less owed reads below nothing, Credited, and comes off the bill still open first, which then shows what’s left of the share it was issued at; and Plan Paid on the line is the plan’s change, below nothing where the plan took its part back. A prescription filled in that time is priced again the same way, its line Credited with what comes back to the account your payments go to, or billed with what more is owed. In Assistance, Charity Taken Off means the hospital screened an uninsured bill when it was billed and took something off it; over ${pct(CT_CHARITY.discountTo)} of the poverty line it took off nothing, and the bill reads Over The Limit.`,
+      `In the bills table, Due shows a date, Settled, Owed As Debt or Credited. A change of cover back in time, a withdrawal by the fifteenth day of classes or Affiliate cover bought on a leave, leaves each bill as it was issued and adds a line of its own: more owed is billed on it; less owed reads below nothing, Credited, and comes off the bill still open first, which then shows what’s left of the share it was issued at; and Plan Paid on the line is the plan’s change, below nothing where the plan took its part back. A prescription filled in that time is priced again the same way, its line Credited with what comes back to the account your payments go to, or billed with what more is owed. In Assistance, Assistance Taken Off means the hospital screened an uninsured bill when it was billed and took something off it; over ${pct(CT_CHARITY.discountTo)} of the poverty line it took off nothing, and the bill reads Over The Limit.`,
       'The toast after Enroll, Your Cover and the subtitle of Care And Its Bills each name a program by its own name, HUSKY D or Covered Connecticut. The marketplace’s plan reads Marketplace Plan in Your Cover, and Access Health CT Standard Silver over the bills.',
       // Until 2026-10-16 this said interest, a benefit or a pension counted toward neither, and that the credit was only
       // over 138%, and none on a 1040-NR. Until 2026-10-17 it said Medicaid asked 80 hours' work first (brief 12).
@@ -332,25 +332,25 @@ export const PAPERS: readonly GuideEntry[] = [
       `A marketplace premium is paid in full. The return gives back what’s over your share of income, for an income over ${pct(PUBLIC_COVER.medicaidShare)}, or from 100% where your status keeps you from HUSKY D, and up to ${pct(PREMIUM_CREDIT.cutoff)} of the poverty line; on a 1040-NR too, in 2026, and from 2027 only for a citizen or a green card holder.`,
     ],
     unavailable: [
-      '“You’re enrolled.”, or “You’re enrolled from …”: one plan at a time.',
+      '“You’re already enrolled.”, or “You’re already enrolled, from ….”: one plan at a time.',
       '“Yale Health covers you while you’re at the School.”: Enroll stays off the screen while you study, unless a personal leave without Affiliate cover lapses it.',
-      `“Yale Health covers you until …; you can enroll from …, ${SPECIAL} days before that cover ends.”`,
-      `“Outside open enrollment, ${OPEN_FROM} to ${OPEN_UNTIL}, and not within ${SPECIAL} days of losing cover.”`,
+      `“Yale Health covers you until …. You can enroll from …, ${SPECIAL} days before that cover ends.”`,
+      `“It’s outside open enrollment, … to …, and you haven’t lost cover in the last ${SPECIAL} days.”`,
       'Stayed past your US status: the marketplace sells only to a citizen or a person lawfully present.',
       // From 2026-10-15: until then Enroll asked no work of somebody applying for HUSKY D.
       // Until 2026-10-16 the sentence said “of earnings” and nothing of an exception, and it was the end of it: Apply For
       // HUSKY D takes the application on its notice since. Until 2026-10-17 it began “80 hours’ work” (brief 12).
-      `“From January 1, 2027, HUSKY D asks an applicant for ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of income, time at the School or an exception in the month before, and last month had none of them.”: HUSKY D not shown its work rules. The line goes on to say whether the marketplace is open to you, and Enroll shows only where it is, and buys its plan; Apply For HUSKY D, beside it, takes the application on a notice.`,
-      '“Your application waits on its notice: answer it by …”: one application at a time. “Last month meets its work rules: Enroll gives it.”: Apply For HUSKY D is for a month that doesn’t.',
-      '“No notice of noncompliance waits on an answer.”, “The thirty days to answer ended on …” or “No month it assessed, …, had a stay in hospital, the hardship SLATE keeps.”: Request A Hardship Exception doesn’t show, and the notice’s line says which.',
-      '“You have no plan of your own to drop.”, or, dropped already, “It’s dropped: it ends on …”',
-      '“… has ended, so there’s no renewal left to answer.” or “… ends on …, so there’s no renewal left to answer.”: a renewal’s notice whose program has ended some other way, and Request A Hardship Exception doesn’t show.',
-      `“That claim wasn’t denied.”, “It’s been appealed.” or “An appeal is filed within ${DENIALS.appealDays} days of the denial.”: Appeal It doesn’t show.`,
-      '“Only a Connecticut hospital’s bill.”, “It’s settled or past due.”, “The hospital’s charity is off it already.” or “It’s been put to the hospital’s charity.”, for a bill applied for or screened over the limit at billing: Apply For Assistance doesn’t show.',
+      `“From January 1, 2027, … asks for … in the month before you apply, and last month had none of them.”, naming HUSKY D and what it asks, ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of income, time at the School or an exception: HUSKY D not shown its work rules. The line goes on to say whether the marketplace is open to you, and Enroll shows only where it is, and buys its plan; Apply For HUSKY D, beside it, takes the application on a notice.`,
+      '“Your application waits on its notice: answer it by …”: one application at a time. “Last month meets its work rules, so press Enroll instead.”: Apply For HUSKY D is for a month that doesn’t.',
+      '“There’s no notice of noncompliance waiting for an answer.”, “The … days to answer ended on ….” or “None of the months it checked, …, had a stay in hospital, the one hardship the game counts.”: Request A Hardship Exception doesn’t show, and the notice’s line says which.',
+      '“You have no plan of your own to drop.”, or, dropped already, “It’s already dropped, and it ends on ….”',
+      '“…, so there’s no renewal left to answer.”, saying the program has ended or the day it ends: a renewal’s notice whose program has ended some other way, and Request A Hardship Exception doesn’t show.',
+      `“That claim wasn’t denied.”, “It’s been appealed.” or “An appeal has to be filed within ${DENIALS.appealDays} days of the denial, and that time has passed.”: Appeal It doesn’t show.`,
+      '“Only a Connecticut hospital’s bill can be put in for its financial assistance.”, “It’s already settled or past its due date.”, “The hospital’s financial assistance has already come off it.” or “It’s already been put in for the hospital’s financial assistance.”, for a bill applied for or screened over the limit at billing: Apply For Assistance doesn’t show.',
       // Until 2026-10-16 the last was “… can’t cover it.”, which said nothing of what to do.
       '“You owe nothing for care.”, or, when your current account holds less than the debt, “… holds … of the …: move money into it first, on your bank’s Move Money.” (“… has nothing to pay it with: …” where it holds nothing).',
-      'A Dental Plan shows only while Yale Health covers you or a Yale plan you bought runs: once Yale Health ends, New Haven sells none. Pressed, Buy Dental says “The year is …, which the bank can’t cover.” when the bank can’t pay the year.',
-      `Prepay Three Months and Prepay A Year are England’s, for its ${gbp(NHS.prescription)} prescription charge: “It’s England’s, for its prescription charge.” A life in New Haven never sees them.`,
+      'A Dental Plan shows only while Yale Health covers you or a Yale plan you bought runs: once Yale Health ends, New Haven sells none. Pressed, Buy Dental says “The year costs …, more than your bank can cover.” when the bank can’t pay the year.',
+      `Prepay Three Months and Prepay A Year are England’s, for its ${gbp(NHS.prescription)} prescription charge: “The prepayment certificate is only for England’s prescription charge.” A life in New Haven never sees them.`,
     ],
     next: [
       'Before Yale Health ends, enroll ahead so your new cover starts the day after it, with no gap.',
@@ -362,7 +362,7 @@ export const PAPERS: readonly GuideEntry[] = [
       `Letting the current account run dry before the first: the premium isn’t taken, the plan ends, and a plan left unpaid opens no special enrollment. Unless a month’s income qualifies you for HUSKY D or Covered Connecticut, you wait for open enrollment, ${OPEN_FROM} to ${OPEN_UNTIL}.`,
       'Leaving a bill to its due date with too little in the bank: it goes to medical debt. Pay It Off takes the whole debt from your current account at once, so wait until it holds all of it.',
       `Missing a denial: “A Claim Denied” comes as a notice, and an appeal is filed within ${DENIALS.appealDays} days of the care.`,
-      `Dropping cover to save the premium: care uninsured is billed at ${MARKUP} times the commercial price, less a Connecticut hospital’s charity for an emergency or a stay, and a marketplace plan dropped can’t be bought again until open enrollment.`,
+      `Dropping cover to save the premium: care uninsured is billed at ${MARKUP} times the commercial price, less a Connecticut hospital’s financial assistance for an emergency or a stay, and a marketplace plan dropped can’t be bought again until open enrollment.`,
       'Buying Yale’s dental plan late in its year: bought from October to July, it runs only to the next 30 September, so bought in June or July the full year’s premium buys a summer. Bought in August or September, it runs from that day to 30 September a year on.',
     ],
     related: ['papers.doctor', 'papers.conditions', 'school.leave', 'school.money', 'taxes.return', 'money.affairs'],
@@ -384,7 +384,7 @@ export const PAPERS: readonly GuideEntry[] = [
         `Open Papers, Health Cover. Under The Marketplace: “From January 1, 2027, HUSKY D asks for ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of income, time at the School or an exception in the month before you apply, and last month had none of them. The marketplace is open to you, because you’re within ${SPECIAL} days of losing cover.”`,
         'Press Enroll.',
       ],
-      result: `The toast says “Enrolled in the marketplace, from September 1, …”. From 1 September its premium is taken on each month’s first, and a visit costs ${usd(SILVER.visit)}. Care in August, uncovered, is billed at the uninsured price, less the hospital’s charity on an emergency or a stay. Enrolled ahead, from ${ENROLL_OPENS_ON} while Yale Health still covered them, their cover would have begun 1 August.`,
+      result: `The toast says “Enrolled in the marketplace, from September 1, …”. From 1 September its premium is taken on each month’s first, and a visit costs ${usd(SILVER.visit)}. Care in August, uncovered, is billed at the uninsured price, less the hospital’s financial assistance on an emergency or a stay. Enrolled ahead, from ${ENROLL_OPENS_ON} while Yale Health still covered them, their cover would have begun 1 August.`,
     },
   },
   {
@@ -432,7 +432,7 @@ export const PAPERS: readonly GuideEntry[] = [
       'Choosing a doctor or a pharmacy sets it at once, and the toast names it: “… is now your doctor.” or “… is now your pharmacy.”',
       'Book An Appointment puts it on the calendar; the toast gives its date, and a notice names the practice.',
       'Call It Off takes it off the calendar, with no toast, and leaves the visit owed: the panel reads “…: not yet seen”.',
-      `Fill A Longer Supply pays at once from ${FROM_CURRENT}, moves each Medicine until date on by the days filled, and the toast says “${LONGEST} days of medicine filled.” Where the bank can’t cover every condition’s fill, it’s refused whole, “It comes to more than the bank can cover.”, and nothing is filled or paid.`,
+      `Fill A Longer Supply pays at once from ${FROM_CURRENT}, moves each Medicine until date on by the days filled, and the toast says “${LONGEST} days of medicine filled.” Where the bank can’t cover every condition’s fill, it’s refused whole, “It costs more than your bank can cover.”, and nothing is filled or paid.`,
     ],
     later: [
       `At the hour, kept: “A Doctor’s Visit” comes as a notice, and what your cover leaves you is billed, due in ${MEDICAL_DEBT.dueDays} days, under the practice it was booked at; on Yale Health at ${YALE_PRACTICE}, HUSKY D or Covered Connecticut that’s $0, and no bill is made. On Yale Health at ${PRACTICE} it’s ${usd(UNINSURED_VISIT)} in 2026, and the notice says Yale Health pays for a visit at its own Health Center. On Access Health CT’s silver plan it’s the ${usd(SILVER.visit)} copay, with no deductible, and Care And Its Bills gives what the plan paid of the visit’s price under Plan Paid. Your prescriptions are renewed, a review visit marks its condition reviewed, and the visit may end in a referral, booked for the specialist’s wait.`,
@@ -459,11 +459,11 @@ export const PAPERS: readonly GuideEntry[] = [
     unavailable: [
       '“There’s nothing to see a doctor about.”: no visit is owed.',
       '“You have an appointment already.”',
-      '“No wait is published where you live; you’re seen when it comes up.”: Ireland’s way, where a visit comes unbooked.',
-      '“Your doctor is in the town you live in.” or “That isn’t a doctor’s practice.”',
+      '“No waiting time is published where you live, so there’s nothing to book: you’re seen when you need care.”: Ireland’s way, where a visit comes unbooked.',
+      '“Your doctor has to be in the town you live in.” or “That isn’t a doctor’s practice.”',
       '“Yale Health sees Yale students it covers, and it doesn’t cover you now.”: Yale Health’s practice sent once its cover has ended; the box doesn’t offer it then.',
-      '“A pharmacy’s own cash price is kept only in America.”',
-      'Pressed, Fill A Longer Supply says “It comes to more than the bank can cover.” when the bank can’t pay every condition’s fill.',
+      '“You can choose a pharmacy only in the United States.”',
+      'Pressed, Fill A Longer Supply says “It costs more than your bank can cover.” when the bank can’t pay every condition’s fill.',
       'Before the chapter is read, the boxes, Call It Off and Book An Appointment are grayed, their tooltip naming the chapter.',
     ],
     next: [

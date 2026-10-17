@@ -410,7 +410,7 @@ export const TAXES: readonly GuideEntry[] = [
       '“The IRS needs every return filed first, and your … return isn’t. File it first.”',
       `A short-term plan for ${usd(PLAN.shortMax)} or more: “A short-term plan is for less than ….” A Simple Payment Plan over ${usd(PLAN.longMax)}: a larger balance needs a financial statement, which the game doesn’t offer.`,
       `“The lowest monthly payment is …: what you owe, spread over ${PLAN.leastMonths} months.”`,
-      'For a state: “Connecticut DRS needs every return filed first”, a balance over its limit, months outside its range (“Connecticut DRS sets up a plan over 2 to 12 months.”), a plan already applied for or in force (“You already have a plan with Connecticut DRS.”), or a year it has levied that’s still owed.',
+      'For a state, each refusal names its agency, such as Connecticut DRS: “… needs every return filed first, and your … return isn’t. File it first.”, a balance over its limit, months outside its range (“… sets up a plan over 2 to 12 months.”), a plan already applied for or in force (“You already have a plan with ….”), or a year it has levied that’s still owed.',
       'Catch Up shows only while a plan is behind, and your bank has to cover the payment: “Your bank can’t cover …, so nothing was paid.” On a plan that isn’t behind: “Your plan isn’t behind, so there’s nothing to catch up.”, or for a state’s plan, which Connecticut ends rather than lets fall behind, “That plan isn’t behind, so there’s nothing to catch up.”',
       `Revise The Plan shows only on a monthly IRS plan in force or behind. It refuses a payment under the lowest monthly payment, more than ${usd(PLAN.longMax)} owed now, or a ${usd(PLAN.reviseFee)} fee your bank can’t cover.`,
       'Ask For Its Waiver: “There’s no three-year penalty on that year.”, “Its waiver has already been decided.”, “File your own return for the year first.”, or more than a year since full payment.',
@@ -483,7 +483,7 @@ export const TAXES: readonly GuideEntry[] = [
     ],
     interpret: [
       'Its status is one of: Notice Of Intent Sent, Filed, Paid: Release To Come, Released, Asked To Be Withdrawn, Withdrawn, or Not Filed.',
-      '“Filed when collection reached that step” or “Filed because its payment plan requires one” says why it went on record.',
+      '“when collection reached that stage” or “because the payment plan requires one” says why it went on record.',
       `The line about its effect is in the authority’s own words. Connecticut’s says “${CT_LIEN.effect}” The IRS’s says it may limit your ability to get credit.`,
       'In the game, no credit record or bank reads a lien, so its status is all that changes.',
       'On a lien that secured tax you owed when it was filed, the panel says so instead of offering Ask For Its Withdrawal As Filed In Error: “It secured tax you owed when it was filed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.” Connecticut’s always does, because it takes a payment to its penalty and interest before its tax and files its lien only while something is owed. Your own return in place of its assessment leaves the tax as it was, since DRS assessed it from the same figures.',

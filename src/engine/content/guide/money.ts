@@ -389,7 +389,7 @@ export const MONEY: readonly GuideEntry[] = [
       '“With the … withdrawal fee, you can move at most … out of ….”',
       '“You can take … more out of … this month without notice.” (a German savings account)',
       '“… is closing, so money can’t move into or out of it.” and “… has been blocked since the switch, except for paying off what it owes.”',
-      `At Citi: “Citi lets you send ${usd(CITI_OPEN.limits?.outDay ?? 0)} a day to other banks, and you’ve sent … today.” or “Citi lets you send ${usd(CITI_OPEN.limits?.outMonth ?? 0)} a month to other banks, and you’ve sent … this month.”`,
+      `At Citi: “… lets you send ${usd(CITI_OPEN.limits?.outDay ?? 0)} a day to other banks, and you’ve sent … today.” or “… lets you send ${usd(CITI_OPEN.limits?.outMonth ?? 0)} a month to other banks, and you’ve sent … this month.”, naming Citi.`,
     ],
     mistakes: [
       `Emptying an account just before a standing order or a card’s autopay is due from it. The order doesn’t go, and the autopay fails unless linked savings at that bank covers it. Short For A Payment warns you ${LOOKAHEAD_DAYS} days ahead.`,
@@ -579,12 +579,12 @@ export const MONEY: readonly GuideEntry[] = [
       '“That account isn’t dormant.”',
       '“Its cooling-off period has passed, or there isn’t one here for it.”',
       '“Your primary current account can’t be canceled. Make another account primary first.”',
-      'A current account can be refused for the same reasons as Close It, shown under it with Cancel It grayed out: “It’s overdrawn by …. The bank only closes it once that’s paid off.”, “Money is on its way into or out of it. Wait until it arrives.”, a list of what still uses it, “… is still open at the same bank. Close that first.”, “Card payments are still pending on it. You can close it once they’ve posted.”, or “Its fees, …, are more than it holds. Pay in … first.” (with its overdraft interest named too, where there is some).',
-      'Any account whose interest goes back when it holds less: “The interest it was paid, …, goes back, and is more than it holds. Pay in … first.”, or with its fees, “Its fees, …, and the interest it was paid, …, are more than it holds. Pay in … first.”',
+      'A current account can be refused for the same reasons as Close It, shown under it with Cancel It grayed out: “It’s overdrawn by …. The bank only closes it once that’s paid off.”, “Money is on its way into or out of it. Wait until it arrives.”, a list of what still uses it, “… is still open at the same bank. Close that first.”, “Card payments are still pending on it. You can close it once they’ve posted.”, or, where its fees, with any overdraft interest, come to more than its balance, a sentence naming each that ends “… more than it holds. Pay in … first.”',
+      'Any account whose interest goes back when it holds less: “The interest it was paid, …, goes back, …”, or with its fees, “Its fees, …, and the interest it was paid, …”, each ending “… more than it holds. Pay in … first.”',
       // From 2026-10-15's recheck: a term's interest taken during the term went back out of the primary account unasked.
       'A term deposit whose interest was paid into another account that now holds less: “The interest it paid into …, …, goes back out of it, and is more than it holds. Pay in … first.”',
       '“No money of yours is held as unclaimed.”',
-      '“Enter the low balance alert as an amount, or leave it blank to turn it off.”',
+      '“Enter the … alert as an amount, or leave it blank to turn it off.”, naming the low balance or large payment alert.',
     ],
     mistakes: [
       'Leaving savings unused for years. Interest and fees don’t count as using it, but a small move in or out does.',
@@ -753,7 +753,7 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     unavailable: [
       '“Everyday spending goes in cash, on the debit card or on the credit card.”',
-      '“There’s no savings account at … to cover the current account.”, or with more than one paying account, “… to cover the current accounts your payments come from.”',
+      '“There’s no savings account at … to cover …”, ending “the current account”, or, with more than one paying account, “the current accounts your payments come from”.',
       '“A standing order can only go into one of your savings accounts.” and “… is a term deposit, locked until its end. A standing order goes into easy-access savings.”',
       '“Enter how much to pay each month.” and “Pick a day of the month, 1 to 31.”',
       '“That standing order no longer exists.” and “That payment is no longer scheduled.”',
@@ -1034,7 +1034,7 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     interpret: [
       '“… on purchases until …, then ….” is the introductory rate and the rate after it.',
-      '“A payment plan: … left, paid at … a month for … more months, with a … monthly fee instead of interest.” is each plan as it stands. A free plan says “with no fee and no interest”.',
+      '“A payment plan: … left, paid at … a month for …” is each plan as it stands: the months still to pay, then “with a … monthly fee instead of interest”, or for a free plan “with no fee and no interest”.',
       '“A plan made while the introductory rate lasts, until …, is free for its whole life.” shows while a plan made today would be free.',
       '“You have … to redeem” is the rewards waiting. Redeem Onto The Card is grayed out while there are none.',
     ],
@@ -1129,8 +1129,8 @@ export const MONEY: readonly GuideEntry[] = [
       `If a stranger used your debit card at a bank that moves accounts to a new number, the account’s number stays exposed for ${EXPOSURE.days} days: debits may be tried on it, and once the account has moved they’re declined.`,
     ],
     interpret: [
-      '“Locked: nothing new can go on it until you unlock it.” is a locked card. “Lost: stopped. A new one arrives …” is a reported one.',
-      '“This is a new account’s first card. It arrives …” is a new account’s first debit card on its way.',
+      '“Locked: nothing new can go on it until you unlock it.” is a locked card. A card you reported says why it was stopped, as in “Lost: stopped.”, and the day a new one arrives.',
+      '“This is a new account’s first card”, with the day it arrives, is a new account’s first debit card on its way.',
       '“The law gives … days from the statement to report it, and they’ve passed.” beside a payment means you pay all of it.',
       '“Your account number isn’t known to be exposed” until a stranger has used the debit card at a bank that moves accounts. A new number then closes the old one to debits.',
     ],
@@ -1221,7 +1221,7 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     interpret: [
       '“It covers up to about …” is how far the bank pays payments before declining them. That figure is estimated, as the line at the foot of the panel says.',
-      '“… overdraft fee is on hold, …. It’s charged after the end of … unless the account is back to …” is a fee you can still avoid.',
+      'The line under the overdraft that counts the overdraft fees on hold, each “charged after the end of” a day “unless the account is back to” zero or better (or to the small overdraft the bank lets go), is about fees you can still avoid.',
       'A loan’s quote, “…% a year: … a month for … months”, is its rate for your credit record and its equal monthly payment.',
       '“Every loan you hold, at any bank, counts against the same wages.” means a second loan is limited by what the first leaves.',
     ],
@@ -1326,10 +1326,10 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     interpret: [
       '“Application sent. … decides by ….” means a review is under way. “Your account at … is open.” means it’s open now, and the line under it gives the card’s day.',
-      '“It’s waiting for its first deposit” means money is still on its way to it.',
+      'A new account that’s waiting for its first deposit, or for an opening deposit of a set amount, hasn’t had the money arrive yet. Where a date is given, the bank closes it if nothing has arrived by then.',
       // The day from 2026-10-16 (`closeHold`): until then it said only that the wages were paid in, and to move them.
       'Under Close It, a list of what still uses the old account. If its wages are already on their way elsewhere, it gives the day each payer moves and the day you can close it.',
-      '“Closing it now charges its fees to the day, …” is what closing a German account would charge now: the fees kept for the quarter’s close, and this month’s fee for the days the account has been open, rounded to the cent. After 11 PM on a month’s last day, that month is counted with the quarter’s.',
+      '“… it now charges its fees to the day, …”, after Closing or Canceling, is what closing a German account would charge now: the fees kept for the quarter’s close, and this month’s fee for the days the account has been open, rounded to the cent. After 11 PM on a month’s last day, that month is counted with the quarter’s.',
       'Past Switches lists each switch and how it ended.',
     ],
     unavailable: [
@@ -1343,7 +1343,7 @@ export const MONEY: readonly GuideEntry[] = [
       // scope reset of 2026-10-09, and it went from `openRefusal` (`systems/bankmoves.ts`) that day.
       'Without a Social Security number, a branch visit is refused while you’re in hospital, while you’re busy elsewhere, or when something starts before the visit would end.',
       '“… asks for an opening deposit of …, sent from another of your accounts.” and “That account is already at …. Pay the deposit from an account at another bank.”',
-      'Closing: “It’s your only current account. Open another one first: you always need a current account to be paid into.”, “It’s your primary account. Make another account primary first.”, “It’s overdrawn by …. The bank only closes it once that’s paid off.”, “Money is on its way into or out of it. Wait until it arrives.”, a list of what still uses it, “… is still open at the same bank. Close that first.”, “Card payments are still pending on it. You can close it once they’ve posted.”, or “Its fees, …, are more than it holds. Pay in … first.” (with its overdraft interest named too, where there is some).',
+      'Closing: “It’s your only current account. Open another one first: you always need a current account to be paid into.”, “It’s your primary account. Make another account primary first.”, “It’s overdrawn by …. The bank only closes it once that’s paid off.”, “Money is on its way into or out of it. Wait until it arrives.”, a list of what still uses it, “… is still open at the same bank. Close that first.”, “Card payments are still pending on it. You can close it once they’ve posted.”, or, where its fees, with any overdraft interest, come to more than its balance, a sentence naming each that ends “… more than it holds. Pay in … first.”',
       'Switching, in the US: “There’s no switching service here: …” Elsewhere: “A switch is already under way.”, “Clear the overdraft before switching. The new bank won’t take it on.” or “A partial switch is only available through Britain’s Current Account Switch Service.”',
       'Calling it off: “This country’s switching service doesn’t let you call a switch off. It goes ahead on its date.” or “You could call it off until …”',
       'Keep The Balance There: “No switch is under way.”, “This country’s switching service has no such step.”, “Its balance transfer is already stopped.” or “The transfer could be stopped until close of business ….”',
@@ -1439,9 +1439,9 @@ export const MONEY: readonly GuideEntry[] = [
       'Each account there shows its balance in its currency, Held From Abroad beside its number, and its value in dollars at an estimated exchange rate under it, with the bank’s fee for a customer abroad, its card’s fees here, and its closing date if it’s closing. Its statements, Home’s Money line and the alerts give it in its currency too.',
     ],
     unavailable: [
-      '“You lived in America before Yale, so your account is the one here.”',
+      '“You lived in … before …, so your account is the one here.”: you lived in America before Yale.',
       '“There’s no research on what … does when a customer moves to America, so the game can’t offer it.”',
-      '“… opens an account from age …, and you left at ….” and “You began living there after Yale began.”',
+      '“… opens an account from age …, and you left at ….” and “You began living there after … began.”',
       'Savings, a term deposit, a loan, an overdraft or a card at the bank there are refused, each in its own words: it opens nothing new for a customer abroad.',
       '“Yale only pays wages into an account in America.”',
       'Where a bank’s fee for sending or receiving a payment abroad isn’t published, Move Money says so and doesn’t send it.',

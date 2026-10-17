@@ -249,7 +249,7 @@ describe('h-money', () => {
     // $92,391 and $413,043 less the fall’s Yale Health plan, $1,882, owed at nine on the first morning for want of money
     // in checking and paid back out of savings at midnight, and the $10.00: $503,542. Until 2026-10-13 this read $505,424:
     // the plan the bank couldn’t pay was dropped (tests/evidence2-b10.test.ts, c-wealth).
-    const line = 'Money Chase Total Checking: -$10.00. Worth $503,542. Your account is overdrawn. Chase How This Works';
+    const line = 'Money Chase Total Checking: −$10.00. Worth $503,542. Your account is overdrawn. Chase How This Works';
     expect(drawn(sim).affairs).toContain(line);
     press('Chase');
     expect(h.went).toEqual([['/workspace/bank', 'Money']]);

@@ -230,7 +230,7 @@ describe('h-money', () => {
     // TEST SETUP: the checking brought to -$25.00, $92,416.00 out of the worth.
     setBalance(sim, checking, -25_00);
     // $413,043 in savings less the $25.00 overdrawn: $413,018.
-    expect(drawn(sim).affairs).toContain('Money Chase Total Checking: -$25.00. Worth $413,018. Your account is overdrawn. Chase How This Works');
+    expect(drawn(sim).affairs).toContain('Money Chase Total Checking: −$25.00. Worth $413,018. Your account is overdrawn. Chase How This Works');
     const moved = sim.must<{ moved: number }>({ kind: 'bank.transfer', payload: { fromId: own(sim, 'savings').id, toId: checking.id, amount: 1_000_00 } });
     expect(moved.moved).toBe(1_000_00);
     const after = drawn(sim).affairs;
@@ -239,6 +239,18 @@ describe('h-money', () => {
     const kept = drawn(reload(sim)).affairs;
     expect(kept).toContain('Money Chase Total Checking: $975.00. Worth $413,018. Chase How This Works');
     expect(kept).not.toContain('Your account is overdrawn.');
+  });
+
+  // From 2026-10-17 (brief 14's cross-area pass): a worth below nothing read “Worth -$227” where Money writes a negative
+  // with the minus sign (“−$3.30”). The health area found it on a played New Haven life out of status.
+  it('a worth below nothing is written with the minus sign, as Money writes an overdrawn balance', () => {
+    const sim = life('g33-money-under');
+    // TEST SETUP: the savings emptied and the checking brought to -$227.00, so the worth is -$227 with nothing owed.
+    setBalance(sim, own(sim, 'savings'), 0);
+    setBalance(sim, primary(sim), -227_00);
+    const { affairs } = drawn(sim);
+    expect(affairs).toContain('Money Chase Total Checking: −$227.00. Worth −$227. Your account is overdrawn. Chase How This Works');
+    expect(affairs).not.toMatch(/-\$/);
   });
 
   it('with the day’s spending put on the card, the worth counts what the card owes and the line says “, $X of it owed”', () => {

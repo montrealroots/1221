@@ -670,7 +670,7 @@ describe('nourishment', () => {
     expect(fed.player.wellbeing.condition - locked.player.wellbeing.condition).toBeCloseTo(0.5 * 3, 9);
     expect(fed.player.wellbeing.morale - locked.player.wellbeing.morale).toBeCloseTo(0.7 * 3, 9);
     expect(howYouAre(locked).text).toContain('Hungry, and it’s starting to show.');
-    expect(dial(locked, 'nourishment').says).toBe('14. Hungry, and it’s costing condition and mood every hour. Each morning the day’s groceries bring it up to at least 76, or to 40 on a day the food can’t be paid for.');
+    expect(dial(locked, 'nourishment').says).toBe('14. Hungry, and it’s costing condition and morale every hour. Each morning the day’s groceries bring it up to at least 76, or to 40 on a day the food can’t be paid for.');
 
     expect(locked.execute({ kind: 'card.lock', payload: { which: 'debit', locked: false } }).ok).toBe(true);
     const meal = lookAfter(locked, 'eat');
@@ -737,7 +737,7 @@ describe('hygiene', () => {
     // Under fifty from (58.8 − 50) / 1.6 = 5.5 hours after nine: three and a half grimy hours by six.
     expect(grimy.player.wellbeing.hygiene).toBeCloseTo(58.8 - 1.6 * 9, 9);
     expect(clean.player.wellbeing.morale - grimy.player.wellbeing.morale).toBeCloseTo(0.4 * 3.5, 9);
-    expect(dial(grimy, 'hygiene').says).toBe('44. Under 50, it wears on your mood every hour. A shower puts it back. The morning shower brings it up to at least 82.');
+    expect(dial(grimy, 'hygiene').says).toBe('44. Under 50, it wears on your morale every hour. A shower puts it back. The morning shower brings it up to at least 82.');
     expect(dial(clean, 'hygiene').says).toBe('86. Clean enough not to bother you. The morning shower brings it up to at least 82.');
     const stressBefore = grimy.player.wellbeing.stress;
     const late = lookAfter(grimy, 'wash');

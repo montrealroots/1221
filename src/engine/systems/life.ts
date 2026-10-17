@@ -798,11 +798,11 @@ function whyNow(person: Person, action: LookAfter, gain: number, urgent: boolean
   const w = person.wellbeing;
   const r = (x: number) => Math.round(x);
   if (action === 'eat' || action === 'order') {
-    if (urgent) return `Hungry at ${r(w.nourishment)}: every hour under ${HUNGRY} costs condition and mood.`;
+    if (urgent) return `Hungry at ${r(w.nourishment)}: every hour under ${HUNGRY} costs condition and morale.`;
     return gain >= 0.5 ? `Nourishment at ${r(w.nourishment)} is costing readiness.` : `Nourishment at ${r(w.nourishment)}: there’s little to gain from a meal yet.`;
   }
   if (action === 'wash') {
-    if (urgent) return `Hygiene at ${r(w.hygiene ?? 80)}: every hour under ${GRIMY} wears on the mood.`;
+    if (urgent) return `Hygiene at ${r(w.hygiene ?? 80)}: every hour under ${GRIMY} wears on your morale.`;
     return gain >= 0.5 ? `Hygiene at ${r(w.hygiene ?? 80)}, and stress at ${r(w.stress)} it would ease.` : `Hygiene at ${r(w.hygiene ?? 80)}: little to gain yet.`;
   }
   if (action === 'unwind') {

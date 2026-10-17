@@ -103,10 +103,10 @@ const DIALS = [
   { key: 'stress', name: 'Stress', unit: 'level', behind: (p: Spoken) => `How wound up ${p.they} ${p.are}. High stress spoils ${p.their} sleep` },
   { key: 'sleepDebt', name: 'Sleep Debt', unit: 'hours', behind: (p: Spoken) => `Sleep ${p.they} ${p.s('owe')}, which a night pays back` },
   { key: 'morale', name: 'Morale', unit: 'level', behind: (p: Spoken) => `${upper(p.their)} mood. When it’s up, a night clears more of the day’s stress` },
-  { key: 'condition', name: 'Condition', unit: 'level', behind: (p: Spoken) => `How sound ${p.their} body is. It sets how much a night gives back, ${p.their} mood, sick days, and how likely each year is to be ${p.their} last` },
+  { key: 'condition', name: 'Condition', unit: 'level', behind: (p: Spoken) => `How sound ${p.their} body is. It sets how much a night gives back, ${p.their} morale, sick days, and how likely each year is to be ${p.their} last` },
   { key: 'fitness', name: 'Fitness', unit: 'level', behind: (p: Spoken) => `How trained ${p.their} body is${p.they === 'you' ? ', the Stamina on your Player Profile' : ''}. It sets how far rest can mend ${p.them} and what a workout costs` },
   { key: 'nourishment', name: 'Nourishment', unit: 'level', behind: (p: Spoken) => `How well fed ${p.they} ${p.are}. A meal puts it back` },
-  { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: (p: Spoken) => `How clean ${p.they} ${p.are}. When it’s low, it drags on ${p.their} mood, and on readiness a little` },
+  { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: (p: Spoken) => `How clean ${p.they} ${p.are}. When it’s low, it drags on ${p.their} morale, and on readiness a little` },
 ] as const;
 
 /** What each measure is, said to the player on its own look (from 2026-10-17, brief 14). */
@@ -373,12 +373,12 @@ function sentenceFor(dial: Dial, now: number, p: Spoken): string {
     case 'nourishment':
       // With the day’s meals: at least 76 each morning when the food is paid for, 40 when it can’t be.
       return (n > 70 ? `${n}. Well fed.`
-        : n >= 20 ? `${n}. Getting hungry. Under 20, hunger costs condition and mood every hour.`
-          : `${n}. Hungry, and it’s costing condition and mood every hour.`)
+        : n >= 20 ? `${n}. Getting hungry. Under 20, hunger costs condition and morale every hour.`
+          : `${n}. Hungry, and it’s costing condition and morale every hour.`)
         + ' Each morning the day’s groceries bring it up to at least 76, or to 40 on a day the food can’t be paid for.';
     case 'hygiene':
       return (n >= 50 ? `${n}. Clean enough not to bother ${p.them}.`
-        : `${n}. Under 50, it wears on ${p.their} mood every hour. A shower puts it back.`)
+        : `${n}. Under 50, it wears on ${p.their} morale every hour. A shower puts it back.`)
         + ' The morning shower brings it up to at least 82.';
     default:
       return `${n}.`;
@@ -547,7 +547,7 @@ defineLook<Carried>('condition', {
           ? ` Until then ${theyAre} laid up, kept from classes, work and training.`
           : INJURY_KIND[hurt.kind].limits !== 'none' ? ` Until then ${p.they} can’t work out, and it holds back the physical side of ${p.their} work.` : ''}`,
         parent: at('person', person.id),
-        ways: [{ to: at('dial', `${person.id}/condition`), label: 'Condition', detail: `How sound ${p.their} body is. An injury doesn’t lower it, but it adds to ${p.their} stress and lowers ${p.their} mood each day.` }],
+        ways: [{ to: at('dial', `${person.id}/condition`), label: 'Condition', detail: `How sound ${p.their} body is. An injury doesn’t lower it, but it adds to ${p.their} stress and lowers ${p.their} morale each day.` }],
         provenance: 'How long it takes depends on the injury, and it’s longer for somebody illness hits harder.',
       };
     }

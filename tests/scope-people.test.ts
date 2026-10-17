@@ -103,10 +103,10 @@ describe('l-person: another person’s look reads their traits, their condition 
     expect(labels).toEqual(['Energy', 'Stress', 'Sleep Debt', 'Morale', 'Condition', 'Fitness', 'Nourishment', 'Hygiene', 'Readiness', 'Curious', 'Frugal']);
     expect(her.ways!.find((w) => w.label === 'Energy')!.detail).toMatch(/^\d+\/100\. What’s left in her for today\. Sleep brings it back\.$/);
     expect(her.ways!.find((w) => w.label === 'Stress')!.detail).toMatch(/\. How wound up she is\. High stress spoils her sleep\.$/);
-    expect(her.ways!.find((w) => w.label === 'Condition')!.detail).toMatch(/\. How sound her body is\. It sets how much a night gives back, her mood, sick days, and how likely each year is to be her last\.$/);
+    expect(her.ways!.find((w) => w.label === 'Condition')!.detail).toMatch(/\. How sound her body is\. It sets how much a night gives back, her morale, sick days, and how likely each year is to be her last\.$/);
     expect(her.ways!.find((w) => w.label === 'Fitness')!.detail).toMatch(/\. How trained her body is\. It sets how far rest can mend her and what a workout costs\.$/);
     expect(her.ways!.find((w) => w.label === 'Nourishment')!.detail).toMatch(/\. How well fed she is\. A meal puts it back\.$/);
-    expect(her.ways!.find((w) => w.label === 'Hygiene')!.detail).toMatch(/\. How clean she is\. When it’s low, it drags on her mood, and on readiness a little\.$/);
+    expect(her.ways!.find((w) => w.label === 'Hygiene')!.detail).toMatch(/\. How clean she is\. When it’s low, it drags on her morale, and on readiness a little\.$/);
     expect(her.ways!.find((w) => w.label === 'Readiness')!.detail).toMatch(/^How ready she is today, from all of these but fitness\. .* and how judged work goes\.$/);
     expect(her.ways!.find((w) => w.label === 'Curious')!.to).toEqual(at('trait', `${cleo.id}/curious`));
     expect(her.ways!.find((w) => w.label === 'Energy')!.to).toEqual(at('dial', `${cleo.id}/energy`));
@@ -227,14 +227,14 @@ describe('l-person: another person’s look reads their traits, their condition 
     const hers = (key: string) => dialOf(cleo, key).summary!;
     expect(hers('energy')).toBe('90. Plenty for a full day.');
     expect(hers('sleepDebt')).toBe('None to speak of. She’s caught up on sleep.');
-    expect(hers('hygiene')).toBe('44. Under 50, it wears on her mood every hour. A shower puts it back. The morning shower brings it up to at least 82.');
+    expect(hers('hygiene')).toBe('44. Under 50, it wears on her morale every hour. A shower puts it back. The morning shower brings it up to at least 82.');
     expect(hers('condition')).toMatch(/^\d+\. (?:As sound as rest can make her at her fitness\.|At her fitness, rest can mend it to \d+\.).* The lower it is, the likelier a year is to be her last\.$/);
     expect(hers('fitness')).toMatch(/^\d+\. At this fitness, rest can mend her condition to \d+, and a workout costs \d+ energy\./);
     expect(dialOf(dev, 'energy').summary).toBe('90. Plenty for a full day.');
     expect(dialOf(dev, 'sleepDebt').summary).toBe('None to speak of. He’s caught up on sleep.');
     expect(dialOf(kit, 'energy').summary).toBe('90. Plenty for a full day.');
     expect(dialOf(kit, 'sleepDebt').summary).toBe('None to speak of. They’re caught up on sleep.');
-    expect(dialOf(kit, 'hygiene').summary).toMatch(/wears on their mood every hour/);
+    expect(dialOf(kit, 'hygiene').summary).toMatch(/wears on their morale every hour/);
     // At 30 and 86 the other branches: running down, and clean enough.
     cleo.wellbeing = { ...cleo.wellbeing, energy: 30, hygiene: 86 };
     expect(hers('energy')).toBe('30. She’s running low, and it pulls readiness down. Under 15, stress starts to climb.');
@@ -259,7 +259,7 @@ describe('l-person: another person’s look reads their traits, their condition 
     // The player's own, in the same world, are as they were.
     expect(dialOf(sim.player, 'energy').summary).toBe('90. Plenty for a full day.');
     expect(dialOf(sim.player, 'sleepDebt').summary).toBe('None to speak of. You’re caught up on sleep.');
-    expect(dialOf(sim.player, 'hygiene').summary).toBe('44. Under 50, it wears on your mood every hour. A shower puts it back. The morning shower brings it up to at least 82.');
+    expect(dialOf(sim.player, 'hygiene').summary).toBe('44. Under 50, it wears on your morale every hour. A shower puts it back. The morning shower brings it up to at least 82.');
     expect(look(sim, 'readiness', sim.player.id).kind).toBe('How Ready You Are Today');
 
     // Her look's own summary, at energy under fifteen, says nothing to the player of her sleep (until 2026-10-15

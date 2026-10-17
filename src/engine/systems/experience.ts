@@ -26,6 +26,7 @@
 
 import type { Person } from '../domain/model';
 import { zonedParts, type Instant } from '../core/time';
+import { plural } from '../core/text';
 import type { MaterialProfile } from '../content/material';
 import type { Identity } from './artistry';
 import { ENGAGEMENT } from '../content/engagement';
@@ -253,7 +254,10 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
       const label = cost.get(what)?.label ?? labelOf(what);
       const each = Math.round(f.points * 10) / 10;
       // The work it read and the gain it expects, by name (from brief 10, F2-A10 (g)): until then "(N of the pieces read it)".
-      const read = f.of !== undefined ? ` (${f.pieces} of your last ${f.of} ${f.of === 1 ? 'piece calls' : 'pieces call'} on it${f.most ? `; ${f.most.what} would gain most, about ${f.most.points >= 0 ? '+' : ''}${Math.round(f.most.points * 10) / 10}` : ''})` : ` (${f.pieces} of the pieces call on it)`;
+      // One piece read is “your last piece”, and the verb agrees with the pieces that call on it (from 2026-10-17, brief 14's
+      // cross-area pass): until then it read “1 of your last 1 piece calls on it” and “1 of your last 5 pieces call on it”.
+      const calls = `${f.pieces === 1 ? 'calls' : 'call'} on it`;
+      const read = f.of !== undefined ? ` (${f.of === 1 && f.pieces === 1 ? 'your last piece' : `${f.pieces} of your last ${plural(f.of, 'piece')}`} ${calls}${f.most ? `; ${f.most.what} would gain most, about ${f.most.points >= 0 ? '+' : ''}${Math.round(f.most.points * 10) / 10}` : ''})` : ` (${f.pieces} of the pieces ${calls})`;
       const prepared = f.prepared ? ` It counts ${f.prepared === 1 ? 'the piece' : `the ${f.prepared} pieces`} held back most by ${f.prepared === 1 ? 'its' : 'their'} own preparation as fully prepared.` : '';
       const days = (f.days ?? 0) >= 0.05 ? ` About ${Math.round(f.days! * 10) / 10} of it is the discipline ${f.hours} days of practice build, which any exercise kept up daily would bring.` : '';
       out.push({ target: what, label, exercise: ex.id, tier: matchedTier(f.from), focus, points: each, forecast: f, why: `${f.hours} hours of its exercise${f.of !== undefined ? ', a session a day,' : ''} would take it from ${Math.round(f.from)} to about ${Math.round(f.to)}. On your recent work, replayed with you as you are now, that’s forecast to be worth about ${each} ${each === 1 ? 'point' : 'points'} a piece${read}.${prepared}${days} ${focus === 'spaced' ? SPACED_NOW : STEADY_FIRST}` });

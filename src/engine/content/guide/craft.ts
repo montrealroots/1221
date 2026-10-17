@@ -442,7 +442,7 @@ export const CRAFT: readonly GuideEntry[] = [
       '“You haven’t started training, so there’s nothing to practice yet.”',
       '“Not from a hospital bed.”, “You’re asleep.”, “You’re at … until ….” or “… starts at …: there isn’t the time before it.”',
       `“You’ve practiced ${plural(PRACTICE.dailyHours, 'hour')} today, and more stops helping after that. Practice again tomorrow.”`,
-      '“You’re too tired to work on your feet. Sleep first.”, or an injury’s “Not with …; it has … days yet to mend.”',
+      '“You’re too tired to work on your feet. Sleep first.”, or an injury’s “Not with …; it has … yet to mend.”',
       // Until 2026-10-13 this named “It takes a classmate, and you have no class to ask.” and “This exercise has nothing it
       // carries over to.”, refusals no play reached, which went that day (`systems/practice.ts`).
       'Stamina has no exercise: its row says Work Out, under Look After Yourself. Discipline has none either: it grows from practice kept up, day after day.',
@@ -524,7 +524,7 @@ export const CRAFT: readonly GuideEntry[] = [
       'It Asks For names each technique with your level against mastery, or says the research didn’t establish one: “Not established: the research rests on one example”, or “No more than any self-tape asks”.',
       'A genre’s look gives Familiarity, Work In It and Preparation: how much faster the better of the two makes a scene or a part from a play of its kind, where a brief’s steps speed up with material you’ve met before instead. It gives what the research found the genre asks, and how sure it is.',
       `Knowing The Genre, inside a brief, is the better of the first two against the ${pct(BRIEF.complete.genre)} that completes it.`,
-      'The Genre Asks, inside a brief, names each of its genre’s concerns: what it asks, what a self-tape in it is judged more on and calls on, and which part of preparation answers it. A take held back most by an ability a concern asks for says so: “Composure held back the consistency by 4.2 points: Nordic Noir’s Feeling Held In asks for it”.',
+      'The Genre Asks, inside a brief, names each of its genre’s concerns: what it asks, what a self-tape in it is judged more on and calls on, and which part of preparation answers it. A tape held back most by an ability one of those concerns asks for says so: “Your … held back … by … points: …’s … asks for it.”, as when your Composure held back Consistency by 4.2 points and Nordic Noir’s Feeling Held In asks for it.',
       '“You love it” on a genre’s look means a day of its work is a better day: loving it doesn’t make the work faster or limit it.',
     ],
     unavailable: [
@@ -609,7 +609,7 @@ export const CRAFT: readonly GuideEntry[] = [
       'Past what every beat asks, more rehearsal adds nothing to a take.',
     ],
     unavailable: [
-      '“There’s nothing more to gain from it now.”: the part is at 97% or more. Rehearsal still goes on while a way of playing it, once chosen, isn’t fully rehearsed yet.',
+      '“You’ve done all this step can do.”: the part is at 97% or more. Rehearsal still goes on while a way of playing it, once chosen, isn’t fully rehearsed yet.',
       '“Learn some of the lines first: there’s nothing to rehearse without them.”',
       `“You’re too tired to work on your feet. Sleep first.”, or an injury still mending, for ${BRIEF.steps.rehearse.label}.`,
       '“Not from a hospital bed.”, “You’re asleep.”, “You’re at … until ….” or “… starts at …: there isn’t the time before it.”',
@@ -770,7 +770,7 @@ export const CRAFT: readonly GuideEntry[] = [
       LOCKED,
     ],
     mistakes: [
-      'Choosing a classmate on the day of the take: they start with nothing, and the take with them comes out under the recording’s. Choose them before you rehearse: once your own rehearsal is at 97% or more and any way you chose is fully rehearsed, Rehearse It On Your Feet says “There’s nothing more to gain from it now.”, and only Run It With Your Partner, while Work It Through names them, brings them along.',
+      'Choosing a classmate on the day of the take: they start with nothing, and the take with them comes out under the recording’s. Choose them before you rehearse: once your own rehearsal is at 97% or more and any way you chose is fully rehearsed, Rehearse It On Your Feet says “You’ve done all this step can do.”, and only Run It With Your Partner, while Work It Through names them, brings them along.',
       'Switching readers to try one: switching back starts the first from nothing again.',
       'Reading a lower take together as weaker work of yours: your own result is kept apart, and your record keeps it.',
     ],
@@ -850,10 +850,10 @@ export const CRAFT: readonly GuideEntry[] = [
       'Continuity, under the beats, is how evenly the character held: shown beside the take, never added to it.',
       '“Played against the callback’s note: the callback is still yours.” means the note wasn’t answered.',
       'Where It Would Show Next suggests up to five, each with why: a callback waiting; the brief you haven’t taped that leans most on the weakness What To Work On names, or on the one your work keeps coming back to where recent work names none (once every brief is taped, the one leaning most); one built on material your work hasn’t met; one taped before that takes it the other way from a habit; the brief of the genre your work knows least, new to you; and a reading of a taped brief you haven’t tried.',
-      'A weakness no practice brief reads is suggested no brief, and What To Work On says so: “No practice brief reads …, so a take won’t show it and none is suggested for it.”',
+      'A weakness no practice brief calls on gets no brief suggested for it, and What To Work On says so: “No practice brief calls on …, so a tape won’t show it and none is suggested for it.”',
     ],
     unavailable: [
-      '“Choose a reading first: a take is of the scene played one way, and you should know which before the camera rolls.”',
+      '“Choose a reading first. A self-tape plays the scene one way, so decide which before the camera rolls.”',
       '“Your training hasn’t begun: there’s no craft to tape yet.”',
       '“There’s no such genre.”, “There’s no such brief.” or “… isn’t a scene of that genre.”',
       '“Not from a hospital bed.”, “You’re asleep.”, “You’re at … until ….” or “… starts at …: there isn’t the time before it.”',

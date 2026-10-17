@@ -211,7 +211,7 @@ describe('an uninsured hospital bill says what the charity did with it', () => {
     expect(bill.aid).toBe('refused');
     const { text } = drawn(sim, PapersWorkspace, healthTab);
     expect(text).toContain('Over The Limit');
-    expect(text).not.toContain('Charity Taken Off');
+    expect(text).not.toContain('Assistance Taken Off');
     expect(aidRefusal(bill, sim.now)).toBe('It’s already been put in for the hospital’s financial assistance.');
     expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: bill.id } }).error).toBe('It’s already been put in for the hospital’s financial assistance.');
   });
@@ -220,7 +220,7 @@ describe('an uninsured hospital bill says what the charity did with it', () => {
     const { sim, bill } = emergency('g86-charity-under', (CHARITY.connecticut.freeTo + CHARITY.connecticut.discountTo) / 2);
     expect(bill.aid).toBe('screened');
     const { text } = drawn(sim, PapersWorkspace, healthTab);
-    expect(text).toContain('Charity Taken Off');
+    expect(text).toContain('Assistance Taken Off');
     expect(aidRefusal(bill, sim.now)).toBe('The hospital’s financial assistance has already come off it.');
   });
 });

@@ -418,7 +418,7 @@ describe('p-abilities', () => {
 // ---------------------------------------------------------------------------
 
 describe('p-journey-history', () => {
-  const journey = (sim: Simulation) => between(drawn(sim, ProfileWorkspace).text, 'School Journey', 'Your School');
+  const journey = (sim: Simulation) => between(drawn(sim, ProfileWorkspace).text, 'School Journey', 'School');
 
   /**
    * Your Work So Far worked out here from the records it reads, by the rule's own numbers (`ARTISTRY`: a pattern from

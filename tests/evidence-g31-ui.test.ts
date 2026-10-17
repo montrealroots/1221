@@ -472,7 +472,7 @@ describe('p-traits-line', () => {
     fresh();
     const sim = life('g31-dispositions', { personality, personalityTraits: ['early_riser', 'even_tempered'] });
     const html = profile(sim);
-    expect(dispositions(html)).toBe('Emotional Stability 72, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 40, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 70, over 65, so your card’s autopay began on the minimum payment; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 30, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood; Agreeableness 80, how a day of rehearsal affects your mood.');
+    expect(dispositions(html)).toBe('Emotional Stability 72, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 40, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 70, over 65, so your card’s autopay began on the minimum payment; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 30, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 80, how a day of rehearsal affects your morale.');
     // Where composure starts: 25 and 0.35 a point of stability, 50.2 at 72. Where discipline starts: 30 and half a
     // point of conscientiousness, 50.0 at 40. Each as the Attributes table shows it.
     expect(rowOf(abilities(html), 'Composure')[1]).toBe('50.2');

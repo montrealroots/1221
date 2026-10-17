@@ -470,7 +470,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       '“There’s no way left at this note that hasn’t been tried and put back, or tried and found to change nothing.”',
       '“Keep or put back the change you tried first.”',
       '“Learn some of the part first: there’s nothing to rehearse without it.”',
-      '“Not from a hospital bed.”, “You’re asleep.”, “You’re too tired to work on your feet. Sleep first.” or an injury’s “Not with …; it has … days yet to mend.”',
+      '“Not from a hospital bed.”, “You’re asleep.”, “You’re too tired to work on your feet. Sleep first.” or an injury’s “Not with …; it has … yet to mend.”',
       '“You’re at … until ….”, or “… starts at …: there isn’t the time before it.”',
       '“You aren’t cast in anything there.” and “The run is over.”',
       LOCKED,

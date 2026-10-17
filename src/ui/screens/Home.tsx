@@ -95,7 +95,10 @@ export function Home() {
     const was = kept.get(a.institution ?? '') ?? { currency: a.currency, held: 0 };
     kept.set(a.institution ?? '', { currency: was.currency, held: was.held + heldOf(a) });
   }
-  const keptWords = [...kept].map(([bank, k]) => `, and ${formatMoney(k.held, k.currency)} at ${bank}`).join('');
+  // A negative written with the minus sign, as Money writes an overdrawn balance (“−$3.30”), from 2026-10-17 (brief 14):
+  // until then Home's line said “Worth -$227” where Money said “−$227”.
+  const signed = (text: string) => text.replace(/(^|\()-/g, '$1−');
+  const keptWords = [...kept].map(([bank, k]) => `, and ${signed(formatMoney(k.held, k.currency))} at ${bank}`).join('');
   const place = city ? placeProfile(sim, city.id) : undefined;
   const today = dateKey(sim.now, sim.zone);
   const season = seasonOf(sim.now, sim.zone, city?.latitude ?? 34);
@@ -478,7 +481,7 @@ export function Home() {
           {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
             <AffairLine
               title="Money"
-              line={`${primary?.name ?? 'No account'}: ${primary ? balanceText(sim, primary) : formatMoney(0, cur)}${keptWords}. Worth ${formatMoney(worth.total, cur, { cents: false })}${worth.liabilities > 0 ? `, ${formatMoney(worth.liabilities, cur, { cents: false })} of it owed` : ''}.`}
+              line={`${primary?.name ?? 'No account'}: ${primary ? signed(balanceText(sim, primary)) : formatMoney(0, cur)}${keptWords}. Worth ${signed(formatMoney(worth.total, cur, { cents: false }))}${worth.liabilities > 0 ? `, ${formatMoney(worth.liabilities, cur, { cents: false })} of it owed.` : '.'}`}
               alert={(primary?.balance ?? 0) < 0 ? 'Your account is overdrawn.' : undefined}
               action={<Gated feature="ui.bank" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{primary?.institution ?? 'Your Bank'}</Gated>}
               help="bank.accounts"

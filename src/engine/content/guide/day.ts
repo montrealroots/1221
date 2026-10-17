@@ -423,7 +423,7 @@ export const DAY: readonly GuideEntry[] = [
     unavailable: [
       `Open Calendar, Put Something On It and Call It Off show Locked until ${chapter('plans')} is read.`,
       '“That time has already passed. Pick a time that’s still to come.” The clock passed the start while the form was open.',
-      '“The calendar takes plans up to five years ahead. Pick an earlier day.” The day is past the furthest the calendar takes a plan.',
+      '“The calendar takes plans up to … years ahead. Pick an earlier day.” The day is past the furthest the calendar takes a plan.',
       '“It’s already started, so it can’t be called off now.” Call It Off after the plan’s start has come.',
     ],
     mistakes: [
@@ -507,7 +507,7 @@ export const DAY: readonly GuideEntry[] = [
         'Check the next hour is dry, and not freezing or sweltering.',
         'Open Look After Yourself and press Work Out.',
       ],
-      result: `The hour was a run: ${RUN_MORE}% more fitness than the same hour indoors, for more calories burned and a run’s higher chance of an injury. The Work Out line had said so before you pressed it: “A run in fine weather.”`,
+      result: `The hour was a run: ${RUN_MORE}% more fitness than the same hour indoors, for more calories burned and a run’s higher chance of an injury. The Work Out line had said so before you pressed it, opening “A run in fine weather”.`,
     },
   },
 ];

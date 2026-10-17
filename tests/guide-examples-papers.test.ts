@@ -364,7 +364,7 @@ PLAYS['papers.health-cover'] = () => {
   expect(coverOn(sim.player, sim.now)).toBeUndefined();
   expect(careQuote(sim, sim.player, 'visit')).toBe(uninsuredPrice(sim, 'visit', sim.now));
   expect(careQuote(sim, sim.player, 'emergency')).toBeLessThan(uninsuredPrice(sim, 'emergency', sim.now));
-  expect(ex.result).toContain('Care in August, uncovered, is billed at the uninsured price, less the hospital’s charity on an emergency or a stay.');
+  expect(ex.result).toContain('Care in August, uncovered, is billed at the uninsured price, less the hospital’s financial assistance on an emergency or a stay.');
   // Enroll, and the toast as the screen words it.
   const enrolled = sim.must<{ from: number; kind: string }>({ kind: 'health.enroll', payload: {} });
   expect(enrolled.kind).toBe('marketplace');
