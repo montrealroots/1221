@@ -324,6 +324,26 @@ if os.path.exists(f'{B11F}/figures.json'):
             r['failure'] = f"{r['failure']}; on brief 11's tested commit ({B11AT}): {'the same' if FIG11[r['id']] == FIG10.get(r['id']) else FIG11[r['id']]}"
             r['evidence'] = f"{r['evidence']}; {B11F}/README.md"
             r['citations'] = r['citations'] + [{'file': f'{B11F}/figures.json'}]
+# Brief 11's final runs (completion-2026-10-16/runs/, figures.json read from their outputs by runs/figures.py, none
+# typed): the long runs, the built app and F2-A's cases on the commit the runs name, the gate on the commit gate.txt names.
+# Until they're there, these rows stay brief 10's, and the matrix calls them unverified where what they read has changed.
+B11R = f'{B11}/runs'
+FIG11R = json.load(open(f'{B11R}/figures.json', encoding='utf-8')) if os.path.exists(f'{B11R}/figures.json') else {}
+if FIG11R:
+    R11 = re.search(r'^at (\w+)', open(f'{B11R}/exits-A.txt', encoding='utf-8').read(), re.M).group(1)
+    GATE11 = re.search(r'^at (\w+)', open(f'{B11R}/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG11R else None
+    for r in rows:
+        m = r.get('measured')
+        gate = r['id'] == 'INT-gate'
+        if not (m in (RUNS10, BUILT10) or (gate and m and m.get('watch') == 'app')):
+            continue
+        if gate and not GATE11:
+            continue  # the gate's figure, folded in once it has run
+        assert r['id'] in FIG11R, r['id']
+        r['measured'] = {'commit': GATE11, 'watch': 'app'} if gate else {'commit': R11, 'watch': m['watch']}
+        r['failure'] = f"{r['failure']}; brief 11 ({r['measured']['commit']}): {'the same' if FIG11R[r['id']] == FIG10R.get(r['id']) else FIG11R[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {B11R}/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{B11R}/figures.json'}] + ([{'file': f'{B11R}/gate.txt'}] if gate else [])
 # Brief 11's areas' results (completion-2026-10-16/<area>-result.json, the coordinator's integration-result.json among
 # them): each row an area worked, its status and the tests it cites, read onto the matrix, never typed here. An area's
 # item takes an override; a criterion or shortfall row here is changed in place. The audit's rows aren't taken: their
