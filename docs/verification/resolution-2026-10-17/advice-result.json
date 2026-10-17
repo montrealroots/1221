@@ -1,0 +1,624 @@
+{
+ "area": "advice",
+ "on": "2d71d188 (the last commit to change code or tests); measurements and this result committed after it",
+ "against": "20b6d777 (brief 12's instructions), on aeb4c917; main at 9302b29c",
+ "commits": [
+  "864c01e5 F2-A10 (f) and (h) clarified as the owner resolved them, before any test or code they govern changes",
+  "994c29a3 The fresh validation set, adv-v-0 to 119, refused without --fresh; brief 11's held-out set is regression coverage",
+  "1f9a89a5 The advice says what its forecast assumes, which deserves attention, and what moved a forecast, in parts",
+  "b81f4a08 The measure works out every clarified clause of (f) and (h), on each case, its cold take and every read after",
+  "37331652 The owner's five players, the detectors and the fresh summary held in the gate, through the commands",
+  "e9e647df F3's test plays adv-t-6, where the brief's own state missed (e) and the forecast's own reading doesn't",
+  "e89bd9f5 Three claims the mutations found unguarded: the growth rule, discipline's place in the parts, the edge of known better",
+  "2d71d188 The harness's header says what brief 12 added to it",
+  "47035cee The advice area's measurements on its final code, 2d71d188, kept beside its result"
+ ],
+ "rows": [
+  {
+   "id": "advice.F2A10-f",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Decision Required",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Verified in the gate on tuning seeds for every clarified clause. The fresh set is the coordinator's one run on the tested commit: the row stays Implemented And Verified only where that run shows the figures in forTheCoordinator.measurements; a figure short of them makes it remaining, with that figure.",
+   "criterion": "F2-A10 (f) as the owner resolved it, F1 to F6 in docs/verification/resolution-2026-10-17/advice-criteria.md (committed 864c01e5 before any test or code it governs changed): F1 training's benefit apart from preparation's; F2 what the forecast assumes of preparation and genre knowledge, said and equal to the records; F3 the forecast against what twenty played sessions brought, read under the forecast's own assumptions and budget, within (e)'s 0.3 or a quarter on 80% of the fresh set and 70% of each band and stage; F4 no unprepared take read as prepared without its counterfactual (named, each part short, the figure as taped, what preparation would bring), and no other piece read better prepared than its record; F5 whether preparation, ability development or both deserve attention, from the judge's replay, at the advice's floor of a tenth; F6 diminishing returns read in the growth the progression model gives.",
+   "superseded": {
+    "asWritten": "Near mastery, a predicted gain falls as the input's level rises (diminishing returns), on every case; where a take's preparation, not an ability, held it back, the advice's figures read the take as prepared. (../decisions-2026-10-16/criteria.md)",
+    "asWrittenResults": "Brief 10: ladder 30 of 30 near mastery by a median 0.0010; every candidate 277 of 287 (276 integrated); a step of a take's own preparation held back 0 of 0 held-out cases. Brief 11 held-out on 3de26e0b: ladder 30 of 30, every candidate 276 of 287.",
+    "briefElevenClarification": "../completion-2026-10-16/clarifications.md, F2-A10 (f)",
+    "briefElevenResults": "Held out on 3de26e0b: preparation apart 120 of 120; below three quarters the forecast fell with the level on 110 of 111 (adv-h-1): not met.",
+    "by": "Brief 12, section 2: superseded with this authorization, not passed; the results kept as they were."
+   },
+   "exercised": "Through sim.execute and the drawn Player Profile and brief pane, across loadSave(deserialise(serialise(...))): adv-t-15 near mastery with The Spare Key taped cold (its own preparation held it back most); adv-t-4 beginner with the same take cold (an ability held it back); a take in a genre already known in full (TEST SETUP); the attention verdict driven to all four answers by changing one side at a time (TEST SETUP: every piece's own preparation complete and its genres known in full; every input training reaches at full); adv-t-1, adv-t-6 and adv-t-19 played twenty sessions against a baseline copy for F3, and one session played at 60 and at 85 against the forecast's one session for F6. The measure works every clause on every case, as built and with a cold take drawn from the seed: 30 of 30 tuning cases and 6 of 6 regression cases on 2d71d188.",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+     "kind": "player journey",
+     "proves": "F2 and F4: the engine's account of what the forecast assumes equals the records' (complete, short, read as prepared, genres short and known better); the cold take named with each part at 0%; the first-named's figure read as taped equal, to 1e-9, to the forecast worked from the records with that take as taped, and said; every input's forecast equal to the records' reading with only that take as prepared; F1: preparation's figure equal to the judge's replay from the records, never in training's (exact = own + days); on the Profile and the brief's pane, the same across a save and a load; a beginner's ability-held cold take read as taped and named as no prepared piece; a genre known in full at the take not counted known better."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says whether preparation, training or both deserve attention, from what the judge’s replay gives each, and the verdict follows the figures when one side is changed",
+     "kind": "player journey",
+     "proves": "F5: preparation's own and genre figures equal to the records' judge replay to 1e-9; the verdict both, its words and both figures on both screens; with every piece prepared and every genre known in full, training alone; with everything training reaches at full besides, neither; the cold case with everything at full, preparation alone."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: the forecast’s growth is the progression model’s: on the first-named’s ladder it never rises with the level and falls below three quarters of full; the forecast is within (e)’s tolerance of what twenty sessions brought, read under its own assumptions",
+     "kind": "player journey",
+     "proves": "F6: the forecast's growth ladder never rises with the level and falls below three quarters of full; one played session against the forecast's one session gives the same ratio at 60 and at 85. F3: on adv-t-1, adv-t-6 and adv-t-19 the forecast is within 0.3 or a quarter of what twenty played sessions brought read on the forecast's pieces, and on adv-t-6 read on the briefs' own state ((e) as written) it isn't."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: reaches mastery: the first-named practiced to full through practice.exercise drops out, the next by forecast is named and the standing says the first has nothing left to forecast; with everything training reaches at full the advice says so, and the verdict asks for preparation alone, across a save and a load",
+     "kind": "player journey",
+     "proves": "F5 at mastery: with everything training reaches at full, the advice says so first and the verdict asks for preparation alone."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+     "kind": "player journey",
+     "proves": "Brief 11's, kept: preparation's figure apart from training's, on the screen."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate",
+     "kind": "player journey",
+     "proves": "Brief 11's, kept: past three quarters the played growth is the forecast's in one ratio at every rung."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built",
+     "kind": "guard",
+     "proves": "The measure works F1 to F6 out on adv-t-0, each met, and its summary reports each clause for the fresh set as a whole and by every band and stage (that case's output labeled as each stratum: no fresh case built)."
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/summary.json",
+     "title": "npx vite-node tools/advice.ts -- --summarize docs/verification/resolution-2026-10-17/advice/tuning-adv-0-9.json docs/verification/resolution-2026-10-17/advice/tuning-adv-t-0-19.json docs/verification/resolution-2026-10-17/advice/regression-spot.json --out docs/verification/resolution-2026-10-17/advice/summary.json (each run on 2d71d188, tracked tree clean)",
+     "kind": "measurement",
+     "proves": "Tuning 30 of 30 on F1, F2, F3, F4, F5 and F6; the cold take read as prepared on 27 of 30; regression spot (adv-h-1, 22, 102, 111, 10, 57) 6 of 6 on every clause."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "What the forecast assumes said, each take read as prepared named with how far short each part was and the first-named's figure read as taped (F2, F4): until then such a take was counted and named nowhere, and the genre read as known today was said only in the guide",
+     "where": "src/engine/systems/advice.ts (assumedOf, trainingForecast's asTaped), src/engine/systems/next-steps.ts (assumesOf), the Profile and the brief's pane",
+     "failingTest": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load fails on 994c29a3 (assumedOf is not a function; no assumes)"
+    },
+    {
+     "summary": "Whether preparation, training or both deserve attention said, with both figures (F5)",
+     "where": "src/engine/systems/advice.ts (preparationWorth), src/engine/systems/next-steps.ts (attentionOf, attentionSaid), the Profile and the brief's pane",
+     "failingTest": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says whether preparation, training or both deserve attention, from what the judge’s replay gives each, and the verdict follows the figures when one side is changed fails on 994c29a3 (attentionOf is not a function)"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "preparation added into training's figure",
+     "where": "src/engine/systems/advice.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today",
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ]
+    },
+    {
+     "what": "pieces read as prepared counted as short and read as taped",
+     "where": "src/engine/systems/advice.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ]
+    },
+    {
+     "what": "the as-taped figure read as prepared",
+     "where": "src/engine/systems/next-steps.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ]
+    },
+    {
+     "what": "a piece read as prepared not named",
+     "where": "src/engine/systems/next-steps.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ]
+    },
+    {
+     "what": "any piece with a preparation limit read as prepared",
+     "where": "src/engine/systems/advice.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+      "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+     ]
+    },
+    {
+     "what": "the verdict ignores preparation",
+     "where": "src/engine/systems/next-steps.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: reaches mastery: the first-named practiced to full through practice.exercise drops out, the next by forecast is named and the standing says the first has nothing left to forecast; with everything training reaches at full the advice says so, and the verdict asks for preparation alone, across a save and a load",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says whether preparation, training or both deserve attention, from what the judge’s replay gives each, and the verdict follows the figures when one side is changed",
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ]
+    },
+    {
+     "what": "preparation's figure from the pieces as the forecast reads them, not as taped",
+     "where": "src/engine/systems/advice.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says whether preparation, training or both deserve attention, from what the judge’s replay gives each, and the verdict follows the figures when one side is changed",
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ]
+    },
+    {
+     "what": "the forecast's growth slowed past three quarters",
+     "where": "src/engine/systems/advice.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: the forecast’s growth is the progression model’s: on the first-named’s ladder it never rises with the level and falls below three quarters of full; the forecast is within (e)’s tolerance of what twenty sessions brought, read under its own assumptions"
+     ],
+     "before": {
+      "on": "e9e647df",
+      "killed": false,
+      "by": [],
+      "note": "survived until e89bd9f5 held the claim (see that commit)"
+     }
+    },
+    {
+     "what": "genre known better counted from at least as well",
+     "where": "src/engine/systems/advice.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load"
+     ],
+     "before": {
+      "on": "e9e647df",
+      "killed": false,
+      "by": [],
+      "note": "survived until e89bd9f5 held the claim (see that commit)"
+     }
+    }
+   ],
+   "missing": "Nothing in the gate. The fresh set (adv-v-0 to 119) is run once by the coordinator on the tested commit; the figures that keep this row closed are in forTheCoordinator.measurements."
+  },
+  {
+   "id": "advice.F2A10-h",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Decision Required",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Verified in the gate on tuning seeds for every clarified clause. The fresh set is the coordinator's one run on the tested commit: the row stays Implemented And Verified only where that run shows the figures in forTheCoordinator.measurements; a figure short of them makes it remaining, with that figure.",
+   "criterion": "F2-A10 (h) as the owner resolved it, H1 to H6 in docs/verification/resolution-2026-10-17/advice-criteria.md (committed 864c01e5): H1 after twenty sessions the read isn't stale and the trained input's forecast moved, the move attributed (residual under 1e-9) with the work's and genres' parts 0; H2 an unchanged first-named only where it's still the largest, another named wherever another leads; H3 a rise permitted where the engine attributes it to inputs the save shows changed; H4 a rise explained, each part said; H5 stale reads and unexplained changes detected, 0 on the fresh set, the detectors shown to fire; H6 no rotation to inferior advice. A stale read (S1 to S3) and an unexplained change (a residual, a rise that can't be worked out, a rise unsaid) are defined there so a run or a test detects them.",
+   "superseded": {
+    "asWritten": "After the player follows it (20 sessions of the advised exercise, through the commands), the advice is read again: the trained input's predicted gain falls on every case, and the first-named changes wherever another input's gain now leads. (../decisions-2026-10-16/criteria.md)",
+    "asWrittenResults": "Brief 10: fell 141 of 150 held out (111 of 120 fresh; 113 of 120 integrated), the nine near mastery within a thousandth; changed where another led 62 of 62 (51 of 51). Brief 11 held-out on 3de26e0b: fell 113 of 120; changed where another led 51 of 51.",
+    "briefElevenClarification": "../completion-2026-10-16/clarifications.md, F2-A10 (h)",
+    "briefElevenResults": "Held out on 3de26e0b: the own part fell 116 of 120 (adv-h-1, 22, 102, 111 didn't): not met; fell or rose within discipline's lift and said 120 of 120, seen after the run.",
+    "by": "Brief 12, section 2: superseded with this authorization, not passed; the results kept as they were."
+   },
+   "exercised": "The players the owner named, through sim.execute and the drawn Player Profile, across loadSave(deserialise(serialise(...))): the follower near mastery (adv-t-19, twenty sessions, its forecast rose); the ignorer (adv-t-5, three weeks of taping, two briefs a week, no practice); the part follower (adv-t-5, seven of the twenty sessions, and twenty of the second-named's exercise); the work changer (adv-t-5, three voice briefs in genres never met); the player who reaches mastery (adv-t-19, practice.exercise up to four hours a day, 51 days to full). The detectors made to fire on adv-0 and adv-t-19 (an earlier read shown after the sessions; a note moved by a hundredth by hand; a note with no state, TEST SETUP). The measure checks every read it makes on every case (as built, the cold take, the follower, the ignorer and each other input's player): 485 reads and 806 changes on the 30 tuning cases, 0 stale and 0 unexplained.",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: followed near mastery, its forecast rose, and the advice works the rise out in parts, its own level and discipline and the other inputs the hours moved, the work and the genres nothing; it says each part, and the read isn’t stale, across a save and a load",
+     "kind": "player journey",
+     "proves": "H1, H3, H4: after twenty sessions the read isn't stale; the rise since the note made as the sessions began is worked out in parts summing to it (residual 0), the work and the genres 0, its own level negative and discipline positive, discipline's part brief 11's figure; the standing says each part at four places and agrees with brief 11's discipline sentence; on the Profile; the same across a save and a load."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: ignored for three weeks of taping, it keeps naming what brings most and is never stale; every move of its forecast is worked out in parts and said, the work it reads and how well you know its genres, a part whose input didn’t move nothing, across a save and a load",
+     "kind": "player journey",
+     "proves": "H5, H6: three weeks ignored, every read not stale and every change worked out and said, a part whose input didn't move exactly 0; brief 11's unexplained rise (composure still at 42, 1.00 to 1.28) now said as the work's and the genres'."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: partly followed, seven of the twenty sessions, the level moves less and the change is its own level’s and discipline’s; twenty sessions of another input’s exercise move its forecast through the other inputs and discipline; each said, never stale, across a save and a load",
+     "kind": "player journey",
+     "proves": "H1, H3, H4 for a part follower: seven sessions move the level less, the change its own level's and discipline's; another input's twenty sessions leave its own part 0 and move it through the other inputs, said; never stale; the same across a save and a load."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: changes their work, three briefs of another kind (the microphone’s) in genres never met: the work’s and the genres’ parts are worked out and said, the first-named is the forecast’s largest, never stale, across a save and a load",
+     "kind": "player journey",
+     "proves": "H3, H4, H5 for a player who changes their work: the voice briefs' work and genres parts nonzero, worked out and said, nothing unexplained, the read not stale, the same across a save and a load."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: reaches mastery: the first-named practiced to full through practice.exercise drops out, the next by forecast is named and the standing says the first has nothing left to forecast; with everything training reaches at full the advice says so, and the verdict asks for preparation alone, across a save and a load",
+     "kind": "player journey",
+     "proves": "H2, H6 at mastery: practiced to full, it drops out, the next by forecast is named and isn't stale, and the standing says the first has nothing left to forecast."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted",
+     "kind": "guard",
+     "proves": "H5: the detectors fire: a read from before twenty sessions shown after them is stale (S1, S2), a standing from before is stale (S3); a note's forecast moved by a hundredth is said untraced (−0.0100) and counted unexplained; a stateless note's rise is said to be beyond working out and counted."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the trained input’s forecast falls, and with another’s now ahead, another is named first",
+     "kind": "player journey",
+     "proves": "Brief 10's, kept: once followed (adv-0), another now ahead is named first (H2)."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+     "kind": "player journey",
+     "proves": "Brief 11's, kept: the near-mastery rise no more than discipline's lift, said."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought",
+     "kind": "player journey",
+     "proves": "Brief 11's L1, kept: ignored for five weeks it keeps the input that brings most and what it says changes each week (H6)."
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built",
+     "kind": "guard",
+     "proves": "The measure works H1 to H6 out on adv-t-0, each met, with the follower, the ignorer and the cold take among its reads, and its summary reports each clause by fresh stratum."
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/summary.json",
+     "title": "npx vite-node tools/advice.ts -- --summarize docs/verification/resolution-2026-10-17/advice/tuning-adv-0-9.json docs/verification/resolution-2026-10-17/advice/tuning-adv-t-0-19.json docs/verification/resolution-2026-10-17/advice/regression-spot.json --out docs/verification/resolution-2026-10-17/advice/summary.json (each run on 2d71d188, tracked tree clean)",
+     "kind": "measurement",
+     "proves": "Tuning 30 of 30 on H1 to H6: 485 reads, 0 stale; 806 changes, 238 rises, 0 unexplained; the follower stayed first on 20 and moved on wherever another led (10 of 10); 2 rose, both attributed and explained. Regression spot 6 of 6."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A forecast's change since a note worked out in parts and said (H3, H4): the note keeps the state it was made in; a rise since it was first given had been said with nothing to explain it (adv-t-5's composure, still at 42, \"its forecast from 1.00 to 1.28\", seen on 20b6d777)",
+     "where": "src/engine/systems/advice.ts (ForecastState, stateOf, forecastChange), src/engine/systems/experience.ts (AdvisedAt.state), src/engine/systems/next-steps.ts (noteAdvice, standingOf, movedSaid)",
+     "failingTest": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: ignored for three weeks of taping, it keeps naming what brings most and is never stale; every move of its forecast is worked out in parts and said, the work it reads and how well you know its genres, a part whose input didn’t move nothing, across a save and a load fails on 994c29a3 (forecastChange is not a function)"
+    },
+    {
+     "summary": "Discipline's sentence called the rest of a change \"its own\" where it held the work, the genres and the other inputs too; it says \"everything else's\", and the parts follow",
+     "where": "src/engine/systems/next-steps.ts (disciplinePart)",
+     "failingTest": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: followed near mastery, its forecast rose, and the advice works the rise out in parts, its own level and discipline and the other inputs the hours moved, the work and the genres nothing; it says each part, and the read isn’t stale, across a save and a load (its discipline figure is held to the parts sentence's)"
+    },
+    {
+     "summary": "Stale reads and unexplained changes detected (H5): S1 to S3 and the residual, by the measure and the gate",
+     "where": "tools/advice-harness.ts (staleOf, changesOf), tools/advice.ts (h12)",
+     "failingTest": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted fails on 994c29a3"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "the genres read as now at every step of the attribution",
+     "where": "src/engine/systems/advice.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: changes their work, three briefs of another kind (the microphone’s) in genres never met: the work’s and the genres’ parts are worked out and said, the first-named is the forecast’s largest, never stale, across a save and a load",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: ignored for three weeks of taping, it keeps naming what brings most and is never stale; every move of its forecast is worked out in parts and said, the work it reads and how well you know its genres, a part whose input didn’t move nothing, across a save and a load"
+     ]
+    },
+    {
+     "what": "a rise said without its parts",
+     "where": "src/engine/systems/next-steps.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: changes their work, three briefs of another kind (the microphone’s) in genres never met: the work’s and the genres’ parts are worked out and said, the first-named is the forecast’s largest, never stale, across a save and a load",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: followed near mastery, its forecast rose, and the advice works the rise out in parts, its own level and discipline and the other inputs the hours moved, the work and the genres nothing; it says each part, and the read isn’t stale, across a save and a load",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: ignored for three weeks of taping, it keeps naming what brings most and is never stale; every move of its forecast is worked out in parts and said, the work it reads and how well you know its genres, a part whose input didn’t move nothing, across a save and a load",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: partly followed, seven of the twenty sessions, the level moves less and the change is its own level’s and discipline’s; twenty sessions of another input’s exercise move its forecast through the other inputs and discipline; each said, never stale, across a save and a load",
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ]
+    },
+    {
+     "what": "the residual left unsaid",
+     "where": "src/engine/systems/next-steps.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted"
+     ]
+    },
+    {
+     "what": "the note keeps no state",
+     "where": "src/engine/systems/next-steps.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: changes their work, three briefs of another kind (the microphone’s) in genres never met: the work’s and the genres’ parts are worked out and said, the first-named is the forecast’s largest, never stale, across a save and a load",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: followed near mastery, its forecast rose, and the advice works the rise out in parts, its own level and discipline and the other inputs the hours moved, the work and the genres nothing; it says each part, and the read isn’t stale, across a save and a load",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: ignored for three weeks of taping, it keeps naming what brings most and is never stale; every move of its forecast is worked out in parts and said, the work it reads and how well you know its genres, a part whose input didn’t move nothing, across a save and a load",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: partly followed, seven of the twenty sessions, the level moves less and the change is its own level’s and discipline’s; twenty sessions of another input’s exercise move its forecast through the other inputs and discipline; each said, never stale, across a save and a load",
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ]
+    },
+    {
+     "what": "sticky advice: the noted input kept first while it passes the floor",
+     "where": "src/engine/systems/next-steps.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+      "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why",
+      "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     ]
+    },
+    {
+     "what": "the standing's figures unchecked",
+     "where": "tools/advice-harness.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted"
+     ]
+    },
+    {
+     "what": "a first-named behind another unchecked",
+     "where": "tools/advice-harness.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted"
+     ]
+    },
+    {
+     "what": "discipline worked out before the input's own level",
+     "where": "src/engine/systems/advice.ts",
+     "killed": true,
+     "on": "2d71d188",
+     "caughtBy": [
+      "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: followed near mastery, its forecast rose, and the advice works the rise out in parts, its own level and discipline and the other inputs the hours moved, the work and the genres nothing; it says each part, and the read isn’t stale, across a save and a load"
+     ],
+     "before": {
+      "on": "e9e647df",
+      "killed": false,
+      "by": [],
+      "note": "survived until e89bd9f5 held the claim (see that commit)"
+     }
+    }
+   ],
+   "missing": "Nothing in the gate. The fresh set (adv-v-0 to 119) is run once by the coordinator on the tested commit; the figures that keep this row closed are in forTheCoordinator.measurements."
+  }
+ ],
+ "replacements": [],
+ "supersededNote": "Neither row was replaced by a new id: each closes on its clarified criteria (prompts/advice.md, Your Result). Each row's superseded field keeps (f) or (h) as written and as brief 11 clarified it, with every result, as superseded with brief 12's authorization, not passed.",
+ "added": [
+  {
+   "id": "advice.note-state",
+   "reason": "A necessary dependency of H3 to H5: a change since a note can be attributed to the inputs that changed only if the note keeps the state its forecast was made in.",
+   "impact": "Experience.advised.first and .last gain an optional state (every ability and technique, stamina's full, how well each genre is known, the latest piece's key): about forty numbers a note. No schema move (94 in both places), nothing migrated: a note from before keeps its sentences as brief 11 said them, and a rise since it is said to be beyond working out."
+  },
+  {
+   "id": "advice.measure-cold-take",
+   "reason": "A necessary dependency of measuring F4 on the fresh set: brief 10 and brief 11 found 0 held-out cases a take's own preparation held back, so the case as built would test the counterfactual on almost nothing.",
+   "impact": "The measure tapes one more camera brief cold, drawn from the seed, in a copy of each case; the case itself is built exactly as before. On tuning it put a piece read as prepared in 27 of 30 cases."
+  },
+  {
+   "id": "advice.measure-like-for-like",
+   "reason": "F3 asks the forecast compared with what training brought under the same assumptions; (e) as written reads each brief as its record now stands, which isn't the forecast's reading (adv-t-6: 0.884 read so, 0.569 read on the forecast's pieces, the forecast 0.55).",
+   "impact": "Reported beside (e) as written, which keeps its figures; nothing in the game reads it."
+  },
+  {
+   "id": "advice.live-days",
+   "reason": "The part follower plays seven of the twenty sessions; tools/advice-harness.ts live() takes a number of days, twenty by default.",
+   "impact": "None on any existing case or test."
+  },
+  {
+   "id": "advice.trained-sessions-type",
+   "reason": "trained()'s default made its sessions parameter the literal type 20, so the F6 test couldn't forecast one session.",
+   "impact": "Type only; the default and every call unchanged."
+  }
+ ],
+ "defectsFound": [
+  {
+   "what": "A rise of the first-named's forecast since it was first given was said with nothing to explain it (adv-t-5 as built on 20b6d777: composure still at 42, \"its forecast from 1.00 to 1.28\"). Fixed in 1f9a89a5: the work's +0.1411 and the genres' +0.1395, said.",
+   "blocksCompletion": false
+  },
+  {
+   "what": "A take the forecast read as prepared was counted on the screen and named nowhere, with no word of what reading it so did to the figure (F4). Fixed in 1f9a89a5.",
+   "blocksCompletion": false
+  },
+  {
+   "what": "Discipline's sentence said the rest of a change was the input's own, where it held the work, the genres and the other inputs too. Fixed in 1f9a89a5.",
+   "blocksCompletion": false
+  }
+ ],
+ "judgedMoved": false,
+ "judgedMovedNote": "Nothing the game judges moved: no file the judge reads changed (evaluation.ts, piece.ts, briefs.ts, attributes.ts, content/tasks.ts and the rest of completion-matrix.mjs's judge watch are untouched), so RULESET stays evaluation-11 and docs/ENGINE-MODEL.md gains no row. The save schema stays 94 in both places; a note gains an optional field.",
+ "checks": [
+  {
+   "cmd": "npx tsc --noEmit -p tsconfig.app.json",
+   "exit": 0
+  },
+  {
+   "cmd": "npm run lint",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/doc-refs.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/tics.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/voice-check.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/spelling.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/typos.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/title-case.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/label-sweep.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/plural-check.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/wired.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/deciders.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/inventory.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/capabilities.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/devmap.mjs --check (no test file or command added, so no --write)",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/traceability.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/coverage.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/student-matrix.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/completion-matrix.mjs --check",
+   "exit": 1,
+   "why": "Expected on any engine change, and the coordinator's: 8 rows verified by measurements watching src/engine or src (advice.F2A10-c, advice.heldout, F2-A, MA5, INT-skipped, INT-navigation, INT-long-runs, INT-gate) were measured before this branch's code changed, and the handoff's completion line then differs (559 against 567). On 20b6d777 it exits 0. No judge-watched file changed."
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-advice.test.ts",
+   "exit": 0,
+   "tests": "29 of 29"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/advice.test.ts",
+   "exit": 0,
+   "tests": "5 of 5"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/interpretation-journey.test.ts",
+   "exit": 0,
+   "tests": "1 of 1"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/attributes-phase-2b.test.ts",
+   "exit": 0,
+   "tests": "35 of 35"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g3-1.test.ts",
+   "exit": 0,
+   "tests": "7 of 7"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-r8-1.test.ts",
+   "exit": 0,
+   "tests": "10 of 10"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g23-school.test.ts",
+   "exit": 0,
+   "tests": "34 of 34"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/material.test.ts",
+   "exit": 0,
+   "tests": "16 of 16"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide.test.ts",
+   "exit": 0,
+   "tests": "12 of 12"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-craft.test.ts",
+   "exit": 0,
+   "tests": "10 of 10"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/persistence.test.ts",
+   "exit": 0,
+   "tests": "14 of 14"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/base44-contract.test.ts",
+   "exit": 0,
+   "tests": "22 of 22"
+  },
+  {
+   "cmd": "npx vite-node tools/advice.ts -- --cases adv-0..9 --out docs/verification/resolution-2026-10-17/advice/tuning-adv-0-9.json",
+   "exit": 0
+  },
+  {
+   "cmd": "npx vite-node tools/advice.ts -- --cases adv-t-0..19 --out docs/verification/resolution-2026-10-17/advice/tuning-adv-t-0-19.json",
+   "exit": 0
+  },
+  {
+   "cmd": "npx vite-node tools/advice.ts -- --cases adv-h-1,adv-h-22,adv-h-102,adv-h-111,adv-h-10,adv-h-57 --held-out --out docs/verification/resolution-2026-10-17/advice/regression-spot.json",
+   "exit": 0
+  },
+  {
+   "cmd": "mutations: each alone in a copy, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-advice.test.ts (docs/verification/resolution-2026-10-17/advice/mutations.json)",
+   "exit": "18 of 18 killed on 2d71d188"
+  }
+ ],
+ "forTheCoordinator": {
+  "measurements": [
+   {
+    "cmd": "npx vite-node tools/advice.ts -- --cases adv-v-0..9 --fresh --out docs/verification/resolution-2026-10-17/advice/fresh-adv-v-0-9.json ; npx vite-node tools/advice.ts -- --cases adv-v-10..19 --fresh --out docs/verification/resolution-2026-10-17/advice/fresh-adv-v-10-19.json ; npx vite-node tools/advice.ts -- --cases adv-v-20..29 --fresh --out docs/verification/resolution-2026-10-17/advice/fresh-adv-v-20-29.json ; npx vite-node tools/advice.ts -- --cases adv-v-30..39 --fresh --out docs/verification/resolution-2026-10-17/advice/fresh-adv-v-30-39.json ; npx vite-node tools/advice.ts -- --cases adv-v-40..49 --fresh --out docs/verification/resolution-2026-10-17/advice/fresh-adv-v-40-49.json ; npx vite-node tools/advice.ts -- --cases adv-v-50..59 --fresh --out docs/verification/resolution-2026-10-17/advice/fresh-adv-v-50-59.json ; npx vite-node tools/advice.ts -- --cases adv-v-60..69 --fresh --out docs/verification/resolution-2026-10-17/advice/fresh-adv-v-60-69.json ; npx vite-node tools/advice.ts -- --cases adv-v-70..79 --fresh --out docs/verification/resolution-2026-10-17/advice/fresh-adv-v-70-79.json ; npx vite-node tools/advice.ts -- --cases adv-v-80..89 --fresh --out docs/verification/resolution-2026-10-17/advice/fresh-adv-v-80-89.json ; npx vite-node tools/advice.ts -- --cases adv-v-90..99 --fresh --out docs/verification/resolution-2026-10-17/advice/fresh-adv-v-90-99.json ; npx vite-node tools/advice.ts -- --cases adv-v-100..109 --fresh --out docs/verification/resolution-2026-10-17/advice/fresh-adv-v-100-109.json ; npx vite-node tools/advice.ts -- --cases adv-v-110..119 --fresh --out docs/verification/resolution-2026-10-17/advice/fresh-adv-v-110-119.json",
+    "seeds": "adv-v-0 to adv-v-119 (fresh, never run; case n in band BAND_ORDER[floor(n / 30)] and stage STAGE_ORDER[floor((n mod 30) / 10)], ten seeds each of the twelve strata). Twelve batches of ten; on the tested commit, tracked tree clean; once.",
+    "out": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-*.json",
+    "reads": "Each case's f12.ok and h12.ok; the run writes its commit and clean flag. About 15 to 20 minutes in all (the 20 F2-A10 tuning cases took 2.5 minutes)."
+   },
+   {
+    "cmd": "npx vite-node tools/advice.ts -- --summarize docs/verification/resolution-2026-10-17/advice/fresh-adv-v-0-9.json docs/verification/resolution-2026-10-17/advice/fresh-adv-v-10-19.json docs/verification/resolution-2026-10-17/advice/fresh-adv-v-20-29.json docs/verification/resolution-2026-10-17/advice/fresh-adv-v-30-39.json docs/verification/resolution-2026-10-17/advice/fresh-adv-v-40-49.json docs/verification/resolution-2026-10-17/advice/fresh-adv-v-50-59.json docs/verification/resolution-2026-10-17/advice/fresh-adv-v-60-69.json docs/verification/resolution-2026-10-17/advice/fresh-adv-v-70-79.json docs/verification/resolution-2026-10-17/advice/fresh-adv-v-80-89.json docs/verification/resolution-2026-10-17/advice/fresh-adv-v-90-99.json docs/verification/resolution-2026-10-17/advice/fresh-adv-v-100-109.json docs/verification/resolution-2026-10-17/advice/fresh-adv-v-110-119.json --out docs/verification/resolution-2026-10-17/advice/fresh-summary.json",
+    "seeds": "the twelve fresh files",
+    "out": "docs/verification/resolution-2026-10-17/advice/fresh-summary.json",
+    "reads": "Group \"fresh\": f12.F1, F2, F4, F5 and F6 each 120; f12.F3 at least 96; in each \"fresh F2-A10 <band>\" group f12.F3 at least 21 (of 30), in each \"fresh F2-A10 <stage>\" group at least 28 (of 40). h12.H1 to H6 each 120; h12.staleReads 0; h12.unexplained 0; h12.followed.changedWhereLed equal to h12.followed.leads; h12.followed.roseAttributed and roseExplained equal to h12.followed.rose. advice.F2A10-f closes on the f12 figures, advice.F2A10-h on the h12 figures; a figure short makes its row remaining with that figure. Reported beside, not judged: e (as written), f.ladderFalls, h.fell, h.ownFell, h.withinLift, b, c, d, g, i."
+   },
+   {
+    "cmd": "npx vite-node tools/advice.ts -- --cases held-out --held-out, in batches as brief 11 ran it (adv-10..19, adv-20..29, adv-30..39, adv-h-0..9 to adv-h-110..119), then --summarize",
+    "seeds": "adv-10 to 39 and adv-h-0 to 119: regression coverage from brief 12, not unseen validation",
+    "out": "the coordinator's choice of folder",
+    "reads": "Optional regression run on the tested commit: re-measures F2-A, advice.F2A10-c and advice.heldout, whose matrix measurements (watching src/engine) predate this branch's code; the summary names its groups regression. Every brief 12 clause is expected to hold there too (the six hardest held 6 of 6 on 2d71d188), but it closes nothing."
+   }
+  ],
+  "records": "criteria.py and the matrix: advice.F2A10-f and advice.F2A10-h closed on brief 12's clarified criteria (advice-criteria.md, F1 to F6 and H1 to H6) with the evidence above and the fresh summary's figures; (f) and (h) as written and as brief 11 clarified them recorded as superseded with the owner's authorization, their results kept, not passed. advice.heldout's set is regression coverage from brief 12; the fresh set is the unseen validation. The handoff: the advice now says what its forecast assumes, which deserves attention, and what moved a forecast in parts; a note keeps its state; nothing judged moved; the fresh run's commit and figures. GAMEPLAY-COVERAGE and the audit: the nine brief 12 tests by title. renames.json: no test was renamed (the held-out refusal's message changed inside brief 11's guard, its title unchanged). The guide (craft.ts, What To Work On Next) and the tutorial (You As An Actor) say what changed."
+ }
+}

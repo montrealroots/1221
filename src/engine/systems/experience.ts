@@ -30,7 +30,7 @@ import type { MaterialProfile } from '../content/material';
 import type { Identity } from './artistry';
 import { ENGAGEMENT } from '../content/engagement';
 import { blendsOf, transitionsOf } from './material';
-import { tied, type Forecast } from './advice';
+import { tied, type Forecast, type ForecastState } from './advice';
 import { ABILITY_DEFS, TECHNIQUE_LABEL } from '../content/abilities';
 import type { Skill } from '../content/school';
 
@@ -70,8 +70,12 @@ export interface Advised {
   before?: { target: string; since: Instant; until: string; first: { level: number; forecast: number }; then: { level: number; forecast?: number } };
 }
 
-/** An input's level, its forecast at full precision, and discipline, at a note. */
-export interface AdvisedAt { at: Instant; level: number; forecast: number; discipline: number }
+/**
+ * An input's level, its forecast at full precision, and discipline, at a note; and from brief 12 (2026-10-17) the state the
+ * forecast was made in (`stateOf`, `systems/advice.ts`), so a change since can be worked out in parts (`forecastChange`).
+ * A note from before brief 12 has none, and its changes are said as they were.
+ */
+export interface AdvisedAt { at: Instant; level: number; forecast: number; discipline: number; state?: ForecastState }
 
 export const experienceOf = (person: Person): Experience => {
   const e = (person.experience ??= { features: {}, approaches: {}, exercises: {} });
@@ -149,6 +153,14 @@ export interface Recommendation {
   standing?: string;
   /** What the player can do about it now (from brief 11, `adviceFor`): the exercise, where, what an hour costs and brings, or why not now. */
   next?: string;
+  /**
+   * What every input's forecast assumes of the work it read (from brief 12, `adviceFor`): its own preparation as taped, the
+   * pieces read as prepared by name with how far short each part was and what the figure would be read as taped, and each
+   * genre as known today. The first training recommendation's.
+   */
+  assumes?: string;
+  /** Whether preparation, ability development or both deserve attention now, with both figures (from brief 12, `adviceFor`): the first recommendation's. */
+  attention?: string;
 }
 
 /**
@@ -157,8 +169,11 @@ export interface Recommendation {
  */
 export const RECOMMEND = { floor: 0.5, recurringWithin: 0.5 } as const;
 
-/** The least a forecast's hours must be worth, in points a piece, to be recommended (from 2026-10-16): a tenth, the least a result shows. */
-const ADVICE_FLOOR = 0.1;
+/**
+ * The least a forecast's hours must be worth, in points a piece, to be recommended (from 2026-10-16): a tenth, the least a
+ * result shows. From brief 12 (2026-10-17) also what preparation's figure must reach to deserve attention (`attentionOf`).
+ */
+export const ADVICE_FLOOR = 0.1;
 /** A forecast's own share at full precision (from brief 10), or its said figure where it's one from before. */
 const ownOf = (f: Forecast): number => f.own ?? f.exact ?? f.points;
 const labelOf = (id: string) => ABILITY_DEFS.find((d) => d.id === id)?.label ?? TECHNIQUE_LABEL[id as Skill] ?? id;

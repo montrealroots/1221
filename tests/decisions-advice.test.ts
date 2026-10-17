@@ -22,10 +22,16 @@
  * gives them, a small rise explained by discipline's lift); and the harness itself (its seeds apart, its bands and
  * stages, a case built through the commands, a take that waits out a hospital stay). Still tuning seeds only: no test
  * builds or reads a held-out case.
+ *
+ * Added later on 2026-10-17 for brief 12 (docs/verification/resolution-2026-10-17/advice-criteria.md, written first): (f)
+ * and (h) as the owner resolved them, F1 to F6 and H1 to H6, on the players the owner named (who follows the advice,
+ * ignores it, follows it in part, changes their work and reaches mastery), each through the commands and across a save and
+ * a load; the detectors made to fire; and the fresh validation set, adv-v-0 to 119, read from the case list alone. No test
+ * builds a fresh case or a held-out one; the held-out set is regression coverage from brief 12.
  */
 import { describe, expect, it, vi } from 'vitest';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { createElement } from 'react';
@@ -37,14 +43,14 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, formatDate } from '@/engine/core/time';
 import { TASK_PROFILES } from '@/engine/content/tasks';
 import { performerOf, replayAs, type WorkRecord } from '@/engine/systems/evaluation';
-import { ADVICE, genreNow, trainingForecast, trained, type Forecast } from '@/engine/systems/advice';
+import { ADVICE, assumedOf, forecastAtDiscipline, forecastChange, genreNow, trainingForecast, trained, type Forecast } from '@/engine/systems/advice';
 import { abilityFull, abilityOf, isAbility, levelOf } from '@/engine/systems/attributes';
 import { atFull } from '@/engine/systems/briefs';
 import { recommendations } from '@/engine/systems/experience';
 import { careFor, inHospital } from '@/engine/systems/health';
-import { adviceFor } from '@/engine/systems/next-steps';
+import { adviceFor, attentionOf } from '@/engine/systems/next-steps';
 import { matchedTier, practicedToday } from '@/engine/systems/practice';
-import { BANDS, BAND_ORDER, GENRES, INPUTS, STAGES, STAGE_ORDER, buildCase, caseOf, casesOf, clone, f2aCase, go, heldOutRefusal, live, rest, setLevel, tapeWaiting, worthOf, type Take } from '../tools/advice-harness';
+import { BANDS, BAND_ORDER, GENRES, INPUTS, PART_WORDS, SET_LABEL, SET_ROLE, STAGES, STAGE_ORDER, assumedByRecords, attentionByRecords, buildCase, caseOf, casesOf, changesOf, clone, f2aCase, forecastByRecords, go, growthLadder, heldOutRefusal, isFull, likeForLike, live, preparationByRecords, preparedCopy, readWork, rest, setLevel, staleOf, tapeWaiting, worthOf, type Take } from '../tools/advice-harness';
 
 // The screens, drawn over a real save under the game's context, as tests/defects-r8-1.test.ts draws them.
 const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation }));
@@ -54,8 +60,12 @@ vi.mock('@/app/game-context', () => {
   return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
 });
 const { ProfileWorkspace } = await import('@/ui/workspaces/ProfileWorkspace');
+const { BriefPane } = await import('@/ui/components/BriefPane');
+const unescape = (x: string) => x.replace(/&#x27;/g, '\'').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 /** The Player Profile as drawn, its text as read. */
-const profileText = (sim: Simulation) => { h.sim = sim; return renderToStaticMarkup(createElement(ProfileWorkspace)).replace(/&#x27;/g, '\'').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&'); };
+const profileText = (sim: Simulation) => { h.sim = sim; return unescape(renderToStaticMarkup(createElement(ProfileWorkspace))); };
+/** A brief's pane as drawn (as tests/defects-r8-1.test.ts draws it), its text as read. */
+const paneText = (sim: Simulation, brief: string) => { h.sim = sim; return unescape(renderToStaticMarkup(createElement(BriefPane, { genre: BRIEF_BY_ID[brief]!.kinds[0]!, brief, onOpen: () => undefined, practice: (id: string) => createElement('span', { 'data-practice': id }) }))); };
 
 /** A tuning case, as the measure builds it. */
 function tuning(seed: string): { sim: Simulation; takes: Take[] } {
@@ -465,6 +475,391 @@ describe('F2-A10 (f) and (h), as clarified (brief 11)', () => {
   }, 240_000);
 });
 
+/** Signed to four places, as the advice says a part of a change. */
+const signed4 = (x: number) => `${x >= 0 ? '+' : '−'}${Math.abs(x).toFixed(4)}`;
+/** Every part of a change whose input the save shows didn't move is exactly 0 (H3): its own level, discipline, the work, the genres. */
+function zeroWhereUnmoved(sim: Simulation, id: string, note: { state?: { levels: Record<string, number>; genres: Record<string, number>; key?: string } }, parts: Record<string, number>, what: string) {
+  const s = note.state!;
+  if (s.levels[id] === levelOf(sim, sim.player, id as never)) expect(parts.own, `${what}: own`).toBe(0);
+  if (s.levels.discipline === abilityOf(sim, sim.player, 'discipline')) expect(parts.discipline, `${what}: discipline`).toBe(0);
+  if (s.key === [...sim.player.work!].sort((a, b) => a.at - b.at).at(-1)!.inputs.key) expect(parts.work, `${what}: work`).toBe(0);
+}
+/** adv-t-15, near mastery, and then The Spare Key taped cold through the commands: its rehearsal held it back most. */
+function coldCase(): { sim: Simulation; cold: WorkRecord } {
+  const { sim } = tuning('adv-t-15');
+  const b = BRIEF_BY_ID['brief-drama']!;
+  go(sim, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id });
+  expect(go(sim, 'practice.self_tape', { genre: b.kinds[0], brief: b.id }).ok).toBe(true);
+  rest(sim);
+  return { sim, cold: sim.player.work!.at(-1)! };
+}
+
+describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
+  it('PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load', () => {
+    const { sim, cold } = coldCase();
+    const first = firstOf(sim);
+    // Worked from the records (each piece's own parts against what completes them, its chief limit, its genre now and
+    // then): the cold take is the one read as prepared, and the engine's account of it is the records'.
+    const byRecords = assumedByRecords(sim);
+    expect(byRecords.prepared).toEqual([cold.what]);
+    const a = assumedOf(sim.player)!;
+    expect({ pieces: a.pieces, complete: a.complete, short: a.short, prepared: a.prepared.map((x) => x.what), genres: a.genres, genreShort: a.genreShort, genreBetter: a.genreBetter }).toEqual(byRecords);
+    // F4: read exactly as said. Every input's forecast is the one worked from the records with that take alone as
+    // prepared, and with it as taped the first-named's figure is the one said.
+    for (const [k, f] of trainingForecast(sim, sim.player)) expect(Math.abs(exact(f) - forecastByRecords(sim, k)), k).toBeLessThan(1e-9);
+    const taped = forecastByRecords(sim, first.target, true);
+    expect(Math.abs(taped - exact(trainingForecast(sim, sim.player, sim.player.work, [first.target], true).get(first.target)))).toBeLessThan(1e-9);
+    // Played, not assumed: here reading the cold take as taped would say less.
+    expect(taped).toBeLessThan(exact(first.forecast));
+    expect(first.assumes).toContain(`What it assumes of your last ${byRecords.pieces} pieces: `);
+    expect(first.assumes).toContain(`In ${cold.what}, the breakdown and your reading stood at 0%, the lines at 0% and rehearsal on your feet at 0% of what completes them.`);
+    expect(first.assumes).toContain(`That piece is read as if its own preparation were complete, since that held it back most: read as taped, ${ADVICE.sessions} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} a piece, not ${exact(first.forecast).toFixed(2)}.`);
+    expect(first.assumes).toContain(`Each genre is read as you know it today: of the ${byRecords.genres} pieces’ genres, ${byRecords.genreShort} are short of complete and ${byRecords.genreBetter} known better than when taped.`);
+    // F1: what completing that preparation would bring, the judge's replay worked from the records, said apart.
+    const prep = preparationByRecords(sim);
+    expect(prep).toBeGreaterThan(0.05);
+    for (const f of trainingForecast(sim, sim.player).values()) { expect(Math.abs(f.preparation! - prep)).toBeLessThan(1e-9); expect(Math.abs(exact(f) - (f.own! + f.days!))).toBeLessThan(1e-12); }
+    expect(first.why).toContain(`would bring it about ${Math.round(prep * 100) / 100} points a piece as you are now: that’s preparation, not training`);
+    expect(profileText(sim)).toContain(first.assumes!);
+    expect(paneText(sim, 'brief-drama')).toContain(first.assumes!);
+    const again = clone(sim);
+    expect(adviceFor(again, again.player)).toEqual(adviceFor(sim, sim.player));
+    // The falsifiability test: a beginner's cold take, held back most by an ability, is read as taped, counted short and
+    // named as no prepared piece.
+    const beginner = tuning('adv-t-4').sim;
+    const b = BRIEF_BY_ID['brief-drama']!;
+    go(beginner, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id });
+    go(beginner, 'practice.self_tape', { genre: b.kinds[0], brief: b.id });
+    rest(beginner);
+    const held = beginner.player.work!.at(-1)!;
+    expect(held.limits[0]!.kind).toBe('ability');
+    expect(assumedByRecords(beginner).prepared).toEqual([]);
+    expect(assumedOf(beginner.player)!.short).toBe(assumedByRecords(beginner).short);
+    const said = firstOf(beginner).assumes!;
+    expect(said).not.toContain(`In ${held.what}`);
+    expect(said).not.toContain('read as if its own preparation were complete');
+    for (const [k, f] of trainingForecast(beginner, beginner.player)) expect(Math.abs(exact(f) - forecastByRecords(beginner, k)), k).toBeLessThan(1e-9);
+    // The boundary of known better: a take in a genre already known in full is known no better since (TEST SETUP: its
+    // genre at full before the take), and isn't counted so.
+    const known = tuning('adv-t-15').sim;
+    for (const g of b.kinds) known.player.engagement!.byGenre[g] = { familiarity: 100, practice: 100 };
+    go(known, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id });
+    expect(go(known, 'practice.self_tape', { genre: b.kinds[0], brief: b.id }).ok).toBe(true);
+    rest(known);
+    const fullAtTake = known.player.work!.at(-1)!;
+    expect(fullAtTake.inputs.prep.genre).toBe(1);
+    const ka = assumedOf(known.player)!;
+    expect(ka.genreBetter).toBe(assumedByRecords(known).genreBetter);
+    expect(ka.genreBetter).toBeLessThan(ka.genres);
+  }, 240_000);
+
+  it('PLAYER JOURNEY: says whether preparation, training or both deserve attention, from what the judge’s replay gives each, and the verdict follows the figures when one side is changed', () => {
+    const { sim } = coldCase();
+    const first = firstOf(sim);
+    const att = attentionOf(sim, sim.player, first)!;
+    const byRecords = attentionByRecords(sim, exact(first.forecast));
+    expect(Math.abs(att.own - byRecords.own)).toBeLessThan(1e-9);
+    expect(Math.abs(att.genres - byRecords.genres)).toBeLessThan(1e-9);
+    expect(att.verdict).toBe(byRecords.verdict);
+    // Played, not assumed: a take taped cold and genres short, and training worth more than a tenth: both.
+    expect(att.verdict).toBe('both');
+    const prepWords = `coming to your recent work fully prepared would have brought it about ${att.preparation.toFixed(2)} a piece as you are now (${att.own.toFixed(2)} from each piece’s own preparation, ${att.genres.toFixed(2)} from knowing its genre in full)`;
+    expect(first.attention).toContain(prepWords);
+    expect(first.attention).toContain(`${ADVICE.sessions} hours of ${first.label.toLowerCase()} would bring about ${exact(first.forecast).toFixed(2)}`);
+    expect(first.attention!.startsWith(att.preparation > exact(first.forecast) ? 'Both preparation and training deserve attention, preparation most: ' : 'Both training and preparation deserve attention, training most: ')).toBe(true);
+    expect(profileText(sim)).toContain(first.attention!);
+    expect(paneText(sim, 'brief-drama')).toContain(first.attention!);
+    // The falsifiability test, a side at a time (TEST SETUP). Every recent piece's own preparation complete in its record
+    // and every genre it reads known in full: preparation would bring nothing, and training alone deserves attention.
+    const prepared = clone(sim);
+    prepared.player.work = prepared.player.work!.map((w) => ({ ...preparedCopy(w), limits: w.limits.filter((l) => l.kind !== 'preparation') }));
+    for (const w of readWork(prepared)) for (const g of BRIEFS.find((x) => w.what.startsWith(x.title))?.kinds ?? []) prepared.player.engagement!.byGenre[g] = { familiarity: 100, practice: 100 };
+    const pFirst = firstOf(prepared);
+    const pAtt = attentionOf(prepared, prepared.player, pFirst)!;
+    expect(pAtt.verdict).toBe(attentionByRecords(prepared, exact(pFirst.forecast)).verdict);
+    expect(pAtt.verdict).toBe('training');
+    expect(pFirst.attention!.startsWith('Training deserves attention now, and preparation doesn’t: ')).toBe(true);
+    // And with everything training reaches at full besides: neither.
+    const level = (x: Simulation) => [...new Set(readWork(x).flatMap((w) => [...Object.keys(w.inputs.abilities), ...Object.entries(w.inputs.techniques).filter(([, v]) => (v ?? 0) > 0).map(([k]) => k)]))].filter((k) => exerciseFor(k as never));
+    for (const k of level(prepared)) setLevel(prepared, k, TECHNIQUES.includes(k as never) ? MASTERED + 2 : 'full');
+    const none = adviceFor(prepared, prepared.player);
+    expect(none[0]!.target).toBe('full:all');
+    expect(none[0]!.attention!.startsWith('Neither preparation nor training would bring your recent work a tenth of a point now: ')).toBe(true);
+    // The other side: the cold case with everything training reaches at full, its preparation as it was: preparation alone.
+    const full = clone(sim);
+    for (const k of level(full)) setLevel(full, k, TECHNIQUES.includes(k as never) ? MASTERED + 2 : 'full');
+    const fAdvice = adviceFor(full, full.player);
+    expect(fAdvice.some((r) => r.forecast)).toBe(false);
+    expect(attentionOf(full, full.player)!.verdict).toBe(attentionByRecords(full, undefined).verdict);
+    expect(fAdvice[0]!.attention!.startsWith('Preparation deserves attention now, and training doesn’t: ')).toBe(true);
+    expect(profileText(full)).toContain(fAdvice[0]!.attention!);
+  }, 240_000);
+
+  it('PLAYER JOURNEY: followed near mastery, its forecast rose, and the advice works the rise out in parts, its own level and discipline and the other inputs the hours moved, the work and the genres nothing; it says each part, and the read isn’t stale, across a save and a load', () => {
+    const { sim } = tuning('adv-t-19');
+    const first = firstOf(sim);
+    const id = first.target;
+    const before = exact(first.forecast);
+    let copy = clone(sim);
+    live(copy, id);
+    copy = clone(copy);
+    const after = firstOf(copy);
+    expect(after.target).toBe(id);
+    const now = exact(after.forecast);
+    // Played, not assumed: here it rose (brief 11 found it, by under a thousandth).
+    expect(now).toBeGreaterThan(before);
+    const was = copy.player.experience!.advised!;
+    expect(was.target).toBe(id);
+    // Noted as the sessions began, by the first hour of them, the next morning: what the twenty hours moved is read from
+    // there (a day's own change, the body's fitness among the other inputs, is the note's, not the sessions').
+    expect(was.last.at).toBeGreaterThan(sim.now);
+    expect(was.last.at).toBeLessThan(sim.now + 2 * MS_DAY);
+    expect(after.standing).toContain(`Since ${formatDate(was.last.at, copy.zone)}, ${ADVICE.sessions} hours of `);
+    const ch = forecastChange(copy, copy.player, id, was.last)!;
+    expect(Math.abs(ch.residual)).toBeLessThan(1e-9);
+    expect(ch.parts.work).toBe(0);
+    expect(ch.parts.genres).toBe(0);
+    expect(ch.parts.own).toBeLessThan(0);
+    expect(ch.parts.discipline).toBeGreaterThan(0);
+    expect(Math.abs(Object.values(ch.parts).reduce((t, x) => t + x, 0) - (now - was.last.forecast))).toBeLessThan(1e-12);
+    // Discipline's part is worked out last, so it's brief 11's figure, and the standing's two sentences give one figure.
+    const atThen = exact(forecastAtDiscipline(copy, copy.player, id, was.last.discipline));
+    expect(Math.abs(ch.parts.discipline - (now - atThen))).toBeLessThan(1e-12);
+    expect(after.standing).toContain(`so ${signed4(now - atThen)} of the change is discipline’s`);
+    expect(after.standing).toContain(`${PART_WORDS.discipline}, ${signed4(ch.parts.discipline)}`);
+    // Said: each part that shows at four places, by name, and nothing untraced.
+    const sentence = `What moved its forecast since ${formatDate(was.last.at, copy.zone)}: `;
+    expect(after.standing).toContain(sentence);
+    for (const [k, x] of Object.entries(ch.parts)) if (Math.abs(x) >= 0.00005) expect(after.standing).toContain(`${PART_WORDS[k]}, ${signed4(x)}`);
+    expect(after.standing).not.toContain('can’t trace');
+    const recs = adviceFor(copy, copy.player);
+    expect(staleOf(copy, recs)).toEqual([]);
+    expect(changesOf(copy, recs).filter((x) => x.unexplained)).toEqual([]);
+    expect(profileText(copy)).toContain(sentence);
+    const again = clone(copy);
+    expect(adviceFor(again, again.player)).toEqual(recs);
+  }, 240_000);
+
+  it('PLAYER JOURNEY: ignored for three weeks of taping, it keeps naming what brings most and is never stale; every move of its forecast is worked out in parts and said, the work it reads and how well you know its genres, a part whose input didn’t move nothing, across a save and a load', () => {
+    let { sim } = tuning('adv-t-5');
+    // Brief 11 said composure, still at 42, had gone from 1.00 to 1.28 with nothing to say why. Worked out now:
+    const first0 = firstOf(sim);
+    const was0 = sim.player.experience!.advised!;
+    expect(was0.target).toBe(first0.target);
+    expect(exact(first0.forecast)).toBeGreaterThan(was0.first.forecast);
+    const ch0 = forecastChange(sim, sim.player, first0.target, was0.first)!;
+    expect(Math.abs(ch0.residual)).toBeLessThan(1e-9);
+    zeroWhereUnmoved(sim, first0.target, was0.first, ch0.parts, 'as built');
+    expect(ch0.parts.work + ch0.parts.genres).toBeGreaterThan(0);
+    expect(first0.standing).toContain(`What moved its forecast since it was first given: ${PART_WORDS.work}, ${signed4(ch0.parts.work)}; ${PART_WORDS.genres}, ${signed4(ch0.parts.genres)}`);
+    for (let week = 0; week < 3; week += 1) {
+      for (const day of [2, 5]) { sim.advanceTo(sim.now + (day === 2 ? 2 : 3) * MS_DAY); tapeNew(sim); }
+      sim.advanceTo(sim.now + 2 * MS_DAY);
+      rest(sim);
+      if (week === 1) { const said = adviceFor(sim, sim.player); sim = clone(sim); expect(adviceFor(sim, sim.player)).toEqual(said); }
+      const recs = adviceFor(sim, sim.player);
+      expect(staleOf(sim, recs), `week ${week}`).toEqual([]);
+      const was = sim.player.experience!.advised!;
+      const changes = changesOf(sim, recs);
+      expect(changes.length, `week ${week}`).toBeGreaterThan(0);
+      for (const c of changes) {
+        expect(c.unexplained, `week ${week} since ${c.since}`).toBe(false);
+        expect(c.said, `week ${week} since ${c.since}`).toBe(true);
+        zeroWhereUnmoved(sim, was.target, c.since === 'first' ? was.first : was.last, c.parts!, `week ${week} since ${c.since}`);
+      }
+      expect(recs.find((r) => r.forecast)!.standing).toContain('What moved its forecast since');
+    }
+    expect(profileText(sim)).toContain(firstOf(sim).standing!);
+  }, 240_000);
+
+  it('PLAYER JOURNEY: partly followed, seven of the twenty sessions, the level moves less and the change is its own level’s and discipline’s; twenty sessions of another input’s exercise move its forecast through the other inputs and discipline; each said, never stale, across a save and a load', () => {
+    const { sim } = tuning('adv-t-5');
+    const first = firstOf(sim);
+    const id = first.target;
+    const lv = (x: Simulation) => levelOf(x, x.player, id as never);
+    const all = clone(sim);
+    live(all, id);
+    let some = clone(sim);
+    live(some, id, 7);
+    some = clone(some);
+    expect(lv(some)).toBeGreaterThan(lv(sim));
+    expect(lv(some)).toBeLessThan(lv(all));
+    const was = some.player.experience!.advised!;
+    expect(was.target).toBe(id);
+    const ch = forecastChange(some, some.player, id, was.last)!;
+    expect(Math.abs(ch.residual)).toBeLessThan(1e-9);
+    expect(ch.parts.work).toBe(0);
+    expect(ch.parts.genres).toBe(0);
+    expect(ch.parts.own).not.toBe(0);
+    expect(ch.parts.discipline).not.toBe(0);
+    const recs = adviceFor(some, some.player);
+    expect(staleOf(some, recs)).toEqual([]);
+    expect(changesOf(some, recs).filter((x) => x.unexplained)).toEqual([]);
+    expect(recs.find((r) => r.forecast)!.standing).toContain(`${PART_WORDS.own}, ${signed4(ch.parts.own)}`);
+    // Another input's exercise for the twenty: the second-named's.
+    const other = adviceFor(sim, sim.player).filter((r) => r.forecast && r.target !== id)[0]!.target;
+    let alt = clone(sim);
+    live(alt, other);
+    alt = clone(alt);
+    const wasA = alt.player.experience!.advised!;
+    expect(wasA.target).toBe(id);
+    const chA = forecastChange(alt, alt.player, id, wasA.last)!;
+    expect(Math.abs(chA.residual)).toBeLessThan(1e-9);
+    expect(chA.parts.work).toBe(0);
+    expect(chA.parts.genres).toBe(0);
+    // Played, not assumed: its level didn't move, so its own part is nothing, and the other input's hours are.
+    expect(lv(alt)).toBe(lv(sim));
+    expect(chA.parts.own).toBe(0);
+    expect(chA.parts.others).not.toBe(0);
+    const recsA = adviceFor(alt, alt.player);
+    expect(staleOf(alt, recsA)).toEqual([]);
+    expect(changesOf(alt, recsA).filter((x) => x.unexplained)).toEqual([]);
+    expect(recsA.find((r) => r.forecast)!.standing).toContain(`${PART_WORDS.others}, ${signed4(chA.parts.others)}`);
+    const again = clone(alt);
+    expect(adviceFor(again, again.player)).toEqual(recsA);
+  }, 240_000);
+
+  it('PLAYER JOURNEY: changes their work, three briefs of another kind (the microphone’s) in genres never met: the work’s and the genres’ parts are worked out and said, the first-named is the forecast’s largest, never stale, across a save and a load', () => {
+    let { sim } = tuning('adv-t-5');
+    const known = new Set(Object.keys(sim.player.engagement?.byGenre ?? {}));
+    const voice = BRIEFS.filter((b) => b.medium === 'voice' && !b.kinds.some((g) => known.has(g)) && !sim.player.briefs?.[b.id]).slice(0, 3);
+    expect(voice.length).toBe(3);
+    for (const b of voice) {
+      sim.advanceTo(sim.now + 2 * MS_DAY);
+      go(sim, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id });
+      for (let i = 0; i < 2; i += 1) for (const step of ['read', 'lines', 'rehearse']) go(sim, 'brief.prepare', { brief: b.id, step });
+      expect(go(sim, 'genre.study', { genre: b.kinds[0] }).ok).toBe(true);
+      expect(go(sim, 'practice.self_tape', { genre: b.kinds[0], brief: b.id }).ok).toBe(true);
+    }
+    rest(sim);
+    expect(readWork(sim).slice(-3).map((w) => w.what)).toEqual(voice.map((b) => expect.stringContaining(b.title)));
+    sim = clone(sim);
+    const recs = adviceFor(sim, sim.player);
+    expect(staleOf(sim, recs)).toEqual([]);
+    const was = sim.player.experience!.advised!;
+    const changes = changesOf(sim, recs);
+    expect(changes.filter((x) => x.unexplained)).toEqual([]);
+    // Played, not assumed: the microphone's pieces moved the forecast through the work and the genres, each said.
+    const since = changes.find((x) => x.since === 'first')!;
+    expect(since.parts!.work).not.toBe(0);
+    expect(since.parts!.genres).not.toBe(0);
+    zeroWhereUnmoved(sim, was.target, was.first, since.parts!, 'since it was first given');
+    const first = recs.find((r) => r.forecast)!;
+    expect(first.standing).toContain(`${PART_WORDS.genres}, ${signed4(since.parts!.genres!)}`);
+    expect(first.assumes).toContain(`What it assumes of your last ${readWork(sim).length} pieces: `);
+    expect(profileText(sim)).toContain(first.standing!);
+    const again = clone(sim);
+    expect(adviceFor(again, again.player)).toEqual(recs);
+  }, 240_000);
+
+  it('PLAYER JOURNEY: reaches mastery: the first-named practiced to full through practice.exercise drops out, the next by forecast is named and the standing says the first has nothing left to forecast; with everything training reaches at full the advice says so, and the verdict asks for preparation alone, across a save and a load', () => {
+    const { sim } = tuning('adv-t-19');
+    const first = firstOf(sim);
+    const id = first.target;
+    const ex = exerciseFor(id as never)!;
+    // Up to four hours a day of its exercise, a day at a time, until it's at full (51 days here).
+    let days = 0;
+    for (; !isFull(sim, id) && days < 120; days += 1) {
+      sim.advanceTo(sim.now + MS_DAY);
+      for (let hour = 0; hour < PRACTICE.dailyHours && !isFull(sim, id); hour += 1) {
+        sim.advanceTo(sim.now + 60 * 60_000);
+        expect(go(sim, 'practice.exercise', { exercise: ex.id, tier: matchedTier(levelOf(sim, sim.player, id as never)), focus: 'steady' }).ok).toBe(true);
+      }
+    }
+    expect(isFull(sim, id)).toBe(true);
+    const was = sim.player.experience!.advised!;
+    expect(was.target).toBe(id);
+    let recs = adviceFor(sim, sim.player);
+    expect(recs.some((r) => r.target === id)).toBe(false);
+    expect(staleOf(sim, recs)).toEqual([]);
+    const next = recs.find((r) => r.forecast)!;
+    expect(next.standing).toContain(`the first was ${first.label.toLowerCase()}`);
+    expect(next.standing).toContain(`${first.label.toLowerCase()} has nothing left to forecast on your recent work`);
+    const reloaded = clone(sim);
+    expect(adviceFor(reloaded, reloaded.player)).toEqual(recs);
+    // TEST SETUP: everything else training reaches brought to full; the advice says so first, and asks for preparation.
+    const read = [...new Set(readWork(sim).flatMap((w) => [...Object.keys(w.inputs.abilities), ...Object.entries(w.inputs.techniques).filter(([, v]) => (v ?? 0) > 0).map(([k]) => k)]))].filter((k) => exerciseFor(k as never));
+    for (const k of read) setLevel(sim, k, TECHNIQUES.includes(k as never) ? MASTERED + 2 : 'full');
+    recs = adviceFor(sim, sim.player);
+    expect(recs[0]!.target).toBe('full:all');
+    expect(recs.some((r) => r.forecast)).toBe(false);
+    expect(staleOf(sim, recs)).toEqual([]);
+    expect(recs[0]!.attention!.startsWith('Preparation deserves attention now, and training doesn’t: ')).toBe(true);
+    expect(profileText(sim)).toContain(recs[0]!.attention!);
+  }, 240_000);
+
+  it('GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted', () => {
+    // S1 and S2: adv-0, where twenty sessions put another input ahead (brief 10's journey).
+    const { sim } = tuning('adv-0');
+    const before = adviceFor(sim, sim.player);
+    let copy = clone(sim);
+    live(copy, firstOf(sim).target);
+    copy = clone(copy);
+    expect(staleOf(copy, adviceFor(copy, copy.player))).toEqual([]);
+    const old = staleOf(copy, before);
+    expect(old.some((x) => x.startsWith('S1:'))).toBe(true);
+    expect(old.some((x) => x.startsWith('S2:'))).toBe(true);
+    // S3: adv-t-19, whose first stays first: today's read with the standing it had before the sessions.
+    const t = tuning('adv-t-19').sim;
+    const was = firstOf(t);
+    let f = clone(t);
+    live(f, was.target);
+    f = clone(f);
+    const recs = adviceFor(f, f.player);
+    expect(staleOf(f, recs)).toEqual([]);
+    expect(staleOf(f, recs.map((r) => (r.forecast && r.target === was.target ? { ...r, standing: was.standing } : r))).some((x) => x.startsWith('S3:'))).toBe(true);
+    // Unexplained: TEST SETUP, the note made as the sessions began moved by a hundredth by hand.
+    expect(changesOf(f, recs).filter((x) => x.unexplained)).toEqual([]);
+    const note = f.player.experience!.advised!.last;
+    note.forecast += 0.01;
+    const moved = adviceFor(f, f.player).find((r) => r.forecast)!;
+    expect(moved.standing).toContain('−0.0100 the advice can’t trace to anything it reads');
+    expect(changesOf(f, adviceFor(f, f.player)).filter((x) => x.unexplained).map((x) => x.since)).toEqual(['last']);
+    note.forecast -= 0.01;
+    // A note from before brief 12, with no state (TEST SETUP): the rise since it is said to be beyond working out, and counted.
+    delete note.state;
+    const stateless = adviceFor(f, f.player).find((r) => r.forecast)!;
+    expect(stateless.standing).toContain('can’t be worked out');
+    expect(changesOf(f, adviceFor(f, f.player)).filter((x) => x.unexplained).map((x) => x.since)).toEqual(['last']);
+  }, 240_000);
+
+  it('PLAYER JOURNEY: the forecast’s growth is the progression model’s: on the first-named’s ladder it never rises with the level and falls below three quarters of full; the forecast is within (e)’s tolerance of what twenty sessions brought, read under its own assumptions', () => {
+    // adv-t-1, developing, its first-named below three quarters; adv-t-19, near mastery, past it; adv-t-6, advanced, where
+    // (e) as written missed in brief 10 and brief 11.
+    for (const seed of ['adv-t-1', 'adv-t-6', 'adv-t-19']) {
+      const { sim, takes } = tuning(seed);
+      const first = firstOf(sim);
+      const ladder = growthLadder(sim, first.target);
+      expect(ladder.ok, `${seed} ${ladder.growth.join(' ')}`).toBe(true);
+      // The forecast grows as an hour of practice grows: one session through practice.exercise against the forecast's
+      // one session (`trained`), the same ratio (the played day's focus over the forecast's ordinary one) below three
+      // quarters of full and past it, where only the model's rate differs.
+      const ex = exerciseFor(first.target as never)!;
+      const ratio = (level: number) => {
+        const x = clone(sim);
+        setLevel(x, first.target, level);
+        const forecastOne = levelOf(x, trained(x, x.player, first.target as never, 1), first.target as never) - level;
+        expect(go(x, 'practice.exercise', { exercise: ex.id, tier: matchedTier(level), focus: 'steady' }).ok).toBe(true);
+        return (levelOf(x, x.player, first.target as never) - level) / forecastOne;
+      };
+      expect(Math.abs(ratio(60) - ratio(85)), seed).toBeLessThan(1e-9);
+      if (ladder.rungs[0]! < 75) expect(ladder.growth[1]!).toBeLessThan(ladder.growth[0]!);
+      else expect(Math.abs(ladder.growth[1]! - ladder.growth[0]!)).toBeLessThan(1e-9);
+      // F3: the same twenty sessions played, the pieces read as the forecast read them.
+      const base = clone(sim);
+      live(base, undefined);
+      const trainedCopy = clone(sim);
+      live(trainedCopy, first.target);
+      const like = likeForLike(sim, trainedCopy, base);
+      expect(like, seed).toBeGreaterThan(0);
+      expect(Math.abs(exact(first.forecast) - like), `${seed}: forecast ${exact(first.forecast)}, brought ${like}`).toBeLessThanOrEqual(Math.max(0.3, 0.25 * Math.abs(like)));
+      // The same sessions read on each brief as its record stands now ((e) as written): on adv-t-6 not the forecast's
+      // assumptions, and outside the tolerance, played, not assumed.
+      if (seed === 'adv-t-6') { const asWritten = worthOf(trainedCopy, takes) - worthOf(base, takes); expect(Math.abs(exact(first.forecast) - asWritten)).toBeGreaterThan(Math.max(0.3, 0.25 * Math.abs(asWritten))); }
+    }
+  }, 240_000);
+});
+
 describe('The F2-A10 harness (brief 11)', () => {
   it('GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out', () => {
     const tuned = casesOf('tuning');
@@ -487,12 +882,39 @@ describe('The F2-A10 harness (brief 11)', () => {
       expect(fresh.filter((c) => c.band === band && c.stage === stage).length, `${band} ${stage}`).toBe(10);
       expect(tunedFresh.some((c) => c.band === band && c.stage === stage), `${band} ${stage}`).toBe(true);
     }
-    for (const seed of ['adv-40', 'adv-t-20', 'adv-h-120', 'adv-h-x']) expect(caseOf(seed), seed).toBeUndefined();
+    for (const seed of ['adv-40', 'adv-t-20', 'adv-h-120', 'adv-h-x', 'adv-v-120']) expect(caseOf(seed), seed).toBeUndefined();
     expect(() => casesOf('adv-h-120')).toThrow('is no case of F2-A or F2-A10');
-    expect(heldOutRefusal(casesOf('adv-h-0..2'), false)).toBe('A held-out seed is run only with --held-out, once, on the code to be reported.');
+    expect(heldOutRefusal(casesOf('adv-h-0..2'), false)).toBe('A held-out seed (regression coverage from brief 12) is run only with --held-out, on the code to be reported.');
     expect(heldOutRefusal(casesOf('adv-10'), false)).toBeDefined();
     expect(heldOutRefusal(casesOf('tuning'), false)).toBeUndefined();
     expect(heldOutRefusal(casesOf('adv-h-0..2'), true)).toBeUndefined();
+  });
+
+  it('GUARD: the fresh validation seeds (brief 12) are apart from the tuning and held-out ones, four bands by three stages by ten, and refused without --fresh, the held-out set now regression coverage', () => {
+    // Read from the case list alone: no fresh case is built or run here, or anywhere but the coordinator's one run.
+    const fresh = casesOf('fresh');
+    expect(fresh.map((c) => c.seed)).toEqual(Array.from({ length: 120 }, (_, i) => `adv-v-${i}`));
+    expect(fresh.every((c) => c.set === 'fresh' && c.design === 'F2-A10')).toBe(true);
+    const seen = new Set([...casesOf('tuning'), ...casesOf('held-out')].map((c) => c.seed));
+    expect(fresh.filter((c) => seen.has(c.seed))).toEqual([]);
+    // Stratified as the held-out set is: case n in band n / 30 and stage (n mod 30) / 10, ten seeds each.
+    const held = casesOf('held-out').filter((c) => c.design === 'F2-A10');
+    fresh.forEach((c, n) => { expect(c.band).toBe(held[n]!.band); expect(c.stage).toBe(held[n]!.stage); });
+    for (const band of BAND_ORDER) for (const stage of STAGE_ORDER) expect(fresh.filter((c) => c.band === band && c.stage === stage).length, `${band} ${stage}`).toBe(10);
+    // Refused without --fresh, whatever else is asked for; with it, run.
+    const fresh0 = casesOf('adv-v-0..2');
+    expect(heldOutRefusal(fresh0, false)).toBe('A fresh validation seed is run only with --fresh, once, on the tested commit.');
+    expect(heldOutRefusal(fresh0, true)).toBe('A fresh validation seed is run only with --fresh, once, on the tested commit.');
+    expect(heldOutRefusal(casesOf('adv-t-0,adv-v-5'), false)).toBeDefined();
+    expect(heldOutRefusal(fresh0, false, true)).toBeUndefined();
+    // A held-out seed still needs --held-out, and --fresh doesn't stand in for it.
+    expect(heldOutRefusal(casesOf('adv-h-0,adv-v-0'), false, true)).toBe('A held-out seed (regression coverage from brief 12) is run only with --held-out, on the code to be reported.');
+    expect(heldOutRefusal(casesOf('tuning'), false, false)).toBeUndefined();
+    // What each set is for, as a summary names it: the held-out set is regression coverage, the fresh set the unseen one.
+    expect(SET_LABEL).toEqual({ tuning: 'tuning', 'held-out': 'regression', fresh: 'fresh' });
+    expect(SET_ROLE['held-out']).toContain('regression');
+    expect(SET_ROLE['held-out']).toContain('isn’t unseen validation');
+    expect(SET_ROLE.fresh).toContain('unseen validation (brief 12): run once, on the tested commit');
   });
 
   it('GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built', () => {
@@ -518,11 +940,32 @@ describe('The F2-A10 harness (brief 11)', () => {
       expect(Object.keys(c.h as object)).toEqual(expect.arrayContaining(['before', 'after', 'fell', 'leads', 'ok']));
       expect(Object.keys(c.i as object)).toEqual(['same']);
       expect(Object.keys(run.summary)).toEqual(expect.arrayContaining(['tuning', 'tuning F2-A10', 'tuning F2-A10 beginner', 'tuning F2-A10 firstWeek']));
+      // From brief 12: every clause of (f) and (h) as the owner resolved them, worked out on the case, each one met here.
+      expect((c.f12 as { ok: object }).ok).toEqual({ F1: true, F2: true, F3: true, F4: true, F5: true, F6: true });
+      expect((c.h12 as { ok: object }).ok).toEqual({ H1: true, H2: true, H3: true, H4: true, H5: true, H6: true });
+      expect((c.h12 as { reads: { who: string }[] }).reads.map((x) => x.who)).toEqual(expect.arrayContaining(['as built', 'ignored', 'followed', 'cold take']));
+      // The summary reports each clause on the fresh set by band and by stage. FIXTURE: this case's own output, labeled as
+      // each of the twelve strata of the fresh set (no fresh case is built or run), summarized as a fresh run is.
+      const fixture = join(dir, 'fresh-fixture.json');
+      const strata = BAND_ORDER.flatMap((band) => STAGE_ORDER.map((stage) => ({ ...c, seed: `fixture-${band}-${stage}`, set: 'fresh', band, stage })));
+      writeFileSync(fixture, JSON.stringify({ commit: run.commit, cases: strata }));
+      const summaryOut = join(dir, 'fresh-summary.json');
+      const sum = spawnSync(process.execPath, [resolve('node_modules/vite-node/vite-node.mjs'), 'tools/advice.ts', '--', '--summarize', fixture, '--out', summaryOut], { encoding: 'utf8' });
+      expect(sum.status, sum.stderr).toBe(0);
+      const summary = JSON.parse(readFileSync(summaryOut, 'utf8')) as { roles: Record<string, string>; groups: Record<string, { n: number; f12: Record<string, unknown>; h12: Record<string, unknown> }> };
+      expect(summary.roles).toEqual({ fresh: SET_ROLE.fresh });
+      for (const g of ['fresh', 'fresh F2-A10', ...BAND_ORDER.map((x) => `fresh F2-A10 ${x}`), ...STAGE_ORDER.map((x) => `fresh F2-A10 ${x}`)]) {
+        expect(summary.groups[g], g).toBeDefined();
+        expect(summary.groups[g]!.f12, g).toMatchObject({ F1: summary.groups[g]!.n, F2: summary.groups[g]!.n, F3: summary.groups[g]!.n, F4: summary.groups[g]!.n, F5: summary.groups[g]!.n, F6: summary.groups[g]!.n });
+        expect(summary.groups[g]!.h12, g).toMatchObject({ H1: summary.groups[g]!.n, H2: summary.groups[g]!.n, H3: summary.groups[g]!.n, H4: summary.groups[g]!.n, H5: summary.groups[g]!.n, H6: summary.groups[g]!.n, staleReads: 0, unexplained: 0 });
+      }
+      expect(summary.groups['fresh F2-A10 beginner']!.n).toBe(3);
+      expect(summary.groups['fresh F2-A10 later']!.n).toBe(4);
       // A held-out seed without --held-out: refused, and nothing written.
       const held = join(dir, 'held.json');
       const no = spawnSync(process.execPath, [resolve('node_modules/vite-node/vite-node.mjs'), 'tools/advice.ts', '--', '--cases', 'adv-h-0', '--out', held], { encoding: 'utf8' });
       expect(no.status).not.toBe(0);
-      expect(no.stderr + no.stdout).toContain('A held-out seed is run only with --held-out, once, on the code to be reported.');
+      expect(no.stderr + no.stdout).toContain('A held-out seed (regression coverage from brief 12) is run only with --held-out, on the code to be reported.');
       expect(existsSync(held)).toBe(false);
     } finally {
       rmSync(dir, { recursive: true, force: true });

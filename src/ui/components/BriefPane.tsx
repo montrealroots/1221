@@ -271,6 +271,8 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
           <p className="small" style={{ margin: 0 }}><strong>{top.label}</strong>. {top.why}{top.recurring && <> <span className="xs dim">From your work for life: {top.recurring.evidence.join('; ')}; it last held a piece back on {formatDate(top.recurring.last, sim.zone)}.</span></>}</p>
           {top.standing && <p className="xs" style={{ margin: 0 }} data-standing="">{top.standing}</p>}
           {top.next && <p className="xs" style={{ margin: 0 }} data-next="">{top.next}</p>}
+          {top.assumes && <p className="xs" style={{ margin: 0 }} data-assumes="">{top.assumes}</p>}
+          {top.attention && <p className="xs" style={{ margin: 0 }} data-attention="">{top.attention}</p>}
           {heldVersusNext(person, recs) && <p className="xs" style={{ margin: 0 }}>{heldVersusNext(person, recs)}</p>}
           {unread && <p className="xs dim" style={{ margin: 0 }}>No practice brief reads {top.label.toLowerCase()}, so a take won’t show it and none is suggested for it.</p>}
           <div>{practice(top.target)}</div>

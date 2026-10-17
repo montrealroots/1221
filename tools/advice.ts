@@ -18,14 +18,20 @@
  * Until brief 10 it ran F2-A's adv-N alone and read each brief's shown tenth; and it imported `writeFileSync` twice.
  * From brief 11 (2026-10-17) it also measures (f) and (h) as clarified (docs/verification/completion-2026-10-16/
  * clarifications.md): preparation's own figure against the judge's replay, and the trained input's forecast at the
- * discipline it had, beside each as written.
+ * discipline it had, beside each as written. From brief 12, later that day, every clause of (f) and (h) as the owner
+ * resolved them (docs/verification/resolution-2026-10-17/advice-criteria.md, F1 to F6 and H1 to H6, `f12` and `h12`),
+ * on each case as built, on a copy that tapes one more brief cold, and on every copy read after its twenty days; each
+ * brief 11 and brief 10 figure is kept beside them as it was.
  *
  *   npx vite-node tools/advice.ts -- --cases tuning [--out file.json]
  *   npx vite-node tools/advice.ts -- --cases adv-h-0..9 --held-out --out docs/verification/decisions-2026-10-16/advice/h-000.json
+ *   npx vite-node tools/advice.ts -- --cases adv-v-0..9 --fresh --out <file.json>
  *   npx vite-node tools/advice.ts -- --summarize a.json b.json … [--out summary.json]
  *
- * A held-out seed is refused without `--held-out`; with it, the commit and whether the tracked tree was clean are written
- * into the output, so a held-out run says what it ran on.
+ * A held-out seed is refused without `--held-out`, and from brief 12 (2026-10-17) a fresh one (adv-v-0 to 119) without
+ * `--fresh`; every run writes its commit and whether the tracked tree was clean into its output, so it says what it ran
+ * on. From brief 12 the held-out set is regression coverage, its groups named `regression` in a summary, and the fresh
+ * set is the unseen validation (`SET_ROLE`, tools/advice-harness.ts).
  */
 import { execSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -40,7 +46,10 @@ import { adviceFor } from '../src/engine/systems/next-steps';
 import { forecastWork, genreNow, trainingForecast, type Forecast } from '../src/engine/systems/advice';
 import { abilityFull, abilityOf, isAbility, levelOf } from '../src/engine/systems/attributes';
 import type { Recommendation } from '../src/engine/systems/experience';
-import { RECENT, casesOf, candidatesOf, clone, buildCase, f2aCase, heldOutRefusal, isFull, live, setLevel, worthOf, type CaseSpec } from './advice-harness';
+import { BRIEFS } from '../src/engine/content/briefs';
+import { adviceFor as readAdvice, attentionOf } from '../src/engine/systems/next-steps';
+import { assumedOf, forecastChange, preparationWorth } from '../src/engine/systems/advice';
+import { RECENT, SET_LABEL, SET_ROLE, assumedByRecords, attentionByRecords, casesOf, candidatesOf, changesOf, clone, buildCase, f2aCase, forecastByRecords, go, growthLadder, heldOutRefusal, isFull, likeForLike, live, preparationByRecords, rest, rng, setLevel, staleOf, tapeWaiting, worthOf, type CaseSpec } from './advice-harness';
 
 const argv = process.argv.slice(2);
 const arg = (n: string, d = '') => { const i = argv.indexOf(`--${n}`); return i >= 0 ? argv[i + 1]! : d; };
@@ -96,10 +105,42 @@ function measure(spec: CaseSpec) {
   const baseWorth = worthOf(base, takes);
   const realized: Record<string, number> = {};
   let h: Record<string, unknown> = {};
+  // Brief 12: each read the measure makes of the advice, and what it says of the first-named's training (F3, H1 to H4).
+  const reads: { who: string; stale: string[]; changes: ReturnType<typeof changesOf> }[] = [];
+  const readOf = (who: string, x: Simulation) => { const recs = readAdvice(x, x.player); reads.push({ who, stale: staleOf(x, recs), changes: changesOf(x, recs) }); return recs; };
+  readOf('as built', sim);
+  readOf('ignored', base);
+  let followed: Record<string, unknown> = {};
   for (const id of played) {
     const c = clone(sim);
     live(c, id);
     realized[id] = worthOf(c, takes) - baseWorth;
+    const again12 = readOf(first && id === first.target ? 'followed' : `trained ${id}`, c);
+    if (first && id === first.target) {
+      // H1 to H4 on the player who followed it; F3 on what the sessions brought, under the forecast's own assumptions.
+      const was = c.player.experience?.advised;
+      const after = trainingForecast(c, c.player).get(id);
+      const before = pointsOf(predicted.get(id))!;
+      const mine = reads.at(-1)!;
+      // The change since the note made as the sessions began (the first hour notes it), worked out by the engine whatever the
+      // standing speaks of: with no work since, the work's and the genres' parts are 0.
+      const sinceSessions = was && was.target === id && after !== undefined ? forecastChange(c, c.player, id, was.last) : undefined;
+      const firstAfter = again12.find((x) => x.forecast)?.target;
+      const leader = [...trainingForecast(c, c.player)].filter(([k, x]) => k !== id && (x.own ?? pointsOf(x)!) >= 0.1).sort((a, b) => pointsOf(b[1])! - pointsOf(a[1])!)[0];
+      const leads = leader !== undefined && (after === undefined || pointsOf(leader[1])! > pointsOf(after)! + 1e-12);
+      const like = likeForLike(sim, c, base);
+      followed = {
+        notStale: mine.stale.length === 0, stale: mine.stale,
+        moved: after === undefined ? isFull(c, id) : Math.abs(pointsOf(after)! - before) > 1e-12,
+        stayed: firstAfter === id, leads, changedWhereLed: !leads || firstAfter !== id,
+        rose: after !== undefined && pointsOf(after)! > before + 1e-12,
+        noted: was?.target === id, change: sinceSessions ? { residual: sinceSessions.residual, parts: Object.fromEntries(Object.entries(sinceSessions.parts).map(([k, v]) => [k, Math.round(v * 1e6) / 1e6])) } : null,
+        attributed: after === undefined || (sinceSessions !== undefined && Math.abs(sinceSessions.residual) < 1e-9 && Math.abs(sinceSessions.parts.work) < 1e-12 && Math.abs(sinceSessions.parts.genres) < 1e-12),
+        // Every rise the standing speaks of is said in its parts.
+        explained: mine.changes.every((x) => !x.rose || x.said),
+        like: { predicted: r3(before), realized: r3(like), within: Math.abs(before - like) <= Math.max(0.3, 0.25 * Math.abs(like)) },
+      };
+    }
     if (first && id === first.target) {
       const again = adviceFor(c, c.player);
       const fNow = trainingForecast(c, c.player);
@@ -194,6 +235,69 @@ function measure(spec: CaseSpec) {
   for (const w of renamed.player.work ?? []) w.inputs.seed = `${seed}~renamed`;
   const i = { same: JSON.stringify(adviceFor(renamed, renamed.player)) === JSON.stringify(advice) };
 
+  // Brief 12, (f) as the owner resolved it: F1, F2, F4 and F5 on the case as built and on a copy that tapes one more brief
+  // cold, a camera brief it hasn't taped drawn from the seed; F6 on the first-named's ladder; F3 above, on the followed copy.
+  const fOn = (x: Simulation) => {
+    const recs = readAdvice(x, x.player);
+    const top = recs.find((r) => r.forecast);
+    const fx = trainingForecast(x, x.player);
+    const apart = [...fx.values()].every((y) => Math.abs((y.exact ?? y.points) - ((y.own ?? 0) + (y.days ?? 0))) < 1e-12 && y.hours === 20);
+    const prepBy = preparationByRecords(x);
+    const prepSaid = [...fx.values()][0]?.preparation;
+    const prepWorked = prepSaid === undefined ? Math.abs(prepBy) < 1e-12 : [...fx.values()].every((y) => Math.abs((y.preparation ?? 0) - prepBy) < 1e-9);
+    const a = assumedOf(x.player);
+    const byRecords = assumedByRecords(x);
+    const assumedMatch = a !== undefined && a.pieces === byRecords.pieces && a.complete === byRecords.complete && a.short === byRecords.short && a.genres === byRecords.genres && a.genreShort === byRecords.genreShort && a.genreBetter === byRecords.genreBetter && JSON.stringify(a.prepared.map((p) => p.what)) === JSON.stringify(byRecords.prepared);
+    const says = top?.assumes ?? '';
+    const assumedSaid = top !== undefined && says.startsWith(`What it assumes of your last ${byRecords.pieces === 1 ? 'piece' : `${byRecords.pieces} pieces`}:`) && (byRecords.genres === 0 || (says.includes(`${byRecords.genreShort} ${byRecords.genreShort === 1 ? 'is' : 'are'} short of complete and ${byRecords.genreBetter} known better than when taped`)));
+    // F4: each piece read as prepared named, what the first-named's figure would be read as taped (the forecast's own,
+    // checked against the measure's reading), and no other piece read better prepared than its record.
+    const taped = top ? forecastByRecords(x, top.target, true) : undefined;
+    const tapedEngine = top ? (trainingForecast(x, x.player, x.player.work ?? [], [top.target], true).get(top.target)) : undefined;
+    // Read exactly as said: every input's forecast is the one worked from the records with only the named pieces as prepared.
+    const exactly = [...fx].every(([k, y]) => Math.abs((y.exact ?? y.points) - forecastByRecords(x, k)) < 1e-9);
+    const counterfactual = { pieces: byRecords.prepared.length, named: byRecords.prepared.every((w) => says.includes(`In ${w}, `)), taped: byRecords.prepared.length === 0 || (taped !== undefined && tapedEngine !== undefined && Math.abs(taped - (tapedEngine.exact ?? tapedEngine.points)) < 1e-9 && says.includes(`would be worth about ${taped.toFixed(2)} a piece, not ${(pointsOf(top!.forecast)!).toFixed(2)}`)), readAsSaid: exactly };
+    // F5: the verdict and its figures, the engine's against the records'.
+    const att = attentionOf(x, x.player, top);
+    const byRec = attentionByRecords(x, top ? pointsOf(top.forecast) : undefined);
+    const worth = preparationWorth(x, x.player);
+    const verdictWords = { both: 'Both ', preparation: 'Preparation deserves attention now', training: 'Training deserves attention now', neither: 'Neither preparation nor training' } as const;
+    const lead = top ?? recs[0];
+    const attention = { verdict: att?.verdict ?? null, own: worth ? r3(worth.own) : null, genres: worth ? r3(worth.genres) : null, matches: att !== undefined && worth !== undefined && Math.abs(worth.own - byRec.own) < 1e-9 && Math.abs(worth.genres - byRec.genres) < 1e-9 && att.verdict === byRec.verdict, said: att !== undefined && (lead?.attention ?? '').startsWith(verdictWords[att.verdict]) };
+    return { apart, prepWorked, assumedMatch, assumedSaid, counterfactual, attention, ok: { F1: apart && prepWorked, F2: assumedMatch && assumedSaid, F4: counterfactual.named && counterfactual.taped && counterfactual.readAsSaid, F5: attention.matches && attention.said } };
+  };
+  const asBuilt = fOn(sim);
+  const cold = clone(sim);
+  const cr = rng(`${seed}:cold`);
+  const untaped = BRIEFS.filter((b) => b.medium === 'camera' && !cold.player.briefs?.[b.id]);
+  const coldBrief = untaped[Math.floor(cr() * untaped.length)]!;
+  const tapeCold = () => go(cold, 'practice.self_tape', { genre: coldBrief.kinds[0], brief: coldBrief.id });
+  go(cold, 'brief.choose', { brief: coldBrief.id, reading: coldBrief.readings[0]!.id });
+  tapeWaiting(cold, `${seed} ${coldBrief.id} cold`, () => { go(cold, 'brief.choose', { brief: coldBrief.id, reading: coldBrief.readings[0]!.id }); }, tapeCold);
+  rest(cold);
+  const coldF = fOn(cold);
+  readOf('cold take', cold);
+  const ladder12 = first ? growthLadder(sim, first.target) : undefined;
+  const f12 = {
+    asBuilt, cold: { brief: coldBrief.id, chief: cold.player.work!.at(-1)!.limits[0] ? `${cold.player.work!.at(-1)!.limits[0]!.kind}:${cold.player.work!.at(-1)!.limits[0]!.what}` : null, ...coldF },
+    like: followed.like ?? null, growth: ladder12 ? { growth: ladder12.growth.map((x) => Math.round(x * 1e6) / 1e6), ok: ladder12.ok } : null,
+    ok: { F1: asBuilt.ok.F1 && coldF.ok.F1, F2: asBuilt.ok.F2 && coldF.ok.F2, F3: Boolean((followed.like as { within?: boolean } | undefined)?.within), F4: asBuilt.ok.F4 && coldF.ok.F4, F5: asBuilt.ok.F5 && coldF.ok.F5, F6: ladder12?.ok ?? false },
+  };
+  // Brief 12, (h) as the owner resolved it: the follower (H1 to H4) and every read (H5, H6).
+  const allChanges = reads.flatMap((x) => x.changes);
+  const h12 = {
+    followed, reads: reads.map((x) => ({ who: x.who, stale: x.stale, changes: x.changes.map((y) => ({ since: y.since, rose: y.rose, by: Math.round(y.by * 1e6) / 1e6, residual: y.residual ?? null, said: y.said, unexplained: y.unexplained })) })),
+    staleReads: reads.filter((x) => x.stale.length).length, changes: allChanges.length, unexplained: allChanges.filter((x) => x.unexplained).length, rises: allChanges.filter((x) => x.rose).length,
+    ok: {
+      H1: Boolean(followed.notStale && followed.moved && followed.attributed),
+      H2: Boolean(followed.notStale && followed.changedWhereLed),
+      H3: !followed.rose || Boolean(followed.attributed),
+      H4: !followed.rose || Boolean(followed.explained),
+      H5: reads.every((x) => x.stale.length === 0) && allChanges.every((x) => !x.unexplained),
+      H6: reads.every((x) => !x.stale.some((y) => y.startsWith('S1'))),
+    },
+  };
+
   const levels = Object.fromEntries([...candidates, ...built.full].map((k) => [k, r3(levelOf(sim, sim.player, k as never))]));
   return {
     seed, set: spec.set, design: spec.design, ...(spec.band ? { band: spec.band, stage: spec.stage } : {}),
@@ -202,7 +306,7 @@ function measure(spec: CaseSpec) {
     first: first?.target, said, chief, chiefIsFirst: chief !== undefined && chief === first?.target,
     predicted: Object.fromEntries([...predicted].map(([k, v]) => [k, r3(pointsOf(v)!)])), candidates,
     realized: Object.fromEntries(Object.entries(realized).map(([k, v]) => [k, r3(v)])), best: best?.[0], bestGain: best ? r3(best[1]) : undefined, firstGain: firstGain !== undefined ? r3(firstGain) : undefined,
-    pass, noAdvice: !first, c, d, e, f, g, h, i,
+    pass, noAdvice: !first, c, d, e, f, g, h, i, f12, h12,
   };
 }
 
@@ -230,22 +334,42 @@ function summarize(cases: readonly CaseOut[]) {
       // As clarified (from brief 11): the input's own part fell, a rise within discipline's lift, a rise explained.
       ownFell: hs.filter((x) => (x.h as { ownFell?: boolean }).ownFell).length, rose: hs.filter((x) => (x.h as { rose?: boolean }).rose).length, withinLift: hs.filter((x) => (x.h as { withinLift?: boolean }).withinLift).length, roseSinceNote: hs.filter((x) => (x.h as { roseSinceNote?: boolean }).roseSinceNote).length, explained: hs.filter((x) => (x.h as { explained?: boolean }).explained).length },
     i: { same: cases.filter((x) => x.i.same).length },
+    // Brief 12 (advice-criteria.md): each clause of (f) and (h) as the owner resolved them, counted case by case.
+    f12: {
+      F1: cases.filter((x) => x.f12.ok.F1).length, F2: cases.filter((x) => x.f12.ok.F2).length, F3: cases.filter((x) => x.f12.ok.F3).length, F4: cases.filter((x) => x.f12.ok.F4).length, F5: cases.filter((x) => x.f12.ok.F5).length, F6: cases.filter((x) => x.f12.ok.F6).length,
+      F3share: r3(cases.filter((x) => x.f12.ok.F3).length / Math.max(1, n)),
+      readAsPrepared: { asBuilt: cases.filter((x) => x.f12.asBuilt.counterfactual.pieces > 0).length, cold: cases.filter((x) => x.f12.cold.counterfactual.pieces > 0).length },
+      verdicts: Object.fromEntries(['both', 'training', 'preparation', 'neither'].map((v) => [v, cases.filter((x) => x.f12.asBuilt.attention.verdict === v).length])),
+      coldVerdicts: Object.fromEntries(['both', 'training', 'preparation', 'neither'].map((v) => [v, cases.filter((x) => x.f12.cold.attention.verdict === v).length])),
+    },
+    h12: {
+      H1: cases.filter((x) => x.h12.ok.H1).length, H2: cases.filter((x) => x.h12.ok.H2).length, H3: cases.filter((x) => x.h12.ok.H3).length, H4: cases.filter((x) => x.h12.ok.H4).length, H5: cases.filter((x) => x.h12.ok.H5).length, H6: cases.filter((x) => x.h12.ok.H6).length,
+      followed: { stayed: cases.filter((x) => x.h12.followed.stayed).length, leads: cases.filter((x) => x.h12.followed.leads).length, changedWhereLed: cases.filter((x) => x.h12.followed.leads && x.h12.followed.changedWhereLed).length, rose: cases.filter((x) => x.h12.followed.rose).length, roseAttributed: cases.filter((x) => x.h12.followed.rose && x.h12.followed.attributed).length, roseExplained: cases.filter((x) => x.h12.followed.rose && x.h12.followed.explained).length },
+      reads: cases.reduce((t, x) => t + x.h12.reads.length, 0), staleReads: cases.reduce((t, x) => t + x.h12.staleReads, 0), changes: cases.reduce((t, x) => t + x.h12.changes, 0), rises: cases.reduce((t, x) => t + x.h12.rises, 0), unexplained: cases.reduce((t, x) => t + x.h12.unexplained, 0),
+    },
   };
 }
 
-/** Every group the criteria report: each set and design, and for F2-A10's cases each band and each stage. */
+/**
+ * Every group the criteria report: each set and design, and for F2-A10's cases each band and each stage. From brief 12 the
+ * fresh set's too, and the held-out set's groups are named `regression` (`SET_LABEL`); until then they were `held-out`.
+ */
 function groups(cases: readonly CaseOut[]) {
   const out: Record<string, ReturnType<typeof summarize>> = {};
   const by = (name: string, pick: (x: CaseOut) => boolean) => { const xs = cases.filter(pick); if (xs.length) out[name] = summarize(xs); };
-  for (const set of ['tuning', 'held-out'] as const) {
-    by(`${set}`, (x) => x.set === set);
-    by(`${set} F2-A`, (x) => x.set === set && x.design === 'F2-A');
-    by(`${set} F2-A10`, (x) => x.set === set && x.design === 'F2-A10');
-    for (const band of ['beginner', 'developing', 'advanced', 'nearMastery']) by(`${set} F2-A10 ${band}`, (x) => x.set === set && x.band === band);
-    for (const stage of ['firstWeek', 'midTerm', 'later']) by(`${set} F2-A10 ${stage}`, (x) => x.set === set && x.stage === stage);
+  for (const set of ['tuning', 'held-out', 'fresh'] as const) {
+    const name = SET_LABEL[set];
+    by(`${name}`, (x) => x.set === set);
+    by(`${name} F2-A`, (x) => x.set === set && x.design === 'F2-A');
+    by(`${name} F2-A10`, (x) => x.set === set && x.design === 'F2-A10');
+    for (const band of ['beginner', 'developing', 'advanced', 'nearMastery']) by(`${name} F2-A10 ${band}`, (x) => x.set === set && x.band === band);
+    for (const stage of ['firstWeek', 'midTerm', 'later']) by(`${name} F2-A10 ${stage}`, (x) => x.set === set && x.stage === stage);
   }
   return out;
 }
+
+/** What each set present is for (from brief 12): said beside the figures, so a regression run isn't read as unseen validation. */
+const rolesOf = (cases: readonly CaseOut[]) => Object.fromEntries([...new Set(cases.map((x) => x.set))].map((set) => [SET_LABEL[set], SET_ROLE[set]]));
 
 const git = (cmd: string) => { try { return execSync(`git ${cmd}`, { encoding: 'utf8' }).trim(); } catch { return undefined; } };
 const out = arg('out');
@@ -258,21 +382,21 @@ if (argv.includes('--summarize')) {
   const files = argv.slice(argv.indexOf('--summarize') + 1).filter((x) => !x.startsWith('--') && x !== out);
   const read = files.map((f) => JSON.parse(readFileSync(f, 'utf8')) as { commit?: string; cases: CaseOut[] });
   const cases = read.flatMap((x) => x.cases);
-  const summary = { ...at, files, commits: [...new Set(read.map((x) => x.commit))], cases: cases.length, groups: groups(cases) };
+  const summary = { ...at, files, commits: [...new Set(read.map((x) => x.commit))], cases: cases.length, roles: rolesOf(cases), groups: groups(cases) };
   console.log(JSON.stringify(summary.groups, null, 1));
   if (out) writeFileSync(out, `${JSON.stringify(summary, null, 1)}\n`);
 } else {
   const specs = casesOf(arg('cases', 'tuning'));
-  const refused = heldOutRefusal(specs, argv.includes('--held-out'));
+  const refused = heldOutRefusal(specs, argv.includes('--held-out'), argv.includes('--fresh'));
   if (refused) throw new Error(refused);
   const cases: CaseOut[] = [];
   for (const spec of specs) {
     const x = measure(spec);
     cases.push(x);
-    console.log(`${x.seed} ${x.band ?? ''} ${x.stage ?? ''} first=${x.first} best=${x.best} (${x.bestGain}) first gained ${x.firstGain} predicted ${(x.e as { predicted?: number }).predicted} ${x.pass ? 'PASS' : 'MISS'} median=${x.c.atOrAboveMedian} e=${(x.e as { within?: boolean }).within} f=${x.f.falls} prep=${x.f.prep.limited ? x.f.prep.same : '-'} g=${x.g.ok}/${x.g.recs} h=${(x.h as { fell?: boolean }).fell}/${(x.h as { ok?: boolean }).ok} i=${x.i.same} d=${x.d.violations.length}/${x.d.allFull.says}`);
+    console.log(`${x.seed} ${x.band ?? ''} ${x.stage ?? ''} first=${x.first} best=${x.best} (${x.bestGain}) first gained ${x.firstGain} predicted ${(x.e as { predicted?: number }).predicted} ${x.pass ? 'PASS' : 'MISS'} median=${x.c.atOrAboveMedian} e=${(x.e as { within?: boolean }).within} f=${x.f.falls} prep=${x.f.prep.limited ? x.f.prep.same : '-'} g=${x.g.ok}/${x.g.recs} h=${(x.h as { fell?: boolean }).fell}/${(x.h as { ok?: boolean }).ok} i=${x.i.same} d=${x.d.violations.length}/${x.d.allFull.says} f12=${Object.entries(x.f12.ok).filter(([, v]) => !v).map(([k]) => k).join('') || 'ok'} h12=${Object.entries(x.h12.ok).filter(([, v]) => !v).map(([k]) => k).join('') || 'ok'}`);
     if (out) writeFileSync(out, `${JSON.stringify({ ...at, cases }, null, 1)}\n`);
   }
   const summary = groups(cases);
   console.log(JSON.stringify(summary, null, 1));
-  if (out) writeFileSync(out, `${JSON.stringify({ ...at, cases, summary }, null, 1)}\n`);
+  if (out) writeFileSync(out, `${JSON.stringify({ ...at, roles: rolesOf(cases), cases, summary }, null, 1)}\n`);
 }

@@ -1,0 +1,247 @@
+{
+ "what": "Each mutation applied alone in a copy of the clone (never the clone itself), tests/decisions-advice.test.ts run whole, the copy restored; caughtBy is every test that failed (vitest names).",
+ "command": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-advice.test.ts",
+ "mutations": [
+  {
+   "id": "M1",
+   "clause": "F1",
+   "what": "preparation added into training's figure",
+   "where": "src/engine/systems/advice.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today",
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+   ]
+  },
+  {
+   "id": "M2",
+   "clause": "F2",
+   "what": "pieces read as prepared counted as short and read as taped",
+   "where": "src/engine/systems/advice.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+   ]
+  },
+  {
+   "id": "M3",
+   "clause": "F4",
+   "what": "the as-taped figure read as prepared",
+   "where": "src/engine/systems/next-steps.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+   ]
+  },
+  {
+   "id": "M4",
+   "clause": "F4",
+   "what": "a piece read as prepared not named",
+   "where": "src/engine/systems/next-steps.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+   ]
+  },
+  {
+   "id": "M5",
+   "clause": "F4",
+   "what": "any piece with a preparation limit read as prepared",
+   "where": "src/engine/systems/advice.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+   ]
+  },
+  {
+   "id": "M6",
+   "clause": "F5",
+   "what": "the verdict ignores preparation",
+   "where": "src/engine/systems/next-steps.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: reaches mastery: the first-named practiced to full through practice.exercise drops out, the next by forecast is named and the standing says the first has nothing left to forecast; with everything training reaches at full the advice says so, and the verdict asks for preparation alone, across a save and a load",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says whether preparation, training or both deserve attention, from what the judge’s replay gives each, and the verdict follows the figures when one side is changed",
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+   ]
+  },
+  {
+   "id": "M7",
+   "clause": "F5",
+   "what": "preparation's figure from the pieces as the forecast reads them, not as taped",
+   "where": "src/engine/systems/advice.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says whether preparation, training or both deserve attention, from what the judge’s replay gives each, and the verdict follows the figures when one side is changed",
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+   ]
+  },
+  {
+   "id": "M8",
+   "clause": "H3",
+   "what": "the genres read as now at every step of the attribution",
+   "where": "src/engine/systems/advice.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: changes their work, three briefs of another kind (the microphone’s) in genres never met: the work’s and the genres’ parts are worked out and said, the first-named is the forecast’s largest, never stale, across a save and a load",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: ignored for three weeks of taping, it keeps naming what brings most and is never stale; every move of its forecast is worked out in parts and said, the work it reads and how well you know its genres, a part whose input didn’t move nothing, across a save and a load"
+   ]
+  },
+  {
+   "id": "M9",
+   "clause": "H4",
+   "what": "a rise said without its parts",
+   "where": "src/engine/systems/next-steps.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: changes their work, three briefs of another kind (the microphone’s) in genres never met: the work’s and the genres’ parts are worked out and said, the first-named is the forecast’s largest, never stale, across a save and a load",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: followed near mastery, its forecast rose, and the advice works the rise out in parts, its own level and discipline and the other inputs the hours moved, the work and the genres nothing; it says each part, and the read isn’t stale, across a save and a load",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: ignored for three weeks of taping, it keeps naming what brings most and is never stale; every move of its forecast is worked out in parts and said, the work it reads and how well you know its genres, a part whose input didn’t move nothing, across a save and a load",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: partly followed, seven of the twenty sessions, the level moves less and the change is its own level’s and discipline’s; twenty sessions of another input’s exercise move its forecast through the other inputs and discipline; each said, never stale, across a save and a load",
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+   ]
+  },
+  {
+   "id": "M10",
+   "clause": "H5",
+   "what": "the residual left unsaid",
+   "where": "src/engine/systems/next-steps.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted"
+   ]
+  },
+  {
+   "id": "M11",
+   "clause": "H1",
+   "what": "the note keeps no state",
+   "where": "src/engine/systems/next-steps.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: changes their work, three briefs of another kind (the microphone’s) in genres never met: the work’s and the genres’ parts are worked out and said, the first-named is the forecast’s largest, never stale, across a save and a load",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: followed near mastery, its forecast rose, and the advice works the rise out in parts, its own level and discipline and the other inputs the hours moved, the work and the genres nothing; it says each part, and the read isn’t stale, across a save and a load",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: ignored for three weeks of taping, it keeps naming what brings most and is never stale; every move of its forecast is worked out in parts and said, the work it reads and how well you know its genres, a part whose input didn’t move nothing, across a save and a load",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: partly followed, seven of the twenty sessions, the level moves less and the change is its own level’s and discipline’s; twenty sessions of another input’s exercise move its forecast through the other inputs and discipline; each said, never stale, across a save and a load",
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+   ]
+  },
+  {
+   "id": "M12",
+   "clause": "H6",
+   "what": "sticky advice: the noted input kept first while it passes the floor",
+   "where": "src/engine/systems/next-steps.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load",
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why",
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+   ]
+  },
+  {
+   "id": "M13",
+   "clause": "fresh",
+   "what": "a fresh seed no longer refused without --fresh",
+   "where": "tools/advice-harness.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "The F2-A10 harness (brief 11) > GUARD: the fresh validation seeds (brief 12) are apart from the tuning and held-out ones, four bands by three stages by ten, and refused without --fresh, the held-out set now regression coverage"
+   ]
+  },
+  {
+   "id": "M14",
+   "clause": "S3",
+   "what": "the standing's figures unchecked",
+   "where": "tools/advice-harness.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted"
+   ]
+  },
+  {
+   "id": "M15",
+   "clause": "S1",
+   "what": "a first-named behind another unchecked",
+   "where": "tools/advice-harness.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted"
+   ]
+  },
+  {
+   "id": "M16",
+   "clause": "F6",
+   "what": "the forecast's growth slowed past three quarters",
+   "where": "src/engine/systems/advice.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: the forecast’s growth is the progression model’s: on the first-named’s ladder it never rises with the level and falls below three quarters of full; the forecast is within (e)’s tolerance of what twenty sessions brought, read under its own assumptions"
+   ],
+   "before": {
+    "on": "e9e647df",
+    "killed": false,
+    "by": [],
+    "note": "survived until e89bd9f5 held the claim (see that commit)"
+   }
+  },
+  {
+   "id": "M17",
+   "clause": "H3",
+   "what": "discipline worked out before the input's own level",
+   "where": "src/engine/systems/advice.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: followed near mastery, its forecast rose, and the advice works the rise out in parts, its own level and discipline and the other inputs the hours moved, the work and the genres nothing; it says each part, and the read isn’t stale, across a save and a load"
+   ],
+   "before": {
+    "on": "e9e647df",
+    "killed": false,
+    "by": [],
+    "note": "survived until e89bd9f5 held the claim (see that commit)"
+   }
+  },
+  {
+   "id": "M18",
+   "clause": "F2",
+   "what": "genre known better counted from at least as well",
+   "where": "src/engine/systems/advice.ts",
+   "on": "2d71d188",
+   "killed": true,
+   "caughtBy": [
+    "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load"
+   ],
+   "before": {
+    "on": "e9e647df",
+    "killed": false,
+    "by": [],
+    "note": "survived until e89bd9f5 held the claim (see that commit)"
+   }
+  }
+ ]
+}

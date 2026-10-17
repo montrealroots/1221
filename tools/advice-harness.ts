@@ -3,7 +3,9 @@
  * tapes three briefs through the game's commands, and copies of the save that each train one input for twenty days.
  * `tools/advice.ts` runs it over the seeds; `tests/advice.test.ts` plays one case through it. From brief 10 (later on
  * 2026-10-16) it also builds F2-A10's cases (`buildCase`, below F2-A's own, which are unchanged): a band of ability, a
- * stage of the term, the 149 genres, and the realized gain over the work the advice reads (`worthOf`).
+ * stage of the term, the 149 genres, and the realized gain over the work the advice reads (`worthOf`). From brief 12
+ * (2026-10-17) it also names the fresh validation set (adv-v-0 to 119, refused without --fresh) and holds the workings
+ * and detectors the clarified (f) and (h) are measured by (below `caseOf`'s sets, at the end of the file).
  */
 
 import { createSave, loadSave } from '../src/engine';
@@ -11,11 +13,15 @@ import { newLifeConfig } from '../src/engine/world/bootstrap';
 import type { Simulation } from '../src/engine/core/simulation';
 import { MS_DAY, instantFromZoned, zonedParts } from '../src/engine/core/time';
 import { deserialise, serialise } from '../src/engine/persistence/adapter';
-import { ABILITY_DEFS, TECHNIQUES, type AbilityId } from '../src/engine/content/abilities';
+import { ABILITY_DEFS, MASTERED, TECHNIQUES, type AbilityId } from '../src/engine/content/abilities';
 import type { Skill } from '../src/engine/content/school';
 import { BRIEFS, BRIEF_BY_ID } from '../src/engine/content/briefs';
 import { exerciseFor } from '../src/engine/content/practice';
-import { atFull, forecast } from '../src/engine/systems/briefs';
+import { atFull, forecast, genreKnown } from '../src/engine/systems/briefs';
+import { RULESET, TASK_PROFILES } from '../src/engine/content/tasks';
+import { performerOf, replayAs, type WorkRecord } from '../src/engine/systems/evaluation';
+import { forecastChange, trainingForecast, trained, type Forecast } from '../src/engine/systems/advice';
+import type { Recommendation } from '../src/engine/systems/experience';
 import { matchedTier } from '../src/engine/systems/practice';
 import { CRAFT_ABILITY, abilityFull, attributesOf, isAbility, levelOf } from '../src/engine/systems/attributes';
 import { inHospital } from '../src/engine/systems/health';
@@ -33,9 +39,9 @@ export const go = (sim: Simulation, kind: string, payload: Record<string, unknow
 export const clone = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)));
 const nextDay = (sim: Simulation, hour: number) => { const p = zonedParts(sim.now + MS_DAY, NY); return instantFromZoned({ year: p.year, month: p.month, day: p.day, hour }, NY); };
 
-/** Twenty days, a session of the exercise each (or none, for the baseline), at the first free hour. */
-export function live(sim: Simulation, exercise: string | undefined) {
-  for (let d = 0; d < SESSIONS; d += 1) {
+/** Twenty days, a session of the exercise each (or none, for the baseline), at the first free hour. `days` (from brief 12): fewer, for a player who follows the advice in part. */
+export function live(sim: Simulation, exercise: string | undefined, days = SESSIONS) {
+  for (let d = 0; d < days; d += 1) {
     sim.advanceTo(nextDay(sim, 7));
     if (!exercise) continue;
     for (const hour of [7, 8, 20, 21, 12, 17]) {
@@ -114,20 +120,34 @@ export const RECENT = 12;
 /** Every genre a brief is written for, the 149. */
 export const GENRES: readonly string[] = [...new Set(BRIEFS.flatMap((b) => b.kinds))].sort();
 
-export interface CaseSpec { seed: string; set: 'tuning' | 'held-out'; design: 'F2-A' | 'F2-A10'; band?: Band; stage?: Stage }
+export interface CaseSpec { seed: string; set: 'tuning' | 'held-out' | 'fresh'; design: 'F2-A' | 'F2-A10'; band?: Band; stage?: Stage }
+
+/**
+ * What each set is for, as a run's summary says it (from brief 12, 2026-10-17; docs/verification/resolution-2026-10-17/
+ * advice-criteria.md). The held-out set was brief 10's unseen validation, run again in brief 11; its results informed brief
+ * 12's clarifications, so from then it's regression coverage, reported as `regression`, and the fresh set is the unseen one.
+ */
+export const SET_ROLE = {
+  tuning: 'tuning: played and read while the advice and its tests were made',
+  'held-out': 'regression: brief 10’s held-out set, run in brief 10 and brief 11; it informed brief 12’s clarifications, so it isn’t unseen validation from then',
+  fresh: 'unseen validation (brief 12): run once, on the tested commit, after the clarified criteria were written',
+} as const;
+/** The name a set's groups have in a summary: the held-out set's is `regression` from brief 12. */
+export const SET_LABEL = { tuning: 'tuning', 'held-out': 'regression', fresh: 'fresh' } as const;
 
 /**
  * A seed's case: F2-A's adv-0 to 9 (tuning) and 10 to 39 (held out), as F2-A built them; adv-t-0 to 19 (tuning) and
- * adv-h-0 to 119 (held out), F2-A10's, their band and stage from their number (the checklist's `seeds`). Nothing in the
- * advice reads this: only the harness does, to build the case.
+ * adv-h-0 to 119 (held out), F2-A10's, their band and stage from their number (the checklist's `seeds`); and from brief
+ * 12, adv-v-0 to 119 (fresh), stratified as the held-out ones are and built the same way. Nothing in the advice reads
+ * this: only the harness does, to build the case.
  */
 export function caseOf(seed: string): CaseSpec | undefined {
   let m = /^adv-(\d+)$/.exec(seed);
   if (m && Number(m[1]) < 40) return { seed, set: Number(m[1]) < 10 ? 'tuning' : 'held-out', design: 'F2-A' };
   m = /^adv-t-(\d+)$/.exec(seed);
   if (m && Number(m[1]) < 20) { const n = Number(m[1]); return { seed, set: 'tuning', design: 'F2-A10', band: BAND_ORDER[n % 4]!, stage: STAGE_ORDER[Math.floor(n / 4) % 3]! }; }
-  m = /^adv-h-(\d+)$/.exec(seed);
-  if (m && Number(m[1]) < 120) { const n = Number(m[1]); return { seed, set: 'held-out', design: 'F2-A10', band: BAND_ORDER[Math.floor(n / 30)]!, stage: STAGE_ORDER[Math.floor((n % 30) / 10)]! }; }
+  m = /^adv-([hv])-(\d+)$/.exec(seed);
+  if (m && Number(m[2]) < 120) { const n = Number(m[2]); return { seed, set: m[1] === 'h' ? 'held-out' : 'fresh', design: 'F2-A10', band: BAND_ORDER[Math.floor(n / 30)]!, stage: STAGE_ORDER[Math.floor((n % 30) / 10)]! }; }
   return undefined;
 }
 
@@ -236,15 +256,16 @@ export function tapeWaiting(sim: Simulation, what: string, prepare: () => void, 
 }
 
 /**
- * The cases a `--cases` list names: `tuning`, `held-out`, a seed, or a range `adv-h-0..9`; an unknown seed throws. Kept in
- * `tools/advice.ts` until brief 11 (2026-10-17), and moved here unchanged with the refusal below, so a gate test reads
- * what the measure runs.
+ * The cases a `--cases` list names: `tuning`, `held-out`, `fresh` (from brief 12), a seed, or a range `adv-h-0..9`; an
+ * unknown seed throws. Kept in `tools/advice.ts` until brief 11 (2026-10-17), and moved here unchanged with the refusal
+ * below, so a gate test reads what the measure runs.
  */
 export function casesOf(list: string): CaseSpec[] {
   const out: string[] = [];
   for (const item of list.split(',').map((x) => x.trim()).filter(Boolean)) {
     if (item === 'tuning') out.push(...Array.from({ length: 10 }, (_, i) => `adv-${i}`), ...Array.from({ length: 20 }, (_, i) => `adv-t-${i}`));
     else if (item === 'held-out') out.push(...Array.from({ length: 30 }, (_, i) => `adv-${i + 10}`), ...Array.from({ length: 120 }, (_, i) => `adv-h-${i}`));
+    else if (item === 'fresh') out.push(...Array.from({ length: 120 }, (_, i) => `adv-v-${i}`));
     else {
       const m = /^(.*-)(\d+)\.\.(\d+)$/.exec(item);
       if (m) for (let n = Number(m[2]); n <= Number(m[3]); n += 1) out.push(`${m[1]}${n}`);
@@ -254,8 +275,13 @@ export function casesOf(list: string): CaseSpec[] {
   return out.map((seed) => { const c = caseOf(seed); if (!c) throw new Error(`${seed} is no case of F2-A or F2-A10`); return c; });
 }
 
-/** Why a run is refused: a held-out seed asked for without `--held-out` (F2-A10 (a): run once, on the code to be reported). */
-export const heldOutRefusal = (specs: readonly CaseSpec[], heldOut: boolean): string | undefined => (specs.some((x) => x.set === 'held-out') && !heldOut ? 'A held-out seed is run only with --held-out, once, on the code to be reported.' : undefined);
+/**
+ * Why a run is refused: a held-out seed asked for without `--held-out`, or a fresh one without `--fresh` (from brief 12).
+ * Until brief 12 the held-out refusal said a held-out seed was run "once, on the code to be reported"; it was run in brief
+ * 10 and again in brief 11, and from brief 12 it's regression coverage, still run only when asked for. The fresh set is
+ * what's run once, on the tested commit (advice-criteria.md).
+ */
+export const heldOutRefusal = (specs: readonly CaseSpec[], heldOut: boolean, fresh = false): string | undefined => (specs.some((x) => x.set === 'held-out') && !heldOut ? 'A held-out seed (regression coverage from brief 12) is run only with --held-out, on the code to be reported.' : specs.some((x) => x.set === 'fresh') && !fresh ? 'A fresh validation seed is run only with --fresh, once, on the tested commit.' : undefined);
 
 /** F2-A's case as takes: its three briefs, each at its first reading, as `setUp` taped them. */
 export function f2aCase(seed: string): { sim: Simulation; takes: Take[] } {
@@ -292,3 +318,170 @@ export function candidatesOf(sim: Simulation): string[] {
 
 /** Whether an input is at full by the game's own rule (`atFull`). */
 export const isFull = (sim: Simulation, id: string): boolean => atFull(levelOf(sim, sim.player, id as never), id, isAbility(id as never) ? abilityFull(sim, sim.player, id as AbilityId) : 100);
+
+/*
+ * Brief 12 (2026-10-17; docs/verification/resolution-2026-10-17/advice-criteria.md, written before this): the detectors
+ * and the independent workings the clarified F2-A10 (f) and (h) are measured by. Each is worked from the records, the
+ * judge's own replay (`replayAs`) and the game's own growth, never from the advice's helper it checks, except where a
+ * clause is about the advice reading itself the same way twice (S1, S2: a fresh forecast of the same save opened anew).
+ */
+
+/** A recent piece the forecast reads: judged under today's rules, replayable, the latest `RECENT` (as the advice keeps them, worked here apart). */
+export const readWork = (sim: Simulation): WorkRecord[] => [...(sim.player.work ?? [])].filter((w) => w.ruleset === RULESET && w.inputs.seed !== undefined && TASK_PROFILES[w.task]).sort((a, b) => a.at - b.at).slice(-RECENT);
+/** Whether a part of a piece's own preparation held it back most: its first limit a preparation, and not knowing the genre. */
+export const heldOwn = (w: WorkRecord): boolean => w.limits[0]?.kind === 'preparation' && w.limits[0].what !== 'genre';
+/** A piece with every part of its own preparation complete, its segments' too, knowing the genre as it stands. */
+export const preparedCopy = (w: WorkRecord): WorkRecord => {
+  const done = (prep: Record<string, number>) => Object.fromEntries(Object.entries(prep).map(([k, x]) => [k, k === 'genre' ? x : 1]));
+  return { ...w, inputs: { ...w.inputs, prep: done(w.inputs.prep), ...(w.inputs.piece?.own ? { piece: { ...w.inputs.piece, own: w.inputs.piece.own.map((o) => (o?.prep ? { ...o, prep: done(o.prep) } : o)) } } : {}) } };
+};
+/** Each piece's genre part as known today, by the brief its take was and `genreKnown`, the function a take reads. */
+export function genreToday(sim: Simulation): (w: WorkRecord) => WorkRecord {
+  const of = new Map<string, string>();
+  for (const [id, r] of Object.entries(sim.player.briefs ?? {})) for (const t of r.takes) of.set(t.key, id);
+  return (w) => { const b = w.inputs.prep.genre !== undefined ? BRIEF_BY_ID[of.get(w.inputs.key) ?? ''] : undefined; return b ? { ...w, inputs: { ...w.inputs, prep: { ...w.inputs.prep, genre: genreKnown(sim.player, b) } } } : w; };
+}
+/** The judge's exact whole of a piece for a performer. */
+const judged = (w: WorkRecord, p: ReturnType<typeof performerOf>): number => { const e = replayAs(w, TASK_PROFILES[w.task]!, p); return e ? e.exact ?? e.overall : 0; };
+/** Weighted to the latest as the advice weights its recent work: (i + 1) / n, over their sum. */
+const weighted = (xs: readonly number[]): number => { const n = xs.length; const W = xs.reduce((t, _x, i) => t + (i + 1) / n, 0); return xs.reduce((t, x, i) => t + (x * (i + 1)) / n, 0) / (W || 1); };
+
+/** F2 and F4, from the records: what the forecast should say it assumes. */
+export function assumedByRecords(sim: Simulation): { pieces: number; complete: number; short: number; prepared: string[]; genres: number; genreShort: number; genreBetter: number } {
+  const work = readWork(sim);
+  const today = work.map(genreToday(sim));
+  const complete = (w: WorkRecord) => Object.entries(w.inputs.prep).every(([k, x]) => k === 'genre' || x >= (w.inputs.required[k] ?? 1));
+  const prepared = work.filter(heldOwn);
+  const done = work.filter((w) => !heldOwn(w) && complete(w)).length;
+  const g = work.map((w, i) => ({ was: w.inputs.prep.genre, now: today[i]!.inputs.prep.genre, need: w.inputs.required.genre ?? 1 })).filter((x) => x.was !== undefined);
+  return { pieces: work.length, complete: done, short: work.length - done - prepared.length, prepared: prepared.map((w) => w.what), genres: g.length, genreShort: g.filter((x) => x.now! < x.need).length, genreBetter: g.filter((x) => x.now! > x.was! + 1e-12).length };
+}
+
+/** F1 and F4, from the records: what completing the own preparation of the pieces it held back most would bring, as you are now. */
+export function preparationByRecords(sim: Simulation): number {
+  const me = performerOf(sim, sim.player);
+  return weighted(readWork(sim).map(genreToday(sim)).map((w) => (heldOwn(w) ? judged(preparedCopy(w), me) - judged(w, me) : 0)));
+}
+
+/** F5, from the records: each piece's own preparation complete, then its genre known in full, against it as taped, as you are now. */
+export function attentionByRecords(sim: Simulation, training: number | undefined): { own: number; genres: number; verdict: 'both' | 'preparation' | 'training' | 'neither' } {
+  const me = performerOf(sim, sim.player);
+  const work = readWork(sim).map(genreToday(sim));
+  const own = weighted(work.map((w) => judged(preparedCopy(w), me) - judged(w, me)));
+  const genres = weighted(work.map((w) => { const p = preparedCopy(w); return p.inputs.prep.genre === undefined ? 0 : judged({ ...p, inputs: { ...p.inputs, prep: { ...p.inputs.prep, genre: Math.max(p.inputs.prep.genre, w.inputs.required.genre ?? 1) } } }, me) - judged(p, me); }));
+  const p = own + genres >= 0.1;
+  const t = training !== undefined && training >= 0.1;
+  return { own, genres, verdict: p && t ? 'both' : p ? 'preparation' : t ? 'training' : 'neither' };
+}
+
+/**
+ * F4, from the records: an input's forecast worked here apart, on the pieces the forecast should read as it should read
+ * them (each as taped, those its own preparation held back most as prepared unless `asTaped`, each genre as known today),
+ * with the game's own growth for the twenty sessions (`trained`): the input's own share on the pieces that read it, and
+ * the days' discipline on every piece, weighted to the latest.
+ */
+export function forecastByRecords(sim: Simulation, id: string, asTaped = false): number {
+  const work = readWork(sim).map(genreToday(sim)).map((w) => (!asTaped && heldOwn(w) ? preparedCopy(w) : w));
+  const me = performerOf(sim, sim.player);
+  const t = trained(sim, sim.player, id as never);
+  const to = levelOf(sim, t, id as never);
+  const d = levelOf(sim, t, 'discipline');
+  const at = (x: string, v: number): ReturnType<typeof performerOf> => (isAbility(x as never) ? { ...me, ability: (y) => (y === x ? v : me.ability(y)) } : { ...me, technique: (y) => (y === x ? v : me.technique(y)) });
+  const reads = (w: WorkRecord) => (isAbility(id as never) ? w.inputs.abilities[id as AbilityId] !== undefined : (w.inputs.techniques[id as never] ?? 0) > 0);
+  const own = weighted(work.map((w) => (reads(w) ? judged(w, at(id, to)) - judged(w, me) : 0)));
+  const days = d === me.ability('discipline') ? 0 : weighted(work.map((w) => judged(w, at('discipline', d)) - judged(w, me)));
+  return own + days;
+}
+
+/**
+ * F3: what twenty sessions brought, read under the forecast's own assumptions: the pieces it read, as it read them (as
+ * taped, the ones its own preparation held back most as prepared, each genre as known when the forecast was made), worked
+ * by the judge for the trained copy's abilities less the baseline copy's, weighted as the forecast weights them.
+ */
+export function likeForLike(before: Simulation, trainedCopy: Simulation, baseCopy: Simulation): number {
+  const work = readWork(before).map(genreToday(before)).map((w) => (heldOwn(w) ? preparedCopy(w) : w));
+  const a = performerOf(trainedCopy, trainedCopy.player);
+  const b = performerOf(baseCopy, baseCopy.player);
+  return weighted(work.map((w) => judged(w, a) - judged(w, b)));
+}
+
+/** F6: the growth twenty sessions bring in the forecast (`trained`) at an input's level, a third and two thirds of the way to full. */
+export function growthLadder(sim: Simulation, id: string): { rungs: number[]; growth: number[]; ok: boolean } {
+  const from = levelOf(sim, sim.player, id as never);
+  const to = isAbility(id as never) ? abilityFull(sim, sim.player, id as AbilityId) : MASTERED;
+  const rungs = [0, 1, 2].map((k) => from + ((to - from) * k) / 3);
+  const growth = rungs.map((r) => { const x = clone(sim); setLevel(x, id, r); return levelOf(x, trained(x, x.player, id as never), id as never) - r; });
+  const ok = growth.every((g, i) => i === 0 || (g <= growth[i - 1]! + 1e-12 && (rungs[i - 1]! >= 75 || g < growth[i - 1]!)));
+  return { rungs, growth, ok };
+}
+
+const r1 = (x: number) => Math.round(x * 10) / 10;
+const signed4 = (x: number) => `${x >= 0 ? '+' : '−'}${Math.abs(x).toFixed(4)}`;
+/** What each part of a change is said as, read here apart from the advice's own table: a test fails if either moves. */
+export const PART_WORDS: Readonly<Record<string, string>> = { work: 'the work it reads', genres: 'how well you know its genres', others: 'your other abilities and techniques', own: 'its own level', discipline: 'discipline' };
+
+/**
+ * S1 to S3 (advice-criteria.md): a read of the advice against a fresh forecast of the same save opened anew. Returns each
+ * reason it's stale; none where it isn't.
+ */
+export function staleOf(sim: Simulation, recs: readonly Recommendation[]): string[] {
+  const fresh = clone(sim);
+  const f = trainingForecast(fresh, fresh.player);
+  const exactOf = (x: Forecast | undefined) => (x ? x.exact ?? x.points : undefined);
+  const passing = [...f].filter(([, x]) => (x.own ?? exactOf(x)!) >= 0.1);
+  const out: string[] = [];
+  const training = recs.filter((r) => r.forecast);
+  const first = training[0];
+  if (!first && passing.length) out.push(`S1: nothing named first where ${passing.length} pass the floor`);
+  if (first) {
+    const top = passing.reduce((m, [k, x]) => (exactOf(x)! > m.v ? { k, v: exactOf(x)! } : m), { k: '', v: -Infinity });
+    const mine = exactOf(f.get(first.target));
+    if (mine === undefined || mine < top.v - 1e-12) out.push(`S1: ${first.target} named first at ${mine}, behind ${top.k} at ${top.v}`);
+  }
+  for (const r of training) {
+    const x = f.get(r.target);
+    if (!x || (x.own ?? exactOf(x)!) < 0.1) out.push(`S2: ${r.target} named, and the fresh forecast leaves it out`);
+    else if (Math.abs(exactOf(x)! - exactOf(r.forecast)!) > 1e-12) out.push(`S2: ${r.target} said at ${exactOf(r.forecast)}, fresh ${exactOf(x)}`);
+  }
+  if (first?.standing) {
+    const now = exactOf(f.get(first.target));
+    const level = r1(levelOf(fresh, fresh.player, first.target as never));
+    const at = (x: number) => [2, 3, 4].map((k) => x.toFixed(k));
+    if (now === undefined) out.push(`S3: ${first.target} has no forecast now`);
+    else if (first.standing.startsWith('When it was last noted')) { if (!first.standing.includes('has nothing left to forecast on your recent work') && !at(now).some((s) => first.standing!.includes(`${first.label.toLowerCase()}’s forecast, ${s}, is now the larger`))) out.push(`S3: ${first.target}’s forecast now, ${now}, isn’t what the standing says`); }
+    else {
+      if (!first.standing.includes(`it’s still at ${level}`) && !first.standing.includes(` to ${level}, and its forecast from`)) out.push(`S3: ${first.target}’s level now, ${level}, isn’t what the standing says`);
+      if (!at(now).some((s) => first.standing!.includes(` to ${s} a piece`))) out.push(`S3: ${first.target}’s forecast now, ${now}, isn’t what the standing says`);
+    }
+  }
+  return out;
+}
+
+/**
+ * H3 to H5 on one read: each change of the noted input's forecast the standing speaks of (since it was first given, and
+ * since the latest note where that's later; for another now first, since it was first given), worked out by the engine
+ * (`forecastChange`), with whether it rose, its residual, and whether the standing says its parts. Unexplained where the
+ * residual is 1e-9 or more, where a rise can't be worked out, or where a rise isn't said in its parts.
+ */
+export function changesOf(sim: Simulation, recs: readonly Recommendation[]): { since: string; rose: boolean; by: number; residual?: number; parts?: Record<string, number>; said: boolean; unexplained: boolean }[] {
+  const was = sim.player.experience?.advised;
+  const first = recs.find((r) => r.forecast);
+  if (!was || !first) return [];
+  const f = trainingForecast(sim, sim.player, sim.player.work ?? [], [was.target]).get(was.target);
+  const now = f ? f.exact ?? f.points : undefined;
+  if (now === undefined) return [];
+  const notes = was.target === first.target ? [['first', was.first] as const, ...(was.last.at > was.since ? [['last', was.last] as const] : [])] : [['first', was.first] as const];
+  const out: ReturnType<typeof changesOf> = [];
+  for (const [since, note] of notes) {
+    const by = now - note.forecast;
+    if (Math.abs(by) <= 1e-12) continue;
+    const ch = forecastChange(sim, sim.player, was.target, note);
+    const shown = ch ? Object.entries(ch.parts).filter(([, x]) => Math.abs(x) >= 0.00005) : [];
+    // The standing's own sentence for this change: since it was first given, or since the latest note's date.
+    const sentences = (first.standing ?? '').split(/(?<=\.) (?=What moved)/).filter((x) => x.startsWith('What moved'));
+    const mine = sentences.find((x) => (since === 'first') === x.includes('since it was first given:'));
+    const said = ch !== undefined && (shown.length === 0 && Math.abs(ch.residual) < 0.00005 ? true : mine !== undefined && shown.every(([k, x]) => mine.includes(`${PART_WORDS[k]}, ${signed4(x)}`)) && (Math.abs(ch.residual) < 0.00005 || mine.includes(`${signed4(-ch.residual)} the advice can’t trace`)));
+    out.push({ since, rose: by > 1e-12, by, ...(ch ? { residual: ch.residual, parts: ch.parts } : {}), said, unexplained: ch ? Math.abs(ch.residual) >= 1e-9 || (by > 1e-12 && !said) : by > 1e-12 });
+  }
+  return out;
+}
