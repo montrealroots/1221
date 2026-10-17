@@ -279,8 +279,8 @@ describe('c-disp-riskTolerance', () => {
     // The Profile says what the figure did: until 2026-10-13 it said the rule, “over 65, the card’s autopay starts on
     // the minimum”, at 65 as at 66, and this held that same line for both.
     for (const [risk, autopay, button, said] of [
-      [66, 'minimum', 'Autopay: The Minimum', 'over 65, so the card’s autopay started on the minimum'],
-      [65, 'full', 'Autopay: The Whole Statement', '65 or under, so the card’s autopay started on the whole statement'],
+      [66, 'minimum', 'Autopay: The Minimum', 'over 65, so your card’s autopay began on the minimum payment'],
+      [65, 'full', 'Autopay: The Whole Statement', '65 or under, so your card’s autopay began on the whole statement'],
     ] as const) {
       const { sim, page } = slidTo(`g28-risk-page-${risk}`, 'riskTolerance', risk);
       // With a curly apostrophe from 2026-10-13, as the page’s other words have it; until then this held the straight one.
@@ -392,7 +392,7 @@ describe('c-disp-extraversion', () => {
   it('PLAYER JOURNEY: says on Dispositions & Traits and on the Profile what Extraversion sets, how a house watching sits with you', () => {
     const { sim, page } = slidTo('g28-house-page', 'extraversion', 5);
     expect(page).toContain('Extraversion: how being watched as you perform, by an audience or a class, affects your stress.');
-    expect(profile(sim)).toContain('Extraversion 5, how a house watching sits with you;');
+    expect(profile(sim)).toContain('Extraversion 5, how being watched as you perform, by an audience or a class, affects your stress;');
   });
 });
 
@@ -443,7 +443,7 @@ describe('c-disp-openness', () => {
     const { sim, page, review } = slidTo('g28-new-work-page', 'openness', 90);
     expect(page).toContain('Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood.');
     expect(review).toContain('Openness 90/100');
-    expect(profile(sim)).toContain('Openness 90, how rehearsing new work does;');
+    expect(profile(sim)).toContain('Openness 90, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood;');
   });
 });
 
@@ -479,7 +479,7 @@ describe('c-disp-agreeableness', () => {
     const { sim, page, review } = slidTo('g28-company-page', 'agreeableness', 10);
     expect(page).toContain('Agreeableness: how a day of rehearsal affects your mood.');
     expect(review).toContain('Agreeableness 10/100');
-    expect(profile(sim)).toContain('Agreeableness 10, how a rehearsal does.');
+    expect(profile(sim)).toContain('Agreeableness 10, how a day of rehearsal affects your mood.');
   });
 });
 
@@ -544,7 +544,7 @@ describe('c-traits', () => {
     expect(review).toContain('Early Riser Up before anybody wants you, and the best hours of your day are over by ten.');
     expect(review).toContain('Frugal You know what everything costs, and the day’s food costs you less.');
     expect(sim.player.personalityTraits).toEqual(['early_riser', 'frugal', 'resilient', 'even_tempered']);
-    expect(profile(sim)).toContain('Chosen at the start. Early Riser, Frugal, Resilient, Even Tempered.');
+    expect(profile(sim)).toContain('Traits you chose. Early Riser, Frugal, Resilient, Even Tempered.');
     expect(look(sim, 'person', sim.player.id).body).toContain('Who you are. Early Riser, Frugal, Resilient and Even Tempered.');
     // Frugal's own 0.85 on what food costs, −15%; with all she is, 0.85 bent inside [0.7, 1.4], exp(L·tanh(ln 0.85 / L))
     // with L = −ln 0.7: 0.8589, −14%.
@@ -663,7 +663,7 @@ describe('c-genres', () => {
     expect(sim.player.genres).toEqual(['drama']);
     const shown = profile(sim);
     expect(shown).toContain('1 loved;');
-    expect(shown).toContain('You love: Drama. Drama is the one you love and know least; no part asks for a kind yet.');
+    expect(shown).toContain('You love: Drama. Drama is the one you love and know least, and no part asks for a kind yet.');
     expect(look(sim, 'person', sim.player.id).body).toContain('The films you love. Drama.');
   });
 

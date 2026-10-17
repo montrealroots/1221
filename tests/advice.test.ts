@@ -73,7 +73,7 @@ describe('what to improve next, forecast', () => {
     const rs = recommendations(level, () => 100, [], (id) => ({ id: `ex-${id}` }), matchedTier, 12, undefined, undefined, f);
     expect(rs[0]!.target).toBe('presence');
     expect(rs[0]!.tiedWith).toEqual(['Focus']);
-    expect(rs[0]!.why).toContain('About as useful: Focus; either is a sound next step.');
+    expect(rs[0]!.why).toContain('About as useful: Focus. Either is a sound next step.');
   });
 
   it('PLAYER JOURNEY: advises what twenty days of training actually pays most for, leaves the save as it was, and says the same twice', () => {

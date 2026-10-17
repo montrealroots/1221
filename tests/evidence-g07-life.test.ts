@@ -281,7 +281,7 @@ describe('readiness', () => {
     expect(render(tired, ProfileWorkspace)).toContain('Readiness 44');
     expect(r).toContain('Sufficient');
     expect(t).toContain('Held Back');
-    expect(t).toContain('Under 60: fatigue holds back the work that reads it');
+    expect(t).toContain('Under 60: tiredness holds your work back');
     const a = rested.must<{ gained: number; feedback: string }>({ kind: 'practice.exercise', payload: { exercise: 'recall-drill' } });
     const b = tired.must<{ gained: number; feedback: string }>({ kind: 'practice.exercise', payload: { exercise: 'recall-drill' } });
     expect(a.gained / b.gained).toBeCloseTo(1.08 / 0.52, 9);

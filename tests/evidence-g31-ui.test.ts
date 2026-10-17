@@ -331,7 +331,7 @@ describe('p-identity', () => {
     const shown = identity(html);
     expect(html).toContain('<h1>Addie</h1>');
     expect(shown).toContain('No portrait chosen');
-    expect(shown).toContain('Full Name Ada May Cole Called Addie');
+    expect(shown).toContain('Full Name Ada May Cole Goes by Addie');
     expect(shown).toContain('Pronouns she/her Billed as an actress');
     // Born 14 June 2002 (newLifeConfig's), on Monday 24 August 2026: twenty-four.
     expect(shown).toContain('Age 24 Born June 14, 2002');
@@ -349,7 +349,7 @@ describe('p-identity', () => {
     const sim = life('g31-identity-other', { homeRegionId: 'uk-eng-london', pronouns: 'they/them', performerTitle: 'actor', birthMonth: 8, birthDay: 30, portrait });
     const html = profile(sim);
     const shown = identity(html);
-    expect(shown).toContain('Full Name Ada Cole Called by it');
+    expect(shown).toContain('Full Name Ada Cole Goes by the full name');
     expect(shown).toContain('Pronouns they/them Billed as an actor');
     expect(shown).toContain('From London A citizen of the United Kingdom');
     expect(shown).toContain('Living In New Haven');
@@ -373,7 +373,7 @@ describe('p-identity', () => {
     const shown = identity(profile(sim));
     expect(shown).toContain('Age 25 Born June 14, 2002');
     expect(shown).toContain('School Year 2 Class of 2029, academic warning');
-    expect(shown).toContain('Full Name Ada May Cole Called Addie');
+    expect(shown).toContain('Full Name Ada May Cole Goes by Addie');
     expect(shown).toContain('Living In New Haven');
     expect(identity(profile(reload(sim)))).toBe(shown);
   });
@@ -417,8 +417,8 @@ describe('p-identity-buttons', () => {
     const sim = life('g31-papers');
     sim.advanceTo(at(2026, 8, 24, 12, 30));
     profile(sim);
-    expect(control(/^Papers, /).text).toBe('Papers, Covered');
-    press('Papers, Covered');
+    expect(control(/^Papers, /).text).toBe('Papers, Health Cover Held');
+    press('Papers, Health Cover Held');
     expect(h.navigated).toEqual([['/workspace/papers', 'Papers']]);
     expect(screenAt(sim, '/workspace/papers')).not.toContain('Papers, Locked');
     const before = postedAt(sim, 'us-chase');
@@ -472,13 +472,13 @@ describe('p-traits-line', () => {
     fresh();
     const sim = life('g31-dispositions', { personality, personalityTraits: ['early_riser', 'even_tempered'] });
     const html = profile(sim);
-    expect(dispositions(html)).toBe('Emotional Stability 72, how fast stress comes and clears, and where composure starts; Conscientiousness 40, how well a night’s sleep restores you, and where discipline starts; Ambition 60, how fast every stress comes; Risk Tolerance 70, over 65, so the card’s autopay started on the minimum; Extraversion 55, how a house watching sits with you; Openness 30, how rehearsing new work does; Agreeableness 80, how a rehearsal does.');
+    expect(dispositions(html)).toBe('Emotional Stability 72, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 40, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 70, over 65, so your card’s autopay began on the minimum payment; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 30, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood; Agreeableness 80, how a day of rehearsal affects your mood.');
     // Where composure starts: 25 and 0.35 a point of stability, 50.2 at 72. Where discipline starts: 30 and half a
     // point of conscientiousness, 50.0 at 40. Each as the Attributes table shows it.
     expect(rowOf(abilities(html), 'Composure')[1]).toBe('50.2');
     expect(rowOf(abilities(html), 'Discipline')[1]).toBe('50.0');
     // The traits chosen, each a way into its look in a life with no guide.
-    expect(html).toMatch(/<strong>Chosen at the start\.<\/strong>[\s\S]*?<button[^>]*class="link"[^>]*>Early Riser<\/button>[\s\S]*?<button[^>]*class="link"[^>]*>Even Tempered<\/button>/);
+    expect(html).toMatch(/<strong>Traits you chose\.<\/strong>[\s\S]*?<button[^>]*class="link"[^>]*>Early Riser<\/button>[\s\S]*?<button[^>]*class="link"[^>]*>Even Tempered<\/button>/);
   });
 
   it('changes when a disposition is made otherwise, and Risk Tolerance does what it says: the card’s autopay on the minimum over 65, in full at 65', () => {
@@ -489,13 +489,13 @@ describe('p-traits-line', () => {
     expect(at65.player.credit!.autopay).toBe('full');
     // What the figure did, not the rule: until 2026-10-13 the line said “over 65, the card’s autopay starts on the
     // minimum” at 65 and at 50 alike, and this held it so.
-    expect(dispositions(profile(risky))).toContain('Risk Tolerance 70, over 65, so the card’s autopay started on the minimum;');
-    expect(dispositions(profile(at65))).toContain('Risk Tolerance 65, 65 or under, so the card’s autopay started on the whole statement;');
+    expect(dispositions(profile(risky))).toContain('Risk Tolerance 70, over 65, so your card’s autopay began on the minimum payment;');
+    expect(dispositions(profile(at65))).toContain('Risk Tolerance 65, 65 or under, so your card’s autopay began on the whole statement;');
     const steadier = life('g31-stability-40', { personality: { ...personality, riskTolerance: 50, emotionalStability: 40, conscientiousness: 70 } });
     const html = profile(steadier);
-    expect(dispositions(html)).toContain('Emotional Stability 40, how fast stress comes');
-    expect(dispositions(html)).toContain('Conscientiousness 70, how well a night’s sleep');
-    expect(dispositions(html)).toContain('Risk Tolerance 50, 65 or under, so the card’s autopay started on the whole statement;');
+    expect(dispositions(html)).toContain('Emotional Stability 40, how quickly stress builds');
+    expect(dispositions(html)).toContain('Conscientiousness 70, how well you sleep');
+    expect(dispositions(html)).toContain('Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement;');
     // 25 + 0.35 × 40 = 39.0; 30 + 0.5 × 70 = 65.0.
     expect(rowOf(abilities(html), 'Composure')[1]).toBe('39.0');
     expect(rowOf(abilities(html), 'Discipline')[1]).toBe('65.0');
@@ -541,10 +541,10 @@ describe('p-abilities', () => {
     sim.advanceTo(at(2026, 8, 24, 8));
     let html = profile(sim);
     const table = abilities(html);
-    expect(onScreen(table)).toContain('Twelve abilities, 0 to 100; today’s practice 0 of 4 hours');
+    expect(onScreen(table)).toContain('Twelve abilities, 0 to 100. Practice today: 0 of 4 hours');
     expect(rowsOf(table).slice(1)).toHaveLength(12);
     const focus = rowOf(table, 'Focus');
-    expect(focus.slice(1, 7)).toEqual([one(sim.player.attrs!.focus!), '100.0', focus[3], 'Nothing holds it back', 'Interpretation, Execution, Consistency', 'None yet']);
+    expect(focus.slice(1, 7)).toEqual([one(sim.player.attrs!.focus!), '100.0', focus[3], 'Not held back today', 'Interpretation, Execution, Consistency', 'None yet']);
     // Classes reach Focus where they reach its kin, script analysis and cold reading: the mean of their reach.
     const kin = ['Script Analysis', 'Cold Reading'].map((t) => Number(rowOf(techniques(html), t)[2]));
     expect(Math.abs(Number(focus[3]) - (kin[0]! + kin[1]!) / 2)).toBeLessThanOrEqual(0.05);
@@ -569,8 +569,10 @@ describe('p-abilities', () => {
     const row = rowOf(abilities(html), 'Focus');
     expect(row[1]).toBe(one(after));
     expect(row[6]).toBe(`+${(after - before).toFixed(2)}, Circles Of Attention`);
-    expect(onScreen(abilities(html))).toContain('today’s practice 1 of 4 hours');
-    expect(onScreen(abilities(html))).toContain('Pitched where you are.');
+    expect(onScreen(abilities(html))).toContain('Practice today: 1 of 4 hours');
+    expect(onScreen(abilities(html))).toContain('Pitched at your level.');
+    // The exercise's record by its date (from 2026-10-17, brief 14): until then its day key, “last 2026-08-24”.
+    expect(onScreen(abilities(html))).toContain('1 session, the last on August 24, 2026.');
     // A day of practice kept grows discipline once, said on its row and first in the history.
     expect(rowOf(abilities(html), 'Discipline')[6]).toMatch(/^\+\d+\.\d\d, A day of practice kept$/);
     const history = onScreen(panel(html, 'Development History'));
@@ -579,7 +581,7 @@ describe('p-abilities', () => {
     const again = reload(sim);
     const reread = profile(again);
     expect(rowOf(abilities(reread), 'Focus')).toEqual(row);
-    expect(onScreen(abilities(reread))).toContain('today’s practice 1 of 4 hours');
+    expect(onScreen(abilities(reread))).toContain('Practice today: 1 of 4 hours');
   });
 
   it('PLAYER JOURNEY: the Tier select pressed to Foundation gives 0.75 of the matched hour and says it went easily; to Advanced, 0.8 and three more energy, and says it was a struggle', () => {
@@ -605,11 +607,11 @@ describe('p-abilities', () => {
     expect(matched.energy - above.energy).toBeCloseTo(3, 6);
     expect(below.energy).toBe(matched.energy);
     expect(matched.words).toContain('Developing: ');
-    expect(matched.words).toContain('Pitched where you are.');
+    expect(matched.words).toContain('Pitched at your level.');
     expect(below.words).toContain('Foundation: ');
-    expect(below.words).toContain('It went easily: you’re past it, and the developing tier would ask more.');
+    expect(below.words).toContain('It went easily: you’re past it, and the Developing tier would ask more.');
     expect(above.words).toContain('Advanced: ');
-    expect(above.words).toContain('You struggled to hold it: the developing tier fits where you are now.');
+    expect(above.words).toContain('You struggled to hold it: the Developing tier fits where you are now.');
   });
 
   it('PLAYER JOURNEY: at 7 PM on the first day, Today names what fatigue reaches of each ability, at readiness times the hour’s fit, Imagination’s believability among them', () => {
@@ -626,7 +628,7 @@ describe('p-abilities', () => {
       expect(rows.map((row) => row[0]).sort()).toEqual(Object.keys(TIRED).sort());
       for (const row of rows) {
         const reached = TIRED[row[0]!]!;
-        if (!reached.length) { expect(row[4], row[0]).toBe('Nothing holds it back'); continue; }
+        if (!reached.length) { expect(row[4], row[0]).toBe('Not held back today'); continue; }
         const m = /^Readiness (\d+), under 60: (.+)$/.exec(row[4]!);
         expect(m, `${row[0]}: ${row[4]}`).not.toBeNull();
         expect(Number(m![1]), row[0]).toBe(said[i]);
@@ -639,7 +641,7 @@ describe('p-abilities', () => {
     fresh();
     const morning = life('g31-today');
     morning.advanceTo(at(2026, 8, 24, 8));
-    for (const row of rowsOf(abilities(profile(morning))).slice(1)) expect(row[4], row[0]).toBe('Nothing holds it back');
+    for (const row of rowsOf(abilities(profile(morning))).slice(1)) expect(row[4], row[0]).toBe('Not held back today');
   });
 
   it('PLAYER JOURNEY: Stamina’s row says a workout is refused during orientation, in its words, that fitness is falling 0.18 a day, and after a workout that it’s held three days', () => {
@@ -676,7 +678,7 @@ describe('p-techniques', () => {
     const sim = life('g31-techniques');
     const html = profile(sim);
     const table = techniques(html);
-    expect(onScreen(table)).toContain('Seventeen learned methods; mastered at 90');
+    expect(onScreen(table)).toContain('Seventeen techniques, each mastered at 90');
     const rows = rowsOf(table).slice(1);
     expect(rows).toHaveLength(17);
     const craft = sim.player.craft!;
@@ -740,7 +742,7 @@ describe('p-genres', () => {
     sim.advanceTo(at(2026, 8, 24, 8));
     expect(FILM_GENRES).toHaveLength(149);
     let html = profile(sim);
-    expect(onScreen(genres(html))).toContain('1 loved; 0 of 149 studied or practiced');
+    expect(onScreen(genres(html))).toContain('1 loved; 0 of 149 studied or worked in');
     expect(onScreen(genres(html))).toContain('16 shown');
     change(findGenre, 'Comedy');
     html = profile(sim);
@@ -759,14 +761,14 @@ describe('p-genres', () => {
     html = profile(sim);
     rows = rowsOf(genres(html)).slice(1);
     expect(rows.find((r) => r[0] === first)!.slice(2, 4)).toEqual(['8.0', '0.0']);
-    expect(onScreen(genres(html))).toContain('1 loved; 1 of 149 studied or practiced');
+    expect(onScreen(genres(html))).toContain('1 loved; 1 of 149 studied or worked in');
     change(findGenre, '');
     profile(sim);
     change(showGenres, 'Loved');
     rows = rowsOf(genres(profile(sim))).slice(1);
     expect(rows.map((r) => r[0])).toEqual(['Drama, Loved']);
     expect(onScreen(genres(profile(sim)))).toContain('1 shown');
-    change(showGenres, 'Studied Or Practiced');
+    change(showGenres, 'Studied Or Worked In');
     rows = rowsOf(genres(profile(sim))).slice(1);
     expect(rows.map((r) => r[0])).toEqual([first]);
     expect(rows[0]!.slice(2, 4)).toEqual(['8.0', '0.0']);
@@ -780,7 +782,7 @@ describe('p-genres', () => {
     html = profile(sim);
     rows = rowsOf(genres(html)).slice(1);
     expect(rows).toHaveLength(16);
-    expect(rows.some((r) => r[1] === 'Nothing past the camera’s own')).toBe(true);
+    expect(rows.some((r) => r[1] === 'No more than any self-tape asks')).toBe(true);
     // 149 genres: nine pages of sixteen, 144, then five more.
     for (let shown = 16; shown < 144; shown += 16) {
       expect(onScreen(genres(html))).toContain(`${shown} shown`);
@@ -800,9 +802,9 @@ describe('p-genres', () => {
     const sim = life('g31-part', { genres: ['drama', 'comedy'] });
     sim.advanceTo(at(2026, 8, 24, 8));
     const sentence = (html: string) => inline(/You love: ([\s\S]*?)<\/p>/.exec(html)?.[1] ?? '');
-    expect(sentence(profile(sim))).toBe('Drama, Comedy. Drama is the one you love and know least; no part asks for a kind yet.');
+    expect(sentence(profile(sim))).toBe('Drama, Comedy. Drama is the one you love and know least, and no part asks for a kind yet.');
     sim.must({ kind: 'genre.study', payload: { genre: 'drama' } });
-    expect(sentence(profile(sim))).toBe('Drama, Comedy. Comedy is the one you love and know least; no part asks for a kind yet.');
+    expect(sentence(profile(sim))).toBe('Drama, Comedy. Comedy is the one you love and know least, and no part asks for a kind yet.');
     // After orientation's first session, an hour and a half free again.
     sim.advanceTo(at(2026, 8, 24, 12, 30));
     sim.must({ kind: 'genre.study', payload: { genre: 'comedy' } });
@@ -812,10 +814,10 @@ describe('p-genres', () => {
     // the play demands (`BASE_INPUTS`), and Barbara again from later that day, when a stage's house came to weigh the
     // voice and the body (`STAGE_LEAN`). The play, and so the kinds below, are the same.
     expect(sim.player.school!.casting).toMatchObject({ play: 'Major Barbara', role: 'Barbara Undershaft' });
-    expect(sentence(profile(sim))).toBe('Drama, Comedy. Satire is the kind your next part’s play is, and the one of its kinds you know least.');
+    expect(sentence(profile(sim))).toBe('Drama, Comedy. Satire is the kind of play your next part is in, and the one of its kinds you know least.');
     expect(studyRefusal(sim, sim.player, 'satire')).toBeUndefined();
     sim.must({ kind: 'genre.study', payload: { genre: 'satire' } });
-    expect(sentence(profile(sim))).toBe('Drama, Comedy. Political Drama is the kind your next part’s play is, and the one of its kinds you know least.');
+    expect(sentence(profile(sim))).toBe('Drama, Comedy. Political Drama is the kind of play your next part is in, and the one of its kinds you know least.');
   });
 
   it('PLAYER JOURNEY: Open Its Brief pressed, Tape It refused before a reading, Read It This Way and Tape It pressed: the take kept once and practice 1.5 in Drama’s row, a cold take’s share, across a reload; refused by the clock before orientation', () => {
@@ -862,7 +864,7 @@ describe('p-genres', () => {
     // credits (practiceShare, from 2026-10-16: 0.15, nothing prepared), 1.5. It was 10 until then.
     const drama = (page: string) => rowOf(genres(page).slice(genres(page).indexOf('genres-find')), 'Drama').slice(2, 4);
     expect(drama(html)).toEqual(['0.0', '1.5']);
-    expect(words).toContain('1 loved; 1 of 149 studied or practiced');
+    expect(words).toContain('1 loved; 1 of 149 studied or worked in');
     // A save and a reload: the take once, and its practice once, on the same screen.
     const again = reload(sim);
     expect(again.player.work).toHaveLength(kept + 1);

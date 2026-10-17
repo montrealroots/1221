@@ -1,0 +1,551 @@
+[
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [emotionalDepth]",
+  "kind": "other",
+  "before": "Believability in every piece of performed work (a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition, a night on stage), most where the piece is played grave; and connection in a fight or an intimacy scene shown with a partner.",
+  "after": "Your believability in everything you perform (a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition, a night on stage), most of all when the material is grave; and your connection with a partner in a fight or an intimacy scene.",
+  "why": "What it does, said to the player about their own work; every task and dimension kept.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts A4: the GUARD and 'every effect each ability’s affects sentence names, it has, clause by clause' hold each new clause; b1-looks.txt"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [presence]",
+  "kind": "other",
+  "before": "What a house or a camera sees beyond technique: the pull of somebody fully there.",
+  "after": "The pull of being fully there, which an audience or a camera sees beyond your technique.",
+  "why": "The definition is read after 'You’re at 69.8 of 100.0:', so the old one printed two colons; 'house' is theater shorthand; one fewer 'somebody'.",
+  "meaningSensitive": false,
+  "verified": "b1-looks.txt, Presence's summary"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [listening]",
+  "kind": "other",
+  "before": "For a life from before it: the mean of its Scene Study and Improvisation.",
+  "after": "It started at the average of your Scene Study and Improvisation.",
+  "why": "Where it started, for the player. The old line spoke only of saves from before the ability; derivedAbilities gives a new life the same mean, so the new line is true for both.",
+  "meaningSensitive": true,
+  "verified": "src/engine/systems/attributes.ts derivedAbilities read (kin mean for any life without the value); b1-looks.txt"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [focus]",
+  "kind": "other",
+  "before": "The day’s focus is another thing: how ready you come to the hour.",
+  "after": "Focus on the day is something else: it’s your readiness at that hour, and this ability doesn’t change it.",
+  "why": "Keeps the ability apart from the day's readiness in the glossary's word, and says the thing a player needs: training focus doesn't change it.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts A4 clause holds it: focusAt is the same at focus 10 and 95 and falls with energy"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [memory]",
+  "kind": "other",
+  "before": "How far a step learning lines goes (a scene’s, a brief’s, a part’s)",
+  "after": "How much a session learning lines gets done (for a scene, a brief or a part)",
+  "why": "'How far a step goes' is the engine's step speed; the player sees sessions of preparation getting more or less done.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts A4 clause: stepRatio of memory 20 against 80 is the speed ratio, coursework, brief and part"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [discipline]",
+  "kind": "other",
+  "before": "How much what classes, nights, steps and practice grow counts for, a tenth more at 100 and a tenth less at 0 (a workout’s fitness aside)",
+  "after": "How much you gain from classes, nights on stage, preparation and practice, a tenth more with discipline at 100 and a tenth less at 0 (but not the fitness a workout builds)",
+  "why": "Says whose 100 it is, and what 'aside' meant.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts A4 clauses: the lift is 1.1/0.9 for class, night, step and exercise, and a workout's fitness is the same at 0 and 100"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [stamina]",
+  "kind": "other",
+  "before": "Workouts, and more on a run in fine weather, held three days after each; lost past that, as fitness is.",
+  "after": "Workouts, and more on a run when the weather’s fine; it holds for three days after each one; then it slowly falls, as fitness does.",
+  "why": "'Lost past that' read as gone at once; fitness falls by a set amount a day.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts A4 develops journey: fitness held FITNESS.heldDays days, then fell FITNESS.perDay a day"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [composure]",
+  "kind": "other",
+  "before": "Kept since 2026-09-27 (`systems/attributes.ts`)",
+  "after": "How it starts and how it grows are estimated. That performance anxiety falls with exposure is from Reeves et al. (2022).",
+  "why": "The look's foot line showed a date and a code file; it now says what's estimated and what has a source.",
+  "meaningSensitive": false,
+  "verified": "b1-looks.txt, Composure's provenance"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "heading",
+  "before": "Which work reads it.",
+  "after": "Where it counts.",
+  "why": "The brief's own example of engine-speak ('Which Work Reads It'); the list after it names the work and what the teacher looks for in it.",
+  "meaningSensitive": false,
+  "verified": "tests/attributes-phase-2b.test.ts asserts `Where it counts. ${readers…}` on all twelve; b1-looks.txt"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "heading",
+  "before": "What develops it.",
+  "after": "How it grows.",
+  "why": "Plainer; the sentence after it names the activities.",
+  "meaningSensitive": false,
+  "verified": "tests/attributes-phase-2b.test.ts and tests/guide-examples-craft.test.ts; tools/playthroughs-ui.mjs matcher changed to /How it grows\\./"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "Judged under evaluation-10 (2026-10-16), rules since changed, so it isn’t worked out again under today’s: what it was is kept as it was.",
+  "after": "The rules have changed since it was judged, so it isn’t worked out again. Its result stands as it was.",
+  "why": "A raw ruleset id shown to the player; the sentence is two thoughts.",
+  "meaningSensitive": false,
+  "verified": "tests/decisions-stamina.test.ts asserts the new provenance exactly on a night kept under evaluation-10"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "Judged under evaluation-11 (2026-10-16); worked out again from its own inputs, 50.2.",
+  "after": "Worked out again from what it was judged on, it comes to 50.2.",
+  "why": "'Its own inputs' is the brief's named engine-speak; the ruleset id is internal.",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-craft.test.ts 'A Piece Of Work, Explained' asserts the figure is the record's overall; b1-looks.txt, the Spare Key take played through brief.choose, brief.prepare and practice.self_tape"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "preparation: the lines at 90% of 80%, the blocking at 80% of 70%; leaning to science fiction, animation.",
+  "after": "preparation: the lines at 90% (complete at 80%), the blocking at 80% (complete at 70%); its genres: science fiction, animation.",
+  "why": "'90% of 80%' read as a product; 'leaning to' is the judge's word for the families' lean.",
+  "meaningSensitive": true,
+  "verified": "tests/defects-g30-1.test.ts asserts both, on a night record copied from a played take"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "Applied as requirements. A self-tape in it reads Stage Combat (you: 56.5 of 90): genre-wide: Tasker's encyclopedia entry states at the level of the whole form …",
+  "after": "What a self-tape in it asks. A self-tape in it calls for Stage Combat (yours: 56.5 of 90). … (the research's reasons move to the small print: 'Why it’s applied, in the research’s words: …')",
+  "why": "The research's own notes were run into the requirement sentence; the requirement now reads on its own and the notes stay, labelled as the research's.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b08.test.ts on the farce's look; b1-looks.txt, Adventure and Chanbara"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "Familiarity 0.0 and practice 0.0: a part in a play of its kind is learned 0% faster, and a brief in it reads knowing it as part of its preparation.",
+  "after": "Familiarity 0.0, work in it 0.0. The better of the two is how well you know it: a part in a play of its kind is learned 0% faster, and it counts as Knowing The Genre when you prepare a brief in it.",
+  "why": "'Practice' is the glossary's word for exercises and self-tapes set by the player; the genre's other score is work done in it. Says the better of the two counts, as genreSpeed and genreKnown take the max.",
+  "meaningSensitive": true,
+  "verified": "systems/engagement.ts genreSpeed and practiceGenres read; tests/guide-examples-craft.test.ts 'Genres' finds 'a part in a play of its kind is learned N% faster'"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#sourceWords",
+  "kind": "label",
+  "before": "Class: DRAM 153a / Coursework: interpretation",
+  "after": "Class: Play (DRAM 153a) / Coursework: the choices",
+  "why": "A course code alone and a raw preparation key on the Profile's Development History and Last Change.",
+  "meaningSensitive": false,
+  "verified": "b1-looks.txt, the development sources list, read off sourceWords"
+ },
+ {
+  "source": "src/engine/systems/attributes.ts#alreadyApplied",
+  "kind": "error",
+  "before": "That was already done.",
+  "after": "That’s already done, so nothing was charged or changed again.",
+  "why": "A refusal says whether anything was charged or changed; it guards a meal, a workout, an hour of practice, a study and a brief's step pressed twice.",
+  "meaningSensitive": false,
+  "verified": "tests/fitness.test.ts, tests/evidence-g20-school.test.ts and tests/evidence-g06-life.test.ts assert it exactly, across a reload"
+ },
+ {
+  "source": "src/ui/components/AttributesPanel.tsx#AttributesPanel",
+  "kind": "other",
+  "before": "Performance anxiety falls with exposure (Reeves et al., 2022); how fast it moves here is SLATE’s estimate.",
+  "after": "Source: Reeves et al. (2022), on performance anxiety falling with exposure. How fast it moves here is estimated.",
+  "why": "STYLE's source line: the source named once, the estimate said plainly.",
+  "meaningSensitive": false,
+  "verified": "pending the School screen in the built app's walk"
+ },
+ {
+  "source": "src/engine/systems/experience.ts#recommendations",
+  "kind": "feedback",
+  "before": "20 hours of its exercise would take it from 43 to about 48, worth about 0.8 points a piece on your recent work (1 of your last 1 piece read it; it gains most on Letters From The Lock (Under The Picture), Taped, about +0.7), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old.",
+  "after": "20 hours of its exercise, a session a day, would take it from 43 to about 48. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.8 points a piece (1 of your last 1 piece calls on it; Letters From The Lock (Under The Picture), Taped would gain most, about +0.7). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old.",
+  "why": "One ninety-word sentence made four; the figure is called a forecast; the pacing names the Focus control's choices.",
+  "meaningSensitive": true,
+  "verified": "tests/decisions-advice.test.ts (29 of 29, F1–F6 and H1–H6 on tuning cases); docs/verification/language-2026-10-17/profile/b2-advice.txt, adv-t-0"
+ },
+ {
+  "source": "src/engine/systems/experience.ts#recommendations",
+  "kind": "feedback",
+  "before": "…; the 10 pieces its own preparation held back most are read as prepared; …",
+  "after": "It counts the 10 pieces held back most by their own preparation as fully prepared.",
+  "why": "Says what the forecast assumes, in a sentence of its own.",
+  "meaningSensitive": true,
+  "verified": "tests/decisions-advice.test.ts asserts both the one and the many forms"
+ },
+ {
+  "source": "src/engine/systems/experience.ts#recommendations",
+  "kind": "feedback",
+  "before": "Coming to the work with knowing the genre short cost about 0.6 points of the whole a piece: that’s preparation, not training.",
+  "after": "Coming to your work short on knowing the genre cost about 0.6 points off the whole a piece. That’s preparation, not training.",
+  "why": "'With knowing the genre short' didn't parse; the label is a gerund.",
+  "meaningSensitive": false,
+  "verified": "tests/attributes-phase-2b.test.ts's regex for every preparation line; docs/verification/language-2026-10-17/profile/b2-advice.txt, adv-t-10"
+ },
+ {
+  "source": "src/engine/systems/experience.ts#recommendations",
+  "kind": "feedback",
+  "before": "Your work keeps coming back to it: it’s held back 3 of your pieces for life, 21.2 points of the whole in all.",
+  "after": "Your work keeps coming back to it: it has held back 3 of your pieces in all, 21.2 points off the whole.",
+  "why": "'For life' read as a sentence; the figure is the record's whole, said once.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-r8-1.test.ts and tests/decisions-advice.test.ts; docs/verification/language-2026-10-17/profile/b2-advice.txt, adv-t-5"
+ },
+ {
+  "source": "src/engine/systems/next-steps.ts#standingOf",
+  "kind": "feedback",
+  "before": "It has been first since September 7, 2026, 5 weeks ago; it’s still at 42, and its forecast from 1.00 to 1.28 a piece; of the 5 pieces you’ve done since, it held back 5, most lately …; you haven’t practiced Graded Exposure since. What moved its forecast since it was first given: the work it reads, +0.1411; how well you know its genres, +0.1395; …",
+  "after": "It has come first since September 7, 2026, 5 weeks ago: it’s still at 42, and its forecast has gone from 1.00 to 1.28 a piece. Of the 5 pieces you’ve done since, it held back 5, most lately …. You haven’t practiced Graded Exposure since. What moved its forecast since the advice first named it: the work it’s forecast on, +0.1411; how well you know its genres, +0.1395; …",
+  "why": "A list joined by semicolons made sentences; 'it's still at 42, and its forecast from' had no verb.",
+  "meaningSensitive": true,
+  "verified": "tools/advice-harness.ts S3 and changesOf read the new words; tests/decisions-advice.test.ts; docs/verification/language-2026-10-17/profile/b2-advice.txt, adv-t-5"
+ },
+ {
+  "source": "src/engine/systems/next-steps.ts#standingOf",
+  "kind": "feedback",
+  "before": "It has been first since December 7, 2026, 0 days ago; …; of the 1 piece you’ve done since, it held back 0.",
+  "after": "It has come first since December 7, 2026, today: … Of the 1 piece you’ve done since, it held back none.",
+  "why": "Zero cases: a note made the same day, and no piece held back.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b2-advice.txt, adv-t-10; tests/decisions-advice.test.ts mirrors 'none'"
+ },
+ {
+  "source": "src/engine/systems/next-steps.ts#standingOf",
+  "kind": "feedback",
+  "before": "When it was last noted, on October 14, 2026, the first was composure, first since September 7, 2026: since it was first given it has gone from 42 to 47.2 and its forecast from 1.00 to 0.75 a piece, and emotional depth’s forecast, 0.84, is now the larger.",
+  "after": "On October 14, 2026, the last time the advice was noted, the first was composure, as it had since September 7, 2026. Since the advice first named it, it has gone from 42 to 47.2 and its forecast from 1.00 to 0.75 a piece, and emotional depth’s forecast, 0.84, is now the larger.",
+  "why": "The other first's line in two sentences, its date first.",
+  "meaningSensitive": true,
+  "verified": "tools/advice-harness.ts S3 reads ', the last time the advice was noted, '; docs/verification/language-2026-10-17/profile/b2-advice.txt, adv-t-5 after twenty sessions"
+ },
+ {
+  "source": "src/engine/systems/next-steps.ts#assumesOf",
+  "kind": "feedback",
+  "before": "What it assumes of your last 6 pieces: 2 were taped with their own preparation complete and 4 short of it and read as taped.",
+  "after": "What the forecast assumes of your last 6 pieces: 2 were fully prepared when taped and 4 were taped underprepared and count as taped.",
+  "why": "Says whose assumption it is; each group a whole clause.",
+  "meaningSensitive": true,
+  "verified": "tools/advice.ts F2's assumedSaid reads the new opening; tests/decisions-advice.test.ts; docs/verification/language-2026-10-17/profile/b2-advice.txt"
+ },
+ {
+  "source": "src/engine/systems/next-steps.ts#nextOf",
+  "kind": "feedback",
+  "before": "Next: Graded Exposure at the foundation tier, steady, from Practice An Hour under Attributes And Craft on your Player Profile: an hour, and 3 energy, for about +0.27 to composure now and +0.24 to discipline for the day kept.",
+  "after": "Next: Graded Exposure at the Foundation tier, Steady, from Practice An Hour under Attributes And Craft on your Player Profile. An hour costs 3 energy, and it would add about +0.27 to composure now, and +0.24 to discipline for a day of practice kept.",
+  "why": "The tier and the focus by the controls' own labels; the cost said before the gain.",
+  "meaningSensitive": false,
+  "verified": "tests/decisions-advice.test.ts (the next hour and its refusal, 'Not now: You’ve practiced 4 hours today'); docs/verification/language-2026-10-17/profile/b2-advice.txt"
+ },
+ {
+  "source": "src/engine/systems/next-steps.ts#heldVersusNext",
+  "kind": "feedback",
+  "before": "… 20 hours of it are forecast at about 1 points a piece, against 1.3 for composure, which your recent work reads across more of it or has more room to grow in.",
+  "after": "… 20 hours of it are forecast at about 1 point a piece, against 1.3 for composure, which more of your recent work calls on or which has more room to grow.",
+  "why": "A plural that disagreed at 1, and 'reads across more of it'.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b2-advice.txt, adv-t-5, beside a brief"
+ },
+ {
+  "source": "src/ui/workspaces/ProfileWorkspace.tsx#DISPOSITIONS",
+  "kind": "other",
+  "before": "Extraversion 55, how a house watching sits with you; Openness 55, how rehearsing new work does; Agreeableness 55, how a rehearsal does.",
+  "after": "Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood; Agreeableness 55, how a day of rehearsal affects your mood.",
+  "why": "'How a rehearsal does' isn't English; and each disposition now reads as creation says it (the frame area's PersonalityStep), so the Profile and creation don't describe the same disposition two ways.",
+  "meaningSensitive": true,
+  "verified": "Read against systems/enjoyment.ts (DISPOSED room at every performance's nerves; novel work and rehearsal days moving morale); tests/evidence-g31-ui.test.ts (all seven exactly), tests/evidence-g34-ui.test.ts, tests/evidence-g28-ui.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/ProfileWorkspace.tsx#riskWords",
+  "kind": "other",
+  "before": "Risk Tolerance 50, 65 or under, which sets where a card’s autopay starts; you hold no card, so it set none",
+  "after": "Risk Tolerance 50, 65 or under, which decides where a card’s autopay starts, but you hold no card",
+  "why": "The no-card variant; a semicolon inside a list joined by semicolons.",
+  "meaningSensitive": true,
+  "verified": "tests/need-paths.test.ts on the Nothing family's life and the wealthy one's"
+ },
+ {
+  "source": "src/ui/workspaces/ProfileWorkspace.tsx#PracticeControl",
+  "kind": "other",
+  "before": "3 sessions, last 2026-09-12.",
+  "after": "3 sessions, the last on September 12, 2026.",
+  "why": "A raw day key printed as a date.",
+  "meaningSensitive": false,
+  "verified": "pending the built app"
+ },
+ {
+  "source": "src/ui/workspaces/ProfileWorkspace.tsx#ConditionPanel",
+  "kind": "other",
+  "before": "Under 60: fatigue holds back the work that reads it / Nothing today holds the work back",
+  "after": "Under 60: tiredness holds your work back / Today, nothing holds your work back",
+  "why": "'The work that reads it'; and a sentence opening on Nothing.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts and tests/evidence-g07-life.test.ts, each condition"
+ },
+ {
+  "source": "src/ui/workspaces/ProfileWorkspace.tsx#NextWork",
+  "kind": "empty",
+  "before": "No work of yours has been judged yet: what to work on is read from what holds judged work back.",
+  "after": "None of your work has been judged yet. What to work on comes from what holds judged work back, so it starts after your first showing, night on stage or self-tape.",
+  "why": "An empty state says when it will fill.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g31-ui.test.ts renders it on a new life"
+ },
+ {
+  "source": "src/ui/workspaces/ProfileWorkspace.tsx#HistoryPanel",
+  "kind": "empty",
+  "before": "Nothing yet: the history begins with the first class, step or hour of practice.",
+  "after": "No changes yet. The history begins with your first class, preparation step or hour of practice.",
+  "why": "A sentence opening on Nothing; 'step' alone.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b13.test.ts and tests/evidence-g32-ui.test.ts"
+ },
+ {
+  "source": "src/engine/systems/practice.ts#practicePreview",
+  "kind": "other",
+  "before": "About +0.17 to focus (now 49.8), and +0.18 to discipline for the day kept. Less or more because the foundation tier isn’t yours (×0.75); spaced today makes it ×0.9; discipline makes it ×1.015. The higher it is, the less an hour adds.",
+  "after": "About +0.17 to focus (now 49.8), and +0.18 to discipline for a day of practice kept. It’s more or less than an ordinary hour because the Foundation tier isn’t your level (×0.75); Spaced today makes it ×0.9; your discipline makes it ×1.015. The higher it is, the less an hour adds.",
+  "why": "Says what it's more or less than; the tier and focus by their control labels.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts; docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ {
+  "source": "src/engine/systems/practice.ts#practicePreview",
+  "kind": "other",
+  "before": "… hour 3 on it today keeps 25% …",
+  "after": "… hour 3 on it today gives 25% of the first …",
+  "why": "'Keeps 25%' of what.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2a.test.ts; docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ {
+  "source": "src/engine/systems/practice.ts#practiceRefusal",
+  "kind": "error",
+  "before": "You’ve practiced 4 hours today: past that, more stops helping. Tomorrow.",
+  "after": "You’ve practiced 4 hours today, and more stops helping after that. Practice again tomorrow.",
+  "why": "A one-word sentence for the next step.",
+  "meaningSensitive": false,
+  "verified": "tests/whynot-profile.test.ts and tests/evidence-g20-school.test.ts"
+ },
+ {
+  "source": "src/engine/systems/practice.ts#practiceFeedback",
+  "kind": "feedback",
+  "before": "Tired, the exactness cost more than it gave: a steady hour would have done better today.",
+  "after": "You were tired, so the exactness cost more than it gave. A Steady hour would have done better today.",
+  "why": "A subject for the sentence; the focus by its control's name.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ {
+  "source": "src/engine/systems/practice.ts#practiceFeedback",
+  "kind": "feedback",
+  "before": "It went easily: you’re past it, and the developing tier would ask more.",
+  "after": "It went easily: you’re past it, and the Developing tier would ask more.",
+  "why": "The tier as the Tier control names it.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g31-ui.test.ts"
+ },
+ {
+  "source": "src/engine/systems/learning.ts#APPROACHES",
+  "kind": "confirmation",
+  "before": "Put It First: it put first, weighing more when it’s shown.",
+  "after": "Put It First: it comes first, and counts for more when the work is shown.",
+  "why": "The toast had no verb and said 'weighing'.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g18-school.test.ts (title, toast and the pane's line)"
+ },
+ {
+  "source": "src/engine/systems/artistry.ts#identityOf",
+  "kind": "other",
+  "before": "Mixed Tone: met or practised 54 times, best 71.4. From: The experience record: mixed-tone.",
+  "after": "Mixed Tone: met or practiced 54 times, best 71.4. From: Your experience record.",
+  "why": "A raw key in the evidence; American spelling.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b11.test.ts; docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ {
+  "source": "src/engine/systems/artistry.ts#identityOf",
+  "kind": "other",
+  "before": "Of 17 notes and requests on the craft, 0 answered.",
+  "after": "Of 17 notes and requests on your craft, you answered 0.",
+  "why": "A subject for 'answered'.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b11.test.ts and tests/evidence-g23-school.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/ProfileWorkspace.tsx#sleepOwed",
+  "kind": "other",
+  "before": "Sleep owed 1 hours / Sleep owed 0 hours",
+  "after": "1 hour of sleep owed / No sleep owed",
+  "why": "A plural that disagreed at one, and a zero said as a figure (a defect, found by the health area).",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts, its own test"
+ },
+ {
+  "source": "src/engine/content/practice.ts#FOCUS",
+  "kind": "other",
+  "before": "Picked up cold, a day or more since the last time and within the week; outside that, it costs.",
+  "after": "Picked up cold, a day to a week after your last session. Sooner or later than that, it costs you.",
+  "why": "The window said plainly.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ {
+  "source": "src/engine/systems/register.ts#concernWords",
+  "kind": "other",
+  "before": "Comic Rhythm: Setup and payoff: … The take weighs responsiveness and execution more and draws on your adaptability and focus. …",
+  "after": "Comic Rhythm: Setup and payoff: … A self-tape in it is judged more on responsiveness and execution, and calls on your adaptability and focus. …",
+  "why": "'Weighs' and 'draws on' are the judge's words; the register is read by a taped brief.",
+  "meaningSensitive": true,
+  "verified": "tests/genre-identity-screens.test.ts; docs/verification/language-2026-10-17/profile/b4-genres.txt"
+ },
+ {
+  "source": "src/engine/systems/register.ts#registerBasisWords",
+  "kind": "other",
+  "before": "The research found nothing on how it’s played: this is SLATE’s reading of its conventions.",
+  "after": "The research found nothing on how it’s played, so this is estimated from its conventions.",
+  "why": "'SLATE’s reading' inside a sentence; the glossary's 'estimated'.",
+  "meaningSensitive": false,
+  "verified": "tests/genre-identity-screens.test.ts on Steampunk"
+ },
+ {
+  "source": "src/engine/content/genres.ts#GENRE_DEFS .military",
+  "kind": "other",
+  "before": "A military film centers on armed forces and military life; no separate reference definition was found, and the nearest, the war film, is a genre concerned with warfare with combat scenes central to the drama.",
+  "after": "A military film centers on armed forces and military life. It’s closest to the war film, about warfare, with combat scenes at the center of the drama.",
+  "why": "A researcher's note shown as the genre's description.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b4-genres.txt"
+ },
+ {
+  "source": "src/engine/content/interpretation.ts#GRAIN_LABEL",
+  "kind": "label",
+  "before": "Against The Grain",
+  "after": "Works Against The Scene",
+  "why": "The glossary: 'suits the scene', not the grain.",
+  "meaningSensitive": false,
+  "verified": "tests/interpretation.test.ts"
+ },
+ {
+  "source": "src/engine/systems/interpretation-read.ts#takeGrainWords",
+  "kind": "feedback",
+  "before": "Played that way it went against the grain of the scene (Expansive, Against The Grain), which cost it 0.4 points",
+  "after": "Played that way it worked against the scene (Expansive, Works Against The Scene), which cost it 0.4 points",
+  "why": "Same.",
+  "meaningSensitive": false,
+  "verified": "tests/decisions-judge.test.ts on a played take"
+ },
+ {
+  "source": "src/engine/systems/interpretation.ts#suitabilityWords",
+  "kind": "other",
+  "before": "Restrained: Either Way. Nothing in the scene leans either way.",
+  "after": "Restrained: Either Way. The scene doesn’t lean either way.",
+  "why": "A sentence opening on Nothing.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b4-genres.txt"
+ },
+ {
+  "source": "src/engine/content/approaches.ts#APPROACH_EFFECT",
+  "kind": "other",
+  "before": "Sized to the room: voice, body and feeling played out to the house.",
+  "after": "Sized to the room: voice, body and feeling played out to the audience.",
+  "why": "'House' is theater shorthand.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b4-genres.txt"
+ },
+ {
+  "source": "src/engine/content/genre-register.ts#GENRE_REGISTER .cosmic_horror",
+  "kind": "other",
+  "before": "Backstage advises playing the descent into madness as quiet detachment rather than ranting.",
+  "after": "Backstage advises playing the descent into madness as quiet detachment, not ranting.",
+  "why": "'Rather than' over its budget across the game.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b4-genres.txt"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.brief-choose]",
+  "kind": "tutorial",
+  "before": "… a reading leans what the take counts for and draws on different abilities, moving weight and adding none … A way chosen is rehearsed in on your feet.",
+  "after": "… a reading changes what the take is judged on most and which abilities it calls on, shifting the balance and adding nothing … Choosing a way isn’t rehearsing it: you rehearse it on your feet before it pays off.",
+  "why": "The brief's named distinction, choosing an interpretation versus rehearsing it, said plainly.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.profile]",
+  "kind": "tutorial",
+  "before": "What To Work On Next: Each ability and technique your recent work read, forecast: 20 hours of its exercise, a session a day at an ordinary day’s focus, grown as an hour of practice grows it, … (one fact of about 300 words)",
+  "after": "Five facts: What To Work On Next; What Each Line Says; Preparation, Said Apart; What Drops Out; The First Line.",
+  "why": "A wall of text made a drill-down a player can read part by part.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.profile]",
+  "kind": "tutorial",
+  "before": "(no next)",
+  "after": "Next: Open the ability with the most room to grow and press its exercise in the Practice column (Practice). Press Open Its Brief beside a genre to prepare and tape a practice brief (Preparing A Brief). After your first piece of work is judged, read What To Work On Next above the table.",
+  "why": "The tutorial's seventh question, for every entry.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.genre]",
+  "kind": "tutorial",
+  "before": "Each of the 149 genres keeps two figures of yours: familiarity, from studying it, and practice, from work done in it.",
+  "after": "Each of the 149 genres keeps two figures of yours: Familiarity, from studying it, and Work In It, from nights on stage and self-tapes in it.",
+  "why": "Practice and work in a genre kept apart, as the glossary does; the screen's labels.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.brief-reader]",
+  "kind": "tutorial",
+  "before": "… once your own rehearsal is at 97% or more and any way you chose is rehearsed in, Rehearse It On Your Feet is refused, …",
+  "after": "… once your own rehearsal is at 97% or more and any way you chose is fully rehearsed, Rehearse It On Your Feet says “There’s nothing more to gain from it now.”, …",
+  "why": "A refusal said with its reason, the command's own words.",
+  "meaningSensitive": false,
+  "verified": "src/engine/systems/briefs.ts prepareRefusal; docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.work]",
+  "kind": "tutorial",
+  "before": "Part By Part gives each part’s result, its own rehearsal, the stamina it cost and what happened in it; continuity is under it.",
+  "after": "Moment By Moment gives each part’s result, its own rehearsal, the stamina it cost and what happened in it; continuity is under it.",
+  "why": "The look's new caption.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#READER_WAYS",
+  "kind": "tutorial",
+  "before": "Pressing, responsiveness weighed more and your adaptability drawn on",
+  "after": "Pressing, judged more on responsiveness and calling on your adaptability",
+  "why": "'Weighed' and 'drawn on'.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.practice]",
+  "kind": "tutorial",
+  "before": "Each exercise is one real pedagogy names, a composite of real practice, or one SLATE designed",
+  "after": "Some exercises are named in real acting teaching, some are put together from real practice, and a few were made for the game.",
+  "why": "'SLATE designed'; plainer.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/ProfileWorkspace.tsx#DISPOSITIONS",
+  "kind": "other",
+  "before": "Emotional Stability 72, how fast stress comes and clears, and where composure starts; Conscientiousness 40, how well a night’s sleep restores you, and where discipline starts; Ambition 60, how fast every stress comes",
+  "after": "Emotional Stability 72, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 40, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike",
+  "why": "The same disposition in creation's words, at the coordinator's note; 'how fast every stress comes' said as what it is.",
+  "meaningSensitive": true,
+  "verified": "Read against axisModifier in systems/personality.ts (stressGain by stability and ambition, stressRecovery by stability, sleepQuality and energyRecovery by conscientiousness) and the starts in systems/attributes.ts; tests/evidence-g31-ui.test.ts p-traits-line (Composure 39.0 at stability 40, Discipline 65.0 at conscientiousness 70)"
+ }
+]

@@ -1415,7 +1415,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
   await step('[save: brief scenario] advice: What To Work On says what its forecast assumes of the work and whether preparation, training or both deserve attention', async () => {
     const assumes = (await briefPane().locator('[data-assumes]').first().innerText().catch(() => '')).trim();
     const attention = (await briefPane().locator('[data-attention]').first().innerText().catch(() => '')).trim();
-    must(/^What it assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes said: ${assumes || 'nothing'}`);
+    must(/^What the forecast assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes said: ${assumes || 'nothing'}`);
     must(/deserves? attention|^Neither preparation nor training/.test(attention), `the attention said: ${attention || 'nothing'}`);
     return `${assumes.slice(0, 200)} / ${attention.slice(0, 200)}`;
   });
@@ -1551,7 +1551,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     const text = (await briefPane().innerText()).replace(/\s+/g, ' ');
     const grain = text.match(/Played that way it suited the scene \([^)]*\), which gave it [\d.]+ points; your abilities and techniques cost it [\d.]+\./)?.[0];
     must(grain, `the take doesn’t say what the way gave: ${text.slice(text.indexOf('The Last Take'), text.indexOf('The Last Take') + 400)}`);
-    const advice = text.match(/(\d+) hours of its exercise would take it from \d+ to about \d+, worth about [\d.]+ points? a piece/)?.[0];
+    const advice = text.match(/(\d+) hours of its exercise(?:, a session a day,)? would take it from \d+ to about \d+\. On your recent work, replayed with you as you are now, that’s forecast to be worth about [\d.]+ points? a piece/)?.[0];
     must(advice, 'What To Work On isn’t forecast');
     await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);

@@ -143,4 +143,4 @@ export const LANGUAGE_AFFINITY: Readonly<Record<'heightened' | 'verse', { affini
 export const GRAIN = { strength: 0.3, stakesStep: 0.15, prep: 0.1, reading: 0.5, band: 0.25, floor: 0.25, concern: 0.5, reader: 0.5 } as const;
 
 export type GrainBand = 'suits' | 'either' | 'against';
-export const GRAIN_LABEL: Readonly<Record<GrainBand, string>> = { suits: 'Suits The Scene', either: 'Either Way', against: 'Against The Grain' };
+export const GRAIN_LABEL: Readonly<Record<GrainBand, string>> = { suits: 'Suits The Scene', either: 'Either Way', against: 'Works Against The Scene' };

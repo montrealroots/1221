@@ -190,7 +190,7 @@ describe('What To Work On, with the work so far', () => {
     expect(without.map((r) => r.target)).toEqual(['presence', 'imagination', 'focus']);
     const near = run(w, life('imagination'));
     expect(near.map((r) => r.target)).toEqual(['imagination', 'presence', 'focus']);
-    expect(near[0]!.why).toContain('Your work keeps coming back to it: it’s held back 9 of your pieces for life, 31.5 points of the whole in all.');
+    expect(near[0]!.why).toContain('Your work keeps coming back to it: it has held back 9 of your pieces in all, 31.5 points off the whole.');
     expect(near[0]!.recurring).toEqual({ last: 0, evidence: ['An ability, 31.5 points in all'] });
     // The falsifiability test: the words and the order change, the numbers don't.
     expect(numbers(near)).toEqual(numbers(without));
@@ -198,7 +198,7 @@ describe('What To Work On, with the work so far', () => {
     // More than half a point under the top, it's named where its points put it.
     const far = run(w, life('focus'));
     expect(far.map((r) => r.target)).toEqual(['presence', 'imagination', 'focus']);
-    expect(far[2]!.why).toContain('it’s held back 9 of your pieces for life');
+    expect(far[2]!.why).toContain('it has held back 9 of your pieces in all');
     expect(numbers(far)).toEqual(numbers(without));
   });
 
@@ -224,11 +224,11 @@ describe('What To Work On, with the work so far', () => {
     const without = recsOf(sim);
     const mine = withIt.find((x) => x.target === r.target)!;
     expect(mine).toBeDefined();
-    expect(mine.why).toContain(`it’s held back ${r.pieces} of your pieces for life`);
+    expect(mine.why).toContain(`it has held back ${r.pieces} of your pieces in all`);
     expect(numbers(withIt)).toEqual(numbers(without));
     const html = profile(sim);
-    expect(html).toContain(`it’s held back ${r.pieces} of your pieces for life`);
-    expect(html).toContain(`From your work for life: ${r.evidence.join('; ')}`);
+    expect(html).toContain(`it has held back ${r.pieces} of your pieces in all`);
+    expect(html).toContain(`From your record: ${r.evidence.join('; ')}`);
     // A brief's pane names the first ability or technique and says it as the Profile does. Until 2026-10-16 that was
     // the recurring weakness here, put first within half a point; from then what's first is what training pays most for
     // (`trainingForecast`), and the recurring weakness goes first only where it's about as useful.
@@ -322,7 +322,7 @@ describe('What To Work On in a brief’s pane', () => {
     expect(recsOf(sim).find((r) => !r.target.includes(':'))!.target).toBe(top.target);
     const html = pane(sim, 'drama', 'brief-drama');
     expect(html).toContain(`<strong>${top.label}</strong>. ${now.why}`);
-    expect(html).toContain('Spaced: the last session was a day to a week ago, when spacing pays.');
+    expect(html).toContain('Choose Spaced: your last session was a day to a week ago, when spacing pays.');
     expect(profile(sim)).toContain(now.why);
   });
 });

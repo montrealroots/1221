@@ -616,7 +616,7 @@ describe('c-disp-emotionalStability', () => {
     expect(shown.step).toContain('Emotional Stability 5 Volatile Steady');
     expect(shown.step).toContain('Emotional Stability: how quickly stress builds and how quickly it clears, and where your Composure starts.');
     expect(shown.step).toContain('Composure is an ability your work is judged on. Apart from where Composure and Discipline start, none of these makes you better or worse at anything.');
-    expect(shown.profile).toContain('Emotional Stability 5, how fast stress comes and clears, and where composure starts');
+    expect(shown.profile).toContain('Emotional Stability 5, how quickly stress builds and how quickly it clears, and where your Composure starts');
   });
 
   it('PLAYER JOURNEY: the same performance, fired by the clock, takes stress from 20 to 25.330 at stability 5 and to 21.463 at 95', () => {
@@ -658,7 +658,7 @@ describe('c-disp-conscientiousness', () => {
     const shown = dispositionsShown(answers(leaning('conscientiousness', 95)));
     expect(shown.step).toContain('Conscientiousness 95 Loose Meticulous');
     expect(shown.step).toContain('Conscientiousness: how well you sleep, and where your Discipline starts.');
-    expect(shown.profile).toContain('Conscientiousness 95, how well a night’s sleep restores you, and where discipline starts');
+    expect(shown.profile).toContain('Conscientiousness 95, how well you sleep, and where your Discipline starts');
   });
 
   it('PLAYER JOURNEY: the same hour of The Given Circumstances through practice.exercise grows imagination 1.0933 times as much at 95 as at 5', () => {
@@ -734,6 +734,6 @@ describe('c-disp-ambition', () => {
     const shown = dispositionsShown(answers(leaning('ambition', 95)));
     expect(shown.step).toContain('Ambition 95 Content Driven');
     expect(shown.step).toContain('Ambition: how quickly stress builds, from work and from money alike.');
-    expect(shown.profile).toContain('Ambition 95, how fast every stress comes');
+    expect(shown.profile).toContain('Ambition 95, how quickly stress builds, from work and from money alike');
   });
 });

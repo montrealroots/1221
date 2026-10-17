@@ -246,9 +246,21 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     expect(Math.round(byHand(sim.player.wellbeing))).toBe(88);
     const before = asSaved(sim);
     const { html } = drawn(sim, ProfileWorkspace);
-    expect(condition(sim)).toBe('Current Condition What today’s work meets Readiness 88 88 at this hour’s fit For Work Sufficient Nothing today holds the work back Energy, Stress 95, 15 Sleep owed 0 hours');
+    expect(condition(sim)).toBe('Current Condition Your readiness for work today Readiness 88 88 at this hour For Work Sufficient Today, nothing holds your work back Energy, Stress 95, 15 No sleep owed');
     expect(html).toContain('<span class="stat-label">For Work</span><span class="stat-value">Sufficient</span>');
     expect(asSaved(sim)).toBe(before);
+  });
+
+  it('says the sleep owed in whole hours, one hour singular and none as none (a defect until 2026-10-17: “Sleep owed 1 hours”)', () => {
+    const sim = ada('g32-condition-owed');
+    sim.advanceTo(at(2026, 8, 24, 14));
+    dials(sim); // TEST SETUP
+    const owed = (hours: number) => { sim.player.wellbeing.sleepDebt = hours; return condition(sim); }; // TEST SETUP: the debt set by hand
+    expect(owed(1)).toContain('Energy, Stress 95, 15 1 hour of sleep owed');
+    expect(owed(1)).not.toContain('1 hours');
+    expect(owed(1.4)).toContain(' 1 hour of sleep owed');
+    expect(owed(3)).toContain(' 3 hours of sleep owed');
+    expect(owed(0.3)).toContain(' No sleep owed');
   });
 
   it('PLAYER JOURNEY: an early riser at nine reads 96 at this hour’s fit against her 88, and at six in the evening 79', () => {
@@ -257,13 +269,13 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     dials(sim); // TEST SETUP
     // Early Riser's mornings at 1.1 and evenings at 0.88, bent inside the knob's [0.8, 1.2] (exp(L·tanh(ln v / L))):
     // 1.09142 and 0.89095, times 88.255.
-    expect(condition(sim)).toContain('Readiness 88 96 at this hour’s fit');
+    expect(condition(sim)).toContain('Readiness 88 96 at this hour');
     sim.advanceTo(at(2026, 8, 24, 18));
     dials(sim); // TEST SETUP
-    expect(condition(sim)).toContain('Readiness 88 79 at this hour’s fit');
+    expect(condition(sim)).toContain('Readiness 88 79 at this hour');
     sim.advanceTo(at(2026, 8, 25, 14));
     dials(sim); // TEST SETUP
-    expect(condition(sim)).toContain('Readiness 88 88 at this hour’s fit');
+    expect(condition(sim)).toContain('Readiness 88 88 at this hour');
   });
 
   it('PLAYER JOURNEY: a day kept up hour by hour falls under the line of 60 and For Work is Held Back by fatigue, the figures the dials’ own; a night’s sleep and it’s Sufficient again', () => {
@@ -277,14 +289,14 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     const hour = zonedParts(sim.now, NY).hour;
     expect(hour >= 12 && hour < 17, 'an hour that suits everybody the same').toBe(true);
     const { html } = drawn(sim, ProfileWorkspace);
-    expect(condition(sim)).toBe(`Current Condition What today’s work meets Readiness ${ready} ${ready} at this hour’s fit For Work Held Back Under 60: fatigue holds back the work that reads it Energy, Stress ${Math.round(w.energy)}, ${Math.round(w.stress)} Sleep owed ${Math.round(w.sleepDebt)} hours`);
+    expect(condition(sim)).toBe(`Current Condition Your readiness for work today Readiness ${ready} ${ready} at this hour For Work Held Back Under 60: tiredness holds your work back Energy, Stress ${Math.round(w.energy)}, ${Math.round(w.stress)} ${Math.round(w.sleepDebt) ? `${Math.round(w.sleepDebt)} ${Math.round(w.sleepDebt) === 1 ? 'hour' : 'hours'} of sleep owed` : 'No sleep owed'}`);
     expect(html).toContain('<span class="stat-label">For Work</span><span class="stat-value warning">Held Back</span>');
     // Kept up to ten, then a night's sleep to seven.
     while (zonedParts(sim.now, NY).hour < 22) sim.advanceTo(sim.now + MS_HOUR);
     expect(sim.execute({ kind: 'life.sleep', payload: { hours: (at(2026, 8, 25, 7) - sim.now) / MS_HOUR } }).ok).toBe(true);
     expect(byHand(sim.player.wellbeing)).toBeGreaterThanOrEqual(60);
     expect(condition(sim)).toContain(`Readiness ${Math.round(byHand(sim.player.wellbeing))}`);
-    expect(condition(sim)).toContain('For Work Sufficient Nothing today holds the work back');
+    expect(condition(sim)).toContain('For Work Sufficient Today, nothing holds your work back');
   });
 
   it('PLAYER JOURNEY: a run on the first morning breaks a bone, and For Work is Held Back, An injury holds back the body, over the line; the twin who didn’t run is Sufficient; a reload keeps it; mended, it holds nothing back', () => {
@@ -295,13 +307,13 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     expect(injury.kind).toBe('fracture');
     const ready = Math.round(byHand(run.player.wellbeing));
     expect(ready).toBeGreaterThanOrEqual(60);
-    expect(condition(run)).toContain(`Readiness ${ready} ${ready} at this hour’s fit For Work Held Back An injury holds back the body`);
+    expect(condition(run)).toContain(`Readiness ${ready} ${ready} at this hour For Work Held Back An injury holds back your physical work`);
     twin.advanceTo(run.now);
-    expect(condition(twin)).toContain('For Work Sufficient Nothing today holds the work back');
-    expect(condition(reload(run))).toContain('For Work Held Back An injury holds back the body');
+    expect(condition(twin)).toContain('For Work Sufficient Today, nothing holds your work back');
+    expect(condition(reload(run))).toContain('For Work Held Back An injury holds back your physical work');
     run.advanceTo(injury.until + MS_HOUR);
     dials(run); // TEST SETUP: the day rested, so the bone is what's measured.
-    expect(condition(run)).toContain('For Work Sufficient Nothing today holds the work back');
+    expect(condition(run)).toContain('For Work Sufficient Today, nothing holds your work back');
   });
 
   it('the flu, an injury, a concussion and the line, each said in its own words and in the panel’s order, and a cut holds nothing back (TEST SETUP: each set by hand, as tests/condition-reach.test.ts sets them)', () => {
@@ -311,21 +323,21 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     const forWork = () => between(condition(sim), 'For Work', 'Energy, Stress');
     const hurt = (kind: 'sprain' | 'concussion' | 'cut') => { healthOf(sim.player).injury = { kind, at: sim.now, until: sim.now + 10 * MS_DAY }; };
     healthOf(sim.player).fluUntil = sim.now + 5 * MS_DAY; // TEST SETUP
-    expect(forWork()).toBe('For Work Held Back The flu holds back the voice and the body');
+    expect(forWork()).toBe('For Work Held Back The flu holds back your voice and body work');
     hurt('sprain'); // TEST SETUP: the flu is said before an injury.
-    expect(forWork()).toBe('For Work Held Back The flu holds back the voice and the body');
+    expect(forWork()).toBe('For Work Held Back The flu holds back your voice and body work');
     delete healthOf(sim.player).fluUntil;
-    expect(forWork()).toBe('For Work Held Back An injury holds back the body');
+    expect(forWork()).toBe('For Work Held Back An injury holds back your physical work');
     healthOf(sim.player).fluUntil = sim.now + 5 * MS_DAY;
     hurt('concussion'); // TEST SETUP: a concussion before the flu.
-    expect(forWork()).toBe('For Work Held Back A concussion holds back all of it');
+    expect(forWork()).toBe('For Work Held Back A concussion holds back all your work');
     dials(sim, { energy: 5 }); // TEST SETUP: 38 by hand, under the line, said before all of them.
     expect(Math.round(byHand(sim.player.wellbeing))).toBe(38);
-    expect(forWork()).toBe('For Work Held Back Under 60: fatigue holds back the work that reads it');
+    expect(forWork()).toBe('For Work Held Back Under 60: tiredness holds your work back');
     dials(sim);
     delete healthOf(sim.player).fluUntil;
     hurt('cut'); // TEST SETUP: a deep cut limits nothing.
-    expect(forWork()).toBe('For Work Sufficient Nothing today holds the work back');
+    expect(forWork()).toBe('For Work Sufficient Today, nothing holds your work back');
   });
 });
 
@@ -349,7 +361,7 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
     const sim = ada('g32-history');
     clearCalendar(sim); // TEST SETUP
     dials(sim); // TEST SETUP
-    expect(between(drawn(sim, ProfileWorkspace).text, 'Development History')).toBe('Development History The latest 400 changes, newest first Nothing yet: the history begins with the first class, step or hour of practice.');
+    expect(between(drawn(sim, ProfileWorkspace).text, 'Development History')).toBe('Development History Your last 400 changes, newest first No changes yet. The history begins with your first class, preparation step or hour of practice.');
     const before = { focus: sim.player.attrs!.focus!, discipline: sim.player.attrs!.discipline! };
     expect(sim.execute({ kind: 'practice.exercise', payload: { exercise: 'concentration', focus: 'steady' } }).ok).toBe(true);
     const moved = { focus: (sim.player.attrs!.focus! - before.focus).toFixed(3), discipline: (sim.player.attrs!.discipline! - before.discipline).toFixed(3) };
@@ -436,12 +448,12 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
 
   it('PLAYER JOURNEY: Your Work So Far is early days on a new life and, a year on, read from the pieces judged: their count, their kinds, and each line with what it rests on', () => {
     const fresh = ada('g32-work-so-far');
-    expect(between(drawn(fresh, ProfileWorkspace).text, 'Your Work So Far', 'How This Works')).toBe('Your Work So Far Early days: 0 pieces judged. Patterns are named from 6.');
+    expect(between(drawn(fresh, ProfileWorkspace).text, 'Your Work So Far', 'How This Works')).toBe('Your Work So Far Early days: 0 pieces judged. Patterns are named once 6 are.');
     const sim = ada('r8-a');
     sim.advanceTo(at(2027, 9, 15, 12));
     const shown = between(drawn(sim, ProfileWorkspace).text, 'Your Work So Far', 'Development History');
     const kept = sim.player.work!;
-    expect(shown).toContain(`Your Work So Far Read from ${kept.length} pieces judged, the material met and the choices made`);
+    expect(shown).toContain(`Your Work So Far From ${kept.length} pieces judged, the material you’ve met and the choices you’ve made`);
     expect(shown).toContain(`Range ${new Set(kept.map((w) => w.task)).size} kinds of work judged`);
     const id = identityOf(sim.player);
     expect(id.strengths.length + id.weaknesses.length).toBeGreaterThan(0);

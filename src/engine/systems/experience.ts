@@ -96,6 +96,10 @@ export function featuresOf(m: MaterialProfile): string[] {
   return out;
 }
 
+/** How to pace the next hour, by the Focus control's own words: Spaced where the last session was a day to a week ago. */
+const SPACED_NOW = 'Choose Spaced: your last session was a day to a week ago, when spacing pays.';
+const STEADY_FIRST = 'Choose Steady to begin; Spaced pays once your last session is a day to a week old.';
+
 export const FEATURE_LABEL: Readonly<Record<string, string>> = {
   timing: 'Exact Timing', physical: 'Physical Work', partner: 'Playing Off A Partner', vocal: 'Vocal Demand', improvisation: 'Improvised Freedom',
   'language:heightened': 'Heightened Prose', 'language:verse': 'Verse', 'medium:camera': 'The Camera', transitions: 'Many Transitions', 'mixed-tone': 'Mixed Tone',
@@ -249,10 +253,10 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
       const label = cost.get(what)?.label ?? labelOf(what);
       const each = Math.round(f.points * 10) / 10;
       // The work it read and the gain it expects, by name (from brief 10, F2-A10 (g)): until then "(N of the pieces read it)".
-      const read = f.of !== undefined ? ` (${f.pieces} of your last ${f.of} ${f.of === 1 ? 'piece' : 'pieces'} read it${f.most ? `; it gains most on ${f.most.what}, about ${f.most.points >= 0 ? '+' : ''}${Math.round(f.most.points * 10) / 10}` : ''})` : ` (${f.pieces} of the pieces read it)`;
-      const prepared = f.prepared ? `; ${f.prepared === 1 ? 'the piece' : `the ${f.prepared} pieces`} its own preparation held back most ${f.prepared === 1 ? 'is' : 'are'} read as prepared` : '';
-      const days = (f.days ?? 0) >= 0.05 ? `; about ${Math.round(f.days! * 10) / 10} of it is the discipline ${f.hours} days of practice keep, which any exercise kept up daily would bring` : '';
-      out.push({ target: what, label, exercise: ex.id, tier: matchedTier(f.from), focus, points: each, forecast: f, why: `${f.hours} hours of its exercise would take it from ${Math.round(f.from)} to about ${Math.round(f.to)}, worth about ${each} ${each === 1 ? 'point' : 'points'} a piece on your recent work${read}, worked out again with you as you are now${f.of !== undefined ? ', a session a day' : ''}${prepared}${days}. ${focus === 'spaced' ? 'Spaced: the last session was a day to a week ago, when spacing pays.' : 'Steady to begin; spaced pays once the last session is a day to a week old.'}` });
+      const read = f.of !== undefined ? ` (${f.pieces} of your last ${f.of} ${f.of === 1 ? 'piece calls' : 'pieces call'} on it${f.most ? `; ${f.most.what} would gain most, about ${f.most.points >= 0 ? '+' : ''}${Math.round(f.most.points * 10) / 10}` : ''})` : ` (${f.pieces} of the pieces call on it)`;
+      const prepared = f.prepared ? ` It counts ${f.prepared === 1 ? 'the piece' : `the ${f.prepared} pieces`} held back most by ${f.prepared === 1 ? 'its' : 'their'} own preparation as fully prepared.` : '';
+      const days = (f.days ?? 0) >= 0.05 ? ` About ${Math.round(f.days! * 10) / 10} of it is the discipline ${f.hours} days of practice build, which any exercise kept up daily would bring.` : '';
+      out.push({ target: what, label, exercise: ex.id, tier: matchedTier(f.from), focus, points: each, forecast: f, why: `${f.hours} hours of its exercise${f.of !== undefined ? ', a session a day,' : ''} would take it from ${Math.round(f.from)} to about ${Math.round(f.to)}. On your recent work, replayed with you as you are now, that’s forecast to be worth about ${each} ${each === 1 ? 'point' : 'points'} a piece${read}.${prepared}${days} ${focus === 'spaced' ? SPACED_NOW : STEADY_FIRST}` });
     }
   }
   for (const [what, c] of forecasting ? [] : cost) {
@@ -267,11 +271,11 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     const since = ex ? lastPracticed?.(ex.id) : undefined;
     const focus = since !== undefined && since >= 1 && since <= 7 ? 'spaced' : 'steady';
     const each = Math.round(points * 10) / 10;
-    out.push({ target: what, label: c.label, ...(ex ? { exercise: ex.id, tier: matchedTier(now) } : {}), focus, points: each, why: `It cost your recent work about ${each} ${each === 1 ? 'point' : 'points'} of the whole a piece, weighted to the latest; it’s at ${Math.round(now)} of ${Math.round(full)}. ${focus === 'spaced' ? 'Spaced: the last session was a day to a week ago, when spacing pays.' : 'Steady to begin; spaced pays once the last session is a day to a week old.'}` });
+    out.push({ target: what, label: c.label, ...(ex ? { exercise: ex.id, tier: matchedTier(now) } : {}), focus, points: each, why: `It cost your recent work about ${each} ${each === 1 ? 'point' : 'points'} off the whole a piece, the latest pieces counting most; it’s at ${Math.round(now)} of ${Math.round(full)}. ${focus === 'spaced' ? SPACED_NOW : STEADY_FIRST}` });
   }
   for (const [what, c] of prepCost) {
     if (c.points < RECOMMEND.floor) continue;
-    out.push({ target: `prep:${what}`, label: c.label, focus: 'preparation', points: Math.round(c.points * 10) / 10, why: `Coming to the work with ${c.label.toLowerCase()} short cost about ${Math.round(c.points * 10) / 10} points of the whole a piece: that’s preparation, not training.` });
+    out.push({ target: `prep:${what}`, label: c.label, focus: 'preparation', points: Math.round(c.points * 10) / 10, why: `Coming to your work short on ${c.label.toLowerCase()} cost about ${Math.round(c.points * 10) / 10} points off the whole a piece. That’s preparation, not training.` });
   }
   for (const [k, c] of dayCost) {
     if (c.points < RECOMMEND.floor) continue;
@@ -282,8 +286,8 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     // first found in, "Stamina, By Beat 2 cost about 2.7 points of the whole a piece: come to the work rested and well, or
     // find places to breathe in it", at fitness 15 on long taped briefs: rest restores energy, and a brief's drain reads
     // none of it.
-    if (k === 'condition:stamina') { out.push({ target: k, label: 'Stamina', focus: 'stamina', points: each, why: `Stamina draining through the later parts of a piece cost about ${each} points of the whole a piece. It’s your fitness: Work Out, under Look After Yourself, builds it, and places to breathe in a piece leave less of it to drain; on a night, so does coming to the curtain rested. Rest restores energy, not fitness.` }); continue; }
-    out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: each, why: c.kind === 'fit' ? `A way of playing that didn’t fit cost about ${each} points of the whole a piece: choose one the material or the direction takes.` : `${c.label} cost about ${each} points of the whole a piece: come to the work rested and well, or find places to breathe in it.` });
+    if (k === 'condition:stamina') { out.push({ target: k, label: 'Stamina', focus: 'stamina', points: each, why: `Tiring through the later moments of a piece cost about ${each} points off the whole a piece. Stamina is your fitness, and Work Out, under Look After Yourself, builds it. Places to breathe in a piece leave less of it to drain, and on a night so does coming to the curtain rested. Rest restores energy, not fitness.` }); continue; }
+    out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: each, why: c.kind === 'fit' ? `Playing it a way that didn’t fit cost about ${each} points off the whole a piece. Choose a way the material or the direction allows.` : `${c.label} cost about ${each} points off the whole a piece. Come to the work rested and well, or find places to breathe in it.` });
   }
   // Ranked by the forecast's own figure where there is one: the tenth said can make two forecasts equal that aren't. From
   // brief 10 at full precision (`exact`), what the hours are forecast to bring, which is what's said and what's played
@@ -299,7 +303,7 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
   const mine = recurring ? out.find((r) => r.target === recurring.target) : undefined;
   if (recurring && mine) {
     mine.recurring = { last: recurring.last, evidence: recurring.evidence };
-    mine.why = `${mine.why} Your work keeps coming back to it: it’s held back ${recurring.pieces} of your pieces for life, ${recurring.whole} ${recurring.whole === 1 ? 'point' : 'points'} of the whole in all.`;
+    mine.why = `${mine.why} Your work keeps coming back to it: it has held back ${recurring.pieces} of your pieces in all, ${recurring.whole} ${recurring.whole === 1 ? 'point' : 'points'} off the whole.`;
     if (!forecasting && mine.points >= out[0]!.points - RECOMMEND.recurringWithin) out.unshift(...out.splice(out.indexOf(mine), 1));
   }
   // Training about as useful as the first's (from 2026-10-16): said beside it, not ranked as if a tenth decided it.
@@ -307,12 +311,12 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
   if (firstTraining) {
     const near = out.filter((r) => r !== firstTraining && r.forecast && tied(ownOf(r.forecast), ownOf(firstTraining.forecast!))).map((r) => r.label);
     // "Either" for one beside it, "any of them" for more (from brief 10: near mastery four or five can be within a tenth).
-    if (near.length) { firstTraining.tiedWith = near; firstTraining.why = `${firstTraining.why} About as useful: ${near.join(', ')}; ${near.length === 1 ? 'either' : 'any of them'} is a sound next step.`; }
+    if (near.length) { firstTraining.tiedWith = near; firstTraining.why = `${firstTraining.why} About as useful: ${near.join(', ')}. ${near.length === 1 ? 'Either' : 'Any of them'} is a sound next step.`; }
     // What preparation would bring, apart from what training brings (from brief 11, F2-A10 (f)): said once, on the first,
     // in its own figure. Until then a piece read as prepared was counted, and what its preparation was worth said nowhere.
     const prep = firstTraining.forecast!.preparation;
     const n = firstTraining.forecast!.prepared ?? 0;
-    if (prep !== undefined && n > 0) firstTraining.why = `${firstTraining.why} Apart from training: completing the preparation of ${n === 1 ? 'the piece' : `the ${n} pieces`} its own preparation held back most would bring ${n === 1 ? 'it' : 'them'} about ${Math.round(prep * 100) / 100} ${Math.round(prep * 100) === 100 ? 'point' : 'points'} a piece as you are now: that’s preparation, not training, and it isn’t in the ${firstTraining.points} above.`;
+    if (prep !== undefined && n > 0) firstTraining.why = `${firstTraining.why} Apart from training, fully preparing ${n === 1 ? 'the piece' : `the ${n} pieces`} held back most by ${n === 1 ? 'its' : 'their'} own preparation would bring ${n === 1 ? 'it' : 'them'} about ${Math.round(prep * 100) / 100} ${Math.round(prep * 100) === 100 ? 'point' : 'points'} a piece as you are now. That’s preparation, not training, and it isn’t part of the ${firstTraining.points} above.`;
   }
   return out.slice(0, 5);
 }

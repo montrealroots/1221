@@ -262,7 +262,7 @@ describe('p-abilities', () => {
       const { html, text } = drawn(sim, ProfileWorkspace);
       const rows = abilityRows(html);
       expect(rows.size).toBe(12);
-      return { rows, sentence: text.match(/It’s full at the most a body your age can be brought to, ([\d.]+) now/)?.[1], text };
+      return { rows, sentence: text.match(/Full is the fittest a body your age can be, ([\d.]+) now/)?.[1], text };
     };
     let { rows, sentence, text } = read();
     expect(rows.get('Stamina')![2]).toBe('99.4');
@@ -277,7 +277,7 @@ describe('p-abilities', () => {
     expect(rows.get('Stamina')![2]).toBe('99.3');
     expect(sentence).toBe('99.3');
     expect(text).toContain('Age 25 Born August 31, 2001');
-    expect(drawn(reload(sim), ProfileWorkspace).text).toContain('brought to, 99.3 now');
+    expect(drawn(reload(sim), ProfileWorkspace).text).toContain('can be, 99.3 now');
   });
 
   it('PLAYER JOURNEY: Classes Reach is the craft as admitted and 26 more, or the mean of a new ability’s kin’s, held while the first week of classes moves Now; Presence, Composure, Discipline and Stamina read —, classes don’t build them', () => {
@@ -360,7 +360,7 @@ describe('p-abilities', () => {
     morning.advanceTo(at(2026, 8, 24, 8));
     expect(byHand(morning.player.wellbeing)).toBeGreaterThanOrEqual(60);
     const rows = abilityRows(drawn(morning, ProfileWorkspace).html);
-    expect([...rows.values()].map((r) => r[4])).toEqual(Array(12).fill('Nothing holds it back'));
+    expect([...rows.values()].map((r) => r[4])).toEqual(Array(12).fill('Not held back today'));
   });
 
   it('PLAYER JOURNEY: a run on the first morning sprains her ankle, and Today names an injury mending on the dimensions a task that lists injury reads the ability in, Vocal Expression’s execution and Discipline’s consistency alone; Emotional Depth, Presence, Listening, Imagination and Adaptability hold nothing back', () => {
@@ -378,7 +378,7 @@ describe('p-abilities', () => {
     // read only in written work, which lists fatigue.
     const today = Object.fromEntries([...rows].map(([name, row]) => [name, row[4]!]));
     const mending = (dims: string) => `An injury mending: ${dims}`;
-    const nothing = 'Nothing holds it back';
+    const nothing = 'Not held back today';
     expect(today).toEqual({
       'Emotional Depth': nothing,
       Presence: nothing,
@@ -407,7 +407,7 @@ describe('p-abilities', () => {
     const { html, text } = drawn(sim, ProfileWorkspace);
     const fatigued = [...new Set([...abilityRows(html).values()].flatMap((r) => /^Readiness \d+, under 60: (.+)$/.exec(r[4]!)?.[1]?.split(', ') ?? []))].sort();
     expect(fatigued).toEqual(['believability', 'connection', 'consistency', 'execution', 'responsiveness']);
-    const fine = between(text, 'Tired, an actor’s attention', 'An injury holds back');
+    const fine = between(text, 'When you’re tired', 'An injury holds back');
     // Until 2026-10-13 the sentence named execution, consistency and responsiveness, and left out the two Today names.
     expect(fatigued.filter((d) => !fine.includes(d))).toEqual([]);
   });
@@ -429,7 +429,7 @@ describe('p-journey-history', () => {
   function workSoFar(p: Person): string {
     const j = journeyOf(p);
     const pieces = Object.values(j.totals).reduce((a, t) => a + (t?.n ?? 0), 0);
-    const out: string[] = [`Your Work So Far Read from ${pieces} pieces judged, the material met and the choices made How This Works`];
+    const out: string[] = [`Your Work So Far From ${pieces} pieces judged, the material you’ve met and the choices you’ve made How This Works`];
     const section = (title: string, lines: { line: string; evidence: string[] }[]) => { if (lines.length) out.push(title, ...lines.map((l) => `${l.line} From: ${l.evidence.join('; ')}.`)); };
     // Strengths, over the latest forty.
     const work = [...(p.work ?? [])].sort((a, b) => a.at - b.at).slice(-40);
@@ -437,11 +437,11 @@ describe('p-journey-history', () => {
     const dims = new Map<string, { sum: number; n: number; q: { what: string; q: number }[] }>();
     for (const w of work) for (const [d, q] of Object.entries(w.dims)) { const x = dims.get(d) ?? { sum: 0, n: 0, q: [] }; x.sum += q as number; x.n += 1; x.q.push({ what: w.what, q: q as number }); dims.set(d, x); }
     section('What Your Work Shows Most', [...dims].filter(([, x]) => x.n >= 6 && x.sum / x.n - mean >= 4).sort(([a], [b]) => a.localeCompare(b))
-      .map(([d, x]) => ({ line: `Your ${d} runs ahead of the rest: ${r1(x.sum / x.n)} on average across ${x.n} pieces, against ${r1(mean)} for the whole.`, evidence: x.q.sort((a, b) => b.q - a.q).slice(0, 3).map((b) => `${b.what}: ${r1(b.q)}`) })));
+      .map(([d, x]) => ({ line: `Your ${d} runs ahead of the rest: ${r1(x.sum / x.n)} on average across ${x.n} pieces, against ${r1(mean)} overall.`, evidence: x.q.sort((a, b) => b.q - a.q).slice(0, 3).map((b) => `${b.what}: ${r1(b.q)}`) })));
     // Weaknesses for life, and the note that keeps coming back.
     const KIND: Record<string, string> = { ability: 'An ability', technique: 'A technique', preparation: 'Preparation', condition: 'The day' };
     const weak = Object.entries(j.limits ?? {}).filter(([, t]) => t.n >= 3).sort((a, b) => b[1].whole - a[1].whole).slice(0, 3)
-      .map(([k, t]) => ({ line: `${t.label} has held back ${t.n} pieces, about ${r1(t.whole / t.n)} points of the whole each.`, evidence: [`${KIND[k.split(':')[0]!] ?? 'The choice'}, ${r1(t.whole)} points in all`] }));
+      .map(([k, t]) => ({ line: `${t.label} has held back ${t.n} pieces, about ${r1(t.whole / t.n)} points off the whole each.`, evidence: [`${KIND[k.split(':')[0]!] ?? 'The choice'}, ${r1(t.whole)} points in all`] }));
     const notes = ((p.school as { coursework?: { notes?: { key: string; status: string; given: number }[] } }).coursework?.notes ?? []).filter((n) => n.status === 'open' && n.given >= 3).sort((a, b) => b.given - a.given);
     // The class's name for a note on rehearsal: Time On Its Feet.
     expect(notes[0]!.key).toBe('dim:rehearsal');
@@ -450,15 +450,15 @@ describe('p-journey-history', () => {
     // Material met.
     const features = p.experience?.features ?? {};
     section('Material You Know', Object.entries(features).map(([f, x]) => ({ f, n: x.met + x.practiced, best: x.best })).filter((x) => x.n >= 6 && FEATURE_LABEL[x.f]).sort((a, b) => b.n - a.n).slice(0, 4)
-      .map((x) => ({ line: `${FEATURE_LABEL[x.f]}: met or practised ${x.n} times${x.best !== undefined ? `, best ${r1(x.best)}` : ''}.`, evidence: [`The experience record: ${x.f}`] })));
+      .map((x) => ({ line: `${FEATURE_LABEL[x.f]}: met or practiced ${x.n} times${x.best !== undefined ? `, best ${r1(x.best)}` : ''}.`, evidence: ['Your experience record'] })));
     const unmet = Object.keys(FEATURE_LABEL).filter((f) => !((features[f]?.met ?? 0) + (features[f]?.practiced ?? 0)));
-    out.push(`Not met yet: ${unmet.map((f) => FEATURE_LABEL[f]).join(', ')}. A brief built on one is suggested beside a brief.`);
+    out.push(`Not met yet: ${unmet.map((f) => FEATURE_LABEL[f]).join(', ')}. When you open a brief, one built on these is suggested beside it.`);
     // Range.
     const kinds = Object.values(j.totals).filter((t) => (t?.n ?? 0) > 0).length;
     const genres = Object.values(p.engagement?.byGenre ?? {}).filter((g) => (g.practice ?? 0) > 0).length;
-    section('Range', [{ line: `${kinds} kinds of work judged, ${genres} genres worked in, ${12 - unmet.length} of 12 kinds of material met.`, evidence: [`The journey’s kinds of work: ${kinds}`] }]);
+    section('Range', [{ line: `${kinds} kinds of work judged, ${genres} genres worked in, ${12 - unmet.length} of 12 kinds of material met.`, evidence: [`Kinds of work on your record: ${kinds}`] }]);
     const dir = j.direction!;
-    section('Taking Direction', [{ line: `Of ${dir.given} notes and requests on the craft, ${dir.answered} answered.`, evidence: [`Worked ${dir.worked}, answered ${dir.answered}`] }]);
+    section('Taking Direction', [{ line: `Of ${dir.given} notes and requests on your craft, you answered ${dir.answered}.`, evidence: [`Worked ${dir.worked}, answered ${dir.answered}`] }]);
     const school = p.school as unknown as { tally: { calls: number; answered: number }; callsBefore?: { calls: number; answered: number } };
     const calls = (school.callsBefore?.calls ?? 0) + school.tally.calls;
     const answered = (school.callsBefore?.answered ?? 0) + school.tally.answered;
@@ -480,7 +480,7 @@ describe('p-journey-history', () => {
     // Each of the sections the first round didn't read is there, and the habit nobody chose isn't.
     for (const title of ['What Your Work Shows Most', 'What Keeps Holding It Back', 'Material You Know', 'Not met yet:', 'Range', 'Taking Direction', 'Reliability', 'Playing With Others']) expect(shown, title).toContain(title);
     expect(shown).not.toContain('How You Tend To Play It');
-    expect(shown).toContain('Taking Direction Of 9 notes and requests on the craft, 0 answered. From: Worked 0, answered 0.');
+    expect(shown).toContain('Taking Direction Of 9 notes and requests on your craft, you answered 0. From: Worked 0, answered 0.');
     expect(shown).toContain('Reliability 68 of 68 calls answered; 0 rehearsals with a partner kept.');
     expect(between(drawn(reload(sim), ProfileWorkspace).text, 'Your Work So Far', 'Sources And Estimates')).toBe(shown);
   });

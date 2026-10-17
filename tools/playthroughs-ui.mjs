@@ -817,7 +817,7 @@ async function specialist() {
     const look = await openLook(abilityRow('Composure').getByRole('button', { name: /^Composure$/ }));
     must(look.name === 'Composure' && /^You’re at 90\.0 of 100/.test(look.summary), `Composure’s look: ${look.summary}`);
     const body = clean(await look.look.locator(':scope > .look-inner').innerText());
-    must(/What develops it\./.test(body) && /To practice it\./.test(body), `the look doesn’t say what develops it or how to practice it: ${body.slice(0, 200)}`);
+    must(/How it grows\./.test(body) && /To practice it\./.test(body), `the look doesn’t say what develops it or how to practice it: ${body.slice(0, 200)}`);
     await wayIn(look);
     await closeLook('Composure');
     must(!(await page.locator('.look').count()), 'a look still open after Composure’s Close');
@@ -873,8 +873,8 @@ async function specialist() {
     const first = clean(await work.locator('p').first().innerText());
     const assumes = clean(await work.locator('[data-assumes]').innerText().catch(() => ''));
     const attention = clean(await work.locator('[data-attention]').innerText().catch(() => ''));
-    must(/\d+ hours of its exercise would take it from \d+ to about \d+, worth about [\d.]+ points? a piece/.test(clean(await work.innerText())), `no forecast in hours and points: ${first.slice(0, 300)}`);
-    must(/^What it assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes: ${assumes || 'nothing'}`);
+    must(/\d+ hours of its exercise(?:, a session a day,)? would take it from \d+ to about \d+\. On your recent work, replayed with you as you are now, that’s forecast to be worth about [\d.]+ points? a piece/.test(clean(await work.innerText())), `no forecast in hours and points: ${first.slice(0, 300)}`);
+    must(/^What the forecast assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes: ${assumes || 'nothing'}`);
     must(/deserves? attention|^Neither preparation nor training/.test(attention), `what deserves attention: ${attention || 'nothing'}`);
     const ex = work.locator('button', { hasText: /…$/ }).first();
     trains = (await ex.count()) ? clean(await ex.innerText()).replace(/…$/, '') : '';

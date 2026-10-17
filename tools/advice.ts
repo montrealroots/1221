@@ -249,7 +249,7 @@ function measure(spec: CaseSpec) {
     const byRecords = assumedByRecords(x);
     const assumedMatch = a !== undefined && a.pieces === byRecords.pieces && a.complete === byRecords.complete && a.short === byRecords.short && a.genreCount === byRecords.genreCount && a.genreShort === byRecords.genreShort && a.genreBetter === byRecords.genreBetter && JSON.stringify(a.prepared.map((p) => p.what)) === JSON.stringify(byRecords.prepared);
     const says = top?.assumes ?? '';
-    const assumedSaid = top !== undefined && says.startsWith(`What it assumes of your last ${byRecords.pieces === 1 ? 'piece' : `${byRecords.pieces} pieces`}:`) && (byRecords.genreCount === 0 || (says.includes(`${byRecords.genreShort} ${byRecords.genreShort === 1 ? 'is' : 'are'} short of complete and ${byRecords.genreBetter} known better than when taped`)));
+    const assumedSaid = top !== undefined && says.startsWith(`What the forecast assumes of your last ${byRecords.pieces === 1 ? 'piece' : `${byRecords.pieces} pieces`}:`) && (byRecords.genreCount === 0 || (says.includes(`${byRecords.genreShort} ${byRecords.genreShort === 1 ? 'is' : 'are'} short of complete and ${byRecords.genreBetter} known better than when taped`)));
     // F4: each piece read as prepared named, what the first-named's figure would be read as taped (the forecast's own,
     // checked against the measure's reading), and no other piece read better prepared than its record.
     const taped = top ? forecastByRecords(x, top.target, true) : undefined;

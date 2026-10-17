@@ -308,8 +308,8 @@ describe('the family a new life comes from (c-family, c-wealth)', () => {
   it('the Nothing family’s life begins with no card, and its Profile says Risk Tolerance set no autopay, where the Wealthy one’s card started on the whole statement', () => {
     const none = createSave(1, 'need-family-nothing', chosen('nothing'));
     expect(mine(none, 'credit_card')).toHaveLength(0);
-    expect(drawn(none, ProfileWorkspace).text).toContain('Risk Tolerance 50, 65 or under, which sets where a card’s autopay starts; you hold no card, so it set none ;');
-    expect(drawn(createSave(1, 'need-family-wealthy', chosen('wealthy')), ProfileWorkspace).text).toContain('Risk Tolerance 50, 65 or under, so the card’s autopay started on the whole statement ;');
+    expect(drawn(none, ProfileWorkspace).text).toContain('Risk Tolerance 50, 65 or under, which decides where a card’s autopay starts, but you hold no card ;');
+    expect(drawn(createSave(1, 'need-family-wealthy', chosen('wealthy')), ProfileWorkspace).text).toContain('Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement ;');
   });
 
   it('a draft carried back keeps the family it chose, and its means with it; a draft naming none the game knows comes back wealthy', () => {

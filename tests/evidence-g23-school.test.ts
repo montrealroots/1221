@@ -499,7 +499,7 @@ describe('development ledger', () => {
     expect(now.slice(0, 400 - came)).toEqual(was.slice(came));
     expect(now.slice(0, 400 - came).every((x, k) => x === was[came + k])).toBe(true);
     expect(now.at(-1)!.at).toBeGreaterThanOrEqual(was.at(-1)!.at);
-    expect(shown(sim, ProfileWorkspace)).toContain('Development History The latest 400 changes, newest first');
+    expect(shown(sim, ProfileWorkspace)).toContain('Development History Your last 400 changes, newest first');
     const back = reload(sim);
     expect(developmentOf(back.player).history).toEqual(now);
   });
@@ -558,7 +558,7 @@ describe('work records + journey', () => {
     expect(strong.length, 'the played fall has a strength to name').toBeGreaterThan(0);
     for (const [d, xs] of strong) {
       const best = [...xs].sort((a, b) => b.q - a.q).slice(0, 3).map((b) => `${b.what}: ${r1(b.q)}`).join('; ');
-      expect(text).toContain(`Your ${DIMENSION_LABEL[d].toLowerCase()} runs ahead of the rest: ${r1(avg(xs))} on average across ${xs.length} pieces, against ${r1(mean)} for the whole. From: ${best}.`);
+      expect(text).toContain(`Your ${DIMENSION_LABEL[d].toLowerCase()} runs ahead of the rest: ${r1(avg(xs))} on average across ${xs.length} pieces, against ${r1(mean)} overall. From: ${best}.`);
     }
     for (const [d] of not) expect(text).not.toContain(`Your ${DIMENSION_LABEL[d].toLowerCase()} runs ahead of the rest`);
   });
@@ -596,7 +596,7 @@ describe('work records + journey', () => {
     const exercise = EXERCISES.find((e) => e.trains === what)!;
     const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const each = r1(top.points);
-    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*, ${esc(exercise.label)} at the \\w+ tier\\. ${top.hours} hours of its exercise would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}, worth about ${esc(String(each))} points? a piece on your recent work`));
+    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*, ${esc(exercise.label)} at the \\w+ tier\\. ${top.hours} hours of its exercise(?:, a session a day,)? would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}\\. On your recent work, replayed with you as you are now, that’s forecast to be worth about ${esc(String(each))} points? a piece`));
   });
 
   it('PLAYER JOURNEY: Taking Direction reads, for life, the notes on the craft a run gave and those the work answered', () => {
@@ -624,7 +624,7 @@ describe('work records + journey', () => {
     const answered = onCraft.filter((n) => n.taken === true).length;
     expect(onCraft.length).toBeGreaterThanOrEqual(3);
     expect(journeyOf(sim.player).direction).toMatchObject({ given: onCraft.length, answered });
-    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on the craft, ${answered} answered`);
+    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you answered ${answered}`);
   });
 
   it('names a strength at 4 over the mean and not at 3.9', () => {

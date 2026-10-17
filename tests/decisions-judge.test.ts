@@ -768,7 +768,7 @@ describe('ST6-R2.c and ST6-R2.e clarified (brief 13)', () => {
     expect(second.work.inputs.grain?.believability?.d).toBe(0.01);
     expect(withoutGrain(second.work) - replay(second.work, taskOf(b))!.exact!).toBeGreaterThan(1e-9);
     // The take's line follows its own shown figures: against the grain where it cost a shown tenth, nothing either way where not.
-    if (second.take.grain) expect(takeGrainWords(second.take.grain)).toContain(second.take.grain.points < 0 ? 'against the grain' : 'nothing either way');
+    if (second.take.grain) expect(takeGrainWords(second.take.grain)).toContain(second.take.grain.points < 0 ? 'worked against the scene' : 'no difference either way');
     const kept = [first, second].map((x) => ({ key: x.work.inputs.key, exact: replay(x.work, taskOf(b))!.exact, overall: x.work.overall }));
     sim = loadSave(deserialise(serialise(sim.universe)) as never);
     h.sim = sim;
