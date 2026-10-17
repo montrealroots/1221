@@ -37,7 +37,7 @@ describe('tutorial.read', () => {
     const [first, second] = CHAPTERS;
     const locked = second!.opens.find((f) => !first!.opens.includes(f))!;
     expect(isOpen(sim, locked)).toBe(false);
-    expect(sim.execute({ kind: 'tutorial.read', payload: { chapterId: second!.id } }).error).toMatch(/first; the chapters go in order/);
+    expect(sim.execute({ kind: 'tutorial.read', payload: { chapterId: second!.id } }).error).toMatch(/first\. The chapters open in order\./);
     const r = sim.execute<{ read: string; next?: string }>({ kind: 'tutorial.read', payload: { chapterId: first!.id } });
     expect(r.ok, r.error).toBe(true);
     expect(r.value!.next).toBe(second!.id);

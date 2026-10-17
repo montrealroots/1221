@@ -1,0 +1,42 @@
+{
+ "save": "brief.json",
+ "width": 390,
+ "returnBar": [
+  "Back To Help",
+  "Back To Home",
+  "✕"
+ ],
+ "afterBackTo": "#/home",
+ "found": [
+  {
+   "name": "help-entry",
+   "page": "",
+   "out": []
+  },
+  {
+   "name": "help-entry-everything",
+   "page": "",
+   "out": []
+  },
+  {
+   "name": "help-contents",
+   "page": "",
+   "out": []
+  },
+  {
+   "name": "help-way-back",
+   "page": "",
+   "out": []
+  },
+  {
+   "name": "guide-school",
+   "page": "",
+   "out": []
+  },
+  {
+   "name": "guide-school-details",
+   "page": "",
+   "out": []
+  }
+ ]
+}

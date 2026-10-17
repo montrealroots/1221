@@ -1402,8 +1402,13 @@ td, th { overflow-wrap: break-word; }
 .help-facts dt { color: var(--text-muted); }
 .help-facts dd { margin: 0; }
 .help-related { border-top: 1px solid var(--line); padding-top: var(--s3); margin-top: var(--s2); }
+.help-where { margin: var(--s2) 0 0; display: flex; flex-direction: column; gap: 2px; color: var(--text-dim); }
+.help-where > div { display: flex; flex-wrap: wrap; gap: 0 var(--s2); }
+.help-where dt { font-weight: 600; }
+.help-where dd { margin: 0; min-width: 0; }
 .help-return {
-  position: fixed; right: var(--s4); bottom: var(--s4); z-index: 250; display: flex; gap: var(--s1);
+  position: fixed; right: var(--s4); bottom: var(--s4); z-index: 250; display: flex; flex-wrap: wrap; gap: var(--s1);
+  max-width: calc(100vw - 2 * var(--s4));
   background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: var(--s1); box-shadow: var(--shadow);
 }
 @media (max-width: 720px) {

@@ -569,7 +569,7 @@ describe('c-tutorial', () => {
     expect(kept.universe.preferences.timeSpeed).toBe('live');
     const read = kept.execute({ kind: 'tutorial.read', payload: { chapterId: CHAPTERS[0]!.id } });
     expect(read.ok).toBe(false);
-    expect(read.error).toBe('This life has no guide to read through; everything is open.');
+    expect(read.error).toBe('This life was begun without the guide, so everything is already open.');
   });
 
   it('makes a guided life, paused, when Begin is pressed on the default, and refuses Sleep naming its chapter and the first', async () => {
@@ -579,7 +579,7 @@ describe('c-tutorial', () => {
     expect(sim.universe.preferences.timeSpeed).toBe('paused');
     const refused = sim.execute({ kind: 'life.sleep', payload: { hours: 8 } });
     expect(refused.ok).toBe(false);
-    expect(refused.error).toBe('Read “Sleep” in the guide first. The next chapter is “Your Life, Hour By Hour”.');
+    expect(refused.error).toBe('Read “Sleep” in the guide first. The chapters open in order, and “Your Life, Hour By Hour” is next: press Guide, at the top of the screen.');
     expect(sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'live' } }).ok).toBe(false);
     expect(sim.universe.preferences.timeSpeed).toBe('paused');
     // And Money opens as Locked, naming its chapter.
@@ -603,7 +603,7 @@ describe('c-tutorial', () => {
 
     const held = take(sim);
     expect(held.ok).toBe(false);
-    expect(held.error).toBe('Read “Cover, Benefits And Returns” in the guide first. The next chapter is “How You Are”.');
+    expect(held.error).toBe('Read “Cover, Benefits And Returns” in the guide first. The chapters open in order, and “How You Are” is next: press Guide, at the top of the screen.');
     // The same command given directly is held in the same words.
     expect(sim.execute({ kind: 'tax.file', payload: { year: 2026 } }).error).toBe(held.error);
 

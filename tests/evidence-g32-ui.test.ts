@@ -589,7 +589,7 @@ describe('h-calendar: the Calendar section of Home', () => {
     expect(h.went).toEqual(['/workspace/calendar']);
     const guided = ada('g32-calendar-guided', { tutorial: true });
     const read = (id: string) => expect(guided.execute({ kind: 'tutorial.read', payload: { chapterId: id } }).ok, id).toBe(true);
-    expect(drawn(guided, Home).text).toContain('Calendar Locked Opens with “What’s Coming” in the guide');
+    expect(drawn(guided, Home).text).toContain('Calendar Locked This opens when you read “What’s Coming” in the guide');
     read('welcome');
     read('calendar');
     const { text } = drawn(guided, Home);
@@ -733,7 +733,7 @@ describe('h-needs: What Needs You on Home', () => {
     sim.advanceTo(at(2027, 2, 1, 12));
     const decision = openDecisions(sim)[0]!;
     drawn(sim, Home);
-    expect(press(button('File It'))).toEqual({ ok: false, error: 'Read “Cover, Benefits And Returns” in the guide first. The next chapter is “How You Are”.' });
+    expect(press(button('File It'))).toEqual({ ok: false, error: 'Read “Cover, Benefits And Returns” in the guide first. The chapters open in order, and “How You Are” is next: press Guide, at the top of the screen.' });
     expect(needs(sim)).toContain(`Your 2026 Tax Return in 2 months ${decision.detail} File It Go There Dismiss`);
     expect(sim.universe.decisions[decision.id]!.resolvedAt).toBeUndefined();
     for (const id of ['body', 'sleep', 'looking-after', 'plans', 'weather', 'school', 'profile', 'papers']) read(id);

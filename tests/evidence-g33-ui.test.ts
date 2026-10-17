@@ -255,18 +255,18 @@ describe('h-money', () => {
   it('PLAYER JOURNEY, guided: Money is its LockedPanel until “Money” is read; then Chase is Locked until “Your Bank” is, a press goes nowhere and the bank refuses a transfer in the guide’s words, across a reload; read, Chase opens the bank screen', () => {
     const sim = life('g33-money-guided', { tutorial: true });
     const before = drawn(sim).affairs;
-    expect(before).toContain('Money Locked Opens with “Money” in the guide: everything you have and owe, at a glance. Read About It');
+    expect(before).toContain('Money Locked This opens when you read “Money” in the guide: everything you have and owe, at a glance. Read About It');
     expect(before).not.toContain('Chase Total Checking');
     readTo(sim, 'documents');
-    expect(drawn(sim).affairs).toContain('Money Locked Opens with “Money” in the guide');
+    expect(drawn(sim).affairs).toContain('Money Locked This opens when you read “Money” in the guide');
     readTo(sim, 'money');
     expect(drawn(sim).affairs).toContain('Money Chase Total Checking: $92,391.00. Worth $505,434. Chase Locked How This Works');
     const locked = button('ChaseLocked');
-    expect(locked.props.title).toBe('Read “Your Bank” in the guide first.');
+    expect(locked.props.title).toBe('Read “Your Bank” in the guide first. Press Guide, at the top of the screen, to read it.');
     expect(locked.props.className).toBe('btn btn-sm is-locked');
     press('ChaseLocked');
     expect(h.went).toEqual([]);
-    expect(sim.execute({ kind: 'bank.transfer', payload: { fromId: own(sim, 'savings').id, toId: primary(sim).id, amount: 1_00 } }).error).toBe('Read “Your Bank” in the guide first.');
+    expect(sim.execute({ kind: 'bank.transfer', payload: { fromId: own(sim, 'savings').id, toId: primary(sim).id, amount: 1_00 } }).error).toBe('Read “Your Bank” in the guide first. Press Guide, at the top of the screen, to read it.');
     const kept = reload(sim);
     expect(drawn(kept).affairs).toContain('Chase Locked How This Works');
     kept.must({ kind: 'tutorial.read', payload: { chapterId: 'bank' } });
@@ -353,7 +353,7 @@ describe('h-school', () => {
     const sim = life('g33-school-guided', { tutorial: true });
     readTo(sim, 'weather');
     const before = drawn(sim).affairs;
-    expect(before).toContain('School Locked Opens with “Drama School” in the guide: where your life as an actor begins. Read About It');
+    expect(before).toContain('School Locked This opens when you read “Drama School” in the guide: where your life as an actor begins. Read About It');
     expect(before).not.toContain('Arriving');
     readTo(sim, 'school');
     expect(drawn(sim).affairs).toContain(`School Arriving, good standing, ${rankOf(sim)} of 16 in the class. Next: Registration And Your Account`);
