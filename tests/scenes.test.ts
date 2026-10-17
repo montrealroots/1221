@@ -3,10 +3,15 @@
  * scene's id unique, its fields in range, every question with a reading the
  * text supports and one it cuts against, each cut-against reading saying why;
  * the material each kind of course asks for there to be chosen from; and every
- * course of the Bulletin setting work, The Greeks with its Greek scenes.
+ * course of the Bulletin setting work, The Greeks with its Greek scenes. From
+ * 2026-10-17, the coverage matrix's count of the bank, read against the code.
  */
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { QUESTIONS, SCENES, TEMPLATES, sceneById, templateFor } from '@/engine/content/coursework';
+import { PLAY_MATERIAL } from '@/engine/content/material';
+import { EXERCISES } from '@/engine/content/practice';
 import { createSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { courseworkOf, questionsFor, setWork, show } from '@/engine/systems/coursework';
@@ -30,6 +35,16 @@ describe('the scene bank', () => {
       }
     }
     expect(QUESTIONS).toHaveLength(5);
+  });
+
+  // From 2026-10-17 (brief 11, judge.coverage-row): the coverage matrix's row for the bank said 56 scenes when the catalog
+  // held 64, and was corrected by hand twice (to 65, then to 67 when brief 10 added the two meetings), held by nothing.
+  it('GUARD: the coverage matrix’s scene bank row states the bank as the code holds it, its scenes, its plays and its exercises, so a scene added or taken away fails here until the row says so', () => {
+    const doc = readFileSync(fileURLToPath(new URL('../docs/COVERAGE-MATRIX.md', import.meta.url)), 'utf8');
+    const row = doc.split('\n').find((l) => l.startsWith('| 42 scenes, 26 plays |'));
+    const said = row?.match(/Enlarged, still finite: (\d+) scenes, (\d+) plays, (\d+) exercises\./);
+    expect(said, 'the scene bank row and its count').toBeTruthy();
+    expect(said!.slice(1).map(Number)).toEqual([SCENES.length, PLAY_MATERIAL.length, EXERCISES.length]);
   });
 
   it('has material for every kind of course, the Greeks’ only Greek, and several defensible readings where the text allows', () => {

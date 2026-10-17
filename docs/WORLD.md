@@ -156,7 +156,7 @@ Researched in `docs/research/world/research-documents-safetynet.json` and `resea
   - New York's "more than half", taken at half, its floor.
   - Another state's, the mean of the three.
   - The TSA's 94% of travelers counts passports, and isn't used.
-- **A state ID card** (`documents.apply_idcard`) for someone the state hasn't licensed: New York's $14 for eight years, Connecticut's $28, California's $40. Each is REAL ID.
+- **A state ID card** (`documents.apply_idcard`) for someone the state hasn't licensed: New York's $14 for eight years, Connecticut's $28, California's $40. Each is REAL ID for a citizen; Connecticut's for somebody who isn't is Not For Federal Identification (from 2026-10-16: until then every one was REAL ID). Connecticut's runs seven years to a birthday, the first at least seven years on, and comes by mail within twenty business days, after SAVE's check for somebody not a citizen (from 2026-10-17, `docs/research/world/research-ct-idcard.json`: until then six years from the day, SLATE's figure, and a citizen's was in force at the counter).
 - **Since, later on 2026-09-30:** an airline's ID outside America (`boardingIdRefusal`, researched in `research-travel4.json`):
   - Canada: a government photo ID, which a passport, a license or a provincial photo card is.
   - Mexico: a passport, a driver's license or the INE.

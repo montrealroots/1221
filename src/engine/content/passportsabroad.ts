@@ -10,8 +10,14 @@
  * UK again on 2026-10-16: gov.uk's "New fees for passport applications" (published 18 March 2026, in force from 8 April
  * 2026: £116.50 online from overseas, £130 on paper) and "Get a passport urgently" ("You cannot use this service if:
  * you're outside the UK"). Where an office's fee or time from abroad wasn't found, its fee at home stands and the entry
- * says so (`assumed`); where its faster service isn't sold abroad, or that wasn't found, none is offered. A figure the
- * research gives for one embassy (Latvia's in Ireland) is taken for the embassy in the US and said to be.
+ * says so (`assumed`); where its faster service isn't sold abroad, or that wasn't found, none is offered.
+ *
+ * Iceland's, Brazil's and Latvia's read again on 2026-10-17, on their own pages (`docs/research/world/
+ * research-passports-abroad.json`, brief 11): until then Iceland's fee at an embassy, Brazil's at a consulate and
+ * Latvia's at its embassy in the US weren't found, and SLATE took Iceland's and Brazil's fees at home (Brazil's R$257.25,
+ * the Polícia Federal's) and the Latvian embassy in Ireland's fees and times, its €165 urgent service with them, for the
+ * embassy in the US; Iceland's express wasn't offered from abroad. Japan's consulate and New Zealand's office refused
+ * every request that day (403s, a Cloudflare challenge), and their entries still say what's SLATE's.
  *
  * The United States isn't here: a US citizen in New Haven applies at home, and renews by mail (`US_RENEWAL`).
  */
@@ -49,10 +55,14 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
     basis: 'Passport Online from anywhere at the adult €75, with €15 postage for an applicant living outside Ireland, in the same turnaround.',
     assumed: ['Same-day renewal is at a passport office in Ireland, and the urgent renewal found abroad is the London embassy’s: none from the US.', 'Postage from abroad takes longer: not counted.'],
   },
+  // The consular fee schedule (stjornarradid.is, Gjaldskrá fyrir verk borgaraþjónustu, read 2026-10-17): an adult of 18
+  // to 66 pays the fee in Iceland, 19,000 ISK (USD 148 at December 2025's monthly rate), and express 39,200 ISK in all
+  // (USD 306), under art. 14 of Act no. 88/1991; in the US only the embassy in Washington takes the application. Until
+  // 2026-10-17 the fee was the same, said to be assumed, and no express was offered.
   IS: {
-    fee: 19000, currency: 'ISK', days: 6, daysEstimated: true, expedite: null,
-    basis: 'At certain Icelandic embassies and consulates-general only, collected there or shipped.',
-    assumed: ['The fee charged at an embassy wasn’t found: SLATE charges the fee in Iceland.', 'Shipping time is added and wasn’t found: SLATE takes the days in Iceland.', 'Whether express is sold at an embassy wasn’t found: none offered.'],
+    fee: 19000, currency: 'ISK', days: 6, daysEstimated: true, expedite: { extra: 20200, days: 2, note: 'Express, 39,200 ISK in all' },
+    basis: 'At the Embassy of Iceland in Washington, the only post in the US that takes it, at the fee in Iceland: 19,000 ISK, or 39,200 ISK for express, in dollars at the month’s rate; collected there or shipped.',
+    assumed: ['Registers Iceland’s four business days have the delivery added, which isn’t published: SLATE takes the days in Iceland, and express’s two.'],
   },
   DE: {
     fee: 106, youngFee: 73.5, currency: 'EUR', days: 42, daysEstimated: false, expedite: null,
@@ -72,7 +82,7 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
   JP: {
     fee: 9300, currency: 'JPY', days: 30, daysEstimated: true, expedite: null,
     basis: 'At a Japanese embassy or consulate, charged in local currency at the mission’s published rate; about a month, the passport made in Japan.',
-    assumed: ['The mission’s local-currency fee wasn’t collected: SLATE charges the yen fee at its rate.'],
+    assumed: ['The consulate’s dollar fee wasn’t read, its site refusing SLATE’s requests on 2026-10-17: SLATE charges the yen fee at its rate.'],
   },
   KR: {
     fee: 52, currency: 'USD', days: 30, daysEstimated: true, expedite: null,
@@ -89,20 +99,27 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
     basis: 'Through an Australian embassy or consulate, the fee and an overseas surcharge of $189: 611 AUD; at least six weeks, and no Priority or Fast Track overseas.',
     assumed: [],
   },
+  // Portaria MRE nº 664 of 29 April 2026 (DOU 4 May 2026), in force 1 June 2026: a passaporte comum is 60 reais-ouro
+  // (item 110.5), and a real-ouro is one US dollar (Regulamento Consular Brasileiro, Portaria nº 428/2022, 4.1.45 IV);
+  // both read in the Diário Oficial on 2026-10-17, the Hartford consulate's page answering with a CAPTCHA. Until
+  // 2026-10-17 SLATE charged the Polícia Federal's R$257.25 at home.
   BR: {
-    fee: 257.25, currency: 'BRL', days: 8, daysEstimated: true, expedite: null,
-    basis: 'Issued by Brazilian embassies and consulates through e-consular, their consular fee in local currency, not the Polícia Federal’s.',
-    assumed: ['The consular fee and time weren’t found: SLATE charges the fee at home and its days.', 'The Polícia Federal’s urgent service isn’t consular: none offered.'],
+    fee: 60, currency: 'USD', days: 8, daysEstimated: true, expedite: null,
+    basis: 'Issued by Brazilian embassies and consulates through e-consular, at the consular fee from 1 June 2026: 60 reais-ouro, a real-ouro being a dollar, so US$60.',
+    assumed: ['The consulate’s time wasn’t found: SLATE takes the days at home.', 'The Polícia Federal’s urgent service isn’t consular: none offered.'],
   },
   NZ: {
     fee: 247, currency: 'NZD', days: 28, daysEstimated: false, expedite: { extra: 247, days: 5, note: 'Urgent service; its fee is from search extracts, not read from the office itself' },
     basis: 'Online to DIA from overseas, at the same New Zealand dollar fees.',
     assumed: ['A non-resident for New Zealand tax applying online pays no GST; whether a student in the US is one isn’t known, so SLATE charges it.', 'Courier delivery, NZD 7 to 78, isn’t charged.', 'Its urgent service from overseas is taken as at home.'],
   },
+  // The Embassy of Latvia to the USA (usa.mfa.gov.lv, "Applying for passport and ID card", updated 27.05.2026, read
+  // 2026-10-17): a passport alone €140, €115 under 20 or over 65, from 1 May 2026, in about eight weeks, no urgent
+  // service. Until 2026-10-17 SLATE took the embassy in Ireland's for it: €140 in about five weeks, and €165 urgent.
   LV: {
-    fee: 140, youngFee: 115, currency: 'EUR', days: 35, daysEstimated: true, expedite: { extra: 25, days: 21, note: 'Urgent, €165 in all' },
-    basis: 'In person at a Latvian embassy or consulate, at its own consular fees: the embassy in Ireland’s, €140 in about five weeks (€115 under 20), or €165 urgent in about three.',
-    assumed: ['The embassy in the US wasn’t read: SLATE takes the Irish embassy’s fees and times for it.'],
+    fee: 140, youngFee: 115, currency: 'EUR', days: 56, daysEstimated: false, expedite: null,
+    basis: 'In person at the Embassy of Latvia in Washington, at its own fees from 1 May 2026: €140 (€115 under 20), in about eight weeks on average; no urgent service.',
+    assumed: ['Shipment by FedEx, €35, isn’t charged: SLATE takes the passport collected at the embassy, where it’s applied for in person.'],
   },
 };
 

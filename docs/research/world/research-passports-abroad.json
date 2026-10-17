@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "topic": "What a passport office charges a citizen applying from the United States, where `content/passportsabroad.ts` took an estimate for it (brief 11's row KS-passport-fees): Iceland, Japan, Brazil and Latvia's fees, and New Zealand's GST and urgent fee",
+    "dateRead": "2026-10-17",
+    "method": "Each page read on the issuer's own site (curl with a browser user agent, or WebFetch) and its text quoted; a fee settled only where read there. Search-engine summaries and secondary sites were used to find pages and are recorded as leads, never as the figure.",
+    "settled": [
+      "Iceland: an Icelandic embassy charges the fee in Iceland, 19,000 ISK for an adult of 18 to 66 (USD 148 at December 2025's registered monthly rate), and sells express, 39,200 ISK in all (USD 306): the Ministry's consular fee schedule, under art. 14 of the Act on State Revenue Fees no. 88/1991. In the United States only the embassy in Washington takes applications, and Registers Iceland's four business days have the delivery added.",
+      "Brazil: a consulate charges 60 reais-ouro for a passaporte comum from 1 June 2026 (Portaria MRE nº 664 of 29 April 2026, item 110.5), a real-ouro being one US dollar (the Regulamento Consular Brasileiro, Portaria nº 428 of 15 December 2022, 4.1.45 IV): US$60.",
+      "Latvia: the embassy in the United States charges €140 for a passport alone, €115 under 20 or over 65, from 1 May 2026, and says an average of about eight weeks; it lists no urgent service, and ships by FedEx for €35."
+    ],
+    "notSettled": [
+      "Japan: the dollar fee at the consulate for Connecticut from 1 July 2026. Every ny.us.emb-japan.go.jp and mofa.go.jp page answered 403 (Akamai, 'Access Denied') to curl and to WebFetch. Search extracts of the Boston and Anchorage consulates' own tables give US$62 at the window and US$60 online for a ten-year passport from 1 July 2026, and of New York's notice of 8 June 2026 that its dollar amount would follow; none of these is New York's figure read on its page.",
+      "New Zealand: whether a student in the United States is charged GST, and the urgent fee from overseas. passports.govt.nz answered a Cloudflare challenge (403) to curl and 503 to WebFetch; legislation.govt.nz and demo.legislation.govt.nz answered 202 with an empty body, three times each; the Internet Archive's captures of passports.govt.nz (1 October and 19 September 2026) reset every connection, and WebFetch refuses web.archive.org. DIA's own release confirms only the adult fee in force, $247 with GST from 2 May 2025."
+    ]
+  },
+  "sources": [
+    {
+      "office": "IS",
+      "title": "Stjórnarráð Íslands, Gjaldskrá fyrir verk borgaraþjónustu (the consular services' fee schedule)",
+      "url": "https://www.stjornarradid.is/verkefni/utanrikismal/adstod-erlendis/um-borgarathjonustuna/gjaldskra-borgarathjonustu/",
+      "read": "2026-10-17",
+      "confirmed": true,
+      "quotes": [
+        "Eftirfarandi er yfirlit yfir gjöld borgaraþjónustu vegna útgáfu vegabréfa og ökuskírteina, staðfestingu skjala, rafræna afhendingu gagna og fleira samkvæmt lögum um aukatekjur ríkissjóðs.",
+        "Gjaldskrá miðað við skráð mánaðargengi fyrir desember 2025 Vegabréf 18-66 ára¹ ISK USD EUR",
+        "Almennt gjald 19.000 148 128",
+        "Fyrir skyndiútgáfu 39.200 306 265",
+        "1 14. gr. laga um aukatekjur ríkissjóðs nr. 88/1991."
+      ],
+      "note": "'The following is an overview of the consular service's fees for issuing passports and driving licences ... under the Act on State Revenue Fees'; 'Schedule at the registered monthly rate for December 2025. Passport, 18-66'; 'General fee 19,000 ISK, USD 148'; 'Express issue 39,200 ISK, USD 306'. The page warns the schedule is published subject to exchange-rate changes."
+    },
+    {
+      "office": "IS",
+      "title": "Embassy of Iceland in Washington, D.C., Consular Services",
+      "url": "https://www.government.is/ministries/diplomatic-missions/washington-d-c-united-states-of-america/consular-services/",
+      "read": "2026-10-17",
+      "confirmed": true,
+      "quotes": [
+        "In the United States, Icelandic citizens can only apply for/renew their passports at the Embassy of Iceland in Washington, D.C.",
+        "Cost of an Icelandic passport see: Gjaldskrá borgaraþjónustu",
+        "Registers Iceland processes passport applications within 4 business days from the receipt of the application; delivery time will be added to the processing time."
+      ]
+    },
+    {
+      "office": "BR",
+      "title": "Portaria MRE nº 664, de 29 de abril de 2026 (DOU 4 May 2026, Seção 1, p. 113): Tabela de Emolumentos Consulares",
+      "url": "https://www.in.gov.br/en/web/dou/-/portaria-mre-n-664-de-29-de-abril-de-2026-702863919",
+      "read": "2026-10-17",
+      "confirmed": true,
+      "quotes": [
+        "Art. 3º Esta Portaria entra em vigor em 1º (primeiro) de junho de 2026.",
+        "Valor (em reais-ouro)",
+        "110.5",
+        "Concessão de Passaporte",
+        "60,00"
+      ],
+      "note": "Item 110.5, passaporte comum, concessão: 60,00 reais-ouro; 110.6 under 4: 20,00; 110.7 from 4 to 18: 40,00. It revoked Portaria MRE nº 640 of 12 December 2025. No later fee table was published in 2026 (the DOU searched for 'Tabela de Emolumentos Consulares', 2026, on 2026-10-17)."
+    },
+    {
+      "office": "BR",
+      "title": "Portaria nº 428, de 15 de dezembro de 2022 (DOU 22 December 2022): Regulamento Consular Brasileiro",
+      "url": "https://www.in.gov.br/en/web/dou/-/portaria-n-428-de-15-de-dezembro-de-2022-452764921",
+      "read": "2026-10-17",
+      "confirmed": true,
+      "quotes": [
+        "os emolumentos consulares são tabelados em \"real-ouro\" (equivalente a US$1,00 - um dólar norte-americano)"
+      ]
+    },
+    {
+      "office": "LV",
+      "title": "Embassy of Latvia to the USA, Applying for passport and ID card (Updated: 27.05.2026)",
+      "url": "https://www.usa.mfa.gov.lv/en/applying-passport-and-id-card",
+      "read": "2026-10-17",
+      "confirmed": true,
+      "quotes": [
+        "Average processing time for a new passport and/or eID card is approximately 8 weeks.",
+        "Prices for a passport and eID card at the Embassy (as of May 1, 2026)",
+        "Passport only – 140 EUR",
+        "Passport for persons under the age of 20 and persons over the age of 65 – 115 EUR",
+        "Shipment of each passport and/ or eID card with FedEx – 35 EUR",
+        "The passport/identity card (eID) can only be applied for in person only ."
+      ],
+      "note": "Reached from https://www2.mfa.gov.lv/en/usa/consular-information/applying-for-passport-and-or-id-card, which redirects here. No urgent service on the page."
+    },
+    {
+      "office": "NZ",
+      "title": "Department of Internal Affairs, media release of 1 May 2025",
+      "url": "https://www.dia.govt.nz/press.nsf/d77da9b523f12931cc256ac5000d19b6/81b8eaa9c51a898acc258c7d0003b229!OpenDocument",
+      "read": "2026-10-17",
+      "confirmed": true,
+      "quotes": [
+        "From 2 May 2025, the price of an adult passport will increase from $215 to $247, and the price of a child passport from $125 to $144 (incl. GST)."
+      ]
+    }
+  ],
+  "unreached": [
+    { "office": "JP", "url": "https://www.ny.us.emb-japan.go.jp/itpr_ja/passport02.html", "tried": "2026-10-17", "why": "403 Access Denied (Akamai) to curl and WebFetch" },
+    { "office": "JP", "url": "https://www.ny.us.emb-japan.go.jp/files/100876429.pdf", "tried": "2026-10-17", "why": "403 to curl and WebFetch; a search extract says it holds the dollar fees" },
+    { "office": "JP", "url": "https://www.ny.us.emb-japan.go.jp/itpr_ja/11_000001_00472.html", "tried": "2026-10-17", "why": "403 to curl" },
+    { "office": "JP", "url": "https://www.ny.us.emb-japan.go.jp/files/101051085.pdf", "tried": "2026-10-17", "why": "403 to curl" },
+    { "office": "JP", "url": "https://www.ny.us.emb-japan.go.jp/", "tried": "2026-10-17", "why": "403 Access Denied (Akamai)" },
+    { "office": "JP", "url": "https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html", "tried": "2026-10-17", "why": "403 to curl and WebFetch" },
+    { "office": "JP", "url": "https://www.boston.us.emb-japan.go.jp/files/100996789.pdf", "tried": "2026-10-17", "why": "403 to curl" },
+    { "office": "JP", "url": "https://www.mofa.go.jp/mofaj/ca/pss/pagew_000001_02493.html", "tried": "2026-10-17", "why": "403 to curl and WebFetch" },
+    { "office": "JP", "url": "https://www.mofa.go.jp/mofaj/files/100482215.pdf", "tried": "2026-10-17", "why": "403 to curl" },
+    { "office": "BR", "url": "https://www.gov.br/mre/pt-br/consulado-hartford/servicos-consulares/passaportes", "tried": "2026-10-17", "why": "a CAPTCHA ('This question is for testing whether you are a human visitor') to curl and WebFetch; the fee was read in the Diário Oficial instead" },
+    { "office": "NZ", "url": "https://www.passports.govt.nz/passport-costs", "tried": "2026-10-17", "why": "Cloudflare challenge ('Just a moment...', 403) to curl; 503 to WebFetch" },
+    { "office": "NZ", "url": "https://www.passports.govt.nz/urgent-travel", "tried": "2026-10-17", "why": "Cloudflare challenge (403)" },
+    { "office": "NZ", "url": "https://www.passports.govt.nz/passport-costs/passport-timeframes", "tried": "2026-10-17", "why": "Cloudflare challenge (403)" },
+    { "office": "NZ", "url": "https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2015/264/en/latest/", "tried": "2026-10-17", "why": "202 with an empty body to curl; 403 to WebFetch" },
+    { "office": "NZ", "url": "https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2015/264/en/2025-05-02.pdf", "tried": "2026-10-17", "why": "202 with an empty body, three times" },
+    { "office": "NZ", "url": "https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2025/75/en/latest/", "tried": "2026-10-17", "why": "202 with an empty body, three times" },
+    { "office": "NZ", "url": "https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/096be8ed81f36d4a.pdf", "tried": "2026-10-17", "why": "202 with an empty body" },
+    { "office": "NZ", "url": "https://web.archive.org/web/20261001231111/https://www.passports.govt.nz/passport-costs", "tried": "2026-10-17", "why": "connection reset (the proxy's tunnel closed mid-exchange, six times); WebFetch refuses web.archive.org" }
+  ]
+}

@@ -33,7 +33,18 @@
  * and a night's reaching it at 4/3 of the work it did (`PIECE.drain`, `WORKLOAD.full`); a night's part's text by its
  * time on stage (`PART_TEXT`), which the owner authorized; and a night before a house at stakes 1.5 (`NIGHT_STAKES`), from
  * performance-anxiety research. Each is held here by hand, and H4-R's own work for all twelve.
+ *
+ * Added on 2026-10-17 by brief 11's acting area (docs/verification/completion-2026-10-16/acting-result.json), for clauses
+ * brief 10 held by measurement alone: ST3-R (e), the rules a process can change made in it and put back; ST6-R's
+ * restraint read against its own abilities (the specialist and its twin) and against the grain's strength, and the
+ * materials restraint suits held to exist; L3-R (a)'s fixed set as it was named and judged, controlled, with each
+ * journey's own work replayed beside it; and L3-R (e)'s report, on two months the journeys' tool plays. ST6-R (a), (c)
+ * and (e) still fail: what was measured of them is the owner's to decide on, and nothing here asserts them.
  */
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { describe, expect, it } from 'vitest';
 import { createSave, loadSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
@@ -41,10 +52,11 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { ABILITY_DEFS, DEVELOPMENT, MASTERED, type AbilityId } from '@/engine/content/abilities';
-import { APPROACH_EFFECT, AXES } from '@/engine/content/approaches';
+import { APPROACH_EFFECT, AXES, CAMERA_LEAN, STAGE_LEAN } from '@/engine/content/approaches';
 import { GRAIN } from '@/engine/content/interpretation';
 import { PIECE, TONE_LEAN } from '@/engine/content/piece';
 import { PLAY_MATERIAL, SCENE_MATERIAL, type Axis, type AxisValue, type MaterialProfile } from '@/engine/content/material';
+import { BRIEF_BY_ID } from '@/engine/content/briefs';
 import { EVALUATION, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
 import { SCENES, templateById } from '@/engine/content/coursework';
 import { difficultyOf } from '@/engine/systems/coursework';
@@ -58,7 +70,7 @@ import { sceneOfMaterial, suitabilityOf } from '@/engine/systems/interpretation'
 import { scenesFor, type Worked } from '@/engine/systems/learning';
 import { abilityFull, abilityOf, attributesOf, ATTRIBUTES } from '@/engine/systems/attributes';
 import { personalityOf } from '@/engine/systems/personality';
-import { ALL_PIECES, fixedPieces } from '../tools/pieces';
+import { ALL_PIECES, FIXED_SET, fixedPieces } from '../tools/pieces';
 import { attentiveHour, life as policyLife } from '../tools/policy';
 
 const r1 = (x: number) => Math.round(x * 10) / 10;
@@ -82,8 +94,10 @@ function sceneCase(m: MaterialProfile, scale: Scale, o: { key?: string; prep?: n
 }
 const judged = (m: MaterialProfile, p: Performer, scale: Scale, o: { key?: string; prep?: number } = {}): Evaluation => { const c = sceneCase(m, scale, o); return judgePiece('decisions-judge', p, c.ctx, c.spec); };
 const exactOf = (m: MaterialProfile, p: Performer, scale: Scale, o: { prep?: number } = {}) => judged(m, p, scale, o).exact!;
+/** The grain at a strength for the length of `f`, put back after. */
+const grained = <T,>(strength: number, f: () => T): T => { const s0 = GRAIN.strength; Object.assign(GRAIN as Record<string, number>, { strength }); try { return f(); } finally { Object.assign(GRAIN as Record<string, number>, { strength: s0 }); } };
 /** ST3's comparison holds the grain at nothing, so the medium's own lean is what's compared. */
-const grainless = <T,>(f: () => T): T => { const s0 = GRAIN.strength; Object.assign(GRAIN as Record<string, number>, { strength: 0 }); try { return f(); } finally { Object.assign(GRAIN as Record<string, number>, { strength: s0 }); } };
+const grainless = <T,>(f: () => T): T => grained(0, f);
 const stageCases = () => MATS.flatMap((m) => (['restrained', 'expansive'] as const).filter((s) => !misfitOf('scale', s, m)).map((s) => ({ m, s })));
 const closeFrame = (m: MaterialProfile): MaterialProfile => ({ ...m, medium: 'camera' });
 /** An actor at `share` of full in every ability, techniques at `tech`, and stamina at `stamina` (100 doesn't drain). */
@@ -188,6 +202,26 @@ describe('ST3-R: the stage and a close frame differ where they should, and only 
     });
     expect(checked).toBe(2 * stageCases().length);
   });
+
+  // From 2026-10-17 (brief 11, ST3-R (e), which brief 10 held by measurement alone): the checks above against the rules (e)
+  // names, each changed in this process and put back. The stage's and the close frame's leans at 1, the full drain at
+  // nothing, and the grain let into the comparison are content a process can change; rounding twice or by floor isn't, so
+  // those were made in copies, each failing the test above (docs/verification/completion-2026-10-16/acting/test-mutations.json).
+  it('ST3-R (e), it catches what it should: with the stage’s and the close frame’s leans at 1 the voice-and-body specialist isn’t better on stage on every case, with no drain a stamina of 55 costs nothing on any, and with the grain let into the comparison the undrained even actor comes apart', () => {
+    const VOICE_BODY = actor({ vocal: 85, physical: 85 }, (600 - 170) / 10);
+    const put = <T,>(o: object, to: object, f: () => T): T => { const was = { ...o }; Object.assign(o, to); try { return f(); } finally { Object.assign(o, was); } };
+    grainless(() => {
+      const betterOnStage = () => stageCases().filter(({ m, s }) => exactOf(m, VOICE_BODY, s) > exactOf(closeFrame(m), VOICE_BODY, s)).length;
+      expect(betterOnStage()).toBe(stageCases().length);
+      expect(put(STAGE_LEAN, { execution: 1 }, () => put(CAMERA_LEAN, { believability: 1 }, betterOnStage))).toBeLessThan(stageCases().length);
+      const drains = () => stageCases().filter(({ m, s }) => exactOf(m, at(0.55, 100, 50), s) - exactOf(m, at(0.55, 55, 50), s) > 1e-9).length;
+      expect(drains()).toBe(stageCases().length);
+      expect(put(PIECE, { drain: 0 }, drains)).toBe(0);
+    });
+    const apart = () => stageCases().filter(({ m, s }) => Math.abs(judged(m, at(0.55, 100), s).exact! - judged(closeFrame(m), at(0.55, 100), s).exact!) > 1e-9).length;
+    expect(grainless(apart)).toBe(0);
+    expect(apart()).toBeGreaterThan(0);
+  });
 });
 
 describe('ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10)', () => {
@@ -250,6 +284,48 @@ describe('ST6-R: restrained and expansive interpretations, the wins and the limi
     const withIt = both.filter((m) => suit(m).r > suit(m).e);
     const wins = withIt.filter((m) => exactOf(m, EXP, 'expansive') - exactOf(m, EXP, 'restrained') > 0.05);
     expect(wins.length).toBeGreaterThanOrEqual(Math.ceil(0.25 * withIt.length));
+    // From 2026-10-17 (brief 11): and there are such materials, a quarter of those both sides fit or more (ST1's quarter;
+    // 50 of 96 measured). With restrained suitability forced to its least in a copy there were none, and this held on 0 of 0.
+    expect(withIt.length).toBeGreaterThanOrEqual(Math.ceil(0.25 * both.length));
+  });
+
+  // From 2026-10-17 (brief 11, section 8: "Ensure tests detect when restraint's own relevant abilities cease to matter").
+  // The specialist against itself with one of restraint's abilities, or all three, at the even actor's 50 and nothing else
+  // changed (the three together are a budget of 515: an ablation, not a fair-budget comparison). Measured on acting11
+  // (`ST6R.sorting`, docs/verification/completion-2026-10-16/acting/measured/st6.json): the three together cost the
+  // restrained take 3.33 to 8.15 on all 96, each alone 0.53 or more; by more than they cost the expansive take on 91
+  // (emotional depth), 94 (composure) and 96 (focus) of 96. Where not, restraint suits the scene most (Hedda's second act,
+  // Riders to the Sea, Trifles): the grain eases the restrained take, and an easier take asks less of every ability.
+  it('restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often', () => {
+    const OWN = { emotionalDepth: 85, composure: 75, focus: 75 };
+    const fill = (600 - 235) / 9;
+    const less = { ...Object.fromEntries((Object.keys(OWN) as AbilityId[]).map((a) => [a, actor({ ...OWN, [a]: 50 }, fill)])), all: actor({ emotionalDepth: 50, composure: 50, focus: 50 }, fill) };
+    for (const [which, p] of Object.entries(less)) {
+      const fell = both.map((m) => ({ id: m.id, r: exactOf(m, RES, 'restrained') - exactOf(m, p, 'restrained'), e: exactOf(m, RES, 'expansive') - exactOf(m, p, 'expansive') }));
+      for (const f of fell) expect(f.r, `${which}: ${f.id}`).toBeGreaterThan(0.05);
+      expect(fell.filter((f) => f.r > f.e + 1e-9).length, which).toBeGreaterThanOrEqual(Math.ceil(0.9 * both.length));
+    }
+    const against = both.filter((m) => suit(m).e > suit(m).r);
+    const TWIN = less.all;
+    const grainCost = (m: MaterialProfile, p: Performer) => exactOf(m, p, 'restrained') - grained(0, () => exactOf(m, p, 'restrained'));
+    expect(against.filter((m) => grainCost(m, RES) > grainCost(m, TWIN) + 1e-9).length).toBeGreaterThanOrEqual(Math.ceil(0.9 * against.length));
+    // Restraint the better choice against the grain, the actor's own restrained take ahead of its own expansive one:
+    // 10 of 44 for the specialist, 2 for its twin, none for the even actor.
+    const better = (p: Performer) => against.filter((m) => exactOf(m, p, 'restrained') - exactOf(m, p, 'expansive') > 0.05).length;
+    expect(better(RES)).toBeGreaterThan(better(TWIN));
+    expect(better(TWIN)).toBeGreaterThanOrEqual(better(EVEN));
+  });
+
+  // From 2026-10-17 (brief 11): what the scene's grain does to a restrained take against it. ST6-R (a) asks the restrained
+  // specialist ahead of the even actor's expansive take on a quarter of these materials; measured on acting11, it's 11 of
+  // 44 with the grain at nothing, 5 at 0.1, 4 at 0.2 and 2 at the grain's 0.3, falling on all 44 (`ST6R.sorting.grain`).
+  it('circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer', () => {
+    const against = both.filter((m) => suit(m).e > suit(m).r);
+    const steps = [0, 1 / 3, 2 / 3, 1].map((k) => grained(k * GRAIN.strength, () => against.map((m) => exactOf(m, RES, 'restrained') - exactOf(m, EVEN, 'expansive'))));
+    against.forEach((m, i) => steps.forEach((xs, k) => { if (k) expect(xs[i]!, `${m.id} at ${k}/3 of the grain`).toBeLessThanOrEqual(steps[k - 1]![i]! + 1e-12); }));
+    const wins = (xs: number[]) => xs.filter((x) => x > 0.05).length;
+    expect(wins(steps[3]!)).toBeLessThan(wins(steps[0]!));
+    expect(wins(steps[3]!)).toBeGreaterThan(0);
   });
 });
 
@@ -443,14 +519,33 @@ describe('L3-R: real progress, controlled (brief 10)', () => {
     p.attrs = { ...(p.attrs ?? {}), composure: hi, imagination: hi, presence: hi, listening: lo, focus: lo, adaptability: lo, discipline: lo } as typeof p.attrs;
   };
 
+  // The month each profile is played through, once, kept for the tests below (from 2026-10-17, when the own takes' test
+  // came to read it too): its levels at the start and the end, and the work it taped.
+  type Month = { start: Performer; now: Performer; work: WorkRecord[] };
+  const months = new Map<'specialist' | 'generalist', Month>();
+  const month = (which: 'specialist' | 'generalist'): Month => {
+    const kept = months.get(which);
+    if (kept) return kept;
+    const sim = policyLife(`dj-l3-${which}`, { homeRegionId: 'us-ny-newyork' });
+    profile(sim, which);
+    const start = levels(sim);
+    const end = sim.now + 30 * MS_DAY;
+    while (sim.now < end && sim.universe.meta.endedAt === undefined) attentiveHour(sim);
+    const played = { start, now: levels(sim), work: structuredClone(sim.player.work ?? []) };
+    months.set(which, played);
+    return played;
+  };
+  /** A fall from `before` to `at(now)` put down to the abilities it reads that fell: only stamina, and gone with it held. */
+  const onlyStaminaFell = (where: string, at: (p: Performer) => Evaluation, start: Performer, now: Performer, before: number) => {
+    const fell = (Object.keys(at(now).inputs.abilities) as AbilityId[]).filter((a) => now.ability(a) / now.full(a) < start.ability(a) / start.full(a) - 1e-12);
+    expect(fell, where).toEqual(['stamina']);
+    const held: Performer = { ...now, ability: (a) => (a === 'stamina' ? start.ability(a) : now.ability(a)), full: (a) => (a === 'stamina' ? start.full(a) : now.full(a)) };
+    expect(at(held).exact!, where).toBeGreaterThanOrEqual(before - 1e-9);
+  };
+
   it('PLAYER JOURNEY: a specialist and a generalist, each played through a month of the first term, judge L3-R’s fixed set higher at the month’s end than at its start, and no piece falls but where stamina, which they never trained, fell', () => {
     for (const which of ['specialist', 'generalist'] as const) {
-      const sim = policyLife(`dj-l3-${which}`, { homeRegionId: 'us-ny-newyork' });
-      profile(sim, which);
-      const start = levels(sim);
-      const end = sim.now + 30 * MS_DAY;
-      while (sim.now < end && sim.universe.meta.endedAt === undefined) attentiveHour(sim);
-      const now = levels(sim);
+      const { start, now } = month(which);
       const pieces = fixedPieces();
       expect(pieces).toHaveLength(24);
       const before = pieces.map((pc) => pc.judge(start).exact!), after = pieces.map((pc) => pc.judge(now).exact!);
@@ -458,11 +553,99 @@ describe('L3-R: real progress, controlled (brief 10)', () => {
       pieces.forEach((pc, i) => {
         if (after[i]! >= before[i]! - 1e-9) return;
         // A fall: the abilities it reads that fell, held at the start's level, and it falls no more.
-        const fell = (Object.keys(pc.judge(now).inputs.abilities) as AbilityId[]).filter((a) => now.ability(a) / now.full(a) < start.ability(a) / start.full(a) - 1e-12);
-        expect(fell, `${which} ${pc.kind}:${pc.id}`).toEqual(['stamina']);
-        const held: Performer = { ...now, ability: (a) => (a === 'stamina' ? start.ability(a) : now.ability(a)), full: (a) => (a === 'stamina' ? start.full(a) : now.full(a)) };
-        expect(pc.judge(held).exact!, `${which} ${pc.kind}:${pc.id}`).toBeGreaterThanOrEqual(before[i]! - 1e-9);
+        onlyStaminaFell(`${which} ${pc.kind}:${pc.id}`, (p) => pc.judge(p), start, now, before[i]!);
       });
+    }
+  });
+
+  // From 2026-10-17 (brief 11, L3-R (a), which brief 10 held by measurement alone): the fixed set as the judge area's
+  // checklist named it before anything was measured, and judged as (a) asks, controlled.
+  it('L3-R (a), a fixed set, controlled: the 24 named before measurement, eight briefs at their first reading in eight registers, eight class scenes, four nights and four casting reads, each judged fully prepared, with no way chosen, on a sufficient day and with no draw', () => {
+    expect(FIXED_SET.map((x) => `${x.kind}:${x.id}`)).toEqual([
+      ...['brief-art_house', 'brief-comedy', 'brief-drama', 'brief-musical', 'brief-horror', 'brief-legal_drama', 'brief-thriller', 'brief-social_realism'].map((id) => `brief:${id}`),
+      ...['seagull-4', 'earnest-2', 'hamlet-3-1', 'antigone-441', 'dream-3-2', 'scapin-3-2', 'henry5-4-3', 'orig-office-hours'].map((id) => `scene:${id}`),
+      ...['The Bear', 'Three Sisters', 'Macbeth', 'Hedda Gabler'].map((id) => `night:${id}`),
+      ...['Twelfth Night', 'Julius Caesar', 'Trifles', 'Tartuffe'].map((id) => `casting:${id}`),
+    ]);
+    const pieces = fixedPieces();
+    const briefs = FIXED_SET.filter((x) => x.kind === 'brief').map((x) => BRIEF_BY_ID[x.id]!);
+    expect(pieces.filter((pc) => pc.kind === 'brief').map((pc) => pc.id)).toEqual(briefs.map((b) => `${b.id}/${b.readings[0]!.id}`));
+    expect(new Set(briefs.map((b) => b.kinds[0])).size).toBe(8);
+    const p = actor({}, 50);
+    let drawn = 0;
+    for (const pc of pieces) {
+      const e = pc.judge(p);
+      const where = `${pc.kind}:${pc.id}`;
+      for (const [part, at] of Object.entries(e.inputs.prep)) expect(at, `${where} ${part}`).toBeGreaterThanOrEqual(e.inputs.required[part] ?? 1);
+      expect(e.inputs.prep.approach, where).toBeUndefined();
+      expect(e.inputs.fit, where).toBeUndefined();
+      expect(e.inputs.condition.readiness, where).toBe(100);
+      // The day's own: no preparation short, no fit, and no condition but the piece's own tiring (`what: 'stamina'`, the drain).
+      expect(e.dimensions.flatMap((d) => d.limits).filter((l) => l.kind === 'preparation' || l.kind === 'fit' || (l.kind === 'condition' && l.what !== 'stamina')), where).toEqual([]);
+      // No draw: the judgment is the one its own record replays at the levels it was judged at with the draw left out (a
+      // casting read judges the actor as casting reads them, `castingPerformer`), where a keyed one isn't, somewhere.
+      const replayed = (x: Evaluation) => replayAs({ inputs: x.inputs, task: x.task, ruleset: x.ruleset }, TASK_PROFILES[x.task]!, frozenPerformer(x.inputs))!.exact!;
+      expect(replayed(e), where).toBe(e.exact);
+      const keyed = pc.judge(p, { key: `dj-l3-drawn:${where}` });
+      if (Math.abs(keyed.exact! - replayed(keyed)) > 1e-9) drawn += 1;
+    }
+    expect(drawn).toBeGreaterThan(0);
+  });
+
+  it('PLAYER JOURNEY: L3-R (a), beside the fixed set: each journey’s own work, replayed as it was taped at the month’s start and at its end, is no lower at the end but where stamina, which they never trained, fell', () => {
+    for (const which of ['specialist', 'generalist'] as const) {
+      const { start, now, work } = month(which);
+      expect(work.length, which).toBeGreaterThanOrEqual(5);
+      // Stamina, untrained, detrains through the month; held at the start's level, what's left is the rest's growth.
+      const held: Performer = { ...now, ability: (a) => (a === 'stamina' ? start.ability(a) : now.ability(a)), full: (a) => (a === 'stamina' ? start.full(a) : now.full(a)) };
+      let rise = 0;
+      for (const w of work) {
+        const at = (p: Performer) => replayAs(w, TASK_PROFILES[w.task]!, p)!;
+        const before = at(start).exact!, after = at(now).exact!;
+        rise += at(held).exact! - before;
+        if (after >= before - 1e-9) continue;
+        onlyStaminaFell(`${which} ${w.task}: ${w.what}`, at, start, now, before);
+      }
+      // And the end's over the start's, as L3′ asks, with the fall L3-R (c) puts down to stamina held out: the mean rises.
+      // Measured: the generalist's own work, movement and voice among it, fell 0.10 on the mean with stamina as it was.
+      expect(rise / work.length, which).toBeGreaterThan(0);
+    }
+  });
+
+  // From 2026-10-17 (brief 11, L3-R (e), which brief 10 held by measurement alone): the report the journeys' tool writes,
+  // on two months of a journey it plays through the commands, read by `tools/l3r.mjs` as the coordinator's run reads eight.
+  it('PLAYER JOURNEY: L3-R (e), the journey kept in view: two months played by the journeys’ tool, and its report gives each month’s takes, their purposes, their difficulty’s mean and range, their stakes and genres, with L3 as written beside the controlled measure', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'dj-l3r-'));
+    try {
+      const run = spawnSync(process.execPath, [resolve('node_modules/vite-node/vite-node.mjs'), 'tools/brief-journeys.ts', '--', '--profile', 'beginner', '--seed', 'bj-0', '--days', '62', '--trace', join(dir, 'l3-trace-beginner-bj-0.json')], { encoding: 'utf8' });
+      expect(run.status, run.stderr).toBe(0);
+      const read = spawnSync(process.execPath, [resolve('tools/l3r.mjs'), dir], { encoding: 'utf8' });
+      expect(read.status, read.stderr).toBe(0);
+      const trace = JSON.parse(readFileSync(join(dir, 'l3-trace-beginner-bj-0.json'), 'utf8')) as { takes: { month: number; purpose: string; difficulty: number; stakes: number }[] };
+      const report = JSON.parse(readFileSync(join(dir, 'l3r.json'), 'utf8'));
+      expect(report.verdict.e.met).toBe(true);
+      const j = report.journeys[0];
+      const months = Object.entries(j.mix) as [string, { takes: number; purposes: Record<string, number>; difficulty: { mean: number; min: number; max: number }; stakes: Record<string, number>; genres: string[] }][];
+      expect(months.length).toBeGreaterThanOrEqual(2);
+      expect(months.reduce((t, [, x]) => t + x.takes, 0)).toBe(trace.takes.length);
+      for (const [m, x] of months) {
+        const own = trace.takes.filter((t) => `m${t.month}` === m);
+        expect(x.takes, m).toBe(own.length);
+        expect(Object.values(x.purposes).reduce((t, n) => t + n, 0), m).toBe(x.takes);
+        expect(Object.values(x.stakes).reduce((t, n) => t + n, 0), m).toBe(x.takes);
+        expect([x.difficulty.min, x.difficulty.max], m).toEqual([Math.min(...own.map((t) => t.difficulty)), Math.max(...own.map((t) => t.difficulty))]);
+        expect(x.difficulty.mean, m).toBeGreaterThanOrEqual(x.difficulty.min);
+        expect(x.difficulty.mean, m).toBeLessThanOrEqual(x.difficulty.max);
+        expect(x.genres.length, m).toBeGreaterThan(0);
+      }
+      // L3 as written, the first and last months' mean take, beside the fixed set's mean at each point and its growth.
+      expect(j.journeyMetric.firstMonth.mean).toBeTypeOf('number');
+      expect(j.journeyMetric.lastMonth.mean).toBeTypeOf('number');
+      expect(['meets', 'fails']).toContain(j.journeyMetric.l3AsWritten);
+      expect(j.fixedSetMean.map((x: { at: string }) => x.at)).toEqual(['start', 'm1', 'm2', 'end']);
+      expect(j.growth).toBeCloseTo(j.fixedSetMean.at(-1).mean - j.fixedSetMean[0].mean, 2);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
     }
   });
 

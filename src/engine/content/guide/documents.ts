@@ -42,6 +42,11 @@
  * someone not a citizen for no identity document, where it asks a passport in force or OPT's card (`idCardRefusal`);
  * and that every US state ID card SLATE issues met REAL ID, where Connecticut issues a non-citizen's Not For Federal
  * Identification.
+ *
+ * Corrected on 2026-10-17 with Connecticut's own pages (brief 11's KS-ct-idcard, `content/identity.ts`): until then it
+ * said the card was good for six years, SLATE's term for the state's "up to seven", and in force at once for a citizen,
+ * a non-citizen's coming on SAVE's day; the DMV gives seven years to a birthday and mails the card within twenty business
+ * days, after SAVE's check for somebody not a citizen.
  */
 
 import { CHAPTER_FOR } from '../tutorial';
@@ -147,7 +152,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
       { label: 'Time', value: 'None: applying, reporting and replacing move no clock' },
       { label: 'A US Passport', value: `${dollars(US.fee)} the first time or after one is lost, ready in up to ${US.days} days, good for ${US.validityYears} years; renewed by mail on Form ${US_RENEWAL.form}, ${dollars(US_RENEWAL.fee)}, where your most recent was issued within ${US_RENEWAL.withinYears} years, at ${US_RENEWAL.issuedFromAge} or older, and never reported lost; ${dollars(US_FASTER.extra)} more for ${US_FASTER.days} days`, estimate: US.daysEstimated },
       { label: 'Another Country’s Passport', value: `Applied for from New Haven, so from abroad: its office’s fee and time for an applicant outside the country, where SLATE has them, as the UK’s ${inOwn(UK_ABROAD.fee, UK_ABROAD.currency)} online and Australia’s ${inOwn(AU_ABROAD.fee, AU_ABROAD.currency)} with its overseas surcharge; its faster service only where it’s sold abroad, which the UK’s Fast Track isn’t`, estimate: true },
-      { label: 'Connecticut’s ID Card', value: `${dollars(CT_ID.fee)}, good for ${CT_ID.years} years, SLATE’s term for the state’s “up to seven”; for anyone not a citizen, after ${NONCITIZEN_ID.saveBusinessDays} federal workdays for the DMV’s SAVE check, weekends and federal holidays not among them, to the program’s end at school, or on OPT to the end printed on it, ${OPT.months} months from its start. OPT canceled for its days without work leaves the card in force to that printed end`, estimate: true },
+      { label: 'Connecticut’s ID Card', value: `${dollars(CT_ID.fee)}, good for ${CT_ID.years} years, to your first birthday at least ${CT_ID.years} years on; mailed, it comes ${CT_ID.mailedBusinessDays} business days after you apply, weekends and federal holidays not among them. For anyone not a citizen, the DMV’s SAVE check comes first, ${NONCITIZEN_ID.saveBusinessDays} federal workdays, and the card runs to the program’s end at school, or on OPT to the end printed on it, ${OPT.months} months from its start, SLATE’s reading where the state publishes none. OPT canceled for its days without work leaves the card in force to that printed end`, estimate: true },
       { label: 'Replacing An ID Card', value: `Connecticut ${dollars(CT_ID_AGAIN.fee)} in ${CT_ID_AGAIN.days} days; New York ${dollars(NY_ID_AGAIN.fee)} in ${NY_ID_AGAIN.days}; California ${dollars(CA_ID_AGAIN.fee)} in ${CA_ID_AGAIN.days}` },
       { label: 'Replacing A License', value: `Connecticut ${dollars(CT_LICENSE.fee)} in ${CT_LICENSE.days} days; New York ${dollars(NY_LICENSE.fee)} in ${NY_LICENSE.days}, free when it was stolen and the police have your report; California ${dollars(CA_LICENSE.fee)} in ${CA_LICENSE.days}` },
       { label: 'A Police Report', value: 'Free, and filed at once' },
@@ -160,14 +165,14 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     ],
     now: [
       'The fee leaves your bank, and a passport shows Being Decided with the day it’s ready.',
-      'An ID card is in force at once, but in a US state one for someone not a citizen shows Being Decided until the DMV’s check is done.',
+      `Connecticut’s ID card shows Being Decided until it comes by mail, ${CT_ID.mailedBusinessDays} business days on, after the DMV’s SAVE check for someone not a citizen. Until it comes it can’t be shown as a photo ID.`,
       'Reported lost or stolen, a paper is canceled for good, even if it turns up. A passport takes with it any visa or travel authorization issued on it, though the F-1 holds.',
       'A police report is kept on the lost paper’s record.',
       'Replace It cancels the lost card and puts a new one, with a new number, on its way.',
     ],
     later: [
       'A passport is issued on its day for its term, and the one it replaces is canceled then, with any travel authorization on it.',
-      'A replacement card arrives on its day, in force from then. Until it comes, it can’t be shown as a photo ID.',
+      'A new or replacement card arrives on its day, in force from then. Until it comes, it can’t be shown as a photo ID.',
     ],
     interpret: [
       'Standing in a row reads In Force, Being Decided, Reported Lost, Canceled or Run Out.',

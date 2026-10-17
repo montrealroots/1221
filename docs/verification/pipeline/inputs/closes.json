@@ -12,6 +12,9 @@
   },
   "card.statement": {
    "raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it": "A positive test of the six-monthly raise, with its control, played to the date: the limit is unchanged at the 20 February 2027 statement (180 days). At the 20 March statement it goes from $65,217 to $78,260 (a fifth, rounded to the dollar), cardRoom reads $78,260, and “It’s $78,260.00 now, for a clean record.” The card.set_auto_raise off twin keeps $65,217 with no notice. A reload sits in between. Until 2026-10-16’s brief 09 the notice’s apostrophe was a straight one."
+  },
+  "documents.apply_idcard": {
+   "PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card that comes by mail twenty business days on, Tuesday 22 September 2026, good to her birthday on 14 June 2034; Citi turns her away until it comes and then opens her account, across a save and a load": "Gap 1: a new bank takes the ID card, read by photoIdOf through bank.open_current (Citi), refused before the card and while it’s on its way, in its own words. Gap 2: the $28 fee checked twice, as the fall in the checking balance and as the transaction that took it. A citizen’s card comes by mail twenty business days on, Tuesday 22 September 2026, good to her birthday on 14 June 2034, given as literal dates, across a save and a load. Until 2026-10-17 a citizen’s card was in force at once, with a six-year term"
   }
  }
 }

@@ -32,6 +32,7 @@ import { Stat } from '@/ui/components/primitives';
 import { Segments } from '@/ui/components/WorkThrough';
 import { briefKinds } from '@/engine/content/briefs';
 import { TEMPLATES } from '@/engine/content/coursework';
+import { abilityReaders } from '@/engine/systems/material';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
 
@@ -44,13 +45,8 @@ export const targetLabel = (t: AbilityId | Skill): string => (isAbility(targetId
 /** Where a target opens: an ability’s look, or a technique’s (the school’s skill). */
 export const targetSubject = (t: AbilityId | Skill) => (isAbility(targetId(t)) ? at('ability', targetId(t)) : at('skill', t));
 
-/** The tasks and dimensions that read an ability, from the task profiles themselves. */
-export function readersOf(id: AbilityId): { task: string; label: string; dims: Dimension[] }[] {
-  return Object.values(TASK_PROFILES).map((t) => ({
-    task: t.id, label: t.label,
-    dims: (Object.entries(t.dims) as [Dimension, NonNullable<(typeof t.dims)[Dimension]>][]).filter(([, s]) => s.inputs.some((i) => 'ability' in i && i.ability === id)).map(([d]) => d),
-  })).filter((r) => r.dims.length > 0);
-}
+/** The tasks and dimensions that read an ability (`abilityReaders`, systems/material.ts): its look’s and the Profile’s. */
+export const readersOf = (id: AbilityId): { task: string; label: string; dims: Dimension[] }[] => abilityReaders(id);
 
 /** The latest changes to an id on the development history, newest first. */
 export function recentOf(person: Person, id: string, n = 6) {
@@ -133,7 +129,11 @@ defineLook<TheAbility>('ability', {
           </div>
           <p className="small"><strong>What develops it.</strong> {def.develops}</p>
           <p className="small"><strong>Where it began.</strong> {def.derivedFrom}</p>
-          <p className="small"><strong>What it does.</strong> {readers.length ? readers.map((r) => `${r.label}: ${r.dims.map((d) => DIMENSION_LABEL[d].toLowerCase()).join(', ')}`).join('; ') : def.affects}.</p>
+          {/* What it does, in its own sentence, and which work reads it (from 2026-10-17, brief 11, A4): until then What It Does
+              was the readers alone, and the ability’s own sentence, corrected against the code in the attributes brief’s
+              phase 2, was shown nowhere: every ability has a reader, so the line that fell back to it never did. */}
+          <p className="small"><strong>What it does.</strong> {def.affects}</p>
+          <p className="small"><strong>Which work reads it.</strong> {readers.map((r) => `${r.label}: ${r.dims.map((d) => DIMENSION_LABEL[d].toLowerCase()).join(', ')}`).join('; ')}.</p>
           {exercise && <p className="small"><strong>To practice it.</strong> {exercise.label}: {exercise.how} {exercise.kind === 'slate' ? '(SLATE’s own exercise.)' : exercise.kind === 'named' ? '(A named exercise of real pedagogy.)' : '(A composite of real practice.)'}</p>}
           {id === 'stamina' && <p className="small"><strong>Its scale.</strong> Stamina is your fitness, full at the most a body your age can be brought to ({one(full)} now): at full fitness it counts as full. A workout builds it and holds it for {FITNESS.heldDays} days, and so does a class that trains the body as hard (from 2026-10-16: Movement Invention, stage combat); past that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, as an untrained body’s does. A second workout the same day builds half.</p>}
           {recent.length > 0 && (

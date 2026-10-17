@@ -159,7 +159,7 @@ const dayAt = (start: number, day: number, hour: number) => { const p = zonedPar
  * rounds of each step and none to two studies of the genre; from mid-term on, a share of the takes another reading of a
  * brief taped before, one round of each step. Each take on its day at nine, rested (`go`), every calendar hour cleared.
  */
-export function buildCase(seed: string, band: Band, stage: Stage): { sim: Simulation; takes: Take[]; full: string[] } {
+export function buildCase(seed: string, band: Band, stage: Stage): { sim: Simulation; takes: Take[]; full: string[]; drawn: Record<string, number | 'full'> } {
   const r = rng(seed);
   const sim = createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
   clear(sim);
@@ -167,13 +167,16 @@ export function buildCase(seed: string, band: Band, stage: Stage): { sim: Simula
   sim.advanceTo(start);
   const [lo, hi] = BANDS[band];
   const full = new Set<string>();
+  // What each input was drawn at (from brief 11, 2026-10-17, for the gate test of the bands; the draw is unchanged).
+  const drawn: Record<string, number | 'full'> = {};
   for (const id of INPUTS) {
     const v = Math.round(lo + (hi - lo) * r());
     const atFull = band === 'nearMastery' && r() < NEAR_FULL.chance;
     if (atFull) full.add(id);
+    drawn[id] = atFull ? 'full' : v;
     setLevel(sim, id, atFull ? 'full' : v);
   }
-  while (band === 'nearMastery' && full.size < NEAR_FULL.least) { const id = INPUTS[Math.floor(r() * INPUTS.length)]!; full.add(id); setLevel(sim, id, 'full'); }
+  while (band === 'nearMastery' && full.size < NEAR_FULL.least) { const id = INPUTS[Math.floor(r() * INPUTS.length)]!; full.add(id); drawn[id] = 'full'; setLevel(sim, id, 'full'); }
   const { takes: [least, most], days } = STAGES[stage];
   const n = least + Math.floor(r() * (most - least + 1));
   const genres = [...GENRES];
@@ -212,16 +215,17 @@ export function buildCase(seed: string, band: Band, stage: Stage): { sim: Simula
   if (sim.universe.meta.endedAt !== undefined) throw new Error(`${seed}: the life ended while its takes were taped`);
   // Every piece of work the case holds is one of its takes, in order: what the realized gain reads is what the advice reads.
   if ((sim.player.work ?? []).length !== takes.length) throw new Error(`${seed}: ${(sim.player.work ?? []).length} pieces of work for ${takes.length} takes`);
-  return { sim, takes, full: [...full] };
+  return { sim, takes, full: [...full], drawn };
 }
 
 /**
  * A take, and where it's refused because she's in hospital (a stay the life's own health brought on), the stay waited
  * out a day at a time as a player waits it, the take's preparation done again and the take taped then (from brief 10's
  * held-out run, later on 2026-10-16, which met it on adv-h-10 and adv-h-57: until then the harness threw, and the case
- * was never built). Only a refused take waits, so a case that never met a stay is built exactly as it was.
+ * was never built). Only a refused take waits, so a case that never met a stay is built exactly as it was. Exported from
+ * brief 11 (2026-10-17), for the gate test that holds it (`tests/decisions-advice.test.ts`).
  */
-function tapeWaiting(sim: Simulation, what: string, prepare: () => void, tape: () => { ok: boolean; error?: string }): void {
+export function tapeWaiting(sim: Simulation, what: string, prepare: () => void, tape: () => { ok: boolean; error?: string }): void {
   let t = tape();
   if (!t.ok && inHospital(sim.player, sim.now)) {
     for (let d = 0; d < 90 && inHospital(sim.player, sim.now) && sim.universe.meta.endedAt === undefined; d += 1) sim.advanceTo(nextDay(sim, 9));
@@ -230,6 +234,28 @@ function tapeWaiting(sim: Simulation, what: string, prepare: () => void, tape: (
   }
   if (!t.ok) throw new Error(`${what}: ${t.error}`);
 }
+
+/**
+ * The cases a `--cases` list names: `tuning`, `held-out`, a seed, or a range `adv-h-0..9`; an unknown seed throws. Kept in
+ * `tools/advice.ts` until brief 11 (2026-10-17), and moved here unchanged with the refusal below, so a gate test reads
+ * what the measure runs.
+ */
+export function casesOf(list: string): CaseSpec[] {
+  const out: string[] = [];
+  for (const item of list.split(',').map((x) => x.trim()).filter(Boolean)) {
+    if (item === 'tuning') out.push(...Array.from({ length: 10 }, (_, i) => `adv-${i}`), ...Array.from({ length: 20 }, (_, i) => `adv-t-${i}`));
+    else if (item === 'held-out') out.push(...Array.from({ length: 30 }, (_, i) => `adv-${i + 10}`), ...Array.from({ length: 120 }, (_, i) => `adv-h-${i}`));
+    else {
+      const m = /^(.*-)(\d+)\.\.(\d+)$/.exec(item);
+      if (m) for (let n = Number(m[2]); n <= Number(m[3]); n += 1) out.push(`${m[1]}${n}`);
+      else out.push(item);
+    }
+  }
+  return out.map((seed) => { const c = caseOf(seed); if (!c) throw new Error(`${seed} is no case of F2-A or F2-A10`); return c; });
+}
+
+/** Why a run is refused: a held-out seed asked for without `--held-out` (F2-A10 (a): run once, on the code to be reported). */
+export const heldOutRefusal = (specs: readonly CaseSpec[], heldOut: boolean): string | undefined => (specs.some((x) => x.set === 'held-out') && !heldOut ? 'A held-out seed is run only with --held-out, once, on the code to be reported.' : undefined);
 
 /** F2-A's case as takes: its three briefs, each at its first reading, as `setUp` taped them. */
 export function f2aCase(seed: string): { sim: Simulation; takes: Take[] } {

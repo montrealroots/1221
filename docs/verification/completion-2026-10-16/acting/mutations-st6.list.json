@@ -1,0 +1,86 @@
+[
+ {
+  "id": "st6-no-draws",
+  "clause": "ST6-R (g), first item, against (b) as written",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: {} },"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vite-node",
+   "tools/interpretation.ts",
+   "--",
+   "--st6",
+   "$OUT"
+  ],
+  "verdict": "o.ST6R.verdict.b.met",
+  "figure": "({ verdicts: Object.fromEntries(Object.entries(o.ST6R.verdict).map(([k, v]) => [k, v.met])), a: `${o.ST6R.verdict.a.wins} of ${o.ST6R.verdict.a.of}`, b: `${o.ST6R.verdict.b.larger} of ${o.ST6R.verdict.b.of}`, bPrime: `${o.ST6R.proposedB.paid} of ${o.ST6R.proposedB.of}`, c: { abilities: [o.ST6R.verdict.c.abilities.rate, o.ST6R.verdict.c.abilities.atMost, o.ST6R.verdict.c.abilities.met], preparation: [o.ST6R.verdict.c.preparation.halfRehearsedWins, o.ST6R.verdict.c.preparation.fullyRehearsedWins, o.ST6R.verdict.c.preparation.met], circumstances: [o.ST6R.verdict.c.circumstances.smallerGapRate, o.ST6R.verdict.c.circumstances.largerGapRate, o.ST6R.verdict.c.circumstances.met], interpretation: o.ST6R.verdict.c.interpretation.everyWinAllowed }, d: `${o.ST6R.verdict.d.behind} of ${o.ST6R.verdict.d.of}, the expansive specialist ahead on ${o.ST6R.verdict.d.expansiveSpecialistAheadThere}`, e: [Object.keys(o.ST6R.verdict.e.winWorks).length, o.ST6R.verdict.e.winFamilies.length], f: `${o.ST6R.verdict.f.wins} of ${o.ST6R.verdict.f.of}`, ownChoice: (({ specialist, halfRehearsed, smallerGapRate, largerGapRate, works, families }) => ({ specialist, halfRehearsed, smallerGapRate, largerGapRate, works, families: families.length }))(o.ST6R.sorting.ownChoice) })"
+ },
+ {
+  "id": "st6-no-draws-bprime",
+  "clause": "ST6-R (g), first item, against (b′) (clarification A1)",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: {} },"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vite-node",
+   "tools/interpretation.ts",
+   "--",
+   "--st6",
+   "$OUT"
+  ],
+  "verdict": "o.ST6R.proposedB.met",
+  "figure": "({ verdicts: Object.fromEntries(Object.entries(o.ST6R.verdict).map(([k, v]) => [k, v.met])), a: `${o.ST6R.verdict.a.wins} of ${o.ST6R.verdict.a.of}`, b: `${o.ST6R.verdict.b.larger} of ${o.ST6R.verdict.b.of}`, bPrime: `${o.ST6R.proposedB.paid} of ${o.ST6R.proposedB.of}`, c: { abilities: [o.ST6R.verdict.c.abilities.rate, o.ST6R.verdict.c.abilities.atMost, o.ST6R.verdict.c.abilities.met], preparation: [o.ST6R.verdict.c.preparation.halfRehearsedWins, o.ST6R.verdict.c.preparation.fullyRehearsedWins, o.ST6R.verdict.c.preparation.met], circumstances: [o.ST6R.verdict.c.circumstances.smallerGapRate, o.ST6R.verdict.c.circumstances.largerGapRate, o.ST6R.verdict.c.circumstances.met], interpretation: o.ST6R.verdict.c.interpretation.everyWinAllowed }, d: `${o.ST6R.verdict.d.behind} of ${o.ST6R.verdict.d.of}, the expansive specialist ahead on ${o.ST6R.verdict.d.expansiveSpecialistAheadThere}`, e: [Object.keys(o.ST6R.verdict.e.winWorks).length, o.ST6R.verdict.e.winFamilies.length], f: `${o.ST6R.verdict.f.wins} of ${o.ST6R.verdict.f.of}`, ownChoice: (({ specialist, halfRehearsed, smallerGapRate, largerGapRate, works, families }) => ({ specialist, halfRehearsed, smallerGapRate, largerGapRate, works, families: families.length }))(o.ST6R.sorting.ownChoice) })"
+ },
+ {
+  "id": "st6-least",
+  "clause": "ST6-R (g), second item: (a) or (c), read as A2 reads it (a clause met under the mutation catches nothing)",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "  const s = r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));",
+    "replace": "  const s = side === 'restrained' ? -1 : r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vite-node",
+   "tools/interpretation.ts",
+   "--",
+   "--st6",
+   "$OUT"
+  ],
+  "verdict": "o.ST6R.verdict.a.met || o.ST6R.verdict.c.met",
+  "figure": "({ verdicts: Object.fromEntries(Object.entries(o.ST6R.verdict).map(([k, v]) => [k, v.met])), a: `${o.ST6R.verdict.a.wins} of ${o.ST6R.verdict.a.of}`, b: `${o.ST6R.verdict.b.larger} of ${o.ST6R.verdict.b.of}`, bPrime: `${o.ST6R.proposedB.paid} of ${o.ST6R.proposedB.of}`, c: { abilities: [o.ST6R.verdict.c.abilities.rate, o.ST6R.verdict.c.abilities.atMost, o.ST6R.verdict.c.abilities.met], preparation: [o.ST6R.verdict.c.preparation.halfRehearsedWins, o.ST6R.verdict.c.preparation.fullyRehearsedWins, o.ST6R.verdict.c.preparation.met], circumstances: [o.ST6R.verdict.c.circumstances.smallerGapRate, o.ST6R.verdict.c.circumstances.largerGapRate, o.ST6R.verdict.c.circumstances.met], interpretation: o.ST6R.verdict.c.interpretation.everyWinAllowed }, d: `${o.ST6R.verdict.d.behind} of ${o.ST6R.verdict.d.of}, the expansive specialist ahead on ${o.ST6R.verdict.d.expansiveSpecialistAheadThere}`, e: [Object.keys(o.ST6R.verdict.e.winWorks).length, o.ST6R.verdict.e.winFamilies.length], f: `${o.ST6R.verdict.f.wins} of ${o.ST6R.verdict.f.of}`, ownChoice: (({ specialist, halfRehearsed, smallerGapRate, largerGapRate, works, families }) => ({ specialist, halfRehearsed, smallerGapRate, largerGapRate, works, families: families.length }))(o.ST6R.sorting.ownChoice) })"
+ },
+ {
+  "id": "st6-no-grain",
+  "clause": "ST6-R (g), third item: (c) or (d), read as A2 reads it",
+  "edits": [
+   {
+    "file": "src/engine/content/interpretation.ts",
+    "find": "export const GRAIN = { strength: 0.3,",
+    "replace": "export const GRAIN = { strength: 0,"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vite-node",
+   "tools/interpretation.ts",
+   "--",
+   "--st6",
+   "$OUT"
+  ],
+  "verdict": "o.ST6R.verdict.c.met || o.ST6R.verdict.d.met",
+  "figure": "({ verdicts: Object.fromEntries(Object.entries(o.ST6R.verdict).map(([k, v]) => [k, v.met])), a: `${o.ST6R.verdict.a.wins} of ${o.ST6R.verdict.a.of}`, b: `${o.ST6R.verdict.b.larger} of ${o.ST6R.verdict.b.of}`, bPrime: `${o.ST6R.proposedB.paid} of ${o.ST6R.proposedB.of}`, c: { abilities: [o.ST6R.verdict.c.abilities.rate, o.ST6R.verdict.c.abilities.atMost, o.ST6R.verdict.c.abilities.met], preparation: [o.ST6R.verdict.c.preparation.halfRehearsedWins, o.ST6R.verdict.c.preparation.fullyRehearsedWins, o.ST6R.verdict.c.preparation.met], circumstances: [o.ST6R.verdict.c.circumstances.smallerGapRate, o.ST6R.verdict.c.circumstances.largerGapRate, o.ST6R.verdict.c.circumstances.met], interpretation: o.ST6R.verdict.c.interpretation.everyWinAllowed }, d: `${o.ST6R.verdict.d.behind} of ${o.ST6R.verdict.d.of}, the expansive specialist ahead on ${o.ST6R.verdict.d.expansiveSpecialistAheadThere}`, e: [Object.keys(o.ST6R.verdict.e.winWorks).length, o.ST6R.verdict.e.winFamilies.length], f: `${o.ST6R.verdict.f.wins} of ${o.ST6R.verdict.f.of}`, ownChoice: (({ specialist, halfRehearsed, smallerGapRate, largerGapRate, works, families }) => ({ specialist, halfRehearsed, smallerGapRate, largerGapRate, works, families: families.length }))(o.ST6R.sorting.ownChoice) })"
+ }
+]

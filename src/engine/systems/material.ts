@@ -14,7 +14,8 @@
  */
 
 import type { AbilityId } from '../content/abilities';
-import type { Dimension, TaskProfile } from '../content/tasks';
+import { TASK_PROFILES, TEMPLATE_TASK, type Dimension, type TaskProfile } from '../content/tasks';
+import { TEMPLATES } from '../content/coursework';
 import { MATERIAL_BY_ID, type Axis, type AxisValue, type Feature, type MaterialProfile } from '../content/material';
 import { APPROACH_EFFECT, AXES, BLEND_EFFECT, CAMERA_LEAN, DEMAND_EFFECT, FEATURE_EFFECT, LANGUAGE_EFFECT, MISFIT, PLAYING, TRANSITION_EFFECT, VOICE_LEAN, STAGE_LEAN, type Inputs } from '../content/approaches';
 import type { Instant } from '../core/time';
@@ -47,6 +48,30 @@ export interface MaterialRead {
 
 /** Tasks that aren't performed: the material's body, voice and partner don't reach them. */
 export const UNPERFORMED: ReadonlySet<string> = new Set(['written']);
+
+/**
+ * The tasks judged in parts (`judgePiece`, systems/piece.ts): a taped brief, a night, and every coursework template that
+ * sets a scene (`scenePiece`, systems/coursework.ts), but written work, which isn't performed. Each reads stamina as the
+ * drain through the piece, on every dimension tiring reaches, and takes it out of its dimensions' inputs.
+ */
+export const IN_PARTS: ReadonlySet<string> = new Set(['tape', 'tapeOnFeet', 'performance', ...TEMPLATES.filter((t) => t.material !== 'none').map((t) => TEMPLATE_TASK[t.id] ?? 'scene').filter((task) => !UNPERFORMED.has(task))]);
+
+/**
+ * The tasks and dimensions that read an ability, from the task profiles themselves (from 2026-10-17, here so the ability's
+ * look, the Player Profile's It Shapes and docs/ATTRIBUTES-MATRIX.md say the same): an ability a dimension's inputs name,
+ * and stamina, in a task judged in parts, on each dimension tiring reaches (`IN_PARTS`). Until then each read stamina off
+ * the inputs alone, so it was named in a scene's and a night's consistency, which take it out of every input and drain
+ * the dimensions tiring reaches with it, and in no self-tape, audition or taped brief, which each drain it too (brief 11,
+ * A4; docs/verification/attributes-genres-2026-10-16/attributes-matrix.json's flag on stamina's look, open since phase 1).
+ */
+export function abilityReaders(id: AbilityId): { task: string; label: string; dims: Dimension[] }[] {
+  return Object.values(TASK_PROFILES).map((t) => ({
+    task: t.id, label: t.label,
+    dims: (Object.entries(t.dims) as [Dimension, NonNullable<(typeof t.dims)[Dimension]>][])
+      .filter(([, s]) => (id === 'stamina' && IN_PARTS.has(t.id) ? (s.conditions ?? []).includes('fatigue') : s.inputs.some((i) => 'ability' in i && i.ability === id)))
+      .map(([d]) => d),
+  })).filter((r) => r.dims.length > 0);
+}
 
 export const materialOf = (id: string | undefined): MaterialProfile | undefined => (id ? MATERIAL_BY_ID[id] : undefined);
 

@@ -9,7 +9,8 @@
  *
  * - `documents.us_status`: Covered Connecticut begun before the status ends is ended with the month too, and the notice
  *   when her cover ends offers no marketplace to somebody it would refuse.
- * - `documents.apply_idcard`: SAVE’s ten days are federal workdays, Veterans Day not among them.
+ * - `documents.apply_idcard`: SAVE’s ten days are federal workdays, Veterans Day not among them (and from 2026-10-17
+ *   the card then comes by mail twenty business days on, Thanksgiving not among them: until then on SAVE’s tenth).
  * - `documents.replace_license` and `documents.replace_idcard`: a card past its date, or past it before a new one would
  *   come, isn’t replaced, refused in words on Papers and through the command; a twin that asks in time is.
  * - What Needs You: every question a played life is asked carries a date, so the guide no longer gives a rule for one
@@ -140,7 +141,10 @@ describe('documents.us_status', () => {
 // ---------------------------------------------------------------------------
 
 describe('documents.apply_idcard', () => {
-  it('PLAYER JOURNEY: an F-1 student’s limited-term card applied for at noon on Thursday 5 November 2026 comes ten federal workdays on, Friday the 20th, Veterans Day not among them', () => {
+  // Renamed on 2026-10-17 (brief 11's KS-ct-idcard, inputs/renames.json): until then 'PLAYER JOURNEY: an F-1 student’s
+  // limited-term card applied for at noon on Thursday 5 November 2026 comes ten federal workdays on, Friday the 20th,
+  // Veterans Day not among them', when the card came on SAVE's day, unmailed.
+  it('PLAYER JOURNEY: an F-1 student’s limited-term card applied for at noon on Thursday 5 November 2026 is approved by SAVE ten federal workdays on, Friday the 20th, Veterans Day not among them, and comes by mail twenty business days later, Monday 21 December, Thanksgiving not among them', () => {
     const sim = student('d3-save', 'uk-eng-london');
     sim.advanceTo(on(2026, 9, 8, 19));
     const ssn = sim.must<{ arrivesAt: number }>({ kind: 'documents.apply_ssn', payload: {} });
@@ -149,25 +153,41 @@ describe('documents.apply_idcard', () => {
     expect(run(sim, 'documents.apply_idcard').ok).toBe(true);
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
     // 6, 9, 10, 12, 13, 16, 17, 18, 19 and 20 November: Wednesday the 11th is Veterans Day (5 U.S.C. 6103), and SAVE
-    // counts federal workdays. Counted Monday to Friday, as until 2026-10-13, the tenth was the 19th.
-    expect(card.readyAt).toBe(on(2026, 11, 20, 12));
+    // counts federal workdays. Counted Monday to Friday, as until 2026-10-13, the tenth was the 19th. Then the mail's
+    // twenty: 23 to 25 and 27 November, Thanksgiving passed, 30 November to 4 December, 7 to 11, 14 to 18 and 21 December.
+    // Until 2026-10-17 the card came on SAVE's day, the 20th.
+    expect(card.readyAt).toBe(on(2026, 12, 21, 12));
     sim.advanceTo(on(2026, 11, 20, 13));
+    expect(card.status).toBe('pending');
+    sim.advanceTo(on(2026, 12, 21, 13));
     expect(card.status).toBe('valid');
-    expect(titled(sim, 'Non-Driver Identification Card, Limited Term Arrived').map((n) => n.at)).toEqual([on(2026, 11, 20, 12)]);
+    expect(titled(sim, 'Non-Driver Identification Card, Limited Term Arrived').map((n) => n.at)).toEqual([on(2026, 12, 21, 12)]);
   }, 60_000);
 
-  it('PLAYER JOURNEY: the same card applied for at 9 PM that Thursday, 2 AM on the Friday in UTC, comes at 9 PM on Friday the 20th too, its days counted as New Haven has them', () => {
+  // Renamed on 2026-10-17 (brief 11's KS-ct-idcard, inputs/renames.json): until then 'PLAYER JOURNEY: the same card
+  // applied for at 9 PM that Thursday, 2 AM on the Friday in UTC, comes at 9 PM on Friday the 20th too, its days counted
+  // as New Haven has them', when the card came on SAVE's day, unmailed. With the mail's twenty days after SAVE's ten, a
+  // count of New Haven's days and one of UTC's from that Thursday evening land on the same instant, 9 PM on Monday 21
+  // December, and the test no longer told them apart (a mutation counting both in UTC survived it); from the Wednesday
+  // evening before they don't, so it's asked for then.
+  it('PLAYER JOURNEY: the card applied for at 9 PM on Wednesday 4 November, 2 AM on the Thursday in UTC, is approved by SAVE at 9 PM on Thursday the 19th and comes at 9 PM on Friday 18 December, its days counted as New Haven has them', () => {
     const sim = student('d3-save', 'uk-eng-london');
     sim.advanceTo(on(2026, 9, 8, 19));
     const ssn = sim.must<{ arrivesAt: number }>({ kind: 'documents.apply_ssn', payload: {} });
-    sim.advanceTo(Math.max(ssn.arrivesAt + MS_HOUR, on(2026, 11, 5, 21)));
-    expect(sim.now).toBe(on(2026, 11, 5, 21));
+    sim.advanceTo(Math.max(ssn.arrivesAt + MS_HOUR, on(2026, 11, 4, 21)));
+    expect(sim.now).toBe(on(2026, 11, 4, 21));
     expect(run(sim, 'documents.apply_idcard').ok).toBe(true);
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
-    // The same ten federal workdays, 6 to 20 November less Veterans Day. Until the third round of 2026-10-13 each day was
-    // the day in UTC, a day after New Haven’s at 9 PM: the Sundays the 8th, 15th and 22nd counted as Mondays and the
-    // Fridays as Saturdays, and the card came at 9 PM on Sunday 22 November.
-    expect(card.readyAt).toBe(on(2026, 11, 20, 21));
+    // SAVE's ten federal workdays, 5, 6, 9, 10, 12, 13 and 16 to 19 November, Veterans Day not among them; then the
+    // mail's twenty, 20, 23 to 25 and 27 November, Thanksgiving passed, 30 November to 4 December, 7 to 11 and 14 to 18
+    // December. Until the third round of 2026-10-13 each day was the day in UTC, a day after New Haven's at 9 PM, the
+    // Sundays counted as Mondays and the Fridays as Saturdays: counted so, this card would come at 9 PM on Sunday 20
+    // December.
+    expect(card.readyAt).toBe(on(2026, 12, 18, 21));
+    sim.advanceTo(on(2026, 12, 18, 20));
+    expect(card.status).toBe('pending');
+    sim.advanceTo(on(2026, 12, 18, 22));
+    expect(card.status).toBe('valid');
   }, 60_000);
 });
 

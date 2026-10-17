@@ -1,0 +1,385 @@
+[
+ {
+  "id": "st3-floor",
+  "row": "ST3-R.e",
+  "what": "the whole rounded by floor",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "return { ...e, dimensions, overall: r1(e.overall), exact: e.overall",
+    "replace": "return { ...e, dimensions, overall: Math.floor(e.overall * 10) / 10, exact: e.overall"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "st3-twice",
+  "row": "ST3-R.e",
+  "what": "a whole worked from rounded dimensions",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "const q = (x: { quality: number; exact?: number }) => x.exact ?? x.quality;",
+    "replace": "const q = (x: { quality: number; exact?: number }) => Math.round((x.exact ?? x.quality) * 10) / 10;"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "st3-segments-twice",
+  "row": "ST3-R.e",
+  "what": "a piece's whole worked from its segments' rounded wholes",
+  "edits": [
+   {
+    "file": "src/engine/systems/piece.ts",
+    "find": "  const overall = results.reduce((s, r, i) => s + r.overall * spec.segments[i]!.weight, 0) / W;",
+    "replace": "  const overall = results.reduce((s, r, i) => s + r1(r.overall) * spec.segments[i]!.weight, 0) / W;"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "st3-leans",
+  "row": "ST3-R.e",
+  "what": "STAGE_LEAN and CAMERA_LEAN both 1",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1.2 };",
+    "replace": "export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1 };"
+   },
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const STAGE_LEAN: Partial<Record<Dimension, number>> = { execution: 1.2 };",
+    "replace": "export const STAGE_LEAN: Partial<Record<Dimension, number>> = { execution: 1 };"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "st3-drain",
+  "row": "ST3-R.e",
+  "what": "the drain removed",
+  "edits": [
+   {
+    "file": "src/engine/content/piece.ts",
+    "find": "  drain: 0.4,",
+    "replace": "  drain: 0,"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "st3-grain-leak",
+  "row": "ST3-R.e",
+  "what": "the grain leaking into ST3's comparison",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "grain[d] = { d: r2((had?.d ?? 0) - GRAIN.strength * x.s",
+    "replace": "grain[d] = { d: r2((had?.d ?? 0) - (GRAIN.strength || 0.3) * x.s"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "h4-tenth",
+  "row": "H4-R.e",
+  "what": "listening's every input weight cut to a tenth",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight,",
+    "replace": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight * (input.ability === 'listening' ? 0.1 : 1),"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "h4-budget",
+  "row": "H4-R.e",
+  "what": "a specialist built over twelve abilities, not eleven",
+  "edits": [
+   {
+    "file": "tests/decisions-judge.test.ts",
+    "find": "  const specialist = (a: AbilityId) => actor({ [a]: 85 }, (600 - 85) / 11);",
+    "replace": "  const specialist = (a: AbilityId) => actor({ [a]: 85 }, (600 - 85) / 12);"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "st6-no-draws",
+  "row": "ST6-R.g, ST6-R.bPrime",
+  "what": "restraint's draws removed",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: {} },"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "st6-composure-draw",
+  "row": "ST6-R.g",
+  "what": "restraint's draw on composure removed, emotional depth's and focus's kept",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "st6-own-abilities-unread",
+  "row": "ST6-R.g",
+  "what": "emotional depth, composure and focus read at the even actor's 50 whatever their level",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: clamp(level(input.ability) / full(input.ability), 0, 1) });",
+    "replace": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: ['emotionalDepth', 'composure', 'focus'].includes(input.ability) ? 0.5 : clamp(level(input.ability) / full(input.ability), 0, 1) });"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "st6-least",
+  "row": "ST6-R.g",
+  "what": "restrained suitability forced to its least on every material",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "  const s = r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));",
+    "replace": "  const s = side === 'restrained' ? -1 : r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "st6-least-stage",
+  "row": "ST6-R.g",
+  "what": "restrained suitability forced to its least, against the stage criteria's tests",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "  const s = r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));",
+    "replace": "  const s = side === 'restrained' ? -1 : r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/stage-interpretation.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "st6-no-grain",
+  "row": "ST6-R.g",
+  "what": "the grain removed",
+  "edits": [
+   {
+    "file": "src/engine/content/interpretation.ts",
+    "find": "export const GRAIN = { strength: 0.3,",
+    "replace": "export const GRAIN = { strength: 0,"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "scenes-one-fewer",
+  "row": "judge.coverage-row",
+  "what": "the two meetings taken out of the bank, the matrix's row left saying 67",
+  "edits": [
+   {
+    "file": "src/engine/content/coursework.ts",
+    "find": "  ...MEETING_SCENES,",
+    "replace": "  ...MEETING_SCENES.slice(2),"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/scenes.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "fixed-set-swapped",
+  "row": "L3-R.a",
+  "what": "a casting read in the fixed set swapped after measurement",
+  "edits": [
+   {
+    "file": "tools/pieces.ts",
+    "find": "'Twelfth Night', 'Julius Caesar', 'Trifles', 'Tartuffe'",
+    "replace": "'Twelfth Night', 'Julius Caesar', 'Trifles', 'Macbeth'"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "fixed-set-drawn",
+  "row": "L3-R.a",
+  "what": "a scene, night or casting read in the fixed set judged with its draw",
+  "edits": [
+   {
+    "file": "tools/pieces.ts",
+    "find": "key: o.key ?? `ag:${kind}:${m.id}`, ...(o.key ? {} : { expected: true }) };",
+    "replace": "key: o.key ?? `ag:${kind}:${m.id}` };"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ },
+ {
+  "id": "l3r-no-range",
+  "row": "L3-R.e",
+  "what": "the report's difficulty given as its mean alone",
+  "edits": [
+   {
+    "file": "tools/brief-journeys.ts",
+    "find": ", min: Math.min(...ds), max: Math.max(...ds) }",
+    "replace": " }"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ]
+ }
+]

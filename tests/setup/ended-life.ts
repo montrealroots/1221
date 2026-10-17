@@ -12,10 +12,12 @@ import { formatDateTime } from '@/engine/core/time';
 
 /**
  * How many calls in a row may find an ended life's clock where it stopped before it's a loop that will never end: a
- * million, far past any bounded loop's count, so a loop that ends on its own (a year of days, `tests/personality.test.ts`'s
- * `aYearAlone`, whose 1955 life ends on 16 January 2026) still returns and is judged by its own assertions, as it was
- * before; a loop waiting for the clock reaches it in a second or two. It was 100 until later on 2026-10-16, which failed
- * that bounded loop.
+ * million, far past any bounded loop's count, so a loop that ends on its own still returns and is judged by its own
+ * assertions, as it was before; a loop waiting for the clock reaches it in a second or two. It was 100 until later on
+ * 2026-10-16, which failed such a bounded loop: `tests/personality.test.ts`'s `aYearAlone`, which read the clock 365
+ * times on a 1955 life its seed's mortality had ended on 16 January 2026, eleven days in. From 2026-10-17 (brief 11)
+ * that year runs on a seed whose two lives last it, each asserted alive on every day it reads, so no test is known to
+ * need the million; it's kept for a bounded loop that does.
  */
 export const ENDED_LIFE_CALLS = 1_000_000;
 

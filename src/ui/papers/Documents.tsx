@@ -177,8 +177,9 @@ function IdPanel() {
       <LookRegion className="col gap-3">
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
           <Gated feature="documents.apply_idcard" className="btn btn-sm" disabled={Boolean(idNo)} title={idNo} onClick={() => {
-            const a = run<{ expiresAt?: number; fee: number }>('documents.apply_idcard', {});
-            if (a.ok) toast(`${card?.card.name ?? 'An ID card'}, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}${a.value!.expiresAt ? `; good until ${formatDate(a.value!.expiresAt, sim.zone)}` : ''}.`, 'positive');
+            const a = run<{ expiresAt?: number; fee: number; readyAt?: number }>('documents.apply_idcard', {});
+            // The day a card on its way comes, where it isn't handed over (from 2026-10-17: Connecticut mails it).
+            if (a.ok) toast(`${card?.card.name ?? 'An ID card'}, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}${a.value!.readyAt ? `; the card comes ${formatDate(a.value!.readyAt, sim.zone)}` : ''}${a.value!.expiresAt ? `; good until ${formatDate(a.value!.expiresAt, sim.zone)}` : ''}.`, 'positive');
           }}>Get {card?.card.name ?? 'An ID Card'}</Gated>
         </div>
         <DocumentList kinds={['idcard', 'license', 'idp']} />

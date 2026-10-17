@@ -1,16 +1,150 @@
-# Read First: The Approved Decisions, Brief 10, 2026-10-16
+# Read First: Brief 11, Finishing The Current Build Against A Fixed Checklist, 2026-10-17
 
 **This section is the current status, and where a new session starts.** Every section below is history. It was written
-at the end of the owner's "Implement The Approved Acting, Advice, Banking, And Stamina Decisions"
-(`docs/verification/briefs-2026-10-16/10-approved-acting-advice-banking-and-stamina-decisions.txt`, kept verbatim),
-worked on `claude/peaceful-hamilton-59zdbb` from `main` at `44dcd973` (#36's merge). **Not merged, not deployed.**
+at the end of the owner's "Finish The Current Build Against A Fixed Checklist"
+(`docs/verification/briefs-2026-10-16/11-finish-the-current-build-against-a-fixed-checklist.txt`, kept verbatim). That
+brief was worked on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `0e7ff7c2` (#37's merge), and put to the owner
+in pull request #38 (https://github.com/yvcbcjhsy7-prog/1221/pull/38). **Nothing of it is merged or deployed**, and neither happens without the owner.
 
 ## 1. The Repository
 
-- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `44dcd973`.
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `0e7ff7c2`.
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 11's commits on `0e7ff7c2`
+  (`git log --oneline 0e7ff7c2..origin/claude/peaceful-hamilton-59zdbb`). They are pushed, and never force-pushed.
+- **The tested code,** each check on the commit it ran on, no source file changed after it:
+  - the judge's criteria on `81eadac9` (`docs/verification/completion-2026-10-16/final/`);
+  - the long runs and the advice's cases on `3de26e0b` (`runs/`, `advice/`);
+  - the build, the saves and the built app on `43a82efa`;
+  - the gate on `12f58cec`: 376 of 376 files, 4,537 of 4,537 tests, the completion matrix holding, exit 0 (`runs/gate.txt`).
+
+  Only documents changed after `43a82efa`.
+- **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
+  worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees. Two
+  stray files outside the repository, `/lint.txt` and `/tsc-node.txt`, are still there (brief 10's section says why).
+
+## 2. Where It Stands
+
+**Completion, by the matrix:** 567 of 599 rows in scope Implemented And Verified (94.6%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.
+
+- **Against the frozen baseline** (the matrix at `0e7ff7c2`, 608 rows in scope): **567 of 608 Implemented And Verified
+  (93.2%)**. At the baseline it was 530 (87.1%).
+- **Of the actionable portion** (the 46 open rows this pass was authorized to work): **37 of 46 (80.4%)** closed by
+  implementation or verification.
+- **The game is not complete.** Decision 4's 23 rows stay as authorized, and nine actionable rows remain, each below
+  with what blocks it.
+
+`docs/verification/completion-2026-10-16/RECEIPT.md` (by `receipt.py`) gives every baseline row's status then and now.
+It found no baseline row gone, decision 4 unchanged, no administrative row counted verified, and no row verified at the
+baseline fallen back. `batches.md` reports each batch.
+
+## 3. What Brief 11 Did
+
+- **The baseline frozen** (`baseline.json`, `7572578b`) and its 78 open rows classified (`classification.json`):
+  - 46 actionable;
+  - decision 4's 23, left unchanged;
+  - 9 administrative.
+- **The 9 administrative rows, Explicitly Deferred, not counted as progress:**
+  - ST3, H4 and L3 as written, superseded;
+  - two duplicates, the residence and naturalization item and the stamina-load question;
+  - four records of a process step.
+- **37 rows closed by work.** Each area's result says how each was exercised, its tests by title, and what broke each
+  test in a copy:
+  - **journeys:** the five tax.s8 items, and l-actor after a second reader's check;
+  - **integration:** coverage09.4 to 09.6 (`tests/audit-pipeline.test.ts`, the audit made again in a copy);
+    genres.4 and 6 (the genre table against the code);
+  - **acting:** ST6-R (b′), ST3-R (e), H4-R (e), L3-R (a), (b) and (e), judge.tests, judge.coverage-row, judge.together;
+  - **attributes:** A4, A5, T1, O3, F1, F3, A1, stamina.A1;
+  - **advice:** L1 **as clarified**, the harness's four rows;
+  - **by measurement on the tested commits:** genres.7, advice.F2, advice.F2A10-c, advice.heldout.
+- **Defects fixed, as added work:**
+  - **A credit that cleared a held Yale account left the hold.** Credits now reconcile it, and an older save's hold
+    over nothing owed lifts on opening.
+  - **The personality test's year** ended one case's lives 11 days in. Each year now runs 365 days, alive.
+  - **Registering on a leave** registered the student for the term she was away from.
+  - **Six of the attributes'**, each blocking a row:
+    - the ability look's own sentence shown nowhere;
+    - stamina's readers said as consistency;
+    - four ability sentences the code contradicted;
+    - the history rounded twice;
+    - fitness said to the whole point;
+    - stamina's drain advised as rest.
+  - **Connecticut's ID card and three passport offices' fees** follow their published terms.
+  - **Two failures the gate found:**
+    - a journey test that expected the old refusal on a leave;
+    - straight apostrophes in the ability look.
+- **Changed for the player, and said in the guide and the tutorial:**
+  - the hold lifting on a credit;
+  - the leave's refusal to register;
+  - the ID card coming by mail, good to a birthday;
+  - the passport fees from abroad;
+  - the ability look's What It Does and Which Work Reads It;
+  - fitness to a tenth;
+  - the repeated advice saying how long it has stood, what has moved and the next action, with preparation's gain said
+    apart. The tutorial's What To Work On had said "an hour of practice" since brief 10 and now says twenty sessions.
+- **Nothing the game judges moved.** Every judge measurement on `81eadac9` and every long run on `3de26e0b` is byte for
+  byte brief 10's, but for fields the pass added to two tools, so RULESET stays evaluation-11.
+
+## 4. What Remains, And What It Waits On
+
+- **Decision 4, unchanged** (23 rows):
+  - its twelve audit rows, out of a player's reach;
+  - its three decision rows;
+  - the banking area's eight items for the same commands.
+
+  It's still the owner's decision whether to keep them unresolved or defer them.
+- **ST6-R (a), (c), (e), (g): the owner's decision** (`acting-result.json`, ST6-R.a).
+  - No gameplay is missing: restraint's own abilities decide its take.
+  - (a)'s 25% at the equal budget is reachable only by what the approved design rules out: a budget 5.2% over, the
+    weakest-dimension term removed, or a restraint bonus.
+  - Recommended: restate (a) in the restrained choice's own frame, at a floor the owner sets. It reads 10 of 44 there,
+    one short of 25%.
+- **F2-A10 (f) and (h): the owner's decision** (`integration-result.json`).
+  - The clarifications held on tuning seeds, but not on the held-out set run on the tested commit: (f) 110 of 111, (h)
+    116 of 120.
+  - The cause: the forecast is in points of result, and what an ability point is worth is the judge's curve, which the
+    forecast reads truly.
+  - The reading that holds on 120 of 120 (the forecast falls, or rises within discipline's lift and says so) was seen
+    after the run, so it's proposed, not adopted.
+- **health.enroll: the owner's decision.** It stays partial at a second reader's check. Its work arm, HUSKY D kept
+  through 80 hours' work, can't be reached in play since the scope reset, and it changes only the notice's words. Cut it
+  or keep it as a guard (THE ONE RULE).
+- **Blocked externally:**
+  - **KS-ct-idcard:** no published source gives a non-citizen's card term. The DMV's answer in writing
+    (860-263-5700) would settle it.
+  - **KS-passport-fees:** Japan's New York consulate and New Zealand's passport office refused every request.
+- **Clarifications the owner can reject** (`clarifications.md`, each with its earlier result):
+  - **L1's**, under which L1 is verified: as written it is still 8 and 6 weeks.
+  - **ST6-R (g)'s A1**, (b′) in (b)'s place.
+
+## 5. The Rules, The Schema And The Model
+
+CLAUDE.md counts eighteen checks; none was added. The save schema is unchanged: **94** in both places. RULESET is
+**evaluation-11**. A save gains an optional field, `Experience.advised`, the advice's note of what it put first. An older
+save's hold over nothing owed is lifted on every opening (`holdsOverNothing`, beside `strandedMoments`).
+
+The matrix gained three things:
+- an area item can carry a measurement through an override (`measured`);
+- `criteria.py` reads brief 11's results;
+- `criteria.py` writes its file once.
+
+The audit's fold reads brief 11's folder (`remaining-fold.cjs`), and `tests/audit-pipeline.test.ts` holds the audit to
+what the pipeline makes.
+
+# Brief 10: The Approved Decisions, 2026-10-16
+
+Until brief 11 began, this section was the current status, and where a new session started. It was written
+at the end of the owner's "Implement The Approved Acting, Advice, Banking, And Stamina Decisions"
+(`docs/verification/briefs-2026-10-16/10-approved-acting-advice-banking-and-stamina-decisions.txt`, kept verbatim),
+worked on `claude/peaceful-hamilton-59zdbb` from `main` at `44dcd973` (#36's merge), and merged to `main` in #37 (`0e7ff7c2`)
+at the owner's word ("Merge it.", 2026-10-16). **Merged isn't deployed: nothing is.**
+
+## 1. The Repository
+
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `0e7ff7c2`, #37's merge.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 10's commits on `44dcd973`
   (`git log --oneline 44dcd973..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in pull request #37
-  (https://github.com/yvcbcjhsy7-prog/1221/pull/37), which the owner hasn't merged. **The tested code is `9c40be73`'s.**
+  (https://github.com/yvcbcjhsy7-prog/1221/pull/37), merged with a merge commit at the owner's word (until then this
+  said the owner hadn't merged it). **The tested code is `9c40be73`'s.**
   - The gate passed on `d9b631ba`, the same code.
   - The build, the saves and the built app ran on `9c40be73`.
   - The long runs and the advice's held-out set ran on `57b64401`, whose engine is the same.
@@ -109,7 +243,8 @@ Not deployed. Base44 deployment happens on the owner's word, after the gate pass
 1. **The startup checks:** the repository, local changes, `origin/main`, this branch, the instructions, this file, the
    work plan (section 13), the briefs. Preserve the stash, worktrees and local files.
 2. **The owner's decisions** in section 3, each with its evidence in `brief-10.md` and the matrix's rows.
-3. **The pull request**, merged only at the owner's word; a follow-up after a merge starts a fresh branch from `main`.
+3. **A follow-up starts a fresh branch from `main`,** as this section's correction after #37's merge did; a pull request
+   is merged only at the owner's word.
 4. **The matrix's What's Left**, row by row.
 
 # Earlier: The Remaining Integration Gaps, Brief 09, 2026-10-16

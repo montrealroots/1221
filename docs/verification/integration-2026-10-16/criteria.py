@@ -50,7 +50,6 @@ for i, (g, th, b, a) in enumerate([
     ('The even actor follows suitability where the sides are a band apart', '75%', '100%', '100% on every sample'),
     ('Two or more ways within a point of the best', '80%', '≥ 98.7%', '99.3%, 98.0%, 97.8%')], start=1):
     row(f'I{i}', 'Criteria: Interpretation', g, 'npx vite-node tools/interpretation.ts -- --fresh --stage', th, b, a, 'Met', [ST, 'docs/verification/interpretation-2026-10-16/criteria.md'], [cite(ST), cite('docs/verification/interpretation-2026-10-16/criteria.md')])
-json.dump({'rows': rows}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))
 # ---- appended: the attributes, mastery through play, long-term, the genres, integration ----
 rows_head = rows
@@ -97,7 +96,6 @@ for id, goal, f, t in MA:
     row(id, 'Criteria: Mastery Through Play', goal, 'Played through the commands (practice.exercise, brief.choose, brief.prepare, practice.self_tape)', 'as README.md writes it', 'not measured before', 'holds', 'Met', [f], [cite(f, t)] if t else [cite(f)], implementation='systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts', sees='The brief’s forecast and How You’ll Play It; the take’s note')
 row('MA5', 'Criteria: Mastery Through Play', 'A played mastery plan reaches 100 on every payoff tape', 'npx vite-node tools/mastery.ts -- --mode plan --genre <id> --seed <s> --years 8', 'every payoff tape 100', 'all six plans (journeys-2026-10-16)', 'all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0', 'Met', [f'{D}/runs/plan-nordic_noir-m-0.json', f'{D}/runs/plan-musical-m-0.json', f'{D}/runs/plan-slapstick-m-0.json'], [cite(f'{D}/runs/plan-nordic_noir-m-0.json'), cite(f'{D}/runs/plan-nordic_noir-m-1.json'), cite(f'{D}/runs/plan-social_realism-m-0.json'), cite(f'{D}/runs/plan-social_realism-m-1.json'), cite(f'{D}/runs/plan-musical-m-0.json'), cite(f'{D}/runs/plan-slapstick-m-0.json')])
 row('MA8', 'Criteria: Mastery Through Play', 'Mastery in the work doesn’t stand in for the work the school asks: a mastered student who misses pieces is Unready on them and the review counts them', 'tests/integration-mastery.test.ts', 'as README.md writes it', 'not measured before', 'two pieces slept through, both Unready, the review counting exactly two; the twin missing nothing, none', 'Met', ['tests/integration-mastery.test.ts'], [cite('tests/integration-mastery.test.ts', 'PLAYER JOURNEY: a mastered student asleep through two pieces is Unready on both and the review counts exactly those two; the same student missing nothing is counted Unready on none')], changes='None to the engine: a played test, killed by the tally leaving pieces not shown out of its Unready')
-json.dump({'rows': rows}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))
 # ---- appended: the genres ----
 SIG = f'{D}/closeout/signature.json'; SIGF = f'{D}/closeout/signature-fresh.json'; G1R = 'docs/verification/genres-2026-10-16/g1-replacement.md'
@@ -108,7 +106,6 @@ for id, goal, th, b, a in [
   ('S4', 'No two briefs of different genres identical in every number a take reads (G2)', '0 pairs', '0', '0')]:
     row(id, 'Criteria: The Genres', goal, 'npx vite-node tools/genre-signature.ts -- [--fresh] --out <file>; tools/genre-identity.ts', th, b, a, 'Met', [SIG, SIGF, f'{D}/closeout/genre-identity.json', G1R], [cite(SIG), cite(SIGF), cite(G1R)], systems='Every take of a brief, a class scene and a play, read in its genre’s register', sees='The Genre Asks on a brief; the take’s note; the genre’s look')
 row('Genre Audit', 'Criteria: The Genres', 'Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits', 'npx vite-node tools/genre-audit.ts -- --out <file>', 'helps its own in every genre; leaks into none', '149 of 149; 0; 56 to weigh', '149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)', 'Met', [f'{D}/closeout/genre-audit.md', 'tests/genre-identity.test.ts'], [cite(f'{D}/closeout/genre-audit.md'), cite('tests/genre-identity.test.ts')], failure='The 55 genres whose two briefs suited the same sides on every axis were weighed, not faults (their registers agree; I2 holds across the catalog); 54 until brief 09 counted them again, 46 after it replaced fourteen genres’ second briefs (genres-09.md)')
-json.dump({'rows': rows}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))
 # ---- appended: integration rows (the brief's sections 6, 9 to 13) ----
 def integ(id, goal, entry, threshold, status, evidence, citations, failure='', changes='Nothing in this pass', sees='', systems='', implementation=''):
@@ -126,7 +123,6 @@ integ('INT-skipped', 'Every skipped check accounted for: the suite skips none; t
 integ('INT-navigation', 'Home readable; Money, School and Papers usable and aligned at 1440 and 390', 'node tools/acceptance-ui.mjs <out> 1440|390 <saves>', '0 failed, 0 overflows', 'Met', ['tools/acceptance-ui.mjs', f'{D}/runs/acceptance/1440.log', f'{D}/runs/acceptance/390.log'], [cite(f'{D}/runs/acceptance/1440.log'), cite(f'{D}/runs/acceptance/390.log')])
 integ('INT-long-runs', 'Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code', 'tools/lives.ts, tools/workload.ts, tools/mastery.ts, tools/advice.ts, tools/variety.ts, tools/freshness.ts', 'breaches 0, unbalanced 0, no errors; the figures each account set', 'Met', [f'{D}/runs/README.md', f'{D}/runs/lives.jsonl', f'{D}/runs/variety-v-0.json', f'{D}/runs/freshness.json'], [cite(f'{D}/runs/README.md'), cite(f'{D}/runs/lives.jsonl'), cite(f'{D}/runs/variety-v-0.json'), cite(f'{D}/runs/freshness.json')])
 integ('INT-gate', 'The gate and the build on the final revision', 'npm run gate (exit from a file); npm run build', 'exit 0', 'Met', [f'{D}/runs/gate.txt', f'{D}/runs/README.md'], [cite(f'{D}/runs/gate.txt')], failure='Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again')
-json.dump({'rows': rows}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))
 # ---- appended: the seven statuses (brief 09, section 1) ----
 # Until brief 09 each row carried the word its source gave it (Met, Not Met, Superseded), and the matrix read "none
@@ -294,5 +290,102 @@ OVERRIDES = [
   {'id': 'coverage.7-overdraft-home-panel', 'status': IAV, 'why': 'Reported by the coverage area and fixed outside it the same day (d31f0a94): the overdraft and loan offers ask abroadRefusal first, and the panels say the refusal in place of their controls',
    'citations': [cite('tests/integration-home-lending.test.ts', 'borrowing at a bank kept from home > PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing that it opens nothing new for a customer abroad')]},
 ]
+# Brief 11 (2026-10-16): the open rows' administrative reconciliations (docs/verification/completion-2026-10-16/
+# classification.json). Each is a record, not progress: it leaves the in-scope rows and is reported apart from the rows
+# closed by work. Brief 11's own words decide each, so none goes back to the owner. Until brief 11 ST3, H4 and L3 as written stayed Not
+# Implemented, the two duplicates were open rows of their own, and the four records were Implemented, Verification
+# Incomplete, which nothing in the current build could verify.
+B11 = 'docs/verification/completion-2026-10-16'
+B11_HISTORICAL = 'brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.”'
+B11_ADMIN = {
+  'ST3.asWritten': f'Superseded by ST3-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence ({B11_HISTORICAL}); as written, not met: the even actor the same as shown on 185 of 193 on brief 10’s final code (decisions-2026-10-16/integrated/after/st3.json)',
+  'H4.asWritten': f'Superseded by H4-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence ({B11_HISTORICAL}); as written, not met: 1 of 12 on brief 10’s final code (decisions-2026-10-16/integrated/after/criteria.txt)',
+  'L3.asWritten': f'Superseded by L3-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence ({B11_HISTORICAL}); as written, not met: failing on 2 of brief 10’s 8 journeys on its final code (decisions-2026-10-16/integrated/after/l3r.json)',
+  'tax.s8.residence_naturalization': 'A duplicate: residence abroad and naturalization were deferred by the owner’s scope reset of 2026-10-09, as the audit’s own rows for them already are (documents.residence, documents.settle, documents.renew_residence, documents.naturalize, citizenship.decided, each Explicitly Deferred); counted there, not twice (brief 11, section 3)',
+  'judge.stamina-load': 'A duplicate: brief 09’s question whether a night’s load should read a heavier, sourced account was answered by the owner’s decision 5 in brief 10, a night’s workload by its running time, part, intensity and breaks, verified as stamina.W1 to stamina.W10 (each Implemented And Verified; W2 and W3 hold that a longer or harder night drains more); counted there, not twice (brief 11, section 3)',
+  'tax.s8.jurisdiction': 'A historical record of a process step: the tax area’s research of which office’s rules each papers system follows (remaining/tax-result.json); the rules themselves are each audit row’s own, verified there (brief 11, section 3)',
+  'judge.baseline': 'A historical record of a process step: its brief’s criteria measured on the engine before any change, the outputs kept; nothing in the current build can measure an engine that no longer exists, and the current figures are the criteria rows’ (brief 11, section 3)',
+  'stamina.measure': 'A historical record of a process step: the stamina area’s first look at what moved, before and after its change (brief 10); the current figures are the criteria rows’ and the judge area’s, measured on the tested commit (brief 11, section 3)',
+}
+for id, why in B11_ADMIN.items():
+    OVERRIDES.append({'id': id, 'status': ED, 'deferredBy': why, 'why': 'Reconciled administratively under brief 11, section 3; not counted as progress', 'citations': [{'file': f'{B11}/classification.json'}]})
+# Brief 11's criteria on its tested commit (completion-2026-10-16/final/, figures.json read from the outputs, none typed):
+# the areas' changes to systems/material.ts, systems/briefs.ts and systems/leave.ts left every judge measurement stale, so
+# each was made again there. Every output is brief 10's, byte for byte, but for fields this pass added to two tools, so a
+# figure the same as brief 10's is said to be. Until then these rows stood on brief 10's 567d27dd.
+B11F = f'{B11}/final'
+if os.path.exists(f'{B11F}/figures.json'):
+    FIG11 = json.load(open(f'{B11F}/figures.json', encoding='utf-8'))
+    B11AT = re.search(r'^at (\w+)', open(f'{B11F}/exits.txt', encoding='utf-8').read(), re.M).group(1)
+    for r in rows:
+        if r.get('measured') == INTEGRATED10:
+            assert r['id'] in FIG11, r['id']
+            r['measured'] = {'commit': B11AT, 'watch': 'judge'}
+            r['failure'] = f"{r['failure']}; on brief 11's tested commit ({B11AT}): {'the same' if FIG11[r['id']] == FIG10.get(r['id']) else FIG11[r['id']]}"
+            r['evidence'] = f"{r['evidence']}; {B11F}/README.md"
+            r['citations'] = r['citations'] + [{'file': f'{B11F}/figures.json'}]
+# Brief 11's final runs (completion-2026-10-16/runs/, figures.json read from their outputs by runs/figures.py, none
+# typed): the long runs, the built app and F2-A's cases on the commit the runs name, the gate on the commit gate.txt names.
+# Until they're there, these rows stay brief 10's, and the matrix calls them unverified where what they read has changed.
+B11R = f'{B11}/runs'
+FIG11R = json.load(open(f'{B11R}/figures.json', encoding='utf-8')) if os.path.exists(f'{B11R}/figures.json') else {}
+if FIG11R:
+    # Each by the commit its lane ran on: the built app's (lane A) and the engine's runs (the lives' lane, B) can differ
+    # where a commit between changed a screen and no engine file (43a82efa's comments).
+    lane = lambda name: re.search(r'^at (\w+)', open(f'{B11R}/exits-{name}.txt', encoding='utf-8').read(), re.M).group(1)
+    R11 = {'app': lane('A'), 'engine': lane('B')}
+    GATE11 = re.search(r'^at (\w+)', open(f'{B11R}/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG11R else None
+    for r in rows:
+        m = r.get('measured')
+        gate = r['id'] == 'INT-gate'
+        if not (m in (RUNS10, BUILT10) or (gate and m and m.get('watch') == 'app')):
+            continue
+        if gate and not GATE11:
+            continue  # the gate's figure, folded in once it has run
+        assert r['id'] in FIG11R, r['id']
+        r['measured'] = {'commit': GATE11, 'watch': 'app'} if gate else {'commit': R11[m['watch']], 'watch': m['watch']}
+        r['failure'] = f"{r['failure']}; brief 11 ({r['measured']['commit']}): {'the same' if FIG11R[r['id']] == FIG10R.get(r['id']) else FIG11R[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {B11R}/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{B11R}/figures.json'}] + ([{'file': f'{B11R}/gate.txt'}] if gate else [])
+# Brief 11's areas' results (completion-2026-10-16/<area>-result.json, the coordinator's integration-result.json among
+# them): each row an area worked, its status and the tests it cites, read onto the matrix, never typed here. An area's
+# item takes an override; a criterion or shortfall row here is changed in place. The audit's rows aren't taken: their
+# status is the audit's own, through the pipeline's fold and a second reader's check (health.enroll, l-actor). Until
+# later on 2026-10-17 the coordinator's five rows were copied in by hand.
+AUDIT_IDS = {it['id'] for f in sorted(os.listdir('docs/verification/audit')) if f.endswith('.json') for it in json.load(open(f'docs/verification/audit/{f}', encoding='utf-8'))['items']}
+NEEDS11 = {IVI: 'missing', PI: 'gap', NI: 'gap', BE: 'blocker', DR: 'decision', ED: 'deferredBy'}
+for f in sorted(x for x in os.listdir(B11) if x.endswith('-result.json')):
+    area = f[:-len('-result.json')]
+    for r in json.load(open(f'{B11}/{f}', encoding='utf-8')).get('rows', []):
+        if r['id'] in AUDIT_IDS:
+            continue
+        cites = [cite(e['file'], e.get('title')) for e in r.get('evidence', []) if e.get('file')]
+        status = r['status']
+        why = f"Brief 11, the {area} area ({B11}/{f}): {r.get('exercised') or r.get('notProved') or ''}".strip()
+        # What the status asks, from whichever of the fields the area wrote it in (common.md: "missing | gap | blocker |
+        # decision"); a verified row carries none.
+        need = NEEDS11.get(status)
+        said = next((r[k] for k in ((need, 'missing', 'gap', 'blocker') if need in ('missing', 'gap') else (need,)) if need and r.get(k)), None)
+        assert need is None or said, f"{f}: {r['id']} is {status} without its {need}"
+        # A decision whose evidence is its area's result (ST6-R's (c), (e) and (g) rest on (a)'s measurements there) names
+        # the result, as the matrix does for brief 09's areas.
+        if need == 'decision' and isinstance(said, dict) and not said.get('evidence'):
+            said = {**said, 'evidence': f'{B11}/{f}'}
+        extra = {**({need: said} if need else {}), **({'measured': r['measured']} if r.get('measured') else {})}
+        crit = [x for x in rows if x['id'] == r['id'] and x['group'] == r['group']]
+        if crit:
+            x = crit[0]
+            # What its old status asked goes with it (KS-ct-idcard's missing, once it's Blocked Externally).
+            for k in ('missing', 'gap', 'blocker', 'decision', 'deferredBy'):
+                if k != need: x.pop(k, None)
+            x.update({'status': status, 'citations': x['citations'] + cites, 'evidence': f"{x['evidence']}; {B11}/{f}", **extra})
+            if status == IAV:
+                # Verified by the tests it cites, not by the measurement it carried, and no longer a decision (L1, brief 11).
+                x.pop('measured', None)
+                x.pop('decision', None)
+            continue
+        # It replaces an earlier override of the same item (stamina.A1's of brief 10), since the matrix reads the first.
+        OVERRIDES[:] = [o for o in OVERRIDES if o['id'] != r['id']]
+        OVERRIDES.append({'id': r['id'], 'status': status, 'why': why, 'citations': cites, **extra})
 json.dump({'rows': rows, 'overrides': OVERRIDES}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))

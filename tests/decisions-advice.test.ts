@@ -15,20 +15,47 @@
  * engine grows them, discipline kept once a day and said apart; each replay at full precision; knowing the genre read as
  * it's known now; a take its own preparation held back most read as prepared; the forecast's order kept by the forecast;
  * and everything at full said.
+ *
+ * Added on 2026-10-17 for brief 11 (docs/verification/completion-2026-10-16/clarifications.md, written first): L1 on a
+ * player who ignores the advice and one who follows it, through the commands and across a save and a load; F2-A10 (f)
+ * and (h) as clarified (preparation's figure apart from training's, diminishing returns where the progression model
+ * gives them, a small rise explained by discipline's lift); and the harness itself (its seeds apart, its bands and
+ * stages, a case built through the commands, a take that waits out a hospital stay). Still tuning seeds only: no test
+ * builds or reads a held-out case.
  */
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { spawnSync } from 'node:child_process';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { MASTERED, TECHNIQUES, type AbilityId } from '@/engine/content/abilities';
-import { BRIEF_BY_ID } from '@/engine/content/briefs';
-import { exerciseFor } from '@/engine/content/practice';
+import { BRIEFS, BRIEF_BY_ID } from '@/engine/content/briefs';
+import { EXERCISE_BY_ID, PRACTICE, exerciseFor } from '@/engine/content/practice';
 import type { Simulation } from '@/engine/core/simulation';
-import type { WorkRecord } from '@/engine/systems/evaluation';
-import { ADVICE, trainingForecast, trained, type Forecast } from '@/engine/systems/advice';
+import { MS_DAY, formatDate } from '@/engine/core/time';
+import { TASK_PROFILES } from '@/engine/content/tasks';
+import { performerOf, replayAs, type WorkRecord } from '@/engine/systems/evaluation';
+import { ADVICE, genreNow, trainingForecast, trained, type Forecast } from '@/engine/systems/advice';
 import { abilityFull, abilityOf, isAbility, levelOf } from '@/engine/systems/attributes';
 import { atFull } from '@/engine/systems/briefs';
 import { recommendations } from '@/engine/systems/experience';
+import { careFor, inHospital } from '@/engine/systems/health';
 import { adviceFor } from '@/engine/systems/next-steps';
-import { matchedTier } from '@/engine/systems/practice';
-import { buildCase, caseOf, clone, f2aCase, go, live, setLevel, worthOf, type Take } from '../tools/advice-harness';
+import { matchedTier, practicedToday } from '@/engine/systems/practice';
+import { BANDS, BAND_ORDER, GENRES, INPUTS, STAGES, STAGE_ORDER, buildCase, caseOf, casesOf, clone, f2aCase, go, heldOutRefusal, live, rest, setLevel, tapeWaiting, worthOf, type Take } from '../tools/advice-harness';
+
+// The screens, drawn over a real save under the game's context, as tests/defects-r8-1.test.ts draws them.
+const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation }));
+vi.mock('@/app/game-context', () => {
+  const noop = () => undefined;
+  const game = () => new Proxy({ get sim() { return h.sim; }, version: 0, run: (kind: string, payload: Record<string, unknown> = {}) => h.sim.execute({ kind, payload }), toast: noop } as Record<string, unknown>, { get: (t, k) => (k in t ? t[k as string] : noop) });
+  return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
+});
+const { ProfileWorkspace } = await import('@/ui/workspaces/ProfileWorkspace');
+/** The Player Profile as drawn, its text as read. */
+const profileText = (sim: Simulation) => { h.sim = sim; return renderToStaticMarkup(createElement(ProfileWorkspace)).replace(/&#x27;/g, '\'').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&'); };
 
 /** A tuning case, as the measure builds it. */
 function tuning(seed: string): { sim: Simulation; takes: Take[] } {
@@ -214,3 +241,350 @@ describe('F2-A10: What To Improve Next, followed through the commands (brief 10)
     expect(advice.some((x) => x.forecast)).toBe(true);
   }, 240_000);
 });
+
+/** A brief not yet taped, its genre next in the 149's order: chosen, prepared two rounds, its genre studied once, taped, through the commands. */
+function tapeNew(sim: Simulation): void {
+  const taped = new Set(Object.keys(sim.player.briefs ?? {}).filter((id) => (sim.player.briefs![id]!.takes.length ?? 0) > 0));
+  const b = GENRES.map((g) => BRIEFS.find((x) => x.kinds[0] === g && !taped.has(x.id))).find(Boolean)!;
+  go(sim, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id });
+  for (let i = 0; i < 2; i += 1) for (const step of ['read', 'lines', 'rehearse']) go(sim, 'brief.prepare', { brief: b.id, step });
+  go(sim, 'genre.study', { genre: b.kinds[0] });
+  const r = go(sim, 'practice.self_tape', { genre: b.kinds[0], brief: b.id });
+  expect(r.ok, r.error).toBe(true);
+}
+/** The forecast every training recommendation is ranked by, at full precision, for the inputs that pass the floor. */
+const passing = (sim: Simulation) => [...trainingForecast(sim, sim.player)].filter(([, f]) => (f.own ?? exact(f)) >= 0.1);
+
+describe('L1: repeated advice, for a player who ignores it and one who follows it (brief 11)', () => {
+  it('PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought', () => {
+    // adv-t-5, developing, mid-term: then five weeks, two new briefs taped a week and no practice.
+    let { sim } = tuning('adv-t-5');
+    const weeks: { target: string; standing: string; next: string; pieces: number }[] = [];
+    for (let week = 0; week < 5; week += 1) {
+      for (const day of [2, 5]) { sim.advanceTo(sim.now + (day === 2 ? 2 : 3) * MS_DAY); tapeNew(sim); }
+      sim.advanceTo(sim.now + 2 * MS_DAY);
+      rest(sim);
+      if (week === 2) {
+        // A save and a load mid-way: the same advice, word for word.
+        const said = adviceFor(sim, sim.player);
+        sim = clone(sim);
+        expect(adviceFor(sim, sim.player)).toEqual(said);
+      }
+      const first = firstOf(sim);
+      // Never inferior advice: the first is the forecast's largest of what passes the floor, at full precision.
+      for (const [k, f] of passing(sim)) expect(exact(f), `week ${week}: ${k}`).toBeLessThanOrEqual(exact(first.forecast) + 1e-12);
+      const was = sim.player.experience!.advised!;
+      expect(was.target).toBe(first.target);
+      // What it says, worked from the records: since when, its level then and now, and the pieces since that it held back.
+      const since = (sim.player.work ?? []).filter((w) => w.at >= was.since);
+      const held = since.filter((w) => w.limits.some((l) => l.what === first.target));
+      expect(first.standing).toContain(`It has been first since ${formatDate(was.since, sim.zone)}`);
+      expect(first.standing).toContain(`of the ${since.length} pieces you’ve done since, it held back ${held.length}`);
+      expect(first.standing).toContain(`you haven’t practiced ${EXERCISE_BY_ID[first.exercise!]!.label} since`);
+      expect(first.next).toContain(`Next: ${EXERCISE_BY_ID[first.exercise!]!.label} at the`);
+      expect(first.next).toContain(`an hour, and ${EXERCISE_BY_ID[first.exercise!]!.feet ? PRACTICE.energy.feet : PRACTICE.energy.desk} energy`);
+      weeks.push({ target: first.target, standing: first.standing!, next: first.next!, pieces: since.length });
+    }
+    // Played, not assumed: one input stayed first all five weeks, which L1 as written allows four of (brief 10: 8 and 6).
+    expect(new Set(weeks.map((w) => w.target)).size).toBe(1);
+    // Each week says something the last didn't, because the player's state moved: two more pieces each week.
+    for (let i = 1; i < weeks.length; i += 1) {
+      expect(weeks[i]!.standing, `week ${i}`).not.toBe(weeks[i - 1]!.standing);
+      expect(weeks[i]!.pieces).toBe(weeks[i - 1]!.pieces + 2);
+    }
+    // On the screen: the Player Profile says it, and the next hour.
+    const text = profileText(sim);
+    expect(text).toContain(weeks.at(-1)!.standing);
+    expect(text).toContain(weeks.at(-1)!.next);
+    // The player who follows it, from the same save: twenty sessions of its exercise, one a day, inside L1's four weeks.
+    const target = weeks.at(-1)!.target;
+    const from = levelOf(sim, sim.player, target as never);
+    const fromForecast = exact(firstOf(sim).forecast);
+    let follower = clone(sim);
+    const start = follower.now;
+    live(follower, target);
+    expect(follower.now - start).toBeLessThan(28 * MS_DAY);
+    follower = clone(follower);
+    const after = firstOf(follower);
+    const now = levelOf(follower, follower.player, target as never);
+    // Played, not assumed: here it still brings most, so it stays first, and it rose by what the sessions brought,
+    // which it says, with its forecast before them and now.
+    expect(after.target).toBe(target);
+    expect(now).toBeGreaterThan(from);
+    const nowForecast = exact(after.forecast);
+    expect(nowForecast).toBeLessThan(fromForecast);
+    const ex = EXERCISE_BY_ID[after.exercise!]!;
+    expect(after.standing).toContain(`${ADVICE.sessions} hours of ${ex.label}: it went from ${Math.round(from * 10) / 10} to ${Math.round(now * 10) / 10}, and its forecast from ${fromForecast.toFixed(2)} to ${nowForecast.toFixed(2)}`);
+    expect(after.standing).not.toBe(weeks.at(-1)!.standing);
+    // Its forecast fell here, as the input's own should: nothing is said of a rise.
+    expect(after.standing).not.toContain('a little up');
+    // And the ignorer, the same five weeks on, never trained it: it says so.
+    expect(weeks.at(-1)!.standing).toContain(`you haven’t practiced ${ex.label} since`);
+    expect(adviceFor(clone(follower), follower.player)).toEqual(adviceFor(follower, follower.player));
+  }, 240_000);
+
+  it('PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why', () => {
+    // adv-0, F2-A's own: twenty sessions of the first-named, one a day, inside L1's four weeks.
+    const { sim } = tuning('adv-0');
+    const first = firstOf(sim);
+    const from = levelOf(sim, sim.player, first.target as never);
+    let copy = clone(sim);
+    const start = copy.now;
+    live(copy, first.target);
+    expect(copy.now - start).toBeLessThan(28 * MS_DAY);
+    copy = clone(copy);
+    const after = firstOf(copy);
+    const now = levelOf(copy, copy.player, first.target as never);
+    const left = exact(trainingForecast(copy, copy.player).get(first.target));
+    // Played, not assumed: another now brings more, and is named first, by the forecast's own order.
+    expect(after.target).not.toBe(first.target);
+    expect(exact(after.forecast)).toBeGreaterThan(left);
+    expect(after.standing).toContain(`the first was ${first.label.toLowerCase()}`);
+    expect(after.standing).toContain(`it has gone from ${Math.round(from * 10) / 10} to ${Math.round(now * 10) / 10}`);
+    expect(after.standing).toContain(`to ${left.toFixed(2)} a piece, and ${after.label.toLowerCase()}’s forecast, ${exact(after.forecast).toFixed(2)}, is now the larger`);
+    expect(adviceFor(clone(copy), copy.player)).toEqual(adviceFor(copy, copy.player));
+    // The next action reads the hour's own refusal: with today's hours of practice used, it says why not now.
+    const ex = EXERCISE_BY_ID[after.exercise!]!;
+    expect(after.next).toContain(`Next: ${ex.label} at the`);
+    expect(after.next).toContain('for about +');
+    while (practicedToday(copy, copy.player) < PRACTICE.dailyHours) { copy.advanceTo(copy.now + 60 * 60_000); expect(go(copy, 'practice.exercise', { exercise: ex.id, focus: 'steady' }).ok).toBe(true); }
+    const refused = firstOf(copy);
+    expect(refused.next).toContain(`Not now: You’ve practiced ${PRACTICE.dailyHours} hours today`);
+    expect(refused.next).not.toContain('for about +');
+  }, 240_000);
+});
+
+describe('F2-A10 (f) and (h), as clarified (brief 11)', () => {
+  it('PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s', () => {
+    // adv-t-15, near mastery, and then The Spare Key taped cold: its rehearsal held it back most.
+    const { sim } = tuning('adv-t-15');
+    const b = BRIEF_BY_ID['brief-drama']!;
+    go(sim, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id });
+    expect(go(sim, 'practice.self_tape', { genre: b.kinds[0], brief: b.id }).ok).toBe(true);
+    rest(sim);
+    const f = trainingForecast(sim, sim.player);
+    // Worked from the records and the judge's own replay: each recent piece its own preparation held back most, as
+    // prepared (its own steps complete, by hand, knowing the genre as it's known now) less as taped, weighted to the latest.
+    const latest = [...sim.player.work!].filter((w) => TASK_PROFILES[w.task] && w.inputs.seed !== undefined).sort((x, y) => x.at - y.at).slice(-ADVICE.recent).map(genreNow(sim.player));
+    const W = latest.reduce((t, _w, i) => t + (i + 1) / latest.length, 0);
+    const me = performerOf(sim, sim.player);
+    const judged = (w: WorkRecord) => { const e = replayAs(w, TASK_PROFILES[w.task]!, me)!; return e.exact ?? e.overall; };
+    const own = latest.map((w, i) => ({ w, i })).filter(({ w }) => w.limits[0]?.kind === 'preparation' && w.limits[0].what !== 'genre');
+    expect(own.length).toBeGreaterThanOrEqual(1);
+    const expected = own.reduce((t, { w, i }) => t + ((judged({ ...w, inputs: { ...w.inputs, prep: Object.fromEntries(Object.entries(w.inputs.prep).map(([k, x]) => [k, k === 'genre' ? x : 1])) } }) - judged(w)) * (i + 1)) / latest.length / W, 0);
+    expect(expected).toBeGreaterThan(0.05);
+    for (const [k, x] of f) {
+      expect(Math.abs(x.preparation! - expected), k).toBeLessThan(1e-9);
+      // Never in training's: what's said is the input's own and the days' alone, on the same hours as every other input.
+      expect(Math.abs(exact(x) - (x.own! + x.days!)), k).toBeLessThan(1e-12);
+      expect(x.hours).toBe(ADVICE.sessions);
+    }
+    const first = firstOf(sim);
+    const n = own.length;
+    const words = `Apart from training: completing the preparation of ${n === 1 ? 'the piece' : `the ${n} pieces`} its own preparation held back most would bring ${n === 1 ? 'it' : 'them'} about ${Math.round(expected * 100) / 100}`;
+    expect(first.why).toContain(words);
+    expect(first.why).toContain(`that’s preparation, not training, and it isn’t in the ${first.points} above`);
+    expect(profileText(sim)).toContain(words);
+    // The falsifiability test: the same work with that take's own steps complete has no preparation to say.
+    const cold = sim.player.work!.at(-1)!;
+    const done = sim.player.work!.map((w) => (w !== cold ? w : { ...w, limits: w.limits.filter((l) => l.kind !== 'preparation'), inputs: { ...w.inputs, prep: Object.fromEntries(Object.entries(w.inputs.prep).map(([k, x]) => [k, k === 'genre' ? x : 1])) } }));
+    const without = trainingForecast(sim, sim.player, done);
+    const left = own.filter(({ w }) => w.inputs.key !== cold.inputs.key).length;
+    for (const [k, x] of without) expect((x.prepared ?? 0), k).toBe(left);
+  }, 240_000);
+
+  it('PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate', () => {
+    // adv-t-1, developing, a take in: its first-named input at six levels (TEST SETUP), each copy playing the same twenty
+    // sessions through practice.exercise.
+    const { sim } = tuning('adv-t-1');
+    const id = firstOf(sim).target;
+    expect(isAbility(id as never)).toBe(true);
+    const ex = exerciseFor(id as never)!;
+    const rung = (level: number) => {
+      const x = clone(sim);
+      setLevel(x, id, level);
+      const f = trainingForecast(x, x.player).get(id)!;
+      // What the forecast's hours grow it by, at an ordinary day's focus (`trained`, the copy the forecast reads).
+      const grown = levelOf(x, trained(x, x.player, id as AbilityId), id as never) - level;
+      const before = x.player.experience?.exercises?.[ex.id]?.sessions ?? 0;
+      live(x, id);
+      expect((x.player.experience!.exercises[ex.id]!.sessions) - before).toBe(ADVICE.sessions);
+      expect(f.hours).toBe(ADVICE.sessions);
+      return { played: levelOf(x, x.player, id as never) - level, grown, forecast: exact(f) };
+    };
+    const below = [40, 55, 70].map(rung);
+    const past = [76, 84, 92].map(rung);
+    // Diminishing returns where the model gives them: each rung up brings less, played and forecast, and the forecast's
+    // points fall with it.
+    for (const k of ['played', 'grown', 'forecast'] as const) {
+      expect(below[1]![k], k).toBeLessThan(below[0]![k]);
+      expect(below[2]![k], k).toBeLessThan(below[1]![k]);
+    }
+    // Past three quarters of full the model's rate is constant (DEVELOPMENT.floor): the same twenty sessions bring the
+    // same level at every rung, played and forecast (the played day's rested focus over the forecast's ordinary one, the
+    // same at every rung), and the forecast's points, reading that, move by under a hundredth where below they fell by tenths.
+    for (const x of past) {
+      expect(Math.abs(x.played - past[0]!.played)).toBeLessThan(1e-9);
+      expect(Math.abs(x.grown - past[0]!.grown)).toBeLessThan(1e-9);
+      expect(Math.abs(x.played / x.grown - past[0]!.played / past[0]!.grown)).toBeLessThan(1e-9);
+    }
+    expect(past[0]!.played).toBeLessThan(below[2]!.played);
+    const spread = (xs: { forecast: number }[]) => Math.max(...xs.map((x) => x.forecast)) - Math.min(...xs.map((x) => x.forecast));
+    expect(spread(past)).toBeLessThan(0.01);
+    expect(spread(below)).toBeGreaterThan(0.5);
+  }, 240_000);
+
+  it('PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so', () => {
+    // adv-t-19: twenty sessions of the first-named, one a day, through practice.exercise.
+    const { sim } = tuning('adv-t-19');
+    const first = firstOf(sim);
+    const id = first.target;
+    const before = exact(first.forecast);
+    const d0 = abilityOf(sim, sim.player, 'discipline');
+    const copy = clone(sim);
+    live(copy, id);
+    const d1 = abilityOf(copy, copy.player, 'discipline');
+    const after = exact(trainingForecast(copy, copy.player).get(id));
+    // The same save at the discipline it had (TEST SETUP): what the input's own part comes to.
+    const held = clone(copy);
+    setLevel(held, 'discipline', d0);
+    const atD0 = exact(trainingForecast(held, held.player).get(id));
+    expect(d1).toBeGreaterThan(d0);
+    expect(atD0).toBeLessThan(before);
+    // Played, not assumed: here it rose, by less than a thousandth, and by no more than discipline's lift.
+    expect(after).toBeGreaterThan(before);
+    expect(after - before).toBeLessThan(0.001);
+    expect(after - before).toBeLessThanOrEqual(after - atD0 + 1e-12);
+    // Said: its forecast then and now, discipline then and now, and how much of the change is discipline's.
+    const said = firstOf(copy);
+    expect(said.target).toBe(id);
+    const r1 = (x: number) => Math.round(x * 10) / 10;
+    expect(said.standing).toContain(`its forecast from ${before.toFixed(4)} to ${after.toFixed(4)}, a little up: discipline went from ${r1(d0)} to ${r1(d1)}`);
+    expect(said.standing).toContain(`at discipline ${r1(d0)} its forecast would be ${atD0.toFixed(4)}, so +${(after - atD0).toFixed(4)} of the change is discipline’s`);
+    expect(profileText(copy)).toContain(said.standing!);
+  }, 240_000);
+});
+
+describe('The F2-A10 harness (brief 11)', () => {
+  it('GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out', () => {
+    const tuned = casesOf('tuning');
+    const held = casesOf('held-out');
+    expect(tuned.length).toBe(30);
+    expect(held.length).toBe(150);
+    expect(tuned.every((c) => c.set === 'tuning')).toBe(true);
+    expect(held.every((c) => c.set === 'held-out')).toBe(true);
+    const seeds = new Set(tuned.map((c) => c.seed));
+    expect(held.filter((c) => seeds.has(c.seed))).toEqual([]);
+    expect(tuned.filter((c) => c.design === 'F2-A').map((c) => c.seed)).toEqual(Array.from({ length: 10 }, (_, i) => `adv-${i}`));
+    expect(held.filter((c) => c.design === 'F2-A').map((c) => c.seed)).toEqual(Array.from({ length: 30 }, (_, i) => `adv-${i + 10}`));
+    // The criterion's bands and stages (F2-A10 (a)), as the harness draws them.
+    expect(BANDS).toEqual({ beginner: [25, 45], developing: [40, 65], advanced: [60, 85], nearMastery: [80, 97] });
+    expect(Object.fromEntries(STAGE_ORDER.map((s) => [s, STAGES[s].takes]))).toEqual({ firstWeek: [1, 3], midTerm: [6, 10], later: [15, 20] });
+    const fresh = held.filter((c) => c.design === 'F2-A10');
+    const tunedFresh = tuned.filter((c) => c.design === 'F2-A10');
+    expect(fresh.length).toBe(120);
+    for (const band of BAND_ORDER) for (const stage of STAGE_ORDER) {
+      expect(fresh.filter((c) => c.band === band && c.stage === stage).length, `${band} ${stage}`).toBe(10);
+      expect(tunedFresh.some((c) => c.band === band && c.stage === stage), `${band} ${stage}`).toBe(true);
+    }
+    for (const seed of ['adv-40', 'adv-t-20', 'adv-h-120', 'adv-h-x']) expect(caseOf(seed), seed).toBeUndefined();
+    expect(() => casesOf('adv-h-120')).toThrow('is no case of F2-A or F2-A10');
+    expect(heldOutRefusal(casesOf('adv-h-0..2'), false)).toBe('A held-out seed is run only with --held-out, once, on the code to be reported.');
+    expect(heldOutRefusal(casesOf('adv-10'), false)).toBeDefined();
+    expect(heldOutRefusal(casesOf('tuning'), false)).toBeUndefined();
+    expect(heldOutRefusal(casesOf('adv-h-0..2'), true)).toBeUndefined();
+  });
+
+  it('GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built', () => {
+    // tools/advice.ts itself, as the measure is run (a child process), on adv-t-0: a beginner a take in.
+    const dir = mkdtempSync(join(tmpdir(), 'advice-measure-'));
+    try {
+      const out = join(dir, 'adv-t-0.json');
+      const r = spawnSync(process.execPath, [resolve('node_modules/vite-node/vite-node.mjs'), 'tools/advice.ts', '--', '--cases', 'adv-t-0', '--out', out], { encoding: 'utf8' });
+      expect(r.status, r.stderr).toBe(0);
+      const run = JSON.parse(readFileSync(out, 'utf8')) as { commit: string; clean: boolean; command: string; cases: Record<string, unknown>[]; summary: Record<string, unknown> };
+      expect(run.commit).toMatch(/^[0-9a-f]{40}$/);
+      expect(typeof run.clean).toBe('boolean');
+      expect(run.command).toBe('npx vite-node tools/advice.ts -- --cases adv-t-0 --out ' + out);
+      const c = run.cases[0]!;
+      expect(c).toMatchObject({ seed: 'adv-t-0', set: 'tuning', design: 'F2-A10', band: 'beginner', stage: 'firstWeek' });
+      // F2-A's pass, and every clause the criteria name, worked out on the case.
+      expect(typeof c.pass).toBe('boolean');
+      expect(Object.keys(c.c as object)).toEqual(expect.arrayContaining(['medianOthers', 'atOrAboveMedian', 'randomMean', 'firstGain']));
+      expect(Object.keys(c.d as object)).toEqual(expect.arrayContaining(['violations', 'allFull']));
+      expect(Object.keys(c.e as object)).toEqual(expect.arrayContaining(['predicted', 'realized', 'within']));
+      expect(Object.keys(c.f as object)).toEqual(expect.arrayContaining(['ladder', 'falls', 'prep']));
+      expect(Object.keys(c.g as object)).toEqual(expect.arrayContaining(['recs', 'ok', 'missing']));
+      expect(Object.keys(c.h as object)).toEqual(expect.arrayContaining(['before', 'after', 'fell', 'leads', 'ok']));
+      expect(Object.keys(c.i as object)).toEqual(['same']);
+      expect(Object.keys(run.summary)).toEqual(expect.arrayContaining(['tuning', 'tuning F2-A10', 'tuning F2-A10 beginner', 'tuning F2-A10 firstWeek']));
+      // A held-out seed without --held-out: refused, and nothing written.
+      const held = join(dir, 'held.json');
+      const no = spawnSync(process.execPath, [resolve('node_modules/vite-node/vite-node.mjs'), 'tools/advice.ts', '--', '--cases', 'adv-h-0', '--out', held], { encoding: 'utf8' });
+      expect(no.status).not.toBe(0);
+      expect(no.stderr + no.stdout).toContain('A held-out seed is run only with --held-out, once, on the code to be reported.');
+      expect(existsSync(held)).toBe(false);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  }, 240_000);
+
+  it('PLAYER JOURNEY: a case is built through the game’s commands: every input drawn within its band, near mastery at least two at full, the stage’s takes taped as its work in its days, each in one of the 149 genres', () => {
+    expect(GENRES.length).toBe(149);
+    // A tuning case of each stage: adv-t-0 (beginner, the first week), adv-t-5 (developing, mid-term), adv-t-11 (near
+    // mastery, later).
+    for (const seed of ['adv-t-0', 'adv-t-5', 'adv-t-11']) {
+      const spec = caseOf(seed)!;
+      const { sim, takes, full, drawn } = buildCase(seed, spec.band!, spec.stage!);
+      const [lo, hi] = BANDS[spec.band!];
+      expect(Object.keys(drawn).sort(), seed).toEqual([...INPUTS].sort());
+      for (const [id, v] of Object.entries(drawn)) if (v !== 'full') { expect(v, `${seed} ${id}`).toBeGreaterThanOrEqual(lo); expect(v, `${seed} ${id}`).toBeLessThanOrEqual(hi); }
+      if (spec.band === 'nearMastery') expect(full.length, seed).toBeGreaterThanOrEqual(2); else expect(full, seed).toEqual([]);
+      for (const id of full) expect(drawn[id]).toBe('full');
+      const [least, most] = STAGES[spec.stage!].takes;
+      expect(takes.length, seed).toBeGreaterThanOrEqual(least);
+      expect(takes.length, seed).toBeLessThanOrEqual(most);
+      // Every take is the case's work, judged as a taped brief, in order, and every brief's record holds its take.
+      const work = sim.player.work ?? [];
+      expect(work.length, seed).toBe(takes.length);
+      work.forEach((w, i) => {
+        expect(w.task, `${seed} ${i}`).toMatch(/^tape/);
+        expect(w.what, `${seed} ${i}`).toContain(BRIEF_BY_ID[takes[i]!.brief]!.title);
+        expect(sim.player.briefs![takes[i]!.brief]!.takes.some((t) => t.reading === takes[i]!.reading)).toBe(true);
+      });
+      for (const t of takes) { expect(GENRES).toContain(t.genre); expect(BRIEF_BY_ID[t.brief]!.kinds).toContain(t.genre); }
+      const startDay = takes[0]!.at;
+      expect(takes.at(-1)!.at - startDay, seed).toBeLessThanOrEqual((STAGES[spec.stage!].days + 1) * MS_DAY);
+      if (spec.stage === 'later') expect(new Set(takes.map((t) => t.genre)).size, seed).toBeGreaterThanOrEqual(10);
+    }
+  }, 240_000);
+
+  it('PLAYER JOURNEY: a take refused in hospital waits the stay out, is prepared again and taped once she’s out, where until brief 10 the harness threw and the case was never built (adv-h-10, adv-h-57)', () => {
+    const { sim } = tuning('adv-t-0');
+    const b = BRIEF_BY_ID['brief-drama']!;
+    const prepare = () => { go(sim, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id }); for (const step of ['read', 'lines', 'rehearse']) go(sim, 'brief.prepare', { brief: b.id, step }); };
+    prepare();
+    // FIXTURE: a stay the life's own health brings, through the function that brings it (careFor, systems/health.ts).
+    careFor(sim, sim.player, { care: 'stay', what: 'A stay in hospital' }, sim.now);
+    expect(inHospital(sim.player, sim.now)).toBe(true);
+    const until = sim.player.health!.inHospitalUntil!;
+    const tape = () => go(sim, 'practice.self_tape', { genre: b.kinds[0], brief: b.id });
+    // The game's own refusal, the one the harness met on adv-h-10 and adv-h-57.
+    expect(tape().error).toBe('Not from a hospital bed.');
+    const n = sim.player.work!.length;
+    tapeWaiting(sim, 'adv-t-0 brief-drama', prepare, tape);
+    expect(sim.player.work!.length).toBe(n + 1);
+    expect(sim.player.work!.at(-1)!.what).toContain(b.title);
+    expect(sim.player.work!.at(-1)!.at).toBeGreaterThanOrEqual(until);
+    expect(inHospital(sim.player, sim.now)).toBe(false);
+    // The falsifiability test: a take refused for another reason isn't waited on or tried again, even where preparing
+    // again would let it through (here no reading had been chosen); it throws, as a broken case should.
+    const other = clone(sim);
+    const c = BRIEFS.find((x) => x.medium === 'camera' && !other.player.briefs?.[x.id])!;
+    const choose = () => { go(other, 'brief.choose', { brief: c.id, reading: c.readings[0]!.id }); };
+    const tapeOther = () => go(other, 'practice.self_tape', { genre: c.kinds[0], brief: c.id });
+    expect(tapeOther().error).toContain('Choose a reading first');
+    expect(() => tapeWaiting(other, 'adv-t-0 no reading', choose, tapeOther)).toThrow('adv-t-0 no reading: Choose a reading first');
+  }, 240_000);
+});
+

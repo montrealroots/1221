@@ -1,0 +1,733 @@
+{
+ "from": "baseline.json (608 in scope; 78 not Implemented And Verified)",
+ "counts": {
+  "verification": 38,
+  "decision-4": 23,
+  "duplicate": 2,
+  "historical-record": 4,
+  "design-or-gameplay": 8,
+  "superseded": 3
+ },
+ "actionable": 46,
+ "rows": [
+  {
+   "id": "health.enroll",
+   "group": "Life, Health And Time",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The duplicate-enrollment refusal and the other gaps the audit row names are tested nowhere",
+   "action": "verify through the commands; regression tests",
+   "area": "journeys"
+  },
+  {
+   "id": "bank.arrange_overdraft",
+   "group": "Money",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "One of decision 4’s twelve rows out of a player’s reach, kept exactly as authorized (brief 10 and 11, section 2)",
+   "action": "none: unchanged, counted in the original totals",
+   "area": "—"
+  },
+  {
+   "id": "bank.cancel_new",
+   "group": "Money",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "One of decision 4’s twelve rows out of a player’s reach, kept exactly as authorized (brief 10 and 11, section 2)",
+   "action": "none: unchanged, counted in the original totals",
+   "area": "—"
+  },
+  {
+   "id": "bank.switch",
+   "group": "Money",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "One of decision 4’s twelve rows out of a player’s reach, kept exactly as authorized (brief 10 and 11, section 2)",
+   "action": "none: unchanged, counted in the original totals",
+   "area": "—"
+  },
+  {
+   "id": "bank.take_overrun_loan",
+   "group": "Money",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "One of decision 4’s twelve rows out of a player’s reach, kept exactly as authorized (brief 10 and 11, section 2)",
+   "action": "none: unchanged, counted in the original totals",
+   "area": "—"
+  },
+  {
+   "id": "card.money_transfer",
+   "group": "Money",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "One of decision 4’s twelve rows out of a player’s reach, kept exactly as authorized (brief 10 and 11, section 2)",
+   "action": "none: unchanged, counted in the original totals",
+   "area": "—"
+  },
+  {
+   "id": "bank.switch_complete",
+   "group": "Money",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "One of decision 4’s twelve rows out of a player’s reach, kept exactly as authorized (brief 10 and 11, section 2)",
+   "action": "none: unchanged, counted in the original totals",
+   "area": "—"
+  },
+  {
+   "id": "bank.cancel_switch",
+   "group": "Money",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "One of decision 4’s twelve rows out of a player’s reach, kept exactly as authorized (brief 10 and 11, section 2)",
+   "action": "none: unchanged, counted in the original totals",
+   "area": "—"
+  },
+  {
+   "id": "bank.stop_balance_transfer",
+   "group": "Money",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "One of decision 4’s twelve rows out of a player’s reach, kept exactly as authorized (brief 10 and 11, section 2)",
+   "action": "none: unchanged, counted in the original totals",
+   "area": "—"
+  },
+  {
+   "id": "tax.amend",
+   "group": "Papers",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "One of decision 4’s twelve rows out of a player’s reach, kept exactly as authorized (brief 10 and 11, section 2)",
+   "action": "none: unchanged, counted in the original totals",
+   "area": "—"
+  },
+  {
+   "id": "tax.catch_up_state_plan",
+   "group": "Papers",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "One of decision 4’s twelve rows out of a player’s reach, kept exactly as authorized (brief 10 and 11, section 2)",
+   "action": "none: unchanged, counted in the original totals",
+   "area": "—"
+  },
+  {
+   "id": "tax.lien_dispute",
+   "group": "Papers",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "One of decision 4’s twelve rows out of a player’s reach, kept exactly as authorized (brief 10 and 11, section 2)",
+   "action": "none: unchanged, counted in the original totals",
+   "area": "—"
+  },
+  {
+   "id": "tax.request_waiver",
+   "group": "Papers",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "One of decision 4’s twelve rows out of a player’s reach, kept exactly as authorized (brief 10 and 11, section 2)",
+   "action": "none: unchanged, counted in the original totals",
+   "area": "—"
+  },
+  {
+   "id": "l-actor",
+   "group": "Creation, Profile, Home And The Looks",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "No test opens the actor look on a migrated save carrying an “interest” source",
+   "action": "verify through the look on a migrated save; regression test",
+   "area": "journeys"
+  },
+  {
+   "id": "tax.s8.f1_status",
+   "group": "Remaining Area: tax",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The tax area verified it as it stood and cited no gate test by its title",
+   "action": "find or write the gate tests that hold its acceptance, played through the commands",
+   "area": "journeys"
+  },
+  {
+   "id": "tax.s8.ssn",
+   "group": "Remaining Area: tax",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The tax area verified it as it stood and cited no gate test by its title",
+   "action": "find or write the gate tests that hold its acceptance, played through the commands",
+   "area": "journeys"
+  },
+  {
+   "id": "tax.s8.opt",
+   "group": "Remaining Area: tax",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The tax area verified it as it stood and cited no gate test by its title",
+   "action": "find or write the gate tests that hold its acceptance, played through the commands",
+   "area": "journeys"
+  },
+  {
+   "id": "tax.s8.license",
+   "group": "Remaining Area: tax",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The tax area verified it as it stood and cited no gate test by its title",
+   "action": "find or write the gate tests that hold its acceptance, played through the commands",
+   "area": "journeys"
+  },
+  {
+   "id": "tax.s8.visas_authorizations",
+   "group": "Remaining Area: tax",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The tax area verified it as it stood and cited no gate test by its title",
+   "action": "find or write the gate tests that hold its acceptance, played through the commands",
+   "area": "journeys"
+  },
+  {
+   "id": "tax.s8.residence_naturalization",
+   "group": "Remaining Area: tax",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "duplicate",
+   "reason": "The tax area’s item that residence abroad and naturalization stay deferred, as the audit’s own rows (documents.residence, documents.settle, documents.renew_residence, documents.naturalize, citizenship.decided) already are, by the owner’s scope reset of 2026-10-09",
+   "action": "administrative: Explicitly Deferred with the rows it repeats; not counted as progress",
+   "area": "integration"
+  },
+  {
+   "id": "tax.s8.jurisdiction",
+   "group": "Remaining Area: tax",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "historical-record",
+   "reason": "The tax area’s research record of which office’s rules each papers system follows (tax-result.json); the rules themselves are each row’s own, verified there",
+   "action": "administrative: Explicitly Deferred as a research record; not counted as progress",
+   "area": "integration"
+  },
+  {
+   "id": "banking.2.scope",
+   "group": "Brief 09 Area: banking",
+   "baselineStatus": "Decision Required",
+   "category": "decision-4",
+   "reason": "One of decision 4’s three decision rows, kept exactly as authorized",
+   "action": "none: unchanged",
+   "area": "—"
+  },
+  {
+   "id": "banking.2.arrange_overdraft",
+   "group": "Brief 09 Area: banking",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "The banking area’s item for one of decision 4’s eight bank rows (its disposition “owner decision”): the same requirement as the audit row, covered by decision 4",
+   "action": "none: unchanged",
+   "area": "—"
+  },
+  {
+   "id": "banking.2.cancel_new",
+   "group": "Brief 09 Area: banking",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "The banking area’s item for one of decision 4’s eight bank rows (its disposition “owner decision”): the same requirement as the audit row, covered by decision 4",
+   "action": "none: unchanged",
+   "area": "—"
+  },
+  {
+   "id": "banking.2.switch",
+   "group": "Brief 09 Area: banking",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "The banking area’s item for one of decision 4’s eight bank rows (its disposition “owner decision”): the same requirement as the audit row, covered by decision 4",
+   "action": "none: unchanged",
+   "area": "—"
+  },
+  {
+   "id": "banking.2.switch_complete",
+   "group": "Brief 09 Area: banking",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "The banking area’s item for one of decision 4’s eight bank rows (its disposition “owner decision”): the same requirement as the audit row, covered by decision 4",
+   "action": "none: unchanged",
+   "area": "—"
+  },
+  {
+   "id": "banking.2.cancel_switch",
+   "group": "Brief 09 Area: banking",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "The banking area’s item for one of decision 4’s eight bank rows (its disposition “owner decision”): the same requirement as the audit row, covered by decision 4",
+   "action": "none: unchanged",
+   "area": "—"
+  },
+  {
+   "id": "banking.2.stop_balance_transfer",
+   "group": "Brief 09 Area: banking",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "The banking area’s item for one of decision 4’s eight bank rows (its disposition “owner decision”): the same requirement as the audit row, covered by decision 4",
+   "action": "none: unchanged",
+   "area": "—"
+  },
+  {
+   "id": "banking.2.take_overrun_loan",
+   "group": "Brief 09 Area: banking",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "The banking area’s item for one of decision 4’s eight bank rows (its disposition “owner decision”): the same requirement as the audit row, covered by decision 4",
+   "action": "none: unchanged",
+   "area": "—"
+  },
+  {
+   "id": "banking.2.money_transfer",
+   "group": "Brief 09 Area: banking",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "decision-4",
+   "reason": "The banking area’s item for one of decision 4’s eight bank rows (its disposition “owner decision”): the same requirement as the audit row, covered by decision 4",
+   "action": "none: unchanged",
+   "area": "—"
+  },
+  {
+   "id": "coverage09.3-unresolved",
+   "group": "Brief 09 Area: coverage",
+   "baselineStatus": "Decision Required",
+   "category": "decision-4",
+   "reason": "One of decision 4’s three decision rows, kept exactly as authorized",
+   "action": "none: unchanged",
+   "area": "—"
+  },
+  {
+   "id": "coverage09.4-fold",
+   "group": "Brief 09 Area: coverage",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The audit pipeline’s fold, by-test mapping and regeneration, held by no named gate test",
+   "action": "a gate test of the fold and the mapping, and the gate’s coverage check",
+   "area": "integration"
+  },
+  {
+   "id": "coverage09.5-journeys-fold",
+   "group": "Brief 09 Area: coverage",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The audit pipeline’s fold, by-test mapping and regeneration, held by no named gate test",
+   "action": "a gate test of the fold and the mapping, and the gate’s coverage check",
+   "area": "integration"
+  },
+  {
+   "id": "coverage09.6-journeys-followup-fold",
+   "group": "Brief 09 Area: coverage",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The audit pipeline’s fold, by-test mapping and regeneration, held by no named gate test",
+   "action": "a gate test of the fold and the mapping, and the gate’s coverage check",
+   "area": "integration"
+  },
+  {
+   "id": "genres.4-kept",
+   "group": "Brief 09 Area: genres",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The kept genres’ reasons and the per-genre table are documents held by nothing; genres.7 is a measurement",
+   "action": "a gate test that the reasons and the table cover exactly the genres the code keeps alike; genres.7 measured on the tested commit",
+   "area": "integration"
+  },
+  {
+   "id": "genres.6-table",
+   "group": "Brief 09 Area: genres",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The kept genres’ reasons and the per-genre table are documents held by nothing; genres.7 is a measurement",
+   "action": "a gate test that the reasons and the table cover exactly the genres the code keeps alike; genres.7 measured on the tested commit",
+   "area": "integration"
+  },
+  {
+   "id": "genres.7-measured",
+   "group": "Brief 09 Area: genres",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The kept genres’ reasons and the per-genre table are documents held by nothing; genres.7 is a measurement",
+   "action": "a gate test that the reasons and the table cover exactly the genres the code keeps alike; genres.7 measured on the tested commit",
+   "area": "integration"
+  },
+  {
+   "id": "judge.baseline",
+   "group": "Brief 09 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "historical-record",
+   "reason": "A record of a process step of its brief (the criteria measured on the engine before any change), its outputs kept; nothing in the current build can re-verify a measurement of an engine that no longer exists",
+   "action": "administrative: Explicitly Deferred as a historical record; not counted as progress",
+   "area": "integration"
+  },
+  {
+   "id": "judge.stamina-load",
+   "group": "Brief 09 Area: judge",
+   "baselineStatus": "Not Implemented",
+   "category": "duplicate",
+   "reason": "Brief 09’s question whether a night’s load should read a heavier, sourced account was answered by the owner’s decision 5 (brief 10): a night’s workload by its running time, part, intensity and breaks, verified as W1 to W10 (stamina.W1 to stamina.W10, Implemented And Verified)",
+   "action": "administrative: its evidence is W2’s and W3’s gate tests (a longer or harder night drains more); not counted as progress",
+   "area": "integration",
+   "amended": {
+    "on": "2026-10-16, when the reconciliation was made",
+    "action": "administrative: Explicitly Deferred as a duplicate, counted once in stamina.W1 to W10 (W2 and W3 hold that a longer or harder night drains more); not counted as progress",
+    "why": "Verified by W2’s and W3’s tests, it would have counted one requirement twice among the verified rows"
+   }
+  },
+  {
+   "id": "judge.coverage-row",
+   "group": "Brief 09 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "A document’s count of the scenes, corrected once and held by nothing",
+   "action": "correct it where it’s fallen behind, and a gate test that the count is the code’s",
+   "area": "acting"
+  },
+  {
+   "id": "advice.harness",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The harness and its tests exist; no gate test holds the harness’s structure, the hospital fix, or the cases’ split, and the tests are cited by file",
+   "action": "gate tests of the harness; the tests cited by title",
+   "area": "advice"
+  },
+  {
+   "id": "advice.F2",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Measured on the integrated code; no gate test holds them",
+   "action": "measured again on the tested commit, the measurement attached",
+   "area": "integration"
+  },
+  {
+   "id": "advice.F2A10-a",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The harness and its tests exist; no gate test holds the harness’s structure, the hospital fix, or the cases’ split, and the tests are cited by file",
+   "action": "gate tests of the harness; the tests cited by title",
+   "area": "advice"
+  },
+  {
+   "id": "advice.F2A10-c",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Measured on the integrated code; no gate test holds them",
+   "action": "measured again on the tested commit, the measurement attached",
+   "area": "integration"
+  },
+  {
+   "id": "advice.F2A10-f",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Decision Required",
+   "category": "design-or-gameplay",
+   "reason": "Repeated advice and two advice clauses (brief 11, section 8): state-aware repeated advice for a player who follows it and one who ignores it; preparation apart from training; a small rise explained",
+   "action": "implement within the approved intent; criterion clarifications documented before tests change",
+   "area": "advice"
+  },
+  {
+   "id": "advice.F2A10-h",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Decision Required",
+   "category": "design-or-gameplay",
+   "reason": "Repeated advice and two advice clauses (brief 11, section 8): state-aware repeated advice for a player who follows it and one who ignores it; preparation apart from training; a small rise explained",
+   "action": "implement within the approved intent; criterion clarifications documented before tests change",
+   "area": "advice"
+  },
+  {
+   "id": "advice.tests",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The harness and its tests exist; no gate test holds the harness’s structure, the hospital fix, or the cases’ split, and the tests are cited by file",
+   "action": "gate tests of the harness; the tests cited by title",
+   "area": "advice"
+  },
+  {
+   "id": "advice.heldout",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Measured on the integrated code; no gate test holds them",
+   "action": "measured again on the tested commit, the measurement attached",
+   "area": "integration"
+  },
+  {
+   "id": "advice.harness-hospital",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The harness and its tests exist; no gate test holds the harness’s structure, the hospital fix, or the cases’ split, and the tests are cited by file",
+   "action": "gate tests of the harness; the tests cited by title",
+   "area": "advice"
+  },
+  {
+   "id": "judge.baseline",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "historical-record",
+   "reason": "A record of a process step of its brief (the criteria measured on the engine before any change), its outputs kept; nothing in the current build can re-verify a measurement of an engine that no longer exists",
+   "action": "administrative: Explicitly Deferred as a historical record; not counted as progress",
+   "area": "integration"
+  },
+  {
+   "id": "ST3-R.e",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Met by measurement on the integrated code; no gate test holds the clause",
+   "action": "measured again on the tested commit, the measurement attached; gate tests where a clause allows one cheaply",
+   "area": "acting"
+  },
+  {
+   "id": "ST3.asWritten",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Not Implemented",
+   "category": "superseded",
+   "reason": "The original acting criterion as written, superseded by its replacement at the owner’s decision 1 (brief 10); brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.” ST6 as written was already recorded so (brief 10’s close-out)",
+   "action": "administrative: Explicitly Deferred as historical evidence, its figures kept; not counted as progress",
+   "area": "integration"
+  },
+  {
+   "id": "ST6-R.a",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Decision Required",
+   "category": "design-or-gameplay",
+   "reason": "ST6-R’s clauses not met: which failures are missing gameplay and which a test that contradicts the approved design (brief 11, section 8)",
+   "action": "finish justified implementation; a criterion clarification documented before any test changes; a genuine conflict presented after the rest",
+   "area": "acting"
+  },
+  {
+   "id": "ST6-R.c",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Decision Required",
+   "category": "design-or-gameplay",
+   "reason": "ST6-R’s clauses not met: which failures are missing gameplay and which a test that contradicts the approved design (brief 11, section 8)",
+   "action": "finish justified implementation; a criterion clarification documented before any test changes; a genuine conflict presented after the rest",
+   "area": "acting"
+  },
+  {
+   "id": "ST6-R.e",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Decision Required",
+   "category": "design-or-gameplay",
+   "reason": "ST6-R’s clauses not met: which failures are missing gameplay and which a test that contradicts the approved design (brief 11, section 8)",
+   "action": "finish justified implementation; a criterion clarification documented before any test changes; a genuine conflict presented after the rest",
+   "area": "acting"
+  },
+  {
+   "id": "ST6-R.g",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Decision Required",
+   "category": "design-or-gameplay",
+   "reason": "ST6-R’s clauses not met: which failures are missing gameplay and which a test that contradicts the approved design (brief 11, section 8)",
+   "action": "finish justified implementation; a criterion clarification documented before any test changes; a genuine conflict presented after the rest",
+   "area": "acting"
+  },
+  {
+   "id": "H4-R.e",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Met by measurement on the integrated code; no gate test holds the clause",
+   "action": "measured again on the tested commit, the measurement attached; gate tests where a clause allows one cheaply",
+   "area": "acting"
+  },
+  {
+   "id": "H4.asWritten",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Not Implemented",
+   "category": "superseded",
+   "reason": "The original acting criterion as written, superseded by its replacement at the owner’s decision 1 (brief 10); brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.” ST6 as written was already recorded so (brief 10’s close-out)",
+   "action": "administrative: Explicitly Deferred as historical evidence, its figures kept; not counted as progress",
+   "area": "integration"
+  },
+  {
+   "id": "L3-R.a",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Met by measurement on the integrated code; no gate test holds the clause",
+   "action": "measured again on the tested commit, the measurement attached; gate tests where a clause allows one cheaply",
+   "area": "acting"
+  },
+  {
+   "id": "L3-R.b",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Met by measurement on the integrated code; no gate test holds the clause",
+   "action": "measured again on the tested commit, the measurement attached; gate tests where a clause allows one cheaply",
+   "area": "acting"
+  },
+  {
+   "id": "L3-R.e",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Met by measurement on the integrated code; no gate test holds the clause",
+   "action": "measured again on the tested commit, the measurement attached; gate tests where a clause allows one cheaply",
+   "area": "acting"
+  },
+  {
+   "id": "L3.asWritten",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Not Implemented",
+   "category": "superseded",
+   "reason": "The original acting criterion as written, superseded by its replacement at the owner’s decision 1 (brief 10); brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.” ST6 as written was already recorded so (brief 10’s close-out)",
+   "action": "administrative: Explicitly Deferred as historical evidence, its figures kept; not counted as progress",
+   "area": "integration"
+  },
+  {
+   "id": "judge.together",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Met by measurement on the integrated code; no gate test holds the clause",
+   "action": "measured again on the tested commit, the measurement attached; gate tests where a clause allows one cheaply",
+   "area": "acting"
+  },
+  {
+   "id": "judge.tests",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "The tests exist in the gate, cited by their file, not their titles",
+   "action": "cite them by title, and run them on the tested commit",
+   "area": "acting"
+  },
+  {
+   "id": "ST6-R.bPrime",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Decision Required",
+   "category": "design-or-gameplay",
+   "reason": "ST6-R’s clauses not met: which failures are missing gameplay and which a test that contradicts the approved design (brief 11, section 8)",
+   "action": "finish justified implementation; a criterion clarification documented before any test changes; a genuine conflict presented after the rest",
+   "area": "acting"
+  },
+  {
+   "id": "A1",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "A1’s figure is held by a measurement only; stamina.A1 is the same requirement for stamina",
+   "action": "a gate test of each ability’s largest effect, and the measurement on the tested commit",
+   "area": "attributes"
+  },
+  {
+   "id": "stamina.measure",
+   "group": "Brief 10 Area: stamina",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "historical-record",
+   "reason": "A record of the stamina area’s first look at what moved, before and after its change (brief 10); the current figures are the criteria rows’ and the judge area’s, measured on the tested commit",
+   "action": "administrative: Explicitly Deferred as a historical record; not counted as progress",
+   "area": "integration"
+  },
+  {
+   "id": "stamina.A1",
+   "group": "Brief 10 Area: stamina",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "A1’s figure is held by a measurement only; stamina.A1 is the same requirement for stamina",
+   "action": "a gate test of each ability’s largest effect, and the measurement on the tested commit",
+   "area": "attributes"
+  },
+  {
+   "id": "A4",
+   "group": "Criteria: The Attributes",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Judged by reading the code in phase 2b; no assertion would fail if it stopped holding",
+   "action": "gate tests through the commands",
+   "area": "attributes"
+  },
+  {
+   "id": "A5",
+   "group": "Criteria: The Attributes",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Judged by reading the code in phase 2b; no assertion would fail if it stopped holding",
+   "action": "gate tests through the commands",
+   "area": "attributes"
+  },
+  {
+   "id": "T1",
+   "group": "Criteria: The Attributes",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Judged by reading the code in phase 2b; no assertion would fail if it stopped holding",
+   "action": "gate tests through the commands",
+   "area": "attributes"
+  },
+  {
+   "id": "O3",
+   "group": "Criteria: The Attributes",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Judged by reading the code in phase 2b; no assertion would fail if it stopped holding",
+   "action": "gate tests through the commands",
+   "area": "attributes"
+  },
+  {
+   "id": "F1",
+   "group": "Criteria: The Attributes",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Judged by reading the code in phase 2b; no assertion would fail if it stopped holding",
+   "action": "gate tests through the commands",
+   "area": "attributes"
+  },
+  {
+   "id": "F3",
+   "group": "Criteria: The Attributes",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Judged by reading the code in phase 2b; no assertion would fail if it stopped holding",
+   "action": "gate tests through the commands",
+   "area": "attributes"
+  },
+  {
+   "id": "L1",
+   "group": "Criteria: Long-Term Continuity",
+   "baselineStatus": "Decision Required",
+   "category": "design-or-gameplay",
+   "reason": "Repeated advice and two advice clauses (brief 11, section 8): state-aware repeated advice for a player who follows it and one who ignores it; preparation apart from training; a small rise explained",
+   "action": "implement within the approved intent; criterion clarifications documented before tests change",
+   "area": "advice"
+  },
+  {
+   "id": "KS-bank-rows-scope",
+   "group": "Known Shortfalls And Missing Tests",
+   "baselineStatus": "Decision Required",
+   "category": "decision-4",
+   "reason": "One of decision 4’s three decision rows, kept exactly as authorized",
+   "action": "none: unchanged",
+   "area": "—"
+  },
+  {
+   "id": "KS-ct-idcard",
+   "group": "Known Shortfalls And Missing Tests",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Values the tax area couldn’t source, labelled as assumptions; no prior approval makes them authorized assumptions",
+   "action": "research the authoritative source; implement and test what it settles, or say what blocks it",
+   "area": "research"
+  },
+  {
+   "id": "KS-passport-fees",
+   "group": "Known Shortfalls And Missing Tests",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "category": "verification",
+   "reason": "Values the tax area couldn’t source, labelled as assumptions; no prior approval makes them authorized assumptions",
+   "action": "research the authoritative source; implement and test what it settles, or say what blocks it",
+   "area": "research"
+  }
+ ],
+ "addedWork": [
+  {
+   "id": "defect.yale-credit-hold",
+   "reason": "brief 11, section 5, and the handoff’s open list: a credit that clears a held Yale account leaves the hold",
+   "impact": "a defect fix outside the baseline’s rows"
+  },
+  {
+   "id": "defect.personality-year",
+   "reason": "brief 11, section 5, and the handoff’s open list: tests/personality.test.ts’s year on autopilot ends 16 days in",
+   "impact": "a test defect outside the baseline’s rows"
+  }
+ ]
+}

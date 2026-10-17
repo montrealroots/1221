@@ -1,0 +1,8 @@
+{
+ "INT-navigation": "the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
+ "INT-skipped": "no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
+ "INT-long-runs": "lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14",
+ "MA5": "musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-28, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]",
+ "F2-A": "40 of 40 advice cases: the first named input the best to raise",
+ "INT-gate": "npm run gate on 12f58cec: 376 of 376 files, 4537 of 4537 tests passed, none skipped, exit=0, the last check, the completion matrix, holding"
+}

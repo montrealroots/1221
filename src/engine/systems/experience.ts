@@ -46,7 +46,32 @@ export interface Experience {
   exercises: Record<string, { sessions: number; lastDay?: string; focus: Record<string, number>; tiers: Record<string, number>; streak?: number; gains?: number[]; lastTier?: number }>;
   /** The exercise practised last, whatever it was. */
   lastExercise?: string;
+  /** What the advice named first, from when, and where it stood then (from brief 11, 2026-10-17; `noteAdvice`, `systems/next-steps.ts`). */
+  advised?: Advised;
 }
+
+/**
+ * What to improve next as it was given (from brief 11, 2026-10-17; L1, docs/verification/completion-2026-10-16/
+ * clarifications.md): the input the advice named first, from when, and where it stood when it was first given and after
+ * the player's latest work, noted as they come to tape a brief or to practice after new work (`noteAdvice`). It's
+ * what lets the advice say how long it has been first and what has moved since, rather than the same words week after
+ * week. Until then nothing of the advice was kept, and the same advice read the same on every day it was given.
+ */
+export interface Advised {
+  target: string;
+  /** The first time it was noted first, and the day of the latest note, at home (a day's work is noted once). */
+  since: Instant;
+  day: string;
+  /** Where it stood when it was first noted first. */
+  first: AdvisedAt;
+  /** Where it stood at the latest note after new work (the latest piece's key), or when first noted: what practice since is read against. */
+  last: AdvisedAt & { key?: string };
+  /** What was first before it: from when, the day it was last first, and its level and forecast when it was first given and on that day. */
+  before?: { target: string; since: Instant; until: string; first: { level: number; forecast: number }; then: { level: number; forecast?: number } };
+}
+
+/** An input's level, its forecast at full precision, and discipline, at a note. */
+export interface AdvisedAt { at: Instant; level: number; forecast: number; discipline: number }
 
 export const experienceOf = (person: Person): Experience => {
   const e = (person.experience ??= { features: {}, approaches: {}, exercises: {} });
@@ -120,6 +145,10 @@ export interface Recommendation {
   forecast?: Forecast;
   /** Other training about as useful as this (from 2026-10-16, `tied`): said beside the first, so a near-tie isn't called a winner. */
   tiedWith?: string[];
+  /** How long it has been first and what has moved since it was first given, or what was first before it (from brief 11, `adviceFor`): the first training recommendation's. */
+  standing?: string;
+  /** What the player can do about it now (from brief 11, `adviceFor`): the exercise, where, what an hour costs and brings, or why not now. */
+  next?: string;
 }
 
 /**
@@ -231,7 +260,15 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
   }
   for (const [k, c] of dayCost) {
     if (c.points < RECOMMEND.floor) continue;
-    out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: Math.round(c.points * 10) / 10, why: c.kind === 'fit' ? `A way of playing that didn’t fit cost about ${Math.round(c.points * 10) / 10} points of the whole a piece: choose one the material or the direction takes.` : `${c.label} cost about ${Math.round(c.points * 10) / 10} points of the whole a piece: come to the work rested and well, or find places to breathe in it.` });
+    const each = Math.round(c.points * 10) / 10;
+    // Stamina draining through a piece's later parts is kept as a limit of the condition kind (`judgePiece`), but it's the
+    // body's fitness, not the day's (from 2026-10-17, brief 11, F3 and section 7): said as stamina, what builds it and
+    // what leaves less of it to drain. Until then it was said as the day's condition, under the label of the part it was
+    // first found in, "Stamina, By Beat 2 cost about 2.7 points of the whole a piece: come to the work rested and well, or
+    // find places to breathe in it", at fitness 15 on long taped briefs: rest restores energy, and a brief's drain reads
+    // none of it.
+    if (k === 'condition:stamina') { out.push({ target: k, label: 'Stamina', focus: 'stamina', points: each, why: `Stamina draining through the later parts of a piece cost about ${each} points of the whole a piece. It’s your fitness: Work Out, under Look After Yourself, builds it, and places to breathe in a piece leave less of it to drain; on a night, so does coming to the curtain rested. Rest restores energy, not fitness.` }); continue; }
+    out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: each, why: c.kind === 'fit' ? `A way of playing that didn’t fit cost about ${each} points of the whole a piece: choose one the material or the direction takes.` : `${c.label} cost about ${each} points of the whole a piece: come to the work rested and well, or find places to breathe in it.` });
   }
   // Ranked by the forecast's own figure where there is one: the tenth said can make two forecasts equal that aren't. From
   // brief 10 at full precision (`exact`), what the hours are forecast to bring, which is what's said and what's played
@@ -256,6 +293,11 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     const near = out.filter((r) => r !== firstTraining && r.forecast && tied(ownOf(r.forecast), ownOf(firstTraining.forecast!))).map((r) => r.label);
     // "Either" for one beside it, "any of them" for more (from brief 10: near mastery four or five can be within a tenth).
     if (near.length) { firstTraining.tiedWith = near; firstTraining.why = `${firstTraining.why} About as useful: ${near.join(', ')}; ${near.length === 1 ? 'either' : 'any of them'} is a sound next step.`; }
+    // What preparation would bring, apart from what training brings (from brief 11, F2-A10 (f)): said once, on the first,
+    // in its own figure. Until then a piece read as prepared was counted, and what its preparation was worth said nowhere.
+    const prep = firstTraining.forecast!.preparation;
+    const n = firstTraining.forecast!.prepared ?? 0;
+    if (prep !== undefined && n > 0) firstTraining.why = `${firstTraining.why} Apart from training: completing the preparation of ${n === 1 ? 'the piece' : `the ${n} pieces`} its own preparation held back most would bring ${n === 1 ? 'it' : 'them'} about ${Math.round(prep * 100) / 100} ${Math.round(prep * 100) === 100 ? 'point' : 'points'} a piece as you are now: that’s preparation, not training, and it isn’t in the ${firstTraining.points} above.`;
   }
   return out.slice(0, 5);
 }

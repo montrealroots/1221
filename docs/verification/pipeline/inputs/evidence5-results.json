@@ -3152,5 +3152,107 @@
     "defects": []
    }
   ]
+ },
+ {
+  "key": "remaining-11-journeys",
+  "testFile": "tests/evidence-g03-life.test.ts",
+  "rows": [
+   {
+    "id": "health.enroll",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-11-journeys",
+  "testFile": "tests/evidence3-lifepapers.test.ts",
+  "rows": [
+   {
+    "id": "health.enroll",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-11-journeys",
+  "testFile": "tests/need-paths.test.ts",
+  "rows": [
+   {
+    "id": "health.enroll",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-11-journeys",
+  "testFile": "tests/scope-cover.test.ts",
+  "rows": [
+   {
+    "id": "health.enroll",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-11-journeys",
+  "testFile": "tests/remaining-health-eligibility.test.ts",
+  "rows": [
+   {
+    "id": "health.enroll",
+    "testsAdded": [
+     {
+      "title": "health.apply: HUSKY D applied for on its notice, the month before read, decided after thirty days > PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $182,500, $465.00, she’s shown the work rules short",
+      "closes": "The work rules met by income the clock paid (interest), the arm off the School a played life reaches",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-11-journeys",
+  "testFile": "tests/remaining-health-billing.test.ts",
+  "rows": [
+   {
+    "id": "health.enroll",
+    "testsAdded": [
+     {
+      "title": "HUSKY D kept at its renewal through work, read over Connecticut’s six months > FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice",
+      "closes": "HUSKY D kept at its renewal through work, on the clock, with the wages no played life off the School has posted by hand",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-11-journeys",
+  "testFile": "tests/evidence2-b13.test.ts",
+  "rows": [
+   {
+    "id": "l-actor",
+    "testsAdded": [
+     {
+      "title": "i-ui-text > PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense, the one interest wording on either; its twin without the hour says none; an hour of practice takes the Listening column and the history keeps the line, across a save and a load",
+      "closes": "The look and the Profile on a migrated save carrying an interest: source, the line in both places, across a save and a load",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
  }
 ]

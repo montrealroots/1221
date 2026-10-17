@@ -517,7 +517,8 @@ export const SCHOOL: readonly GuideEntry[] = [
       `“A medical leave is on a Yale Health physician’s written recommendation, and nothing in the last ${LEAVE_RULES.medicalLookbackDays} days would bring one …”`,
       `“You’ve had N terms of leave; the Bulletin allows ${LEAVE_RULES.maxTerms} in all.”`,
       'Notice: “Its deadline has passed.”, or after a medical leave, why a physician can’t clear you yet.',
-      'Register: “A financial hold stops registration: … is owed on your Yale account.”',
+      // On leave from 2026-10-17 (brief 11): until then Register was drawn on a leave and registered her for the term she'd left.
+      'Register: “A financial hold stops registration: … is owed on your Yale account.”, or on leave “You’re on leave: you register for the term you come back to, when it begins.”',
       // The bank's refusal from 2026-10-16, when Affiliate cover began to be paid from the savings beside the current account
       // too; until then it was “Your bank can’t cover it.”, and this list left it out.
       'Affiliate cover: “The School pays for your Affiliate cover.” on a medical leave, “It could be bought until …”, or, as it’s paid in full, “Your current account and the savings beside it can pay … of it now: it’s paid in full, so move money into your current account first.” or “… have nothing to pay it with: move money into your current account first.”',
@@ -707,7 +708,9 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Held at Commencement, the diploma waits until it’s paid.',
       `The aid review’s answer is read when the next term begins. With an exception, its tuition isn’t billed and the term runs as one of the first ${SIX}; with need found, living aid goes on either way and meets the term’s Yale Health fee. A term billed before the answer isn’t credited back.`,
       `Converted hours are paid into your bank as grant aid on the processing day; for a nonresident on an F-1, ${pct(NONRESIDENT_SCHOLARSHIP_RATE)} is withheld for tax.`,
-      'A credit left on the account is refunded to your bank.',
+      // From 2026-10-17 (brief 11): until then a credit that cleared the account left its hold, which only a payment or a
+      // term's aid lifted.
+      'A credit on the account (a leave’s tuition rebate or Yale Health fee refunded, or a scholarship restored on appeal) that leaves nothing owed lifts a hold as a payment does, said in “The Financial Hold Is Lifted”; a credit left over is refunded to your bank.',
     ],
     interpret: [
       'Owed On Your Yale Account shows a warning when anything is owed; Financial Hold gives the day it began.',

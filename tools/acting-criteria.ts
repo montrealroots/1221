@@ -279,8 +279,60 @@ export function measureST6R(budgetFill = (n: number) => (600 - n) / 9) {
     restraintSuitsAndRestrainedSpecialistAhead: { ahead: withItAhead.length, of: withIt.length, note: 'both playing restrained, where restrained suits better: the specialist against the even actor at the criteria’s budget' },
     restraintsOwnDrawsPartOfTheLift: { mean: r4(drawsPart.reduce((t, v) => t + v, 0) / drawsPart.length), least: r4(Math.min(...drawsPart)), most: r4(Math.max(...drawsPart)), note: 'the restrained specialist’s lift over the even actor, both restrained, with restraint’s draws less without them' },
   };
+  // From 2026-10-17 (brief 11, section 8): the failing clauses sorted, beside the verdicts and not part of them. The owner
+  // asked which failures show missing gameplay (restraint's own abilities not read where the approved design says they
+  // are) and which a criterion that contradicts the approved design. Every change is made in this process and put back.
+  // - `ownAbilities`: the specialist against its twin, emotional depth, composure and focus at the even actor's 50 and the
+  //   nine held (a budget of 515, printed: an ablation, not a fair-budget comparison).
+  // - `share`: what restraint's three carry of a restrained take's ability effects, each +10 from the even actor.
+  // - `grain`: (a) as the grain's strength rises from nothing to its own; `budget`: (a) as the nine rise from 40.56.
+  // - `ownChoice`: against the grain, a restrained take ahead of the same actor's expansive one (ST6 as written's frame,
+  //   at full precision by more than 0.05), for the specialist, its twin and the even actor; for the specialist, (c)'s and
+  //   (e)'s questions asked of it in that frame, and its count with the grain at nothing and with restraint's draws out.
+  const TWIN = actor({ emotionalDepth: 50, composure: 50, focus: 50 }, budgetFill(235));
+  const take = (m: MaterialProfile, p: Performer, scale: Scale) => judgeOn(m, p, scale).exact!;
+  const twinGap = both.map((m) => ({ id: m.id, r: take(m, RES, 'restrained') - take(m, TWIN, 'restrained'), e: take(m, RES, 'expansive') - take(m, TWIN, 'expansive') }));
+  const grainCost = (m: MaterialProfile, p: Performer) => take(m, p, 'restrained') - withGrain(0, () => take(m, p, 'restrained'));
+  const costsLess = against.filter((m) => grainCost(m, RES) > grainCost(m, TWIN) + 1e-9);
+  const shareOf = (m: MaterialProfile) => {
+    const base = take(m, EVEN, 'restrained');
+    const eff = Object.fromEntries(ABILITIES.map((a) => [a, Math.max(0, take(m, actor({ [a]: 60 }, 50), 'restrained') - base)]));
+    const total = ABILITIES.reduce((t, a) => t + eff[a]!, 0);
+    return total > 0 ? (eff.emotionalDepth! + eff.composure! + eff.focus!) / total : 0;
+  };
+  const spread = (xs: number[]) => ({ mean: r4(xs.reduce((t, v) => t + v, 0) / xs.length), least: r4(Math.min(...xs)), most: r4(Math.max(...xs)) });
+  const aAt = (p: Performer) => against.filter((m) => take(m, p, 'restrained') - take(m, EVEN, 'expansive') > 0.05);
+  const strengths = [0, 0.1, 0.2, GRAIN.strength];
+  const byStrength = against.map((m) => strengths.map((s) => withGrain(s, () => take(m, RES, 'restrained') - take(m, EVEN, 'expansive'))));
+  const choiceOf = (p: Performer, prep = 1) => against.filter((m) => judgeOn(m, p, 'restrained', { prep }).exact! - take(m, p, 'expansive') > 0.05);
+  const chosen = choiceOf(RES);
+  const chosenWorks = byWork(chosen);
+  const chosenRate = (ms: MaterialProfile[]) => r4(pct(ms.filter((m) => chosen.includes(m)).length, ms.length));
+  const withoutDrawsChosen = (() => { R.inputs = {}; try { return choiceOf(RES).length; } finally { R.inputs = asBuilt; } })();
+  const sorting = {
+    budgets: { twin: budgetOf(TWIN) },
+    ownAbilities: {
+      restrainedBehindTheSpecialist: { ...spread(twinGap.map((g) => g.r)), of: twinGap.length },
+      byMoreThanPlayingExpansive: { count: twinGap.filter((g) => g.r - g.e > 0.05).length, of: twinGap.length, not: twinGap.filter((g) => !(g.r - g.e > 0.05)).map((g) => `${g.id}: ${r4(g.r - g.e)}`) },
+      theGrainCostsTheSpecialistLess: { count: costsLess.length, of: against.length },
+      twinWinsInA: aAt(TWIN).length,
+    },
+    share: { restraintSuits: spread(withIt.map(shareOf)), againstTheGrain: spread(against.map(shareOf)) },
+    grain: {
+      wins: strengths.map((s, i) => ({ strength: s, wins: byStrength.filter((xs) => xs[i]! > 0.05).length })),
+      nonIncreasing: byStrength.filter((xs) => xs.every((v, i) => i === 0 || v <= xs[i - 1]! + 1e-12)).length, of: against.length,
+      winsWithNoGrain: against.filter((_m, i) => byStrength[i]![0]! > 0.05).map((m) => `${m.id} (${r4(suit(m).e - suit(m).r)})`),
+    },
+    budget: [(600 - 235) / 9, 41, 42, 43, 44, 45, (600 - 235) / 8].map((f) => { const P = actor({ emotionalDepth: 85, composure: 75, focus: 75 }, f); return { budget: r4(budgetOf(P)), winsInA: aAt(P).length, aheadBothRestrainedWhereRestraintSuits: withIt.filter((m) => take(m, P, 'restrained') - take(m, EVEN, 'restrained') > 0.05).length }; }),
+    ownChoice: {
+      specialist: chosen.length, twin: choiceOf(TWIN).length, evenActor: choiceOf(EVEN).length, of: against.length, materials: chosen.map((m) => m.id),
+      halfRehearsed: choiceOf(RES, 0.5).length, smallerGapRate: chosenRate(smaller), largerGapRate: chosenRate(largerGap),
+      works: Object.keys(chosenWorks).length, mostFromOneWork: Math.max(0, ...Object.values(chosenWorks)), families: [...new Set(chosen.map(familyOf))],
+      withNoGrain: withGrain(0, () => choiceOf(RES).length), withoutRestraintsDraws: withoutDrawsChosen,
+    },
+  };
   return {
-    criterion: 'ST6-R (docs/verification/decisions-2026-10-16/criteria.md)', diagnostics,
+    criterion: 'ST6-R (docs/verification/decisions-2026-10-16/criteria.md)', diagnostics, sorting,
     budgets: { restrainedSpecialist: budgetOf(RES), expansiveSpecialist: budgetOf(EXP), evenActor: budgetOf(EVEN) },
     verdict, met: Object.values(verdict).every((v) => v.met), proposedB,
     st6AsWritten: { restrained: `${resWinsShown.length} of ${against.length}`, expansive: `${expWinsShown.length} of ${withIt.length}`, met: resWinsShown.length >= 0.25 * against.length && expWinsShown.length >= 0.25 * withIt.length, note: 'ST6 as written, superseded by ST6-R and kept as the record: each specialist’s own side against its other, as shown, on these budgets' },

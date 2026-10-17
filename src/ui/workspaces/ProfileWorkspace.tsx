@@ -262,7 +262,8 @@ function PracticeControl({ exercise }: { exercise: string }) {
  * held back for life and what that rests on, and first within half a point of the top. From 2026-10-16 it's forecast
  * (`adviceFor`, `systems/advice.ts`): what each input's hours of practice would be worth; from brief 10, later that day,
  * the recurring weakness is said where its forecast puts it, and where everything the recent work read that an exercise
- * trains is at full, the first line says so (`full:all`, no exercise).
+ * trains is at full, the first line says so (`full:all`, no exercise). From brief 11 (2026-10-17) the first training line
+ * says how long it has been first and what has moved since (`standing`), and what to do about it now (`next`).
  */
 function NextWork() {
   const { sim } = useGame();
@@ -278,7 +279,7 @@ function NextWork() {
     <div className="col gap-1">
       <div className="eyebrow">What To Work On Next</div>
       <ul className="small" style={{ margin: 0 }}>
-        {recs.map((r) => <li key={r.target}><strong>{r.label}</strong>{r.exercise ? `, ${EXERCISE_BY_ID[r.exercise]?.label ?? r.exercise} at the ${TIER.label[r.tier ?? 0].toLowerCase()} tier` : ''}. {r.why}{r.recurring && <> <span className="xs dim">From your work for life: {r.recurring.evidence.join('; ')}; it last held a piece back on {formatDate(r.recurring.last, sim.zone)}.</span></>}</li>)}
+        {recs.map((r) => <li key={r.target}><strong>{r.label}</strong>{r.exercise ? `, ${EXERCISE_BY_ID[r.exercise]?.label ?? r.exercise} at the ${TIER.label[r.tier ?? 0].toLowerCase()} tier` : ''}. {r.why}{r.recurring && <> <span className="xs dim">From your work for life: {r.recurring.evidence.join('; ')}; it last held a piece back on {formatDate(r.recurring.last, sim.zone)}.</span></>}{r.standing && <> <span className="xs" data-standing="">{r.standing}</span></>}{r.next && <> <span className="xs" data-next="">{r.next}</span></>}</li>)}
       </ul>
     </div>
   );

@@ -59,7 +59,9 @@ describe('PLAYER JOURNEY: a second-year leave, and back with the class a year be
     const carlotta = (school().credits ?? []).filter((c) => c.kind === 'carlotta');
     expect(carlotta.map((c) => c.year)).toEqual([2027]);
     expect(school().casting).toBeUndefined();
-    expect(sim.execute({ kind: 'school.reregister', payload: {} }).error).toMatch(/registered/);
+    // On the leave there's no term to register for: the return asks (from 2026-10-17, brief 11's journeys, where a term begun
+    // under a hold and left registered her for the term she was away from). Until then the refusal here was "registered".
+    expect(sim.execute({ kind: 'school.reregister', payload: {} }).error).toMatch(/on leave: you register for the term you come back to/);
 
     // Notice of return, once; a second time refused.
     sim.must({ kind: 'school.return_notice', payload: {} });

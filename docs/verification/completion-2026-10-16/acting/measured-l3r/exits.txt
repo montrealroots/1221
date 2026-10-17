@@ -1,0 +1,10 @@
+at c3e05866, 2 files uncommitted
+journey-beginner-bj-0 exit=0 cmd: npx vite-node tools/brief-journeys.ts -- --profile beginner --seed bj-0 --days 120 --write <out>/journey-beginner-bj-0.json --trace <out>/l3-trace-beginner-bj-0.json
+journey-beginner-bj-1 exit=0 cmd: npx vite-node tools/brief-journeys.ts -- --profile beginner --seed bj-1 --days 120 --write <out>/journey-beginner-bj-1.json --trace <out>/l3-trace-beginner-bj-1.json
+journey-developing-bj-0 exit=0 cmd: npx vite-node tools/brief-journeys.ts -- --profile developing --seed bj-0 --days 120 --write <out>/journey-developing-bj-0.json --trace <out>/l3-trace-developing-bj-0.json
+journey-developing-bj-1 exit=0 cmd: npx vite-node tools/brief-journeys.ts -- --profile developing --seed bj-1 --days 120 --write <out>/journey-developing-bj-1.json --trace <out>/l3-trace-developing-bj-1.json
+journey-specialist-bj-0 exit=0 cmd: npx vite-node tools/brief-journeys.ts -- --profile specialist --seed bj-0 --days 120 --write <out>/journey-specialist-bj-0.json --trace <out>/l3-trace-specialist-bj-0.json
+journey-specialist-bj-1 exit=0 cmd: npx vite-node tools/brief-journeys.ts -- --profile specialist --seed bj-1 --days 120 --write <out>/journey-specialist-bj-1.json --trace <out>/l3-trace-specialist-bj-1.json
+journey-generalist-bj-0 exit=0 cmd: npx vite-node tools/brief-journeys.ts -- --profile generalist --seed bj-0 --days 120 --write <out>/journey-generalist-bj-0.json --trace <out>/l3-trace-generalist-bj-0.json
+journey-generalist-bj-1 exit=0 cmd: npx vite-node tools/brief-journeys.ts -- --profile generalist --seed bj-1 --days 120 --write <out>/journey-generalist-bj-1.json --trace <out>/l3-trace-generalist-bj-1.json
+l3r exit=0 cmd: node tools/l3r.mjs <out>

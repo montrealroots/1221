@@ -25,6 +25,10 @@
  *   withheld degree say what still stands, and the practice they name is pressed after.
  * - Yale's policy against SLATE's design: what the guide and the screen say of each rule, read against the 2026–2027
  *   Bulletin (read 2026-10-16), with the corrections asserted.
+ * - From 2026-10-17 (brief 11's defect.yale-credit-hold): a credit that clears a held Yale account lifts the hold, played
+ *   on sc-x3's third year with a medical leave's tuition rebate and, on a term begun under the hold, its fee refunded and
+ *   its tuition rebated; a credit that leaves something owed keeps it; an older save's hold kept over nothing owed is
+ *   lifted on opening.
  *
  * Every figure is worked here from the rules' own numbers and written as a literal, never asked of the engine's helper:
  * the Bulletin's nine semesters; a leave of two terms; five of Yale's working days to a decision; thirty days for an
@@ -42,7 +46,8 @@
  * each time the clock moves, as tests/scope-school.test.ts plays one; the flu on a day called in sick and before a
  * medical leave, as illness comes by the draw; two stays in hospital put on the care log, as admissions make them; the
  * hospital, an injury, the flu or a low condition at a moment a refusal reads it; the Scraping family, as creation's
- * select gives it; a three-term leave's length and a deadline's item called off, where only a guard is reached.
+ * select gives it; a three-term leave's length and a deadline's item called off, where only a guard is reached; and a
+ * hold put back over nothing owed, as a build before 2026-10-17 left one.
  */
 import { describe, expect, it, vi } from 'vitest';
 import { createElement, type FunctionComponent } from 'react';
@@ -699,6 +704,152 @@ describe('school.d-not-registered-hold: a term begun under a financial hold', ()
     const before = sim.player.school!.tally.attended;
     tend(sim, onDay(classDays(7)[1]!, 12));
     expect(sim.player.school!.tally.attended).toBe(before + 1);
+  }, 600_000);
+});
+
+// ---------------------------------------------------------------------------
+// defect.yale-credit-hold (brief 11, section 5)
+// ---------------------------------------------------------------------------
+
+/**
+ * A credit that clears a held Yale account (from 2026-10-17, brief 11): every credit on the account is a leave's, at its
+ * start (`startLeave`: Yale Health's fee refunded where the cover goes back to the insurance term's start, the tuition of a
+ * billed term rebated on the schedule) or on an appeal that overturns a mandatory leave (`rescind`: the living-expense
+ * scholarship it returned, restored). The first two reach a hold in play, and are played here on sc-x3's third year,
+ * billed and unpaid as `clownFailed` leaves it. The third doesn't: the scholarship is returned only on a term the
+ * scholarship aids, an appeal is decided within twelve days of the leave (seven to appeal, five working days to decide),
+ * before the thirty days that returned scholarship is due in, and the only hold an aided term can begin under is cleared
+ * by its own scholarship first (journeys.d-aid-past-balance). Nor does any credit reach a degree held for the account:
+ * a leave is refused once the terms are done (“Your terms are done; what’s left is the degree.”), so the degree's
+ * conferral on the hold's lift is the payment's (tests/leave.test.ts).
+ *
+ * Figures worked from the rules, as this file's others are: Fall Term 2029's $22,407.28 tuition and $2,377.37 Yale Health
+ * plan (school.d-not-registered-hold) billed on Monday 27 August, due thirty days on, Wednesday 26 September, when
+ * unpaid the hold comes with the month's $125.00 late fee, to the term's $375.00; a leave's tuition rebate the Bulletin's
+ * schedule, all of it within a tenth of the classes, half within a quarter, a quarter within half (p.183): classes from
+ * Monday 3 September to Friday 14 December, so a medical leave decided at noon on Thursday 4 October (five of Yale's
+ * working days from Thursday 27 September) begins 31.5 days into 102.96, 31%, and rebates a quarter, $5,601.82.
+ */
+describe('defect.yale-credit-hold: a credit that clears a held Yale account lifts the hold, and only that', () => {
+  /** sc-x3 under Fall Term 2029's hold, the day after it came: $24,909.65 owed. */
+  const heldInTheFall = once(() => {
+    const sim = thaw(clownFailed());
+    tend(sim, onDay(termStart(6).date, 12) + 31 * MS_DAY);
+    expect(sim.player.school!.hold).toBe(at(2029, 9, 26));
+    expect(accountOwed(sim, sim.player)).toBe(24_909_65);
+    return freeze(sim);
+  });
+  const refunded = (sim: Simulation) => sim.universe.transactions.filter((t) => t.memo === 'Yale account credit balance refunded').map((t) => Math.max(...t.postings.map((p) => p.amount)));
+
+  it('DEFECT: owing $24,909.65 under the hold, she pays $20,000.00 and takes a medical leave (TEST SETUP: the flu); its quarter of the tuition rebated, $5,601.82, clears the $4,909.65 left and refunds $692.17: the hold lifts at noon on 4 October, said once, across a reload; Pay is refused with nothing owed, no late fee comes, and back for Fall Term 2030 she registers (until 2026-10-17 the hold stayed over nothing owed, and refused that registration)', () => {
+    let sim = thaw(heldInTheFall());
+    const school = () => sim.player.school!;
+    sim.must({ kind: 'school.pay_balance', payload: { amount: 20_000_00 } });
+    expect(accountOwed(sim, sim.player)).toBe(4_909_65);
+    expect(school().hold).toBe(at(2029, 9, 26));
+    flu(sim);
+    const asked = sim.must<{ decideAt: Instant; firstTerm: number }>({ kind: 'school.request_leave', payload: { kind: 'medical', reason: 'illness' } });
+    expect(asked).toMatchObject({ decideAt: at(2029, 10, 4, 12), firstTerm: 6 });
+    sim = reload(sim);
+    tend(sim, asked.decideAt + MS_HOUR);
+    expect(school().leave!.status).toBe('on');
+    expect(sim.universe.transactions.filter((t) => t.memo === 'Tuition rebated (25%), Fall Term 2029: leave of absence')).toHaveLength(1);
+    expect(accountOwed(sim, sim.player)).toBe(0);
+    expect(refunded(sim)).toEqual([692_17]);
+    // The hold's own condition met, it lifts, said once in what cleared it.
+    expect(school().hold).toBeUndefined();
+    expect(titled(sim, 'The Financial Hold Is Lifted').map((n) => [n.at, n.body])).toEqual([[at(2029, 10, 4, 12), 'The tuition rebated on your leave (25%), $5,601.82, clears your Yale account, and the $692.17 over what it owed is refunded to your bank. Registration and the diploma are open to you again.']]);
+    expect(refused(sim, 'school.pay_balance')).toBe('Your Yale account owes no balance.');
+    sim = reload(sim);
+    expect(school().hold).toBeUndefined();
+    // The month's due date finds nothing owed: no fee, no hold said again.
+    tend(sim, at(2029, 10, 27, 12));
+    expect([accountOwed(sim, sim.player), school().lateFees]).toEqual([0, { 6: 125_00 }]);
+    expect(titled(sim, 'A Financial Hold')).toHaveLength(1);
+    // Back from the leave: notice given, Fall Term 2030 begins, registration is asked and taken.
+    sim.must({ kind: 'school.return_notice', payload: {} });
+    tend(sim, onDay(termStart(8).date, 12));
+    expect(school().leave).toBeUndefined();
+    expect(school().mustRegister).toBe(true);
+    expect(school().hold).toBeUndefined();
+    sim.must({ kind: 'school.reregister', payload: {} });
+    expect(school().mustRegister).toBeUndefined();
+    expect(titled(sim, 'The Financial Hold Is Lifted')).toHaveLength(1);
+  }, 600_000);
+
+  it('PLAYER JOURNEY: her twin pays $15,000.00: the same $5,601.82 rebate leaves $4,307.83 owed, and the hold stands, nothing said; the month’s fees go on to the term’s $375.00, $4,557.83, and back for Fall Term 2030 the hold refuses registration until it’s paid, when it lifts, once, and she registers', () => {
+    let sim = thaw(heldInTheFall());
+    const school = () => sim.player.school!;
+    sim.must({ kind: 'school.pay_balance', payload: { amount: 15_000_00 } });
+    flu(sim);
+    const asked = sim.must<{ decideAt: Instant }>({ kind: 'school.request_leave', payload: { kind: 'medical', reason: 'illness' } });
+    tend(sim, asked.decideAt + MS_HOUR);
+    expect(sim.universe.transactions.filter((t) => t.memo === 'Tuition rebated (25%), Fall Term 2029: leave of absence')).toHaveLength(1);
+    expect(accountOwed(sim, sim.player)).toBe(4_307_83);
+    expect(refunded(sim)).toEqual([]);
+    expect(school().hold).toBe(at(2029, 9, 26));
+    expect(titled(sim, 'The Financial Hold Is Lifted')).toHaveLength(0);
+    sim = reload(sim);
+    tend(sim, at(2029, 12, 1, 12));
+    expect(accountOwed(sim, sim.player)).toBe(4_557_83);
+    expect(school().lateFees).toEqual({ 6: 375_00 });
+    sim.must({ kind: 'school.return_notice', payload: {} });
+    tend(sim, onDay(termStart(8).date, 12));
+    expect(school().hold).toBe(at(2029, 9, 26));
+    expect(refused(sim, 'school.reregister')).toMatch(/^A financial hold stops registration: \$30,256\.57 is owed on your Yale account\.$/);
+    sim.must({ kind: 'school.pay_balance', payload: {} });
+    expect(school().hold).toBeUndefined();
+    expect(titled(sim, 'The Financial Hold Is Lifted').map((n) => n.body)).toEqual(['Your Yale account is paid. Registration and the diploma are open to you again.']);
+    sim.must({ kind: 'school.reregister', payload: {} });
+  }, 600_000);
+
+  it('PLAYER JOURNEY: Spring Term 2030 begun under the fall’s hold, $49,944.30 owed and registration asked; she pays the fall’s $25,159.65 and takes a medical leave before classes (TEST SETUP: the flu): its Yale Health fee refunded, $2,377.37, leaves the tuition owed and the hold stands; its tuition rebated in full, $22,407.28, clears it, and the hold lifts, said once in the rebate’s words, the registration the term asked for still asked, kept for her return: on the leave Standing draws no Register and the command is refused', () => {
+    const sim = thaw(clownFailed());
+    const school = () => sim.player.school!;
+    tend(sim, onDay(termStart(7).date, 12));
+    expect([accountOwed(sim, sim.player), school().hold, school().mustRegister]).toEqual([49_944_30, at(2029, 9, 26), true]);
+    sim.must({ kind: 'school.pay_balance', payload: { amount: 25_159_65 } });
+    expect([accountOwed(sim, sim.player), school().hold]).toEqual([24_784_65, at(2029, 9, 26)]);
+    flu(sim);
+    const asked = sim.must<{ decideAt: Instant }>({ kind: 'school.request_leave', payload: { kind: 'medical', reason: 'illness' } });
+    // Decided at noon on Monday 14 January, the classes' first day: before they're over, so the cover goes back.
+    expect(asked.decideAt).toBe(at(2030, 1, 14, 12));
+    tend(sim, asked.decideAt + MS_HOUR);
+    expect(school().leave).toMatchObject({ status: 'on', retro: true, feeRefund: 2_377_37 });
+    const credits = sim.universe.transactions.filter((t) => t.at === asked.decideAt && t.category === 'school').map((t) => t.memo);
+    expect(credits).toEqual(['Yale Health fee refunded, Spring Term 2030: cover canceled back to the insurance term’s start', 'Tuition rebated (100%), Spring Term 2030: leave of absence']);
+    expect(accountOwed(sim, sim.player)).toBe(0);
+    // Lifted by the second credit, not the first, which left the tuition owed.
+    expect(titled(sim, 'The Financial Hold Is Lifted').map((n) => n.body)).toEqual(['The tuition rebated on your leave (100%), $22,407.28, clears your Yale account. Registration and the diploma are open to you again.']);
+    expect(school().hold).toBeUndefined();
+    expect(school().mustRegister).toBe(true);
+    // On leave, the term she left isn't one to register for: Standing draws no Register, and the command is refused in
+    // its words, the registration kept for the return (until 2026-10-17 both registered her for the term she'd left).
+    expect(drawn(sim, LeavePanel).text).not.toContain('Register for');
+    expect(drew('school.reregister')).toEqual([]);
+    expect(refused(sim, 'school.reregister')).toBe('You’re on leave: you register for the term you come back to, when it begins.');
+    expect(school().mustRegister).toBe(true);
+  }, 600_000);
+
+  it('FIXTURE: a save from before 2026-10-17 that kept the hold over nothing owed (TEST SETUP: the hold put back after the rebate cleared the account, as that build left it) has it lifted on opening, said once, and later openings say nothing; one over something owed keeps it', () => {
+    let sim = thaw(heldInTheFall());
+    sim.must({ kind: 'school.pay_balance', payload: { amount: 20_000_00 } });
+    flu(sim);
+    const asked = sim.must<{ decideAt: Instant }>({ kind: 'school.request_leave', payload: { kind: 'medical', reason: 'illness' } });
+    tend(sim, asked.decideAt + MS_HOUR);
+    expect(accountOwed(sim, sim.player)).toBe(0);
+    // TEST SETUP: the hold as the build before 2026-10-17 left it, with nothing said of a lift.
+    sim.player.school!.hold = at(2029, 9, 26);
+    sim.universe.notifications = sim.universe.notifications.filter((n) => n.title !== 'The Financial Hold Is Lifted');
+    sim = reload(sim);
+    expect(sim.player.school!.hold).toBeUndefined();
+    expect(titled(sim, 'The Financial Hold Is Lifted').map((n) => n.body)).toEqual(['Your Yale account owes nothing: a credit on it cleared it. Registration and the diploma are open to you again.']);
+    sim = reload(sim);
+    expect(titled(sim, 'The Financial Hold Is Lifted')).toHaveLength(1);
+    // A hold over something owed is kept as the save has it.
+    const owing = thaw(heldInTheFall());
+    expect(owing.player.school!.hold).toBe(at(2029, 9, 26));
+    expect(titled(owing, 'The Financial Hold Is Lifted')).toHaveLength(0);
   }, 600_000);
 });
 

@@ -7925,12 +7925,12 @@
     {
       "id": "l-actor",
       "kind": "look",
-      "entry": "looks/actor.tsx sourceWords 'interest' branch (actor.tsx:66)",
+      "entry": "looks/actor.tsx sourceWords ‘interest’ branch (actor.tsx:65). Until 2026-10-17 this said :66",
       "reads": "development history source",
       "changes": "none",
       "downstream": "",
       "explanation": "Labels history entries from before the removal: legitimate.",
-      "tests": "None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the actor look.",
+      "tests": "tests/evidence2-b13.test.ts ‘PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense…’ (a save as 93 wrote it, migrated through openSlot, the line twice on each and nowhere else, its twin without the hour saying none). Until 2026-10-17 this said none reached the branch, which was so when the row was read",
       "status": "legacy",
       "issue": "None. The header (actor.tsx:1-4) said 'an interest' was among what it opens until the interests went on 2026-10-10; it now says so in the past tense.",
       "corrected": {
@@ -7974,6 +7974,42 @@
       "verification": {
         "class": "legacy",
         "label": "Older Saves Only"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "evidence2-b13.test.ts",
+            "title": "i-ui-text > PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense, the one interest wording on either; its twin without the hour says none; an hour of practice takes the Listening column and the history keeps the line, across a save and a load",
+            "kind": "fixture",
+            "closes": "The look and the Profile on a migrated save carrying an interest: source, the line in both places, across a save and a load",
+            "round": "remaining-11-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "disposition": "verified",
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "legacy",
+        "check": {
+          "holds": true,
+          "verdict": "legacy",
+          "problems": [
+            "Recorded as legacy by the coordinator (2026-10-17): the second reader found the claim holds, and this row is Older Saves Only, a path only a save from before schema 94 reaches, whose status in the audit is its class (docs/GAMEPLAY-COVERAGE.md: the legacy rows are outside what can be verified, and the matrix counts one verified where its tests cite a test). Its test is cited in its tests field from this day.",
+            "Closed, the review's one gap (no test reaches the 'interest' branch) and its UI need (no look or Profile render shows an old interest entry). tests/evidence2-b13.test.ts 'i-ui-text > PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, …' writes a save as 93 wrote it, with a development entry whose source is 'interest:sound_design' (TEST SETUP). It opens the save through openSlot, so migration 94 runs. It asserts the migration 93→94 and the history kept whole. It then draws the ProfileWorkspace and resolves and renders the ability look (resolveLook(at('ability','listening'))) as the screen does.",
+            "The test checks what the row says the change reads: the label in the look's Last Change ('Last Change +0.12 An interest, from before they were removed, August 27, 2026') and its list, and in the Profile's Listening row and Development History. Each is exactly twice, with no other 'interest' on either. It holds after a practice hour and after a save and load.",
+            "Its expectations are independent: a literal string (THE_LINE), not a call to sourceWords. It isn't vacuous: there are exact counts, a twin without the hour that says none, and the line leaving the Listening column after practice while the history keeps it. By reading, cutting the branch at actor.tsx:69 makes sourceWords return the raw 'interest' kind, and every toContain on the line fails. The journeys area's 'removed in a copy fails it' agrees.",
+            "The latest skeptic's checks.json holds no entry for l-actor, so no problem from it stays open. The 93 save is written by hand, but for a branch reached only by a save from before schema 94, opening such a save through openSlot is the player's own path. It is the condition the row describes, not a shortcut past play.",
+            "Ran alone on dcd59fba: tests/evidence2-b13.test.ts, 6 tests, exit 0."
+          ],
+          "weakTests": []
+        }
       }
     },
     {

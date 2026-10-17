@@ -16,6 +16,9 @@
  * case renamed (i).
  *
  * Until brief 10 it ran F2-A's adv-N alone and read each brief's shown tenth; and it imported `writeFileSync` twice.
+ * From brief 11 (2026-10-17) it also measures (f) and (h) as clarified (docs/verification/completion-2026-10-16/
+ * clarifications.md): preparation's own figure against the judge's replay, and the trained input's forecast at the
+ * discipline it had, beside each as written.
  *
  *   npx vite-node tools/advice.ts -- --cases tuning [--out file.json]
  *   npx vite-node tools/advice.ts -- --cases adv-h-0..9 --held-out --out docs/verification/decisions-2026-10-16/advice/h-000.json
@@ -31,12 +34,13 @@ import { BRIEF_BY_ID } from '../src/engine/content/briefs';
 import type { Skill } from '../src/engine/content/school';
 import { exerciseFor } from '../src/engine/content/practice';
 import type { Simulation } from '../src/engine/core/simulation';
-import type { WorkRecord } from '../src/engine/systems/evaluation';
+import { performerOf, replayAs, type WorkRecord } from '../src/engine/systems/evaluation';
+import { TASK_PROFILES } from '../src/engine/content/tasks';
 import { adviceFor } from '../src/engine/systems/next-steps';
-import { trainingForecast, type Forecast } from '../src/engine/systems/advice';
-import { abilityFull, isAbility, levelOf } from '../src/engine/systems/attributes';
+import { forecastWork, genreNow, trainingForecast, type Forecast } from '../src/engine/systems/advice';
+import { abilityFull, abilityOf, isAbility, levelOf } from '../src/engine/systems/attributes';
 import type { Recommendation } from '../src/engine/systems/experience';
-import { RECENT, caseOf, candidatesOf, clone, buildCase, f2aCase, isFull, live, setLevel, worthOf, type CaseSpec } from './advice-harness';
+import { RECENT, casesOf, candidatesOf, clone, buildCase, f2aCase, heldOutRefusal, isFull, live, setLevel, worthOf, type CaseSpec } from './advice-harness';
 
 const argv = process.argv.slice(2);
 const arg = (n: string, d = '') => { const i = argv.indexOf(`--${n}`); return i >= 0 ? argv[i + 1]! : d; };
@@ -46,20 +50,8 @@ const pointsOf = (f: Forecast | undefined): number | undefined => (f ? ((f as Fo
 const r3 = (x: number) => Math.round(x * 1000) / 1000;
 const median = (xs: readonly number[]) => { const s = [...xs].sort((a, b) => a - b); const m = Math.floor(s.length / 2); return s.length % 2 ? s[m]! : (s[m - 1]! + s[m]!) / 2; };
 
-/** The cases a `--cases` list names: `tuning`, `held-out`, a seed, or a range `adv-h-0..9`. */
-function casesOf(list: string): CaseSpec[] {
-  const out: string[] = [];
-  for (const item of list.split(',').map((x) => x.trim()).filter(Boolean)) {
-    if (item === 'tuning') out.push(...Array.from({ length: 10 }, (_, i) => `adv-${i}`), ...Array.from({ length: 20 }, (_, i) => `adv-t-${i}`));
-    else if (item === 'held-out') out.push(...Array.from({ length: 30 }, (_, i) => `adv-${i + 10}`), ...Array.from({ length: 120 }, (_, i) => `adv-h-${i}`));
-    else {
-      const m = /^(.*-)(\d+)\.\.(\d+)$/.exec(item);
-      if (m) for (let n = Number(m[2]); n <= Number(m[3]); n += 1) out.push(`${m[1]}${n}`);
-      else out.push(item);
-    }
-  }
-  return out.map((seed) => { const c = caseOf(seed); if (!c) throw new Error(`${seed} is no case of F2-A or F2-A10`); return c; });
-}
+// The cases a `--cases` list names (`casesOf`) and the held-out refusal (`heldOutRefusal`) moved to
+// tools/advice-harness.ts on 2026-10-17 (brief 11), unchanged, so a gate test reads what this runs.
 
 /** The work the advice and the realized gain read: the latest `RECENT` pieces. */
 const recentWork = (sim: Simulation): WorkRecord[] => [...(sim.player.work ?? [])].sort((a, b) => a.at - b.at).slice(-RECENT);
@@ -118,6 +110,18 @@ function measure(spec: CaseSpec) {
       const leads = leader !== undefined && (after === undefined ? leader.p >= 0.1 : leader.p > after);
       const firstAfter = again.find((x) => x.forecast)?.target;
       h = { before: r3(before), after: after === undefined ? null : r3(after), atFullAfter: isFull(c, id), fell: after === undefined ? isFull(c, id) : after < before, leader: leader?.k, leaderPoints: leader ? r3(leader.p) : undefined, leads, firstAfter, ok: !leads || firstAfter !== id, tieLead: leads && after !== undefined && leader!.p - after <= 0.1 };
+      // (h) as clarified (from brief 11, 2026-10-17; docs/verification/completion-2026-10-16/clarifications.md): the
+      // trained input's forecast at the discipline it had before the sessions (`ownFell`), a rise no more than what
+      // discipline's lift adds (`withinLift`), and where it rose since the advice's own note, the advice saying so.
+      if (after !== undefined) {
+        const held = clone(c);
+        setLevel(held, 'discipline', abilityOf(sim, sim.player, 'discipline'));
+        const atBefore = pointsOf(trainingForecast(held, held.player).get(id))!;
+        const mine = again.find((x) => x.target === id);
+        const noted = c.player.experience?.advised;
+        const roseSinceNote = noted?.target === id && noted.last.forecast !== undefined && after > noted.last.forecast;
+        h = { ...h, atBeforeDiscipline: r3(atBefore), ownFell: atBefore < before, rose: after > before, withinLift: after - before <= after - atBefore + 1e-12, roseSinceNote, explained: roseSinceNote ? Boolean(mine?.standing?.includes('of the change is discipline’s')) : undefined };
+      }
     }
   }
   const ranked = Object.entries(realized).filter(([k]) => candidates.includes(k)).sort((a, b) => b[1] - a[1]);
@@ -168,7 +172,16 @@ function measure(spec: CaseSpec) {
   const stepsGap = gap(predicted, trainingForecast(sim, sim.player, asPrepared(sim.player.work ?? [], ownStep, ['genre'])));
   const prepAny = last.some((w) => w.limits.some((l) => l.kind === 'preparation'));
   const anyGap = gap(predicted, trainingForecast(sim, sim.player, asPrepared(sim.player.work ?? [], () => true)));
-  const f = { ladder, falls: exactLadder ? falling(exactLadder) : undefined, leastDrop: exactLadder ? drop(exactLadder) : undefined, every: everyLadder ? { n: Object.keys(everyLadder).length, falling: Object.values(everyLadder).filter(falling).length, rising: Object.entries(everyLadder).filter(([, l]) => !falling(l)).map(([k, l]) => `${k} ${l.map((x) => x.toFixed(5)).join(' → ')}`) } : undefined, prep: { limited: prepChief, largest: r3(chiefGap), same: chiefGap < 1e-9, stepsLimited: prepSteps, stepsLargest: r3(stepsGap), stepsSame: stepsGap < 1e-9, anyLimited: prepAny, anyLargest: r3(anyGap), anySame: anyGap < 1e-9 } };
+  // (f) as clarified (from brief 11): preparation's own figure (`Forecast.preparation`) against the judge's replay of each
+  // recent piece its own preparation held back, as prepared less as taped, weighted to the latest; and never in training's.
+  const read = forecastWork(sim.player.work ?? []).map(genreNow(sim.player));
+  const W = read.reduce((t, _w, i) => t + (i + 1) / read.length, 0);
+  const me = performerOf(sim, sim.player);
+  const judged = (w: WorkRecord) => { const x = replayAs(w, TASK_PROFILES[w.task]!, me); return x ? x.exact ?? x.overall : 0; };
+  const worked = read.reduce((t, w, i) => (ownStep(w) ? t + ((judged(asPrepared([w], () => true, ['genre'])[0]!) - judged(w)) * (i + 1)) / read.length / W : t), 0);
+  const prepSaid = first?.forecast?.preparation;
+  const preparation = { pieces: read.filter(ownStep).length, said: prepSaid === undefined ? null : r3(prepSaid), worked: r3(worked), same: read.some(ownStep) ? prepSaid !== undefined && Math.abs(prepSaid - worked) < 1e-9 : prepSaid === undefined, apart: [...predicted.values()].every((x) => Math.abs((x.exact ?? x.points) - ((x.own ?? 0) + (x.days ?? 0))) < 1e-12) };
+  const f = { ladder, falls: exactLadder ? falling(exactLadder) : undefined, leastDrop: exactLadder ? drop(exactLadder) : undefined, every: everyLadder ? { n: Object.keys(everyLadder).length, falling: Object.values(everyLadder).filter(falling).length, rising: Object.entries(everyLadder).filter(([, l]) => !falling(l)).map(([k, l]) => `${k} ${l.map((x) => x.toFixed(5)).join(' → ')}`) } : undefined, prep: { limited: prepChief, largest: r3(chiefGap), same: chiefGap < 1e-9, stepsLimited: prepSteps, stepsLargest: r3(stepsGap), stepsSame: stepsGap < 1e-9, anyLimited: prepAny, anyLargest: r3(anyGap), anySame: anyGap < 1e-9, preparation } };
 
   // (g) the reason: the gain it expects, how many of the pieces it read, and a piece by name.
   const titles = [...new Set(takes.slice(-RECENT).map((t) => BRIEF_BY_ID[t.brief]!.title))];
@@ -211,9 +224,11 @@ function summarize(cases: readonly CaseOut[]) {
     c: { named: named.length, atOrAboveMedian: named.filter((x) => x.c.atOrAboveMedian).length, share: r3(named.filter((x) => x.c.atOrAboveMedian).length / Math.max(1, named.length)), firstMean: r3(firstMean), randomMean: r3(randomMean), ratio: r3(firstMean / (randomMean || 1)) },
     d: { casesWithViolation: cases.filter((x) => x.d.violations.length).length, nearMastery: near.length, allFullSaid: near.filter((x) => x.d.allFull.says && !x.d.allFull.named.length).length, allFullSaidEveryCase: cases.filter((x) => x.d.allFull.says && !x.d.allFull.named.length).length },
     e: { named: named.length, within: named.filter((x) => (x.e as { within?: boolean }).within).length, share: r3(named.filter((x) => (x.e as { within?: boolean }).within).length / Math.max(1, named.length)), meanError: r3(mean(named.map((x) => ((x.e as { realized: number }).realized - (x.e as { predicted: number }).predicted)))) },
-    f: { nearMastery: near.length, ladderFalls: near.filter((x) => x.f.falls).length, everyCandidate: near.reduce((t, x) => t + (x.f.every?.falling ?? 0), 0), ofCandidates: near.reduce((t, x) => t + (x.f.every?.n ?? 0), 0), prepLimited: cases.filter((x) => x.f.prep.limited).length, prepSame: cases.filter((x) => x.f.prep.limited && x.f.prep.same).length, prepStepsLimited: cases.filter((x) => x.f.prep.stepsLimited).length, prepStepsSame: cases.filter((x) => x.f.prep.stepsLimited && x.f.prep.stepsSame).length, prepAnyLimited: cases.filter((x) => x.f.prep.anyLimited).length, prepAnySame: cases.filter((x) => x.f.prep.anyLimited && x.f.prep.anySame).length },
+    f: { prepPieces: cases.filter((x) => x.f.prep.preparation.pieces > 0).length, prepSaid: cases.filter((x) => x.f.prep.preparation.pieces > 0 && x.f.prep.preparation.same).length, prepSameEvery: cases.filter((x) => x.f.prep.preparation.same).length, prepApart: cases.filter((x) => x.f.prep.preparation.apart).length, nearMastery: near.length, ladderFalls: near.filter((x) => x.f.falls).length, everyCandidate: near.reduce((t, x) => t + (x.f.every?.falling ?? 0), 0), ofCandidates: near.reduce((t, x) => t + (x.f.every?.n ?? 0), 0), prepLimited: cases.filter((x) => x.f.prep.limited).length, prepSame: cases.filter((x) => x.f.prep.limited && x.f.prep.same).length, prepStepsLimited: cases.filter((x) => x.f.prep.stepsLimited).length, prepStepsSame: cases.filter((x) => x.f.prep.stepsLimited && x.f.prep.stepsSame).length, prepAnyLimited: cases.filter((x) => x.f.prep.anyLimited).length, prepAnySame: cases.filter((x) => x.f.prep.anyLimited && x.f.prep.anySame).length },
     g: { recs: cases.reduce((t, x) => t + x.g.recs, 0), ok: cases.reduce((t, x) => t + x.g.ok, 0) },
-    h: { cases: hs.length, fell: hs.filter((x) => (x.h as { fell: boolean }).fell).length, leads: leads.length, changedWhereLed: leads.filter((x) => (x.h as { ok: boolean }).ok).length, leadsWithinATie: leads.filter((x) => (x.h as { tieLead: boolean }).tieLead).length },
+    h: { cases: hs.length, fell: hs.filter((x) => (x.h as { fell: boolean }).fell).length, leads: leads.length, changedWhereLed: leads.filter((x) => (x.h as { ok: boolean }).ok).length, leadsWithinATie: leads.filter((x) => (x.h as { tieLead: boolean }).tieLead).length,
+      // As clarified (from brief 11): the input's own part fell, a rise within discipline's lift, a rise explained.
+      ownFell: hs.filter((x) => (x.h as { ownFell?: boolean }).ownFell).length, rose: hs.filter((x) => (x.h as { rose?: boolean }).rose).length, withinLift: hs.filter((x) => (x.h as { withinLift?: boolean }).withinLift).length, roseSinceNote: hs.filter((x) => (x.h as { roseSinceNote?: boolean }).roseSinceNote).length, explained: hs.filter((x) => (x.h as { explained?: boolean }).explained).length },
     i: { same: cases.filter((x) => x.i.same).length },
   };
 }
@@ -248,7 +263,8 @@ if (argv.includes('--summarize')) {
   if (out) writeFileSync(out, `${JSON.stringify(summary, null, 1)}\n`);
 } else {
   const specs = casesOf(arg('cases', 'tuning'));
-  if (specs.some((x) => x.set === 'held-out') && !argv.includes('--held-out')) throw new Error('A held-out seed is run only with --held-out, once, on the code to be reported.');
+  const refused = heldOutRefusal(specs, argv.includes('--held-out'));
+  if (refused) throw new Error(refused);
   const cases: CaseOut[] = [];
   for (const spec of specs) {
     const x = measure(spec);

@@ -1,0 +1,4997 @@
+{
+ "baseline": {
+  "frozen": "2026-10-16, at the start of the owner's brief 11 (\"Finish The Current Build Against A Fixed Checklist\")",
+  "main": "0e7ff7c2",
+  "counts": {
+   "rows": 635,
+   "inScope": 608,
+   "Implemented And Verified": 530,
+   "Implemented, Verification Incomplete": 63,
+   "Partially Implemented": 0,
+   "Not Implemented": 4,
+   "Blocked Externally": 0,
+   "Decision Required": 11,
+   "Explicitly Deferred": 27
+  }
+ },
+ "matrix": "Completion, by the matrix: 567 of 599 rows in scope Implemented And Verified (94.6%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.",
+ "completion": {
+  "againstTheFullBaseline": "567 of 608 (93.2%)",
+  "ofTheActionablePortion": "37 of 46 (80.4%)",
+  "verifiedAtTheBaseline": 530
+ },
+ "closedByWork": [
+  {
+   "id": "l-actor",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.s8.f1_status",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.s8.ssn",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.s8.opt",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.s8.license",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.s8.visas_authorizations",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "coverage09.4-fold",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "coverage09.5-journeys-fold",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "coverage09.6-journeys-followup-fold",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "genres.4-kept",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "genres.6-table",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "genres.7-measured",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "judge.coverage-row",
+   "group": "Brief 09 Area: judge",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.harness",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.F2",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.F2A10-a",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.F2A10-c",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.tests",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.heldout",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.harness-hospital",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "ST3-R.e",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "H4-R.e",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "L3-R.a",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "L3-R.b",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "L3-R.e",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "judge.together",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "judge.tests",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "ST6-R.bPrime",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Decision Required"
+  },
+  {
+   "id": "A1",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "stamina.A1",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "A4",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "A5",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "T1",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "O3",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "F1",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "F3",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "L1",
+   "group": "Criteria: Long-Term Continuity",
+   "baseline": "Decision Required"
+  }
+ ],
+ "administrative": [
+  {
+   "id": "tax.s8.residence_naturalization",
+   "group": "Remaining Area: tax",
+   "category": "duplicate",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred"
+  },
+  {
+   "id": "tax.s8.jurisdiction",
+   "group": "Remaining Area: tax",
+   "category": "historical-record",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred"
+  },
+  {
+   "id": "judge.baseline",
+   "group": "Brief 09 Area: judge",
+   "category": "historical-record",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred"
+  },
+  {
+   "id": "judge.stamina-load",
+   "group": "Brief 09 Area: judge",
+   "category": "duplicate",
+   "baseline": "Not Implemented",
+   "now": "Explicitly Deferred"
+  },
+  {
+   "id": "judge.baseline",
+   "group": "Brief 10 Area: judge",
+   "category": "historical-record",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred"
+  },
+  {
+   "id": "ST3.asWritten",
+   "group": "Brief 10 Area: judge",
+   "category": "superseded",
+   "baseline": "Not Implemented",
+   "now": "Explicitly Deferred"
+  },
+  {
+   "id": "H4.asWritten",
+   "group": "Brief 10 Area: judge",
+   "category": "superseded",
+   "baseline": "Not Implemented",
+   "now": "Explicitly Deferred"
+  },
+  {
+   "id": "L3.asWritten",
+   "group": "Brief 10 Area: judge",
+   "category": "superseded",
+   "baseline": "Not Implemented",
+   "now": "Explicitly Deferred"
+  },
+  {
+   "id": "stamina.measure",
+   "group": "Brief 10 Area: stamina",
+   "category": "historical-record",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred"
+  }
+ ],
+ "remaining": [
+  {
+   "id": "health.enroll",
+   "group": "Life, Health And Time",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at renewal and at an application, is unreachable in play, since the owner’s scope reset of 2026-10-09 left wages only on the School (work-study, the Summer Cabaret) and a month at the School counts as the School before work; where a fixture reaches it, it changes only the notice’s words, as 80 paid hours always pass the $580 income test. Whether to cut it or keep it as a guard is the owner’s (THE ONE RULE); the row stays partial on it | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
+  },
+  {
+   "id": "advice.F2A10-f",
+   "group": "Brief 10 Area: advice",
+   "now": "Decision Required",
+   "lacks": "F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth falls with the level there, as the model gives it (tests/decisions-advice.test.ts, [N], played on tuning seeds). The forecast is in points of result, and what an ability point is worth on the work isn’t monotone in the level everywhere: it is the judge’s curve, and the forecast reads it truly (adv-h-1 forecast 0.828 and brought 1.058; F2-A10 (e) holds). Preparation apart from training holds on 120 of 120, and near mastery the ladder falls on 30 of 30. Should (f)’s diminishing returns be read in the growth the twenty sessions bring, with the forecast’s points left to the judge’s curve; or does (f) stay not met as clarified?"
+  },
+  {
+   "id": "advice.F2A10-h",
+   "group": "Brief 10 Area: advice",
+   "now": "Decision Required",
+   "lacks": "F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 focus at 93), the forecast itself fell, so (h) as written holds there; the input’s own part rose because what an ability point is worth on the work isn’t monotone in the level (the judge’s curve, as in (f)). As written, the forecast fell on 113 of 120; the 7 that rose (adv-h-91, 100, 103, 106, 107, 110, 118, all near mastery) rose by a thousandth or less, each within discipline’s lift and said. Every case fell, or rose within discipline’s lift and said: 120 of 120. The first-named changed wherever another led, 51 of 51. Should (h) read: after the twenty sessions the forecast falls, or a rise is no more than discipline’s lift and is said; or does (h) stay not met, as written and as clarified?"
+  },
+  {
+   "id": "ST6-R.a",
+   "group": "Brief 10 Area: judge",
+   "now": "Decision Required",
+   "lacks": "ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the nine others 40.56, 600 in all) to be ahead of the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of the 44 materials. Measured, it isn’t (2 of 44), and the sorting brief 11 asked for says why: nothing in the game is missing, and the clause, with (c), (e) and (g)’s second and third items, asks what the approved design rules out at this budget. Which comparison and which floor should hold the owner’s “meaningful opportunities to make a valid restrained interpretation work, even where a scene favors larger expression”, given one strength that mustn’t erase unrelated weaknesses, fair budgets, no restraint bonus and no rebalancing of the judge?"
+  },
+  {
+   "id": "ST6-R.c",
+   "group": "Brief 10 Area: judge",
+   "now": "Decision Required",
+   "lacks": "Rests on ST6-R (a): see its decision. Abilities and circumstances fail only for want of (a)’s wins; preparation and interpretation hold."
+  },
+  {
+   "id": "ST6-R.e",
+   "group": "Brief 10 Area: judge",
+   "now": "Decision Required",
+   "lacks": "Rests on ST6-R (a): see its decision."
+  },
+  {
+   "id": "ST6-R.g",
+   "group": "Brief 10 Area: judge",
+   "now": "Decision Required",
+   "lacks": "With A1, (g)’s first item is met. Its second and third aren’t caught by the clauses (g) names, and the third by none of ST6-R’s: they rest on what replaces (a) and (c). See ST6-R (a)’s decision."
+  },
+  {
+   "id": "KS-ct-idcard",
+   "group": "Known Shortfalls And Missing Tests",
+   "now": "Blocked Externally",
+   "lacks": "The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card once its holder is 'no longer entitled to be present', and sets no term; CGS chapter 246 has no such provision (searched for 'authorized stay', 'lawful status', 'immigration status', 'visa', 'legal presence', 'citizen'). SLATE keeps the term to the end of lawful presence as its assumption, said so in systems/identity.ts and on the guide's line ('SLATE's reading where the state publishes none'). Also not said by the DMV, and taken by SLATE: whether a non-citizen the DMV doesn't ask back has the twenty days from the first visit (SLATE takes the later, its described return after SAVE); and whose holidays the twenty business days skip (SLATE counts the federal ones). What would settle it: the DMV's answer in writing (its Contact Center, 860-263-5700, or a published policy). Pages tried and not reached: https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining (2026-10-16: host doesn't resolve, WebFetch ENOTFOUND, the proxy's CONNECT 502); https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1hSection_01-1h-1/ to -8 and Title_01Subtitle_01-1h/ (2026-10-16: 'Unable to Access Resource (HTTP: 404)'; read instead in the DMV's 2007 compilation, https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf). www.cga.ct.gov was reached only after completing its certificate chain with GoDaddy's G2 intermediate from certs.godaddy.com, the server sending its leaf alone (curl error 60 otherwise; WebFetch 503)."
+  },
+  {
+   "id": "KS-passport-fees",
+   "group": "Known Shortfalls And Missing Tests",
+   "now": "Blocked Externally",
+   "lacks": "Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passport-fee.html , /itpr_ja/m02_01.html , /itpr_ja/index.html , /itpr_ja/11_000001_00472.html , /files/100876429.pdf , /files/101051085.pdf ; https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html ; https://www.boston.us.emb-japan.go.jp/files/100996789.pdf ; https://www.mofa.go.jp/mofaj/ca/pss/pagew_000001_02493.html , /mofaj/files/100482215.pdf , /mofaj/toko/passport/pass_5.html . Search extracts (leads, not sources) show Boston's and Anchorage's tables at US$62 at the window and US$60 online from 1 July 2026, and New York's notice of 8 June 2026 saying its dollar amount would follow; which consulate's district holds Connecticut wasn't read either. New Zealand: whether a student in the US is charged GST, and the urgent fee from overseas (SLATE charges GST and takes the urgent service as at home, NZ$247 more). Tried on 2026-10-17: https://www.passports.govt.nz/passport-costs (Cloudflare challenge 'Just a moment...', 403 to curl; 503 to WebFetch), /urgent-travel and /passport-costs/passport-timeframes (403, the same challenge); https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2015/264/en/latest/ (202 with an empty body to curl, three times; 403 to WebFetch), /2015/264/en/2025-05-02.pdf and /2025/75/en/latest/ (202 empty, three times each), https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/096be8ed81f36d4a.pdf (202 empty); the Internet Archive's captures https://web.archive.org/web/20261001231111/https://www.passports.govt.nz/passport-costs and .../20260919065520/.../urgent-travel (connection reset by the proxy's tunnel, six times; WebFetch refuses web.archive.org). DIA's own release (dia.govt.nz, read) confirms only the adult fee in force, $247 with GST from 2 May 2025. Brazil's Hartford consulate page (https://www.gov.br/mre/pt-br/consulado-hartford/servicos-consulares/passaportes) answered a CAPTCHA to curl and WebFetch; its fee was read in the Diário Oficial instead, so it isn't a blocker. Outside the row's fees and left as labelled: the turnaround estimates (UK, France, Spain, Japan, Korea, Mexico, Iceland, Brazil), Canada's and Germany's faster services not offered from New Haven, and New Zealand's courier."
+  }
+ ],
+ "decision4": [
+  {
+   "id": "bank.arrange_overdraft",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "bank.cancel_new",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "bank.switch",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "bank.take_overrun_loan",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "card.money_transfer",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "bank.switch_complete",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "bank.cancel_switch",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "bank.stop_balance_transfer",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.amend",
+   "group": "Papers",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.catch_up_state_plan",
+   "group": "Papers",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.lien_dispute",
+   "group": "Papers",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.request_waiver",
+   "group": "Papers",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "banking.2.scope",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Decision Required",
+   "now": "Decision Required"
+  },
+  {
+   "id": "banking.2.arrange_overdraft",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "banking.2.cancel_new",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "banking.2.switch",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "banking.2.switch_complete",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "banking.2.cancel_switch",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "banking.2.stop_balance_transfer",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "banking.2.take_overrun_loan",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "banking.2.money_transfer",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "coverage09.3-unresolved",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Decision Required",
+   "now": "Decision Required"
+  },
+  {
+   "id": "KS-bank-rows-scope",
+   "group": "Known Shortfalls And Missing Tests",
+   "baseline": "Decision Required",
+   "now": "Decision Required"
+  }
+ ],
+ "addedRows": [],
+ "problems": [],
+ "rows": [
+  {
+   "id": "life.sleep",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "life.look_after",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "life.look_after:eat",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "life.look_after:order",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "life.look_after:wash",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "life.look_after:exercise",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "life.look_after:unwind",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "calendar.schedule",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "calendar.cancel",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "calendar.skip",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "world.dismiss_decision",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "world.mark_read",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "world.set_preferences",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "world.take_decision_action",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tutorial.read",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.appeal",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.apply_aid",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.book",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.cancel_appointment",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.choose_clinic",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.choose_pharmacy",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.dental",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.drop",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.enroll",
+   "group": "Life, Health And Time",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at renewal and at an application, is unreachable in play, since the owner’s scope reset of 2026-10-09 left wages only on the School (work-study, the Summer Cabaret) and a month at the School counts as the School before work; where a fixture reaches it, it changes only the notice’s words, as 80 paid hours always pass the $580 income test. Whether to cut it or keep it as a guard is the owner’s (THE ONE RULE); the row stays partial on it | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
+  },
+  {
+   "id": "health.apply",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.request_hardship",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.extra_supply",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.pay_bill",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.prepay",
+   "group": "Life, Health And Time",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Deferred: England’s certificate, which the New Haven student is refused. A prescription free while it runs is shown on a London fixture (tests/coverage-gaps-life.test.ts ‘makes prescriptions free while it runs…’, rxShareOf read, not a fill); until 2026-10-13 this said no test showed it. | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "health.therapy",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.treat",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "life.birthday",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "life.commitment",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "life.day_rollover",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "life.end",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "world.tick",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.appeal_decided",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.appointment",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.bill",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.month",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.therapy_session",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health.week",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "injury.comp",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "energy",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "sleepDebt",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "condition",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "fitness",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "nourishment",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "hygiene",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stress",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "morale",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "readiness",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "weather/trainingAt",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "seasons/flu",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "holidays",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "injuries",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "chronic",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "body",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "mortality",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "knob:stressGain",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "knob:stressRecovery",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "knob:sleepQuality",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "knob:energyRecovery",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "knob:hygieneDrift",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "knob:moraleSwing",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "knob:spending",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "knob:illnessToll",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "knob:appetite",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "knob:mealMood",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
+   "group": "Life, Health And Time",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.add_standing_order",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.arrange_overdraft",
+   "group": "Money",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad opens nothing new for a customer abroad, an overdraft among them, and refuses it in its words (abroadRefusal, systems/abroad.ts; bank.arrange_overdraft, lending.ts). Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): the overdraft was refused on every account kept at home, in the bank’s own words (abroadRefusal). | tested on fixtures: tests/scope-money.test.ts ‘FIXTURE, London: twins £500 overdrawn at Barclays for 61 days…’ (the limit read by leftOverdrawn: the arranged twin kept open, the other charged off) and ‘FIXTURE, London: Arrange It pressed with £1,000 typed on Barclays’ panel…’ (the panel, its refusals, Close The Overdraft), on lives living in London; tests/lending.test.ts, tests/bank-fees.test.ts and tests/bank-lifecycle.test.ts on lives abroad."
+  },
+  {
+   "id": "bank.borrow",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.break_term",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.cancel_new",
+   "group": "Money",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 August 2026 at the latest, and every country’s cooling-off (fourteen days, or fourteen and ten business days) has ended by 24 August; nothing new can be opened at a bank abroad (abroadRefusal). Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): on the first day no account kept at home was in its cooling-off, and Cancel It was refused on each, “Its cooling-off period has passed, or there isn’t one here for it.” | tested on fixtures: tests/scope-money.test.ts ‘FIXTURE, London: a Barclays card applied for and canceled the day it comes…’, ‘FIXTURE, Toronto: an RBC chequing account opened beside TD shows Cancel It…’, ‘FIXTURE, Reykjavík: a Landsbankinn Einkareikningur…’ and ‘FIXTURE, Toronto and Berlin: a savings account opened on Monday 5 January can be canceled at 11:30 PM…’, with the rest of its Toronto, Berlin, Mexico City and Seoul fixtures; tests/remaining-banking.test.ts ‘FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day…’ (its overdraft interest charged on canceling, from 2026-10-16); tests/accountlife.test.ts, tests/defects5.test.ts and tests/money-fixes.test.ts."
+  },
+  {
+   "id": "bank.cancel_scheduled",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.cancel_standing_order",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.claim_unclaimed",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.close_savings",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.debit_overdraft",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.new_number",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.open_savings",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.open_term",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.pay_collections",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.reactivate",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.repay_loan",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.schedule_payment",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.set_alerts",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.set_payments",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.set_round_ups",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.set_term_end",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.switch",
+   "group": "Money",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Unreachable as a switch. The US has no switching service, so a switch is refused, first for a photo ID where she holds none, then with the steps to take, nothing scheduled across a reload, and Your Banks draws those steps and no Switch Bank panel (tests/scope-money.test.ts ‘PLAYER JOURNEY: in New Haven a switch to Citi is refused first for a photo ID…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a switch is to a bank where she lives, by its country’s service (banksFor and SWITCHING, read for where she lives), and she lives in America. Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): a switch to the bank kept at home was refused on every one, “That isn’t a bank where you live.” | tested on fixtures: tests/scope-money.test.ts ‘FIXTURE, London: Barclays to HSBC on Wednesday 14 January 2026…’; tests/lending.test.ts (Iceland, Britain), tests/bank-moves.test.ts and tests/payments.test.ts (Britain, the orders re-pointed), on lives living abroad."
+  },
+  {
+   "id": "bank.take_overrun_loan",
+   "group": "Money",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Unreachable. Only a French bank offers a loan for an overrun, and no New Haven bank is French. From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad makes no such offer to a customer abroad (lending.ts, the offer’s abroadRefusal) and refuses the loan in its words (bank.take_overrun_loan), so a student’s BNP Paribas account kept from Paris has none to take. Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): no bank offered a loan for an overrun (“Your bank has offered no loan for an overrun.”), and none can to a customer abroad (lending.ts:278 asks abroadRefusal first). | tested on fixtures: tests/scope-money.test.ts ‘FIXTURE, Paris: €2,000 overdrawn at BNP Paribas, the loan offered by the clock three months on…’ (Take The Loan pressed, €179.78 a month, LOAN_DUE a month on, the closing count started again, against a twin closed); tests/commands-kept.test.ts ‘offers a loan for an overrun three months past the overdraft…’, on lives living in Paris."
+  },
+  {
+   "id": "bank.take_term_interest",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.transfer",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.apply",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.close",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.dispute",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.lock",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.money_transfer",
+   "group": "Money",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Unreachable. No American card offers a money transfer, so a student’s Chase card draws no Move It and the command is refused with nothing moved (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven student’s Chase card offers no money transfer…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad issues no card to a customer abroad (abroadRefusal), so no British card with a transfer offer is hers. Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): the only card any of them held was the American bank’s, the Chase Freedom Unlimited, which “doesn’t offer money transfers”. | tested on fixtures: tests/scope-money.test.ts ‘FIXTURE, London: Move It (3% Fee) pressed with £500 typed on NatWest’s card…’ (the fee, two refusals, a payment split by the rates across a reload); tests/cardoffers.test.ts ‘pays NatWest’s card into the current account for 3%…’, on lives living in London."
+  },
+  {
+   "id": "card.plan",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.redeem_rewards",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.refund_credit",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.report",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.request_hardship",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.request_limit",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.set_auto_raise",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.set_everyday",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.set_over_limit",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.set_statement_day",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "cash.deposit",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "cash.withdraw",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "finance.pay_card",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "finance.set_autopay",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.fraud_refund",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.loan_due",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.month_end",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.savings_notice",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.scheduled_payment",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.standing_order",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.switch_complete",
+   "group": "Money",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Unreachable: it completes a switch, and no current life can start one (bank.switch). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: the switch is by the service where she lives. Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): no switch could be started (bank.switch), so none completes. | tested on fixtures: tests/scope-money.test.ts ‘FIXTURE, London: Barclays to HSBC on Wednesday 14 January 2026…’ (the savings moved to the penny, the account held back for pending groceries, the order re-pointed), tests/lending.test.ts, tests/bank-lifecycle.test.ts, tests/payments.test.ts and tests/finance-paths.test.ts, on lives living in Iceland and Britain."
+  },
+  {
+   "id": "card.arrives",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.due",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.replaced",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.statement",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "daily food spending",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ledger",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "credit score",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "statements",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.open_current",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.set_primary",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.redirect_deposits",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.set_order_source",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "card.set_autopay_from",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.set_loan_repayment",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.close_current",
+   "group": "Money",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "bank.cancel_switch",
+   "group": "Money",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Unreachable: no switch can be under way for a current life (bank.switch). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: the switch is by the service where she lives. Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): no switch could be started (bank.switch), so none can be called off. | tested on fixtures: tests/scope-money.test.ts ‘FIXTURE, London: Call Off The Switch…’ (pressed on the panel, the review canceled, the history, nothing moved on the date, a partial switch refused); tests/bank-lifecycle.test.ts ‘can be called off until seven working days before its date…’ and tests/finance-paths.test.ts, on lives living in London."
+  },
+  {
+   "id": "bank.stop_balance_transfer",
+   "group": "Money",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Unreachable: no switch can be under way for a current life (bank.switch). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: the switch is by the service where she lives. Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): no switch could be started (bank.switch), so no balance transfer is under way. | tested on fixtures: tests/scope-money.test.ts ‘FIXTURE, London: past its window, Stop The Balance Transfer…’ (pressed, its three refusals, a payment set for a date moved to HSBC and Barclays keeping its money); tests/finance-paths.test.ts ‘PLAYER JOURNEY: past its window, the balance transfer alone is stopped…’, on a life living in London."
+  },
+  {
+   "id": "documents.apply_idcard",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "documents.apply_opt",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "documents.apply_passport",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "documents.naturalize",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Only Mexico can be reached, and a Mexican citizenship changes nothing for somebody living in New Haven. | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "documents.police_report",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "documents.renew_residence",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Until 2026-10-10 it accepted an expired card, checking status 'valid' rather than inForce; it has checked inForce since (residence.ts:207). | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "documents.replace_idcard",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "documents.replace_license",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "documents.report_lost",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "documents.residence",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Until 2026-10-16 a wealthy start passed the savings test on day one and bought papers nothing read (finding 3). From then nothing is sold. | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "documents.settle",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Until 2026-10-10 continuous residence wasn't checked: years were counted from the first grant, even across a lapse. Since then they count from the grant a lapse last broke (continuousSince, residence.ts:145-157). | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "benefits.assistance",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "benefits.claim",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "benefits.ei_register",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Needs living in Canada, which can't happen. The premium is never charged anywhere (no eiOnCheck caller); until 2026-10-09 the panel said it came from each check, and since then it says there are no earnings to take it from. | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "pension.bienestar",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Needs living in Mexico, which can't happen. | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "pension.ie_state",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "No Irish earnings and no Irish residence can arise. | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "pension.imss",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "contribute() (imss.ts:103) has no caller in src, so imss.days is always 0. Dead. | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "pension.social_security",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "40 credits can't be earned: the only wages are three school years of work-study and Cabaret. Until 2026-10-10 the credits also counted FICA-exempt work-study pay; since then work-study is left out, and an F-1 nonresident earns none (usWages, socialsecurity.ts:72-79). | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "pension.state",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Needs UK earnings or UC credits; neither can arise. | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "tax.file",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.pay",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "citizenship.decided",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Reached only with the application put in by hand: no played life holds Mexican residence long enough; and no downstream consumer in play. | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "documents.decided",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "documents.idcard_arrives",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "documents.opt_week",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "documents.permission",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "documents.us_status",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "documents.visit",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "benefits.assistance_month",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "benefits.week",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "benefits.desempleo_month",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "benefits.ja_week",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Can't live in Ireland. | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "benefits.uc_period",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Can't live in Britain. | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "pension.ie_week / pension.bienestar_payment / pension.imss_month / pension.ss_month / pension.state_payment",
+   "group": "Papers",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Each is unreachable, as its command is. Until 2026-10-10 recordPension had no caller, so none of these was taxed; since then each records its payment (earnings.ts:251). | the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "tax.season",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.due",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.substitute",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.notice",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.refund",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.pay_state",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.amend",
+   "group": "Papers",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Unreachable: every writer to a year’s record writes at the moment it pays, into that moment’s year, and a year’s return is raised the February after, so a filed year’s figures never change and a played student is told there’s nothing to amend (tests/scope-taxpapers.test.ts ‘tax.amend: her filed 2026 and 2027 match the record…’). Read again on 2026-10-16 (brief 09), with the account kept at home and the families of that day: unchanged. Interest from a bank abroad is written to its year as it’s paid, as an American bank’s is, and nothing in the game reports a filed year’s pay late or corrects it. | tested on fixtures: tests/remaining-tax.test.ts ‘FIXTURE: $5,000 of wages a corrected W-2 adds, amended on 1 July 2027…’, ‘FIXTURE: a W-2 that overstated the wages by $5,000, corrected and amended…’ and ‘FIXTURE: an amendment’s new tax of two monthly payments or less joins the IRS plan in force…’ (New Haven quick-saves with a corrected W-2 set by hand); tests/tax-lifecycle.test.ts and tests/finance-paths.test.ts on New York lives."
+  },
+  {
+   "id": "tax.apply_plan",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.revise_plan",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.catch_up_plan",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.apply_state_plan",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.catch_up_state_plan",
+   "group": "Papers",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Unreachable: Connecticut, the only state a life files in, ends its plan at the first payment missed (its cure “none”, SLATE’s reading), so Catch Up is never drawn and the command says the plan isn’t behind (tests/scope-taxpapers.test.ts ‘PLAYER JOURNEY: its first payment missed with her money in the CD, the plan ends at once…’). Read again on 2026-10-16 (brief 09): unchanged; every life still files in Connecticut alone. | tested on fixtures: tests/remaining-tax.test.ts ‘FIXTURE: its payment missed, Catch Up drawn on Papers and pressed…’ (a New York plan kept past the day it would have ended, its next payment taken, across a reload, against a twin that ends); tests/state-tax.test.ts on a New York life."
+  },
+  {
+   "id": "tax.lien_release",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.lien_dispute",
+   "group": "Papers",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Unreachable: Connecticut’s lien always secures tax still owed, since a payment goes to the penalty and interest first, a lien is filed only while something is owed, and DRS assesses from the return’s own figures. Since 2026-10-16 the button is drawn only on a lien filed in error; on a played student’s Connecticut lien Papers says why in the engine’s words and the command is refused (tests/remaining-tax.test.ts ‘PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date…’). Read again on 2026-10-16 (brief 09): unchanged. An Inherited family’s student who files nothing has Connecticut liens filed by the clock on 2026, 2027 and 2028, each securing tax still owed and each paid by DRS’s levy 30 days on (probe/coverage09/tax-lien.ts), none of them in error: DRS’s assessment of a return never filed is the return’s own figure (assessStateNonFiler), so her own in its place owes the same. | tested on fixtures: tests/remaining-tax.test.ts ‘FIXTURE: a Connecticut lien on DRS’s assessment that her own return, in its place, showed she didn’t owe…’ (the button pressed, decided 30 days on, withdrawn with one notice across a reload); tests/liens-and-arrangements.test.ts on California’s, by calling the engine’s functions."
+  },
+  {
+   "id": "tax.federal_lien_withdraw",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.request_waiver",
+   "group": "Papers",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "Unreachable: only Oregon charges the three-year penalty, and every life files in Connecticut; shown on the played life, the refusal and no row drawn (tests/scope-taxpapers.test.ts ‘tax.request_waiver: only Oregon charges the three-year penalty…’). Read again on 2026-10-16 (brief 09): unchanged; every life still files in Connecticut alone. | tested on fixtures: tests/remaining-tax.test.ts ‘FIXTURE: her own 2001 return filed before any notice…’ (70%, refunded), ‘FIXTURE: its Demand To File sent, then her own return, unpaid…’ (50%) and ‘FIXTURE: assessed, $990 paid toward its $1,000 of penalties…’ (25%, the part paid credited) on Portland quick-saves; tests/liens-and-arrangements.test.ts ‘three years with tax and no return of their own…’."
+  },
+  {
+   "id": "documents.apply_ssn",
+   "group": "Papers",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.prepare",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.approach",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.choose",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.choose_playing",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.read_feedback",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.ask_partner",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.answer_partner",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.cancel_rehearsal",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.make_amends",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.respond",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.orientation",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.learn_part",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.choose_part_playing",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.review_blocking",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.work_note",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "work.identify",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "work.try",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "work.settle",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.call_in_sick",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.take_shift",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.buy_ppe",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.cabaret",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.summer_cabaret",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "plays.read",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "plays.research",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "practice.exercise",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "practice.self_tape",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "brief.prepare",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "brief.choose",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "brief.reader",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genre.study",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.term",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.week",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.classes",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.shift",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.payday",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.call",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.evaluation",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.commencement",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.company",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.lab",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.cabaret (kind)",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.summer",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.stipend",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.recess",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.orientation (kind)",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.partner_ask",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.partner_rehearsal",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.study_session",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.moment",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "abilities+techniques",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "development ledger",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "work records + journey",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genre familiarity/practice",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genre demands",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "classmates abilities/craft",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "classmate trust/bonds",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "casting (castFit/castScore)",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "standing/term evaluation",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "notes and feedback",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "preparation dims",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "showing/night bands",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "credits",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "work-study",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.request_leave",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.cancel_leave",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.appeal_leave",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.return_notice",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.reregister",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.buy_affiliate",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.withdraw",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.make_up",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.extend_incomplete",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.request_repeat",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.cancel_repeat",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.request_extra_term",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.pay_balance",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.request_aid_review",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.request_conversion",
+   "group": "School",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-names",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-displayName",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-pronouns",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-performerTitle",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-birthdate",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-birthplace",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-citizenship",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-race",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-portrait",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-disp-emotionalStability",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-disp-conscientiousness",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-disp-ambition",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-disp-riskTolerance",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-disp-extraversion",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-disp-openness",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-disp-agreeableness",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-traits",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-genres",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-background",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-body",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-whereLive",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-livesWhereBorn",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-wealth",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-family",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-bank",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-startDate",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "c-tutorial",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-stressGain",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-stressRecovery",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-sleepQuality",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-energyRecovery",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-hygieneDrift",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-moraleSwing",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-spending",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-mealMood",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-illnessToll",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-receipts",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)"
+  },
+  {
+   "id": "trait-bondWarmth-bondWound",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-company",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-appetite",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-morning-evening",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "trait-prep",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "p-identity",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "p-identity-buttons",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "p-traits-line",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "p-abilities",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "p-techniques",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "p-genres",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "p-condition",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "p-journey-history",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "h-head",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "h-calendar",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "h-needs",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "h-how",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "h-where-weather",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "h-money",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "h-school",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "h-papers",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "l-person",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "l-dial-stress",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "l-trait",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "l-actor",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "n-decision-tax",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "n-decision-unclaimed",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "n-decision-us-status",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "n-notify",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "n-dismiss-expire",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "i-runtime",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "i-ui-text",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "i-stale-claims",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "i-genres-dispositions-intact",
+   "group": "Creation, Profile, Home And The Looks",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.1",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.1.overdraft-interest",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.1.standing-orders",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.1.pro-rata",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.2",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.s7.opening",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.s7.ownership",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.s7.switching",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.s7.closure",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.s7.funds",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.s7.transfers",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.s7.rejections",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.s7.statements",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.s7.features",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.s7.school",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.s7.holds",
+   "group": "Remaining Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage.1-separate-totals",
+   "group": "Remaining Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage.2-i-stale-claims",
+   "group": "Remaining Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage.3-unresolved-rows",
+   "group": "Remaining Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage.4-fold-areas",
+   "group": "Remaining Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage.d-renames-chain",
+   "group": "Remaining Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage.d-fixture-kind",
+   "group": "Remaining Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage.d-evidence-cell",
+   "group": "Remaining Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage.d-stale-claims-walk",
+   "group": "Remaining Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage.5-added-rows",
+   "group": "Remaining Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage.6-savings-notice-played",
+   "group": "Remaining Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage.7-overdraft-home-panel",
+   "group": "Remaining Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health-billing.1-reprice-plan-part",
+   "group": "Remaining Area: health-billing",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health-billing.2-husky-d-kept-through-work",
+   "group": "Remaining Area: health-billing",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health-billing.3-insured-paths-trace",
+   "group": "Remaining Area: health-billing",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health-eligibility.1-covered-ct-status-barred",
+   "group": "Remaining Area: health-eligibility",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health-eligibility.2-work-exemptions",
+   "group": "Remaining Area: health-eligibility",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health-eligibility.3-notice-and-response",
+   "group": "Remaining Area: health-eligibility",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health-eligibility.4-look-back",
+   "group": "Remaining Area: health-eligibility",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health-eligibility.5-f1-premium-credit-2026",
+   "group": "Remaining Area: health-eligibility",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health-eligibility.6-work-test-income",
+   "group": "Remaining Area: health-eligibility",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "health-eligibility.7-renewal-and-decision-notices",
+   "group": "Remaining Area: health-eligibility",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.repeat-room-leave",
+   "group": "Remaining Area: school",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.unreached-refusals",
+   "group": "Remaining Area: school",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.d-appeal-before-begun",
+   "group": "Remaining Area: school",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.continuity",
+   "group": "Remaining Area: school",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.s6.missed-term",
+   "group": "Remaining Area: school",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.d-coursework-shown",
+   "group": "Remaining Area: school",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.s6.journey",
+   "group": "Remaining Area: school",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.s6.policy",
+   "group": "Remaining Area: school",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.s6.dead-ends",
+   "group": "Remaining Area: school",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "school.d-not-registered-hold",
+   "group": "Remaining Area: school",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.early_filing_notices",
+   "group": "Remaining Area: tax",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.ct_filed_in_error",
+   "group": "Remaining Area: tax",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.amend",
+   "group": "Remaining Area: tax",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.catch_up_state_plan",
+   "group": "Remaining Area: tax",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.lien_dispute",
+   "group": "Remaining Area: tax",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.federal_lien_withdraw",
+   "group": "Remaining Area: tax",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.request_waiver",
+   "group": "Remaining Area: tax",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.other_refusals",
+   "group": "Remaining Area: tax",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.s8.inventory",
+   "group": "Remaining Area: tax",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.s8.passport",
+   "group": "Remaining Area: tax",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.s8.idcard",
+   "group": "Remaining Area: tax",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.s8.f1_status",
+   "group": "Remaining Area: tax",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.s8.ssn",
+   "group": "Remaining Area: tax",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.s8.opt",
+   "group": "Remaining Area: tax",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.s8.license",
+   "group": "Remaining Area: tax",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.s8.visas_authorizations",
+   "group": "Remaining Area: tax",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "tax.s8.residence_naturalization",
+   "group": "Remaining Area: tax",
+   "category": "duplicate",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred",
+   "lacks": "A duplicate: residence abroad and naturalization were deferred by the owner’s scope reset of 2026-10-09, as the audit’s own rows for them already are (documents.residence, documents.settle, documents.renew_residence, documents.naturalize, citizenship.decided, each Explicitly Deferred); counted there, not twice (brief 11, section 3)"
+  },
+  {
+   "id": "tax.s8.jurisdiction",
+   "group": "Remaining Area: tax",
+   "category": "historical-record",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred",
+   "lacks": "A historical record of a process step: the tax area’s research of which office’s rules each papers system follows (remaining/tax-result.json); the rules themselves are each audit row’s own, verified there (brief 11, section 3)"
+  },
+  {
+   "id": "banking.1.pro-rata",
+   "group": "Brief 09 Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.1.pro-rata.month-end",
+   "group": "Brief 09 Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.1.pro-rata.opening-month",
+   "group": "Brief 09 Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.3.homecloses",
+   "group": "Brief 09 Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.2.scope",
+   "group": "Brief 09 Area: banking",
+   "category": "decision-4",
+   "baseline": "Decision Required",
+   "now": "Decision Required",
+   "lacks": "What's missing: nothing to implement. Each of the eight commands works and is tested on labelled lives abroad (each row's tests), and each row's unfinished work is none (bank.cancel_new's last item, Germany's fee to the day, is implemented above). What a played life lacks is a way to reach them: a life living outside America, which the owner's scope reset of 2026-10-09 removed and the briefs forbid restoring, or a New Haven bank offering what no US bank offers (a switching service, an arranged overdraft at the five, a money transfer card, a cooling-off period, France's overrun loan). Whether rows a current life can't reach count against completion is a product choice the briefs don't settle: (a) keep them Unresolved, counted against completion with nothing anyone can do; (b) move them to Explicitly Deferred, as health.prepay was, the engine and its fixture tests kept, counted outside the completed numerator. Recommended: (b), since no work remains and (a) asks for a life the scope forbids; either way they are not counted complete."
+  },
+  {
+   "id": "banking.2.arrange_overdraft",
+   "group": "Brief 09 Area: banking",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "owner decision"
+  },
+  {
+   "id": "banking.2.cancel_new",
+   "group": "Brief 09 Area: banking",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "owner decision (its last unfinished item implemented: banking.1.pro-rata)"
+  },
+  {
+   "id": "banking.2.switch",
+   "group": "Brief 09 Area: banking",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "owner decision"
+  },
+  {
+   "id": "banking.2.switch_complete",
+   "group": "Brief 09 Area: banking",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "owner decision"
+  },
+  {
+   "id": "banking.2.cancel_switch",
+   "group": "Brief 09 Area: banking",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "owner decision"
+  },
+  {
+   "id": "banking.2.stop_balance_transfer",
+   "group": "Brief 09 Area: banking",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "owner decision"
+  },
+  {
+   "id": "banking.2.take_overrun_loan",
+   "group": "Brief 09 Area: banking",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "owner decision"
+  },
+  {
+   "id": "banking.2.money_transfer",
+   "group": "Brief 09 Area: banking",
+   "category": "decision-4",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "owner decision"
+  },
+  {
+   "id": "banking.4.sparkassen-card",
+   "group": "Brief 09 Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.5.arion-card",
+   "group": "Brief 09 Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.6.fee-schedule",
+   "group": "Brief 09 Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.7.redirect-close",
+   "group": "Brief 09 Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "banking.8.apostrophes",
+   "group": "Brief 09 Area: banking",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.1-brief.prepare",
+   "group": "Brief 09 Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.1-brief.choose",
+   "group": "Brief 09 Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.1-brief.reader",
+   "group": "Brief 09 Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.1-school.choose_playing",
+   "group": "Brief 09 Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.1-school.choose_part_playing",
+   "group": "Brief 09 Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.1-work.identify",
+   "group": "Brief 09 Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.1-work.try",
+   "group": "Brief 09 Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.1-work.settle",
+   "group": "Brief 09 Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.1-life.look_after",
+   "group": "Brief 09 Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.2-hardship-renewal",
+   "group": "Brief 09 Area: coverage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.3-unresolved",
+   "group": "Brief 09 Area: coverage",
+   "category": "decision-4",
+   "baseline": "Decision Required",
+   "now": "Decision Required",
+   "lacks": {
+    "what": "Whether the twelve rows reached only through a life living abroad or in another state (the eight bank rows, tax.catch_up_state_plan, tax.lien_dispute, tax.request_waiver), and tax.amend, which nothing in scope reaches, stay Unresolved, counted against completion, or move to Deferred Scope.",
+    "evidence": "The bank-rows probe (110 lives, every bank abroad SLATE has research on) reached none of the six bank commands; Connecticut is the only state a life files in, and its plan, liens and penalties don’t reach the three state rows; no writer changes a filed year. Each row’s engine is tested on labelled fixtures (its acceptance.engine).",
+    "options": [
+     "Keep them Unresolved: the denominator holds 12 rows no current player reaches, and completion is reported short by them (the page’s 95% stays under 100% for them alone).",
+     "Move them to Deferred Scope, as health.prepay was: nothing that works is hidden, the engine and its fixture tests stay, and the rows leave the denominator with their four parts kept.",
+     "For tax.amend alone, add an in-scope event that changes a filed year (a corrected W-2 for a year’s work-study), which would make it reachable; a product choice, since no source says Yale issues one."
+    ],
+    "recommended": "Move the eleven reachable only through a removed system to Deferred Scope, since the owner removed the travel that reached them and brief 09 bars restoring it; keep tax.amend Unresolved until the owner says whether a corrected W-2 belongs in the game."
+   }
+  },
+  {
+   "id": "coverage09.4-fold",
+   "group": "Brief 09 Area: coverage",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.5-journeys-fold",
+   "group": "Brief 09 Area: coverage",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "coverage09.6-journeys-followup-fold",
+   "group": "Brief 09 Area: coverage",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.1-count",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.2-compare",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-animated",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-christmas",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-conspiracy_thriller",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-farce",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-film_noir",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-gothic_horror",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-jukebox_musical",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-new_wave",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-psychological_thriller",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-samurai",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-silent_film",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-sword_and_sorcery",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-tragicomedy",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.3-yakuza",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.4-kept",
+   "group": "Brief 09 Area: genres",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.5-saves",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.6-table",
+   "group": "Brief 09 Area: genres",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.7-measured",
+   "group": "Brief 09 Area: genres",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "genres.8-docs",
+   "group": "Brief 09 Area: genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.known-graduated-school-page",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.x1-yale-payment-savings-hold-registration",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.x2-leave-affiliate-bill",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.x3-withdrawal-health-tax-papers",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.x4-document-expiring",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.played-school",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.played-money",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.played-papers",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.played-health",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.actions",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.d-aid-past-balance",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.d-cover-ended-notice",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.d-medicaid-start",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.d-expired-license-next-step",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.d-lapse-appointment",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.d-lapse-prescription",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.d-hardship-ended-renewal",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.f-mexico-residence",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.f-injury-space",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.f-ended-life-loops",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "journeys.d-f1-term-notice",
+   "group": "Brief 09 Area: journeys",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "judge.baseline",
+   "group": "Brief 09 Area: judge",
+   "category": "historical-record",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred",
+   "lacks": "A historical record of a process step: its brief’s criteria measured on the engine before any change, the outputs kept; nothing in the current build can measure an engine that no longer exists, and the current figures are the criteria rows’ (brief 11, section 3)"
+  },
+  {
+   "id": "judge.ST3",
+   "group": "Brief 09 Area: judge",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "The owner’s brief 10 (decision 1) decided it: ST3 as written stays in the record, not met, superseded by ST3-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)"
+  },
+  {
+   "id": "judge.ST6",
+   "group": "Brief 09 Area: judge",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "The owner’s brief 10 (decision 1) decided it: ST6 as written stays in the record, not met, superseded by ST6-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)"
+  },
+  {
+   "id": "judge.H4",
+   "group": "Brief 09 Area: judge",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "The owner’s brief 10 (decision 1) decided it: H4 as written stays in the record, not met, superseded by H4-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)"
+  },
+  {
+   "id": "judge.L3",
+   "group": "Brief 09 Area: judge",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "The owner’s brief 10 (decision 1) decided it: L3 as written stays in the record, not met, superseded by L3-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)"
+  },
+  {
+   "id": "judge.remeasure",
+   "group": "Brief 09 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "judge.length",
+   "group": "Brief 09 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "judge.stamina-load",
+   "group": "Brief 09 Area: judge",
+   "category": "duplicate",
+   "baseline": "Not Implemented",
+   "now": "Explicitly Deferred",
+   "lacks": "A duplicate: brief 09’s question whether a night’s load should read a heavier, sourced account was answered by the owner’s decision 5 in brief 10, a night’s workload by its running time, part, intensity and breaks, verified as stamina.W1 to stamina.W10 (each Implemented And Verified; W2 and W3 hold that a longer or harder night drains more); counted there, not twice (brief 11, section 3)"
+  },
+  {
+   "id": "judge.classes-fitness",
+   "group": "Brief 09 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "judge.coverage-row",
+   "group": "Brief 09 Area: judge",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "advice.harness",
+   "group": "Brief 10 Area: advice",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "advice.F2",
+   "group": "Brief 10 Area: advice",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "advice.F2A10-a",
+   "group": "Brief 10 Area: advice",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "advice.F2A10-b",
+   "group": "Brief 10 Area: advice",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "advice.F2A10-c",
+   "group": "Brief 10 Area: advice",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "advice.F2A10-d",
+   "group": "Brief 10 Area: advice",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "advice.F2A10-e",
+   "group": "Brief 10 Area: advice",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "advice.F2A10-f",
+   "group": "Brief 10 Area: advice",
+   "category": "design-or-gameplay",
+   "baseline": "Decision Required",
+   "now": "Decision Required",
+   "lacks": "F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth falls with the level there, as the model gives it (tests/decisions-advice.test.ts, [N], played on tuning seeds). The forecast is in points of result, and what an ability point is worth on the work isn’t monotone in the level everywhere: it is the judge’s curve, and the forecast reads it truly (adv-h-1 forecast 0.828 and brought 1.058; F2-A10 (e) holds). Preparation apart from training holds on 120 of 120, and near mastery the ladder falls on 30 of 30. Should (f)’s diminishing returns be read in the growth the twenty sessions bring, with the forecast’s points left to the judge’s curve; or does (f) stay not met as clarified?"
+  },
+  {
+   "id": "advice.F2A10-g",
+   "group": "Brief 10 Area: advice",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "advice.F2A10-h",
+   "group": "Brief 10 Area: advice",
+   "category": "design-or-gameplay",
+   "baseline": "Decision Required",
+   "now": "Decision Required",
+   "lacks": "F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 focus at 93), the forecast itself fell, so (h) as written holds there; the input’s own part rose because what an ability point is worth on the work isn’t monotone in the level (the judge’s curve, as in (f)). As written, the forecast fell on 113 of 120; the 7 that rose (adv-h-91, 100, 103, 106, 107, 110, 118, all near mastery) rose by a thousandth or less, each within discipline’s lift and said. Every case fell, or rose within discipline’s lift and said: 120 of 120. The first-named changed wherever another led, 51 of 51. Should (h) read: after the twenty sessions the forecast falls, or a rise is no more than discipline’s lift and is said; or does (h) stay not met, as written and as clarified?"
+  },
+  {
+   "id": "advice.F2A10-i",
+   "group": "Brief 10 Area: advice",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "advice.tests",
+   "group": "Brief 10 Area: advice",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "advice.heldout",
+   "group": "Brief 10 Area: advice",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "advice.harness-hospital",
+   "group": "Brief 10 Area: advice",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "arion.AR0.research",
+   "group": "Brief 10 Area: arion",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "arion.AR0.assumption",
+   "group": "Brief 10 Area: arion",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "arion.AR1.first-charge",
+   "group": "Brief 10 Area: arion",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "arion.AR2.renewal",
+   "group": "Brief 10 Area: arion",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "arion.AR3.close",
+   "group": "Brief 10 Area: arion",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "arion.AR4.refund",
+   "group": "Brief 10 Area: arion",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "arion.AR5.insufficient-funds",
+   "group": "Brief 10 Area: arion",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "arion.AR6.duplicates",
+   "group": "Brief 10 Area: arion",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "arion.AR7.save-and-calendar",
+   "group": "Brief 10 Area: arion",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "arion.AR7.older-save",
+   "group": "Brief 10 Area: arion",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "arion.AR8.verified-as-specified",
+   "group": "Brief 10 Area: arion",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "judge.baseline",
+   "group": "Brief 10 Area: judge",
+   "category": "historical-record",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred",
+   "lacks": "A historical record of a process step: its brief’s criteria measured on the engine before any change, the outputs kept; nothing in the current build can measure an engine that no longer exists, and the current figures are the criteria rows’ (brief 11, section 3)"
+  },
+  {
+   "id": "judge.budget",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST3-R.a",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST3-R.b",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST3-R.c",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST3-R.d",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST3-R.e",
+   "group": "Brief 10 Area: judge",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST3.asWritten",
+   "group": "Brief 10 Area: judge",
+   "category": "superseded",
+   "baseline": "Not Implemented",
+   "now": "Explicitly Deferred",
+   "lacks": "Superseded by ST3-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence (brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.”); as written, not met: the even actor the same as shown on 185 of 193 on brief 10’s final code (decisions-2026-10-16/integrated/after/st3.json)"
+  },
+  {
+   "id": "ST6-R.a",
+   "group": "Brief 10 Area: judge",
+   "category": "design-or-gameplay",
+   "baseline": "Decision Required",
+   "now": "Decision Required",
+   "lacks": "ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the nine others 40.56, 600 in all) to be ahead of the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of the 44 materials. Measured, it isn’t (2 of 44), and the sorting brief 11 asked for says why: nothing in the game is missing, and the clause, with (c), (e) and (g)’s second and third items, asks what the approved design rules out at this budget. Which comparison and which floor should hold the owner’s “meaningful opportunities to make a valid restrained interpretation work, even where a scene favors larger expression”, given one strength that mustn’t erase unrelated weaknesses, fair budgets, no restraint bonus and no rebalancing of the judge?"
+  },
+  {
+   "id": "ST6-R.b",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST6-R.c",
+   "group": "Brief 10 Area: judge",
+   "category": "design-or-gameplay",
+   "baseline": "Decision Required",
+   "now": "Decision Required",
+   "lacks": "Rests on ST6-R (a): see its decision. Abilities and circumstances fail only for want of (a)’s wins; preparation and interpretation hold."
+  },
+  {
+   "id": "ST6-R.d",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST6-R.e",
+   "group": "Brief 10 Area: judge",
+   "category": "design-or-gameplay",
+   "baseline": "Decision Required",
+   "now": "Decision Required",
+   "lacks": "Rests on ST6-R (a): see its decision."
+  },
+  {
+   "id": "ST6-R.f",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST6-R.g",
+   "group": "Brief 10 Area: judge",
+   "category": "design-or-gameplay",
+   "baseline": "Decision Required",
+   "now": "Decision Required",
+   "lacks": "With A1, (g)’s first item is met. Its second and third aren’t caught by the clauses (g) names, and the third by none of ST6-R’s: they rest on what replaces (a) and (c). See ST6-R (a)’s decision."
+  },
+  {
+   "id": "ST6.asWritten",
+   "group": "Brief 10 Area: judge",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Superseded by ST6-R, approved by the owner in brief 10 (decision 1); as written it holds on brief 10’s final code at its floor to the case (restrained 11 of 44, expansive 24 of 50, decisions-2026-10-16/integrated/after/stage.json), kept as the record, not counted"
+  },
+  {
+   "id": "H4-R.a",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "H4-R.b",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "H4-R.c",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "H4-R.d",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "H4-R.e",
+   "group": "Brief 10 Area: judge",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "H4.asWritten",
+   "group": "Brief 10 Area: judge",
+   "category": "superseded",
+   "baseline": "Not Implemented",
+   "now": "Explicitly Deferred",
+   "lacks": "Superseded by H4-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence (brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.”); as written, not met: 1 of 12 on brief 10’s final code (decisions-2026-10-16/integrated/after/criteria.txt)"
+  },
+  {
+   "id": "L3-R.a",
+   "group": "Brief 10 Area: judge",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "L3-R.b",
+   "group": "Brief 10 Area: judge",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "L3-R.c",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "L3-R.d",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "L3-R.e",
+   "group": "Brief 10 Area: judge",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "L3.asWritten",
+   "group": "Brief 10 Area: judge",
+   "category": "superseded",
+   "baseline": "Not Implemented",
+   "now": "Explicitly Deferred",
+   "lacks": "Superseded by L3-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence (brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.”); as written, not met: failing on 2 of brief 10’s 8 journeys on its final code (decisions-2026-10-16/integrated/after/l3r.json)"
+  },
+  {
+   "id": "M1",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "judge.together",
+   "group": "Brief 10 Area: judge",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "judge.tests",
+   "group": "Brief 10 Area: judge",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "judge.stamina",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "judge.memory",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "judge.composure",
+   "group": "Brief 10 Area: judge",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST6-R.bPrime",
+   "group": "Brief 10 Area: judge",
+   "category": "design-or-gameplay",
+   "baseline": "Decision Required",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "A1",
+   "group": "Brief 10 Area: judge",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.W1",
+   "group": "Brief 10 Area: stamina",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.W2",
+   "group": "Brief 10 Area: stamina",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.W3",
+   "group": "Brief 10 Area: stamina",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.W4",
+   "group": "Brief 10 Area: stamina",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.W5",
+   "group": "Brief 10 Area: stamina",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.W6",
+   "group": "Brief 10 Area: stamina",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.W7",
+   "group": "Brief 10 Area: stamina",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.W8",
+   "group": "Brief 10 Area: stamina",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.W9",
+   "group": "Brief 10 Area: stamina",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.W10",
+   "group": "Brief 10 Area: stamina",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.M1",
+   "group": "Brief 10 Area: stamina",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.measure",
+   "group": "Brief 10 Area: stamina",
+   "category": "historical-record",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred",
+   "lacks": "A historical record of a process step: the stamina area’s first look at what moved, before and after its change (brief 10); the current figures are the criteria rows’ and the judge area’s, measured on the tested commit (brief 11, section 3)"
+  },
+  {
+   "id": "stamina.A1",
+   "group": "Brief 10 Area: stamina",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST1",
+   "group": "Criteria: The Stage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST2",
+   "group": "Criteria: The Stage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST3",
+   "group": "Criteria: The Stage",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "ST3 as written: the even actor the same as shown on 178 of 189 (integrated-09), not met; 185 of 193 on brief 10’s final code (decisions-2026-10-16/integrated/after/st3.json), not met; superseded by ST3-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
+  },
+  {
+   "id": "ST4",
+   "group": "Criteria: The Stage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST5",
+   "group": "Criteria: The Stage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST6",
+   "group": "Criteria: The Stage",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "ST6 as written: the restrained half 9 of 42 (integrated-09; 10 of 42 once the specialists’ budgets were made equal in brief 10), not met; 11 of 44 on brief 10’s final code, the 25% floor to the case (integrated/after/stage.json); superseded by ST6-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
+  },
+  {
+   "id": "ST7",
+   "group": "Criteria: The Stage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST8",
+   "group": "Criteria: The Stage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "ST9",
+   "group": "Criteria: The Stage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "Stage F1",
+   "group": "Criteria: The Stage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "Stage F2",
+   "group": "Criteria: The Stage",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "I1",
+   "group": "Criteria: Interpretation",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "I2",
+   "group": "Criteria: Interpretation",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "I3",
+   "group": "Criteria: Interpretation",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "I4",
+   "group": "Criteria: Interpretation",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "I5",
+   "group": "Criteria: Interpretation",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "A1",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "A2",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "A3",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "T2",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "T3",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "G3",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "G4",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "G5",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "M1",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "M3",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "O1",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "O2",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "H2",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "H5",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "H7",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "H4",
+   "group": "Criteria: The Attributes",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "H4 as written: 1 of 12 (integrated-09), not met; 1 of 12 on brief 10’s final code (integrated/after/criteria.txt); superseded by H4-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
+  },
+  {
+   "id": "F2",
+   "group": "Criteria: The Attributes",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Superseded by F2-A, approved by the owner in brief 10 (decision 2), and F2-A10 its broadened proof (remaining-10/advice-result.json); F2 as written stays in the record, not met (67.6%, 302 of 447 on brief 09’s integrated tree; 68.9%, 308 of 447 on brief 10’s final code, decisions-2026-10-16/integrated/after/criteria.txt), and is still run and reported"
+  },
+  {
+   "id": "F2-A",
+   "group": "Criteria: The Attributes",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "G1",
+   "group": "Criteria: The Attributes",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "Replaced under the owner’s authorization in brief 02, section 3 (\"I authorize replacing a demonstrably invalid metric…\"), on the conditions it set (docs/verification/genres-2026-10-16/g1-replacement.md); S1 to S4 are counted in its place, and its result is kept as measured"
+  },
+  {
+   "id": "A4",
+   "group": "Criteria: The Attributes",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "A5",
+   "group": "Criteria: The Attributes",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "T1",
+   "group": "Criteria: The Attributes",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "O3",
+   "group": "Criteria: The Attributes",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "F1",
+   "group": "Criteria: The Attributes",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "F3",
+   "group": "Criteria: The Attributes",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "L1",
+   "group": "Criteria: Long-Term Continuity",
+   "category": "design-or-gameplay",
+   "baseline": "Decision Required",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "L2",
+   "group": "Criteria: Long-Term Continuity",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "L3",
+   "group": "Criteria: Long-Term Continuity",
+   "category": "deferred at the baseline",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "lacks": "L3 as written: the specialist 65.5 to 64.3, the beginner 54.0 to 56.8 (integrated-09), not met for the specialist; failing on 2 of brief 10’s 8 journeys on its final code (integrated/after/l3r.json); superseded by L3-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
+  },
+  {
+   "id": "MA1",
+   "group": "Criteria: Mastery Through Play",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "MA2",
+   "group": "Criteria: Mastery Through Play",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "MA3",
+   "group": "Criteria: Mastery Through Play",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "MA4",
+   "group": "Criteria: Mastery Through Play",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "MA6",
+   "group": "Criteria: Mastery Through Play",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "MA7",
+   "group": "Criteria: Mastery Through Play",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "MA5",
+   "group": "Criteria: Mastery Through Play",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "MA8",
+   "group": "Criteria: Mastery Through Play",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "S1",
+   "group": "Criteria: The Genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "S2",
+   "group": "Criteria: The Genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "S3",
+   "group": "Criteria: The Genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "S4",
+   "group": "Criteria: The Genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "Genre Audit",
+   "group": "Criteria: The Genres",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "INT-determinism",
+   "group": "Integration",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "INT-time",
+   "group": "Integration",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "INT-duplicates",
+   "group": "Integration",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "INT-migration",
+   "group": "Integration",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "INT-missed-term",
+   "group": "Integration",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "INT-skipped",
+   "group": "Integration",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "INT-navigation",
+   "group": "Integration",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "INT-long-runs",
+   "group": "Integration",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "INT-gate",
+   "group": "Integration",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "KS-matrix-gate",
+   "group": "Known Shortfalls And Missing Tests",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "KS-degree-text",
+   "group": "Known Shortfalls And Missing Tests",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "KS-genres-54",
+   "group": "Known Shortfalls And Missing Tests",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "KS-bank-rows-scope",
+   "group": "Known Shortfalls And Missing Tests",
+   "category": "decision-4",
+   "baseline": "Decision Required",
+   "now": "Decision Required",
+   "lacks": "Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred?"
+  },
+  {
+   "id": "KS-homecloses",
+   "group": "Known Shortfalls And Missing Tests",
+   "category": "verified at the baseline",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified"
+  },
+  {
+   "id": "KS-ct-idcard",
+   "group": "Known Shortfalls And Missing Tests",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Blocked Externally",
+   "lacks": "The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card once its holder is 'no longer entitled to be present', and sets no term; CGS chapter 246 has no such provision (searched for 'authorized stay', 'lawful status', 'immigration status', 'visa', 'legal presence', 'citizen'). SLATE keeps the term to the end of lawful presence as its assumption, said so in systems/identity.ts and on the guide's line ('SLATE's reading where the state publishes none'). Also not said by the DMV, and taken by SLATE: whether a non-citizen the DMV doesn't ask back has the twenty days from the first visit (SLATE takes the later, its described return after SAVE); and whose holidays the twenty business days skip (SLATE counts the federal ones). What would settle it: the DMV's answer in writing (its Contact Center, 860-263-5700, or a published policy). Pages tried and not reached: https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining (2026-10-16: host doesn't resolve, WebFetch ENOTFOUND, the proxy's CONNECT 502); https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1hSection_01-1h-1/ to -8 and Title_01Subtitle_01-1h/ (2026-10-16: 'Unable to Access Resource (HTTP: 404)'; read instead in the DMV's 2007 compilation, https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf). www.cga.ct.gov was reached only after completing its certificate chain with GoDaddy's G2 intermediate from certs.godaddy.com, the server sending its leaf alone (curl error 60 otherwise; WebFetch 503)."
+  },
+  {
+   "id": "KS-passport-fees",
+   "group": "Known Shortfalls And Missing Tests",
+   "category": "verification",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Blocked Externally",
+   "lacks": "Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passport-fee.html , /itpr_ja/m02_01.html , /itpr_ja/index.html , /itpr_ja/11_000001_00472.html , /files/100876429.pdf , /files/101051085.pdf ; https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html ; https://www.boston.us.emb-japan.go.jp/files/100996789.pdf ; https://www.mofa.go.jp/mofaj/ca/pss/pagew_000001_02493.html , /mofaj/files/100482215.pdf , /mofaj/toko/passport/pass_5.html . Search extracts (leads, not sources) show Boston's and Anchorage's tables at US$62 at the window and US$60 online from 1 July 2026, and New York's notice of 8 June 2026 saying its dollar amount would follow; which consulate's district holds Connecticut wasn't read either. New Zealand: whether a student in the US is charged GST, and the urgent fee from overseas (SLATE charges GST and takes the urgent service as at home, NZ$247 more). Tried on 2026-10-17: https://www.passports.govt.nz/passport-costs (Cloudflare challenge 'Just a moment...', 403 to curl; 503 to WebFetch), /urgent-travel and /passport-costs/passport-timeframes (403, the same challenge); https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2015/264/en/latest/ (202 with an empty body to curl, three times; 403 to WebFetch), /2015/264/en/2025-05-02.pdf and /2025/75/en/latest/ (202 empty, three times each), https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/096be8ed81f36d4a.pdf (202 empty); the Internet Archive's captures https://web.archive.org/web/20261001231111/https://www.passports.govt.nz/passport-costs and .../20260919065520/.../urgent-travel (connection reset by the proxy's tunnel, six times; WebFetch refuses web.archive.org). DIA's own release (dia.govt.nz, read) confirms only the adult fee in force, $247 with GST from 2 May 2025. Brazil's Hartford consulate page (https://www.gov.br/mre/pt-br/consulado-hartford/servicos-consulares/passaportes) answered a CAPTCHA to curl and WebFetch; its fee was read in the Diário Oficial instead, so it isn't a blocker. Outside the row's fees and left as labelled: the turnaround estimates (UK, France, Spain, Japan, Korea, Mexico, Iceland, Brazil), Canada's and Germany's faster services not offered from New Haven, and New Zealand's courier."
+  }
+ ]
+}

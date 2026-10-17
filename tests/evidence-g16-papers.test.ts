@@ -19,8 +19,9 @@
  *   Capital One turns her away for want of a photo ID; replaced by mail for New York's $17.50, it arrives 21 days on
  *   with `issuedAt` its day, says "Class D (Operator) driver license Arrived" once across a reload, reads In Force on
  *   Papers, and Capital One opens her account. An F-1 student's limited-term Connecticut card, applied for once her
- *   Social Security number has come, arrives ten business days on, runs to her program's end, is said to arrive, and
- *   Wells Fargo takes it as her photo ID once her passport is reported lost.
+ *   Social Security number has come, arrives by mail twenty business days after SAVE's ten (from 2026-10-17: until then
+ *   on SAVE's tenth), runs to her program's end, is said to arrive, and Wells Fargo takes it as her photo ID once her
+ *   passport is reported lost.
  * - `documents.permission`: Apply For OPT on Papers is refused before its window in its words, applied on 5 March 2029
  *   for $470 and decided 90 days on: valid twelve calendar months from the decision, "OPT Approved" naming both dates,
  *   the status's look moved to its expiry and held past the degree's sixty days, then ended by its ninety days without
@@ -477,7 +478,10 @@ describe('documents.idcard_arrives', () => {
     expect(run(again, 'bank.open_current', { bankId: 'us-capital-one' }).ok).toBe(true);
   }, 60_000);
 
-  it('PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes ten business days after applying, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport', () => {
+  // Renamed on 2026-10-17 (brief 11's KS-ct-idcard, inputs/renames.json): until then 'PLAYER JOURNEY: an F-1 student’s
+  // limited-term Connecticut card comes ten business days after applying, runs to her program’s end, is said to arrive,
+  // and Wells Fargo takes it in place of a lost passport', when the card came on SAVE's day, unmailed.
+  it('PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes by mail twenty business days after SAVE’s ten, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport', () => {
     const sim = student('g16-idf1', 'uk-eng-london');
     sim.advanceTo(Date.UTC(2026, 8, 8, 23));
     const ssn = sim.must<{ arrivesAt: number }>({ kind: 'documents.apply_ssn', payload: {} });
@@ -497,15 +501,19 @@ describe('documents.idcard_arrives', () => {
     expect([card.name, card.status]).toEqual(['Non-Driver Identification Card, Limited Term', 'pending']);
     // SAVE’s ten federal workdays from Tuesday 29 September, 9 PM in New Haven: 30 September to 14 October, two weekends
     // and Columbus Day, Monday 12 October, between, so fifteen days to the hour. Until 2026-10-13 SAVE’s days were counted
-    // Monday to Friday, Columbus Day among them, and this held fourteen.
-    expect(card.readyAt).toBe(asked + 15 * MS_DAY);
+    // Monday to Friday, Columbus Day among them, and this held fourteen. Then the card is mailed within twenty business
+    // days (the DMV's Central Issuance, from 2026-10-17: until then it came on SAVE's day): 15, 16, 19 to 23 and 26 to 30
+    // October, 2 to 6, 9, 10 and 12 November, Veterans Day not among them, forty-four days on to the hour.
+    expect(card.readyAt).toBe(asked + 44 * MS_DAY);
     expect(run(sim, 'documents.apply_idcard')).toMatchObject({ ok: false, error: 'One is on its way.' });
+    sim.advanceTo(asked + 15 * MS_DAY + MS_HOUR);
+    expect(card.status).toBe('pending');
     sim.advanceTo(card.readyAt! - MS_HOUR);
     expect(card.status).toBe('pending');
     sim.advanceTo(card.readyAt! + MS_HOUR);
     expect(card.status).toBe('valid');
-    expect(card.issuedAt).toBe(asked + 15 * MS_DAY);
-    expect(titled(sim, 'Non-Driver Identification Card, Limited Term Arrived').map((n) => n.at)).toEqual([asked + 15 * MS_DAY]);
+    expect(card.issuedAt).toBe(asked + 44 * MS_DAY);
+    expect(titled(sim, 'Non-Driver Identification Card, Limited Term Arrived').map((n) => n.at)).toEqual([asked + 44 * MS_DAY]);
     expect(run(sim, 'documents.report_lost', { documentId: passport.id }).ok).toBe(true);
     expect(f1Of(sim.player)!.status).toBe('valid');
     // Her twin, the same life to the same hour with no card, her passport lost too: Wells Fargo turns her away.

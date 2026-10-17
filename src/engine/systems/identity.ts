@@ -10,7 +10,7 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, formatDate, type Instant } from '../core/time';
+import { MS_DAY, dateKey, formatDate, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
@@ -27,7 +27,16 @@ import { schoolEnded } from './school';
  * living there): lawful presence shown and checked through SAVE, ten business days or more; an F-1 student's I-20 and
  * proof of enrollment in the state's school; a Social Security number, or the SSA's letter that they're ineligible,
  * which SLATE doesn't issue since every student here is eligible through work-study; and a term to the end of their
- * lawful presence (Connecticut DMV, non-driver photo ID; CGS 14-36(c)). Once school is over the lawful presence is a US
+ * lawful presence, SLATE's assumption. This cited Connecticut DMV's non-driver photo ID page and CGS 14-36(c) for that
+ * term until 2026-10-17, when the page's host no longer resolved and 14-36(c) was read as the youth instruction permit:
+ * no page the state publishes gives the term of a non-verified card for somebody not a citizen (the limited-term REAL
+ * ID, whose expiration "must align with the expiration date on the individual's legal status document(s)", is for DACA
+ * holders only, and Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card once its holder is
+ * "no longer entitled to be present", with no term), so it stays SLATE's, the limited-term card's rule, and said to be
+ * (`docs/research/world/research-ct-idcard.json`, brief 11's KS-ct-idcard). Once SAVE has approved it the card is mailed
+ * as anyone's is: the DMV asks the applicant back "when the immigration results have been approved", and the card
+ * "will arrive in the mail", within twenty business days (`ID_CARDS`, from 2026-10-17: until then it came on SAVE's
+ * day). Once school is over the lawful presence is a US
  * permit in force, OPT, and the term runs to its end (from 2026-10-12: until then an F-1 holder was turned away once
  * school had ended, OPT in force or not, and the card's term, had it been let through, ran to the program's end,
  * already past). A graduate isn't a student, though: `ssnRefusal` takes an application for the number only through
@@ -40,7 +49,22 @@ import { schoolEnded } from './school';
  * to Friday, and a card applied for on the evening of 29 September 2026 came on 13 October, Columbus Day counted, not
  * on the 14th (left by that day’s second round).
  */
-export const NONCITIZEN_ID = { saveBusinessDays: 10, source: 'https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining; https://portal.ct.gov/DMV/Licenses/Licenses/Drivers-License--NonUS-Citizen--Requirements' } as const;
+export const NONCITIZEN_ID = { saveBusinessDays: 10, source: 'https://portal.ct.gov/dmv/licenses-permits-ids/get-a-drivers-license-ct; https://portal.ct.gov/dmv/licenses-permits-ids/get-real-id' } as const;
+
+/**
+ * When a card issued now runs out: its years from the day, or, where the state runs it to a birthday (Connecticut's,
+ * `ID_CARDS`, from 2026-10-17), the holder's first birthday at least that many years on, by the calendar where they
+ * live, so one applied for on a birthday runs to the same birthday seven years on; nothing where SLATE has no term.
+ */
+export function idCardExpires(card: (typeof ID_CARDS)[string], person: Person, at: Instant): Instant | undefined {
+  if (!card.years) return undefined;
+  const plain = addYears(at, card.years);
+  if (!card.toBirthday) return plain;
+  const zone = CITIES.get(person.currentLocationId)?.timeZone ?? 'UTC';
+  let n = new Date(plain).getUTCFullYear() - new Date(person.birthInstant).getUTCFullYear() - 1;
+  while (dateKey(addYears(person.birthInstant, n), zone) < dateKey(plain, zone)) n += 1;
+  return addYears(person.birthInstant, n);
+}
 
 /** Whether they're at school still, which an F-1 student's I-20 and proof of enrollment show. */
 const atSchool = (person: Person): boolean => person.school !== undefined && !schoolEnded(person.school.standing);
@@ -236,7 +260,7 @@ export function registerIdentity(sim: Simulation): void {
     if (person!.id === s.universe.playerId) s.notify({ category: 'papers', title: `${doc.name} Arrived`, body: 'It’s in force from today.', importance: 40, route: '/workspace/papers' });
   });
 
-  sim.onCommand<Record<string, never>, { expiresAt?: Instant; fee: Money }>('documents.apply_idcard', (_p, { sim: s }) => {
+  sim.onCommand<Record<string, never>, { expiresAt?: Instant; fee: Money; readyAt?: Instant }>('documents.apply_idcard', (_p, { sim: s }) => {
     const person = s.player;
     const no = idCardRefusal(person, s.now);
     if (no) throw new CommandError(no);
@@ -248,16 +272,21 @@ export function registerIdentity(sim: Simulation): void {
     const book = card.passportBook ? documentsOf(person).find((d) => d.kind === 'passport' && d.issuer === 'IE' && inForce(d, s.now)) : undefined;
     // A non-citizen's runs to the end of their lawful presence, and waits on SAVE (`NONCITIZEN_ID`, from 2026-10-10).
     const limited = jurisdiction.startsWith('us-') ? presenceEnds(person, s.now) : undefined;
-    const expiresAt = card.years ? Math.min(addYears(s.now, card.years), book?.expiresAt ?? Infinity, limited ?? Infinity) : undefined;
-    if (limited !== undefined) {
-      const readyAt = businessDaysOn(s.now, NONCITIZEN_ID.saveBusinessDays, true);
-      // Not REAL ID: “Only U.S. Citizens and Permanent Residents are eligible for a verified REAL ID driver’s license”,
-      // and anyone else is “issued a non-verified (Not for Federal Identification) driver’s license or ID card”
-      // (Connecticut DMV, Non-US Citizen Requirements and DI-3 Rev. 6-2026, read 2026-10-16). Until 2026-10-16 it was
-      // marked REAL ID, and its page said it met it (`nonCitizenCards` corrects one a save holds).
-      documentsOf(person).push({ id, kind: 'idcard', issuer: jurisdiction, name: `${card.name}, Limited Term`, number: numberFor('ID', id), status: 'pending', appliedAt: s.now, readyAt, ...(expiresAt ? { expiresAt } : {}), realId: false } as PersonDocument);
+    const term = idCardExpires(card, person, s.now);
+    const expiresAt = term !== undefined ? Math.min(term, book?.expiresAt ?? Infinity, limited ?? Infinity) : undefined;
+    // SAVE's check first for somebody not a citizen, then the mail where the state mails the card (Connecticut's twenty
+    // business days, `ID_CARDS`, from 2026-10-17: until then a citizen's was in force at the counter, and a
+    // non-citizen's came on SAVE's day).
+    const decided = limited !== undefined ? businessDaysOn(s.now, NONCITIZEN_ID.saveBusinessDays, true) : s.now;
+    const readyAt = card.mailedBusinessDays ? businessDaysOn(decided, card.mailedBusinessDays, true) : decided;
+    if (readyAt > s.now) {
+      // Not REAL ID for somebody not a citizen: “Only U.S. Citizens and Permanent Residents are eligible for a verified
+      // REAL ID driver’s license”, and anyone else is “issued a non-verified (Not for Federal Identification) driver’s
+      // license or ID card” (Connecticut DMV, Non-US Citizen Requirements and DI-3 Rev. 6-2026, read 2026-10-16). Until
+      // 2026-10-16 it was marked REAL ID, and its page said it met it (`nonCitizenCards` corrects one a save holds).
+      documentsOf(person).push({ id, kind: 'idcard', issuer: jurisdiction, name: limited !== undefined ? `${card.name}, Limited Term` : card.name, number: numberFor('ID', id), status: 'pending', appliedAt: s.now, readyAt, ...(expiresAt ? { expiresAt } : {}), ...(jurisdiction.startsWith('us-') ? { realId: limited === undefined } : {}) } as PersonDocument);
       s.schedule({ at: readyAt, kind: ID_CARD_KIND, label: 'The ID Card Comes', category: 'personal', priority: 30, payload: { personId: person.id, documentId: id } });
-      return { expiresAt, fee };
+      return { expiresAt, fee, readyAt };
     }
     documentsOf(person).push({ id, kind: 'idcard', issuer: jurisdiction, name: card.name, number: numberFor('ID', id), status: 'valid', issuedAt: s.now, ...(expiresAt ? { expiresAt } : {}), ...(jurisdiction.startsWith('us-') ? { realId: true } : {}) });
     return { expiresAt, fee };

@@ -1,0 +1,945 @@
+{
+  "area": "attributes",
+  "commits": [
+    "d6d0247e9ce34920ba62364ed7ccfe2098ed6b2f",
+    "3ad95b37d347b258bcb75884d6c5224e89c99561",
+    "2f42b9fcd8b4888a2e04ef1a20af2f7390d720ae",
+    "15917af0c2c7b74b91afab59f249560c6bde427e",
+    "68ac7ff8f88a9d84ac65f02d6a9cf7f7b19afe3b"
+  ],
+  "rows": [
+    {
+      "id": "A4",
+      "group": "Criteria: The Attributes",
+      "baselineStatus": "Implemented, Verification Incomplete",
+      "status": "Implemented And Verified",
+      "notProved": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding. For all twelve abilities: that the ability look says what develops it and what it does, that what it says it does moves with it on every piece of each task it names (and nothing else, for stamina), and that every activity its develops sentence names grows it.",
+      "exercised": "Each of the twelve abilities’ looks drawn (resolveLook, the house’s look registry) on a played save and its Player Profile row drawn with renderToStaticMarkup; every task and dimension the look names judged on every piece of that task (tools/pieces.ts, ag-baseline’s constructions) at the even actor and at +10 of the ability; every clause of the develops and affects sentences parsed against a clause table and each clause’s check run; every develops clause played through its command on one save (practice.exercise, plays.read, school.ask_partner, life.look_after, a night, a call answered), with a save and a load.",
+      "evidence": [
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "A4: what the game says each ability does and what develops it, it does (brief 11) > the ability’s look says what develops it, what it does and which work reads it, and every task and dimension it names moves with it on every piece of that task; stamina’s are the drain’s, exactly, all twelve",
+          "kind": "fixture",
+          "proves": "The look says What Develops It, What It Does (the ability’s own sentence) and Which Work Reads It; the Profile’s It Shapes the same dimensions; every named task and dimension moves with +10 on every piece of that task; stamina’s named readers are exactly what +10 stamina moves on any piece, the drain’s dimensions, all twelve."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "A4: what the game says each ability does and what develops it, it does (brief 11) > GUARD: every clause of every ability’s two sentences is its own words and is held by a check, all twelve",
+          "kind": "guard",
+          "proves": "Every clause of every ability’s develops and affects sentences is in the clause table that checks it, and nothing is said beyond the clauses, all twelve; the four sentences as they stood at the baseline fail it."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "A4: what the game says each ability does and what develops it, it does (brief 11) > PLAYER JOURNEY: every activity each ability’s develops sentence names grows it, on one save played through its commands and its clock",
+          "kind": "player journey",
+          "proves": "Every activity each develops sentence names grows the ability, played through its commands and the clock on one save."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "A4: what the game says each ability does and what develops it, it does (brief 11) > every effect each ability’s affects sentence names, it has, clause by clause, all twelve",
+          "kind": "fixture",
+          "proves": "Every effect each affects sentence names, clause by clause, holds on the judged pieces: the demand, approach, transition, language and feature effects, recover and cover, discipline’s lift and stamina’s night energy, all twelve."
+        },
+        {
+          "file": "tests/evidence2-b11.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 15
+        },
+        {
+          "file": "tests/evidence-g31-ui.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 21
+        },
+        {
+          "file": "tests/attributes-matrix.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 1
+        },
+        {
+          "file": "tests/guide-examples-craft.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 10
+        },
+        {
+          "file": "tests/ability-mastered.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 2
+        }
+      ],
+      "fixes": [
+        {
+          "summary": "The ability look’s What It Does listed the readers and fell back to the ability’s sentence only where nothing read it, and every ability has a reader, so the sentence was shown nowhere. It now says the sentence as What It Does and the readers as Which Work Reads It.",
+          "where": "src/ui/looks/actor.tsx; src/engine/content/guide/craft.ts (the guide’s line for the look)",
+          "failingTest": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > the ability’s look says what develops it, what it does and which work reads it, and every task and dimension it names moves with it on every piece of that task; stamina’s are the drain’s, exactly, all twelve"
+        },
+        {
+          "summary": "Stamina’s readers came from the task profiles’ inputs alone, so the look, the Profile’s Today and It Shapes and the attributes matrix said a scene’s and a night’s consistency, the input a piece judged in parts takes out. abilityReaders now reads stamina, in a task judged in parts, as the drain on every dimension that lists fatigue.",
+          "where": "src/engine/systems/material.ts (abilityReaders, IN_PARTS); src/ui/looks/actor.tsx (readersOf); src/engine/content/attributes-matrix.ts; docs/ATTRIBUTES-MATRIX.md regenerated",
+          "failingTest": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > the ability’s look says what develops it, what it does and which work reads it, and every task and dimension it names moves with it on every piece of that task; stamina’s are the drain’s, exactly, all twelve"
+        },
+        {
+          "summary": "Four affects sentences said what the code contradicts: presence “most in front of a house” (+10 moves a clown turn 1.6 and an improvisation 1.0 on the mean, a night 0.65); memory execution “wherever lines are spoken” (a speech drill’s and a voice sequence’s execution read none); composure “on a night, more than in class” (a self-tape and an audition shown in class 0.95 and 0.93, a night 0.69, a class scene 0.53); discipline consistency in every task “but the audition” (an audition on a scene of more than three units, The Seagull’s fourth act, reads it). Each reworded to what was measured, the old clause kept in a dated comment.",
+          "where": "src/engine/content/abilities.ts",
+          "failingTest": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > GUARD: every clause of every ability’s two sentences is its own words and is held by a check, all twelve"
+        }
+      ],
+      "mutations": [
+        {
+          "what": "abilityReaders read stamina off its inputs alone (the look's and the Profile's stamina, as before the fix)",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > the ability’s look says what develops it, what it does and which work reads it, and every task and dimension it names moves with it on every piece of that task; stamina’s are the drain’s, exactly, all twelve"
+        },
+        {
+          "what": "the look's What It Does back to the readers, its own sentence shown nowhere",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > the ability’s look says what develops it, what it does and which work reads it, and every task and dimension it names moves with it on every piece of that task; stamina’s are the drain’s, exactly, all twelve"
+        },
+        {
+          "what": "getting to know coursework's material read no focus (STEP_ABILITY's familiarity gone)",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > every effect each ability’s affects sentence names, it has, clause by clause, all twelve"
+        },
+        {
+          "what": "a change of tone asked no adaptability (TRANSITION_EFFECT's 0.6 to 0)",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > every effect each ability’s affects sentence names, it has, clause by clause, all twelve"
+        },
+        {
+          "what": "recovering from a slip read adaptability alone, not composure",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > every effect each ability’s affects sentence names, it has, clause by clause, all twelve"
+        },
+        {
+          "what": "covering a partner's slip read listening alone, not adaptability",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > every effect each ability’s affects sentence names, it has, clause by clause, all twelve"
+        },
+        {
+          "what": "a night in front of a house grew no listening",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > PLAYER JOURNEY: every activity each ability’s develops sentence names grows it, on one save played through its commands and its clock"
+        },
+        {
+          "what": "a call answered grew no discipline",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > PLAYER JOURNEY: every activity each ability’s develops sentence names grows it, on one save played through its commands and its clock"
+        },
+        {
+          "what": "discipline's lift a fifth either side, not a tenth",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > every effect each ability’s affects sentence names, it has, clause by clause, all twelve"
+        },
+        {
+          "what": "stamina spared four tenths of a night's energy at full, not half",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > every effect each ability’s affects sentence names, it has, clause by clause, all twelve"
+        },
+        {
+          "what": "the four affects sentences as they stood at the baseline (src/engine/content/abilities.ts at 7572578b)",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A4: what the game says each ability does and what develops it, it does (brief 11) > GUARD: every clause of every ability’s two sentences is its own words and is held by a check, all twelve"
+        }
+      ],
+      "decision": "Verified for all twelve. The look’s and the Profile’s readers and the attributes matrix are display; nothing the game judges changed, so RULESET stays evaluation-11."
+    },
+    {
+      "id": "A5",
+      "group": "Criteria: The Attributes",
+      "baselineStatus": "Implemented, Verification Incomplete",
+      "status": "Implemented And Verified",
+      "notProved": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding. For each of the twelve: an action the player chooses that develops it, and the screens that say what moved.",
+      "exercised": "An hour of each of the ten abilities’ exercises pressed on its own Practice An Hour control on the drawn Player Profile (Gated’s onClick, the save’s own execute): the command’s gain, the hour’s feedback words, the toast and the Profile row’s Last Change compared, then the same across serialise, deserialise and loadSave; discipline from a day’s practice kept (said before the hour on the control and on its row after, once a day); stamina from Work Out through life.look_after, said on its row and its look.",
+      "evidence": [
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "A5: an action the player chooses develops each ability, and says what moved (brief 11) > PLAYER JOURNEY: an hour of each of the ten abilities’ exercises, pressed on its control, grows it, its words and the toast say by how much, and the Profile’s row says the last change, across a save and a load",
+          "kind": "player journey",
+          "proves": "Each of the ten exercises grows its ability by what the command says; its words and the toast say the same gain, and the Profile’s Last Change says it to the hundredth, across a save and a load."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "A5: an action the player chooses develops each ability, and says what moved (brief 11) > PLAYER JOURNEY: discipline grows from a day’s practice kept, once a day, said before the hour and on its row after; stamina from a Work Out, said on its row and its look",
+          "kind": "player journey",
+          "proves": "Discipline grows from a day’s practice kept, once a day, said before the hour and on its row after; stamina grows from a Work Out, said on its row and its look."
+        },
+        {
+          "file": "tests/evidence2-b08.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 11
+        },
+        {
+          "file": "tests/evidence-g22-school.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 19
+        },
+        {
+          "file": "tests/evidence-g20-school.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 27
+        },
+        {
+          "file": "tests/evidence-g31-ui.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 21
+        },
+        {
+          "file": "tests/development.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 6
+        },
+        {
+          "file": "tests/history-continuity.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 2
+        }
+      ],
+      "fixes": [
+        {
+          "summary": "recordDevelopment kept each change to a thousandth and the Profile’s Last Change rounded it again to a hundredth: an hour of the Repetition Exercise whose toast and words said +0.25 showed +0.24. The history now keeps the change at full precision; each screen rounds it once.",
+          "where": "src/engine/systems/attributes.ts (recordDevelopment)",
+          "failingTest": "tests/attributes-phase-2b.test.ts > A5: an action the player chooses develops each ability, and says what moved (brief 11) > PLAYER JOURNEY: an hour of each of the ten abilities’ exercises, pressed on its control, grows it, its words and the toast say by how much, and the Profile’s row says the last change, across a save and a load"
+        }
+      ],
+      "mutations": [
+        {
+          "what": "the history kept to a thousandth again (a screen's hundredth rounded twice)",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A5: an action the player chooses develops each ability, and says what moved (brief 11) > PLAYER JOURNEY: an hour of each of the ten abilities’ exercises, pressed on its control, grows it, its words and the toast say by how much, and the Profile’s row says the last change, across a save and a load"
+        },
+        {
+          "what": "the hour's words said nothing of what rose",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A5: an action the player chooses develops each ability, and says what moved (brief 11) > PLAYER JOURNEY: an hour of each of the ten abilities’ exercises, pressed on its control, grows it, its words and the toast say by how much, and the Profile’s row says the last change, across a save and a load"
+        }
+      ],
+      "decision": "Verified for all twelve: ten through their exercises, discipline through practice kept, stamina through Work Out. Five assertions in four earlier files that compared the history with the change rounded to a thousandth were refigured to compare it with the change exactly, a stronger assertion; none was weakened."
+    },
+    {
+      "id": "T1",
+      "group": "Criteria: The Attributes",
+      "baselineStatus": "Implemented, Verification Incomplete",
+      "status": "Implemented And Verified",
+      "notProved": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding. For each ability’s training: the value said on the control before the hour and in the hour’s words after; a repeat said; a technique past mastery said to move no result.",
+      "exercised": "Each of the ten abilities’ controls opened on the drawn Profile at 7 AM on a morning of its own: the gain and tier said before, pressed, the hour’s words compared, then a second hour the same day said a repeat before and after; Work Out’s fitness said in the Look After Yourself menu (TimeControls drawn with its useState queue) before the hour to a tenth and the Profile row after; every technique set past 90 and at 85 and its control and hour read.",
+      "evidence": [
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: each of the ten abilities’ controls says the hour’s gain and its tier before it, the hour’s words the same gain, the tier and that it’s pitched where you are after; a second hour the same day is said a repeat before and after, at half",
+          "kind": "player journey",
+          "proves": "Each of the ten controls says the hour’s gain and its tier before; the hour’s words say the same gain, the tier and that it’s pitched where you are; a second hour the same day is said a repeat before and after."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: stamina’s training, Work Out, says the fitness it builds before the hour, to a tenth, and its row the same after; a gain under a point isn’t said as none",
+          "kind": "player journey",
+          "proves": "Work Out says the fitness it builds before the hour to a tenth and the Profile’s row the same after; a gain under a point isn’t said as none."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: every technique past 90 is said to move no result, on its control before the hour and in the hour’s words after; at 85, neither says it",
+          "kind": "player journey",
+          "proves": "Every technique past 90 is said to move no result on its control before and in the hour’s words after; at 85 neither says it."
+        },
+        {
+          "file": "tests/evidence-g29-ui.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 27
+        },
+        {
+          "file": "tests/evidence-g30-ui.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 29
+        },
+        {
+          "file": "tests/fitness.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 8
+        }
+      ],
+      "fixes": [
+        {
+          "summary": "The Look After menu said every dial as a whole number, so a workout or a run building under a point said it built nothing (at 50.6 a run building 0.8 read “Fitness 51 → 51”). Fitness, stamina’s figure, is now said to the tenth the Profile keeps it to.",
+          "where": "src/ui/shell/TimeControls.tsx (dialFigure)",
+          "failingTest": "tests/attributes-phase-2b.test.ts > T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: stamina’s training, Work Out, says the fitness it builds before the hour, to a tenth, and its row the same after; a gain under a point isn’t said as none"
+        }
+      ],
+      "mutations": [
+        {
+          "what": "the control said no gain before the hour",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: each of the ten abilities’ controls says the hour’s gain and its tier before it, the hour’s words the same gain, the tier and that it’s pitched where you are after; a second hour the same day is said a repeat before and after, at half"
+        },
+        {
+          "what": "the hour's words said nothing of a repeat",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: each of the ten abilities’ controls says the hour’s gain and its tier before it, the hour’s words the same gain, the tier and that it’s pitched where you are after; a second hour the same day is said a repeat before and after, at half"
+        },
+        {
+          "what": "past mastery said nowhere",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: every technique past 90 is said to move no result, on its control before the hour and in the hour’s words after; at 85, neither says it"
+        },
+        {
+          "what": "the Look After menu's fitness in whole numbers again",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: stamina’s training, Work Out, says the fitness it builds before the hour, to a tenth, and its row the same after; a gain under a point isn’t said as none"
+        }
+      ],
+      "decision": "Verified for all twelve: ten exercises, discipline (said with every practice hour), stamina through Work Out; and the seventeen techniques for the mastery clause."
+    },
+    {
+      "id": "O3",
+      "group": "Criteria: The Attributes",
+      "baselineStatus": "Implemented, Verification Incomplete",
+      "status": "Implemented And Verified",
+      "notProved": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding. That a class band and a night’s band read the player’s own result, casting the expected result, and that preparation and condition are limits of their own.",
+      "exercised": "A paired scene shown at Acting I’s meeting, played through school.ask_partner and the meeting, with a partner who reads it apart; a night played through the run with a shaky company; casting read through castFit with and without a draw; a take taped cold and one with the flu through practice.self_tape, against prepared and well twins.",
+      "evidence": [
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "O3: bands, grades and casting read the player’s own result, and preparation and condition are limits of their own (brief 11) > PLAYER JOURNEY: a paired scene shown at Acting I’s meeting is banded by the player’s own result, Exceptional, while the scene together, said beside it, is Strong; a partner who reads it apart moves the scene together and nothing of the player’s own",
+          "kind": "player journey",
+          "proves": "A paired scene is banded by the player’s own result, Exceptional, while the scene together, said beside it, is Strong; a partner who reads it apart moves the scene together and nothing of the player’s band."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "O3: bands, grades and casting read the player’s own result, and preparation and condition are limits of their own (brief 11) > PLAYER JOURNEY: a night is banded by the player’s own night while the company’s, said apart, moves the mood alone; casting reads the expected personal result, no draw and no company in it",
+          "kind": "player journey",
+          "proves": "A night is banded by the player’s own night while the company’s, said apart, moves the mood alone; casting reads the expected personal result, no draw and no company in it."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "O3: bands, grades and casting read the player’s own result, and preparation and condition are limits of their own (brief 11) > PLAYER JOURNEY: a take taped cold names its preparation short as limits of their own, in the task’s words, and a take with the flu names the flu, while the abilities each read stand as they are",
+          "kind": "player journey",
+          "proves": "A take taped cold names its preparation short as limits of their own in the task’s words, a take with the flu names the flu, and the abilities each read stand as they are."
+        }
+      ],
+      "fixes": [],
+      "mutations": [
+        {
+          "what": "a showing banded by the scene together",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > O3: bands, grades and casting read the player’s own result, and preparation and condition are limits of their own (brief 11) > PLAYER JOURNEY: a paired scene shown at Acting I’s meeting is banded by the player’s own result, Exceptional, while the scene together, said beside it, is Strong; a partner who reads it apart moves the scene together and nothing of the player’s own"
+        },
+        {
+          "what": "a night banded by the night together",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > O3: bands, grades and casting read the player’s own result, and preparation and condition are limits of their own (brief 11) > PLAYER JOURNEY: a night is banded by the player’s own night while the company’s, said apart, moves the mood alone; casting reads the expected personal result, no draw and no company in it"
+        },
+        {
+          "what": "casting read a drawn night",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > O3: bands, grades and casting read the player’s own result, and preparation and condition are limits of their own (brief 11) > PLAYER JOURNEY: a night is banded by the player’s own night while the company’s, said apart, moves the mood alone; casting reads the expected personal result, no draw and no company in it"
+        },
+        {
+          "what": "the flu named nowhere in the judged work",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > O3: bands, grades and casting read the player’s own result, and preparation and condition are limits of their own (brief 11) > PLAYER JOURNEY: a take taped cold names its preparation short as limits of their own, in the task’s words, and a take with the flu names the flu, while the abilities each read stand as they are; tests/attributes-phase-2b.test.ts > health, stamina and energy kept apart (brief 11, section 7) > PLAYER JOURNEY: twins at a night’s curtain at the same readiness, one down with the flu: the flu reaches the night once, as Down With The Flu on the dimensions its task lists illness for; stamina, its drain in every part and the energy the night costs are the well twin’s"
+        }
+      ],
+      "decision": "Verified as it stood; no defect found. One mutation (a night banded by the night together) survived the night test as first written, where the player’s own night and the night together fell in the same band; the test was strengthened to a player at 88 everywhere against a steady company (reliability 1) and a shaky one (0.2): her own night is solid with either, and the shaky company’s night together falls under the solid line, off, so the two bands part, and the mutation then failed it."
+    },
+    {
+      "id": "F1",
+      "group": "Criteria: The Attributes",
+      "baselineStatus": "Implemented, Verification Incomplete",
+      "status": "Implemented And Verified",
+      "notProved": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding. That each note reads what the evaluation found: the take’s chief limit, its look, What To Work On Next and the brief suggested, and a class note.",
+      "exercised": "Twins taping the same prepared brief, one weak in imagination and one in emotional depth, through practice.self_tape: each take’s chief limit, its look, the advice and the brief pane’s suggestion read; a scene shown at Acting I’s meeting by twins behind the year in voice and in emotional access, the note read.",
+      "evidence": [
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "F1: every note names what the evaluation found (brief 11) > PLAYER JOURNEY: twins taping the same prepared brief, one weak in imagination and one in emotional depth: each take’s chief limit, its look, What To Work On Next and the brief suggested for it name what each one’s evaluation found",
+          "kind": "player journey",
+          "proves": "Each twin’s take names its own chief limit, and its look, What To Work On Next and the brief suggested name what that twin’s evaluation found."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "F1: every note names what the evaluation found (brief 11) > PLAYER JOURNEY: a scene shown at Acting I’s meeting by a craft behind the year gets its note on the craft skill its judged result’s limits say held it most, the voice for one twin and emotional access for the other",
+          "kind": "player journey",
+          "proves": "A class note names the craft skill the judged result’s limits say held it most: the voice for one twin, emotional access for the other."
+        }
+      ],
+      "fixes": [],
+      "mutations": [
+        {
+          "what": "the chief limit the second, not the first",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > F1: every note names what the evaluation found (brief 11) > PLAYER JOURNEY: twins taping the same prepared brief, one weak in imagination and one in emotional depth: each take’s chief limit, its look, What To Work On Next and the brief suggested for it name what each one’s evaluation found"
+        },
+        {
+          "what": "a course's note on the craft names the scene whatever the limits",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > F1: every note names what the evaluation found (brief 11) > PLAYER JOURNEY: a scene shown at Acting I’s meeting by a craft behind the year gets its note on the craft skill its judged result’s limits say held it most, the voice for one twin and emotional access for the other"
+        }
+      ],
+      "decision": "Verified as it stood; no defect found."
+    },
+    {
+      "id": "F3",
+      "group": "Criteria: The Attributes",
+      "baselineStatus": "Implemented, Verification Incomplete",
+      "status": "Implemented And Verified",
+      "notProved": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding. That preparation, the day’s condition and a way of playing are each advised in their own words, apart from ability, with no exercise where none answers them.",
+      "exercised": "Takes taped cold against the same briefs prepared, takes with the flu against a well twin, takes played a way the scene doesn’t allow, and long taped briefs at fitness 15 against a fitter twin, all through practice.self_tape, the advice read through adviceFor and on the Player Profile’s What To Work On Next as drawn, line by line.",
+      "evidence": [
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: takes taped cold are advised as preparation, in its words, with no exercise; the same briefs prepared aren’t",
+          "kind": "player journey",
+          "proves": "Cold takes are advised as preparation in its words with no exercise; the same briefs prepared aren’t."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: takes with the flu are advised as the day’s condition, in its words, with no exercise; a well twin’s aren’t",
+          "kind": "player journey",
+          "proves": "Takes with the flu are advised as the day’s condition in its words with no exercise; a well twin’s aren’t."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: takes played a way the scene doesn’t allow are advised as the choice, in its words, with no exercise",
+          "kind": "player journey",
+          "proves": "Takes played a way the scene doesn’t allow are advised as the choice in its words with no exercise."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: stamina draining through long takes is advised as stamina, built by a Work Out, never as rest; a fitter twin isn’t advised it",
+          "kind": "player journey",
+          "proves": "Stamina draining through long takes is advised as stamina, built by a Work Out, never as rest; a fitter twin isn’t advised it."
+        },
+        {
+          "file": "tests/defects-g3-1.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 7
+        },
+        {
+          "file": "tests/advice.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 5
+        },
+        {
+          "file": "tests/decisions-advice.test.ts",
+          "ran": true,
+          "exit": 0,
+          "tests": 10
+        }
+      ],
+      "fixes": [
+        {
+          "summary": "Stamina’s drain, kept as a condition limit, was advised as the day’s condition under the label of the part it was first found in: “Stamina, By Beat 2 cost about 2.7 points of the whole a piece: come to the work rested and well, or find places to breathe in it”, at fitness 15 on long taped briefs, where rest builds no fitness and a brief’s drain reads no readiness. It is now said as Stamina: what it cost, that it’s fitness, that Work Out builds it, that places to breathe leave less to drain, and that on a night coming rested does too (W8).",
+          "where": "src/engine/systems/experience.ts (recommendations)",
+          "failingTest": "tests/attributes-phase-2b.test.ts > F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: stamina draining through long takes is advised as stamina, built by a Work Out, never as rest; a fitter twin isn’t advised it"
+        }
+      ],
+      "mutations": [
+        {
+          "what": "preparation advised as training",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: takes taped cold are advised as preparation, in its words, with no exercise; the same briefs prepared aren’t"
+        },
+        {
+          "what": "the day's condition advised as training",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: takes with the flu are advised as the day’s condition, in its words, with no exercise; a well twin’s aren’t"
+        },
+        {
+          "what": "stamina's drain advised as the day's condition again",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: stamina draining through long takes is advised as stamina, built by a Work Out, never as rest; a fitter twin isn’t advised it"
+        }
+      ],
+      "decision": "Verified. The target key stays condition:stamina, so the brief pane’s weakness (tools/brief-journeys.ts, tests/defects-g3-1.test.ts) still passes over it."
+    },
+    {
+      "id": "A1",
+      "group": "Brief 10 Area: judge",
+      "baselineStatus": "Implemented, Verification Incomplete",
+      "status": "Implemented And Verified",
+      "notProved": "A1’s figure was held by a measurement only (tools/ag-baseline.ts, tools/ag-criteria.mjs on the integrated code); no gate test would fail if an ability fell below 0.5 everywhere.",
+      "exercised": "tools/ag-baseline.ts’s quantity held in a gate test on its own constructions (tools/pieces.ts): every class scene (SCENE_MATERIAL), every play as a night and as casting’s read (PLAY_MATERIAL), every coursework template not judged as a scene; each ability +10 from the even actor of 50s. The largest kind per ability in the test: emotional depth scene 0.60, presence casting 0.68, listening casting 0.93, imagination coursework 0.88, focus coursework 0.69, memory casting 0.62, adaptability casting 0.68, composure casting 0.72, vocal coursework 0.58, physical coursework 0.61, discipline night 0.69, stamina scene 0.54.",
+      "evidence": [
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "A1: every ability is causal somewhere, at half a point or more (brief 11) > gives each of the twelve a kind of work where +10 moves the mean result half a point or more, and stamina half a point on the class scenes",
+          "kind": "fixture",
+          "proves": "Each of the twelve has a kind of work (class scenes, nights at a supporting part, casting’s read, coursework not judged as a scene, the pieces tools/ag-baseline.ts judges) where +10 from the even actor moves the mean whole 0.5 or more, ag-baseline’s own figure (each change to a thousandth, the mean to a hundredth); stamina 0.5 or more on the class scenes."
+        }
+      ],
+      "fixes": [],
+      "mutations": [
+        {
+          "what": "the full drain 0.3, as before brief 10's judge phase",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A1: every ability is causal somewhere, at half a point or more (brief 11) > gives each of the twelve a kind of work where +10 moves the mean result half a point or more, and stamina half a point on the class scenes"
+        }
+      ],
+      "decision": "Verified by the gate test on fixed materials, without ag-baseline’s 298 briefs. The full measurement on the tested commit is the coordinator’s, as prompts/attributes.md says: npx vite-node tools/ag-baseline.ts -- --out docs/verification/completion-2026-10-16/attributes-ag-baseline.json, then node tools/ag-criteria.mjs docs/verification/completion-2026-10-16/attributes-ag-baseline.json, read for A1."
+    },
+    {
+      "id": "stamina.A1",
+      "group": "Brief 10 Area: stamina",
+      "baselineStatus": "Implemented, Verification Incomplete",
+      "status": "Implemented And Verified",
+      "notProved": "Stamina’s A1 was met by measurement (briefs 0.53, scenes 0.54 on brief 10’s integrated code); no gate test held it.",
+      "exercised": "Stamina +10 from the even actor on every class scene, the drain through a scene’s later units, held at 0.5 or more in the gate; and its night effect at a lead’s part, a smaller part and a light brief, held by the test brief 10 left.",
+      "evidence": [
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "A1: every ability is causal somewhere, at half a point or more (brief 11) > gives each of the twelve a kind of work where +10 moves the mean result half a point or more, and stamina half a point on the class scenes",
+          "kind": "fixture",
+          "proves": "Each of the twelve has a kind of work (class scenes, nights at a supporting part, casting’s read, coursework not judged as a scene, the pieces tools/ag-baseline.ts judges) where +10 from the even actor moves the mean whole 0.5 or more, ag-baseline’s own figure (each change to a thousandth, the mean to a hundredth); stamina 0.5 or more on the class scenes."
+        },
+        {
+          "file": "tests/attributes-phase-2b.test.ts",
+          "title": "stamina counts by how long and how hard a piece is > gives +10 stamina half a point or more on a lead’s night, on the mean of the plays, less in a smaller part, and a tenth or less on a light brief",
+          "kind": "fixture",
+          "proves": "+10 stamina moves a lead’s night half a point or more on the mean of the plays, less in a smaller part, and a tenth or less on a light brief."
+        }
+      ],
+      "fixes": [],
+      "mutations": [
+        {
+          "what": "the full drain 0.3, as before brief 10's judge phase",
+          "caughtBy": "tests/attributes-phase-2b.test.ts > A1: every ability is causal somewhere, at half a point or more (brief 11) > gives each of the twelve a kind of work where +10 moves the mean result half a point or more, and stamina half a point on the class scenes"
+        }
+      ],
+      "decision": "Verified by the gate test (scenes); the full measurement is the coordinator’s with A1’s command. Which part a night is read at stays the owner’s, as the baseline row says; this pass doesn’t change it."
+    }
+  ],
+  "added": [
+    {
+      "id": "A4-look-says-what-it-does",
+      "reason": "A4: the look said the readers as What It Does and showed the ability’s own sentence nowhere.",
+      "impact": "The ability look gains one line, Which Work Reads It; What It Does is the ability’s sentence. Display only. The guide’s line for the look says so (content/guide/craft.ts)."
+    },
+    {
+      "id": "A4-stamina-readers-are-the-drain",
+      "reason": "A4: stamina’s readers were said as consistency, the input a piece in parts takes out, where judgePiece reads it as the drain.",
+      "impact": "abilityReaders (systems/material.ts) is the one source for the look, the Profile’s Today and It Shapes and the attributes matrix; stamina’s Today and It Shapes now name believability, connection, execution, consistency and responsiveness. Two earlier tests refigured (evidence2-b11, evidence-g31-ui), old figures kept in dated comments. Display only."
+    },
+    {
+      "id": "A4-four-sentences-reworded",
+      "reason": "A4: presence, memory, composure and discipline’s affects sentences each had a clause the code contradicts.",
+      "impact": "Text in content/abilities.ts, each old clause in a dated past-tense comment with the figures measured. docs/ATTRIBUTES-MATRIX.md regenerated."
+    },
+    {
+      "id": "A5-history-full-precision",
+      "reason": "A5: the Profile’s Last Change rounded a thousandth a second time and said less than the toast and the hour’s words.",
+      "impact": "recordDevelopment keeps the change whole; a save from before keeps its thousandths, read only by screens. Five assertions in four earlier test files now compare exactly."
+    },
+    {
+      "id": "T1-fitness-to-a-tenth",
+      "reason": "T1: the Look After menu said a workout’s fitness gain under a point as none.",
+      "impact": "The menu says fitness to a tenth; other dials unchanged."
+    },
+    {
+      "id": "F3-stamina-advised-as-fitness",
+      "reason": "F3 and brief 11 section 7: stamina’s drain was advised as rest, under one beat’s label.",
+      "impact": "recommendations says it as Stamina with Work Out as what builds it; the key condition:stamina is kept so the brief pane passes over it."
+    }
+  ],
+  "defectsFound": [
+    {
+      "what": "The ability look’s What It Does showed the readers; the ability’s own sentence was shown nowhere (A4). Fixed in d6d0247e.",
+      "blocksCompletion": true
+    },
+    {
+      "what": "Stamina’s readers said consistency on the look, the Profile and the attributes matrix, where the judge reads it as the drain on every dimension tiring reaches (A4). Fixed in d6d0247e.",
+      "blocksCompletion": true
+    },
+    {
+      "what": "Four ability sentences contradicted the code: presence, memory, composure, discipline (A4). Fixed in d6d0247e.",
+      "blocksCompletion": true
+    },
+    {
+      "what": "The Profile’s Last Change said +0.24 for an hour whose toast and words said +0.25: the history rounded to a thousandth, rounded again (A5). Fixed in 3ad95b37.",
+      "blocksCompletion": true
+    },
+    {
+      "what": "The Look After menu said “Fitness 51 → 51” for a run building 0.8 (T1). Fixed in 2f42b9fc.",
+      "blocksCompletion": true
+    },
+    {
+      "what": "Stamina’s drain was advised as the day’s condition, “come to the work rested and well”, under “Stamina, By Beat 2” (F3, section 7). Fixed in 15917af0.",
+      "blocksCompletion": true
+    }
+  ],
+  "section7": {
+    "checked": [
+      {
+        "claim": "An established illness affects readiness and the work where the scope says, and the player is told: the clock’s flu (2 November 2026, 5 days) takes condition and energy, is told “You Have The Flu”, is named on each ability’s Today where its task lists illness, and refuses Work Out in its words. Fitness is untouched.",
+        "evidence": [
+          {
+            "file": "tests/attributes-phase-2b.test.ts",
+            "title": "health, stamina and energy kept apart (brief 11, section 7) > PLAYER JOURNEY: the flu the clock brings takes condition and energy and is told, leaves fitness as it was, reaches each ability’s work where its task lists illness, as the Profile’s Today says, and stops a Work Out in its words",
+            "kind": "player journey",
+            "proves": "as claimed"
+          },
+          {
+            "file": "tests/evidence-g07-life.test.ts",
+            "title": "seasons/flu > PLAYER JOURNEY: the clock’s health week brings the flu on 2 November: five days of it, 25 condition, and the work judged that week meets it ill",
+            "kind": "player journey",
+            "proves": "the flu’s days and toll, the work judged ill"
+          },
+          {
+            "file": "tests/evidence-g07-life.test.ts",
+            "title": "seasons/flu > with the flu, Work Out is refused in its words through the command, the save unchanged and across a reload; Profile holds the work back; once over, it’s taken",
+            "kind": "player journey",
+            "proves": "Work Out refused with the flu, across a reload"
+          },
+          {
+            "file": "tests/evidence-g07-life.test.ts",
+            "title": "seasons/flu > an unseen flu is told, “You Have The Flu”, with nothing to pay",
+            "kind": "player journey",
+            "proves": "the flu told"
+          }
+        ]
+      },
+      {
+        "claim": "An injury affects exertion and is told: a sprained ankle refuses Work Out and is named mending on the dimensions a task that lists injury reads each ability in.",
+        "evidence": [
+          {
+            "file": "tests/evidence2-b11.test.ts",
+            "title": "p-abilities > PLAYER JOURNEY: a run on the first morning sprains her ankle, and Today names an injury mending on the dimensions a task that lists injury reads the ability in, Vocal Expression’s execution and Discipline’s consistency alone; Emotional Depth, Presence, Listening, Imagination and Adaptability hold nothing back",
+            "kind": "player journey",
+            "proves": "Today names the injury where it reaches, stamina’s consistency and execution among them"
+          },
+          {
+            "file": "tests/evidence-g07-life.test.ts",
+            "title": "injuries > the next Work Out is refused in trainingRefusal’s words through the command, the save unchanged and across a reload; mended, it’s taken",
+            "kind": "player journey",
+            "proves": "Work Out refused while mending, taken once mended"
+          }
+        ]
+      },
+      {
+        "claim": "The same impairment isn’t counted twice: twins at a night’s curtain at equal readiness, one with the flu, have the same abilities, the same stamina drain in every part and the same energy cost; the flu adds one limit kind, condition:illness, once on each dimension the night lists illness for.",
+        "evidence": [
+          {
+            "file": "tests/attributes-phase-2b.test.ts",
+            "title": "health, stamina and energy kept apart (brief 11, section 7) > PLAYER JOURNEY: twins at a night’s curtain at the same readiness, one down with the flu: the flu reaches the night once, as Down With The Flu on the dimensions its task lists illness for; stamina, its drain in every part and the energy the night costs are the well twin’s",
+            "kind": "player journey",
+            "proves": "as claimed"
+          }
+        ]
+      },
+      {
+        "claim": "Rest restores energy and eases stress, doesn’t cure the flu (its fluUntil is kept) and doesn’t build fitness; a Work Out once well builds fitness by under a point, short of full.",
+        "evidence": [
+          {
+            "file": "tests/attributes-phase-2b.test.ts",
+            "title": "health, stamina and energy kept apart (brief 11, section 7) > PLAYER JOURNEY: rest restores energy and eases stress, but leaves the flu its days and fitness where it was; a Work Out builds fitness by under a point, never to full at once",
+            "kind": "player journey",
+            "proves": "as claimed"
+          }
+        ]
+      }
+    ],
+    "defects": [
+      "Stamina’s drain advised as rest (F3): fixed, see added F3-stamina-advised-as-fitness."
+    ],
+    "observed": [
+      "With the flu, Work Out is refused but practice exercises on the feet aren’t; the scope asks a refusal of training alone, so this wasn’t changed (no new health connection).",
+      "A night’s drain reads readiness (W8, owner-approved): the flu’s toll on energy reaches a night through readiness once, not as a separate stamina reduction; a taped brief’s drain reads no readiness."
+    ]
+  },
+  "checks": [
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/devmap.mjs --write",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/devmap.mjs --check",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/traceability.mjs --write",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/traceability.mjs",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/doc-refs.mjs --check",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/tics.mjs --check",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/voice-check.mjs --check",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/spelling.mjs",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/typos.mjs",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/title-case.mjs --check",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/label-sweep.mjs",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/plural-check.mjs",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/wired.mjs --check",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/deciders.mjs --check",
+      "exit": 0
+    },
+    {
+      "cmd": "npx vite-node tools/geo-check.mjs",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/inventory.mjs --check",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/capabilities.mjs --check",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/coverage.mjs --check",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/student-matrix.mjs --check",
+      "exit": 0
+    },
+    {
+      "cmd": "node tools/completion-matrix.mjs --check",
+      "exit": 1,
+      "note": "Passes at the base commit 7572578b (530 of 608). Fails here only on the coordinator’s records: the handoff’s completion line and the generated matrix are behind, and 41 rows called verified on a measurement are read as stale because files their measurement watches changed (judge: content/abilities.ts, systems/attributes.ts, systems/material.ts; engine and app: also systems/experience.ts, content/attributes-matrix.ts, content/guide/craft.ts, ui/looks/actor.tsx, ui/shell/TimeControls.tsx). None of these changes moves a judged figure (display, the history’s precision and advice text), but the matrix asks for the measurements again on the tested commit."
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/attributes-phase-2b.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/attributes-matrix.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/ability-mastered.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b13.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-craft.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g3-1.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b11.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-r8-1.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g07-life.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/advice.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/development.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/fitness.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/attributes-phase-2a.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/help-mechanics.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-advice.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g01-life.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g02-life.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g08-life.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g29-ui.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g30-ui.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b01.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g4-1.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g4-2.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g7-1.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/whynot-time.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/whynot-profile.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/ui-fixes.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/need-paths.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/genre-mastered.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence3-home.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g23-school.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g24-school.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b08.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g22-school.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g27-ui.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g28-ui.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g32-ui.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g34-ui.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g31-ui.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/material.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/integration-mastery.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/interpretation-journey.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/history-continuity.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/classes-grow.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/learning.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g19-school.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g18-school.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/school-fixes.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-start-day-body.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/plans.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g20-school.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/attributes-phase-2b.test.ts (on the committed tree, 35 tests)",
+      "exit": 0
+    }
+  ],
+  "forTheCoordinator": {
+    "criteria.json / criteria.py": "A4, A5, T1, O3, F1, F3: Implemented And Verified, evidence the tests named in each row above (no longer by reading).",
+    "completion matrix": "The eight rows as above. Re-measure the 41 rows the matrix reads as stale on the tested commit (ST1, ST2, ST4, ST5, ST7, ST8, ST9, Stage F1, Stage F2, I1–I5, A1, A2, A3, T2, T3, G3, G4, G5, M1, M3, O1, O2, H2, H5, H7, F2-A, L2, MA5, S1–S4, Genre Audit, INT-skipped, INT-navigation, INT-long-runs, INT-gate), then node tools/completion-matrix.mjs.",
+    "A1 measurement": "npx vite-node tools/ag-baseline.ts -- --out docs/verification/completion-2026-10-16/attributes-ag-baseline.json; node tools/ag-criteria.mjs docs/verification/completion-2026-10-16/attributes-ag-baseline.json",
+    "handoff": "The completion line, and that ability looks now say What It Does and Which Work Reads It, stamina’s readers are its drain, the history keeps changes whole, fitness is said to a tenth in Look After, and stamina’s drain is advised as fitness.",
+    "docs/GAMEPLAY-COVERAGE.md and docs/verification/audit/": "Nothing of decision 4’s rows was touched; any audit row citing the four reworded ability sentences or stamina’s readers as consistency should cite the new words."
+  }
+}

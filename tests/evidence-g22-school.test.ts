@@ -141,7 +141,6 @@ const twinOf = (snap: string): Simulation => loadSave(deserialise(snap) as never
 const pending = (sim: Simulation, kind: string) => sim.universe.scheduled.filter((i) => i.kind === kind && i.status === 'pending').sort((a, b) => a.at - b.at);
 const itemIn = (sim: Simulation, id: string) => sim.universe.scheduled.find((i) => i.id === id)!;
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
-const round3 = (x: number) => Math.round(x * 1000) / 1000;
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /** A night's band from its whole, at the evaluation's lines: 50, 65 and 80 (`EVALUATION.bands`, LAMDA's Pass, Merit, Distinction). */
@@ -300,7 +299,8 @@ describe('school.lab', () => {
       // One session at the cap of focus, 1.2 (readiness past 96, at three o'clock nobody's hour): 0.42 × 1.2 × room^1.5,
       // and from 2026-10-16 discipline's lift, 1 + 0.1 × (discipline − 50) / 50, as every growth reads it (`grown`).
       expect(rise, skill).toBeCloseTo(0.42 * 1.2 * (1 - craft[skill] / reach[skill]) ** 1.5 * lift(sim), 9);
-      expect(kept.filter((x) => x.id === id), skill).toEqual([{ at: lab!.at, id, delta: round3(rise), source: 'lab' }]);
+      // Kept at full precision from 2026-10-17 (brief 11, A5: `recordDevelopment`); to a thousandth until then.
+      expect(kept.filter((x) => x.id === id), skill).toEqual([{ at: lab!.at, id, delta: rise, source: 'lab' }]);
     }
     expect(kept).toHaveLength(4);
     expect(p.craft!.emotion).toBe(craft.emotion);
@@ -346,7 +346,8 @@ describe('school.lab', () => {
       // 2026-10-16 discipline's lift (`grown`).
       const rise = p.craft!.scene - scene;
       expect(rise).toBeCloseTo(0.42 * 3 * 1.2 * Math.max(0, 1 - level / p.craftCeiling!.scene) ** 1.5 * lift(twin), 9);
-      expect(developmentOf(p).history.filter((x) => x.source === 'lab:showing')).toEqual(rise > 0 ? [{ at: item.at, id: 'scene', delta: round3(rise), source: 'lab:showing' }] : []);
+      // Kept at full precision from 2026-10-17 (brief 11, A5); to a thousandth until then.
+      expect(developmentOf(p).history.filter((x) => x.source === 'lab:showing')).toEqual(rise > 0 ? [{ at: item.at, id: 'scene', delta: rise, source: 'lab:showing' }] : []);
       expect(p.school!.tally.calls).toBe(tally.calls + 1);
       expect(p.school!.tally.answered).toBe(tally.answered + 1);
       expect(p.school!.courses!['5:DRAM 363a']).toMatchObject({ name: 'You Are The Creator', meetings: 1, attended: 1 });
@@ -814,7 +815,8 @@ describe('school.partner_rehearsal', () => {
     expect(preparedParts(sim.player, a, a.dueOn).partner).toBeCloseTo(0.44, 12);
     const rise = sim.player.attrs!.listening! - listening;
     expect(rise).toBeGreaterThan(0);
-    expect(developmentOf(sim.player).history.filter((x) => x.source === 'partner-rehearsal')).toEqual([{ at: r.at, id: 'listening', delta: round3(rise), source: 'partner-rehearsal' }]);
+    // Kept at full precision from 2026-10-17 (brief 11, A5); to a thousandth until then.
+    expect(developmentOf(sim.player).history.filter((x) => x.source === 'partner-rehearsal')).toEqual([{ at: r.at, id: 'listening', delta: rise, source: 'partner-rehearsal' }]);
     // Nothing prepared but the evening: the scene not known is what holds it back.
     expect(r.said).toBe(`${first} thinks you don’t know the scene well enough yet to play it.`);
     const shown = drawn(sim, SchoolWorkspace, 'coursework').shown;

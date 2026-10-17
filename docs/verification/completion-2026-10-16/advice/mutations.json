@@ -1,0 +1,426 @@
+{
+ "on": "2026-10-17",
+ "area": "advice (brief 11)",
+ "how": "Each mutation applied alone to a clone of the advice11 clone (scratchpad advice11-mut), never the clone itself, then VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-advice.test.ts; killed where the file failed, by the tests named.",
+ "killed": 31,
+ "of": 32,
+ "mutations": [
+  {
+   "id": "M1 nothing noted",
+   "file": "src/engine/systems/next-steps.ts",
+   "find": "  if (person.id !== sim.universe.playerId) return;\n  const day = dayOf(sim);",
+   "replace": "  if (person.id !== sim.universe.playerId || person) return;\n  const day = dayOf(sim);",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why",
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+   ]
+  },
+  {
+   "id": "M2 last never refreshed after new work",
+   "file": "src/engine/systems/next-steps.ts",
+   "find": "    xp.advised = { ...was, day, ...(was.last.key !== key ? { last } : {}) };",
+   "replace": "    xp.advised = { ...was, day };",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+   ]
+  },
+  {
+   "id": "M3 practice notes every day",
+   "file": "src/engine/systems/next-steps.ts",
+   "find": "  if (was?.day === day || (when === 'practice' && was && was.last.key === key)) return;",
+   "replace": "  if (was?.day === day) return;",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why"
+   ]
+  },
+  {
+   "id": "M4 held back counts every piece",
+   "file": "src/engine/systems/next-steps.ts",
+   "find": "  const held = work.filter((w) => w.limits.some((l) => l.what === first.target && (l.kind === 'ability' || l.kind === 'technique')));",
+   "replace": "  const held = work;",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+   ]
+  },
+  {
+   "id": "M5 rotation after four weeks",
+   "file": "src/engine/systems/next-steps.ts",
+   "find": "  const { recs, forecast } = advised(sim, person);\n  const first = recs.find((r) => r.forecast);\n  if (!first) return recs;",
+   "replace": "  const { recs: all, forecast } = advised(sim, person);\n  const w0 = person.experience?.advised;\n  const tr = all.filter((r) => r.forecast);\n  const recs = w0 && tr.length > 1 && tr[0]!.target === w0.target && sim.now - w0.since > 28 * MS_DAY ? [tr[1]!, ...all.filter((r) => r !== tr[1])] : all;\n  const first = recs.find((r) => r.forecast);\n  if (!first) return recs;",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+   ]
+  },
+  {
+   "id": "M6 discipline part said whatever the forecast did",
+   "file": "src/engine/systems/next-steps.ts",
+   "find": "  const lifted = Math.abs(discipline - last.discipline) >= 0.05 && now > last.forecast;",
+   "replace": "  const lifted = Math.abs(discipline - last.discipline) >= 0.05;",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+   ],
+   "before": {
+    "on": "40da45b5",
+    "killed": false,
+    "by": [],
+    "note": "survived until 44ec1548 held the follower whose forecast fell to no word of a rise"
+   }
+  },
+  {
+   "id": "M7 forecast at another discipline ignores it",
+   "file": "src/engine/systems/advice.ts",
+   "find": "  setAbility(sim, p, 'discipline', discipline);\n",
+   "replace": "",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so"
+   ]
+  },
+  {
+   "id": "M8 next action ignores the refusal",
+   "file": "src/engine/systems/next-steps.ts",
+   "find": "  if (no) return `${hour}. Not now: ${no}`;",
+   "replace": "",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why"
+   ]
+  },
+  {
+   "id": "M9 preparation added into training's figure",
+   "file": "src/engine/systems/advice.ts",
+   "find": "    const all = own + days;",
+   "replace": "    const all = own + days + (preparation ?? 0);",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+   ]
+  },
+  {
+   "id": "M10 preparation unweighted",
+   "file": "src/engine/systems/advice.ts",
+   "find": "return a === undefined || b === undefined ? t : t + ((a - b) * weights[i]!) / W; }, 0) : undefined;",
+   "replace": "return a === undefined || b === undefined ? t : t + (a - b) / kept.length; }, 0) : undefined;",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s"
+   ]
+  },
+  {
+   "id": "M11 preparation's sentence dropped",
+   "file": "src/engine/systems/experience.ts",
+   "find": "    if (prep !== undefined && n > 0) firstTraining.why",
+   "replace": "    if (prep !== undefined && n > 99) firstTraining.why",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s"
+   ]
+  },
+  {
+   "id": "M12 the forecast's growth slows past three quarters",
+   "file": "src/engine/systems/advice.ts",
+   "find": "    develop(sim, p, e.trains, { weight: TIER.matched, focus: ADVICE.focus, deliberate: true, source: `practice:${e.id}` });",
+   "replace": "    develop(sim, p, e.trains, { weight: TIER.matched * (1 - levelOf(sim, p, e.trains) / 200), focus: ADVICE.focus, deliberate: true, source: `practice:${e.id}` });",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains"
+   ]
+  },
+  {
+   "id": "M13 the Profile doesn't show the standing",
+   "file": "src/ui/workspaces/ProfileWorkspace.tsx",
+   "find": "{r.standing && <> <span className=\"xs\" data-standing=\"\">{r.standing}</span></>}",
+   "replace": "",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+   ]
+  },
+  {
+   "id": "M14 held-out seeds run without --held-out",
+   "file": "tools/advice-harness.ts",
+   "find": "(specs.some((x) => x.set === 'held-out') && !heldOut ?",
+   "replace": "(false && !heldOut ?",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built",
+    "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out"
+   ]
+  },
+  {
+   "id": "M15 held-out stages mapped wrong",
+   "file": "tools/advice-harness.ts",
+   "find": "stage: STAGE_ORDER[Math.floor((n % 30) / 10)]! }; }",
+   "replace": "stage: STAGE_ORDER[Math.floor((n % 30) / 15)]! }; }",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out"
+   ]
+  },
+  {
+   "id": "M16 a tuning seed in the held-out set",
+   "file": "tools/advice-harness.ts",
+   "find": "if (m && Number(m[1]) < 40) return { seed, set: Number(m[1]) < 10 ? 'tuning' : 'held-out', design: 'F2-A' };",
+   "replace": "if (m && Number(m[1]) < 40) return { seed, set: Number(m[1]) < 9 ? 'tuning' : 'held-out', design: 'F2-A' };",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out"
+   ]
+  },
+  {
+   "id": "M17 a band drawn wider than the criterion",
+   "file": "tools/advice-harness.ts",
+   "find": "    const v = Math.round(lo + (hi - lo) * r());",
+   "replace": "    const v = Math.round(lo - 5 + (hi - lo + 10) * r());",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: followed for twenty sessions through practice.exercise, the advised input brings what it forecast, within 0.3 points or a quarter, from a beginner to near mastery",
+    "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a case is built through the game’s commands: every input drawn within its band, near mastery at least two at full, the stage’s takes taped as its work in its days, each in one of the 149 genres"
+   ]
+  },
+  {
+   "id": "M18 the hospital stay not waited out",
+   "file": "tools/advice-harness.ts",
+   "find": "  if (!t.ok && inHospital(sim.player, sim.now)) {",
+   "replace": "  if (!t.ok && inHospital(sim.player, sim.now) && false) {",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a take refused in hospital waits the stay out, is prepared again and taped once she’s out, where until brief 10 the harness threw and the case was never built (adv-h-10, adv-h-57)"
+   ]
+  },
+  {
+   "id": "M19 a refused take waited on whatever refused it",
+   "file": "tools/advice-harness.ts",
+   "find": "  if (!t.ok && inHospital(sim.player, sim.now)) {",
+   "replace": "  if (!t.ok) {",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a take refused in hospital waits the stay out, is prepared again and taped once she’s out, where until brief 10 the harness threw and the case was never built (adv-h-10, adv-h-57)"
+   ],
+   "before": {
+    "on": "44ec1548",
+    "killed": false,
+    "note": "survived: the old falsifiability check used a take that could never pass on a second try; 31ca3b0a made it one that preparing again would let through"
+   }
+  },
+  {
+   "id": "M20 near mastery drawn with none at full",
+   "file": "tools/advice-harness.ts",
+   "find": "  while (band === 'nearMastery' && full.size < NEAR_FULL.least)",
+   "replace": "  while (band === 'nearMastery' && full.size < 0)",
+   "on": "c1dd1650",
+   "killed": false,
+   "by": [],
+   "survives": "A redundant guard on every tuning seed: the near-mastery draw (one chance in four for each of sixteen inputs) leaves 4 to 11 at full on adv-t-3, 7, 11, 15 and 19, so the top-up to two never runs on a seed a test may build; no held-out seed is built in a test."
+  },
+  {
+   "id": "M21 the measure doesn't say the commit it ran on",
+   "file": "tools/advice.ts",
+   "find": "const at = { commit: git('rev-parse HEAD'),",
+   "replace": "const at = { commit: 'unknown',",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+   ],
+   "rerun": {
+    "on": "2ff661c1",
+    "killed": true,
+    "by": [
+     "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+    ]
+   }
+  },
+  {
+   "id": "M22 the measure leaves (h) out",
+   "file": "tools/advice.ts",
+   "find": "    pass, noAdvice: !first, c, d, e, f, g, h, i,",
+   "replace": "    pass, noAdvice: !first, c, d, e, f, g, i,",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+   ],
+   "rerun": {
+    "on": "2ff661c1",
+    "killed": true,
+    "by": [
+     "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+    ]
+   }
+  },
+  {
+   "id": "B10-1 each replay its shown tenth",
+   "file": "src/engine/systems/advice.ts",
+   "find": "return e ? e.exact ?? e.overall : undefined;",
+   "replace": "return e ? e.overall : undefined;",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate",
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision"
+   ],
+   "from": "docs/verification/decisions-2026-10-16/advice/mutations.json (brief 10), run again"
+  },
+  {
+   "id": "B10-2 discipline held still through the twenty days",
+   "file": "src/engine/systems/advice.ts",
+   "find": "    develop(sim, p, 'discipline', { weight: PRACTICE.disciplineDay, focus: 1, deliberate: true, source: 'practice-day' });\n",
+   "replace": "",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > grows the twenty sessions as the engine grows them: the discipline a played copy keeps is the forecast’s to the last digit, and what the days bring is said apart, nothing at full discipline",
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+   ],
+   "from": "docs/verification/decisions-2026-10-16/advice/mutations.json (brief 10), run again"
+  },
+  {
+   "id": "B10-3 the recurring weakness put first when tied, as before brief 10",
+   "file": "src/engine/systems/experience.ts",
+   "find": "if (!forecasting && mine.points >= out[0]!.points - RECOMMEND.recurringWithin)",
+   "replace": "if (forecasting ? Boolean(mine.forecast) && tied(ownOf(mine.forecast!), ownOf(out.find((r) => r.forecast)!.forecast!)) : mine.points >= out[0]!.points - RECOMMEND.recurringWithin)",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one"
+   ],
+   "from": "docs/verification/decisions-2026-10-16/advice/mutations.json (brief 10), run again"
+  },
+  {
+   "id": "B10-4 nothing said where everything is at full (its find moved with brief 11's advised())",
+   "file": "src/engine/systems/next-steps.ts",
+   "find": "return { recs: full?.all ? [allFull(full.short), ...recs].slice(0, 5) : recs,",
+   "replace": "return { recs,",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains"
+   ],
+   "from": "docs/verification/decisions-2026-10-16/advice/mutations.json (brief 10), run again"
+  },
+  {
+   "id": "B10-5 a technique full at 100, not MASTERED",
+   "file": "src/engine/systems/advice.ts",
+   "find": "const workFull = (now: Performer, id: string) => (isAbility(id as never) ? now.full(id as AbilityId) : MASTERED);",
+   "replace": "const workFull = (now: Performer, id: string) => (isAbility(id as never) ? now.full(id as AbilityId) : 100);",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains"
+   ],
+   "from": "docs/verification/decisions-2026-10-16/advice/mutations.json (brief 10), run again"
+  },
+  {
+   "id": "B10-6 knowing the genre read as at the take",
+   "file": "src/engine/systems/advice.ts",
+   "find": "work.map(genreNow(person))",
+   "replace": "work",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+   ],
+   "from": "docs/verification/decisions-2026-10-16/advice/mutations.json (brief 10), run again"
+  },
+  {
+   "id": "B10-7 a take its own preparation held back read as it was",
+   "file": "src/engine/systems/advice.ts",
+   "find": "const latest = kept.map((w) => (heldByPreparation(w) ? asPrepared(w) : w));",
+   "replace": "const latest = kept;",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+   ],
+   "from": "docs/verification/decisions-2026-10-16/advice/mutations.json (brief 10), run again"
+  },
+  {
+   "id": "B10-8 the advice reads the seed",
+   "file": "src/engine/systems/next-steps.ts",
+   "find": "  const full = read ? atFullRead(sim, person) : undefined;",
+   "replace": "  if (sim.universe.meta.seed.length % 2) recs.reverse();\n  const full = read ? atFullRead(sim, person) : undefined;",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads no seed: the case renamed, its save’s seed and every piece’s, gets the same advice",
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+   ],
+   "from": "docs/verification/decisions-2026-10-16/advice/mutations.json (brief 10), run again"
+  },
+  {
+   "id": "B10-9 the floor on the whole figure, the days included",
+   "file": "src/engine/systems/experience.ts",
+   "find": "if (ownOf(f) < ADVICE_FLOOR) continue;",
+   "replace": "if (f.points < ADVICE_FLOOR) continue;",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > passes the floor on the input’s own share: the discipline twenty days keep isn’t advice to train what moves nothing"
+   ],
+   "from": "docs/verification/decisions-2026-10-16/advice/mutations.json (brief 10), run again"
+  },
+  {
+   "id": "B10-10 the twenty sessions counted as repeats of one day",
+   "file": "src/engine/systems/advice.ts",
+   "find": "    p.development = { day: '', counts: {}, history: [] };\n    develop(",
+   "replace": "    develop(",
+   "on": "c1dd1650",
+   "killed": true,
+   "by": [
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so",
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate",
+    "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: followed for twenty sessions through practice.exercise, the advised input brings what it forecast, within 0.3 points or a quarter, from a beginner to near mastery",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the trained input’s forecast falls, and with another’s now ahead, another is named first",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > grows the twenty sessions as the engine grows them: the discipline a played copy keeps is the forecast’s to the last digit, and what the days bring is said apart, nothing at full discipline",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today",
+    "F2-A10: What To Improve Next, followed through the commands (brief 10) > says why: each recommendation’s figure, how many of the last pieces read it, and the piece it gains most on, by the records",
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why",
+    "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought",
+    "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+   ],
+   "from": "docs/verification/decisions-2026-10-16/advice/mutations.json (brief 10), run again"
+  }
+ ]
+}

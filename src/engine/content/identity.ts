@@ -30,9 +30,21 @@
  * of licenses.
  *
  * A state ID card, for someone the state hasn't licensed to drive: New York's
- * non-driver ID, $14 for eight years under 62; Connecticut's, $28, up to
- * seven years to the birthday, SLATE's six; California's, $40, six
- * birthdays. Each is REAL ID for a citizen.
+ * non-driver ID, $14 for eight years under 62; Connecticut's, $28; California's,
+ * $40, six birthdays. Each is REAL ID for a citizen.
+ *
+ * Connecticut's, from 2026-10-17 (`docs/research/world/research-ct-idcard.json`,
+ * read on the state's pages on 2026-10-16): seven years to a birthday, the first
+ * birthday at least seven years on, the one day CGS 1-1h(b)(2) ("not exceeding
+ * seven years following the date of the applicant's next birthday") and the
+ * DMV ("valid for 7 years"; a card "expires, which is on your birthday") both
+ * allow; and it isn't handed over at the office but mailed, "within 20 business
+ * days" of the appointment (Central Issuance), the temporary paper credential
+ * given meanwhile not taken alone where an ID is asked ("won't accept the TPC as
+ * a standalone document"). Until 2026-10-17 it ran six years from the day,
+ * SLATE's figure for the state's "up to seven", and a citizen's was in force at
+ * the counter. Whose holidays the twenty business days skip isn't said: SLATE
+ * counts the federal ones.
  */
 
 export const REAL_ID = {
@@ -52,9 +64,9 @@ export const realIdShare = (jurisdiction: string): number => REAL_ID.share[juris
  * The Ontario and BC cards' and the INE's terms weren't read, and they don't
  * expire in SLATE.
  */
-export const ID_CARDS: Readonly<Record<string, { name: string; fee: number; years?: number; currency?: string; citizens?: string; age?: number; passportBook?: boolean }>> = {
+export const ID_CARDS: Readonly<Record<string, { name: string; fee: number; years?: number; toBirthday?: boolean; mailedBusinessDays?: number; currency?: string; citizens?: string; age?: number; passportBook?: boolean }>> = {
   'us-ny': { name: 'Non-Driver ID Card', fee: 14, years: 8 },
-  'us-ct': { name: 'Non-Driver Identification Card', fee: 28, years: 6 },
+  'us-ct': { name: 'Non-Driver Identification Card', fee: 28, years: 7, toBirthday: true, mailedBusinessDays: 20 },
   'us-ca': { name: 'Identification Card', fee: 40, years: 6 },
   'ca-on': { name: 'Ontario Photo Card', fee: 35, currency: 'CAD' },
   'ca-bc': { name: 'BCID', fee: 35, currency: 'CAD' },

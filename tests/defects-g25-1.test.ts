@@ -12,6 +12,7 @@
  * markup (react-dom/server) over a real save, with `useGame` standing in for the provider, which needs a browser.
  */
 import { describe, expect, it, vi } from 'vitest';
+import { readFileSync, readdirSync } from 'node:fs';
 import { createElement, isValidElement, type ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { quickSave } from '@/engine';
@@ -141,6 +142,15 @@ describe('FIXTURE: a travel authorization held from before 2026-10-09', () => {
     const shown = papers(sim);
     expect(shown).not.toContain('You may go.');
     expect(shown).toContain('It would let you in for a week’s visit.');
+  });
+
+  it('GUARD: Going Abroad says a visa or an authorization isn’t applied for here, and the rule it shows decides nothing: `mayEnter` is read by Papers and a document’s page alone, by no system of the engine (brief 11, tax.s8.visas_authorizations, 2026-10-17)', () => {
+    const sim = life('g25-abroad-rule');
+    rest(sim);
+    expect(papers(sim)).toContain('There’s no travel in SLATE since 2026-10-09, so a visa or an authorization isn’t applied for here: what each country asks is kept as what it is.');
+    const files = (dir: string): string[] => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? files(`${dir}/${e.name}`) : /\.tsx?$/.test(e.name) ? [`${dir}/${e.name}`] : []));
+    const readers = files('src').filter((f) => readFileSync(f, 'utf8').split('\n').some((line) => /\bmayEnter\(/.test(line) && !/function mayEnter\(/.test(line)));
+    expect(readers.sort()).toEqual(['src/ui/looks/papers.tsx', 'src/ui/papers/Documents.tsx']);
   });
 });
 

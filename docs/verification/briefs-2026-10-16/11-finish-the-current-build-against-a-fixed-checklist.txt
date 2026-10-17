@@ -1,0 +1,212 @@
+SLATE: Finish The Current Build Against A Fixed Checklist
+
+Continue from the latest main branch and complete the existing in-scope requirements. This is a completion pass, not another expansion or general improvement pass.
+
+At the last review, PR #37 was merged at 0e7ff7c2. Verify the actual current state before working. Preserve unrelated local changes, stashes, and worktrees. Follow the repository’s instructions.
+
+1. Freeze And Record The Starting Checklist
+
+Read the current completion matrix, handoff, verification reports, source code, and approved decisions.
+
+The last recorded matrix contained:
+
+* 530 Implemented And Verified.
+* 63 Implemented, Verification Incomplete.
+* 4 Not Implemented.
+* 11 Decision Required.
+* 608 total in-scope requirements.
+* 27 Explicitly Deferred outside that denominator.
+
+Verify those figures rather than assuming they remain current.
+
+Save a versioned baseline containing every requirement’s stable ID, acceptance criteria, status, and evidence. Preserve that original denominator for comparison throughout this pass.
+
+Do not add optional features, expand the catalog, redesign working systems, or create new acceptance requirements merely to improve the game further.
+
+Add work only when it fixes a discovered defect or is necessary to complete an existing requirement. Record those additions separately with their reason and impact. Do not silently change the baseline.
+
+2. Leave Decision #4 Unchanged
+
+The twelve unreachable rows covered by decision #4 remain exactly as authorized previously.
+
+Do not implement, defer, reclassify, remove, or close them. Do not restore removed systems to make them reachable.
+
+Keep them visible in the original totals. Separately report the actionable work authorized by this pass, with an explicit list of exclusions. Never conceal them to claim that the whole game is complete.
+
+3. Separate Real Work From Historical Records
+
+Review the current Decision Required and Not Implemented rows.
+
+For each, identify whether it is:
+
+* An actual missing current behavior.
+* A genuine unresolved design choice.
+* A superseded historical criterion.
+* An already authorized simulation assumption.
+* A duplicate of another requirement.
+* One of decision #4’s protected rows.
+
+Use prior explicit approvals to resolve administrative ambiguity without repeatedly asking me to approve the same decision.
+
+For example:
+
+* Arion’s unknown real-world timing must remain labeled unverified, but it does not block completion of the authorized configurable simulation.
+* Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.
+* A proposed criterion is not automatically approved merely because it passes.
+
+Record every reconciliation, preserve the original baseline, and report administrative corrections separately from actual implementation and verification. Do not count relabeling as gameplay progress.
+
+4. Close The Verification-Incomplete Rows
+
+Make the existing verification gaps the central workload.
+
+For each row:
+
+* Identify the exact behavior not yet proved.
+* Inspect its current implementation.
+* Exercise the behavior through the appropriate public engine command or player interface.
+* Verify relevant downstream effects and persistence.
+* Fix any defect exposed.
+* Add a meaningful regression test.
+* Attach reproducible evidence to that row.
+
+Do not mark a requirement verified merely because a function exists, a document describes it, or an unrelated test passes.
+
+Where several rows share a journey, verify them together efficiently while preserving individual traceability. Prefer extending existing useful tests over duplicating them.
+
+5. Fix Known Defects First
+
+Reproduce and resolve these previously documented issues if they remain present:
+
+* A credit clears an outstanding Yale balance but leaves the associated hold active.
+* The personality test described as year-long actually ends its simulated life after sixteen days.
+* Any other known functional defect explicitly listed in the current handoff.
+
+For the Yale issue, reconcile holds after every relevant balance-changing operation. Clear only holds whose actual conditions are satisfied; preserve unrelated restrictions.
+
+For the year-long test, make it genuinely exercise the intended year. Verify the elapsed simulation time and conditions. Keep separate tests for death and ended-life behavior. Do not simply rename a short run or disable legitimate mortality globally to make the test pass.
+
+6. Finish The Existing Connected Journeys
+
+Prioritize remaining rows covering school, money, papers, health, and their current integrations.
+
+Trace each relevant journey through:
+Player Action → Preconditions → State Read → State Changed → Immediate Outcome → Scheduled Consequences → Player Explanation → Save/Load.
+
+Verify existing features such as:
+
+* School payments, credits, holds, registration, attendance, evaluations, and completion.
+* Account balances, settlement, fees, closures, restrictions, and recovery.
+* Document validity, applications, submissions, renewals, and their actual effects.
+* Health eligibility, medical billing, treatment, recovery, and school consequences.
+* Time advancement, repeated actions, reloads, and interrupted operations.
+
+Nothing advertised as functional may work only as text or decoration. Every mechanic must fulfill its stated purpose, with appropriate consequences and accurate explanations.
+
+Do not invent arbitrary effects simply to claim that a feature “bites.”
+
+7. Keep Health, Stamina, And Energy Distinct
+
+Do not replace the health engine with stamina.
+
+Verify the connections required by the existing scope:
+
+* Health represents illness, injury, treatment, and recovery.
+* Stamina represents sustained exertion capacity.
+* Energy/fatigue represents current readiness.
+
+Where an established health condition should affect participation, readiness, exertion, or recovery, verify that the engine applies the intended effect and explains it.
+
+Avoid double-counting the same impairment through multiple systems. Rest should not magically cure an illness or instantly create long-term fitness.
+
+Complete missing connections required by existing requirements; do not introduce a new health-system expansion.
+
+8. Resolve Remaining Acting And Advice Work Within The Approved Intent
+
+Use the already approved design direction. Do not reopen the entire balance model.
+
+For restrained interpretation:
+
+* Determine which remaining failures indicate missing gameplay and which indicate a test that contradicts the approved design.
+* Preserve meaningful restrained choices without making one strength erase unrelated weaknesses.
+* Ensure tests detect when restraint’s own relevant abilities cease to matter.
+* Do not declare all of ST6 resolved because one replacement subclause passes.
+* Finish justified implementation work before escalating a genuine design conflict.
+
+For repeated advice:
+
+* Test a player who follows the recommendation and a player who ignores it.
+* Advice should respond to actual progress and changing priorities.
+* Correct advice may retain the same target when its cause remains unresolved.
+* The player should receive state-aware explanations, progress, and useful next actions rather than an identical recurring message.
+* Do not rotate to inferior advice merely for variety.
+
+For the remaining advice clauses:
+
+* Separate preparation improvements from ability-training benefits.
+* Compare like-for-like training budgets.
+* Explain small increases in predicted benefit when another relevant factor improves.
+* Preserve diminishing returns where the actual progression model provides them; do not impose a contradictory rule merely to satisfy a slogan.
+
+Document any necessary criterion clarification before changing its test. Map it to the approved behavior and retain the earlier result. If a material design decision truly remains unresolved, finish all independent work before presenting it.
+
+9. Work In Batches That Reduce The Backlog
+
+Group work by shared dependencies and complete small batches.
+
+After each batch report:
+
+* Baseline requirement IDs addressed.
+* Starting actionable incomplete count.
+* Requirements implemented and verified in this batch.
+* Administrative reconciliations, reported separately.
+* Remaining actionable incomplete count.
+* New defects discovered and whether they block completion.
+* Tests run and evidence locations.
+
+Do not stop after a batch merely to ask whether to continue. Continue through the authorized backlog.
+
+Checkpoint and push work appropriately so an interruption does not lose progress. Avoid repeating completed research or rerunning expensive suites when the relevant code has not changed.
+
+10. Validate The Final Integrated Build
+
+Use targeted checks during implementation. After the authorized checklist is addressed, run:
+
+* The full required gate.
+* Production build.
+* Regenerated scenario saves.
+* Desktop and mobile built-app acceptance.
+* Relevant full school, financial, document, and health journeys.
+* Attribute, genre, interpretation, advice, and mastery regression checks.
+* Relevant persistence, migration, duplicate-action, and time-advance checks.
+* Long-run tests sufficient to verify the changed behaviors.
+
+Record the source commit, commands, exit codes, seeds where relevant, and results.
+
+Passing the gate does not automatically close every requirement. Each completed row must have evidence for its own acceptance criteria.
+
+Do not weaken assertions, delete difficult cases, or mark untested behavior verified to obtain a green report.
+
+11. Deliver A Clear Completion Receipt
+
+Provide:
+
+* The frozen baseline and final status for every original requirement.
+* Actual requirements closed through implementation or verification.
+* Administrative corrections separately.
+* Added dependency or defect work separately.
+* Exact remaining requirements and their concrete blockers.
+* Decision #4’s protected rows, unchanged.
+* Final test evidence and tested commits.
+* Updated handoff, tutorials where behavior changed, and accurate PR status.
+
+Report both:
+
+1. Completion against the original full baseline.
+2. Completion of the explicitly authorized actionable portion.
+
+Do not describe the whole game as 100% complete while excluded or unresolved requirements remain.
+
+Commit and push the completed work and prepare the appropriate PR. Follow established merge and deployment authorization rules.
+
+The goal is to finish the current build’s defined behaviors—not continually enlarge the definition of completion. Keep working until every authorized, unblocked requirement is implemented and verified, with a precise account of anything that genuinely remains.

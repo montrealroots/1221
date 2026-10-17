@@ -50,8 +50,11 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     definition: 'What a house or a camera sees beyond technique: the pull of somebody fully there.',
     develops: 'Nights in front of a house, a little at a time, and more on a remarkable night; a showing for classmates, and what graded exposure and a clown practice carry over.',
     // Until 2026-10-16 this left out a scene and a taped brief, which read it too; from then more the less a piece has a
-    // partner to play off, and most in front of a house (`DEMAND_EFFECT`, the night's profile).
-    affects: 'Connection in performance, an audition, a clown turn, a scene and a taped brief: more the less of a partner the piece has to play off, and most in front of a house.',
+    // partner to play off, and more in front of a house (`DEMAND_EFFECT`, the night's profile). Until 2026-10-17 it said
+    // "most in front of a house": a clown turn's +10 moves its whole 1.6 on the mean and an improvisation's 1.0, against a
+    // night's 0.65, a scene's 0.47, an audition's 0.38 and a taped brief's 0.29 (brief 11, A4,
+    // tests/attributes-phase-2b.test.ts).
+    affects: 'Connection in performance, an audition, a clown turn, a scene and a taped brief: more the less of a partner the piece has to play off, and more on a night in front of a house than in a scene, an audition or a taped brief.',
     derivedFrom: 'Drawn once at the start, 55 to 80 for a student the faculty chose.',
     source: 'Kept since 2026-09-27 (`systems/attributes.ts`)',
   },
@@ -98,7 +101,9 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     // From 2026-10-16 it speeds every step that learns lines (`STEP_SPEED`); until then this said so, and nothing read it.
     // From 2026-10-16 execution reads it more the more text there is: a longer brief, verse, a night's whole part (`DEMAND_EFFECT`).
     // From later that day (brief 10) a night's part more the longer it's on stage (`PART_TEXT`); until then every part alike.
-    affects: 'How far a step learning lines goes (a scene’s, a brief’s, a part’s), and execution wherever lines are spoken, more the longer the text: a medium or long brief, verse, and a whole part on a night, more the longer the part is on stage.',
+    // Until 2026-10-17 it said execution "wherever lines are spoken": a voice sequence's text and a speech drill's are
+    // spoken, learned as lines are, and voice work's execution reads no memory (brief 11, A4).
+    affects: 'How far a step learning lines goes (a scene’s, a brief’s, a part’s), and execution wherever a part’s lines are spoken (a scene, a self-tape, a taped brief, an audition, a night), more the longer the text: a medium or long brief, verse, and a whole part on a night, more the longer the part is on stage.',
     derivedFrom: 'The craft’s Memorization, which it is.',
     source: 'Noice & Noice (2006) on actors’ elaborative learning; Roediger & Karpicke (2006) on retrieval practice; kept in the craft as Memorization until 2026-10-09',
   },
@@ -121,7 +126,9 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     // the integration pass of that day believability in any piece played Restrained, the calm that lets a held feeling read
     // (`APPROACH_EFFECT`). From later that day (brief 10) a night before a house rides on more than a class scene
     // (`NIGHT_STAKES`); until then a night read the same stakes as a scene, and only its own profile's composure.
-    affects: 'Consistency under pressure, more the more rides on the piece (a brief’s stakes) and on a night in front of a house, more than in class, and a little of believability where the stakes are high; believability in any piece played Restrained, the calm that lets a held feeling read; recovering from a slip; and the stress nerves add before a performance.',
+    // Until 2026-10-17 it said "on a night in front of a house, more than in class": a self-tape and an audition shown in
+    // class move with +10 of it 0.95 and 0.93 on the mean, a night 0.69 and a scene shown in class 0.53 (brief 11, A4).
+    affects: 'Consistency under pressure, more the more rides on the piece (a brief’s stakes) and on a night in front of a house, more than in a scene shown in class, and a little of believability where the stakes are high; believability in any piece played Restrained, the calm that lets a held feeling read; recovering from a slip; and the stress nerves add before a performance.',
     derivedFrom: 'At the start, by emotional stability: 25 to 60.',
     source: 'Kept since 2026-09-27 (`systems/attributes.ts`)',
   },
@@ -150,7 +157,10 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'Practice on days running, and attending every call.',
     // From 2026-10-16 consistency reads it more the more beats a piece holds and across a night's run, and execution in
     // physical work set to a score (`DEMAND_EFFECT`, `FEATURE_EFFECT`).
-    affects: 'How much what classes, nights, steps and practice grow counts for, a tenth more at 100 and a tenth less at 0 (a workout’s fitness aside); consistency in every task that asks it but the audition, where nerves are what’s held, more the more beats a piece holds and on a night of a run; execution in physical work set to a score; and execution in written work.',
+    // Until 2026-10-17 it said consistency in every task "but the audition, where nerves are what's held": an audition is
+    // shown on a scene, and from evaluation-10 a scene of more than three units reads discipline as a brief's beats do, so
+    // an audition on The Seagull's fourth act read it and one on A Doll's House's third didn't (brief 11, A4).
+    affects: 'How much what classes, nights, steps and practice grow counts for, a tenth more at 100 and a tenth less at 0 (a workout’s fitness aside); consistency in every task that asks it, more the more beats a piece holds and on a night of a run, an audition’s only by its beats, where nerves are what’s held; execution in physical work set to a score; and execution in written work.',
     derivedFrom: 'For a new life and one from before it: the Conscientiousness slider, of which self-discipline is a facet.',
     source: 'Costa & McCrae, NEO PI-R Professional Manual (1992), self-discipline as a facet of conscientiousness',
   },

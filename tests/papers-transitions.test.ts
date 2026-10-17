@@ -1,6 +1,7 @@
 /**
  * Papers across the school's transitions (from 2026-10-10): a Connecticut ID card for an F-1 student, held to lawful
- * presence, enrollment and a Social Security number, and running to the end of their status; and the F-1's end moving
+ * presence, enrollment and a Social Security number, mailed after SAVE's check (from 2026-10-17), and running to the
+ * end of their status; and the F-1's end moving
  * with a repeated year. PLAYER JOURNEYS play forward through commands; FIXTURES set a state by hand, and say so.
  */
 import { describe, expect, it } from 'vitest';
@@ -18,7 +19,9 @@ const student = (seed: string, extra: Record<string, unknown> = {}) => createSav
 const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75, condition: 90 }); sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
 
 describe('PLAYER JOURNEY: a Connecticut ID card on an F-1', () => {
-  it('waits for the Social Security number, then for SAVE’s ten business days, and runs only to the end of the program', () => {
+  // Renamed on 2026-10-17 (brief 11's KS-ct-idcard, inputs/renames.json): until then 'waits for the Social Security
+  // number, then for SAVE’s ten business days, and runs only to the end of the program', when it came on SAVE's day.
+  it('waits for the Social Security number, then for SAVE’s ten business days and the mail’s twenty, and runs only to the end of the program', () => {
     const sim = student('pt-ctid', { homeRegionId: 'uk-eng-london' });
     tended(sim, at(2026, 9, 8, 19));
     expect(idCardRefusal(sim.player, sim.now)).toMatch(/Social Security number/);
@@ -26,13 +29,17 @@ describe('PLAYER JOURNEY: a Connecticut ID card on an F-1', () => {
     tended(sim, ssn.arrivesAt + MS_HOUR);
     expect(idCardRefusal(sim.player, sim.now)).toBeUndefined();
     const applied = sim.must<{ expiresAt: number }>({ kind: 'documents.apply_idcard', payload: {} });
-    // Limited to their lawful presence, not the card's six years.
+    // Limited to their lawful presence, not the card's seven years to a birthday (six from the day until 2026-10-17).
     expect(applied.expiresAt).toBe(programEnd(sim.player));
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
     expect(card.status).toBe('pending');
     expect(card.name).toMatch(/Limited Term/);
     expect(idCardRefusal(sim.player, sim.now)).toBe('One is on its way.');
+    // SAVE's ten federal workdays are past in fifteen days, and the card is still in the mail; it has come thirty days
+    // later, the mail's twenty business days being past (from 2026-10-17: until then it was in force on SAVE's day).
     tended(sim, sim.now + 15 * MS_DAY);
+    expect(card.status).toBe('pending');
+    tended(sim, sim.now + 30 * MS_DAY);
     expect(card.status).toBe('valid');
   });
 

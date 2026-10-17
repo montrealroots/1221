@@ -13,7 +13,7 @@ import { COMMENCEMENT_KIND, CLASSES_KIND, EVALUATION_KIND, TERM_KIND, academicTe
 import { degreeShortfall } from '@/engine/systems/courserecord';
 import { careFor, coverOn, healthOf } from '@/engine/systems/health';
 import { f1Of } from '@/engine/systems/permission';
-import { facultyReview, rebateShare, accountDue, billUnsupportedTerm, accountOwed, disqualified, enrolledTerms, insuranceStart, leaveRefusal, repeatRefusal, LEAVE_DECIDE_KIND } from '@/engine/systems/leave';
+import { facultyReview, rebateShare, accountDue, billUnsupportedTerm, accountOwed, disqualified, enrolledTerms, insuranceStart, leaveRefusal, repeatRefusal, yaleAccount, LEAVE_DECIDE_KIND } from '@/engine/systems/leave';
 import { EXTENDED_STUDY, LEAVE_RULES } from '@/engine/content/school';
 import { courseworkOf } from '@/engine/systems/coursework';
 
@@ -347,6 +347,44 @@ describe('failing, repeating and disqualification', () => {
     sim.must({ kind: 'school.pay_balance', payload: {} });
     expect(school.standing).toBe('graduated');
     expect(titled(sim, 'Your MFA Is Conferred')[0]!.body).toMatch(/Your Yale account paid/);
+  });
+
+  it('FIXTURE: a save from before 2026-10-17 whose diploma is held for a hold kept over nothing owed (TEST SETUP: the account cleared by a credit posted by hand, as that build’s credits left the hold) opens with the hold lifted and the MFA conferred, “Your Yale account cleared”; its twin with an Incomplete open has the hold lifted and the degree still waiting for it', () => {
+    const held = (seed: string, incomplete: boolean) => {
+      const sim = student(seed, { wealth: 'comfortable' });
+      tended(sim, at(2026, 9, 2));
+      const school = sim.player.school!;
+      // FIXTURE: as the repeated year's graduation above, the eighth term billed and held, its evaluation passed.
+      Object.assign(school, { termsBegun: 8, enrolled: [0, 1, 2, 3, 4, 5, 6, 7], offset: 2, repeats: 1, standing: 'good', classOf: 2030 });
+      billUnsupportedTerm(sim, sim.player, 7);
+      accountDue(sim, sim.player, 7);
+      school.courses = { '7:DRAM 393b': { term: 7, academic: 5, code: 'DRAM 393b', name: 'Acting VI', meetings: 20, attended: 20, excused: 0 } };
+      Object.assign(school.tally, { classDays: 40, attended: 40, excused: 0 });
+      expect(evaluate(sim, sim.player, 7)!.standing).toBe('good');
+      // TEST SETUP: an Incomplete left open, as an excused absence's would be.
+      if (incomplete) Object.assign(school.courses['7:DRAM 393b']!, { result: 'incomplete', why: 'TEST SETUP' });
+      const booked = pendingOf(sim, COMMENCEMENT_KIND)[0]!;
+      sim.timeline.cancel(booked.id, sim.now);
+      sim.schedule({ at: sim.now + MS_DAY, kind: COMMENCEMENT_KIND, label: 'Commencement', category: 'school', priority: 30, payload: booked.payload });
+      tended(sim, sim.now + 2 * MS_DAY);
+      expect(school.awaitingDegree).toBe(true);
+      // TEST SETUP: what the account owed credited back, the hold left as the build before 2026-10-17 left it.
+      const owed = accountOwed(sim, sim.player);
+      sim.post({ memo: 'TEST SETUP: a credit as an older build posted one', category: 'school', postings: [{ accountId: yaleAccount(sim, sim.player)!.id, amount: owed }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -owed }] });
+      expect([accountOwed(sim, sim.player), school.hold]).toEqual([0, expect.any(Number)]);
+      return reload(sim);
+    };
+    const opened = held('lv-old-hold', false);
+    expect(opened.player.school!.hold).toBeUndefined();
+    expect(opened.player.school!.standing).toBe('graduated');
+    expect(titled(opened, 'The Financial Hold Is Lifted')).toHaveLength(1);
+    expect(titled(opened, 'Your MFA Is Conferred')[0]!.body).toMatch(/^Your Yale account cleared, the faculty confer the MFA/);
+    const waiting = held('lv-old-hold-inc', true);
+    expect(waiting.player.school!.hold).toBeUndefined();
+    expect(titled(waiting, 'The Financial Hold Is Lifted')).toHaveLength(1);
+    expect(waiting.player.school!.awaitingDegree).toBe(true);
+    expect(waiting.player.school!.standing).toBe('good');
+    expect(titled(waiting, 'Your MFA Is Conferred')).toHaveLength(0);
   });
 
   it('REPLAY: the same seed and commands make the same leave, to the field', () => {

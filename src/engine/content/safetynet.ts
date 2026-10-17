@@ -201,9 +201,12 @@ export const POVERTY_LINE: RateSteps = [['2025-01-01', 15_650_00], ['2026-01-01'
  * New York's pharmacy copays. New York's Essential Plan takes them from there
  * to 200% ($2,660), no premium, $0 copays to 150% and $15 to $150 above it;
  * its band to 250% ended 1 July 2026. From 1 January 2027 the federal law
- * asks a Medicaid adult for 80 hours' work or $580 of earnings a month, and
- * renews them every six months from 1 March 2027. A person a program takes
- * gets no marketplace credit.
+ * asks a Medicaid adult for 80 hours' work or $580 of income a month, unless
+ * they're at school or on SNAP, or a hardship is asked for a month in
+ * hospital (`monthEngagement`), and renews them every six months from 1 March
+ * 2027. A person a program takes gets no
+ * marketplace credit. Until 2026-10-17 this said "$580 of earnings", where the
+ * month's test reads its income; found by brief 11's second reader.
  */
 export const PUBLIC_COVER = {
   medicaidShare: 1.38,

@@ -6,11 +6,11 @@
       "kind": "command",
       "entry": "Papers > Passport tab > IdPanel 'Get Non-Driver Identification Card' (ui/papers/Documents.tsx:172)",
       "reads": "idCardRefusal: the state’s card where they live, a license or card held or pending; for somebody not a citizen at a US state’s counter, in status, lawful presence (an F-1 at school, or a US permit in force, OPT), from 2026-10-16 a primary identity document in force (the passport, or OPT’s EAD), and a Social Security number held",
-      "changes": "pays the fee; a citizen’s card in force at once and REAL ID; somebody not a citizen’s Limited Term card waiting on SAVE’s ten federal workdays, to the end of their lawful presence, non-verified (Not For Federal Identification, from 2026-10-16: until then marked REAL ID)",
+      "changes": "pays the fee; Connecticut’s card is mailed, Being Decided until it comes twenty business days on (Central Issuance), a citizen’s to their first birthday at least seven years on (CGS 1-1h(b)(2)) and REAL ID; somebody not a citizen’s Limited Term card waits on SAVE’s ten federal workdays and then the mail’s twenty, to the end of their lawful presence (SLATE’s assumption: the state publishes no term for a non-verified card), non-verified (Not For Federal Identification, from 2026-10-16: until then marked REAL ID). From 2026-10-17 (brief 11’s research): until then a citizen’s was in force at once for six years from the day, and a non-citizen’s came on SAVE’s tenth day",
       "downstream": "photoIdOf, read by an account at a new bank (bank.open_current, bankmoves.ts) and by bank.switch (lending.ts); idCardRefusal blocks a second one",
       "persistent": "person.documents",
       "explanation": "toast with fee and expiry; DocumentList row, where from 2026-10-16 a license or an ID card run out says what replaces it (an ID card applied for under Your ID; for a license, that nothing in SLATE renews one, Documents.tsx:76-81): until then the row said nothing past Run Out, and a New Yorker whose license ran out mid-program met it first as a new bank’s refusal (brief 09’s journeys); document look",
-      "tests": "tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card in force at once…, and Citi then opens her account’ (bank.open_current takes the card), ‘PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days…’, the refusals in their words (a second card, a Connecticut license, out of status, a bank short of $28) and IdPanel’s button pressed; tests/defects3-50-70.test.ts ‘…limited-term card applied for at noon on Thursday 5 November 2026 comes ten federal workdays on, Friday the 20th, Veterans Day not among them’ and its 9 PM twin; tests/papers-transitions.test.ts ‘waits for the Social Security number, then for SAVE’s ten business days…’; tests/defects-g24-1.test.ts ‘is issued on OPT in force, and runs to OPT’s end, not the program’s’; tests/defects-r7-1.test.ts and tests/defects-r3d-1.test.ts (the Social Security refusal’s three wordings); tests/guide-examples-papers.test.ts PLAYS['documents.passport-id']. Until 2026-10-13 this said no test had a bank take the ID card",
+      "tests": "tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card that comes by mail twenty business days on…Citi turns her away until it comes and then opens her account, across a save and a load’ (bank.open_current takes the card once it comes), ‘PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days…’, the refusals in their words (a second card on its way or come, a Connecticut license, out of status, a bank short of $28) and IdPanel’s button pressed; tests/defects3-50-70.test.ts ‘…limited-term card applied for at noon on Thursday 5 November 2026 is approved by SAVE ten federal workdays on, Friday the 20th, Veterans Day not among them, and comes by mail twenty business days later, Monday 21 December, Thanksgiving not among them’ and its 9 PM twin; tests/remaining-papers.test.ts ‘GUARD: the card runs to the first birthday at least seven years on, by New Haven’s calendar…’; tests/papers-transitions.test.ts ‘waits for the Social Security number, then for SAVE’s ten business days…’; tests/defects-g24-1.test.ts ‘is issued on OPT in force, and runs to OPT’s end, not the program’s’; tests/defects-r7-1.test.ts and tests/defects-r3d-1.test.ts (the Social Security refusal’s three wordings); tests/guide-examples-papers.test.ts PLAYS['documents.passport-id']. Until 2026-10-13 this said no test had a bank take the ID card, and until 2026-10-17 it cited the tests by their titles from before the mail",
       "status": "verified",
       "issue": "A CT-born holder of a CT license is refused ('It serves as your ID'), which is correct.",
       "corrected": {
@@ -111,13 +111,13 @@
         "tests": [
           {
             "file": "evidence-g15-papers.test.ts",
-            "title": "PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card in force at once to 24 August 2032, and Citi then opens her account",
+            "title": "PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card that comes by mail twenty business days on, Tuesday 22 September 2026, good to her birthday on 14 June 2034; Citi turns her away until it comes and then opens her account, across a save and a load",
             "kind": "command",
-            "closes": "Gap 1: a new bank takes the ID card, read by photoIdOf through bank.open_current (Citi), refused before the card in its own words. Gap 2: the $28 fee checked twice, as the fall in the checking balance and as the transaction that took it. A citizen's card is in force at once, with its six-year term given as a literal date."
+            "closes": "Gap 1: a new bank takes the ID card, read by photoIdOf through bank.open_current (Citi), refused before the card and while it’s on its way, in its own words. Gap 2: the $28 fee checked twice, as the fall in the checking balance and as the transaction that took it. A citizen’s card comes by mail twenty business days on, Tuesday 22 September 2026, good to her birthday on 14 June 2034, given as literal dates, across a save and a load. Until 2026-10-17 a citizen’s card was in force at once, with a six-year term"
           },
           {
             "file": "evidence-g15-papers.test.ts",
-            "title": "refuses a second card while one is in force, in its words, charges once, and holds it across a save and a load",
+            "title": "refuses a second card while one is on its way and once it has come, in its words, charges once, and holds it across a save and a load",
             "kind": "command",
             "closes": "Gap 4: 'You hold one in force.' (identity.ts:103) through the command, before and after a reload. One $28 charge. After the reload the card is still the photo ID Citi takes."
           },
@@ -141,19 +141,19 @@
           },
           {
             "file": "evidence-g15-papers.test.ts",
-            "title": "PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days from Monday 19 October to Monday 2 November 2026, and runs to the program’s end, 31 May 2029",
+            "title": "PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days from Monday 19 October to Monday 2 November 2026, then comes by mail twenty business days on, Wednesday 2 December, and runs to the program’s end, 31 May 2029",
             "kind": "command",
             "closes": "Gap 3: SAVE's ten business days pinned on a calendar window with no federal holiday. The card is pending an hour before 2 November 14:00Z and valid an hour after, with issuedAt on that day. Gap 2: the $28 for the Limited Term card. The 'Yours is on its way.' refusal while the SSN is pending. Persistence: a reload while SAVE decides, then one arrival."
           },
           {
             "file": "evidence-g15-papers.test.ts",
-            "title": "on Passport And ID, Get Non-Driver Identification Card pressed says “$28.00; good until August 24, 2032”, lists the card, and is then shut with the reason; a Connecticut license holder sees why it is shut",
+            "title": "on Passport And ID, Get Non-Driver Identification Card pressed says “$28.00; the card comes September 22, 2026; good until June 14, 2034”, lists the card Being Decided and then In Force, and is shut with the reason each time; a Connecticut license holder sees why it is shut",
             "kind": "render",
             "closes": "UI evidence: IdPanel drawn as the player has it. The real button handler is pressed and its toast (fee and expiry) checked. The button is then disabled with title 'You hold one in force.', and for a CT license holder it is disabled with the license refusal."
           },
           {
             "file": "remaining-papers.test.ts",
-            "title": "PLAYER JOURNEY: her number come and her passport reported lost, Get Non-Driver Identification Card is shut with the DMV’s reason and the command refused, nothing taken; her passport renewed from abroad, the card is asked for, comes after SAVE’s ten federal workdays, and is Not For Federal Identification, across a reload; until 2026-10-16 it was issued with no identity document, marked REAL ID",
+            "title": "PLAYER JOURNEY: her number come and her passport reported lost, Get Non-Driver Identification Card is shut with the DMV’s reason and the command refused, nothing taken; her passport renewed from abroad, the card is asked for, comes by mail twenty business days after SAVE’s ten federal workdays, and is Not For Federal Identification, across a reload; until 2026-10-16 it was issued with no identity document, marked REAL ID, and until 2026-10-17 it came on SAVE’s tenth day",
             "kind": "render",
             "closes": "passport lost: the button shut with the DMV's reason, the command refused, $0 taken; a new passport from abroad; the card asked for, pending, issued after SAVE's days, realId false, its page 'It’s marked Not For Federal Identification: it isn’t REAL ID.', across a reload",
             "round": "remaining-tax"
@@ -174,7 +174,7 @@
           },
           {
             "file": "evidence-g16-papers.test.ts",
-            "title": "PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes ten business days after applying, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport",
+            "title": "PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes by mail twenty business days after SAVE’s ten, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport",
             "kind": "command",
             "closes": "reordered: the card asked for with the passport in force, the passport lost after, and a twin without the card refused by Wells Fargo",
             "round": "remaining-tax"
@@ -188,7 +188,7 @@
           },
           {
             "file": "remaining-09-journeys.test.ts",
-            "title": "journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, is in force at once, and the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out)",
+            "title": "journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, comes by mail on 19 July, the bank refusing her until it does, and then the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out; until 2026-10-17 the card was in force at once)",
             "kind": "render",
             "closes": "je-5: a New York license 14 June 2020 to 14 June 2028, no passport; in force on 13 June, none on 20 June; the row’s words; Citi refuses in its words, nothing moved; the Connecticut ID $28.00 from Chase, a second refused “You hold one in force.”; reloaded, in force to 20 June 2034; Citi opens, $100.00 in transit, landed on its day; breaches 0, ledger balanced.",
             "round": "remaining-09-journeys"
@@ -2589,11 +2589,11 @@
       "kind": "scheduled",
       "entry": "replace_idcard, replace_license, and apply_idcard for somebody not a citizen at a US state’s counter (from 2026-10-10)",
       "reads": "the pending document",
-      "changes": "valid, issuedAt (identity.ts:212-221)",
+      "changes": "valid, issuedAt (identity.ts:257-258), on the day the mail brings it: twenty business days after the application for a citizen, after SAVE’s ten federal workdays for somebody not a citizen (from 2026-10-17, brief 11’s research: until then on SAVE’s tenth day, and a citizen’s card was in force at once)",
       "downstream": "photoIdOf, read by an account at a new bank (bank.open_current)",
       "persistent": "documents",
       "explanation": "DocumentList status; the ‘<name> Arrived’ notice (from 2026-10-10)",
-      "tests": "tests/evidence-g16-papers.test.ts ‘PLAYER JOURNEY: a New York license reported lost leaves no photo ID and Capital One refuses; replaced by mail for $17.50, it arrives 21 days on, is said to, reads In Force, and Capital One opens the account’, ‘PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes ten business days after applying… and Wells Fargo takes it in place of a lost passport’ (ten federal workdays, Columbus Day not among them, from 2026-10-13); tests/defects3-50-70.test.ts ‘…comes ten federal workdays on, Friday the 20th, Veterans Day not among them’; tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: a stolen card replaced for $30…’; tests/idreplace.test.ts ‘is replaced in New York for $8 and comes in three weeks’; tests/papers-transitions.test.ts; tests/guide-examples-papers.test.ts PLAYS['documents.passport-id']. Until 2026-10-13 this said no test had a bank take the card",
+      "tests": "tests/evidence-g16-papers.test.ts ‘PLAYER JOURNEY: a New York license reported lost leaves no photo ID and Capital One refuses; replaced by mail for $17.50, it arrives 21 days on, is said to, reads In Force, and Capital One opens the account’, ‘PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes by mail twenty business days after SAVE’s ten…and Wells Fargo takes it in place of a lost passport’ (SAVE’s ten federal workdays, Columbus Day not among them, then the mail’s twenty, from 2026-10-17); tests/defects3-50-70.test.ts ‘…is approved by SAVE ten federal workdays on, Friday the 20th, Veterans Day not among them, and comes by mail twenty business days later, Monday 21 December, Thanksgiving not among them’; tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: a stolen card replaced for $30…’; tests/idreplace.test.ts ‘is replaced in New York for $8 and comes in three weeks’; tests/papers-transitions.test.ts; tests/guide-examples-papers.test.ts PLAYS['documents.passport-id']. Until 2026-10-13 this said no test had a bank take the card",
       "status": "verified",
       "issue": "Until 2026-10-10 it fired no notice when the card arrived; since then it says ‘<name> Arrived’ (identity.ts:220).",
       "corrected": {
@@ -2666,7 +2666,7 @@
           },
           {
             "file": "evidence-g16-papers.test.ts",
-            "title": "PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes ten business days after applying, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport",
+            "title": "PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes by mail twenty business days after SAVE’s ten, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport",
             "kind": "command",
             "closes": "apply_idcard for a non-citizen: SAVE's ten business days counted by hand, expiresAt the program's end, issuedAt, 'Non-Driver Identification Card, Limited Term Arrived', and Wells Fargo opening on it"
           }
