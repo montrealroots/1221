@@ -1,0 +1,378 @@
+[
+ {
+  "id": "st3-floor",
+  "row": "ST3-R.e",
+  "what": "the whole rounded by floor",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "return { ...e, dimensions, overall: r1(e.overall), exact: e.overall",
+    "replace": "return { ...e, dimensions, overall: Math.floor(e.overall * 10) / 10, exact: e.overall"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > every shown figure is its own exact value rounded once, and each whole is worked by hand from its parts’ exact values",
+   "M1: mastery at 100 (brief 10) > every judged piece and reading comes to 100 for a mastered actor, prepared, on a sufficient day, with no draw and with a draw; and every class scene and play on every way of playing that fits"
+  ],
+  "killed": true
+ },
+ {
+  "id": "st3-twice",
+  "row": "ST3-R.e",
+  "what": "a whole worked from rounded dimensions",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "const q = (x: { quality: number; exact?: number }) => x.exact ?? x.quality;",
+    "replace": "const q = (x: { quality: number; exact?: number }) => Math.round((x.exact ?? x.quality) * 10) / 10;"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "ST3-R: identical effective inputs give identical results (brief 10) > an actor even in everything the formula reads, undrained, is 100 × n^(1 + difficulty) on stage and at a close frame, at full precision and as shown",
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > every shown figure is its own exact value rounded once, and each whole is worked by hand from its parts’ exact values"
+  ],
+  "killed": true
+ },
+ {
+  "id": "st3-segments-twice",
+  "row": "ST3-R.e",
+  "what": "a piece's whole worked from its segments' rounded wholes",
+  "edits": [
+   {
+    "file": "src/engine/systems/piece.ts",
+    "find": "  const overall = results.reduce((s, r, i) => s + r.overall * spec.segments[i]!.weight, 0) / W;",
+    "replace": "  const overall = results.reduce((s, r, i) => s + r1(r.overall) * spec.segments[i]!.weight, 0) / W;"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "ST3-R: identical effective inputs give identical results (brief 10) > an actor even in everything the formula reads, undrained, is 100 × n^(1 + difficulty) on stage and at a close frame, at full precision and as shown",
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the criterion’s even actor’s difference is its techniques’ part and its stamina’s part, and what’s left is floating point",
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > every shown figure is its own exact value rounded once, and each whole is worked by hand from its parts’ exact values",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer",
+   "H4-R: every ability’s contribution on its own work (brief 10) > each specialist is on the even actor’s budget, and its own work (the pieces where its ability’s +10 effect is the largest of the twelve) is five pieces or more in two kinds or more, where all twelve are ahead on at least 60% by a median of 0.3 or more"
+  ],
+  "killed": true
+ },
+ {
+  "id": "st3-leans",
+  "row": "ST3-R.e",
+  "what": "STAGE_LEAN and CAMERA_LEAN both 1",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1.2 };",
+    "replace": "export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1 };"
+   },
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const STAGE_LEAN: Partial<Record<Dimension, number>> = { execution: 1.2 };",
+    "replace": "export const STAGE_LEAN: Partial<Record<Dimension, number>> = { execution: 1 };"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the voice-and-body specialist is better on stage than at a close frame on every case, and a stamina at 55 costs on both, at a budget of 600",
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the criterion’s even actor’s difference is its techniques’ part and its stamina’s part, and what’s left is floating point",
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > ST3-R (e), it catches what it should: with the stage’s and the close frame’s leans at 1 the voice-and-body specialist isn’t better on stage on every case, with no drain a stamina of 55 costs nothing on any, and with the grain let into the comparison the undrained even actor comes apart",
+   "H4-R: every ability’s contribution on its own work (brief 10) > each specialist is on the even actor’s budget, and its own work (the pieces where its ability’s +10 effect is the largest of the twelve) is five pieces or more in two kinds or more, where all twelve are ahead on at least 60% by a median of 0.3 or more"
+  ],
+  "killed": true
+ },
+ {
+  "id": "st3-drain",
+  "row": "ST3-R.e",
+  "what": "the drain removed",
+  "edits": [
+   {
+    "file": "src/engine/content/piece.ts",
+    "find": "  drain: 0.4,",
+    "replace": "  drain: 0,"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the voice-and-body specialist is better on stage than at a close frame on every case, and a stamina at 55 costs on both, at a budget of 600",
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the criterion’s even actor’s difference is its techniques’ part and its stamina’s part, and what’s left is floating point",
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > ST3-R (e), it catches what it should: with the stage’s and the close frame’s leans at 1 the voice-and-body specialist isn’t better on stage on every case, with no drain a stamina of 55 costs nothing on any, and with the grain let into the comparison the undrained even actor comes apart",
+   "H4-R: every ability’s contribution on its own work (brief 10) > each specialist is on the even actor’s budget, and its own work (the pieces where its ability’s +10 effect is the largest of the twelve) is five pieces or more in two kinds or more, where all twelve are ahead on at least 60% by a median of 0.3 or more",
+   "The judge area’s second phase: stamina’s, memory’s and composure’s second kind of work (brief 10) > the full drain is 0.4, and a night reaches it at 4/3 of the anchor’s work: the anchor’s lead still drains 0.3 at its curtain, and the heaviest lead the catalog holds more than that"
+  ],
+  "killed": true
+ },
+ {
+  "id": "st3-grain-leak",
+  "row": "ST3-R.e",
+  "what": "the grain leaking into ST3's comparison",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "grain[d] = { d: r2((had?.d ?? 0) - GRAIN.strength * x.s",
+    "replace": "grain[d] = { d: r2((had?.d ?? 0) - (GRAIN.strength || 0.3) * x.s"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "ST3-R: identical effective inputs give identical results (brief 10) > an actor even in everything the formula reads, undrained, is 100 × n^(1 + difficulty) on stage and at a close frame, at full precision and as shown",
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the voice-and-body specialist is better on stage than at a close frame on every case, and a stamina at 55 costs on both, at a budget of 600",
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the criterion’s even actor’s difference is its techniques’ part and its stamina’s part, and what’s left is floating point",
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > ST3-R (e), it catches what it should: with the stage’s and the close frame’s leans at 1 the voice-and-body specialist isn’t better on stage on every case, with no drain a stamina of 55 costs nothing on any, and with the grain let into the comparison the undrained even actor comes apart",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer"
+  ],
+  "killed": true
+ },
+ {
+  "id": "h4-tenth",
+  "row": "H4-R.e",
+  "what": "listening's every input weight cut to a tenth",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight,",
+    "replace": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight * (input.ability === 'listening' ? 0.1 : 1),"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "H4-R: every ability’s contribution on its own work (brief 10) > each specialist is on the even actor’s budget, and its own work (the pieces where its ability’s +10 effect is the largest of the twelve) is five pieces or more in two kinds or more, where all twelve are ahead on at least 60% by a median of 0.3 or more"
+  ],
+  "killed": true
+ },
+ {
+  "id": "h4-budget",
+  "row": "H4-R.e",
+  "what": "a specialist built over twelve abilities, not eleven",
+  "edits": [
+   {
+    "file": "tests/decisions-judge.test.ts",
+    "find": "  const specialist = (a: AbilityId) => actor({ [a]: 85 }, (600 - 85) / 11);",
+    "replace": "  const specialist = (a: AbilityId) => actor({ [a]: 85 }, (600 - 85) / 12);"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "H4-R: every ability’s contribution on its own work (brief 10) > each specialist is on the even actor’s budget, and its own work (the pieces where its ability’s +10 effect is the largest of the twelve) is five pieces or more in two kinds or more, where all twelve are ahead on at least 60% by a median of 0.3 or more",
+   "H4-R: every ability’s contribution on its own work (brief 10) > the two public meetings are presence’s own work: its +10 effect the largest of the twelve on each, played to the meeting with the partner barely there, and its specialist ahead of the even actor"
+  ],
+  "killed": true
+ },
+ {
+  "id": "st6-no-draws",
+  "row": "ST6-R.g, ST6-R.bPrime",
+  "what": "restraint's draws removed",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: {} },"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > a restrained take can carry a scene that leans the other way, where the lean is slight: the specialist playing Earnest’s garden scene restrained is ahead of the even actor playing it expansive, and isn’t once the choice is only half rehearsed in",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own craft pays: the restrained specialist’s lift over the even actor is larger playing restrained than expansive wherever both fit, and restraint’s draws are part of it on every one",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > success depends on the scene: every win against the grain is on a material where the grain is slighter than on any of the limits",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer"
+  ],
+  "killed": true
+ },
+ {
+  "id": "st6-composure-draw",
+  "row": "ST6-R.g",
+  "what": "restraint's draw on composure removed, emotional depth's and focus's kept",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often"
+  ],
+  "killed": true
+ },
+ {
+  "id": "st6-own-abilities-unread",
+  "row": "ST6-R.g",
+  "what": "emotional depth, composure and focus read at the even actor's 50 whatever their level",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: clamp(level(input.ability) / full(input.ability), 0, 1) });",
+    "replace": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: ['emotionalDepth', 'composure', 'focus'].includes(input.ability) ? 0.5 : clamp(level(input.ability) / full(input.ability), 0, 1) });"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "ST3-R: identical effective inputs give identical results (brief 10) > an actor even in everything the formula reads, undrained, is 100 × n^(1 + difficulty) on stage and at a close frame, at full precision and as shown",
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the criterion’s even actor’s difference is its techniques’ part and its stamina’s part, and what’s left is floating point",
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > ST3-R (e), it catches what it should: with the stage’s and the close frame’s leans at 1 the voice-and-body specialist isn’t better on stage on every case, with no drain a stamina of 55 costs nothing on any, and with the grain let into the comparison the undrained even actor comes apart",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > a restrained take can carry a scene that leans the other way, where the lean is slight: the specialist playing Earnest’s garden scene restrained is ahead of the even actor playing it expansive, and isn’t once the choice is only half rehearsed in",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own craft pays: the restrained specialist’s lift over the even actor is larger playing restrained than expansive wherever both fit, and restraint’s draws are part of it on every one",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > success depends on the scene: every win against the grain is on a material where the grain is slighter than on any of the limits",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer",
+   "H4-R: every ability’s contribution on its own work (brief 10) > each specialist is on the even actor’s budget, and its own work (the pieces where its ability’s +10 effect is the largest of the twelve) is five pieces or more in two kinds or more, where all twelve are ahead on at least 60% by a median of 0.3 or more",
+   "M1: mastery at 100 (brief 10) > every judged piece and reading comes to 100 for a mastered actor, prepared, on a sufficient day, with no draw and with a draw; and every class scene and play on every way of playing that fits"
+  ],
+  "killed": true
+ },
+ {
+  "id": "st6-least",
+  "row": "ST6-R.g",
+  "what": "restrained suitability forced to its least on every material",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "  const s = r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));",
+    "replace": "  const s = side === 'restrained' ? -1 : r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > a restrained take can carry a scene that leans the other way, where the lean is slight: the specialist playing Earnest’s garden scene restrained is ahead of the even actor playing it expansive, and isn’t once the choice is only half rehearsed in",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > the other half is kept: the expansive specialist playing expansive is ahead of its own restrained take on at least a quarter of the materials restraint suits better",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer"
+  ],
+  "killed": true
+ },
+ {
+  "id": "st6-least-stage",
+  "row": "ST6-R.g",
+  "what": "restrained suitability forced to its least, against the stage criteria's tests",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "  const s = r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));",
+    "replace": "  const s = side === 'restrained' ? -1 : r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));"
+   }
+  ],
+  "command": "npx vitest run tests/stage-interpretation.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "the stage reads the scene, not the house > the house pulls no scale: the same bare scene, on stage, suits neither side; at a close frame restraint",
+   "the stage reads the scene, not the house > a sung song is the voice’s demand, not size: Othello’s willow song, two women at bedtime, suits restraint",
+   "the stage reads the scene, not the house > a concealed, private scene and an open quarrel in the same play read apart: Brutus’s orchard (2.1) against his tent (4.3)",
+   "the stage reads the scene, not the house > a private exchange against a public speech, within one genre: Macbeth and his wife outside the feast against Antigone before the palace",
+   "the stage reads the scene, not the house > comedy both ways: Darlington’s warning under the compliments suits restraint, Chekhov’s shouting match over the meadows size",
+   "the stage reads the scene, not the house > no universal best: an even actor does better restrained on some stage scenes and expansive on others, each a quarter or more",
+   "the stage reads the scene, not the house > strength carries the harder side: a presence specialist does better playing expansive in Brutus’s orchard, which suits restraint, than restrained"
+  ],
+  "killed": true
+ },
+ {
+  "id": "st6-no-grain",
+  "row": "ST6-R.g",
+  "what": "the grain removed",
+  "edits": [
+   {
+    "file": "src/engine/content/interpretation.ts",
+    "find": "export const GRAIN = { strength: 0.3,",
+    "replace": "export const GRAIN = { strength: 0,"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > ST3-R (e), it catches what it should: with the stage’s and the close frame’s leans at 1 the voice-and-body specialist isn’t better on stage on every case, with no drain a stamina of 55 costs nothing on any, and with the grain let into the comparison the undrained even actor comes apart",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > where size is what the scene is built on, restraint has its limits: before Thebes, at Antigone’s defiance and in the two meetings the restrained take is behind the even actor’s expansive one, and the expansive specialist is ahead of it",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > success depends on the scene: every win against the grain is on a material where the grain is slighter than on any of the limits",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often",
+   "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer"
+  ],
+  "killed": true
+ },
+ {
+  "id": "scenes-one-fewer",
+  "row": "judge.coverage-row",
+  "what": "the two meetings taken out of the bank, the matrix's row left saying 67",
+  "edits": [
+   {
+    "file": "src/engine/content/coursework.ts",
+    "find": "  ...MEETING_SCENES,",
+    "replace": "  ...MEETING_SCENES.slice(2),"
+   }
+  ],
+  "command": "npx vitest run tests/scenes.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "the scene bank > GUARD: the coverage matrix’s scene bank row states the bank as the code holds it, its scenes, its plays and its exercises, so a scene added or taken away fails here until the row says so"
+  ],
+  "killed": true
+ },
+ {
+  "id": "fixed-set-swapped",
+  "row": "L3-R.a",
+  "what": "a casting read in the fixed set swapped after measurement",
+  "edits": [
+   {
+    "file": "tools/pieces.ts",
+    "find": "'Twelfth Night', 'Julius Caesar', 'Trifles', 'Tartuffe'",
+    "replace": "'Twelfth Night', 'Julius Caesar', 'Trifles', 'Macbeth'"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "L3-R: real progress, controlled (brief 10) > L3-R (a), a fixed set, controlled: the 24 named before measurement, eight briefs at their first reading in eight registers, eight class scenes, four nights and four casting reads, each judged fully prepared, with no way chosen, on a sufficient day and with no draw"
+  ],
+  "killed": true
+ },
+ {
+  "id": "fixed-set-drawn",
+  "row": "L3-R.a",
+  "what": "a scene, night or casting read in the fixed set judged with its draw",
+  "edits": [
+   {
+    "file": "tools/pieces.ts",
+    "find": "key: o.key ?? `ag:${kind}:${m.id}`, ...(o.key ? {} : { expected: true }) };",
+    "replace": "key: o.key ?? `ag:${kind}:${m.id}` };"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "H4-R: every ability’s contribution on its own work (brief 10) > the two public meetings are presence’s own work: its +10 effect the largest of the twelve on each, played to the meeting with the partner barely there, and its specialist ahead of the even actor",
+   "H4-R: every ability’s contribution on its own work (brief 10) > no strength erases an unrelated weakness: where an ability carries under a tenth of what a piece’s abilities move, its specialist is never ahead of the even actor",
+   "L3-R: real progress, controlled (brief 10) > L3-R (a), a fixed set, controlled: the 24 named before measurement, eight briefs at their first reading in eight registers, eight class scenes, four nights and four casting reads, each judged fully prepared, with no way chosen, on a sufficient day and with no draw"
+  ],
+  "killed": true
+ },
+ {
+  "id": "l3r-no-range",
+  "row": "L3-R.e",
+  "what": "the report's difficulty given as its mean alone",
+  "edits": [
+   {
+    "file": "tools/brief-journeys.ts",
+    "find": ", min: Math.min(...ds), max: Math.max(...ds) }",
+    "replace": " }"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "failed": [
+   "L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: L3-R (e), the journey kept in view: two months played by the journeys’ tool, and its report gives each month’s takes, their purposes, their difficulty’s mean and range, their stakes and genres, with L3 as written beside the controlled measure"
+  ],
+  "killed": true
+ }
+]
