@@ -22,10 +22,13 @@
  *
  *   npx vite-node tools/advice.ts -- --cases tuning [--out file.json]
  *   npx vite-node tools/advice.ts -- --cases adv-h-0..9 --held-out --out docs/verification/decisions-2026-10-16/advice/h-000.json
+ *   npx vite-node tools/advice.ts -- --cases adv-v-0..9 --fresh --out <file.json>
  *   npx vite-node tools/advice.ts -- --summarize a.json b.json … [--out summary.json]
  *
- * A held-out seed is refused without `--held-out`; with it, the commit and whether the tracked tree was clean are written
- * into the output, so a held-out run says what it ran on.
+ * A held-out seed is refused without `--held-out`, and from brief 12 (2026-10-17) a fresh one (adv-v-0 to 119) without
+ * `--fresh`; every run writes its commit and whether the tracked tree was clean into its output, so it says what it ran
+ * on. From brief 12 the held-out set is regression coverage, its groups named `regression` in a summary, and the fresh
+ * set is the unseen validation (`SET_ROLE`, tools/advice-harness.ts).
  */
 import { execSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -40,7 +43,7 @@ import { adviceFor } from '../src/engine/systems/next-steps';
 import { forecastWork, genreNow, trainingForecast, type Forecast } from '../src/engine/systems/advice';
 import { abilityFull, abilityOf, isAbility, levelOf } from '../src/engine/systems/attributes';
 import type { Recommendation } from '../src/engine/systems/experience';
-import { RECENT, casesOf, candidatesOf, clone, buildCase, f2aCase, heldOutRefusal, isFull, live, setLevel, worthOf, type CaseSpec } from './advice-harness';
+import { RECENT, SET_LABEL, SET_ROLE, casesOf, candidatesOf, clone, buildCase, f2aCase, heldOutRefusal, isFull, live, setLevel, worthOf, type CaseSpec } from './advice-harness';
 
 const argv = process.argv.slice(2);
 const arg = (n: string, d = '') => { const i = argv.indexOf(`--${n}`); return i >= 0 ? argv[i + 1]! : d; };
@@ -233,19 +236,26 @@ function summarize(cases: readonly CaseOut[]) {
   };
 }
 
-/** Every group the criteria report: each set and design, and for F2-A10's cases each band and each stage. */
+/**
+ * Every group the criteria report: each set and design, and for F2-A10's cases each band and each stage. From brief 12 the
+ * fresh set's too, and the held-out set's groups are named `regression` (`SET_LABEL`); until then they were `held-out`.
+ */
 function groups(cases: readonly CaseOut[]) {
   const out: Record<string, ReturnType<typeof summarize>> = {};
   const by = (name: string, pick: (x: CaseOut) => boolean) => { const xs = cases.filter(pick); if (xs.length) out[name] = summarize(xs); };
-  for (const set of ['tuning', 'held-out'] as const) {
-    by(`${set}`, (x) => x.set === set);
-    by(`${set} F2-A`, (x) => x.set === set && x.design === 'F2-A');
-    by(`${set} F2-A10`, (x) => x.set === set && x.design === 'F2-A10');
-    for (const band of ['beginner', 'developing', 'advanced', 'nearMastery']) by(`${set} F2-A10 ${band}`, (x) => x.set === set && x.band === band);
-    for (const stage of ['firstWeek', 'midTerm', 'later']) by(`${set} F2-A10 ${stage}`, (x) => x.set === set && x.stage === stage);
+  for (const set of ['tuning', 'held-out', 'fresh'] as const) {
+    const name = SET_LABEL[set];
+    by(`${name}`, (x) => x.set === set);
+    by(`${name} F2-A`, (x) => x.set === set && x.design === 'F2-A');
+    by(`${name} F2-A10`, (x) => x.set === set && x.design === 'F2-A10');
+    for (const band of ['beginner', 'developing', 'advanced', 'nearMastery']) by(`${name} F2-A10 ${band}`, (x) => x.set === set && x.band === band);
+    for (const stage of ['firstWeek', 'midTerm', 'later']) by(`${name} F2-A10 ${stage}`, (x) => x.set === set && x.stage === stage);
   }
   return out;
 }
+
+/** What each set present is for (from brief 12): said beside the figures, so a regression run isn't read as unseen validation. */
+const rolesOf = (cases: readonly CaseOut[]) => Object.fromEntries([...new Set(cases.map((x) => x.set))].map((set) => [SET_LABEL[set], SET_ROLE[set]]));
 
 const git = (cmd: string) => { try { return execSync(`git ${cmd}`, { encoding: 'utf8' }).trim(); } catch { return undefined; } };
 const out = arg('out');
@@ -258,12 +268,12 @@ if (argv.includes('--summarize')) {
   const files = argv.slice(argv.indexOf('--summarize') + 1).filter((x) => !x.startsWith('--') && x !== out);
   const read = files.map((f) => JSON.parse(readFileSync(f, 'utf8')) as { commit?: string; cases: CaseOut[] });
   const cases = read.flatMap((x) => x.cases);
-  const summary = { ...at, files, commits: [...new Set(read.map((x) => x.commit))], cases: cases.length, groups: groups(cases) };
+  const summary = { ...at, files, commits: [...new Set(read.map((x) => x.commit))], cases: cases.length, roles: rolesOf(cases), groups: groups(cases) };
   console.log(JSON.stringify(summary.groups, null, 1));
   if (out) writeFileSync(out, `${JSON.stringify(summary, null, 1)}\n`);
 } else {
   const specs = casesOf(arg('cases', 'tuning'));
-  const refused = heldOutRefusal(specs, argv.includes('--held-out'));
+  const refused = heldOutRefusal(specs, argv.includes('--held-out'), argv.includes('--fresh'));
   if (refused) throw new Error(refused);
   const cases: CaseOut[] = [];
   for (const spec of specs) {
@@ -274,5 +284,5 @@ if (argv.includes('--summarize')) {
   }
   const summary = groups(cases);
   console.log(JSON.stringify(summary, null, 1));
-  if (out) writeFileSync(out, `${JSON.stringify({ ...at, cases, summary }, null, 1)}\n`);
+  if (out) writeFileSync(out, `${JSON.stringify({ ...at, roles: rolesOf(cases), cases, summary }, null, 1)}\n`);
 }

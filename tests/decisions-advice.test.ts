@@ -44,7 +44,7 @@ import { recommendations } from '@/engine/systems/experience';
 import { careFor, inHospital } from '@/engine/systems/health';
 import { adviceFor } from '@/engine/systems/next-steps';
 import { matchedTier, practicedToday } from '@/engine/systems/practice';
-import { BANDS, BAND_ORDER, GENRES, INPUTS, STAGES, STAGE_ORDER, buildCase, caseOf, casesOf, clone, f2aCase, go, heldOutRefusal, live, rest, setLevel, tapeWaiting, worthOf, type Take } from '../tools/advice-harness';
+import { BANDS, BAND_ORDER, GENRES, INPUTS, SET_LABEL, SET_ROLE, STAGES, STAGE_ORDER, buildCase, caseOf, casesOf, clone, f2aCase, go, heldOutRefusal, live, rest, setLevel, tapeWaiting, worthOf, type Take } from '../tools/advice-harness';
 
 // The screens, drawn over a real save under the game's context, as tests/defects-r8-1.test.ts draws them.
 const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation }));
@@ -487,12 +487,39 @@ describe('The F2-A10 harness (brief 11)', () => {
       expect(fresh.filter((c) => c.band === band && c.stage === stage).length, `${band} ${stage}`).toBe(10);
       expect(tunedFresh.some((c) => c.band === band && c.stage === stage), `${band} ${stage}`).toBe(true);
     }
-    for (const seed of ['adv-40', 'adv-t-20', 'adv-h-120', 'adv-h-x']) expect(caseOf(seed), seed).toBeUndefined();
+    for (const seed of ['adv-40', 'adv-t-20', 'adv-h-120', 'adv-h-x', 'adv-v-120']) expect(caseOf(seed), seed).toBeUndefined();
     expect(() => casesOf('adv-h-120')).toThrow('is no case of F2-A or F2-A10');
-    expect(heldOutRefusal(casesOf('adv-h-0..2'), false)).toBe('A held-out seed is run only with --held-out, once, on the code to be reported.');
+    expect(heldOutRefusal(casesOf('adv-h-0..2'), false)).toBe('A held-out seed (regression coverage from brief 12) is run only with --held-out, on the code to be reported.');
     expect(heldOutRefusal(casesOf('adv-10'), false)).toBeDefined();
     expect(heldOutRefusal(casesOf('tuning'), false)).toBeUndefined();
     expect(heldOutRefusal(casesOf('adv-h-0..2'), true)).toBeUndefined();
+  });
+
+  it('GUARD: the fresh validation seeds (brief 12) are apart from the tuning and held-out ones, four bands by three stages by ten, and refused without --fresh, the held-out set now regression coverage', () => {
+    // Read from the case list alone: no fresh case is built or run here, or anywhere but the coordinator's one run.
+    const fresh = casesOf('fresh');
+    expect(fresh.map((c) => c.seed)).toEqual(Array.from({ length: 120 }, (_, i) => `adv-v-${i}`));
+    expect(fresh.every((c) => c.set === 'fresh' && c.design === 'F2-A10')).toBe(true);
+    const seen = new Set([...casesOf('tuning'), ...casesOf('held-out')].map((c) => c.seed));
+    expect(fresh.filter((c) => seen.has(c.seed))).toEqual([]);
+    // Stratified as the held-out set is: case n in band n / 30 and stage (n mod 30) / 10, ten seeds each.
+    const held = casesOf('held-out').filter((c) => c.design === 'F2-A10');
+    fresh.forEach((c, n) => { expect(c.band).toBe(held[n]!.band); expect(c.stage).toBe(held[n]!.stage); });
+    for (const band of BAND_ORDER) for (const stage of STAGE_ORDER) expect(fresh.filter((c) => c.band === band && c.stage === stage).length, `${band} ${stage}`).toBe(10);
+    // Refused without --fresh, whatever else is asked for; with it, run.
+    const fresh0 = casesOf('adv-v-0..2');
+    expect(heldOutRefusal(fresh0, false)).toBe('A fresh validation seed is run only with --fresh, once, on the tested commit.');
+    expect(heldOutRefusal(fresh0, true)).toBe('A fresh validation seed is run only with --fresh, once, on the tested commit.');
+    expect(heldOutRefusal(casesOf('adv-t-0,adv-v-5'), false)).toBeDefined();
+    expect(heldOutRefusal(fresh0, false, true)).toBeUndefined();
+    // A held-out seed still needs --held-out, and --fresh doesn't stand in for it.
+    expect(heldOutRefusal(casesOf('adv-h-0,adv-v-0'), false, true)).toBe('A held-out seed (regression coverage from brief 12) is run only with --held-out, on the code to be reported.');
+    expect(heldOutRefusal(casesOf('tuning'), false, false)).toBeUndefined();
+    // What each set is for, as a summary names it: the held-out set is regression coverage, the fresh set the unseen one.
+    expect(SET_LABEL).toEqual({ tuning: 'tuning', 'held-out': 'regression', fresh: 'fresh' });
+    expect(SET_ROLE['held-out']).toContain('regression');
+    expect(SET_ROLE['held-out']).toContain('isn’t unseen validation');
+    expect(SET_ROLE.fresh).toContain('unseen validation (brief 12): run once, on the tested commit');
   });
 
   it('GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built', () => {
@@ -522,7 +549,7 @@ describe('The F2-A10 harness (brief 11)', () => {
       const held = join(dir, 'held.json');
       const no = spawnSync(process.execPath, [resolve('node_modules/vite-node/vite-node.mjs'), 'tools/advice.ts', '--', '--cases', 'adv-h-0', '--out', held], { encoding: 'utf8' });
       expect(no.status).not.toBe(0);
-      expect(no.stderr + no.stdout).toContain('A held-out seed is run only with --held-out, once, on the code to be reported.');
+      expect(no.stderr + no.stdout).toContain('A held-out seed (regression coverage from brief 12) is run only with --held-out, on the code to be reported.');
       expect(existsSync(held)).toBe(false);
     } finally {
       rmSync(dir, { recursive: true, force: true });

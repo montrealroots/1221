@@ -114,20 +114,34 @@ export const RECENT = 12;
 /** Every genre a brief is written for, the 149. */
 export const GENRES: readonly string[] = [...new Set(BRIEFS.flatMap((b) => b.kinds))].sort();
 
-export interface CaseSpec { seed: string; set: 'tuning' | 'held-out'; design: 'F2-A' | 'F2-A10'; band?: Band; stage?: Stage }
+export interface CaseSpec { seed: string; set: 'tuning' | 'held-out' | 'fresh'; design: 'F2-A' | 'F2-A10'; band?: Band; stage?: Stage }
+
+/**
+ * What each set is for, as a run's summary says it (from brief 12, 2026-10-17; docs/verification/resolution-2026-10-17/
+ * advice-criteria.md). The held-out set was brief 10's unseen validation, run again in brief 11; its results informed brief
+ * 12's clarifications, so from then it's regression coverage, reported as `regression`, and the fresh set is the unseen one.
+ */
+export const SET_ROLE = {
+  tuning: 'tuning: played and read while the advice and its tests were made',
+  'held-out': 'regression: brief 10’s held-out set, run in brief 10 and brief 11; it informed brief 12’s clarifications, so it isn’t unseen validation from then',
+  fresh: 'unseen validation (brief 12): run once, on the tested commit, after the clarified criteria were written',
+} as const;
+/** The name a set's groups have in a summary: the held-out set's is `regression` from brief 12. */
+export const SET_LABEL = { tuning: 'tuning', 'held-out': 'regression', fresh: 'fresh' } as const;
 
 /**
  * A seed's case: F2-A's adv-0 to 9 (tuning) and 10 to 39 (held out), as F2-A built them; adv-t-0 to 19 (tuning) and
- * adv-h-0 to 119 (held out), F2-A10's, their band and stage from their number (the checklist's `seeds`). Nothing in the
- * advice reads this: only the harness does, to build the case.
+ * adv-h-0 to 119 (held out), F2-A10's, their band and stage from their number (the checklist's `seeds`); and from brief
+ * 12, adv-v-0 to 119 (fresh), stratified as the held-out ones are and built the same way. Nothing in the advice reads
+ * this: only the harness does, to build the case.
  */
 export function caseOf(seed: string): CaseSpec | undefined {
   let m = /^adv-(\d+)$/.exec(seed);
   if (m && Number(m[1]) < 40) return { seed, set: Number(m[1]) < 10 ? 'tuning' : 'held-out', design: 'F2-A' };
   m = /^adv-t-(\d+)$/.exec(seed);
   if (m && Number(m[1]) < 20) { const n = Number(m[1]); return { seed, set: 'tuning', design: 'F2-A10', band: BAND_ORDER[n % 4]!, stage: STAGE_ORDER[Math.floor(n / 4) % 3]! }; }
-  m = /^adv-h-(\d+)$/.exec(seed);
-  if (m && Number(m[1]) < 120) { const n = Number(m[1]); return { seed, set: 'held-out', design: 'F2-A10', band: BAND_ORDER[Math.floor(n / 30)]!, stage: STAGE_ORDER[Math.floor((n % 30) / 10)]! }; }
+  m = /^adv-([hv])-(\d+)$/.exec(seed);
+  if (m && Number(m[2]) < 120) { const n = Number(m[2]); return { seed, set: m[1] === 'h' ? 'held-out' : 'fresh', design: 'F2-A10', band: BAND_ORDER[Math.floor(n / 30)]!, stage: STAGE_ORDER[Math.floor((n % 30) / 10)]! }; }
   return undefined;
 }
 
@@ -236,15 +250,16 @@ export function tapeWaiting(sim: Simulation, what: string, prepare: () => void, 
 }
 
 /**
- * The cases a `--cases` list names: `tuning`, `held-out`, a seed, or a range `adv-h-0..9`; an unknown seed throws. Kept in
- * `tools/advice.ts` until brief 11 (2026-10-17), and moved here unchanged with the refusal below, so a gate test reads
- * what the measure runs.
+ * The cases a `--cases` list names: `tuning`, `held-out`, `fresh` (from brief 12), a seed, or a range `adv-h-0..9`; an
+ * unknown seed throws. Kept in `tools/advice.ts` until brief 11 (2026-10-17), and moved here unchanged with the refusal
+ * below, so a gate test reads what the measure runs.
  */
 export function casesOf(list: string): CaseSpec[] {
   const out: string[] = [];
   for (const item of list.split(',').map((x) => x.trim()).filter(Boolean)) {
     if (item === 'tuning') out.push(...Array.from({ length: 10 }, (_, i) => `adv-${i}`), ...Array.from({ length: 20 }, (_, i) => `adv-t-${i}`));
     else if (item === 'held-out') out.push(...Array.from({ length: 30 }, (_, i) => `adv-${i + 10}`), ...Array.from({ length: 120 }, (_, i) => `adv-h-${i}`));
+    else if (item === 'fresh') out.push(...Array.from({ length: 120 }, (_, i) => `adv-v-${i}`));
     else {
       const m = /^(.*-)(\d+)\.\.(\d+)$/.exec(item);
       if (m) for (let n = Number(m[2]); n <= Number(m[3]); n += 1) out.push(`${m[1]}${n}`);
@@ -254,8 +269,13 @@ export function casesOf(list: string): CaseSpec[] {
   return out.map((seed) => { const c = caseOf(seed); if (!c) throw new Error(`${seed} is no case of F2-A or F2-A10`); return c; });
 }
 
-/** Why a run is refused: a held-out seed asked for without `--held-out` (F2-A10 (a): run once, on the code to be reported). */
-export const heldOutRefusal = (specs: readonly CaseSpec[], heldOut: boolean): string | undefined => (specs.some((x) => x.set === 'held-out') && !heldOut ? 'A held-out seed is run only with --held-out, once, on the code to be reported.' : undefined);
+/**
+ * Why a run is refused: a held-out seed asked for without `--held-out`, or a fresh one without `--fresh` (from brief 12).
+ * Until brief 12 the held-out refusal said a held-out seed was run "once, on the code to be reported"; it was run in brief
+ * 10 and again in brief 11, and from brief 12 it's regression coverage, still run only when asked for. The fresh set is
+ * what's run once, on the tested commit (advice-criteria.md).
+ */
+export const heldOutRefusal = (specs: readonly CaseSpec[], heldOut: boolean, fresh = false): string | undefined => (specs.some((x) => x.set === 'held-out') && !heldOut ? 'A held-out seed (regression coverage from brief 12) is run only with --held-out, on the code to be reported.' : specs.some((x) => x.set === 'fresh') && !fresh ? 'A fresh validation seed is run only with --fresh, once, on the tested commit.' : undefined);
 
 /** F2-A's case as takes: its three briefs, each at its first reading, as `setUp` taped them. */
 export function f2aCase(seed: string): { sim: Simulation; takes: Take[] } {
