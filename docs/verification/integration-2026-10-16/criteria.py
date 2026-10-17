@@ -369,6 +369,45 @@ if FIG12R and FIG11R:
         r['failure'] = f"{r['failure']}; brief 12 ({r['measured']['commit']}): {'the same' if FIG12R[r['id']] == FIG11R.get(r['id']) else FIG12R[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {B12R}/README.md"
         r['citations'] = r['citations'] + [{'file': f'{B12R}/figures.json'}] + ([{'file': f'{B12R}/gate.txt'}] if gate else [])
+# Brief 13's final runs (playthroughs-2026-10-17/), as brief 11's and brief 12's. The acting area's comments on grainOf and
+# briefs.ts, and the interface area's fixes to Home and the looks, changed files the measurements watch. So:
+# - the judge's are made again (final/, figures.json by integrated-09/figures.py), and each row brief 11's judge
+#   measurement held moves to brief 13's commit, with its figure beside brief 11's;
+# - an area item it held, which has no figure of its own, moves only where every output both folders make is byte for
+#   byte the same;
+# - the long runs, the built app and the gate (runs/, by its runs/figures.py) as brief 12's did.
+import filecmp
+B13F = 'docs/verification/playthroughs-2026-10-17/final'
+if os.path.exists(f'{B13F}/figures.json') and os.path.exists(f'{B11F}/figures.json'):
+    FIG13 = json.load(open(f'{B13F}/figures.json', encoding='utf-8'))
+    B13AT = re.search(r'^at (\w+)', open(f'{B13F}/exits.txt', encoding='utf-8').read(), re.M).group(1)
+    shared = sorted(f for f in os.listdir(B11F) if f.endswith('.json') and f != 'figures.json' and os.path.exists(f'{B13F}/{f}'))
+    SAME13 = bool(shared) and all(filecmp.cmp(f'{B11F}/{f}', f'{B13F}/{f}', shallow=False) for f in shared)
+    for r in rows:
+        if r.get('measured') == {'commit': B11AT, 'watch': 'judge'}:
+            assert r['id'] in FIG13, r['id']
+            r['measured'] = {'commit': B13AT, 'watch': 'judge'}
+            r['failure'] = f"{r['failure']}; on brief 13's tested commit ({B13AT}): {'the same' if FIG13[r['id']] == FIG11.get(r['id']) else FIG13[r['id']]}"
+            r['evidence'] = f"{r['evidence']}; {B13F}/README.md"
+            r['citations'] = r['citations'] + [{'file': f'{B13F}/figures.json'}]
+B13R = 'docs/verification/playthroughs-2026-10-17/runs'
+FIG13R = json.load(open(f'{B13R}/figures.json', encoding='utf-8')) if os.path.exists(f'{B13R}/figures.json') else {}
+if FIG13R and FIG12R:
+    lane13 = lambda name: re.search(r'^at (\w+)', open(f'{B13R}/exits-{name}.txt', encoding='utf-8').read(), re.M).group(1)
+    R13 = {'app': lane13('A'), 'engine': lane13('B')}
+    GATE13 = re.search(r'^at (\w+)', open(f'{B13R}/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG13R else None
+    for r in rows:
+        m = r.get('measured')
+        gate = r['id'] == 'INT-gate'
+        if not (m and r['id'] in FIG12R and (gate or m.get('commit') == R12.get(m.get('watch')))):
+            continue
+        if gate and not GATE13:
+            continue  # the gate's figure, folded in once it has run
+        assert r['id'] in FIG13R, r['id']
+        r['measured'] = {'commit': GATE13, 'watch': 'app'} if gate else {'commit': R13[m['watch']], 'watch': m['watch']}
+        r['failure'] = f"{r['failure']}; brief 13 ({r['measured']['commit']}): {'the same' if FIG13R[r['id']] == FIG12R.get(r['id']) else FIG13R[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {B13R}/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{B13R}/figures.json'}] + ([{'file': f'{B13R}/gate.txt'}] if gate else [])
 # Brief 11's areas' results (completion-2026-10-16/<area>-result.json, the coordinator's integration-result.json among
 # them): each row an area worked, its status and the tests it cites, read onto the matrix, never typed here. An area's
 # item takes an override; a criterion or shortfall row here is changed in place. The audit's rows aren't taken: their
@@ -430,5 +469,12 @@ for d, brief, f in [(d, brief, f) for d, brief in PASSES for f in sorted(x for x
         # It replaces an earlier override of the same item (stamina.A1's of brief 10), since the matrix reads the first.
         OVERRIDES[:] = [o for o in OVERRIDES if o['id'] != r['id']]
         OVERRIDES.append({'id': r['id'], 'status': status, 'why': why, 'citations': cites, **extra})
+# The area items brief 11's judge measurement held, after the results that write them: moved to brief 13's commit only where
+# every output both final folders make is byte for byte the same (above).
+if os.path.exists(f'{B13F}/figures.json') and SAME13:
+    for o in OVERRIDES:
+        if o.get('measured') == {'commit': B11AT, 'watch': 'judge'}:
+            o['measured'] = {'commit': B13AT, 'watch': 'judge'}
+            o['citations'] = o.get('citations', []) + [{'file': f'{B13F}/README.md'}]
 json.dump({'rows': rows, 'overrides': OVERRIDES}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))
