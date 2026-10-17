@@ -27,6 +27,12 @@ So a player reads "only in single examples" above small print that says otherwis
 with low confidence (…), so the game doesn’t treat it as a requirement of the genre. Why is in the small print below."
 It's one string; `tests/evidence2-b08.test.ts` doesn't assert it.
 
+The Player Profile's Genres table says the same thing shorter, in its It Asks For column
+(`ui/workspaces/ProfileWorkspace.tsx`, also the profile area's): "Not established: the research rests on one example",
+for all 51 low genres the research names requirements for. It's false of the ten above, and of several of the 41 whose
+demand belongs to a role or particular material: fantasy rests on two productions, horror on one advice site's general
+claim, true crime on a kind of role. "Not established: the research holds it with low confidence" is true of all 51.
+
 ## D2. "Why it’s applied, in the research’s words:" now heads the game's words
 
 **Where:** `src/ui/looks/actor.tsx`, the small print of an applied genre's look (the profile area's).
@@ -37,3 +43,17 @@ house's), not the research's own words, which `research-genre-demands.json` keep
 that's no longer one.
 
 **Suggested fix:** "Why it’s applied:". One string, asserted by no test.
+
+## D3. The genre look's small print is one paragraph
+
+**Where:** `src/ui/looks/actor.tsx`, the genre look (the profile area's layout).
+
+**What:** for an applied genre, the reasons, what the research says, how it was read, and what's uncertain run as one
+`xs dim` paragraph: about 2,000 characters for adventure, which at 390 wide is some forty lines of small text with no
+break (`ui/genre-look-adventure-390-small-print.png`, from `genre-look-ui.mjs.txt` on the built app). It wraps cleanly,
+nothing is clipped and the page never scrolls sideways at either width; it's a wall of text, which the brief names. It was
+the same before this pass (the words are about 3% longer now: "couldn’t be opened" for "403", sentences for fragments).
+
+**Suggested fix:** three short paragraphs, each with the heading the look already has in words ("Why it’s applied",
+"What the research says", "Still uncertain"), or the small print behind a drill-down. Layout, not words; the profile
+area's or the coordinator's call.

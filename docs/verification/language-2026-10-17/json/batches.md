@@ -268,3 +268,44 @@ applied genres are here (25 of 51), and 31 of the 52 reasons the look shows.
 plural-check 0, voice-check 0, tics 0, spelling 0, typos 0, text-inventory 0, doc-refs 0, deciders 0.
 
 **Screens verified:** `b5-genre-looks.txt`, all 35 rendered at this batch's commit and read whole.
+
+## The End: The Built App, The Whole Suite, And What's Left
+
+**Statuses** (`docs/text/statuses/json.json`): all 224 of the area's sources. `genre-demands.json`'s 149 are Rewritten And
+Verified, each on its look rendered at its batch's commit; `home-accounts.json`'s 75 are Reviewed And Retained (batch 1).
+None is Pending or Blocked. With them, the profile subsystem has no Pending source and neither has money.
+
+**Engine-speak** in the area's files fell from 10 to 7, and in the tree from 490 to 487 (`docs/text/engine-speak.json`
+isn't blessed here, as the money area left it for the coordinator). The seven left: two paths in a source's URL (a code
+name), one "segment" inside a quotation of the earlier research's claim, "weight loss" and a "weighted" chair in actors'
+own accounts, and, in two home-account banks no player reads, "SLATE’s estimate" and "weight".
+
+**The built app.** `npm run build` 0. Served on port 4210 and walked with `tools/text-walk.mjs` over brief 13's 14
+scenario saves at 1440 and 390 (`after-1440/`, `after-390/`): 25 screens each, exit 0 both. `tools/text-render-check.mjs`
+read 128,554 strings and found one distinct fault, "You and Hannah had rehearsed together 1 times." on School's
+Coursework (`render-check.txt`): the school area's, and on the walk before this pass too
+(`l14/walk-before-1440/workload.json`). None of the two files' 3,761 sentences of eight words or more is on any walked
+screen, which is what batch 1 found of the home accounts and what the genre look, a drill-down the walk doesn't open,
+means for the genres.
+
+So the genre look was opened on the built app by `genre-look-ui.mjs.txt` (kept here): Player Profile, then a genre's
+name in the Genres table, read only. Adventure (applied) and Absurdist (belonging to Beckett's plays), at 1440 and 390
+(`ui/`): the look's words as rendered, no sideways scroll at either width, nothing clipped, its first lines and its small
+print photographed. What lies outside the viewport is the Genres table in its own scrolling region at 1440, and the
+closed navigation drawer at 390, both by design. The small print is one long paragraph at 390 (`defects.md`, D3).
+
+**The whole suite** (`npx vitest run > full-suite.txt 2>&1`, its exit read from the file): 380 files, 4,637 tests
+passed, exit 0. Its output carries one logged error, "Reactor 'spending.day' failed handling 'world.day_rollover':
+f.states is not iterable", from `tests/liens-and-arrangements.test.ts`'s stderr while that test passes; the
+coordinator's suites before this area's work log it too (`l14/suite-243a.txt`, `l14/suite-merged.txt`), and it's in
+neither of this area's files.
+
+**What's left:** nothing in the area's sources. Two things to keep in step:
+- A change to `research-genre-demands.json` that touches text an edit names stops the build
+  (`tools/build-attribute-content.mjs`), so the words are rewritten for what the research says then, never silently
+  kept.
+- `docs/GENRE-COVERAGE.md` quotes `belongsTo`; it's regenerated with every rebuild (`npx vite-node
+  tools/genre-coverage.ts`) and held to the tables by `tests/genre-coverage.test.ts`.
+
+**For the coordinator:** `defects.md` (two strings and one layout in the profile area's genre look and Profile table,
+none fixed here because they aren't this area's), and `glossary.md`'s note on "read directly" and "read at the source".
