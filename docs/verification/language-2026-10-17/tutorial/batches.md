@@ -207,10 +207,10 @@ On the area's last words (the commits after `01030ec1`), in the clone:
   words. The capture (`tools/tutorial-routes.mjs --capture`, 14 saves): every paragraph, detail and name of the 17
   chapters is on its built-app page, 271 of 271 (`capture/brief.json`), and the render check finds no fault in its
   35,274 strings. The routes: `routes.md`, above.
-- **Phone width:** `shots/`, at 390: an entry, an entry with everything shown, the contents with On This Screen, Show
+- **Phone width:** `phone/`, at 390: an entry, an entry with everything shown, the contents with On This Screen, Show
   Me Where's way back (Back To Help, Back To Home and ✕ fit in the bar, and Back To Home went back to Home), and Drama
   School with its details open. Nothing in the dialogs or the bar runs past the screen's edge, and the page doesn't
-  scroll sideways (`shots/shots-390.json`; the same at 1440, `shots/shots-1440.json`).
+  scroll sideways (`phone/shots-390.json`; the same at 1440, `phone/shots-1440.json`).
 - **Statuses:** the area's 47 sources: 39 Rewritten And Verified, 8 Reviewed And Retained, none Pending or Blocked.
   Engine-speak in them fell from 18 to none; the game's total from 758 to 740.
 
