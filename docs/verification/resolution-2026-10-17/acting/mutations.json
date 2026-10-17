@@ -1,0 +1,286 @@
+[
+ {
+  "id": "g0",
+  "clause": "ST6-R2 none: the control",
+  "edits": [
+   {
+    "file": "src/engine/content/interpretation.ts",
+    "find": "export const GRAIN = { strength: 0.3,",
+    "replace": "export const GRAIN = { strength: 0.3,"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 0,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": true,
+  "figure": [],
+  "killed": false
+ },
+ {
+  "id": "g1",
+  "clause": "ST6-R2 (a2), (e2)",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: {} },"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g2",
+  "clause": "ST6-R2 (a2)",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: { believability: [{ ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g3",
+  "clause": "ST6-R2 (a2)",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g4",
+  "clause": "ST6-R2 (a2)",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }] } },"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g5",
+  "clause": "ST6-R2 (a1), (a3)",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: clamp(level(input.ability) / full(input.ability), 0, 1) });",
+    "replace": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: ['emotionalDepth', 'composure', 'focus'].includes(input.ability) ? 0.5 : clamp(level(input.ability) / full(input.ability), 0, 1) });"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a3), more is better up to the cap: each of the three set to 0, 20, 40, 60, 80 and 100, everything else held, raises the restrained take at every step, on every piece for every actor; set past its full it moves nothing, the cap `termsOf` documents",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a4), the guarantee kept: a mastered actor, fully prepared, played restrained, on a sufficient day, comes to 100 on every class scene, play, night and brief reading, with no draw and with one",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g6",
+  "clause": "ST6-R2 (c2)",
+  "edits": [
+   {
+    "file": "src/engine/content/interpretation.ts",
+    "find": "export const GRAIN = { strength: 0.3,",
+    "replace": "export const GRAIN = { strength: 0,"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (c2), the scene’s circumstances in their direction: on every class scene, play and night, each circumstance a level up or down, everything else held, moves restraint’s suitability its way and the restrained and expansive takes theirs, strictly wherever the suitability moved; and on every piece, reading the scene’s grain never moves a restrained take the wrong way, and lifts it wherever restraint suits",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g7",
+  "clause": "ST6-R2 (c2)",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "for (const [c, level] of Object.entries(material.circumstances ?? {}) as",
+    "replace": "for (const [c, level] of Object.entries({} as Record<string, number>) as"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (c2), the scene’s circumstances in their direction: on every class scene, play and night, each circumstance a level up or down, everything else held, moves restraint’s suitability its way and the restrained and expansive takes theirs, strictly wherever the suitability moved; and on every piece, reading the scene’s grain never moves a restrained take the wrong way, and lifts it wherever restraint suits"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g8",
+  "clause": "ST6-R2 (c1), (c2)",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "grain[d] = { d: r2((had?.d ?? 0) - GRAIN.strength * x.s",
+    "replace": "grain[d] = { d: r2((had?.d ?? 0) + GRAIN.strength * x.s"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (c2), the scene’s circumstances in their direction: on every class scene, play and night, each circumstance a level up or down, everything else held, moves restraint’s suitability its way and the restrained and expansive takes theirs, strictly wherever the suitability moved; and on every piece, reading the scene’s grain never moves a restrained take the wrong way, and lifts it wherever restraint suits",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g9",
+  "clause": "ST6-R2 (c2), (e1)",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "  const s = r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));",
+    "replace": "  const s = side === 'restrained' ? -1 : r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g10",
+  "clause": "ST6-R2 (c1)",
+  "edits": [
+   {
+    "file": "src/engine/systems/material.ts",
+    "find": "      if (x >= 1.1) prep[d] = [...new Set([...(prep[d] ?? []), 'approach'])];",
+    "replace": "      if (x >= 1.1 && side !== 'restrained') prep[d] = [...new Set([...(prep[d] ?? []), 'approach'])];"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g11",
+  "clause": "ST6-R2 (c4)",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: clamp(level(input.ability) / full(input.ability), 0, 1) });",
+    "replace": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: clamp(Math.max(level(input.ability), level('emotionalDepth')) / full(input.ability), 0, 1) });"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a3), more is better up to the cap: each of the three set to 0, 20, 40, 60, 80 and 100, everything else held, raises the restrained take at every step, on every piece for every actor; set past its full it moves nothing, the cap `termsOf` documents"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g12",
+  "clause": "ST6-R2 (a4)",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "    const now = dimensionQuality(terms, diff, prepared, condition, dr, f, spread);",
+    "replace": "    const now = dimensionQuality(terms, diff, prepared, condition, dr, f, spread);\n    if (g && g.d > 0) now.quality = Math.min(now.quality, 99);"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a4), the guarantee kept: a mastered actor, fully prepared, played restrained, on a sufficient day, comes to 100 on every class scene, play, night and brief reading, with no draw and with one"
+  ],
+  "killed": true
+ },
+ {
+  "id": "g11b",
+  "clause": "ST6-R2 (c4)",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: clamp(level(input.ability) / full(input.ability), 0, 1) });",
+    "replace": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: clamp(Math.max(level(input.ability), level('emotionalDepth')) / full(input.ability), 0, 1) });"
+   },
+   {
+    "file": "src/engine/systems/piece.ts",
+    "find": "  const norm = (a: AbilityId) => clamp(performer.ability(a) / Math.max(1, performer.full(a)), 0, 1);",
+    "replace": "  const norm = (a: AbilityId) => clamp(Math.max(performer.ability(a), performer.ability('emotionalDepth')) / Math.max(1, performer.full(a)), 0, 1);"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts -t ST6-R2 --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 10 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "verdict": false,
+  "figure": [
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (a3), more is better up to the cap: each of the three set to 0, 20, 40, 60, 80 and 100, everything else held, raises the restrained take at every step, on every piece for every actor; set past its full it moves nothing, the cap `termsOf` documents",
+   "ST6-R2: restrained acting judged by what it does for a player (brief 12) FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on"
+  ],
+  "killed": true
+ }
+]
