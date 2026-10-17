@@ -212,3 +212,36 @@ target and one past mastery, the four ways at a note, two studies, and Your Work
 **From the coordinator:** "Sleep owed 1 hours", found by the health area, fixed and tested (defects.md). The Core
 glossary's corrections (energy comes back with sleep alone; an injury doesn't lower condition): nothing in this area's
 words said otherwise, and Current Condition's small print no longer calls the day's state "today’s condition".
+
+## Batch 4: The Genres, Their Registers, And How You Play A Scene
+
+**Sources read (349):** `content/genres.ts` (149), `content/genre-register.ts` (149), `content/film-genres.ts` (1),
+`content/contemporary.ts` (29), `systems/register.ts` (3), `content/interpretation.ts` (8), `content/approaches.ts`
+(2), `systems/interpretation-read.ts` (2), `systems/interpretation.ts` (2), and `systems/engagement.ts`'s study again.
+
+**Rewritten:** thirteen genres' conventions (American spelling of the paraphrase, and military's, which said "no
+separate reference definition was found" to the player); five registers (stylized; "not" for "rather than"); the line
+every concern says ("The take weighs … more and draws on your …" became "A self-tape in it is judged more on …, and
+calls on your …"); where a register comes from ("this is SLATE’s reading of its conventions" became "so this is
+estimated from its conventions"); the third band of how well a way of playing suits a scene (Against The Grain became
+Works Against The Scene, the glossary's word); the take's account of it ("went against the grain of the scene",
+"came to nothing either way"); Expansive's line ("to the house"); "Nothing in the scene leans either way".
+
+**Kept, and why:** the other 136 genres' conventions (each paraphrases the source it names; a rewrite would drift from
+it), the other 144 registers (short and specific), the genre names, the contemporary plays' catalog facts, the signal
+names on the chooser (A House To Reach is compared by a test and a tool, so it's a key), the axes and Either Way.
+
+**Meaning-sensitive:** "A self-tape in it is judged more on" for "the take weighs": the register leans a taped brief's
+dimensions and adds no weight (`GENRE_REGISTER`, `concernWords`); a class scene reads the register for suitability only,
+so the line says a self-tape. Nothing the judge reads moved: `genres.ts`'s families, `interpretation.ts`'s affinities and
+`approaches.ts`'s effects are untouched, words only.
+
+**Tests updated:** `tests/genre-identity-screens.test.ts`, `tests/interpretation.test.ts`, `tests/decisions-judge.test.ts`,
+`tests/genre-coverage.test.ts` (the practice refusal it also asks of a life with no training).
+
+**Checks:** tsc 0, eslint 0; vitest on 13 files 157 of 159 (the two assertions above), then those two files 54 of 54,
+exit 0; title-case, label-sweep, plural-check, voice-check, spelling, typos, doc-refs, deciders 0; tics over by one on
+the military line's ", which is", rephrased, then 0; text-inventory 0.
+
+**Screens verified:** `b4-genres.txt`, every genre's look on a new life (summary, what it asks, how its scenes are played
+and where that comes from, provenance), the ways of playing and the bands.

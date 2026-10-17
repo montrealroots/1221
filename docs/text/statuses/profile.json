@@ -71,6 +71,18 @@
   "on": "2026-10-17",
   "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
  },
+ "src/engine/content/approaches.ts#APPROACH_EFFECT": {
+  "status": "Rewritten And Verified",
+  "hash": "9f9f61eca04f",
+  "on": "2026-10-17",
+  "evidence": "Each side's label and line printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; Expansive's 'to the house' became 'to the audience'"
+ },
+ "src/engine/content/approaches.ts#AXES": {
+  "status": "Reviewed And Retained",
+  "hash": "7f09c70bdd9f",
+  "on": "2026-10-17",
+  "reason": "Pace, Scale and Structure: the chooser's three axes, plain."
+ },
  "src/engine/content/attributes-matrix.ts#attributesMatrix": {
   "status": "Reviewed And Retained",
   "hash": "d1542e93680a",
@@ -107,11 +119,191 @@
   "on": "2026-10-17",
   "reason": "A developer document, not player text: attributesMatrix() writes docs/ATTRIBUTES-MATRIX.md (tools/attributes-matrix.ts), held byte for byte by tests/attributes-matrix.test.ts; nothing under src/ui or the engine's player paths imports it (grep -rn attributesMatrix src). Its code names and file paths are the matrix's columns, for the coordinator and the owner, so they stay."
  },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [august-osage-county]": {
+  "status": "Reviewed And Retained",
+  "hash": "3a420af76589",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [between-riverside-and-crazy]": {
+  "status": "Reviewed And Retained",
+  "hash": "4d1249d82f04",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [black-watch]": {
+  "status": "Reviewed And Retained",
+  "hash": "aa2b0e28fc97",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [clybourne-park]": {
+  "status": "Reviewed And Retained",
+  "hash": "a49f13d51fef",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [constellations]": {
+  "status": "Reviewed And Retained",
+  "hash": "c4fb3cabda2f",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [cost-of-living]": {
+  "status": "Reviewed And Retained",
+  "hash": "63068eef322c",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [disgraced]": {
+  "status": "Reviewed And Retained",
+  "hash": "64a3c1862b00",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [doubt-a-parable]": {
+  "status": "Reviewed And Retained",
+  "hash": "72542e6d39c3",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [english]": {
+  "status": "Reviewed And Retained",
+  "hash": "e36f7bd1c9e0",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [enron]": {
+  "status": "Reviewed And Retained",
+  "hash": "b3b83384471f",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [escaped-alone]": {
+  "status": "Reviewed And Retained",
+  "hash": "ebe32edf2765",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [fairview]": {
+  "status": "Reviewed And Retained",
+  "hash": "2f3186ae8091",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [fat-ham]": {
+  "status": "Reviewed And Retained",
+  "hash": "4e6e05a3945c",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [fleabag]": {
+  "status": "Reviewed And Retained",
+  "hash": "f4b0a3966d77",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [gloria]": {
+  "status": "Reviewed And Retained",
+  "hash": "95825be711de",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [king-charles-iii]": {
+  "status": "Reviewed And Retained",
+  "hash": "ccf8c0981f0b",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [lungs]": {
+  "status": "Reviewed And Retained",
+  "hash": "bc44dace949f",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [primary-trust]": {
+  "status": "Reviewed And Retained",
+  "hash": "80aa3cc484f7",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [proof]": {
+  "status": "Reviewed And Retained",
+  "hash": "ec1e985e5081",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [rabbit-hole]": {
+  "status": "Reviewed And Retained",
+  "hash": "0bac29abf197",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [sweat]": {
+  "status": "Reviewed And Retained",
+  "hash": "bbec9b4f9e97",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [the-children]": {
+  "status": "Reviewed And Retained",
+  "hash": "f56c28c52c19",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [the-flick]": {
+  "status": "Reviewed And Retained",
+  "hash": "d358e21301c8",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [the-humans]": {
+  "status": "Reviewed And Retained",
+  "hash": "67094392ca9a",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [the-laramie-project]": {
+  "status": "Reviewed And Retained",
+  "hash": "b4b67e9a3bd5",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [the-wolves]": {
+  "status": "Reviewed And Retained",
+  "hash": "7269597630ef",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [topdog-underdog]": {
+  "status": "Reviewed And Retained",
+  "hash": "685478e2bc0d",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [venus-in-fur]": {
+  "status": "Reviewed And Retained",
+  "hash": "815d9adbd28b",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
+ "src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [water-by-the-spoonful]": {
+  "status": "Reviewed And Retained",
+  "hash": "3de3a1a14ff4",
+  "on": "2026-10-17",
+  "reason": "Real plays' catalog facts: title, playwright, the theater it opened at, publisher and rights holder as each spells itself, and its setting and cast as published (3f 1m is the publishers' own notation), shown where a play is read. Facts, not the game's voice."
+ },
  "src/engine/content/demands.ts#DEMAND_LABEL": {
   "status": "Reviewed And Retained",
   "hash": "568f11a49444",
   "on": "2026-10-17",
   "reason": "Twelve Title Case names of what a genre asks for (Fights And Stunts, Singing, Comic Timing, Naturalism On Camera and the rest), shown in the Genres table's It Asks For column and the genre's look: already plain, short and in the player's words, each naming the skill a player would name."
+ },
+ "src/engine/content/film-genres.ts#FILM_GENRES": {
+  "status": "Reviewed And Retained",
+  "hash": "23fc3ba014d5",
+  "on": "2026-10-17",
+  "reason": "The 149 genre names in Title Case (Absurdist, Action Comedy, Spaghetti Western), the Genres table's and the looks' names: plain."
  },
  "src/engine/content/genre-coverage.ts#genreCoverage": {
   "status": "Reviewed And Retained",
@@ -124,6 +316,1842 @@
   "hash": "82fd9a7986ba",
   "on": "2026-10-17",
   "reason": "A developer document, not player text: genreCoverage() and NO_TECHNIQUE write docs/GENRE-COVERAGE.md (tools/genre-coverage.ts), held byte for byte by tests/genre-coverage.test.ts; neither is imported anywhere under src/ but this file (grep -rn 'genreCoverage\\|NO_TECHNIQUE' src)."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .absurdist": {
+  "status": "Reviewed And Retained",
+  "hash": "93568de9c8be",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .action": {
+  "status": "Reviewed And Retained",
+  "hash": "687d504aa897",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .action_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "68decc908cbf",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .adventure": {
+  "status": "Reviewed And Retained",
+  "hash": "7d06a206ac8e",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .alternate_history": {
+  "status": "Reviewed And Retained",
+  "hash": "ccbf91d143fa",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .animated": {
+  "status": "Reviewed And Retained",
+  "hash": "8aed4f494896",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .anime": {
+  "status": "Reviewed And Retained",
+  "hash": "668d402009f3",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .anthology": {
+  "status": "Reviewed And Retained",
+  "hash": "031071889cf0",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .apocalyptic": {
+  "status": "Reviewed And Retained",
+  "hash": "0fe91627c3a8",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .art_house": {
+  "status": "Reviewed And Retained",
+  "hash": "b29ac9d37ac8",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .avant_garde": {
+  "status": "Reviewed And Retained",
+  "hash": "f5349e080556",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .backstage_musical": {
+  "status": "Reviewed And Retained",
+  "hash": "e0c8448ebd2e",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .biker": {
+  "status": "Reviewed And Retained",
+  "hash": "65baf6445e7c",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .biographical": {
+  "status": "Reviewed And Retained",
+  "hash": "5f4e81a0f43c",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .black_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "29e91fcfffe0",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .blaxploitation": {
+  "status": "Reviewed And Retained",
+  "hash": "7f47693d6316",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .body_horror": {
+  "status": "Reviewed And Retained",
+  "hash": "84ee2f5af5d2",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .buddy_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "382e1cc30d75",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .buddy_cop": {
+  "status": "Reviewed And Retained",
+  "hash": "494d24cc78f0",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .caper": {
+  "status": "Reviewed And Retained",
+  "hash": "41eaaa90c06a",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .chanbara": {
+  "status": "Reviewed And Retained",
+  "hash": "13e073f3fcb0",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .chase": {
+  "status": "Reviewed And Retained",
+  "hash": "5cd856100c3c",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .childrens": {
+  "status": "Reviewed And Retained",
+  "hash": "72b371e147fe",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .christmas": {
+  "status": "Reviewed And Retained",
+  "hash": "fee5418cda82",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "5d7031e1a710",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .coming_of_age": {
+  "status": "Reviewed And Retained",
+  "hash": "e2c329df0f15",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .concert_film": {
+  "status": "Reviewed And Retained",
+  "hash": "5b79d7e3bded",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .conspiracy_thriller": {
+  "status": "Reviewed And Retained",
+  "hash": "443f8ee2570c",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .cosmic_horror": {
+  "status": "Rewritten And Verified",
+  "hash": "57d771562062",
+  "on": "2026-10-17",
+  "evidence": "Its line printed under How its scenes are played in docs/verification/language-2026-10-17/profile/b4-genres.txt; stylized for stylised, or not for rather than"
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .costume_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "8d2698bf2eb8",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .courtroom_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "8ddb12f9152a",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .creature_feature": {
+  "status": "Reviewed And Retained",
+  "hash": "b6144993770f",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .crime": {
+  "status": "Reviewed And Retained",
+  "hash": "c6eaf70c4d39",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .cyberpunk": {
+  "status": "Reviewed And Retained",
+  "hash": "40e1c385c402",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .dance": {
+  "status": "Reviewed And Retained",
+  "hash": "e9d680f2e41f",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .dark_fantasy": {
+  "status": "Reviewed And Retained",
+  "hash": "c39cf11c521b",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .detective": {
+  "status": "Reviewed And Retained",
+  "hash": "e9af91d39928",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .disaster": {
+  "status": "Reviewed And Retained",
+  "hash": "b3354bd5c3c8",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .docudrama": {
+  "status": "Reviewed And Retained",
+  "hash": "2a5b82996a78",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .docufiction": {
+  "status": "Reviewed And Retained",
+  "hash": "96b22ac4a80f",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .documentary": {
+  "status": "Reviewed And Retained",
+  "hash": "63bf60834367",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .domestic_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "77f9c0d05b85",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .drama": {
+  "status": "Reviewed And Retained",
+  "hash": "3a18db8cdcda",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .dystopian": {
+  "status": "Reviewed And Retained",
+  "hash": "c19431998ef0",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .eco_horror": {
+  "status": "Reviewed And Retained",
+  "hash": "3aa8b5ae26e9",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .epic": {
+  "status": "Reviewed And Retained",
+  "hash": "8d72a11a1ffd",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .erotic_thriller": {
+  "status": "Reviewed And Retained",
+  "hash": "aff51a87b1aa",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .espionage": {
+  "status": "Reviewed And Retained",
+  "hash": "833c2dd3983b",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .experimental": {
+  "status": "Reviewed And Retained",
+  "hash": "772816231f38",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .exploitation": {
+  "status": "Reviewed And Retained",
+  "hash": "b9a3d3fef94d",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .fairy_tale": {
+  "status": "Reviewed And Retained",
+  "hash": "ec3443d107af",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .family": {
+  "status": "Reviewed And Retained",
+  "hash": "32040d0b8e82",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .fantasy": {
+  "status": "Reviewed And Retained",
+  "hash": "b0fa2aa31a10",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .farce": {
+  "status": "Rewritten And Verified",
+  "hash": "fabb66f311c4",
+  "on": "2026-10-17",
+  "evidence": "Its line printed under How its scenes are played in docs/verification/language-2026-10-17/profile/b4-genres.txt; stylized for stylised, or not for rather than"
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .film_noir": {
+  "status": "Reviewed And Retained",
+  "hash": "29d49f25beec",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .folk_horror": {
+  "status": "Reviewed And Retained",
+  "hash": "49d89f119f97",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .found_footage": {
+  "status": "Reviewed And Retained",
+  "hash": "3b64e846b931",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .gangster": {
+  "status": "Reviewed And Retained",
+  "hash": "ec2812ae92be",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .giallo": {
+  "status": "Rewritten And Verified",
+  "hash": "10b5d698c927",
+  "on": "2026-10-17",
+  "evidence": "Its line printed under How its scenes are played in docs/verification/language-2026-10-17/profile/b4-genres.txt; stylized for stylised, or not for rather than"
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .gothic_horror": {
+  "status": "Reviewed And Retained",
+  "hash": "811ba291e2b0",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .grindhouse": {
+  "status": "Reviewed And Retained",
+  "hash": "42ad25d5f87f",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .hangout": {
+  "status": "Reviewed And Retained",
+  "hash": "accd64a4ed7a",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .heist": {
+  "status": "Reviewed And Retained",
+  "hash": "7e3b772e0240",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .historical_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "7c26632e22b1",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .historical_fiction": {
+  "status": "Reviewed And Retained",
+  "hash": "b2f2b1a3ac1f",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .holiday": {
+  "status": "Reviewed And Retained",
+  "hash": "2001cd861055",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .hood_film": {
+  "status": "Reviewed And Retained",
+  "hash": "7a716f814e0a",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .horror": {
+  "status": "Reviewed And Retained",
+  "hash": "0c6c5e0278d3",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .horror_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "08222c795391",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .isekai": {
+  "status": "Reviewed And Retained",
+  "hash": "5ac74c21c80e",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .jidaigeki": {
+  "status": "Rewritten And Verified",
+  "hash": "d157f26503c1",
+  "on": "2026-10-17",
+  "evidence": "Its line printed under How its scenes are played in docs/verification/language-2026-10-17/profile/b4-genres.txt; stylized for stylised, or not for rather than"
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .jukebox_musical": {
+  "status": "Reviewed And Retained",
+  "hash": "134d0bbbf9c0",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .kaiju": {
+  "status": "Reviewed And Retained",
+  "hash": "9d518729b93f",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .kitchen_sink": {
+  "status": "Reviewed And Retained",
+  "hash": "fbe00d24c665",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .legal_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "cc957059ff73",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .magical_realism": {
+  "status": "Reviewed And Retained",
+  "hash": "5460426baeec",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .martial_arts": {
+  "status": "Reviewed And Retained",
+  "hash": "a56e49a41e04",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .medical_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "fcc65fa8a23d",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .melodrama": {
+  "status": "Reviewed And Retained",
+  "hash": "ea7232deb063",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .military": {
+  "status": "Reviewed And Retained",
+  "hash": "2a5ac35df272",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .mockumentary": {
+  "status": "Reviewed And Retained",
+  "hash": "7e28b749ac2c",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .monster_movie": {
+  "status": "Reviewed And Retained",
+  "hash": "c5ae29b6cce5",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .mumblecore": {
+  "status": "Reviewed And Retained",
+  "hash": "7022915421bb",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .musical": {
+  "status": "Reviewed And Retained",
+  "hash": "8bce6e7d3866",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .mystery": {
+  "status": "Reviewed And Retained",
+  "hash": "1348e9235a06",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .nature_documentary": {
+  "status": "Reviewed And Retained",
+  "hash": "ad9a5a2def7a",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .neo_noir": {
+  "status": "Reviewed And Retained",
+  "hash": "b1d19cb646ea",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .neorealism": {
+  "status": "Reviewed And Retained",
+  "hash": "9083e7780c4f",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .new_wave": {
+  "status": "Reviewed And Retained",
+  "hash": "ce124af77651",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .nordic_noir": {
+  "status": "Reviewed And Retained",
+  "hash": "fb3dccf4ef86",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .occult": {
+  "status": "Reviewed And Retained",
+  "hash": "91f08c387546",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .parody": {
+  "status": "Reviewed And Retained",
+  "hash": "4d2043d12f64",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .period_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "5d386e3d1103",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .picaresque": {
+  "status": "Reviewed And Retained",
+  "hash": "1db290cc8f26",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .police_procedural": {
+  "status": "Reviewed And Retained",
+  "hash": "fcffffcb8e11",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .political_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "e5f51c2fdb25",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .political_thriller": {
+  "status": "Rewritten And Verified",
+  "hash": "5298dc178ef2",
+  "on": "2026-10-17",
+  "evidence": "Its line printed under How its scenes are played in docs/verification/language-2026-10-17/profile/b4-genres.txt; stylized for stylised, or not for rather than"
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .post_apocalyptic": {
+  "status": "Reviewed And Retained",
+  "hash": "e3c37d7554ca",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .prison_film": {
+  "status": "Reviewed And Retained",
+  "hash": "36fc31a89674",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .psychological_horror": {
+  "status": "Reviewed And Retained",
+  "hash": "4b2065f05987",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .psychological_thriller": {
+  "status": "Reviewed And Retained",
+  "hash": "4c81192a31c4",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .queer_cinema": {
+  "status": "Reviewed And Retained",
+  "hash": "faf54538eb45",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .revenge": {
+  "status": "Reviewed And Retained",
+  "hash": "b8de40459e1b",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .road_movie": {
+  "status": "Reviewed And Retained",
+  "hash": "049c3d0948fe",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .rockumentary": {
+  "status": "Reviewed And Retained",
+  "hash": "9330a627052c",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .romance": {
+  "status": "Reviewed And Retained",
+  "hash": "71cef4c7f6b6",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .romantic_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "2f6daf361c87",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .romantic_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "8cd5b3ed3561",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .samurai": {
+  "status": "Reviewed And Retained",
+  "hash": "24e92374e758",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .satire": {
+  "status": "Reviewed And Retained",
+  "hash": "e30d073e5c7f",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .science_fantasy": {
+  "status": "Reviewed And Retained",
+  "hash": "d3c085ab830e",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .science_fiction": {
+  "status": "Reviewed And Retained",
+  "hash": "41e474452b2c",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .screwball_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "b0e2f02054c4",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .sea_adventure": {
+  "status": "Reviewed And Retained",
+  "hash": "b1ab639ea48f",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .silent_film": {
+  "status": "Reviewed And Retained",
+  "hash": "ee31cf85b4b8",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .slapstick": {
+  "status": "Reviewed And Retained",
+  "hash": "60ccd5618ea8",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .slasher": {
+  "status": "Reviewed And Retained",
+  "hash": "bedf42cd8a51",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .slice_of_life": {
+  "status": "Reviewed And Retained",
+  "hash": "318f183ed0dd",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .social_realism": {
+  "status": "Reviewed And Retained",
+  "hash": "2007039f3195",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .space_opera": {
+  "status": "Reviewed And Retained",
+  "hash": "e2964ecfa990",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .spaghetti_western": {
+  "status": "Reviewed And Retained",
+  "hash": "7dbbefc5239a",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .splatter": {
+  "status": "Reviewed And Retained",
+  "hash": "8e0bd4d410d8",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .sports": {
+  "status": "Reviewed And Retained",
+  "hash": "e6212c88bee7",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .spy": {
+  "status": "Reviewed And Retained",
+  "hash": "86888409f8a6",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .steampunk": {
+  "status": "Reviewed And Retained",
+  "hash": "d01b9e7953fd",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .stoner_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "c7c213a78112",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .superhero": {
+  "status": "Reviewed And Retained",
+  "hash": "26b2c4c3d861",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .supernatural": {
+  "status": "Reviewed And Retained",
+  "hash": "fdd944e14c64",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .surrealist": {
+  "status": "Reviewed And Retained",
+  "hash": "ff3851c7785b",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .survival": {
+  "status": "Reviewed And Retained",
+  "hash": "0825035beef1",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .swashbuckler": {
+  "status": "Reviewed And Retained",
+  "hash": "5f183df722eb",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .sword_and_sandal": {
+  "status": "Reviewed And Retained",
+  "hash": "59a4fef6a3c1",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .sword_and_sorcery": {
+  "status": "Reviewed And Retained",
+  "hash": "7ea5efb4b334",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .techno_thriller": {
+  "status": "Reviewed And Retained",
+  "hash": "8a7bcfc22bcb",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .teen": {
+  "status": "Reviewed And Retained",
+  "hash": "ef25172e896a",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .thriller": {
+  "status": "Reviewed And Retained",
+  "hash": "483220e158fb",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .time_travel": {
+  "status": "Reviewed And Retained",
+  "hash": "7679e07d9aa2",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .tokusatsu": {
+  "status": "Reviewed And Retained",
+  "hash": "b83829cccd40",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .tragedy": {
+  "status": "Reviewed And Retained",
+  "hash": "aa3a6096c3d1",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .tragicomedy": {
+  "status": "Reviewed And Retained",
+  "hash": "b4dcdd448a59",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .true_crime": {
+  "status": "Reviewed And Retained",
+  "hash": "75a0421f4c9e",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .vampire": {
+  "status": "Reviewed And Retained",
+  "hash": "2c1891c6635c",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .war": {
+  "status": "Reviewed And Retained",
+  "hash": "baebaccb3a46",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .werewolf": {
+  "status": "Reviewed And Retained",
+  "hash": "948716e2aeb9",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .western": {
+  "status": "Reviewed And Retained",
+  "hash": "d90f28d55a65",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .whodunit": {
+  "status": "Reviewed And Retained",
+  "hash": "a44c88a98290",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .wuxia": {
+  "status": "Reviewed And Retained",
+  "hash": "2383d6333f8c",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .yakuza": {
+  "status": "Reviewed And Retained",
+  "hash": "0609a88545c5",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genre-register.ts#GENRE_REGISTER .zombie": {
+  "status": "Reviewed And Retained",
+  "hash": "a549ac99f8cf",
+  "on": "2026-10-17",
+  "reason": "Each genre's register in a line under How its scenes are played: what its research or its conventions say of how it's played (Morbid material set against the comic; Tension built by close-ups, silence and pacing), short and specific; the concerns and their weight are the judge's, untouched."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .absurdist": {
+  "status": "Reviewed And Retained",
+  "hash": "14ef426d62ea",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .action": {
+  "status": "Reviewed And Retained",
+  "hash": "65cc6138417e",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .action_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "99d8c5df74ec",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .adventure": {
+  "status": "Reviewed And Retained",
+  "hash": "a3793ca1c886",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .alternate_history": {
+  "status": "Reviewed And Retained",
+  "hash": "df3c202b596c",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .animated": {
+  "status": "Reviewed And Retained",
+  "hash": "f4711f5397ba",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .anime": {
+  "status": "Reviewed And Retained",
+  "hash": "1b18239ad186",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .anthology": {
+  "status": "Reviewed And Retained",
+  "hash": "8601605b9754",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .apocalyptic": {
+  "status": "Reviewed And Retained",
+  "hash": "b52456575595",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .art_house": {
+  "status": "Reviewed And Retained",
+  "hash": "2bb802d62c4c",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .avant_garde": {
+  "status": "Reviewed And Retained",
+  "hash": "93836687bd5b",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .backstage_musical": {
+  "status": "Reviewed And Retained",
+  "hash": "261f7542096c",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .biker": {
+  "status": "Reviewed And Retained",
+  "hash": "bc5acef09762",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .biographical": {
+  "status": "Reviewed And Retained",
+  "hash": "177e4e2399b6",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .black_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "4bd4670a5f81",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .blaxploitation": {
+  "status": "Reviewed And Retained",
+  "hash": "335ae6139a14",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .body_horror": {
+  "status": "Reviewed And Retained",
+  "hash": "2085b5b1923d",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .buddy_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "0a5e5bbfec38",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .buddy_cop": {
+  "status": "Reviewed And Retained",
+  "hash": "dfcc331988ca",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .caper": {
+  "status": "Reviewed And Retained",
+  "hash": "74e300a56e02",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .chanbara": {
+  "status": "Reviewed And Retained",
+  "hash": "b3a75a0a81aa",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .chase": {
+  "status": "Reviewed And Retained",
+  "hash": "02211d590ca2",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .childrens": {
+  "status": "Reviewed And Retained",
+  "hash": "b65c7cc209af",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .christmas": {
+  "status": "Reviewed And Retained",
+  "hash": "15dc4c0a7a0e",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "5074a15e6747",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .coming_of_age": {
+  "status": "Reviewed And Retained",
+  "hash": "b10bd62ff396",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .concert_film": {
+  "status": "Reviewed And Retained",
+  "hash": "e0d00bef1362",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .conspiracy_thriller": {
+  "status": "Reviewed And Retained",
+  "hash": "39cd8f94149f",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .cosmic_horror": {
+  "status": "Rewritten And Verified",
+  "hash": "a82a029112ba",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .costume_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "74737e91f1f2",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .courtroom_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "5afdce473038",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .creature_feature": {
+  "status": "Reviewed And Retained",
+  "hash": "57eb3dc7e159",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .crime": {
+  "status": "Reviewed And Retained",
+  "hash": "6643d7a55d95",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .cyberpunk": {
+  "status": "Reviewed And Retained",
+  "hash": "0211576931b3",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .dance": {
+  "status": "Reviewed And Retained",
+  "hash": "7f5994bb8ecd",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .dark_fantasy": {
+  "status": "Reviewed And Retained",
+  "hash": "acf3101ddd81",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .detective": {
+  "status": "Reviewed And Retained",
+  "hash": "b3253157dd88",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .disaster": {
+  "status": "Reviewed And Retained",
+  "hash": "42e20852d132",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .docudrama": {
+  "status": "Reviewed And Retained",
+  "hash": "02d0503d25a2",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .docufiction": {
+  "status": "Rewritten And Verified",
+  "hash": "1cae97694d21",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .documentary": {
+  "status": "Reviewed And Retained",
+  "hash": "efa9096bef3e",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .domestic_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "02afd84fb37d",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .drama": {
+  "status": "Reviewed And Retained",
+  "hash": "daf993e72abe",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .dystopian": {
+  "status": "Reviewed And Retained",
+  "hash": "8bb231d4fb77",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .eco_horror": {
+  "status": "Reviewed And Retained",
+  "hash": "8a7df535f077",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .epic": {
+  "status": "Reviewed And Retained",
+  "hash": "38ff6c37f459",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .erotic_thriller": {
+  "status": "Reviewed And Retained",
+  "hash": "9d15b51f2c1e",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .espionage": {
+  "status": "Reviewed And Retained",
+  "hash": "d4dcd20efa0d",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .experimental": {
+  "status": "Reviewed And Retained",
+  "hash": "7124a22f7dbc",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .exploitation": {
+  "status": "Rewritten And Verified",
+  "hash": "0afe676b4632",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .fairy_tale": {
+  "status": "Reviewed And Retained",
+  "hash": "41851082f163",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .family": {
+  "status": "Reviewed And Retained",
+  "hash": "459b7169b77a",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .fantasy": {
+  "status": "Reviewed And Retained",
+  "hash": "3aa7bd47ae50",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .farce": {
+  "status": "Reviewed And Retained",
+  "hash": "b154b5e4cb4f",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .film_noir": {
+  "status": "Reviewed And Retained",
+  "hash": "ae818dc1858a",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .folk_horror": {
+  "status": "Reviewed And Retained",
+  "hash": "22fd991406a8",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .found_footage": {
+  "status": "Reviewed And Retained",
+  "hash": "c44af87878b5",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .gangster": {
+  "status": "Rewritten And Verified",
+  "hash": "4eb3400e0a21",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .giallo": {
+  "status": "Rewritten And Verified",
+  "hash": "23e3d0059c2f",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .gothic_horror": {
+  "status": "Reviewed And Retained",
+  "hash": "bf601ab0c8ce",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .grindhouse": {
+  "status": "Reviewed And Retained",
+  "hash": "d7ec3ec8d3ca",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .hangout": {
+  "status": "Rewritten And Verified",
+  "hash": "a78b046f2336",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .heist": {
+  "status": "Reviewed And Retained",
+  "hash": "305a72b7bf44",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .historical_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "961e86d9f9f5",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .historical_fiction": {
+  "status": "Reviewed And Retained",
+  "hash": "91b61c865b05",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .holiday": {
+  "status": "Reviewed And Retained",
+  "hash": "0d584fef81ca",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .hood_film": {
+  "status": "Reviewed And Retained",
+  "hash": "2330f0eabd30",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .horror": {
+  "status": "Reviewed And Retained",
+  "hash": "1167b52f00cf",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .horror_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "c35cf39e781e",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .isekai": {
+  "status": "Reviewed And Retained",
+  "hash": "557bd84889ea",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .jidaigeki": {
+  "status": "Reviewed And Retained",
+  "hash": "60d975397a87",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .jukebox_musical": {
+  "status": "Reviewed And Retained",
+  "hash": "7cc213b615da",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .kaiju": {
+  "status": "Reviewed And Retained",
+  "hash": "ac5a46df17cd",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .kitchen_sink": {
+  "status": "Reviewed And Retained",
+  "hash": "859135f63317",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .legal_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "c167bda5a04e",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .magical_realism": {
+  "status": "Reviewed And Retained",
+  "hash": "021bfbd01c71",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .martial_arts": {
+  "status": "Reviewed And Retained",
+  "hash": "398cf8f731ac",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .medical_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "9a699fd73830",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .melodrama": {
+  "status": "Rewritten And Verified",
+  "hash": "1eb6737283b7",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .military": {
+  "status": "Rewritten And Verified",
+  "hash": "e8d6e6196a23",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .mockumentary": {
+  "status": "Reviewed And Retained",
+  "hash": "eeb96f1147d9",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .monster_movie": {
+  "status": "Reviewed And Retained",
+  "hash": "70c5c5859c62",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .mumblecore": {
+  "status": "Rewritten And Verified",
+  "hash": "21578a0c5ecd",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .musical": {
+  "status": "Reviewed And Retained",
+  "hash": "fb6a2e3c1949",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .mystery": {
+  "status": "Rewritten And Verified",
+  "hash": "e8be8f2c22a4",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .nature_documentary": {
+  "status": "Reviewed And Retained",
+  "hash": "dfd222d34ebb",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .neo_noir": {
+  "status": "Reviewed And Retained",
+  "hash": "a4d54f0c7da8",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .neorealism": {
+  "status": "Reviewed And Retained",
+  "hash": "fde2299e3bb0",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .new_wave": {
+  "status": "Reviewed And Retained",
+  "hash": "526e8139e5c7",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .nordic_noir": {
+  "status": "Reviewed And Retained",
+  "hash": "cf3065c050fd",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .occult": {
+  "status": "Reviewed And Retained",
+  "hash": "110ba9338cdd",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .parody": {
+  "status": "Reviewed And Retained",
+  "hash": "1d87c28a17b6",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .period_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "73114b86beef",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .picaresque": {
+  "status": "Reviewed And Retained",
+  "hash": "1575018845df",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .police_procedural": {
+  "status": "Reviewed And Retained",
+  "hash": "323ce219a1ed",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .political_drama": {
+  "status": "Reviewed And Retained",
+  "hash": "7b6e939e6b8e",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .political_thriller": {
+  "status": "Reviewed And Retained",
+  "hash": "4687cddcc217",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .post_apocalyptic": {
+  "status": "Reviewed And Retained",
+  "hash": "35bbc7199243",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .prison_film": {
+  "status": "Reviewed And Retained",
+  "hash": "6ddd4dd33cbc",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .psychological_horror": {
+  "status": "Reviewed And Retained",
+  "hash": "b3a01f09ec9b",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .psychological_thriller": {
+  "status": "Reviewed And Retained",
+  "hash": "e00d15296328",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .queer_cinema": {
+  "status": "Reviewed And Retained",
+  "hash": "fed61f03fa45",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .revenge": {
+  "status": "Reviewed And Retained",
+  "hash": "fe97e333ee3b",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .road_movie": {
+  "status": "Reviewed And Retained",
+  "hash": "672da0c7ff15",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .rockumentary": {
+  "status": "Reviewed And Retained",
+  "hash": "f97ab8a4783d",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .romance": {
+  "status": "Reviewed And Retained",
+  "hash": "9aef0a006b63",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .romantic_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "a299e7c6a534",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .romantic_drama": {
+  "status": "Rewritten And Verified",
+  "hash": "17ede998bfcb",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .samurai": {
+  "status": "Reviewed And Retained",
+  "hash": "df150c2d441c",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .satire": {
+  "status": "Reviewed And Retained",
+  "hash": "19c1327aa706",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .science_fantasy": {
+  "status": "Reviewed And Retained",
+  "hash": "4d0d436a8aa4",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .science_fiction": {
+  "status": "Reviewed And Retained",
+  "hash": "bc1d43e32081",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .screwball_comedy": {
+  "status": "Rewritten And Verified",
+  "hash": "78c92a9a2a64",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .sea_adventure": {
+  "status": "Reviewed And Retained",
+  "hash": "325305c7101d",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .silent_film": {
+  "status": "Reviewed And Retained",
+  "hash": "1964e850078c",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .slapstick": {
+  "status": "Reviewed And Retained",
+  "hash": "149d763678d8",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .slasher": {
+  "status": "Reviewed And Retained",
+  "hash": "2fce358d6afd",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .slice_of_life": {
+  "status": "Reviewed And Retained",
+  "hash": "d604a1cc1f9a",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .social_realism": {
+  "status": "Reviewed And Retained",
+  "hash": "b345a5782934",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .space_opera": {
+  "status": "Reviewed And Retained",
+  "hash": "9ec93dfc2f4e",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .spaghetti_western": {
+  "status": "Reviewed And Retained",
+  "hash": "fafef511bc86",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .splatter": {
+  "status": "Reviewed And Retained",
+  "hash": "84af8c3257e3",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .sports": {
+  "status": "Reviewed And Retained",
+  "hash": "82ee9280bf4f",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .spy": {
+  "status": "Reviewed And Retained",
+  "hash": "0569f5d9d902",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .steampunk": {
+  "status": "Reviewed And Retained",
+  "hash": "a302dfceb5f3",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .stoner_comedy": {
+  "status": "Reviewed And Retained",
+  "hash": "b772a49b102c",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .superhero": {
+  "status": "Reviewed And Retained",
+  "hash": "d31f70b68040",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .supernatural": {
+  "status": "Reviewed And Retained",
+  "hash": "bd0cc21a1561",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .surrealist": {
+  "status": "Reviewed And Retained",
+  "hash": "f124aa840430",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .survival": {
+  "status": "Reviewed And Retained",
+  "hash": "6267adca4056",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .swashbuckler": {
+  "status": "Rewritten And Verified",
+  "hash": "e9989421c66f",
+  "on": "2026-10-17",
+  "evidence": "Its look's summary printed in docs/verification/language-2026-10-17/profile/b4-genres.txt; the change is American spelling of the paraphrase (the house's, tools/spelling.mjs) or, for military, the research's own note made a sentence"
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .sword_and_sandal": {
+  "status": "Reviewed And Retained",
+  "hash": "35ef8b17399a",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .sword_and_sorcery": {
+  "status": "Reviewed And Retained",
+  "hash": "4bdd6eb9b9dd",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .techno_thriller": {
+  "status": "Reviewed And Retained",
+  "hash": "bdda2dbffef8",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .teen": {
+  "status": "Reviewed And Retained",
+  "hash": "be9b352cac64",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .thriller": {
+  "status": "Reviewed And Retained",
+  "hash": "5f59abef31dd",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .time_travel": {
+  "status": "Reviewed And Retained",
+  "hash": "21e32f139b81",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .tokusatsu": {
+  "status": "Reviewed And Retained",
+  "hash": "4e3d89872975",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .tragedy": {
+  "status": "Reviewed And Retained",
+  "hash": "d9156c300b03",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .tragicomedy": {
+  "status": "Reviewed And Retained",
+  "hash": "556d4ca3f5d7",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .true_crime": {
+  "status": "Reviewed And Retained",
+  "hash": "661309d9f021",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .vampire": {
+  "status": "Reviewed And Retained",
+  "hash": "ba84106512f4",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .war": {
+  "status": "Reviewed And Retained",
+  "hash": "5035b9697c25",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .werewolf": {
+  "status": "Reviewed And Retained",
+  "hash": "9923bd9414d6",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .western": {
+  "status": "Reviewed And Retained",
+  "hash": "b338944de53e",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .whodunit": {
+  "status": "Reviewed And Retained",
+  "hash": "de4b7b711187",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .wuxia": {
+  "status": "Reviewed And Retained",
+  "hash": "b14fcc4bcb22",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .yakuza": {
+  "status": "Reviewed And Retained",
+  "hash": "f8dd5f70f7b2",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/genres.ts#GENRE_DEFS .zombie": {
+  "status": "Reviewed And Retained",
+  "hash": "3c46332ead4b",
+  "on": "2026-10-17",
+  "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
+ },
+ "src/engine/content/interpretation.ts#CIRCUMSTANCE_AFFINITY": {
+  "status": "Reviewed And Retained",
+  "hash": "693de3d07a7e",
+  "on": "2026-10-17",
+  "reason": "The names of what in a scene a way of playing rests on (A Close Frame, Its Comic Beats, What’s Kept Hidden), or a concern's phrase, shown beside each side on the chooser; plain. A House To Reach stays: tests/stage-interpretation.test.ts and tools/interpretation.ts compare the source by it, so it's a key."
+ },
+ "src/engine/content/interpretation.ts#CONCERN_AFFINITY": {
+  "status": "Reviewed And Retained",
+  "hash": "01d99dab88ee",
+  "on": "2026-10-17",
+  "reason": "The names of what in a scene a way of playing rests on (A Close Frame, Its Comic Beats, What’s Kept Hidden), or a concern's phrase, shown beside each side on the chooser; plain. A House To Reach stays: tests/stage-interpretation.test.ts and tools/interpretation.ts compare the source by it, so it's a key."
+ },
+ "src/engine/content/interpretation.ts#FEATURE_AFFINITY": {
+  "status": "Reviewed And Retained",
+  "hash": "26ed18fa2e65",
+  "on": "2026-10-17",
+  "reason": "The names of what in a scene a way of playing rests on (A Close Frame, Its Comic Beats, What’s Kept Hidden), or a concern's phrase, shown beside each side on the chooser; plain. A House To Reach stays: tests/stage-interpretation.test.ts and tools/interpretation.ts compare the source by it, so it's a key."
+ },
+ "src/engine/content/interpretation.ts#GRAIN_LABEL": {
+  "status": "Rewritten And Verified",
+  "hash": "befafd5a618e",
+  "on": "2026-10-17",
+  "evidence": "tests/interpretation.test.ts (Works Against The Scene in the take's account), tests/decisions-judge.test.ts (Either Way on the chooser); all three printed in docs/verification/language-2026-10-17/profile/b4-genres.txt"
+ },
+ "src/engine/content/interpretation.ts#LANGUAGE_AFFINITY": {
+  "status": "Reviewed And Retained",
+  "hash": "957e6e8cb3d4",
+  "on": "2026-10-17",
+  "reason": "The names of what in a scene a way of playing rests on (A Close Frame, Its Comic Beats, What’s Kept Hidden), or a concern's phrase, shown beside each side on the chooser; plain. A House To Reach stays: tests/stage-interpretation.test.ts and tools/interpretation.ts compare the source by it, so it's a key."
+ },
+ "src/engine/content/interpretation.ts#MEDIUM_AFFINITY": {
+  "status": "Reviewed And Retained",
+  "hash": "ef1124e0ee2f",
+  "on": "2026-10-17",
+  "reason": "The names of what in a scene a way of playing rests on (A Close Frame, Its Comic Beats, What’s Kept Hidden), or a concern's phrase, shown beside each side on the chooser; plain. A House To Reach stays: tests/stage-interpretation.test.ts and tools/interpretation.ts compare the source by it, so it's a key."
+ },
+ "src/engine/content/interpretation.ts#READER_AFFINITY": {
+  "status": "Reviewed And Retained",
+  "hash": "0b1b1c5fb03d",
+  "on": "2026-10-17",
+  "reason": "The names of what in a scene a way of playing rests on (A Close Frame, Its Comic Beats, What’s Kept Hidden), or a concern's phrase, shown beside each side on the chooser; plain. A House To Reach stays: tests/stage-interpretation.test.ts and tools/interpretation.ts compare the source by it, so it's a key."
+ },
+ "src/engine/content/interpretation.ts#TONE_AFFINITY": {
+  "status": "Reviewed And Retained",
+  "hash": "bbabc8661959",
+  "on": "2026-10-17",
+  "reason": "The names of what in a scene a way of playing rests on (A Close Frame, Its Comic Beats, What’s Kept Hidden), or a concern's phrase, shown beside each side on the chooser; plain. A House To Reach stays: tests/stage-interpretation.test.ts and tools/interpretation.ts compare the source by it, so it's a key."
  },
  "src/engine/content/practice.ts#EXERCISE_DESIGN .adjustments": {
   "status": "Reviewed And Retained",
@@ -365,6 +2393,30 @@
   "on": "2026-10-17",
   "evidence": "docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions), on every training line of adv-t-0 and adv-t-5"
  },
+ "src/engine/systems/interpretation-read.ts#grainWords": {
+  "status": "Rewritten And Verified",
+  "hash": "6513cbb7803a",
+  "on": "2026-10-17",
+  "evidence": "tests/interpretation.test.ts asserts 'worked against the scene (Expansive, Works Against The Scene): it cost the take … points'"
+ },
+ "src/engine/systems/interpretation-read.ts#takeGrainWords": {
+  "status": "Rewritten And Verified",
+  "hash": "055ab92b51a8",
+  "on": "2026-10-17",
+  "evidence": "tests/decisions-judge.test.ts asserts the take's line (worked against the scene, or no difference either way) on a played Rockumentary take"
+ },
+ "src/engine/systems/interpretation.ts#suitabilityOf": {
+  "status": "Reviewed And Retained",
+  "hash": "0312175367cd",
+  "on": "2026-10-17",
+  "reason": "Signal names on the chooser (No One To Play Off But The Lens, Turn, Your Reading, …): plain labels."
+ },
+ "src/engine/systems/interpretation.ts#suitabilityWords": {
+  "status": "Rewritten And Verified",
+  "hash": "d9f450b43076",
+  "on": "2026-10-17",
+  "evidence": "Both shapes printed in docs/verification/language-2026-10-17/profile/b4-genres.txt (no signal, and signals for and against). Nothing under src calls it today (grep), so no screen shows it"
+ },
  "src/engine/systems/learning.ts#ADVANCED": {
   "status": "Reviewed And Retained",
   "hash": "0a1a5e23c0a7",
@@ -484,6 +2536,24 @@
   "hash": "ed440b7536f3",
   "on": "2026-10-17",
   "reason": "'There’s no such tier.': a payload outside the Tier control's three, reached by no press; plain."
+ },
+ "src/engine/systems/register.ts#concernNote": {
+  "status": "Reviewed And Retained",
+  "hash": "6118bd58ec79",
+  "on": "2026-10-17",
+  "reason": "Nordic Noir’s Feeling Held In asks for it: the genre's and the concern's own names, after the limit it explains; plain."
+ },
+ "src/engine/systems/register.ts#concernWords": {
+  "status": "Rewritten And Verified",
+  "hash": "5d3bb90c6c2e",
+  "on": "2026-10-17",
+  "evidence": "tests/genre-identity-screens.test.ts (calls on your composure and focus, on Nordic Noir's brief); every genre's concerns printed in docs/verification/language-2026-10-17/profile/b4-genres.txt"
+ },
+ "src/engine/systems/register.ts#registerBasisWords": {
+  "status": "Rewritten And Verified",
+  "hash": "42f79c0cda5f",
+  "on": "2026-10-17",
+  "evidence": "tests/genre-identity-screens.test.ts (research and estimated, both); every genre's in docs/verification/language-2026-10-17/profile/b4-genres.txt"
  },
  "src/ui/looks/actor.tsx#BAND_WORD": {
   "status": "Reviewed And Retained",

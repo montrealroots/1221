@@ -33,7 +33,7 @@ export function concernWords(c: Concern): string {
   const def = CONCERNS[c];
   const leans = concernLeans(c).map((d) => DIMENSION_LABEL[d].toLowerCase());
   const draws = concernDraws(c).map((a) => abilityLabel(a).toLowerCase());
-  return `${def.label}: ${def.words} The take weighs ${and(leans)} more and draws on your ${and(draws)}. ${def.helps}`;
+  return `${def.label}: ${def.words} A self-tape in it is judged more on ${and(leans)}, and calls on your ${and(draws)}. ${def.helps}`;
 }
 
 /** A genre's concerns, none where it has no register. */
@@ -43,7 +43,7 @@ export const concernsOf = (genre: string): readonly Concern[] => GENRE_REGISTER[
 export function registerBasisWords(genre: string): string | undefined {
   const r = GENRE_REGISTER[genre];
   if (!r) return undefined;
-  return `${r.why} ${r.basis === 'research' ? 'From the genre’s research, mostly at low confidence.' : 'The research found nothing on how it’s played: this is SLATE’s reading of its conventions.'}`;
+  return `${r.why} ${r.basis === 'research' ? 'This comes from the genre’s research, mostly held with low confidence.' : 'The research found nothing on how it’s played, so this is estimated from its conventions.'}`;
 }
 
 /**

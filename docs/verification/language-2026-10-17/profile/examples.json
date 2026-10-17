@@ -394,5 +394,77 @@
   "why": "The window said plainly.",
   "meaningSensitive": false,
   "verified": "docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ {
+  "source": "src/engine/systems/register.ts#concernWords",
+  "kind": "other",
+  "before": "Comic Rhythm: Setup and payoff: … The take weighs responsiveness and execution more and draws on your adaptability and focus. …",
+  "after": "Comic Rhythm: Setup and payoff: … A self-tape in it is judged more on responsiveness and execution, and calls on your adaptability and focus. …",
+  "why": "'Weighs' and 'draws on' are the judge's words; the register is read by a taped brief.",
+  "meaningSensitive": true,
+  "verified": "tests/genre-identity-screens.test.ts; docs/verification/language-2026-10-17/profile/b4-genres.txt"
+ },
+ {
+  "source": "src/engine/systems/register.ts#registerBasisWords",
+  "kind": "other",
+  "before": "The research found nothing on how it’s played: this is SLATE’s reading of its conventions.",
+  "after": "The research found nothing on how it’s played, so this is estimated from its conventions.",
+  "why": "'SLATE’s reading' inside a sentence; the glossary's 'estimated'.",
+  "meaningSensitive": false,
+  "verified": "tests/genre-identity-screens.test.ts on Steampunk"
+ },
+ {
+  "source": "src/engine/content/genres.ts#GENRE_DEFS .military",
+  "kind": "other",
+  "before": "A military film centers on armed forces and military life; no separate reference definition was found, and the nearest, the war film, is a genre concerned with warfare with combat scenes central to the drama.",
+  "after": "A military film centers on armed forces and military life. It’s closest to the war film, about warfare, with combat scenes at the center of the drama.",
+  "why": "A researcher's note shown as the genre's description.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b4-genres.txt"
+ },
+ {
+  "source": "src/engine/content/interpretation.ts#GRAIN_LABEL",
+  "kind": "label",
+  "before": "Against The Grain",
+  "after": "Works Against The Scene",
+  "why": "The glossary: 'suits the scene', not the grain.",
+  "meaningSensitive": false,
+  "verified": "tests/interpretation.test.ts"
+ },
+ {
+  "source": "src/engine/systems/interpretation-read.ts#takeGrainWords",
+  "kind": "feedback",
+  "before": "Played that way it went against the grain of the scene (Expansive, Against The Grain), which cost it 0.4 points",
+  "after": "Played that way it worked against the scene (Expansive, Works Against The Scene), which cost it 0.4 points",
+  "why": "Same.",
+  "meaningSensitive": false,
+  "verified": "tests/decisions-judge.test.ts on a played take"
+ },
+ {
+  "source": "src/engine/systems/interpretation.ts#suitabilityWords",
+  "kind": "other",
+  "before": "Restrained: Either Way. Nothing in the scene leans either way.",
+  "after": "Restrained: Either Way. The scene doesn’t lean either way.",
+  "why": "A sentence opening on Nothing.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b4-genres.txt"
+ },
+ {
+  "source": "src/engine/content/approaches.ts#APPROACH_EFFECT",
+  "kind": "other",
+  "before": "Sized to the room: voice, body and feeling played out to the house.",
+  "after": "Sized to the room: voice, body and feeling played out to the audience.",
+  "why": "'House' is theater shorthand.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b4-genres.txt"
+ },
+ {
+  "source": "src/engine/content/genre-register.ts#GENRE_REGISTER .cosmic_horror",
+  "kind": "other",
+  "before": "Backstage advises playing the descent into madness as quiet detachment rather than ranting.",
+  "after": "Backstage advises playing the descent into madness as quiet detachment, not ranting.",
+  "why": "'Rather than' over its budget across the game.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b4-genres.txt"
  }
 ]

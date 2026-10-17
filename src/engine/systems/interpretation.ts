@@ -150,7 +150,7 @@ export function grainOf(task: TaskProfile, sides: readonly AxisValue[], material
 export function suitabilityWords(x: Suitability): string {
   const top = x.signals.filter((g) => Math.abs(g.v) >= 0.1).slice(0, 3);
   const said = top.map((g) => `${g.source} (${g.v > 0 ? 'for it' : 'against it'})`).join('; ');
-  return `${APPROACH_EFFECT[x.side].label}: ${GRAIN_LABEL[x.band]}.${said ? ` ${said}.` : ' Nothing in the scene leans either way.'}`;
+  return `${APPROACH_EFFECT[x.side].label}: ${GRAIN_LABEL[x.band]}.${said ? ` ${said}.` : ' The scene doesn’t lean either way.'}`;
 }
 
 /** How much of a choice's rehearsal completes it, for the sides given (`grainOf`'s `required`), without a task. */
