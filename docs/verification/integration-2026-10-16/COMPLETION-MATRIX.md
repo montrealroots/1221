@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 561 of 599 rows in scope Implemented And Verified (93.6%); 27 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 559 of 599 rows in scope Implemented And Verified (93.3%); 29 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.
 
 ## Totals
 
@@ -40,7 +40,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 09 Area: genres | 21 | 21 |  |  |  |  |  |  |
 | Brief 09 Area: journeys | 21 | 21 |  |  |  |  |  |  |
 | Brief 09 Area: judge | 10 | 4 |  |  |  |  |  | 6 |
-| Brief 10 Area: advice | 14 | 12 |  |  |  |  | 2 |  |
+| Brief 10 Area: advice | 14 | 10 | 2 |  |  |  | 2 |  |
 | Brief 10 Area: arion | 11 | 11 |  |  |  |  |  |  |
 | Brief 10 Area: judge | 36 | 27 |  |  |  |  | 4 | 5 |
 | Brief 10 Area: stamina | 13 | 12 |  |  |  |  |  | 1 |
@@ -52,7 +52,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
 | Integration | 9 | 5 | 4 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 4 |  |  |  | 2 | 1 |  |
-| **All** | **635** | **561** | **27** | **0** | **0** | **2** | **9** | **36** |
+| **All** | **635** | **559** | **29** | **0** | **0** | **2** | **9** | **36** |
 
 ## Life, Health And Time
 
@@ -630,7 +630,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `advice.F2` | F2 as written, kept in the record and still reported. | Implemented And Verified | verified as it stands | docs/verification/decisions-2026-10-16/advice/f2-as-written.txt ‘npx vite-node tools/ag-baseline.ts -- --out f2-ag-baseline.json; node tools/ag-criteria.mjs f2… |
 | `advice.F2A10-a` | F2-A10 (a): cases, tuning apart from held out; 120 fresh held-out cases stratified as four bands, three stages and ten seeds each, their ge… | Implemented And Verified | implemented | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
 | `advice.F2A10-b` | F2-A10 (b): right often enough: at least 80% of the 120 fresh held-out cases pass F2-A, and at least 70% of each band and of each stage. | Implemented And Verified | fixed | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
-| `advice.F2A10-c` | F2-A10 (c): better than the alternatives: on the same budget, the advised input's realized gain at or above the median of the other inputs'… | Implemented And Verified | verified as it stands | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
+| `advice.F2A10-c` | F2-A10 (c): better than the alternatives: on the same budget, the advised input's realized gain at or above the median of the other inputs'… | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
 | `advice.F2A10-d` | F2-A10 (d): improvable: the advice names no input at full and none the player has no way to train (0 cases); where every read input is at f… | Implemented And Verified | fixed | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exerci… |
 | `advice.F2A10-e` | F2-A10 (e): the real curve: the predicted gain for the first input within 0.3 points, or a quarter, of the realized gain in at least 80% of… | Implemented And Verified | fixed | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: followed for twenty sessions through p… |
 | `advice.F2A10-f` | F2-A10 (f): mastery and preparation: near mastery, a predicted gain falls as the input's level rises (diminishing returns), on every case; … | Decision Required | owner decision | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level r… |
@@ -638,7 +638,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `advice.F2A10-h` | F2-A10 (h): it updates: after twenty sessions of the advised exercise through the commands, the advice read again: the trained input's pred… | Decision Required | owner decision | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the traine… |
 | `advice.F2A10-i` | F2-A10 (i): no hardcoding: the advice reads no seed, profile or case name, and a case renamed gets the same advice. | Implemented And Verified | verified as it stands | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > reads no seed: the case renamed, its save’s seed and e… |
 | `advice.tests` | Tests in tests/decisions-advice.test.ts: advice followed through the actual commands (twenty sessions of the advised exercise) gives the ga… | Implemented And Verified | implemented | tests/decisions-advice.test.ts; docs/verification/decisions-2026-10-16/advice/mutations.json ‘ten mutations in a copy of the clone at 0afc7914’ (mutations) |
-| `advice.heldout` | The held-out run, once, on the final code, into docs/verification/decisions-2026-10-16/advice/, the commit recorded, each stratum reported. | Implemented And Verified | implemented | docs/verification/decisions-2026-10-16/advice/held-out-runs.txt ‘each batch and its exit’ (measurement (seeded, played through the commands)); docs/verificatio… |
+| `advice.heldout` | The held-out run, once, on the final code, into docs/verification/decisions-2026-10-16/advice/, the commit recorded, each stratum reported. | Implemented, Verification Incomplete | implemented | docs/verification/decisions-2026-10-16/advice/held-out-runs.txt ‘each batch and its exit’ (measurement (seeded, played through the commands)); docs/verificatio… |
 | `advice.harness-hospital` | adv-h-10 and adv-h-57 threw “Not from a hospital bed.” and were never built | Implemented And Verified | fixed | docs/verification/decisions-2026-10-16/advice/held-out-04.json ‘npx vite-node tools/advice.ts -- --cases adv-h-10..19 --held-out’ (measurement (seeded, played … |
 
 ## Brief 10 Area: arion
@@ -833,7 +833,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (27)
+### Implemented, Verification Incomplete (29)
 
 - **`health.enroll`** (Life, Health And Time): Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at renewal and at an application, is unreachable in play, since the owner’s scope reset of 2026-10-09 left wages only on the School (work-study, the Summer Cabaret) and a month at the School counts as the S…
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
@@ -856,6 +856,8 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`banking.2.stop_balance_transfer`** (Brief 09 Area: banking): owner decision
 - **`banking.2.take_overrun_loan`** (Brief 09 Area: banking): owner decision
 - **`banking.2.money_transfer`** (Brief 09 Area: banking): owner decision
+- **`advice.F2A10-c`** (Brief 10 Area: advice): It was measured on 81eadac9, and what it reads has changed since (src/engine/content/safetynet.ts, src/engine/content/tutorial.ts): measure it again
+- **`advice.heldout`** (Brief 10 Area: advice): It was measured on 81eadac9, and what it reads has changed since (src/engine/content/safetynet.ts, src/engine/content/tutorial.ts): measure it again
 - **`F2-A`** (Criteria: The Attributes): It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/guide/craft.ts, …): measure it again
 - **`MA5`** (Criteria: Mastery Through Play): It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/guide/craft.ts, …): measure it again
 - **`INT-skipped`** (Integration): It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/guide/craft.ts, …): measure it again

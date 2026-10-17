@@ -14,10 +14,10 @@
    "Explicitly Deferred": 27
   }
  },
- "matrix": "Completion, by the matrix: 561 of 599 rows in scope Implemented And Verified (93.6%); 27 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.",
+ "matrix": "Completion, by the matrix: 559 of 599 rows in scope Implemented And Verified (93.3%); 29 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.",
  "completion": {
-  "againstTheFullBaseline": "561 of 608 (92.2%)",
-  "ofTheActionablePortion": "37 of 46 (80.4%)",
+  "againstTheFullBaseline": "559 of 608 (91.9%)",
+  "ofTheActionablePortion": "35 of 46 (76.0%)",
   "verifiedAtTheBaseline": 530
  },
  "closedByWork": [
@@ -102,17 +102,7 @@
    "baseline": "Implemented, Verification Incomplete"
   },
   {
-   "id": "advice.F2A10-c",
-   "group": "Brief 10 Area: advice",
-   "baseline": "Implemented, Verification Incomplete"
-  },
-  {
    "id": "advice.tests",
-   "group": "Brief 10 Area: advice",
-   "baseline": "Implemented, Verification Incomplete"
-  },
-  {
-   "id": "advice.heldout",
    "group": "Brief 10 Area: advice",
    "baseline": "Implemented, Verification Incomplete"
   },
@@ -280,6 +270,12 @@
    "lacks": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at renewal and at an application, is unreachable in play, since the owner’s scope reset of 2026-10-09 left wages only on the School (work-study, the Summer Cabaret) and a month at the School counts as the School before work; where a fixture reaches it, it changes only the notice’s words, as 80 paid hours always pass the $580 income test. Whether to cut it or keep it as a guard is the owner’s (THE ONE RULE); the row stays partial on it | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
   },
   {
+   "id": "advice.F2A10-c",
+   "group": "Brief 10 Area: advice",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "It was measured on 81eadac9, and what it reads has changed since (src/engine/content/safetynet.ts, src/engine/content/tutorial.ts): measure it again"
+  },
+  {
    "id": "advice.F2A10-f",
    "group": "Brief 10 Area: advice",
    "now": "Decision Required",
@@ -290,6 +286,12 @@
    "group": "Brief 10 Area: advice",
    "now": "Decision Required",
    "lacks": "F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 focus at 93), the forecast itself fell, so (h) as written holds there; the input’s own part rose because what an ability point is worth on the work isn’t monotone in the level (the judge’s curve, as in (f)). As written, the forecast fell on 113 of 120; the 7 that rose (adv-h-91, 100, 103, 106, 107, 110, 118, all near mastery) rose by a thousandth or less, each within discipline’s lift and said. Every case fell, or rose within discipline’s lift and said: 120 of 120. The first-named changed wherever another led, 51 of 51. Should (h) read: after the twenty sessions the forecast falls, or a rise is no more than discipline’s lift and is said; or does (h) stay not met, as written and as clarified?"
+  },
+  {
+   "id": "advice.heldout",
+   "group": "Brief 10 Area: advice",
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "It was measured on 81eadac9, and what it reads has changed since (src/engine/content/safetynet.ts, src/engine/content/tutorial.ts): measure it again"
   },
   {
    "id": "ST6-R.a",
@@ -3983,7 +3985,8 @@
    "group": "Brief 10 Area: advice",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented And Verified"
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "It was measured on 81eadac9, and what it reads has changed since (src/engine/content/safetynet.ts, src/engine/content/tutorial.ts): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -4041,7 +4044,8 @@
    "group": "Brief 10 Area: advice",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented And Verified"
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "It was measured on 81eadac9, and what it reads has changed since (src/engine/content/safetynet.ts, src/engine/content/tutorial.ts): measure it again"
   },
   {
    "id": "advice.harness-hospital",

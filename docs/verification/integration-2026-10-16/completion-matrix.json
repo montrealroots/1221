@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 561 of 599 rows in scope Implemented And Verified (93.6%); 27 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 559 of 599 rows in scope Implemented And Verified (93.3%); 29 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -11124,13 +11124,14 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands))",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "verified as it stands",
    "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The held-out set run once on the tested commit, 81eadac9, its tree clean: the advised input’s realized gain at or above the median of the others’ on 120 of 120 fresh cases (95% asked), its mean 0.763 against 0.388 for an input chosen at random, 1.965 times (1.5 asked); every stratum the same (beginner 1.864, developing 2.057, advanced 1.961, near mastery 2.046; first week 1.976, mid-term 1.855, later 2.079); F2-A’s 30 held out, 2.187",
    "measured": {
     "commit": "81eadac9",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on 81eadac9, and what it reads has changed since (src/engine/content/safetynet.ts, src/engine/content/tutorial.ts): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11326,13 +11327,14 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/advice/held-out-runs.txt ‘each batch and its exit’ (measurement (seeded, played through the commands)); docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands)); docs/verification/decisions-2026-10-16/advice/final/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out, fifteen batches on 2634283b and again on 57b64401 (the tested commit), then --summarize’ (measurement (seeded, played through the commands))",
    "sourceStatus": "implemented",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "implemented",
    "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The held-out set run once on the tested commit, 81eadac9, its tree clean, in fifteen batches (F2-A’s adv-10 to 39 and the 120 fresh adv-h-0 to 119), each exit 0, its commit written in each file, then summarized with the tuning cases apart; each stratum reported (four bands, three stages). Every figure brief 10’s summary shares is the same, 390 of 390",
    "measured": {
     "commit": "81eadac9",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on 81eadac9, and what it reads has changed since (src/engine/content/safetynet.ts, src/engine/content/tutorial.ts): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -12225,7 +12227,7 @@
    "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): measure.sh journeys-a, journeys-b and l3r on the tested commit, 81eadac9, seeds bj-0 and bj-1, all four profiles: l3r.json byte for byte brief 10’s, met: (b) met on 8 journeys, beginner 2, developing 2, generalist 2, specialist 2; (c) growth 1.253 at least, 0 falls unexplained; L3-R met: True",
    "measured": {
     "commit": "81eadac9",
-    "watch": "engine"
+    "watch": "judge"
    }
   },
   {
@@ -12371,7 +12373,7 @@
    "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): Every part of measure.sh but the two mutation runs on the tested commit, 81eadac9: every output byte for byte brief 10’s final but for the fields this pass added to two tools, so every criterion that held holds and those that failed (ST6-R (a), (c), (e), (g); F2, ST3, ST6, H4 and L3 as written) fail as they did; L1 as written fails as it did and holds as clarified (final/README.md)",
    "measured": {
     "commit": "81eadac9",
-    "watch": "engine"
+    "watch": "judge"
    }
   },
   {
