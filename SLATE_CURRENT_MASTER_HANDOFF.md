@@ -3,14 +3,17 @@
 **This section is the current status, and where a new session starts.** Every section below is history. It was written
 at the end of the owner's "Finish The Current Build Against A Fixed Checklist"
 (`docs/verification/briefs-2026-10-16/11-finish-the-current-build-against-a-fixed-checklist.txt`, kept verbatim). That
-brief was worked on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `0e7ff7c2` (#37's merge), and put to the owner
-in pull request #38 (https://github.com/yvcbcjhsy7-prog/1221/pull/38). **Nothing of it is merged or deployed**, and neither happens without the owner.
+brief was worked on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `0e7ff7c2` (#37's merge), and merged to
+`main` in pull request #38 (https://github.com/yvcbcjhsy7-prog/1221/pull/38, `9302b29c`) at the owner's word ("Merge it.",
+2026-10-17); until then this said nothing of it was merged. **Merged isn't deployed: nothing is.**
 
 ## 1. The Repository
 
-- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `0e7ff7c2`.
-- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 11's commits on `0e7ff7c2`
-  (`git log --oneline 0e7ff7c2..origin/claude/peaceful-hamilton-59zdbb`). They are pushed, and never force-pushed.
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `9302b29c`, #38's merge;
+  until then this said `0e7ff7c2`.
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carried brief 11's commits on `0e7ff7c2`
+  (`git log --oneline 0e7ff7c2..57bcff08`), pushed and never force-pushed, and was merged with a merge commit. It was
+  restarted from `9302b29c` for this correction.
 - **The tested code,** each check on the commit it ran on, no source file changed after it:
   - the judge's criteria on `81eadac9` (`docs/verification/completion-2026-10-16/final/`);
   - the long runs and the advice's cases on `3de26e0b` (`runs/`, `advice/`);
