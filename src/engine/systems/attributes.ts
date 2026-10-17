@@ -247,11 +247,16 @@ export function markApplied(person: Person, actionId: unknown): void {
   if (led.applied.length > ACTIONS_KEPT) led.applied.splice(0, led.applied.length - ACTIONS_KEPT);
 }
 
-/** Records a change, for the profile's history and an ability's look. */
+/**
+ * Records a change, for the profile's history and an ability's look, at full precision, so each screen rounds it once.
+ * Until 2026-10-17 it was kept to a thousandth, and the Player Profile's Last Change, shown to a hundredth, rounded it a
+ * second time: an hour of the Repetition Exercise whose toast and words said +0.25 was +0.24 on its row (brief 11, A5,
+ * tests/attributes-phase-2b.test.ts). A change a save from before kept stays at its thousandth.
+ */
 export function recordDevelopment(sim: Simulation, person: Person, id: string, delta: number, source: string): void {
   if (delta <= 0) return;
   const led = developmentOf(person);
-  led.history.push({ at: sim.now, id, delta: Math.round(delta * 1000) / 1000, source });
+  led.history.push({ at: sim.now, id, delta, source });
   if (led.history.length > DEVELOPMENT.historyKept) led.history.splice(0, led.history.length - DEVELOPMENT.historyKept);
 }
 

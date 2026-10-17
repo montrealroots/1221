@@ -257,7 +257,8 @@ describe('trait-morning-evening', () => {
         const r = sim.must<{ gained: number }>({ kind: 'practice.exercise', payload: { exercise: 'speech-drill' } });
         // The craft grown is what the hour said it grew, kept on the development history under the exercise.
         expect(sim.player.craft!.speech - before).toBeCloseTo(r.gained, 10);
-        expect(developmentOf(sim.player).history.find((x) => x.id === 'speech')).toMatchObject({ source: 'practice:speech-drill', delta: Math.round(r.gained * 1000) / 1000 });
+        // At full precision from 2026-10-17 (brief 11, A5: `recordDevelopment`); to a thousandth until then.
+        expect(developmentOf(sim.player).history.find((x) => x.id === 'speech')).toMatchObject({ source: 'practice:speech-drill', delta: r.gained });
         return r.gained;
       });
       expect(gained[0]! / gained[1]!, `${hour}:${minute}, early`).toBeCloseTo(early, 4);
@@ -561,7 +562,8 @@ describe('p-abilities', () => {
     expect(sim.now - t0).toBe(MS_HOUR);
     expect(after).toBeGreaterThan(before);
     expect(h.toasts).toEqual([{ message: `Circles Of Attention: +${(after - before).toFixed(2)}.`, tone: 'positive' }]);
-    expect(developmentOf(sim.player).history.find((x) => x.id === 'focus')).toMatchObject({ source: 'practice:concentration', delta: Math.round((after - before) * 1000) / 1000 });
+    // At full precision from 2026-10-17 (brief 11, A5: `recordDevelopment`); to a thousandth until then.
+    expect(developmentOf(sim.player).history.find((x) => x.id === 'focus')).toMatchObject({ source: 'practice:concentration', delta: after - before });
     expect(sim.player.wellbeing.energy).toBeLessThan(energy);
     html = profile(sim);
     const row = rowOf(abilities(html), 'Focus');

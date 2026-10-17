@@ -677,9 +677,9 @@ describe('practice.self_tape', () => {
     // The camera's technique and the one the scene stages, grown as it's taped, each on the history.
     const taped = historyOf(sim).filter((e) => e.source === 'self-tape');
     expect(taped.map((e) => e.id)).toEqual(['screen', 'comedy']);
-    // The history keeps each change to three places.
-    const r3 = (x: number) => Math.round(x * 1000) / 1000;
-    expect([r3(sim.player.craft!.screen - screen0), r3(sim.player.craft!.comedy - comedy0)]).toEqual([taped[0]!.delta, taped[1]!.delta]);
+    // The history keeps each change at full precision, from 2026-10-17 (brief 11, A5: `recordDevelopment`); until then to
+    // three places, which this held.
+    expect([sim.player.craft!.screen - screen0, sim.player.craft!.comedy - comedy0]).toEqual([taped[0]!.delta, taped[1]!.delta]);
     expect(taped.every((e) => e.delta > 0)).toBe(true);
 
     // The twin, the same in all but the reader: the recording reads with her, and nobody's bond moves.
@@ -742,8 +742,8 @@ describe('practice.self_tape', () => {
     go(sim, 'practice.self_tape', { genre: 'comedy', brief: comedy.id });
     const camera = historyOf(sim).filter((e) => e.source === 'self-tape').slice(2);
     expect(camera.map((e) => e.id)).toEqual(['screen', 'comedy']);
-    const r3 = (x: number) => Math.round(x * 1000) / 1000;
-    expect([r3(sim.player.craft!.screen - c1.screen), r3(sim.player.craft!.comedy - c1.comedy)]).toEqual([camera[0]!.delta, camera[1]!.delta]);
+    // At full precision from 2026-10-17 (brief 11, A5); to three places until then.
+    expect([sim.player.craft!.screen - c1.screen, sim.player.craft!.comedy - c1.comedy]).toEqual([camera[0]!.delta, camera[1]!.delta]);
     expect(camera.every((e) => e.delta > 0)).toBe(true);
     expect(sim.player.craft!.voiceover).toBe(c1.voiceover);
   });

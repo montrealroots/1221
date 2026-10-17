@@ -336,15 +336,17 @@ describe('abilities+techniques', () => {
     expect(atReach.kept.filter((x) => x.id === 'imagination')).toEqual([]);
     expect(atReach.script).toBeGreaterThan(0);
     expect(atReach.script).toBe(asPlayed.script);
-    // Each rise kept under the read's source.
-    expect(asPlayed.kept.filter((x) => x.id === 'imagination').map((x) => x.delta)).toEqual([round3(asPlayed.rise)]);
-    expect(under.kept.filter((x) => x.id === 'imagination').map((x) => x.delta)).toEqual([round3(under.rise)]);
+    // Each rise kept under the read's source, at full precision from 2026-10-17 (brief 11, A5: `recordDevelopment`), where
+    // until then it was kept to a thousandth.
+    expect(asPlayed.kept.filter((x) => x.id === 'imagination').map((x) => x.delta)).toEqual([asPlayed.rise]);
+    expect(under.kept.filter((x) => x.id === 'imagination').map((x) => x.delta)).toEqual([under.rise]);
 
     // The Profile, as the player has it: imagination now, full at 100, its reach, and the read as its last change; a
     // technique's reach is its own ceiling; presence, which classes don't build, has none.
     const { text } = drawn(asPlayed.s, ProfileWorkspace);
     expect(text).toContain(`Imagination ${asPlayed.s.player.attrs!.imagination!.toFixed(1)} 100.0 ${R.toFixed(1)} `);
-    expect(text).toContain(`+${round3(asPlayed.rise).toFixed(2)}, Reading a play`);
+    // Rounded once, from the rise itself (from 2026-10-17; until then from its thousandth, a second rounding).
+    expect(text).toContain(`+${asPlayed.rise.toFixed(2)}, Reading a play`);
     expect(text).toContain(`${TECHNIQUE_LABEL.script} ${asPlayed.s.player.craft!.script.toFixed(1)} ${c.script.toFixed(1)} `);
     expect(text).toContain(`Presence ${asPlayed.s.player.attrs!.presence.toFixed(1)} 100.0 — `);
   }, 60_000);
