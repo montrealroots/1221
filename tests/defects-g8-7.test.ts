@@ -87,8 +87,8 @@ describe('taxes-plan-refused-stops-collection: a refused IRS plan resumes the IR
     sim.advanceTo(applied.decideAt + MS_HOUR);
     expect(sim.player.taxPlan!.status).toBe('refused');
     expect(pendingNotices(sim, 2026)).toHaveLength(1);
-    const refusal = sim.universe.notifications.find((n) => n.title === 'The IRS Refused A Payment Plan')!;
-    expect(refusal.body).toMatch(/2025’s isn’t/);
+    const refusal = sim.universe.notifications.find((n) => n.title === 'The IRS Declined Your Payment Plan')!;
+    expect(refusal.body).toMatch(/your 2025 return isn’t/);
     expect(refusal.body).toMatch(/letters .*start again/);
     const before = irsLetters(sim).length;
     sim.advanceTo(sim.now + 200 * MS_DAY);
@@ -104,7 +104,7 @@ describe('taxes-plan-setup-fee-not-charged: an IRS plan’s setup fee leaves the
     const fee = planFee(sim, sim.player, 'long', false);
     expect(fee).toBe(PLAN.fee.online);
     expect(inTheBank(sim, sim.player)).toBeLessThan(fee);
-    expect(sim.execute({ kind: 'tax.apply_plan', payload: { kind: 'long', directDebit: false } }).error).toMatch(/The \$69\.00 setup fee is more than the bank can cover/);
+    expect(sim.execute({ kind: 'tax.apply_plan', payload: { kind: 'long', directDebit: false } }).error).toMatch(/Your bank can’t cover the \$69\.00 setup fee, so you haven’t applied and nothing was charged\./);
     expect(sim.player.taxPlan).toBeUndefined();
     // A short-term plan has no fee, and an empty bank doesn't stop it.
     sim.must({ kind: 'tax.apply_plan', payload: { kind: 'short' } });
@@ -130,7 +130,7 @@ describe('taxes-plan-setup-fee-not-charged: an IRS plan’s setup fee leaves the
     sim.advanceTo(applied.decideAt + MS_HOUR);
     const plan = sim.player.taxPlan!;
     expect(plan.status).toBe('refused');
-    expect(plan.why).toMatch(/setup fee is more than the bank can cover/);
+    expect(plan.why).toMatch(/Your bank couldn’t cover the \$[\d.]+ setup fee, so the plan wasn’t set up\./);
     expect(feeCharged(sim)).toHaveLength(0);
     expect(pendingNotices(sim, 2026)).toHaveLength(1);
     expect(returnsOf(sim.player)['2026']!.reducedFrom).toBeUndefined();
@@ -150,7 +150,7 @@ describe('taxes-federal-lien-withdraw-years: Form 12277 reads the last three yea
 
   it('a year among the last three left unfiled refuses it, though the three after the lien’s are filed', () => {
     const { person, r } = withLien({ 2027: filed(2027), 2028: filed(2028), 2029: filed(2029), 2030: filed(2030), 2031: unfiled(2031), 2032: filed(2032) });
-    expect(federalLienWithdrawRefusal(person, r, at(2033, 6, 1))).toMatch(/last three years’ returns filed: 2031’s isn’t/);
+    expect(federalLienWithdrawRefusal(person, r, at(2033, 6, 1))).toMatch(/last three years’ returns are filed, and your 2031 return isn’t/);
   });
 
   it('a year before the last three left unfiled doesn’t, and a year not yet due never does', () => {
@@ -158,7 +158,7 @@ describe('taxes-federal-lien-withdraw-years: Form 12277 reads the last three yea
     expect(federalLienWithdrawRefusal(person, r, at(2033, 6, 1))).toBeUndefined();
     const early = withLien({ 2030: filed(2030), 2031: filed(2031), 2032: unfiled(2032) });
     expect(federalLienWithdrawRefusal(early.person, early.r, at(2033, 2, 1))).toBeUndefined();
-    expect(federalLienWithdrawRefusal(early.person, early.r, at(2033, 6, 1))).toMatch(/2032’s isn’t/);
+    expect(federalLienWithdrawRefusal(early.person, early.r, at(2033, 6, 1))).toMatch(/your 2032 return isn’t/);
   });
 });
 

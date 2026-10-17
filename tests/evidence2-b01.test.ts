@@ -552,12 +552,12 @@ describe('health.choose_clinic', () => {
     const papers = drawn(sim, PapersWorkspace, [], HEALTH_TAB);
     expect(Math.round(Math.round(100_00 * 439.389 / 417.93) * 1.75)).toBe(183_98);
     expect(papers.select('own-doctor').options).toEqual([
-      { value: '', text: 'As Your Cover Has It' },
+      { value: '', text: 'The Practice Your Cover Uses' },
       { value: 'us-ct-fhchc-grand', text: 'Fair Haven Community Health Care, A Visit $183.98, A 24-Day Wait' },
       { value: 'us-ct-yalehealth-studenthealth', text: 'Yale Health Center, Student Health, A Visit $0.00, The Next Weekday' },
     ]);
     // Your Pharmacy, America’s, is still drawn.
-    expect(papers.select('own-pharmacy').options[0]).toEqual({ value: '', text: 'Any Pharmacy, At The Median' });
+    expect(papers.select('own-pharmacy').options[0]).toEqual({ value: '', text: 'Any Pharmacy, At The Typical Price' });
     // Until later on 2026-10-15 the line named Fair Haven, where her visit went with nothing picked.
     expect(papers.text).toContain('A doctor’s visit: Yale Health Center, Student Health');
     expect(/What it would cost you here now: a doctor’s visit (\$\d[\d,]*\.\d\d)/.exec(papers.text)?.[1]).toBe('$0.00');

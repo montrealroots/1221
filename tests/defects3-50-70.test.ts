@@ -215,18 +215,18 @@ describe('documents.replace_license', () => {
     expect(replaced(twin).map((t) => t.memo)).toEqual(['Class D (Operator) driver license, replaced']);
     twin.advanceTo(on(2026, 9, 27));
     expect(documentsOf(twin.player).filter((d) => d.kind === 'license' && d.status === 'valid').map((d) => d.expiresAt)).toEqual([on(2026, 10, 1, 3)]);
-    expect(titled(twin, 'Class D (Operator) driver license Arrived').map((n) => n.body)).toEqual(['It’s in force from today.']);
+    expect(titled(twin, 'Class D (Operator) driver license Arrived').map((n) => n.body)).toEqual(['It’s in your hands and in force from today.']);
 
     // On 30 September, 21 days would bring it on 21 October, three weeks past its date.
     sim.advanceTo(on(2026, 9, 30));
-    const soon = 'It runs out on October 1, 2026, before a new card would come, and a replacement keeps its date: a license past it is renewed, and SLATE renews none since the cars went.';
+    const soon = 'It runs out on October 1, 2026, before a new card would come, and a replacement keeps the same date. A license past its date has to be renewed instead, and driving licenses can’t be renewed in the game.';
     const papers = drawn(sim, PassportPane);
     expect(papers.text).toContain(soon);
     expect(papers.button('Replace It')).toMatchObject({ disabled: true, title: soon });
     expect(run(sim, 'documents.replace_license', { documentId: license.id })).toMatchObject({ ok: false, error: soon });
     // On 2 October it has run out.
     sim.advanceTo(on(2026, 10, 2));
-    const gone = 'It ran out on October 1, 2026, and a replacement keeps its date: a license past it is renewed, and SLATE renews none since the cars went.';
+    const gone = 'It ran out on October 1, 2026, and a replacement keeps the same date. A license past its date has to be renewed instead, and driving licenses can’t be renewed in the game.';
     expect(drawn(sim, PassportPane).button('Replace It')).toMatchObject({ disabled: true, title: gone });
     expect(run(sim, 'documents.replace_license', { documentId: license.id })).toMatchObject({ ok: false, error: gone });
     expect(replaced(sim)).toEqual([]);
@@ -256,11 +256,11 @@ describe('documents.replace_idcard', () => {
 
     // On 20 February, fourteen days would bring it on 6 March, past the 28th.
     sim.advanceTo(on(2026, 2, 20, 12, 0, DUBLIN));
-    const soon = 'It runs out on February 28, 2026, before a new card would come, and a replacement keeps its date, so it isn’t replaced.';
+    const soon = 'It runs out on February 28, 2026, before a new card would come, and a replacement keeps the same date, so it can’t be replaced. Apply for a new card instead, if you can.';
     expect(drawn(sim, PassportPane).button('Replace It')).toMatchObject({ disabled: true, title: soon });
     expect(run(sim, 'documents.replace_idcard', { documentId: card.id })).toMatchObject({ ok: false, error: soon });
     sim.advanceTo(on(2026, 3, 1, 12, 0, DUBLIN));
-    const gone = 'It ran out on February 28, 2026, and a replacement keeps its date, so it isn’t replaced.';
+    const gone = 'It ran out on February 28, 2026, and a replacement keeps the same date, so it can’t be replaced. Apply for a new card instead, if you can.';
     expect(run(sim, 'documents.replace_idcard', { documentId: card.id })).toMatchObject({ ok: false, error: gone });
     expect(replaced(sim)).toEqual([]);
   }, 60_000);

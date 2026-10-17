@@ -302,20 +302,20 @@ describe('health.therapy', () => {
     const before = drawn(sim, PapersWorkspace, HEALTH_TAB);
     expect(before.html).toMatch(/<option value="Yale Mental Health &amp; Counseling" selected="">Yale Mental Health &amp; Counseling, Free With Yale Health<\/option>/);
     expect(before.text).toContain('Adna Linden Psychotherapy, $240 A Session');
-    const begin = before.buttons.find((b) => b.text === 'Begin A Course Of 8')!;
+    const begin = before.buttons.find((b) => b.text === 'Begin A Course Of 8 Sessions')!;
     expect(begin.disabled).toBe(false);
     begin.onClick!();
-    expect(h.toasts).toEqual(['The first session, August 31, 2026.']);
+    expect(h.toasts).toEqual(['Your first session is August 31, 2026.']);
     expect(sim.player.therapy).toMatchObject({ therapist: 'Yale Mental Health & Counseling', done: 0 });
     expect(drawn(sim, PapersWorkspace, HEALTH_TAB).text).toContain('Therapy with Yale Mental Health & Counseling: 0 of 8 sessions');
     sim.advanceTo(EDT(2026, 9, 1, 12));
     const after = drawn(sim, PapersWorkspace, HEALTH_TAB);
     expect(after.text).toContain('Therapy with Yale Mental Health & Counseling: 1 of 8 sessions');
-    expect(after.buttons.some((b) => b.text === 'Begin A Course Of 8')).toBe(false);
+    expect(after.buttons.some((b) => b.text === 'Begin A Course Of 8 Sessions')).toBe(false);
     // A student who drew no depression ('g04-dep-3') has no course offered, and is refused one in the rule's words.
     const well = student('g04-dep-3');
     expect(healthOf(well.player).chronic?.depression).toBeUndefined();
-    expect(drawn(well, PapersWorkspace, HEALTH_TAB).buttons.some((b) => b.text === 'Begin A Course Of 8')).toBe(false);
+    expect(drawn(well, PapersWorkspace, HEALTH_TAB).buttons.some((b) => b.text === 'Begin A Course Of 8 Sessions')).toBe(false);
     expect(well.execute({ kind: 'health.therapy', payload: { therapist: 'Yale Mental Health & Counseling' } }).error).toBe('A course of therapy here is for depression.');
     expect(well.player.therapy).toBeUndefined();
   });

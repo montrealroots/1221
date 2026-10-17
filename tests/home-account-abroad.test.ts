@@ -304,7 +304,7 @@ describe('a card from home, as the everyday card here', () => {
     const atm = run<{ fee: number; ownerCharge?: number }>(sim, 'cash.withdraw', { amount: 10_000, from: 'other_atm' });
     expect(atm).toMatchObject({ ownerCharge: 322 });
     expect(postingsOn(sim, current, 'Cash withdrawal fee').at(-1)!.native).toBe(-392);
-    expect(refused(sim, 'cash.withdraw', { amount: 10_000, from: 'atm' })).toBe('HSBC UK’s own machines and counters are in its country; here its card works at another bank’s machine.');
+    expect(refused(sim, 'cash.withdraw', { amount: 10_000, from: 'atm' })).toBe('HSBC UK’s own machines and counters are in its country. Here, its card works only at another bank’s machine.');
     // More than it holds, said in pounds, the dollars beside (until 2026-10-16 in dollars alone).
     expect(refused(sim, 'cash.withdraw', { amount: 500_000, from: 'other_atm' })).toMatch(/^HSBC Bank Account holds £[\d,]+\.\d\d \(\$[\d,]+\.\d\d\)\.$/);
     expect(refused(sim, 'card.apply', {})).toBe('HSBC UK opens its accounts for people living in the UK; for a customer abroad it has HSBC Expat, from £75,000.');

@@ -178,11 +178,11 @@ describe('collection by the new authorities', () => {
     empty(sim);
     r(2001).stateDue = { 'us-in': { state: 'us-in', balance: 3_000_00, filedAt: sim.now, owed: 3_000_00, parts: { tax: 3_000_00, penalty: 0, interest: 0 }, accruedAt: sim.now } };
     // $3,000 a day past due, with Indiana's 10% late-payment penalty: $3,300, in the tier to $5,000.
-    expect(statePlanRefusal(sim, sim.player, 'us-in', 30)).toContain('1 to 24 months on $3,300.00');
+    expect(statePlanRefusal(sim, sim.player, 'us-in', 30)).toContain('1 to 24 months for $3,300.00');
     expect(statePlanRefusal(sim, sim.player, 'us-in', 24)).toBeUndefined();
     r(2002).stateDue = { 'us-dc': { state: 'us-dc', balance: 2_000_00, filedAt: sim.now, owed: 2_000_00, parts: { tax: 2_000_00, penalty: 0, interest: 0 }, accruedAt: sim.now } };
     // $2,000 a day past due with the District's 5% for a month begun: $2,100, 10% of it down.
-    expect(statePlanRefusal(sim, sim.player, 'us-dc', 12, { down: 0 })).toContain('asks 10% down, $210.00');
+    expect(statePlanRefusal(sim, sim.player, 'us-dc', 12, { down: 0 })).toContain('asks for 10% down, $210.00');
     // The bank was emptied: the $200 down is more than it holds.
     expect(statePlanRefusal(sim, sim.player, 'us-dc', 12, { down: 210_00 })).toMatch(/bank can’t cover/);
     r(2003).stateDue = { 'us-ok': { state: 'us-ok', balance: 90_00, filedAt: sim.now, owed: 90_00, parts: { tax: 90_00, penalty: 0, interest: 0 }, accruedAt: sim.now } };

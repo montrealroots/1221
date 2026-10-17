@@ -122,16 +122,16 @@ const studying = (person: Person) => person.school !== undefined && !schoolEnded
 
 export function optRefusal(sim: Simulation, person: Person): string | undefined {
   const end = programEnd(person);
-  if (citizenOf(person, 'US')) return 'OPT is for a student on an F-1; you’re a citizen.';
+  if (citizenOf(person, 'US')) return 'OPT is for a student on an F-1, and you’re a US citizen.';
   if (end === undefined) return 'OPT is for a student on an F-1, and you haven’t held one.';
   // Post-completion OPT follows a program completed: not a dismissal, a withdrawal or a degree withheld (from 2026-10-10:
   // until then only a dismissal was refused).
-  if (person.school && leftWithout(person.school.standing)) return 'OPT follows a degree completed, and you left without it.';
+  if (person.school && leftWithout(person.school.standing)) return 'OPT follows a completed degree, and you left without one.';
   const opens = end - WORK_RULES.opt.windowBeforeDays * MS_DAY;
   const closes = end + WORK_RULES.opt.windowAfterDays * MS_DAY;
-  if (sim.now < opens) return `It opens ${formatDate(opens, sim.zone)}, 90 days before the program ends.`;
-  if (sim.now > closes) return `It closed ${formatDate(closes, sim.zone)}, 60 days after the program ended.`;
-  if (documentsOf(person).some((d) => d.kind === 'permit' && d.destination === 'US' && d.name.includes('OPT'))) return 'You’ve applied for OPT already.';
+  if (sim.now < opens) return `You can apply from ${formatDate(opens, sim.zone)}, 90 days before your program ends.`;
+  if (sim.now > closes) return `The time to apply closed on ${formatDate(closes, sim.zone)}, 60 days after your program ended.`;
+  if (documentsOf(person).some((d) => d.kind === 'permit' && d.destination === 'US' && d.name.includes('OPT'))) return 'You’ve already applied for OPT.';
   return undefined;
 }
 
@@ -221,7 +221,7 @@ export function scheduleUsStatus(sim: Simulation, person: Person): void {
 
 export function registerPermission(sim: Simulation): void {
   const payOrRefuse = (s: Simulation, person: Person, amount: Money, memo: string) => {
-    if (!payFromBank(s, person, amount, memo, 'documents')) throw new CommandError(`${formatMoney(amount, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (!payFromBank(s, person, amount, memo, 'documents')) throw new CommandError(`Your bank can’t cover ${formatMoney(amount, saveCurrency(s.universe))}, so nothing was charged.`);
   };
 
   sim.onCommand<{ premium?: boolean }, { readyAt: Instant; fee: Money }>('documents.apply_opt', (p, { sim: s }) => {
@@ -257,7 +257,7 @@ export function registerPermission(sim: Simulation): void {
       if (person.school && leftWithout(person.school.standing)) {
         doc.status = 'cancelled';
         scheduleUsStatus(s, person);
-        tell('OPT Denied', 'OPT follows a degree completed, and you left without it. The fee isn’t refunded.');
+        tell('OPT Denied', 'USCIS denied your OPT, because OPT follows a completed degree and you left without one. The fee isn’t refunded.');
         return;
       }
       // Twelve months from the later of the program's end and the approval.
@@ -268,7 +268,7 @@ export function registerPermission(sim: Simulation): void {
       doc.idleDays = 0;
       s.schedule({ at: start + 7 * MS_DAY, kind: OPT_WEEK_KIND, label: 'OPT: A Week', category: 'system', priority: 5, payload: { personId: person.id, documentId: doc.id } });
       scheduleUsStatus(s, person);
-      tell('OPT Approved', `You may work in the United States from ${formatDate(start, s.zone)} to ${formatDate(doc.expiresAt, s.zone)}, with no more than ${WORK_RULES.opt.unemploymentDays} days between jobs in all.`);
+      tell('OPT Approved', `You may work in the United States from ${formatDate(start, s.zone)} to ${formatDate(doc.expiresAt, s.zone)}, with no more than ${WORK_RULES.opt.unemploymentDays} days without work in total. The game has no work after the degree, so in practice it ends after those ${WORK_RULES.opt.unemploymentDays} days.`);
       return;
     }
     // An O-1's petition and a production's Canadian permit were decided here until the career went on 2026-10-09.
@@ -289,7 +289,7 @@ export function registerPermission(sim: Simulation): void {
         const opt = !optRefusal(s, person);
         s.requireDecision({
           urgency: 90, category: 'personal', title: 'Your US Status Is Ending',
-          detail: `Your permission to work in the United States has ended, and your status ends ${formatDate(ends, s.zone)}.${opt ? ' OPT can still be applied for before then.' : ''} After it, you’re out of status: no work can be had here, a US visa you hold is void, and the Visa Waiver Program is closed to you for good.`,
+          detail: `Your permission to work in the United States has ended, and your status ends ${formatDate(ends, s.zone)}.${opt ? ' You can still apply for OPT before then.' : ''} If you’re still here after that, you’ll be out of status. In the game, that means you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you from then on.`,
           route: '/workspace/papers', dueAt: ends, refType: 'us-status', refId: String(ends),
           // The move home went with the career's relocation on 2026-10-09. Standard, or premium said so (from 2026-10-10:
           // until then the one button applied with premium processing, and its fee, without saying).
@@ -303,7 +303,7 @@ export function registerPermission(sim: Simulation): void {
     person.usOutOfStatus = ends;
     const f1 = f1Of(person);
     if (f1 && f1.status === 'valid') f1.status = 'cancelled';
-    if (mine) s.notify({ category: 'personal', title: 'Out Of Status', body: 'You stayed in the United States past your status. Your US visa is void, and the Visa Waiver Program is closed to you for good.', importance: 90, route: '/workspace/papers' });
+    if (mine) s.notify({ category: 'personal', title: 'Out Of Status', body: 'You stayed in the United States past the end of your status, so you’re now out of status. In the game, your US visa is canceled and the Visa Waiver Program is closed to you from now on.', importance: 90, route: '/workspace/papers' });
   });
 
   sim.onSchedule(OPT_WEEK_KIND, (item, s) => {
@@ -316,7 +316,7 @@ export function registerPermission(sim: Simulation): void {
       // A violation: the status ends with it, no grace after.
       doc.endedAt = s.now;
       scheduleUsStatus(s, person);
-      if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'OPT Ended', body: `More than ${WORK_RULES.opt.unemploymentDays} days without work: your OPT has ended, and with it permission to work in the United States.`, importance: 85, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'OPT Ended', body: `You’ve had more than ${WORK_RULES.opt.unemploymentDays} days without work, so your OPT has ended, and with it your permission to work in the United States. Your US status ends with it, with no grace period.`, importance: 85, route: '/workspace/papers' });
       return;
     }
     if (item.at + 7 * MS_DAY < (doc.expiresAt ?? 0)) s.schedule({ at: item.at + 7 * MS_DAY, kind: OPT_WEEK_KIND, label: 'OPT: A Week', category: 'system', priority: 5, payload: { personId: person.id, documentId: doc.id } });

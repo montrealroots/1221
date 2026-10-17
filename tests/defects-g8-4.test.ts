@@ -277,7 +277,7 @@ describe('Your Doctor and Your Pharmacy offer only what can be chosen', () => {
     // New Haven keeps one practice, so it has no Your Doctor box (from 2026-10-13); until then this test chose the
     // practice here, beside The Town’s First Practice, the same place. The doctor’s half is London’s, below.
     expect(optionsOf(html, 'own-doctor')).toEqual([]);
-    expect(optionsOf(html, 'own-pharmacy')[0]).toEqual({ value: '', words: 'Any Pharmacy, At The Median' });
+    expect(optionsOf(html, 'own-pharmacy')[0]).toEqual({ value: '', words: 'Any Pharmacy, At The Typical Price' });
     expect(optionsOf(html, 'own-pharmacy').map((o) => o.words)).toContain('Walmart Pharmacy, A Generic $4.00 Uninsured');
     sim.must({ kind: 'health.choose_pharmacy', payload: { chain: US_PHARMACIES[0]!.id } });
     ({ html } = drawn(sim, PapersWorkspace, healthTab));
@@ -289,7 +289,7 @@ describe('Your Doctor and Your Pharmacy offer only what can be chosen', () => {
     const practices = clinicsIn(london.player.currentLocationId).filter((c) => DOCTOR_KINDS.includes(c.kind));
     expect(practices.length).toBe(3);
     ({ html } = drawn(london, PapersWorkspace, healthTab));
-    expect(optionsOf(html, 'own-doctor')[0]).toEqual({ value: '', words: 'The Town’s First Practice' });
+    expect(optionsOf(html, 'own-doctor')[0]).toEqual({ value: '', words: 'The First Practice In Town' });
     london.must({ kind: 'health.choose_clinic', payload: { clinicId: practices.at(-1)!.id } });
     ({ html } = drawn(london, PapersWorkspace, healthTab));
     expect(optionsOf(html, 'own-doctor').map((o) => o.value)).not.toContain('');

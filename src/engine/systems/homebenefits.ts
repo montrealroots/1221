@@ -90,10 +90,10 @@ export function capitalMeans(savingsEur: Money): Money {
 
 export function jobseekerRefusal(sim: Simulation, person: Person): string | undefined {
   if (!livesInIreland(person)) return 'Jobseeker’s Allowance is for someone living in Ireland.';
-  if (!citizenshipsOf(person).some((c) => EU.has(c))) return 'On a visa, Ireland’s means-tested payments aren’t yours.';
+  if (!citizenshipsOf(person).some((c) => EU.has(c))) return 'On a visa, you can’t get Ireland’s means-tested payments.';
   const age = (sim.now - person.birthInstant) / YEAR;
   if (age >= IRISH_JA.pensionAge) return 'At 66 it’s the State Pension, not Jobseeker’s Allowance.';
-  if (person.jobseekers && person.jobseekers.closedAt === undefined) return 'You have a claim open.';
+  if (person.jobseekers && person.jobseekers.closedAt === undefined) return 'You already have a claim open.';
   return undefined;
 }
 
@@ -106,7 +106,7 @@ export function jobseekerRefusal(sim: Simulation, person: Person): string | unde
  * holds is paid out (`DESEMPLEO_KIND`).
  */
 export function desempleoRefusal(): string {
-  return 'Its tracks are for a job lost in the city or a Mexican come home from abroad, and neither is yours.';
+  return 'Seguro de Desempleo is for someone who lost a job in the city, or a Mexican who has come home from abroad, and you’re neither.';
 }
 
 /** A week's Jobseeker's Allowance, in euro cents: the days out of work, less the waiting days left, less the savings' means. */

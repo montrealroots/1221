@@ -30,7 +30,7 @@ describe('OPT', () => {
 
   it('closes sixty days after the program ends', () => {
     const sim = graduate('opt-late', -61);
-    expect(optRefusal(sim, sim.player)).toMatch(/It closed/);
+    expect(optRefusal(sim, sim.player)).toMatch(/The time to apply closed/);
   });
 
   it('is decided in thirty business days with premium processing, for $1,780 more', () => {

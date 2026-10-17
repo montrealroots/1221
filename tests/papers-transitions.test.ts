@@ -34,7 +34,7 @@ describe('PLAYER JOURNEY: a Connecticut ID card on an F-1', () => {
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
     expect(card.status).toBe('pending');
     expect(card.name).toMatch(/Limited Term/);
-    expect(idCardRefusal(sim.player, sim.now)).toBe('One is on its way.');
+    expect(idCardRefusal(sim.player, sim.now)).toBe('One is already on its way.');
     // SAVE's ten federal workdays are past in fifteen days, and the card is still in the mail; it has come thirty days
     // later, the mail's twenty business days being past (from 2026-10-17: until then it was in force on SAVE's day).
     tended(sim, sim.now + 15 * MS_DAY);
@@ -47,7 +47,7 @@ describe('PLAYER JOURNEY: a Connecticut ID card on an F-1', () => {
     const sim = student('pt-ctid-out', { homeRegionId: 'uk-eng-london' });
     tended(sim, at(2026, 9, 8, 11));
     sim.must({ kind: 'school.withdraw', payload: { confirm: true } });
-    expect(idCardRefusal(sim.player, sim.now)).toMatch(/proof you’re enrolled/);
+    expect(idCardRefusal(sim.player, sim.now)).toMatch(/proof that you’re enrolled/);
   });
 });
 

@@ -125,7 +125,7 @@ describe('taxes-file-toast-whole-balance: File It says what happened to the IRS�
     expect(r.refundAt).toBeUndefined();
     expect(r.stateDue!['us-ct']!.refundAt).toBeGreaterThan(sim.now);
     expect(toast).not.toMatch(/comes back|21 days/);
-    expect(toast).toBe('Filed. The bank couldn’t pay all of it: what’s owed shows under Who It’s Owed To. A state’s refund comes on its own day, under Who It’s Owed To.');
+    expect(toast).toBe('Filed. Your bank couldn’t pay all of it. What you still owe is under Who It’s Owed To. A state refund comes on that state’s own schedule, under Who It’s Owed To.');
   }, 120_000);
 
   it('PLAYER JOURNEY: a 1040-NR filed without a Social Security number says the day its refund arrives, seven weeks past the 21 days', () => {
@@ -141,7 +141,7 @@ describe('taxes-file-toast-whole-balance: File It says what happened to the IRS�
     // What the engine did: the refund waits the ITIN's weeks too.
     expect(r.refundAt! - r.filedAt!).toBe((RETURN.refundDays + SSN.itinWeeks * 7) * MS_DAY);
     expect(toast).not.toMatch(new RegExp(`in ${RETURN.refundDays} days`));
-    expect(toast).toContain(`The IRS’s refund, ${moneyIn(sim)(-r.figures.owedTo!.irs)}, arrives ${formatDate(r.refundAt!, sim.zone)}.`);
+    expect(toast).toContain(`Your IRS refund of ${moneyIn(sim)(-r.figures.owedTo!.irs)} arrives ${formatDate(r.refundAt!, sim.zone)}.`);
   }, 180_000);
 
   it('PLAYER JOURNEY: their own return in place of the IRS’s assessed one says what came back now, not in 21 days', () => {
@@ -169,7 +169,7 @@ describe('taxes-file-toast-whole-balance: File It says what happened to the IRS�
     expect(r.reconsideredAt).toBe(sim.now);
     expect(sim.universe.transactions.some((t) => t.memo === 'Tax refund, 2026: the IRS’s return replaced by yours' && t.postings[0]!.amount === 2_000_00)).toBe(true);
     expect(toast).not.toMatch(/comes back in/);
-    expect(toast).toContain(`${moneyIn(sim)(2_000_00)} you paid past your own return’s tax is back now`);
+    expect(toast).toContain(`refunded the ${moneyIn(sim)(2_000_00)} you’d paid beyond your return’s tax`);
   }, 180_000);
 
   it('PLAYER JOURNEY: the IRS’s assessment paid in full, New York’s side filed with it and the bank empty: what’s still owed is said', () => {
@@ -193,7 +193,7 @@ describe('taxes-file-toast-whole-balance: File It says what happened to the IRS�
     expect(r.reconsideredAt).toBe(sim.now);
     expect(r.owed ?? 0).toBe(0);
     expect(r.stateDue!['us-ny']!.owed).toBeGreaterThan(0);
-    expect(toast).toContain('What’s still owed shows under Who It’s Owed To.');
+    expect(toast).toContain('What you still owe is under Who It’s Owed To.');
   }, 180_000);
 });
 
@@ -243,7 +243,7 @@ describe('taxes-refund-offset-label: another year’s refund kept for this one',
     expect(r26.amended).toBeUndefined();
     const text = drawn(sim);
     expect(text).not.toContain('from an amended return’s refund');
-    expect(text).toMatch(new RegExp(`${moneyIn(sim)(2_000_00).replace(/[$.]/g, '\\$&')}, from a refund; to the tax`));
+    expect(text).toMatch(new RegExp(`${moneyIn(sim)(2_000_00).replace(/[$.]/g, '\\$&')} kept from a refund\\. \\$[\\d,]+\\.\\d\\d went to the tax`));
   }, 120_000);
 });
 
@@ -257,13 +257,13 @@ describe('taxes-straight-apostrophes: the refusals beside Apply and Revise The P
     sim.must({ kind: 'tax.file', payload: { year: 2026 } });
     expect(owedAll(sim.player, sim.now)).toBeGreaterThan(PLAN.longMax);
     const no = planRefusal(sim, sim.player, 'long')!;
-    expect(no).toContain('SLATE doesn’t model');
+    expect(no).toContain('the game doesn’t offer');
     expect(no).not.toContain('\'');
     // FIXTURE: a monthly plan in force from before the balance grew past the limit.
     sim.player.taxPlan = { kind: 'long', status: 'active', appliedAt: sim.now, decideAt: sim.now, startedAt: sim.now, directDebit: true, fee: 0, monthly: 1_000_00, covers: 40_000_00, years: [2026], history: [] };
     const revised = sim.execute({ kind: 'tax.revise_plan', payload: {} });
     expect(revised.ok).toBe(false);
-    expect(revised.error).toContain('SLATE doesn’t model');
+    expect(revised.error).toContain('the game doesn’t offer');
     expect(revised.error).not.toContain('\'');
   }, 120_000);
 });
@@ -276,19 +276,19 @@ describe('taxes-returns-fine-print-stale: the returns’ fine print and No Retur
     const text = drawn(sim);
     expect(text).toContain('No Returns Yet');
     expect(text).toContain(formatDate(deadline(thisYear), sim.zone));
-    expect(text).toContain(`with no wages on it, a 1040-NR is due ${formatDate(nonresidentDeadline(thisYear, false), sim.zone)}`);
+    expect(text).toContain(`or ${formatDate(nonresidentDeadline(thisYear, false), sim.zone)} for a 1040-NR with no wages on it`);
     const citizen = lifeIn('us-ny-newyork', 'g88-no-returns-citizen');
     const own = drawn(citizen);
     expect(own).toContain('No Returns Yet');
-    expect(own).not.toContain('1040-NR is due');
+    expect(own).not.toContain('for a 1040-NR with no wages on it');
   });
 
   it('the fine print gives the 1040-NR’s June date, the ITIN’s wait, and what the IRS’s substitute comes to after its 120 days', () => {
     const text = drawn(lifeIn('us-ny-newyork', 'g88-fine'));
-    expect(text).toContain('Due 15 April, or the next business day; 15 June for a 1040-NR with no wages on it.');
-    expect(text).toContain(`A refund comes ${RETURN.refundDays} days after filing, ${RETURN.refundDays + SSN.itinWeeks * 7} on a 1040-NR filed without a Social Security number.`);
+    expect(text).toContain('A return is due 15 April, or the next business day. A 1040-NR with no wages on it is due 15 June.');
+    expect(text).toContain(`A refund comes ${RETURN.refundDays} days after filing, or ${RETURN.refundDays + SSN.itinWeeks * 7} days for a 1040-NR filed without a Social Security number.`);
     expect(text).not.toContain('yours to replace for 120 days');
-    expect(text).toContain(`nothing of it is assessed if yours comes within ${SUBSTITUTE.answerDays} days of its notice, and yours replaces it after`);
+    expect(text).toContain(`Nothing of it is assessed if your own return arrives within ${SUBSTITUTE.answerDays} days of its notice, and your return replaces it if it comes later`);
     // The comment beside SUBSTITUTE says what it was until 2026-10-10, and what their own return does now.
     const source = readFileSync(join(fileURLToPath(new URL('.', import.meta.url)), '..', 'src/engine/systems/taxreturn.ts'), 'utf8');
     const doc = source.slice(source.lastIndexOf('/**', source.indexOf('export const SUBSTITUTE')), source.indexOf('export const SUBSTITUTE'));

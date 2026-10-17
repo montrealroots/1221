@@ -55,26 +55,26 @@ function firstResidence(person: Person, iso: string, at: Instant): Instant | und
 }
 
 export function naturalizeRefusal(sim: Simulation, person: Person, iso: string): string | undefined {
-  if (!(iso in NATURALIZE)) return 'SLATE keeps naturalizing in Britain, Mexico and the United States, where a route to residence reaches.';
+  if (!(iso in NATURALIZE)) return 'In the game, you can naturalize only in Britain, Mexico and the United States, where a route to residence leads.';
   if (citizenOf(person, iso)) return 'You’re a citizen there.';
-  if (person.naturalizing) return 'An application is being decided.';
+  if (person.naturalizing) return 'Your application is already being decided.';
   const held = residenceIn(person, iso, sim.now);
   const first = firstResidence(person, iso, sim.now);
-  if (!held || first === undefined) return 'It asks residence there first.';
+  if (!held || first === undefined) return 'It needs residence there first.';
   const years = (sim.now - first) / YEAR_MS;
   if (iso === 'GB') {
-    if (held.route !== 'uk-settled' || sim.now - (held.issuedAt ?? sim.now) < YEAR_MS) return 'It asks twelve months settled, with indefinite leave to remain.';
+    if (held.route !== 'uk-settled' || sim.now - (held.issuedAt ?? sim.now) < YEAR_MS) return 'It needs twelve months settled, with indefinite leave to remain.';
     // Its five years' residence are met on the way: settlement comes after five on the Global Talent visa.
   }
   if (iso === 'MX') {
     // Outstanding artistic work, read on the O-1's record, shortened it to two years until the career went on 2026-10-09,
     // and the refusal offered the two years until the connected world of that day.
-    if (years < NATURALIZE.MX.years) return 'It asks five years’ residence in Mexico.';
+    if (years < NATURALIZE.MX.years) return 'It needs five years’ residence in Mexico.';
     // Applied for past the five years, for MXN 9,502.01, until 2026-10-16.
     return `Mexico naturalizes after five years’ residence, for MXN ${NATURALIZE.MX.fee.toLocaleString('en-US', { minimumFractionDigits: 2 })}. ${MEXICO_UNREAD}`;
   }
   if (iso === 'US') {
-    if (held.route !== 'us-green-card' || years < NATURALIZE.US.years) return 'It asks five years with a green card.';
+    if (held.route !== 'us-green-card' || years < NATURALIZE.US.years) return 'It needs five years with a green card.';
   }
   return undefined;
 }
@@ -89,7 +89,7 @@ export function registerCitizenship(sim: Simulation): void {
     const cents = Math.round(rule.fee * 100);
     const cur = saveCurrency(s.universe);
     const fee = cur === rule.currency ? cents : exchange(cents, rule.currency, cur) ?? cents;
-    if (!payFromBank(s, person, fee, 'Naturalization, the application', 'documents')) throw new CommandError(`${formatMoney(fee, cur)} is more than the bank can cover.`);
+    if (!payFromBank(s, person, fee, 'Naturalization, the application', 'documents')) throw new CommandError(`Your bank can’t cover ${formatMoney(fee, cur)}, so nothing was charged.`);
     const readyAt = s.now + rule.days * MS_DAY;
     person.naturalizing = { iso, readyAt };
     s.schedule({ at: readyAt, kind: CITIZENSHIP_KIND, label: 'Citizenship Decided', category: 'system', priority: 20, payload: { personId: person.id } });
@@ -101,6 +101,6 @@ export function registerCitizenship(sim: Simulation): void {
     if (!person || !n) return;
     delete person.naturalizing;
     person.naturalized = [...(person.naturalized ?? []), { iso: n.iso, at: s.now }];
-    if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'A Citizen', body: `Naturalized on ${formatDate(s.now, s.zone)}: a citizen there now, beside the country you were born a citizen of.`, importance: 70, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'A Citizen', body: `You were naturalized on ${formatDate(s.now, s.zone)}. You’re now a citizen there, and still a citizen of the country you were born in.`, importance: 70, route: '/workspace/papers' });
   });
 }

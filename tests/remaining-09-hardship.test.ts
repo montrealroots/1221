@@ -134,7 +134,7 @@ function press(feature: string, label?: string): string[] {
 // 5 November, ended with November where unanswered (each a month earlier from 2026-10-16, brief 09's journeys). Until
 // 2026-10-17 it began “80 hours’ work” and said “school at least half-time” (brief 12).
 const NOTICE = 'HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from April to September 2027. You’re covered while you answer, to November 4, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in those months counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, HUSKY D ends on November 30, 2027, said on November 5, 2027, and the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.';
-const PENDING_LINE = 'A notice of noncompliance of October 1, 2027: HUSKY D couldn’t find the work rules met in April to September 2027. Answer by November 4, 2027; you’re covered until it’s decided on November 5, 2027.';
+const PENDING_LINE = 'A notice of noncompliance dated October 1, 2027: HUSKY D couldn’t find that you met the work rules in April to September 2027. Answer by November 4, 2027. You’re covered until it’s decided on November 5, 2027.';
 const RENEWED = 'HUSKY D is renewed to its next renewal, April 1, 2028: last month’s income is within what it allows, and September 2027 met its work rules by a stay in hospital, on your request.';
 const NO_STAY = 'No month it assessed, April to September 2027, had a stay in hospital, the hardship SLATE keeps.';
 
@@ -202,9 +202,9 @@ describe('health.request_hardship: a member’s renewal notice answered by a sta
     jump.advanceTo(at(2027, 10, 10, 9));
     const before = papers(jump);
     expect(before).toContain(PENDING_LINE);
-    expect(before).toContain('A stay in hospital in a month it assessed counts if you ask for it.');
+    expect(before).toContain('If you were in hospital in one of those months, you can ask for it to count.');
     expect(drawnFor('health.apply')).toEqual([]);
-    expect(press('health.request_hardship', 'Request A Hardship Exception')).toEqual(['The hardship is granted, and the work rules met.']);
+    expect(press('health.request_hardship', 'Request A Hardship Exception')).toEqual(['Hardship exception granted. The work rules count as met.']);
 
     // Renewed as it would have been at its date: six months on from the renewal of 1 October, no gap, said once.
     expect(titled(jump, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 10, 9), RENEWED]]);
@@ -214,7 +214,7 @@ describe('health.request_hardship: a member’s renewal notice answered by a sta
     // Asked again: nothing waits; Papers draws neither the notice's line nor the button.
     expect(jump.execute({ kind: 'health.request_hardship', payload: {} }).error).toBe('No notice of noncompliance waits on an answer.');
     const after = papers(jump);
-    expect(after).not.toContain('A notice of noncompliance of');
+    expect(after).not.toContain('A notice of noncompliance dated');
     expect(drawnFor('health.request_hardship')).toEqual([]);
 
     // Saved and loaded, and on past the decision's day: the decision finds nothing waiting, and she's covered into December.
@@ -238,7 +238,7 @@ describe('health.request_hardship: a member’s renewal notice answered by a sta
     for (let day = 0, t = at(2027, 10, 1, 9); t <= at(2027, 12, 2, 9); day += 1, t = at(2027, 10, 1 + day, 9)) {
       steps.advanceTo(t);
       if (reloadAt.length && t >= reloadAt[0]!) { steps = thaw(freeze(steps)); reloadAt.shift(); }
-      if (t === at(2027, 10, 10, 9)) { papers(steps); expect(press('health.request_hardship', 'Request A Hardship Exception')).toEqual(['The hardship is granted, and the work rules met.']); }
+      if (t === at(2027, 10, 10, 9)) { papers(steps); expect(press('health.request_hardship', 'Request A Hardship Exception')).toEqual(['Hardship exception granted. The work rules count as met.']); }
       // Covered every day of it.
       expect(coverOn(steps.player, t)).toBe('medicaid');
     }

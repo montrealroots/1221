@@ -804,13 +804,13 @@ await step('papers: a Connecticut ID card got from Passport And ID, its fee, its
   must(!(await get.isDisabled()), `refused: ${await get.getAttribute('title')}`);
   await get.click(); await wait(1000);
   const said = await toast();
-  must(/Non-Driver Identification Card, for \$28\.00; the card comes [A-Z][a-z]+ \d{1,2}, \d{4}; good until [A-Z][a-z]+ \d{1,2}, \d{4}\./.test(said), `the toast said: ${said}`);
+  must(/Non-Driver Identification Card: you paid \$28\.00\. The card comes [A-Z][a-z]+ \d{1,2}, \d{4}\. It’s good until [A-Z][a-z]+ \d{1,2}, \d{4}\./.test(said), `the toast said: ${said}`);
   await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
   await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
   await rail('Papers'); await tab('Passport And ID');
   const again = page.getByRole('button', { name: /^Get Non-Driver Identification Card$/ }).first();
   const why = await again.getAttribute('title');
-  must((await again.isDisabled()) && why === 'One is on its way.', `after Continue the button is ${await again.isDisabled() ? 'refused' : 'open'}: ${why}`);
+  must((await again.isDisabled()) && why === 'One is already on its way.', `after Continue the button is ${await again.isDisabled() ? 'refused' : 'open'}: ${why}`);
   return `${said} After Continue: “${why}”`;
 });
 // Journeys from saves the scenarios wrote: a tax balance owed to the IRS and Connecticut, and a student back from a leave.
@@ -829,11 +829,11 @@ if (DIR && existsSync(`${DIR}/tax.json`)) {
     // Connecticut’s own, in its panel: until 2026-10-13 it was the first Ask For The Plan on the tab, whoever’s it was.
     const ct = page.locator('section.card').filter({ has: page.locator('#state-plan-us-ct') }).first();
     must(await ct.count(), 'no Connecticut plan panel to ask in');
-    const ask = ct.getByRole('button', { name: /^Ask For The Plan$/ }).first();
-    must(await ask.count() && !(await ask.isDisabled()), 'Ask For The Plan not available');
+    const ask = ct.getByRole('button', { name: /^Apply For The Plan$/ }).first();
+    must(await ask.count() && !(await ask.isDisabled()), 'Apply For The Plan not available');
     await ask.click(); await wait(1200);
     const asked = await toast();
-    must(/Asked: \$[\d,.]+ a month, decided by/.test(asked), `asked: ${asked}`);
+    must(/Applied: \$[\d,.]+ a month\. Connecticut DRS decides by/.test(asked), `asked: ${asked}`);
     return `${paid} / ${asked}`;
   });
   await overflow('papers tax (save)');
@@ -1590,8 +1590,8 @@ if (DIR && existsSync(`${DIR}/lien.json`)) {
     must(!(await ask.isDisabled()), 'release still grayed after payment');
     await ask.click(); await wait(900);
     const asked = await toast();
-    must(/Asked: released by [A-Z][a-z]+ \d{1,2}, \d{4}/.test(asked), `asked: ${asked}`);
-    must(/To be released by/.test(await lienLine().innerText()), 'no release date on the lien');
+    must(/Asked\. It’s to be released by [A-Z][a-z]+ \d{1,2}, \d{4}/.test(asked), `asked: ${asked}`);
+    must(/It’s to be released by/.test(await lienLine().innerText()), 'no release date on the lien');
     must(await ask.isDisabled(), 'release still offered once asked');
     return `${paid} / ${asked}`;
   });
@@ -1599,7 +1599,7 @@ if (DIR && existsSync(`${DIR}/lien.json`)) {
     await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await rail('Papers'); await tab('Tax Returns');
-    must(/To be released by/.test(await lienLine().innerText()), 'the request didn’t survive the reload');
+    must(/It’s to be released by/.test(await lienLine().innerText()), 'the request didn’t survive the reload');
     for (let i = 0; i < 8 && !/· Released\./.test(await lienLine().innerText()); i += 1) { await advance('One Week'); await rail('Papers'); await tab('Tax Returns'); }
     const said = await lienLine().innerText();
     must(/· Released\. .*Released [A-Z][a-z]+ \d{1,2}, \d{4}/s.test(said), `lien: ${said.slice(0, 200)}`);
@@ -1619,9 +1619,9 @@ if (DIR && existsSync(`${DIR}/lien.json`)) {
     must(!(await apply.isDisabled()), `Apply grayed: ${(await irs.innerText()).slice(-200)}`);
     await apply.click(); await wait(900);
     const said = await toast();
-    must(/Applied: answered by [A-Z][a-z]+ \d{1,2}, \d{4}/.test(said), `applied: ${said || 'no toast'}`);
+    must(/Applied\. The IRS answers by [A-Z][a-z]+ \d{1,2}, \d{4}/.test(said), `applied: ${said || 'no toast'}`);
     must(!(await irs.getByRole('button', { name: /^Apply$/ }).count()), 'Apply still offered once applied');
-    must(await irs.getByText(/^(With the IRS|In force)$/).count(), `the IRS plan isn’t with the IRS or in force: ${(await irs.innerText()).slice(0, 160)}`);
+    must(await irs.getByText(/^(Being decided|In force)$/).count(), `the IRS plan isn’t being decided or in force: ${(await irs.innerText()).slice(0, 160)}`);
     return said;
   });
   await overflow('papers tax (lien save)');
@@ -1630,7 +1630,7 @@ if (DIR && existsSync(`${DIR}/missed-plan.json`)) {
   await step('[save: missed-plan scenario] papers: the IRS plan in default, caught up, and back in force', async () => {
     await openSave('missed-plan.json');
     await rail('Papers'); await tab('Tax Returns');
-    must(await page.getByText(/^Caught Up By$/).count(), 'no Caught Up By date');
+    must(await page.getByText(/^Catch Up By$/).count(), 'no Catch Up By date');
     const catchUp = page.getByRole('button', { name: /^Catch Up$/ }).first();
     must(await catchUp.count() && !(await catchUp.isDisabled()), 'Catch Up not available');
     await catchUp.click(); await wait(900);

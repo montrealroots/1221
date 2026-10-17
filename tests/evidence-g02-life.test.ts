@@ -942,7 +942,7 @@ describe('health.apply_aid', () => {
     const { sim, bill } = fallen('g02-aid-free');
     const papers = drawn(sim, PapersWorkspace, [], HEALTH);
     expect(rowOf(papers.html, titleCaseLabel(bill.what))).toContain('Apply For Assistance');
-    expect(papers.press('Apply For Assistance')).toEqual(['The hospital took the charity off it.']);
+    expect(papers.press('Apply For Assistance')).toEqual(['The hospital applied its charity care to this bill.']);
     expect(bill).toMatchObject({ aid: 'free', amount: 0, paid: true });
     const row = paperRow(sim, bill);
     expect(row).toContain('Free Care');

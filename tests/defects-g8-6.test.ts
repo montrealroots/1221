@@ -249,13 +249,13 @@ describe('Papers reads the charity’s, the appeal’s and the medical debt’s 
   it('PLAYER JOURNEY: Apply For Assistance over the limit is told the rule’s limit, whatever it is', () => {
     const { sim, bill } = insuredWith('g86-aid-toast', {}, 7);
     drawn(sim, PapersWorkspace, healthTab);
-    expect(press('health.apply_aid')).toEqual([`Your income is over the policy’s ${Math.round(CHARITY.connecticut.discountTo * 100)}%.`]);
+    expect(press('health.apply_aid')).toEqual([`Your income is over the hospital policy’s limit of ${Math.round(CHARITY.connecticut.discountTo * 100)}% of the poverty line.`]);
     expect(bill.aid).toBe('refused');
     // The rule's limit raised to 650% and the bill put back: still over it at seven times the line, and told so.
     delete bill.aid;
     swapped(CHARITY.connecticut as { discountTo: number }, { discountTo: 6.5 }, () => {
       drawn(sim, PapersWorkspace, healthTab);
-      expect(press('health.apply_aid')).toEqual(['Your income is over the policy’s 650%.']);
+      expect(press('health.apply_aid')).toEqual(['Your income is over the hospital policy’s limit of 650% of the poverty line.']);
     });
   });
 

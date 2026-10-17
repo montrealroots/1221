@@ -36,7 +36,7 @@ describe('an older save with one combined tax balance', () => {
     let sim = open(text);
     const r = sim.player.returns!['2026']!;
     // Divided, and said so on the return, as an estimate.
-    expect(r.split?.how).toMatch(/in proportion to each authority’s part of the return/);
+    expect(r.split?.how).toMatch(/in proportion to each authority’s share of the return/);
     const ct = r.stateDue!['us-ct']!;
     expect(ct.migrated?.how).toBe(r.split!.how);
     expect(ct.owed).toBeGreaterThan(0);
@@ -44,7 +44,7 @@ describe('an older save with one combined tax balance', () => {
     expect(Math.abs(owedOn(r, sim.now) + stateOwedOn(ct, r.due, sim.now) - combined)).toBeLessThanOrEqual(1);
     // The IRS plan covers federal tax only now, and says what was taken out.
     expect(sim.player.taxPlan!.covers).toBe(owedAll(sim.player, sim.now));
-    expect(sim.player.taxPlan!.history.some((h) => /A state’s tax taken out/.test(h.what))).toBe(true);
+    expect(sim.player.taxPlan!.history.some((h) => /A state’s tax was taken out of the plan/.test(h.what))).toBe(true);
     // Connecticut's own collection begins; the IRS's plan payment is still on the calendar.
     expect(sim.universe.scheduled.some((i) => i.kind === STATE_NOTICE_KIND && i.status === 'pending')).toBe(true);
     expect(sim.universe.scheduled.some((i) => i.kind === TAX_PLAN_KIND && i.status === 'pending')).toBe(true);

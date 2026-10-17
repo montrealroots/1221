@@ -509,7 +509,7 @@ describe('the graduate, played', () => {
     expect(later.player.usOutOfStatus).toBeUndefined();
     later.advanceTo(at(2029, 8, 30, 13));
     expect(optPermits(later)[0]).toMatchObject({ status: 'valid', issuedAt: at(2029, 8, 30, 12), expiresAt: at(2030, 8, 30, 12) });
-    expect(titled(later, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from August 30, 2029 to August 30, 2030, with no more than 90 days between jobs in all.']);
+    expect(titled(later, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from August 30, 2029 to August 30, 2030, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.']);
   });
 
   it('p-journey-history: PLAYER JOURNEY: the played graduate’s School Journey says every part she was on stage in once, The Seagull’s Nina among them, as her credits keep them', () => {

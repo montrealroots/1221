@@ -211,14 +211,14 @@ describe('health.choose_clinic, New Haven’s two practices', () => {
     // Yale Health.
     const screen = papers(chooser);
     expect(screen.select('own-doctor').map((s) => s.options)).toEqual([[
-      { value: '', text: 'As Your Cover Has It' },
+      { value: '', text: 'The Practice Your Cover Uses' },
       { value: FAIR_HAVEN, text: `${FAIR_HAVEN_NAME}, A Visit $183.98, A 24-Day Wait` },
       { value: YALE, text: `${YALE_NAME}, A Visit $0.00, The Next Weekday` },
     ]]);
     expect(screen.text).toContain(`A doctor’s visit: ${YALE_NAME}`);
     h.toasts = [];
     screen.select('own-doctor')[0]!.onChange!({ target: { value: YALE } });
-    expect(h.toasts).toEqual(['Your doctor, chosen.']);
+    expect(h.toasts).toEqual([`${YALE_NAME} is now your doctor.`]);
     expect(healthOf(chooser.player).clinicId).toBe(YALE);
     const again = papers(chooser);
     expect(again.select('own-doctor')[0]!.options.map((o) => o.value)).toEqual([FAIR_HAVEN, YALE]);
@@ -546,7 +546,7 @@ describe('health.choose_clinic: Yale Health’s rule that a member’s care is h
     const screen = papers(chooser);
     h.toasts = [];
     screen.select('own-doctor')[0]!.onChange!({ target: { value: FAIR_HAVEN } });
-    expect(h.toasts).toEqual(['Your doctor, chosen.']);
+    expect(h.toasts).toEqual([`${FAIR_HAVEN_NAME} is now your doctor.`]);
     expect(healthOf(chooser.player).clinicId).toBe(FAIR_HAVEN);
     // Papers now quotes her a visit at what Fair Haven bills her.
     expect(papers(chooser).text).toContain('What it would cost you here now: a doctor’s visit $183.98');

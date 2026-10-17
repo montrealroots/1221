@@ -44,14 +44,14 @@ export function hasSsn(person: Person): boolean {
 
 /** Why they can't apply now, or nothing. */
 export function ssnRefusal(sim: Simulation, person: Person): string | undefined {
-  if (citizenOf(person, 'US')) return 'You have a Social Security number already, as a citizen.';
-  if (person.ssn?.status === 'issued') return 'Your Social Security card came already.';
-  if (person.ssn?.status === 'applied') return 'You’ve applied; the card is on its way.';
-  if (!f1Of(person)) return 'A number is for someone allowed to work in the US.';
+  if (citizenOf(person, 'US')) return 'As a US citizen, you already have a Social Security number.';
+  if (person.ssn?.status === 'issued') return 'Your Social Security card has already come.';
+  if (person.ssn?.status === 'applied') return 'You’ve already applied, and the card is on its way.';
+  if (!f1Of(person)) return 'A number is only for someone allowed to work in the US.';
   const school = person.school;
-  if (!school || schoolEnded(school.standing)) return 'On an F-1, the number needs on-campus work, which ends with the program.';
-  if (!registered(school, courseworkOf(sim, person))) return 'On an F-1, the number needs on-campus work begun or starting within 30 days: register first, and the School’s work-study is yours.';
-  if (!passportOf(person, sim.now)) return 'The office asks for your passport, in force.';
+  if (!school || schoolEnded(school.standing)) return 'On an F-1, the number needs on-campus work, and that ended with your program.';
+  if (!registered(school, courseworkOf(sim, person))) return 'On an F-1, the number needs on-campus work that has begun or starts within 30 days. Register at the School first, and the School’s work-study is yours.';
+  if (!passportOf(person, sim.now)) return 'The office asks for your passport, and you don’t have one in force.';
   // “The Social Security office is in New Haven, at 150 Court Street.” went on 2026-10-13, reached by no play: only a
   // student registered at the School gets this far, a life is enrolled only where it begins in New Haven (`populateWorld`,
   // `engine/index.ts`), and nothing has moved a person since the scope reset of 2026-10-09.
@@ -74,6 +74,6 @@ export function registerTaxId(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     if (!person || person.ssn?.status !== 'applied') return;
     person.ssn = { ...person.ssn, status: 'issued' };
-    if (person.id === s.universe.playerId) s.notify({ category: 'papers', title: 'Your Social Security Card Came', body: 'Give it to the School’s payroll and your bank. A bank that opens accounts online for someone with a number can now.', importance: 45, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'papers', title: 'Your Social Security Card Came', body: 'Give the number to the School’s payroll and your bank. A bank that opens accounts online for people with a number can now open one for you online.', importance: 45, route: '/workspace/papers' });
   });
 }

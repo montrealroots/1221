@@ -93,7 +93,7 @@ export const VISITS: Readonly<Record<VisitRule, VisitTerms>> = {
   'us-biometrics': { what: 'Biometrics At A USCIS Application Support Center', after: 0, ended: 'You missed the biometrics appointment, and USCIS treats the case as abandoned and denies it (8 CFR 103.2(b)(13)(ii)). The fees aren’t returned.' },
   'uk-enrolment-home': { what: 'Biometrics At A UKVCAS Service Point', after: 0, again: { days: 10, from: 'missed' }, ended: 'You didn’t enrol your biometrics after the Home Office’s warning, so the application is rejected and treated as not made.' },
   'uk-enrolment-abroad': { what: 'Biometrics At A Visa Application Center', after: 0, ended: 'You didn’t enrol your biometrics, so the Home Office treats the application as not made.' },
-  'ca-biometrics': { what: 'Biometrics At A Visa Application Center', after: 0, again: { days: 30, from: 'applied' }, ended: 'You didn’t give your biometrics within the 30 days of IRCC’s letter, so the application is refused.' },
+  'ca-biometrics': { what: 'Biometrics At A Visa Application Center', after: 0, again: { days: 30, from: 'applied' }, ended: 'You didn’t give your biometrics within the 30 days of IRCC’s letter, so IRCC refuses the application.' },
 };
 
 /** The visit a document waits on, where there is one, and whether it's been kept. */
@@ -164,7 +164,7 @@ export function registerPaperVisits(sim: Simulation): void {
       doc.readyAt = ready;
       if (v.years) doc.expiresAt = ready + v.years * 365.2425 * MS_DAY;
       if (ready !== was || ready <= s.now) s.schedule({ at: ready, kind: v.decidedBy ?? DECIDED_KIND, label: `${doc.name} Decided`, category: 'system', priority: 20, payload: { personId: person.id, documentId: doc.id } });
-      tell(`${terms.what.split(' At ')[0]} Done`, `${terms.what}, for ${doc.name}: done. It’s decided from ${formatDate(ready, s.zone)}.`, 45);
+      tell(`${terms.what.split(' At ')[0]} Done`, `Done: ${terms.what}, for ${doc.name}. It’s decided from ${formatDate(ready, s.zone)}.`, 45);
       return;
     }
     v.missed = (v.missed ?? 0) + 1;

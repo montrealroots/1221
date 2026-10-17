@@ -156,7 +156,7 @@ export function abroadRefusal(person: Person, bank: Bank | undefined): string | 
   const here = livesIn(person);
   const terms = bank ? homeTerms(bank.id) : undefined;
   if (!bank || !terms || here === undefined || bank.iso === here) return undefined;
-  return terms.abroad.opening ?? `The research found no way to open anything new at ${bank.name} from America, so SLATE takes it there’s none.`;
+  return terms.abroad.opening ?? `No way to open anything new at ${bank.name} from America was found, so the game assumes there’s none.`;
 }
 
 /**
@@ -227,7 +227,7 @@ export function chargeAbroadFee(sim: Simulation, account: Account, native: Money
 export function cardAbroadRefusal(bank: Bank): string | undefined {
   const terms = abroadTermsOf(bank.id);
   if (terms?.cardRefused) return terms.cardRefused;
-  if (!terms?.card) return `SLATE has no research on what ${bank.name} charges for a purchase in dollars on its card, so it can’t be your everyday card here.`;
+  if (!terms?.card) return `What ${bank.name} charges for a purchase in dollars on its card isn’t known to the game, so it can’t be your everyday card here.`;
   return undefined;
 }
 
@@ -270,10 +270,10 @@ function spentAbroadThisMonth(sim: Simulation, account: Account): Money {
 export function atmAbroad(sim: Simulation, account: Account, amount: Money, from: string): { fee: Money; native: Money } | { refused: string } | undefined {
   if (!heldFromAbroad(sim, account)) return undefined;
   const bank = bankById(account.bankId!)!;
-  if (from !== 'other_atm') return { refused: `${bank.name}’s own machines and counters are in its country; here its card works at another bank’s machine.` };
+  if (from !== 'other_atm') return { refused: `${bank.name}’s own machines and counters are in its country. Here, its card works only at another bank’s machine.` };
   const terms = abroadTermsOf(bank.id);
   if (terms?.atmRefused) return { refused: terms.atmRefused };
-  if (!terms?.atm) return { refused: `SLATE has no research on what ${bank.name} charges for cash from a machine abroad.` };
+  if (!terms?.atm) return { refused: `What ${bank.name} charges for cash from a machine abroad isn’t known to the game.` };
   const currency = moneyOf(sim, account);
   const native = chargeOf(terms.atm, fromSave(sim, amount, currency), currency, swap);
   return { native, fee: toSave(sim, native, currency) };
@@ -331,16 +331,16 @@ function sentAbroadSince(sim: Simulation, person: Person, bankId: string, since:
 export function abroadQuote(sim: Simulation, person: Person, from: Account, to: Account | undefined, sent: Money, toBankId = to?.bankId, byTheBank = false): AbroadQuote | { refused: string } {
   const fromBank = from.bankId ? bankById(from.bankId) : undefined;
   const toBank = toBankId ? bankById(toBankId) : undefined;
-  if (!fromBank || !toBank) return { refused: 'Money moves abroad between your own accounts at banks SLATE knows.' };
+  if (!fromBank || !toBank) return { refused: 'Money moves abroad only between your own accounts at banks the game has.' };
   const out = abroadTermsOf(fromBank.id);
   const into = abroadTermsOf(toBank.id);
   if (out?.outRefused) return { refused: out.outRefused };
   // Its fee for a customer abroad unpaid, at a bank that then stops its payments abroad.
   const owing = checkingsOf(sim, person).find((a) => a.bankId === fromBank.id && (a.feeOwedHeld ?? 0) > 0);
   if (owing) return { refused: `${homeTerms(fromBank.id)!.nonResidentFee!.unpaid!} ${formatMoney(owing.feeOwedHeld!, fromBank.currency)} of it is owed, taken the first night an account there holds it.` };
-  if (!out?.out) return { refused: `SLATE has no research on what ${fromBank.name} charges to send a payment abroad.` };
-  if (!into?.incoming) return { refused: `SLATE has no research on what ${toBank.name} charges for a payment received from abroad.` };
-  if (!(sent > 0)) return { refused: 'Say how much to send.' };
+  if (!out?.out) return { refused: `What ${fromBank.name} charges to send a payment abroad isn’t known to the game.` };
+  if (!into?.incoming) return { refused: `What ${toBank.name} charges for a payment received from abroad isn’t known to the game.` };
+  if (!(sent > 0)) return { refused: 'Enter how much to send.' };
   const save = saveCurrency(sim.universe);
   const sentIn = moneyOf(sim, from);
   const has = heldOf(from);
@@ -365,7 +365,7 @@ export function abroadQuote(sim: Simulation, person: Person, from: Account, to: 
   const incomingSave = toSave(sim, incoming, receivedIn);
   const receivedSave = worth - marginSave - incomingSave;
   const received = receivedIn === save ? receivedSave : arriving - incoming;
-  if (receivedSave <= 0 && !byTheBank) return { refused: 'That wouldn’t cover the margin on the exchange and the fee for receiving it.' };
+  if (receivedSave <= 0 && !byTheBank) return { refused: 'That amount wouldn’t even cover the exchange margin and the fee for receiving it.' };
   const days = out.days ?? ASSUMED_DAYS;
   const places = [daysOfAccount(from, person), daysOfAccount(to ?? { bankId: toBank.id }, person)];
   const arrives = afterBusinessDaysIn(sim.now, days, places, sim.homeZone);
@@ -392,8 +392,8 @@ const percent = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
 export function quoteWords(sim: Simulation, q: AbroadQuote): string {
   const fee = q.fee > 0 ? `for a ${formatMoney(q.fee, q.sentIn)} fee` : 'for no fee';
   const margin = q.marginAssumed
-    ? `At ${percent(q.margin)} under SLATE’s rate (${ASSUMED_WORDS.margin})`
-    : `At its rate, ${percent(q.margin)} under SLATE’s`;
+    ? `At ${percent(q.margin)} under the game’s exchange rate (${ASSUMED_WORDS.margin})`
+    : `At its rate, ${percent(q.margin)} under the game’s exchange rate`;
   const incoming = q.incoming > 0 ? ` after its ${formatMoney(q.incoming, q.receivedIn)} fee for a payment from abroad` : '';
   const days = q.daysAssumed ? ` (${ASSUMED_WORDS.days})` : '';
   return `${q.from.name} sends ${formatMoney(q.sent, q.sentIn)} ${fee}. ${margin}, ${q.to.name} receives ${formatMoney(q.received, q.receivedIn)}${incoming}, on ${formatWeekdayDate(q.arrives, sim.zone)}${days}.`;
@@ -575,7 +575,7 @@ export function foreignAccountsNotice(sim: Simulation, person: Person, year: num
   const money = (cents: Money) => formatMoney(cents, cur);
   const line = (cents: Money) => formatMoney(usd(cents), cur, { cents: false });
   const on = (d: { month: number; day: number }) => formatDate(instantFromZoned({ year: year + 1, ...d, hour: 12 }, sim.homeZone), sim.homeZone);
-  const fbar = `Your accounts at banks outside America held ${money(most)} together at most in ${year} (the highest each held at a day’s end, at SLATE’s rate), over ${line(US_REPORTS.fbar.over)}. So FinCEN Form 114, the FBAR, is due ${on(US_REPORTS.fbar.due)}, extended automatically to ${on(US_REPORTS.fbar.extended)}, and is filed online with FinCEN, not with your return.`;
+  const fbar = `Your accounts at banks outside America held ${money(most)} together at most in ${year} (the highest each held at a day’s end, at the game’s exchange rate), over ${line(US_REPORTS.fbar.over)}. So FinCEN Form 114, the FBAR, is due ${on(US_REPORTS.fbar.due)}, extended automatically to ${on(US_REPORTS.fbar.extended)}, and is filed online with FinCEN, not with your return.`;
   const t = US_REPORTS.form8938;
   const over = [
     ...(end > usd(t.yearEnd) ? [`${money(end)} on December 31, over Form 8938’s ${line(t.yearEnd)} at the year’s end`] : []),
@@ -584,7 +584,7 @@ export function foreignAccountsNotice(sim: Simulation, person: Person, year: num
   const form8938 = over.length === 0 ? ''
     : returned ? ` They held ${over.join(', and ')}, so Form 8938 goes with your ${year} return.`
     : ` They held ${over.join(', and ')}, but the form goes only with an income tax return, and you have none to file for ${year}.`;
-  return `${fbar}${form8938} SLATE doesn’t file either form for you or charge the penalties for not filing one, and it converts at its own rate, not Treasury’s for the year’s end.`;
+  return `${fbar}${form8938} The game doesn’t file either form for you or charge the penalties for not filing one. It also converts at its own exchange rate, not the Treasury’s rate for the year’s end.`;
 }
 
 export function registerAbroad(sim: Simulation): void {

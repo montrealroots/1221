@@ -62,7 +62,7 @@ describe('PLAYER JOURNEY: a tax balance paid in parts, then corrected', () => {
     const three = partsOn(r(), sim.now);
     expect(three.penalty - two.penalty).toBe(Math.round((payLate(r().due, sim.now) - rateTwo) * (tax - Math.round(tax / 2))));
     // More than owed is refused; the rest pays it off and the IRS's notices stop.
-    expect(sim.execute({ kind: 'tax.pay', payload: { year: 2026, amount: owedOn(r(), sim.now) + 1 } }).error).toMatch(/is owed; pay that or less/);
+    expect(sim.execute({ kind: 'tax.pay', payload: { year: 2026, amount: owedOn(r(), sim.now) + 1 } }).error).toMatch(/Pay that amount or less/);
     fund(sim, owedOn(r(), sim.now) + 10_000_00);
     sim.must({ kind: 'tax.pay', payload: { year: 2026 } });
     expect(r().owed).toBeUndefined();

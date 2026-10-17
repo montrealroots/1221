@@ -90,10 +90,10 @@ export const COLLECTION = {
   finalDays: 30,
   againDays: 91,
   notices: [
-    { code: 'CP501', title: 'A Reminder From The IRS', words: 'you still owe it, with the interest and penalty since.' },
-    { code: 'CP503', title: 'A Second Reminder From The IRS', words: 'it has not heard from you, and expects it paid.' },
-    { code: 'CP504', title: 'The IRS Intends To Levy', words: 'it may take a state refund and certain federal payments without further notice.' },
-    { code: 'LT11', title: 'Final Notice Of Intent To Levy', words: 'in 30 days it takes what you owe from your bank accounts.' },
+    { code: 'CP501', title: 'A Reminder From The IRS', words: 'It’s still unpaid, and interest and the late-payment penalty keep adding up. Pay it on Papers, under Tax Returns, or apply for a payment plan there.' },
+    { code: 'CP503', title: 'A Second Reminder From The IRS', words: 'The IRS hasn’t heard from you and expects it paid. Pay it on Papers, under Tax Returns, or apply for a payment plan there.' },
+    { code: 'CP504', title: 'The IRS Intends To Levy', words: 'The IRS may now take a state refund and certain federal payments without further notice. Paying it, or a payment plan, stops collection.' },
+    { code: 'LT11', title: 'Final Notice Of Intent To Levy', words: 'In 30 days the IRS takes what you owe from your bank accounts. Paying it, or a payment plan, stops the levy.' },
   ],
   source: 'https://www.irs.gov/newsroom/interest-rates-remain-the-same-for-the-fourth-quarter-of-2026; https://www.irsproblemsolve.com/2026/03/24/cp14-cp501-cp503-cp504-lt11/',
 } as const;
@@ -290,10 +290,10 @@ export function applyPayment(sim: Simulation, person: Person, r: TaxReturn, amou
  * account, their amounts unpublished: SLATE charges none.
  */
 export const FEDERAL_LIEN = {
-  name: 'Notice Of Federal Tax Lien', threshold: 10_000_00, atStep: 3, recordedAt: 'the county recorder where you live', cdpDays: 30,
+  name: 'Notice Of Federal Tax Lien', threshold: 10_000_00, atStep: 3, recordedAt: 'the county recorder’s office where you live', cdpDays: 30,
   releaseDays: 30, withdrawDays: 30, withdrawAssumed: true, errorDays: 14,
   effect: 'The IRS says it may limit your ability to get credit, and that employers, landlords and others may not view it favorably.',
-  source: 'IRC 6320, 6321, 6323(j), 6325(a); IRM 5.12.2.6, 5.12.3.9, 5.12.9.9; IRS Pub 594, Pub 1450, Form 12277; research-federal-tax-lien.json',
+  source: 'IRC 6320, 6321, 6323(j), 6325(a); IRM 5.12.2.6, 5.12.3.9, 5.12.9.9; IRS Pub 594, Pub 1450, Form 12277',
 } as const;
 export const FEDERAL_LIEN_KIND = 'tax.federal_lien';
 
@@ -305,8 +305,8 @@ function federalLienStep(sim: Simulation, person: Person, r: TaxReturn): void {
   if (r.lien || !r.owed || owedOn(r, sim.now) < usd(FEDERAL_LIEN.threshold, cur)) return;
   const amount = owedOn(r, sim.now);
   r.lien = { name: FEDERAL_LIEN.name, status: 'filed', trigger: 'collection', amount, recordedAt: FEDERAL_LIEN.recordedAt, filedAt: sim.now, fee: 0, history: [] };
-  fedNote(r.lien, sim.now, `Filed with ${FEDERAL_LIEN.recordedAt}; Letter 3172 sent`, amount);
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: 'The IRS Filed A Notice Of Federal Tax Lien', body: `Letter 3172: a notice of federal tax lien for ${formatMoney(amount, cur)} on your ${r.year} return, filed with ${FEDERAL_LIEN.recordedAt}. You have ${FEDERAL_LIEN.cdpDays} days to ask for a Collection Due Process hearing. ${FEDERAL_LIEN.effect} It’s released within ${FEDERAL_LIEN.releaseDays} days of payment in full.`, importance: 90, route: '/workspace/papers' });
+  fedNote(r.lien, sim.now, `Filed with ${FEDERAL_LIEN.recordedAt}, and Letter 3172 sent`, amount);
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: 'The IRS Filed A Notice Of Federal Tax Lien', body: `Letter 3172: the IRS filed a notice of federal tax lien for ${formatMoney(amount, cur)} on your ${r.year} return, with ${FEDERAL_LIEN.recordedAt}. The letter gives you ${FEDERAL_LIEN.cdpDays} days to ask for a Collection Due Process hearing, which the game doesn’t offer. ${FEDERAL_LIEN.effect} It’s released within ${FEDERAL_LIEN.releaseDays} days of payment in full.`, importance: 90, route: '/workspace/papers' });
 }
 
 /** Paid in full: released within 30 days, on its own. */
@@ -332,15 +332,15 @@ export function federalLienInError(r: TaxReturn): boolean {
 export function federalLienWithdrawRefusal(person: Person, r: TaxReturn | undefined, now: Instant): string | undefined {
   const l = r?.lien;
   if (!l) return 'There’s no federal tax lien on that year.';
-  if (l.status === 'withdrawn') return 'It’s been withdrawn.';
-  if (l.status === 'disputed') return `Asked: decided by ${formatDate(l.decideAt!, HOME)}.`;
+  if (l.status === 'withdrawn') return 'The lien has already been withdrawn.';
+  if (l.status === 'disputed') return `You’ve already asked. The IRS decides by ${formatDate(l.decideAt!, HOME)}.`;
   if (federalLienInError(r!)) return undefined;
-  if (l.status !== 'released') return 'A withdrawal after payment comes once it’s released, within 30 days of payment in full; one filed in error can be withdrawn now.';
+  if (l.status !== 'released') return `You can ask for a withdrawal once the lien is released, which happens within ${FEDERAL_LIEN.releaseDays} days of paying in full. Only a lien filed in error can be withdrawn sooner, and this one wasn’t.`;
   // The three tax years before this one (from 2026-10-12: until then the three after the lien's year, so a lien on 2026
   // released in 2033 read 2027 to 2029 and let 2030 to 2032 go unfiled). A year not yet due never stops it.
   const y = zonedParts(now, HOME).year;
   const unfiled = [1, 2, 3].map((n) => person.returns?.[String(y - n)]).find((x) => x && x.filedAt === undefined && x.due < now && x.figures.balance > 0);
-  if (unfiled) return `The IRS withdraws one after payment only with the last three years’ returns filed: ${unfiled.year}’s isn’t.`;
+  if (unfiled) return `The IRS withdraws a lien after payment only if your last three years’ returns are filed, and your ${unfiled.year} return isn’t. File it first.`;
   return undefined;
 }
 
@@ -354,14 +354,14 @@ export function registerFederalLien(sim: Simulation): void {
       l.status = 'released';
       l.releasedAt = s.now;
       fedNote(l, s.now, 'Released: a certificate of release recorded');
-      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your Federal Tax Lien Is Released', body: `The IRS released the notice of federal tax lien on your ${r.year} return. You can ask for it to be withdrawn too, on Form 12277, with your last three years’ returns filed.`, importance: 70, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your Federal Tax Lien Is Released', body: `The IRS released the notice of federal tax lien on your ${r.year} return. You can also ask for it to be withdrawn on Form 12277, on Papers under Tax Returns, if your last three years’ returns are filed.`, importance: 70, route: '/workspace/papers' });
       return;
     }
     if (item.payload.action === 'withdraw' && l.status === 'disputed') {
       l.status = 'withdrawn';
       l.withdrawnAt = s.now;
       fedNote(l, s.now, item.payload.error ? 'Released as erroneous, and withdrawn' : 'Withdrawn on Form 12277');
-      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your Federal Tax Lien Is Withdrawn', body: `The IRS withdrew the notice of federal tax lien on your ${r.year} return${item.payload.error ? ', as filed in error' : ''}: it’s as if it had never been filed.`, importance: 70, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your Federal Tax Lien Is Withdrawn', body: `The IRS withdrew the notice of federal tax lien on your ${r.year} return${item.payload.error ? ', because it was filed in error' : ''}. A withdrawn notice is treated as if it had never been filed.`, importance: 70, route: '/workspace/papers' });
     }
   });
 
@@ -375,7 +375,7 @@ export function registerFederalLien(sim: Simulation): void {
     l.status = 'disputed';
     l.disputedAt = s.now;
     l.decideAt = s.now + (error ? FEDERAL_LIEN.errorDays : FEDERAL_LIEN.withdrawDays) * MS_DAY;
-    fedNote(l, s.now, error ? 'Asked to be released as erroneous (IRC 6326)' : 'Form 12277 sent, asking its withdrawal');
+    fedNote(l, s.now, error ? 'Asked to be released as erroneous (IRC 6326)' : 'Form 12277 sent, asking for its withdrawal');
     s.schedule({ at: l.decideAt, kind: FEDERAL_LIEN_KIND, label: FEDERAL_LIEN.name, category: 'system', priority: 20, payload: { personId: person.id, year: r!.year, action: 'withdraw', error } });
     return { decideAt: l.decideAt, error };
   });
@@ -418,8 +418,8 @@ function billed(sim: Simulation, person: Person, r: TaxReturn): void {
   const pct = (x: number) => `${Math.round(x * 1000) / 10}%`;
   const runs = `interest at ${pct(COLLECTION.interest)} a year and a penalty for paying late of ${pct(RETURN.payLateMonthly)} a month`;
   const body = sim.now < r.due
-    ? `Notice CP14: your ${r.year} return shows ${formatMoney(owed, cur)} owed to the IRS, due by ${formatDate(r.due, HOME)}. Paid by then, nothing is added; from then, ${runs} run on what’s unpaid, and its reminders begin ${COLLECTION.noticeWeeks} weeks after that date.`
-    : `Notice CP14: ${formatMoney(owed, cur)} owed on your ${r.year} return${owed > (r.parts?.tax ?? owed) ? ', with the penalties and interest since its due date' : ''}. Until it’s paid, ${runs} go on, and its reminders begin in ${COLLECTION.noticeWeeks} weeks.`;
+    ? `Notice CP14: your ${r.year} return shows ${formatMoney(owed, cur)} owed to the IRS, due by ${formatDate(r.due, HOME)}. If you pay by then, nothing is added. After that, ${runs} are added to what’s unpaid, and the IRS’s reminders begin ${COLLECTION.noticeWeeks} weeks after the due date. Pay it on Papers, under Tax Returns.`
+    : `Notice CP14: you owe ${formatMoney(owed, cur)} on your ${r.year} return${owed > (r.parts?.tax ?? owed) ? ', including the penalties and interest since its due date' : ''}. Until it’s paid, ${runs} keep adding up, and the IRS’s reminders begin in ${COLLECTION.noticeWeeks} weeks. Pay it on Papers, under Tax Returns.`;
   sim.notify({ category: 'tax', title: 'A Bill From The IRS', body, importance: 75, route: '/workspace/papers' });
 }
 export const TAX_DUE_KIND = 'tax.due';
@@ -544,7 +544,7 @@ export const PLAN = {
   shortDays: 180, shortMax: 100_000_00, longMax: 50_000_00,
   fee: { onlineDebit: 29_00, online: 69_00, lowIncomeDebit: 0, lowIncome: 43_00 }, reviseFee: 6_00,
   lowIncomeShare: 2.5, leastMonths: 72, reducedRate: 0.0025, defaultDays: 30, mailDays: 30, addedPayments: 2,
-  source: 'https://www.irs.gov/payments/payment-plans-installment-agreements; IRM 5.14.5 (07-21-2026); 26 CFR 300.1-300.2; IRC 6651(h); research-switch-loans-plans.json',
+  source: 'https://www.irs.gov/payments/payment-plans-installment-agreements; IRM 5.14.5 (07-21-2026); 26 CFR 300.1-300.2; IRC 6651(h)',
 } as const;
 export const TAX_PLAN_KIND = 'tax.plan_payment';
 export const TAX_PLAN_DECIDE_KIND = 'tax.plan_decide';
@@ -561,14 +561,14 @@ export const owedEverywhere = (person: Person, at: Instant): Money => owedAll(pe
 
 /** Why a plan can't be applied for, or nothing; and what it would be. */
 export function planRefusal(sim: Simulation, person: Person, kind: 'short' | 'long'): string | undefined {
-  if (person.taxPlan && ['pending', 'active', 'default'].includes(person.taxPlan.status)) return person.taxPlan.status === 'pending' ? `Your application is with the IRS, answered by ${formatDate(person.taxPlan.decideAt, HOME)}.` : 'You have a payment plan.';
+  if (person.taxPlan && ['pending', 'active', 'default'].includes(person.taxPlan.status)) return person.taxPlan.status === 'pending' ? `Your application is already with the IRS. It answers by ${formatDate(person.taxPlan.decideAt, HOME)}.` : 'You already have a payment plan with the IRS.';
   const owed = owedAll(person, sim.now);
   if (owed <= 0) return 'You owe the IRS nothing.';
   const unfiled = Object.values(person.returns ?? {}).find((r) => r.filedAt === undefined && r.due < sim.now);
-  if (unfiled) return `The IRS asks every return filed first: ${unfiled.year}’s isn’t.`;
+  if (unfiled) return `The IRS needs every return filed first, and your ${unfiled.year} return isn’t. File it first.`;
   const cur = saveCurrency(sim.universe);
   if (kind === 'short' && owed >= usd(PLAN.shortMax, cur)) return `A short-term plan is for less than ${formatMoney(usd(PLAN.shortMax, cur), cur, { cents: false })}.`;
-  if (kind === 'long' && owed > usd(PLAN.longMax, cur)) return `A Simple Payment Plan is for ${formatMoney(usd(PLAN.longMax, cur), cur, { cents: false })} or less; more needs a financial statement SLATE doesn’t model.`;
+  if (kind === 'long' && owed > usd(PLAN.longMax, cur)) return `A Simple Payment Plan is for ${formatMoney(usd(PLAN.longMax, cur), cur, { cents: false })} or less. A larger balance needs a financial statement, which the game doesn’t offer.`;
   return undefined;
 }
 
@@ -648,7 +648,7 @@ function refusePlan(sim: Simulation, person: Person, p: TaxPlan, why: string): v
   p.why = why;
   planNote(p, sim.now, `Refused: ${why}`);
   const owes = resumeCollection(sim, person);
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: 'The IRS Refused A Payment Plan', body: `${why}${owes ? ' The IRS’s letters about what you owe start again.' : ''}`, importance: 85, route: '/workspace/papers' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: 'The IRS Declined Your Payment Plan', body: `${why}${owes ? ' Its letters about what you owe will start again.' : ''}`, importance: 85, route: '/workspace/papers' });
 }
 
 /** A plan ended, by default or paid off: the reduced rate stops, and anything still owed goes back to collection. */
@@ -687,7 +687,7 @@ export function newLiability(sim: Simulation, person: Person, added: Money): voi
   p.defaultBy = sim.now + PLAN.defaultDays * MS_DAY;
   planNote(p, sim.now, 'New tax beyond what the plan takes: CP523', added);
   sim.schedule({ at: p.defaultBy, kind: TAX_PLAN_DEFAULT_KIND, label: 'IRS: Notice Of Intent To End The Plan', category: 'personal', priority: 25, payload: { personId: person.id } });
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: 'Notice CP523: Your Payment Plan', body: `New tax of ${formatMoney(added, saveCurrency(sim.universe))} is more than the plan’s two payments take in. Revise the plan by ${formatDate(p.defaultBy, HOME)}, or it ends and collection resumes.`, importance: 90, route: '/workspace/papers' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: 'Notice CP523: Your Payment Plan', body: `New tax of ${formatMoney(added, saveCurrency(sim.universe))} is more than two of the plan’s monthly payments, so it can’t simply join the plan. Revise the plan on Papers by ${formatDate(p.defaultBy, HOME)}, or it ends and collection resumes.`, importance: 90, route: '/workspace/papers' });
 }
 
 export interface ReturnFigures {
@@ -1281,7 +1281,7 @@ export function settleUkYears(sim: Simulation, person: Person, calendarYear: num
     uk.withheld += change;
     const memo = change < 0 ? `HMRC refund, UK tax year ${key}–${String(Number(key) + 1).slice(2)}` : `HMRC, UK tax year ${key}–${String(Number(key) + 1).slice(2)}`;
     sim.post({ memo, category: 'tax', postings: [{ accountId: account.id, amount: -change }, { accountId: sim.nominalAccount(change < 0 ? 'income' : 'expense', change < 0 ? 'Tax Refund' : 'Foreign Tax Withheld').id, amount: change }] });
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: change < 0 ? 'The UK Gave Tax Back' : 'The UK Took Its Balance', body: `Your ${key}–${String(Number(key) + 1).slice(2)} UK tax year: ${formatMoney(Math.abs(change), cur)} ${change < 0 ? 'back' : 'paid'}, ${tax === 0 ? 'the treaty leaving it untaxed' : `on ${formatMoney(tax, cur)} of UK tax`}.`, importance: 70, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: change < 0 ? 'The UK Refunded Tax' : 'The UK Collected Its Balance', body: `Your ${key}–${String(Number(key) + 1).slice(2)} UK tax year is settled: ${formatMoney(Math.abs(change), cur)} ${change < 0 ? 'came back to you' : 'was paid'}, ${tax === 0 ? 'because the treaty leaves it untaxed' : `on ${formatMoney(tax, cur)} of UK tax`}.`, importance: 70, route: '/workspace/papers' });
   }
 }
 
@@ -1323,7 +1323,7 @@ export function registerTaxReturn(sim: Simulation): void {
     if (person.id !== s.universe.playerId) return;
     s.requireDecision({
       urgency: 70, category: 'taxes', title: `Your ${year} Tax Return`,
-      detail: `${nra ? (figures.income > 0 ? 'Form 1040-NR, with Form 8843. ' : 'Form 8843, which every F-1 student files; no income to report. ') : ''}${figures.balance > 0 ? `You owe ${formatMoney(figures.balance, cur)}` : figures.balance < 0 ? `${formatMoney(-figures.balance, cur)} comes back to you` : 'Nothing owed or due back'} on ${formatMoney(figures.income, cur)} of income. File by ${formatDate(due, HOME)}.`,
+      detail: `${nra ? (figures.income > 0 ? 'Form 1040-NR, with Form 8843. ' : 'Form 8843, which every F-1 student files. There’s no income to report. ') : ''}${figures.balance > 0 ? `You owe ${formatMoney(figures.balance, cur)}` : figures.balance < 0 ? `You’re due a refund of ${formatMoney(-figures.balance, cur)}` : 'You owe nothing and are due nothing back'}, on ${formatMoney(figures.income, cur)} of income. File it by ${formatDate(due, HOME)}.`,
       route: '/workspace/papers', dueAt: due, refType: 'return', refId: String(year),
       actions: [{ label: 'File It', commandKind: 'tax.file', payload: { year } }],
     });
@@ -1352,11 +1352,11 @@ export function registerTaxReturn(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     const to = owedToOf(person, r);
     const states = Object.entries(to.states).filter(([, v]) => v > 0).map(([state]) => stateName(state));
-    const theirs = states.length === 0 ? '' : states.length === 1 ? `${states[0]} charges its own on what it’s owed.` : `${states.join(' and ')} each charge their own on what they’re owed.`;
+    const theirs = states.length === 0 ? '' : states.length === 1 ? `${states[0]} charges its own penalty on what you owe it.` : `${states.join(' and ')} each charge their own penalty on what you owe them.`;
     const body = to.irs > 0
-      ? `Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least ${formatMoney(Math.min(usd(RETURN.lateMinimum, cur), to.irs), cur)}.${theirs ? ` ${theirs}` : ''}`
-      : theirs ? `${to.irs < 0 ? 'The IRS’s refund waits for the return, with no penalty on it.' : 'The IRS is owed nothing on it.'} ${theirs}`
-      : r.figures.balance < 0 ? 'A refund waits for the return; there’s no penalty on one.' : 'With no tax owed on it and no refund due, there’s no penalty; it’s still yours to file.';
+      ? `Each month it’s late adds ${RETURN.lateMonthly * 100}% of what you owe the IRS, up to a quarter of it, and after ${RETURN.lateMinimumAfterDays} days the penalty is at least ${formatMoney(Math.min(usd(RETURN.lateMinimum, cur), to.irs), cur)}.${theirs ? ` ${theirs}` : ''} File it on Papers, under Tax Returns.`
+      : theirs ? `${to.irs < 0 ? 'Your IRS refund waits until you file, with no penalty.' : 'You owe the IRS nothing on it.'} ${theirs} File it on Papers, under Tax Returns.`
+      : r.figures.balance < 0 ? 'Your refund waits until you file it. There’s no penalty when you’re due a refund.' : 'With no tax owed and no refund due, there’s no penalty, but you still need to file it.';
     s.notify({ category: 'tax', title: `Your ${r.year} Return Is Late`, body, importance: 80, route: '/workspace/papers' });
   });
 
@@ -1376,7 +1376,7 @@ export function registerTaxReturn(sim: Simulation): void {
     const interest = lateInterest(federalPart, r.due, s.now, cur);
     const total = federalPart + penalty + interest;
     if (item.payload.step === 'proposed') {
-      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Figured Your ${r.year} Return`, body: `Notice CP2566: with no return from you, the IRS worked out ${formatMoney(total, cur)} from what your employers and banks reported, with the penalty for filing late and the interest. File your own within ${SUBSTITUTE.answerDays} days to replace it.`, importance: 90, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Figured Your ${r.year} Return`, body: `Notice CP2566: you didn’t file, so the IRS worked out that you owe ${formatMoney(total, cur)} from what your employers and banks reported, including the late-filing penalty and interest. File your own return within ${SUBSTITUTE.answerDays} days to replace it.`, importance: 90, route: '/workspace/papers' });
       s.schedule({ at: s.now + SUBSTITUTE.answerDays * MS_DAY, kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'assessed' } });
       return;
     }
@@ -1389,7 +1389,7 @@ export function registerTaxReturn(sim: Simulation): void {
     demand(r, lateShares(federalPart, r.due, s.now, cur).payLate, s.now);
     r.collection = 0;
     // Its File It lapsed on the due date (`expireDecisions`); the Taxes screen's is gone once it's filed.
-    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Assessed Your ${r.year} Return`, body: `${formatMoney(total, cur)} is owed as the IRS figured it, and its collection begins.`, importance: 90, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `The IRS Assessed Your ${r.year} Return`, body: `You owe ${formatMoney(total, cur)} as the IRS worked it out, and its collection begins. You can still file your own return to replace it.`, importance: 90, route: '/workspace/papers' });
     nextNotice(s, person, r);
   });
 
@@ -1423,7 +1423,7 @@ export function registerTaxReturn(sim: Simulation): void {
     if (step < COLLECTION.notices.length) {
       const n = COLLECTION.notices[step]!;
       r.collection = step + 1;
-      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: n.title, body: `Notice ${n.code}: ${formatMoney(r.owed, cur)} on your ${r.year} return; ${n.words}`, importance: step >= 2 ? 90 : 75, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: n.title, body: `Notice ${n.code}: you owe ${formatMoney(r.owed, cur)} on your ${r.year} return. ${n.words}`, importance: step >= 2 ? 90 : 75, route: '/workspace/papers' });
       nextNotice(s, person, r);
       return;
     }
@@ -1435,7 +1435,7 @@ export function registerTaxReturn(sim: Simulation): void {
       applyPayment(s, person, r, taken, 'levy');
     }
     r.collection = step + 1;
-    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'The IRS Levied Your Accounts', body: `${formatMoney(taken, cur)} taken from your bank accounts for your ${r.year} return${(r.owed ?? 0) > 0 ? `; ${formatMoney(r.owed!, cur)} is still owed, and it levies again while it is` : ', which is now paid'}.`, importance: 95, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'The IRS Levied Your Accounts', body: `The IRS took ${formatMoney(taken, cur)} from your bank accounts for your ${r.year} return.${(r.owed ?? 0) > 0 ? ` You still owe ${formatMoney(r.owed!, cur)}, and it will levy again while you do.` : ' That pays it in full.'}`, importance: 95, route: '/workspace/papers' });
     if ((r.owed ?? 0) > 0) nextNotice(s, person, r);
   });
 
@@ -1459,7 +1459,7 @@ export function registerTaxReturn(sim: Simulation): void {
       s.post({ memo: `Tax refund, ${r.year}, applied to ${other.year}`, category: 'tax', postings: [{ accountId: s.nominalAccount('expense', expenseFor('tax')).id, amount: take }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -take }] });
       applyPayment(s, person, other, take, 'refund offset');
       back -= take;
-      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your ${r.year} Refund Went To ${other.year}`, body: `${formatMoney(take, saveCurrency(s.universe))} of it paid what you owe on ${other.year}.`, importance: 70, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your ${r.year} Refund Went To ${other.year}`, body: `${formatMoney(take, saveCurrency(s.universe))} of your ${r.year} refund paid what you owed for ${other.year}.`, importance: 70, route: '/workspace/papers' });
     }
     // Then to the state on the return's address for its past-due income tax (IRC 6402(e)).
     back -= federalOffsetToState(s, person, stateOf(r.figures.cityId), back, r.year);
@@ -1475,11 +1475,11 @@ export function registerTaxReturn(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     const directDebit = kind === 'long' ? p?.directDebit !== false : false;
     const monthly = kind === 'long' ? Math.round(Number(p?.monthly ?? leastMonthly(owed))) : undefined;
-    if (monthly !== undefined && monthly < leastMonthly(owed)) throw new CommandError(`The least a month is ${formatMoney(leastMonthly(owed), cur)}, what’s owed over ${PLAN.leastMonths} months.`);
+    if (monthly !== undefined && monthly < leastMonthly(owed)) throw new CommandError(`The lowest monthly payment is ${formatMoney(leastMonthly(owed), cur)}: what you owe, spread over ${PLAN.leastMonths} months.`);
     const fee = planFee(s, person, kind, directDebit);
     // The setup fee leaves the bank on approval, so a bank that can't cover it now isn't applied with (from 2026-10-12, as
     // a revision's fee is; until then the plan began with nothing charged).
-    if (fee > 0 && inTheBank(s, person) < fee) throw new CommandError(`The ${formatMoney(fee, cur)} setup fee is more than the bank can cover.`);
+    if (fee > 0 && inTheBank(s, person) < fee) throw new CommandError(`Your bank can’t cover the ${formatMoney(fee, cur)} setup fee, so you haven’t applied and nothing was charged.`);
     // Online with a Social Security number, decided at once; without one, Form 9465 by mail.
     const online = hasSsn(person);
     const decideAt = online ? s.now + 60_000 : s.now + PLAN.mailDays * MS_DAY;
@@ -1501,9 +1501,9 @@ export function registerTaxReturn(sim: Simulation): void {
     if (no && !/payment plan|application/.test(no)) { refusePlan(s, person, p, no); return; }
     // The setup fee, paid on approval; a bank emptied in Form 9465's thirty days can't, and there's no plan (from
     // 2026-10-12).
-    if (p.fee > 0 && !payFromBank(s, person, p.fee, 'IRS payment plan setup fee', 'tax')) { refusePlan(s, person, p, `The ${formatMoney(p.fee, saveCurrency(s.universe))} setup fee is more than the bank can cover.`); return; }
+    if (p.fee > 0 && !payFromBank(s, person, p.fee, 'IRS payment plan setup fee', 'tax')) { refusePlan(s, person, p, `Your bank couldn’t cover the ${formatMoney(p.fee, saveCurrency(s.universe))} setup fee, so the plan wasn’t set up.`); return; }
     startPlan(s, person, p);
-    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your IRS Payment Plan Is Approved', body: p.kind === 'long' ? `${formatMoney(p.monthly!, saveCurrency(s.universe))} a month${p.directDebit ? ' by direct debit' : ''}, from ${formatDate(p.nextDue!, HOME)}. Interest goes on; ${Object.values(person.returns ?? {}).some((r) => r.reducedFrom === p.startedAt) ? 'the late-payment penalty halves for each month that begins while it stands' : 'the penalty stays at its full rate, since the return wasn’t filed on time'}. Collection has stopped.` : `Pay what’s owed by ${formatDate(p.payBy!, HOME)}; there’s no setup fee. Interest and the penalty go on.`, importance: 80, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your IRS Payment Plan Is Approved', body: p.kind === 'long' ? `${formatMoney(p.monthly!, saveCurrency(s.universe))} a month${p.directDebit ? ' by direct debit' : ''}, from ${formatDate(p.nextDue!, HOME)}. Collection has stopped. Interest keeps adding up, and ${Object.values(person.returns ?? {}).some((r) => r.reducedFrom === p.startedAt) ? 'the late-payment penalty is halved for each month that begins while the plan is in force' : 'the penalty stays at its full rate, because the return wasn’t filed on time'}.` : `Pay what you owe by ${formatDate(p.payBy!, HOME)}. There’s no setup fee. Interest and the penalty keep adding up until it’s paid.`, importance: 80, route: '/workspace/papers' });
   });
 
   sim.onSchedule(TAX_PLAN_KIND, (item, s) => {
@@ -1525,7 +1525,7 @@ export function registerTaxReturn(sim: Simulation): void {
     p.defaultBy = s.now + PLAN.defaultDays * MS_DAY;
     planNote(p, s.now, 'A payment missed: CP523', due);
     s.schedule({ at: p.defaultBy, kind: TAX_PLAN_DEFAULT_KIND, label: 'IRS: Notice Of Intent To End The Plan', category: 'personal', priority: 25, payload: { personId: person.id } });
-    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Notice CP523: A Payment Missed', body: `The bank couldn’t pay ${formatMoney(due, cur)}. Catch up by ${formatDate(p.defaultBy, HOME)}, on Papers, or the plan ends and collection resumes.`, importance: 90, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Notice CP523: A Payment Missed', body: `Your bank couldn’t pay the plan’s ${formatMoney(due, cur)}. Catch up by ${formatDate(p.defaultBy, HOME)} on Papers, under Tax Returns, or the plan ends and collection resumes.`, importance: 90, route: '/workspace/papers' });
   });
 
   sim.onSchedule(TAX_PLAN_DEFAULT_KIND, (item, s) => {
@@ -1533,15 +1533,15 @@ export function registerTaxReturn(sim: Simulation): void {
     const p = person?.taxPlan;
     if (!person || !p || p.status !== 'default') return;
     endPlan(s, person, p, 'ended', 'Ended: not caught up after CP523');
-    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your IRS Payment Plan Has Ended', body: 'It wasn’t caught up in its thirty days. Collection resumes on what’s owed: the final notice before a levy comes next.', importance: 95, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your IRS Payment Plan Has Ended', body: 'The missed payment wasn’t made up within its thirty days. Collection resumes on what you owe, and the final notice before a levy comes next.', importance: 95, route: '/workspace/papers' });
   });
 
   sim.onCommand<Record<string, never>, { paid: Money }>('tax.catch_up_plan', (_p, { sim: s }) => {
     const person = s.player;
     const p = person.taxPlan;
-    if (!p || p.status !== 'default') throw new CommandError('Your plan isn’t behind.');
+    if (!p || p.status !== 'default') throw new CommandError('Your plan isn’t behind, so there’s nothing to catch up.');
     const due = Math.min(owedAll(person, s.now), p.kind === 'short' ? owedAll(person, s.now) : p.monthly!);
-    if (!payFromBank(s, person, due, 'IRS payment plan, caught up', 'tax')) throw new CommandError(`${formatMoney(due, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (!payFromBank(s, person, due, 'IRS payment plan, caught up', 'tax')) throw new CommandError(`Your bank can’t cover ${formatMoney(due, saveCurrency(s.universe))}, so nothing was paid.`);
     payPlan(s, person, due);
     for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_PLAN_DEFAULT_KIND && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);
     p.status = 'active';
@@ -1555,14 +1555,14 @@ export function registerTaxReturn(sim: Simulation): void {
   sim.onCommand<{ monthly?: Money }, { monthly: Money; fee: Money }>('tax.revise_plan', (p, { sim: s }) => {
     const person = s.player;
     const plan = person.taxPlan;
-    if (!plan || (plan.status !== 'active' && plan.status !== 'default') || plan.kind !== 'long') throw new CommandError('Only a monthly plan in force is revised.');
+    if (!plan || (plan.status !== 'active' && plan.status !== 'default') || plan.kind !== 'long') throw new CommandError('Only a monthly plan that’s in force can be revised.');
     const owed = owedAll(person, s.now);
     const cur = saveCurrency(s.universe);
     const monthly = Math.round(Number(p?.monthly ?? leastMonthly(owed)));
-    if (monthly < leastMonthly(owed)) throw new CommandError(`The least a month is ${formatMoney(leastMonthly(owed), cur)}.`);
-    if (owed > usd(PLAN.longMax, cur)) throw new CommandError(`More than ${formatMoney(usd(PLAN.longMax, cur), cur, { cents: false })} is owed now: a revision needs a financial statement SLATE doesn’t model.`);
+    if (monthly < leastMonthly(owed)) throw new CommandError(`The lowest monthly payment is ${formatMoney(leastMonthly(owed), cur)}.`);
+    if (owed > usd(PLAN.longMax, cur)) throw new CommandError(`You owe more than ${formatMoney(usd(PLAN.longMax, cur), cur, { cents: false })} now. A revision would need a financial statement, which the game doesn’t offer.`);
     const fee = usd(PLAN.reviseFee, cur);
-    if (!payFromBank(s, person, fee, 'IRS payment plan revision fee', 'tax')) throw new CommandError(`The ${formatMoney(fee, cur)} fee is more than the bank can cover.`);
+    if (!payFromBank(s, person, fee, 'IRS payment plan revision fee', 'tax')) throw new CommandError(`Your bank can’t cover the ${formatMoney(fee, cur)} revision fee, so nothing was changed.`);
     plan.monthly = monthly;
     plan.covers = owed;
     if (plan.status === 'default') { plan.status = 'active'; delete plan.defaultBy; for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_PLAN_DEFAULT_KIND && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now); }
@@ -1575,7 +1575,7 @@ export function registerTaxReturn(sim: Simulation): void {
     const person = s.player;
     const r = returnsOf(person)[String(p.year)];
     if (!r) throw new CommandError('There’s no return for that year.');
-    if (r.filedAt !== undefined && !r.substitute) throw new CommandError('You’ve filed it. A change is an amended return.');
+    if (r.filedAt !== undefined && !r.substitute) throw new CommandError('You’ve already filed it. To change it, file an amended return.');
     const cur = saveCurrency(s.universe);
     if (r.substitute) return reconsider(s, person, r);
     // Filed before the IRS assessed its substitute: the CP2566's proposal is replaced, and nothing of it is assessed; a
@@ -1632,13 +1632,13 @@ export function registerTaxReturn(sim: Simulation): void {
   sim.onCommand<{ year: number; amount?: Money }, { paid: Money; owed: Money; tax: Money; penalty: Money; interest: Money }>('tax.pay', (p, { sim: s }) => {
     const person = s.player;
     const r = returnsOf(person)[String(p.year)];
-    if (!r?.owed) throw new CommandError('That year is paid.');
+    if (!r?.owed) throw new CommandError('That year is already paid.');
     const cur = saveCurrency(s.universe);
     const total = owedOn(r, s.now);
     const amount = p.amount === undefined ? total : Math.round(Number(p.amount));
-    if (!(amount > 0)) throw new CommandError('Pay something.');
-    if (amount > total) throw new CommandError(`${formatMoney(total, cur)} is owed; pay that or less.`);
-    if (!payFromBank(s, person, amount, `Income tax owed, ${r.year}${amount < total ? ', in part' : ''}`, 'tax')) throw new CommandError(`${formatMoney(amount, cur)} is more than the bank can cover.`);
+    if (!(amount > 0)) throw new CommandError('Enter an amount above zero.');
+    if (amount > total) throw new CommandError(`You owe ${formatMoney(total, cur)}. Pay that amount or less.`);
+    if (!payFromBank(s, person, amount, `Income tax owed, ${r.year}${amount < total ? ', in part' : ''}`, 'tax')) throw new CommandError(`Your bank can’t cover ${formatMoney(amount, cur)}, so nothing was paid.`);
     const split = applyPayment(s, person, r, amount, 'payment');
     return { paid: amount, owed: r.owed ?? 0, ...split };
   });
@@ -1659,7 +1659,7 @@ export function registerTaxReturn(sim: Simulation): void {
     const was = owedToOf(person, r!);
     const now = figures.owedTo!;
     const byState = [...new Set([...Object.keys(was.states), ...Object.keys(now.states)])].map((st) => [st, (now.states[st] ?? 0) - (was.states[st] ?? 0)] as const).filter(([, d]) => d !== 0);
-    if (change === 0 && now.irs === was.irs && !byState.length) throw new CommandError('Your return as filed matches what’s on record: there’s nothing to amend.');
+    if (change === 0 && now.irs === was.irs && !byState.length) throw new CommandError('Your return as filed matches what’s on record, so there’s nothing to amend.');
     const form = figures.form === '1040-NR' ? '1040-X with 1040-NR' as const : '1040-X' as const;
     const processAt = s.now + AMEND.weeks * 7 * MS_DAY;
     const sides = { irs: now.irs - was.irs, ...(byState.length ? { states: Object.fromEntries(byState) } : {}) };
@@ -1682,7 +1682,7 @@ export function registerTaxReturn(sim: Simulation): void {
     for (const [state, d] of Object.entries(a.states ?? {})) amendState(s, person, r, state, d);
     // The IRS's change: a return amended before the split carries none, and its whole change is the IRS's as it was.
     const federal = a.irs ?? a.change;
-    if (federal === 0) { if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your Amended ${r.year} Return Is Processed`, body: `The federal tax didn’t change; each state’s is on Papers.`, importance: 70, route: '/workspace/papers' }); return; }
+    if (federal === 0) { if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your Amended ${r.year} Return Is Processed`, body: `The federal tax didn’t change. Each state’s result is on Papers, under Tax Returns.`, importance: 70, route: '/workspace/papers' }); return; }
     a.change = federal;
     if (a.change > 0) {
       const interest = Math.round(a.change * (irsGrowth(r.due, s.now) - 1));
@@ -1694,7 +1694,7 @@ export function registerTaxReturn(sim: Simulation): void {
       // Under a payment plan, the new tax joins it or puts it in default (`newLiability`); otherwise collection.
       if (person.taxPlan?.status === 'active') { if (r.filedAt !== undefined && r.filedAt <= r.due && !r.substitute) underPlan(r, s.now); newLiability(s, person, a.change + interest); }
       else if (!had) { r.collection = 0; nextNotice(s, person, r); }
-      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your Amended ${r.year} Return Is Processed`, body: `Form ${a.form}: ${formatMoney(a.change, cur)} more tax, with ${formatMoney(interest, cur)} of interest from the due date. ${formatMoney(r.owed ?? 0, cur)} is owed on the year.`, importance: 85, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your Amended ${r.year} Return Is Processed`, body: `Form ${a.form}: ${formatMoney(a.change, cur)} more tax, plus ${formatMoney(interest, cur)} of interest from the due date. You owe ${formatMoney(r.owed ?? 0, cur)} on the year.`, importance: 85, route: '/workspace/papers' });
       return;
     }
     let back = -a.change;
@@ -1705,7 +1705,7 @@ export function registerTaxReturn(sim: Simulation): void {
     a.interest = interest;
     if (back + interest > 0) s.post({ memo: `Tax refund, amended ${r.year} return${interest ? ', with interest' : ''}`, category: 'tax', postings: [{ accountId: payeeAccount(s, person).id, amount: back + interest }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -back }, ...(interest ? [{ accountId: s.nominalAccount('income', 'Interest').id, amount: -interest }] : [])] });
     if (interest) yearOf(person, zonedParts(s.now, HOME).year).interest = (yearOf(person, zonedParts(s.now, HOME).year).interest ?? 0) + interest;
-    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your Amended ${r.year} Return Is Processed`, body: `Form ${a.form}: ${formatMoney(-a.change, cur)} less tax.${offset > 0 ? ` ${formatMoney(offset, cur)} of it went to what was owed on the year.` : ''}${back > 0 ? ` ${formatMoney(back + interest, cur)} is refunded, ${formatMoney(interest, cur)} of it the IRS’s interest, which is taxable.` : ''}`, importance: 85, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: `Your Amended ${r.year} Return Is Processed`, body: `Form ${a.form}: ${formatMoney(-a.change, cur)} less tax.${offset > 0 ? ` ${formatMoney(offset, cur)} of it paid what you owed on the year.` : ''}${back > 0 ? ` ${formatMoney(back + interest, cur)} is refunded, including ${formatMoney(interest, cur)} of interest from the IRS, which is taxable.` : ''}`, importance: 85, route: '/workspace/papers' });
   });
 }
 
@@ -1716,9 +1716,9 @@ export const TAX_AMEND_KIND = 'tax.amended';
 /** Why a year's return can't be amended now, or nothing. */
 export function amendRefusal(sim: Simulation, r: TaxReturn | undefined): string | undefined {
   if (!r) return 'There’s no return for that year.';
-  if (r.filedAt === undefined) return 'It isn’t filed: file it.';
-  if (r.substitute) return 'The IRS filed this one: file your own to replace it.';
-  if (r.amended?.some((a) => a.processedAt === undefined)) return 'An amended return for the year is with the IRS.';
+  if (r.filedAt === undefined) return 'It isn’t filed yet. File it first.';
+  if (r.substitute) return 'The IRS filed this one. File your own return to replace it.';
+  if (r.amended?.some((a) => a.processedAt === undefined)) return 'An amended return for this year is already with the IRS.';
   const paid = r.payments?.at(-1)?.at ?? r.filedAt;
   const by = Math.max(r.filedAt + AMEND.years * 365.25 * MS_DAY, paid + AMEND.paidYears * 365.25 * MS_DAY);
   if (sim.now > by) return `The time to amend it ran out on ${formatDate(by, HOME)}.`;
@@ -1766,7 +1766,7 @@ function reconsider(sim: Simulation, person: Person, r: TaxReturn): Filed {
   if (!r.owed) federalLienPaid(sim, person, r);
   if (!r.owed) for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_NOTICE_KIND && one.payload.personId === person.id && one.payload.year === r.year) sim.timeline.cancel(one.id, sim.now);
   for (const d of Object.values(sim.universe.decisions)) if (d.refType === 'return' && d.refId === String(r.year) && !d.resolvedAt) d.resolvedAt = sim.now;
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `Your ${r.year} Return Replaces The IRS’s`, body: `The IRS reconsidered its assessment on your own return: ${formatMoney(ownIrs, cur)} of federal tax for the year against its ${formatMoney(was, cur)}. ${r.owed ? `${formatMoney(r.owed, cur)} is still owed, the penalty and interest in proportion.` : over > 0 ? `${formatMoney(over, cur)} you paid past it comes back.` : 'Nothing more is owed.'}`, importance: 85, route: '/workspace/papers' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `Your ${r.year} Return Replaces The IRS’s`, body: `The IRS reconsidered its assessment using your own return: ${formatMoney(ownIrs, cur)} of federal tax for the year, against its ${formatMoney(was, cur)}. ${r.owed ? `You still owe ${formatMoney(r.owed, cur)}, with the penalty and interest reduced in proportion.` : over > 0 ? `The ${formatMoney(over, cur)} you paid beyond it comes back to you.` : 'Nothing more is owed.'}`, importance: 85, route: '/workspace/papers' });
   return { balance: own.balance, penalty: r.penalty ?? 0, paid: !r.owed && statesPaid, irs: ownIrs, states: own.owedTo!.states, refunded: Math.max(0, over) };
 }
 
@@ -1782,14 +1782,14 @@ function amendState(sim: Simulation, person: Person, r: TaxReturn, state: string
     if (sd.owed) { accrueState(sd, stateDueOf(r), sim.now); sd.parts = { tax: sd.parts!.tax + added.parts!.tax, penalty: sd.parts!.penalty + added.parts!.penalty, interest: sd.parts!.interest + added.parts!.interest }; sd.owed = sd.parts.tax + sd.parts.penalty + sd.parts.interest; }
     else { Object.assign(sd, { parts: added.parts, owed: added.owed, accruedAt: sim.now, payLateRate: added.payLateRate, interestMonths: added.interestMonths }); sd.collection = 0; stateNextNotice(sim, person, r, state); }
     statePlanNewBalance(sim, person, state, added.owed!);
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `${stateName(state)} Processed Your Amended ${r.year} Return`, body: `${formatMoney(change, cur)} more ${stateName(state)} tax, with what it charges from the due date: ${formatMoney(added.owed!, cur)} in all.`, importance: 80, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `${stateName(state)} Processed Your Amended ${r.year} Return`, body: `${formatMoney(change, cur)} more ${stateName(state)} tax, plus what it charges from the due date: ${formatMoney(added.owed!, cur)} in all.`, importance: 80, route: '/workspace/papers' });
     return;
   }
   let back = -change;
   const offset = Math.min(back, sd.owed ? stateOwedOn(sd, stateDueOf(r), sim.now) : 0);
   if (offset > 0) { applyStatePayment(sim, person, r, state, offset, 'refund offset'); back -= offset; }
   if (back > 0) sim.post({ memo: `${stateName(state)} tax refund, amended ${r.year} return`, category: 'tax', postings: [{ accountId: payeeAccount(sim, person).id, amount: back }, { accountId: sim.nominalAccount('income', 'Tax Refund').id, amount: -back }] });
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `${stateName(state)} Processed Your Amended ${r.year} Return`, body: `${formatMoney(-change, cur)} less ${stateName(state)} tax.${offset > 0 ? ` ${formatMoney(offset, cur)} went to what was owed to it.` : ''}${back > 0 ? ` ${formatMoney(back, cur)} is refunded.` : ''}`, importance: 80, route: '/workspace/papers' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `${stateName(state)} Processed Your Amended ${r.year} Return`, body: `${formatMoney(-change, cur)} less ${stateName(state)} tax.${offset > 0 ? ` ${formatMoney(offset, cur)} of it paid what you owed ${stateName(state)}.` : ''}${back > 0 ? ` ${formatMoney(back, cur)} is refunded.` : ''}`, importance: 80, route: '/workspace/papers' });
 }
 
 /**
@@ -1814,7 +1814,7 @@ export function splitReturns(sim: Simulation, person: Person): void {
     const statesDue = Object.entries(to.states).filter(([, v]) => v < 0);
     if (!statesOwed.length && !statesDue.length) continue;
     r.figures.owedTo = to;
-    const how = `Kept as one balance before ${formatDate(sim.now, HOME)}; divided ${to.derived ? 'with the withholding worked out from the paychecks’ tax table, and ' : ''}in proportion to each authority’s part of the return`;
+    const how = `Until ${formatDate(sim.now, HOME)} this year’s balance was kept as one total. It’s now divided ${to.derived ? 'by the paychecks’ tax tables for the withholding, and ' : ''}in proportion to each authority’s share of the return`;
     r.split = { at: sim.now, how };
     const sides = stateDuesOf(r);
     for (const [state, v] of Object.entries(to.states)) sides[state] = { state, balance: v, filedAt: r.filedAt, migrated: { at: sim.now, how } };
@@ -1863,6 +1863,6 @@ export function splitReturns(sim: Simulation, person: Person): void {
   if (moved > 0 && person.taxPlan && ['pending', 'active', 'default'].includes(person.taxPlan.status)) {
     const p = person.taxPlan;
     p.covers = owedAll(person, sim.now);
-    planNote(p, sim.now, 'A state’s tax taken out: an IRS plan covers federal tax only', moved);
+    planNote(p, sim.now, 'A state’s tax was taken out of the plan, because an IRS plan covers federal tax only', moved);
   }
 }

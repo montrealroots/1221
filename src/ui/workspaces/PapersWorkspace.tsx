@@ -23,7 +23,7 @@ import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHARITY, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
-import { PLAN, SUBSTITUTE, type Filed, amendRefusal, deadline, leastMonthly, nonresidentDeadline, nonresidentFor, owedAll, owedOn, owedToOf, partsOn, planFee, planRefusal, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
+import { COLLECTION, PLAN, SUBSTITUTE, type Filed, amendRefusal, deadline, leastMonthly, nonresidentDeadline, nonresidentFor, owedAll, owedOn, owedToOf, partsOn, planFee, planRefusal, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
 import { SSN } from '@/engine/systems/taxid';
 import { agencyOf, financialStatement, interestWords, orderWords, owedToState, payLateWords, statePlanFee, rulesOf, statePartsOn, stateDueOf, stateOwedOn, statePlanRefusal } from '@/engine/systems/statetax';
 import { FederalLien, StateLienAndPenalty } from '@/ui/components/LienPanels';
@@ -81,12 +81,12 @@ function WhoIsOwed({ year }: { year: number }) {
       <div className="table-scroll">
         <table>
           <tbody>
-            <tr><td>The IRS: federal income tax and payroll tax, less federal withholding and the premium credit</td><td className="num mono">{to.irs >= 0 ? money(to.irs) : `${money(-to.irs)} back`}</td></tr>
-            {Object.entries(to.states).map(([state, v]) => <tr key={state}><td>{agencyOf(state)}: {stateName(state)}’s tax{state === 'us-ny' ? ' and New York City’s' : state === 'us-in' && r.figures.local ? ' and Marion County’s' : ''}{state === 'us-ca' ? ', and its penalty for no cover' : ''}, less what it withheld{state === 'us-ct' ? ' and its premium assistance' : ''}</td><td className="num mono">{v >= 0 ? money(v) : `${money(-v)} back`}</td></tr>)}
+            <tr><td>The IRS: federal income tax and Social Security and Medicare, minus federal tax withheld and the premium tax credit</td><td className="num mono">{to.irs >= 0 ? money(to.irs) : `${money(-to.irs)} back`}</td></tr>
+            {Object.entries(to.states).map(([state, v]) => <tr key={state}><td>{agencyOf(state)}: {stateName(state)}’s tax{state === 'us-ny' ? ' and New York City’s' : state === 'us-in' && r.figures.local ? ' and Marion County’s' : ''}{state === 'us-ca' ? ', plus its penalty for having no health cover' : ''}, minus what was withheld for it{state === 'us-ct' ? ' and its premium assistance' : ''}</td><td className="num mono">{v >= 0 ? money(v) : `${money(-v)} back`}</td></tr>)}
           </tbody>
         </table>
       </div>
-      {to.derived && <p className="xs dim" style={{ margin: 0 }}>The year’s withholding was kept as one total: SLATE divided it by the paychecks’ own tax table.</p>}
+      {to.derived && <p className="xs dim" style={{ margin: 0 }}>Your withholding for the year was recorded as one total, so it’s split between the IRS and the state by the paychecks’ own tax tables. The split is estimated.</p>}
       {sides.map(([state, sd]) => {
         const rules = rulesOf(state);
         const p = sd.owed ? statePartsOn(sd, stateDueOf(r), sim.now) : undefined;
@@ -96,26 +96,26 @@ function WhoIsOwed({ year }: { year: number }) {
             <div className="eyebrow">Owed To {agencyOf(state)}</div>
             {!rules && <p className="xs dim" style={{ margin: 0 }}>{STATE_UNRESEARCHED}</p>}
             {sd.migrated && <p className="xs dim" style={{ margin: 0 }}>{sd.migrated.how}.</p>}
-            {sd.assessedBy && <p className="xs dim" style={{ margin: 0 }}>{sd.replacedAt !== undefined ? `Assessed by ${agencyOf(state)} with no return from you, ${formatDate(sd.assessedBy.at, sim.zone)}; replaced by your own, ${formatDate(sd.replacedAt, sim.zone)}.` : `Assessed by ${agencyOf(state)} with no return from you, ${formatDate(sd.assessedBy.at, sim.zone)}. File your own to replace it.`}</p>}
+            {sd.assessedBy && <p className="xs dim" style={{ margin: 0 }}>{sd.replacedAt !== undefined ? `${agencyOf(state)} assessed this year on ${formatDate(sd.assessedBy.at, sim.zone)}, with no return from you. Your own return replaced its assessment on ${formatDate(sd.replacedAt, sim.zone)}.` : `${agencyOf(state)} assessed this year on ${formatDate(sd.assessedBy.at, sim.zone)}, with no return from you. File your own return to replace its assessment.`}</p>}
             {p ? (
               <>
                 <div className="grid grid-3">
                   <Stat label="Tax Unpaid" value={money(p.tax)} />
-                  <Stat label="Penalties" value={money(p.penalty)} note={rules ? payLateWords(rules) : 'None added: unresearched'} />
-                  <Stat label="Interest" value={money(p.interest)} note={rules ? interestWords(rules) : 'None added: unresearched'} />
+                  <Stat label="Penalties" value={money(p.penalty)} note={rules ? payLateWords(rules) : 'None added: this state’s rules aren’t researched'} />
+                  <Stat label="Interest" value={money(p.interest)} note={rules ? interestWords(rules) : 'None added: this state’s rules aren’t researched'} />
                 </div>
-                {rules && (sd.collection ?? 0) > 0 && <p className="xs dim" style={{ margin: 0 }}>{(sd.collection ?? 0) <= rules.notices.length ? `${rules.notices[(sd.collection ?? 1) - 1]!.code} sent.` : 'Its levy has been made.'}{rules.timingAssumed ? ' The days between its notices are SLATE’s.' : ''}</p>}
+                {rules && (sd.collection ?? 0) > 0 && <p className="xs dim" style={{ margin: 0 }}>{(sd.collection ?? 0) <= rules.notices.length ? `The latest notice: ${rules.notices[(sd.collection ?? 1) - 1]!.title}.` : `${agencyOf(state)} has levied your bank account.`}{rules.timingAssumed ? ' The time between its notices is estimated.' : ''}</p>}
                 <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
                   <div className="field"><label htmlFor={`tax-pay-${state}-${year}`}>{`Pay ${stateName(state)} (Blank Pays It All)`}</label><input id={`tax-pay-${state}-${year}`} inputMode="decimal" value={amounts[state] ?? ''} onChange={(e) => setAmounts({ ...amounts, [state]: e.target.value })} placeholder={(stateOwedOn(sd, stateDueOf(r), sim.now) / 100).toFixed(2)} /></div>
-                  <Gated feature="tax.pay_state" className="btn btn-sm" onClick={() => { const a = run<{ owed: number; tax: number; penalty: number; interest: number }>('tax.pay_state', amounts[state] ? { state, year, amount: value } : { state, year }); if (a.ok) { toast(a.value!.owed > 0 ? `Paid ${agencyOf(state)}: ${money(a.value!.tax)} to the tax, ${money(a.value!.penalty)} to penalties, ${money(a.value!.interest)} to interest. ${money(a.value!.owed)} still owed.` : `Paid ${agencyOf(state)} in full.`, 'positive'); setAmounts({ ...amounts, [state]: '' }); } }}>Pay</Gated>
+                  <Gated feature="tax.pay_state" className="btn btn-sm" onClick={() => { const a = run<{ owed: number; tax: number; penalty: number; interest: number }>('tax.pay_state', amounts[state] ? { state, year, amount: value } : { state, year }); if (a.ok) { toast(a.value!.owed > 0 ? `Paid ${agencyOf(state)}: ${money(a.value!.tax)} to the tax, ${money(a.value!.penalty)} to penalties and ${money(a.value!.interest)} to interest. You still owe ${money(a.value!.owed)}.` : `Paid ${agencyOf(state)} in full.`, 'positive'); setAmounts({ ...amounts, [state]: '' }); } }}>Pay</Gated>
                   <HowItWorks help="tax.pay_state" />
                 </div>
                 {rules && <p className="xs dim" style={{ margin: 0 }}>{orderWords(rules)}</p>}
               </>
-            ) : sd.refund ? <p className="small" style={{ margin: 0 }}>{money(sd.refund)} back from {agencyOf(state)}{sd.refundedAt !== undefined ? `, paid ${formatDate(sd.refundedAt, sim.zone)}` : sd.refundAt !== undefined ? `, due about ${formatDate(sd.refundAt, sim.zone)}` : ''}.</p> : sd.filedAt !== undefined ? <p className="small" style={{ margin: 0 }}>Paid to {agencyOf(state)}.</p> : null}
+            ) : sd.refund ? <p className="small" style={{ margin: 0 }}>{sd.refundedAt !== undefined ? `${agencyOf(state)} refunded you ${money(sd.refund)} on ${formatDate(sd.refundedAt, sim.zone)}.` : `${agencyOf(state)} owes you a refund of ${money(sd.refund)}${sd.refundAt !== undefined ? `, due about ${formatDate(sd.refundAt, sim.zone)}` : ''}.`}</p> : sd.filedAt !== undefined ? <p className="small" style={{ margin: 0 }}>Nothing more is owed to {agencyOf(state)}.</p> : null}
             {(sd.payments ?? []).length > 0 && (
               <details className="small"><summary>{`Payments To ${agencyOf(state)}`}</summary>
-                <ul style={{ margin: 0 }}>{sd.payments!.map((x, i) => <li key={i}>{formatDate(x.at, sim.zone)}: {money(x.amount)}, {x.how === 'levy' ? 'taken by levy' : x.how === 'refund offset' ? 'from a refund' : x.how === 'plan' ? 'by its plan' : 'paid'}; to the tax {money(x.tax)}, penalties {money(x.penalty)}, interest {money(x.interest)}.</li>)}</ul>
+                <ul style={{ margin: 0 }}>{sd.payments!.map((x, i) => <li key={i}>{formatDate(x.at, sim.zone)}: {money(x.amount)} {x.how === 'levy' ? 'taken by levy' : x.how === 'refund offset' ? 'kept from a refund' : x.how === 'plan' ? 'paid through the payment plan' : 'paid'}. {money(x.tax)} went to the tax, {money(x.penalty)} to penalties and {money(x.interest)} to interest.</li>)}</ul>
               </details>
             )}
             <StateLienAndPenalty year={year} state={state} />
@@ -136,13 +136,13 @@ function WhoIsOwed({ year }: { year: number }) {
 function filedWords(a: Filed, money: (c: number) => string, zone: string): string {
   const reconsidered = a.refunded !== undefined;
   const said: string[] = [];
-  if (reconsidered) said.push(a.refunded ? `The IRS reconsidered its assessment: ${money(a.refunded)} you paid past your own return’s tax is back now.` : 'The IRS reconsidered its assessment on your own return.');
-  else if (a.irs < 0 && a.refundAt !== undefined) said.push(`The IRS’s refund, ${money(-a.irs)}, arrives ${formatDate(a.refundAt, zone)}.`);
+  if (reconsidered) said.push(a.refunded ? `The IRS reconsidered its assessment using your return, and refunded the ${money(a.refunded)} you’d paid beyond your return’s tax.` : 'The IRS reconsidered its assessment using your return.');
+  else if (a.irs < 0 && a.refundAt !== undefined) said.push(`Your IRS refund of ${money(-a.irs)} arrives ${formatDate(a.refundAt, zone)}.`);
   const where = Object.keys(a.states).length ? 'Who It’s Owed To' : 'Owed To The IRS';
-  if (!a.paid) said.push(reconsidered ? `What’s still owed shows under ${where}.` : `The bank couldn’t pay all of it: what’s owed shows under ${where}.`);
-  if (Object.values(a.states).some((v) => v < 0)) said.push('A state’s refund comes on its own day, under Who It’s Owed To.');
+  if (!a.paid) said.push(reconsidered ? `What you still owe is under ${where}.` : `Your bank couldn’t pay all of it. What you still owe is under ${where}.`);
+  if (Object.values(a.states).some((v) => v < 0)) said.push('A state refund comes on that state’s own schedule, under Who It’s Owed To.');
   if (said.length) return `Filed. ${said.join(' ')}`;
-  return a.irs > 0 || Object.values(a.states).some((v) => v > 0) ? 'Filed and paid.' : 'Filed: nothing owed or due back.';
+  return a.irs > 0 || Object.values(a.states).some((v) => v > 0) ? 'Filed and paid.' : 'Filed. You owe nothing, and nothing is due back.';
 }
 
 /**
@@ -189,30 +189,30 @@ function StatePlanPanel({ state }: { state: string }) {
       <div className="col gap-3">
         {plan && (
           <div className="grid grid-3">
-            <Stat label="Covers" value={money(plan.covers)} note={plan.down ? `after ${money(plan.down)} down` : undefined} />
+            <Stat label="Covers" value={money(plan.covers)} note={plan.down ? `After a ${money(plan.down)} down payment` : undefined} />
             <Stat label="Each Month" value={money(plan.monthly)} note={`${plan.months} months`} />
             <Stat label={plan.status === 'missed' ? 'Catch Up By' : 'Next Payment'} value={plan.status === 'missed' && plan.endsBy !== undefined ? formatDate(plan.endsBy, sim.zone) : plan.nextDue !== undefined && plan.status === 'active' ? formatDate(plan.nextDue, sim.zone) : plan.status === 'pending' ? `Decided ${formatDate(plan.decideAt, sim.zone)}` : '—'} />
           </div>
         )}
         {plan?.why && <p className="small" style={{ margin: 0 }}>{plan.why}.</p>}
-        {plan?.long?.statement && <p className="xs dim" style={{ margin: 0 }}>The statement it was asked with: {money(plan.long.statement.income)} a month in, {money(plan.long.statement.expenses)} out, {money(plan.long.statement.net)} left; {money(plan.long.statement.cash)} in the bank.</p>}
+        {plan?.long?.statement && <p className="xs dim" style={{ margin: 0 }}>The financial statement you applied with: {money(plan.long.statement.income)} a month coming in, {money(plan.long.statement.expenses)} going out and {money(plan.long.statement.net)} left over, with {money(plan.long.statement.cash)} in the bank.</p>}
         {plan?.status === 'missed' && <div><Gated feature="tax.catch_up_state_plan" className="btn btn-sm" onClick={() => { const a = run<{ paid: number }>('tax.catch_up_state_plan', { state }); if (a.ok) toast(`Caught up: ${money(a.value!.paid)} paid. The plan is back in force.`, 'positive'); }}>Catch Up</Gated></div>}
         {(!live || (lp?.alreadyOnPlan && plan?.status === 'active' && !plan.long)) && owed > 0 && (
           <div className="col gap-2">
             <p className="small" style={{ margin: 0 }}>
-              {rules.short}’s own plan, apart from any with the IRS: {rules.plan.max !== undefined ? `up to ${money(rules.plan.max)}` : 'no most published'}{rules.plan.min !== undefined ? `, over ${money(rules.plan.min)}` : ''}, over {rules.plan.minMonths} to {rules.plan.maxMonths} months{rules.plan.tiers ? ` (${rules.plan.tiers.map((t) => `${t.maxMonths} to ${t.upTo !== undefined ? money(t.upTo) : 'any amount'}`).join(', ')})` : ''}{rules.plan.monthsAssumed ? ' (SLATE’s: the longest isn’t published)' : ''}{rules.plan.minMonthly !== undefined ? `, at least ${money(rules.plan.minMonthly)} a month` : ''}{rules.plan.fee ? (statePlanFee(person, rules, cur) ? `, a ${money(statePlanFee(person, rules, cur))} fee added to the balance` : ', its fee waived at your income') : ', no fee'}.{rules.plan.beyond ? ` ${rules.plan.beyond}` : ''} Collection stops while it stands; interest {rules.payLate.monthly ? 'and the late-payment penalty go' : 'goes'} on.{rules.plan.cure.kind === 'next-due' ? ' A missed payment is made up by the next due date.' : rules.plan.cure.kind === 'notice' ? ` A missed payment brings an Intent to Terminate and ${rules.plan.cure.days} days.` : ' What a missed payment does isn’t published: SLATE ends the plan.'}{rules.plan.newBalance === 'default' ? ' A new balance with it while the plan stands is a default.' : ''}
-              {dp ? ` ${dp.why}` : ''}{lp ? ` Longer: its ${lp.name.toLowerCase()}, to ${lp.maxMonths} months${lp.maxAssumed ? ' (SLATE’s most)' : ''}. ${lp.how}` : ''}
+              This is {rules.short}’s own payment plan, separate from any plan with the IRS. It takes {rules.plan.max !== undefined ? `up to ${money(rules.plan.max)}` : 'any amount (no limit is published)'}{rules.plan.min !== undefined ? `, for a balance over ${money(rules.plan.min)}` : ''}, paid over {rules.plan.minMonths} to {rules.plan.maxMonths} months{rules.plan.tiers ? ` (${rules.plan.tiers.map((t) => `up to ${t.maxMonths} months for ${t.upTo !== undefined ? `${money(t.upTo)} or less` : 'any amount'}`).join(', ')})` : ''}{rules.plan.minMonthly !== undefined ? `, at least ${money(rules.plan.minMonthly)} a month` : ''}.{rules.plan.monthsAssumed ? ' The longest term isn’t published, so it’s estimated.' : ''}{rules.plan.fee ? (statePlanFee(person, rules, cur) ? ` A ${money(statePlanFee(person, rules, cur))} fee is added to what you owe.` : ' Its fee is waived at your income.') : ' There’s no fee.'}{rules.plan.beyond ? ` ${rules.plan.beyond}` : ''} While the plan is in force, collection stops, but interest {rules.payLate.monthly ? 'and the late-payment penalty keep' : 'keeps'} adding up.{rules.plan.cure.kind === 'next-due' ? ' If you miss a payment, you can make it up by the next due date.' : rules.plan.cure.kind === 'notice' ? ` If you miss a payment, ${rules.short} sends an Intent to Terminate and gives you ${rules.plan.cure.days} days.` : ' What happens after a missed payment isn’t published. In the game, the plan ends.'}{rules.plan.newBalance === 'default' ? ' A new balance owed while the plan is in force puts it in default.' : ''}
+              {dp ? ` ${dp.why}` : ''}{lp ? ` For longer, there’s its ${lp.name.toLowerCase()}, up to ${lp.maxMonths} months${lp.maxAssumed ? ' (the longest term is estimated)' : ''}. ${lp.how}` : ''}
             </p>
             <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
               {lp && <label className="check" htmlFor={`state-plan-long-${state}`}><input id={`state-plan-long-${state}`} type="checkbox" checked={long} onChange={(e) => setLong(e.target.checked)} /><span>{`Ask For Its ${lp.name}`}</span></label>}
-              <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor={`state-plan-${state}`}>Over</label><select id={`state-plan-${state}`} style={{ width: 'auto' }} value={months} onChange={(e) => setMonths(e.target.value)}>
+              <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor={`state-plan-${state}`}>Pay Over</label><select id={`state-plan-${state}`} style={{ width: 'auto' }} value={months} onChange={(e) => setMonths(e.target.value)}>
                 {Array.from({ length: longest - rules.plan.minMonths + 1 }, (_, i) => rules.plan.minMonths + i).filter((m) => m <= 12 || m % 6 === 0).map((m) => <option key={m} value={m}>{m} Months</option>)}
               </select></div>
               {dp && <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor={`state-plan-down-${state}`}>{dp.required ? 'Down Payment (Required)' : 'Down Payment (Optional)'}</label><input id={`state-plan-down-${state}`} inputMode="decimal" value={down} onChange={(e) => setDown(e.target.value)} placeholder={((dp.required ? suggested : 0) / 100).toFixed(2)} /></div>}
-              <Gated feature="tax.apply_state_plan" className="btn btn-sm" disabled={Boolean(no)} onClick={() => { const a = run<{ decideAt: number; monthly: number; down: number }>('tax.apply_state_plan', { state, months: Number(months), long, down: downCents }); if (a.ok) { toast(`Asked${a.value!.down ? ` with ${money(a.value!.down)} down` : ''}: ${money(a.value!.monthly)} a month, decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); setDown(''); } }}>{long && lp ? `Ask For The ${lp.name}` : 'Ask For The Plan'}</Gated>
+              <Gated feature="tax.apply_state_plan" className="btn btn-sm" disabled={Boolean(no)} onClick={() => { const a = run<{ decideAt: number; monthly: number; down: number }>('tax.apply_state_plan', { state, months: Number(months), long, down: downCents }); if (a.ok) { toast(`Applied${a.value!.down ? ` with ${money(a.value!.down)} down` : ''}: ${money(a.value!.monthly)} a month. ${rules.short} decides by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); setDown(''); } }}>{long && lp ? `Apply For The ${lp.name}` : 'Apply For The Plan'}</Gated>
             </div>
-            <p className="xs dim" style={{ margin: 0 }}>{`About ${money(monthly)} a month over ${months} months.`}{lien ? ` ${rules.short} files a ${rules.lien!.name} with it.` : ''}</p>
-            {statement && <p className="xs dim" style={{ margin: 0 }}>{`The statement ${lp!.statement} asks, from your own records over the last three months: ${money(statement.income)} a month in, ${money(statement.expenses)} out, ${money(statement.net)} left; ${money(statement.cash)} in the bank.`}{monthly > Math.max(0, statement.net) ? ` At ${money(monthly)} a month it would be declined: more than the statement leaves.` : ''}</p>}
+            <p className="xs dim" style={{ margin: 0 }}>{`That’s about ${money(monthly)} a month over ${months} months.`}{lien ? ` With this plan, ${rules.short} also files a ${rules.lien!.name}.` : ''}</p>
+            {statement && <p className="xs dim" style={{ margin: 0 }}>{`${lp!.statement} asks for a financial statement. From your own records over the last three months: ${money(statement.income)} a month coming in, ${money(statement.expenses)} going out and ${money(statement.net)} left over, with ${money(statement.cash)} in the bank.`}{monthly > Math.max(0, statement.net) ? ` At ${money(monthly)} a month it would be declined, because that’s more than the statement leaves over.` : ''}</p>}
             {no && <span className="xs dim why-not">{no}</span>}
           </div>
         )}
@@ -244,44 +244,44 @@ function ReturnLife({ year }: { year: number }) {
   const value = Math.round(Number(amount) * 100);
   return (
     <div className="col gap-2">
-      {r.substitute && <p className="small" style={{ margin: 0 }}>The IRS filed this from what your employers and banks reported{r.substituteFigures ? `, ${money(r.substituteFigures.balance)} of tax with no credit only your own return claims` : ''}. File your own and it reconsiders: the tax becomes what yours says, the penalty and interest fall in proportion, and anything paid past it comes back.</p>}
+      {r.substitute && <p className="small" style={{ margin: 0 }}>The IRS filed this return for you from what your employers and banks reported{r.substituteFigures ? `. It assessed ${money(r.substituteFigures.balance)} of tax, without the credits only your own return can claim` : ''}. If you file your own, the IRS reconsiders: the tax becomes what your return says, the penalty and interest fall in proportion, and anything you paid beyond that comes back to you.</p>}
       {r.reconsideredAt !== undefined && <p className="small" style={{ margin: 0 }}>Your own return replaced the IRS’s on {formatDate(r.reconsideredAt, sim.zone)}.</p>}
       <WhoIsOwed year={year} />
       <FederalLien year={year} />
-      {r.split && <p className="xs dim" style={{ margin: 0 }}>{r.split.how}: SLATE’s division, since payments made before then weren’t kept by who they went to.</p>}
+      {r.split && <p className="xs dim" style={{ margin: 0 }}>{r.split.how}. This split is estimated, because payments made before then weren’t recorded by who they went to.</p>}
       {parts && <div className="eyebrow">Owed To The IRS</div>}
       {parts && (
         <div className="col gap-2">
           <div className="grid grid-3">
             <Stat label="Tax Unpaid" value={money(parts.tax)} />
-            <Stat label="Penalties" value={money(parts.penalty)} note={r.reducedFrom !== undefined && r.reducedTo === undefined ? `${PLAN.reducedRate * 100}% for each month that begins under the payment plan, to ${RETURN.lateCap * 100}%` : `${RETURN.payLateMonthly * 100}% a month on the tax unpaid, to ${RETURN.lateCap * 100}%`} />
-            <Stat label="Interest" value={money(parts.interest)} note="7% a year, daily" />
+            <Stat label="Penalties" value={money(parts.penalty)} note={r.reducedFrom !== undefined && r.reducedTo === undefined ? `${PLAN.reducedRate * 100}% for each month that begins under the payment plan, up to ${RETURN.lateCap * 100}%` : `${RETURN.payLateMonthly * 100}% a month on the unpaid tax, up to ${RETURN.lateCap * 100}%`} />
+            <Stat label="Interest" value={money(parts.interest)} note={`${Math.round(COLLECTION.interest * 1000) / 10}% a year, compounded daily`} />
           </div>
           <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
             <div className="field"><label htmlFor={`tax-pay-${year}`}>Pay (Blank Pays It All)</label><input id={`tax-pay-${year}`} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder={(owedOn(r, sim.now) / 100).toFixed(2)} /></div>
-            <Gated feature="tax.pay" className="btn btn-sm" onClick={() => { const a = run<{ owed: number; tax: number; penalty: number; interest: number }>('tax.pay', amount ? { year, amount: value } : { year }); if (a.ok) { toast(a.value!.owed > 0 ? `Paid: ${money(a.value!.tax)} to the tax, ${money(a.value!.penalty)} to penalties, ${money(a.value!.interest)} to interest. ${money(a.value!.owed)} still owed.` : 'Paid in full.', 'positive'); setAmount(''); } }}>Pay</Gated>
+            <Gated feature="tax.pay" className="btn btn-sm" onClick={() => { const a = run<{ owed: number; tax: number; penalty: number; interest: number }>('tax.pay', amount ? { year, amount: value } : { year }); if (a.ok) { toast(a.value!.owed > 0 ? `Paid the IRS: ${money(a.value!.tax)} to the tax, ${money(a.value!.penalty)} to penalties and ${money(a.value!.interest)} to interest. You still owe ${money(a.value!.owed)}.` : 'Paid the IRS in full.', 'positive'); setAmount(''); } }}>Pay</Gated>
             <HowItWorks help="tax.pay" />
           </div>
-          <p className="xs dim" style={{ margin: 0 }}>A part goes to the tax first, then the penalties, then the interest, the IRS’s order where you name none; a lower tax lowers the months of penalty still to come.</p>
+          <p className="xs dim" style={{ margin: 0 }}>When you don’t choose, the IRS puts a partial payment toward the tax first, then penalties, then interest. Paying down the tax also lowers the monthly penalty still to come.</p>
         </div>
       )}
       {/* An offset reads “from a refund”, as a state's list has it: another year's refund kept for this one is an offset
           too (from 2026-10-12; until then every one here read “from an amended return's refund”). */}
       {(r.payments ?? []).length > 0 && (
         <details className="small"><summary>Payments On The Year</summary>
-          <ul style={{ margin: 0 }}>{r.payments!.map((p, i) => <li key={i}>{formatDate(p.at, sim.zone)}: {money(p.amount)}, {p.how === 'levy' ? 'taken by levy' : p.how === 'refund offset' ? 'from a refund' : 'paid'}; to the tax {money(p.tax)}, penalties {money(p.penalty)}, interest {money(p.interest)}.</li>)}</ul>
+          <ul style={{ margin: 0 }}>{r.payments!.map((p, i) => <li key={i}>{formatDate(p.at, sim.zone)}: {money(p.amount)} {p.how === 'levy' ? 'taken by levy' : p.how === 'refund offset' ? 'kept from a refund' : 'paid'}. {money(p.tax)} went to the tax, {money(p.penalty)} to penalties and {money(p.interest)} to interest.</li>)}</ul>
         </details>
       )}
       {(r.amended ?? []).map((a, i) => (
-        <p key={i} className="small" style={{ margin: 0 }}>Form {a.form}, filed {formatDate(a.at, sim.zone)}: {amendWords(a, money)}. {a.processedAt ? `Processed ${formatDate(a.processedAt, sim.zone)}${a.refund ? `: ${money(a.refund + (a.interest ?? 0))} refunded, with interest` : a.interest ? `, with ${money(a.interest)} of interest` : ''}.` : `The IRS takes eight to twelve weeks; SLATE’s estimate is ${formatDate(a.processAt, sim.zone)}.`}</p>
+        <p key={i} className="small" style={{ margin: 0 }}>Form {a.form}, filed {formatDate(a.at, sim.zone)}: {amendWords(a, money)}. {a.processedAt ? `Processed ${formatDate(a.processedAt, sim.zone)}${a.refund ? `: ${money(a.refund + (a.interest ?? 0))} refunded, with interest` : a.interest ? `, with ${money(a.interest)} of interest` : ''}.` : `The IRS takes eight to twelve weeks to process it, so about ${formatDate(a.processAt, sim.zone)} (estimated).`}</p>
       ))}
       {!r.substitute && (
         <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
           {!amending
             ? <button type="button" className="btn btn-sm btn-ghost" disabled={Boolean(amendNo)} title={amendNo} onClick={() => setAmending(true)}>Amend The Return…</button>
             : <>
-                <span className="small">An amended return refigures the year from what’s on record now. More owed is added with interest from the due date; less comes off what’s owed, and the rest back with interest.</span>
-                <Gated feature="tax.amend" className="btn btn-sm" onClick={() => { const a = run<{ change: number; processAt: number; form: string; irs: number; states?: Record<string, number> }>('tax.amend', { year }); if (a.ok) toast(`Form ${a.value!.form} filed: ${amendWords(a.value!, money)}, processed about ${formatDate(a.value!.processAt, sim.zone)}.`, 'positive'); setAmending(false); }}>File The Amendment</Gated>
+                <span className="small">An amended return works out the year again from what’s on record now. If you owe more, it’s added with interest from the original due date. If you owe less, it comes off what you owe, and anything left over is refunded with interest.</span>
+                <Gated feature="tax.amend" className="btn btn-sm" onClick={() => { const a = run<{ change: number; processAt: number; form: string; irs: number; states?: Record<string, number> }>('tax.amend', { year }); if (a.ok) toast(`Form ${a.value!.form} filed: ${amendWords(a.value!, money)}. The IRS should process it about ${formatDate(a.value!.processAt, sim.zone)}.`, 'positive'); setAmending(false); }}>File The Amendment</Gated>
                 <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAmending(false)}>Not Now</button>
               </>}
           {amendNo && <span className="xs dim">{amendNo}</span>}
@@ -291,7 +291,7 @@ function ReturnLife({ year }: { year: number }) {
   );
 }
 
-const PLAN_STATUS: Record<string, string> = { pending: 'With the IRS', active: 'In force', default: 'A payment missed', ended: 'Ended', paid: 'Paid in full', refused: 'Refused' };
+const PLAN_STATUS: Record<string, string> = { pending: 'Being decided', active: 'In force', default: 'A payment missed', ended: 'Ended', paid: 'Paid in full', refused: 'Declined' };
 
 /**
  * An IRS payment plan (from 2026-10-10, `tax.apply_plan`): applied for across every year owed, its fee, its monthly
@@ -321,7 +321,7 @@ function TaxPlanPanel() {
           <div className="grid grid-3">
             <Stat label="Covers" value={money(plan.covers)} note={plan.years.join(', ')} />
             <Stat label={plan.kind === 'long' ? 'Each Month' : 'Paid By'} value={plan.kind === 'long' ? money(plan.monthly ?? 0) : plan.payBy !== undefined ? formatDate(plan.payBy, sim.zone) : '—'} note={plan.directDebit ? 'By direct debit' : 'Paid by you'} />
-            <Stat label={plan.status === 'pending' ? 'Answered By' : plan.status === 'default' ? 'Caught Up By' : 'Next Payment'} value={plan.status === 'pending' ? formatDate(plan.decideAt, sim.zone) : plan.status === 'default' && plan.defaultBy !== undefined ? formatDate(plan.defaultBy, sim.zone) : plan.nextDue !== undefined && plan.status === 'active' ? formatDate(plan.nextDue, sim.zone) : '—'} />
+            <Stat label={plan.status === 'pending' ? 'Answered By' : plan.status === 'default' ? 'Catch Up By' : 'Next Payment'} value={plan.status === 'pending' ? formatDate(plan.decideAt, sim.zone) : plan.status === 'default' && plan.defaultBy !== undefined ? formatDate(plan.defaultBy, sim.zone) : plan.nextDue !== undefined && plan.status === 'active' ? formatDate(plan.nextDue, sim.zone) : '—'} />
           </div>
         )}
         {plan?.why && <p className="small" style={{ margin: 0 }}>{plan.why}</p>}
@@ -339,16 +339,16 @@ function TaxPlanPanel() {
         {!live && owed > 0 && (
           <div className="col gap-2">
             <p className="small" style={{ margin: 0 }}>
-              The IRS takes what’s owed to it on every year in one plan: federal tax only, a state’s being the state’s, with a plan of its own. A short-term plan has {PLAN.shortDays} days and no fee; a monthly plan up to {money(PLAN.longMax)} is approved online, with a setup fee. While it’s in force, collection stops, and on a return filed on time each month of the late-payment penalty that begins under it is charged {PLAN.reducedRate * 100}% where it would be {RETURN.payLateMonthly * 100}%. A payment missed brings Notice CP523, and {PLAN.defaultDays} days to catch up before the plan ends. The least monthly payment, what’s owed over {PLAN.leastMonths} months, is SLATE’s.
+              One IRS plan covers what you owe the IRS for every year. It’s for federal tax only: a state has its own plan for what you owe it. A short-term plan gives you {PLAN.shortDays} days to pay, with no fee. A monthly plan for up to {money(PLAN.longMax)} is approved online and has a setup fee. While a plan is in force, collection stops. If you filed the return on time, each month of late-payment penalty that begins under the plan is {PLAN.reducedRate * 100}% instead of {RETURN.payLateMonthly * 100}%. If you miss a payment, the IRS sends Notice CP523 and gives you {PLAN.defaultDays} days to catch up before the plan ends. The lowest monthly payment shown, what you owe spread over {PLAN.leastMonths} months, is estimated.
             </p>
             <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
-              <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor="plan-kind">Plan</label><select id="plan-kind" style={{ width: 'auto' }} value={kind} onChange={(e) => setKind(e.target.value as 'long' | 'short')}>
+              <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor="plan-kind">Plan Type</label><select id="plan-kind" style={{ width: 'auto' }} value={kind} onChange={(e) => setKind(e.target.value as 'long' | 'short')}>
                 <option value="long">Monthly Payments</option>
                 <option value="short">Paid Within {PLAN.shortDays} Days</option>
               </select></div>
               {kind === 'long' && <div className="field"><label htmlFor="plan-monthly">{`Each Month (${cur})`}</label><input id="plan-monthly" inputMode="decimal" value={monthly} onChange={(e) => setMonthly(e.target.value)} placeholder={(least / 100).toFixed(2)} /></div>}
               {kind === 'long' && <label className="row gap-1 small"><input type="checkbox" checked={debit} onChange={(e) => setDebit(e.target.checked)} /> By Direct Debit</label>}
-              <Gated feature="tax.apply_plan" className="btn btn-sm" disabled={Boolean(no)} onClick={() => { const a = run<{ status: string; decideAt: number; fee: number }>('tax.apply_plan', { kind, ...(kind === 'long' ? { directDebit: debit, ...(asked ? { monthly: asked } : {}) } : {}) }); if (a.ok) { toast(`Applied: answered by ${formatDate(a.value!.decideAt, sim.zone)}${a.value!.fee ? `, a fee of ${money(a.value!.fee)}` : ''}.`, 'positive'); setMonthly(''); } }}>Apply</Gated>
+              <Gated feature="tax.apply_plan" className="btn btn-sm" disabled={Boolean(no)} onClick={() => { const a = run<{ status: string; decideAt: number; fee: number }>('tax.apply_plan', { kind, ...(kind === 'long' ? { directDebit: debit, ...(asked ? { monthly: asked } : {}) } : {}) }); if (a.ok) { toast(`Applied. The IRS answers by ${formatDate(a.value!.decideAt, sim.zone)}${a.value!.fee ? `, and the setup fee is ${money(a.value!.fee)}` : ''}.`, 'positive'); setMonthly(''); } }}>Apply</Gated>
             </div>
             {no ? <span className="xs dim">{no}</span> : kind === 'long' && <span className="xs dim">Setup fee: {money(planFee(sim, person, 'long', debit))}.</span>}
           </div>
@@ -372,7 +372,7 @@ export function PapersWorkspace() {
       <div className="page-head">
         <div className="eyebrow">Your Affairs</div>
         <h1>Papers</h1>
-        <p className="muted">Your returns, your health cover, unemployment, your pensions, your passport and your ID.</p>
+        <p className="muted">Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work.</p>
       </div>
       <div className="tabs" role="tablist" aria-label="Papers">
         {PAPERS_TABS.map((one, i) => (
@@ -421,7 +421,7 @@ function ReturnsPane() {
         <Panel title="No Returns Yet" help="taxes.return">
           <LookRegion>
             <p className="small" style={{ margin: 0 }}>
-              Each February, a year with anything owed or due back, or with income over the standard deduction, has its return ready, and a student on an F-1 has one every year. {thisYear}’s is due <Open subject={at('day', dateKey(deadline(thisYear), sim.homeZone))}>{formatDate(deadline(thisYear), sim.zone)}</Open>{nonresident ? <>; with no wages on it, a 1040-NR is due <Open subject={at('day', dateKey(nonresidentDeadline(thisYear, false), sim.homeZone))}>{formatDate(nonresidentDeadline(thisYear, false), sim.zone)}</Open></> : null}.
+              Each February, last year’s return is ready here if you owe tax, are due a refund, or had income over the standard deduction. A student on an F-1 has one every year. The return for {thisYear} is due <Open subject={at('day', dateKey(deadline(thisYear), sim.homeZone))}>{formatDate(deadline(thisYear), sim.zone)}</Open>{nonresident ? <>, or <Open subject={at('day', dateKey(nonresidentDeadline(thisYear, false), sim.homeZone))}>{formatDate(nonresidentDeadline(thisYear, false), sim.zone)}</Open> for a 1040-NR with no wages on it</> : null}.
             </p>
           </LookRegion>
         </Panel>
@@ -440,14 +440,14 @@ function ReturnsPane() {
           ['Rent, Less Its Costs And Depreciation', f.rental ?? 0],
           ['A Home’s Gain Held A Year Or Less', f.gainShort ?? 0],
           ['A Home’s Long-Term Gain', f.gainLong ?? 0],
-          ['Of A Home’s Gain, Kept Free Of Tax', f.gainExcluded ?? 0],
+          ['Home Sale Gain Excluded From Tax', f.gainExcluded ?? 0],
           ['Performing Artist Deduction', -f.deduction],
           ['Itemized: Mortgage Interest, Taxes And Mortgage Insurance', -(f.itemized ?? 0)],
-          ['Of The Federal Tax, On Gains And Investment Income', f.gainTax ?? 0],
+          ['Part Of The Federal Tax: On Gains And Investment Income', f.gainTax ?? 0],
           ['Federal Income Tax', f.federal],
-          ['Of It, The Credit For Another Country’s Tax', -(f.foreignCredit ?? 0)],
-          ['Canada’s Tax Refunded, By Its Treaty Or Its Return', -(f.foreignRefund ?? 0)],
-          ...(f.states ?? []).flatMap((l) => [[`${stateName(l.state)} Income Tax`, l.tax], ...(l.credit ? [[`${stateName(l.state)}’s Credit For Another State’s Tax`, -l.credit]] : [])] as [string, number][]),
+          ['Credit For Tax Paid To Another Country', -(f.foreignCredit ?? 0)],
+          ['Canadian Tax Refunded, By Treaty Or Canadian Return', -(f.foreignRefund ?? 0)],
+          ...(f.states ?? []).flatMap((l) => [[`${stateName(l.state)} Income Tax`, l.tax], ...(l.credit ? [[`${stateName(l.state)}’s Credit For Tax Paid To Another State`, -l.credit]] : [])] as [string, number][]),
           ['City And County Income Tax', f.local ?? 0],
           ['Income Tax In All', f.incomeTax],
           ['Social Security And Medicare', f.payroll],
@@ -475,7 +475,7 @@ function ReturnsPane() {
                 <table>
                   <tbody>
                     {lines.filter(([, v]) => v !== 0).map(([label, v]) => <tr key={label}><td>{label}</td><td className="num mono">{money(v)}</td></tr>)}
-                    <tr className="strong"><td>{f.balance > 0 ? 'You Owe' : 'Comes Back To You'}</td><td className="num mono">{money(Math.abs(f.balance))}</td></tr>
+                    <tr className="strong"><td>{f.balance > 0 ? 'You Owe' : 'Your Refund'}</td><td className="num mono">{money(Math.abs(f.balance))}</td></tr>
                     {r.penalty ? <tr><td>Late Penalties</td><td className="num mono">{money(r.penalty)}</td></tr> : null}
                     {r.owed ? <tr><td>Still Owed To The IRS, With Interest And Penalty To Date</td><td className="num mono">{money(owedOn(r, sim.now))}</td></tr> : null}
                     {Object.entries(r.stateDue ?? {}).filter(([, sd]) => sd.owed).map(([state, sd]) => <tr key={state}><td>{`Still Owed To ${agencyOf(state)}, With Interest And Penalty To Date`}</td><td className="num mono">{money(stateOwedOn(sd, stateDueOf(r), sim.now))}</td></tr>)}
@@ -490,7 +490,7 @@ function ReturnsPane() {
         );
       })}
       {ukYears.length > 0 && (
-        <Panel title="UK Tax Years" subtitle="April to April, each settled the 31 January after">
+        <Panel title="UK Tax Years" subtitle="April to April, each settled on the 31 January after it ends">
           <div className="col gap-2">
             {ukYears.map(([key, gross]) => {
               const withheld = record.ukWithheld?.[key] ?? 0;
@@ -499,11 +499,11 @@ function ReturnsPane() {
               const years = `${key}–${String(Number(key) + 1).slice(2)}`;
               return (
                 <p key={key} className="small" style={{ margin: 0 }}>
-                  {years}: {money(gross)} earned, {money(withheld)} taken by payers. {settled ? 'Settled.' : `Settles 31 January ${Number(key) + 2}: ${change < 0 ? `${money(-change)} back` : change > 0 ? `${money(change)} to pay` : 'nothing either way'}, as it stands.`}
+                  {years}: {money(gross)} earned and {money(withheld)} withheld by payers. {settled ? 'Settled.' : `It settles on 31 January ${Number(key) + 2}. As things stand, ${change < 0 ? `${money(-change)} comes back to you` : change > 0 ? `you’ll pay ${money(change)}` : 'nothing is owed either way'}.`}
                 </p>
               );
             })}
-            <Fine>Under the treaty’s {money(treaty)} in a year all that was withheld comes back; over it, the UK’s bands on it all. Source: {ABROAD.source}.</Fine>
+            <Fine>If you earn under the treaty’s {money(treaty)} in a tax year, everything withheld comes back. Over it, the UK taxes all of it at its usual bands. Source: {ABROAD.source}.</Fine>
           </div>
         </Panel>
       )}
@@ -511,7 +511,7 @@ function ReturnsPane() {
           `billed`). Until 2026-10-14 the deduction took “the job’s other costs you kept receipts for” too; they went with the
           `receipts` knob that day, as nothing recorded one. */}
       <Fine>
-        Due 15 April, or the next business day; 15 June for a 1040-NR with no wages on it. Filed late with a balance, 5% of it a month or part of one, to a quarter of it, with at least {formatMoney(inSaveMoney(sim, RETURN.lateMinimum, 'USD'), cur)} past 60 days; paid late, 0.5% a month to a quarter, and the IRS’s interest, 7% a year compounded daily, from the due date. Left owing, the IRS bills it at filing (Notice CP14) and from the due date writes about every five weeks, sends its final notice, and 30 days on levies your bank accounts; a return never filed that owes, it files itself a year on: nothing of it is assessed if yours comes within {SUBSTITUTE.answerDays} days of its notice, and yours replaces it after. A refund comes {RETURN.refundDays} days after filing, {RETURN.refundDays + SSN.itinWeeks * 7} on a 1040-NR filed without a Social Security number. The performing artist deduction takes your commission and dues off an income of {formatMoney(inSaveMoney(sim, RETURN.performingArtistIncome, 'USD'), cur)} or less, from two employers paying {formatMoney(inSaveMoney(sim, RETURN.performingArtistEmployerPay, 'USD'), cur)} or more, where the costs are over a tenth of the acting wages; otherwise federally they aren’t deductible. The tax is the federal and state law SLATE carries for where you lived. Work in Canada is taxed at 23% as it’s paid, all of it back under {formatMoney(inSaveMoney(sim, ABROAD.canada.treatyCad, 'CAD'), cur)} (CAD 15,000) in the year and, over it, a Canadian return filed with this one by 30 April gives back what’s past its graduated tax. Work in the United Kingdom is taxed 20% by a payer paying you past {formatMoney(inSaveMoney(sim, ABROAD.uk.payerThresholdGbp, 'GBP'), cur)} (£12,570) in its tax year, and settled with its own return each 31 January. Source: {RETURN.source}; {ABROAD.source}.
+        A return is due 15 April, or the next business day. A 1040-NR with no wages on it is due 15 June. Filed late with tax owed, the penalty is {RETURN.lateMonthly * 100}% of the balance for each month or part of a month, up to a quarter of it, and at least {formatMoney(inSaveMoney(sim, RETURN.lateMinimum, 'USD'), cur)} once it’s {RETURN.lateMinimumAfterDays} days late. Paid late, the penalty is {RETURN.payLateMonthly * 100}% a month, up to a quarter, plus the IRS’s interest of {Math.round(COLLECTION.interest * 1000) / 10}% a year, compounded daily, from the due date. If you leave tax owing, the IRS bills you at filing (Notice CP14). From the due date it writes about every {COLLECTION.noticeWeeks === 5 ? 'five' : COLLECTION.noticeWeeks} weeks, then sends a final notice, and {COLLECTION.finalDays} days later levies your bank accounts. If you never file a return that owes tax, the IRS files one for you a year later. Nothing of it is assessed if your own return arrives within {SUBSTITUTE.answerDays} days of its notice, and your return replaces it if it comes later. A refund comes {RETURN.refundDays} days after filing, or {RETURN.refundDays + SSN.itinWeeks * 7} days for a 1040-NR filed without a Social Security number. The performing artist deduction takes your commission and dues off your income if it’s {formatMoney(inSaveMoney(sim, RETURN.performingArtistIncome, 'USD'), cur)} or less, you had two employers each paying {formatMoney(inSaveMoney(sim, RETURN.performingArtistEmployerPay, 'USD'), cur)} or more, and the costs are over a tenth of your acting wages. Otherwise those costs aren’t deductible federally. The tax follows the federal and state law for where you lived. Work in Canada is taxed at 23% when it’s paid. All of it comes back if you earn under {formatMoney(inSaveMoney(sim, ABROAD.canada.treatyCad, 'CAD'), cur)} (CAD 15,000) in the year. Over that, a Canadian return filed with this one by 30 April gives back anything past Canada’s graduated tax. Work in the United Kingdom is taxed at 20% by a payer once it pays you over {formatMoney(inSaveMoney(sim, ABROAD.uk.payerThresholdGbp, 'GBP'), cur)} (£12,570) in its tax year, and is settled with its own return each 31 January. Source: {RETURN.source}; {ABROAD.source}.
       </Fine>
     </div>
   );
@@ -552,12 +552,12 @@ function HealthPane() {
       </Panel>
       <Panel
         title="The Marketplace"
-        subtitle={state ? `${formatMoney(benchmarkFor(state, year, cur), cur)} a month for the benchmark silver plan` : 'In New York, Los Angeles or New Haven'}
+        subtitle={state ? `${formatMoney(benchmarkFor(state, year, cur), cur)} a month for the benchmark silver plan` : 'Only in New York, Los Angeles or New Haven'}
         actions={enrolled
           // Dropped, it says so in place of the button (from 2026-10-16: until then Drop The Plan stayed, and a second press
           // said the same again).
           ? ownPlan!.ended === 'voluntary' && ownPlan!.until !== undefined ? <span className="small">Dropped: it ends on {formatDate(ownPlan!.until, sim.zone)}.</span>
-            : <Gated feature="health.drop" onClick={() => { if (run('health.drop').ok) toast('It ends at the month’s end, and opens no special enrollment.', 'positive'); }}>Drop The Plan</Gated>
+            : <Gated feature="health.drop" onClick={() => { if (run('health.drop').ok) toast('Your plan ends at the end of the month. Dropping it doesn’t open a special enrollment period.', 'positive'); }}>Drop The Plan</Gated>
           : !may.ok ? undefined : <Gated feature="health.enroll" onClick={() => { const a = run<{ kind: string; from: number }>('health.enroll'); if (a.ok) toast(`Enrolled in ${a.value!.kind === 'marketplace' ? 'the marketplace' : state ? PROGRAM_NAMES[state][a.value!.kind as 'medicaid' | 'essential'] : 'Medicaid'}, from ${formatDate(a.value!.from, sim.zone)}.`, 'positive'); }}>Enroll</Gated>}
         help="papers.health-cover"
       >
@@ -565,30 +565,30 @@ function HealthPane() {
           {/* The work rules said as the player meets them (from 2026-10-17, brief 12): until then this began “80 hours’ work”,
               which nobody off the School can do in SLATE, and said “school at least half-time” for the School. */}
           <p className="small" style={{ margin: 0 }}>
-            {enrolled ? `Enrolled from ${formatDate(ownPlan!.from, sim.zone)}. ` : `${may.why} `}
-            On a low month’s income, Medicaid (Medi-Cal in California, HUSKY D in Connecticut) takes you at 138% of the poverty line, in New York the Essential Plan to 200%, and in Connecticut Covered Connecticut to 175% of the year before’s, at any time and with no premium; Covered Connecticut is for an income over HUSKY D’s line, whatever your status, and comes with the premium tax credit, from 100% of the poverty line; from 2027 a student in F-1 status or a graduate on OPT has none. From 2027 Medicaid’s work rules are met by a month you spend any of at the School, or one with {formatMoney(inSaveMoney(sim, PUBLIC_COVER.workEarnings, 'USD'), cur)} of income (pay, interest, a benefit or a pension): in Connecticut the month before you apply, and any one of the {PUBLIC_COVER.workLookBack.ct.renew} months before a renewal. Being 65 or over, SNAP received under its work rules, or a stay in hospital you ask for counts as meeting them. Short of it, a notice gives {PUBLIC_COVER.answerDays} days from its receipt to answer before an application is denied or cover ends, and an ending is said {PUBLIC_COVER.advanceNoticeDays} days or more ahead, at a month’s end.{' '}
-            You pay the whole premium each month, and the return gives back what’s over your share of income, a nonresident’s 1040-NR too: none over {PREMIUM_CREDIT.cutoff * 100}% of the poverty line, since the enhanced credits ended with 2025.
-            {CITIES.get(person.currentLocationId)?.parentId === 'us-ca' ? ` In California a month without cover costs its penalty on the return: the greater of ${formatMoney(inSaveMoney(sim, CALIFORNIA_MANDATE.flat, 'USD'), cur)} a year and ${CALIFORNIA_MANDATE.share * 100}% of income, a twelfth a month, to ${formatMoney(inSaveMoney(sim, CALIFORNIA_MANDATE.bronzeMonth, 'USD'), cur)}; ${h.uncoveredInCalifornia[year] ?? 0} this year so far.` : ''}
+            {enrolled ? `You’re enrolled from ${formatDate(ownPlan!.from, sim.zone)}. ` : `${may.why} `}
+            Public cover depends on your income in a month. Medicaid (Medi-Cal in California, HUSKY D in Connecticut) covers you up to 138% of the poverty line. In New York the Essential Plan covers you up to 200%, and in Connecticut Covered Connecticut covers you up to 175% of the previous year’s line. Each is open at any time, with no premium. Covered Connecticut is for an income over HUSKY D’s line, whatever your immigration status, and comes with the premium tax credit from 100% of the poverty line. From 2027 a student in F-1 status or a graduate on OPT gets no premium tax credit. From 2027 Medicaid also has work rules. You meet them in any month you spend some of at the School, or in a month with {formatMoney(inSaveMoney(sim, PUBLIC_COVER.workEarnings, 'USD'), cur)} of income (pay, interest, a benefit or a pension). In Connecticut that’s the month before you apply, or any one of the {PUBLIC_COVER.workLookBack.ct.renew} months before a renewal. You also meet them if you’re 65 or over, if you get SNAP under its own work rules, or if you ask for a hospital stay to count. If you don’t meet them, a notice gives you {PUBLIC_COVER.answerDays} days from when you receive it to answer before an application is denied or cover ends. An ending is announced at least {PUBLIC_COVER.advanceNoticeDays} days ahead, at the end of a month.{' '}
+            On a marketplace plan you pay the whole premium each month, and your tax return gives back what’s over your share of income, a nonresident’s 1040-NR too. There’s no credit over {PREMIUM_CREDIT.cutoff * 100}% of the poverty line, since the enhanced credits ended with 2025.
+            {CITIES.get(person.currentLocationId)?.parentId === 'us-ca' ? ` In California, each month without cover adds a penalty to your return: the greater of ${formatMoney(inSaveMoney(sim, CALIFORNIA_MANDATE.flat, 'USD'), cur)} a year or ${CALIFORNIA_MANDATE.share * 100}% of income, a twelfth for each month, up to ${formatMoney(inSaveMoney(sim, CALIFORNIA_MANDATE.bronzeMonth, 'USD'), cur)}. Months without cover this year so far: ${h.uncoveredInCalifornia[year] ?? 0}.` : ''}
           </p>
           {/* HUSKY D's work rules short, it's applied for on a notice; a notice waits on an answer (from 2026-10-16:
               until then Papers' refusal was the end of it, and a renewal ended cover at once). */}
           {state && !applyRefusal(sim, person, sim.now) && (
             <div className="row gap-3" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-              <p className="small" style={{ margin: 0, flex: 1 }}>Applying for {PROGRAM_NAMES[state].medicaid} anyway, you’re sent a notice of noncompliance and {PUBLIC_COVER.answerDays} days from its receipt to show the work rules met in {monthsWords(lookBack(sim.now, state, 'apply'))}, or an exception, a stay in hospital that month among them; it’s decided after, and the marketplace sells to you meanwhile.</p>
-              <Gated feature="health.apply" onClick={() => { const a = run<{ decideAt: number }>('health.apply'); if (a.ok) toast(`Applied: a notice says what’s needed, decided ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Apply For {PROGRAM_NAMES[state].medicaid}</Gated>
+              <p className="small" style={{ margin: 0, flex: 1 }}>You can still apply for {PROGRAM_NAMES[state].medicaid}. You’ll be sent a notice of noncompliance, with {PUBLIC_COVER.answerDays} days from receiving it to show you met the work rules in {monthsWords(lookBack(sim.now, state, 'apply'))}, or that an exception applies, such as a hospital stay that month. It’s decided after that, and you can buy a marketplace plan in the meantime.</p>
+              <Gated feature="health.apply" onClick={() => { const a = run<{ decideAt: number }>('health.apply'); if (a.ok) toast(`Applied. A notice will say what’s needed, and it’s decided ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Apply For {PROGRAM_NAMES[state].medicaid}</Gated>
             </div>
           )}
           {h.pending && (
             <div className="row gap-3" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
               <p className="small" style={{ margin: 0, flex: 1 }}>
-                A notice of noncompliance of {formatDate(h.pending.noticeAt, sim.zone)}: {PROGRAM_NAMES[h.pending.state].medicaid} couldn’t find the work rules met in {monthsWords(h.pending.months)}. Answer by {formatDate(answerBy(h.pending.noticeAt), sim.zone)}; {h.pending.kind === 'renewal' ? 'you’re covered until it’s decided' : 'the application is decided'} on {formatDate(h.pending.decideAt, sim.zone)}.{' '}
-                {hardshipRefusal(sim, person, sim.now) ?? 'A stay in hospital in a month it assessed counts if you ask for it.'}
+                A notice of noncompliance dated {formatDate(h.pending.noticeAt, sim.zone)}: {PROGRAM_NAMES[h.pending.state].medicaid} couldn’t find that you met the work rules in {monthsWords(h.pending.months)}. Answer by {formatDate(answerBy(h.pending.noticeAt), sim.zone)}. {h.pending.kind === 'renewal' ? 'You’re covered until it’s decided' : 'The application is decided'} on {formatDate(h.pending.decideAt, sim.zone)}.{' '}
+                {hardshipRefusal(sim, person, sim.now) ?? 'If you were in hospital in one of those months, you can ask for it to count.'}
               </p>
-              {!hardshipRefusal(sim, person, sim.now) && <Gated feature="health.request_hardship" onClick={() => { const r = run<{ month: string }>('health.request_hardship'); if (r.ok) toast('The hardship is granted, and the work rules met.', 'positive'); }}>Request A Hardship Exception</Gated>}
+              {!hardshipRefusal(sim, person, sim.now) && <Gated feature="health.request_hardship" onClick={() => { const r = run<{ month: string }>('health.request_hardship'); if (r.ok) toast('Hardship exception granted. The work rules count as met.', 'positive'); }}>Request A Hardship Exception</Gated>}
             </div>
           )}
           <Fine>
-            The benchmark premiums are SLATE’s estimate from published rates. Source: {BENCHMARK_SOURCE}; {CALIFORNIA_MANDATE.source}.
+            The benchmark premiums are estimated from published rates. Source: {BENCHMARK_SOURCE}; {CALIFORNIA_MANDATE.source}.
           </Fine>
         </div>
       </Panel>
@@ -598,22 +598,22 @@ function HealthPane() {
 
       <Panel
         title="Care And Its Bills"
-        subtitle={plan ? `${cover === 'medicaid' || cover === 'essential' ? named : plan.label}: ${formatMoney(h.spent[year] ?? 0, cur)} of ${formatMoney(inSaveMoney(sim, plan.outOfPocket, 'USD'), cur)} paid this year` : 'Uninsured: you pay the price, less a hospital’s charity'}
+        subtitle={plan ? `${cover === 'medicaid' || cover === 'essential' ? named : plan.label}: ${formatMoney(h.spent[year] ?? 0, cur)} of ${formatMoney(inSaveMoney(sim, plan.outOfPocket, 'USD'), cur)} paid this year` : 'Uninsured: you pay the full price, less any hospital charity care'}
         actions={debt && debt.balance < 0 ? <Gated feature="health.pay_bill" onClick={() => { if (run('health.pay_bill', { amount: -debt.balance }).ok) toast('Paid off.', 'positive'); }}>Pay It Off</Gated> : undefined}
         help="papers.health-cover"
       >
         <div className="col gap-3">
-          {debt && debt.balance < 0 && <Stat label="Medical Debt" value={formatMoney(-debt.balance, cur)} tone="warning" note={`On your record only at ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)}, a year past due, and outside New York and California`} />}
+          {debt && debt.balance < 0 && <Stat label="Medical Debt" value={formatMoney(-debt.balance, cur)} tone="warning" note={`It goes on your credit record only at ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)} or more, once a year past due, and never in New York or California`} />}
           {bills.length > 0 && (
             <div className="table-scroll">
               <table>
                 <thead><tr><th scope="col">Care</th><th scope="col">When</th><th scope="col" className="num">Your Share</th><th scope="col">Due</th><th scope="col">Assistance</th><th scope="col" className="num">Plan Paid</th></tr></thead>
-                <tbody>{bills.map((b) => <tr key={b.id}><td>{titleCaseLabel(b.what)}</td><td>{formatDate(b.at, sim.zone)}</td><td className="num mono">{formatMoney(b.credit ? -b.credit : b.amount, cur)}{b.credited ? <span className="xs dim"> of {formatMoney(b.amount + b.credited, cur)}</span> : null}</td><td>{b.credit || (b.credited && b.amount === 0) ? 'Credited' : b.paid ? 'Settled' : b.inDebt ? 'Owed As Debt' : formatDate(b.dueAt, sim.zone)}</td><td>{b.denied && (b.denied.outcome ? <span className="xs dim">{b.denied.outcome === 'upheld' ? 'Denial Upheld' : 'Denial Overturned'}</span> : appealRefusal(b, sim.now) ? <span className="xs dim">{b.denied.appealedAt ? 'Appealed' : 'Denied'}</span> : <Gated feature="health.appeal" className="btn btn-sm btn-ghost" title={`It’s decided in ${DENIALS.decideDays} days, and insurers uphold ${pct(DENIALS.upheld)} of appeals.`} onClick={() => { if (run('health.appeal', { billId: b.id }).ok) toast(`Appealed: decided in ${DENIALS.decideDays} days.`, 'positive'); }}>Appeal It</Gated>)}{b.aid ? aidWord(b.aid) : aidRefusal(b, sim.now) ? '' : <Gated feature="health.apply_aid" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ aid: string }>('health.apply_aid', { billId: b.id }); if (r.ok) toast(r.value!.aid === 'refused' ? `Your income is over the policy’s ${pct(CHARITY.connecticut.discountTo)}.` : 'The hospital took the charity off it.', r.value!.aid === 'refused' ? 'neutral' : 'positive'); }}>Apply For Assistance</Gated>}</td><td className="num mono">{b.covered ? formatMoney(b.covered.planPaid, cur) : ''}</td></tr>)}</tbody>
+                <tbody>{bills.map((b) => <tr key={b.id}><td>{titleCaseLabel(b.what)}</td><td>{formatDate(b.at, sim.zone)}</td><td className="num mono">{formatMoney(b.credit ? -b.credit : b.amount, cur)}{b.credited ? <span className="xs dim"> of {formatMoney(b.amount + b.credited, cur)}</span> : null}</td><td>{b.credit || (b.credited && b.amount === 0) ? 'Credited' : b.paid ? 'Settled' : b.inDebt ? 'Owed As Debt' : formatDate(b.dueAt, sim.zone)}</td><td>{b.denied && (b.denied.outcome ? <span className="xs dim">{b.denied.outcome === 'upheld' ? 'Denial Upheld' : 'Denial Overturned'}</span> : appealRefusal(b, sim.now) ? <span className="xs dim">{b.denied.appealedAt ? 'Appealed' : 'Denied'}</span> : <Gated feature="health.appeal" className="btn btn-sm btn-ghost" title={`It’s decided in ${DENIALS.decideDays} days, and insurers uphold ${pct(DENIALS.upheld)} of appeals.`} onClick={() => { if (run('health.appeal', { billId: b.id }).ok) toast(`Appealed: decided in ${DENIALS.decideDays} days.`, 'positive'); }}>Appeal It</Gated>)}{b.aid ? aidWord(b.aid) : aidRefusal(b, sim.now) ? '' : <Gated feature="health.apply_aid" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ aid: string }>('health.apply_aid', { billId: b.id }); if (r.ok) toast(r.value!.aid === 'refused' ? `Your income is over the hospital policy’s limit of ${pct(CHARITY.connecticut.discountTo)} of the poverty line.` : 'The hospital applied its charity care to this bill.', r.value!.aid === 'refused' ? 'neutral' : 'positive'); }}>Apply For Assistance</Gated>}</td><td className="num mono">{b.covered ? formatMoney(b.covered.planPaid, cur) : ''}</td></tr>)}</tbody>
               </table>
             </div>
           )}
           <Fine>
-            Illness comes at the rates of an adult your age: about {CARE.perYear.visit} doctor’s visits a year, {CARE.perYear.emergency} emergency visits, a stay in hospital one year in 25, and the flu one season in eleven. Care costs what it costs your plan: {formatMoney(inSaveMoney(sim, grown(CARE.price.visit, 'visit', sim.now), 'USD'), cur)} a visit, {formatMoney(inSaveMoney(sim, grown(CARE.price.emergency, 'emergency', sim.now), 'USD'), cur)} an emergency visit and {formatMoney(inSaveMoney(sim, grown(CARE.price.stay, 'stay', sim.now), 'USD'), cur)} a stay at this year’s commercial prices, grown from their year by the medical price index, and the uninsured are billed more. A bill is due in {MEDICAL_DEBT.dueDays} days. Source: {CARE.source}; {PLANS_SOURCE}.
+            Illness comes at the rates for an adult your age: about {CARE.perYear.visit} doctor’s visits and {CARE.perYear.emergency} emergency visits a year, a hospital stay one year in 25, and the flu one season in eleven. Care is priced at what it costs your plan: {formatMoney(inSaveMoney(sim, grown(CARE.price.visit, 'visit', sim.now), 'USD'), cur)} a visit, {formatMoney(inSaveMoney(sim, grown(CARE.price.emergency, 'emergency', sim.now), 'USD'), cur)} an emergency visit and {formatMoney(inSaveMoney(sim, grown(CARE.price.stay, 'stay', sim.now), 'USD'), cur)} a hospital stay, at this year’s commercial prices, grown from their source year by the medical price index. The uninsured are billed more. A bill is due in {MEDICAL_DEBT.dueDays} days. Source: {CARE.source}; {PLANS_SOURCE}.
           </Fine>
         </div>
       </Panel>
@@ -649,7 +649,7 @@ function TherapyRow() {
         <label htmlFor="therapist">Therapist</label>
         <select id="therapist" value={t.name} onChange={(e) => setName(e.target.value)}>{here.map((x) => <option key={x.name} value={x.name}>{x.price > 0 ? `${x.name}, ${formatMoney(sessionPrice(sim, x), saveCurrency(sim.universe), { cents: false })} A Session` : `${x.name}, Free${x.yale ? ' With Yale Health' : ''}`}</option>)}</select>
       </div>
-      <Gated feature="health.therapy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const r = run<{ first: number }>('health.therapy', { therapist: t.name }); if (r.ok) toast(`The first session, ${formatDate(r.value!.first, sim.zone)}.`, 'positive'); }}>{`Begin A Course Of ${THERAPY.sessions}`}</Gated>
+      <Gated feature="health.therapy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const r = run<{ first: number }>('health.therapy', { therapist: t.name }); if (r.ok) toast(`Your first session is ${formatDate(r.value!.first, sim.zone)}.`, 'positive'); }}>{`Begin A Course Of ${THERAPY.sessions} Sessions`}</Gated>
       {no && <span className="xs dim">{no}</span>}
     </div>
   );
@@ -680,7 +680,7 @@ function ConditionsPanel() {
         {conditions.some(([, s]) => s.treated) && <div className="row gap-2" style={{ flexWrap: 'wrap' }}><Gated feature="health.extra_supply" className="btn btn-sm btn-ghost" disabled={Boolean(noSupply)} title={noSupply ?? `Pays for ${longest} days at once, at ${fills === 1 ? 'one fill’s' : `${fills} fills’`} share`} onClick={() => { if (run('health.extra_supply', { days: longest }).ok) toast(`${longest} days of medicine filled.`, 'positive'); }}>{`Fill A Longer Supply, ${longest} Days`}</Gated><HowItWorks help="health.extra_supply" /></div>}
         {conditions.some(([, s]) => s.treated) && noSupply && <span className="xs dim">{noSupply}</span>}
         <Fine>
-          Medicine is filled as a supply at the pharmacy where you live, with a week left: 28 days in England, 30 in America, a month elsewhere. A longer supply pays for up to {longest} days at once, so a month the bank runs low doesn’t leave you without; one the bank can’t cover isn’t filled at all. Drawn at the rates of adults 18 to 34: depression {CHRONIC.share.depression * 100}%, asthma {(CHRONIC.share.asthma * 100).toFixed(1)}%, high blood pressure {(CHRONIC.share.hypertension * 100).toFixed(1)}%, diabetes {(CHRONIC.share.diabetes * 100).toFixed(1)}%, arthritis {(CHRONIC.share.arthritis * 100).toFixed(1)}%. Kept up, each month’s care and each fill is paid then, at what your plan leaves: therapy twice and a generic for depression, a brand inhaler for asthma, a generic for blood pressure, insulin and a glucose monitor (or a generic for type 2) and a visit a quarter for diabetes, a generic for arthritis. Insulin is never more than the makers’ {formatMoney(inSaveMoney(sim, INSULIN.cashCap, 'USD'), cur)} a month, and nothing on a plan New York regulates; the monitor never more than Abbott’s {formatMoney(inSaveMoney(sim, INSULIN.monitor.program, 'USD'), cur)}. Left alone, depression weighs on your morale each week, asthma doubles your emergencies, type 1 diabetes quadruples them, diabetes wears your body down and arthritis tires it, which is SLATE’s estimate. Source: {CHRONIC.source}; {INSULIN.source}; {PHARMACY.source}; {DENTAL_VISION.source}.
+          Medicine is refilled at the pharmacy where you live when a week of it is left: 28 days at a time in England, 30 in America, a month elsewhere. A longer supply pays for up to {longest} days at once, so a month when your bank runs low doesn’t leave you without. A fill your bank can’t cover isn’t filled at all. Conditions come at the rates for adults 18 to 34: depression {CHRONIC.share.depression * 100}%, asthma {(CHRONIC.share.asthma * 100).toFixed(1)}%, high blood pressure {(CHRONIC.share.hypertension * 100).toFixed(1)}%, diabetes {(CHRONIC.share.diabetes * 100).toFixed(1)}% and arthritis {(CHRONIC.share.arthritis * 100).toFixed(1)}%. While you keep a condition up, each month’s care and each fill is paid when it happens, at what your plan leaves you to pay: for depression, therapy {CHRONIC.therapyPerMonth === 2 ? 'twice' : `${CHRONIC.therapyPerMonth} times`} a month and a generic; for asthma, a brand inhaler; for blood pressure, a generic; for diabetes, insulin and a glucose monitor (or a generic for type 2) and a visit each quarter; for arthritis, a generic. Insulin never costs more than the makers’ {formatMoney(inSaveMoney(sim, INSULIN.cashCap, 'USD'), cur)} a month, and nothing on a plan New York regulates. The monitor never costs more than Abbott’s {formatMoney(inSaveMoney(sim, INSULIN.monitor.program, 'USD'), cur)}. Left alone, depression lowers your morale each week, asthma doubles your emergencies, type 1 diabetes quadruples them, diabetes wears your body down and arthritis tires it. These effects are estimated. Source: {CHRONIC.source}; {INSULIN.source}; {PHARMACY.source}; {DENTAL_VISION.source}.
         </Fine>
       </div>
     </Panel>
@@ -711,7 +711,7 @@ function DentalPanel() {
       <div className="col gap-3">
         {own && <Stat label="Paid By The Plan This Year" value={`${formatMoney(own.paid[year] ?? 0, cur)} of ${formatMoney(inSaveMoney(sim, d.max, 'USD'), cur)}`} />}
         <Fine>
-          Cleanings in full; a filling at {d.basic * 100}% after a {formatMoney(inSaveMoney(sim, d.deductible, 'USD'), cur)} deductible, to {formatMoney(inSaveMoney(sim, d.max, 'USD'), cur)} a year. It pays only where your health plan doesn’t. {offered === 'ca' ? 'Covered California sells it only beside its own plan, and it ends with that plan; its Los Angeles premium is SLATE’s estimate.' : offered === 'yale' ? 'Paid for the year to 30 September, and not canceled once paid.' : 'Bought on its own through NY State Of Health; its premium and its share of a filling are SLATE’s estimate.'} Source: {DENTAL_PLANS.source}.
+          It pays for cleanings in full, and {d.basic * 100}% of a filling after a {formatMoney(inSaveMoney(sim, d.deductible, 'USD'), cur)} deductible, up to {formatMoney(inSaveMoney(sim, d.max, 'USD'), cur)} a year. It pays only where your health plan doesn’t. {offered === 'ca' ? 'Covered California sells it only alongside its own health plan, and it ends when that plan does. Its Los Angeles premium is estimated.' : offered === 'yale' ? 'It’s paid for the year to 30 September, and can’t be canceled once paid.' : 'It’s bought on its own through NY State Of Health. Its premium and its share of a filling are estimated.'} Source: {DENTAL_PLANS.source}.
         </Fine>
       </div>
     </Panel>
@@ -736,16 +736,16 @@ function HomeClaimsPanel() {
   const cur = saveCurrency(sim.universe);
   const money = (c: number) => formatMoney(c, cur);
   const eur = (c: number) => formatMoney(inSaveMoney(sim, c, 'EUR'), cur);
-  const file = () => { const a = run<{ firstPaymentAt: number }>('benefits.claim'); if (a.ok) toast('Filed.', 'positive'); };
+  const file = () => { const a = run<{ firstPaymentAt: number }>('benefits.claim'); if (a.ok) toast('Claim filed.', 'positive'); };
   if (livesInBritain(person)) {
     const uc = person.universalCredit;
-    const no = uc && uc.closedAt === undefined ? 'You have a claim open.' : creditRefusal(sim, person);
+    const no = uc && uc.closedAt === undefined ? 'You already have a claim open.' : creditRefusal(sim, person);
     return (
-      <Panel title="Universal Credit" subtitle="Britain’s, a month assessed at a time" actions={no ? undefined : <Gated feature="benefits.claim" onClick={file}>File A Claim</Gated>} help="papers.benefits">
+      <Panel title="Universal Credit" subtitle="Britain’s benefit, assessed one month at a time" actions={no ? undefined : <Gated feature="benefits.claim" onClick={file}>File A Claim</Gated>} help="papers.benefits">
         <div className="grid grid-3">
           <Stat label="Claim" value={uc && uc.closedAt === undefined ? 'Open' : 'None Open'} note={uc ? `Filed ${formatDate(uc.filedAt, sim.zone)}` : no ?? 'You can file now'} />
           <Stat label="Paid" value={money(uc?.paid ?? 0)} note="Since it was filed" />
-          <Stat label="Months Nothing" value={String(uc?.nils ?? 0)} note="Assessed, and nothing due" />
+          <Stat label="Months With Nothing Due" value={String(uc?.nils ?? 0)} note="Assessed, with nothing to pay you" />
         </div>
       </Panel>
     );
@@ -755,11 +755,11 @@ function HomeClaimsPanel() {
     const no = jobseekerRefusal(sim, person);
     return (
       <>
-        <Panel title="Jobseeker’s Allowance" subtitle="Ireland’s, a week at a time" actions={no ? undefined : <Gated feature="benefits.claim" onClick={file}>File A Claim</Gated>} help="papers.benefits">
+        <Panel title="Jobseeker’s Allowance" subtitle="Ireland’s benefit, paid a week at a time" actions={no ? undefined : <Gated feature="benefits.claim" onClick={file}>File A Claim</Gated>} help="papers.benefits">
           <div className="grid grid-3">
             <Stat label="Claim" value={ja && ja.closedAt === undefined ? 'Open' : 'None Open'} note={ja ? `Filed ${formatDate(ja.filedAt, sim.zone)}` : no ?? 'You can file now'} />
             <Stat label="Paid" value={money(ja?.paid ?? 0)} />
-            <Stat label="Full Week" value={eur(IRISH_JA.weekly)} note="Less a fifth a day worked, and savings over €20,000" />
+            <Stat label="Full Week" value={eur(IRISH_JA.weekly)} note="Less a fifth for each day worked, and less for savings over €20,000" />
           </div>
         </Panel>
       </>
@@ -773,7 +773,7 @@ function HomeClaimsPanel() {
         <div className="grid grid-3">
           <Stat label="Claimed" value="Yes" note={`Filed ${formatDate(d.filedAt, sim.zone)}`} />
           <Stat label="Paid" value={`${d.payments} Of ${CDMX_DESEMPLEO.payments}`} note="Months" />
-          <Stat label="A Month" value={formatMoney(inSaveMoney(sim, CDMX_DESEMPLEO.monthly, 'MXN'), cur)} note="The month’s UMA" />
+          <Stat label="A Month" value={formatMoney(inSaveMoney(sim, CDMX_DESEMPLEO.monthly, 'MXN'), cur)} note="One month’s UMA, Mexico’s official benchmark amount" />
         </div>
       </Panel>
     );
@@ -801,10 +801,10 @@ function AssistancePanel() {
     <Panel title={title} subtitle={subtitle} actions={no ? undefined : <Gated feature="benefits.assistance" onClick={() => { const a = run<{ firstPaymentAt: number }>('benefits.assistance'); if (a.ok) toast(`Applied. The first month comes ${formatDate(a.value!.firstPaymentAt, sim.zone)}.`, 'positive'); }}>Apply</Gated>} help="papers.benefits">
       <div className="grid grid-3">
         <Stat label="Claim" value={claim ? 'Open' : 'None Open'} note={claim ? `Since ${formatDate(claim.since, sim.zone)}, ${claim.months} ${claim.months === 1 ? 'month' : 'months'} paid` : no ?? 'You can apply now'} />
-        <Stat label="At Most" value={most} note={scheme === 'snap' ? 'A month, less 30% of net income' : 'A month, less earnings past what’s kept'} />
-        <Stat label={scheme === 'snap' ? 'On The EBT Card' : 'Assets Kept To'} value={scheme === 'snap' ? formatMoney(ebtBalance(sim, person), cur) : `CAD ${(scheme === 'ontario-works' ? ONTARIO_WORKS.assets : BC_ASSISTANCE.assets).toLocaleString('en-US')}`} note={scheme === 'snap' ? 'Spent on groceries first' : 'The home and a car aside'} />
+        <Stat label="At Most" value={most} note={scheme === 'snap' ? 'A month, less 30% of net income' : 'A month, less earnings over what you’re allowed to keep'} />
+        <Stat label={scheme === 'snap' ? 'On The EBT Card' : 'Asset Limit'} value={scheme === 'snap' ? formatMoney(ebtBalance(sim, person), cur) : `CAD ${(scheme === 'ontario-works' ? ONTARIO_WORKS.assets : BC_ASSISTANCE.assets).toLocaleString('en-US')}`} note={scheme === 'snap' ? 'Spent on groceries first' : 'Not counting a home or a car'} />
       </div>
-      {scheme === 'snap' && <Fine>Counted as SNAP counts it (7 CFR 273.9): work-study pay isn’t income; interest and benefits are, without the earned-income deduction wages get. A student is eligible in term on a work-study award, and in the summer only with 20 hours’ work a week (7 CFR 273.5).</Fine>}
+      {scheme === 'snap' && <Fine>Income is counted as SNAP counts it (7 CFR 273.9). Work-study pay isn’t income. Interest and benefits are, without the earned-income deduction that wages get. A student is eligible during term with a work-study award, and in the summer only with 20 hours of work a week (7 CFR 273.5).</Fine>}
     </Panel>
   );
 }
@@ -821,11 +821,11 @@ function EiPanel() {
     <Panel title="EI Special Benefits" subtitle="Canada’s, for the self-employed who register" help="papers.benefits">
       <div className="col gap-3">
         <div className="grid grid-2">
-          <Stat label="Registered" value={person.ei ? formatDate(person.ei.registeredAt, sim.zone) : 'Not Yet'} note={person.ei ? `Premiums would come from self-employed earnings, of which there are none since the career went: ${(EI_SELF_EMPLOYED.premium * 100).toFixed(2)}% to $${EI_SELF_EMPLOYED.premiumMax.toLocaleString('en-US', { minimumFractionDigits: 2 })} a year` : `Then ${(EI_SELF_EMPLOYED.premium * 100).toFixed(2)}% of your earnings, to $${EI_SELF_EMPLOYED.premiumMax.toLocaleString('en-US', { minimumFractionDigits: 2 })} a year`} />
+          <Stat label="Registered" value={person.ei ? formatDate(person.ei.registeredAt, sim.zone) : 'Not Yet'} note={person.ei ? `Premiums are ${(EI_SELF_EMPLOYED.premium * 100).toFixed(2)}% of self-employed earnings, up to $${EI_SELF_EMPLOYED.premiumMax.toLocaleString('en-US', { minimumFractionDigits: 2 })} a year. You have no self-employed earnings in the game, so none are charged` : `Once registered, ${(EI_SELF_EMPLOYED.premium * 100).toFixed(2)}% of self-employed earnings, up to $${EI_SELF_EMPLOYED.premiumMax.toLocaleString('en-US', { minimumFractionDigits: 2 })} a year`} />
           <Stat label="A Sick Week" value={weekly > 0 ? formatMoney(inSaveMoney(sim, Math.round(weekly * 100), 'CAD'), cur) : '—'} note={person.ei ? `After ${EI_SELF_EMPLOYED.registeredMonths} months registered, with $${EI_SELF_EMPLOYED.minEarnings.toLocaleString('en-US')} earned last year` : 'Once registered for a year'} />
         </div>
         {!person.ei && <div className="row gap-2"><Gated feature="benefits.ei_register" className="btn btn-sm" onClick={() => { if (run('benefits.ei_register', {}).ok) toast('Registered for EI’s special benefits.', 'positive'); }}>Register</Gated></div>}
-        <Fine>A week too sick to work, in hospital or laid up, pays {Math.round(EI_SELF_EMPLOYED.rate * 100)}% of last year’s weekly earnings to ${EI_SELF_EMPLOYED.maxWeekly}, after {EI_SELF_EMPLOYED.waitWeeks === 1 ? 'one unpaid week' : `${EI_SELF_EMPLOYED.waitWeeks} unpaid weeks`}, for {EI_SELF_EMPLOYED.weeks} weeks a claim. Once paid, the premiums run for as long as you’re self-employed. Source: canada.ca, 2026.</Fine>
+        <Fine>A week you’re too sick to work, in hospital or laid up, pays {Math.round(EI_SELF_EMPLOYED.rate * 100)}% of last year’s weekly earnings, up to ${EI_SELF_EMPLOYED.maxWeekly}, after {EI_SELF_EMPLOYED.waitWeeks === 1 ? 'one unpaid week' : `${EI_SELF_EMPLOYED.waitWeeks} unpaid weeks`}, for up to {EI_SELF_EMPLOYED.weeks} weeks a claim. Once a benefit has been paid, you keep paying premiums for as long as you’re self-employed. Source: canada.ca, 2026.</Fine>
       </div>
     </Panel>
   );
@@ -846,7 +846,7 @@ function BenefitsPane() {
   // A full-time student in Connecticut isn't available for work (from 2026-10-10, `studentUnavailable`).
   // A student in Connecticut, or a noncitizen without permission to work (`usWorkAuthorized`, from 2026-10-10): the reason said, no button.
   const studying = state ? studentUnavailable(person, state) ?? (usWorkAuthorized(person, sim.now) ? undefined : 'Unemployment pays a noncitizen only with permission to work in the US, such as OPT (FUTA 3304(a)(14)).') : undefined;
-  const partial = state === 'ca' ? `the benefit less the earnings past the greater of ${formatMoney(inSaveMoney(sim, CALIFORNIA_UI.disregard, 'USD'), cur)} and a quarter of them` : state === 'ct' ? 'the benefit less two-thirds of the pay' : 'by its hours, and nothing where the pay reaches the maximum';
+  const partial = state === 'ca' ? `the benefit less your earnings above ${formatMoney(inSaveMoney(sim, CALIFORNIA_UI.disregard, 'USD'), cur)} or a quarter of them, whichever is greater` : state === 'ct' ? 'the benefit less two-thirds of the pay' : 'a share of the benefit by the hours worked, and nothing once the pay reaches the maximum';
   return (
     <div className="col gap-5">
       <HomeClaimsPanel />
@@ -856,23 +856,23 @@ function BenefitsPane() {
       <Panel
         title={claim ? `A ${stateName(`us-${claim.state}`)} Claim` : 'No Claim Open'}
         subtitle={claim ? `Filed ${formatDate(claim.filedAt, sim.zone)}` : undefined}
-        actions={claim || !state || !preview?.result.ok || studying ? undefined : <Gated feature="benefits.claim" onClick={() => { const a = run<{ weekly: number }>('benefits.claim'); if (a.ok) toast(`Filed: ${money(a.value!.weekly)} a week.`, 'positive'); }}>File A Claim</Gated>}
+        actions={claim || !state || !preview?.result.ok || studying ? undefined : <Gated feature="benefits.claim" onClick={() => { const a = run<{ weekly: number }>('benefits.claim'); if (a.ok) toast(`Claim filed: ${money(a.value!.weekly)} a week.`, 'positive'); }}>File A Claim</Gated>}
         help="papers.benefits"
       >
         <div className="col gap-3">
           {claim ? (
             <div className="grid grid-3">
-              <Stat label="A Week" value={money(claim.weekly)} note={claim.state === 'ct' ? 'Connecticut has no waiting week' : claim.waited ? 'The waiting week is served' : 'The first week due is unpaid'} />
+              <Stat label="A Week" value={money(claim.weekly)} note={claim.state === 'ct' ? 'Connecticut has no waiting week' : claim.waited ? 'The unpaid waiting week is served' : 'The first eligible week is unpaid'} />
               <Stat label="Paid" value={money(claim.paid)} note={`Of ${money(claim.maxTotal)} at most`} />
               <Stat label="At Most" value={money(claim.maxTotal)} note={`Until ${formatDate(claim.endsAt, sim.zone)}`} />
             </div>
           ) : (
             <p className="small" style={{ margin: 0 }}>
-              {!state ? 'SLATE pays unemployment in New York, California and Connecticut, where you’d have to live.' : studying ? studying : preview!.result.ok ? `Filed now, your base period, ${preview!.quarters.join(', ')}, pays ${preview!.result.why}` : `Filed now, it wouldn’t pay: ${preview!.result.why}`}
+              {!state ? 'Unemployment is paid in the game only in New York, California and Connecticut, and you’d have to live in one of them.' : studying ? studying : preview!.result.ok ? `Filed now, your base period, ${preview!.quarters.join(', ')}, pays ${preview!.result.why}` : `Filed now, it wouldn’t pay: ${preview!.result.why}`}
             </p>
           )}
           <p className="small" style={{ margin: 0 }}>
-            Each Sunday the week is certified for you, from anywhere in the country as an interstate claim is; a week abroad pays nothing, and so does a week while you’re a full-time student in Connecticut. A week with work pays {partial}, from the wages paid in it; work-study wages are your school’s, outside the claim’s base period. What’s paid is income on your return{state === 'ca' ? ', federally; California doesn’t tax it' : ''}.
+            Each Sunday the week is certified for you, from anywhere in the country, as an interstate claim is. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays {partial}, counting the wages paid that week. Work-study wages come from your school and don’t count in the claim’s base period. What’s paid is taxable income on your return{state === 'ca' ? ' federally, though California doesn’t tax it' : ''}.
           </p>
           <Fine>Source: {source}.</Fine>
         </div>
@@ -933,15 +933,15 @@ function YourDoctor() {
   // What shuts both prepayments: the engine's refusal, or the guide's while its chapter is unread, as their title says.
   const noPrepay = prepayRefusal(sim, person) ?? prepay.reason;
   return (
-    <Panel title="Your Doctor" subtitle="Where a doctor’s visit, urgent care and an emergency are had where you live" help="papers.doctor">
+    <Panel title="Your Doctor" subtitle="Where you’re seen for a doctor’s visit, urgent care or an emergency where you live" help="papers.doctor">
       <div className="col gap-3">
         {(choosing || american) && <div className="col gap-1">
           <div className="field-row field-row-tight">
             {choosing && (
               <div className="field">
                 <label htmlFor="own-doctor">Your Doctor</label>
-                <select id="own-doctor" value={ownPractice?.id ?? ''} disabled={!choose.open} title={choose.reason} onChange={(e) => { if (e.target.value && run('health.choose_clinic', { clinicId: e.target.value }).ok) toast('Your doctor, chosen.', 'positive'); }}>
-                  {!ownPractice && <option value="">{doctor && doctor.members !== null ? 'As Your Cover Has It' : 'The Town’s First Practice'}</option>}
+                <select id="own-doctor" value={ownPractice?.id ?? ''} disabled={!choose.open} title={choose.reason} onChange={(e) => { if (e.target.value && run('health.choose_clinic', { clinicId: e.target.value }).ok) toast(`${clinicById(e.target.value)?.name ?? 'That practice'} is now your doctor.`, 'positive'); }}>
+                  {!ownPractice && <option value="">{doctor && doctor.members !== null ? 'The Practice Your Cover Uses' : 'The First Practice In Town'}</option>}
                   {practices.map((c) => <option key={c.id} value={c.id}>{practiceWords(c)}</option>)}
                 </select>
               </div>
@@ -949,8 +949,8 @@ function YourDoctor() {
             {american && (
               <div className="field">
                 <label htmlFor="own-pharmacy">Your Pharmacy</label>
-                <select id="own-pharmacy" value={ownChain?.id ?? ''} disabled={!pharmacy.open} title={pharmacy.reason} onChange={(e) => { if (e.target.value && run('health.choose_pharmacy', { chain: e.target.value }).ok) toast('Your pharmacy, chosen.', 'positive'); }}>
-                  {!ownChain && <option value="">Any Pharmacy, At The Median</option>}
+                <select id="own-pharmacy" value={ownChain?.id ?? ''} disabled={!pharmacy.open} title={pharmacy.reason} onChange={(e) => { if (e.target.value && run('health.choose_pharmacy', { chain: e.target.value }).ok) toast(`${US_PHARMACIES.find((c) => c.id === e.target.value)?.name ?? 'That pharmacy'} is now your pharmacy.`, 'positive'); }}>
+                  {!ownChain && <option value="">Any Pharmacy, At The Typical Price</option>}
                   {/* Priced as `rxShareOf` prices it, in the save's money (from 2026-10-12: until then a bare "4.00"). */}
                   {US_PHARMACIES.map((c) => <option key={c.id} value={c.id}>{`${c.name}, A Generic ${formatMoney(inSaveMoney(sim, Math.round(c.generic * 100), 'USD'), cur)} Uninsured`}</option>)}
                 </select>
@@ -976,7 +976,7 @@ function YourDoctor() {
           <div className="col gap-1">
             <div className="row gap-2" style={{ alignItems: 'baseline', flexWrap: 'wrap' }}>
               <span className="small">{(person.health?.prepaidUntil ?? 0) > sim.now ? `Prescriptions are prepaid to ${formatDate(person.health!.prepaidUntil!, sim.zone)}` : 'Prescriptions: £9.90 an item'}</span>
-              {([3, 12] as const).map((m) => <button key={m} type="button" className="btn btn-sm btn-ghost" disabled={!prepay.open || Boolean(prepayRefusal(sim, person))} title={prepayRefusal(sim, person) ?? prepay.reason} onClick={() => { if (run('health.prepay', { months: m }).ok) toast('Prepaid: prescriptions are free while it runs.', 'positive'); }}>{m === 3 ? 'Prepay Three Months, £32.05' : 'Prepay A Year, £114.50'}</button>)}
+              {([3, 12] as const).map((m) => <button key={m} type="button" className="btn btn-sm btn-ghost" disabled={!prepay.open || Boolean(prepayRefusal(sim, person))} title={prepayRefusal(sim, person) ?? prepay.reason} onClick={() => { if (run('health.prepay', { months: m }).ok) toast('Prepaid. Your prescriptions are free until it runs out.', 'positive'); }}>{m === 3 ? 'Prepay Three Months, £32.05' : 'Prepay A Year, £114.50'}</button>)}
             </div>
             <WhyNot reasons={[['Prepay Three Months, £32.05', noPrepay], ['Prepay A Year, £114.50', noPrepay]]} />
           </div>
@@ -990,7 +990,7 @@ function YourDoctor() {
             <WhyNot reasons={[['Book An Appointment', bookAgain.reason]]} />
           </div>
         )}
-        <Fine>The practices, clinics and hospitals are real. A practice that publishes how soon it sees people books for that: Yale Health’s Student Health, for Yale students it covers, offers the same day or the next, and SLATE books the next; elsewhere the town’s published wait stands. Uninsured, an urgent visit at one that publishes its self-pay price is that price: CityMD’s, which two sources put at $225 and $250, taken at the middle, and Exer’s $215. An emergency keeps you the department’s median time, missing what that time held. In America, a generic is filled at your pharmacy’s own cash price, a plan’s copay never more.</Fine>
+        <Fine>The practices, clinics and hospitals are real. A practice that publishes how soon it sees people books on that wait. Yale Health’s Student Health offers the Yale students it covers the same day or the next, and the game books the next. Elsewhere the town’s published wait applies. Uninsured, an urgent visit at a clinic that publishes its self-pay price costs that price: CityMD’s, which two sources put at $225 and $250, taken at the middle, and Exer’s $215. An emergency keeps you for the department’s median time, and you miss whatever you had planned in that time. In America, a generic is filled at your pharmacy’s own cash price, and never costs more than your plan’s copay.</Fine>
       </div>
     </Panel>
   );
@@ -1016,11 +1016,11 @@ function PensionsPanel() {
           <Panel title="Social Security" subtitle="Your US earnings record" actions={no ? undefined : <Gated feature="pension.social_security" onClick={() => { const r = run<{ monthly: number; factor: number }>('pension.social_security'); if (r.ok) toast(`Claimed: ${money(r.value!.monthly)} a month, ${Math.round(r.value!.factor * 1000) / 10}% of the full benefit.`, 'positive'); }}>Claim Social Security</Gated>} help="papers.pensions">
             <div className="col gap-3">
               <div className="grid grid-3">
-                <Stat label="Credits" value={String(ss.credits)} note="Forty qualify; a school life earns a few" />
-                <Stat label="At 67, A Month" value={usd(ss.pia)} note={`62: ${usd(Math.floor(ss.pia * claimFactor(-60)))}; 70: ${usd(Math.floor(ss.pia * claimFactor(36)))}`} />
+                <Stat label="Credits" value={String(ss.credits)} note="You need forty to qualify, and years at school earn only a few" />
+                <Stat label="At 67, A Month" value={usd(ss.pia)} note={`At 62: ${usd(Math.floor(ss.pia * claimFactor(-60)))}. At 70: ${usd(Math.floor(ss.pia * claimFactor(36)))}`} />
                 <Stat label="Claimed" value={person.socialSecurity ? usd(person.socialSecurity.monthlyUsd) : 'Not Yet'} note={person.socialSecurity ? `A month since ${formatDate(person.socialSecurity.from, sim.zone)}` : no ?? 'You can claim it now'} />
               </div>
-              <Fine>Your highest 35 years of US wages, each to its year’s taxable maximum and indexed by the national wage index to the year you turn 60, averaged a month, then 90%, 32% and 15% across SSA’s 2026 bend points. Claimed early it’s cut, delayed it rises 8% a year to 70. SLATE holds what SSA hasn’t published at the last it did. Source: {SOCIAL_SECURITY.source}.</Fine>
+              <Fine>The benefit is worked from your highest 35 years of US wages. Each year counts up to its taxable maximum and is indexed by the national wage index to the year you turn 60. They’re averaged by month, then paid at 90%, 32% and 15% across SSA’s 2026 bend points. Claimed early, it’s cut. Delayed, it rises 8% a year until 70. Where SSA hasn’t published a figure yet, the game uses its latest one. Source: {SOCIAL_SECURITY.source}.</Fine>
             </div>
           </Panel>
         );
@@ -1029,11 +1029,11 @@ function PensionsPanel() {
         <Panel title="State Pension" subtitle="The UK’s, on your National Insurance record" actions={statePensionRefusal(sim, person) ? undefined : <Gated feature="pension.state" onClick={() => { const r = run<{ weekly: number }>('pension.state'); if (r.ok) toast(`Claimed: ${money(r.value!.weekly)} a week, paid every four weeks.`, 'positive'); }}>Claim It</Gated>} help="papers.pensions">
           <div className="col gap-3">
             <div className="grid grid-3">
-              <Stat label="Qualifying Years" value={String(qualifyingYears(person, cur).length)} note={`Ten for any, ${STATE_PENSION.yearsForFull} for the full rate`} />
+              <Stat label="Qualifying Years" value={String(qualifyingYears(person, cur).length)} note={`Ten for any pension, ${STATE_PENSION.yearsForFull} for the full rate`} />
               <Stat label="A Week" value={money(weeklyPension(person, sim.now, cur))} note={person.statePensionFrom !== undefined ? `Claimed ${formatDate(person.statePensionFrom, sim.zone)}` : `From ${formatDate(statePensionAge(person), sim.zone)}`} />
               <Stat label="Claimed" value={person.statePensionFrom !== undefined ? 'Yes' : 'Not Yet'} note={statePensionRefusal(sim, person) ?? 'You can claim it now'} />
             </div>
-            <Fine>A tax year qualifies with UK earnings at the Lower Earnings Limit, {formatMoney(STATE_PENSION.lowerEarningsLimit, 'GBP', { cents: false })} in 2026/27, or with the credits Universal Credit gives; each is a thirty-fifth of the full {formatMoney(STATE_PENSION.weekly[STATE_PENSION.weekly.length - 1]![1], 'GBP')} a week (2026/27). State Pension age is 68 for anyone born after 5 April 1978, by the Pensions Act 2007. SLATE holds the limit and the rate at 2026/27’s. Source: {STATE_PENSION.source}.</Fine>
+            <Fine>A tax year qualifies if your UK earnings reach the Lower Earnings Limit, {formatMoney(STATE_PENSION.lowerEarningsLimit, 'GBP', { cents: false })} in 2026/27, or with the credits Universal Credit gives. Each qualifying year is worth a thirty-fifth of the full {formatMoney(STATE_PENSION.weekly[STATE_PENSION.weekly.length - 1]![1], 'GBP')} a week (2026/27). State Pension age is 68 for anyone born after 5 April 1978, under the Pensions Act 2007. The game keeps the limit and the rate at their 2026/27 levels. Source: {STATE_PENSION.source}.</Fine>
           </div>
         </Panel>
       )}
@@ -1041,11 +1041,11 @@ function PensionsPanel() {
         <Panel title="State Pension (Ireland)" subtitle="Ireland’s, on your PRSI contributions" actions={irishPensionRefusal(sim, person) ? undefined : <Gated feature="pension.ie_state" onClick={() => { const r = run<{ weekly: number }>('pension.ie_state'); if (r.ok) toast(`Claimed: ${money(r.value!.weekly)} a week.`, 'positive'); }}>Claim It</Gated>} help="papers.pensions">
           <div className="col gap-3">
             <div className="grid grid-3">
-              <Stat label="Contributions" value={String(irishContributions(person, cur))} note={`${IRISH_PENSION.paidNeeded} for any, ${IRISH_PENSION.forFull.toLocaleString('en-US')} for the full rate`} />
-              <Stat label="A Week At 66" value={formatMoney(inSaveMoney(sim, person.irishPension?.weeklyEur ?? irishWeekly(irishContributions(person, cur), IRISH_PENSION.age), 'EUR'), cur)} note={person.irishPension ? `Claimed ${formatDate(person.irishPension.from, sim.zone)}` : 'More claimed at 67, and at 68'} />
+              <Stat label="Contributions" value={String(irishContributions(person, cur))} note={`${IRISH_PENSION.paidNeeded} for any pension, ${IRISH_PENSION.forFull.toLocaleString('en-US')} for the full rate`} />
+              <Stat label="A Week At 66" value={formatMoney(inSaveMoney(sim, person.irishPension?.weeklyEur ?? irishWeekly(irishContributions(person, cur), IRISH_PENSION.age), 'EUR'), cur)} note={person.irishPension ? `Claimed ${formatDate(person.irishPension.from, sim.zone)}` : 'More if you claim at 67 or 68'} />
               <Stat label="Claimed" value={person.irishPension ? 'Yes' : 'Not Yet'} note={irishPensionRefusal(sim, person) ?? 'You can claim it now'} />
             </div>
-            <Fine>A calendar year of Irish earnings at €5,000 or more counts as 52 contributions; the week is the full rate times your contributions over 2,080: €299.30 at 66, €313.40 claimed at 67, €328.90 at 68 (2026). A short record or none, living in Ireland: the means-tested pension instead, €288 a week (€298 from 80) less your means over €30, whichever is higher; and the Fuel Allowance, €38 a week through the winter, with the means-tested one. (The €22 Living Alone Increase isn’t kept since the home went.) SLATE holds the rates at 2026’s. Source: {IRISH_PENSION.source}.</Fine>
+            <Fine>A calendar year of Irish earnings of €5,000 or more counts as 52 contributions. Your weekly pension is the full rate times your contributions divided by 2,080: €299.30 at 66, €313.40 claimed at 67, €328.90 at 68 (2026). With a short record or none, while you live in Ireland, you get the means-tested pension instead if it’s higher: €288 a week (€298 from 80), less your means over €30. The means-tested pension also brings the Fuel Allowance, €38 a week through the winter. The €22 Living Alone Increase isn’t included in the game. Rates are kept at their 2026 levels. Source: {IRISH_PENSION.source}.</Fine>
           </div>
         </Panel>
       )}
@@ -1057,7 +1057,7 @@ function PensionsPanel() {
               <Stat label="AFORE Account" value={formatMoney(inSaveMoney(sim, grownTo(person.imss!, sim.now), 'MXN'), cur)} note="At CONSAR’s 4% real, less its fee" />
               <Stat label="Claimed" value={person.imss!.claimedAt !== undefined ? 'Yes' : 'Not Yet'} note={imssRefusal(sim, person) ?? 'You can claim it now'} />
             </div>
-            <Fine>A day’s work in Mexico is a day registered with IMSS, and its pay puts the year’s retirement contribution for its band into your AFORE account; weeks are days over seven. From 65 with the year’s weeks, the account buys a pension, never less than the guaranteed floor, topped up by the Fondo de Pensiones para el Bienestar to your last year’s wage, to MXN 17,885.85 a month. The account’s annuity is SLATE’s estimate. Source: {IMSS.source}.</Fine>
+            <Fine>Each day you work in Mexico is a day registered with IMSS, and its pay puts that year’s retirement contribution for its pay band into your AFORE account. Weeks are your registered days divided by seven. From 65, with enough weeks for the year, the account buys a pension. It’s never less than the guaranteed floor, and the Fondo de Pensiones para el Bienestar tops it up to your last year’s wage, up to MXN 17,885.85 a month. The pension the account buys is estimated. Source: {IMSS.source}.</Fine>
           </div>
         </Panel>
       )}
@@ -1065,7 +1065,7 @@ function PensionsPanel() {
         <Panel title="Pensión Para El Bienestar" subtitle="Mexico’s, for every Mexican living there from 65" actions={bienestarRefusal(sim, person) ? undefined : <Gated feature="pension.bienestar" onClick={() => { const r = run<{ bimonthly: number }>('pension.bienestar'); if (r.ok) toast(`Claimed: ${money(r.value!.bimonthly)} every two months.`, 'positive'); }}>Claim It</Gated>} help="papers.pensions">
           <div className="col gap-3">
             <Stat label="Claimed" value={person.bienestarFrom !== undefined ? 'Yes' : 'Not Yet'} note={bienestarRefusal(sim, person) ?? 'You can claim it now'} />
-            <Fine>MXN 6,400 every two months, not contributory, paid while you live in Mexico (2026 rules). Source: {BIENESTAR.source}.</Fine>
+            <Fine>MXN 6,400 every two months, paid while you live in Mexico, whatever you paid in (2026 rules). Source: {BIENESTAR.source}.</Fine>
           </div>
         </Panel>
       )}

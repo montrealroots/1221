@@ -36,9 +36,9 @@ const tended = (sim: Simulation, until: number) => { while (sim.now < until) { O
 const fund = (sim: Simulation, amount: number) => sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: sim.player.primaryAccountId!, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
 
 const ASKED = 'The DMV asks for your Social Security number, or the SSA’s letter that you can’t have one.';
-const TO_PAPERS = `${ASKED} You can, through work-study: apply for it on the Papers screen first.`;
+const TO_PAPERS = `${ASKED} You can get one through work-study: apply for it first, under Social Security Number on Papers.`;
 const ON_ITS_WAY = `${ASKED} Yours is on its way.`;
-const NOT_ISSUED = `${ASKED} SLATE issues the number only to an F-1 student at school, through work-study, and never the letter.`;
+const NOT_ISSUED = `${ASKED} In the game, the number goes only to an F-1 student at school, through work-study, and the letter is never issued.`;
 
 /**
  * A British student at Yale with no Social Security number; then, as a FIXTURE, graduated with her program ten days
@@ -70,7 +70,7 @@ describe('PLAYER JOURNEY: the ID card’s Social Security line, for a student at
     expect(idCardRefusal(sim.player, sim.now)).toBe(TO_PAPERS);
     const ssn = sim.must<{ arrivesAt: number }>({ kind: 'documents.apply_ssn', payload: {} });
     // Applied for, it isn't to be applied for again: Papers says so too.
-    expect(ssnRefusal(sim, sim.player)).toMatch(/You’ve applied/);
+    expect(ssnRefusal(sim, sim.player)).toMatch(/You’ve already applied/);
     expect(idCardRefusal(sim.player, sim.now)).toBe(ON_ITS_WAY);
     tended(sim, ssn.arrivesAt + MS_HOUR);
     expect(sim.player.ssn?.status).toBe('issued');
@@ -82,7 +82,7 @@ describe('PLAYER JOURNEY: the ID card’s Social Security line, for a graduate o
   it('doesn’t send her to Papers, which turns her away, and the counter refuses her with the same words', () => {
     const sim = graduateOnOpt('r7-ssn-graduate');
     // Papers won't take her: work-study ended with the program.
-    expect(ssnRefusal(sim, sim.player)).toMatch(/ends with the program/);
+    expect(ssnRefusal(sim, sim.player)).toMatch(/ended with your program/);
     expect(idCardRefusal(sim.player, sim.now)).toBe(NOT_ISSUED);
     expect(() => sim.must({ kind: 'documents.apply_idcard', payload: {} })).toThrow(NOT_ISSUED);
     expect(documentsOf(sim.player).some((d) => d.kind === 'idcard')).toBe(false);
@@ -148,7 +148,7 @@ describe('FIXTURE: papers held from before 2026-10-09, and the country each name
     const { gb } = papers(sim);
     // FIXTURE: issued on a passport since replaced, so a visit would still ask more.
     gb.passportId = 'pp-replaced';
-    expect(page(sim, gb.id)).toMatch(/It’s in force for the United Kingdom, but a week’s visit there would still ask more: /);
+    expect(page(sim, gb.id)).toMatch(/It’s in force for the United Kingdom, but a week’s visit there would still need more: /);
     // FIXTURE: issued from tomorrow, so it isn't in force yet; the sentence opens on the country, capitalized.
     gb.issuedAt = sim.now + MS_DAY;
     expect(page(sim, gb.id)).toContain('The United Kingdom won’t let you in on it now.');

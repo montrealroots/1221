@@ -431,7 +431,7 @@ describe('h-papers', () => {
   it('a claim for unemployment is refused at school and after leaving it, in its own words, so the line has no Unemployment clause', () => {
     const sim = life('g33-papers-claim');
     sim.advanceTo(at(2027, 4, 5, 12));
-    expect(sim.execute({ kind: 'benefits.claim', payload: {} }).error).toBe('Connecticut takes a full-time student as not available for work (CGS 31-235(b)): a claim pays once you’ve left school.');
+    expect(sim.execute({ kind: 'benefits.claim', payload: {} }).error).toBe('Connecticut treats a full-time student as not available for work (CGS 31-235(b)), so a claim pays only once you’ve left school.');
     sim.must({ kind: 'school.withdraw', payload: { confirm: true } });
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).error).toBe('Connecticut asks for base-period wages of 40 times the weekly benefit: $1,800.00 for $45.00. Your base period’s quarters paid $0.00, $0.00, $0.00, $0.00.');
     expect(sim.player.unemployment?.claim).toBeUndefined();
@@ -638,7 +638,7 @@ describe('n-decision-tax', () => {
     expect(returnDecision(sim)).toHaveLength(1);
     expect(d).toMatchObject({
       title: 'Your 2026 Tax Return', createdAt: at(2027, 2, 1, 9), dueAt: DUE,
-      detail: 'Form 1040-NR, with Form 8843. You owe $165.60 on $1,656.00 of income. File by April 15, 2027.',
+      detail: 'Form 1040-NR, with Form 8843. You owe $165.60, on $1,656.00 of income. File it by April 15, 2027.',
       actions: [{ label: 'File It', commandKind: 'tax.file', payload: { year: 2026 } }],
     });
     expect(d!.resolvedAt).toBeUndefined();
@@ -653,7 +653,7 @@ describe('n-decision-tax', () => {
     expect(fromPlayer(sim, paid[0]!)).toBe(-165_60);
     expect(drawn(sim).affairs).toContain('Papers Cover: Yale Health. Papers How This Works');
     expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 0 } }).error).toBe('That’s been done already.');
-    expect(sim.execute({ kind: 'tax.file', payload: { year: 2026 } }).error).toBe('You’ve filed it. A change is an amended return.');
+    expect(sim.execute({ kind: 'tax.file', payload: { year: 2026 } }).error).toBe('You’ve already filed it. To change it, file an amended return.');
     const kept = reload(sim);
     kept.advanceTo(DUE + 3 * MS_DAY);
     expect(memoed(kept, 'Federal income tax, 2026')).toHaveLength(1);
@@ -756,7 +756,7 @@ describe('n-decision-us-status', () => {
     // Sixty days' grace after a degree (8 CFR 214.2(f)(5)(iv)): Monday 31 May at noon.
     expect(statusDecision(sim)[0]).toMatchObject({
       title: 'Your US Status Is Ending', createdAt: PROGRAM_END, dueAt: at(2027, 5, 31, 12), route: '/workspace/papers',
-      detail: 'Your permission to work in the United States has ended, and your status ends May 31, 2027. OPT can still be applied for before then. After it, you’re out of status: no work can be had here, a US visa you hold is void, and the Visa Waiver Program is closed to you for good.',
+      detail: 'Your permission to work in the United States has ended, and your status ends May 31, 2027. You can still apply for OPT before then. If you’re still here after that, you’ll be out of status. In the game, that means you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you from then on.',
       actions: [{ label: 'Apply For OPT', commandKind: 'documents.apply_opt', payload: {} }, { label: 'Apply For OPT, Premium Processing', commandKind: 'documents.apply_opt', payload: { premium: true } }],
     });
     drawn(sim);
@@ -778,7 +778,7 @@ describe('n-decision-us-status', () => {
     expect(d!.resolvedAt).toBe(PROGRAM_END + 60_000);
     expect(openDecisions(sim).filter((x) => x.refType === 'us-status')).toEqual([]);
     expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 1 } }).error).toBe('That’s been done already.');
-    expect(sim.execute({ kind: 'documents.apply_opt', payload: {} }).error).toBe('You’ve applied for OPT already.');
+    expect(sim.execute({ kind: 'documents.apply_opt', payload: {} }).error).toBe('You’ve already applied for OPT.');
     const kept = reload(sim);
     // Past the status's old end, the application pending holds it.
     kept.advanceTo(at(2027, 6, 1, 12));
@@ -787,7 +787,7 @@ describe('n-decision-us-status', () => {
     kept.advanceTo(at(2027, 6, 30, 12, 2));
     expect(optPermits(kept)).toHaveLength(1);
     expect(optPermits(kept)[0]).toMatchObject({ status: 'valid', issuedAt: at(2027, 6, 30, 12, 1), expiresAt: at(2028, 6, 30, 12, 1) });
-    expect(titled(kept, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from June 30, 2027 to June 30, 2028, with no more than 90 days between jobs in all.']);
+    expect(titled(kept, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from June 30, 2027 to June 30, 2028, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.']);
     expect(memoed(kept, 'Form I-765, (c)(3)(B), OPT')).toHaveLength(1);
     expect(statusDecision(kept)).toHaveLength(1);
   });
@@ -839,7 +839,7 @@ describe('n-decision-us-status', () => {
     expect(statusDecision(sim)).toHaveLength(1);
     expect(statusDecision(sim)[0]).toMatchObject({
       title: 'Your US Status Is Ending', dueAt: at(2026, 9, 16, 12), actions: [],
-      detail: 'Your permission to work in the United States has ended, and your status ends September 16, 2026. After it, you’re out of status: no work can be had here, a US visa you hold is void, and the Visa Waiver Program is closed to you for good.',
+      detail: 'Your permission to work in the United States has ended, and your status ends September 16, 2026. If you’re still here after that, you’ll be out of status. In the game, that means you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you from then on.',
     });
   });
 });
