@@ -119,9 +119,9 @@ export const DAY: readonly GuideEntry[] = [
     ],
     unavailable: [
       `Go, Skip It and the entries show Locked until ${chapter('calendar')} is read; pressing one opens the guide there.`,
-      'Skip It before the plan comes round: “It hasn’t come round yet. Call it off instead.”',
-      'Skip It on something the world booked: “That one isn’t yours to walk away from.”',
-      'Skip It on something already done or missed: “That’s already settled one way or the other.”',
+      'Skip It before the plan comes round: “It hasn’t started yet. To drop it, open it on the Calendar and press Call It Off.”',
+      'Skip It on something the world booked: “Only a plan you made yourself can be skipped.”',
+      'Skip It on something already done or missed: “That’s already over: it was kept, missed or called off.”',
     ],
     mistakes: [
       'Stand Here and then Sleep sleeps through the commitment: it runs while you’re asleep and counts as missed.',
@@ -332,7 +332,7 @@ export const DAY: readonly GuideEntry[] = [
     unavailable: [
       `Before ${chapter('needs')} is read, the panel shows Locked, with Read About It.`,
       `An answer whose own chapter hasn’t been read is refused with the chapter to read: File It waits for ${chapter('papers')}.`,
-      '“That’s been done already.” A question answered once can’t be answered again.',
+      '“That question is already settled: it was answered, or its date passed.” A question answered once can’t be answered again.',
       'An answer its command refuses keeps the question open, with the reason on screen: a payment the bank can’t cover, say.',
     ],
     mistakes: [
@@ -406,9 +406,9 @@ export const DAY: readonly GuideEntry[] = [
     ],
     unavailable: [
       `Open Calendar, Put Something On It and Call It Off show Locked until ${chapter('plans')} is read.`,
-      '“That’s already been and gone. Pick a time you can still get to.” The clock passed the start while the form was open.',
-      '“That’s further out than the calendar goes.” The day is past the furthest the calendar takes a plan.',
-      '“It’s already started. You either went or you didn’t.” Call It Off after the plan’s start has come.',
+      '“That time has already passed. Pick a time that’s still to come.” The clock passed the start while the form was open.',
+      '“The calendar takes plans up to five years ahead. Pick an earlier day.” The day is past the furthest the calendar takes a plan.',
+      '“It’s already started, so it can’t be called off now.” Call It Off after the plan’s start has come.',
     ],
     mistakes: [
       'The clock keeps running while the form is open, so on a live clock a start can pass before you press Put It On. Pause first.',

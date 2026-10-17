@@ -23,7 +23,7 @@ describe('the clock’s speeds', () => {
     for (const speed of ['fast', 'faster']) {
       const answer = sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: speed } });
       expect(answer.ok, speed).toBe(false);
-      expect(answer.error).toBe('The clock runs paused or live.');
+      expect(answer.error).toBe('The clock can only be set to Play or Pause.');
       expect(sim.universe.preferences.timeSpeed).toBe(before);
     }
     // What the control sends still goes through.

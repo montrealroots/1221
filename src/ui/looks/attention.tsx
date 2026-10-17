@@ -70,34 +70,42 @@ function ordinal(n: number): string {
 const SMALL = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'] as const;
 const countWord = (n: number): string => SMALL[n] ?? String(n);
 
-const sentenceStart = (s: string): string => (s ? s[0]!.toUpperCase() + s.slice(1) : s);
+/** "3 weeks ago", and "just now" where `formatRelative` says "now". */
+const ago = (at: number, now: number): string => { const r = formatRelative(at, now); return r === 'now' ? 'just now' : r; };
 
-/** Who raised it, in the world’s words rather than the category’s. */
-const RAISED_BY: Readonly<Record<string, string>> = {
-  system: 'the machinery that keeps the days running',
-  schedule: 'the calendar',
-  life: 'your own body',
-  money: 'the money',
+/**
+ * What a question or a notice is about, by who raised it, in the player’s words (from 2026-10-17, brief 14). Until then
+ * it was who "put it in front of you": "the machinery that keeps the days running", "the money", "the roof over your
+ * head". The categories of systems that went (career, property, travel and the rest) stay for what an older save keeps.
+ */
+const ABOUT: Readonly<Record<string, string>> = {
+  system: 'the game itself',
+  schedule: 'your calendar',
+  life: 'your day-to-day life',
+  personal: 'your own affairs',
+  money: 'your money',
   bank: 'your bank',
-  school: 'the School',
-  tax: 'the tax office',
-  benefits: 'the unemployment office',
-  career: 'the work',
+  school: 'your school',
+  tax: 'your taxes',
+  taxes: 'your taxes',
+  papers: 'your papers',
+  benefits: 'your benefits',
   health: 'your health',
-  property: 'the roof over your head',
-  travel: 'the traveling',
-  relationship: 'a person who knows you',
-  legal: 'the paperwork',
-  business: 'the office',
-  reimbursement: 'the office, with the state’s clock running',
+  home: 'your home',
+  career: 'your work',
+  property: 'your home',
+  travel: 'your travel',
+  relationship: 'someone you know',
+  legal: 'a legal matter',
+  business: 'your business',
+  reimbursement: 'a reimbursement',
 };
 
-const raisedBy = (category: string): string =>
-  RAISED_BY[category] ?? `the ${category.replace(/[_/]+/g, ' ').trim() || 'quiet'} side of things`;
+const aboutOf = (category: string): string => ABOUT[category] ?? 'something in your life';
 
 /** The category as a label, for the one figure grid. */
 const categoryLabel = (category: string): string =>
-  titleCaseLabel(category.replace(/[_/]+/g, ' ').trim()) || 'Not On File';
+  titleCaseLabel(category.replace(/[_/]+/g, ' ').trim()) || 'Not Recorded';
 
 /**
  * A title as a name: no underscore, no slash, no long run of digits, and Title
@@ -123,12 +131,17 @@ function nameOf(title: string, fallback: string): string {
   return plain ? titleCaseLabel(plain) : fallback;
 }
 
-/** What a figure on the hundred-point scale means for where a thing sits. */
+/**
+ * A figure on the hundred-point scale, as a word. Until 2026-10-17 each band said where a thing sat ("nothing but an
+ * overdue thing sits above it", "it will keep for a day", "nothing bad happens while it sits there"), which the order
+ * (`openDecisions`) and the dates didn’t bear out: another question of 90 sits above one of 86, and one of 45 can be due
+ * tomorrow.
+ */
 function weightOf(urgency: number): string {
-  if (urgency >= 85) return 'high enough that nothing but an overdue thing sits above it';
-  if (urgency >= 65) return 'above the ordinary run of things';
-  if (urgency >= 40) return 'ordinary weight, and it will keep for a day';
-  return 'low, and nothing bad happens while it sits there';
+  if (urgency >= 85) return 'very high';
+  if (urgency >= 65) return 'high';
+  if (urgency >= 40) return 'ordinary';
+  return 'low';
 }
 
 /**
@@ -152,6 +165,9 @@ function wayTo(sim: Simulation, subject: Subject, detail: string): Way | undefin
 
 type Stage = 'open' | 'answered' | 'ran out' | 'let go';
 
+/** A closed question’s state, as the figure grid says it. */
+const STAGE_WORD: Readonly<Record<Stage, string>> = { open: 'Open', answered: 'Dealt with', 'ran out': 'Closed after its date', 'let go': 'Dismissed' };
+
 function stageOf(decision: DecisionItem): Stage {
   if (decision.dismissedAt !== undefined) return 'let go';
   if (decision.resolvedAt !== undefined) {
@@ -163,26 +179,29 @@ function stageOf(decision: DecisionItem): Stage {
 const closedAtOf = (decision: DecisionItem): number | undefined =>
   decision.dismissedAt ?? decision.resolvedAt;
 
-/** One sentence, second person, true at this instant. */
+/**
+ * One sentence, second person, true at this instant. An overdue question is open only until the next world tick closes
+ * it (`expireDecisions`), and the tick comes every two days. A question is dealt with by an answer on Home or by acting
+ * on its own screen (the raisers' own `resolvedAt`); one closed after its date may have been either, or the tick.
+ */
 function decisionSentence(decision: DecisionItem, stage: Stage, sim: Simulation): string {
-  const urgency = Math.round(decision.urgency);
   switch (stage) {
     case 'open':
       if (decision.dueAt < sim.now) {
-        return `It went past its date ${formatRelative(decision.dueAt, sim.now)}, it’s carrying ${outOf(urgency)}, and being overdue is what holds it at the top of everything waiting on you.`;
+        return `Its date passed ${ago(decision.dueAt, sim.now)}. It stays at the top of What Needs You until it closes by itself, within ${countWord(TICK_DAYS)} days.`;
       }
-      return `It’s asking you at ${outOf(urgency)} and it wants an answer ${formatRelative(decision.dueAt, sim.now)}.`;
+      return `Answer it by ${formatDate(decision.dueAt, sim.zone)}. That’s ${formatRelative(decision.dueAt, sim.now)}.`;
     case 'answered':
-      return `You dealt with this one ${formatRelative(decision.resolvedAt ?? sim.now, sim.now)}, so it isn’t on the list any more.`;
+      return `It was dealt with ${ago(closedAtOf(decision) ?? sim.now, sim.now)}, so it’s no longer in What Needs You.`;
     case 'ran out':
-      return 'Its date had already gone by the time it closed, so it isn’t asking you for anything now.';
+      return 'It closed after its date had passed, so it isn’t asking you for anything now.';
     case 'let go':
-      return `You waved it off Home. The thing it was about stands on its own screen until ${formatDate(decision.dueAt, sim.zone)}, and can still be answered there.`;
+      return `You dismissed it from Home ${ago(closedAtOf(decision) ?? sim.now, sim.now)}. Dismissing only takes it off the list: what it was about still stands, and its date is ${formatDate(decision.dueAt, sim.zone)}.`;
   }
 }
 
 defineLook<DecisionItem>('decision', {
-  gone: 'That one’s settled, and settled long enough ago that nothing keeps it now.',
+  gone: `That question closed more than ${FORGOTTEN_AFTER_DAYS} days ago, so the save no longer keeps it.`,
   resolve: (sim, id) => sim.universe.decisions[id],
   seeds: (sim) => {
     const waiting = openDecisions(sim).map((d) => d.id);
@@ -200,33 +219,34 @@ defineLook<DecisionItem>('decision', {
 
     const ways: Way[] = [];
     const about = subjectForRef(decision);
-    const aboutWay = about && wayTo(sim, about, 'The thing this is actually about, opened where it stands');
+    const aboutWay = about && wayTo(sim, about, 'Open what this question is about');
     if (aboutWay) ways.push(aboutWay);
 
+    // The order is `openDecisions`': overdue first, then the most urgent, then the soonest due.
     const standing = stage === 'open'
       ? (overdue
-        ? 'Overdue puts it first, ahead of anything asking harder, and it stays there until it’s dealt with.'
+        ? 'Being overdue puts it first, ahead of anything more urgent.'
         : waiting.length === 1
-          ? 'It’s the only thing waiting on you.'
-          : `It’s ${ordinal(place)} of the ${countWord(waiting.length)} things waiting on you${place > PANEL_ROWS ? `, which is below the ${countWord(PANEL_ROWS)} rows Home has room for, so it sits off the panel until something above it clears` : ''}.`)
-      : `It closed ${formatRelative(closedAt ?? sim.now, sim.now)} and nothing on Home lists it now.`;
+          ? 'It’s the only question waiting on you.'
+          : `It’s ${ordinal(place)} of the ${countWord(waiting.length)} questions waiting on you.`)
+      : `It closed ${ago(closedAt ?? sim.now, sim.now)}, and Home no longer lists it.`;
 
     const ending = stage === 'open'
-      ? `It closes when you answer it, here or on its own screen, or on its date: once ${formatDate(decision.dueAt, sim.zone)} passes it closes itself, answered or not, because whatever raised it already said where it ends. The world only looks in every ${countWord(TICK_DAYS)} days, so the closing lands at the next look and not on the stroke. Six months after it closes the save keeps no record of it.`
-      : `The save forgets it entirely six months after it closed, on ${formatDate(forgottenAt, sim.zone)}.`;
+      ? `It closes when you answer it on Home or deal with it on its own screen. Otherwise it closes by itself after ${formatDate(decision.dueAt, sim.zone)}: the game checks every ${countWord(TICK_DAYS)} days, so that happens within ${countWord(TICK_DAYS)} days of its date. The save keeps it for ${FORGOTTEN_AFTER_DAYS} days after it closes.`
+      : `The save keeps it until ${formatDate(forgottenAt, sim.zone)}, ${FORGOTTEN_AFTER_DAYS} days after it closed.`;
 
-    // Home renders the actions, a way through where there is a route, and
-    // Dismiss on every row it prints — but only for the rows it prints.
+    // Home renders the actions, Go There where there is a route, and Dismiss on every row it prints, but only for the
+    // rows it prints.
     const labels = decision.actions.map((action) => titleCaseLabel(action.label));
     const onPanel = stage === 'open' && place > 0 && place <= PANEL_ROWS;
     const offered = stage !== 'open'
-      ? 'Home doesn’t list it at all now, so there’s nothing to press.'
+      ? 'It’s no longer on Home, so there’s nothing to press.'
       : !onPanel
-        ? 'While it sits below the panel there’s nothing to press, so it waits its turn.'
-        : `Home puts ${spokenList([...labels, 'Dismiss'])} against it${decision.route ? ', and a way through to the screen where it lives' : ''}, and pressing one of those is doing it. They’re the doing; this is the reading.`;
+        ? `Home shows the first ${countWord(PANEL_ROWS)} questions, and this one is further down. Its buttons appear there once one of the questions above it closes.`
+        : `On Home, its buttons are ${spokenList([...labels, ...(decision.route ? ['Go There'] : []), 'Dismiss'])}. Reading it here changes nothing.`;
 
     return {
-      name: nameOf(decision.title, 'Something Waiting'),
+      name: nameOf(decision.title, 'A Question For You'),
       kind: stage === 'open' ? 'Waiting On You' : 'No Longer Waiting',
       parent: at('person', sim.universe.playerId),
       summary: decisionSentence(decision, stage, sim),
@@ -234,21 +254,21 @@ defineLook<DecisionItem>('decision', {
         <>
           {decision.detail && <p className="small muted">{decision.detail}</p>}
           <p className="small muted">
-            {`${sentenceStart(raisedBy(decision.category))} put it in front of you ${formatRelative(decision.createdAt, sim.now)}, at ${outOf(urgency)} — ${weightOf(urgency)}. `}
-            {'If the same thing comes up again the figure only ever goes up: the higher of the two stands, and nothing brings it back down. '}
+            {`It came up ${ago(decision.createdAt, sim.now)}, about ${aboutOf(decision.category)}. Its urgency is ${weightOf(urgency)}, at ${outOf(urgency)}. `}
+            {'If it comes up again while it’s open, its urgency can only go up. '}
             {standing}
           </p>
           <p className="small muted">{ending}</p>
           <p className="small muted">{offered}</p>
           <div className="grid grid-3">
-            <Stat label="Urgency" value={urgency} note="Out of a hundred, and the panel never prints it" />
-            <Stat label="Raised By" value={categoryLabel(decision.category)} note={raisedBy(decision.category)} />
+            <Stat label="Urgency" value={urgency} note="Out of 100. Home shows it only as a colored stripe" />
+            <Stat label="About" value={categoryLabel(decision.category)} />
             <Stat
               label="Raised"
               value={formatDate(decision.createdAt, sim.zone)}
               // An undated row’s note was the day it would go quiet ("Quiet by"), until 2026-10-14, when every row
               // had a date and the rule went.
-              note={stage !== 'open' ? `Closed ${formatDate(closedAt ?? sim.now, sim.zone)}` : 'It ends on its own date'}
+              note={stage !== 'open' ? `Closed ${formatDate(closedAt ?? sim.now, sim.zone)}` : 'It closes by itself after its date'}
             />
             <Stat
               label="Due"
@@ -257,21 +277,21 @@ defineLook<DecisionItem>('decision', {
               tone={overdue ? 'negative' : undefined}
             />
             <Stat
-              label="Where It Sits"
-              value={stage === 'open' ? `${place} of ${waiting.length}` : 'Off the list'}
-              note={stage === 'open' ? 'Overdue first, then the figure' : sentenceStart(stage)}
+              label="Place On Home"
+              value={stage === 'open' ? `${place} of ${waiting.length}` : 'Not listed'}
+              note={stage === 'open' ? 'Overdue first, then the most urgent' : STAGE_WORD[stage]}
             />
             <Stat
-              label="Ways Out"
-              value={decision.actions.length > 0 ? decision.actions.length : 'Dismiss only'}
-              note={decision.actions.length > 0 ? 'Offered on Home, taken on Home' : 'It can be waved away, not answered'}
+              label="Answers"
+              value={decision.actions.length > 0 ? decision.actions.length : 'None'}
+              note={decision.actions.length > 0 ? 'On Home, beside Dismiss' : 'It can only be dismissed'}
             />
           </div>
         </>
       ),
       ways,
       // Until 2026-10-14 it said the save kept a row waved away early to its date, and an undated row’s ninety days.
-      provenance: 'Urgency is SLATE’s own reading of how much a thing matters, nought to a hundred. A thing closes on its date, and the save drops it six months after it closed.',
+      provenance: 'Urgency is estimated, from 0 to 100.',
     };
   },
 });
@@ -281,7 +301,7 @@ defineLook<DecisionItem>('decision', {
 // ---------------------------------------------------------------------------
 
 defineLook<Notice>('notification', {
-  gone: 'That one’s gone — the save keeps the last five hundred, and it fell off the end.',
+  gone: `That notice is gone. The save keeps the latest ${NOTICES_KEPT}, and this one was older.`,
   resolve: (sim, id) => sim.universe.notifications.find((n) => n.id === id),
   seeds: (sim) => {
     const unread = unreadNotifications(sim).slice(0, 6).map((n) => n.id);
@@ -295,7 +315,7 @@ defineLook<Notice>('notification', {
 
     const ways: Way[] = [];
     const about = subjectForRef(note);
-    const aboutWay = about && wayTo(sim, about, 'What the notice is about, opened where it stands');
+    const aboutWay = about && wayTo(sim, about, 'Open what this notice is about');
     if (aboutWay) ways.push(aboutWay);
     const alsoWaiting = note.refType
       ? openDecisions(sim).find((d) => d.refType === note.refType && d.refId === note.refId)
@@ -303,52 +323,57 @@ defineLook<Notice>('notification', {
     if (alsoWaiting) {
       ways.push({
         to: at('decision', alsoWaiting.id),
-        label: nameOf(alsoWaiting.title, 'What It Wants'),
-        detail: `The same thing, still waiting on you at ${outOf(alsoWaiting.urgency)}`,
+        label: nameOf(alsoWaiting.title, 'The Open Question'),
+        detail: 'The question about the same thing, still waiting on you',
       });
     }
 
+    // Mark Read on Home sends no ids, so it marks every unread notice read (`world.mark_read`).
+    const marking = unread.length === 1
+      ? 'On Home, Mark 1 Read marks it read.'
+      : `On Home, Mark ${unread.length} Read marks all ${unread.length} unread notices read at once.`;
+
     return {
       name: nameOf(note.title, 'A Notice With No Title'),
-      kind: 'Something You Were Told',
+      kind: 'Notice',
       parent: at('person', sim.universe.playerId),
       summary: note.read
-        ? `You’ve read this one — it came in ${formatRelative(note.at, sim.now)}, and it’s a record now, not a question.`
+        ? `You’ve read this notice. It came in ${ago(note.at, sim.now)}.`
         : unread.length === 1
-          ? `It came in ${formatRelative(note.at, sim.now)} and it’s the only thing you haven’t read.`
-          : `It came in ${formatRelative(note.at, sim.now)} and it’s ${ordinal(place)} of the ${countWord(unread.length)} you haven’t read.`,
+          ? `It came in ${ago(note.at, sim.now)}, and it’s your only unread notice.`
+          : `It came in ${ago(note.at, sim.now)}. It’s ${ordinal(place)} of your ${countWord(unread.length)} unread notices.`,
       body: (
         <>
           {note.body && <p className="small muted">{note.body}</p>}
           <p className="small muted">
-            {`${sentenceStart(raisedBy(note.category))} sent it, at ${outOf(importance)}, and that figure is the whole of what decides the order the unread come in — heaviest first, and the newest of two that weigh the same. `}
+            {`It’s about ${aboutOf(note.category)}, and its importance is ${outOf(importance)}. Unread notices are listed most important first, and the newer first when two are equal. `}
             {note.read
-              ? 'It isn’t asking for anything. It stays until the list runs past five hundred and the oldest fall off the end.'
-              : 'Reading it here doesn’t mark it read — the one control that does sits on Home and clears the whole list at once, because that changes the save and this doesn’t.'}
-            {note.route ? ' Home offers a way through to where it happened.' : ''}
+              ? `The save keeps it until there are more than ${NOTICES_KEPT} notices, when the oldest are dropped.`
+              : `Opening it here doesn’t mark it read. ${marking}`}
+            {note.route ? ' On Home, Go There opens the screen it’s about.' : ''}
           </p>
           <div className="grid grid-3">
-            <Stat label="Weight" value={importance} note="Out of a hundred, and it sets the order" />
+            <Stat label="Importance" value={importance} note="Out of 100. It sets the order" />
             <Stat label="Arrived" value={formatDate(note.at, sim.zone)} note={formatRelative(note.at, sim.now)} />
-            <Stat label="Sent By" value={categoryLabel(note.category)} note={raisedBy(note.category)} />
+            <Stat label="About" value={categoryLabel(note.category)} />
             <Stat
-              label="Standing"
+              label="Status"
               value={note.read ? 'Read' : 'Unread'}
-              note={note.read ? 'No longer counted' : `${place} of ${unread.length} unread`}
+              note={note.read ? 'No longer listed on Home' : `${place} of ${unread.length} unread`}
             />
             <Stat
               label="What It’s About"
-              value={aboutWay ? aboutWay.label : 'Not said'}
-              note={aboutWay ? 'The way below opens it' : 'It never says which thing'}
+              value={aboutWay ? aboutWay.label : 'Not named'}
+              note={aboutWay ? 'Open it below' : 'This notice doesn’t name one'}
             />
-            <Stat label="Kept" value={`${NOTICES_KEPT} deep`} note="The oldest drop off the end" />
+            <Stat label="Kept" value={`Latest ${NOTICES_KEPT}`} note="Older ones are dropped" />
           </div>
         </>
       ),
       ways,
-      provenance: aboutWay
-        ? 'A notice can name the thing it’s about, and the thing this one names is still in the world.'
-        : 'A notice can name the thing it’s about. So far nothing in the world does, so this one ends here. The day something names one, it’ll open onto it.',
+      // Until 2026-10-17 it said, under a notice that named nothing, that nothing in the world named one so far, and
+      // that the day something did it would open onto it: the game’s history, not the player’s (brief 14).
+      provenance: aboutWay ? 'The link below opens what this notice is about.' : undefined,
     };
   },
 });

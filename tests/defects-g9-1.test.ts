@@ -55,7 +55,7 @@ describe('the course record’s header, against the code', () => {
     for (const kind of named) {
       const sim = life(`g9-${kind}`);
       const r = sim.execute({ kind, payload: {} });
-      expect(r.ok ? '' : r.error, kind).not.toMatch(/Unknown command/);
+      expect(r.ok ? '' : (r.detail ?? r.error), kind).not.toMatch(/Unknown command/);
     }
   });
 });

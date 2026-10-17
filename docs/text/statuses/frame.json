@@ -1,0 +1,188 @@
+{
+ "src/app/game-context.tsx#CLOCK_FAULT": {
+  "status": "Rewritten And Verified",
+  "hash": "c6f95e70c084",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame-ui.test.ts 'says a command’s fault in words, its detail in the console, and a refusal in the world’s own; and a clock that threw in words' (the provider's own toast, the clock asked backwards)"
+ },
+ "src/app/game-context.tsx#useGame": {
+  "status": "Reviewed And Retained",
+  "hash": "096c46174044",
+  "on": "2026-10-17",
+  "reason": "An internal error a developer reads: thrown only when a component is drawn outside the provider, which SlateApp never does."
+ },
+ "src/engine/core/events.ts#EventBus": {
+  "status": "Reviewed And Retained",
+  "hash": "1297b86e52d0",
+  "on": "2026-10-17",
+  "reason": "Internal errors for a developer (a cascade too deep, an event storm, a reactor that threw). They're thrown inside a command or a calendar item, so from 2026-10-17 the player reads only the fault sentences in simulation.ts, and these go to CommandResult.detail and the console."
+ },
+ "src/engine/core/simulation.ts#FAULT_ROLLED_BACK": {
+  "status": "Rewritten And Verified",
+  "hash": "d1adf3b405bd",
+  "on": "2026-10-17",
+  "evidence": "tests/simulation.test.ts 'tells the player a fault in words…' and 'says a fault met as time passes in words…'; tests/language-frame-ui.test.ts 'says a command’s fault in words…' (the provider's toast)"
+ },
+ "src/engine/core/simulation.ts#FAULT_WHILE_TIME_PASSED": {
+  "status": "Rewritten And Verified",
+  "hash": "ed1749ee8919",
+  "on": "2026-10-17",
+  "evidence": "tests/simulation.test.ts 'tells the player a fault in words…' and 'says a fault met as time passes in words…'; tests/language-frame-ui.test.ts 'says a command’s fault in words…' (the provider's toast)"
+ },
+ "src/engine/core/simulation.ts#Simulation": {
+  "status": "Rewritten And Verified",
+  "hash": "ef43d67b34da",
+  "on": "2026-10-17",
+  "evidence": "tests/simulation.test.ts 'says a fault met as time passes in words, as missed where it was a calendar item, and never claims it undone' (each notice word for word) and 'tells the player a fault in words, says nothing changed because nothing did, and keeps the detail for a developer'. Its other strings are a developer's: thrown inside a command or a calendar item they reach the player only as the fault sentences; 'Opening Balances' is an account nominalAccount finds by its name, and its memo is the statement's line."
+ },
+ "src/engine/core/simulation.ts#UNKNOWN_COMMAND": {
+  "status": "Rewritten And Verified",
+  "hash": "5f89c1bfa3e0",
+  "on": "2026-10-17",
+  "evidence": "tests/simulation.test.ts 'rejects an unknown command instead of failing silently'; tests/integrity.test.ts 'refuses a command that does not exist rather than doing nothing quietly'"
+ },
+ "src/engine/world/place.ts#placeKindLabel": {
+  "status": "Reviewed And Retained",
+  "hash": "5eeeb6cce064",
+  "on": "2026-10-17",
+  "reason": "The kind of capital a city is, named as its country names its first-level regions (State Capital, Provincial Capital, Prefectural Capital, Cantonal Capital): Title Case labels, already plain and accurate; and 'en-US', a locale code, not words."
+ },
+ "src/engine/world/place.ts#placeProfile": {
+  "status": "Reviewed And Retained",
+  "hash": "596a52fa3c0f",
+  "on": "2026-10-17",
+  "reason": "The kind of capital a city is, named as its country names its first-level regions (State Capital, Provincial Capital, Prefectural Capital, Cantonal Capital): Title Case labels, already plain and accurate; and 'en-US', a locale code, not words."
+ },
+ "src/engine/world/place.ts#REGION_WORD": {
+  "status": "Reviewed And Retained",
+  "hash": "69f6cf57c617",
+  "on": "2026-10-17",
+  "reason": "The kind of capital a city is, named as its country names its first-level regions (State Capital, Provincial Capital, Prefectural Capital, Cantonal Capital): Title Case labels, already plain and accurate; and 'en-US', a locale code, not words."
+ },
+ "src/engine/world/plans.ts#ALREADY_OVER": {
+  "status": "Rewritten And Verified",
+  "hash": "3e4941e37232",
+  "on": "2026-10-17",
+  "evidence": "tests/plans.test.ts; tests/evidence-g02-life.test.ts; tests/evidence-g04-life.test.ts; tests/coverage-gaps-life.test.ts (a plan kept, then skipped or called off)"
+ },
+ "src/engine/world/plans.ts#checkPlan": {
+  "status": "Rewritten And Verified",
+  "hash": "5bc6ff20be10",
+  "on": "2026-10-17",
+  "evidence": "tests/plans.test.ts 'refuses what it cannot take, and says why in words' (each refusal); tests/evidence-g32-ui.test.ts (a time gone by, word for word)"
+ },
+ "src/engine/world/plans.ts#NOT_ON_CALENDAR": {
+  "status": "Rewritten And Verified",
+  "hash": "fd4f5d276f59",
+  "on": "2026-10-17",
+  "evidence": "tests/plans.test.ts (skip and call off of an id the calendar doesn't hold); tests/evidence-g02-life.test.ts"
+ },
+ "src/engine/world/plans.ts#registerPlans": {
+  "status": "Rewritten And Verified",
+  "hash": "8487281efae0",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g04-life.test.ts (You Missed Dinner, New York at 6:00 PM) and tests/evidence-g32-ui.test.ts (Los Angeles at 4:30 AM PDT), word for word. The fallbacks (no such city) are unreachable: checkPlan refuses a place CITIES doesn't hold."
+ },
+ "src/engine/world/plans.ts#registerPlans <calendar.cancel>": {
+  "status": "Rewritten And Verified",
+  "hash": "2c6ed39b6cae",
+  "on": "2026-10-17",
+  "evidence": "tests/plans.test.ts (skip before its time, the skip notice, call off once started, twice, and the world's own item); tests/evidence-g02-life.test.ts"
+ },
+ "src/engine/world/plans.ts#registerPlans <calendar.skip>": {
+  "status": "Rewritten And Verified",
+  "hash": "59a6d1e809c0",
+  "on": "2026-10-17",
+  "evidence": "tests/plans.test.ts (skip before its time, the skip notice, call off once started, twice, and the world's own item); tests/evidence-g02-life.test.ts"
+ },
+ "src/engine/world/world.ts#NOT_THERE": {
+  "status": "Rewritten And Verified",
+  "hash": "4b53f4110543",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g34-ui.test.ts (a question kept 180 days, then gone); tests/evidence-g02-life.test.ts (an unknown id, dismissed and answered)"
+ },
+ "src/engine/world/world.ts#registerWorld [world.tick]": {
+  "status": "Reviewed And Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-17",
+  "reason": "World Simulation is the calendar label of a background item (category system), which every calendar surface filters out (world/calendar.ts: entries, upcoming, skipTargets, missedBy); a failure of one is said as something the game does in the background (simulation.ts), never by this label."
+ },
+ "src/engine/world/world.ts#registerWorld <world.dismiss_decision>": {
+  "status": "Rewritten And Verified",
+  "hash": "89a754c85968",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g02-life.test.ts, tests/evidence2-b01.test.ts, tests/life-fixes.test.ts, tests/evidence-g33-ui.test.ts, tests/evidence-g29-ui.test.ts, tests/evidence-g34-ui.test.ts, tests/defects-g6-1.test.ts (each refusal word for word); tests/language-frame-ui.test.ts (the speed refusal in the provider's toast)"
+ },
+ "src/engine/world/world.ts#registerWorld <world.set_preferences>": {
+  "status": "Rewritten And Verified",
+  "hash": "aadc742f4c59",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g02-life.test.ts, tests/evidence2-b01.test.ts, tests/life-fixes.test.ts, tests/evidence-g33-ui.test.ts, tests/evidence-g29-ui.test.ts, tests/evidence-g34-ui.test.ts, tests/defects-g6-1.test.ts (each refusal word for word); tests/language-frame-ui.test.ts (the speed refusal in the provider's toast)"
+ },
+ "src/engine/world/world.ts#registerWorld <world.take_decision_action>": {
+  "status": "Rewritten And Verified",
+  "hash": "3ff2ecbd591b",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g02-life.test.ts, tests/evidence2-b01.test.ts, tests/life-fixes.test.ts, tests/evidence-g33-ui.test.ts, tests/evidence-g29-ui.test.ts, tests/evidence-g34-ui.test.ts, tests/defects-g6-1.test.ts (each refusal word for word); tests/language-frame-ui.test.ts (the speed refusal in the provider's toast)"
+ },
+ "src/ui/looks/attention.tsx#ABOUT": {
+  "status": "Rewritten And Verified",
+  "hash": "245fd2b92d35",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame.test.ts: a question opened (one, seven, overdue, closed after its date, dealt with, dismissed, gone; each urgency band) and a notice opened (one, three, read, an unknown category, gone), word for word; tests/evidence-g32-ui.test.ts (the notice look's kind and name)"
+ },
+ "src/ui/looks/attention.tsx#aboutOf": {
+  "status": "Rewritten And Verified",
+  "hash": "62563d42cfbc",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame.test.ts: a question opened (one, seven, overdue, closed after its date, dealt with, dismissed, gone; each urgency band) and a notice opened (one, three, read, an unknown category, gone), word for word; tests/evidence-g32-ui.test.ts (the notice look's kind and name)"
+ },
+ "src/ui/looks/attention.tsx#ago": {
+  "status": "Rewritten And Verified",
+  "hash": "a7f8e7cc0d43",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame.test.ts: a question opened (one, seven, overdue, closed after its date, dealt with, dismissed, gone; each urgency band) and a notice opened (one, three, read, an unknown category, gone), word for word; tests/evidence-g32-ui.test.ts (the notice look's kind and name)"
+ },
+ "src/ui/looks/attention.tsx#categoryLabel": {
+  "status": "Rewritten And Verified",
+  "hash": "45c9e0013576",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame.test.ts: a question opened (one, seven, overdue, closed after its date, dealt with, dismissed, gone; each urgency band) and a notice opened (one, three, read, an unknown category, gone), word for word; tests/evidence-g32-ui.test.ts (the notice look's kind and name)"
+ },
+ "src/ui/looks/attention.tsx#decisionSentence": {
+  "status": "Rewritten And Verified",
+  "hash": "c75e40b3605b",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame.test.ts: a question opened (one, seven, overdue, closed after its date, dealt with, dismissed, gone; each urgency band) and a notice opened (one, three, read, an unknown category, gone), word for word; tests/evidence-g32-ui.test.ts (the notice look's kind and name)"
+ },
+ "src/ui/looks/attention.tsx#nameOf": {
+  "status": "Reviewed And Retained",
+  "hash": "5a7bd4149d0d",
+  "on": "2026-10-17",
+  "reason": "Its one string is 'en-US', the locale its digit grouping uses, not words; the names it makes are held in tests/language-frame.test.ts and tests/evidence-g32-ui.test.ts."
+ },
+ "src/ui/looks/attention.tsx#STAGE_WORD": {
+  "status": "Rewritten And Verified",
+  "hash": "29968628a2f7",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame.test.ts: a question opened (one, seven, overdue, closed after its date, dealt with, dismissed, gone; each urgency band) and a notice opened (one, three, read, an unknown category, gone), word for word; tests/evidence-g32-ui.test.ts (the notice look's kind and name)"
+ },
+ "src/ui/looks/attention.tsx#stageOf": {
+  "status": "Reviewed And Retained",
+  "hash": "a2ca6c79eb38",
+  "on": "2026-10-17",
+  "reason": "'ran out' and 'let go' are the look's own stage keys, never shown: STAGE_WORD says each stage to the player."
+ },
+ "src/ui/looks/attention.tsx#top": {
+  "status": "Rewritten And Verified",
+  "hash": "ff25ed76a9d2",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame.test.ts: a question opened (one, seven, overdue, closed after its date, dealt with, dismissed, gone; each urgency band) and a notice opened (one, three, read, an unknown category, gone), word for word; tests/evidence-g32-ui.test.ts (the notice look's kind and name)"
+ },
+ "src/ui/looks/attention.tsx#weightOf": {
+  "status": "Rewritten And Verified",
+  "hash": "515f8bb758a3",
+  "on": "2026-10-17",
+  "evidence": "tests/language-frame.test.ts: a question opened (one, seven, overdue, closed after its date, dealt with, dismissed, gone; each urgency band) and a notice opened (one, three, read, an unknown category, gone), word for word; tests/evidence-g32-ui.test.ts (the notice look's kind and name)"
+ }
+}

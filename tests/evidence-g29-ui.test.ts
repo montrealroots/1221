@@ -617,7 +617,7 @@ describe('c-tutorial', () => {
     expect(kept.player.returns?.['2026']?.filedAt).toBe(kept.now);
     const again = take(kept);
     expect(again.ok).toBe(false);
-    expect(again.error).toBe('That’s been done already.');
+    expect(again.error).toBe('That question is already settled: it was answered, or its date passed.');
   });
 });
 

@@ -18394,16 +18394,6 @@
   "hash": "5a7bd4149d0d",
   "on": "2026-10-17"
  },
- "src/ui/looks/attention.tsx#RAISED_BY": {
-  "status": "Pending",
-  "hash": "cace2234f30d",
-  "on": "2026-10-17"
- },
- "src/ui/looks/attention.tsx#raisedBy": {
-  "status": "Pending",
-  "hash": "e828d3eb74c0",
-  "on": "2026-10-17"
- },
  "src/ui/looks/attention.tsx#stageOf": {
   "status": "Pending",
   "hash": "a2ca6c79eb38",

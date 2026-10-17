@@ -1,7 +1,8 @@
 import { readFileSync } from 'node:fs';
-import { beforeAll, describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { quickSave, validateUniverse, migrate, loadSave } from '@/engine';
 import type { Simulation } from '@/engine';
+import { CommandError, type CommandResult } from '@/engine/core/simulation';
 import { SAVE_SCHEMA_VERSION, type Person, type Wellbeing } from '@/engine/domain/model';
 import { applySleep, settleTheBody, sleepQuality, sleepStandsForTheNight, startOfLocalDay, suggestedSleep, unattendedNight } from '@/engine/systems/life';
 import { formatTime, instantFromZoned, MS_DAY, MS_HOUR, MS_MINUTE, startOfNextDay, zonedParts } from '@/engine/core/time';
@@ -1161,7 +1162,9 @@ describe('commands', () => {
     const sim = quickSave();
     const result = sim.execute({ kind: 'does.not.exist', payload: {} });
     expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/Unknown command/);
+    // The command's id is the developer's, in `detail`; the player is told in words (from 2026-10-17, brief 14).
+    expect(result.detail).toMatch(/Unknown command/);
+    expect(result.error).toBe('That isn’t something the game can do, so it changed nothing.');
   });
 
   it('surfaces a readable reason when a command is refused', () => {
@@ -1169,6 +1172,66 @@ describe('commands', () => {
     const result = sim.execute({ kind: 'life.sleep', payload: { hours: 8, startAt: sim.now - MS_DAY } });
     expect(result.ok).toBe(false);
     expect(result.error).toMatch(/can’t go to sleep in the past/);
+  });
+
+  // From 2026-10-17 (brief 14): a fault the game didn't foresee was said to the player as `<command id> failed: <the
+  // internal message>`, and a calendar item's as `'<label>' failed: <the message>` under "A Scheduled Event Could Not Be
+  // Processed". The player reads what happened and what it changed; the id and the message are a developer's.
+  it('tells the player a fault in words, says nothing changed because nothing did, and keeps the detail for a developer', () => {
+    const sim = quickSave();
+    const logged = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const energy = sim.player.wellbeing.energy;
+    const notices = sim.universe.notifications.length;
+    sim.onCommand('test.fault', (_p: Record<string, unknown>, { sim: s }) => {
+      s.player.wellbeing.energy = 1;
+      s.notify({ category: 'life', title: 'Half Done', body: 'Half of it happened.' });
+      throw new Error('boom');
+    });
+    const result = sim.execute({ kind: 'test.fault', payload: {} });
+    expect(result).toEqual({ ok: false, error: 'That didn’t go through because of an error in the game. It changed nothing and charged you nothing, so you can carry on from here.', detail: 'test.fault failed: boom' });
+    expect(sim.player.wellbeing.energy).toBe(energy);
+    expect(sim.universe.notifications.length).toBe(notices);
+    // `must` is for callers that treat a failure as a bug: it throws the detail, and not as a refusal.
+    expect(() => sim.must({ kind: 'test.fault', payload: {} })).toThrow(/^test\.fault failed: boom$/);
+    sim.onCommand('test.refused', () => { throw new CommandError('Checking is short.'); });
+    expect(sim.execute({ kind: 'test.refused', payload: {} })).toEqual({ ok: false, error: 'Checking is short.' });
+    expect(() => sim.must({ kind: 'test.refused', payload: {} })).toThrow(CommandError);
+    logged.mockRestore();
+  });
+
+  it('says a fault met as time passes in words, as missed where it was a calendar item, and never claims it undone', () => {
+    const sim = quickSave();
+    const logged = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    sim.onCommand('test.fault', () => { throw new Error('boom'); });
+    sim.onCommand('test.refused', () => { throw new CommandError('Checking is short.'); });
+    const raised: CommandResult[] = [];
+    sim.onSchedule('test.raises', (item, s) => { raised.push(s.execute({ kind: item.payload.command as string, payload: {} })); });
+    sim.onSchedule('test.throws', (item) => { throw item.payload.refusal ? new CommandError('Checking is short.') : new Error('boom'); });
+    const at = sim.now + MS_HOUR;
+    sim.schedule({ at, kind: 'test.raises', label: 'Raises', category: 'school', payload: { command: 'test.fault' } });
+    sim.schedule({ at: at + 1, kind: 'test.raises', label: 'Raises', category: 'school', payload: { command: 'test.refused' } });
+    const plain = sim.schedule({ at: at + 2, kind: 'test.throws', label: 'Work-Study Payday', category: 'school', payload: {} });
+    const refused = sim.schedule({ at: at + 3, kind: 'test.throws', label: 'Classes', category: 'school', payload: { refusal: true } });
+    const background = sim.schedule({ at: at + 4, kind: 'test.throws', label: 'World Simulation', category: 'system', payload: {} });
+    const before = sim.universe.notifications.length;
+    const result = sim.advanceTo(at + MS_HOUR);
+    expect(raised).toEqual([
+      { ok: false, error: 'An error in the game stopped something it was doing as time passed, so that didn’t happen. Anything it did before the error still stands, and the clock went on.', detail: 'test.fault failed: boom' },
+      { ok: false, error: 'Checking is short.' },
+    ]);
+    expect(sim.universe.notifications.slice(before).map((n) => [n.title, n.body])).toEqual([
+      ['Something Didn’t Go Through', 'An error in the game stopped something it was doing as time passed, so that didn’t happen. Anything it did before the error still stands, and the clock went on.'],
+      ['Something Didn’t Go Through', 'Checking is short.'],
+      ['Work-Study Payday Didn’t Go Through', 'An error in the game stopped it, so it shows as missed on your calendar. Anything it did before the error still stands, and the clock went on.'],
+      ['Classes Didn’t Go Through', 'Checking is short. It shows as missed on your calendar.'],
+      ['Something Didn’t Go Through', 'An error in the game stopped something it does in the background. Anything it did before the error still stands, and the clock went on.'],
+    ]);
+    expect([plain, refused, background].map((i) => i.status)).toEqual(['missed', 'missed', 'missed']);
+    expect(result.missed.map((i) => i.id)).toEqual([plain.id, refused.id, background.id]);
+    expect(sim.now).toBe(at + MS_HOUR);
+    // The detail of each fault went to the developer's console; a refusal, the world's own words, didn't.
+    expect(logged.mock.calls.map((c) => String(c[0]))).toEqual(['test.fault failed: boom', '\'Work-Study Payday\' (test.throws) failed:', '\'World Simulation\' (test.throws) failed:']);
+    logged.mockRestore();
   });
 });
 

@@ -543,10 +543,10 @@ describe('life.commitment', () => {
     sim.advanceTo(EDT(2026, 8, 24, 12, 30));
     expect(sim.timeline.get(gym)!.status).toBe('done');
     expect(sleepFor(sim, 1).error).toBe('You’re at Gym until 2:00 PM.');
-    expect(sim.execute<{ ok: boolean; error?: string }>({ kind: 'calendar.skip', payload: { entryId: gym } }).value).toEqual({ ok: false, error: 'That’s already settled one way or the other.' });
+    expect(sim.execute<{ ok: boolean; error?: string }>({ kind: 'calendar.skip', payload: { entryId: gym } }).value).toEqual({ ok: false, error: 'That’s already over: it was kept, missed or called off.' });
     sim.advanceTo(EDT(2026, 8, 24, 19));
     expect(sim.timeline.get(dinner)!.status).toBe('missed');
-    expect(titled(sim, 'You Missed Dinner').map((n) => n.body)).toEqual(['It wanted you in New York at 6:00 PM, and you were in New Haven.']);
+    expect(titled(sim, 'You Missed Dinner').map((n) => n.body)).toEqual(['It was in New York at 6:00 PM, and you were in New Haven. Missing a plan of your own costs nothing else.']);
     // Done, its hours over: sleep is taken again.
     expect(sleepFor(sim, 1).ok).toBe(true);
     sim = reload(sim);
@@ -730,7 +730,7 @@ describe('world.tick', () => {
     expect(closed.resolvedAt! - ret.dueAt!).toBeLessThanOrEqual(2 * MS_DAY);
     expect(closed.dismissedAt).toBeUndefined();
     expect(drawn(sim, Home).text).not.toContain('Your 2026 Tax Return');
-    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: ret.id, actionIndex: 0 } }).error).toBe('That’s been done already.');
+    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: ret.id, actionIndex: 0 } }).error).toBe('That question is already settled: it was answered, or its date passed.');
     // Kept 180 days after it closed, gone at the tick after.
     sim.advanceTo(closed.resolvedAt! + 179 * MS_DAY);
     expect(sim.universe.decisions[ret.id]).toBeDefined();

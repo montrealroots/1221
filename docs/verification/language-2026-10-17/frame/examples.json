@@ -1,0 +1,272 @@
+[
+ {
+  "source": "src/engine/core/simulation.ts#FAULT_ROLLED_BACK",
+  "kind": "error",
+  "before": "school.attend failed: Cannot read properties of undefined (reading 'x')",
+  "after": "That didn’t go through because of an error in the game. It changed nothing and charged you nothing, so you can carry on from here.",
+  "why": "The toast showed a command id and an internal message. The player reads that it didn’t happen and that nothing changed; the id and message go to result.detail and the console.",
+  "meaningSensitive": true,
+  "verified": "tests/simulation.test.ts, 'tells the player a fault in words, says nothing changed because nothing did, and keeps the detail for a developer' (the handler's change and notice are rolled back)"
+ },
+ {
+  "source": "src/engine/core/simulation.ts#FAULT_WHILE_TIME_PASSED",
+  "kind": "notification",
+  "before": "Something Didn’t Go Through / test.fault failed: boom",
+  "after": "Something Didn’t Go Through / An error in the game stopped something it was doing as time passed, so that didn’t happen. Anything it did before the error still stands, and the clock went on.",
+  "why": "Mid-advance commands aren't snapshotted (execute's own comment), so the sentence never claims nothing changed; it says the clock went on, as it does.",
+  "meaningSensitive": true,
+  "verified": "tests/simulation.test.ts, 'says a fault met as time passes in words, as missed where it was a calendar item, and never claims it undone'"
+ },
+ {
+  "source": "src/engine/core/simulation.ts#Simulation",
+  "kind": "notification",
+  "before": "A Scheduled Event Could Not Be Processed / 'Work-Study Payday' failed: boom",
+  "after": "Work-Study Payday Didn’t Go Through / An error in the game stopped it, so it shows as missed on your calendar. Anything it did before the error still stands, and the clock went on.",
+  "why": "Leads with what happened, names the item in its calendar label, says its status (missed) and that its partial work stands.",
+  "meaningSensitive": true,
+  "verified": "tests/simulation.test.ts, 'says a fault met as time passes in words…' (status missed, result.missed)"
+ },
+ {
+  "source": "src/engine/core/simulation.ts#Simulation",
+  "kind": "notification",
+  "before": "A Scheduled Event Could Not Be Processed / 'Classes' failed: Checking is short.",
+  "after": "Classes Didn’t Go Through / Checking is short. It shows as missed on your calendar.",
+  "why": "A refusal in the world's own words is kept as the reason; only the frame around it changed.",
+  "meaningSensitive": false,
+  "verified": "tests/simulation.test.ts, 'says a fault met as time passes in words…'"
+ },
+ {
+  "source": "src/engine/core/simulation.ts#Simulation",
+  "kind": "notification",
+  "before": "A Scheduled Event Could Not Be Processed / 'World Simulation' failed: boom",
+  "after": "Something Didn’t Go Through / An error in the game stopped something it does in the background. Anything it did before the error still stands, and the clock went on.",
+  "why": "A background item's label, World Simulation, names machinery; the sentence says what it is instead.",
+  "meaningSensitive": false,
+  "verified": "tests/simulation.test.ts, 'says a fault met as time passes in words…'"
+ },
+ {
+  "source": "src/engine/core/simulation.ts#UNKNOWN_COMMAND",
+  "kind": "error",
+  "before": "Unknown command 'does.not.exist'.",
+  "after": "That isn’t something the game can do, so it changed nothing.",
+  "why": "No command id in the player's sentence; the id is in result.detail for a developer.",
+  "meaningSensitive": false,
+  "verified": "tests/simulation.test.ts, 'rejects an unknown command instead of failing silently'; tests/integrity.test.ts"
+ },
+ {
+  "source": "src/app/game-context.tsx#CLOCK_FAULT",
+  "kind": "error",
+  "before": "Refusing to move the world clock backwards (from February 11, 2027 at 8:10 PM to February 11, 2027 at 7:00 PM). Time only runs forwards.",
+  "after": "An error in the game stopped the clock. Anything that happened before it stopped still stands. You can try moving the clock again.",
+  "why": "The toast was the engine's exception text. A move of the clock isn't rolled back, so the sentence says what stands, and the next step.",
+  "meaningSensitive": true,
+  "verified": "read in game-context.tsx: advance and advanceTo catch the throw, refresh and toast; advanceTo has no snapshot (simulation.ts). Typecheck."
+ },
+ {
+  "source": "src/engine/world/world.ts#NOT_THERE",
+  "kind": "error",
+  "before": "No such decision.",
+  "after": "That question isn’t in What Needs You any more.",
+  "why": "The player knows a decision as a question in What Needs You. Raised only for an id the save no longer holds (closed 180 days, prune).",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g34-ui.test.ts (the 180 days kept, then gone); tests/evidence-g02-life.test.ts"
+ },
+ {
+  "source": "src/engine/world/world.ts#registerWorld <world.take_decision_action>",
+  "kind": "error",
+  "before": "That’s been done already.",
+  "after": "That question is already settled: it was answered, or its date passed.",
+  "why": "resolvedAt is set by an answer or, past the date, by expireDecisions; the old words named only the first.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g02-life.test.ts, tests/life-fixes.test.ts, tests/evidence-g33-ui.test.ts, tests/evidence-g29-ui.test.ts"
+ },
+ {
+  "source": "src/engine/world/world.ts#registerWorld <world.take_decision_action>",
+  "kind": "error",
+  "before": "It’s dismissed.",
+  "after": "You dismissed that question, so it can’t be answered from What Needs You.",
+  "why": "Says who did what and the consequence.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b01.test.ts, tests/life-fixes.test.ts, tests/evidence-g02-life.test.ts"
+ },
+ {
+  "source": "src/engine/world/world.ts#registerWorld <world.set_preferences>",
+  "kind": "error",
+  "before": "theme isn’t a preference.",
+  "after": "That isn’t a setting the game has.",
+  "why": "Never a raw field name in the player's sentence.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g02-life.test.ts"
+ },
+ {
+  "source": "src/engine/world/world.ts#registerWorld <world.set_preferences>",
+  "kind": "error",
+  "before": "The clock runs paused or live.",
+  "after": "The clock can only be set to Play or Pause.",
+  "why": "The controls are Play and Pause; paused and live are internal values.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g6-1.test.ts, tests/evidence-g02-life.test.ts"
+ },
+ {
+  "source": "src/engine/world/plans.ts#checkPlan",
+  "kind": "error",
+  "before": "That’s further out than the calendar goes.",
+  "after": "The calendar takes plans up to five years ahead. Pick an earlier day.",
+  "why": "Names the limit, read from FURTHEST_AHEAD_DAYS, and the next step.",
+  "meaningSensitive": true,
+  "verified": "tests/plans.test.ts, 'refuses what it cannot take, and says why in words' (FURTHEST_AHEAD_DAYS + 10 days)"
+ },
+ {
+  "source": "src/engine/world/plans.ts#checkPlan",
+  "kind": "error",
+  "before": "That’s too short to be worth writing down. Give it five minutes at least.",
+  "after": "A plan needs to be at least five minutes long.",
+  "why": "Plain; five is read from SHORTEST_MINUTES.",
+  "meaningSensitive": false,
+  "verified": "tests/plans.test.ts, 'refuses what it cannot take…' (/five minutes/i)"
+ },
+ {
+  "source": "src/engine/world/plans.ts#checkPlan",
+  "kind": "error",
+  "before": "It needs a name — something you’d recognize on the day.",
+  "after": "Give it a name you’ll recognize on the day.",
+  "why": "An instruction, without the dash.",
+  "meaningSensitive": false,
+  "verified": "tests/plans.test.ts, 'refuses what it cannot take…'"
+ },
+ {
+  "source": "src/engine/world/plans.ts#registerPlans",
+  "kind": "notification",
+  "before": "You Missed Dinner / It wanted you in New York at 6:00 PM, and you were in New Haven.",
+  "after": "You Missed Dinner / It was in New York at 6:00 PM, and you were in New Haven. Missing a plan of your own costs nothing else.",
+  "why": "No plan 'wants' anything; and the consequence is said: nothing but this notice reads a missed plan of the player's own (grep PLAN_KIND).",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g04-life.test.ts; tests/evidence-g32-ui.test.ts (Los Angeles, on the call's own clock)"
+ },
+ {
+  "source": "src/engine/world/plans.ts#registerPlans <calendar.skip>",
+  "kind": "error",
+  "before": "It hasn’t come round yet. Call it off instead.",
+  "after": "It hasn’t started yet. To drop it, open it on the Calendar and press Call It Off.",
+  "why": "Names where Call It Off is (the calendar entry's dialog) in its own label.",
+  "meaningSensitive": false,
+  "verified": "tests/plans.test.ts, 'is refused before its time, with the way to call it off instead'"
+ },
+ {
+  "source": "src/engine/world/plans.ts#registerPlans <calendar.skip>",
+  "kind": "notification",
+  "before": "You Didn’t Go To Dinner / Nobody was waiting on it but you, so it cost you nothing but the plan.",
+  "after": "You Didn’t Go To Dinner / It was your own plan, so skipping it costs you nothing else.",
+  "why": "The same fact, plainly.",
+  "meaningSensitive": false,
+  "verified": "tests/plans.test.ts (the skip notice's body)"
+ },
+ {
+  "source": "src/engine/world/plans.ts#ALREADY_OVER",
+  "kind": "error",
+  "before": "That’s already settled one way or the other.",
+  "after": "That’s already over: it was kept, missed or called off.",
+  "why": "Names the three statuses a non-pending item can have (done, missed, cancelled).",
+  "meaningSensitive": false,
+  "verified": "tests/plans.test.ts; tests/evidence-g02-life.test.ts; tests/evidence-g04-life.test.ts; tests/coverage-gaps-life.test.ts"
+ },
+ {
+  "source": "src/engine/world/plans.ts#registerPlans <calendar.cancel>",
+  "kind": "error",
+  "before": "It’s already started. You either went or you didn’t.",
+  "after": "It’s already started, so it can’t be called off now.",
+  "why": "The obstacle, said once, without the quip.",
+  "meaningSensitive": false,
+  "verified": "tests/plans.test.ts; tests/evidence-g02-life.test.ts"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#decisionSentence",
+  "kind": "other",
+  "before": "It’s asking you at 70/100 and it wants an answer in 2 months.",
+  "after": "Answer it by April 15, 2027. That’s in 2 months.",
+  "why": "Leads with what to do and by when; the urgency moves to the body.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts, 'says when to answer it, where it sits among the rest…'"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#decisionSentence",
+  "kind": "other",
+  "before": "It went past its date 3h ago, it’s carrying 70/100, and being overdue is what holds it at the top of everything waiting on you.",
+  "after": "Its date passed 3 hours ago. It stays at the top of What Needs You until it closes by itself, within two days.",
+  "why": "Overdue and open only until the next world tick (every two days, expireDecisions); says that.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame.test.ts, 'says an overdue question comes first and closes itself within the world tick’s two days…'"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#decisionSentence",
+  "kind": "other",
+  "before": "You waved it off Home. The thing it was about stands on its own screen until April 15, 2027, and can still be answered there.",
+  "after": "You dismissed it from Home just now. Dismissing only takes it off the list: what it was about still stands, and its date is April 15, 2027.",
+  "why": "Dismiss is the button's word. The old 'can still be answered there' wasn't checked for every raiser; what's true is that dismissing changes nothing else.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame.test.ts (dismissed via world.dismiss_decision)"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#top",
+  "kind": "other",
+  "before": "The taxes side of things put it in front of you 10d 11h ago, at 70/100 — above the ordinary run of things. If the same thing comes up again the figure only ever goes up: the higher of the two stands, and nothing brings it back down.",
+  "after": "It came up 10d 11h ago, about your taxes. Its urgency is high, at 70/100. If it comes up again while it’s open, its urgency can only go up.",
+  "why": "Plain subject and verb; urgency named as Urgency, the stat's own label; requireDecision keeps the higher of two (Math.max).",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#weightOf",
+  "kind": "other",
+  "before": "high enough that nothing but an overdue thing sits above it",
+  "after": "very high",
+  "why": "The old band claimed a place in the order the sort doesn't give (another question of 90 sits above one of 86); the order is now said once, as openDecisions has it.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame.test.ts (90 first of seven; 20 seventh)"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#top",
+  "kind": "other",
+  "before": "Home puts File It and Dismiss against it, and a way through to the screen where it lives, and pressing one of those is doing it. They’re the doing; this is the reading.",
+  "after": "On Home, its buttons are File It, Go There and Dismiss. Reading it here changes nothing.",
+  "why": "Names the buttons in Home's order, Go There included by its label.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts; the text walk's decision save, Home"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#top",
+  "kind": "label",
+  "before": "Something You Were Told",
+  "after": "Notice",
+  "why": "The look's kind, a plain noun.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts; tests/language-frame.test.ts"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#top",
+  "kind": "other",
+  "before": "Reading it here doesn’t mark it read — the one control that does sits on Home and clears the whole list at once, because that changes the save and this doesn’t.",
+  "after": "Opening it here doesn’t mark it read. On Home, Mark 3 Read marks all 3 unread notices read at once.",
+  "why": "Names the button by its label and count; and, for one, 'On Home, Mark 1 Read marks it read.'",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts (one and three unread)"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#top",
+  "kind": "other",
+  "before": "A notice can name the thing it’s about. So far nothing in the world does, so this one ends here. The day something names one, it’ll open onto it.",
+  "after": "(no line)",
+  "why": "The game's history, not the player's: with nothing to open, the look says nothing about it.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts (provenance undefined)"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#top",
+  "kind": "other",
+  "before": "That one’s gone — the save keeps the last five hundred, and it fell off the end.",
+  "after": "That notice is gone. The save keeps the latest 500, and this one was older.",
+  "why": "Two short sentences; 500 read from NOTICES_KEPT.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts (gone)"
+ }
+]

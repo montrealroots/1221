@@ -554,7 +554,7 @@ describe('h-calendar: the Calendar section of Home', () => {
     expect(shown.split('Table Read').length - 1).toBe(1);
     expect(shown.split('Coffee With Sam').length - 1).toBe(1);
     const late = plan(sim, { title: 'Too Late', at: sim.now - MS_HOUR });
-    expect(late).toEqual({ ok: false, error: 'That’s already been and gone. Pick a time you can still get to.' });
+    expect(late).toEqual({ ok: false, error: 'That time has already passed. Pick a time that’s still to come.' });
     expect(calendar(sim)).toBe(shown);
     expect(sim.must<{ ok: boolean }>({ kind: 'calendar.cancel', payload: { entryId: read.id } }).ok).toBe(true);
     expect(sim.must<{ ok: boolean }>({ kind: 'calendar.cancel', payload: { entryId: coffee.id } }).ok).toBe(true);
@@ -574,7 +574,7 @@ describe('h-calendar: the Calendar section of Home', () => {
     expect(sim.timeline.get(call.id!)?.status).toBe('missed');
     // The notice gives the call’s own clock, as Home did. Until 2026-10-13 it gave the home clock with no zone, “at 7:30
     // AM”, and this held it (found by that day’s third round).
-    expect(sim.universe.notifications.filter((n) => n.title === 'You Missed Call With The Agent').map((n) => n.body)).toEqual(['It wanted you in Los Angeles at 4:30 AM PDT, and you were in New Haven.']);
+    expect(sim.universe.notifications.filter((n) => n.title === 'You Missed Call With The Agent').map((n) => n.body)).toEqual(['It was in Los Angeles at 4:30 AM PDT, and you were in New Haven. Missing a plan of your own costs nothing else.']);
     plan(sim, { title: 'Lunch With Theo', at: at(2026, 8, 28, 13), durationMinutes: 60 });
     const shown = calendar(sim);
     expect(shown).toContain('Lunch With Theo August 28, 2026 at 1:00 PM');
@@ -685,7 +685,7 @@ describe('h-needs: What Needs You on Home', () => {
     drawn(sim, Home);
     press(button('Welcome To The Class Of 2029'));
     let shown = needs(sim);
-    expect(shown).toContain('Something You Were Told Welcome To The Class Of 2029 Close It came in');
+    expect(shown).toContain('Notice Welcome To The Class Of 2029 Close It came in');
     expect(shown).not.toContain('2,029');
     sim.advanceTo(at(2027, 2, 1, 12));
     h.given = new Map();

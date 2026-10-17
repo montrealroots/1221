@@ -436,8 +436,8 @@ async function normal() {
     must(/MFA in Acting/.test(body), `the welcome doesn’t name the MFA in Acting: ${body.slice(0, 200)}`);
     const look = await openLook(row.locator('.strong button.link').first());
     // The kind is drawn in capitals by the stylesheet, and innerText reads it so.
-    must(look.name === 'Welcome To The Class Of 2029' && look.kind.toLowerCase() === 'something you were told', `opened “${look.name}” (${look.kind})`);
-    must(/^It came in .+ and it’s (the only thing you haven’t read|\w+ of the \w+ you haven’t read)\.$/.test(look.summary), `its summary: ${look.summary}`);
+    must(look.name === 'Welcome To The Class Of 2029' && look.kind.toLowerCase() === 'notice', `opened “${look.name}” (${look.kind})`);
+    must(/^It came in [^.]+(, and it’s your only unread notice|\. It’s \w+ of your [\w,]+ unread notices)\.$/.test(look.summary), `its summary: ${look.summary}`);
     await shot('home-notice-look');
     await closeLook(look.name);
   });
@@ -632,9 +632,9 @@ async function setback() {
   await step('the warning opened in place: its look, who sent it and when, and Close', ['drill-down'], async () => {
     const row = noticeRow(/^A Word On Your Coursework$/);
     const look = await openLook(row.locator('.strong button.link').first());
-    must(look.kind.toLowerCase() === 'something you were told' && look.name === 'A Word On Your Coursework', `opened “${look.name}” (${look.kind})`);
+    must(look.kind.toLowerCase() === 'notice' && look.name === 'A Word On Your Coursework', `opened “${look.name}” (${look.kind})`);
     const stats = clean(await look.look.locator('.stat').allInnerTexts().then((a) => a.join(' | ')));
-    must(/Sent By/i.test(stats) && /Weight/i.test(stats), `the look’s figures: ${stats}`);
+    must(/About/i.test(stats) && /Importance/i.test(stats), `the look’s figures: ${stats}`);
     said(`its figures: ${stats}`);
     await closeLook(look.name);
   });

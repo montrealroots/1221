@@ -652,7 +652,7 @@ describe('n-decision-tax', () => {
     expect(paid).toHaveLength(1);
     expect(fromPlayer(sim, paid[0]!)).toBe(-165_60);
     expect(drawn(sim).affairs).toContain('Papers Cover: Yale Health. Papers How This Works');
-    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 0 } }).error).toBe('That’s been done already.');
+    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 0 } }).error).toBe('That question is already settled: it was answered, or its date passed.');
     expect(sim.execute({ kind: 'tax.file', payload: { year: 2026 } }).error).toBe('You’ve filed it. A change is an amended return.');
     const kept = reload(sim);
     kept.advanceTo(DUE + 3 * MS_DAY);
@@ -686,7 +686,7 @@ describe('n-decision-tax', () => {
     expect(troubles(sim, sim.player).filter((t) => t.kind === 'return_late')).toEqual([{ kind: 'return_late', amount: 173_88 }]);
     // The IRS's substitute return is on the calendar for a year past the due date.
     expect(sim.universe.scheduled.filter((i) => i.kind === 'tax.substitute' && i.status === 'pending').map((i) => i.at)).toEqual([DUE + 365 * MS_DAY]);
-    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 0 } }).error).toBe('That’s been done already.');
+    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 0 } }).error).toBe('That question is already settled: it was answered, or its date passed.');
     sim.must({ kind: 'tax.file', payload: { year: 2026 } });
     // Three days' interest at 7% a year compounded daily on $165.60: 9.53 cents, 10.
     const paid = memoed(sim, 'Federal income tax, 2026, with late penalties and interest');
@@ -777,7 +777,7 @@ describe('n-decision-us-status', () => {
     expect(optPermits(sim)[0]).toMatchObject({ status: 'pending', appliedAt: PROGRAM_END + 60_000, readyAt: at(2027, 6, 30, 12, 1) });
     expect(d!.resolvedAt).toBe(PROGRAM_END + 60_000);
     expect(openDecisions(sim).filter((x) => x.refType === 'us-status')).toEqual([]);
-    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 1 } }).error).toBe('That’s been done already.');
+    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 1 } }).error).toBe('That question is already settled: it was answered, or its date passed.');
     expect(sim.execute({ kind: 'documents.apply_opt', payload: {} }).error).toBe('You’ve applied for OPT already.');
     const kept = reload(sim);
     // Past the status's old end, the application pending holds it.

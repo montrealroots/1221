@@ -353,7 +353,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
   const callOff = () => {
     const result = run<PlanResult>('calendar.cancel', { entryId: entry.id });
     if (result.value?.ok) { refresh(); onClose(); return; }
-    setError(result.value?.error ?? result.error ?? 'It wouldn’t come off the calendar.');
+    setError(result.value?.error ?? result.error ?? 'It couldn’t be taken off the calendar, so it’s still there.');
   };
 
   return (

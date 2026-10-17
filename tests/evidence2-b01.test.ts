@@ -392,8 +392,8 @@ describe('world.dismiss_decision', () => {
     expect(sim.universe.decisions[decisionId]!.dismissedAt).toBe(sim.now);
     expect(railCount(sim)).toBeUndefined();
     expect(drawn(sim, Home).text).not.toContain('Your US Status Is Ending');
-    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId, actionIndex: 0 } }).error).toBe('It’s dismissed.');
-    expect(sim.execute({ kind: 'world.dismiss_decision', payload: { decisionId } }).error).toBe('It’s dismissed already.');
+    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId, actionIndex: 0 } }).error).toBe('You dismissed that question, so it can’t be answered from What Needs You.');
+    expect(sim.execute({ kind: 'world.dismiss_decision', payload: { decisionId } }).error).toBe('You’ve already dismissed that question.');
 
     // Waved off Home, the thing it was about stands: out of status on its date, said once.
     sim.advanceTo(ends + MS_HOUR);
