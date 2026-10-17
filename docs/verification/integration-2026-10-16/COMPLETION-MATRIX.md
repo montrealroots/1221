@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 535 of 599 rows in scope Implemented And Verified (89.3%); 53 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 534 of 599 rows in scope Implemented And Verified (89.1%); 54 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.
 
 ## Totals
 
@@ -34,7 +34,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Remaining Area: health-billing | 3 | 3 |  |  |  |  |  |  |
 | Remaining Area: health-eligibility | 7 | 7 |  |  |  |  |  |  |
 | Remaining Area: school | 10 | 10 |  |  |  |  |  |  |
-| Remaining Area: tax | 18 | 11 | 5 |  |  |  |  | 2 |
+| Remaining Area: tax | 18 | 16 |  |  |  |  |  | 2 |
 | Brief 09 Area: banking | 18 | 9 | 8 |  |  |  | 1 |  |
 | Brief 09 Area: coverage | 14 | 13 |  |  |  |  | 1 |  |
 | Brief 09 Area: genres | 21 | 20 | 1 |  |  |  |  |  |
@@ -46,13 +46,13 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 10 Area: stamina | 13 | 11 | 1 |  |  |  |  | 1 |
 | Criteria: The Stage | 11 | 9 |  |  |  |  |  | 2 |
 | Criteria: Interpretation | 5 | 5 |  |  |  |  |  |  |
-| Criteria: The Attributes | 25 | 16 | 6 |  |  |  |  | 3 |
+| Criteria: The Attributes | 25 | 15 | 7 |  |  |  |  | 3 |
 | Criteria: Long-Term Continuity | 3 | 1 |  |  |  |  | 1 | 1 |
-| Criteria: Mastery Through Play | 8 | 8 |  |  |  |  |  |  |
+| Criteria: Mastery Through Play | 8 | 7 | 1 |  |  |  |  |  |
 | Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
-| Integration | 9 | 9 |  |  |  |  |  |  |
+| Integration | 9 | 5 | 4 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 4 | 2 |  |  |  | 1 |  |
-| **All** | **635** | **535** | **53** | **0** | **0** | **0** | **11** | **36** |
+| **All** | **635** | **534** | **54** | **0** | **0** | **0** | **11** | **36** |
 
 ## Life, Health And Time
 
@@ -505,11 +505,11 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `tax.s8.inventory` | What Papers contains (the owner's brief, section 8): the Papers screen and the documents system | Implemented And Verified | verified as it stands | tests/remaining-papers.test.ts ‘PLAYER JOURNEY: a London-born student’s papers are her passport and her F-1; the Social Security office, a new bank and the DMV… |
 | `tax.s8.passport` | The passport's lifecycle: eligibility, application, fee and time, issue and term, renewal, loss and replacement, and what a missing or expi… | Implemented And Verified | fixed | tests/remaining-papers.test.ts ‘PLAYER JOURNEY: a London-born student renews her British passport on Papers from New Haven: £116.50, the overseas fee, in dolla… |
 | `tax.s8.idcard` | The state ID card's lifecycle (Connecticut's non-driver identification card) and the documents it requires | Implemented And Verified | fixed | tests/remaining-papers.test.ts ‘PLAYER JOURNEY: her number come and her passport reported lost, Get Non-Driver Identification Card is shut with the DMV’s reaso… |
-| `tax.s8.f1_status` | The F-1 student visa and status: issue, term, grace, end, and what reads it | Implemented, Verification Incomplete | verified as it stands | Existing verified rows' tests (documents.us_status, documents.permission, documents.opt_week); tests/remaining-papers.test.ts: the F-1 read by the DMV and the … |
-| `tax.s8.ssn` | The Social Security number: eligibility, application, card, and readers | Implemented, Verification Incomplete | verified as it stands | tests/scope-taxpapers.test.ts documents.apply_ssn journeys; tests/evidence-g17-papers.test.ts; GUARD tests in tests/remaining-tax.test.ts |
-| `tax.s8.opt` | OPT (Form I-765, the EAD): window, fee, decision, term, days without work, status | Implemented, Verification Incomplete | verified as it stands | Existing verified rows' tests; tests/remaining-papers.test.ts GUARD for the EAD at the DMV |
-| `tax.s8.license` | A driving license held from before (identity only since the scope reset) | Implemented, Verification Incomplete | verified as it stands | Existing verified rows' tests (documents.replace_license, documents.report_lost) |
-| `tax.s8.visas_authorizations` | Visas and travel authorizations, and Going Abroad | Implemented, Verification Incomplete | verified as it stands | tests/defects-g25-1.test.ts (FIXTURE: an authorization held from before, a reading) |
+| `tax.s8.f1_status` | The F-1 student visa and status: issue, term, grace, end, and what reads it | Implemented And Verified | verified as it stands | Existing verified rows' tests (documents.us_status, documents.permission, documents.opt_week); tests/remaining-papers.test.ts: the F-1 read by the DMV and the … |
+| `tax.s8.ssn` | The Social Security number: eligibility, application, card, and readers | Implemented And Verified | verified as it stands | tests/scope-taxpapers.test.ts documents.apply_ssn journeys; tests/evidence-g17-papers.test.ts; GUARD tests in tests/remaining-tax.test.ts |
+| `tax.s8.opt` | OPT (Form I-765, the EAD): window, fee, decision, term, days without work, status | Implemented And Verified | verified as it stands | Existing verified rows' tests; tests/remaining-papers.test.ts GUARD for the EAD at the DMV |
+| `tax.s8.license` | A driving license held from before (identity only since the scope reset) | Implemented And Verified | verified as it stands | Existing verified rows' tests (documents.replace_license, documents.report_lost) |
+| `tax.s8.visas_authorizations` | Visas and travel authorizations, and Going Abroad | Implemented And Verified | verified as it stands | tests/defects-g25-1.test.ts (FIXTURE: an authorization held from before, a reading) |
 | `tax.s8.residence_naturalization` | Residence abroad and naturalization (Residence Abroad on Permission To Work) | Explicitly Deferred | verified as it stands | The deferred rows as they stand |
 | `tax.s8.jurisdiction` | Jurisdiction: US federal (USCIS, SSA, IRS, State), Connecticut (DMV, DRS), the home country's office; real requirements apart from SLATE's … | Explicitly Deferred | verified as it stands | docs/verification/remaining/tax-result.json sources and assumptions per item |
 
@@ -763,7 +763,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `H7` | Randomness doesn’t overwhelm skill, and still exists | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
 | `H4` | Specialists are advantaged on suitable work | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4… |
 | `F2` | Acting on the first-named weakness pays more than training at random (as written) | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md |
-| `F2-A` | The advice’s first-named input is the largest realized gain, played | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/… |
+| `F2-A` | The advice’s first-named input is the largest realized gain, played | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/… |
 | `G1` | A genre’s label predicts what its work asks (as written) | Explicitly Deferred | Superseded | docs/verification/genres-2026-10-16/g1-replacement.md |
 | `A4` | What the game says an ability does, it does | Implemented, Verification Incomplete | Met | docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A4) |
 | `A5` | Every ability can be developed by an action the player chooses, and says what moved | Implemented, Verification Incomplete | Met | docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A5) |
@@ -790,7 +790,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `MA4` | An ability read twice by one dimension is counted once, at its summed weight | Implemented And Verified | Met | tests/integration-mastery.test.ts |
 | `MA6` | At mastery no draw moves a result off 100 | Implemented And Verified | Met | tests/engine-properties.test.ts |
 | `MA7` | Each shortfall a take has is named in words | Implemented And Verified | Met | tests/integration-mastery.test.ts |
-| `MA5` | A played mastery plan reaches 100 on every payoff tape | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification… |
+| `MA5` | A played mastery plan reaches 100 on every payoff tape | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification… |
 | `MA8` | Mastery in the work doesn’t stand in for the work the school asks: a mastered student who misses pieces is Unready on them and the review c… | Implemented And Verified | Met | tests/integration-mastery.test.ts |
 
 ## Criteria: The Genres
@@ -812,10 +812,10 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `INT-duplicates` | A command sent twice (a repeat click, a duplicate submission) is lived once, across a reload | Implemented And Verified | Met | tests/briefs.test.ts; tests/engagement.test.ts; tests/base44-contract.test.ts |
 | `INT-migration` | An older save opens, migrates and plays on | Implemented And Verified | Met | tests/save-migration.test.ts; tests/migration-94.test.ts |
 | `INT-missed-term` | A term played with missed pieces and a missed revision: warning, forecast, notices and review count alike, once, through reloads | Implemented And Verified | Met | tests/remaining-school-term.test.ts |
-| `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Implemented And Verified | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
-| `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Implemented And Verified | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
-| `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/ru… |
-| `INT-gate` | The gate and the build on the final revision | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-… |
+| `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Implemented, Verification Incomplete | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
+| `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Implemented, Verification Incomplete | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
+| `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/ru… |
+| `INT-gate` | The gate and the build on the final revision | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-… |
 
 ## Known Shortfalls And Missing Tests
 
@@ -833,7 +833,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (53)
+### Implemented, Verification Incomplete (54)
 
 - **`health.enroll`** (Life, Health And Time): Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). / The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through t…
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
@@ -849,11 +849,6 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`tax.lien_dispute`** (Papers): Unreachable: Connecticut’s lien always secures tax still owed, since a payment goes to the penalty and interest first, a lien is filed only while something is owed, and DRS assesses from the return’s own figures. Since 2026-10-16 the button is drawn only on a lien filed in error; on a played student’s Connecticut lien Papers says why in the engine’s words and the command is refused (tests/remaining-tax.test.ts ‘PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date…’). Read again on 2026-10-16 (brief 09): unchanged. An Inherited family’s student who files nothing …
 - **`tax.request_waiver`** (Papers): Unreachable: only Oregon charges the three-year penalty, and every life files in Connecticut; shown on the played life, the refusal and no row drawn (tests/scope-taxpapers.test.ts ‘tax.request_waiver: only Oregon charges the three-year penalty…’). Read again on 2026-10-16 (brief 09): unchanged; every life still files in Connecticut alone. / tested on fixtures: tests/remaining-tax.test.ts ‘FIXTURE: her own 2001 return filed before any notice…’ (70%, refunded), ‘FIXTURE: its Demand To File sent, then her own return, unpaid…’ (50%) and ‘FIXTURE: assessed, $990 paid toward its $1,000 of penalties…
 - **`l-actor`** (Creation, Profile, Home And The Looks): None. The header (actor.tsx:1-4) said 'an interest' was among what it opens until the interests went on 2026-10-10; it now says so in the past tense. / None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the actor look. / no test reaches it
-- **`tax.s8.f1_status`** (Remaining Area: tax): the area called it verified as it stands and cites no gate test that holds it
-- **`tax.s8.ssn`** (Remaining Area: tax): the area called it verified as it stands and cites no gate test that holds it
-- **`tax.s8.opt`** (Remaining Area: tax): the area called it verified as it stands and cites no gate test that holds it
-- **`tax.s8.license`** (Remaining Area: tax): the area called it verified as it stands and cites no gate test that holds it
-- **`tax.s8.visas_authorizations`** (Remaining Area: tax): the area called it verified as it stands and cites no gate test that holds it
 - **`banking.2.arrange_overdraft`** (Brief 09 Area: banking): owner decision
 - **`banking.2.cancel_new`** (Brief 09 Area: banking): owner decision (its last unfinished item implemented: banking.1.pro-rata)
 - **`banking.2.switch`** (Brief 09 Area: banking): owner decision
@@ -880,12 +875,18 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`judge.tests`** (Brief 10 Area: judge): the area called it implemented and cites no gate test that holds it
 - **`A1`** (Brief 10 Area: judge): Measured by tools/ag-baseline.ts and tools/ag-criteria.mjs on the integrated code; no gate test holds A1’s figure. A night drains as it did by WORKLOAD.full’s design, so A1 is met by briefs and scenes, and read at a lead a night would be 0.487, short of 0.5 / verified as it stands
 - **`stamina.A1`** (Brief 10 Area: stamina): Met on brief 10’s integrated code by the judge area’s second phase (remaining-10/judge-result.json, A1): stamina’s briefs 0.53 and scenes 0.54, its nights 0.334 at a supporting part as the tool reads them (0.487 at a lead, 0.138 featured), measured by tools/ag-baseline.ts and tools/ag-criteria.mjs (decisions-2026-10-16/integrated/after/criteria.txt, a1-nights.json); no gate test holds A1’s figure. Which part a night is read at no longer decides A1, and stays the owner’s to change / owner decision
+- **`F2-A`** (Criteria: The Attributes): It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again
 - **`A4`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`A5`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`T1`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`O3`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`F1`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`F3`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
+- **`MA5`** (Criteria: Mastery Through Play): It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again
+- **`INT-skipped`** (Integration): It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again
+- **`INT-navigation`** (Integration): It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again
+- **`INT-long-runs`** (Integration): It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again
+- **`INT-gate`** (Integration): It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again
 - **`KS-ct-idcard`** (Known Shortfalls And Missing Tests): The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)
 - **`KS-passport-fees`** (Known Shortfalls And Missing Tests): Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)
 

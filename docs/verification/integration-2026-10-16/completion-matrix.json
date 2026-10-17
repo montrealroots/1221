@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 535 of 599 rows in scope Implemented And Verified (89.3%); 53 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 534 of 599 rows in scope Implemented And Verified (89.1%); 54 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -5717,10 +5717,10 @@
    "source": "audit",
    "goal": "Take a leave of absence, call it off, appeal one the dean imposed, come back from it, or withdraw | Register (StudyPlanPanels.tsx:110) sends school.reregister when mustRegister is set (back from a leave, or a term begun under a financial hold). A hold refuses it. Otherwise it deletes mustRegister and sets registeredAt, so registered() is true and classes and shifts count the student again.",
    "entry": "School, Standing And Craft: Register (StudyPlanPanels.tsx:110) | guide: Drama School | StudyPlanPanels.tsx",
-   "preconditions": "At school; a leave asked with its kind, reason and terms, decided in five working days, called off while pending or before it begins; an appeal only of a leave the dean imposed, by its date; notice eight weeks before the return term, with a Yale Health physician’s clearance after a medical leave; Affiliate cover by its deadline on a personal leave; a withdrawal confirmed | refused where: You’re not at school.; You’re registered.; A financial hold stops registration: … is owed on your Yale account.",
+   "preconditions": "At school; a leave asked with its kind, reason and terms, decided in five working days, called off while pending or before it begins; an appeal only of a leave the dean imposed, by its date; notice eight weeks before the return term, with a Yale Health physician’s clearance after a medical leave; Affiliate cover by its deadline on a personal leave; a withdrawal confirmed | refused where: You’re not at school.; You’re on leave: you register for the term you come back to, when it begins.; You’re registered.; A financial hold stops registration: … is owed on your Yale account.",
    "reads": "mustRegister (set at a return, and at a term begun under a hold the term’s aid doesn’t clear, from 2026-10-16); a financial hold (accountOwed)",
    "decisions": "issued with no choice beyond the control",
-   "validation": "refusals: You’re not at school.; You’re registered.; A financial hold stops registration: … is owed on your Yale account. | costs: Granted, a leave begins that day or with the next term: courses in progress are withdrawn and taken again on return; coursework, castings and a Cabaret show end; aid stops and the term’s scholarship is returned on the rebate schedule; Yale Health ends, a medical leave keeping Affiliate cover. Back and registered, the program picks up where it left off (SchoolRecord.offset); no notice, and the leave ends in dismissal. An appeal upheld leaves it standing; rescinded, the term’s courses are restored. Withdrawn, the place is given up that day, and by the fifteenth day of classes the term’s Hospitalization premium comes back",
+   "validation": "refusals: You’re not at school.; You’re on leave: you register for the term you come back to, when it begins.; You’re registered.; A financial hold stops registration: … is owed on your Yale account. | costs: Granted, a leave begins that day or with the next term: courses in progress are withdrawn and taken again on return; coursework, castings and a Cabaret show end; aid stops and the term’s scholarship is returned on the rebate schedule; Yale Health ends, a medical leave keeping Affiliate cover. Back and registered, the program picks up where it left off (SchoolRecord.offset); no notice, and the leave ends in dismissal. An appeal upheld leaves it standing; rescinded, the term’s courses are restored. Withdrawn, the place is given up that day, and by the fifteenth day of classes the term’s Hospitalization premium comes back",
    "changes": "deletes mustRegister; registeredAt (leave.ts:1164). Until 2026-10-13 this cited leave.ts:1124",
    "later": "Not recorded",
    "systems": "registered(), which classes and shifts read | academicTerm, which the curriculum reads (systems/school.ts); registered, which classes and shifts read (systems/school.ts); coverOn and repriceCare (systems/health.ts); the F-1 record and the US status (systems/permission.ts)",
@@ -8872,9 +8872,9 @@
    "implementation": "Not recorded",
    "evidence": "Existing verified rows' tests (documents.us_status, documents.permission, documents.opt_week); tests/remaining-papers.test.ts: the F-1 read by the DMV and the SSA in the inventory journey",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "verified as it stands",
-   "missing": "the area called it verified as it stands and cites no gate test that holds it"
+   "override": "Brief 11, the journeys area (docs/verification/completion-2026-10-16/journeys-result.json): Each part read in its test and the files run: the F-1 drawn at creation to the program’s end and sixty days; the clock’s look at the program’s end and the grace’s, out of status at its end, a pending OPT holding it; fifteen days after a withdrawal, none after a dismissal; its readers (the School’s leave, OPT, the Social Security office, the DMV, the 1040-NR); a passport reported lost leaving it in force. Added: a played student whose passport runs out in June 2028 keeps her F-1 and status (tests/remaining-papers.test.ts); a status look made to read the passport fails it."
   },
   {
    "id": "tax.s8.ssn",
@@ -8896,9 +8896,9 @@
    "implementation": "Not recorded",
    "evidence": "tests/scope-taxpapers.test.ts documents.apply_ssn journeys; tests/evidence-g17-papers.test.ts; GUARD tests in tests/remaining-tax.test.ts",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "verified as it stands",
-   "missing": "the area called it verified as it stands and cites no gate test that holds it"
+   "override": "Brief 11, the journeys area (docs/verification/completion-2026-10-16/journeys-result.json): Each part read in its test and the files run: refused until she registers and in each of its other words; Apply pressed on Papers, an hour at the office, the card 21 days on, Held once it comes, across a reload; read by the bank’s channel, the DMV, the W-7 on a 1040-NR, the IRS’s payment plan and Discover. A lost card isn’t modeled because nothing reads the card, only the number’s status. The registration check broken in a copy is caught."
   },
   {
    "id": "tax.s8.opt",
@@ -8920,9 +8920,9 @@
    "implementation": "Not recorded",
    "evidence": "Existing verified rows' tests; tests/remaining-papers.test.ts GUARD for the EAD at the DMV",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "verified as it stands",
-   "missing": "the area called it verified as it stands and cites no gate test that holds it"
+   "override": "Brief 11, the journeys area (docs/verification/completion-2026-10-16/journeys-result.json): Each part read in its test and the files run: the window from 90 days before the program’s end to 60 after, refused outside it; $470, or $2,250 with premium processing decided in thirty business days; decided 90 days on, twelve months from the later of the program’s end and the approval; ended on the 91st day without work with no grace; a pending application holding the status; the EAD read at the DMV. Played to the degree and applied for on Home. The ninety days broken in a copy are caught."
   },
   {
    "id": "tax.s8.license",
@@ -8944,9 +8944,9 @@
    "implementation": "Not recorded",
    "evidence": "Existing verified rows' tests (documents.replace_license, documents.report_lost)",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "verified as it stands",
-   "missing": "the area called it verified as it stands and cites no gate test that holds it"
+   "override": "Brief 11, the journeys area (docs/verification/completion-2026-10-16/journeys-result.json): Each part read in its test and the files run: drawn at creation from the birth state; read as photo ID by a new bank and by the DMV (“You hold a license here.”); lost, reported, a police report, replaced by mail or in person; run out in June 2028 with no renewal, its row saying a passport or an ID card replaces it, the bank refusing and the ID card taking its place. A license read past its date in a copy is caught."
   },
   {
    "id": "tax.s8.visas_authorizations",
@@ -8968,9 +8968,9 @@
    "implementation": "Not recorded",
    "evidence": "tests/defects-g25-1.test.ts (FIXTURE: an authorization held from before, a reading)",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "verified as it stands",
-   "missing": "the area called it verified as it stands and cites no gate test that holds it"
+   "override": "Brief 11, the journeys area (docs/verification/completion-2026-10-16/journeys-result.json): Each part read in its test and the files run: no command applies for either since 2026-10-09; one pending in an older save is decided, and one held is shown as a reading; Going Abroad says the country would let you in, not that you may go. Added: a guard that Going Abroad says nothing is applied for there, and that only the screens read mayEnter; an engine reader added or the sentence removed in a copy fails it."
   },
   {
    "id": "tax.s8.residence_naturalization",
@@ -9740,7 +9740,7 @@
    "sourceStatus": "implemented",
    "status": "Implemented And Verified",
    "disposition": "implemented",
-   "override": "The pipeline run in a copy makes the committed audit byte for byte, and every test remaining-09’s fold records add reaches the row it names (brief 11)"
+   "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The pipeline’s five writing steps run in the README’s order in a temporary copy of the folders they read, their output compared with the committed files"
   },
   {
    "id": "coverage09.5-journeys-fold",
@@ -9764,7 +9764,7 @@
    "sourceStatus": "implemented",
    "status": "Implemented And Verified",
    "disposition": "implemented",
-   "override": "Each test mapped by itself (byTest) reaches the rows its own map names and no other, a row already citing it not given it twice (brief 11)"
+   "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): As coverage09.4, then each byTest entry’s rows read from the copy’s audit. Five rows its map names don’t get the test under its round, and each already cites it in its own text or an earlier round, which the fold’s README says isn’t added again: school.pay_balance, school.reregister, life.day_rollover, documents.settle and c-performerTitle"
   },
   {
    "id": "coverage09.6-journeys-followup-fold",
@@ -9788,7 +9788,7 @@
    "sourceStatus": "implemented",
    "status": "Implemented And Verified",
    "disposition": "implemented",
-   "override": "Each field an area added to and each deferred row’s settled is placed in its row once, put back byte for byte when taken out of the fold’s own last output; tools/coverage.mjs --check holds each cited title (brief 11)"
+   "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The fold reads its own last output (doc-fields.json) as the field it adds to, so an add once placed stays placed whatever the script does: the test takes the eight out of a second copy’s doc-fields.json, runs the pipeline, and requires the committed files back byte for byte with each in its row once"
   },
   {
    "id": "genres.1-count",
@@ -10180,7 +10180,7 @@
    "sourceStatus": "verified as it stands",
    "status": "Implemented And Verified",
    "disposition": "verified as it stands",
-   "override": "Each of the 41 kept genres’ parts the same and the parts that differ, and what carries each of its sides, read against tools/genre-pairs.ts as the engine stands (brief 11)"
+   "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): Each row of the table parsed and read against tools/genre-pairs.ts (pairOf, betterSides) on the current engine: the parts the same, the parts that differ for a kept genre, each axis’s side and whether the register decides it (either brief’s side moves with the register’s concerns set aside) or the scenes agree without it. All 55 held on the first run, so no document correction was needed; the register decides 29 axes across 22 kept genres, as the document says"
   },
   {
    "id": "genres.5-saves",
@@ -10227,7 +10227,7 @@
    "sourceStatus": "implemented",
    "status": "Implemented And Verified",
    "disposition": "implemented",
-   "override": "The per-genre table holds the 55 and no other, each row’s after read against the engine as it stands (brief 11)"
+   "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): As genres.4-kept"
   },
   {
    "id": "genres.7-measured",
@@ -13699,14 +13699,15 @@
    "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894; brief 09 (bcd75970): 40 of 40 advice cases: the first named input the best to raise; brief 10 (57b64401): 40 of 40 advice cases: the first named input the best to raise",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "40 of 40; the exact best in 38",
    "after": "40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894",
    "sourceStatus": "Met",
    "measured": {
     "commit": "57b64401",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14132,14 +14133,15 @@
    "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0; brief 09 (bcd75970): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-25, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 10 (57b64401): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-28, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "all six plans (journeys-2026-10-16)",
    "after": "all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0",
    "sourceStatus": "Met",
    "measured": {
     "commit": "57b64401",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14434,12 +14436,13 @@
    "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
    "implementation": "src/engine, src/ui",
    "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "Met",
    "measured": {
     "commit": "9c40be73",
     "watch": "app"
-   }
+   },
+   "missing": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14460,12 +14463,13 @@
    "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
    "implementation": "src/engine, src/ui",
    "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "Met",
    "measured": {
     "commit": "9c40be73",
     "watch": "app"
-   }
+   },
+   "missing": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14486,12 +14490,13 @@
    "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 10 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 4 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14; brief 10 (57b64401): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14",
    "implementation": "src/engine, src/ui",
    "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "Met",
    "measured": {
     "commit": "57b64401",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14512,12 +14517,13 @@
    "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again; brief 09 (7c1198a2): npm run gate on 7c1198a2: 368 of 368 files, 4401 of 4401 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 10 (d9b631ba): npm run gate on d9b631ba: 375 of 375 files, 4479 of 4479 tests passed, none skipped, exit=0, the last check, the completion matrix, holding",
    "implementation": "src/engine, src/ui",
    "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "Met",
    "measured": {
     "commit": "d9b631ba",
     "watch": "app"
-   }
+   },
+   "missing": "It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",

@@ -16,8 +16,12 @@ kept verbatim) is being worked on `claude/peaceful-hamilton-59zdbb`, restarted f
   - **9 administrative**: ST3, H4 and L3 as written, superseded; two duplicates; four records of a process step.
 - **The administrative reconciliations are in the matrix:** the 9 are Explicitly Deferred by `criteria.py`'s brief 11
   overrides, each with its reason. They are not progress, so the matrix's denominator fell to 599 and no row was closed by them.
-- **Two defects are added work:** a credit that clears a held Yale account leaves the hold, and
-  `tests/personality.test.ts`'s year on autopilot ends 16 days in.
+- **Three defects are fixed, as added work** (`journeys-result.json`):
+  - **A credit that cleared a held Yale account left the hold.** `creditAccount` now reconciles through `liftHold`, and
+    an older save's hold over nothing owed is lifted on opening (`holdsOverNothing`).
+  - **`tests/personality.test.ts`'s year on autopilot** had a case whose lives mortality ended 11 days in, on
+    16 January 2026. Each year now runs 365 days, alive on every day it reads.
+  - **Registering on a leave,** found on the way, is refused for the term the leave left.
 - **Five areas are working in clones** (`…/scratchpad/<area>11`, branch `<area>11`) from instructions written before
   their work (`completion-2026-10-16/prompts/`): journeys (the two defects, health.enroll, l-actor, the five tax.s8
   items), research (the Connecticut ID card, passport fees abroad), attributes (A4, A5, T1, O3, F1, F3, A1, stamina.A1,
@@ -27,10 +31,15 @@ kept verbatim) is being worked on `claude/peaceful-hamilton-59zdbb`, restarted f
 - **The matrix** may now carry an area item's measurement through an override (`measured`), held current as a
   criterion's is.
 
-**Completion, by the matrix:** 535 of 599 rows in scope Implemented And Verified (89.3%); 53 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 534 of 599 rows in scope Implemented And Verified (89.1%); 54 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.
 
-Against the frozen baseline's 608: 535 (87.9%). Five were closed by this pass's work: coverage09.4 to 09.6, by
-`tests/audit-pipeline.test.ts`, and genres.4 and 6, by `tests/remaining-genres.test.ts` (`integration-result.json`).
+Against the frozen baseline's 608, the figure is 534 (87.8%), and 10 of the 46 actionable rows are closed by this pass's work:
+- coverage09.4 to 09.6, genres.4 and genres.6 (`integration-result.json`);
+- the five tax.s8 items (`journeys-result.json`).
+
+The engine change behind the Yale fix left six measured rows stale: F2-A, MA5, INT-skipped, INT-navigation, INT-long-runs
+and INT-gate. They're measured again on the final commit. health.enroll and l-actor wait on a second reader's check
+before the audit moves them. `RECEIPT.md`, by `receipt.py`, has every row.
 
 # Brief 10: The Approved Decisions, 2026-10-16
 

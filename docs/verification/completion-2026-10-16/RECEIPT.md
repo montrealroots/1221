@@ -2,27 +2,32 @@
 
 Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0e7ff7c2`) and the matrix as it stands. Nothing here is typed.
 
-- **Against the original full baseline:** 535 of 608 (87.9%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
-- **Of the actionable portion:** 5 of 46 (10.8%) closed by implementation or verification.
-- **The matrix’s own count:** 535 of 599 rows in scope Implemented And Verified (89.3%); 53 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
+- **Against the original full baseline:** 534 of 608 (87.8%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
+- **Of the actionable portion:** 10 of 46 (21.7%) closed by implementation or verification.
+- **The matrix’s own count:** 534 of 599 rows in scope Implemented And Verified (89.1%); 54 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
 - **Not complete:** decision 4’s rows stay as authorized, and every remaining row is listed below with what it lacks.
 
 ## Status Now, Of The Baseline’s Rows
 
 | Status | At The Baseline | Now |
 |---|---|---|
-| Implemented And Verified | 530 | 535 |
-| Implemented, Verification Incomplete | 63 | 53 |
+| Implemented And Verified | 530 | 534 |
+| Implemented, Verification Incomplete | 63 | 54 |
 | Partially Implemented | 0 | 0 |
 | Not Implemented | 4 | 0 |
 | Blocked Externally | 0 | 0 |
 | Decision Required | 11 | 11 |
 | Explicitly Deferred | 27 | 36 |
 
-## Closed By Implementation Or Verification (5)
+## Closed By Implementation Or Verification (10)
 
 | Row | Group | At The Baseline |
 |---|---|---|
+| `tax.s8.f1_status` | Remaining Area: tax | Implemented, Verification Incomplete |
+| `tax.s8.ssn` | Remaining Area: tax | Implemented, Verification Incomplete |
+| `tax.s8.opt` | Remaining Area: tax | Implemented, Verification Incomplete |
+| `tax.s8.license` | Remaining Area: tax | Implemented, Verification Incomplete |
+| `tax.s8.visas_authorizations` | Remaining Area: tax | Implemented, Verification Incomplete |
 | `coverage09.4-fold` | Brief 09 Area: coverage | Implemented, Verification Incomplete |
 | `coverage09.5-journeys-fold` | Brief 09 Area: coverage | Implemented, Verification Incomplete |
 | `coverage09.6-journeys-followup-fold` | Brief 09 Area: coverage | Implemented, Verification Incomplete |
@@ -43,17 +48,12 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 | `L3.asWritten` | Brief 10 Area: judge | superseded | Not Implemented | Explicitly Deferred |
 | `stamina.measure` | Brief 10 Area: stamina | historical-record | Implemented, Verification Incomplete | Explicitly Deferred |
 
-## Remaining In The Actionable Portion (41)
+## Remaining In The Actionable Portion (36)
 
 | Row | Group | Now | What It Lacks |
 |---|---|---|---|
 | `health.enroll` | Life, Health And Time | Implemented, Verification Incomplete | Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). / The duplicate-enrollment refusal 'You’re enrolled from …'  |
 | `l-actor` | Creation, Profile, Home And The Looks | Implemented, Verification Incomplete | None. The header (actor.tsx:1-4) said 'an interest' was among what it opens until the interests went on 2026-10-10; it now says so in the past tense. / None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the actor look. / no test reaches it |
-| `tax.s8.f1_status` | Remaining Area: tax | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it |
-| `tax.s8.ssn` | Remaining Area: tax | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it |
-| `tax.s8.opt` | Remaining Area: tax | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it |
-| `tax.s8.license` | Remaining Area: tax | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it |
-| `tax.s8.visas_authorizations` | Remaining Area: tax | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it |
 | `genres.7-measured` | Brief 09 Area: genres | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it / The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sid |
 | `judge.coverage-row` | Brief 09 Area: judge | Implemented, Verification Incomplete | the area called it corrected to 65, read from SCENES, with what 2026-10-16 added and cites no gate test that holds it |
 | `advice.harness` | Brief 10 Area: advice | Implemented, Verification Incomplete | the area called it implemented and cites no gate test that holds it / TEST SETUP: abilities, techniques and stamina’s fitness drawn within the band and set where each is kept; every calendar hour cleared and the student rested before every command, as F2-A’s set-up does; F2-A’s own adv-N set-up kept exactly as it was, including that it never set the four abilities kept in the craft (it wrote them  |
@@ -121,9 +121,14 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 
 None: the baseline wasn’t changed.
 
-## What The Receipt Found (0)
+## What The Receipt Found (6)
 
-Nothing: no baseline row is missing, decision 4’s rows are unchanged, no administrative row is counted verified, and no row verified at the baseline has fallen back.
+- F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure
+- MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure
+- INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): meas
+- INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): meas
+- INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure
+- INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): meas
 
 ## Every Baseline Row
 
@@ -526,11 +531,11 @@ Nothing: no baseline row is missing, decision 4’s rows are unchanged, no admin
 | `tax.s8.inventory` | Remaining Area: tax | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `tax.s8.passport` | Remaining Area: tax | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `tax.s8.idcard` | Remaining Area: tax | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `tax.s8.f1_status` | Remaining Area: tax | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
-| `tax.s8.ssn` | Remaining Area: tax | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
-| `tax.s8.opt` | Remaining Area: tax | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
-| `tax.s8.license` | Remaining Area: tax | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
-| `tax.s8.visas_authorizations` | Remaining Area: tax | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `tax.s8.f1_status` | Remaining Area: tax | verification | Implemented, Verification Incomplete | Implemented And Verified |
+| `tax.s8.ssn` | Remaining Area: tax | verification | Implemented, Verification Incomplete | Implemented And Verified |
+| `tax.s8.opt` | Remaining Area: tax | verification | Implemented, Verification Incomplete | Implemented And Verified |
+| `tax.s8.license` | Remaining Area: tax | verification | Implemented, Verification Incomplete | Implemented And Verified |
+| `tax.s8.visas_authorizations` | Remaining Area: tax | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `tax.s8.residence_naturalization` | Remaining Area: tax | duplicate | Implemented, Verification Incomplete | Explicitly Deferred |
 | `tax.s8.jurisdiction` | Remaining Area: tax | historical-record | Implemented, Verification Incomplete | Explicitly Deferred |
 | `banking.1.pro-rata` | Brief 09 Area: banking | verified at the baseline | Implemented And Verified | Implemented And Verified |
@@ -724,7 +729,7 @@ Nothing: no baseline row is missing, decision 4’s rows are unchanged, no admin
 | `H7` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `H4` | Criteria: The Attributes | deferred at the baseline | Explicitly Deferred | Explicitly Deferred |
 | `F2` | Criteria: The Attributes | deferred at the baseline | Explicitly Deferred | Explicitly Deferred |
-| `F2-A` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `F2-A` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
 | `G1` | Criteria: The Attributes | deferred at the baseline | Explicitly Deferred | Explicitly Deferred |
 | `A4` | Criteria: The Attributes | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
 | `A5` | Criteria: The Attributes | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
@@ -741,7 +746,7 @@ Nothing: no baseline row is missing, decision 4’s rows are unchanged, no admin
 | `MA4` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `MA6` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `MA7` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `MA5` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `MA5` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
 | `MA8` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `S1` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `S2` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented And Verified |
@@ -753,10 +758,10 @@ Nothing: no baseline row is missing, decision 4’s rows are unchanged, no admin
 | `INT-duplicates` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `INT-migration` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `INT-missed-term` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `INT-skipped` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `INT-navigation` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `INT-long-runs` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `INT-gate` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `INT-skipped` | Integration | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
+| `INT-navigation` | Integration | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
+| `INT-long-runs` | Integration | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
+| `INT-gate` | Integration | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
 | `KS-matrix-gate` | Known Shortfalls And Missing Tests | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `KS-degree-text` | Known Shortfalls And Missing Tests | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `KS-genres-54` | Known Shortfalls And Missing Tests | verified at the baseline | Implemented And Verified | Implemented And Verified |

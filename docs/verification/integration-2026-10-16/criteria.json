@@ -2857,7 +2857,7 @@
   {
    "id": "coverage09.4-fold",
    "status": "Implemented And Verified",
-   "why": "The pipeline run in a copy makes the committed audit byte for byte, and every test remaining-09’s fold records add reaches the row it names (brief 11)",
+   "why": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The pipeline’s five writing steps run in the README’s order in a temporary copy of the folders they read, their output compared with the committed files",
    "citations": [
     {
      "file": "tests/audit-pipeline.test.ts",
@@ -2872,12 +2872,8 @@
   {
    "id": "coverage09.5-journeys-fold",
    "status": "Implemented And Verified",
-   "why": "Each test mapped by itself (byTest) reaches the rows its own map names and no other, a row already citing it not given it twice (brief 11)",
+   "why": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): As coverage09.4, then each byTest entry’s rows read from the copy’s audit. Five rows its map names don’t get the test under its round, and each already cites it in its own text or an earlier round, which the fold’s README says isn’t added again: school.pay_balance, school.reregister, life.day_rollover, documents.settle and c-performerTitle",
    "citations": [
-    {
-     "file": "tests/audit-pipeline.test.ts",
-     "title": "the audit pipeline, run in a copy > GUARD: makes the committed audit and the merge’s inputs, byte for byte"
-    },
     {
      "file": "tests/audit-pipeline.test.ts",
      "title": "the audit pipeline, run in a copy > GUARD: coverage09.5, a test mapped by itself reaches the rows its own map names and no other"
@@ -2887,7 +2883,7 @@
   {
    "id": "coverage09.6-journeys-followup-fold",
    "status": "Implemented And Verified",
-   "why": "Each field an area added to and each deferred row’s settled is placed in its row once, put back byte for byte when taken out of the fold’s own last output; tools/coverage.mjs --check holds each cited title (brief 11)",
+   "why": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The fold reads its own last output (doc-fields.json) as the field it adds to, so an add once placed stays placed whatever the script does: the test takes the eight out of a second copy’s doc-fields.json, runs the pipeline, and requires the committed files back byte for byte with each in its row once",
    "citations": [
     {
      "file": "tests/audit-pipeline.test.ts",
@@ -2901,7 +2897,7 @@
   {
    "id": "genres.4-kept",
    "status": "Implemented And Verified",
-   "why": "Each of the 41 kept genres’ parts the same and the parts that differ, and what carries each of its sides, read against tools/genre-pairs.ts as the engine stands (brief 11)",
+   "why": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): Each row of the table parsed and read against tools/genre-pairs.ts (pairOf, betterSides) on the current engine: the parts the same, the parts that differ for a kept genre, each axis’s side and whether the register decides it (either brief’s side moves with the register’s concerns set aside) or the scenes agree without it. All 55 held on the first run, so no document correction was needed; the register decides 29 axes across 22 kept genres, as the document says",
    "citations": [
     {
      "file": "tests/remaining-genres.test.ts",
@@ -2920,7 +2916,7 @@
   {
    "id": "genres.6-table",
    "status": "Implemented And Verified",
-   "why": "The per-genre table holds the 55 and no other, each row’s after read against the engine as it stands (brief 11)",
+   "why": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): As genres.4-kept",
    "citations": [
     {
      "file": "tests/remaining-genres.test.ts",
@@ -2929,6 +2925,245 @@
     {
      "file": "tests/remaining-genres.test.ts",
      "title": "genres-09.md’s table of the 55, against the code > GUARD: says each genre’s two briefs are the same in the parts the engine reads now, and a kept one differs in the rest"
+    }
+   ]
+  },
+  {
+   "id": "tax.s8.f1_status",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the journeys area (docs/verification/completion-2026-10-16/journeys-result.json): Each part read in its test and the files run: the F-1 drawn at creation to the program’s end and sixty days; the clock’s look at the program’s end and the grace’s, out of status at its end, a pending OPT holding it; fifteen days after a withdrawal, none after a dismissal; its readers (the School’s leave, OPT, the Social Security office, the DMV, the 1040-NR); a passport reported lost leaving it in force. Added: a played student whose passport runs out in June 2028 keeps her F-1 and status (tests/remaining-papers.test.ts); a status look made to read the passport fails it.",
+   "citations": [
+    {
+     "file": "tests/evidence-g27-ui.test.ts",
+     "title": "c-birthplace > PLAYER JOURNEY: gives a license from the birth state, California not Connecticut, and a Tokyo-born student a Japanese passport and an F-1 to 30 July 2029"
+    },
+    {
+     "file": "tests/documents.test.ts",
+     "title": "the papers a life begins with > give a student from abroad their passport and an F-1 visa to the degree and its grace, which lets them back into the US"
+    },
+    {
+     "file": "tests/evidence3-home.test.ts",
+     "title": "the graduate, played > n-decision-us-status: PLAYER JOURNEY: the played graduate’s F-1 is looked at by the clock on 31 May 2029, due 30 July; Apply For OPT pressed on Home on 1 June pays $470 and leaves a permit pending ninety days, to 30 August, which holds her status past 30 July and is approved for twelve months, across a reload"
+    },
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.us_status > the degree: the look armed when the life was made asks “Your US Status Is Ending” on the program’s end, due sixty days on with OPT both ways; out of status the day it falls due, where a twin that presses Apply For OPT keeps hers"
+    },
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.us_status > PLAYER JOURNEY: withdrawn on 1 February 2027, an F-1 student keeps fifteen days’ status by the School’s own reschedule; on the sixteenth she is out of status, her F-1 canceled, told once, and refused the marketplace, an ID card and unemployment"
+    },
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.us_status > PLAYER JOURNEY: a student who lets her classes go is dismissed, and is out of status the same hour, with no grace"
+    },
+    {
+     "file": "tests/evidence2-b12.test.ts",
+     "title": "n-decision-us-status > PLAYER JOURNEY: an F-1 who withdraws on 1 September 2026 is raised “Your US Status Is Ending” a minute on, due the sixteenth, with nothing to apply for; Home shows it without a button; it lapses with her status, across a reload"
+    },
+    {
+     "file": "tests/evidence-g25-school.test.ts",
+     "title": "school.request_leave > an F-1 student’s personal leave is refused through the command, in its words, and nothing is asked"
+    },
+    {
+     "file": "tests/leave.test.ts",
+     "title": "a personal leave > is refused for a professional commitment, and refused to an F-1 student with why; a medical leave extends the I-20"
+    },
+    {
+     "file": "tests/remaining-tax.test.ts",
+     "title": "tax.other_refusals > GUARD: the Social Security office’s four its panel never sends: a citizen, an application on its way, a card come, and someone not on an F-1"
+    },
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.idcard_arrives > PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes ten business days after applying, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport"
+    },
+    {
+     "file": "tests/federal-tax-years.test.ts",
+     "title": "a played student’s returns on the year’s table > PLAYER JOURNEY: born in London, on an F-1, her 2026 1040-NR takes back 2026’s deduction and taxes the $1,656 of work-study at 10% from the first dollar, $165.60"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.inventory > PLAYER JOURNEY: a London-born student’s papers are her passport and her F-1; the Social Security office, a new bank and the DMV each read the passport, and each says why once it’s reported lost"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.report_lost > refuses a British student’s F-1 in its words, which holds; her passport reported lost leaves the F-1 in force"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.f1_status > PLAYER JOURNEY: a London-born student who keeps up, her British passport run out on 14 June 2028, mid-program, keeps her F-1 and her status: the F-1 in force to 30 July 2029, no ending raised, the status looked at on the program’s end, 31 May 2029, her standing good, across a reload; the passport alone is out of force, and a new bank turns her away for it"
+    }
+   ]
+  },
+  {
+   "id": "tax.s8.ssn",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the journeys area (docs/verification/completion-2026-10-16/journeys-result.json): Each part read in its test and the files run: refused until she registers and in each of its other words; Apply pressed on Papers, an hour at the office, the card 21 days on, Held once it comes, across a reload; read by the bank’s channel, the DMV, the W-7 on a 1040-NR, the IRS’s payment plan and Discover. A lost card isn’t modeled because nothing reads the card, only the number’s status. The registration check broken in a copy is caught.",
+   "citations": [
+    {
+     "file": "tests/evidence-g17-papers.test.ts",
+     "title": "documents.apply_ssn > PLAYER JOURNEY: Papers’ Social Security Number panel says Not yet with the button refused until she registers; pressed, an hour at the office and the card 21 days on, the panel saying so and the button gone; Held once it comes, across a reload"
+    },
+    {
+     "file": "tests/remaining-tax.test.ts",
+     "title": "tax.other_refusals > GUARD: the Social Security office’s four its panel never sends: a citizen, an application on its way, a card come, and someone not on an F-1"
+    },
+    {
+     "file": "tests/evidence-g17-papers.test.ts",
+     "title": "documents.apply_ssn > refuses in its words a Call within the hour, a hospital bed and a passport reported lost, the clock and her number left as they were; and a citizen, who holds one"
+    },
+    {
+     "file": "tests/evidence3-lifepapers.test.ts",
+     "title": "documents.apply_ssn, from a hospital bed the week drew (round three) > PLAYER JOURNEY: the F-1 admitted by her first health week (TEST SETUP: the draw forced to a stay) is refused “Not from a hospital bed.” where her twin, that evening, is sent to the office; discharged, she applies"
+    },
+    {
+     "file": "tests/evidence-g17-papers.test.ts",
+     "title": "documents.apply_ssn > the bank’s channel: before the card, Wells Fargo opens her account only in a branch, an hour there; once it has come, online, with no hour"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_idcard > PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days from Monday 19 October to Monday 2 November 2026, and runs to the program’s end, 31 May 2029"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "documents.apply_ssn on a London-born student > PLAYER JOURNEY: her 1040-NR’s $329.56 back, from the 14% withheld on her scholarship, comes in the IRS’s 21 days with the card in hand; without it the W-7 holds it seven weeks more, 70 days"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "documents.apply_ssn on a London-born student > PLAYER JOURNEY: the IRS’s plan on the Wealthy family’s 1040-NR, $165.60 owed with her money in a CD: with the card come, applied for online on Papers and answered in a minute; without it, Form 9465 and 30 days"
+    },
+    {
+     "file": "tests/evidence2-b06.test.ts",
+     "title": "documents.apply_ssn > Discover reads the number: with it and a month’s wages past $25,000 a year it lends $2,500 over 36 months at $78.33; her twin without it is refused for want of it; no played life’s wages reach that line"
+    }
+   ]
+  },
+  {
+   "id": "tax.s8.opt",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the journeys area (docs/verification/completion-2026-10-16/journeys-result.json): Each part read in its test and the files run: the window from 90 days before the program’s end to 60 after, refused outside it; $470, or $2,250 with premium processing decided in thirty business days; decided 90 days on, twelve months from the later of the program’s end and the approval; ended on the 91st day without work with no grace; a pending application holding the status; the EAD read at the DMV. Played to the degree and applied for on Home. The ninety days broken in a copy are caught.",
+   "citations": [
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.permission > PLAYER JOURNEY: Apply For OPT on Papers, refused before its window in its words, applied on 5 March 2029 for $470, decided 90 days on, valid twelve calendar months, said with both dates; status held past the degree’s sixty days; ended by its ninety days without work"
+    },
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.permission > is refused in its words to a citizen, to a student who withdrew, to a life never on an F-1, and once its window has closed"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_opt > PLAYER JOURNEY: applied for 40 days into the grace, $470 leaves the bank, the pending application holds her status past the grace’s end, OPT runs a year from its approval 90 days on, and ends on its 91st day without work"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_opt > PLAYER JOURNEY: the status’s ending, raised by the clock on the program’s last day, offers OPT standard then premium; taking the first files OPT at $470 with no premium, and answers it"
+    },
+    {
+     "file": "tests/evidence2-b12.test.ts",
+     "title": "n-decision-us-status > Apply For OPT, Premium Processing pressed on Home on Friday 1 June 2029 pays $2,250, and is decided in thirty business days with Juneteenth and Independence Day not among them, on Tuesday 17 July"
+    },
+    {
+     "file": "tests/evidence2-b06.test.ts",
+     "title": "documents.permission > PLAYER JOURNEY: a student the clock graduates applies for OPT on Papers before Commencement; the degree moves the look at her status; decided 3 June, valid twelve calendar months, said with both dates; ended by ninety days without work"
+    },
+    {
+     "file": "tests/evidence3-home.test.ts",
+     "title": "the graduate, played > n-decision-us-status: PLAYER JOURNEY: the played graduate’s F-1 is looked at by the clock on 31 May 2029, due 30 July; Apply For OPT pressed on Home on 1 June pays $470 and leaves a permit pending ninety days, to 30 August, which holds her status past 30 July and is approved for twelve months, across a reload"
+    },
+    {
+     "file": "tests/permission.test.ts",
+     "title": "OPT > closes sixty days after the program ends"
+    },
+    {
+     "file": "tests/permission.test.ts",
+     "title": "OPT > ends after more than ninety days in all without work"
+    },
+    {
+     "file": "tests/permission.test.ts",
+     "title": "a graduate’s US status, and its end > holds while OPT runs and 60 days after it, and not at all after OPT ended for time without work"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard > GUARD: an Employment Authorization Document in force stands as the primary document without a passport (FIXTURE: an OPT permit put on by hand: no play brings OPT and a lost passport together before 2029)"
+    },
+    {
+     "file": "tests/defects-g24-1.test.ts",
+     "title": "PLAYER JOURNEY: Connecticut’s ID card for a graduate on OPT > is refused for lawful presence to somebody with neither an F-1 nor a permit, and issued on a permit alone"
+    }
+   ]
+  },
+  {
+   "id": "tax.s8.license",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the journeys area (docs/verification/completion-2026-10-16/journeys-result.json): Each part read in its test and the files run: drawn at creation from the birth state; read as photo ID by a new bank and by the DMV (“You hold a license here.”); lost, reported, a police report, replaced by mail or in person; run out in June 2028 with no renewal, its row saying a passport or an ID card replaces it, the bank refusing and the ID card taking its place. A license read past its date in a copy is caught.",
+   "citations": [
+    {
+     "file": "tests/evidence-g27-ui.test.ts",
+     "title": "c-birthplace > PLAYER JOURNEY: gives a license from the birth state, California not Connecticut, and a Tokyo-born student a Japanese passport and an F-1 to 30 July 2029"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.inventory > PLAYER JOURNEY: a New York-born student’s papers are her license alone: a new bank takes it until it runs out on 14 June 2028, and then turns her away, the state ID card on Papers the next step, which it then takes"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_idcard > refuses a Connecticut-born student holding a Connecticut license: “You hold a license here. It serves as your ID.”"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.replace_license > PLAYER JOURNEY: a Connecticut-born student’s only photo ID, her license, lost and replaced for $30 in 30 days, its term and REAL ID kept; Citi takes it once it has come, and the DMV then refuses her an ID card"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.replace_license > replaces a New Yorker’s license by mail (MV-44): lost, $17.50 leaves the bank; stolen with the police’s report, nothing does; each comes in 21 days"
+    },
+    {
+     "file": "tests/coverage-gaps-papers.test.ts",
+     "title": "a license from home, lost in New Haven (JOURNEY: a New Yorker at Yale) > is replaced by mail, free when stolen with the police’s report, and not where its issuer sends none out of state"
+    },
+    {
+     "file": "tests/defects3-50-70.test.ts",
+     "title": "documents.replace_license > PLAYER JOURNEY: a license reported lost in force is refused a replacement once a new card would come after its date, and once the date has passed, in words on Papers and through the command, with nothing charged; a twin who asks in time is sent one in force"
+    },
+    {
+     "file": "tests/evidence2-b05.test.ts",
+     "title": "documents.report_lost > PLAYER JOURNEY: the New York license issued 14 June 2020 has run out by 15 June 2028: its row reads Run Out with no Report Lost…, and with the passport reported lost Citi turns her away, where a day before the run-out it opened her twin’s account"
+    },
+    {
+     "file": "tests/remaining-09-journeys.test.ts",
+     "title": "journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, is in force at once, and the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out)"
+    }
+   ]
+  },
+  {
+   "id": "tax.s8.visas_authorizations",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the journeys area (docs/verification/completion-2026-10-16/journeys-result.json): Each part read in its test and the files run: no command applies for either since 2026-10-09; one pending in an older save is decided, and one held is shown as a reading; Going Abroad says the country would let you in, not that you may go. Added: a guard that Going Abroad says nothing is applied for there, and that only the screens read mayEnter; an engine reader added or the sentence removed in a copy fails it.",
+   "citations": [
+    {
+     "file": "tests/visas.test.ts",
+     "title": "a visitor visa > isn’t applied for since travel went, and one pending from before is still decided"
+    },
+    {
+     "file": "tests/visas.test.ts",
+     "title": "a visitor visa > is what the US asks of a Mexican, issued by its consulate, and a visa held lets them in"
+    },
+    {
+     "file": "tests/coverage-gaps-papers.test.ts",
+     "title": "compatibility paths (LEGACY STATE) > a visit booked before the travel went: kept, its document decided"
+    },
+    {
+     "file": "tests/defects-g25-1.test.ts",
+     "title": "FIXTURE: a travel authorization held from before 2026-10-09 > would let you into its country: a reading, not a door"
+    },
+    {
+     "file": "tests/defects-g25-1.test.ts",
+     "title": "FIXTURE: a travel authorization held from before 2026-10-09 > on Papers, Going Abroad says the country would let you in, not that you may go"
+    },
+    {
+     "file": "tests/defects-g25-1.test.ts",
+     "title": "FIXTURE: a travel authorization held from before 2026-10-09 > GUARD: Going Abroad says a visa or an authorization isn’t applied for here, and the rule it shows decides nothing: `mayEnter` is read by Papers and a document’s page alone, by no system of the engine (brief 11, tax.s8.visas_authorizations, 2026-10-17)"
     }
    ]
   }

@@ -14,13 +14,38 @@
    "Explicitly Deferred": 27
   }
  },
- "matrix": "Completion, by the matrix: 535 of 599 rows in scope Implemented And Verified (89.3%); 53 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.",
+ "matrix": "Completion, by the matrix: 534 of 599 rows in scope Implemented And Verified (89.1%); 54 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.",
  "completion": {
-  "againstTheFullBaseline": "535 of 608 (87.9%)",
-  "ofTheActionablePortion": "5 of 46 (10.8%)",
+  "againstTheFullBaseline": "534 of 608 (87.8%)",
+  "ofTheActionablePortion": "10 of 46 (21.7%)",
   "verifiedAtTheBaseline": 530
  },
  "closedByWork": [
+  {
+   "id": "tax.s8.f1_status",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.s8.ssn",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.s8.opt",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.s8.license",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "tax.s8.visas_authorizations",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete"
+  },
   {
    "id": "coverage09.4-fold",
    "group": "Brief 09 Area: coverage",
@@ -124,36 +149,6 @@
    "group": "Creation, Profile, Home And The Looks",
    "now": "Implemented, Verification Incomplete",
    "lacks": "None. The header (actor.tsx:1-4) said 'an interest' was among what it opens until the interests went on 2026-10-10; it now says so in the past tense. | None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the actor look. | no test reaches it"
-  },
-  {
-   "id": "tax.s8.f1_status",
-   "group": "Remaining Area: tax",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
-  },
-  {
-   "id": "tax.s8.ssn",
-   "group": "Remaining Area: tax",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
-  },
-  {
-   "id": "tax.s8.opt",
-   "group": "Remaining Area: tax",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
-  },
-  {
-   "id": "tax.s8.license",
-   "group": "Remaining Area: tax",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
-  },
-  {
-   "id": "tax.s8.visas_authorizations",
-   "group": "Remaining Area: tax",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
   },
   {
    "id": "genres.7-measured",
@@ -501,7 +496,14 @@
   }
  ],
  "addedRows": [],
- "problems": [],
+ "problems": [
+  "F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure",
+  "MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure",
+  "INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): meas",
+  "INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): meas",
+  "INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure",
+  "INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): meas"
+ ],
  "rows": [
   {
    "id": "life.sleep",
@@ -3317,40 +3319,35 @@
    "group": "Remaining Area: tax",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
+   "now": "Implemented And Verified"
   },
   {
    "id": "tax.s8.ssn",
    "group": "Remaining Area: tax",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
+   "now": "Implemented And Verified"
   },
   {
    "id": "tax.s8.opt",
    "group": "Remaining Area: tax",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
+   "now": "Implemented And Verified"
   },
   {
    "id": "tax.s8.license",
    "group": "Remaining Area: tax",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
+   "now": "Implemented And Verified"
   },
   {
    "id": "tax.s8.visas_authorizations",
    "group": "Remaining Area: tax",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
+   "now": "Implemented And Verified"
   },
   {
    "id": "tax.s8.residence_naturalization",
@@ -4770,7 +4767,8 @@
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified"
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again"
   },
   {
    "id": "G1",
@@ -4898,7 +4896,8 @@
    "group": "Criteria: Mastery Through Play",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified"
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again"
   },
   {
    "id": "MA8",
@@ -4982,28 +4981,32 @@
    "group": "Integration",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified"
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again"
   },
   {
    "id": "INT-navigation",
    "group": "Integration",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified"
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again"
   },
   {
    "id": "INT-long-runs",
    "group": "Integration",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified"
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again"
   },
   {
    "id": "INT-gate",
    "group": "Integration",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified"
+   "now": "Implemented, Verification Incomplete",
+   "lacks": "It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again"
   },
   {
    "id": "KS-matrix-gate",
