@@ -1,0 +1,518 @@
+{
+ "area": "research",
+ "commits": [
+  "28823855",
+  "c6f93061"
+ ],
+ "rows": [
+  {
+   "id": "KS-ct-idcard",
+   "group": "Known Shortfalls And Missing Tests",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Blocked Externally",
+   "notProved": "Whether a Connecticut ID card's term and its mailing were the DMV's: SLATE ran a card six years from the day ('SLATE's six' for the state's 'up to seven'), put a citizen's in force at the counter, and gave a non-citizen's on SAVE's tenth business day to the end of lawful presence, citing a dead page and CGS 14-36(c); the tax area's sources weren't conclusive (tax-result.json, tax.s8.idcard assumptions).",
+   "exercised": "Read the state's own pages and law on 2026-10-16 (docs/research/world/research-ct-idcard.json, every quote checked against the saved page text): CGS 1-1h(b)(2) (www.cga.ct.gov/current/pub/chap_001.htm), CGS 14-36d(c) (chap_246.htm), the DMV's Get a non-driver ID, Central Issuance, Get a driver's license (its non-US citizen requirements), Get a REAL ID, checklist DI-3 Rev. 6-2026, and Regs. Conn. State Agencies § 14-137-64a (eRegulations, amended 2008) with §§ 1-1h-4 to 1-1h-7 (the DMV's 2007 compilation). Set what they settle: the term to the first birthday at least seven years on (by New Haven's date), the card mailed within twenty business days for everyone (pending, not a photo ID until it comes), and for somebody not a citizen the mail after SAVE's ten days. Played through documents.apply_idcard on the drawn Papers screen and the command, with bank.open_current reading the card, idcard_arrives on its day, and save and load.",
+   "evidence": [
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard > FIXTURE: Connecticut’s card is the DMV’s: $28, seven years to a birthday, mailed within twenty business days, SAVE’s ten first for somebody not a citizen (CGS 1-1h(b)(2); portal.ct.gov, read 2026-10-16)",
+     "kind": "fixture",
+     "proves": "the figures as set: $28, 7 years to a birthday, 20 business days by mail; SAVE's 10"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard > GUARD: the card runs to the first birthday at least seven years on, by New Haven’s calendar: asked for the day before her birthday, seven years and a day; on it, seven years to the day; the day after, to the birthday eight years on",
+     "kind": "guard",
+     "proves": "idCardExpires: 13 June 2026 -> 14 June 2033; 14 June 2026 (noon and 11 PM) -> 14 June 2033; 15 June and 24 August 2026 -> 14 June 2034; New York's eight years from the day unchanged"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_idcard > PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card that comes by mail twenty business days on, Tuesday 22 September 2026, good to her birthday on 14 June 2034; Citi turns her away until it comes and then opens her account, across a save and a load",
+     "kind": "player journey",
+     "proves": "a citizen's card pending from Monday 24 August to Tuesday 22 September 2026 (Labor Day not counted), REAL ID, to 14 June 2034; Citi refuses while it's in the mail, before and after a reload, and opens once it has come; $28 once; 'Arrived' said once on its day"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_idcard > refuses a second card while one is on its way and once it has come, in its words, charges once, and holds it across a save and a load",
+     "kind": "player journey",
+     "proves": "'One is on its way.' while mailed, 'You hold one in force.' once come, each across a reload; charged once"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_idcard > on Passport And ID, Get Non-Driver Identification Card pressed says “$28.00; the card comes September 22, 2026; good until June 14, 2034”, lists the card Being Decided and then In Force, and is shut with the reason each time; a Connecticut license holder sees why it is shut",
+     "kind": "player journey",
+     "proves": "the drawn screen: the toast names the day it comes and its term; the row reads Being Decided, then In Force from 22 September 2026 to 14 June 2034"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_idcard > PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days from Monday 19 October to Monday 2 November 2026, then comes by mail twenty business days on, Wednesday 2 December, and runs to the program’s end, 31 May 2029",
+     "kind": "player journey",
+     "proves": "a non-citizen's card still pending past SAVE's approval (2 November), arriving 2 December (Veterans Day and Thanksgiving not counted), across a reload, once"
+    },
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.idcard_arrives > PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes by mail twenty business days after SAVE’s ten, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport",
+     "kind": "player journey",
+     "proves": "asked 29 September 9 PM: pending past SAVE's 14 October, arrives 44 days on to the hour (12 November), said once, then Wells Fargo takes it"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard > PLAYER JOURNEY: her number come and her passport reported lost, Get Non-Driver Identification Card is shut with the DMV’s reason and the command refused, nothing taken; her passport renewed from abroad, the card is asked for, comes by mail twenty business days after SAVE’s ten federal workdays, and is Not For Federal Identification, across a reload; until 2026-10-16 it was issued with no identity document, marked REAL ID, and until 2026-10-17 it came on SAVE’s tenth day",
+     "kind": "player journey",
+     "proves": "asked Sunday 11 October 2026: the toast 'the card comes November 24, 2026; good until May 31, 2029'; readyAt 24 November (SAVE to 26 October, Columbus Day out; mail, Veterans Day out); not REAL ID"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.inventory > PLAYER JOURNEY: a New York-born student’s papers are her license alone: a new bank takes it until it runs out on 14 June 2028, and then turns her away, the state ID card on Papers the next step, which it then takes",
+     "kind": "player journey",
+     "proves": "asked on her birthday: 'the card comes July 14, 2028; good until June 14, 2035' (Juneteenth and the Fourth out); no photo ID and Wells Fargo refusing while it's in the mail; REAL ID and the photo ID once come"
+    },
+    {
+     "file": "tests/remaining-09-journeys.test.ts",
+     "title": "journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, comes by mail on 19 July, the bank refusing her until it does, and then the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out; until 2026-10-17 the card was in force at once)",
+     "kind": "player journey",
+     "proves": "applied 20 June 2028: comes 19 July, Citi refusing meanwhile; runs to 14 June 2036; the bank opens once it has come, through a reload"
+    },
+    {
+     "file": "tests/defects3-50-70.test.ts",
+     "title": "documents.apply_idcard > PLAYER JOURNEY: an F-1 student’s limited-term card applied for at noon on Thursday 5 November 2026 is approved by SAVE ten federal workdays on, Friday the 20th, Veterans Day not among them, and comes by mail twenty business days later, Monday 21 December, Thanksgiving not among them",
+     "kind": "player journey",
+     "proves": "pending on 20 November 1 PM, arrives 21 December noon, said then"
+    },
+    {
+     "file": "tests/defects3-50-70.test.ts",
+     "title": "documents.apply_idcard > PLAYER JOURNEY: the card applied for at 9 PM on Wednesday 4 November, 2 AM on the Thursday in UTC, is approved by SAVE at 9 PM on Thursday the 19th and comes at 9 PM on Friday 18 December, its days counted as New Haven has them",
+     "kind": "player journey",
+     "proves": "the thirty working days counted in New Haven's days (UTC's would end on Sunday 20 December)"
+    },
+    {
+     "file": "tests/defects-g24-1.test.ts",
+     "title": "PLAYER JOURNEY: Connecticut’s ID card for a graduate on OPT > is issued on OPT in force, and runs to OPT’s end, not the program’s",
+     "kind": "player journey",
+     "proves": "on OPT: SAVE to 27 November, then the mail to 28 December, 46 days on"
+    },
+    {
+     "file": "tests/papers-transitions.test.ts",
+     "title": "PLAYER JOURNEY: a Connecticut ID card on an F-1 > waits for the Social Security number, then for SAVE’s ten business days and the mail’s twenty, and runs only to the end of the program",
+     "kind": "player journey",
+     "proves": "pending 15 days on (SAVE done, mail not), in force 30 days later"
+    },
+    {
+     "file": "tests/defects-g27-1.test.ts",
+     "title": "documents-tutorial-chapter-stale: what Report Lost takes > takes a passport, a license, an international driving permit and an ID card, and refuses an F-1",
+     "kind": "player journey",
+     "proves": "a card got by mail is reported lost (rewritten: until 2026-10-17 over the counter)"
+    },
+    {
+     "file": "tests/guide-examples-papers.test.ts",
+     "title": "the guide’s worked examples for Papers, played on throwaway saves > documents.passport-id: a stolen ID card reported and replaced, and the photo ID that stands meanwhile",
+     "kind": "player journey",
+     "proves": "the guide's example played with the card come by mail before it's stolen"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.replace_idcard > PLAYER JOURNEY: a stolen card replaced for $30 with a new number; Citi turns her away while it’s on its way, 30 days, and takes it once it has come, across a save and a load",
+     "kind": "player journey",
+     "proves": "the replacement on a card come by mail: 30 days from the day it's replaced, its term kept (14 June 2034)"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.replace_idcard > on Passport And ID, a lost card’s row offers File A Police Report and Replace It, $30; pressed, it says the day it comes, and the row then reads Being Decided",
+     "kind": "player journey",
+     "proves": "the lost card's row reads September 22, 2026 to June 14, 2034; Replace It says October 22, 2026"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A citizen's Connecticut card mailed, pending twenty business days, not a photo ID until it comes (was in force at the counter); a non-citizen's mailed after SAVE (came on SAVE's day). The paper credential given meanwhile 'won't [be accepted] as a standalone document' where IDs are asked (Central Issuance).",
+     "where": "src/engine/content/identity.ts ID_CARDS['us-ct'].mailedBusinessDays; src/engine/systems/identity.ts documents.apply_idcard; src/ui/papers/Documents.tsx IdPanel toast",
+     "failingTest": "tests/evidence-g15-papers.test.ts 'documents.apply_idcard > PLAYER JOURNEY: every other photo ID lost, ... until it comes and then opens her account, across a save and a load' (and mutations M1, M5, M7, M9)"
+    },
+    {
+     "summary": "The term: seven years to the first birthday at least seven years on, compared by New Haven's calendar (was six years from the day). Found on the way: compared by instant, a card asked for on a birthday an hour after the birth-time anniversary ran eight years; fixed before commit.",
+     "where": "src/engine/systems/identity.ts idCardExpires; src/engine/content/identity.ts ID_CARDS['us-ct'] years 7, toBirthday",
+     "failingTest": "tests/remaining-papers.test.ts 'tax.s8.idcard > GUARD: the card runs to the first birthday at least seven years on, by New Haven’s calendar: ...' and the New York-born journey (mutations M2, M3, M4)"
+    },
+    {
+     "summary": "NONCITIZEN_ID's sources: the dead digital.ct.gov page (ENOTFOUND) and CGS 14-36(c) (the youth instruction permit) replaced by the DMV's current pages; the non-citizen's term said to be SLATE's assumption.",
+     "where": "src/engine/systems/identity.ts NONCITIZEN_ID and its comment",
+     "failingTest": "none: a citation"
+    },
+    {
+     "summary": "The guide's Connecticut ID card line, its 'now' line, the tutorial's ID sentence and docs/WORLD.md say the term and the mail; each dated.",
+     "where": "src/engine/content/guide/documents.ts, src/engine/content/tutorial.ts, docs/WORLD.md",
+     "failingTest": "tests/guide-examples-papers.test.ts, tests/tutorial.test.ts, tests/defects-g27-1.test.ts ran green on them"
+    },
+    {
+     "summary": "defects3-50-70's 9 PM case moved from Thursday 5 November to Wednesday 4 November: with the mail added, a UTC count and New Haven's landed on the same instant from the Thursday, and the test no longer caught the defect it was written for (mutation M10 survived it).",
+     "where": "tests/defects3-50-70.test.ts",
+     "failingTest": "M10 killed by 'documents.apply_idcard > PLAYER JOURNEY: the card applied for at 9 PM on Wednesday 4 November, ...'"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "M1: Connecticut's card handed over at the counter (mailedBusinessDays removed)",
+     "caughtBy": "6 tests in tests/evidence-g15-papers.test.ts (the citizen journey, the second-card refusal, the British Limited Term journey, the screen's toast, both replacement journeys) and 3 in tests/remaining-papers.test.ts (the New York-born journey, the tax.s8.idcard journey, the FIXTURE)"
+    },
+    {
+     "what": "M2: the term from the day, not to a birthday (toBirthday removed)",
+     "caughtBy": "4 tests in tests/evidence-g15-papers.test.ts and the FIXTURE and GUARD in tests/remaining-papers.test.ts"
+    },
+    {
+     "what": "M3: six years, SLATE's old figure",
+     "caughtBy": "4 tests in tests/evidence-g15-papers.test.ts; the New York-born journey, FIXTURE and GUARD in tests/remaining-papers.test.ts"
+    },
+    {
+     "what": "M4: the birthday compared by instant, not by New Haven's date (an hour after the birth-time anniversary ran eight years)",
+     "caughtBy": "tests/remaining-papers.test.ts: the New York-born journey ('good until June 14, 2035') and the GUARD"
+    },
+    {
+     "what": "M5: a non-citizen's mail counted from the application, SAVE inside it",
+     "caughtBy": "tests/evidence-g15-papers.test.ts British Limited Term journey; both documents.apply_idcard journeys in tests/defects3-50-70.test.ts"
+    },
+    {
+     "what": "M6: the mail's days counting federal holidays",
+     "caughtBy": "4 tests in tests/evidence-g15-papers.test.ts (Labor Day, Veterans Day, Thanksgiving)"
+    },
+    {
+     "what": "M7: a pending card put in force at once",
+     "caughtBy": "6 tests in tests/evidence-g15-papers.test.ts"
+    },
+    {
+     "what": "M8: a mailed non-citizen's card marked REAL ID",
+     "caughtBy": "tests/remaining-papers.test.ts tax.s8.idcard journey"
+    },
+    {
+     "what": "M9: the toast silent on the day the card comes",
+     "caughtBy": "tests/evidence-g15-papers.test.ts on Passport And ID ... “$28.00; the card comes September 22, 2026; good until June 14, 2034” ..."
+    },
+    {
+     "what": "M10: SAVE's and the mail's days counted as UTC has them",
+     "caughtBy": "tests/defects3-50-70.test.ts 'the card applied for at 9 PM on Wednesday 4 November ...'; it survived the test while that test asked on the Thursday, where the two counts coincide once the mail was added, so the test was moved to the Wednesday (not caught by tests/defects-g24-1.test.ts, whose Thursday-evening count coincides too)"
+    }
+   ],
+   "blocker": "The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card once its holder is 'no longer entitled to be present', and sets no term; CGS chapter 246 has no such provision (searched for 'authorized stay', 'lawful status', 'immigration status', 'visa', 'legal presence', 'citizen'). SLATE keeps the term to the end of lawful presence as its assumption, said so in systems/identity.ts and on the guide's line ('SLATE's reading where the state publishes none'). Also not said by the DMV, and taken by SLATE: whether a non-citizen the DMV doesn't ask back has the twenty days from the first visit (SLATE takes the later, its described return after SAVE); and whose holidays the twenty business days skip (SLATE counts the federal ones). What would settle it: the DMV's answer in writing (its Contact Center, 860-263-5700, or a published policy). Pages tried and not reached: https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining (2026-10-16: host doesn't resolve, WebFetch ENOTFOUND, the proxy's CONNECT 502); https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1hSection_01-1h-1/ to -8 and Title_01Subtitle_01-1h/ (2026-10-16: 'Unable to Access Resource (HTTP: 404)'; read instead in the DMV's 2007 compilation, https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf). www.cga.ct.gov was reached only after completing its certificate chain with GoDaddy's G2 intermediate from certs.godaddy.com, the server sending its leaf alone (curl error 60 otherwise; WebFetch 503)."
+  },
+  {
+   "id": "KS-passport-fees",
+   "group": "Known Shortfalls And Missing Tests",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Blocked Externally",
+   "notProved": "That a passport renewed abroad costs its issuer's published fee: content/passportsabroad.ts charged Iceland's and Brazil's fees at home and Japan's yen fee at SLATE's rate where the missions' fees weren't found, took the Latvian embassy in Ireland's fees and times (and its €165 urgent service) for the embassy in the US, and charged New Zealand's GST and its urgent fee 'from search extracts' (tax-result.json, tax.s8.passport assumptions).",
+   "exercised": "Read each issuer's own page on 2026-10-17 (docs/research/world/research-passports-abroad.json, every quote checked against the saved text): Iceland's consular fee schedule (stjornarradid.is, Gjaldskrá fyrir verk borgaraþjónustu, December 2025's rate) and its Washington embassy's consular page; Brazil's Portaria MRE nº 664/2026 and the Regulamento Consular Brasileiro (Portaria nº 428/2022) in the Diário Oficial (in.gov.br); the Embassy of Latvia to the USA's passport page (updated 27.05.2026); DIA's release of 1 May 2025. Set Iceland (the fee confirmed, express sold at missions), Brazil (US$60) and Latvia (€140, about eight weeks, no urgent service). Played documents.apply_passport for a São Paulo-, a Reykjavík- (faster) and a Riga-born student on the drawn Papers passport pane and through the command, issued on its day across a save and load.",
+   "evidence": [
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > FIXTURE: the offices’ terms from abroad read on 2026-10-17: Iceland’s 19,000 ISK and express 39,200 ISK in all, Brazil’s US$60, Latvia’s €140 (€115 under 20) in about eight weeks with no urgent service; Japan’s and New Zealand’s still said to be SLATE’s",
+     "kind": "fixture",
+     "proves": "PASSPORTS_ABROAD IS/BR/LV as read; JP and NZ keep their assumption labels; none of the three settled says its fee is assumed"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a São Paulo-born student renews her Brazilian passport on Papers from New Haven: US$60, the consular fee of sixty reais-ouro from 1 June 2026; no faster service, the command refused; issued on its day, the old one canceled then, once across a reload; until 2026-10-17 the Polícia Federal’s R$257.25 at home",
+     "kind": "player journey",
+     "proves": "'A New One $60.00' drawn and $60.00 charged once ('Passaporte comum'); Faster refused on screen and by command; issued 8 days on across a reload, the old one canceled"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a Reykjavík-born student renews her Icelandic passport faster on Papers from New Haven: express at the embassy, 39,200 ISK in all in dollars, charged once and issued in two days, the old one canceled then, across a reload; Renew It at 19,000 ISK; until 2026-10-17 no faster service was offered from abroad",
+     "kind": "player journey",
+     "proves": "19,000 ISK and 39,200 ISK drawn in dollars; Renew It Faster offered, pressed, charged 39,200 ISK once; issued 2 days on across a reload"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a Riga-born student renews her Latvian passport on Papers from New Haven: €140 at the embassy in Washington, in dollars, in up to 56 days; no urgent service there, the command refused; issued on its day across a reload; until 2026-10-17 the embassy in Ireland’s five weeks and its €165 urgent service",
+     "kind": "player journey",
+     "proves": "€140 in dollars, 'Up to 56 days'; Faster Not Offered and the command refused; issued 56 days on across a reload"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "ran": true
+    },
+    {
+     "file": "tests/documents.test.ts",
+     "ran": true
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "ran": true
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Brazil from abroad: US$60, 60 reais-ouro from 1 June 2026, a real-ouro being one dollar (was the Polícia Federal's R$257.25 at home).",
+     "where": "src/engine/content/passportsabroad.ts BR",
+     "failingTest": "tests/remaining-papers.test.ts 'tax.s8.passport > PLAYER JOURNEY: a São Paulo-born student renews her Brazilian passport ...' (mutation P1)"
+    },
+    {
+     "summary": "Iceland from abroad: the fee in Iceland, now sourced, and express sold at the embassy, 39,200 ISK in all (was offered no faster service).",
+     "where": "src/engine/content/passportsabroad.ts IS",
+     "failingTest": "tests/remaining-papers.test.ts 'tax.s8.passport > PLAYER JOURNEY: a Reykjavík-born student renews her Icelandic passport faster ...' (mutations P2, P3)"
+    },
+    {
+     "summary": "Latvia from the US: the embassy in Washington's €140 (€115 under 20) in about eight weeks, no urgent service (was the embassy in Ireland's five weeks and €165 urgent).",
+     "where": "src/engine/content/passportsabroad.ts LV",
+     "failingTest": "tests/remaining-papers.test.ts 'tax.s8.passport > PLAYER JOURNEY: a Riga-born student renews her Latvian passport ...' (mutations P4, P5)"
+    },
+    {
+     "summary": "Japan's assumption reworded to say the consulate's dollar fee wasn't read because its site refused SLATE's requests on 2026-10-17; the file's header dated with what was read and what wasn't.",
+     "where": "src/engine/content/passportsabroad.ts JP and header",
+     "failingTest": "tests/remaining-papers.test.ts FIXTURE asserts the label stays"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "P1: Brazil's fee at home again, R$257.25",
+     "caughtBy": "tests/remaining-papers.test.ts: the FIXTURE and the São Paulo-born journey"
+    },
+    {
+     "what": "P2: Iceland's express not sold abroad",
+     "caughtBy": "tests/remaining-papers.test.ts: the FIXTURE and the Reykjavík-born journey"
+    },
+    {
+     "what": "P3: Iceland's express at the standard fee (extra 0)",
+     "caughtBy": "tests/remaining-papers.test.ts: the FIXTURE and the Reykjavík-born journey"
+    },
+    {
+     "what": "P4: Latvia's Irish-embassy terms again (35 days estimated, €165 urgent)",
+     "caughtBy": "tests/remaining-papers.test.ts: the FIXTURE and the Riga-born journey"
+    },
+    {
+     "what": "P5: Latvia's time back to five weeks alone",
+     "caughtBy": "tests/remaining-papers.test.ts: the FIXTURE and the Riga-born journey"
+    }
+   ],
+   "blocker": "Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passport-fee.html , /itpr_ja/m02_01.html , /itpr_ja/index.html , /itpr_ja/11_000001_00472.html , /files/100876429.pdf , /files/101051085.pdf ; https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html ; https://www.boston.us.emb-japan.go.jp/files/100996789.pdf ; https://www.mofa.go.jp/mofaj/ca/pss/pagew_000001_02493.html , /mofaj/files/100482215.pdf , /mofaj/toko/passport/pass_5.html . Search extracts (leads, not sources) show Boston's and Anchorage's tables at US$62 at the window and US$60 online from 1 July 2026, and New York's notice of 8 June 2026 saying its dollar amount would follow; which consulate's district holds Connecticut wasn't read either. New Zealand: whether a student in the US is charged GST, and the urgent fee from overseas (SLATE charges GST and takes the urgent service as at home, NZ$247 more). Tried on 2026-10-17: https://www.passports.govt.nz/passport-costs (Cloudflare challenge 'Just a moment...', 403 to curl; 503 to WebFetch), /urgent-travel and /passport-costs/passport-timeframes (403, the same challenge); https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2015/264/en/latest/ (202 with an empty body to curl, three times; 403 to WebFetch), /2015/264/en/2025-05-02.pdf and /2025/75/en/latest/ (202 empty, three times each), https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/096be8ed81f36d4a.pdf (202 empty); the Internet Archive's captures https://web.archive.org/web/20261001231111/https://www.passports.govt.nz/passport-costs and .../20260919065520/.../urgent-travel (connection reset by the proxy's tunnel, six times; WebFetch refuses web.archive.org). DIA's own release (dia.govt.nz, read) confirms only the adult fee in force, $247 with GST from 2 May 2025. Brazil's Hartford consulate page (https://www.gov.br/mre/pt-br/consulado-hartford/servicos-consulares/passaportes) answered a CAPTCHA to curl and WebFetch; its fee was read in the Diário Oficial instead, so it isn't a blocker. Outside the row's fees and left as labelled: the turnaround estimates (UK, France, Spain, Japan, Korea, Mexico, Iceland, Brazil), Canada's and Germany's faster services not offered from New Haven, and New Zealand's courier."
+  }
+ ],
+ "added": [
+  {
+   "id": "doc.world-idcard-realid",
+   "reason": "docs/WORLD.md's state ID card line said 'Each is REAL ID' though from 2026-10-16 Connecticut issues somebody not a citizen a non-verified card (the tax area's change, which didn't reach WORLD.md); corrected in the same sentence that now gives the term and the mail.",
+   "impact": "a document only; no game behavior"
+  },
+  {
+   "id": "test.defects3-utc-evening",
+   "reason": "Restoring a regression test's strength that this change would otherwise have weakened: tests/defects3-50-70.test.ts's 9 PM case moved to Wednesday 4 November so a count in UTC is caught again (mutation M10).",
+   "impact": "one test's date and title; the defect it guards (days counted as UTC has them) is caught again"
+  }
+ ],
+ "defectsFound": [
+  {
+   "what": "NONCITIZEN_ID cited https://digital.ct.gov/...non-driver-photo-id---obtaining, a host that no longer resolves, and CGS 14-36(c), the youth instruction permit, for the non-citizen's term; corrected, and the term said to be SLATE's assumption.",
+   "blocksCompletion": false
+  },
+  {
+   "what": "docs/WORLD.md said every US state ID card SLATE issues is REAL ID (stale since 2026-10-16); corrected.",
+   "blocksCompletion": false
+  },
+  {
+   "what": "Found in my own change before it was committed: idCardExpires compared the birthday by instant, so a card asked for on a birthday an hour after the birth-time anniversary ran eight years; compared by New Haven's date instead, held by the GUARD and the New York-born journey (mutation M4).",
+   "blocksCompletion": false
+  },
+  {
+   "what": "`npm run typecheck` (tsc -b) came back in about two seconds, reading a build-info file in the linked node_modules (node_modules/.tmp/tsconfig.app.tsbuildinfo) that other clones write too; `npx tsc --noEmit -p tsconfig.app.json` (33 to 50 s) is the check that actually ran on this clone's code, exit 0. A clone sharing node_modules can be told it typechecks by another clone's build.",
+   "blocksCompletion": false
+  }
+ ],
+ "forTheCoordinator": {
+  "renames": "docs/verification/pipeline/inputs/renames.json: ten entries added (old title to new) for the tests whose titles this change made false; listed in commit c6f93061.",
+  "audit": "docs/verification/audit/papers.json and money.json cite the old titles: `node tools/coverage.mjs --check` names 13 (money bank.open_current; papers documents.apply_idcard, documents.idcard_arrives), each to be re-cited by its new title (renames.json maps each). papers.json documents.apply_idcard 'changes' should read: 'pays the fee; Connecticut's card is mailed, Being Decided until it comes twenty business days on (Central Issuance), a citizen's to their first birthday at least seven years on and REAL ID; somebody not a citizen's Limited Term card waits on SAVE's ten federal workdays and then the mail's twenty, to the end of their lawful presence (SLATE's assumption: the state publishes no term for a non-verified card), non-verified (Not For Federal Identification, from 2026-10-16: until then marked REAL ID). From 2026-10-17: until then a citizen's was in force at once for six years, and a non-citizen's came on SAVE's day.' Its 'closes' text for the g15 journey says 'A citizen's card is in force at once', no longer true.",
+  "criteria": "criteria.py's known('KS-ct-idcard', ...) and known('KS-passport-fees', ...) should take Blocked Externally with this result's blockers and evidence.",
+  "coverage": "docs/GAMEPLAY-COVERAGE.md is generated from the audit; run node tools/coverage.mjs once the audit is re-cited.",
+  "staleMeasurements": "Regenerating the matrix in a full-history clone of this branch moves six measured rows to Implemented, Verification Incomplete because the code they read changed (src/engine/content/guide/documents.ts, content/identity.ts, content/passportsabroad.ts, ...): F2-A and MA5 (measured on 57b64401), INT-skipped and INT-navigation (9c40be73), INT-long-runs (57b64401), INT-gate (d9b631ba). They need measuring again on the tested commit (the gate, the built app, the long runs), as any engine change of this pass would require.",
+  "handoff": "The matrix's completion line, once regenerated."
+ },
+ "checks": [
+  {
+   "cmd": "npx tsc --noEmit -p tsconfig.app.json",
+   "exit": 0
+  },
+  {
+   "cmd": "npx tsc --noEmit -p tsconfig.node.json",
+   "exit": 0
+  },
+  {
+   "cmd": "npm run typecheck",
+   "exit": 0
+  },
+  {
+   "cmd": "npm run lint",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/doc-refs.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/tics.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/voice-check.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/spelling.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/typos.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/title-case.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/label-sweep.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/plural-check.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/wired.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/deciders.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/inventory.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/devmap.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/traceability.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/capabilities.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "npx vite-node tools/geo-check.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/student-matrix.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/coverage.mjs --check",
+   "exit": 1,
+   "why": "13 audit citations of the renamed titles (docs/verification/audit, the coordinator's): see forTheCoordinator.audit"
+  },
+  {
+   "cmd": "node tools/completion-matrix.mjs --check",
+   "exit": 1,
+   "why": "the handoff's completion line and the committed matrix are behind their sources (the coordinator's); regenerated in a full-history copy it reads 524 of 608, the six measured rows of forTheCoordinator.staleMeasurements; at the baseline 7572578b the same check exits 0 at 530"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g15-papers.test.ts",
+   "exit": 0,
+   "tests": "32 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g16-papers.test.ts",
+   "exit": 0,
+   "tests": "26 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-papers.test.ts",
+   "exit": 0,
+   "tests": "13 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-09-journeys.test.ts",
+   "exit": 0,
+   "tests": "22 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g24-1.test.ts",
+   "exit": 0,
+   "tests": "2 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g27-1.test.ts",
+   "exit": 0,
+   "tests": "4 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects3-50-70.test.ts",
+   "exit": 0,
+   "tests": "7 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-papers.test.ts",
+   "exit": 0,
+   "tests": "15 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/papers-transitions.test.ts",
+   "exit": 0,
+   "tests": "3 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/commands-kept.test.ts",
+   "exit": 0,
+   "tests": "15 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-r3d-1.test.ts",
+   "exit": 0,
+   "tests": "1 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-r7-1.test.ts",
+   "exit": 0,
+   "tests": "5 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/finance-paths.test.ts",
+   "exit": 0,
+   "tests": "12 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/idreplace.test.ts",
+   "exit": 0,
+   "tests": "1 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/tutorial.test.ts",
+   "exit": 0,
+   "tests": "16 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/documents.test.ts",
+   "exit": 0,
+   "tests": "9 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide.test.ts",
+   "exit": 0,
+   "tests": "12 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/scope-taxpapers.test.ts",
+   "exit": 0,
+   "tests": "17 passed"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/scope-money.test.ts",
+   "exit": 0,
+   "tests": "31 passed"
+  },
+  {
+   "cmd": "mutations M1-M10, P1-P5 in a copy of the clone (scratchpad/mut11), each named test file run alone",
+   "exit": 0,
+   "tests": "15 of 15 killed (M10 after the 9 PM case moved)"
+  }
+ ]
+}
