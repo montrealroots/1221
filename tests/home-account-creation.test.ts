@@ -222,6 +222,10 @@ describe('the creation screen', () => {
     // ¥: 706,500 × 150 = 105,975,000, ¥1,059,750 exactly, less the ¥10,200 its current account opens with.
     expect(words).toContain('Kept At MUFG Bank: ¥1,049,550 In 普通預金 (Ordinary Deposit)');
     expect(words).toContain('Its 普通預金 (Ordinary Deposit) opens with what its fees come to until you graduate in May 2029, ¥10,200, from your savings, as far as that goes: move more in before it runs low.');
+    // Each held at home in dollars as Money says it, from 2026-10-17 (brief 14's cross-area pass): until then “$68 at the
+    // estimated rate”. ¥10,200 and ¥1,049,550 at 150 to the dollar.
+    expect(words).toContain('¥10,200 About $68 at an estimated exchange rate');
+    expect(words).toContain('¥1,049,550 About $6,997 at an estimated exchange rate');
   });
 
   it('says America before Yale, and offers no bank, for one raised in New York', () => {

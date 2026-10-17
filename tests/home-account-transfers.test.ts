@@ -172,7 +172,7 @@ describe('from America to home', () => {
     sim.advanceTo(day(sim, 8, 28));
     const quote = abroadQuote(sim, sim.player, chase, hsbc, 100_000);
     expect(quote).toMatchObject({ fee: 500, marginSave: 2_600, marginAssumed: true, incoming: 500, incomingSave: 633, received: 76_446, receivedSave: 96_767, daysAssumed: true });
-    expect(quoteWords(sim, quote as never)).toBe('Chase sends $1,000.00 for a $5.00 fee. At 2.6% under the game’s exchange rate (an estimate: the bank publishes no margin, so the game uses the FSB’s 2024 average cost of a payment abroad, 2.6%), HSBC UK receives £764.46 after its £5.00 fee for a payment from abroad, on Thursday, September 3, 2026 (an estimate: the bank publishes no time, so the game uses three business days).');
+    expect(quoteWords(sim, quote as never)).toBe('Chase sends $1,000.00 for a $5.00 fee. At 2.6% under the estimated exchange rate (an estimate: the bank publishes no margin, so the game uses the FSB’s 2024 average cost of a payment abroad, 2.6%), HSBC UK receives £764.46 after its £5.00 fee for a payment from abroad, on Thursday, September 3, 2026 (an estimate: the bank publishes no time, so the game uses three business days).');
     const before = chase.balance;
     const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase.id, toId: hsbc.id, amount: 100_000 });
     expect(iso(sent.arrivesAt)).toBe('2026-09-03T21:00:00.000Z');
@@ -248,7 +248,7 @@ describe('the Move Money panel', () => {
     const words = renderToStaticMarkup(createElement(BankWorkspace)).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, '\'').replace(/\s+/g, ' ');
     expect(words).toContain('Amount (GBP)');
     expect(words).toContain('Barclays Bank Account ···');
-    expect(words).toContain('Barclays sends £1,000.00 for no fee. At its rate, 2.75% under the game’s exchange rate, Chase receives $1,216.01 after its $15.00 fee for a payment from abroad, on Wednesday, September 2, 2026.');
+    expect(words).toContain('Barclays sends £1,000.00 for no fee. At its rate, 2.75% under the estimated exchange rate, Chase receives $1,216.01 after its $15.00 fee for a payment from abroad, on Wednesday, September 2, 2026.');
     const press = h.elements.find((e) => e.text === 'Move It')!;
     (press.props.onClick as () => void)();
     expect(h.toasts.at(-1)).toBe('Sent £1,000.00. It arrives September 2, 2026.');
