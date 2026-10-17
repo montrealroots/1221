@@ -14,14 +14,14 @@
    "Explicitly Deferred": 27
   }
  },
- "matrix": "Completion, by the matrix: 566 of 599 rows in scope Implemented And Verified (94.4%); 28 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.",
- "againstTheFullBaseline": "564 of 608 (92.7%)",
+ "matrix": "Completion, by the matrix: 568 of 599 rows in scope Implemented And Verified (94.8%); 26 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.",
+ "againstTheFullBaseline": "566 of 608 (93.0%)",
  "actionable": {
-  "closed": 37,
+  "closed": 39,
   "superseded": 4,
   "scope resolution": 1,
   "research assumption": 2,
-  "remaining": 2,
+  "remaining": 0,
   "of": 46
  },
  "decision4": 23,
@@ -3738,10 +3738,9 @@
    "id": "advice.F2A10-c",
    "group": "Brief 10 Area: advice",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "disposition": "remaining",
-   "by": "nothing yet",
-   "lacks": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again"
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "docs/verification/resolution-2026-10-17/final-result.json"
   },
   {
    "id": "advice.F2A10-d",
@@ -3763,7 +3762,7 @@
    "baseline": "Decision Required",
    "now": "Implemented And Verified",
    "disposition": "closed",
-   "by": "docs/verification/resolution-2026-10-17/advice-result.json"
+   "by": "docs/verification/resolution-2026-10-17/final-result.json"
   },
   {
    "id": "advice.F2A10-g",
@@ -3778,7 +3777,7 @@
    "baseline": "Decision Required",
    "now": "Implemented And Verified",
    "disposition": "closed",
-   "by": "docs/verification/resolution-2026-10-17/advice-result.json"
+   "by": "docs/verification/resolution-2026-10-17/final-result.json"
   },
   {
    "id": "advice.F2A10-i",
@@ -3799,10 +3798,9 @@
    "id": "advice.heldout",
    "group": "Brief 10 Area: advice",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "disposition": "remaining",
-   "by": "nothing yet",
-   "lacks": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again"
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "docs/verification/resolution-2026-10-17/final-result.json"
   },
   {
    "id": "advice.harness-hospital",

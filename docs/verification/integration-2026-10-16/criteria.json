@@ -4052,40 +4052,6 @@
    }
   },
   {
-   "id": "advice.F2A10-c",
-   "status": "Implemented And Verified",
-   "why": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The held-out set on the tested commit, 3de26e0b, every figure the same as its first run on 81eadac9, made before the tutorial’s and a comment’s words changed: the advised input’s realized gain at or above the median of the others’ on 120 of 120 fresh cases (95% asked), its mean 0.763 against 0.388 for an input chosen at random, 1.965 times (1.5 asked); every stratum the same (beginner 1.864, developing 2.057, advanced 1.961, near mastery 2.046; first week 1.976, mid-term 1.855, later 2.079); F2-A’s 30 held out, 2.187",
-   "citations": [
-    {
-     "file": "docs/verification/completion-2026-10-16/advice/held-out-summary.json"
-    },
-    {
-     "file": "docs/verification/completion-2026-10-16/advice/exits.txt"
-    }
-   ],
-   "measured": {
-    "commit": "3de26e0b",
-    "watch": "engine"
-   }
-  },
-  {
-   "id": "advice.heldout",
-   "status": "Implemented And Verified",
-   "why": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The held-out set run on 81eadac9, its tree clean, and again on the tested commit, 3de26e0b, once the tutorial’s and a comment’s words had changed, every figure the same; on the second each batch’s file reads not clean only because it rewrote its own committed output as it ran, in fifteen batches (F2-A’s adv-10 to 39 and the 120 fresh adv-h-0 to 119), each exit 0, its commit written in each file, then summarized with the tuning cases apart; each stratum reported (four bands, three stages). Every figure brief 10’s summary shares is the same, 390 of 390",
-   "citations": [
-    {
-     "file": "docs/verification/completion-2026-10-16/advice/held-out-summary.json"
-    },
-    {
-     "file": "docs/verification/completion-2026-10-16/advice/exits.txt"
-    }
-   ],
-   "measured": {
-    "commit": "3de26e0b",
-    "watch": "engine"
-   }
-  },
-  {
    "id": "tax.s8.f1_status",
    "status": "Implemented And Verified",
    "why": "Brief 11, the journeys area (docs/verification/completion-2026-10-16/journeys-result.json): Each part read in its test and the files run: the F-1 drawn at creation to the program’s end and sixty days; the clock’s look at the program’s end and the grace’s, out of status at its end, a pending OPT holding it; fifteen days after a withdrawal, none after a dismissal; its readers (the School’s leave, OPT, the Social Security office, the DMV, the 1040-NR); a passport reported lost leaving it in force. Added: a played student whose passport runs out in June 2028 keeps her F-1 and status (tests/remaining-papers.test.ts); a status look made to read the passport fails it.",
@@ -4379,92 +4345,238 @@
   {
    "id": "advice.F2A10-f",
    "status": "Implemented And Verified",
-   "why": "Brief 12, the advice area (docs/verification/resolution-2026-10-17/advice-result.json): Through sim.execute and the drawn Player Profile and brief pane, across loadSave(deserialise(serialise(...))): adv-t-15 near mastery with The Spare Key taped cold (its own preparation held it back most); adv-t-4 beginner with the same take cold (an ability held it back); a take in a genre already known in full (TEST SETUP); the attention verdict driven to all four answers by changing one side at a time (TEST SETUP: every piece's own preparation complete and its genres known in full; every input training reaches at full); adv-t-1, adv-t-6 and adv-t-19 played twenty sessions against a baseline copy for F3, and one session played at 60 and at 85 against the forecast's one session for F6. The measure works every clause on every case, as built and with a cold take drawn from the seed: 30 of 30 tuning cases and 6 of 6 regression cases on 2d71d188.",
+   "why": "Brief 12, the final area (docs/verification/resolution-2026-10-17/final-result.json): The fresh set, adv-v-0 to 119, run once on the tested commit ed24ff3b, every batch exit 0 and its tree clean (runs12.sh ADVF): F1 120, F2 120, F4 120, F5 120 and F6 120 of 120 (120 asked); F3 120 of 120 (96 asked), by band beginner 30, developing 30, advanced 30, nearMastery 30 of 30 (21 asked), by stage firstWeek 40, midTerm 40, later 40 of 40 (28 asked); read as prepared {'asBuilt': 1, 'cold': 102}; the verdicts {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}, on the cold take {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}. Reported beside them as written, deciding nothing: (e) 119 of 120, (f)'s ladder falls 30 of 30 near mastery.",
    "citations": [
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says what the forecast assumes of the work, and a take read as prepared is named with how far short each part was, what the figure would be read as taped and what its preparation would bring, on the Profile and in the brief’s pane, across a save and a load"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-summary.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: says whether preparation, training or both deserve attention, from what the judge’s replay gives each, and the verdict follows the figures when one side is changed"
+     "file": "docs/verification/resolution-2026-10-17/runs/exits-ADVF.txt"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: the forecast’s growth is the progression model’s: on the first-named’s ladder it never rises with the level and falls below three quarters of full; the forecast is within (e)’s tolerance of what twenty sessions brought, read under its own assumptions"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-0-9.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: reaches mastery: the first-named practiced to full through practice.exercise drops out, the next by forecast is named and the standing says the first has nothing left to forecast; with everything training reaches at full the advice says so, and the verdict asks for preparation alone, across a save and a load"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-10-19.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-100-109.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-110-119.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-20-29.json"
     },
     {
-     "file": "docs/verification/resolution-2026-10-17/advice/summary.json",
-     "title": "npx vite-node tools/advice.ts -- --summarize docs/verification/resolution-2026-10-17/advice/tuning-adv-0-9.json docs/verification/resolution-2026-10-17/advice/tuning-adv-t-0-19.json docs/verification/resolution-2026-10-17/advice/regression-spot.json --out docs/verification/resolution-2026-10-17/advice/summary.json (each run on 2d71d188, tracked tree clean)"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-30-39.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-40-49.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-50-59.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-60-69.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-70-79.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-80-89.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-90-99.json"
     }
-   ]
+   ],
+   "measured": {
+    "commit": "ed24ff3b",
+    "watch": "engine"
+   }
   },
   {
    "id": "advice.F2A10-h",
    "status": "Implemented And Verified",
-   "why": "Brief 12, the advice area (docs/verification/resolution-2026-10-17/advice-result.json): The players the owner named, through sim.execute and the drawn Player Profile, across loadSave(deserialise(serialise(...))): the follower near mastery (adv-t-19, twenty sessions, its forecast rose); the ignorer (adv-t-5, three weeks of taping, two briefs a week, no practice); the part follower (adv-t-5, seven of the twenty sessions, and twenty of the second-named's exercise); the work changer (adv-t-5, three voice briefs in genres never met); the player who reaches mastery (adv-t-19, practice.exercise up to four hours a day, 51 days to full). The detectors made to fire on adv-0 and adv-t-19 (an earlier read shown after the sessions; a note moved by a hundredth by hand; a note with no state, TEST SETUP). The measure checks every read it makes on every case (as built, the cold take, the follower, the ignorer and each other input's player): 485 reads and 806 changes on the 30 tuning cases, 0 stale and 0 unexplained.",
+   "why": "Brief 12, the final area (docs/verification/resolution-2026-10-17/final-result.json): The fresh set on ed24ff3b: H1 to H6 120, 120, 120, 120, 120, 120 of 120 (120 asked); followed, the first-named stayed on 75 and another led on 45, changed on 45; rose 5, attributed 5, explained 5; 1965 reads with 0 stale, 3371 forecast changes (1348 rises) with 0 unexplained. Reported beside them as written, deciding nothing: (h) fell on 115 of 120, its own level's part on 120.",
    "citations": [
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: followed near mastery, its forecast rose, and the advice works the rise out in parts, its own level and discipline and the other inputs the hours moved, the work and the genres nothing; it says each part, and the read isn’t stale, across a save and a load"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-summary.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: ignored for three weeks of taping, it keeps naming what brings most and is never stale; every move of its forecast is worked out in parts and said, the work it reads and how well you know its genres, a part whose input didn’t move nothing, across a save and a load"
+     "file": "docs/verification/resolution-2026-10-17/runs/exits-ADVF.txt"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: partly followed, seven of the twenty sessions, the level moves less and the change is its own level’s and discipline’s; twenty sessions of another input’s exercise move its forecast through the other inputs and discipline; each said, never stale, across a save and a load"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-0-9.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: changes their work, three briefs of another kind (the microphone’s) in genres never met: the work’s and the genres’ parts are worked out and said, the first-named is the forecast’s largest, never stale, across a save and a load"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-10-19.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > PLAYER JOURNEY: reaches mastery: the first-named practiced to full through practice.exercise drops out, the next by forecast is named and the standing says the first has nothing left to forecast; with everything training reaches at full the advice says so, and the verdict asks for preparation alone, across a save and a load"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-100-109.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as the owner resolved them (brief 12) > GUARD: the detectors fire when made to: a read made before twenty sessions, shown after them, is stale; a note’s forecast moved by hand is said as untraced and counted unexplained; a rise whose note kept no state is said to be beyond working out, and counted"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-110-119.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the trained input’s forecast falls, and with another’s now ahead, another is named first"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-20-29.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-30-39.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-40-49.json"
     },
     {
-     "file": "tests/decisions-advice.test.ts",
-     "title": "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-50-59.json"
     },
     {
-     "file": "docs/verification/resolution-2026-10-17/advice/summary.json",
-     "title": "npx vite-node tools/advice.ts -- --summarize docs/verification/resolution-2026-10-17/advice/tuning-adv-0-9.json docs/verification/resolution-2026-10-17/advice/tuning-adv-t-0-19.json docs/verification/resolution-2026-10-17/advice/regression-spot.json --out docs/verification/resolution-2026-10-17/advice/summary.json (each run on 2d71d188, tracked tree clean)"
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-60-69.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-70-79.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-80-89.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/fresh-adv-v-90-99.json"
     }
-   ]
+   ],
+   "measured": {
+    "commit": "ed24ff3b",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "advice.F2A10-c",
+   "status": "Implemented And Verified",
+   "why": "Brief 12, the final area (docs/verification/resolution-2026-10-17/final-result.json): The held-out set, regression coverage from brief 12, on the tested commit ed24ff3b (runs12.sh ADVR, every batch exit 0, its tree clean): the advised input's realized gain at or above the median of the others' on 120 of 120 (95% asked), its mean 0.763 against 0.388 for an input chosen at random, 1.965 times (1.5 asked); by stratum beginner 1.864, developing 2.057, advanced 1.961, nearMastery 2.046, firstWeek 1.976, midTerm 1.855, later 2.079; F2-A's 30 held out, 2.187.",
+   "citations": [
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-summary.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/runs/exits-ADVR.txt"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/f2a-adv-0-9.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/f2a-adv-10-19.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/f2a-adv-20-29.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/f2a-adv-30-39.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-0-9.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-10-19.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-100-109.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-110-119.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-20-29.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-30-39.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-40-49.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-50-59.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-60-69.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-70-79.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-80-89.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-90-99.json"
+    }
+   ],
+   "measured": {
+    "commit": "ed24ff3b",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "advice.heldout",
+   "status": "Implemented And Verified",
+   "why": "Brief 12, the final area (docs/verification/resolution-2026-10-17/final-result.json): Brief 10's held-out set, adv-h-0 to 119, and F2-A's adv-10 to 39, run on the tested commit ed24ff3b in 16 batches, each exit 0, its commit and a clean tree written in each file, then summarized as regression coverage, the tuning cases apart, each band and stage reported. From brief 12 it isn't unseen validation: its results informed the clarified (f) and (h), and the fresh set took its place.",
+   "citations": [
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-summary.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/runs/exits-ADVR.txt"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/f2a-adv-0-9.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/f2a-adv-10-19.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/f2a-adv-20-29.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/f2a-adv-30-39.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-0-9.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-10-19.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-100-109.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-110-119.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-20-29.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-30-39.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-40-49.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-50-59.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-60-69.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-70-79.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-80-89.json"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/advice/regression-adv-h-90-99.json"
+    }
+   ],
+   "measured": {
+    "commit": "ed24ff3b",
+    "watch": "engine"
+   }
   }
  ]
 }

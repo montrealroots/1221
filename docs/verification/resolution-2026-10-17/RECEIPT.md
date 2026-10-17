@@ -2,10 +2,10 @@
 
 Written by `receipt.py` from brief 11’s frozen baseline (the matrix at `main`’s `0e7ff7c2`), its classification, brief 12’s results and the matrix as it stands. Nothing here is typed.
 
-- **Against the original full baseline:** 564 of 608 (92.7%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
-- **The 46 actionable rows, each in one category:** closed 37; superseded 4; scope resolution 1; research assumption 2; remaining 2.
+- **Against the original full baseline:** 566 of 608 (93.0%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
+- **The 46 actionable rows, each in one category:** closed 39; superseded 4; scope resolution 1; research assumption 2; remaining 0.
 - **Outside them:** decision 4’s 23 rows, unchanged; brief 11’s 9 administrative rows.
-- **The matrix’s own count:** 566 of 599 rows in scope Implemented And Verified (94.4%); 28 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
+- **The matrix’s own count:** 568 of 599 rows in scope Implemented And Verified (94.8%); 26 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
 
 ## The Actionable Rows
 
@@ -28,11 +28,11 @@ Written by `receipt.py` from brief 11’s frozen baseline (the matrix at `main`�
 | `advice.harness` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `advice.F2` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `advice.F2A10-a` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
-| `advice.F2A10-c` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented, Verification Incomplete | remaining | nothing yet |
-| `advice.F2A10-f` | Brief 10 Area: advice | Decision Required | Implemented And Verified | closed | docs/verification/resolution-2026-10-17/advice-result.json |
-| `advice.F2A10-h` | Brief 10 Area: advice | Decision Required | Implemented And Verified | closed | docs/verification/resolution-2026-10-17/advice-result.json |
+| `advice.F2A10-c` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented And Verified | closed | docs/verification/resolution-2026-10-17/final-result.json |
+| `advice.F2A10-f` | Brief 10 Area: advice | Decision Required | Implemented And Verified | closed | docs/verification/resolution-2026-10-17/final-result.json |
+| `advice.F2A10-h` | Brief 10 Area: advice | Decision Required | Implemented And Verified | closed | docs/verification/resolution-2026-10-17/final-result.json |
 | `advice.tests` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
-| `advice.heldout` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented, Verification Incomplete | remaining | nothing yet |
+| `advice.heldout` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented And Verified | closed | docs/verification/resolution-2026-10-17/final-result.json |
 | `advice.harness-hospital` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `ST3-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `ST6-R.a` | Brief 10 Area: judge | Decision Required | Explicitly Deferred | superseded | docs/verification/resolution-2026-10-17/acting-result.json |
@@ -69,8 +69,7 @@ Written by `receipt.py` from brief 11’s frozen baseline (the matrix at `main`�
 
 ## What Remains
 
-- `advice.F2A10-c` (Brief 10 Area: advice): Implemented, Verification Incomplete: It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again
-- `advice.heldout` (Brief 10 Area: advice): Implemented, Verification Incomplete: It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again
+Nothing in the actionable portion.
 - `ST6-R2.c` (replacement): Decision Required: Should (c2)’s strict reading name the grain’s hundredth (`grainOf`) beside its floor as a documented limit, and should (c4) read “unrelated” on restrained takes as an ability carrying under the equal budget’s even share (1/12) rather than under a tenth?
 - `ST6-R2.e` (replacement): Decision Required: Should (e2) and (e3)’s “more than the even actor” be read only where the even actor’s opportunities fall short of every suitable piece (tape, where both hold), or should R4 and R5 rest on (e1)’s and (e3)’s floors with (d) and (f)?
 
@@ -138,6 +137,11 @@ A scope resolution, Implemented And Verified in the matrix: Removed, alone: the 
 
 ## The Final Runs, The Walkthrough And Merging
 
+- **ADVF:** at ed24ff3b, 0 tracked files uncommitted, 2026-10-17T05:36:44Z; 13 steps, every one exit 0.
+- **ADVR:** at ed24ff3b, 0 tracked files uncommitted, 2026-10-17T05:55:14Z; 18 steps, every one exit 0.
+- **B:** at ed24ff3b, 0 tracked files uncommitted, 2026-10-17T05:36:44Z; 13 steps, every one exit 0.
+- **D:** at ed24ff3b, 0 tracked files uncommitted, 2026-10-17T05:36:44Z; 14 steps, every one exit 0.
+- **J:** at ed24ff3b, 0 tracked files uncommitted, 2026-10-17T05:55:34Z; 1 steps, every one exit 0.
 - **Merged:** not into main, which is the owner’s word to give (git merge-base, as this was written). **Deployed:** nothing; Base44 deployment is the owner’s word after the gate (rule 14).
 
 ## What The Receipt Found (6)
