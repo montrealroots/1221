@@ -112,5 +112,271 @@
     { "office": "NZ", "url": "https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2025/75/en/latest/", "tried": "2026-10-17", "why": "202 with an empty body, three times" },
     { "office": "NZ", "url": "https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/096be8ed81f36d4a.pdf", "tried": "2026-10-17", "why": "202 with an empty body" },
     { "office": "NZ", "url": "https://web.archive.org/web/20261001231111/https://www.passports.govt.nz/passport-costs", "tried": "2026-10-17", "why": "connection reset (the proxy's tunnel closed mid-exchange, six times); WebFetch refuses web.archive.org" }
-  ]
+  ],
+  "brief12": {
+    "topic": "Brief 12's focused attempt at what brief 11 left blocked (row KS-passport-fees): Japan's fee at a consulate in the United States, and New Zealand's GST and urgent fee for an applicant abroad",
+    "dateRead": "2026-10-17",
+    "method": "As brief 11's: each figure read on its issuer's own site or in its own law, with curl and a browser user agent or WebFetch, and quoted; search summaries used only to find pages and recorded as leads. A value is 'unavailable' where no source publishes it, and 'blocked' where a source exists and access was refused or failed.",
+    "settled": [
+      "Japan: US$62 for a ten-year passport applied for on paper at a Japanese embassy or consulate in the United States, US$60 online, from 1 July 2026 (MOFA Ordinance 4 of 2006, the ordinance on passport fees abroad, as amended by MOFA Ordinance 19 of 2026, promulgated 24 June 2026, in force 1 July 2026; read on e-Gov's law database). The fee is set for each country where the consular officer is posted, in its currency (the Passport Act's Enforcement Order, art. 5), so the consulate whose district holds Connecticut charges the same as any Japanese post in the United States. Applications made before 1 July 2026 keep the fees then in force (the amending ordinance's supplementary provision)."
+    ],
+    "notSettled": [
+      "New Zealand, GST: whether a New Zealander studying in New Haven pays GST on an online application. DIA's 2022 Cabinet papers say online applications from outside New Zealand don't attract GST; DIA's current costs page (blocked; seen in search extracts only) narrows it to 'a non-resident for New Zealand tax purposes', which IRD's test decides by a permanent place of abode in New Zealand and 325 days away. That is the applicant's own facts, which SLATE doesn't hold and no source can publish for its student: unavailable. SLATE's assumption: charged (`NZ_FROM_ABROAD.gstCharged`).",
+      "New Zealand, urgent fee from overseas: the 2025 regulations (SL 2025/75) are blocked (an AWS WAF challenge); DIA's 2022 schedule set the priority fee for an application lodged in New Zealand or online equal to the standard fee, and Cabinet's 2025 increase of about 14.9% applied to passport and travel document fees alike. SLATE's assumption: the standard fee, NZ$214.78 before GST (`NZ_FROM_ABROAD.urgentBeforeGst`)."
+    ],
+    "assumptions": [
+      {
+        "value": "New Zealand's GST on an online application from New Haven",
+        "constant": "NZ_FROM_ABROAD.gstCharged (src/engine/content/passportsabroad.ts)",
+        "default": true,
+        "basis": "The price DIA publishes is with GST, NZ$247; whether the student has stopped being resident turns on a home in New Zealand SLATE knows nothing of; and SLATE charged it from 2026-10-16. Off, NZ$214.78."
+      },
+      {
+        "value": "New Zealand's urgent fee for an online application from overseas",
+        "constant": "NZ_FROM_ABROAD.urgentBeforeGst (src/engine/content/passportsabroad.ts)",
+        "default": 214.78,
+        "basis": "DIA's 2022 schedule: the priority fee 'New Zealand or on line' equal to the standard fee in each year; Cabinet's 2025 increase applied to all passport and travel document fees. GST on it follows gstCharged."
+      }
+    ],
+    "sources": [
+      {
+        "office": "JP",
+        "title": "国外における旅券手数料の額を定める省令 (MOFA Ordinance 4 of 2006, fees for passports applied for abroad), revision in force 1 July 2026 (amended by 令和八年外務省令第十九号, promulgated 2026-06-24)",
+        "url": "https://laws.e-gov.go.jp/api/2/law_data/418M60000020004?response_format=xml",
+        "page": "https://laws.e-gov.go.jp/law/418M60000020004",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "国外における旅券手数料の額は、別表に定める額とする。",
+          "旅券法（以下「法」という。）第２０条の２第１項の適用を受け、法第２０条第１号及び旅券法施行令（以下「政令」という。）第５条第１項第１号に規定される手数料（１０年旅券かつ書面申請）",
+          "法第２０条の２第１項の適用を受け、法第２０条第１項第１号及び政令第５条第２項第１号に規定される手数料（１０年旅券かつ電子申請）",
+          "アメリカ合衆国 | ドル | ６２ | １２３ | ６０ | １２０ | ３２ | ６２ | ３０ | ６０",
+          "この省令は、令和八年七月一日から施行する。",
+          "同日前にされたこれらの処分の申請に係る手数料については、なお従前の例による。"
+        ],
+        "note": "The table's columns, in order: ten-year on paper (62); the same after an uncollected passport lapsed (123); ten-year online (60); the same lapsed (120); an under-18's five-year on paper (32); lapsed (62); online (30); lapsed (60). The row is the United States's, in dollars. Read through e-Gov's API (law revision 418M60000020004_20260701_508M60000020019)."
+      },
+      {
+        "office": "JP",
+        "title": "旅券法施行令 (the Passport Act's Enforcement Order, Cabinet Order 122 of 1989), art. 5, revision in force 1 July 2026 (amended by 令和八年政令第百七十七号, promulgated 2026-05-22)",
+        "url": "https://laws.e-gov.go.jp/api/2/law_data/401CO0000000122?response_format=xml",
+        "page": "https://laws.e-gov.go.jp/law/401CO0000000122",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "法第二十条の二第一項の政令で定める手数料の額は、外国貨幣換算率（予算決算及び会計令（昭和二十二年勅令第百六十五号）第百十四条の規定に基づいて財務大臣が定める外国貨幣換算率をいう。以下この条において同じ。）により邦貨に換算した場合の額が次の各号に掲げる手数料の種類に応じそれぞれ当該各号に定める金額の範囲内の額となるよう、領事官の所在国ごとに当該国の通貨（当該国において広く一般に流通している通貨として外務省令で定めるものを含む。次項から第四項までにおいて同じ。）をもって外務省令で定める額とする。",
+          "一法第二十条第一項第一号の処分に係る手数料九千二百円以上九千四百円以下"
+        ],
+        "note": "The fee abroad is fixed for each country where the consular officer is posted, in that country's currency, by MOFA ordinance, so that at the Finance Minister's rate it falls between 9,200 and 9,400 yen for a ten-year passport on paper (8,800 to 9,000 online, para. 2)."
+      },
+      {
+        "office": "JP",
+        "title": "旅券法 (the Passport Act), art. 20-2, fees abroad",
+        "url": "https://laws.e-gov.go.jp/api/1/lawdata/326AC0000000267",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "（国外における手数料）第二十条の二国外において前条第一項各号に掲げる処分の申請をする者は、政令で定めるところにより、同項の政令で定める額に同条第三項の政令で定める額を加えた額に相当するものとして政令で定める額の手数料を、国に納付しなければならない。"
+        ]
+      },
+      {
+        "office": "JP",
+        "title": "政府広報オンライン (the Cabinet Office's public relations site), パスポートの申請はオンラインで！2026年7月から手数料が引き下げに",
+        "url": "https://www.gov-online.go.jp/article/202301/entry-7458.html",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "10年 オンライン申請 15,900円 8,900円 窓口申請 16,300円 9,300円"
+        ],
+        "note": "The fees in Japan before and from 1 July 2026, the yen figures the ordinance's dollar amounts convert; dated 2026年5月28日 on the page."
+      },
+      {
+        "office": "NZ",
+        "title": "DIA, proactive release of Cabinet papers and associated briefings related to the 2022 Passport and Travel Document Fee Review: the Cabinet paper's Appendix C, 'Fee changes under the proposed options' (PDF pages 28 and 29)",
+        "url": "https://www.dia.govt.nz/diawebsite.nsf/Files/Proactive-releases/$file/Cabinet-papers-related-to-the-2022-Passport-and-Travel-Document-Fee-Review.pdf",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "Applications lodged online (online applications from outside New Zealand do not attract GST)",
+          "Additional Fees (online applications from outside New Zealand do not attract GST}",
+          "Priority fee New Zealand or on line $166.09 $191.00 2022 -$173.04 2023 -$179.13 2024 - $186.96",
+          "The impact of the proposed fees increases across all passport and travel document fees will be set out in the Regulations at the GST exclusive amount."
+        ],
+        "note": "The priority fee's row, laid out in columns in the PDF, quoted as one line: current fee before and with GST, then option 2's fee before GST for each year, the same as the standard adult fee's row above it. The closing brace in the second quote is the PDF's. The last quote is the Cabinet paper's para. 34 (PDF page 20)."
+      },
+      {
+        "office": "NZ",
+        "title": "DIA, proactive release of the Cabinet paper and associated material relating to the 2024 Passport Cost Recovery Fee Review",
+        "url": "https://www.dia.govt.nz/diawebsite.nsf/Files/Proactive-Releases-2024-25/$file/For-Proactive-release-of-Cabinet-Paper-and-associated-material-relating-to-the-2024-Passport-Cost-Recovery-Fee-Review.pdf",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "On 10 March 2025 Cabinet (CAB-25-MIN-0055): 2.1 Agreed to a passport and travel document fee increase of approximately 14.9% from Friday 2 May 2025.",
+          "The fee for an adult passport, with a ten-year validity period, will increase from $215 to $247 (GST inclusive) from 2 May 2025",
+          "service level standard of issuing passports within 10 working days of application (and 3 working days for urgent passports)"
+        ],
+        "note": "PDF pages 17, 19 and 10. It gives no schedule of the priority fee."
+      },
+      {
+        "office": "NZ",
+        "title": "DIA, media release of 1 May 2025, read again",
+        "url": "https://www.dia.govt.nz/press.nsf/d77da9b523f12931cc256ac5000d19b6/81b8eaa9c51a898acc258c7d0003b229!OpenDocument",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "From 2 May 2025, the price of an adult passport will increase from $215 to $247, and the price of a child passport from $125 to $144 (incl. GST).",
+          "The New Zealand passport application process is one of the only fully online application processes in the world, meaning New Zealanders can apply from anywhere, anytime."
+        ]
+      },
+      {
+        "office": "NZ",
+        "title": "govt.nz (run by DIA), Get or renew a New Zealand passport (last updated 26 November 2025)",
+        "url": "https://www.govt.nz/browse/passports-citizenship-and-identity/get-or-renew-a-new-zealand-passport/get-or-renew-a-new-zealand-passport/",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "Adult passports cost $247 and are valid for 10 years.",
+          "We aim to process applications for urgent processing within 3 working days, but this can depend on demand and factors such as complete information and a photo that meets the standards."
+        ]
+      },
+      {
+        "office": "NZ",
+        "title": "Inland Revenue, Tax residency status for individuals (last updated 25 June 2026)",
+        "url": "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "If you're a New Zealand tax resident, you'll become a non-resident taxpayer if you both: do not have a permanent place of abode in New Zealand are away from New Zealand for more than 325 days in any 12-month period.",
+          "If you meet this rule, your status as a non-resident taxpayer will be backdated to the fi"
+        ],
+        "note": "The second quote is cut where the page's text was cut in the reading; it goes on to the first of the 325 days."
+      }
+    ],
+    "unreached": [
+      {
+        "office": "JP",
+        "url": "https://www.us.emb-japan.go.jp/itpr_en/japanese-passport.html",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "403 (Akamai) to curl and to WebFetch; a search extract says it lists $62 for a ten-year passport from 1 July 2026"
+      },
+      {
+        "office": "JP",
+        "url": "https://www.us.emb-japan.go.jp/itpr_ja/passport.html",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "403 to curl"
+      },
+      {
+        "office": "JP",
+        "url": "https://www.seattle.us.emb-japan.go.jp/itpr_en/VISA_fee.html",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "403 to curl and to WebFetch; a search extract gives $62 in person and $60 online"
+      },
+      {
+        "office": "JP",
+        "url": "https://www.nashville.us.emb-japan.go.jp/itpr_ja/ryoji_tesuryo.html",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "403 to curl"
+      },
+      {
+        "office": "JP",
+        "url": "https://www.ny.us.emb-japan.go.jp/itpr_ja/060826.html",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "403 to curl and to WebFetch; New York's notice of 8 June 2026 that the dollar amount would follow"
+      },
+      {
+        "office": "JP",
+        "url": "https://www.ny.us.emb-japan.go.jp/itpr_ja/news.html",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "403 to curl"
+      },
+      {
+        "office": "JP",
+        "url": "https://www.ny.us.emb-japan.go.jp/itpr_ja/passport02.html",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "403 to curl, as on 2026-10-17 for brief 11"
+      },
+      {
+        "office": "JP",
+        "url": "https://www.ny.us.emb-japan.go.jp/itpr_en/",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "403 to curl"
+      },
+      {
+        "office": "JP",
+        "url": "https://www.mofa.go.jp/mofaj/files/100976346.pdf",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "403 to curl; MOFA's notice of the fee change, May 2026"
+      },
+      {
+        "office": "JP",
+        "url": "https://www.mofa.go.jp/mofaj/toko/passport/index.html",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "403 to curl"
+      },
+      {
+        "office": "NZ",
+        "url": "https://www.passports.govt.nz/passport-costs",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "Cloudflare challenge ('Just a moment...', 403) to curl; 403 to WebFetch"
+      },
+      {
+        "office": "NZ",
+        "url": "https://passports.govt.nz/ , https://www.passports.govt.nz/robots.txt , https://www.passports.govt.nz/sitemap.xml",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "the same Cloudflare challenge, 403"
+      },
+      {
+        "office": "NZ",
+        "url": "https://www.legislation.govt.nz/regulation/public/2025/0075/latest/whole.html , https://www.legislation.govt.nz/regulation/public/2015/0264/latest/whole.html , https://www.legislation.govt.nz/regulation/public/2015/0264/latest/DLM6553218.html , https://www.legislation.govt.nz/",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "202 with an empty body and the header x-amzn-waf-action: challenge (an AWS WAF challenge), from CloudFront"
+      },
+      {
+        "office": "NZ",
+        "url": "https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/LMS697516 , https://demo.legislation.govt.nz/Regulations/2015/264/096be8ed81f385c0/LMS1033331",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "202 with an empty body"
+      },
+      {
+        "office": "NZ",
+        "url": "https://web.archive.org/web/2026/https://www.passports.govt.nz/passport-costs , https://web.archive.org/cdx/search/cdx?url=passports.govt.nz/passport-costs",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "connection reset; the proxy's relay log names web.archive.org:443, 'tunnel closed (code 1006, Connection ended)'. archive.org's availability API answered, naming a capture of 1 October 2026 (20261001231111) that couldn't then be read"
+      },
+      {
+        "office": "NZ",
+        "url": "https://www.dia.govt.nz/diawebsite.nsf/wpg_URL/Services-Passports-Index",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "301 to passports.govt.nz, the Cloudflare challenge"
+      },
+      {
+        "office": "NZ",
+        "url": "https://www.dia.govt.nz/Resource-material-Regulatory-Impact-Statements-Index",
+        "tried": "2026-10-17",
+        "kind": "unavailable",
+        "why": "read; it lists no regulatory impact statement for the 2025 fees (the 2022 review's is there), so DIA publishes no 2025 schedule of the priority fee outside the blocked regulations"
+      }
+    ],
+    "leads": [
+      "Search extracts of the Washington embassy's and the Seattle consulate's pages: $62 for a ten-year passport from 1 July 2026, $60 online; they agree with the ordinance, which is the source.",
+      "Search extracts of SL 2025/75: the Schedule's fees exclusive of GST; the priority fee $214.78 for an application lodged in New Zealand or online, $314 in London or Sydney.",
+      "Search extracts of passports.govt.nz/passport-costs: 'If you are a non-resident for New Zealand tax purposes and apply online, GST is not included in your fee.'"
+    ]
+  }
 }

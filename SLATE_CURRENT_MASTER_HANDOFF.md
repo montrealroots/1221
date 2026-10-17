@@ -1,16 +1,132 @@
-# Read First: Brief 11, Finishing The Current Build Against A Fixed Checklist, 2026-10-17
+# Read First: Brief 12, Resolving The Remaining Decisions And Completing The Authorized Build, 2026-10-17
 
 **This section is the current status, and where a new session starts.** Every section below is history. It was written
-at the end of the owner's "Finish The Current Build Against A Fixed Checklist"
-(`docs/verification/briefs-2026-10-16/11-finish-the-current-build-against-a-fixed-checklist.txt`, kept verbatim). That
-brief was worked on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `0e7ff7c2` (#37's merge), and put to the owner
-in pull request #38 (https://github.com/yvcbcjhsy7-prog/1221/pull/38). **Nothing of it is merged or deployed**, and neither happens without the owner.
+at the end of the owner's "Resolve The Remaining Decisions And Complete The Authorized Build"
+(`docs/verification/briefs-2026-10-16/12-resolve-the-remaining-decisions-and-complete-the-authorized-build.txt`, kept
+verbatim), worked on `claude/peaceful-hamilton-59zdbb` from `main` at `9302b29c` (#38's merge). It is pushed and in
+pull request #39 (https://github.com/yvcbcjhsy7-prog/1221/pull/39) for the owner. **Nothing of it is merged, and nothing is deployed:** each is the owner's word.
 
 ## 1. The Repository
 
-- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `0e7ff7c2`.
-- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 11's commits on `0e7ff7c2`
-  (`git log --oneline 0e7ff7c2..origin/claude/peaceful-hamilton-59zdbb`). They are pushed, and never force-pushed.
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `9302b29c`, #38's merge,
+  checked on 2026-10-17. No pull request was open before brief 12's.
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 12's commits on `9302b29c`
+  (`git log --oneline 9302b29c..origin/claude/peaceful-hamilton-59zdbb`), pushed and never force-pushed. Two areas,
+  acting and advice, were merged into it with merge commits from their clones.
+- **The tested code is `ed24ff3b`'s.** The final runs, the built app and the advice's fresh set ran on it. The gate ran
+  on `ac79bf4a`, with only documents changed in between: 376 of 376 files, 4,566 of 4,566 tests, the completion matrix
+  holding, exit 0 (`runs/gate.txt`). Only documents changed after it. Each run's commit, command, exit and seed are in
+  `docs/verification/resolution-2026-10-17/runs/exits-*.txt`, and the gate's in `runs/gate.txt`.
+- **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
+  worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
+
+## 2. Where It Stands
+
+**Completion, by the matrix:** 574 of 599 rows in scope Implemented And Verified (95.8%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
+
+- **Against the frozen baseline** (brief 11's, the matrix at `0e7ff7c2`, 608 rows in scope): **572 of 608 (94.0%) Implemented And Verified**; at the baseline it was 530 (87.1%), and at brief 12's start 567 (93.2%).
+- **The 46 actionable rows, each in exactly one category** (`docs/verification/resolution-2026-10-17/RECEIPT.md`, by
+  `receipt.py`): 39 closed by implementation or verification, 4 superseded by the owner's authorization, 1 scope resolution, 2 research assumptions and 0 remaining.
+- **Decision 4's 23 rows are unchanged**, and so are brief 11's 9 administrative rows, counted apart.
+- **The game is not complete.** What remains is in section 4.
+
+## 3. What Brief 12 Did
+
+- **Section 1, restrained acting** (`acting-criteria.md`, written before anything was measured, and `acting-result.json`):
+  - ST6-R (a), (c), (e) and (g) are superseded and Explicitly Deferred, with their results kept. They were not passed.
+  - Each replacement, ST6-R2, covers every piece a player can play restrained: 784 readings, five actors named first.
+  - **ST6-R2.a** and **ST6-R2.g** are verified on their own evidence. **ST6-R2.c** and **.e** are the owner's (section 4).
+  - Brief 11's option 2 wasn't adopted as it stood. Its frame and (e)'s diversity floors were.
+  - Nothing judged moved: ST6-R's, ST3-R's and the stage's outputs are byte for byte brief 11's on the tested commit.
+- **Section 2, the advice** (`advice-criteria.md`, written before any test or code it governs):
+  - each owner bullet became a clause that can fail: F1 to F6 and H1 to H6;
+  - the advice now says what its forecast assumes of the work, which take it reads as if prepared, and whether
+    preparation, training or both deserve attention;
+  - a change in its forecast is worked out in parts by the input that moved;
+  - the fresh set, adv-v-0 to 119, was run once on the tested commit: every clause on 120 of 120, 0 stale reads, 0
+    unexplained changes. The verdict was "both" on all 120;
+  - brief 11's held-out set is regression coverage now, and gave its figures exactly;
+  - five players are held in the gate, each across a save and a load: one who follows, one who ignores, one who
+    partly follows, one who changes their work, and one who reaches mastery.
+- **Section 3, health.enroll** (`health-criteria.md`, its finding committed before the code):
+  - **The branch served no necessary purpose,** so it alone was cut. No save holds a month met by it, nothing else read
+    it, and 80 paid hours always pass the $580 income test.
+  - **The notices name the player's route:** the School, income, SNAP or a hospital stay.
+  - **Verified playable journeys** (the student, eligibility, enrollment, renewal, hardship) are listed apart from the
+    **internally tested safeguards** (`RECEIPT.md`).
+  - **A second reader verified it,** and it is a scope resolution. Decision 4 wasn't touched.
+- **Section 4, documents** (`research-criteria.md`, `research-result.json`; no institution was contacted):
+  - **Japan's fee from the United States is a verified fact:** US$62 from 2026-07-01, by MOFA's ordinance on e-Gov.
+  - **Connecticut's non-citizen card term remains SLATE's labelled assumption:** no source publishes it. It runs to the
+    end of lawful presence (`NONCITIZEN_ID.toLawfulPresence`).
+  - **New Zealand's GST and urgent fee remain SLATE's labelled assumptions** (`NZ_FROM_ABROAD`): blocked and
+    unavailable, kept apart.
+  - **Each value is read when an application is made.** A card or fee already issued keeps it, and each is tested
+    through issuance, expiry, charging, a duplicate and a save and load.
+  - **SLATE has no state ID renewal:** a card is applied for anew. That's recorded, not added, as new scope.
+- **Section 5, the checklist:** every remaining actionable row was worked, and none is closed on approval alone.
+  - **Added work, each a defect or a dependency, is recorded apart** (`docs/verification/resolution-2026-10-17/README.md`):
+    - SNAP's and the tutorial's offers of work;
+    - the audit pipeline's "Still open" on 43 verified rows;
+    - the advice's field names, which the cohesion guard read as a person's genres;
+    - the handoff's stale statements about `main` and its pull requests.
+- **Section 6, the final validation** (`runs/README.md`): on the tested commit, every step exit 0.
+  - **The build,** and the 14 scenario saves made again.
+  - **The built app,** 76 of 76 steps at 1440 and at 390.
+  - **The long runs,** byte for byte brief 11's.
+  - **The advice's runs** and the acting measurement.
+  - **The gate,** last, on `ac79bf4a`: 376 of 376 files, 4,566 of 4,566 tests, exit 0.
+- **Section 7, the walkthrough:** `docs/verification/resolution-2026-10-17/PLAYTEST.md`.
+  - It is a route for the owner on a local build, with what to expect and what to report.
+  - Each step is played by the built app's acceptance run.
+
+## 4. What Remains, And What It Waits On
+
+- **ST6-R2.c and ST6-R2.e: the owner's two questions** (`acting-result.json`, the matrix's rows).
+  - **(c):** should its strict reading name the grain's hundredth as a documented limit? Ten brief readings at ±0.01
+    don't move, and none moves the wrong way. And should "unrelated" read as an ability carrying under the equal budget's
+    1/12? As written, specialists are ahead on 65 of 6,344 pairs (1.02%, against 1%), each where the ability carries
+    between 1/12 and a tenth; under 1/12, none of 5,101 is.
+  - **(e):** should "more than the even actor" be read only where the even actor has room? On stage it already has
+    every suitable piece, 66 of 66.
+  - Both readings were seen after the run, so they're proposed, not adopted. The parts that hold are in the gate.
+- **Decision 4, unchanged** (23 rows): its twelve audit rows, three decision rows and the banking area's eight items.
+- **Nothing else is open in the actionable portion.** The matrix's 20 rows still Implemented, Verification Incomplete
+  are all decision 4's.
+- **Merging and deploying are the owner's.** The pull request waits for "Merge it."; Base44 deployment waits for the
+  owner and the gate (rule 14). Read section 10 further down first.
+
+## 5. The Rules, The Schema And The Model
+
+CLAUDE.md counts eighteen checks; none was added. The save schema is unchanged: **94** in both places. RULESET is
+**evaluation-11**: nothing the judge reads changed. A save gains two optional things, both read safely when absent:
+- the advice's note keeps the state it was made in (`Experience.advised`'s `state`: the levels, stamina's full, genre
+  knowledge and the latest work), so a change since can be worked out in parts;
+- nothing else: health.enroll's `'work'` engagement went with its branch, and a save never held it, since it was worked
+  out each month and not kept.
+
+The matrix gained brief 12's results (`criteria.py` reads `resolution-2026-10-17/`), its replacement rows as rows of their
+own, and brief 12's final runs. The audit's fold reads brief 12's folder, and `merge-review.cjs` settles the open gaps
+of a row its final check verified.
+
+# Earlier: Brief 11, Finishing The Current Build Against A Fixed Checklist, 2026-10-17
+
+**This section was the current status until brief 12** (**Superseded 2026-10-17:** the current status is the first
+section above, brief 12's, and so is the completion line; the line below is brief 11's as it was). Every section below
+is history. It was written
+at the end of the owner's "Finish The Current Build Against A Fixed Checklist"
+(`docs/verification/briefs-2026-10-16/11-finish-the-current-build-against-a-fixed-checklist.txt`, kept verbatim). That
+brief was worked on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `0e7ff7c2` (#37's merge), and merged to
+`main` in pull request #38 (https://github.com/yvcbcjhsy7-prog/1221/pull/38, `9302b29c`) at the owner's word ("Merge it.",
+2026-10-17); until then this said nothing of it was merged. **Merged isn't deployed: nothing is.**
+
+## 1. The Repository
+
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `9302b29c`, #38's merge;
+  until then this said `0e7ff7c2`.
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carried brief 11's commits on `0e7ff7c2`
+  (`git log --oneline 0e7ff7c2..57bcff08`), pushed and never force-pushed, and was merged with a merge commit. It was
+  restarted from `9302b29c` for this correction.
 - **The tested code,** each check on the commit it ran on, no source file changed after it:
   - the judge's criteria on `81eadac9` (`docs/verification/completion-2026-10-16/final/`);
   - the long runs and the advice's cases on `3de26e0b` (`runs/`, `advice/`);
@@ -86,6 +202,10 @@ baseline fallen back. `batches.md` reports each batch.
 
 ## 4. What Remains, And What It Waits On
 
+(**Superseded 2026-10-17:** brief 12 resolved every row below but decision 4's. ST6-R (a), (c), (e) and (g) were
+superseded by ST6-R2, F2-A10 (f) and (h) closed on the owner's clarified criteria, health.enroll a scope resolution,
+and both document rows research assumptions. What remains now is in brief 12's section above.)
+
 - **Decision 4, unchanged** (23 rows):
   - its twelve audit rows, out of a player's reach;
   - its three decision rows;
@@ -141,6 +261,8 @@ at the owner's word ("Merge it.", 2026-10-16). **Merged isn't deployed: nothing 
 ## 1. The Repository
 
 - **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `0e7ff7c2`, #37's merge.
+  (**Superseded 2026-10-17:** `main` is at `9302b29c`, #38's merge, checked with `git fetch` on brief 12's first day.
+  The current status is the first section of this file.)
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 10's commits on `44dcd973`
   (`git log --oneline 44dcd973..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in pull request #37
   (https://github.com/yvcbcjhsy7-prog/1221/pull/37), merged with a merge commit at the owner's word (until then this
@@ -259,9 +381,12 @@ measured it then.
 ## 1. The Repository
 
 - **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `64b69fc7`.
+  (**Superseded 2026-10-17:** #36 was merged as `44dcd973`, and `main` is at `9302b29c`, #38's merge. The current
+  status is the first section of this file.)
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 09's commits on `64b69fc7`
   (`git log --oneline 64b69fc7..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in pull request #36
-  (https://github.com/yvcbcjhsy7-prog/1221/pull/36), which the owner hasn't merged. **The tested commit is `7c1198a2`**; what came after it is the account, this handoff and the
+  (https://github.com/yvcbcjhsy7-prog/1221/pull/36), which the owner hasn't merged (**Superseded:** merged as
+  `44dcd973`). **The tested commit is `7c1198a2`**; what came after it is the account, this handoff and the
   runs' records.
 - **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
   worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees. Two
@@ -349,6 +474,7 @@ Not deployed. Base44 deployment happens on the owner's word, after the gate pass
    work plan (section 12), the briefs. Preserve the stash, worktrees and local files.
 2. **The owner's decisions** in section 3, each with what it would change written beside it in `brief-09.md`.
 3. **The pull request**, merged only at the owner's word; a follow-up after a merge starts a fresh branch from `main`.
+   (**Superseded:** #36, merged at the owner's word as `44dcd973`.)
 4. **The matrix's What's Left**, row by row.
 
 # Earlier: The Integration And Acceptance Pass, 2026-10-16
@@ -476,7 +602,8 @@ after the sweep, on `claude/zen-mccarthy-i88ujw`, and merged in pull request #34
 ## 1. The Repository, Verified On 2026-10-16
 
 - **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`.
-- **`main`:** #34's merge commit, the first on `main` after `297452ed`. A file can't name the commit that merges it: the
+- **`main`:** #34's merge commit, the first on `main` after `297452ed`. (**Superseded 2026-10-17:** that was `ef784ccd`, and
+  `main` is at `9302b29c`, #38's merge. The current status is the first section of this file.) A file can't name the commit that merges it: the
   handoff's receipt names it, and `git log origin/main -1` shows it. Its tree is the tree of #34's head, which the gate
   passed on (section 7).
 - **The working branch,** `claude/zen-mccarthy-i88ujw`, is wholly in `main`. Nothing of this session's is unmerged.
@@ -491,7 +618,8 @@ after the sweep, on `claude/zen-mccarthy-i88ujw`, and merged in pull request #34
   | #34 | the first after `297452ed` | this handoff: the briefs verbatim, the sweep's account, two tools |
 
   Before them, #28 and #29 merged `claude/current-scope-acceptance` and `claude/remaining-acceptance`.
-- **Open pull requests:** none, checked before #34 was opened.
+- **Open pull requests:** none, checked before #34 was opened. (On 2026-10-17, during brief 12, still none: #35 to #38
+  were each merged.)
 - **Branches with commits not in `main`,** checked against the full history. The container's clone was shallow, and
   every branch looked unmerged until `git fetch --unshallow`. None is this session's, and each was left as it is:
   - the seventeen `base44/setup-*` branches, one or two commits each, the Base44 platform's own setup of 2026-09-03 to

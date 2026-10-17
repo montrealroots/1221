@@ -322,7 +322,7 @@ describe('HUSKY D kept at its renewal through work, read over Connecticut’s si
     return sim;
   };
 
-  it('FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice', () => {
+  it('FIXTURE: $600 of wages in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with the same wages in August, outside the six months, the same notice', () => {
     const worked = holding('rhb-kept');
     wagesPosted(worked, at(2026, 11, 20, 17), 600_00, 80); // FIXTURE: November's work
     for (const m of ['2026-09', '2026-10', '2026-11', '2026-12', '2027-01', '2027-02']) expect(earningsOf(worked.player).months[m] ?? 0).toBeLessThan(580_00);
@@ -334,7 +334,8 @@ describe('HUSKY D kept at its renewal through work, read over Connecticut’s si
       expect(coverOn(worked.player, t)).toBe('medicaid');
     }
     expect(healthOf(worked.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2026, 3, 1, 0), band: 'low', renewAt: at(2027, 9, 1, 0) });
-    expect(titled(worked, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 3, 1, 0, 30), 'HUSKY D is renewed to its next renewal, September 1, 2027: last month’s income is within what it allows, and November 2026 met its work rules by 80 hours’ work.']]);
+    // Until 2026-10-17 “by 80 hours’ work”: since then the hours aren’t read, and the $600 they were paid is (brief 12, health-criteria.md).
+    expect(titled(worked, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 3, 1, 0, 30), 'HUSKY D is renewed to its next renewal, September 1, 2027: last month’s income is within what it allows, and November 2026 met its work rules by its income, $580.00 or more.']]);
     expect(titled(worked, 'A Notice Of Noncompliance')).toEqual([]);
     expect(memoed(worked, /premium/i)).toEqual([]);
     const reloaded = loadSave(JSON.parse(snap) as never);
@@ -347,7 +348,7 @@ describe('HUSKY D kept at its renewal through work, read over Connecticut’s si
     expect(healthOf(idle.player).pending).toMatchObject({ kind: 'renewal', noticeAt: at(2027, 3, 1, 0, 30), decideAt: at(2027, 4, 5, 0), months: ['2027-02', '2027-01', '2026-12', '2026-11', '2026-10', '2026-09'] });
     idle.advanceTo(at(2027, 4, 30, 12));
     expect(coverOn(idle.player, idle.now)).toBe('medicaid');
-    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 4, 5, 0), 'No month from September 2026 to February 2027 showed 80 hours’ work, $580.00 of income, school at least half-time or an exception, and none was shown by April 4, 2027: HUSKY D ends on April 30, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
+    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 4, 5, 0), 'No month from September 2026 to February 2027 showed $580.00 of income, time at the School or an exception, and none was shown by April 4, 2027: HUSKY D ends on April 30, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
     idle.advanceTo(at(2027, 5, 1, 9));
     expect(coverOn(idle.player, idle.now)).toBeUndefined();
     expect(healthOf(idle.player).program!.until).toBe(at(2027, 5, 1, 0));

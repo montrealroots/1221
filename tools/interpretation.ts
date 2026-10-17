@@ -6,7 +6,11 @@
  * strengths were set) and, held out, on the further briefs (`brief-<genre>-2` and on), which weren't. `--off` sets the
  * grain's strength and its rehearsal shift to 0: the way of playing as it was before, which the criteria should fail.
  *
- *   npx vite-node tools/interpretation.ts -- [--off] [--fresh] [--stage] [--out file.json] [--md file.md] [--st3 file.json] [--st6 file.json]
+ *   npx vite-node tools/interpretation.ts -- [--off] [--fresh] [--stage] [--out file.json] [--md file.md] [--st3 file.json] [--st6 file.json] [--st6r2 file.json [--st6r2-only]]
+ *
+ * `--st6r2` (from 2026-10-17, brief 12): ST6-R2, the replacements of ST6-R (a), (c), (e) and (g)
+ * (docs/verification/resolution-2026-10-17/acting-criteria.md), every part on every brief reading (`measureST6R2`);
+ * `--st6r2-only` writes it and stops before the measures above.
  */
 import { writeFileSync } from 'node:fs';
 import { BRIEFS, type Brief } from '../src/engine/content/briefs';
@@ -27,7 +31,7 @@ import { difficultyOf } from '../src/engine/systems/coursework';
 import { materialContext } from '../src/engine/systems/material';
 import { misfitOf, type Playing } from '../src/engine/systems/material';
 import { sceneOfMaterial, suitabilityOf } from '../src/engine/systems/interpretation';
-import { measureST3R, measureST6R } from './acting-criteria';
+import { measureST3R, measureST6R, measureST6R2 } from './acting-criteria';
 
 const flag = (n: string) => process.argv.includes(`--${n}`);
 const arg = (n: string, d: string) => { const i = process.argv.indexOf(`--${n}`); return i >= 0 ? process.argv[i + 1]! : d; };
@@ -358,6 +362,11 @@ function measureST6Cases() {
   };
 }
 
+const st6r2 = arg('st6r2', '');
+if (st6r2) {
+  writeFileSync(st6r2, `${JSON.stringify(measureST6R2(), null, 1)}\n`);
+  if (flag('st6r2-only')) process.exit(0);
+}
 const out = { strength: GRAIN.strength, prep: GRAIN.prep, I2: measureI2(BRIEFS), designed: measure(first), heldOut: measure(held), ...(flag('fresh') ? { freshHeldOut: measureFresh() } : {}), ...(flag('stage') ? { stage: measureStage() } : {}) };
 const st3 = arg('st3', '');
 // From 2026-10-16, brief 10: ST3-R and ST6-R as the owner's approved criteria write them (`tools/acting-criteria.ts`),

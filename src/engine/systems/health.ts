@@ -408,17 +408,21 @@ export const PREMIUM_CREDIT_RULES = { floor: 1, eligibleAliensFrom: 2027 } as co
  * 2 February (found by play). Since 2026-10-16 a month is read by `monthEngagement`, and the months by `engagement`:
  * Connecticut's one before an application and six before a renewal (`lookBack`, `PUBLIC_COVER.workLookBack`).
  */
-/** How a month meets Medicaid's work rules, or nothing: by work, by income, at school, or by an exception. */
-export type EngagedBy = 'work' | 'income' | 'school' | 'age' | 'snap' | 'hardship';
+/** How a month meets Medicaid's work rules, or nothing: by income, at school, or by an exception. */
+export type EngagedBy = 'income' | 'school' | 'age' | 'snap' | 'hardship';
 /**
  * Whether a month meets Medicaid's community engagement, and how (from 2026-10-16), read from what SLATE holds as the
  * State's own records would (42 CFR 435.557, ex parte):
- * - 80 hours' work (435.552(a)(1)), the hours of the wages paid in it (`workedBetween`);
  * - a month's income of 80 hours at the federal minimum wage, $580 (435.552(f)), which is "the individual's MAGI-based
  *   income" (435.552(f)(2)), earned and unearned: CMS "considered counting only earned income" and didn't
  *   (CMS-2454-IFC, read 2026-10-16). It's the month's income the record holds, as `programFor` reads it, with any wages
- *   posted that the record doesn't. Until 2026-10-16 it was work's pay alone, and interest, a benefit or a pension of
- *   $580 or more didn't count;
+ *   posted that the record doesn't (`workedBetween`): a save from the day-job builds of 24 to 26 September 2026 keeps
+ *   their paychecks and not their pay record. Until 2026-10-16 it was work's pay alone, and interest, a benefit or a
+ *   pension of $580 or more didn't count. Until 2026-10-17 80 hours' work (435.552(a)(1)), the hours the month's wages
+ *   were paid for, met it first, whatever they paid. Brief 12 had that branch cut as serving no necessary purpose
+ *   (docs/verification/resolution-2026-10-17/health-criteria.md): no wage SLATE has paid, in play or in any save's
+ *   history, came to under $7.25 an hour where these rules are read, so 80 paid hours always met the $580 here too, and
+ *   the branch changed only the notice's words;
  * - school at least half-time, any of the month at the School (`enrolledIn`);
  * - under 19, or 65 or over, for any part of it: the adult group is 19 to 64 (435.551, 435.553(a)(1)). SLATE's HUSKY D
  *   at 65 stands in for HUSKY C, which it doesn't keep; no life at Yale is under 21, so under 19 is a guard;
@@ -440,11 +444,10 @@ export function monthEngagement(sim: Simulation, person: Person, key: string, cu
   const yearsAt = (t: Instant) => (t - person.birthInstant) / (365.2425 * MS_DAY);
   if (yearsAt(from) < 19 || yearsAt(until - 1) >= 65) return 'age';
   if (enrolledIn(person, from, until)) return 'school';
-  const work = workedBetween(sim, person, from, until);
-  if (work.hours >= PUBLIC_COVER.workHours) return 'work';
+  const paid = workedBetween(sim, person, from, until).pay;
   const kinds = earningsOf(person).kinds?.[key];
   const recordedPay = kinds ? kinds.wages + kinds.workStudy : 0;
-  const income = (earningsOf(person).months[key] ?? 0) + Math.max(0, work.pay - recordedPay);
+  const income = (earningsOf(person).months[key] ?? 0) + Math.max(0, paid - recordedPay);
   if (income >= usd(PUBLIC_COVER.workEarnings, cur)) return 'income';
   const snap = sim.universe.transactions.some((t) => t.at >= from && t.at < until && t.memo === 'SNAP, the month, onto the EBT card' && t.postings.some((q) => sim.universe.accounts[q.accountId]?.ownerId === person.id));
   const claims = [person.unemployment?.claim, ...(person.unemployment?.past ?? [])].filter((c) => c !== undefined);
@@ -990,9 +993,12 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
   }
 }
 
-/** How a month met the work rules, in a sentence (`renewProgram`, `health.request_hardship`). */
+/**
+ * How a month met the work rules, in a sentence (`renewProgram`, `health.request_hardship`). Until 2026-10-17 a month of
+ * 80 hours' work was said "by 80 hours’ work", which `monthEngagement` no longer reads.
+ */
 const BY_WORDS: Readonly<Record<EngagedBy, string>> = {
-  work: 'by 80 hours’ work', income: 'by its income, $580.00 or more', school: 'at the School', age: 'by your age, which they aren’t asked of',
+  income: 'by its income, $580.00 or more', school: 'at the School', age: 'by your age, which they aren’t asked of',
   snap: 'by SNAP, whose work rules you were under', hardship: 'by a stay in hospital, on your request',
 };
 const capital = (s: string): string => `${s.charAt(0).toUpperCase()}${s.slice(1)}`;
@@ -1085,8 +1091,12 @@ function endAhead(sim: Simulation, person: Person, prog: NonNullable<HealthRecor
   if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Public Cover Ends', body: `${why}: ${name} ends on ${formatDate(lastDayBefore(until), HOME)}, ${lawfullyPresent(person) ? `and losing it opens ${ENROLLMENT.specialDays} days to enroll in the marketplace${credit}` : 'and out of status the marketplace won’t take you'}.`, importance: 80, route: '/workspace/papers' });
 }
 
-/** The work rules' words, for the notices: "80 hours’ work, $580.00 of income, school at least half-time or an exception". */
-const workWords = (cur: string): string => `${PUBLIC_COVER.workHours} hours’ work, ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of income, school at least half-time or an exception`;
+/**
+ * The work rules' words, for the notices and Enroll's refusal: "$580.00 of income, time at the School or an exception",
+ * what a player can meet them with (from 2026-10-17, brief 12). Until then they began "80 hours’ work", which nobody off
+ * the School can do in SLATE and nobody at it needs, and said "school at least half-time" for the School.
+ */
+const workWords = (cur: string): string => `${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of income, time at the School or an exception`;
 /** The months assessed, in a sentence: "in December 2026", "in any month from May to October 2027". */
 const inMonths = (months: string[]): string => (months.length > 1 ? `in any month from ${monthsWords(months)}` : `in ${monthsWords(months)}`);
 

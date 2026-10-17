@@ -1176,11 +1176,10 @@
           "The two-step flow pressed end to end through its own handlers, and tied to its rows (both of the skeptic's weak tests)",
           "The run-out license reached by play, not by hand",
           "The stale entry and the stale tests field: see claimCorrection, which carries both (the skeptic's 'Tested By not corrected')",
-          "Round one's closures stand: statuses and the stolen flag; the bank refusal through bank.open_current; a second report refused across a reload; the F-1 refused and spared by the passport cascade"
+          "Round one's closures stand: statuses and the stolen flag; the bank refusal through bank.open_current; a second report refused across a reload; the F-1 refused and spared by the passport cascade",
+          "Settled at the final check: [needs engine change] documents.report_lost checks `doc.status !== 'valid'`, not inForce (documents.ts:335). A license run out by play (15 June 2028) was reported lost through the command, though the screen hides the button on a Run Out row (Documents.tsx:67, 76). A report would then let replace_license (identity.ts:221, which keeps the term) charge for a copy that has already run out. Reported below, with a failing test"
         ],
-        "gapsOpen": [
-          "[needs engine change] documents.report_lost checks `doc.status !== 'valid'`, not inForce (documents.ts:335). A license run out by play (15 June 2028) was reported lost through the command, though the screen hides the button on a Run Out row (Documents.tsx:67, 76). A report would then let replace_license (identity.ts:221, which keeps the term) charge for a copy that has already run out. Reported below, with a failing test"
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -2403,11 +2402,10 @@
           "The second payment's order wasn't asserted: $100.00 after the tax is paid goes all to the penalty with the interest left as it was, and the blank payment pays the penalty's remaining $45.28 before any interest",
           "Still Owed was checked only within a 25-cent band: the penalty is now asserted to the cent from IRC 6651 ($179.68 on 16 August 2028), and the assessment's whole from the statute ($376.73), the latter failing as a defect",
           "The test's expected interest mirrored SLATE's (interest on the tax alone): now worked from IRC 6601(e)(2)(B), interest on the failure-to-file addition from the due date (irs.gov/payments/interest: the Failure to File penalty is due on the return due date)",
-          "The IRS Pay never pressed with a typed part: pressed on the server-rendered Returns tab three times (typed $200.00, typed $100.00, blank), the standard this pass holds a screen to; the built app's acceptance script still presses only Connecticut's field, which is a tool outside this one file"
+          "The IRS Pay never pressed with a typed part: pressed on the server-rendered Returns tab three times (typed $200.00, typed $100.00, blank), the standard this pass holds a screen to; the built app's acceptance script still presses only Connecticut's field, which is a tool outside this one file",
+          "Settled at the final check: [needs engine change] The IRS's figures on a late return charge interest on the tax alone; IRC 6601(e)(2)(B) charges it from the due date on the failure-to-file addition too, so Still Owed, and Pay in full, is $16.14 short on the London student's 2026 substitute ($360.59 assessed against $376.73)"
         ],
-        "gapsOpen": [
-          "[needs engine change] The IRS's figures on a late return charge interest on the tax alone; IRC 6601(e)(2)(B) charges it from the due date on the failure-to-file addition too, so Still Owed, and Pay in full, is $16.14 short on the London student's 2026 substitute ($360.59 assessed against $376.73)"
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -2865,11 +2863,10 @@
           "The refusals 'You’ve applied for OPT already', 'OPT follows a degree completed…', the citizen's and 'It opens …' were untested: each asserted through the command, the first two also on WorkPane's button",
           "Every test reached OPT with the degree set by hand: the London student is played three years with the School's evaluations, terms and Commencement all its own, conferred on 21 May 2029 at 10 AM by the clock, having applied on Papers on 5 March; the only setup is the coursework prepared at midnight and the life kept rested, which stand in for a player at work",
           "setStanding's reschedule of the status look was never reached on the way to OPT: the look armed at createSave is cancelled at Commencement and a new one set at the program's end, 31 May 2029",
-          "The audit row's changes still cited permission.ts:361-382: corrected below"
+          "The audit row's changes still cited permission.ts:361-382: corrected below",
+          "Settled at the final check: [deferred or removed] The status running to OPT's expiry plus 60 days is never played: the career and its jobs went in the scope reset of 2026-10-09, so OPT_WEEK counts every week idle ('every day is one without work now', permission.ts) and ends every OPT on its 91st day, long before its twelve months. The expiry plus 60 is read only as WorkPane's 'Your US Status Ends August 2, 2030' (first round) and as the look's place at the expiry (here)"
         ],
-        "gapsOpen": [
-          "[deferred or removed] The status running to OPT's expiry plus 60 days is never played: the career and its jobs went in the scope reset of 2026-10-09, so OPT_WEEK counts every week idle ('every day is one without work now', permission.ts) and ends every OPT on its 91st day, long before its twelve months. The expiry plus 60 is read only as WorkPane's 'Your US Status Ends August 2, 2030' (first round) and as the look's place at the expiry (here)"
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [],
         "mutations": {
@@ -3061,11 +3058,10 @@
           "[only a fixture reaches it] The marketplace plan the clock ends was bought on $6,000 of May wages set by hand. It is now bought on played income: the F-1 takes her CD’s interest, $10,110.10, and enrolls in her fifteen days’ grace. Capital One, which carries the citizen over the line, won’t open an F-1’s account; creation gave her Chase when Capital One was asked for. With her savings left at Chase, Wells Fargo or Bank of America, September came to $435.44.",
           "[stale claim] The papers-fixes ‘fifteen days’ title and header were fixed on 2026-10-13 (its header now says so in the past tense).",
           "[only a fixture reaches it] usWorkAuthorized’s out-of-status line went on 2026-10-13 (permission.ts:109-112 records it).",
-          "[deferred or removed] authorizationFor: the row’s downstream already says, in the past tense, that it was named until 2026-10-13."
+          "[deferred or removed] authorizationFor: the row’s downstream already says, in the past tense, that it was named until 2026-10-13.",
+          "Settled at the final check: [only a fixture reaches it] A marketplace plan that had begun, ended out of status: in every played path a plan bought in status starts after status ends. Yale Health outlasts the grace after a withdrawal (30 days against 15) and after the degree (31 July against 60 days from Commencement), so the plan ended out of status has never begun. A begun plan ends out of status only after OPT, which needs the degree three years on, and OPT has had no work since 2026-10-09. The 1 December notice, ‘Your Health Cover Ended: You’re uncovered from December 1, 2026’, also comes a month after her Yale Health ended on 1 November. It was measured here, not asserted, and isn’t this row’s claim."
         ],
-        "gapsOpen": [
-          "[only a fixture reaches it] A marketplace plan that had begun, ended out of status: in every played path a plan bought in status starts after status ends. Yale Health outlasts the grace after a withdrawal (30 days against 15) and after the degree (31 July against 60 days from Commencement), so the plan ended out of status has never begun. A begun plan ends out of status only after OPT, which needs the degree three years on, and OPT has had no work since 2026-10-09. The 1 December notice, ‘Your Health Cover Ended: You’re uncovered from December 1, 2026’, also comes a month after her Yale Health ended on 1 November. It was measured here, not asserted, and isn’t this row’s claim."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -3330,13 +3326,12 @@
           "The UTC month key was untested at a month's edge: a payment at 9 PM on 31 January in New Haven reads January by UTC (a defect)",
           "BC Income Assistance was never run: CAD 560 by the clock, 21 days after applying and 30 after, and its assets refusal",
           "tests/assistance.test.ts's drain() writes balances without postings: the EBT evidence here moves every balance by a posting and holds the card's balance to the sum of SNAP's payments less the groceries' draws, so the row's evidence no longer rests on that helper, which stays in its own file",
-          "The row's changes cited assistance.ts:361-401: corrected below"
+          "The row's changes cited assistance.ts:361-401: corrected below",
+          "Settled at the final check: [deferred or removed] The USD conversion (toSave/inLocal) is the identity in every SNAP claim: a save's currency is its starting city's, SNAP is kept in New York, California and Connecticut alone, and moving between countries went with travel in the scope reset of 2026-10-09, so no played save holds a SNAP claim in another currency",
+          "Settled at the final check: [needs engine change] SNAP reads the month before in UTC while the earnings record keys months in New Haven's time: a payment made between about 7 PM and midnight on a month's last day reads its own month so far",
+          "Settled at the final check: [needs engine change] No minimum benefit: an eligible one-person household whose 30% formula gives less than SNAP's least is paid that, or nothing, where 7 U.S.C. 2017(a) pays at least $25 in FY2027 ($24 in FY2026)"
         ],
-        "gapsOpen": [
-          "[deferred or removed] The USD conversion (toSave/inLocal) is the identity in every SNAP claim: a save's currency is its starting city's, SNAP is kept in New York, California and Connecticut alone, and moving between countries went with travel in the scope reset of 2026-10-09, so no played save holds a SNAP claim in another currency",
-          "[needs engine change] SNAP reads the month before in UTC while the earnings record keys months in New Haven's time: a payment made between about 7 PM and midnight on a month's last day reads its own month so far",
-          "[needs engine change] No minimum benefit: an eligible one-person household whose 30% formula gives less than SNAP's least is paid that, or nothing, where 7 U.S.C. 2017(a) pays at least $25 in FY2027 ($24 in FY2026)"
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {

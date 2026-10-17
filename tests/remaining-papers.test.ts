@@ -21,6 +21,12 @@
  *   SAVE's ten for somebody not a citizen, and a citizen's runs to her first birthday at least seven years on; until
  *   then a citizen's was in force at the counter, and a non-citizen's came on SAVE's tenth day.
  *
+ * - From later on 2026-10-17 (brief 12's KS-ct-idcard and KS-passport-fees, docs/verification/resolution-2026-10-17/
+ *   research-criteria.md): Japan's fee from the United States is the US$62 MOFA's ordinance sets (read on e-Gov), and
+ *   New Zealand's GST and urgent fee from abroad and Connecticut's term for somebody not a citizen are SLATE's
+ *   assumptions, one value each (`NZ_FROM_ABROAD`, `NONCITIZEN_ID.toLawfulPresence`), said so on Papers. TEST SETUP
+ *   turns a value as a correction would, inside the test and back after it: what was issued keeps its date, what was
+ *   charged stands, and what's applied for after takes the new value.
  * - From 2026-10-17 (brief 11's tax.s8.f1_status): a passport run out under an F-1 ends nothing, the status reading the
  *   program and its grace alone, played on a London-born student who keeps up to her passport's end in June 2028 (seed
  *   rp-f1-run-out-45; TEST SETUP: the work done each midnight and the student tended, as tests/remaining-school.test.ts
@@ -46,12 +52,13 @@ import { MS_DAY, MS_HOUR, instantFromZoned, type Instant } from '@/engine/core/t
 import { newLifeConfig, withFamily } from '@/engine/world/bootstrap';
 import { exchange } from '@/engine/content/currency';
 import { documentsOf, inForce, passportOf, photoIdOf, type PersonDocument } from '@/engine/systems/documents';
-import { US_STATUS_KIND, f1Of, usStatusEnds } from '@/engine/systems/permission';
+import { US_STATUS_KIND, businessDaysOn, f1Of, usStatusEnds } from '@/engine/systems/permission';
 import { PREP_DIMS } from '@/engine/content/coursework';
 import { courseworkOf } from '@/engine/systems/coursework';
 import { NONCITIZEN_ID, idCardExpires, idCardRefusal } from '@/engine/systems/identity';
 import { ID_CARDS } from '@/engine/content/identity';
-import { PASSPORTS_ABROAD } from '@/engine/content/passportsabroad';
+import { NZ_FROM_ABROAD, PASSPORTS_ABROAD } from '@/engine/content/passportsabroad';
+import { PASSPORTS } from '@/engine/content/passports';
 import { ssnRefusal } from '@/engine/systems/taxid';
 import '@/ui/looks/all';
 import { resolveLook, type Looked } from '@/ui/looks/registry';
@@ -254,15 +261,124 @@ describe('tax.s8.passport', () => {
 
   // Brief 11's KS-passport-fees (2026-10-17, docs/research/world/research-passports-abroad.json): the fees from abroad
   // read on the offices' own pages that day. Until then Iceland's and Brazil's were their fees at home, said to be
-  // assumed, and Latvia's the embassy in Ireland's.
-  it('FIXTURE: the offices’ terms from abroad read on 2026-10-17: Iceland’s 19,000 ISK and express 39,200 ISK in all, Brazil’s US$60, Latvia’s €140 (€115 under 20) in about eight weeks with no urgent service; Japan’s and New Zealand’s still said to be SLATE’s', () => {
+  // assumed, and Latvia's the embassy in Ireland's. Renamed later that day (brief 12, inputs/renames.json): until then
+  // 'FIXTURE: the offices’ terms from abroad read on 2026-10-17: Iceland’s 19,000 ISK and express 39,200 ISK in all,
+  // Brazil’s US$60, Latvia’s €140 (€115 under 20) in about eight weeks with no urgent service; Japan’s and New Zealand’s
+  // still said to be SLATE’s', when Japan's fee was the yen fee at SLATE's rate.
+  it('FIXTURE: the offices’ terms from abroad: Iceland’s 19,000 ISK and express 39,200 ISK in all, Brazil’s US$60, Latvia’s €140 (€115 under 20) in about eight weeks with no urgent service, read on 2026-10-17; Japan’s US$62 from 1 July 2026, its ordinance read on e-Gov later that day; New Zealand’s GST and urgent fee SLATE’s assumptions, one value each, said so', () => {
     expect(PASSPORTS_ABROAD['IS']).toMatchObject({ fee: 19000, currency: 'ISK', days: 6, daysEstimated: true, expedite: { extra: 20200, days: 2 } });
     expect(PASSPORTS_ABROAD['BR']).toMatchObject({ fee: 60, currency: 'USD', expedite: null });
     expect(PASSPORTS_ABROAD['LV']).toMatchObject({ fee: 140, youngFee: 115, currency: 'EUR', days: 56, daysEstimated: false, expedite: null });
-    // What no page settled stays said on the screen as SLATE's.
-    expect(PASSPORTS_ABROAD['JP']!.assumed.join(' ')).toMatch(/dollar fee wasn’t read/);
-    expect(PASSPORTS_ABROAD['NZ']!.assumed.join(' ')).toMatch(/GST/);
-    for (const iso of ['IS', 'BR', 'LV']) expect(PASSPORTS_ABROAD[iso]!.assumed.join(' ')).not.toMatch(/fees? (charged|wasn’t|weren’t)/);
+    // Japan's, read in MOFA Ordinance 4 of 2006 as amended from 1 July 2026: the United States's row, ten years on paper.
+    expect(PASSPORTS_ABROAD['JP']).toMatchObject({ fee: 62, currency: 'USD', expedite: null, assumed: [] });
+    expect(PASSPORTS_ABROAD['JP']!.basis).toContain('US$62 from 1 July 2026, the fee MOFA’s ordinance on passport fees abroad sets for the United States (US$60 applied for online)');
+    // New Zealand's: DIA's NZ$214.78 before GST, and SLATE's two assumptions, each one value, said on the screen as SLATE's.
+    expect(NZ_FROM_ABROAD).toEqual({ feeBeforeGst: 214.78, urgentBeforeGst: 214.78, gstRate: 0.15, gstCharged: true });
+    expect(PASSPORTS_ABROAD['NZ']).toMatchObject({ fee: 247, currency: 'NZD', days: 28, expedite: { extra: 247, days: 5 } });
+    expect(PASSPORTS_ABROAD['NZ']!.assumed.slice(0, 2)).toEqual([
+      'SLATE’s assumption, not DIA’s published policy: GST is charged. DIA charges none to a non-resident for New Zealand tax applying online, and whether you’re one turns on a home in New Zealand that SLATE doesn’t keep.',
+      'SLATE’s assumption: the urgent fee from overseas is the standard fee, as DIA’s 2022 schedule set it for an application online.',
+    ]);
+    for (const iso of ['IS', 'BR', 'LV', 'JP']) expect(PASSPORTS_ABROAD[iso]!.assumed.join(' ')).not.toMatch(/fees? (charged|wasn’t|weren’t)|SLATE’s assumption/);
+  });
+
+  it('PLAYER JOURNEY: a Tokyo-born student renews her Japanese passport on Papers from New Haven: US$62, the fee MOFA’s ordinance sets for the United States from 1 July 2026; no faster service, the command refused; a second application refused while hers is decided; charged once and issued on its day across a reload, the old one canceled then; until later on 2026-10-17 the window fee in Japan, 9,300 yen, at SLATE’s rate, the same $62.00 said to be SLATE’s', () => {
+    const sim = life('rp-jp-a', 'jp-13-tokyo');
+    const old = passportOf(sim.player, sim.now)!;
+    expect(old.issuer).toBe('JP');
+    // SLATE's rate put the yen fee at the same $62.00: what changed is whose figure it is, the ordinance's, not SLATE's
+    // conversion of the fee in Japan, and the fine print no longer says it's SLATE's.
+    expect(usdOf(9_300_00, 'JPY')).toBe(62_00);
+    const { issuer, name } = PASSPORTS['JP']!;
+    const screen = drawn(sim, PassportPane);
+    expect(screen).toContain('A New One $62.00 About 30 days; good for 10 years; from abroad');
+    expect(screen).toContain(`Faster Not Offered ${issuer} sells no faster service to an applicant abroad`);
+    expect(screen).toContain('At a Japanese embassy or consulate in the US, on paper: US$62 from 1 July 2026, the fee MOFA’s ordinance on passport fees abroad sets for the United States (US$60 applied for online)');
+    expect(screen).not.toContain('yen fee');
+    expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It']);
+    const before = held(sim);
+    expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe(`${issuer} sells no faster service to an applicant abroad.`);
+    expect(held(sim)).toBe(before);
+    const applied = sim.now;
+    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied, for \$62\.00\. It comes by /)]);
+    expect([taken(sim, name), before - held(sim)]).toEqual([[62_00], 62_00]);
+    expect(refusal(sim, 'documents.apply_passport')).toBe('An application is in already.');
+    expect(taken(sim, name)).toEqual([62_00]);
+    const again = reload(sim);
+    again.advanceTo(applied + 30 * MS_DAY - MS_HOUR);
+    expect(passportOf(again.player, again.now)?.id).toBe(old.id);
+    again.advanceTo(applied + 30 * MS_DAY + MS_HOUR);
+    const renewed = passportOf(again.player, again.now)!;
+    expect(renewed.id).not.toBe(old.id);
+    expect(documentsOf(again.player).find((d) => d.id === old.id)!.status).toBe('cancelled');
+    expect(titled(again, `${name} Issued`)).toHaveLength(1);
+    expect(taken(again, name)).toEqual([62_00]);
+  });
+
+  it('PLAYER JOURNEY: an Auckland-born student renews her New Zealand passport faster on Papers from New Haven: NZ$247 and NZ$247 more, in dollars, GST charged and the urgent fee taken as the standard one, each said on the screen to be SLATE’s assumption; charged once, a second application refused, issued in five days across a reload', () => {
+    const sim = life('rp-nz-a', 'nz-akl-auckland');
+    const old = passportOf(sim.player, sim.now)!;
+    expect(old.issuer).toBe('NZ');
+    const fee = usdOf(247_00, 'NZD');
+    const faster = usdOf(494_00, 'NZD');
+    const screen = drawn(sim, PassportPane);
+    expect(screen).toContain(`A New One ${'$' + (fee / 100).toFixed(2)} Up to 28 days; good for 10 years; from abroad`);
+    expect(screen).toContain(`Faster ${'$' + (faster / 100).toFixed(2)} 5 days`);
+    expect(screen).toContain('Online to DIA from overseas: NZ$214.78 before GST, NZ$247.00 with it, from 2 May 2025.');
+    expect(screen).toContain('Not confirmed: SLATE’s assumption, not DIA’s published policy: GST is charged.');
+    expect(screen).toContain('SLATE’s assumption: the urgent fee from overseas is the standard fee');
+    expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It', 'Renew It Faster']);
+    const applied = sim.now;
+    expect(press('documents.apply_passport', 'Renew It Faster')).toEqual([expect.stringMatching(/^Applied, for \$[\d,]+\.\d\d\. It comes by /)]);
+    expect(taken(sim, 'New Zealand passport, expedited')).toEqual([faster]);
+    expect(refusal(sim, 'documents.apply_passport')).toBe('An application is in already.');
+    const again = reload(sim);
+    again.advanceTo(applied + 5 * MS_DAY - MS_HOUR);
+    expect(passportOf(again.player, again.now)?.id).toBe(old.id);
+    again.advanceTo(applied + 5 * MS_DAY + MS_HOUR);
+    const renewed = passportOf(again.player, again.now)!;
+    expect(renewed.id).not.toBe(old.id);
+    expect(documentsOf(again.player).find((d) => d.id === old.id)!.status).toBe('cancelled');
+    expect(titled(again, 'New Zealand passport Issued')).toHaveLength(1);
+    expect(taken(again, 'New Zealand passport, expedited')).toEqual([faster]);
+  });
+
+  it('PLAYER JOURNEY: New Zealand’s GST turned off after she has applied (TEST SETUP: `NZ_FROM_ABROAD.gstCharged`, as a correction would change it): her application, charged NZ$247 with GST, is issued on its day across a save and a load with nothing charged or refunded and its transaction as it was; reported lost, the next is NZ$214.78, faster NZ$429.56, the screen saying no GST is charged, and the faster one is charged that', () => {
+    const sim = life('rp-nz-a', 'nz-akl-auckland');
+    const old = passportOf(sim.player, sim.now)!;
+    const withGst = usdOf(247_00, 'NZD');
+    drawn(sim, PassportPane);
+    const applied = sim.now;
+    press('documents.apply_passport', 'Renew It');
+    expect(taken(sim, 'New Zealand passport')).toEqual([withGst]);
+    const charged = JSON.stringify(sim.universe.transactions.filter((t) => t.memo === 'New Zealand passport'));
+    const posted = JSON.stringify(sim.universe.transactions);
+    try {
+      NZ_FROM_ABROAD.gstCharged = false;
+      const again = reload(sim);
+      // Nothing already posted moves: the ledger reads as it did, and what's on its way comes as it was applied for.
+      expect(JSON.stringify(again.universe.transactions)).toBe(posted);
+      again.advanceTo(applied + 28 * MS_DAY + MS_HOUR);
+      const renewed = passportOf(again.player, again.now)!;
+      expect(renewed.id).not.toBe(old.id);
+      expect(JSON.stringify(again.universe.transactions.filter((t) => t.memo === 'New Zealand passport'))).toBe(charged);
+      expect(taken(again, 'New Zealand passport')).toEqual([withGst]);
+      // What's applied for after takes the value as it now stands.
+      again.must({ kind: 'documents.report_lost', payload: { documentId: renewed.id } });
+      const without = usdOf(214_78, 'NZD');
+      const faster = usdOf(429_56, 'NZD');
+      expect(without).toBeLessThan(withGst);
+      const screen = drawn(again, PassportPane);
+      expect(screen).toContain(`A New One ${'$' + (without / 100).toFixed(2)} Up to 28 days`);
+      expect(screen).toContain(`Faster ${'$' + (faster / 100).toFixed(2)} 5 days`);
+      expect(screen).toContain('SLATE’s assumption, not DIA’s published policy: no GST is charged, taking you as a non-resident for New Zealand tax.');
+      expect(screen).not.toContain('GST is charged.');
+      press('documents.apply_passport', 'Apply Faster');
+      expect(taken(again, 'New Zealand passport, expedited')).toEqual([faster]);
+      expect(taken(again, 'New Zealand passport')).toEqual([withGst]);
+    } finally {
+      NZ_FROM_ABROAD.gstCharged = true;
+    }
   });
 
   it('PLAYER JOURNEY: a São Paulo-born student renews her Brazilian passport on Papers from New Haven: US$60, the consular fee of sixty reais-ouro from 1 June 2026; no faster service, the command refused; issued on its day, the old one canceled then, once across a reload; until 2026-10-17 the Polícia Federal’s R$257.25 at home', () => {
@@ -492,5 +608,101 @@ describe('tax.s8.f1_status', () => {
     expect(Object.values(sim.universe.decisions).filter((d) => d.refType === 'us-status')).toEqual([]);
     expect(sim.universe.notifications.filter((n) => /Status/.test(n.title))).toEqual([]);
     expect(drawn(sim, WorkPane)).toContain('F-1 Student Visa');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// tax.s8.idcard, its term: SLATE's assumption for somebody not a citizen (brief 12's KS-ct-idcard, 2026-10-17)
+// ---------------------------------------------------------------------------
+
+/**
+ * No source gives Connecticut's term for the card the DMV doesn't verify (docs/research/world/research-ct-idcard.json, its
+ * `brief12`): SLATE runs it to the end of the holder's lawful presence, one value, `NONCITIZEN_ID.toLawfulPresence`,
+ * written on the card when it's applied for. These hold that Your ID says so, that turning the value (TEST SETUP, as a
+ * correction would, and back after) leaves a card already issued, its charge and its notices as they were while the next
+ * card takes the new term, and that a card played to its last day runs out then.
+ */
+describe('tax.s8.idcard, its term', () => {
+  /** A British student at Yale with her Social Security number come, as the journeys above have her. */
+  const withNumber = (sim: Simulation): Simulation => {
+    sim.advanceTo(at(2026, 8, 30, 12));
+    const ssn = sim.must<{ arrivesAt: number }>({ kind: 'documents.apply_ssn', payload: {} });
+    sim.advanceTo(ssn.arrivesAt + MS_HOUR);
+    return sim;
+  };
+  const TERM_NOTE = 'You’re not a US citizen, so your card runs to the end of your lawful presence: the program’s end at school, OPT’s end on OPT. That’s SLATE’s assumption, not the state’s published policy: the state publishes no term for a card it doesn’t verify. A card already issued keeps its date if that’s ever corrected.';
+
+  it('PLAYER JOURNEY: Your ID on Papers tells a British student that her card’s term, to the end of her lawful presence, is SLATE’s assumption, not the state’s published policy, and that a card already issued keeps its date if that’s corrected; a New York-born citizen is told nothing of it', () => {
+    expect(drawn(life('rp-uk-a', 'uk-eng-london'), PassportPane)).toContain(TERM_NOTE);
+    const citizen = drawn(life('rp-ny-a', 'us-ny-newyork'), PassportPane);
+    expect(citizen).toContain('Get Non-Driver Identification Card');
+    expect(citizen).not.toContain('lawful presence');
+    expect(citizen).not.toContain('publishes no term');
+  });
+
+  it('PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so', () => {
+    const sim = withNumber(life('rp-uk-a', 'uk-eng-london'));
+    drawn(sim, PassportPane);
+    expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card, for $28.00; the card comes November 2, 2026; good until May 31, 2029.']);
+    const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
+    expect([card.status, card.name, card.realId, card.expiresAt]).toEqual(['pending', 'Non-Driver Identification Card, Limited Term', false, Date.UTC(2029, 4, 31, 12)]);
+    expect(taken(sim, 'Non-Driver Identification Card')).toEqual([28_00]);
+    const posted = JSON.stringify(sim.universe.transactions);
+    try {
+      NONCITIZEN_ID.toLawfulPresence = false;
+      const again = reload(sim);
+      // What's on its way comes as it was applied for, and nothing posted moves.
+      expect(JSON.stringify(again.universe.transactions)).toBe(posted);
+      again.advanceTo(card.readyAt! + MS_HOUR);
+      const kept = documentsOf(again.player).find((d) => d.id === card.id)!;
+      expect([kept.status, kept.name, kept.realId, kept.expiresAt]).toEqual(['valid', 'Non-Driver Identification Card, Limited Term', false, Date.UTC(2029, 4, 31, 12)]);
+      expect(titled(again, 'Non-Driver Identification Card, Limited Term Arrived')).toHaveLength(1);
+      expect(taken(again, 'Non-Driver Identification Card')).toEqual([28_00]);
+      expect(refusal(again, 'documents.apply_idcard')).toBe('You hold one in force.');
+      expect(drawn(again, PassportPane)).toContain('You’re not a US citizen, and your card runs its years to a birthday as anyone’s does. That’s SLATE’s assumption, not the state’s published policy');
+      // Reported lost, a new card is applied for, and takes the term as it now stands.
+      again.must({ kind: 'documents.report_lost', payload: { documentId: kept.id } });
+      const asked = again.now;
+      drawn(again, PassportPane);
+      expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card, for $28.00; the card comes December 16, 2026; good until June 14, 2034.']);
+      const next = documentsOf(again.player).find((d) => d.kind === 'idcard' && d.status === 'pending')!;
+      expect([next.name, next.realId]).toEqual(['Non-Driver Identification Card', false]);
+      // Her birthday, 14 June, the first at least seven years on from 2 November 2026; SAVE to Tuesday 17 November,
+      // Veterans Day out, then the mail to Wednesday 16 December, Thanksgiving out: the rule anyone's card follows.
+      expect([asked, next.expiresAt, next.readyAt]).toEqual([Date.UTC(2026, 10, 2, 19), Date.UTC(2034, 5, 14, 7), Date.UTC(2026, 11, 16, 19)]);
+      expect(next.expiresAt).toBe(idCardExpires(ID_CARDS['us-ct']!, again.player, asked));
+      expect(next.readyAt).toBe(businessDaysOn(businessDaysOn(asked, NONCITIZEN_ID.saveBusinessDays, true), ID_CARDS['us-ct']!.mailedBusinessDays!, true));
+      expect(taken(again, 'Non-Driver Identification Card')).toEqual([28_00, 28_00]);
+      expect(documentsOf(again.player).find((d) => d.id === card.id)!.expiresAt).toBe(Date.UTC(2029, 4, 31, 12));
+      const third = reload(again);
+      third.advanceTo(next.readyAt! + MS_HOUR);
+      const come = documentsOf(third.player).find((d) => d.id === next.id)!;
+      expect([come.status, come.expiresAt, come.realId]).toEqual(['valid', next.expiresAt, false]);
+      expect(titled(third, 'Non-Driver Identification Card Arrived')).toHaveLength(1);
+    } finally {
+      NONCITIZEN_ID.toLawfulPresence = true;
+    }
+  });
+
+  it('PLAYER JOURNEY: a British student who keeps up holds her card to its last day, the program’s end on 31 May 2029, and then it has run out: her row says so, the passport her photo ID, and with school over and no OPT the DMV turns her away for a new one with its reason; SLATE renews no state ID card, so a card run out is applied for anew', () => {
+    let sim = working(withNumber(life('rp-uk-a', 'uk-eng-london')));
+    drawn(sim, PassportPane);
+    press('documents.apply_idcard');
+    const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
+    tend(sim, card.readyAt! + MS_HOUR);
+    expect(card.expiresAt).toBe(Date.UTC(2029, 4, 31, 12));
+    tend(sim, card.expiresAt! - MS_HOUR);
+    sim = working(reload(sim));
+    const held1 = documentsOf(sim.player).find((d) => d.id === card.id)!;
+    expect(inForce(held1, sim.now)).toBe(true);
+    tend(sim, card.expiresAt! + MS_HOUR);
+    expect(inForce(held1, sim.now)).toBe(false);
+    expect(photoIdOf(sim.player, sim.now)?.kind).toBe('passport');
+    const screen = drawn(sim, PassportPane);
+    expect(screen).toContain('Run Out');
+    expect(idCardRefusal(sim.player, sim.now)).toBe('On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.');
+    expect(drew('documents.apply_idcard').map((c) => [c.disabled, c.title])).toEqual([[true, 'On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.']]);
+    expect(refusal(sim, 'documents.apply_idcard')).toBe('On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.');
+    expect(taken(sim, 'Non-Driver Identification Card')).toEqual([28_00]);
   });
 });

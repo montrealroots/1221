@@ -1,0 +1,4765 @@
+{
+ "baseline": {
+  "frozen": "2026-10-16, at the start of the owner's brief 11 (\"Finish The Current Build Against A Fixed Checklist\")",
+  "main": "0e7ff7c2",
+  "counts": {
+   "rows": 635,
+   "inScope": 608,
+   "Implemented And Verified": 530,
+   "Implemented, Verification Incomplete": 63,
+   "Partially Implemented": 0,
+   "Not Implemented": 4,
+   "Blocked Externally": 0,
+   "Decision Required": 11,
+   "Explicitly Deferred": 27
+  }
+ },
+ "matrix": "Completion, by the matrix: 574 of 599 rows in scope Implemented And Verified (95.8%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.",
+ "againstTheFullBaseline": "572 of 608 (94.0%)",
+ "actionable": {
+  "closed": 39,
+  "superseded": 4,
+  "scope resolution": 1,
+  "research assumption": 2,
+  "remaining": 0,
+  "of": 46
+ },
+ "decision4": 23,
+ "administrative": 9,
+ "replacements": [
+  {
+   "id": "ST6-R2.a",
+   "replaces": "ST6-R.a",
+   "criterion": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.a (committed in b8ac2f74 before any test or tool changed): carries R1, R2 and R8. (a1) emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05; (a2) by more with restraint’s draws than without, and each one’s own +10 by more with its own draw than without it, each more than 1e-9; (a3) each of the three at 0, 20, …, 100 raises the take at every step (more than 1e-9), and past full (110) moves nothing (the cap); (a4) a mastered actor, fully prepared, played restrained, comes to 100 with no draw and with one. On every class scene and play, night and brief reading, for the five actors.",
+   "status": "Implemented And Verified",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it",
+     "kind": "fixture",
+     "proves": "(a1), (a2) on 2,125 cases (425 pieces, briefs at their first reading, × 5 actors); on every reading (3,920 cases): least rise 0.7645 (the near-master’s), least draws’ part 0.0547, each one’s own draw’s part at least 0.021"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a3), more is better up to the cap: each of the three set to 0, 20, 40, 60, 80 and 100, everything else held, raises the restrained take at every step, on every piece for every actor; set past its full it moves nothing, the cap `termsOf` documents",
+     "kind": "fixture",
+     "proves": "(a3) on 6,375 ladders; on every reading 11,760: least step emotional depth 0.3485, composure 0.2398, focus 0.2712; past full 0"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a4), the guarantee kept: a mastered actor, fully prepared, played restrained, on a sufficient day, comes to 100 on every class scene, play, night and brief reading, with no draw and with one",
+     "kind": "fixture",
+     "proves": "(a4) 784 of 784 pieces at 100, with no draw and with one"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: the measure judges each piece as the game does: with no way chosen, every class scene and play, night and brief reading comes to what tools/pieces.ts gives it, to the last digit; played restrained, every brief at its first reading comes to the brief pane’s own preview for a played save’s actor",
+     "kind": "fixture",
+     "proves": "the measure is the game’s judgment: every one of the 784 pieces with no way chosen equals tools/pieces.ts to the last digit, and each brief played restrained equals the brief pane’s preview for a played save’s actor"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit",
+     "kind": "player journey",
+     "proves": "through the commands, brief-action’s clock reading: the chooser names Emotional Depth, Composure, Focus and Suits The Scene; the emotional depth a week of Sense Memory built (52.72 to 53.78), alone, lifts the restrained take 0.0961 against the expansive 0.0827, and 0.0926 with restraint’s draws out; the take keeps the draws’ exact weights; the choice, the forecast and the take come back to the last digit after a save and a load"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/acting/st6r2.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6r2 <file> --st6r2-only, on 86d9c8a5 (docs/verification/resolution-2026-10-17/acting/exits.txt)",
+     "kind": "measurement",
+     "proves": "verdict.a met on every reading: a1, a2, a3, a4 each with 0 failing"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own craft pays: the restrained specialist’s lift over the even actor is larger playing restrained than expansive wherever both fit, and restraint’s draws are part of it on every one",
+     "kind": "fixture",
+     "proves": "cited as it stands (ST6-R (b′)): restraint’s draws part of the specialist’s lift on every material"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often",
+     "kind": "fixture",
+     "proves": "cited as it stands: restraint’s own abilities decide the specialist’s restrained take"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "M1: mastery at 100 (brief 10) > every judged piece and reading comes to 100 for a mastered actor, prepared, on a sufficient day, with no draw and with a draw; and every class scene and play on every way of playing that fits",
+     "kind": "fixture",
+     "proves": "cited as it stands (M1): the guarantee with no way chosen and every way that fits on class scenes and plays"
+    },
+    {
+     "file": "tests/stage-interpretation.test.ts",
+     "title": "the stage reads the scene, not the house > mastery: a mastered, prepared actor reaches 100 either way on a scene that suits one, the other side fitting",
+     "kind": "fixture",
+     "proves": "cited as it stands (ST5)"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "L3-R: real progress, controlled (brief 10) > more never makes it worse: raising any one ability, by ten or to full, never lowers a result, on every fourth piece for the even actor, a specialist, a beginner and a near-master",
+     "kind": "fixture",
+     "proves": "cited as it stands (L3-R (d)): no ability raised lowers a result, no way chosen"
+    }
+   ]
+  },
+  {
+   "id": "ST6-R2.c",
+   "replaces": "ST6-R.c",
+   "criterion": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.c: carries R3 and R6. (c1) preparation in its direction; (c2) each circumstance one level up or down, and the scene’s grain read or not, strictly unless the grain’s floor holds it; (c3) a valid interpretation (a callback asking for size); (c4) H4-R (c)’s rule on restrained takes at its 1%, and the restrained specialist’s nine raised to 50.",
+   "status": "Decision Required",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing",
+     "kind": "fixture",
+     "proves": "(c1) holds on every case: half rehearsed behind by 1.0215 at least and named; the mark over 0.9 on 129 pieces (all with restraint’s suitability under nothing) and under on 583 (all over); rehearsed to 0.9 short by 0.0163 at least where the mark is over"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c2), the scene’s circumstances in their direction: on every class scene, play and night, each circumstance a level up or down, everything else held, moves restraint’s suitability its way and the restrained and expansive takes theirs, strictly wherever the suitability moved; and on every piece, reading the scene’s grain never moves a restrained take the wrong way, and lifts it wherever restraint suits",
+     "kind": "fixture",
+     "proves": "(c2)’s circumstances hold on all 3465 controlled changes (35 restrained and 95 expansive held at the documented ±1, 0 by the floor; least strict move 0.0288 restrained, 0.0173 expansive); the grain never the wrong way, asserted"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c3), a valid interpretation: on every brief reading, under a callback asking for it expansive, restraint doesn’t fit, the chooser’s reason is the director’s, and the take is behind the same take under a callback asking for it restrained by more than 0.05, naming the misfit, for every actor; a mastered actor’s isn’t 100 there",
+     "kind": "fixture",
+     "proves": "(c3) holds on every brief reading for every actor: a callback asking for size costs at least 0.8159, named; a mastered actor’s 94.6 at most"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on",
+     "kind": "fixture",
+     "proves": "(c4)’s second part holds: the nine raised to 50 lift the restrained specialist’s take by 3.8369 at least on every piece"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/acting/st6r2.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6r2 <file> --st6r2-only, on 86d9c8a5 (docs/verification/resolution-2026-10-17/acting/exits.txt)",
+     "kind": "measurement",
+     "proves": "verdict.c not met: (c2)’s grain 50 of 3920 cases; (c4) 65 of 6344 pairs (0.0102)"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer",
+     "kind": "fixture",
+     "proves": "cited as it stands: the grain only takes from a restrained take against it"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "H4-R: every ability’s contribution on its own work (brief 10) > no strength erases an unrelated weakness: where an ability carries under a tenth of what a piece’s abilities move, its specialist is never ahead of the even actor",
+     "kind": "fixture",
+     "proves": "cited as it stands (H4-R (c)), on pieces with no way chosen"
+    },
+    {
+     "file": "tests/stage-interpretation.test.ts",
+     "title": "the stage reads the scene, not the house > what a scene asks shows each circumstance with its level and its reason from the text, as it shows a feature",
+     "kind": "fixture",
+     "proves": "cited as it stands: each circumstance shown with its level and its reason"
+    },
+    {
+     "file": "tests/stage-interpretation.test.ts",
+     "title": "the stage reads the scene, played > PLAYER JOURNEY: a class scene chosen restrained and expansive, its forecast following the scene’s circumstances, the choice kept through a reload",
+     "kind": "player journey",
+     "proves": "cited as it stands: a class scene’s forecast follows its circumstances, kept through a reload"
+    }
+   ],
+   "lacks": "Should (c2)’s strict reading name the grain’s hundredth (`grainOf`) beside its floor as a documented limit, and should (c4) read “unrelated” on restrained takes as an ability carrying under the equal budget’s even share (1/12) rather than under a tenth?"
+  },
+  {
+   "id": "ST6-R2.e",
+   "replaces": "ST6-R.e",
+   "criterion": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.e: carries R4 and R5. (e1) where the scene favors restraint, restraint the better choice for the beginner, the even actor, the restrained specialist and the near-master across at least 6 works and 3 register families, no work over a quarter, on stage and on tape; (e2) the restrained specialist with more such opportunities than the even actor, on stage and on tape; (e3) the mirror for size, the expansive specialist with more than the even actor.",
+   "status": "Decision Required",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor",
+     "kind": "fixture",
+     "proves": "(e1) holds: stage, beginner, even and the restrained specialist 66 of 66, 39 works, 8 families, at most 4 from one work, the near-master 64 of 66, 38 works, 8 families, at most 4 from one work; tape, the even actor 363 of 369, 193 works, 113 families, at most 3 from one work. (e3)’s floors hold: stage, the expansive specialist 57 of 57, 34 works, 6 families, at most 4 from one work; tape 279 of 280, 150 works, 91 families, at most 3 from one work. On tape the restrained specialist 369 against the even actor’s 363, the expansive specialist 279 against 217"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/acting/st6r2.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6r2 <file> --st6r2-only, on 86d9c8a5 (docs/verification/resolution-2026-10-17/acting/exits.txt)",
+     "kind": "measurement",
+     "proves": "verdict.e not met: e2 on stage, e3’s “more” on stage"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > where size is what the scene is built on, restraint has its limits: before Thebes, at Antigone’s defiance and in the two meetings the restrained take is behind the even actor’s expansive one, and the expansive specialist is ahead of it",
+     "kind": "fixture",
+     "proves": "cited as it stands (ST6-R (d))"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > the other half is kept: the expansive specialist playing expansive is ahead of its own restrained take on at least a quarter of the materials restraint suits better",
+     "kind": "fixture",
+     "proves": "cited as it stands (ST6-R (f))"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > success depends on the scene: every win against the grain is on a material where the grain is slighter than on any of the limits",
+     "kind": "fixture",
+     "proves": "cited as it stands: the even actor’s restrained take never ahead of its expansive one against the grain"
+    }
+   ],
+   "lacks": "Should (e2) and (e3)’s “more than the even actor” be read only where the even actor’s opportunities fall short of every suitable piece (tape, where both hold), or should R4 and R5 rest on (e1)’s and (e3)’s floors with (d) and (f)?"
+  },
+  {
+   "id": "ST6-R2.g",
+   "replaces": "ST6-R.g",
+   "criterion": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.g: carries R7. Each mutation in a copy runs the ST6-R2 gate tests; caught where a test that passes on the unmutated control fails; met where every mutation R7 names (g1 to g10) is caught, each by a test its clause names; g11 and g12 recorded with what caught them.",
+   "status": "Implemented And Verified",
+   "evidence": [
+    {
+     "file": "docs/verification/resolution-2026-10-17/acting/mutations.json",
+     "title": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 node tools/judge-mutations.mjs --list docs/verification/resolution-2026-10-17/acting/mutations.list.json --out docs/verification/resolution-2026-10-17/acting/mutations.json, on f17511ac",
+     "kind": "measurement",
+     "proves": "g0 passes all ten; g1 to g12 and g11b each fail at least one ST6-R2 test that passed"
+    },
+    {
+     "file": "docs/verification/resolution-2026-10-17/acting/mutations.list.json",
+     "title": "the list, written from the criteria’s table, each edit’s text checked to occur once",
+     "kind": "guard",
+     "proves": "what each mutation changes and which clauses the criteria named"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it",
+     "proves": "A gate test the mutations name: it fails under g1, g2, g3, g4, g5, g11, g11b (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit",
+     "proves": "A gate test the mutations name: it fails under g1, g2, g3, g4, g5, g9, g10 (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a3), more is better up to the cap: each of the three set to 0, 20, 40, 60, 80 and 100, everything else held, raises the restrained take at every step, on every piece for every actor; set past its full it moves nothing, the cap `termsOf` documents",
+     "proves": "A gate test the mutations name: it fails under g5, g11, g11b (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a4), the guarantee kept: a mastered actor, fully prepared, played restrained, on a sufficient day, comes to 100 on every class scene, play, night and brief reading, with no draw and with one",
+     "proves": "A gate test the mutations name: it fails under g5, g12 (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c2), the scene’s circumstances in their direction: on every class scene, play and night, each circumstance a level up or down, everything else held, moves restraint’s suitability its way and the restrained and expansive takes theirs, strictly wherever the suitability moved; and on every piece, reading the scene’s grain never moves a restrained take the wrong way, and lifts it wherever restraint suits",
+     "proves": "A gate test the mutations name: it fails under g6, g7, g8 (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor",
+     "proves": "A gate test the mutations name: it fails under g6, g8, g9 (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing",
+     "proves": "A gate test the mutations name: it fails under g9, g10 (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on",
+     "proves": "A gate test the mutations name: it fails under g11b (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    }
+   ]
+  }
+ ],
+ "problems": [],
+ "rows": [
+  {
+   "id": "life.sleep",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "life.look_after",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "life.look_after:eat",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "life.look_after:order",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "life.look_after:wash",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "life.look_after:exercise",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "life.look_after:unwind",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "calendar.schedule",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "calendar.cancel",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "calendar.skip",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "world.dismiss_decision",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "world.mark_read",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "world.set_preferences",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "world.take_decision_action",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tutorial.read",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.appeal",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.apply_aid",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.book",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.cancel_appointment",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.choose_clinic",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.choose_pharmacy",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.dental",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.drop",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.enroll",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "scope resolution",
+   "by": "docs/verification/resolution-2026-10-17/health-result.json"
+  },
+  {
+   "id": "health.apply",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.request_hardship",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.extra_supply",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.pay_bill",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.prepay",
+   "group": "Life, Health And Time",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "health.therapy",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.treat",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "life.birthday",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "life.commitment",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "life.day_rollover",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "life.end",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "world.tick",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.appeal_decided",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.appointment",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.bill",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.month",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.therapy_session",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health.week",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "injury.comp",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "energy",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "sleepDebt",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "condition",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "fitness",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "nourishment",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "hygiene",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "stress",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "morale",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "readiness",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "weather/trainingAt",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "seasons/flu",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "holidays",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "injuries",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "chronic",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "body",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "mortality",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "knob:stressGain",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "knob:stressRecovery",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "knob:sleepQuality",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "knob:energyRecovery",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "knob:hygieneDrift",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "knob:moraleSwing",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "knob:spending",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "knob:illnessToll",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "knob:appetite",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "knob:mealMood",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
+   "group": "Life, Health And Time",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.add_standing_order",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.arrange_overdraft",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "bank.borrow",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.break_term",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.cancel_new",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "bank.cancel_scheduled",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.cancel_standing_order",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.claim_unclaimed",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.close_savings",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.debit_overdraft",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.new_number",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.open_savings",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.open_term",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.pay_collections",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.reactivate",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.repay_loan",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.schedule_payment",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.set_alerts",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.set_payments",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.set_round_ups",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.set_term_end",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.switch",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "bank.take_overrun_loan",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "bank.take_term_interest",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.transfer",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.apply",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.close",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.dispute",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.lock",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.money_transfer",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "card.plan",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.redeem_rewards",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.refund_credit",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.report",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.request_hardship",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.request_limit",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.set_auto_raise",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.set_everyday",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.set_over_limit",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.set_statement_day",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "cash.deposit",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "cash.withdraw",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "finance.pay_card",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "finance.set_autopay",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.fraud_refund",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.loan_due",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.month_end",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.savings_notice",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.scheduled_payment",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.standing_order",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.switch_complete",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "card.arrives",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.due",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.replaced",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.statement",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "daily food spending",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ledger",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "credit score",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "statements",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.open_current",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.set_primary",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.redirect_deposits",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.set_order_source",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "card.set_autopay_from",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.set_loan_repayment",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.close_current",
+   "group": "Money",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "bank.cancel_switch",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "bank.stop_balance_transfer",
+   "group": "Money",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "documents.apply_idcard",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "documents.apply_opt",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "documents.apply_passport",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "documents.naturalize",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "documents.police_report",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "documents.renew_residence",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "documents.replace_idcard",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "documents.replace_license",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "documents.report_lost",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "documents.residence",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "documents.settle",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "benefits.assistance",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "benefits.claim",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "benefits.ei_register",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "pension.bienestar",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "pension.ie_state",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "pension.imss",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "pension.social_security",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "pension.state",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "tax.file",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.pay",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "citizenship.decided",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "documents.decided",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "documents.idcard_arrives",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "documents.opt_week",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "documents.permission",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "documents.us_status",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "documents.visit",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "benefits.assistance_month",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "benefits.week",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "benefits.desempleo_month",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "benefits.ja_week",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "benefits.uc_period",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "pension.ie_week / pension.bienestar_payment / pension.imss_month / pension.ss_month / pension.state_payment",
+   "group": "Papers",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "tax.season",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.due",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.substitute",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.notice",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.refund",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.pay_state",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.amend",
+   "group": "Papers",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "tax.apply_plan",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.revise_plan",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.catch_up_plan",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.apply_state_plan",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.catch_up_state_plan",
+   "group": "Papers",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "tax.lien_release",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.lien_dispute",
+   "group": "Papers",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "tax.federal_lien_withdraw",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.request_waiver",
+   "group": "Papers",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "documents.apply_ssn",
+   "group": "Papers",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.prepare",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.approach",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.choose",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.choose_playing",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.read_feedback",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.ask_partner",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.answer_partner",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.cancel_rehearsal",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.make_amends",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.respond",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.orientation",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.learn_part",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.choose_part_playing",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.review_blocking",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.work_note",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "work.identify",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "work.try",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "work.settle",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.call_in_sick",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.take_shift",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.buy_ppe",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.cabaret",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.summer_cabaret",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "plays.read",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "plays.research",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "practice.exercise",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "practice.self_tape",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "brief.prepare",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "brief.choose",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "brief.reader",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genre.study",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.term",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.week",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.classes",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.shift",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.payday",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.call",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.evaluation",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.commencement",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.company",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.lab",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.cabaret (kind)",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.summer",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.stipend",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.recess",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.orientation (kind)",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.partner_ask",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.partner_rehearsal",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.study_session",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.moment",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "abilities+techniques",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "development ledger",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "work records + journey",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genre familiarity/practice",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genre demands",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "classmates abilities/craft",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "classmate trust/bonds",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "casting (castFit/castScore)",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "standing/term evaluation",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "notes and feedback",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "preparation dims",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "showing/night bands",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "credits",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "work-study",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.request_leave",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.cancel_leave",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.appeal_leave",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.return_notice",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.reregister",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.buy_affiliate",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.withdraw",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.make_up",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.extend_incomplete",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.request_repeat",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.cancel_repeat",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.request_extra_term",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.pay_balance",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.request_aid_review",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.request_conversion",
+   "group": "School",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-names",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-displayName",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-pronouns",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-performerTitle",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-birthdate",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-birthplace",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-citizenship",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-race",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-portrait",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-disp-emotionalStability",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-disp-conscientiousness",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-disp-ambition",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-disp-riskTolerance",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-disp-extraversion",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-disp-openness",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-disp-agreeableness",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-traits",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-genres",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-background",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-body",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-whereLive",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-livesWhereBorn",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-wealth",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-family",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-bank",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-startDate",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "c-tutorial",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-stressGain",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-stressRecovery",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-sleepQuality",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-energyRecovery",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-hygieneDrift",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-moraleSwing",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-spending",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-mealMood",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-illnessToll",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-receipts",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "trait-bondWarmth-bondWound",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-company",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-appetite",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-morning-evening",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "trait-prep",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "p-identity",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "p-identity-buttons",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "p-traits-line",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "p-abilities",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "p-techniques",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "p-genres",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "p-condition",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "p-journey-history",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "h-head",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "h-calendar",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "h-needs",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "h-how",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "h-where-weather",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "h-money",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "h-school",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "h-papers",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "l-person",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "l-dial-stress",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "l-trait",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "l-actor",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "n-decision-tax",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "n-decision-unclaimed",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "n-decision-us-status",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "n-notify",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "n-dismiss-expire",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "i-runtime",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "i-ui-text",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "i-stale-claims",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "i-genres-dispositions-intact",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.1",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.1.overdraft-interest",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.1.standing-orders",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.1.pro-rata",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.2",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.s7.opening",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.s7.ownership",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.s7.switching",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.s7.closure",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.s7.funds",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.s7.transfers",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.s7.rejections",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.s7.statements",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.s7.features",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.s7.school",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.s7.holds",
+   "group": "Remaining Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage.1-separate-totals",
+   "group": "Remaining Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage.2-i-stale-claims",
+   "group": "Remaining Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage.3-unresolved-rows",
+   "group": "Remaining Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage.4-fold-areas",
+   "group": "Remaining Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage.d-renames-chain",
+   "group": "Remaining Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage.d-fixture-kind",
+   "group": "Remaining Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage.d-evidence-cell",
+   "group": "Remaining Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage.d-stale-claims-walk",
+   "group": "Remaining Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage.5-added-rows",
+   "group": "Remaining Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage.6-savings-notice-played",
+   "group": "Remaining Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage.7-overdraft-home-panel",
+   "group": "Remaining Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health-billing.1-reprice-plan-part",
+   "group": "Remaining Area: health-billing",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health-billing.2-husky-d-kept-through-work",
+   "group": "Remaining Area: health-billing",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health-billing.3-insured-paths-trace",
+   "group": "Remaining Area: health-billing",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health-eligibility.1-covered-ct-status-barred",
+   "group": "Remaining Area: health-eligibility",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health-eligibility.2-work-exemptions",
+   "group": "Remaining Area: health-eligibility",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health-eligibility.3-notice-and-response",
+   "group": "Remaining Area: health-eligibility",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health-eligibility.4-look-back",
+   "group": "Remaining Area: health-eligibility",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health-eligibility.5-f1-premium-credit-2026",
+   "group": "Remaining Area: health-eligibility",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health-eligibility.6-work-test-income",
+   "group": "Remaining Area: health-eligibility",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "health-eligibility.7-renewal-and-decision-notices",
+   "group": "Remaining Area: health-eligibility",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.repeat-room-leave",
+   "group": "Remaining Area: school",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.unreached-refusals",
+   "group": "Remaining Area: school",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.d-appeal-before-begun",
+   "group": "Remaining Area: school",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.continuity",
+   "group": "Remaining Area: school",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.s6.missed-term",
+   "group": "Remaining Area: school",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.d-coursework-shown",
+   "group": "Remaining Area: school",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.s6.journey",
+   "group": "Remaining Area: school",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.s6.policy",
+   "group": "Remaining Area: school",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.s6.dead-ends",
+   "group": "Remaining Area: school",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "school.d-not-registered-hold",
+   "group": "Remaining Area: school",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.early_filing_notices",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.ct_filed_in_error",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.amend",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.catch_up_state_plan",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.lien_dispute",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.federal_lien_withdraw",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.request_waiver",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.other_refusals",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.s8.inventory",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.s8.passport",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.s8.idcard",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "tax.s8.f1_status",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "tax.s8.ssn",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "tax.s8.opt",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "tax.s8.license",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "tax.s8.visas_authorizations",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "tax.s8.residence_naturalization",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred",
+   "disposition": "administrative"
+  },
+  {
+   "id": "tax.s8.jurisdiction",
+   "group": "Remaining Area: tax",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred",
+   "disposition": "administrative"
+  },
+  {
+   "id": "banking.1.pro-rata",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.1.pro-rata.month-end",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.1.pro-rata.opening-month",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.3.homecloses",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.2.scope",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Decision Required",
+   "now": "Decision Required",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "banking.2.arrange_overdraft",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "banking.2.cancel_new",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "banking.2.switch",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "banking.2.switch_complete",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "banking.2.cancel_switch",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "banking.2.stop_balance_transfer",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "banking.2.take_overrun_loan",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "banking.2.money_transfer",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "banking.4.sparkassen-card",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.5.arion-card",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.6.fee-schedule",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.7.redirect-close",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "banking.8.apostrophes",
+   "group": "Brief 09 Area: banking",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage09.1-brief.prepare",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage09.1-brief.choose",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage09.1-brief.reader",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage09.1-school.choose_playing",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage09.1-school.choose_part_playing",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage09.1-work.identify",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage09.1-work.try",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage09.1-work.settle",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage09.1-life.look_after",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage09.2-hardship-renewal",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "coverage09.3-unresolved",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Decision Required",
+   "now": "Decision Required",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "coverage09.4-fold",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "coverage09.5-journeys-fold",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "coverage09.6-journeys-followup-fold",
+   "group": "Brief 09 Area: coverage",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "genres.1-count",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.2-compare",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-animated",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-christmas",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-conspiracy_thriller",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-farce",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-film_noir",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-gothic_horror",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-jukebox_musical",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-new_wave",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-psychological_thriller",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-samurai",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-silent_film",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-sword_and_sorcery",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-tragicomedy",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.3-yakuza",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.4-kept",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "genres.5-saves",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "genres.6-table",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "genres.7-measured",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "genres.8-docs",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.known-graduated-school-page",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.x1-yale-payment-savings-hold-registration",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.x2-leave-affiliate-bill",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.x3-withdrawal-health-tax-papers",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.x4-document-expiring",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.played-school",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.played-money",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.played-papers",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.played-health",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.actions",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.d-aid-past-balance",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.d-cover-ended-notice",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.d-medicaid-start",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.d-expired-license-next-step",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.d-lapse-appointment",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.d-lapse-prescription",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.d-hardship-ended-renewal",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.f-mexico-residence",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.f-injury-space",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.f-ended-life-loops",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "journeys.d-f1-term-notice",
+   "group": "Brief 09 Area: journeys",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "judge.baseline",
+   "group": "Brief 09 Area: judge",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred",
+   "disposition": "administrative"
+  },
+  {
+   "id": "judge.ST3",
+   "group": "Brief 09 Area: judge",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "judge.ST6",
+   "group": "Brief 09 Area: judge",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "judge.H4",
+   "group": "Brief 09 Area: judge",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "judge.L3",
+   "group": "Brief 09 Area: judge",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "judge.remeasure",
+   "group": "Brief 09 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "judge.length",
+   "group": "Brief 09 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "judge.stamina-load",
+   "group": "Brief 09 Area: judge",
+   "baseline": "Not Implemented",
+   "now": "Explicitly Deferred",
+   "disposition": "administrative"
+  },
+  {
+   "id": "judge.classes-fitness",
+   "group": "Brief 09 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "judge.coverage-row",
+   "group": "Brief 09 Area: judge",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "advice.harness",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "advice.F2",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "advice.F2A10-a",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "advice.F2A10-b",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "advice.F2A10-c",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "docs/verification/resolution-2026-10-17/final-result.json"
+  },
+  {
+   "id": "advice.F2A10-d",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "advice.F2A10-e",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "advice.F2A10-f",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Decision Required",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "docs/verification/resolution-2026-10-17/final-result.json"
+  },
+  {
+   "id": "advice.F2A10-g",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "advice.F2A10-h",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Decision Required",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "docs/verification/resolution-2026-10-17/final-result.json"
+  },
+  {
+   "id": "advice.F2A10-i",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "advice.tests",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "advice.heldout",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "docs/verification/resolution-2026-10-17/final-result.json"
+  },
+  {
+   "id": "advice.harness-hospital",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "arion.AR0.research",
+   "group": "Brief 10 Area: arion",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "arion.AR0.assumption",
+   "group": "Brief 10 Area: arion",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "arion.AR1.first-charge",
+   "group": "Brief 10 Area: arion",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "arion.AR2.renewal",
+   "group": "Brief 10 Area: arion",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "arion.AR3.close",
+   "group": "Brief 10 Area: arion",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "arion.AR4.refund",
+   "group": "Brief 10 Area: arion",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "arion.AR5.insufficient-funds",
+   "group": "Brief 10 Area: arion",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "arion.AR6.duplicates",
+   "group": "Brief 10 Area: arion",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "arion.AR7.save-and-calendar",
+   "group": "Brief 10 Area: arion",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "arion.AR7.older-save",
+   "group": "Brief 10 Area: arion",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "arion.AR8.verified-as-specified",
+   "group": "Brief 10 Area: arion",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "judge.baseline",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred",
+   "disposition": "administrative"
+  },
+  {
+   "id": "judge.budget",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST3-R.a",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST3-R.b",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST3-R.c",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST3-R.d",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST3-R.e",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "ST3.asWritten",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Not Implemented",
+   "now": "Explicitly Deferred",
+   "disposition": "administrative"
+  },
+  {
+   "id": "ST6-R.a",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Decision Required",
+   "now": "Explicitly Deferred",
+   "disposition": "superseded",
+   "by": "docs/verification/resolution-2026-10-17/acting-result.json",
+   "lacks": "The owner’s brief 12, section 1 (2026-10-17): “I approve judging restrained acting by meaningful, explainable gameplay benefits rather than requiring a specialist to beat a balanced actor a fixed percentage of the time. Revise ST6-R (a), (c), (e), and (g) individually around these requirements … Keep the original definitions and results as historical evidence. Mark them superseded with this authorization, not retroactively passed. Close each replacement clause only when its own evidence supports it.” Replaced by ST6-R2.a."
+  },
+  {
+   "id": "ST6-R.b",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST6-R.c",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Decision Required",
+   "now": "Explicitly Deferred",
+   "disposition": "superseded",
+   "by": "docs/verification/resolution-2026-10-17/acting-result.json",
+   "lacks": "The owner’s brief 12, section 1 (2026-10-17): “I approve judging restrained acting by meaningful, explainable gameplay benefits rather than requiring a specialist to beat a balanced actor a fixed percentage of the time. Revise ST6-R (a), (c), (e), and (g) individually around these requirements … Keep the original definitions and results as historical evidence. Mark them superseded with this authorization, not retroactively passed. Close each replacement clause only when its own evidence supports it.” Replaced by ST6-R2.c."
+  },
+  {
+   "id": "ST6-R.d",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST6-R.e",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Decision Required",
+   "now": "Explicitly Deferred",
+   "disposition": "superseded",
+   "by": "docs/verification/resolution-2026-10-17/acting-result.json",
+   "lacks": "The owner’s brief 12, section 1 (2026-10-17): “I approve judging restrained acting by meaningful, explainable gameplay benefits rather than requiring a specialist to beat a balanced actor a fixed percentage of the time. Revise ST6-R (a), (c), (e), and (g) individually around these requirements … Keep the original definitions and results as historical evidence. Mark them superseded with this authorization, not retroactively passed. Close each replacement clause only when its own evidence supports it.” Replaced by ST6-R2.e."
+  },
+  {
+   "id": "ST6-R.f",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST6-R.g",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Decision Required",
+   "now": "Explicitly Deferred",
+   "disposition": "superseded",
+   "by": "docs/verification/resolution-2026-10-17/acting-result.json",
+   "lacks": "The owner’s brief 12, section 1 (2026-10-17): “I approve judging restrained acting by meaningful, explainable gameplay benefits rather than requiring a specialist to beat a balanced actor a fixed percentage of the time. Revise ST6-R (a), (c), (e), and (g) individually around these requirements … Keep the original definitions and results as historical evidence. Mark them superseded with this authorization, not retroactively passed. Close each replacement clause only when its own evidence supports it.” Replaced by ST6-R2.g."
+  },
+  {
+   "id": "ST6.asWritten",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "H4-R.a",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "H4-R.b",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "H4-R.c",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "H4-R.d",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "H4-R.e",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "H4.asWritten",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Not Implemented",
+   "now": "Explicitly Deferred",
+   "disposition": "administrative"
+  },
+  {
+   "id": "L3-R.a",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "L3-R.b",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "L3-R.c",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "L3-R.d",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "L3-R.e",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "L3.asWritten",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Not Implemented",
+   "now": "Explicitly Deferred",
+   "disposition": "administrative"
+  },
+  {
+   "id": "M1",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "judge.together",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "judge.tests",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "judge.stamina",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "judge.memory",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "judge.composure",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST6-R.bPrime",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Decision Required",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "A1",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "stamina.W1",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "stamina.W2",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "stamina.W3",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "stamina.W4",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "stamina.W5",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "stamina.W6",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "stamina.W7",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "stamina.W8",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "stamina.W9",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "stamina.W10",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "stamina.M1",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "stamina.measure",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Explicitly Deferred",
+   "disposition": "administrative"
+  },
+  {
+   "id": "stamina.A1",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "ST1",
+   "group": "Criteria: The Stage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST2",
+   "group": "Criteria: The Stage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST3",
+   "group": "Criteria: The Stage",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "ST4",
+   "group": "Criteria: The Stage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST5",
+   "group": "Criteria: The Stage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST6",
+   "group": "Criteria: The Stage",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "ST7",
+   "group": "Criteria: The Stage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST8",
+   "group": "Criteria: The Stage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "ST9",
+   "group": "Criteria: The Stage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "Stage F1",
+   "group": "Criteria: The Stage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "Stage F2",
+   "group": "Criteria: The Stage",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "I1",
+   "group": "Criteria: Interpretation",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "I2",
+   "group": "Criteria: Interpretation",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "I3",
+   "group": "Criteria: Interpretation",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "I4",
+   "group": "Criteria: Interpretation",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "I5",
+   "group": "Criteria: Interpretation",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "A1",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "A2",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "A3",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "T2",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "T3",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "G3",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "G4",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "G5",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "M1",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "M3",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "O1",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "O2",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "H2",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "H5",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "H7",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "H4",
+   "group": "Criteria: The Attributes",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "F2",
+   "group": "Criteria: The Attributes",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "F2-A",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "G1",
+   "group": "Criteria: The Attributes",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "A4",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "A5",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "T1",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "O3",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "F1",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "F3",
+   "group": "Criteria: The Attributes",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "L1",
+   "group": "Criteria: Long-Term Continuity",
+   "baseline": "Decision Required",
+   "now": "Implemented And Verified",
+   "disposition": "closed",
+   "by": "brief 11"
+  },
+  {
+   "id": "L2",
+   "group": "Criteria: Long-Term Continuity",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "L3",
+   "group": "Criteria: Long-Term Continuity",
+   "baseline": "Explicitly Deferred",
+   "now": "Explicitly Deferred",
+   "disposition": "deferred at the baseline"
+  },
+  {
+   "id": "MA1",
+   "group": "Criteria: Mastery Through Play",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "MA2",
+   "group": "Criteria: Mastery Through Play",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "MA3",
+   "group": "Criteria: Mastery Through Play",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "MA4",
+   "group": "Criteria: Mastery Through Play",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "MA6",
+   "group": "Criteria: Mastery Through Play",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "MA7",
+   "group": "Criteria: Mastery Through Play",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "MA5",
+   "group": "Criteria: Mastery Through Play",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "MA8",
+   "group": "Criteria: Mastery Through Play",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "S1",
+   "group": "Criteria: The Genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "S2",
+   "group": "Criteria: The Genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "S3",
+   "group": "Criteria: The Genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "S4",
+   "group": "Criteria: The Genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "Genre Audit",
+   "group": "Criteria: The Genres",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "INT-determinism",
+   "group": "Integration",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "INT-time",
+   "group": "Integration",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "INT-duplicates",
+   "group": "Integration",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "INT-migration",
+   "group": "Integration",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "INT-missed-term",
+   "group": "Integration",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "INT-skipped",
+   "group": "Integration",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "INT-navigation",
+   "group": "Integration",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "INT-long-runs",
+   "group": "Integration",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "INT-gate",
+   "group": "Integration",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "KS-matrix-gate",
+   "group": "Known Shortfalls And Missing Tests",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "KS-degree-text",
+   "group": "Known Shortfalls And Missing Tests",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "KS-genres-54",
+   "group": "Known Shortfalls And Missing Tests",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "KS-bank-rows-scope",
+   "group": "Known Shortfalls And Missing Tests",
+   "baseline": "Decision Required",
+   "now": "Decision Required",
+   "disposition": "decision 4"
+  },
+  {
+   "id": "KS-homecloses",
+   "group": "Known Shortfalls And Missing Tests",
+   "baseline": "Implemented And Verified",
+   "now": "Implemented And Verified",
+   "disposition": "verified at the baseline"
+  },
+  {
+   "id": "KS-ct-idcard",
+   "group": "Known Shortfalls And Missing Tests",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "research assumption",
+   "by": "docs/verification/resolution-2026-10-17/research-result.json"
+  },
+  {
+   "id": "KS-passport-fees",
+   "group": "Known Shortfalls And Missing Tests",
+   "baseline": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
+   "disposition": "research assumption",
+   "by": "docs/verification/resolution-2026-10-17/research-result.json"
+  }
+ ]
+}

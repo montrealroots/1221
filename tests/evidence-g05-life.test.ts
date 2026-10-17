@@ -672,7 +672,7 @@ describe('health.month', () => {
   // 2027; the notice received five days on, 6 August, answered by the thirtieth day from then, 4 September, decided on 5
   // September, and ten days on, 15 September, it ends with September. Her six months before the renewal, February to July
   // 2027, had no work and under $580 of income in each; the working twin's 80 hours are in July.
-  it('PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where 80 hours of work in July renews it six months', () => {
+  it('PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where $600 of wages in July (TEST SETUP) renews it six months', () => {
     const twin = (work: boolean) => {
       const sim = student(SEED.renew);
       withdraw(sim);
@@ -692,7 +692,7 @@ describe('health.month', () => {
     expect(titled(idle, 'A Notice Of Noncompliance')).toHaveLength(1);
     idle.advanceTo(at(2027, 9, 30, 12));
     expect(coverOn(idle.player, idle.now)).toBe('medicaid');
-    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 9, 5, 0), 'No month from February to July 2027 showed 80 hours’ work, $580.00 of income, school at least half-time or an exception, and none was shown by September 4, 2027: HUSKY D ends on September 30, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
+    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 9, 5, 0), 'No month from February to July 2027 showed $580.00 of income, time at the School or an exception, and none was shown by September 4, 2027: HUSKY D ends on September 30, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
     idle.advanceTo(at(2027, 10, 1, 2));
     expect(coverOn(idle.player, idle.now)).toBeUndefined();
     expect(healthOf(idle.player).program!.until).toBe(at(2027, 10, 1, 0));
@@ -709,7 +709,8 @@ describe('health.month', () => {
     expect(healthOf(working.player).program!.renewAt).toBe(at(2028, 2, 1, 0));
     expect(healthOf(working.player).program!.until).toBeUndefined();
     expect(titled(working, 'A Notice Of Noncompliance')).toEqual([]);
-    expect(titled(working, 'Your Public Cover Is Renewed').map((n) => n.body)).toEqual(['HUSKY D is renewed to its next renewal, February 1, 2028: last month’s income is within what it allows, and July 2027 met its work rules by 80 hours’ work.']);
+    // Until 2026-10-17 “by 80 hours’ work”: since then the hours aren’t read, and the $600 they were paid is (brief 12, health-criteria.md).
+    expect(titled(working, 'Your Public Cover Is Renewed').map((n) => n.body)).toEqual(['HUSKY D is renewed to its next renewal, February 1, 2028: last month’s income is within what it allows, and July 2027 met its work rules by its income, $580.00 or more.']);
     const workingScreen = drawn(working).text;
     expect(workingScreen).toContain('Your Cover How This Works This Month HUSKY D');
     // HUSKY D asks no copays.

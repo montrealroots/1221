@@ -114,5 +114,122 @@
   "unreached": [
     { "url": "https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining", "tried": "2026-10-16", "why": "The host no longer resolves (WebFetch: getaddrinfo ENOTFOUND digital.ct.gov; curl: the proxy's CONNECT answered 502). SLATE cited it from 2026-10-10." },
     { "url": "https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1hSection_01-1h-1/ (and -2 to -8, and the subtitle Title_01Subtitle_01-1h/)", "tried": "2026-10-16", "why": "'Unable to Access Resource (HTTP: 404)'; read instead in the DMV's 2007 compilation." }
-  ]
+  ],
+  "brief12": {
+    "topic": "Brief 12's focused attempt at the term of a non-verified Connecticut ID card issued to somebody not a citizen (row KS-ct-idcard)",
+    "dateRead": "2026-10-17",
+    "method": "As brief 11's: the state's own pages and law, read with curl (www.cga.ct.gov's chain completed with GoDaddy's G2 intermediate, its server sending its leaf alone) and quoted. 'Unavailable' where no source publishes the value; 'blocked' where a source exists and access failed.",
+    "settled": [],
+    "notSettled": [
+      "The term of a non-verified card issued to somebody not a citizen: unavailable. No statute, regulation or DMV page gives one. The bill that would have set it to the period of lawful presence, 2005's Substitute SB 189, failed in committee, so the rule SLATE takes isn't the state's law either."
+    ],
+    "assumptions": [
+      {
+        "value": "A Connecticut ID card's term for somebody not a citizen",
+        "constant": "NONCITIZEN_ID.toLawfulPresence (src/engine/systems/identity.ts)",
+        "default": true,
+        "basis": "The DMV's limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)'; § 14-137-64a(c), which lets the commissioner revoke the card once its holder is 'no longer entitled to be present'; and SLATE's term from 2026-10-10. Never past the published seven years to a birthday. Off, the card takes those seven years, still non-verified, still after SAVE and the mail."
+      }
+    ],
+    "sources": [
+      {
+        "title": "Connecticut General Assembly, bill status of SB 189 of 2005",
+        "url": "https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB00189&which_year=2005",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "4/25/2005 (GAE) Motion Failed JF",
+          "4/15/2005 Referred by Senate to Committee on Government Administration and Elections"
+        ]
+      },
+      {
+        "title": "Substitute Senate Bill No. 189, File No. 189, January Session 2005: An Act Concerning Motor Vehicle Licenses For Certain Residents Who Are Not Citizens Of The United States",
+        "url": "https://cga.ct.gov/2005/fc/2005SB-00189-R000189-FC.htm",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "If the Commissioner of Motor Vehicles issues ... an identity card, in accordance with the provisions of section 1-1h of the general statutes, to any person who is a resident of this state and not a citizen of the United States and whose presence in the United States is, pursuant to any provision of federal law, of limited duration, the commissioner shall ... restrict the validity of such motor vehicle operator's license or identity card to a term limited to coincide with the period of such person's lawful presence in the United States."
+        ],
+        "note": "The rule SLATE's assumption is; not enacted."
+      },
+      {
+        "title": "Senate Bill No. 1150, File No. 252, January Session 2025 (no-cost renewals for veterans), § 1-1h as it reprints it",
+        "url": "https://www.cga.ct.gov/2025/FC/PDF/2025SB-01150-R000252-FC.PDF",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "(2) (A) An original identity card shall expire within a period not exceeding seven years following the date of the applicant's next birthday."
+        ],
+        "note": "§ 1-1h reprinted whole, with no term for somebody not a citizen."
+      },
+      {
+        "title": "LCO No. 10336, a proposed amendment to House Bill No. 7287 of 2025 (the state budget), Sec. 501, rewriting § 1-1h(a) and (b)",
+        "url": "https://cga.ct.gov/2025/lcoamd/pdf/2025LCO10336-R00-AMD.pdf",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "(2) (A) An original identity card shall expire within a period not exceeding seven years following the date of the applicant's next birthday.",
+          "The commissioner shall waive the fee for any applicant who does not have the means to pay such fee"
+        ],
+        "note": "Fee waivers; no term for somebody not a citizen. Whether it was adopted wasn't checked: it bears on no value here either way."
+      },
+      {
+        "title": "Connecticut General Statutes, chapters 1 and 246 (2026 revision as published)",
+        "url": "https://www.cga.ct.gov/current/pub/chap_001.htm ; https://www.cga.ct.gov/current/pub/chap_246.htm",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [],
+        "note": "Searched for 'lawful presence', 'limited duration', 'limited term', 'limited-term', 'authorized presence' and 'period of such person': none in either chapter."
+      },
+      {
+        "title": "Connecticut DMV, Renew your non-driver ID",
+        "url": "https://portal.ct.gov/dmv/licenses-permits-ids/renew-non-driver-id",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "You are not a U.S. citizen. Please make an appointment to renew in person.",
+          "If your non-driver ID card is expired two or more years, follow the procedure for obtaining a new ID card."
+        ]
+      },
+      {
+        "title": "Connecticut DMV, Get a non-driver ID, read again",
+        "url": "https://portal.ct.gov/dmv/licenses-permits-ids/get-non-driver-id",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "The fee for a non-driver ID (valid for 7 years) is $28."
+        ]
+      },
+      {
+        "title": "Connecticut DMV, Get a driver's license (its requirements for naturalized and non-U.S. citizens), read again",
+        "url": "https://portal.ct.gov/dmv/licenses-permits-ids/get-a-drivers-license-ct",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "All immigration documents must be valid at the time of Issuance. Immigration checks are only valid for one year (unless you were verified with a Certificate of Naturalization or Certificate of Citizenship)."
+        ],
+        "note": "A SAVE check's life, not a card's term."
+      },
+      {
+        "title": "Regs. Conn. State Agencies § 14-137-64a, in the DMV's compilation (updated 2/2007), read again",
+        "url": "https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf",
+        "read": "2026-10-17",
+        "confirmed": true,
+        "quotes": [
+          "If the commissioner receives reliable information or becomes aware that a non-citizen who has been issued an operator's license or identification card is no longer entitled to be present in the United States, the commissioner may revoke such operator's license or identification card."
+        ]
+      }
+    ],
+    "unreached": [
+      {
+        "url": "https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1h/ and .../Title_01Subtitle_01-1hSection_01-1h-4/",
+        "tried": "2026-10-17",
+        "kind": "blocked",
+        "why": "'Unable to Access Resource (HTTP: 404)', as on 2026-10-16; the sections were read in the DMV's compilation, so nothing turns on it"
+      }
+    ],
+    "leads": [
+      "The 2005 bill was found through a search; secondary guides (stateslaws.com, americajosh.com) that say what a non-citizen's card runs to were read as leads and aren't sources."
+    ]
+  }
 }

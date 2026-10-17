@@ -354,10 +354,11 @@ PLAYS['papers.health-cover'] = () => {
   const may = mayEnroll(sim.player, sim.now, 'USD', sim);
   expect(may.ok).toBe(true);
   expect(may.program).toBeUndefined();
-  // The sentence names income, school at least half-time or an exception from 2026-10-16 (until then “of earnings”):
-  // July's income of any kind counts toward the $580 since (42 CFR 435.552(f)(2)).
+  // The sentence named income, school at least half-time or an exception from 2026-10-16 (until then “of earnings”), and
+  // from 2026-10-17 income, time at the School or an exception, without the 80 hours' work it began with until then
+  // (brief 12): July's income of any kind counts toward the $580 since 2026-10-16 (42 CFR 435.552(f)(2)).
   expect((earningsOf(sim.player).months['2027-07'] ?? 0)).toBeLessThan(580_00);
-  expect(may.why).toBe('From January 1, 2027, HUSKY D asks an applicant for 80 hours’ work, $580.00 of income, school at least half-time or an exception in the month before, and last month had none of them. The marketplace is open to you: within 60 days of losing cover.');
+  expect(may.why).toBe('From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them. The marketplace is open to you: within 60 days of losing cover.');
   expect(ex.steps[1]).toContain(`Under The Marketplace: “${may.why}”`);
   // Care in August, uncovered: the uninsured price for a visit, the hospital's charity off an emergency.
   expect(coverOn(sim.player, sim.now)).toBeUndefined();

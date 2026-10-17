@@ -170,9 +170,10 @@ function pressEnroll(): string[] {
   return h.toasts;
 }
 
-// The sentence names income, school at least half-time or an exception from 2026-10-16: until then it said “$580.00 of
-// earnings”, and income of any kind counts toward the $580 since (42 CFR 435.552(f)(2)).
-const REFUSED = 'From January 1, 2027, HUSKY D asks an applicant for 80 hours’ work, $580.00 of income, school at least half-time or an exception in the month before, and last month had none of them.';
+// The sentence named income, school at least half-time or an exception from 2026-10-16: until then it said “$580.00 of
+// earnings”, and income of any kind counts toward the $580 since (42 CFR 435.552(f)(2)). From 2026-10-17 it names income,
+// time at the School or an exception: until then it began with 80 hours' work, which nobody off the School can do (brief 12).
+const REFUSED = 'From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them.';
 
 /** Two citizens at the School to the last night of 2026, with need (Comfortable) and without (Inherited). */
 const atSchool = once(() => {
@@ -208,7 +209,7 @@ describe('health.enroll: HUSKY D asks an applicant for the month before’s work
   // "will end at the end of the month that the student ... withdraws" (42 CFR 435.552(c)(3), CMS-2454-IFC, read
   // 2026-10-15), so her 1 to 19 January at the School are January enrolled, and the refusal is February's, a month wholly
   // on the leave. Her 6 hours of January are still short of the work.
-  it('PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027 is given HUSKY D on 1 February for January at the School, refused it on 1 March for a February wholly on the leave, in The Marketplace’s words, and Enroll buys the marketplace; with 80 hours’ work in February she’s given HUSKY D; past the 60 days Enroll isn’t drawn', () => {
+  it('PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027 is given HUSKY D on 1 February for January at the School, refused it on 1 March for a February wholly on the leave, in The Marketplace’s words, and Enroll buys the marketplace; with $600 of wages in February (TEST SETUP) she’s given HUSKY D; past the 60 days Enroll isn’t drawn', () => {
     const january = thaw(leave());
     january.advanceTo(at(2027, 2, 1, 9));
     // January: under HUSKY D's $1,835.40, and 6 hours of work-study, $138.00, short of 80 hours and of $580; but at the
@@ -236,7 +237,7 @@ describe('health.enroll: HUSKY D asks an applicant for the month before’s work
     expect(pressEnroll()).toEqual(['Enrolled in the marketplace, from April 1, 2027.']);
     expect(healthOf(idle.player).program).toBeUndefined();
 
-    // Change the input: 80 hours' work in February (TEST SETUP: no played life on a leave has it). HUSKY D, from 1 March,
+    // Change the input: $600 of wages in February, 80 hours' pay (TEST SETUP: no played life on a leave has it). HUSKY D, from 1 March,
     // the month she enrolls in, renewed six months on (until 2026-10-16 from 1 April).
     const worked = thaw(leave());
     wagesPosted(worked, at(2027, 2, 26, 17), 600_00, 80);
@@ -489,5 +490,69 @@ describe('a program taken on a personal leave without Affiliate cover, and Yale 
     expect(titled(sim, 'Your Public Cover Ends')).toEqual([]);
     expect(healthOf(sim.player).program).toMatchObject({ kind: 'medicaid', renewAt: at(2028, 8, 1, 0) });
     expect(healthOf(sim.player).program!.until).toBeUndefined();
+  }, 900_000);
+});
+
+// ---------------------------------------------------------------------------
+// 4. A renewal kept by her being at the School, by play alone (brief 12, 2026-10-17)
+// ---------------------------------------------------------------------------
+
+describe('health.enroll: a renewal kept by a month at the School, played', () => {
+  /**
+   * Brief 12's health area (docs/verification/resolution-2026-10-17/health-criteria.md, H3): until that day the one test
+   * of a renewal met by the School reached it through a renewal held by work posted by hand (the leave journey above,
+   * whose August renewal July's TEST SETUP work held). Here nothing is posted. A student with need on her personal leave
+   * from 20 January 2027 enrolls on Papers on 21 January, Yale Health having lapsed the day before: HUSKY D from the first
+   * of the month of application, 1 January (`programStart`), renewed six months on, 1 July, reading January to June. The
+   * leave began on the 20th, so January was a month at the School (`enrolledIn`), and it meets the rules. Change the input,
+   * the day she enrolls: her twin who waits to 1 February is given HUSKY D from February, renewed on 1 August, reading
+   * February to July, all on the leave, with under $580 of income in each, no SNAP and no stay: a notice of noncompliance.
+   * Each is said on Home, as What Needs You draws it once the player has read what was there.
+   */
+  const RENEWED = 'HUSKY D is renewed to its next renewal, January 1, 2028: last month’s income is within what it allows, and January 2027 met its work rules at the School.';
+  const NOTICE = 'HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from February to July 2027.';
+
+  it('PLAYER JOURNEY: on a personal leave from 20 January 2027, she enrolls in HUSKY D on Papers on 21 January, from 1 January; its renewal on 1 July is kept, Home saying January 2027 met its work rules at the School, said once across a reload; her twin who enrolls on 1 February is renewed on 1 August with no month at the School, and Home draws the notice of noncompliance', async () => {
+    const { Home } = await import('@/ui/screens/Home');
+    const home = (sim: Simulation): string => { h.sim = sim; h.clicks = []; return onScreen(renderToStaticMarkup(createElement(Home as FunctionComponent))); };
+    const snap = freeze(onLeave(thaw(atSchool().need)));
+
+    const early = thaw(snap);
+    early.advanceTo(at(2027, 1, 21, 9));
+    expect(papers(early)).toContain('Last month’s income qualifies you for HUSKY D, at any time and with no premium.');
+    expect(pressEnroll()).toEqual(['Enrolled in HUSKY D, from January 1, 2027.']);
+    expect(healthOf(early.player).program).toMatchObject({ kind: 'medicaid', state: 'ct', from: at(2027, 1, 1, 0), renewAt: at(2027, 7, 1, 0) });
+    early.advanceTo(at(2027, 6, 30, 21));
+    // February to June wholly on the leave, each under $580 of income: January, the month she left, is the one that meets it.
+    for (const m of ['2027-02', '2027-03', '2027-04', '2027-05', '2027-06']) expect(earningsOf(early.player).months[m] ?? 0).toBeLessThan(580_00);
+    expect(early.player.school!.leave).toMatchObject({ status: 'on', startedAt: at(2027, 1, 20, 12) });
+    early.must({ kind: 'world.mark_read', payload: {} }); // What Needs You read, with Mark … Read
+    const kept = thaw(freeze(early));
+    kept.advanceTo(at(2027, 7, 1, 9));
+    expect(healthOf(kept.player).program).toMatchObject({ kind: 'medicaid', from: at(2027, 1, 1, 0), renewAt: at(2028, 1, 1, 0) });
+    expect(healthOf(kept.player).program!.until).toBeUndefined();
+    expect(healthOf(kept.player).pending).toBeUndefined();
+    expect(coverOn(kept.player, kept.now)).toBe('medicaid');
+    expect(titled(kept, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 7, 1, 0, 30), RENEWED]]);
+    expect(titled(kept, 'A Notice Of Noncompliance')).toEqual([]);
+    const keptHome = home(kept);
+    expect(keptHome).toContain(`Your Public Cover Is Renewed ${RENEWED}`);
+    expect(keptHome).not.toMatch(/hours’ work|half-time/);
+
+    const late = thaw(snap);
+    late.advanceTo(at(2027, 2, 1, 9));
+    papers(late);
+    expect(pressEnroll()).toEqual(['Enrolled in HUSKY D, from February 1, 2027.']);
+    expect(healthOf(late.player).program).toMatchObject({ from: at(2027, 2, 1, 0), renewAt: at(2027, 8, 1, 0) });
+    late.advanceTo(at(2027, 7, 31, 21));
+    for (const m of ['2027-02', '2027-03', '2027-04', '2027-05', '2027-06', '2027-07']) expect(earningsOf(late.player).months[m] ?? 0).toBeLessThan(580_00);
+    late.must({ kind: 'world.mark_read', payload: {} });
+    late.advanceTo(at(2027, 8, 1, 9));
+    expect(healthOf(late.player).pending).toMatchObject({ kind: 'renewal', noticeAt: at(2027, 8, 1, 0, 30), months: ['2027-07', '2027-06', '2027-05', '2027-04', '2027-03', '2027-02'] });
+    expect(titled(late, 'Your Public Cover Is Renewed')).toEqual([]);
+    expect(coverOn(late.player, late.now)).toBe('medicaid');
+    const lateHome = home(late);
+    expect(lateHome).toContain(`A Notice Of Noncompliance ${NOTICE}`);
+    expect(lateHome).not.toMatch(/hours’ work|half-time/);
   }, 900_000);
 });

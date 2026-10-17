@@ -347,6 +347,28 @@ if FIG11R:
         r['failure'] = f"{r['failure']}; brief 11 ({r['measured']['commit']}): {'the same' if FIG11R[r['id']] == FIG10R.get(r['id']) else FIG11R[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {B11R}/README.md"
         r['citations'] = r['citations'] + [{'file': f'{B11R}/figures.json'}] + ([{'file': f'{B11R}/gate.txt'}] if gate else [])
+# Brief 12's final runs (resolution-2026-10-17/runs/, figures.json read from their outputs by its runs/figures.py, none
+# typed), as brief 11's: the advice area's change to systems/advice.ts and next-steps.ts left brief 11's stale. Each row
+# brief 11's runs measured moves to the commit its lane ran on, the gate's to the commit gate.txt names, and its figure is
+# said beside brief 11's, or "the same".
+B12R = 'docs/verification/resolution-2026-10-17/runs'
+FIG12R = json.load(open(f'{B12R}/figures.json', encoding='utf-8')) if os.path.exists(f'{B12R}/figures.json') else {}
+if FIG12R and FIG11R:
+    lane12 = lambda name: re.search(r'^at (\w+)', open(f'{B12R}/exits-{name}.txt', encoding='utf-8').read(), re.M).group(1)
+    R12 = {'app': lane12('A'), 'engine': lane12('B')}
+    GATE12 = re.search(r'^at (\w+)', open(f'{B12R}/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG12R else None
+    for r in rows:
+        m = r.get('measured')
+        gate = r['id'] == 'INT-gate'
+        if not (m and r['id'] in FIG11R and (gate or m.get('commit') == R11.get(m.get('watch')))):
+            continue
+        if gate and not GATE12:
+            continue  # the gate's figure, folded in once it has run
+        assert r['id'] in FIG12R, r['id']
+        r['measured'] = {'commit': GATE12, 'watch': 'app'} if gate else {'commit': R12[m['watch']], 'watch': m['watch']}
+        r['failure'] = f"{r['failure']}; brief 12 ({r['measured']['commit']}): {'the same' if FIG12R[r['id']] == FIG11R.get(r['id']) else FIG12R[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {B12R}/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{B12R}/figures.json'}] + ([{'file': f'{B12R}/gate.txt'}] if gate else [])
 # Brief 11's areas' results (completion-2026-10-16/<area>-result.json, the coordinator's integration-result.json among
 # them): each row an area worked, its status and the tests it cites, read onto the matrix, never typed here. An area's
 # item takes an override; a criterion or shortfall row here is changed in place. The audit's rows aren't taken: their
@@ -354,14 +376,32 @@ if FIG11R:
 # later on 2026-10-17 the coordinator's five rows were copied in by hand.
 AUDIT_IDS = {it['id'] for f in sorted(os.listdir('docs/verification/audit')) if f.endswith('.json') for it in json.load(open(f'docs/verification/audit/{f}', encoding='utf-8'))['items']}
 NEEDS11 = {IVI: 'missing', PI: 'gap', NI: 'gap', BE: 'blocker', DR: 'decision', ED: 'deferredBy'}
-for f in sorted(x for x in os.listdir(B11) if x.endswith('-result.json')):
+# Brief 12's (resolution-2026-10-17/, from 2026-10-17) are read after brief 11's, the same way, so a later result replaces an
+# earlier override; and a replacement criterion it writes (`replacements`: ST6-R2's four, which supersede ST6-R's (a), (c),
+# (e) and (g) at the owner's authorization) is a row of its own, closed on its own evidence and never on its original's.
+B12 = 'docs/verification/resolution-2026-10-17'
+PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else [])
+for d, brief, f in [(d, brief, f) for d, brief in PASSES for f in sorted(x for x in os.listdir(d) if x.endswith('-result.json'))]:
     area = f[:-len('-result.json')]
-    for r in json.load(open(f'{B11}/{f}', encoding='utf-8')).get('rows', []):
+    result = json.load(open(f'{d}/{f}', encoding='utf-8'))
+    for n in result.get('replacements', []):
+        cites = [cite(e['file'], e.get('title')) for e in n.get('evidence', []) if e.get('file')]
+        rec = {'id': n['id'], 'group': f'{brief}: Replacement Criteria', 'kind': 'criterion', 'goal': n.get('criterion') or n.get('goal', 'Not recorded'),
+               'entry': n.get('entry', 'Not recorded'), 'preconditions': f"The owner's authorization ({brief}); it replaces {n['replaces']}, which stays as historical evidence",
+               'reads': n.get('reads', 'Not recorded'), 'decisions': 'None: a criterion, not a player decision', 'validation': n.get('threshold', n.get('criterion', 'Not recorded')),
+               'changes': n.get('changes', 'Not recorded'), 'later': 'None', 'systems': n.get('systems', 'Not recorded'), 'sees': n.get('sees', 'Not recorded'),
+               'saveLoad': 'Not recorded', 'failure': n.get('failure', 'Not recorded'), 'implementation': n.get('implementation', 'Not recorded'),
+               'evidence': '; '.join(f"{e['file']}{(' ‘' + e['title'] + '’') if e.get('title') else ''}" for e in n.get('evidence', [])) or 'Not recorded',
+               'status': n['status'], 'sourceStatus': f'{d}/{f}', 'citations': cites}
+        for k in ('missing', 'gap', 'blocker', 'decision', 'deferredBy', 'measured'):
+            if n.get(k): rec[k] = n[k]
+        rows[:] = [x for x in rows if not (x['id'] == rec['id'] and x['group'] == rec['group'])] + [rec]
+    for r in result.get('rows', []):
         if r['id'] in AUDIT_IDS:
             continue
         cites = [cite(e['file'], e.get('title')) for e in r.get('evidence', []) if e.get('file')]
         status = r['status']
-        why = f"Brief 11, the {area} area ({B11}/{f}): {r.get('exercised') or r.get('notProved') or ''}".strip()
+        why = f"{brief}, the {area} area ({d}/{f}): {r.get('exercised') or r.get('notProved') or ''}".strip()
         # What the status asks, from whichever of the fields the area wrote it in (common.md: "missing | gap | blocker |
         # decision"); a verified row carries none.
         need = NEEDS11.get(status)
@@ -370,7 +410,7 @@ for f in sorted(x for x in os.listdir(B11) if x.endswith('-result.json')):
         # A decision whose evidence is its area's result (ST6-R's (c), (e) and (g) rest on (a)'s measurements there) names
         # the result, as the matrix does for brief 09's areas.
         if need == 'decision' and isinstance(said, dict) and not said.get('evidence'):
-            said = {**said, 'evidence': f'{B11}/{f}'}
+            said = {**said, 'evidence': f'{d}/{f}'}
         extra = {**({need: said} if need else {}), **({'measured': r['measured']} if r.get('measured') else {})}
         crit = [x for x in rows if x['id'] == r['id'] and x['group'] == r['group']]
         if crit:
@@ -378,7 +418,7 @@ for f in sorted(x for x in os.listdir(B11) if x.endswith('-result.json')):
             # What its old status asked goes with it (KS-ct-idcard's missing, once it's Blocked Externally).
             for k in ('missing', 'gap', 'blocker', 'decision', 'deferredBy'):
                 if k != need: x.pop(k, None)
-            x.update({'status': status, 'citations': x['citations'] + cites, 'evidence': f"{x['evidence']}; {B11}/{f}", **extra})
+            x.update({'status': status, 'citations': x['citations'] + cites, 'evidence': f"{x['evidence']}; {d}/{f}", **extra})
             if status == IAV:
                 # Verified by the tests it cites, not by the measurement it carried, and no longer a decision (L1, brief 11).
                 x.pop('measured', None)

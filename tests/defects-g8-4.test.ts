@@ -3,7 +3,7 @@
  * that shows it (from 2026-10-12): a withdrawal by the fifteenth day of classes said Yale Health was canceled back to
  * the term's start, where it went back to the insurance term's (1 August) in a fall and only to the day of withdrawing
  * in a spring; HUSKY D's work test counted a benefit, interest or a pension as work, and never read the 80 hours it
- * named (the 80 hours stand; from 2026-10-16 a month's income of any kind counts toward the $580 again, as CMS's rule of
+ * named (the 80 hours stood until 2026-10-17, when brief 12 had them cut; from 2026-10-16 a month's income of any kind counts toward the $580 again, as CMS's rule of
  * 3 June 2026 reads it, and a renewal reads six months); Your Cover, Home and the bills' subtitle called Covered Connecticut and HUSKY D the Essential Plan; Yale's
  * dental plan bought in August covered five weeks, and the degree ended a paid year with no refund; and Your Doctor's
  * and Your Pharmacy's empty options did nothing once a choice was made, beside a pharmacy price with no currency.
@@ -123,7 +123,7 @@ describe('a withdrawal by the fifteenth day of classes says when Yale Health’s
   });
 });
 
-describe('HUSKY D’s work test reads last month’s work: its hours and its pay', () => {
+describe('HUSKY D’s work test reads last month’s work: its hours and its pay until 2026-10-17, and since then its pay as income', () => {
   // FIXTURE: HUSKY D held since January 2027 and up for renewal on 1 July, after the work test began (2027).
   const huskyD = (seed: string) => {
     const sim = newHaven(seed);
@@ -153,7 +153,7 @@ describe('HUSKY D’s work test reads last month’s work: its hours and its pay
     expect(short.player.health!.program!.until).toBeUndefined();
     expect(coverOn(short.player, renewal + MS_DAY)).toBe('medicaid');
     expect(short.player.health!.pending).toMatchObject({ kind: 'renewal', noticeAt: renewal, decideAt: at(2027, 8, 5, 0), months: ['2027-06', '2027-05', '2027-04', '2027-03', '2027-02', '2027-01'] });
-    expect(titled(short, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find 80 hours’ work, $580.00 of income, school at least half-time or an exception in any month from January to June 2027. You’re covered while you answer, to August 4, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in those months counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, HUSKY D ends on August 31, 2027, said on August 5, 2027, and the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.']);
+    expect(titled(short, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from January to June 2027. You’re covered while you answer, to August 4, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in those months counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, HUSKY D ends on August 31, 2027, said on August 5, 2027, and the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.']);
     expect(titled(short, 'Your Public Cover Ends')).toEqual([]);
   });
 
@@ -165,26 +165,26 @@ describe('HUSKY D’s work test reads last month’s work: its hours and its pay
     expect(healthOf(sim.player).program!.renewAt).toBe(at(2028, 1, 1, 0));
   });
 
-  // Its title kept whole inside the new one, for what cites it. Until 2026-10-16 a renewal read June alone, and May's
-  // work didn't count. Connecticut reads the six months before a renewal, any one of them (CHA's HUSKY D materials from
-  // DSS's, 8/25/26, read 2026-10-16; `lookBack`), so May's 80 hours renew her; July's, the renewal's own month, still
-  // don't, and 79 hours in June with July's 80 bring a notice of noncompliance.
-  it('until 2026-10-16 it read: renews on 80 hours, whatever the pay, and not on 79; work paid in May or July isn’t June’s; since then any of the six months before the renewal counts, May among them, and July, its own month, still doesn’t', () => {
-    // FIXTURE: 80 hours at $5 an hour, under the $580 the pay test asks. At SLATE's own wages (work-study's $23 an hour,
-    // the Summer Cabaret's 40 hours a week for $375) 80 hours are always over $580, so the hours never decide alone.
+  // Its title kept whole inside the new one, twice, for what cites it. Until 2026-10-16 a renewal read June alone, and May's work didn't count: Connecticut reads the six months before a renewal, any one of them (CHA's HUSKY D materials from
+  // DSS's, 8/25/26, read 2026-10-16; `lookBack`), so May's month renews her; July's, the renewal's own month, still doesn't, and 79 hours in June with July's 80 bring a notice of noncompliance. Until 2026-10-17 80 hours renewed her
+  // whatever they paid, by `monthEngagement`'s work branch, which brief 12 had cut as serving no necessary purpose (docs/verification/resolution-2026-10-17/health-criteria.md): no wage SLATE has paid, in play or in any save's
+  // history, came to under $7.25 an hour where the rules are read, so 80 paid hours always met the $580 income test too.
+  it('until 2026-10-17 it read: until 2026-10-16 it read: renews on 80 hours, whatever the pay, and not on 79; work paid in May or July isn’t June’s; since then any of the six months before the renewal counts, May among them, and July, its own month, still doesn’t; since then the hours aren’t read: 80 hours paid $400 in June bring a notice of noncompliance, and May’s 80 paid $1,840 renew her by their income', () => {
+    // FIXTURE: 80 hours at $5 an hour, under the $580 the income test asks, which no save can hold. They're read as their pay, $400, and nothing else meets
+    // the rules from January to June, so she's sent a notice and covered while she answers, where until 2026-10-17 she was renewed "by 80 hours’ work".
     const enough = huskyD('g84-work-hours');
     worked(enough, at(2027, 6, 12), 80, 400_00);
     healthMonth(enough, enough.player, renewal);
-    expect(enough.player.health!.program!.until).toBeUndefined();
-    expect(enough.player.health!.pending).toBeUndefined();
-    expect(titled(enough, 'Your Public Cover Is Renewed')[0]!.body).toMatch(/June 2027 met its work rules by 80 hours’ work\.$/);
+    expect([enough.player.health!.program!.until, coverOn(enough.player, renewal + MS_DAY)]).toEqual([undefined, 'medicaid']);
+    expect(enough.player.health!.pending).toMatchObject({ kind: 'renewal', noticeAt: renewal, months: ['2027-06', '2027-05', '2027-04', '2027-03', '2027-02', '2027-01'] });
+    expect([titled(enough, 'Your Public Cover Is Renewed').length, titled(enough, 'A Notice Of Noncompliance').length]).toEqual([0, 1]);
     const may = huskyD('g84-work-hours-may');
     worked(may, at(2027, 6, 12), 79, 400_00);
     worked(may, at(2027, 5, 31, 12), 80, 1_840_00);
     healthMonth(may, may.player, renewal);
     expect(may.player.health!.program!.until).toBeUndefined();
     expect(may.player.health!.pending).toBeUndefined();
-    expect(titled(may, 'Your Public Cover Is Renewed')[0]!.body).toMatch(/May 2027 met its work rules by 80 hours’ work\.$/);
+    expect(titled(may, 'Your Public Cover Is Renewed')[0]!.body).toMatch(/May 2027 met its work rules by its income, \$580\.00 or more\.$/);
     const short = huskyD('g84-work-hours-short');
     worked(short, at(2027, 6, 12), 79, 400_00);
     worked(short, at(2027, 7, 1, 0) + 30 * 60_000, 80, 1_840_00);

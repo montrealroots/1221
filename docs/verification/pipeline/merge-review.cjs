@@ -119,7 +119,9 @@ for (const area of ['life', 'money', 'papers', 'school', 'ui']) {
           const standard = statics[title.split(' > ').pop()];
           return { file: fileOf(x), title, kind: kindOf(t, title), closes: t.closes, ...(String(x.round ?? '').startsWith('remaining-') ? { round: x.round } : {}), ...(standard ? { standard } : {}) };
         })),
-        gapsClosed: recs.flatMap((x) => x.gapsClosed ?? []),
+        // A gap closed by more than one record is kept once (from 2026-10-17: until then health.enroll's listed eight five
+        // times, each round of its area folding the same closures; found by brief 12's second reader of the row).
+        gapsClosed: [...new Set(recs.flatMap((x) => x.gapsClosed ?? []))],
         gapsOpen: a.gapsOpen,
         // The final check's disposition where there is one (it read the code after every fix), else the claim's.
         ...((checkById[it.id]?.disposition ?? a.disposition) ? { disposition: checkById[it.id]?.disposition ?? a.disposition } : {}),
@@ -132,6 +134,13 @@ for (const area of ['life', 'money', 'papers', 'school', 'ui']) {
         ...(checkById[it.id] ? { check: { holds: checkById[it.id].holds, verdict: checkById[it.id].verdict, problems: checkById[it.id].problems, weakTests: checkById[it.id].weakTests } } : {}),
         ...((a.claimCorrection ?? recs.find((x) => x.claimCorrection)?.claimCorrection) ? { claimCorrection: a.claimCorrection ?? recs.find((x) => x.claimCorrection).claimCorrection } : {}),
       };
+      // A final check that verifies the row, read against the code after every fix, settles what its last record left
+      // open, which stays as history among the gaps closed, as a note after the check does below (from 2026-10-17, brief
+      // 12: until then 43 rows the check verified, health.enroll among them, kept “Still open” in their Note).
+      if (checkById[it.id]?.verdict === 'verified' && it.after.verdict === 'verified' && it.after.gapsOpen?.length) {
+        it.after.gapsClosed = [...it.after.gapsClosed, ...it.after.gapsOpen.map((g) => `Settled at the final check: ${g}`)];
+        it.after.gapsOpen = [];
+      }
     }
     // What a test closes, corrected where an area's later change falsified the words its round wrote (inputs/closes.json,
     // from 2026-10-16, brief 09: the banking area's German closing fees charged to the day, where a round's words said the

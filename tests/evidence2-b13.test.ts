@@ -621,3 +621,37 @@ describe('i-stale-claims', () => {
     expect(found.filter(presentTense).map((f) => `${f.file}: ${f.sentence}`)).toEqual([]);
   }, 60_000);
 });
+
+// ---------------------------------------------------------------------------------------------------------------------
+// health.enroll's work rules in the reference and the tutorial (brief 12, 2026-10-17)
+// ---------------------------------------------------------------------------------------------------------------------
+
+describe('health.enroll: the work rules in the guide and the tutorial, as the player meets them (brief 12)', () => {
+  // Brief 12's health area (docs/verification/resolution-2026-10-17/health-criteria.md, H2): until 2026-10-17 the
+  // reference and the tutorial named 80 hours' work first among what meets HUSKY D's work rules, which nobody off the
+  // School can do in SLATE, and "school at least half-time" for the School. Each is drawn here as the player opens it.
+  afterEach(() => { Reflect.deleteProperty(globalThis, 'window'); });
+
+  it('PLAYER JOURNEY: Health Cover’s reference, opened by its own address, and the tutorial’s Cover, Benefits And Returns chapter, opened in the guide’s dialog, name the School, $580 of income and the exceptions for HUSKY D’s work rules, and no hours of work', () => {
+    const sim = createSave(1, 'b13-work-rules', ada({ tutorial: true }));
+    // TEST SETUP: the page's window, holding the address the reference reads, as the test above sets it.
+    Object.defineProperty(globalThis, 'window', {
+      value: { location: { hash: '#/workspace/papers?help=papers.health-cover' }, history: { state: null, replaceState: () => undefined }, addEventListener: () => undefined, removeEventListener: () => undefined },
+      configurable: true, writable: true,
+    });
+    const entry = drawn(sim, createElement(HelpProvider, null, null));
+    expect(entry.html).toContain('<h3 id="entry-papers.health-cover"');
+    expect(entry.text).toContain('From 1 January 2027, some of the month before you enroll spent at the School, or $580 of income of any kind in it, or an exception: 65 or over, SNAP received under its work rules, or a stay in hospital you ask for.');
+    expect(entry.text).toContain('A month meets them with any of it spent at the School (the month you leave it, on a leave, by withdrawing or with the degree, counts whole, and so does the month you come back), $580 of income of any kind (pay, an unemployment benefit, interest or a pension)');
+    expect(entry.text).toContain('“From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them.”');
+    expect(entry.text).not.toMatch(/hours’ work|hours of work|half-time/);
+
+    // TEST SETUP: the chapter the guide shows, as pressing it in the contents sets it.
+    const i = CHAPTERS.findIndex((c) => c.id === 'papers');
+    const chapter = drawn(sim, createElement(GuideProvider, null, null), [CHAPTERS[i]!.id]);
+    expect(chapter.text).toContain(`Chapter ${i + 1} Of ${CHAPTERS.length} ${CHAPTERS[i]!.title}`);
+    expect(chapter.text).toContain('From 2027 Medicaid asks for a month spent partly at the School, or one with $580 of income (pay, interest or a benefit counts), unless you’re 65 or over, on SNAP under its work rules or, if you ask, in hospital that month');
+    expect(chapter.text).toContain('if you fit neither, or its work rules aren’t met, it ends at a month’s end');
+    expect(chapter.text).not.toMatch(/hours’ work|hours of work|half-time/);
+  }, 60_000);
+});

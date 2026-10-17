@@ -1166,12 +1166,11 @@
           "castListRead reading the bond amends restore: a twin pair at the 4 January cast list, by the clock (Rival at −22 against −14, 1.5 of stress, and the word on the Casting tab)",
           "castCompany reading the bond amends restore: a twin pair at the Carlotta's first night, by the clock (a friend at 25 against 23, a point of morale)",
           "The skeptic's weak test tests/defects-g8-10.test.ts > making amends puts right what’s unrepaired (incident, boundary and keptWith by hand) stays in that file. Its claims are carried through the clock by evidence-g18-school.test.ts and this file.",
-          "Where the CLASS.amends comment's 'trust 6, the bond 2 of the 3 it cost' comes from: measured as an evening running lines missed (6/3), not a rehearsal (12/5)"
+          "Where the CLASS.amends comment's 'trust 6, the bond 2 of the 3 it cost' comes from: measured as an evening running lines missed (6/3), not a rehearsal (12/5)",
+          "Settled at the final check: [only a fixture reaches it] 'Hannah is in New Haven.' (amendsRefusal, classmates.ts:368). A life is enrolled only when it begins in New Haven (src/engine/index.ts:241, startLocationId === YALE_DRAMA.cityId). Nothing in src writes currentLocationId after bootstrap.ts:354, so only the first round's TEST SETUP location reaches it. Play could reach it until the scope reset of 2026-10-09, when it applied after the degree. By THE ONE RULE the owner may delete it or keep it as a guard.",
+          "Settled at the final check: [needs engine change] The comment on CLASS.amends (src/engine/systems/classmates.ts:91-92) still says amends give back 'what each thing let down took, and no more: a meeting or rehearsal missed (trust 6, the bond 2 of the 3 it cost)'. A rehearsal or a showing missed takes trust 12 and the bond 5 (WORK.trust.missed, WORK.bond.missed). Trust 6 and the bond 3 is an evening running lines missed (CLASS.study.missed), measured here. The code's figures are pinned by tests, and the comment is false. See defects."
         ],
-        "gapsOpen": [
-          "[only a fixture reaches it] 'Hannah is in New Haven.' (amendsRefusal, classmates.ts:368). A life is enrolled only when it begins in New Haven (src/engine/index.ts:241, startLocationId === YALE_DRAMA.cityId). Nothing in src writes currentLocationId after bootstrap.ts:354, so only the first round's TEST SETUP location reaches it. Play could reach it until the scope reset of 2026-10-09, when it applied after the degree. By THE ONE RULE the owner may delete it or keep it as a guard.",
-          "[needs engine change] The comment on CLASS.amends (src/engine/systems/classmates.ts:91-92) still says amends give back 'what each thing let down took, and no more: a meeting or rehearsal missed (trust 6, the bond 2 of the 3 it cost)'. A rehearsal or a showing missed takes trust 12 and the bond 5 (WORK.trust.missed, WORK.bond.missed). Trust 6 and the bond 3 is an evening running lines missed (CLASS.study.missed), measured here. The code's figures are pinned by tests, and the comment is false. See defects."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -3442,12 +3441,11 @@
           "Stale entry practice.ts:75 is now :194 (claimCorrection)",
           "'There’s no such way to practice.' refused through the command, nothing moved",
           "The skeptic's problem with the variation refusal: shown, through the command, that no exercise reaches it (classified below)",
-          "The first round's 'a classmate wanted where there’s no class' was reached only with the class removed by hand. That refusal is shown to be unreachable in play (classified below)."
+          "The first round's 'a classmate wanted where there’s no class' was reached only with the class removed by hand. That refusal is shown to be unreachable in play (classified below).",
+          "Settled at the final check: [only a fixture reaches it] 'This exercise has nothing it carries over to.' (focusRefusal, practice.ts:105). Every one of the 27 exercises' designs carries over to something it doesn't train, shown here through the command. Only an exercise with no design would meet it, and content/practice.ts has none. By THE ONE RULE the owner may delete it or keep it as a guard for a new exercise.",
+          "Settled at the final check: [only a fixture reaches it] 'It takes a classmate, and you have no class to ask.' (practiceRefusal, practice.ts:63; focusRefusal live, :104). A craft is begun only at enrollment, which gives the class its fifteen (YALE_DRAMA.classSize − 1), and a life without a craft is refused first ('Your training hasn’t begun'). Nothing empties school.classmates: a withdrawal leaves them (shown here), leaveClassBehind copies them, and joinCohort replaces them with the next class. The first round reached it only with the class removed by hand (TEST SETUP)."
         ],
-        "gapsOpen": [
-          "[only a fixture reaches it] 'This exercise has nothing it carries over to.' (focusRefusal, practice.ts:105). Every one of the 27 exercises' designs carries over to something it doesn't train, shown here through the command. Only an exercise with no design would meet it, and content/practice.ts has none. By THE ONE RULE the owner may delete it or keep it as a guard for a new exercise.",
-          "[only a fixture reaches it] 'It takes a classmate, and you have no class to ask.' (practiceRefusal, practice.ts:63; focusRefusal live, :104). A craft is begun only at enrollment, which gives the class its fifteen (YALE_DRAMA.classSize − 1), and a life without a craft is refused first ('Your training hasn’t begun'). Nothing empties school.classmates: a withdrawal leaves them (shown here), leaveClassBehind copies them, and joinCohort replaces them with the next class. The first round reached it only with the class removed by hand (TEST SETUP)."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [],
         "mutations": {
@@ -3974,11 +3972,10 @@
         ],
         "gapsClosed": [
           "genreSpeed's two consumers are never shown faster after a study: a scene for class (coursework.ts:592) and a part's lines (production.ts:526)",
-          "The entry's ProfileWorkspace.tsx:407 and BriefPane.tsx:187, and the downstream coursework.ts:576 and production.ts:478, are now :416, :195, :592 and :526 (claimCorrection)"
+          "The entry's ProfileWorkspace.tsx:407 and BriefPane.tsx:187, and the downstream coursework.ts:576 and production.ts:478, are now :416, :195, :592 and :526 (claimCorrection)",
+          "Settled at the final check: Two stale statements the review names ('no test checks a second study the same day gives half'; 'a take's knowing the genre is tested only with familiarity set by hand') aren't in the audit fields this group carries. They belong to the row's text in docs/GAMEPLAY-COVERAGE.md, which this pass may not edit. guide-examples-craft 'Genres' and this file now hold both."
         ],
-        "gapsOpen": [
-          "Two stale statements the review names ('no test checks a second study the same day gives half'; 'a take's knowing the genre is tested only with familiarity set by hand') aren't in the audit fields this group carries. They belong to the row's text in docs/GAMEPLAY-COVERAGE.md, which this pass may not edit. guide-examples-craft 'Genres' and this file now hold both."
-        ],
+        "gapsOpen": [],
         "defects": [
           {
             "summary": "A scene for class from a play the game knows by kind isn't sped by studying that kind when the scene spells the play's title with a small 'of', 'for' or 'to'. genresOfPlay matches titles exactly, so four scenes never find their kinds and genreSpeed reads 1 for them: riders-sea 'Riders to the Sea' (list: 'Riders To The Sea', tragedy), earnest-2 'The Importance of Being Earnest', playboy-3 'The Playboy of the Western World' and measure-2-4 'Measure for Measure'. Riders to the Sea was set in the first fall on all 52 seeds probed.",
@@ -5836,11 +5833,10 @@
         "gapsClosed": [
           "The review's defect (a closing excused in hospital after nights played had no credit, note or reflection and was never closed) is fixed in SUMMER_KIND (school.ts:3547-3554, from 2026-10-13). The test holds it: credit wentOn 3, note, reflection, closed.",
           "The credit a played closing gives (wentOn 4), the summer's craft growth against a twin who never joined, and its nights are asserted",
-          "The unexcused miss's noteRun 'missed' is asserted through the clock, and so is its reading at the next casting"
+          "The unexcused miss's noteRun 'missed' is asserted through the clock, and so is its reading at the next casting",
+          "Settled at the final check: A closing missed unexcused (away or asleep) after nights played gets no credit, no director's note and no look back, and the run is never closed. That runs against the review's todo, closeRun's own 'played or not', the Cabaret's missed closing and keepCredit for School productions. The failing test holds the right behavior until school.ts:3550 drops its `sick` condition."
         ],
-        "gapsOpen": [
-          "A closing missed unexcused (away or asleep) after nights played gets no credit, no director's note and no look back, and the run is never closed. That runs against the review's todo, closeRun's own 'played or not', the Cabaret's missed closing and keepCredit for School productions. The failing test holds the right behavior until school.ts:3550 drops its `sick` condition."
-        ],
+        "gapsOpen": [],
         "defects": [
           {
             "summary": "SUMMER_KIND credits and closes a closing night missed after nights were played only when the miss is excused. A closing missed unexcused after three nights played leaves the show with no credit, no note and no reflection, and the run is never closed. The Cabaret's missed closing (school.ts:3452-3455), a School production's (closeRun at 3350, keepCredit 1996-2000), closeRun's contract ('when its last night passes, played or not', 3197) and the review's todo all credit and close it.",
@@ -6003,11 +5999,10 @@
           "The F-1 nonresident's FICA exemption on the stipend",
           "The year's return read on clock-paid stipends: the resident's 1040 and the F-1's 1040-NR, both made by the clock on 1 February 2028",
           "The year's return read whole on stipends the clock paid. For the resident's 2027 1040, made by the clock on 1 February 2028, the federal tax, Connecticut's line, the payroll tax, every week's withholding by authority, the balance and its split between the IRS and Connecticut are each asserted as a literal worked from the rules.",
-          "The skeptic's weak F-1 test, which pinned $0 federal withholding, is replaced by a test held to the 1040-NR's own 10%. That test fails, on the defect below."
+          "The skeptic's weak F-1 test, which pinned $0 federal withholding, is replaced by a test held to the 1040-NR's own 10%. That test fails, on the defect below.",
+          "Settled at the final check: [needs engine change] An F-1 nonresident's stipend withholds no federal tax. STIPEND_KIND works the withholding on computeAnnualTax, which takes a resident's standard deduction. The 1040-NR the same save files allows none and taxes the first $375 at 10%. So 'posts it with the IRS's withholding' is not true for the nonresident: the student under-withholds and owes the whole federal tax at filing. The test holding $37.50 fails until the fix below."
         ],
-        "gapsOpen": [
-          "[needs engine change] An F-1 nonresident's stipend withholds no federal tax. STIPEND_KIND works the withholding on computeAnnualTax, which takes a resident's standard deduction. The 1040-NR the same save files allows none and taxes the first $375 at 10%. So 'posts it with the IRS's withholding' is not true for the nonresident: the student under-withholds and owes the whole federal tax at filing. The test holding $37.50 fails until the fix below."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -7002,12 +6997,11 @@
         "gapsClosed": [
           "sourceWords' words for 'rehearsal:<production>', 'lab'/'lab:showing' and 'coursework:<id>' were added on 2026-10-13 (73b2a9ec); played renders now hold them",
           "The history bound is tested through play",
-          "grewFrom recording is held by played sources, not a fixture"
+          "grewFrom recording is held by played sources, not a fixture",
+          "Settled at the final check: Defect: the Cabaret's rehearsal calls print as “A rehearsal call: cabaret” (see defects)",
+          "Settled at the final check: The built-app step (tools/acceptance-ui.mjs:439-443) still checks only the heading. That is outside this file; a render here checks the lines and their words."
         ],
-        "gapsOpen": [
-          "Defect: the Cabaret's rehearsal calls print as “A rehearsal call: cabaret” (see defects)",
-          "The built-app step (tools/acceptance-ui.mjs:439-443) still checks only the heading. That is outside this file; a render here checks the lines and their words."
-        ],
+        "gapsOpen": [],
         "defects": [
           {
             "summary": "The Profile's Development History, the Attributes table's Last Change and an ability's look print a Cabaret rehearsal call as “A rehearsal call: cabaret”: the bare key, lowercase",
@@ -7472,13 +7466,12 @@
           "The row's downstream corrected (see claimCorrection): a demand acts through content (every brief stages it) and the display, not at run time",
           "The runtime branches kept with tests that fail if they change what a take, a casting or a showing reads",
           "The row's downstream corrected (claimCorrection): a demand acts through content (every brief stages it) and the display, and no play's night reads one. Shown on a played farce night, which is unchanged by the demanded technique mastered.",
-          "The display read: the genre look rendered, which found the words below wrong."
+          "The display read: the genre look rendered, which found the words below wrong.",
+          "Settled at the final check: [needs engine change] withDemands in tapeReadsOf (briefs.ts), playReads (school.ts) and workContext (coursework.ts), and engagement.ts's tapeReads, change no outcome: no brief, play or scene reaches a demand its work doesn't already read. This is THE ONE RULE's case. Deleting them (and logging them in docs/UNBITTEN.md) or keeping them under the first round's no-op pins is the owner's call. content/demands.ts's header still says, in the present tense, that a play's kinds' demands join what the work reads.",
+          "Settled at the final check: [needs engine change] The genre look says 'Work in it reads' each demanded technique; of a farce it names Clown And Mask, which a farce's night doesn't read. The test holding the look to what a farce's work reads fails until its words are scoped to the self-tape.",
+          "Settled at the final check: [stale claim] The row's tests cite tests/engagement.test.ts ‘makes every applied demand a requirement of the work…’, which credits the demand with a singing rise that the brief's own staging makes. With the downstream corrected (claimCorrection), the demand has no run-time effect to credit. The row should cite tests/evidence-g23-school.test.ts ‘genre demands’ and tests/evidence2-b08.test.ts ‘genre demands’ instead, an edit to the audit docs outside this file."
         ],
-        "gapsOpen": [
-          "[needs engine change] withDemands in tapeReadsOf (briefs.ts), playReads (school.ts) and workContext (coursework.ts), and engagement.ts's tapeReads, change no outcome: no brief, play or scene reaches a demand its work doesn't already read. This is THE ONE RULE's case. Deleting them (and logging them in docs/UNBITTEN.md) or keeping them under the first round's no-op pins is the owner's call. content/demands.ts's header still says, in the present tense, that a play's kinds' demands join what the work reads.",
-          "[needs engine change] The genre look says 'Work in it reads' each demanded technique; of a farce it names Clown And Mask, which a farce's night doesn't read. The test holding the look to what a farce's work reads fails until its words are scoped to the self-tape.",
-          "[stale claim] The row's tests cite tests/engagement.test.ts ‘makes every applied demand a requirement of the work…’, which credits the demand with a singing rise that the brief's own staging makes. With the downstream corrected (claimCorrection), the demand has no run-time effect to credit. The row should cite tests/evidence-g23-school.test.ts ‘genre demands’ and tests/evidence2-b08.test.ts ‘genre demands’ instead, an edit to the audit docs outside this file."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -10114,12 +10107,11 @@
           "Two-hours-free refusal: Tuesday 12 January 2027 at 8:00, 'Classes starts at 9:00 AM: there isn’t the time before it.'; at 10:00, 'You’re at Classes until 3:00 PM.'; sim.now and madeUp unchanged both times. The Incomplete reaches class days through school.extend_incomplete, a command (due 9 February 2027).",
           "The control rendered: Acting I's line ('1 of 1 make-up sessions left, by February 9, 2027.'), Make Up A Session disabled with its reason on the screen at 8:00, enabled at 15:30, and pressed. It took two hours (17:30), passed the course 'made up after an Incomplete', cleared it from degreeShortfall and left no INCOMPLETE_DUE_KIND for it. After a reload, past 9 February, the course is still a pass and there is no 'Permanent Incomplete: Acting I'.",
           "conferIfReady, by play: On-Camera Acting Technique (DRAM 463a/b, Thursdays, 14 meetings) was called in sick on 18 and 25 January and 1 and 8 February 2029. It met 10 of 14 with 4 excused, so it was Incomplete at the 27 April evaluation, owing one session by 27 May at 5 PM (eleven meetings pass it, one a week). At Commencement on 21 May: 'Not At Commencement' and awaitingDegree. Make Up A Session was drawn enabled ('1 of 1 make-up sessions left, by May 27, 2029.') and pressed at 10 AM on 22 May. Toast 'On-Camera Acting Technique: passed.', two hours, the course passed, no INCOMPLETE_DUE_KIND left. Standing graduated at noon with 'Your last Incomplete made up, the faculty confer the MFA in Acting, class of 2029, without the ceremony.', once through a save.",
-          "onPermanent, the other side of a waiting degree: the twin left alone was still Incomplete and waiting at 4 PM on 27 May, and Permanent and withheld at 5 PM with 'On-Camera Acting Technique wasn’t made up in its month, and the degree needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over.' No MFA."
+          "onPermanent, the other side of a waiting degree: the twin left alone was still Incomplete and waiting at 4 PM on 27 May, and Permanent and withheld at 5 PM with 'On-Camera Acting Technique wasn’t made up in its month, and the degree needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over.' No MFA.",
+          "Settled at the final check: [needs engine change] The New Haven refusal (courserecord.ts:178, 'Its teachers are in New Haven.') is reached by no play. Every new life begins in New Haven (atSchool, which newLifeFrom keeps whatever the draft says), a life is enrolled only if it begins there (engine/index.ts:241), and nothing writes currentLocationId after a life begins (content/guide/day.ts:16). The journey asserts both: still in New Haven three years on, and a draft asking for London begins in New Haven. It is a declared word nothing reads: delete it (defect below).",
+          "Settled at the final check: [needs engine change] 'Its month has run out.' (courserecord.ts:173) is reached by no student still at school. INCOMPLETE_DUE_KIND makes the course Permanent at dueBy itself, and a leave keeps that item (leave.ts kept()). Only a student whose School has ended reaches it, because setStanding calls off every school.* item, the deadline's with them. Played: withdrawn on 14 December 2026, on 11 January 2027 make_up says 'Its month has run out.'. What that student should be told is 'You’re not at school.' (the defect). Once that is fixed nothing reaches the line: delete it."
         ],
-        "gapsOpen": [
-          "[needs engine change] The New Haven refusal (courserecord.ts:178, 'Its teachers are in New Haven.') is reached by no play. Every new life begins in New Haven (atSchool, which newLifeFrom keeps whatever the draft says), a life is enrolled only if it begins there (engine/index.ts:241), and nothing writes currentLocationId after a life begins (content/guide/day.ts:16). The journey asserts both: still in New Haven three years on, and a draft asking for London begins in New Haven. It is a declared word nothing reads: delete it (defect below).",
-          "[needs engine change] 'Its month has run out.' (courserecord.ts:173) is reached by no student still at school. INCOMPLETE_DUE_KIND makes the course Permanent at dueBy itself, and a leave keeps that item (leave.ts kept()). Only a student whose School has ended reaches it, because setStanding calls off every school.* item, the deadline's with them. Played: withdrawn on 14 December 2026, on 11 January 2027 make_up says 'Its month has run out.'. What that student should be told is 'You’re not at school.' (the defect). Once that is fixed nothing reaches the line: delete it."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -10283,11 +10275,10 @@
           "Render: Ask For A Month More was drawn on the Standing tab for each of the four Incompletes, and none was locked. Pressing Acting I's runs the command, with the toast 'Extended to February 9, 2027.'. After that it's gone from Acting I's line, and the line says February 9. Once lapsed, the tab lists 'Acting I, Permanent Incomplete: an Incomplete not made up in its month.' as what the degree needs.",
           "The weak test (student-experience 'is extended once') checked only that the old deadline no longer bit. This one checks that the new one does.",
           "The extension where a degree waits on it, by play and the drawn button. Ask For A Month More was pressed at 10 AM on 22 May 2029, after Commencement: toast 'Extended to June 26, 2029.', record extended with dueBy 26 June at 5 PM, items at 19 June (reminder) and 26 June. 27 May passed with the course Incomplete, the degree waiting and nothing withheld. A session on 20 June returned {madeUp 1, owed 1, passed true} and conferred the degree ('Your last Incomplete made up, ...').",
-          "The twin, not made up: reminded on 20 May ('by May 27, 2029') and again at 5 PM on 19 June ('1 make-up session left, by June 26, 2029.'), not an hour before. Incomplete at 4 PM on 26 June; Permanent ('an Incomplete not made up in its month') and withheld at 5 PM, with 'The Degree Isn’t Recommended' and no MFA."
+          "The twin, not made up: reminded on 20 May ('by May 27, 2029') and again at 5 PM on 19 June ('1 make-up session left, by June 26, 2029.'), not an hour before. Incomplete at 4 PM on 26 June; Permanent ('an Incomplete not made up in its month') and withheld at 5 PM, with 'The Degree Isn’t Recommended' and no MFA.",
+          "Settled at the final check: [needs engine change] 'Its month has run out.' (courserecord.ts:141) is reached in play, as the skeptic said, but only by a student whose School has ended. setStanding calls off INCOMPLETE_DUE_KIND, so on 11 January 2027 a student withdrawn on 14 December gets 'Its month has run out.'. Before dueBy the same student is granted the month (the defect). For a student still at school the deadline's item makes the course Permanent at dueBy, and a later ask gets 'There’s no Incomplete in that course.'. Once the School-ended refusal is in, nothing reaches the line: delete it."
         ],
-        "gapsOpen": [
-          "[needs engine change] 'Its month has run out.' (courserecord.ts:141) is reached in play, as the skeptic said, but only by a student whose School has ended. setStanding calls off INCOMPLETE_DUE_KIND, so on 11 January 2027 a student withdrawn on 14 December gets 'Its month has run out.'. Before dueBy the same student is granted the month (the defect). For a student still at school the deadline's item makes the course Permanent at dueBy, and a later ask gets 'There’s no Incomplete in that course.'. Once the School-ended refusal is in, nothing reaches the line: delete it."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
