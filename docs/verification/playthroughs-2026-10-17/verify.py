@@ -88,6 +88,24 @@ for r in interface['rows']:
     else:
         rows.append({**r, 'status': IVI, 'disposition': 'remaining', 'missing': u_said, 'statusNote': u_said})
 
-json.dump({'area': 'verification', 'on': '2026-10-17', 'journeys': j_said, 'interface': u_said, 'rows': rows}, open(f'{B}/verification-result.json', 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
+# The defects the coordinator found or was handed, each with its fix and what ran again; lane A's rerun read from its
+# record. And what stays open, from the areas' own words, the one finding fixed here left out.
+a_steps, a_bad = lane_exits('A')
+a_first, a_first_bad = lane_exits('A-first')
+defects = [
+    {'what': "OPT was approved at its decision for an application made in the window before the program's end, though the degree was withheld meanwhile, against optRefusal's own rule at the application (the journeys area's finding, J02's superseded first run).",
+     'foundBy': 'the journeys area (findingsNotFixed), left for the coordinator', 'fixed': True, 'commit': 'fa36c201', 'blocksCompletion': False,
+     'test': "tests/evidence-g15-papers.test.ts ‘documents.apply_opt > PLAYER JOURNEY: an application made in the window before the program’s end is denied at its decision when the degree is withheld meanwhile, the fee kept, and approved for a twin whose degree is conferred’",
+     'rerun': 'the OPT test files; with the check taken out, the test fails'},
+    {'what': f"The built app's acceptance run chose a way of playing for Table Work on the workload save, which is written work: the step had relied on D3, the defect the journeys area fixed, and failed at both widths on {lane_at('A-first')} ({a_first} steps, not exit 0: {', '.join(a_first_bad) or 'none'}).",
+     'foundBy': 'the final runs (runs13.sh A, runs/exits-A-first.txt)', 'fixed': True, 'commit': '51cdd7d6', 'blocksCompletion': False,
+     'test': "tools/acceptance-ui.mjs: on the workload save, Table Work offers no way of playing; the circumstances choice on the roundups save's scene study",
+     'rerun': f"lane A again on {lane_at('A')}, the game's code unchanged: {a_steps} steps, " + (f"not exit 0: {', '.join(a_bad)}" if a_bad else 'every one exit 0') + ' (runs/exits-A.txt)'},
+]
+journeys_open = [{'what': x['what'], 'why': x['why']} for x in journeys.get('findingsNotFixed', []) if not x['what'].startswith('OPT approved')]
+limitations = journeys_open + [{'what': x, 'why': 'the interface area'} for x in interface.get('remaining', []) if 'stale' not in x]
+
+json.dump({'area': 'verification', 'on': '2026-10-17', 'journeys': j_said, 'interface': u_said, 'rows': rows, 'defectsFound': defects, 'limitations': limitations},
+          open(f'{B}/verification-result.json', 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(j_said); print(u_said)
 print(f"{sum(1 for r in rows if r['status'] == IAV)} of {len(rows)} rows verified")

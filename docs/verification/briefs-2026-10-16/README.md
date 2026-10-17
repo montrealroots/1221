@@ -28,7 +28,9 @@ dates the work 2026-10-16, as the work plan does, so the commits' dates and the 
 `short-directives.txt` keeps the owner's short instructions between the briefs, verbatim: the session's first message
 (which continued the work plan: banking's open defects and skeptics, merged in #30), "Merge and push all of this." (which
 merged #32), "Merge it all." (which merged #35), and the requests for screen captures (answered with images sent in the session, not kept in the repository;
-`tools/captures.mjs` takes them again).
+`tools/captures.mjs` takes them again). From 2026-10-16T20:00 it also holds the requests for the mastered badges, and the
+three "Merge it." that merged #37, #38 and #39, each after a "Yes." to watching the pull request. Until 2026-10-17 it
+stopped at 14:58 the day before: brief 13's coordinator added the rest from the session's transcript.
 
 What isn't here: the session's own summaries of itself, written when its context ran out, are the model's words, not
 the owner's, and the briefs of the sessions before this one are in `../prompts-2026-10-16/` where they were kept.

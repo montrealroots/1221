@@ -121,25 +121,49 @@ esc = lambda s: str(s).replace('|', '/').replace('\n', ' ')
 # Section 9's other parts, each read from its record: the playthroughs (journeys-result.json, interface-result.json),
 # the defects each area found, and the final runs and whether main holds this branch (runs/, git).
 def playthroughs_md():
-    # Brief 13's playthroughs, read from the journeys and interface areas' results as they wrote them.
+    # Brief 13's playthroughs, read from the journeys and interface areas' results as they wrote them, each beside its run
+    # again on the tested commit (journeys-final/, interface-final/, by runs13.sh and verify.py).
+    import re
     out = []
     j = f'{B13}/journeys-result.json'
     if os.path.exists(j):
         jr = json.load(open(j, encoding='utf-8'))
-        table = jr.get('journeys') or jr.get('playthroughs') or []
-        out += [f'## The Complete School Journeys ({len(table)})', '', '| Journey | Profile | Seed | Duration | Expected | Actual | Checks | Issues |', '|---|---|---|---|---|---|---|---|']
+        table = jr.get('playthroughs') or []
+        fp = f'{B13}/journeys-final/summary.json'
+        final = {x['id']: x for x in json.load(open(fp, encoding='utf-8'))} if os.path.exists(fp) else {}
+        squash = lambda v: re.sub(r'\s+', ' ', str(v or ''))
+        def again(x):
+            f = final.get(x['id'])
+            if not f: return 'not run'
+            passed = sum(1 for v in (f.get('checks') or {}).values() if v == 'pass')
+            return (f'{passed} of {len(f.get("checks") or {})} checks' + ('' if f.get('done') else ', not played to the end')
+                    + (', ending as the area’s run ended' if squash(f.get('actual')) == squash(x.get('actual')) else f', ending {squash(f.get("actual"))}'))
+        out += [f'## The Complete School Journeys ({len(table)})', '',
+                'Each journey as the journeys area ran it (`journeys-result.json`, its records in `journeys/`), and played again on the tested commit (`journeys-final/`).', '',
+                '| Journey | Profile | Seed | Played | Expected | Actual | On The Tested Commit | Issues |', '|---|---|---|---|---|---|---|---|']
         for x in table:
-            checks = x.get('checks') or {}
-            passed = sum(1 for v in checks.values() if (v.get('passed') if isinstance(v, dict) else v) is True) if isinstance(checks, dict) else ''
-            out.append(f'| {esc(x.get("id", ""))} | {esc(x.get("profile", ""))} | {esc(x.get("seed", ""))} | {esc(x.get("duration", ""))} | {esc(x.get("expected", ""))[:160]} | {esc(x.get("actual", ""))[:160]} | {passed}{"/" + str(len(checks)) if isinstance(checks, dict) and checks else ""} | {esc("; ".join(x.get("issues", [])) if isinstance(x.get("issues"), list) else x.get("issues", ""))[:200]} |')
+            d = x.get('duration') or {}
+            played = f"{d.get('played', '')}, {d.get('reloads', '')} reloads" if isinstance(d, dict) else d
+            issues = '; '.join(x.get('issues', [])) if isinstance(x.get('issues'), list) else x.get('issues', '')
+            out.append(f'| {esc(x.get("id", ""))} | {esc(x.get("profile", ""))} | {esc(x.get("seed", ""))} | {esc(played)} | {esc(x.get("expected", ""))[:160]} | {esc(x.get("actual", ""))[:160]} | {esc(again(x))} | {esc(issues)[:240]} |')
         out.append('')
     i = f'{B13}/interface-result.json'
     if os.path.exists(i):
         ir = json.load(open(i, encoding='utf-8'))
         runs = ir.get('playthroughs') or []
-        out += [f'## The Interface Playthroughs ({len(runs)})', '', '| Playthrough | Width | Steps | Passed | Failed | Trace |', '|---|---|---|---|---|---|']
+        up = f'{B13}/interface-final/summary.json'
+        final = {(x['playthrough'], str(x['width'])): x for x in json.load(open(up, encoding='utf-8')).get('runs', [])} if os.path.exists(up) else {}
+        def again(x):
+            f = final.get((x['playthrough'], str(x['width'])))
+            if not f or 'steps' not in f: return 'not run'
+            return (f'{f["passed"]} of {f["steps"]} on {f.get("commit")}' + (f', missing {", ".join(f["sixMissing"])}' if f.get('sixMissing') else ', all six exercised')
+                    + f', {f.get("errors")} errors, {f.get("overflows")} overflows')
+        out += [f'## The Interface Playthroughs ({len(runs)})', '',
+                'Each playthrough of the built app as the interface area ran it (`interface-result.json`, its traces in `interface/`), and again on a build of the tested commit (`interface-final/`).', '',
+                '| Playthrough | Width | The Area’s Run | On The Tested Commit | Trace |', '|---|---|---|---|---|']
         for x in runs:
-            out.append(f'| {esc(x.get("id", x.get("name", "")))} | {esc(x.get("width", ""))} | {esc(x.get("steps", ""))} | {esc(x.get("passed", ""))} | {esc(x.get("failed", ""))} | {esc(x.get("trace", ""))} |')
+            f = final.get((x['playthrough'], str(x['width'])))
+            out.append(f'| {esc(x["playthrough"])} | {esc(x["width"])} | {esc(x.get("passed", ""))} of {esc(x.get("steps", ""))} on {esc(x.get("commit", ""))} | {esc(again(x))} | {esc((f or {}).get("trace", x.get("trace", "")))} |')
         out.append('')
     defects = []
     for f in sorted(x for x in os.listdir(B13) if x.endswith('-result.json')):
@@ -147,6 +171,11 @@ def playthroughs_md():
             defects.append(f'- **{f[:-12]}:** {esc(d.get("what", d) if isinstance(d, dict) else d)[:400]}')
     if defects:
         out += [f'## Defects Found By Brief 13 ({len(defects)})', '', *defects, '']
+    # What stays open besides the rows: the areas' findings not fixed, as verify.py gathers them.
+    v = f'{B13}/verification-result.json'
+    lim = json.load(open(v, encoding='utf-8')).get('limitations', []) if os.path.exists(v) else []
+    if lim:
+        out += [f'## Remaining Limitations ({len(lim)})', '', *[f'- {esc(x["what"])[:500]} ({esc(x["why"])[:240]})' for x in lim], '']
     return out
 
 def runs_md():
