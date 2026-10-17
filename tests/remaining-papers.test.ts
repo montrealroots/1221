@@ -19,6 +19,11 @@
  *   2026-10-16 no document was asked, so a student whose passport was reported lost was issued a card, and every card
  *   was marked REAL ID.
  *
+ * - From 2026-10-17 (brief 11's tax.s8.f1_status): a passport run out under an F-1 ends nothing, the status reading the
+ *   program and its grace alone, played on a London-born student who keeps up to her passport's end in June 2028 (seed
+ *   rp-f1-run-out-45; TEST SETUP: the work done each midnight and the student tended, as tests/remaining-school.test.ts
+ *   plays one).
+ *
  * Every fee is the office's own, written as a literal; a fee in another currency is put in dollars at the engine's rate
  * table (`content/currency.ts`), which these items don't change.
  *
@@ -38,8 +43,10 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, instantFromZoned, type Instant } from '@/engine/core/time';
 import { newLifeConfig, withFamily } from '@/engine/world/bootstrap';
 import { exchange } from '@/engine/content/currency';
-import { documentsOf, passportOf, photoIdOf, type PersonDocument } from '@/engine/systems/documents';
-import { f1Of } from '@/engine/systems/permission';
+import { documentsOf, inForce, passportOf, photoIdOf, type PersonDocument } from '@/engine/systems/documents';
+import { US_STATUS_KIND, f1Of, usStatusEnds } from '@/engine/systems/permission';
+import { PREP_DIMS } from '@/engine/content/coursework';
+import { courseworkOf } from '@/engine/systems/coursework';
 import { idCardRefusal } from '@/engine/systems/identity';
 import { ssnRefusal } from '@/engine/systems/taxid';
 import '@/ui/looks/all';
@@ -292,5 +299,60 @@ describe('tax.s8.idcard', () => {
     expect(card.realId).toBe(false);
     expect(page(opened, card.id)).toContain('It’s marked Not For Federal Identification: it isn’t REAL ID.');
     expect(documentsOf(reload(opened).player).find((d) => d.id === 'old-card')!.realId).toBe(false);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// tax.s8.f1_status: a passport run out under an F-1 (brief 11, 2026-10-17)
+// ---------------------------------------------------------------------------
+
+/** TEST SETUP: the work done each midnight, every open piece's every part prepared, as tests/remaining-school.test.ts plays a student who keeps up. */
+const working = (sim: Simulation): Simulation => {
+  sim.onEvent('world.day_rollover', 'test.doTheWork', (_e, { sim: s }) => {
+    for (const a of courseworkOf(s, s.player)?.assignments ?? []) if (a.status === 'open' || a.status === 'revising') for (const d of PREP_DIMS) a.prep[d] = Math.max(a.prep[d] ?? 0, 0.95);
+  });
+  return sim;
+};
+/** TEST SETUP: rested, fed, steady and awake each time the clock moves, six hours at a time, as that file tends one. */
+const tend = (sim: Simulation, until: Instant) => {
+  while (sim.now < until) {
+    Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75, condition: 90 });
+    sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now);
+    sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR));
+  }
+};
+
+/**
+ * Whether a passport run out ends F-1 status while the student is in the US wasn't found (universities advise keeping
+ * it valid six months ahead; Study in the States ties the six months to re-entry; tax-checklist.json, tax.s8.f1_status),
+ * and SLATE ends nothing on it: the status reads the program and its grace (`usStatusEnds`), never the passport. No
+ * test held that until brief 11. A London-born student's passport is drawn issued up to eight years before her first
+ * day, so about one in nine runs out before her program ends: seed rp-f1-run-out-45, the first of rp-f1-run-out-1 to 60
+ * whose passport runs out before her third year, has hers issued 14 June 2018.
+ */
+describe('tax.s8.f1_status', () => {
+  it('PLAYER JOURNEY: a London-born student who keeps up, her British passport run out on 14 June 2028, mid-program, keeps her F-1 and her status: the F-1 in force to 30 July 2029, no ending raised, the status looked at on the program’s end, 31 May 2029, her standing good, across a reload; the passport alone is out of force, and a new bank turns her away for it', () => {
+    let sim = working(life('rp-f1-run-out-45', 'uk-eng-london'));
+    const passport = passportOf(sim.player, sim.now)!;
+    expect(new Date(passport.expiresAt!).toISOString().slice(0, 10)).toBe('2028-06-14');
+    const f1 = () => f1Of(sim.player)!;
+    expect(f1().expiresAt).toBe(Date.UTC(2029, 4, 31, 12) + 60 * MS_DAY);
+    tend(sim, passport.expiresAt! - MS_DAY);
+    expect(passportOf(sim.player, sim.now)?.id).toBe(passport.id);
+    tend(sim, at(2028, 6, 15));
+    sim = working(reload(sim));
+    // The passport out of force, read so by what reads it.
+    expect(passportOf(sim.player, sim.now)).toBeUndefined();
+    expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
+    expect(refusal(sim, 'bank.open_current', { bankId: 'us-wells-fargo' })).toBe('Wells Fargo asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
+    // The F-1 and the status as they were.
+    expect([f1().status, inForce(f1(), sim.now)]).toEqual(['valid', true]);
+    expect(sim.player.school!.standing).toBe('good');
+    expect(usStatusEnds(sim.player)).toBeUndefined();
+    expect(sim.player.usOutOfStatus).toBeUndefined();
+    expect(sim.universe.scheduled.filter((i) => i.kind === US_STATUS_KIND && i.status === 'pending').map((i) => i.at)).toEqual([Date.UTC(2029, 4, 31, 12)]);
+    expect(Object.values(sim.universe.decisions).filter((d) => d.refType === 'us-status')).toEqual([]);
+    expect(sim.universe.notifications.filter((n) => /Status/.test(n.title))).toEqual([]);
+    expect(drawn(sim, WorkPane)).toContain('F-1 Student Visa');
   });
 });
