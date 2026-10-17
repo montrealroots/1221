@@ -27,6 +27,8 @@ progress (this commit), with its tests part-updated and not yet green.
   isn’t enough, it becomes medical debt."), the stay and the flu's added sentences, the appointment notice's added
   sentence where tests assert it whole, the Diagnosed notice, the prescription run out, and "You have no health cover
   from … Enroll on Papers, under Health Cover." where a test asserts the cover-ended notice whole.
+- **The rerun after the mapping** finished after this was first written: 59 failed, 480 passed, in 23 of the 37 files.
+  Its full output is `batch2-rerun.txt` in this folder; `grep "^ FAIL " batch2-rerun.txt` lists them.
 - **Next:** rerun `$(cat hw/failfiles.txt)`, fix each failure to the new words as exactly as before, then the checks
   (tsc, eslint, the writing tools, text-inventory), mark the batch 2 sources (the rewritten ones Rewritten And Verified
   with the tests as evidence; the labels, memos, care names, program names and system labels in health.ts Reviewed And
