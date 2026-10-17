@@ -2491,9 +2491,9 @@
  },
  "src/engine/systems/experience.ts#recommendations": {
   "status": "Rewritten And Verified",
-  "hash": "f4f0b5a61798",
+  "hash": "eb29d3a93ce8",
   "on": "2026-10-17",
-  "evidence": "tests/decisions-advice.test.ts, tests/advice.test.ts, tests/defects-r8-1.test.ts and tests/attributes-phase-2b.test.ts (each kind of line: a forecast, the preparation, a condition, a misfit, stamina, the recurring weakness, the tie, preparation apart); docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions)"
+  "evidence": "tests/decisions-advice.test.ts, tests/advice.test.ts, tests/defects-r8-1.test.ts and tests/attributes-phase-2b.test.ts (each kind of line: a forecast, the preparation, a condition, a misfit, stamina, the recurring weakness, the tie, preparation apart); docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions); tests/language-dynamic.test.ts 'the advice’s counts: a cost of one point and several, and the pieces that call on an ability, one and several' and 'the advice: none before any work is judged…'"
  },
  "src/engine/systems/experience.ts#SPACED_NOW": {
   "status": "Rewritten And Verified",

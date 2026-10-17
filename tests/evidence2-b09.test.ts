@@ -357,7 +357,7 @@ describe('school.make_up', () => {
     // Tuesday 22 May at ten: the line and its button on the Standing tab, pressed.
     tend(sim, at(2029, 5, 22, 10));
     const shown = drawn(sim, SchoolWorkspace);
-    expect(shown.html).toContain('<strong>On-Camera Acting Technique</strong>, Incomplete: 1 of 1 make-up sessions left, by May 27, 2029.');
+    expect(shown.html).toContain('<strong>On-Camera Acting Technique</strong>, Incomplete: 1 of 1 make-up session left, by May 27, 2029.');
     const make = drew('school.make_up');
     expect(make.map((c) => [c.label, c.disabled])).toEqual([['Make Up A Session', false]]);
     make[0]!.onClick!();
@@ -415,7 +415,7 @@ describe('school.make_up', () => {
     // and Take A Shift offer nothing once you’ve left: until 2026-10-13 it stayed, grayed with “You’re not at school.”, for good
     // (found by that day’s final checks).
     const tab = drawn(sim, SchoolWorkspace);
-    expect(tab.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up sessions left, by January 10, 2027.');
+    expect(tab.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up session left, by January 10, 2027.');
     expect(drew('school.make_up')).toHaveLength(0);
     expect(tab.text).not.toContain('You’re not at school.');
     // Past the month: still the School's words, not the month's.
@@ -434,7 +434,7 @@ describe('school.extend_incomplete', () => {
     const school = () => sim.player.school!;
     tend(sim, at(2029, 5, 22, 10));
     const before = drawn(sim, SchoolWorkspace);
-    expect(before.html).toContain('<strong>On-Camera Acting Technique</strong>, Incomplete: 1 of 1 make-up sessions left, by May 27, 2029.');
+    expect(before.html).toContain('<strong>On-Camera Acting Technique</strong>, Incomplete: 1 of 1 make-up session left, by May 27, 2029.');
     const ask = drew('school.extend_incomplete');
     expect(ask.map((c) => c.label)).toEqual(['Ask For A Month More']);
     ask[0]!.onClick!();

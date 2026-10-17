@@ -2647,9 +2647,9 @@
  },
  "src/ui/papers/Documents.tsx#TaxIdPanel": {
   "status": "Rewritten And Verified",
-  "hash": "ddcd910c0073",
+  "hash": "d97ec51f368c",
   "on": "2026-10-17",
-  "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
+  "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work; tests/language-dynamic.test.ts 'a document’s missing number: a student on an F-1 with no Social Security number…' (Not yet, the refusal, read October 10, 2026)"
  },
  "src/ui/papers/Documents.tsx#WorkPane": {
   "status": "Rewritten And Verified",
@@ -2749,9 +2749,9 @@
  },
  "src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane": {
   "status": "Rewritten And Verified",
-  "hash": "a2fa7b9ab79e",
+  "hash": "ae51ab1aa696",
   "on": "2026-10-17",
-  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves); tests/language-dynamic.test.ts 'a tax return’s balance: a refund due, and nothing owed or due back…' (Your Refund, the withholding with a minus sign, Nothing Owed Or Due Back) and 'a tax return: its date ahead, its last day, and passed unfiled…'"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#STATE_NAMES": {
   "status": "Reviewed And Retained",

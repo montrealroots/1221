@@ -543,7 +543,7 @@ defineLook<Carried>('condition', {
         kind: 'An Injury',
         // What it keeps them from, by what it limits (from 2026-10-17, brief 14): until then only an injury that lays them
         // up said so, and a sprained ankle, which keeps them from training too (`trainingRefusal`), said nothing. The same
-        // day, the health journey found it didn't say Call In Sick excuses a day of classes for it, as the flu's notice does.
+        // day, the health journey found it didn’t say Call In Sick excuses a day of classes for it, as the flu’s notice does.
         summary: `It mends by ${formatDate(hurt.until, sim.zone)}.${hurt.offWorkUntil
           ? ` Until then ${theyAre} laid up, kept from classes, work and training.`
           : INJURY_KIND[hurt.kind].limits !== 'none' ? ` Until then ${p.they} can’t work out, and it holds back the physical side of ${p.their} work.${isYou && person.school && !schoolEnded(person.school.standing) ? ' Call In Sick, on School, excuses a day of classes while it mends.' : ''}` : ''}`,

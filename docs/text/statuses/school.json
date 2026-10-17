@@ -3397,9 +3397,9 @@
  },
  "src/ui/components/CourseworkPane.tsx#Partners": {
   "status": "Rewritten And Verified",
-  "hash": "61d2d867b2cb",
+  "hash": "367a68c3af13",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g24-school.test.ts, tests/evidence-g18-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "tests/evidence-g24-school.test.ts, tests/evidence-g18-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code); tests/language-dynamic.test.ts 'rehearsals with a classmate…' (Wants A Day’s Notice, until 1 and 4 more rehearsals)"
  },
  "src/ui/components/CourseworkPane.tsx#Rehearsals": {
   "status": "Rewritten And Verified",
@@ -3541,9 +3541,9 @@
  },
  "src/ui/looks/classmate.tsx#top": {
   "status": "Rewritten And Verified",
-  "hash": "1d658e3b1ae2",
+  "hash": "e1d291b140eb",
   "on": "2026-10-17",
-  "evidence": "tests/classmate-moments.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "tests/classmate-moments.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code); tests/language-dynamic.test.ts 'rehearsals with a classmate: none yet, one, several, one more to lift a boundary, and missed by you' (asked 0, 1, 4; a boundary 1 and 4 from lifting; missed 1 and 2) and 'a long name with an apostrophe and a hyphen…'"
  },
  "src/ui/looks/school.tsx#STANDING_SAID": {
   "status": "Reviewed And Retained",
@@ -3595,9 +3595,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#CoursesPanel": {
   "status": "Rewritten And Verified",
-  "hash": "180787c6f430",
+  "hash": "b4486a981257",
   "on": "2026-10-17",
-  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g26-school.test.ts, tests/remaining-school.test.ts, tests/evidence-g19/g20-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g26-school.test.ts, tests/remaining-school.test.ts, tests/evidence-g19/g20-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code); tests/language-dynamic.test.ts 'a course’s meetings and the term’s class days on the first day of classes, and make-up sessions owed, one or several' (at 1 of 1 class; 1 of 1 and 3 of 3 make-up sessions)"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#KIND_WORDS": {
   "status": "Reviewed And Retained",
@@ -3655,9 +3655,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#StandingPane": {
   "status": "Rewritten And Verified",
-  "hash": "b2ba4f47d6a9",
+  "hash": "1ccdd0f007e9",
   "on": "2026-10-17",
-  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g24-school.test.ts and tests/evidence2-b08.test.ts (Term Reviews), tests/remaining-school-term.test.ts, tests/remaining-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, after-new-1440, after-new-390)"
+  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g24-school.test.ts and tests/evidence2-b08.test.ts (Term Reviews), tests/remaining-school-term.test.ts, tests/remaining-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, after-new-1440, after-new-390); tests/language-dynamic.test.ts 'a course’s meetings and the term’s class days on the first day of classes…' (1 of 1 class day) and 'the term review’s notice and the screens at good standing, then a concern, a warning and a dismissal'"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#SummerPanel": {
   "status": "Rewritten And Verified",
