@@ -126,12 +126,12 @@ function noteSwitch(person: Person, r: NonNullable<NonNullable<Person['payments'
  * applied for online, so a branch's hour isn't asked.
  */
 export function switchApplicationRefusal(sim: Simulation, person: Person, to: Bank): string | undefined {
-  if (collectionsOf(sim, person, to.name)) return `${to.name} won’t open an account for somebody who owes it a charged-off debt.`;
-  if (declines(sim, person, to)) return `${to.name} turned you away on the ChexSystems report ${person.chex!.bank} made, which stands until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, sim.zone)}.`;
-  if (!photoIdOf(person, sim.now)) return `${to.name} asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.`;
+  if (collectionsOf(sim, person, to.name)) return `${to.name} won’t open an account for you while you owe it a debt it has charged off.`;
+  if (declines(sim, person, to)) return `${to.name} won’t open an account for you because of the ChexSystems report ${person.chex!.bank} filed, which stays on your record until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, sim.zone)}.`;
+  if (!photoIdOf(person, sim.now)) return `${to.name} needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.`;
   const rules = openingOf(to);
-  if (rules?.minimumAge !== undefined && ageOn(sim, person, sim.now) < rules.minimumAge) return `${to.name} opens an account on your own from ${rules.minimumAge}.`;
-  if (rules?.usPersonsOnly && !usPerson(person, sim.now)) return `${to.name} opens this account for US citizens and permanent residents.`;
+  if (rules?.minimumAge !== undefined && ageOn(sim, person, sim.now) < rules.minimumAge) return `${to.name} only opens an account in your own name from age ${rules.minimumAge}.`;
+  if (rules?.usPersonsOnly && !usPerson(person, sim.now)) return `${to.name} only opens this account for US citizens and permanent residents.`;
   return undefined;
 }
 
@@ -1550,7 +1550,7 @@ export function registerLending(sim: Simulation): void {
     const current = checkingAt(s, person, bank.id);
     if (!current) throw new CommandError(`A term deposit at ${bank.name} is funded from your current account there: open one first.`);
     const amount = Math.round(Number(p.amount));
-    if (!(amount > 0)) throw new CommandError('Say how much to put in.');
+    if (!(amount > 0)) throw new CommandError('Enter how much to put away.');
     const cur = saveCurrency(s.universe);
     if (term.minAmount !== undefined && amount < inSaveMoney(s, term.minAmount, bank.currency)) {
       throw new CommandError(`It takes ${formatMoney(inSaveMoney(s, term.minAmount, bank.currency), cur, { cents: false })} or more.`);
@@ -1585,15 +1585,15 @@ export function registerLending(sim: Simulation): void {
     const person = s.player;
     const from = bankOf(s, person);
     const to = banksFor(homeOf(person)).find((b) => b.id === p.bankId);
-    if (!to) throw new CommandError('That isn’t a bank where you live.');
+    if (!to) throw new CommandError('You can only switch to a bank where you live.');
     if (from?.id === to.id) throw new CommandError(`You already bank with ${to.name}.`);
     // Already keeping an account there, there's nothing to switch to (from 2026-10-10: until then a second one opened).
     if (checkingAt(s, person, to.id)) throw new CommandError(`You keep an account at ${to.name} already: make it primary, move what pays from the old one, and close it.`);
-    if (collectionsOf(s, person, to.name)) throw new CommandError(`${to.name} won’t open an account for somebody who owes it a charged-off debt.`);
-    if (declines(s, person, to)) throw new CommandError(`${to.name} turned you away on the ChexSystems report ${person.chex!.bank} made, which stands until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, s.zone)}.`);
+    if (collectionsOf(s, person, to.name)) throw new CommandError(`${to.name} won’t open an account for you while you owe it a debt it has charged off.`);
+    if (declines(s, person, to)) throw new CommandError(`${to.name} won’t open an account for you because of the ChexSystems report ${person.chex!.bank} filed, which stays on your record until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, s.zone)}.`);
     if (s.universe.scheduled.some((one) => one.kind === SWITCH_KIND && one.status === 'pending')) throw new CommandError('A switch is already under way.');
     // A new bank identifies a new customer (31 CFR 1020.220, and its like elsewhere), from 2026-10-09 (`photoIdOf`).
-    if (!photoIdOf(person, s.now)) throw new CommandError(`${to.name} asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.`);
+    if (!photoIdOf(person, s.now)) throw new CommandError(`${to.name} needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.`);
     const current = currentOf(s, person);
     if (current && current.balance < 0) throw new CommandError('Clear the overdraft before switching; the new bank won’t take it on.');
     // The new bank's own opening rules, as its application reads them (from 2026-10-10).

@@ -60,7 +60,7 @@ export function BankWorkspace() {
   const [tab, setTab] = useKept<BankTab>(tabKey('/workspace/bank'), 'accounts');
 
   if (!bank) {
-    return <Empty title="No Bank" body="Your money isn’t held at a bank SLATE knows, so there’s nothing to show here." />;
+    return <Empty title="No Bank" body="None of your money is at a bank the game covers, so there’s nothing to show here." />;
   }
 
   const here = accounts.filter((a) => a.bankId === bank.id);
@@ -81,7 +81,7 @@ export function BankWorkspace() {
   // bank's was said to go to the quarter's closing, ING's and Commerzbank's among them).
   const dueWords = (account: import('@/engine/core/ledger').Account) => {
     const posts = feesPostAt(account);
-    return posts === 'quarter' ? 'for the quarter’s closing' : posts === 'next' ? `charged ${formatDate(monthStartOf(sim, monthEnd + 2 * 3_600_000), sim.zone)}` : `due ${formatDate(monthEnd, sim.zone)}`;
+    return posts === 'quarter' ? 'charged at the quarter’s close' : posts === 'next' ? `charged ${formatDate(monthStartOf(sim, monthEnd + 2 * 3_600_000), sim.zone)}` : `due ${formatDate(monthEnd, sim.zone)}`;
   };
 
   // What a move out of savings costs, and what Germany's month still lets out, before it's made.
@@ -108,7 +108,7 @@ export function BankWorkspace() {
     if (answer.ok && answer.value) {
       const later = answer.value.arrivesAt !== undefined && answer.value.arrivesAt > sim.now;
       const what = answer.value.sentIn ? formatMoney(answer.value.sent!, answer.value.sentIn) : money(answer.value.moved);
-      toast(later ? `Sent ${what}: it arrives ${formatDate(answer.value.arrivesAt!, sim.zone)}.` : `Moved ${what}.`, 'positive');
+      toast(later ? `Sent ${what}. It arrives ${formatDate(answer.value.arrivesAt!, sim.zone)}.` : `Moved ${what}.`, 'positive');
       setAmount('');
     }
   };
@@ -133,25 +133,25 @@ export function BankWorkspace() {
               <div className="col gap-3">
                 <div className="stat">
                   <Open subject={at('account', account.id)}>
-                    <span className="stat-label">Balance</span>
+                    <span className="stat-label">Balance</span>{' '}
                     <span className="stat-value mono">{home ? heldText(sim, account) : money(account.balance)}</span>
                   </Open>
-                  {home && <span className="stat-note">{formatMoney(account.balance, cur)} in dollars, at SLATE’s rate</span>}
+                  {home && <span className="stat-note">{formatMoney(account.balance, cur)} in dollars, at the game’s exchange rate</span>}
                 </div>
                 <p className="small" style={{ margin: 0 }}>{interestWords(sim, product, tax, money, own.currency, account.openedAt, closesQuarterly(account), account, home ? inBank : undefined)}</p>
                 {account.secondChance ? (
-                  <p className="small" style={{ margin: 0 }}>A second-chance account: {formatMoney(inSaveMoney(sim, CHEX.secondChanceFee, 'USD'), cur)} a month, SLATE’s estimate, in place of the ordinary fee, and no overdraft.</p>
+                  <p className="small" style={{ margin: 0 }}>A second-chance account: {formatMoney(inSaveMoney(sim, CHEX.secondChanceFee, 'USD'), cur)} a month instead of the usual fee, and no overdraft.</p>
                 ) : product?.monthlyFee ? (
                   <p className="small" style={{ margin: 0 }}>
                     {home ? formatMoney(product.monthlyFee, own.currency) : formatMoney(inSaveMoney(sim, product.monthlyFee, own.currency), cur)} a month
                     {waiverWords(product, inBank)}
                     {'. '}
                     {fee.fee === 0
-                      ? `This month is waived so far${fee.waivedBy === 'deposits' ? `: ${money(paidIn)} paid in` : ''}.`
+                      ? `It’s waived this month so far${fee.waivedBy === 'deposits' ? `, with ${money(paidIn)} paid in` : ''}.`
                       : fee.waivedBy
-                        ? `This month’s is lowered to ${home && fee.native !== undefined ? formatMoney(fee.native, own.currency) : formatMoney(fee.fee, cur)} so far${fee.waivedBy === 'deposits' ? `, with ${money(paidIn)} paid in` : ''}, ${dueWords(account)}.`
-                        : feesPostAt(account) === 'quarter' ? 'This month’s goes to the quarter’s closing unless that changes.' : `This month’s is ${dueWords(account)} unless that changes.`}
-                    {(account.feesDue ?? 0) > 0 ? ` ${feesPostAt(account) === 'quarter' ? 'The quarter’s fees so far' : 'Last month’s'}, ${home ? formatMoney(account.feesDueHeld ?? 0, own.currency) : money(account.feesDue ?? 0)}, ${feesPostAt(account) === 'quarter' ? 'come off at its closing' : `come off ${formatDate(monthStartOf(sim, monthEnd + 2 * 3_600_000), sim.zone)}`}.` : ''}
+                        ? `So far this month it’s lowered to ${home && fee.native !== undefined ? formatMoney(fee.native, own.currency) : formatMoney(fee.fee, cur)}${fee.waivedBy === 'deposits' ? `, with ${money(paidIn)} paid in` : ''}, and it’s ${dueWords(account)}.`
+                        : feesPostAt(account) === 'quarter' ? 'It isn’t waived this month so far. Unless one of those conditions is met, it’s added to the fees charged at the quarter’s close.' : `It isn’t waived this month so far. Unless one of those conditions is met, it’s ${dueWords(account)}.`}
+                    {(account.feesDue ?? 0) > 0 ? ` ${feesPostAt(account) === 'quarter' ? 'The quarter’s fees so far' : 'Last month’s fees'}, ${home ? formatMoney(account.feesDueHeld ?? 0, own.currency) : money(account.feesDue ?? 0)}, ${feesPostAt(account) === 'quarter' ? 'are charged at its close' : `are charged ${formatDate(monthStartOf(sim, monthEnd + 2 * 3_600_000), sim.zone)}`}.` : ''}
                   </p>
                 ) : (
                   <p className="small" style={{ margin: 0 }}>No monthly fee.</p>
@@ -159,7 +159,7 @@ export function BankWorkspace() {
                 {homeAccountLines(sim, account).map((line) => <p key={line} className="small" style={{ margin: 0 }}>{line}</p>)}
                 {/* The debit card's year (`cardYearWords`, from brief 10, 2026-10-16): until then no panel said it. */}
                 {cardYearWords(sim, account) && <p className="small" style={{ margin: 0 }}>{cardYearWords(sim, account)}</p>}
-                {product && <Fine>{product.estimate ? 'Estimate' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[own.confidence ?? 'H']}</Fine>}
+                {product && <Fine>{product.estimate ? 'Estimated' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[own.confidence ?? 'H']}{account.secondChance ? ' The second-chance account’s fee is estimated.' : ''}</Fine>}
                 {account.kind === 'savings' && (() => {
                   // Where closing it sends the money, as `closeSavings` does: the current account at its own bank, or the
                   // primary with none there (from 2026-10-16: until then both lines named the primary, so a Berlin-raised
@@ -169,12 +169,12 @@ export function BankWorkspace() {
                   return (
                   <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
                     {savingsNotice(sim, account)
-                      ? <span className="xs dim">Notice is given: it closes <Open subject={at('day', dateKey(savingsNotice(sim, account)!.at, sim.homeZone))}>{formatDate(savingsNotice(sim, account)!.at, sim.zone)}</Open>, and what it holds moves to {into ? <Open subject={at('account', into.id)}>{into.name}</Open> : 'your current account'}.</span>
+                      ? <span className="xs dim">You’ve given notice. It closes <Open subject={at('day', dateKey(savingsNotice(sim, account)!.at, sim.homeZone))}>{formatDate(savingsNotice(sim, account)!.at, sim.zone)}</Open>, and what it holds moves to {into ? <Open subject={at('account', into.id)}>{into.name}</Open> : 'your current account'} then.</span>
                       : <>
-                        <Gated feature="bank.close_savings" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ on?: number }>('bank.close_savings', { accountId: account.id }); if (a.ok && a.value?.on) toast(`Notice given: it closes ${formatDate(a.value.on, sim.zone)}.`, 'positive'); }}>
+                        <Gated feature="bank.close_savings" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ on?: number }>('bank.close_savings', { accountId: account.id }); if (a.ok && a.value?.on) toast(`Notice given. It closes ${formatDate(a.value.on, sim.zone)}.`, 'positive'); }}>
                           Close It
                         </Gated>
-                        <span className="xs dim">{closingWords(sim, account, money, into?.name ?? 'your current account')}</span>
+                        <span className="xs dim">{closingWords(sim, account, into?.name ?? 'your current account')}</span>
                       </>}
                   </div>
                   );
@@ -184,9 +184,9 @@ export function BankWorkspace() {
           );
         })}
         {unsaved.map((there) => (
-          <Panel key={`open-${there.id}`} title={there.savings.name} subtitle={`${there.name}, not opened`} help="bank.open_savings">
+          <Panel key={`open-${there.id}`} title={there.savings.name} subtitle={`At ${there.name}, not open yet`} help="bank.open_savings">
             <p className="small">
-              {interestWords(sim, there.savings, bankingIn(there.iso)?.interestTax?.rate ?? 0, money, there.currency, sim.now, there.iso === 'DE')} {there.savings.monthlyFee ? `It costs ${formatMoney(inSaveMoney(sim, there.savings.monthlyFee, there.currency), cur)} a month${waiverWords(there.savings, (c) => money(inSaveMoney(sim, c, there.currency)))}.` : 'Opening one costs nothing.'}
+              {interestWords(sim, there.savings, bankingIn(there.iso)?.interestTax?.rate ?? 0, money, there.currency, sim.now, there.iso === 'DE')} {there.savings.monthlyFee ? `It costs ${formatMoney(inSaveMoney(sim, there.savings.monthlyFee, there.currency), cur)} a month${waiverWords(there.savings, (c) => money(inSaveMoney(sim, c, there.currency)))}.` : 'It has no monthly fee.'}
             </p>
             <Gated feature="bank.open_savings" className="btn btn-sm" onClick={() => run('bank.open_savings', { bankId: there.id })}>
               Open A {there.savings.name}
@@ -196,7 +196,7 @@ export function BankWorkspace() {
       </div>
 
       {accounts.length > 1 && (
-        <Panel title="Move Money" subtitle="Between your own accounts: at once at one bank; to another bank, in the sending bank’s days; abroad, in both countries’ days, less the exchange and the fees." help="bank.transfer">
+        <Panel title="Move Money" subtitle="Between your own accounts. Within one bank it’s instant. To another bank it takes as long as the sending bank takes, and abroad it also costs the exchange and the fees." help="bank.transfer">
           <div className="field-row">
             <div className="field">
               <label htmlFor="move-from">From</label>
@@ -218,9 +218,9 @@ export function BankWorkspace() {
           </div>
           {savingsTerms && (freeLeft !== undefined || allowanceLeft !== undefined) && (
             <p className="xs dim" style={{ margin: '0 0 var(--s2)' }}>
-              {freeLeft === true ? 'This withdrawal is free; past the month’s free ones each costs the bank’s fee. ' : ''}
-              {freeLeft === false ? `The month’s free withdrawals are used: this one costs ${formatMoney(savingsTerms.fee, cur)}, from savings beside it. ` : ''}
-              {allowanceLeft !== undefined ? `${money(allowanceLeft)} more can come out this month without notice.` : ''}
+              {freeLeft === true ? 'This withdrawal is free. Once the month’s free ones are used, each costs the bank’s fee. ' : ''}
+              {freeLeft === false ? `You’ve used this month’s free withdrawals, so this one costs ${formatMoney(savingsTerms.fee, cur)}, taken from the savings on top of the amount. ` : ''}
+              {allowanceLeft !== undefined ? `You can take out ${money(allowanceLeft)} more this month without notice.` : ''}
             </p>
           )}
           {abroad && <p className="xs dim" style={{ margin: '0 0 var(--s2)' }}>{'refused' in abroad ? abroad.refused : quoteWords(sim, abroad)}</p>}
@@ -371,8 +371,8 @@ function othersText(list: Account[], money: (cents: number) => string): string {
 /** How sure the research was of a bank outside the thirteen, where it wasn't sure. */
 const CONFIDENCE: Record<'H' | 'M' | 'L', string> = {
   H: '',
-  M: ' The research was only partly sure of this bank’s figures.',
-  L: ' The research wasn’t sure of this bank’s figures.',
+  M: ' Some of this bank’s figures couldn’t be fully confirmed.',
+  L: ' This bank’s figures couldn’t be confirmed.',
 };
 
 /** Percent, to as many places as the figure has. */
@@ -393,7 +393,7 @@ function interestWords(sim: Simulation, product: Product | undefined, tax: numbe
   const tiered = account ? tierRate(product, account, earningBalance(product, account.balance, bankMoney), bankMoney) : undefined;
   const rate = tiered ?? step ?? rateOn(product, sim.now, sim.homeZone);
   // A rate the research didn't find isn't a rate of none: until 2026-09-26 Citi's savings said it paid no interest.
-  if (product && product.rate === undefined && /no published rate/i.test(product.source) && !product.changes?.length && !product.tiers?.length && !product.bonus && !product.intro) return 'Its rate wasn’t found, so SLATE pays none on it.';
+  if (product && product.rate === undefined && /no published rate/i.test(product.source) && !product.changes?.length && !product.tiers?.length && !product.bonus && !product.intro) return 'No published rate was found for it, so it earns no interest in the game.';
   if (!product || (rate <= 0 && !product.bonus && !product.intro)) return 'Pays no interest.';
   // The yield with the interest left in, credited monthly or in the bank's months (B31).
   const said: string[] = [`Pays ${pct(rate)} a year${tiered !== undefined ? ' on this balance' : ''} (${pct(Number(apyOf(rate, product.pays?.length ?? 12).toFixed(5)))} APY)`];
@@ -403,38 +403,38 @@ function interestWords(sim: Simulation, product: Product | undefined, tax: numbe
     const ahead: string[] = [];
     for (const one of product.intro ?? []) {
       through += one.months;
-      ahead.push(`${pct(one.rate)} to month ${through}`);
+      ahead.push(`${pct(one.rate)} until month ${through}`);
     }
-    said.push(` for now: ${ahead.join(', ')}, and ${pct(rateOn(product, sim.now, sim.homeZone))} after, counted from when it opened`);
+    said.push(` for now: ${ahead.join(', ')}, then ${pct(rateOn(product, sim.now, sim.homeZone))}, counted from when it opened`);
   }
   // The bank's day, as the engine reads it: until 2026-09-27 a UTC one.
   const next = (product.changes ?? []).find((c) => c.from > dateKey(sim.now, sim.homeZone));
   if (next) { const [y, m, d] = next.from.split('-').map(Number); said.push(`, ${pct(next.rate)} from ${formatDate(Date.UTC(y!, m! - 1, d!, 12), 'UTC')}`); }
-  for (const tier of product.tiers ?? []) said.push(`, ${pct(tier.rate)} on the whole balance from ${inBank(tier.from)}`);
+  for (const tier of product.tiers ?? []) said.push(`, and ${pct(tier.rate)} on the whole balance once it’s ${inBank(tier.from)} or more`);
   if (product.rateFrom !== undefined) said.push(`, on a balance of ${inBank(product.rateFrom)} or more`);
   if (product.rateUpTo !== undefined) said.push(`, on up to ${inBank(product.rateUpTo)}`);
   said.push('.');
   if (product.bonus) {
     const earn = product.bonus.when === 'no_withdrawals'
-      ? 'a month with nothing taken out'
-      : product.bonus.growBy !== undefined ? `a month the balance grows by ${inBank(product.bonus.growBy)}` : 'a month the balance grows';
-    said.push(` Another ${pct(product.bonus.rate)} for ${earn}.`);
+      ? 'you take nothing out'
+      : product.bonus.growBy !== undefined ? `the balance grows by ${inBank(product.bonus.growBy)}` : 'the balance grows';
+    said.push(` It pays another ${pct(product.bonus.rate)} in any month ${earn}.`);
   }
   // As the engine pays it: in the bank’s months, at Germany’s quarterly closing, or each month’s end.
   said.push(product.pays
-    ? ` It builds each day and is paid in ${product.pays.map((m) => MONTH_NAMES[m - 1]).join(' and ')}.`
+    ? ` Interest builds up daily and is paid in ${product.pays.map((m) => MONTH_NAMES[m - 1]).join(' and ')}.`
     : quarterly
-      ? ' It builds each day and is paid at the quarterly closing, the end of March, June, September and December.'
-      : ' It builds each day and is paid on the last day of the month.');
-  if (product.taxFree) said.push(' Tax-free.');
+      ? ' Interest builds up daily and is paid at each quarter’s close: the end of March, June, September and December.'
+      : ' Interest builds up daily and is paid on the last day of the month.');
+  if (product.taxFree) said.push(' The interest is tax-free.');
   else if (tax > 0) {
     // Past the year's allowance, where the country has one: until 2026-09-27 it read as tax on all of it.
     const iso = account?.bankId ? bankById(account.bankId)?.iso : undefined;
     const levy = iso ? bankingIn(iso)?.interestTax : undefined;
     const left = account ? interestAllowanceLeft(sim, account) : undefined;
     said.push(levy?.allowance !== undefined
-      ? ` The bank takes ${pct(tax)} of what’s paid past the first ${inBank(levy.allowance)} of the year’s interest${left !== undefined ? `; ${money(left)} of that is left this year` : ''}.`
-      : ` The bank takes ${pct(tax)} of it for tax.`);
+      ? ` The bank keeps back ${pct(tax)} for tax on interest past the first ${inBank(levy.allowance)} each year${left !== undefined ? `, and ${money(left)} of that allowance is left this year` : ''}.`
+      : ` The bank keeps back ${pct(tax)} of it for tax.`);
     if (levy?.source) said.push(` Source: ${levy.source}.`);
   }
   return said.join('');
@@ -452,16 +452,16 @@ function OtherCharges({ bank }: { bank: import('@/engine/content/banks').Bank })
     // charged behind, and its days used charged on a close, and where the timing is SLATE's, said to be simulated and
     // unverified (`Bank.card.year`, from brief 10).
     const year = bank.card.yearly !== undefined ? bank.card.year : undefined;
-    const timing = year ? (year.paid === 'ahead' ? ', paid for the year ahead, and what’s left of the year is refunded when the account closes' : ', charged at the end of each card year, and the year’s days so far charged when the account closes') : '';
-    const simulated = year?.simulated ? ` Its timing is SLATE’s simulation, unverified: ${year.simulated}.` : '';
-    lines.push(`The debit card costs ${bank.card.yearly !== undefined ? `${money(bank.card.yearly)} a year` : 'nothing a year'}${bank.card.perPurchase !== undefined ? ` and ${money(bank.card.perPurchase)} a purchase` : ''}${bank.card.freeUnder !== undefined ? `, free under ${bank.card.freeUnder}` : ''}${timing}.${simulated} Source: ${bank.card.source}.`);
+    const timing = year ? (year.paid === 'ahead' ? '. It’s paid for the year ahead, and what’s left of the year is refunded if the account closes' : '. It’s charged at the end of each card year, and the days used so far are charged if the account closes') : '';
+    const simulated = year?.simulated ? ` Estimated: ${year.simulated}.` : '';
+    lines.push(`The debit card costs ${bank.card.yearly !== undefined ? `${money(bank.card.yearly)} a year` : 'nothing a year'}${bank.card.perPurchase !== undefined ? ` and ${money(bank.card.perPurchase)} a purchase` : ''}${bank.card.freeUnder !== undefined ? `, or nothing at ${bank.card.freeUnder - 1} and under` : ''}${timing}. Source: ${bank.card.source}.${simulated}`);
   }
-  if (bank.returned) lines.push(`A payment the bank returns unpaid costs ${money(bank.returned.fee)}${bank.returned.ifShortAtLeast !== undefined ? `, none on a payment under ${money(bank.returned.ifShortAtLeast)}` : ''}${bank.returned.gapDays > 1 ? `, at most once every ${bank.returned.gapDays} business days` : ''}. Source: ${bank.returned.source}.`);
-  if (bank.dormant) lines.push(`An account unused for ${bank.dormant.afterYears} years costs ${money(bank.dormant.yearly)} a year${bank.dormant.belowBalance !== undefined ? ` while it holds under ${money(bank.dormant.belowBalance)}` : ''}. Source: ${bank.dormant.source}.`);
+  if (bank.returned) lines.push(`A payment the bank returns unpaid costs ${money(bank.returned.fee)}${bank.returned.ifShortAtLeast !== undefined ? `, or nothing when the account is less than ${money(bank.returned.ifShortAtLeast)} short` : ''}${bank.returned.gapDays > 1 ? `, at most once every ${bank.returned.gapDays} business days` : ''}. Source: ${bank.returned.source}.`);
+  if (bank.dormant) lines.push(`An account left unused for ${bank.dormant.afterYears} years costs ${money(bank.dormant.yearly)} a year${bank.dormant.belowBalance !== undefined ? ` while it holds less than ${money(bank.dormant.belowBalance)}` : ''}. Source: ${bank.dormant.source}.`);
   if (bank.quietMonth) lines.push(`A month with fewer than ${bank.quietMonth.minTransactions} transactions costs ${money(bank.quietMonth.fee)}${bank.quietMonth.unlessWages ? ', unless wages are paid in' : ''}. Source: ${bank.quietMonth.source}.`);
   if (refund?.refund) {
-    const day = `${refund.refund.day} ${MONTH_NAMES[refund.refund.month - 1]}`;
-    lines.push(`${refund.note} It’s paid here on ${day}${refund.refund.estimateDate ? ', which is SLATE’s estimate of the day' : ''}.`);
+    const day = `${MONTH_NAMES[refund.refund.month - 1]} ${refund.refund.day}`;
+    lines.push(`${refund.note} It’s paid here on ${day}.${refund.refund.estimateDate ? ' The day is estimated.' : ''}`);
   }
   if (lines.length === 0) return null;
   return (
@@ -475,19 +475,31 @@ function OtherCharges({ bank }: { bank: import('@/engine/content/banks').Bank })
 
 /**
  * What closing savings moves: the balance, with this month's interest paid
- * less its tax. Until 2026-09-27 it said the balance, and more moved.
+ * less its tax. Until 2026-09-27 it said the balance, and more moved. From
+ * 2026-10-17 it says the figure to the cent, and an overdrawn savings account
+ * says what closing takes to clear it (`closeSavings` posts the shortfall from
+ * the current account), where it had said "Its -$3, moves to …".
  */
-function closingWords(sim: Simulation, account: Account, money: (c: number) => string, into: string): string {
+function closingWords(sim: Simulation, account: Account, into: string): string {
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
   const earned = Math.floor(account.accrued ?? 0);
   const net = earned - (earned > 0 ? interestTaxFor(sim, account, earned) : 0);
+  const taxed = earned > net ? ' after tax' : '';
   const left = savingsLeftThisMonth(sim, account);
-  if (left !== undefined && account.balance + earned > left) return `It holds more than the ${money(left)} the month lets out without notice: closing it gives the law’s three months’ notice, and it moves to ${into} then.`;
-  // An account kept at home in its own money, the month's interest so far turned into it at SLATE's rate (from 2026-10-16).
+  if (left !== undefined && account.balance + earned > left) return `It holds more than the ${money(left)} you can take out this month without notice, so closing it gives three months’ notice, as the law requires. The money moves to ${into} then.`;
+  // An account kept at home in its own money, the month's interest so far turned into it at the game's rate (from 2026-10-16).
   if (account.currency) {
-    const built = exchange(net, saveCurrency(sim.universe), account.currency) ?? 0;
-    return `Its ${heldText(sim, account, heldOf(account) + built)}${built > 0 ? `, with ${heldText(sim, account, built)} of interest built this month` : ''}, moves to ${into}.`;
+    const built = exchange(net, cur, account.currency) ?? 0;
+    const total = heldOf(account) + built;
+    if (total < 0) return `It’s overdrawn by ${heldText(sim, account, -total)}. Closing it takes that from ${into} to clear it.`;
+    if (total === 0) return 'It’s empty, so closing it moves nothing.';
+    return `Closing it moves its ${heldText(sim, account, total)} to ${into}${built > 0 ? `, including ${heldText(sim, account, built)} of interest from this month${taxed}` : ''}.`;
   }
-  return `Its ${money(account.balance + net)}${net > 0 ? `, with ${money(net)} of interest built this month` : ''}, moves to ${into}.`;
+  const total = account.balance + net;
+  if (total < 0) return `It’s overdrawn by ${money(-total)}. Closing it takes ${money(-total)} from ${into} to clear it.`;
+  if (total === 0) return 'It’s empty, so closing it moves nothing.';
+  return `Closing it moves its ${money(total)} to ${into}${net > 0 ? `, including ${money(net)} of interest from this month${taxed}` : ''}.`;
 }
 
 // `waiverWords` moved to `ui/bank/feeWords.ts` on 2026-10-16, so the opening panel says the fee before Apply.

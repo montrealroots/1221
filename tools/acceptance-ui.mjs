@@ -1698,7 +1698,7 @@ await step('home account: a London-raised F-1 keeps HSBC UK through Before Yale,
   await rail('Money'); await tab('Accounts');
   const panels = await page.locator('section.card').filter({ hasText: 'Held From Abroad' }).allInnerTexts();
   must(panels.length >= 2, `${panels.length} panels held from abroad`);
-  must(panels.every((p) => /£[\d,]+/.test(p) && /in dollars, at SLATE’s rate/.test(p)), 'a home account’s panel without both currencies');
+  must(panels.every((p) => /£[\d,]+/.test(p) && /in dollars, at the game’s exchange rate/.test(p)), 'a home account’s panel without both currencies');
   await page.locator('#move-from').selectOption({ label: (await page.locator('#move-from option', { hasText: 'Chase Total Checking' }).first().innerText()).trim() }); await wait(400);
   await page.locator('#move-to').selectOption({ label: (await page.locator('#move-to option', { hasText: 'HSBC Bank Account' }).first().innerText()).trim() }); await wait(400);
   await page.locator('#move-amount').fill('100'); await wait(500);

@@ -88,7 +88,7 @@ describe('nothing new at a bank abroad', () => {
     expect(refused(sim, 'bank.open_term', { bankId: 'gb-hsbc', amount: 100_000 })).toBe(words);
     expect(refused(sim, 'bank.borrow', { bankId: 'gb-hsbc', amount: 100_000, months: 12 })).toBe(words);
     expect(refused(sim, 'bank.arrange_overdraft', { accountId: hsbc.id, limit: 50_000 })).toBe(words);
-    expect(refused(sim, 'bank.redirect_deposits', { accountId: hsbc.id })).toBe('Yale pays into an account in America.');
+    expect(refused(sim, 'bank.redirect_deposits', { accountId: hsbc.id })).toBe('Yale only pays wages into an account in America.');
     run(sim, 'cash.withdraw', { amount: 10_000, from: 'atm' });
     expect(refused(sim, 'cash.deposit', { amount: 5_000, toId: hsbc.id, at: 'counter' })).toBe('HSBC UK takes cash only at its own counters and machines, in its country.');
     // Where they live, the same day: Chase opens savings beside its current account.
@@ -162,7 +162,7 @@ describe('the bank’s fee for a customer abroad, on its schedule, in its own mo
     expect(little).toBeLessThan(44_000);
     expect(smbc.feeOwedHeld).toBe(44_000);
     // Nor is it closed with the fee owed, as an overdrawn account isn't.
-    expect(refused(sim, 'bank.close_current', { accountId: smbc.id })).toBe('Its fee for a customer abroad, ¥440, is owed. The bank closes it only once that’s paid.');
+    expect(refused(sim, 'bank.close_current', { accountId: smbc.id })).toBe('You owe its fee for customers abroad, ¥440. The bank only closes it once that’s paid.');
     expect(refused(sim, 'bank.transfer', { fromId: smbc.id, toId: chase.id, amount: 100, in: 'JPY' }))
       .toBe('SMBC stops its payments abroad while the Global Service fee can’t be taken. ¥440 of it is owed, taken the first night an account there holds it.');
     // $100 more: the night it lands both months are taken together, and payments abroad go again.

@@ -270,7 +270,7 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     expect(postedTo(sim, 'Interest: Citi Access Checking, on closing', citi.id)).toEqual([2_50]);
     expect(postedTo(sim, 'From Citi Access Checking', chase.id)).toEqual([2_50]);
     expect(inTransitOf(sim, sim.player).balance).toBe(0);
-    expect(titled(sim, 'Citi Closed Citi Access Checking').map((n) => n.body)).toEqual(['It held nothing for 90 days, and the bank closes an account at zero that long. Its $2.50 of interest is on its way to Chase Total Checking, arriving January 4, 2027.']);
+    expect(titled(sim, 'Citi Closed Citi Access Checking').map((n) => n.body)).toEqual(['It sat at a zero balance for 90 days, so the bank closed it. Its $2.50 of interest is on its way to Chase Total Checking and arrives January 4, 2027.']);
     expect(breaches(sim.universe)).toEqual([]);
   }, 60_000);
 
@@ -515,7 +515,7 @@ describe('banking.1: an account a bank closed stops', () => {
     sim.advanceTo(capone.fundBy! + 2 * MS_DAY);
     expect(capone.closedAt).toBeDefined();
     const closedBy = titled(sim, 'Capital One Closed 360 Checking');
-    expect(closedBy.map((n) => n.body)).toEqual(['It wasn’t funded within 60 days of opening, and the bank closes an account that isn’t. Its standing order of $50.00 into Chase Savings on the 15 ended with it: set one up again on How You Pay.']);
+    expect(closedBy.map((n) => n.body)).toEqual(['The bank closed it because no money was paid into it within 60 days of opening. Its standing order of $50.00 into Chase Savings on the 15 ended with it: set one up again on How You Pay.']);
     expect(paymentsOf(sim.player).standingOrders.map((o) => o.id)).toEqual([fromCiti.id]);
     // Citi's $5 a month, for an owner of 24 with no direct deposit, on 31 October and 30 November, takes it to −$10, and
     // sixty days below zero, from 1 November, close it on 31 December.
@@ -789,7 +789,7 @@ describe('banking.s7: what a New Haven student meets opening and moving money', 
     drawn(sim, createElement(BankMoves));
     type('open-at', 'us-citi');
     const citi = drawn(sim, createElement(BankMoves));
-    expect(citi).toContain('Its Citi Access Checking costs $5.00 a month, waived with $250.00 of electronic deposits (wages, benefits or a tax refund) paid in, or being under 24.');
+    expect(citi).toContain('Its Citi Access Checking costs $5.00 a month, waived in any month you have $250.00 of electronic deposits (wages, benefits or a tax refund) paid in, or while you’re under 24.');
     type('open-at', 'us-capital-one');
     expect(drawn(sim, createElement(BankMoves))).toContain('Its 360 Checking has no monthly fee.');
   });

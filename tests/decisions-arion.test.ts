@@ -203,7 +203,7 @@ function closeVoxtur(sim: Simulation): void {
 /** Close It on the Veltureikningur, into Chase, by the command Your Banks sends. */
 const closeVeltu = (sim: Simulation) => sim.execute({ kind: 'bank.close_current', payload: { accountId: veltu(sim).id, remainderTo: sim.player.primaryAccountId } });
 
-const LABEL = 'Its timing is SLATE’s simulation, unverified: Arion’s price list and terms don’t say when in the year it’s charged.';
+const LABEL = 'Estimated: Arion’s price list and terms don’t say when in the year it’s charged.';
 const LAW_AHEAD = 'Iceland’s Act on Payment Services, art. 57, gives a fee paid ahead back in proportion.';
 
 // ---------------------------------------------------------------------------
@@ -403,7 +403,7 @@ describe('arion.AR5: an account that can’t cover the year’s fee', () => {
     expect(cardPosts(sim, arion.id).at(-1)).toEqual([at(2027, 8, 25, 0), 'Debit card yearly fee', -6_88, -950_00]);
     expect([arion.held, arion.balance]).toEqual([-650_00, -4_71]);
     expect(drawn(sim, createElement(BankWorkspace))).toContain('An account that can’t cover the year’s fee is charged it all the same, and goes below zero by what’s short.');
-    expect(refusal(sim, 'bank.close_current', { accountId: arion.id, remainderTo: primary(sim).id })).toBe('It’s overdrawn by $4.71. The bank closes it only once that’s paid.');
+    expect(refusal(sim, 'bank.close_current', { accountId: arion.id, remainderTo: primary(sim).id })).toBe('It’s overdrawn by $4.71. The bank only closes it once that’s paid off.');
     sim.advanceTo(at(2027, 8, 26, 9));
     setTo(sim, arion, arion.balance + 7_25, arion.held! + 1_000_00); // TEST SETUP: 100,000 / 138 = 724.6, $7.25.
     closeVoxtur(sim);

@@ -279,7 +279,7 @@ describe('h-money', () => {
   it('“No account” can’t be reached: the bank refuses to close a life’s only current account, in its words, and the line still names it', () => {
     const sim = life('g33-money-close');
     expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: primary(sim).id } }).error)
-      .toBe('It’s your only current account. Open another first: SLATE keeps every life a current account to be paid into.');
+      .toBe('It’s your only current account. Open another one first: you always need a current account to be paid into.');
     expect(drawn(sim).affairs).toContain('Money Chase Total Checking: $92,391.00.');
   });
 });

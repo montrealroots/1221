@@ -516,7 +516,7 @@ describe('bank.open_term', () => {
     expect(start).toBe(92_391_00);
     expect(refused(sim, 'bank.open_term', { amount: 100_000_00 })).toBe('Chase Total Checking holds $92,391.');
     expect(refused(sim, 'bank.open_term', { amount: 1_000_00, bankId: 'us-wells-fargo' })).toBe('A term deposit at Wells Fargo is funded from your current account there: open one first.');
-    expect(refused(sim, 'bank.open_term', { amount: 0 })).toBe('Say how much to put in.');
+    expect(refused(sim, 'bank.open_term', { amount: 0 })).toBe('Enter how much to put away.');
     expect(termsOf(sim, sim.player)).toEqual([]);
     expect(checking.balance).toBe(start);
   });
@@ -672,8 +672,8 @@ describe('bank.pay_collections', () => {
     expect(refused(sim, 'bank.pay_collections', { amount: 100_00 })).toBe('There’s nothing in the account to pay it with.');
     expect(troubles(sim, sim.player).filter((t) => t.kind === 'collections')).toEqual([{ kind: 'collections', amount: owed }]);
     expect(applied(sim)).toMatchObject({ approved: false, said: expect.stringMatching(/ said no: you have a debt in collections\.$/) });
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for somebody who owes it a charged-off debt.');
-    expect(refused(sim, 'bank.switch', { bankId: 'us-chase' })).toBe('Chase won’t open an account for somebody who owes it a charged-off debt.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for you while you owe it a debt it has charged off.');
+    expect(refused(sim, 'bank.switch', { bankId: 'us-chase' })).toBe('Chase won’t open an account for you while you owe it a debt it has charged off.');
 
     // Friday's wages land in the new account; on Saturday, $100 from the panel.
     sim.advanceTo(at(2026, 11, 7));
@@ -725,8 +725,8 @@ describe('bank.pay_collections', () => {
     expect(toChase.id).not.toBe(toCiti.id);
     expect(toChase.balance).toBe(heldBefore(sim, [chase, savings], 'Charged off by Chase'));
     expect(toCiti.balance).toBe(heldBefore(sim, [citi], 'Charged off by Citi'));
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for somebody who owes it a charged-off debt.');
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi' })).toBe('Citi won’t open an account for somebody who owes it a charged-off debt.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for you while you owe it a debt it has charged off.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi' })).toBe('Citi won’t open an account for you while you owe it a debt it has charged off.');
     expect(['us-chase', 'us-citi']).not.toContain(primary(sim).bankId);
   });
 

@@ -790,7 +790,7 @@ const PLAYS: Record<string, () => void> = {
     sim.advanceTo(sim.universe.people[sim.player.id]!.payments!.depositChange!.at + HOUR);
     depositAccount(sim, sim.player);
     const savings = own(sim, 'savings')!;
-    expect(closeRefusal(sim, sim.player, chase)).toBe(`${savings.name} is open beside it. Close it first.`);
+    expect(closeRefusal(sim, sim.player, chase)).toBe(`${savings.name} is still open at the same bank. Close that first.`);
     must(sim, 'bank.close_savings', { accountId: savings.id });
     expect(closeRefusal(sim, sim.player, chase)).toBeUndefined();
     const held = chase.balance;

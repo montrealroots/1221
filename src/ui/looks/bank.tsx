@@ -94,7 +94,7 @@ function nativeOn(txn: LedgerTransaction, account: Account): number | undefined 
 interface TheBank { bank: Bank; accounts: Account[]; home: boolean }
 
 defineLook<TheBank>('bank', {
-  gone: 'You hold nothing at that bank any more, so it has nothing of yours to show.',
+  gone: 'You don’t hold anything at that bank any more, so there’s nothing of yours to show.',
   resolve: (sim, id) => {
     const bank = bankById(id);
     if (!bank) return undefined;
@@ -127,23 +127,23 @@ defineLook<TheBank>('bank', {
       ways.push({
         to: at('transaction', txn.id),
         label: asName(txn.memo, 'A Payment'),
-        detail: `On ${formatDate(txn.at, sim.homeZone)}, the latest money through your accounts here`,
+        detail: `A recent payment through your accounts here, on ${formatDate(txn.at, sim.homeZone)}`,
       });
     }
     if (country && lookExists(sim, at('country', country.id))) {
-      ways.push({ to: at('country', country.id), label: country.name, detail: 'The country the bank answers to, and whose money it keeps' });
+      ways.push({ to: at('country', country.id), label: country.name, detail: 'The country whose rules the bank follows, and whose money it uses' });
     }
     if (lookExists(sim, at('currency', bank.currency))) {
-      ways.push({ to: at('currency', bank.currency), label: bank.currency, detail: 'The money it keeps your accounts in, and what it’s worth' });
+      ways.push({ to: at('currency', bank.currency), label: bank.currency, detail: 'The currency your accounts there are kept in, and what it’s worth' });
     }
 
     const named = accounts.map((a) => a.name);
     return {
       name: asName(bank.name, 'Your Bank', false),
-      kind: home ? 'Where The Day Comes Out Of' : 'A Bank You Hold Something With',
+      kind: home ? 'Your Everyday Bank' : 'Another Bank You Use',
       parent: at('person', sim.universe.playerId),
       summary: accounts.length === 0
-        ? 'You hold nothing open here today.'
+        ? 'You have nothing open here now.'
         : owed > 0
           ? `You have ${heldWords} here and owe it ${formatMoney(owed, cur)}, across ${named.length === 1 ? 'one account' : `${named.length} accounts`}.`
           : `You have ${heldWords} here, across ${named.length === 1 ? 'one account' : `${named.length} accounts`}.`,
@@ -151,18 +151,18 @@ defineLook<TheBank>('bank', {
         <>
           <p className="small">
             {bank.name} is a {country ? `${country.name} ` : ''}bank and keeps its accounts in {bank.currency}.
-            {named.length > 0 ? ` In your name it holds ${spokenList(named)}.` : ''}
-            {home ? ' Your current account is here, so the day’s spending and your pay go through it.' : ' Your current account is at another bank; what’s here stays here until you move it.'}
+            {named.length > 0 ? ` You have ${spokenList(named)} here.` : ''}
+            {home ? ' Your primary account is here, so your everyday spending and your pay go through it.' : ' Your primary account is at another bank. What’s here stays here until you move it.'}
           </p>
           <div className="grid grid-3">
-            <Stat label="Held Here" value={<span className="mono">{kept ? heldWords : formatMoney(held, cur)}</span>} note="Across what it holds for you" />
+            <Stat label="Held Here" value={<span className="mono">{kept ? heldWords : formatMoney(held, cur)}</span>} note="In your accounts here" />
             <Stat label="Owed Here" value={<span className="mono">{formatMoney(owed, cur)}</span>} tone={owed > 0 ? 'negative' : undefined} note="On its cards and loans" />
             <Stat label="Accounts" value={String(accounts.length)} note="Open in your name" />
           </div>
         </>
       ),
       ways,
-      provenance: 'Each balance is the sum of the postings against it, added up again every time you look.',
+      provenance: 'Each balance is the total of every payment in and out of the account, added up again each time you look.',
     };
   },
 });
@@ -190,7 +190,7 @@ function movedWords(account: Account, delta: number, cur: string, native?: numbe
 }
 
 defineLook<TheLine>('transaction', {
-  gone: 'That line isn’t on any statement of yours. Whatever it was has been taken off the books.',
+  gone: 'That entry isn’t on any of your statements any more. It has been removed from the records.',
   resolve: (sim, id) => {
     const txn = transactionById(sim, id);
     if (!txn) return undefined;
@@ -228,15 +228,15 @@ defineLook<TheLine>('transaction', {
       if (other && transactionById(sim, other)) {
         ways.push({
           to: at('transaction', other),
-          label: other === txn.reverses ? 'What It Undid' : 'What Undid It',
-          detail: other === txn.reverses ? 'The line this one reversed, to the cent' : 'The line that reversed this one, to the cent',
+          label: other === txn.reverses ? 'The Entry It Reversed' : 'The Entry That Reversed It',
+          detail: other === txn.reverses ? 'The entry this one reversed, to the cent' : 'The entry that reversed this one, to the cent',
         });
       }
     }
 
     return {
       name: asName(txn.memo, category || 'A Payment'),
-      kind: 'A Line On A Statement',
+      kind: 'An Entry On A Statement',
       parent: at('account', first.account.id),
       summary: `It ${spokenList(said)}, on ${when}.`,
       body: (
@@ -244,8 +244,8 @@ defineLook<TheLine>('transaction', {
           <p className="small">
             The bank files it under {category.toLowerCase() || 'nothing in particular'}.{' '}
             {pending
-              ? `It’s held against the balance now and posts on ${formatDate(txn.postsAt!, zone)}.`
-              : txn.reversedBy ? 'It was reversed later, so it no longer counts against you.' : 'It has posted, and it stands.'}
+              ? `It’s pending. It already counts in your available balance, and it posts on ${formatDate(txn.postsAt!, zone)}.`
+              : txn.reversedBy ? 'It was reversed later, so it no longer counts against you.' : 'It has posted.'}
           </p>
           <div className="grid grid-3">
             <Stat
@@ -255,12 +255,12 @@ defineLook<TheLine>('transaction', {
               note={first.delta > 0 ? (isLiability(first.account.kind) ? 'Off what’s owed' : 'In') : (isLiability(first.account.kind) ? 'Onto what’s owed' : 'Out')}
             />
             <Stat label="When" value={formatDate(txn.at, zone)} note={pending ? 'Still pending' : 'Posted'} />
-            <Stat label="Accounts" value={String(touched.length)} note={touched.length === 1 ? 'Of yours, touched by it' : 'Of yours, moved between'} />
+            <Stat label="Accounts" value={String(touched.length)} note={touched.length === 1 ? 'Your account it touched' : 'Your accounts it moved money between'} />
           </div>
         </>
       ),
       ways,
-      provenance: 'Every line has a matching entry on the other side of the books, and the two come to zero.',
+      provenance: 'Every entry has a matching one on the other side of the books, and the two add up to zero.',
     };
   },
 });

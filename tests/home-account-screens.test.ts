@@ -110,8 +110,8 @@ describe('an account kept at home, in its own money on every screen', () => {
 
     // The bank: each account's balance in pounds with its dollars, Held From Abroad, its card's fees, its own rate.
     expect(s.bank).toContain(`HSBC UK ${saver.number}, Held From Abroad`);
-    expect(s.bank).toContain(`Balance ${held(saver.held!)} $${(saver.balance / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })} in dollars, at SLATE’s rate`);
-    expect(s.bank).toContain('Balance £100.00 $126.58 in dollars, at SLATE’s rate');
+    expect(s.bank).toContain(`Balance ${held(saver.held!)} $${(saver.balance / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })} in dollars, at the game’s exchange rate`);
+    expect(s.bank).toContain('Balance £100.00 $126.58 in dollars, at the game’s exchange rate');
     expect(s.bank).toContain('Its debit card costs 2.75% of each purchase in dollars, and 2.75% and 2% (at least £1.75, at most £5.00) of the cash at another bank’s machine here, with the machine’s own fee.');
     expect(s.bank).toContain('Pays 1.05% a year (1.055% APY).');
     expect(s.bank).toMatch(/at your other banks, £5,\d{3} of it at HSBC UK\./);

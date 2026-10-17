@@ -845,7 +845,7 @@ PLAYS['documents.passport-id'] = () => {
   expect(photoIdOf(without.player, without.now)).toBeUndefined();
   const mine = without.universe.accounts[without.player.primaryAccountId!]!.bankId;
   const other = banksFor(without.player.currentLocationId).find((b) => b.id !== mine)!;
-  expect(openRefusal(without, without.player, other.id)).toMatch(/asks a new customer for a photo ID in force/);
+  expect(openRefusal(without, without.player, other.id)).toMatch(/needs a valid photo ID from a new customer/);
   expect(ex.result).toContain('without one, a new bank would turn you away.');
 };
 

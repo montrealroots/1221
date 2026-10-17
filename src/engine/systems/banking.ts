@@ -734,7 +734,7 @@ export function cardYearWords(sim: Simulation, account: Account): string | undef
   said.push((account.cardYearRule ?? year.paid) === 'ahead' ? ' Closing the account gives back the days of the year left.' : ' Closing the account charges the days of the year used.');
   if (year.place) said.push(` Its days are counted by ${year.place}’s calendar.`);
   said.push(' An account that can’t cover the year’s fee is charged it all the same, and goes below zero by what’s short.');
-  if (year.simulated) said.push(` Its timing is SLATE’s simulation, unverified: ${year.simulated}.`);
+  if (year.simulated) said.push(` Estimated: ${year.simulated}.`);
   return said.join('');
 }
 
@@ -753,7 +753,7 @@ export function closingFeesWords(sim: Simulation, account: Account, doing: 'Clos
   const year = cardYearOf(bank);
   // The card year's share in its words, and, where it's SLATE's, the law that sizes it and the label (from brief 10).
   const share = card && bank ? `${card.kind === 'refund' ? 'refunds' : 'charges'} ${balanceText(sim, account, card.save, account.currency ? card.held : undefined)} of its debit card’s ${own(inSaveMoney(sim, card.fee, bank.currency), card.fee)} for the year, ${card.kind === 'refund' ? `paid ahead: the ${card.days} of its ${card.of} days left` : `charged at its end: the ${card.days} of its ${card.of} days so far`}` : undefined;
-  const after = card && bank && year ? `${year.law ? ` ${year.law}, ${card.kind === 'refund' ? 'gives a fee paid ahead back in proportion' : 'owes a regular fee only in proportion to the close'}.` : ''}${year.simulated ? ` Its timing is SLATE’s simulation, unverified: ${year.simulated}.` : ''}` : '';
+  const after = card && bank && year ? `${year.law ? ` ${year.law}, ${card.kind === 'refund' ? 'gives a fee paid ahead back in proportion' : 'owes a regular fee only in proportion to the close'}.` : ''}${year.simulated ? ` Estimated: ${year.simulated}.` : ''}` : '';
   const fees = feesWords(sim, account, due, doing, own);
   if (!fees) return share ? `${doing} it now ${share}.${after}` : undefined;
   return share ? `${fees} It ${share}.${after}` : fees;

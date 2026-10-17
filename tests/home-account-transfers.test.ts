@@ -251,7 +251,7 @@ describe('the Move Money panel', () => {
     expect(words).toContain('Barclays sends £1,000.00 for no fee. At its rate, 2.75% under SLATE’s, Chase receives $1,216.01 after its $15.00 fee for a payment from abroad, on Wednesday, September 2, 2026.');
     const press = h.elements.find((e) => e.text === 'Move It')!;
     (press.props.onClick as () => void)();
-    expect(h.toasts.at(-1)).toBe('Sent £1,000.00: it arrives September 2, 2026.');
+    expect(h.toasts.at(-1)).toBe('Sent £1,000.00. It arrives September 2, 2026.');
     expect(current.held).toBe(10_000);
   });
 });

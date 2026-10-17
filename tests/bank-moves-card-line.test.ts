@@ -66,8 +66,8 @@ const shown = (sim: Simulation) => {
 /** The card's line, and the days it gives, where it gives any. */
 const cardLine = (text: string): { line: string; days?: number; business?: boolean } => {
   const line = /The debit card [^.]*\./.exec(text)![0];
-  const m = /takes (\d+) (business|calendar) days/.exec(line);
-  return m ? { line, days: Number(m[1]), business: m[2] === 'business' } : { line };
+  const m = /arrives in (\d+) (business )?days/.exec(line);
+  return m ? { line, days: Number(m[1]), business: m[2] !== undefined } : { line };
 };
 const currentAt = (sim: Simulation, bankId: string): Account => checkingsOf(sim, sim.player).find((a) => a.bankId === bankId)!;
 const arrivals = (sim: Simulation, account: Account) => sim.universe.scheduled.filter((i) => i.kind === REPLACED_KIND && i.payload.accountId === account.id && i.status === 'pending');
@@ -122,7 +122,7 @@ describe('PLAYER JOURNEY: a New York life at Chase, applying at Bank of America'
     const sim = lifeIn('us-ny-newyork', 'us-chase', 'card-line-boa-plastic');
     withBoaCard({ digital: false }, () => {
       const { line, days, business } = cardLine(screen(sim));
-      expect(line).toBe(`The debit card takes ${OPENING[BOA]!.card!.days} business days.`);
+      expect(line).toBe(`The debit card arrives in ${OPENING[BOA]!.card!.days} business days.`);
       expect([days, business]).toEqual([OPENING[BOA]!.card!.days, OPENING[BOA]!.card!.business]);
       const { account, openedAt } = applyAtBoa(sim);
       expect(account.plastic!.stopped).toBe('new');
@@ -141,7 +141,7 @@ describe('PLAYER JOURNEY: a New York life at Chase, then Wells Fargo and Citi', 
     // Wells Fargo publishes 7 calendar days for a new card.
     expect(shown(sim).id).toBe('us-wells-fargo');
     const wells = cardLine(screen(sim));
-    expect(wells.line).toBe('The debit card takes 7 calendar days.');
+    expect(wells.line).toBe('The debit card arrives in 7 days.');
     const openedWells = sim.now;
     const { cardAt: wellsCard } = run<{ cardAt: number }>(sim, 'bank.open_current', { bankId: 'us-wells-fargo', fundFrom: chase, amount: 25_00 });
     expect(Math.round((wellsCard - openedWells) / MS_DAY)).toBe(wells.days);
@@ -149,7 +149,8 @@ describe('PLAYER JOURNEY: a New York life at Chase, then Wells Fargo and Citi', 
     // Citi publishes none for a new card, and its replacement's 5 business days are what the card takes.
     expect(shown(sim).id).toBe('us-citi');
     const citi = cardLine(screen(sim));
-    expect(citi.line).toBe(`The debit card takes ${SECURITY['us-citi']!.standardDays} business days, as the bank’s replacement card does: SLATE’s estimate, as no figure for a new account’s card was found.`);
+    expect(citi.line).toBe(`The debit card arrives in ${SECURITY['us-citi']!.standardDays} business days.`);
+    expect(screen(sim)).toContain('The new card’s days are estimated from the bank’s time for a replacement card, as no figure for a new account’s card was found.');
     // Until 2026-10-12 the line gave SLATE's 7 here.
     expect(citi.days).not.toBe(ESTIMATE_CARD_DAYS);
     const openedCiti = sim.now;
@@ -163,7 +164,8 @@ describe('PLAYER JOURNEY: a Tokyo life at MUFG, opening an account at SMBC', () 
     const sim = lifeIn('jp-13-tokyo', 'jp-mufg', 'card-line-smbc');
     expect(shown(sim).id).toBe('jp-smbc');
     const { line, days } = cardLine(screen(sim));
-    expect(line).toContain(`takes ${SECURITY['jp-smbc']!.standardDays} business days, as the bank’s replacement card does`);
+    expect(line).toBe(`The debit card arrives in ${SECURITY['jp-smbc']!.standardDays} business days.`);
+    expect(screen(sim)).toContain('The new card’s days are estimated from the bank’s time for a replacement card');
     const opened = sim.now;
     const { accountId, cardAt } = run<{ accountId: string; cardAt: number }>(sim, 'bank.open_current', { bankId: 'jp-smbc' });
     expect(businessDaysTo(sim, sim.universe.accounts[accountId]!, opened, cardAt)).toBe(days);
@@ -177,7 +179,8 @@ describe('PLAYER JOURNEY: a Paris life, opening an account at a bank that publis
     expect(OPENING[bank.id]?.card).toBeUndefined();
     expect(SECURITY[bank.id]?.standardDays).toBeUndefined();
     const { line, days } = cardLine(screen(sim));
-    expect(line).toBe(`The debit card takes ${ESTIMATE_CARD_DAYS} business days, SLATE’s estimate: the bank doesn’t say.`);
+    expect(line).toBe(`The debit card arrives in ${ESTIMATE_CARD_DAYS} business days.`);
+    expect(screen(sim)).toContain('The debit card’s days are estimated: the bank doesn’t say.');
     const opened = sim.now;
     const { accountId, cardAt } = run<{ accountId: string; cardAt: number }>(sim, 'bank.open_current', { bankId: bank.id });
     expect(businessDaysTo(sim, sim.universe.accounts[accountId]!, opened, cardAt)).toBe(days);

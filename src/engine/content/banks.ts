@@ -131,7 +131,7 @@ export interface Product {
  * - `zone`: the calendar the year and a close's days are counted in, the bank's own, and `place`, the town the screen
  *   names it by; the save's home zone where absent.
  * - `simulated`: where the bank's documents don't say when the year is charged, why, in the words the screen and the
- *   guide say after "Its timing is SLATE’s simulation, unverified:"; absent where a source settles it.
+ *   guide say after "Estimated:" (until 2026-10-17 "Its timing is SLATE’s simulation, unverified:"); absent where a source settles it.
  * - `law`: the statute the screen names for a close's share, where one was read.
  *
  * A share is the fee × the days ÷ the card year's days, rounded half up once, to the bank's currency's smallest written

@@ -430,7 +430,7 @@ describe('documents.idcard_arrives', () => {
     expect(rowOf(drawn(sim, PapersWorkspace, 'passport').html, lost.number)).toContain('In Force');
     expect(run(sim, 'documents.report_lost', { documentId: lost.id }).ok).toBe(true);
     expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
-    const refusal = 'Capital One asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.';
+    const refusal = 'Capital One needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.';
     expect(run(sim, 'bank.open_current', { bankId: 'us-capital-one' })).toMatchObject({ ok: false, error: refusal });
 
     // Replaced by mail from New Haven on New York's MV-44: $17.50, three weeks.
@@ -522,7 +522,7 @@ describe('documents.idcard_arrives', () => {
     twin.must({ kind: 'documents.apply_ssn', payload: {} });
     twin.advanceTo(sim.now);
     expect(run(twin, 'documents.report_lost', { documentId: passport.id }).ok).toBe(true);
-    expect(run(twin, 'bank.open_current', { ...wells, fundFrom: current(twin).id })).toMatchObject({ ok: false, error: 'Wells Fargo asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.' });
+    expect(run(twin, 'bank.open_current', { ...wells, fundFrom: current(twin).id })).toMatchObject({ ok: false, error: 'Wells Fargo needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.' });
     const opened = run(sim, 'bank.open_current', wells);
     expect(opened.ok).toBe(true);
     expect(sim.universe.accounts[(opened.value as { accountId: string }).accountId]!.bankId).toBe('us-wells-fargo');

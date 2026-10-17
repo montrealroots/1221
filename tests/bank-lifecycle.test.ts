@@ -138,6 +138,6 @@ describe('instructions on a closing account', () => {
       ?? sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: { bankId: 'us-chase' } }).accountId]!;
     const order = sim.must<{ id: string }>({ kind: 'bank.add_standing_order', payload: { toId: saver.id, amount: 100_00, day: 15 } }).id;
     const capName = sim.universe.accounts[cap]!.name;
-    expect(sim.execute({ kind: 'bank.set_order_source', payload: { orderId: order, accountId: cap } }).error).toBe(`${capName} is closing.`);
+    expect(sim.execute({ kind: 'bank.set_order_source', payload: { orderId: order, accountId: cap } }).error).toBe(`${capName} is closing, so a standing order can’t pay from it.`);
   });
 });

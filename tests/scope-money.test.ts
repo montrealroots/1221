@@ -526,10 +526,10 @@ describe('bank.cancel_new', () => {
     ok(sim, 'bank.cancel_scheduled', { id: set.id });
     // TEST SETUP: RBC's account C$20 under. Until 2026-10-15 it was canceled so, and closed with its C$20 owed.
     setTo(sim, rbc, -20_00);
-    expect(refusal(sim, 'bank.cancel_new', { accountId: rbc.id })).toBe('It’s overdrawn by C$20.00. The bank closes it only once that’s paid.');
+    expect(refusal(sim, 'bank.cancel_new', { accountId: rbc.id })).toBe('It’s overdrawn by C$20.00. The bank only closes it once that’s paid off.');
     expect(rbc.closedAt).toBeUndefined();
-    expect(drawn(sim, createElement(BankAccountLife, { bankId: 'ca-td' }))).toContain('its fees refunded. It’s overdrawn by C$20.00. The bank closes it only once that’s paid.');
-    expect([buttonAfter(rbc.name, 'Cancel It').disabled, buttonAfter(rbc.name, 'Cancel It').title]).toEqual([true, 'It’s overdrawn by C$20.00. The bank closes it only once that’s paid.']);
+    expect(drawn(sim, createElement(BankAccountLife, { bankId: 'ca-td' }))).toContain('its fees refunded. It’s overdrawn by C$20.00. The bank only closes it once that’s paid off.');
+    expect([buttonAfter(rbc.name, 'Cancel It').disabled, buttonAfter(rbc.name, 'Cancel It').title]).toEqual([true, 'It’s overdrawn by C$20.00. The bank only closes it once that’s paid off.']);
     setTo(sim, rbc, 50_00); // TEST SETUP
     const tdBefore = td.balance;
     drawn(sim, createElement(BankAccountLife, { bankId: 'ca-td' }));
@@ -937,7 +937,7 @@ describe('bank.close_current', () => {
     const words = 'Its fees, €0.16, are more than it holds. Pay in €0.06 first.';
     const text = drawn(sim, createElement(BankMoves));
     expect(buttons('Close It').map((b) => [b.disabled, b.title])).toEqual([[true, words]]);
-    expect(text).toContain(`To close it: ${words} Closing it now charges its fees to the day, €0.16: January’s €4.90 for the one day of its 31 it’s been open, €0.16.`);
+    expect(text).toContain(`You can’t close it yet. ${words} Closing it now charges its fees to the day, €0.16: January’s €4.90 for the one day of its 31 it’s been open, €0.16.`);
     expect(refusal(sim, 'bank.close_current', { accountId: giro.id, remainderTo: db.id })).toBe(words);
     expect([giro.closedAt, giro.balance]).toEqual([undefined, 10]);
     setTo(sim, giro, 100_00); // TEST SETUP
@@ -966,7 +966,7 @@ describe('bank.switch', () => {
     // This student holds no photo ID in force: a new bank asks for one (31 CFR 1020.220), the switch's first look as an
     // opening's is.
     expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
-    expect(refusal(sim, 'bank.switch', { bankId: 'us-citi' })).toBe('Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
+    expect(refusal(sim, 'bank.switch', { bankId: 'us-citi' })).toBe('Citi needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.');
     const passport = ok<{ readyAt: number }>(sim, 'documents.apply_passport', {});
     sim.advanceTo(passport.readyAt + MS_HOUR);
     expect(photoIdOf(sim.player, sim.now)).toBeDefined();
@@ -977,7 +977,7 @@ describe('bank.switch', () => {
       expect(pendingKinds(one)).toEqual([]);
       expect(primary(one).bankId).toBe('us-chase');
     }
-    expect(drawn(sim, createElement(BankMoves))).toContain('There’s no switching service here. To move banks: open the account, have your wages paid into it, move each standing order and autopay, move the money across, then close the old account. The new account starts with nothing, and its own history.');
+    expect(drawn(sim, createElement(BankMoves))).toContain('There’s no switching service here. To move banks, open the new account, have your wages paid into it, move each standing order and autopay, move the money across, and then close the old account. The new account starts empty, with its own history.');
     expect(drawn(sim, createElement(BankLending, { bank: bankById('us-chase')!, show: ['switch'] }))).not.toContain('Switch Bank');
     expect(buttons('Switch')).toEqual([]);
   });

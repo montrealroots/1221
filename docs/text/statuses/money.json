@@ -1,0 +1,218 @@
+{
+ "src/engine/systems/bankmoves.ts#closedByBank": {
+  "status": "Rewritten And Verified",
+  "hash": "01673e889f10",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-banking.test.ts (Citi's zero-balance close, its interest on its way and the day it arrives); tests/evidence2-b05.test.ts (the 22-year-old's account closed at nothing)"
+ },
+ "src/engine/systems/bankmoves.ts#closeNow": {
+  "status": "Reviewed And Retained",
+  "hash": "364b3dc46c3a",
+  "on": "2026-10-17",
+  "reason": "'Interest: …, on closing' is a statement memo, and memos beginning 'Interest: ' are read back by accountlife.ts for a term deposit's interest; kept exactly"
+ },
+ "src/engine/systems/bankmoves.ts#closeRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "61267f06db8a",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g14-money.test.ts (only, primary, overdrawn, savings beside it, under Close It); tests/evidence2-b05.test.ts (card payments pending); tests/home-account-abroad.test.ts (the fee for customers abroad); tests/language-money.test.ts (only current account)"
+ },
+ "src/engine/systems/bankmoves.ts#inTransitOf [escrow]": {
+  "status": "Reviewed And Retained",
+  "hash": "a433c996d27f",
+  "on": "2026-10-17",
+  "reason": "'Money In Transit' is the ledger name of the account money between banks waits in, found by name (`inTransitOf`) and held in saves; it's the plain words for it"
+ },
+ "src/engine/systems/bankmoves.ts#limitRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "6c55a3f1bc17",
+  "on": "2026-10-17",
+  "evidence": "tests/bank-moves.test.ts 'keeps Citi’s published limits: $10,000 a day to other banks'; tests/defects-g16-1.test.ts 'is held to Citi’s $10,000 a day out to other banks, and says so'"
+ },
+ "src/engine/systems/bankmoves.ts#openApproved": {
+  "status": "Reviewed And Retained",
+  "hash": "1935c6fb64f2",
+  "on": "2026-10-17",
+  "reason": "'Your New Card Arrives' is the calendar item's title for the card's day: plain, Title Case, and the same title security.ts gives a replacement"
+ },
+ "src/engine/systems/bankmoves.ts#openRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "61f42510dfb1",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'refuses in words that say why and what to do next' (a current account kept already); tests/evidence-g14-money.test.ts (a charged-off debt, the ChexSystems report, the age); tests/evidence2-b05.test.ts (the photo ID, the report's tally); tests/remaining-09-banking.test.ts (not a bank where you live)"
+ },
+ "src/engine/systems/bankmoves.ts#PRIMARY_DOES": {
+  "status": "Reviewed And Retained",
+  "hash": "99b1c09b6fe0",
+  "on": "2026-10-17",
+  "reason": "Four plain sentences of what the primary account pays, each a whole sentence the guide joins with full stops and the screen lowers into one list; set_primary returns them as its 'affects', which tests/bank-moves.test.ts compares"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves": {
+  "status": "Rewritten And Verified",
+  "hash": "d00f0adb5d78",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b05.test.ts (Turned Down Your Application, A Transfer Came Back); tests/evidence-g14-money.test.ts (Didn’t Close); tests/language-money.test.ts 'refuses what a closing account can’t take, saying why, and says where what it held went when it closes' (the Closed notice, on its way and its day)"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <bank.close_current>": {
+  "status": "Rewritten And Verified",
+  "hash": "909022a8f057",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g14-money.test.ts ('Choose which of your accounts the $2,300.00 goes to.'; 'Citi Access Checking is already closing on October 1, 2026.')"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <bank.open_current>": {
+  "status": "Rewritten And Verified",
+  "hash": "ff9b80a3070b",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g14-money.test.ts 'refuses an opening deposit from a card, from an account at the bank itself, of nothing or less, and of more than the account holds, each in its own words, nothing moved'"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <bank.redirect_deposits>": {
+  "status": "Rewritten And Verified",
+  "hash": "e8ab3872a172",
+  "on": "2026-10-17",
+  "evidence": "tests/home-account-abroad.test.ts (Yale only pays wages into an account in America); tests/language-money.test.ts 'refuses what a closing account can’t take…' (closing)"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <bank.set_order_source>": {
+  "status": "Rewritten And Verified",
+  "hash": "acd05897b759",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g14-money.test.ts 'refuses an order it doesn’t know, a savings account or a card to pay from, and Citi while it closes…'; tests/bank-lifecycle.test.ts 'a closing account takes no new standing order or autopay'"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <bank.set_primary>": {
+  "status": "Rewritten And Verified",
+  "hash": "bd6c885eed81",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g14-money.test.ts 'refuses one primary already, a savings account, a card, an account the bank closed and Citi while it closes…'; tests/language-money.test.ts 'refuses in words that say why and what to do next'"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <card.set_autopay_from>": {
+  "status": "Rewritten And Verified",
+  "hash": "5b4d8980def6",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'refuses what a closing account can’t take, saying why…' (Citi closing, so autopay can’t pay from it); 'That isn’t one of your cards.' kept as it was"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <world.day_rollover>": {
+  "status": "Rewritten And Verified",
+  "hash": "25dc204a9d14",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-banking.test.ts (never funded; zero for 90 days); tests/evidence2-b05.test.ts (zero for 90 days)"
+ },
+ "src/engine/systems/bankmoves.ts#sendBetweenBanks": {
+  "status": "Reviewed And Retained",
+  "hash": "60779f1e51bd",
+  "on": "2026-10-17",
+  "reason": "Statement memos ('To Capital One: 360 Checking') and the calendar item 'Money Arrives From Your Other Bank': plain, and a memo is stored on each save's ledger lines, where tests and the guide read it back by its words"
+ },
+ "src/engine/systems/routing.ts#closeHold": {
+  "status": "Rewritten And Verified",
+  "hash": "cf775a013225",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-09-banking.test.ts 'banking.7.redirect-close…' ('You can close it from October 8, 2026.'); tests/evidence-g14-money.test.ts ('Move them first.')"
+ },
+ "src/engine/systems/routing.ts#linkedTo": {
+  "status": "Rewritten And Verified",
+  "hash": "2f22aac94356",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g14-money.test.ts ('A standing order pays from it on the 28th. Move it first.'; Your Banks' 'You can’t close it yet. Your wages and other payments are paid into it…')"
+ },
+ "src/engine/systems/routing.ts#movingDays": {
+  "status": "Reviewed And Retained",
+  "hash": "154df9963f15",
+  "on": "2026-10-17",
+  "reason": "': Yale’s payroll from October 1, 2026, and the rest from October 8, 2026' — already plain and exact; tests/remaining-09-banking.test.ts asserts it"
+ },
+ "src/engine/systems/routing.ts#paidInto": {
+  "status": "Reviewed And Retained",
+  "hash": "4acf3e20ce61",
+  "on": "2026-10-17",
+  "reason": "'Your wages and other payments are paid into it until they move to 360 Checking…' — already plain and specific; tests/remaining-09-banking.test.ts asserts it"
+ },
+ "src/engine/systems/routing.ts#PAYER_NAMES": {
+  "status": "Reviewed And Retained",
+  "hash": "64663dc47680",
+  "on": "2026-10-17",
+  "reason": "'Yale’s payroll', the one payer a change of deposit names apart: plain"
+ },
+ "src/ui/bank/BankMoves.tsx#BankMoves": {
+  "status": "Rewritten And Verified",
+  "hash": "0d7d9a037b3f",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says what the bank asks and how long each step takes…'; tests/evidence-g14-money.test.ts (Your Banks lines, opening panel); tests/bank-moves-card-line.test.ts (the card line and its estimate at the foot); tests/defects-g20-1.test.ts, tests/defects-r5-1.test.ts (cut-off lines); tests/scope-money.test.ts (no switching service)"
+ },
+ "src/ui/bank/feeWords.ts#waiverWords": {
+  "status": "Rewritten And Verified",
+  "hash": "0f1f60a74bd7",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says a fee’s conditions as what the player does in a month…' (Chase Total Checking and Chase Savings, exact); tests/remaining-banking.test.ts (Citi Access Checking, with its age)"
+ },
+ "src/ui/looks/bank.tsx#movedWords": {
+  "status": "Reviewed And Retained",
+  "hash": "a9135a3f14e8",
+  "on": "2026-10-17",
+  "reason": "'put $X into Chase Savings', 'took $X off what you owe on…': already plain and exact, said for each account a line touched"
+ },
+ "src/ui/looks/bank.tsx#standing": {
+  "status": "Reviewed And Retained",
+  "hash": "784c4d1e24e1",
+  "on": "2026-10-17",
+  "reason": "'$X owed on it' and '$X in it' are already plain, each the ledger's figure"
+ },
+ "src/ui/looks/bank.tsx#top": {
+  "status": "Rewritten And Verified",
+  "hash": "dfc1e8944a89",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'opens on the bank and on a statement line in words a player reads' (the bank's kind, summary, body and provenance; the entry's kind, body and provenance)"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#BankTabs": {
+  "status": "Reviewed And Retained",
+  "hash": "3f6b6f5b8bbe",
+  "on": "2026-10-17",
+  "reason": "Your Bank is the tab list's accessible name, matching the page's eyebrow; the other string is an element id, not words"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace": {
+  "status": "Rewritten And Verified",
+  "hash": "f8b255a05c82",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says what closing savings does, above zero, at zero and overdrawn…' and 'says a fee’s conditions as what the player does in a month…'; tests/defects-g14-1.test.ts (savings withdrawal notes, 'At Chase, not open yet'); tests/integration-savings-notice.test.ts (notice and its toast); tests/remaining-09-banking.test.ts (fee due words); the built app's Money, Accounts tab (docs/verification/language-2026-10-17/money/after-1440)"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#BorrowingAt": {
+  "status": "Reviewed And Retained",
+  "hash": "7c5d75ffbe07",
+  "on": "2026-10-17",
+  "reason": "Borrow At is the Borrowing tab's field label for choosing which of your banks lends: short, Title Case, and it names the choice"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#closingWords": {
+  "status": "Rewritten And Verified",
+  "hash": "f2e4d82cec99",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says what closing savings does, above zero, at zero and overdrawn, to the cent…' (positive, empty, -$3.30, and Close It taking $3.30 from checking); tests/integration-savings-notice.test.ts (the notice variant)"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#CONFIDENCE": {
+  "status": "Rewritten And Verified",
+  "hash": "b2f6de275831",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says how sure the research was of a bank’s figures, in the sources line' renders both variants"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#interestWords": {
+  "status": "Rewritten And Verified",
+  "hash": "ec6b5087b591",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says a fee’s conditions…' asserts 'Interest builds up daily and is paid on the last day of the month.'; the built app's Accounts tab shows the Chase lines; the quarterly, tiered, bonus and allowance variants keep their figures and are read from the product (reviewed against the code)"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#MONTH_NAMES": {
+  "status": "Reviewed And Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-17",
+  "reason": "Month names for the interest months and the refund day; the English names, nothing to rewrite"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#OtherCharges": {
+  "status": "Rewritten And Verified",
+  "hash": "75fda327b9ae",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says a returned payment’s fee by the shortfall the bank reads…' (RBC, Resona, Santander) and 'says the debit card’s yearly fee and age, its timing, and its estimate after the source' (Arion, with the refund day)"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#othersText": {
+  "status": "Reviewed And Retained",
+  "hash": "fb0c9695d079",
+  "on": "2026-10-17",
+  "reason": "The head line's other-banks clause (',065 at your other banks, £5,581 of it at HSBC UK') is already plain and exact, each figure the ledger's"
+ }
+}

@@ -336,7 +336,7 @@ describe('h-money', () => {
     // 40 € at 0.92 to the dollar, $43, and no savings or card (tests/need-paths.test.ts).
     expect(sim.ledger.accountsOf(sim.player.id).map((a) => [a.name, a.balance])).toEqual([['Chase Total Checking', 43_00]]);
     expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: checkingOf(sim).id } }).error)
-      .toBe('It’s your only current account. Open another first: SLATE keeps every life a current account to be paid into.');
+      .toBe('It’s your only current account. Open another one first: you always need a current account to be paid into.');
     expect(between(drawn(sim, Home).text, 'Your Affairs', 'School')).toMatch(/Money Chase Total Checking: \$43\.00\. Worth \$43\. Chase How This Works/);
   });
 });

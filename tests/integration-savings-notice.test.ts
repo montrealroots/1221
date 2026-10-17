@@ -138,8 +138,8 @@ async function noticeGiven(seed: string) {
   expect(orders(sim).filter((o) => o.toId === flex.id)).toHaveLength(1);
   const before = bank(sim);
   expect(before).toContain('It holds more than the');
-  expect(before).toContain('the month lets out without notice: closing it gives the law’s three months’ notice, and it moves to AktivKonto then.');
-  expect(press('bank.close_savings', 'Close It')).toEqual(['Notice given: it closes December 1, 2026.']);
+  expect(before).toContain('you can take out this month without notice, so closing it gives three months’ notice, as the law requires. The money moves to AktivKonto then.');
+  expect(press('bank.close_savings', 'Close It')).toEqual(['Notice given. It closes December 1, 2026.']);
   return { sim, flex: flex.id, konto: konto.id };
 }
 
@@ -150,7 +150,7 @@ describe('bank.savings_notice: a Berlin-raised student’s savings kept at Deuts
     expect(pending.map((i) => [i.at, i.payload.accountId])).toEqual([[at(2026, 12, 1, 9), flex]]);
     // Pressed again, refused in its words; the screen says the notice and its day, and draws no Close It.
     expect(sim.execute({ kind: 'bank.close_savings', payload: { accountId: flex } }).error).toBe('Notice is given: Flexgeld closes on December 1, 2026.');
-    expect(bank(sim)).toContain('Notice is given: it closes December 1, 2026, and what it holds moves to AktivKonto.');
+    expect(bank(sim)).toContain('You’ve given notice. It closes December 1, 2026, and what it holds moves to AktivKonto then.');
     expect(h.clicks.filter((c) => c.feature === 'bank.close_savings')).toEqual([]);
 
     // Reloaded in October; the minute before its day it's open, with what it holds.
