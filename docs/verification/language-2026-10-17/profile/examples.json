@@ -466,5 +466,77 @@
   "why": "'Rather than' over its budget across the game.",
   "meaningSensitive": false,
   "verified": "docs/verification/language-2026-10-17/profile/b4-genres.txt"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.brief-choose]",
+  "kind": "tutorial",
+  "before": "… a reading leans what the take counts for and draws on different abilities, moving weight and adding none … A way chosen is rehearsed in on your feet.",
+  "after": "… a reading changes what the take is judged on most and which abilities it calls on, shifting the balance and adding nothing … Choosing a way isn’t rehearsing it: you rehearse it on your feet before it pays off.",
+  "why": "The brief's named distinction, choosing an interpretation versus rehearsing it, said plainly.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.profile]",
+  "kind": "tutorial",
+  "before": "What To Work On Next: Each ability and technique your recent work read, forecast: 20 hours of its exercise, a session a day at an ordinary day’s focus, grown as an hour of practice grows it, … (one fact of about 300 words)",
+  "after": "Five facts: What To Work On Next; What Each Line Says; Preparation, Said Apart; What Drops Out; The First Line.",
+  "why": "A wall of text made a drill-down a player can read part by part.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.profile]",
+  "kind": "tutorial",
+  "before": "(no next)",
+  "after": "Next: Open the ability with the most room to grow and press its exercise in the Practice column (Practice). Press Open Its Brief beside a genre to prepare and tape a practice brief (Preparing A Brief). After your first piece of work is judged, read What To Work On Next above the table.",
+  "why": "The tutorial's seventh question, for every entry.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.genre]",
+  "kind": "tutorial",
+  "before": "Each of the 149 genres keeps two figures of yours: familiarity, from studying it, and practice, from work done in it.",
+  "after": "Each of the 149 genres keeps two figures of yours: Familiarity, from studying it, and Work In It, from nights on stage and self-tapes in it.",
+  "why": "Practice and work in a genre kept apart, as the glossary does; the screen's labels.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.brief-reader]",
+  "kind": "tutorial",
+  "before": "… once your own rehearsal is at 97% or more and any way you chose is rehearsed in, Rehearse It On Your Feet is refused, …",
+  "after": "… once your own rehearsal is at 97% or more and any way you chose is fully rehearsed, Rehearse It On Your Feet says “There’s nothing more to gain from it now.”, …",
+  "why": "A refusal said with its reason, the command's own words.",
+  "meaningSensitive": false,
+  "verified": "src/engine/systems/briefs.ts prepareRefusal; docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.work]",
+  "kind": "tutorial",
+  "before": "Part By Part gives each part’s result, its own rehearsal, the stamina it cost and what happened in it; continuity is under it.",
+  "after": "Moment By Moment gives each part’s result, its own rehearsal, the stamina it cost and what happened in it; continuity is under it.",
+  "why": "The look's new caption.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#READER_WAYS",
+  "kind": "tutorial",
+  "before": "Pressing, responsiveness weighed more and your adaptability drawn on",
+  "after": "Pressing, judged more on responsiveness and calling on your adaptability",
+  "why": "'Weighed' and 'drawn on'.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.practice]",
+  "kind": "tutorial",
+  "before": "Each exercise is one real pedagogy names, a composite of real practice, or one SLATE designed",
+  "after": "Some exercises are named in real acting teaching, some are put together from real practice, and a few were made for the game.",
+  "why": "'SLATE designed'; plainer.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b5-guide.txt; tests/guide-examples-craft.test.ts"
  }
 ]

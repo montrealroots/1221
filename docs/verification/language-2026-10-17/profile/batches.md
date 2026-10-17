@@ -245,3 +245,37 @@ the military line's ", which is", rephrased, then 0; text-inventory 0.
 
 **Screens verified:** `b4-genres.txt`, every genre's look on a new life (summary, what it asks, how its scenes are played
 and where that comes from, provenance), the ways of playing and the bands.
+
+## Batch 5: The Craft Guide's Nine Entries
+
+**Sources read (19):** `content/guide/craft.ts`: the nine entries (The Player Profile, Practice, Genres, Preparing A
+Brief, A Reading And A Way To Play It, Who Reads With You, Taping A Brief, A Piece Of Work, Explained, Your Work So
+Far), their connections, and the five consts their words are built from.
+
+**Rewritten:** every entry now has `next` (what to do once it's done, naming the entry that teaches it). Each `short` is
+the plain overview the brief asks for first; the Profile's "each figure read from where the game keeps it" and "learned
+methods" went, and Choosing A Reading now says the distinction the brief names: choosing a way of playing isn't
+rehearsing it. The screens' labels are the new ones throughout: How it grows, Where it started, Where it counts, Work In
+It, Studied Or Worked In, Not held back today, Moment By Moment, Pitched at your level. The one fact on What To Work On
+Next, some three hundred words, is five facts now (the forecast; what each line says; preparation, said apart; what drops
+out; the first line), each keeping its conditions. "Reads", "weighs", "draws on", "dimension", "rehearsed in" and
+"worked out again from its own inputs" are said as what the player sees: what the take is judged on, calls on, a
+quality, how far you've rehearsed it. Every quoted message is the one the screen now shows (the practice refusals, the
+Profile's empty state, the gone piece of work, Early days, a piece at mastery); the refusals of other areas' systems are
+quoted as they stand today.
+
+**Kept:** the entries' ids, covers, goals, questions, routes and examples' figures, and every connection's kind. The
+questions keep "dimensions" ("What do the six dimensions mean?") as a search phrase a player may type.
+
+**Meaning-sensitive:** the worked examples are played by `tests/guide-examples-craft.test.ts` through the game's
+commands, and only their quoted words changed (Moment By Moment gives, Early days: patterns are named once 6 are). The
+What To Work On Next facts were read against `recommendations`, `adviceFor` and `standingOf` (batch 2). "Rehearse It On
+Your Feet says “There’s nothing more to gain from it now.”" is `prepareRefusal`'s own words at 97%, where the entry had
+said only that it was refused.
+
+**Checks:** tsc 0; eslint 0; `tests/guide-examples-craft.test.ts`, `tests/guide.test.ts`, `tests/help-mechanics.test.ts`
+and `tests/tutorial.test.ts` 47 of 47, then the first three again after the last edits, 30 of 30; voice-check, tics,
+spelling, typos 0; text-inventory over its ratchet by one "the take" from two new next steps, rephrased, then 0 (and the
+guide's engine-speak fell from 131 to the taped brief's own "take").
+
+**Screens verified:** `b5-guide.txt`, every entry printed as the rules fill it, in the brief's order of questions.

@@ -534,7 +534,7 @@ describe('the craft guide’s worked examples, played', () => {
     expect(ex.setup).toContain(`an actor at ${judgedAt(r.w)} in everything, fully prepared, at readiness ${Math.round(r.w.inputs.condition.readiness)}, with no draw`);
     expect(ex.result).toContain(`${one(r.u.overall)} of 100, ${band(r.u.overall)}. The summary says what held it back most: ${chiefLimit(r.u)}.`);
     const segs = r.u.piece!.segments;
-    expect(ex.result).toContain(`Part By Part gives ${andList(segs.map((s) => `${s.label} ${one(s.overall)}`))}`);
+    expect(ex.result).toContain(`Moment By Moment gives ${andList(segs.map((s) => `${s.label} ${one(s.overall)}`))}`);
     expect(ex.result).toContain(`${segs.at(-1)!.label} is Tiring, ${pct(1 - segs.at(-1)!.drain)} off, and continuity is ${one(r.u.piece!.continuity)}`);
     // Part By Part, as the look draws it: stamina draws nothing, so the last beat’s Tiring is the same drawn or not.
     expect(r.body).toContain('Moment By Moment');
@@ -549,7 +549,7 @@ describe('the craft guide’s worked examples, played', () => {
     expect(r.chosenAtFirst).toBe(3);
     expect(ex.setup).toContain(`A first-year with ${plural(r.atFirst.pieces, 'piece')} judged, who has newly chosen ${APPROACH_EFFECT.measured.label} for the pace on ${plural(r.chosenAtFirst, 'piece')} of work`);
     expect(r.atFirst.early).toBe(true);
-    expect(ex.result).toContain(`With ${r.atFirst.pieces} judged it says Early days: patterns are named from ${ARTISTRY.least}`);
+    expect(ex.result).toContain(`With ${r.atFirst.pieces} judged it says Early days: patterns are named once ${ARTISTRY.least} are`);
     // The take played Measured again: a sixth piece, its evidence, and no choice more.
     expect(r.afterTake.pieces).toBe(ARTISTRY.least);
     expect(r.afterTake.early).toBe(false);

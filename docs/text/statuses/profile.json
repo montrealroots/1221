@@ -2105,6 +2105,120 @@
   "on": "2026-10-17",
   "reason": "Each genre's conventions in one sentence, paraphrasing the source named beside it (an encyclopedia, a dictionary or a research guide), shown as the genre's look's summary and Its conventions: plain, professional and specific already, and a rewrite would drift from the source it cites. Its source and how it was read are the look's provenance."
  },
+ "src/engine/content/guide/craft.ts#CRAFT [craft.brief-choose]": {
+  "status": "Rewritten And Verified",
+  "hash": "73f81480c58a",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [craft.brief-prepare]": {
+  "status": "Rewritten And Verified",
+  "hash": "8a4695f3ba7e",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [craft.brief-reader]": {
+  "status": "Rewritten And Verified",
+  "hash": "d2edf0ab005a",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [craft.brief-tape]": {
+  "status": "Rewritten And Verified",
+  "hash": "16e731b470d3",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [craft.genre]": {
+  "status": "Rewritten And Verified",
+  "hash": "6dec583d5c68",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [craft.identity]": {
+  "status": "Rewritten And Verified",
+  "hash": "d19c39330b8c",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [craft.practice]": {
+  "status": "Rewritten And Verified",
+  "hash": "e06ca706790a",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [craft.profile]": {
+  "status": "Rewritten And Verified",
+  "hash": "bf3728c9fd17",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [craft.work]": {
+  "status": "Rewritten And Verified",
+  "hash": "93f621f54b57",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [evaluation]": {
+  "status": "Rewritten And Verified",
+  "hash": "c82838869b66",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [history]": {
+  "status": "Rewritten And Verified",
+  "hash": "815403737127",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [immediate]": {
+  "status": "Rewritten And Verified",
+  "hash": "2464ae2d3291",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [optional]": {
+  "status": "Rewritten And Verified",
+  "hash": "b9a0c2f43b4f",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#CRAFT [prerequisite]": {
+  "status": "Rewritten And Verified",
+  "hash": "6e3ac31118b3",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#LOCKED": {
+  "status": "Reviewed And Retained",
+  "hash": "806bd8bcc49d",
+  "on": "2026-10-17",
+  "reason": "Locked, on a guided life, until “You As An Actor” has been read.: plain, and the chapter's own title."
+ },
+ "src/engine/content/guide/craft.ts#mate": {
+  "status": "Reviewed And Retained",
+  "hash": "c501c53840c9",
+  "on": "2026-10-17",
+  "reason": "A Classmate: the reader's name in a worked example."
+ },
+ "src/engine/content/guide/craft.ts#OPENED": {
+  "status": "Reviewed And Retained",
+  "hash": "77c908860e39",
+  "on": "2026-10-17",
+  "reason": "From the guide’s chapter “You As An Actor”: when the entries open, by the chapter's own title."
+ },
+ "src/engine/content/guide/craft.ts#READER_WAYS": {
+  "status": "Rewritten And Verified",
+  "hash": "fd420ea710ef",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+ },
+ "src/engine/content/guide/craft.ts#RECORDING": {
+  "status": "Reviewed And Retained",
+  "hash": "e325370449f0",
+  "on": "2026-10-17",
+  "reason": "A Recording: the reader's name in a worked example, as the brief's Read With names it."
+ },
  "src/engine/content/interpretation.ts#CIRCUMSTANCE_AFFINITY": {
   "status": "Reviewed And Retained",
   "hash": "693de3d07a7e",
