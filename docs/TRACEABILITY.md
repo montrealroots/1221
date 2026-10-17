@@ -62,7 +62,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `benefits.claim` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/unemployment.ts` | SLATE pays unemployment in New York, California and Connecticut, where you’d have to have ; You have a claim open.; Unemployment pays a noncitizen only with permission to work in the US, such as OPT (FUTA 3; … Your base period’s quarters paid …. | — | Yes | benefits.week | 12 | — |
 | `benefits.ei_register` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/eiself.ts` | — (also eiRefusal) | ei | — | — | 2 | — |
 | `brief.choose` | Implemented But Unverified | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also chooseRefusal) | — | — | — | 31 | — |
-| `brief.prepare` | Implemented But Unverified | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also prepareRefusal) | — | — | — | 25 | — |
+| `brief.prepare` | Implemented But Unverified | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also prepareRefusal) | — | — | — | 26 | — |
 | `brief.reader` | Implemented But Unverified | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also readerRefusal) | — | — | — | 6 | — |
 | `calendar.cancel` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | — | 8 | journey-life.test.ts |
 | `calendar.schedule` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | life.commitment | 22 | journey-life.test.ts |

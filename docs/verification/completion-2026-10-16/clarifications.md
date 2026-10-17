@@ -107,7 +107,7 @@ player who trains it every day for four weeks raises it by less than 5.
    the most (its cause unresolved; no rotation to an input whose training brings less), and what the advice says changes
    each week with the player's state: how long it has been first, what has moved since it was first given (the input's
    level, its forecast, how many pieces it held back since), and a next action the player can take now (the exercise,
-   where it's practised, what an hour costs and brings, or why it can't be done now). Two weeks' messages are never the
+   where it's practiced, what an hour costs and brings, or why it can't be done now). Two weeks' messages are never the
    same where the player's state has changed between them.
 
 On the 120-day journeys (whose student trains the advised input only as the school's hours allow), a run longer than 4
