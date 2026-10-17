@@ -14,20 +14,27 @@
    "Explicitly Deferred": 27
   }
  },
- "matrix": "Completion, by the matrix: 567 of 599 rows in scope Implemented And Verified (94.6%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.",
- "againstTheFullBaseline": "567 of 608 (93.2%)",
+ "matrix": "Completion, by the matrix: 561 of 599 rows in scope Implemented And Verified (93.6%); 29 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.",
+ "againstTheFullBaseline": "561 of 608 (92.2%)",
  "actionable": {
-  "closed": 37,
+  "closed": 35,
   "superseded": 0,
   "scope resolution": 0,
-  "research assumption": 0,
+  "research assumption": 2,
   "remaining": 9,
   "of": 46
  },
  "decision4": 23,
  "administrative": 9,
  "replacements": [],
- "problems": [],
+ "problems": [
+  "F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now",
+  "MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now",
+  "INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now",
+  "INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now",
+  "INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now",
+  "INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now"
+ ],
  "rows": [
   {
    "id": "life.sleep",
@@ -3495,9 +3502,10 @@
    "id": "advice.F2A10-c",
    "group": "Brief 10 Area: advice",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented And Verified",
-   "disposition": "closed",
-   "by": "brief 11"
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "remaining",
+   "by": "nothing yet",
+   "lacks": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -3557,9 +3565,10 @@
    "id": "advice.heldout",
    "group": "Brief 10 Area: advice",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented And Verified",
-   "disposition": "closed",
-   "by": "brief 11"
+   "now": "Implemented, Verification Incomplete",
+   "disposition": "remaining",
+   "by": "nothing yet",
+   "lacks": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -4242,7 +4251,7 @@
    "id": "F2-A",
    "group": "Criteria: The Attributes",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified",
+   "now": "Implemented, Verification Incomplete",
    "disposition": "verified at the baseline"
   },
   {
@@ -4368,7 +4377,7 @@
    "id": "MA5",
    "group": "Criteria: Mastery Through Play",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified",
+   "now": "Implemented, Verification Incomplete",
    "disposition": "verified at the baseline"
   },
   {
@@ -4452,28 +4461,28 @@
    "id": "INT-skipped",
    "group": "Integration",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified",
+   "now": "Implemented, Verification Incomplete",
    "disposition": "verified at the baseline"
   },
   {
    "id": "INT-navigation",
    "group": "Integration",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified",
+   "now": "Implemented, Verification Incomplete",
    "disposition": "verified at the baseline"
   },
   {
    "id": "INT-long-runs",
    "group": "Integration",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified",
+   "now": "Implemented, Verification Incomplete",
    "disposition": "verified at the baseline"
   },
   {
    "id": "INT-gate",
    "group": "Integration",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified",
+   "now": "Implemented, Verification Incomplete",
    "disposition": "verified at the baseline"
   },
   {
@@ -4515,19 +4524,17 @@
    "id": "KS-ct-idcard",
    "group": "Known Shortfalls And Missing Tests",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Blocked Externally",
-   "disposition": "remaining",
-   "by": "nothing yet",
-   "lacks": "The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card once its holder is 'no longer entitled to be present', and sets no term; CGS chapter 246 has no such provision (searched for 'authorized stay', 'lawful status', 'immigration status', 'visa', 'legal presence', 'citizen'). SLATE keeps the term to the end of lawful presence as its assumption, said so in systems/identity.ts and on the guide's line ('SLATE's reading where the state publishes none'). Also not said by the DMV, and taken by SLATE: whether a non-citizen the DMV doesn't ask back has the twenty days from the first visit (SLATE takes the later, its described return after SAVE); and whose holidays the twenty business days skip (SLATE counts the federal ones). What would settle it: the DMV's answer in writing (its Contact Center, 860-263-5700, or a published policy). Pages tried and not reached: https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining (2026-10-16: host doesn't resolve, WebFetch ENOTFOUND, the proxy's CONNECT 502); https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1hSection_01-1h-1/ to -8 and Title_01Subtitle_01-1h/ (2026-10-16: 'Unable to Access Resource (HTTP: 404)'; read instead in the DMV's 2007 compilation, https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf). www.cga.ct.gov was reached only after completing its certificate chain with GoDaddy's G2 intermediate from certs.godaddy.com, the server sending its leaf alone (curl error 60 otherwise; WebFetch 503)."
+   "now": "Implemented And Verified",
+   "disposition": "research assumption",
+   "by": "docs/verification/resolution-2026-10-17/research-result.json"
   },
   {
    "id": "KS-passport-fees",
    "group": "Known Shortfalls And Missing Tests",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Blocked Externally",
-   "disposition": "remaining",
-   "by": "nothing yet",
-   "lacks": "Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passport-fee.html , /itpr_ja/m02_01.html , /itpr_ja/index.html , /itpr_ja/11_000001_00472.html , /files/100876429.pdf , /files/101051085.pdf ; https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html ; https://www.boston.us.emb-japan.go.jp/files/100996789.pdf ; https://www.mofa.go.jp/mofaj/ca/pss/pagew_000001_02493.html , /mofaj/files/100482215.pdf , /mofaj/toko/passport/pass_5.html . Search extracts (leads, not sources) show Boston's and Anchorage's tables at US$62 at the window and US$60 online from 1 July 2026, and New York's notice of 8 June 2026 saying its dollar amount would follow; which consulate's district holds Connecticut wasn't read either. New Zealand: whether a student in the US is charged GST, and the urgent fee from overseas (SLATE charges GST and takes the urgent service as at home, NZ$247 more). Tried on 2026-10-17: https://www.passports.govt.nz/passport-costs (Cloudflare challenge 'Just a moment...', 403 to curl; 503 to WebFetch), /urgent-travel and /passport-costs/passport-timeframes (403, the same challenge); https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2015/264/en/latest/ (202 with an empty body to curl, three times; 403 to WebFetch), /2015/264/en/2025-05-02.pdf and /2025/75/en/latest/ (202 empty, three times each), https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/096be8ed81f36d4a.pdf (202 empty); the Internet Archive's captures https://web.archive.org/web/20261001231111/https://www.passports.govt.nz/passport-costs and .../20260919065520/.../urgent-travel (connection reset by the proxy's tunnel, six times; WebFetch refuses web.archive.org). DIA's own release (dia.govt.nz, read) confirms only the adult fee in force, $247 with GST from 2 May 2025. Brazil's Hartford consulate page (https://www.gov.br/mre/pt-br/consulado-hartford/servicos-consulares/passaportes) answered a CAPTCHA to curl and WebFetch; its fee was read in the Diário Oficial instead, so it isn't a blocker. Outside the row's fees and left as labelled: the turnaround estimates (UK, France, Spain, Japan, Korea, Mexico, Iceland, Brazil), Canada's and Germany's faster services not offered from New Haven, and New Zealand's courier."
+   "now": "Implemented And Verified",
+   "disposition": "research assumption",
+   "by": "docs/verification/resolution-2026-10-17/research-result.json"
   }
  ]
 }

@@ -2918,8 +2918,8 @@
    "saveLoad": "Not recorded",
    "failure": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)",
    "implementation": "Not recorded",
-   "evidence": "Not recorded; docs/verification/completion-2026-10-16/research-result.json",
-   "status": "Blocked Externally",
+   "evidence": "Not recorded; docs/verification/completion-2026-10-16/research-result.json; docs/verification/resolution-2026-10-17/research-result.json",
+   "status": "Implemented And Verified",
    "sourceStatus": "listed by the handoff or an area",
    "citations": [
     {
@@ -2993,9 +2993,40 @@
     {
      "file": "tests/evidence-g15-papers.test.ts",
      "title": "documents.replace_idcard > on Passport And ID, a lost card’s row offers File A Police Report and Replace It, $30; pressed, it says the day it comes, and the row then reads Being Decided"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard, its term > PLAYER JOURNEY: Your ID on Papers tells a British student that her card’s term, to the end of her lawful presence, is SLATE’s assumption, not the state’s published policy, and that a card already issued keeps its date if that’s corrected; a New York-born citizen is told nothing of it"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard, its term > PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard, its term > PLAYER JOURNEY: a British student who keeps up holds her card to its last day, the program’s end on 31 May 2029, and then it has run out: her row says so, the passport her photo ID, and with school over and no OPT the DMV turns her away for a new one with its reason; SLATE renews no state ID card, so a card run out is applied for anew"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard > FIXTURE: Connecticut’s card is the DMV’s: $28, seven years to a birthday, mailed within twenty business days, SAVE’s ten first for somebody not a citizen (CGS 1-1h(b)(2); portal.ct.gov, read 2026-10-16)"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard > GUARD: the card runs to the first birthday at least seven years on, by New Haven’s calendar: asked for the day before her birthday, seven years and a day; on it, seven years to the day; the day after, to the birthday eight years on"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard > PLAYER JOURNEY: her number come and her passport reported lost, Get Non-Driver Identification Card is shut with the DMV’s reason and the command refused, nothing taken; her passport renewed from abroad, the card is asked for, comes by mail twenty business days after SAVE’s ten federal workdays, and is Not For Federal Identification, across a reload; until 2026-10-16 it was issued with no identity document, marked REAL ID, and until 2026-10-17 it came on SAVE’s tenth day"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_idcard > refuses a second card while one is on its way and once it has come, in its words, charges once, and holds it across a save and a load"
+    },
+    {
+     "file": "tests/defects-g24-1.test.ts",
+     "title": "PLAYER JOURNEY: Connecticut’s ID card for a graduate on OPT > is issued on OPT in force, and runs to OPT’s end, not the program’s"
     }
-   ],
-   "blocker": "The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card once its holder is 'no longer entitled to be present', and sets no term; CGS chapter 246 has no such provision (searched for 'authorized stay', 'lawful status', 'immigration status', 'visa', 'legal presence', 'citizen'). SLATE keeps the term to the end of lawful presence as its assumption, said so in systems/identity.ts and on the guide's line ('SLATE's reading where the state publishes none'). Also not said by the DMV, and taken by SLATE: whether a non-citizen the DMV doesn't ask back has the twenty days from the first visit (SLATE takes the later, its described return after SAVE); and whose holidays the twenty business days skip (SLATE counts the federal ones). What would settle it: the DMV's answer in writing (its Contact Center, 860-263-5700, or a published policy). Pages tried and not reached: https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining (2026-10-16: host doesn't resolve, WebFetch ENOTFOUND, the proxy's CONNECT 502); https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1hSection_01-1h-1/ to -8 and Title_01Subtitle_01-1h/ (2026-10-16: 'Unable to Access Resource (HTTP: 404)'; read instead in the DMV's 2007 compilation, https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf). www.cga.ct.gov was reached only after completing its certificate chain with GoDaddy's G2 intermediate from certs.godaddy.com, the server sending its leaf alone (curl error 60 otherwise; WebFetch 503)."
+   ]
   },
   {
    "id": "KS-passport-fees",
@@ -3014,8 +3045,8 @@
    "saveLoad": "Not recorded",
    "failure": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)",
    "implementation": "Not recorded",
-   "evidence": "Not recorded; docs/verification/completion-2026-10-16/research-result.json",
-   "status": "Blocked Externally",
+   "evidence": "Not recorded; docs/verification/completion-2026-10-16/research-result.json; docs/verification/resolution-2026-10-17/research-result.json",
+   "status": "Implemented And Verified",
    "sourceStatus": "listed by the handoff or an area",
    "citations": [
     {
@@ -3042,9 +3073,40 @@
     },
     {
      "file": "tests/scope-money.test.ts"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > FIXTURE: the offices’ terms from abroad: Iceland’s 19,000 ISK and express 39,200 ISK in all, Brazil’s US$60, Latvia’s €140 (€115 under 20) in about eight weeks with no urgent service, read on 2026-10-17; Japan’s US$62 from 1 July 2026, its ordinance read on e-Gov later that day; New Zealand’s GST and urgent fee SLATE’s assumptions, one value each, said so"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a Tokyo-born student renews her Japanese passport on Papers from New Haven: US$62, the fee MOFA’s ordinance sets for the United States from 1 July 2026; no faster service, the command refused; a second application refused while hers is decided; charged once and issued on its day across a reload, the old one canceled then; until later on 2026-10-17 the window fee in Japan, 9,300 yen, at SLATE’s rate, the same $62.00 said to be SLATE’s"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: an Auckland-born student renews her New Zealand passport faster on Papers from New Haven: NZ$247 and NZ$247 more, in dollars, GST charged and the urgent fee taken as the standard one, each said on the screen to be SLATE’s assumption; charged once, a second application refused, issued in five days across a reload"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: New Zealand’s GST turned off after she has applied (TEST SETUP: `NZ_FROM_ABROAD.gstCharged`, as a correction would change it): her application, charged NZ$247 with GST, is issued on its day across a save and a load with nothing charged or refunded and its transaction as it was; reported lost, the next is NZ$214.78, faster NZ$429.56, the screen saying no GST is charged, and the faster one is charged that"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a London-born student renews her British passport on Papers from New Haven: £116.50, the overseas fee, in dollars; no Renew It Faster, the Fast Track not sold abroad, and the command refused; issued in 21 days, the old one canceled on the new one’s day, once across a reload; until 2026-10-16 £102 and Fast Track offered"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a São Paulo-born student renews her Brazilian passport on Papers from New Haven: US$60, the consular fee of sixty reais-ouro from 1 June 2026; no faster service, the command refused; issued on its day, the old one canceled then, once across a reload; until 2026-10-17 the Polícia Federal’s R$257.25 at home"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a Reykjavík-born student renews her Icelandic passport faster on Papers from New Haven: express at the embassy, 39,200 ISK in all in dollars, charged once and issued in two days, the old one canceled then, across a reload; Renew It at 19,000 ISK; until 2026-10-17 no faster service was offered from abroad"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a Riga-born student renews her Latvian passport on Papers from New Haven: €140 at the embassy in Washington, in dollars, in up to 56 days; no urgent service there, the command refused; issued on its day across a reload; until 2026-10-17 the embassy in Ireland’s five weeks and its €165 urgent service"
     }
-   ],
-   "blocker": "Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passport-fee.html , /itpr_ja/m02_01.html , /itpr_ja/index.html , /itpr_ja/11_000001_00472.html , /files/100876429.pdf , /files/101051085.pdf ; https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html ; https://www.boston.us.emb-japan.go.jp/files/100996789.pdf ; https://www.mofa.go.jp/mofaj/ca/pss/pagew_000001_02493.html , /mofaj/files/100482215.pdf , /mofaj/toko/passport/pass_5.html . Search extracts (leads, not sources) show Boston's and Anchorage's tables at US$62 at the window and US$60 online from 1 July 2026, and New York's notice of 8 June 2026 saying its dollar amount would follow; which consulate's district holds Connecticut wasn't read either. New Zealand: whether a student in the US is charged GST, and the urgent fee from overseas (SLATE charges GST and takes the urgent service as at home, NZ$247 more). Tried on 2026-10-17: https://www.passports.govt.nz/passport-costs (Cloudflare challenge 'Just a moment...', 403 to curl; 503 to WebFetch), /urgent-travel and /passport-costs/passport-timeframes (403, the same challenge); https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2015/264/en/latest/ (202 with an empty body to curl, three times; 403 to WebFetch), /2015/264/en/2025-05-02.pdf and /2025/75/en/latest/ (202 empty, three times each), https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/096be8ed81f36d4a.pdf (202 empty); the Internet Archive's captures https://web.archive.org/web/20261001231111/https://www.passports.govt.nz/passport-costs and .../20260919065520/.../urgent-travel (connection reset by the proxy's tunnel, six times; WebFetch refuses web.archive.org). DIA's own release (dia.govt.nz, read) confirms only the adult fee in force, $247 with GST from 2 May 2025. Brazil's Hartford consulate page (https://www.gov.br/mre/pt-br/consulado-hartford/servicos-consulares/passaportes) answered a CAPTCHA to curl and WebFetch; its fee was read in the Diário Oficial instead, so it isn't a blocker. Outside the row's fees and left as labelled: the turnaround estimates (UK, France, Spain, Japan, Korea, Mexico, Iceland, Brazil), Canada's and Germany's faster services not offered from New Haven, and New Zealand's courier."
+   ]
   }
  ],
  "overrides": [

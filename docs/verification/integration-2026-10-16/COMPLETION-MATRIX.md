@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 567 of 599 rows in scope Implemented And Verified (94.6%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 561 of 599 rows in scope Implemented And Verified (93.6%); 29 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.
 
 ## Totals
 
@@ -40,19 +40,19 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 09 Area: genres | 21 | 21 |  |  |  |  |  |  |
 | Brief 09 Area: journeys | 21 | 21 |  |  |  |  |  |  |
 | Brief 09 Area: judge | 10 | 4 |  |  |  |  |  | 6 |
-| Brief 10 Area: advice | 14 | 12 |  |  |  |  | 2 |  |
+| Brief 10 Area: advice | 14 | 10 | 2 |  |  |  | 2 |  |
 | Brief 10 Area: arion | 11 | 11 |  |  |  |  |  |  |
 | Brief 10 Area: judge | 36 | 27 |  |  |  |  | 4 | 5 |
 | Brief 10 Area: stamina | 13 | 12 |  |  |  |  |  | 1 |
 | Criteria: The Stage | 11 | 9 |  |  |  |  |  | 2 |
 | Criteria: Interpretation | 5 | 5 |  |  |  |  |  |  |
-| Criteria: The Attributes | 25 | 22 |  |  |  |  |  | 3 |
+| Criteria: The Attributes | 25 | 21 | 1 |  |  |  |  | 3 |
 | Criteria: Long-Term Continuity | 3 | 2 |  |  |  |  |  | 1 |
-| Criteria: Mastery Through Play | 8 | 8 |  |  |  |  |  |  |
+| Criteria: Mastery Through Play | 8 | 7 | 1 |  |  |  |  |  |
 | Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
-| Integration | 9 | 9 |  |  |  |  |  |  |
-| Known Shortfalls And Missing Tests | 7 | 4 |  |  |  | 2 | 1 |  |
-| **All** | **635** | **567** | **21** | **0** | **0** | **2** | **9** | **36** |
+| Integration | 9 | 5 | 4 |  |  |  |  |  |
+| Known Shortfalls And Missing Tests | 7 | 6 |  |  |  |  | 1 |  |
+| **All** | **635** | **561** | **29** | **0** | **0** | **0** | **9** | **36** |
 
 ## Life, Health And Time
 
@@ -630,7 +630,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `advice.F2` | F2 as written, kept in the record and still reported. | Implemented And Verified | verified as it stands | docs/verification/decisions-2026-10-16/advice/f2-as-written.txt ‘npx vite-node tools/ag-baseline.ts -- --out f2-ag-baseline.json; node tools/ag-criteria.mjs f2… |
 | `advice.F2A10-a` | F2-A10 (a): cases, tuning apart from held out; 120 fresh held-out cases stratified as four bands, three stages and ten seeds each, their ge… | Implemented And Verified | implemented | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
 | `advice.F2A10-b` | F2-A10 (b): right often enough: at least 80% of the 120 fresh held-out cases pass F2-A, and at least 70% of each band and of each stage. | Implemented And Verified | fixed | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
-| `advice.F2A10-c` | F2-A10 (c): better than the alternatives: on the same budget, the advised input's realized gain at or above the median of the other inputs'… | Implemented And Verified | verified as it stands | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
+| `advice.F2A10-c` | F2-A10 (c): better than the alternatives: on the same budget, the advised input's realized gain at or above the median of the other inputs'… | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
 | `advice.F2A10-d` | F2-A10 (d): improvable: the advice names no input at full and none the player has no way to train (0 cases); where every read input is at f… | Implemented And Verified | fixed | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exerci… |
 | `advice.F2A10-e` | F2-A10 (e): the real curve: the predicted gain for the first input within 0.3 points, or a quarter, of the realized gain in at least 80% of… | Implemented And Verified | fixed | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: followed for twenty sessions through p… |
 | `advice.F2A10-f` | F2-A10 (f): mastery and preparation: near mastery, a predicted gain falls as the input's level rises (diminishing returns), on every case; … | Decision Required | owner decision | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level r… |
@@ -638,7 +638,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `advice.F2A10-h` | F2-A10 (h): it updates: after twenty sessions of the advised exercise through the commands, the advice read again: the trained input's pred… | Decision Required | owner decision | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the traine… |
 | `advice.F2A10-i` | F2-A10 (i): no hardcoding: the advice reads no seed, profile or case name, and a case renamed gets the same advice. | Implemented And Verified | verified as it stands | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > reads no seed: the case renamed, its save’s seed and e… |
 | `advice.tests` | Tests in tests/decisions-advice.test.ts: advice followed through the actual commands (twenty sessions of the advised exercise) gives the ga… | Implemented And Verified | implemented | tests/decisions-advice.test.ts; docs/verification/decisions-2026-10-16/advice/mutations.json ‘ten mutations in a copy of the clone at 0afc7914’ (mutations) |
-| `advice.heldout` | The held-out run, once, on the final code, into docs/verification/decisions-2026-10-16/advice/, the commit recorded, each stratum reported. | Implemented And Verified | implemented | docs/verification/decisions-2026-10-16/advice/held-out-runs.txt ‘each batch and its exit’ (measurement (seeded, played through the commands)); docs/verificatio… |
+| `advice.heldout` | The held-out run, once, on the final code, into docs/verification/decisions-2026-10-16/advice/, the commit recorded, each stratum reported. | Implemented, Verification Incomplete | implemented | docs/verification/decisions-2026-10-16/advice/held-out-runs.txt ‘each batch and its exit’ (measurement (seeded, played through the commands)); docs/verificatio… |
 | `advice.harness-hospital` | adv-h-10 and adv-h-57 threw “Not from a hospital bed.” and were never built | Implemented And Verified | fixed | docs/verification/decisions-2026-10-16/advice/held-out-04.json ‘npx vite-node tools/advice.ts -- --cases adv-h-10..19 --held-out’ (measurement (seeded, played … |
 
 ## Brief 10 Area: arion
@@ -763,7 +763,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `H7` | Randomness doesn’t overwhelm skill, and still exists | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
 | `H4` | Specialists are advantaged on suitable work | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4… |
 | `F2` | Acting on the first-named weakness pays more than training at random (as written) | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md |
-| `F2-A` | The advice’s first-named input is the largest realized gain, played | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/… |
+| `F2-A` | The advice’s first-named input is the largest realized gain, played | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/… |
 | `G1` | A genre’s label predicts what its work asks (as written) | Explicitly Deferred | Superseded | docs/verification/genres-2026-10-16/g1-replacement.md |
 | `A4` | What the game says an ability does, it does | Implemented And Verified | Met | docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A4); docs/verification/compl… |
 | `A5` | Every ability can be developed by an action the player chooses, and says what moved | Implemented And Verified | Met | docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A5); docs/verification/compl… |
@@ -790,7 +790,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `MA4` | An ability read twice by one dimension is counted once, at its summed weight | Implemented And Verified | Met | tests/integration-mastery.test.ts |
 | `MA6` | At mastery no draw moves a result off 100 | Implemented And Verified | Met | tests/engine-properties.test.ts |
 | `MA7` | Each shortfall a take has is named in words | Implemented And Verified | Met | tests/integration-mastery.test.ts |
-| `MA5` | A played mastery plan reaches 100 on every payoff tape | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification… |
+| `MA5` | A played mastery plan reaches 100 on every payoff tape | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification… |
 | `MA8` | Mastery in the work doesn’t stand in for the work the school asks: a mastered student who misses pieces is Unready on them and the review c… | Implemented And Verified | Met | tests/integration-mastery.test.ts |
 
 ## Criteria: The Genres
@@ -812,10 +812,10 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `INT-duplicates` | A command sent twice (a repeat click, a duplicate submission) is lived once, across a reload | Implemented And Verified | Met | tests/briefs.test.ts; tests/engagement.test.ts; tests/base44-contract.test.ts |
 | `INT-migration` | An older save opens, migrates and plays on | Implemented And Verified | Met | tests/save-migration.test.ts; tests/migration-94.test.ts |
 | `INT-missed-term` | A term played with missed pieces and a missed revision: warning, forecast, notices and review count alike, once, through reloads | Implemented And Verified | Met | tests/remaining-school-term.test.ts |
-| `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Implemented And Verified | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
-| `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Implemented And Verified | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
-| `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/ru… |
-| `INT-gate` | The gate and the build on the final revision | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-… |
+| `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Implemented, Verification Incomplete | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
+| `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Implemented, Verification Incomplete | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
+| `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/ru… |
+| `INT-gate` | The gate and the build on the final revision | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-… |
 
 ## Known Shortfalls And Missing Tests
 
@@ -826,14 +826,14 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `KS-genres-54` | Each genre’s two briefs ask different things of the actor where its conventions allow | Implemented And Verified | listed by the handoff or an area | docs/verification/integration-2026-10-16/genres-09.md; docs/verification/remaining-09/genres-result.json |
 | `KS-bank-rows-scope` | The nine bank rows no Yale player reaches: kept as unresolved or moved to deferred | Decision Required | listed by the handoff or an area | Not recorded |
 | `KS-homecloses` | A home bank’s own close settles its fees once | Implemented And Verified | listed by the handoff or an area | docs/verification/remaining-09/banking-result.json |
-| `KS-ct-idcard` | A Connecticut ID card’s term and its mailing are the DMV’s | Blocked Externally | listed by the handoff or an area | Not recorded; docs/verification/completion-2026-10-16/research-result.json |
-| `KS-passport-fees` | A passport renewed abroad costs its issuer’s published fee | Blocked Externally | listed by the handoff or an area | Not recorded; docs/verification/completion-2026-10-16/research-result.json |
+| `KS-ct-idcard` | A Connecticut ID card’s term and its mailing are the DMV’s | Implemented And Verified | listed by the handoff or an area | Not recorded; docs/verification/completion-2026-10-16/research-result.json; docs/verification/resolution-2026-10-17/research-result.json |
+| `KS-passport-fees` | A passport renewed abroad costs its issuer’s published fee | Implemented And Verified | listed by the handoff or an area | Not recorded; docs/verification/completion-2026-10-16/research-result.json; docs/verification/resolution-2026-10-17/research-result.json |
 
 ## What's Left
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (21)
+### Implemented, Verification Incomplete (29)
 
 - **`health.enroll`** (Life, Health And Time): Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at renewal and at an application, is unreachable in play, since the owner’s scope reset of 2026-10-09 left wages only on the School (work-study, the Summer Cabaret) and a month at the School counts as the S…
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
@@ -856,6 +856,14 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`banking.2.stop_balance_transfer`** (Brief 09 Area: banking): owner decision
 - **`banking.2.take_overrun_loan`** (Brief 09 Area: banking): owner decision
 - **`banking.2.money_transfer`** (Brief 09 Area: banking): owner decision
+- **`advice.F2A10-c`** (Brief 10 Area: advice): It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again
+- **`advice.heldout`** (Brief 10 Area: advice): It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again
+- **`F2-A`** (Criteria: The Attributes): It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again
+- **`MA5`** (Criteria: Mastery Through Play): It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again
+- **`INT-skipped`** (Integration): It was measured on 43a82efa, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again
+- **`INT-navigation`** (Integration): It was measured on 43a82efa, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again
+- **`INT-long-runs`** (Integration): It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again
+- **`INT-gate`** (Integration): It was measured on 12f58cec, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, …): measure it again
 
 ### Partially Implemented (0)
 
@@ -865,10 +873,9 @@ None.
 
 None.
 
-### Blocked Externally (2)
+### Blocked Externally (0)
 
-- **`KS-ct-idcard`** (Known Shortfalls And Missing Tests): The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner re…
-- **`KS-passport-fees`** (Known Shortfalls And Missing Tests): Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passport-fee.html , /itpr_ja/m02_01.html , /itpr_ja/index.html , /itpr_ja/11_000001_00472.html , /files/100876429.pdf , /files/101051085.pdf ; https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html ;…
+None.
 
 ### Decision Required (9)
 
