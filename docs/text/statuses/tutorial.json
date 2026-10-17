@@ -1,0 +1,122 @@
+{
+ "src/engine/content/guide/index.ts#SEARCH_EXAMPLES": {
+  "status": "Rewritten And Verified",
+  "hash": "8e5813806ca6",
+  "on": "2026-10-17",
+  "evidence": "tests/guide.test.ts, 'suggests only searches that find an entry'; tests/help-mechanics.test.ts asserts them in the hint"
+ },
+ "src/engine/world/tutorial.ts#lockedBecause": {
+  "status": "Rewritten And Verified",
+  "hash": "dd55aa2473a4",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g29-ui.test.ts (c-tutorial) and tests/guide-examples-start-day-body.test.ts (start.guide) assert the refusal with the next chapter named; tests/evidence-g33-ui.test.ts asserts it when the chapter is next"
+ },
+ "src/engine/world/tutorial.ts#registerTutorial": {
+  "status": "Rewritten And Verified",
+  "hash": "8260047a1d1f",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g02-life.test.ts, 'refuses an unknown chapter…', and tests/evidence-g29-ui.test.ts assert the no-guide refusal; tests/trace-commands.test.ts the out-of-order one; the already-read refusal is unchanged"
+ },
+ "src/ui/guide/Guide.tsx#Gated": {
+  "status": "Reviewed And Retained",
+  "hash": "a798882f1c31",
+  "on": "2026-10-17",
+  "reason": "Locked is the word docs/STYLE.md gives a control that isn't open yet"
+ },
+ "src/ui/guide/Guide.tsx#GuideButton": {
+  "status": "Reviewed And Retained",
+  "hash": "bf073fae640d",
+  "on": "2026-10-17",
+  "reason": "Guide (N Left): the top bar's plain name for the guide and what's left of it"
+ },
+ "src/ui/guide/Guide.tsx#GuideDialog": {
+  "status": "Rewritten And Verified",
+  "hash": "872534258c71",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead…' asserts both callouts, every chapter's Opened words and the last chapter's, and The Details"
+ },
+ "src/ui/guide/Guide.tsx#GuideStrip": {
+  "status": "Reviewed And Retained",
+  "hash": "e1fa99aec03c",
+  "on": "2026-10-17",
+  "reason": "Guide · 3 Of 17, the next chapter's title and lead, and Read: a plain progress line and the one verb its button does"
+ },
+ "src/ui/guide/Guide.tsx#LockedPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "f3f8850d40ef",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g33-ui.test.ts asserts 'Money Locked This opens when you read “Money” in the guide: … Read About It' and the School panel's; tests/evidence-g32-ui.test.ts the Calendar panel's"
+ },
+ "src/ui/guide/Help.tsx#CONNECTION_HEADING": {
+  "status": "Rewritten And Verified",
+  "hash": "554866d1e13a",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, the way-back journey, asserts How It Connects' headings for Casting's ties in order (Comes First … Worth Doing With It)"
+ },
+ "src/ui/guide/Help.tsx#Contents": {
+  "status": "Rewritten And Verified",
+  "hash": "fbb549db4a0d",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g02-life.test.ts, 'on a finished guide missing chapters…' asserts the unguided and the 15-of-17 words; tests/help-mechanics.test.ts, 'PLAYER JOURNEY: ? on School’s Casting tab opens the contents with Casting’s entries first…' asserts the none-read words and On This Screen"
+ },
+ "src/ui/guide/Help.tsx#Entry": {
+  "status": "Rewritten And Verified",
+  "hash": "bb929414303b",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, the way-back journey, asserts the sections in the eight questions' order, What To Press open, and How It Connects' headings; '? on School’s Casting tab…' asserts the not-open callout"
+ },
+ "src/ui/guide/Help.tsx#EntryLink": {
+  "status": "Rewritten And Verified",
+  "hash": "a798882f1c31",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, '? on School’s Casting tab…' asserts each entry Locked before its chapter and plain once every chapter is read"
+ },
+ "src/ui/guide/Help.tsx#HelpDialog": {
+  "status": "Rewritten And Verified",
+  "hash": "cbb1d9f40a5c",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: How This Works, a link, Back, a search, Show Everything…' reads the clock line, presses Back and Close and types into Search How This Works; the built app's How This Works dialog in tutorial/capture/ shows the label and the placeholder"
+ },
+ "src/ui/guide/Help.tsx#HelpProvider": {
+  "status": "Rewritten And Verified",
+  "hash": "28f9fc1b44d8",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: Show Me Where to the screen already showing offers Back To Help alone; to another screen, Back To School returns to the screen and tab left…' presses Back To Help and Back To School; the dismiss label is unchanged"
+ },
+ "src/ui/guide/Help.tsx#HINT": {
+  "status": "Rewritten And Verified",
+  "hash": "a1aad8ca5659",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, the Show Me Where way-back journey, asserts the hint; tests/guide.test.ts, 'suggests only searches that find an entry', holds each example to finding one (the old example found none)"
+ },
+ "src/ui/guide/Help.tsx#pageLabel": {
+  "status": "Reviewed And Retained",
+  "hash": "cd8e2fc466e5",
+  "on": "2026-10-17",
+  "reason": "Contents, Search and Search: {words} are the trail's plain names for its pages, already as a player would say them; the help tests assert the trail in them"
+ },
+ "src/ui/guide/Help.tsx#Results": {
+  "status": "Rewritten And Verified",
+  "hash": "cfc7595f500c",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b13.test.ts asserts the words for a search that finds nothing exactly; tests/help-mechanics.test.ts's journey draws the results of 'transfer' and presses one"
+ },
+ "src/ui/guide/Help.tsx#SCREEN_NAME": {
+  "status": "Reviewed And Retained",
+  "hash": "70f8bb9a8a53",
+  "on": "2026-10-17",
+  "reason": "Home is the rail's own name for the screen, used for Back To Home; the other names are the destinations' own labels"
+ },
+ "src/ui/guide/Help.tsx#screenName": {
+  "status": "Reviewed And Retained",
+  "hash": "dd0ba7152437",
+  "on": "2026-10-17",
+  "reason": "The Last Screen is a fallback no play reaches: Show Me Where can only be pressed on Home or a destination the rail names (ALL_DESTINATIONS), each of which has a name"
+ },
+ "src/ui/guide/HowItWorks.tsx#HowItWorks": {
+  "status": "Reviewed And Retained",
+  "hash": "d2147be65fe7",
+  "on": "2026-10-17",
+  "reason": "How This Works is the panel link's name the player already knows and the help's title; plain, and every UI tool finds the help by it"
+ }
+}

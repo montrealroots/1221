@@ -18334,11 +18334,6 @@
   "hash": "9fab53feeae9",
   "on": "2026-10-17"
  },
- "src/ui/guide/Help.tsx#Facts": {
-  "status": "Pending",
-  "hash": "538947ff3415",
-  "on": "2026-10-17"
- },
  "src/ui/guide/Help.tsx#HelpDialog": {
   "status": "Pending",
   "hash": "e04c2bf27b51",

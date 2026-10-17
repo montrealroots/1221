@@ -440,8 +440,8 @@ await step('help: How This Works beside Coursework opens its entry, a connected 
   must(await helpDialog().getByText('The clock waits while you read.').count(), 'the help doesn’t say the clock waits');
   const first = await entryTitle();
   must(first && aria.endsWith(first), `opened "${first}" from "${aria}"`);
-  const connected = helpDialog().locator('details.help-section', { hasText: /^Connected Systems/ }).first();
-  must(await connected.count(), `"${first}" shows no Connected Systems`);
+  const connected = helpDialog().locator('details.help-section', { hasText: /^How It Connects/ }).first();
+  must(await connected.count(), `"${first}" shows no How It Connects`);
   await connected.locator('summary').click(); await wait(300);
   const link = connected.locator('button.help-link').first();
   const to = await link.innerText();
@@ -1011,8 +1011,8 @@ if (DIR) {
     const way = await ways().inputValue();
     await how.click(); await wait(600);
     must((await entryTitle()) === 'The Director’s Notes', `opened "${await entryTitle()}"`);
-    const connected = helpDialog().locator('details.help-section', { hasText: /^Connected Systems/ }).first();
-    must(await connected.count(), 'no Connected Systems on the note’s entry');
+    const connected = helpDialog().locator('details.help-section', { hasText: /^How It Connects/ }).first();
+    must(await connected.count(), 'no How It Connects on the note’s entry');
     await connected.locator('summary').click(); await wait(300);
     const link = connected.locator('button.help-link').first();
     const to = await link.innerText();
@@ -1153,8 +1153,8 @@ if (DIR) {
     const t0 = `${await dateText()} ${await clock()}`;
     await panel().getByRole('button', { name: /^How This Works: Round-Ups$/ }).first().click(); await wait(700);
     must((await entryTitle()) === 'Round-Ups', `opened "${await entryTitle()}"`);
-    const connected = helpDialog().locator('details.help-section', { hasText: /^Connected Systems/ }).first();
-    must(await connected.count(), 'no Connected Systems on Round-Ups');
+    const connected = helpDialog().locator('details.help-section', { hasText: /^How It Connects/ }).first();
+    must(await connected.count(), 'no How It Connects on Round-Ups');
     await connected.locator('summary').click(); await wait(300);
     const link = connected.locator('button.help-link').first();
     const to = await link.innerText();

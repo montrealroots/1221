@@ -21,18 +21,28 @@ import { DOCUMENTS } from './documents';
 
 export type { Connection, ConnectionKind, Fact, Goal, GoalId, GuideEntry } from './types';
 
-/** The contents, by what the player is trying to do, in the order a life meets them. */
+/**
+ * The contents, by what the player is trying to do, in the order a life meets them. Each lead names what its entries
+ * cover, in their order (from 2026-10-17: until then Staying At School's offered "shows of your own", which are
+ * Productions And Casting's, and Your Day And The Clock's left moving time on out).
+ */
 export const GOALS: readonly Goal[] = [
-  { id: 'start', title: 'Getting Started', lead: 'Where you are, the guide itself, and how to find anything.' },
-  { id: 'day', title: 'Your Day And The Clock', lead: 'The calendar, the clock, plans of your own, what needs you, the weather.' },
-  { id: 'body', title: 'Looking After Yourself', lead: 'How you are, sleep, meals and rest, and what the day leaves you.' },
-  { id: 'school', title: 'Staying At School', lead: 'Your standing, classes, terms, leave, money owed the school, shifts and shows of your own.' },
-  { id: 'coursework', title: 'Coursework And Partners', lead: 'Preparing scenes, table work, partners, feedback and notes, and rehearsing a problem through.' },
-  { id: 'productions', title: 'Productions And Casting', lead: 'Being cast, rehearsal calls, the director’s notes, the nights, and plays to read.' },
-  { id: 'craft', title: 'Your Craft', lead: 'Practice, techniques, genres, practice briefs, a piece of work explained, and your work so far.' },
-  { id: 'money', title: 'Money And The Bank', lead: 'Accounts, moving money, cards, paying, borrowing, and what you’re worth.' },
-  { id: 'papers', title: 'Papers', lead: 'Tax returns, health cover and the doctor, benefits, pensions, passport, ID and permission to work.' },
+  { id: 'start', title: 'Getting Started', lead: 'Home, how the guide and this help work, and finding your way around.' },
+  { id: 'day', title: 'Your Day And The Clock', lead: 'What’s coming, the clock, moving time on, what needs you, your own plans and the weather.' },
+  { id: 'body', title: 'Looking After Yourself', lead: 'How you are, sleep, and eating, washing, working out and unwinding.' },
+  { id: 'school', title: 'Staying At School', lead: 'Your standing and classes, calling in sick, orientation, leave, repeating a year, what you owe the school and work-study.' },
+  { id: 'coursework', title: 'Coursework And Partners', lead: 'Preparing the work your classes set, table work, how you’ll play a scene, feedback, rehearsing with a partner and working a problem through.' },
+  { id: 'productions', title: 'Productions And Casting', lead: 'Being cast, learning a part, the director’s notes, the nights, the Cabaret and plays to read.' },
+  { id: 'craft', title: 'Your Craft', lead: 'Your Player Profile, practice, genres, practice briefs, a piece of work explained and your work so far.' },
+  { id: 'money', title: 'Money And The Bank', lead: 'Your accounts, moving money, cards, paying, borrowing, other banks and what you’re worth.' },
+  { id: 'papers', title: 'Papers', lead: 'Health cover and the doctor, benefits and pensions, tax returns, your passport and ID, and permission to work.' },
 ];
+
+/**
+ * The searches the help's empty search suggests (from 2026-10-17): each finds an entry, which `tests/guide.test.ts`
+ * holds. Until then it suggested “why is my rehearsal refused”, which found nothing.
+ */
+export const SEARCH_EXAMPLES: readonly string[] = ['clock stopped', 'how do I pay my card'];
 
 export const GUIDE: readonly GuideEntry[] = [...START, ...DAY, ...BODY, ...SCHOOL, ...COURSEWORK, ...PRODUCTIONS, ...CRAFT, ...MONEY, ...PAPERS, ...TAXES, ...DOCUMENTS];
 

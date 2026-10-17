@@ -668,9 +668,9 @@ async function setback() {
     await press(how, clean(await how.getAttribute('aria-label'))); await wait(700);
     const first = await title();
     must(first, 'How This Works opened no entry');
-    const connected = help().locator('details.help-section', { hasText: /^Connected Systems/ }).first();
-    must(await connected.count(), `“${first}” shows no Connected Systems`);
-    await press(connected.locator('summary'), 'Connected Systems'); await wait(300);
+    const connected = help().locator('details.help-section', { hasText: /^How It Connects/ }).first();
+    must(await connected.count(), `“${first}” shows no How It Connects`);
+    await press(connected.locator('summary'), 'How It Connects'); await wait(300);
     const link = connected.locator('button.help-link').first();
     const to = clean(await link.innerText());
     await press(link, to); await wait(500);

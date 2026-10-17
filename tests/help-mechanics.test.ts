@@ -36,8 +36,11 @@ import type { Simulation } from '@/engine/core/simulation';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY } from '@/engine/core/time';
 import { serialise } from '@/engine/persistence/adapter';
-import { GUIDE_BY_ID, search } from '@/engine/content/guide';
-import { kept } from '@/ui/kept';
+import { GUIDE, GUIDE_BY_ID, SEARCH_EXAMPLES, search } from '@/engine/content/guide';
+import { CHAPTERS } from '@/engine/content/tutorial';
+import { isOpen } from '@/engine/world/tutorial';
+import { keep, kept } from '@/ui/kept';
+import { tabKey } from '@/ui/shell/sections';
 
 type Deps = readonly unknown[] | undefined;
 
@@ -170,7 +173,7 @@ vi.mock('@/app/game-context', () => {
 
 const { HelpProvider } = await import('@/ui/guide/Help');
 const { HowItWorks } = await import('@/ui/guide/HowItWorks');
-const { GuideProvider, GuideButton } = await import('@/ui/guide/Guide');
+const { GuideProvider, GuideButton, Gated } = await import('@/ui/guide/Guide');
 const { TimeControls } = await import('@/ui/shell/TimeControls');
 const { useGame } = await import('@/app/game-context');
 const actual = await vi.importActual<typeof import('@/app/game-context')>('@/app/game-context');
@@ -367,6 +370,161 @@ describe('reading help', () => {
     expect(h.navigated).toHaveLength(1);
     expect(sim.now).toBe(at);
     expect(serialise(sim.universe)).toBe(before);
+  });
+
+  // From 2026-10-17 (brief 14): a link followed, and come back from, keeps the player's place. Until then Show Me Where
+  // offered Back To Help alone, and the screen and tab the player had been reading were left behind.
+  it('PLAYER JOURNEY: Show Me Where to the screen already showing offers Back To Help alone; to another screen, Back To School returns to the screen and tab left, with no command run and the save and the clock as they were', () => {
+    const sim = student('help-way-back');
+    sim.advanceTo(sim.now + MS_DAY);
+    h.sim = sim;
+    const before = serialise(sim.universe);
+    const at = sim.now;
+    const { location } = windowAt('#/workspace/school');
+    keep(tabKey('/workspace/school'), 'casting'); // TEST SETUP: the player was reading School's Casting tab.
+    const p = mounted(() => createElement(GuideProvider, null, createElement(HelpProvider, null, createElement(HowItWorks, { help: 'productions.casting' }))));
+
+    // Casting's own entry: Show Me Where is where the player already is, and the help offers only its trail back.
+    p.press('How This Works: Casting');
+    p.press('Show Me Where');
+    expect(h.navigated).toEqual(['/workspace/school?tab=casting']);
+    expect(p.has('Back To Help')).toBe(true);
+    expect(p.has('Back To School')).toBe(false);
+    p.press('Back To Help');
+    expect(trailOf(p.html)).toBe('Contents › Casting');
+
+    // The entry reads in the brief's eight questions' order, then what decides it and the worked example.
+    const entry = GUIDE_BY_ID['productions.casting']!;
+    const summaries = () => [...p.html.matchAll(/<summary>([^<]*)<\/summary>/g)].map((m) => m[1]!.replace(/&#x27;/g, '’'));
+    expect(summaries()).toEqual([
+      ['What To Press', entry.steps.length], ['What You Need First', entry.needs.length + entry.costs.length],
+      ['What Happens', entry.now.length + entry.later.length + entry.interpret.length], ['How It Connects', entry.connections.length + 1],
+      ['What To Do Next', entry.next?.length ?? 0], ['If You Can’t', entry.unavailable.length + entry.mistakes.length],
+      ['What Decides It', entry.reads.length], ['A Worked Example', 1],
+    ].filter(([, n]) => Number(n) > 0).map(([t]) => t));
+    // What to press is open from the start; the rest wait to be pressed.
+    expect(p.html).toMatch(/<details class="help-section" open=""><summary>What To Press<\/summary>/);
+    expect(p.html).not.toMatch(/<details class="help-section" open=""><summary>What Happens<\/summary>/);
+
+    // Everything shown: How It Connects names each kind of tie the entry has, in its order.
+    p.press('Show Everything');
+    const kinds = ['prerequisite', 'immediate', 'scheduled', 'evaluation', 'history', 'optional'] as const;
+    const headings = { prerequisite: 'Comes First', immediate: 'Changes Straight Away', scheduled: 'Changes Later', evaluation: 'Counts Toward', history: 'Kept In Your Record', optional: 'Worth Doing With It' };
+    const connects = /<summary>How It Connects<\/summary>([\s\S]*?)<\/details>/.exec(p.html)?.[1] ?? '';
+    const eyebrows = [...connects.matchAll(/<div class="eyebrow"[^>]*>([^<]*)<\/div>/g)].map((m) => m[1]);
+    expect(eyebrows).toEqual([...kinds.filter((k) => entry.connections.some((c) => c.kind === k)).map((k) => headings[k]), 'What Leads Here']);
+    p.press('Fold It Up');
+
+    // An empty search suggests searches that find something.
+    p.submit();
+    expect(p.text).toContain(`Type a feature’s name, a word for it or a question, such as ${SEARCH_EXAMPLES.map((x) => `“${x}”`).join(' or ')}.`);
+    p.press('Back');
+
+    // Another screen's entry: the bank's Cards tab, and the way back to School, at Casting.
+    p.type('help-q', 'transfer');
+    p.submit();
+    p.press('A Card’s Offers');
+    p.press('Show Me Where');
+    expect(h.navigated.at(-1)).toBe('/workspace/bank?tab=cards');
+    expect(location.hash).toBe('#/workspace/bank');
+    expect(p.has('Back To School')).toBe(true);
+    p.press('Back To School');
+    expect(h.navigated.at(-1)).toBe('/workspace/school?tab=casting');
+    expect(location.hash).toBe('#/workspace/school');
+    expect(helpOpen(p.html)).toBe(false);
+    expect(p.has('Back To Help')).toBe(false);
+    expect(p.has('Back To School')).toBe(false);
+
+    // Nothing asked of the world, the save the same to the byte and the clock to the millisecond.
+    expect(h.runs).toEqual([]);
+    expect(sim.now).toBe(at);
+    expect(serialise(sim.universe)).toBe(before);
+    p.unmount();
+  });
+
+  // From 2026-10-17 (brief 14): ? opens the contents with the screen's own entries first. Until then it opened at
+  // Getting Started whichever screen it was pressed on.
+  it('PLAYER JOURNEY: ? on School’s Casting tab opens the contents with Casting’s entries first, Locked on a guided life before their chapter and not once it’s read, the save as it was', () => {
+    const sim = createSave(1, 'help-here', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', tutorial: true });
+    h.sim = sim;
+    const before = serialise(sim.universe);
+    const { send } = windowAt('#/workspace/school');
+    keep(tabKey('/workspace/school'), 'casting'); // TEST SETUP: the player is on School's Casting tab.
+    const p = mounted(() => createElement(GuideProvider, null, createElement(HelpProvider, null, null)));
+    p.press('Close'); // The guide opens itself on a guided life's first visit.
+    send('keydown', { key: '?' });
+    p.settle();
+    expect(helpOpen(p.html)).toBe(true);
+    expect(p.text).toContain(`The Guide. You haven’t read any of its ${CHAPTERS.length} chapters yet. Each one you read opens a part of the game. Open The Guide`);
+    const casting = GUIDE.filter((e) => e.where.route === '/workspace/school' && e.where.tab === 'casting');
+    expect(casting.length).toBeGreaterThan(2);
+    // Locked where every feature the entry covers waits on a chapter; an entry covering none, as Casting's explanation
+    // of the cast, is never locked.
+    const shut = casting.filter((e) => e.covers.length > 0 && e.covers.every((f) => !isOpen(sim, f)));
+    expect(shut.length).toBeGreaterThan(2);
+    const here = /<section aria-labelledby="goal-here">([\s\S]*?)<\/section>/.exec(p.html)?.[1] ?? '';
+    expect(onScreen(here)).toBe(`On This Screen School, Casting: what you can do here. ${casting.map((e) => (shut.includes(e) ? `${e.title} Locked` : e.title)).join(' ')}`);
+    // An entry still shut says which chapter opens it.
+    const part = GUIDE_BY_ID['productions.part']!;
+    p.press(part.title);
+    const opensIt = CHAPTERS.find((c) => part.covers.some((f) => c.opens.includes(f)))!;
+    expect(p.text).toContain(`This isn’t open yet. Reading “${opensIt.title}” in the guide opens it. Read About It`);
+    p.press('Back');
+    // Change the input: every chapter read, and nothing on the screen is Locked.
+    for (const c of CHAPTERS) sim.must({ kind: 'tutorial.read', payload: { chapterId: c.id } }); // TEST SETUP
+    p.press('Close');
+    send('keydown', { key: '?' });
+    p.settle();
+    const read = /<section aria-labelledby="goal-here">([\s\S]*?)<\/section>/.exec(p.html)?.[1] ?? '';
+    expect(onScreen(read)).toBe(`On This Screen School, Casting: what you can do here. ${casting.map((e) => e.title).join(' ')}`);
+    expect(h.runs).toEqual([]);
+    p.unmount();
+    // Only the chapters read here changed the save: reading the contents twice wrote nothing else.
+    sim.universe.tutorial = { read: [] }; // TEST SETUP: the chapters' reads put back
+    expect(serialise(sim.universe)).toBe(before);
+  });
+
+  // From 2026-10-17 (brief 14): the guide's own words, pressed through on a new life. Each line it says was read here.
+  it('PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything', () => {
+    const sim = createSave(1, 'guide-words', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', tutorial: true });
+    h.sim = sim;
+    windowAt('#/home');
+    const p = mounted(() => createElement(GuideProvider, null, createElement(Gated, { feature: 'life.sleep', 'aria-label': 'Sleep' }, 'Sleep')));
+    const [first, second, third] = CHAPTERS;
+    // It opens on its own, at the first chapter, with I’ve Read It.
+    expect(p.text).toContain(`Chapter 1 Of ${CHAPTERS.length} ${first!.title}`);
+    expect(p.has('I’ve Read It')).toBe(true);
+    // A later chapter, read ahead.
+    p.press(`3. ${third!.title}, Later`);
+    expect(p.text).toContain(`You can read ahead, but the chapters open in order, and “${first!.title}” is next.`);
+    expect(p.has('I’ve Read It')).toBe(false);
+    p.press('Close');
+    // A locked control opens its own chapter, and says which comes first.
+    p.press('Sleep');
+    expect(p.text).toContain('Chapter 7 Of');
+    expect(p.text).toContain(`This chapter opens what you pressed. The chapters open in order, so read “${first!.title}” first.`);
+    // Read through, chapter by chapter: what each opened, and the way on.
+    p.press(`Next Unread: ${first!.title}`);
+    for (const [i, c] of CHAPTERS.entries()) {
+      // Every paragraph the chapter has is on its page, its details too, before it's read.
+      expect(p.text, c.id).toContain(`Chapter ${i + 1} Of ${CHAPTERS.length} ${c.title} ${c.lead}`);
+      for (const paragraph of [...c.body, ...(c.more ?? [])]) expect(p.text, c.id).toContain(paragraph.replace(/&/g, '&amp;'));
+      if (c.more?.length) expect(p.text, c.id).toContain('The Details');
+      for (const name of c.names) expect(p.text, c.id).toContain(name.replace(/&/g, '&amp;'));
+      p.press('I’ve Read It');
+      expect(p.text, c.id).toContain(`Opened ${c.title}`);
+      const after = CHAPTERS[i + 1];
+      if (after) {
+        expect(p.text, c.id).toContain(`It’s open now. Try it, or go straight on to “${after.title}”. The guide picks up there whenever you open it.`);
+        p.press(`Next: ${after.title}`);
+      }
+    }
+    expect(p.text).toContain('That was the last chapter, and every part of the game is open. Guide, at the top of the screen, opens any chapter again whenever you want it.');
+    expect(p.has('Start Playing')).toBe(true);
+    expect(h.runs).toEqual(CHAPTERS.map(() => 'tutorial.read'));
+    expect(sim.universe.tutorial).toEqual({ read: CHAPTERS.map((c) => c.id), finished: true });
+    expect(second).toBeDefined();
+    p.unmount();
   });
 
   // `tools/acceptance-ui.mjs` plays Show Me Where from Money’s Accounts tab to this entry, which “transfer” finds, and

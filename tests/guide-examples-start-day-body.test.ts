@@ -467,7 +467,7 @@ describe('getting started', () => {
     expect(p.locked.refused).toBeDefined();
     expect(p.locked.chapter!.title).toBe(p.opensAt);
     expect(p.locked.next!.title).toBe(p.comesFirst);
-    expect(p.locked.why).toBe(`Read “${p.opensAt}” in the guide first. The next chapter is “${p.comesFirst}”.`);
+    expect(p.locked.why).toBe(`Read “${p.opensAt}” in the guide first. The chapters open in order, and “${p.comesFirst}” is next: press Guide, at the top of the screen.`);
     expect(result).toMatch(/^Look After Yourself opens\. The clock didn’t move while the guide was open\.$/);
     expect(isOpen(p.sim, 'ui.look-after')).toBe(true);
     expect(isOpen(p.sim, 'life.look_after')).toBe(true);

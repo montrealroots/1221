@@ -321,12 +321,12 @@ describe('i-ui-text', () => {
     // The contents, as ? opens them: no interests among the goals and the entries' titles.
     address('#/home');
     const contents = drawn(sim, createElement(HelpProvider, null, null), [[{ kind: 'contents' }]]);
-    expect(contents.text).toContain('The Guide’s Chapters.');
+    expect(contents.text).toContain('The Guide.');
     expect(contents.text).not.toMatch(/\binterests\b/i);
 
     // TEST SETUP: the trail of a player who typed into Search The Guide. "interests" finds nothing.
     const none = drawn(sim, createElement(HelpProvider, null, null), [[{ kind: 'contents' }, { kind: 'search', q: 'interests' }]]);
-    expect(none.text).toContain('Nothing matches “interests”. Try fewer words, or the contents.');
+    expect(none.text).toContain('Nothing matches “interests”. Try fewer or different words, or go back to Contents.');
     // "interest" finds entries, each one money's or the papers'.
     const some = drawn(sim, createElement(HelpProvider, null, null), [[{ kind: 'contents' }, { kind: 'search', q: 'interest' }]]);
     const found = some.controls.filter((c) => c.type === 'button' && c.props.className === 'help-link strong').map((c) => c.text);
@@ -651,7 +651,7 @@ describe('health.enroll: the work rules in the guide and the tutorial, as the pl
     const chapter = drawn(sim, createElement(GuideProvider, null, null), [CHAPTERS[i]!.id]);
     expect(chapter.text).toContain(`Chapter ${i + 1} Of ${CHAPTERS.length} ${CHAPTERS[i]!.title}`);
     expect(chapter.text).toContain('From 2027 Medicaid asks for a month spent partly at the School, or one with $580 of income (pay, interest or a benefit counts), unless you’re 65 or over, on SNAP under its work rules or, if you ask, in hospital that month');
-    expect(chapter.text).toContain('if you fit neither, or its work rules aren’t met, it ends at a month’s end');
+    expect(chapter.text).toContain('If you fit neither, or its work rules aren’t met, it ends at a month’s end');
     expect(chapter.text).not.toMatch(/hours’ work|hours of work|half-time/);
   }, 60_000);
 });
