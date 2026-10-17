@@ -429,10 +429,11 @@ describe('ST6-R2: restrained acting judged by what it does for a player (brief 1
       if (r.sR[0] === r.sR[1]) expect(Math.abs(r.sR[0]), at).toBe(1); else if (!r.floorHeld) expect(r.dR, at).toBeGreaterThan(1e-9);
       if (r.sE[0] === r.sE[1]) expect(Math.abs(r.sE[0]), at).toBe(1); else if (!r.floorHeld) expect(r.dE, at).toBeGreaterThan(1e-9);
     }
-    // The scene read or not. Measured on 2026-10-17, one brief reading of the 298 (brief-psychological_horror-2,
-    // together) has restraint at −0.01, whose grain, 0.003 of difficulty, is kept to a hundredth (`grainOf`) and so comes
-    // to nothing: the criteria's strict reading under nothing isn't met there, which is the owner's to settle
-    // (docs/verification/resolution-2026-10-17/acting-result.json). What holds on every piece is asserted.
+    // The scene read or not. Measured on 2026-10-17 on every reading, 10 of the 784 pieces are brief readings with
+    // restraint at −0.01 or 0.01 (one a first reading, brief-psychological_horror-2's together), whose grain, 0.003 of
+    // difficulty, is kept to a hundredth (`grainOf`) and so comes to nothing; none of the 784 moves the wrong way. The
+    // criteria's strict reading isn't met on those ten, which is the owner's to settle
+    // (docs/verification/resolution-2026-10-17/acting-result.json). What holds on the gate's pieces is asserted.
     for (const r of ST6R2.grain(HEAVY, A)) {
       if (r.s > 0) expect(r.d, where(r)).toBeGreaterThan(1e-9);
       else if (r.s < 0) expect(r.d, where(r)).toBeLessThanOrEqual(1e-9);
@@ -452,8 +453,9 @@ describe('ST6-R2: restrained acting judged by what it does for a player (brief 1
   }, 120_000);
 
   // H4-R (c)'s rule read on restrained takes, the clause's other part, measured on 2026-10-17 at 60 of 3,433 pairs (1.75%)
-  // against its 1%: every one against the grain, its ability carrying between the equal budget's break-even (1/12) and a
-  // tenth of the take's ability effects, and none of the 2,757 under 1/12. It isn't asserted here; it's the owner's
+  // on the gate's pieces and 65 of 6,344 (1.02%) on every reading, against its 1%: every one against the grain, its
+  // ability carrying between the equal budget's break-even (1/12) and a tenth of the take's ability effects, and none of
+  // the 2,757 under 1/12 on the gate's pieces. It isn't asserted here; it's the owner's
   // (docs/verification/resolution-2026-10-17/acting-result.json).
   it('FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on', () => {
     const rows = ST6R2.weakness(HEAVY).nine;
