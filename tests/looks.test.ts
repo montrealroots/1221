@@ -511,16 +511,16 @@ describe('the sleep debt dial', () => {
     const elevenAfter = (from: number) => from + 15.5 * MS_HOUR;
     sim.advanceTo(elevenAfter(sim.now));
     // A new save's first evening too: the world starts them owing nothing.
-    expect(dial()).toBe('5 hours, about what a day awake puts on the books. A night pays it back.');
+    expect(dial()).toBe('5 hours, about what a normal day awake adds. A night’s sleep pays it back.');
     expect(sim.execute({ kind: 'life.sleep', payload: { hours: 8 } }).ok).toBe(true);
     sim.advanceTo(sim.now + 16 * MS_HOUR);
     expect(sim.player.wellbeing.sleepDebt).toBeCloseTo(16 * 0.34, 9);
-    expect(dial()).toBe('5 hours, about what a day awake puts on the books. A night pays it back.');
+    expect(dial()).toBe('5 hours, about what a normal day awake adds. A night’s sleep pays it back.');
     const person = () => resolveLook(sim, at('person', sim.universe.playerId)) as Looked;
     const row = () => person().ways?.find((way) => way.label === 'Sleep Debt')?.detail;
-    expect(row()).toBe('5 hours on the books, and what sleep pays back');
+    expect(row()).toBe('5 hours. Sleep you owe, which a night pays back.');
     expect((resolveLook(sim, at('dial', `${sim.universe.playerId}/sleepDebt`)) as Looked).provenance)
-      .toBe('Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.');
+      .toBe('Counted in hours. Each waking hour adds about a third of an hour, and a night pays it back, a long night faster. A night under six hours adds some too, and the shortest add more than they pay back.');
     // Four hours in bed leave three owed in the morning, which is what the
     // night left, not what a day has put on.
     expect(sim.execute({ kind: 'life.sleep', payload: { hours: 4 } }).ok).toBe(true);
@@ -538,7 +538,7 @@ describe('the sleep debt dial', () => {
     late.advanceTo(elevenAfter(late.now));
     for (let hour = 0; hour < 6; hour += 1) late.advanceTo(late.now + MS_HOUR);
     expect(late.player.wellbeing.sleepDebt).toBeCloseTo(21.5 * 0.34, 9);
-    expect(lateDial()).toMatch(/about what a day awake puts on the books/);
+    expect(lateDial()).toMatch(/about what a normal day awake adds/);
     late.advanceTo(late.now + MS_HOUR);
     expect(late.player.wellbeing.sleepDebt).toBeCloseTo(22.5 * 0.34, 9);
     expect(lateDial()).toBe('8 hours owed. One long night would clear it.');

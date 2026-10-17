@@ -971,9 +971,9 @@ describe('trait-appetite', () => {
     const HAZARD = { disciplined: 1.0, plain: 1.0, indulgent: 1.07 } as const;
     // 80.589 / 3.24 = 24.873; 80.9 / 3.24 = 24.969; 81.404 / 3.24 = 25.125.
     const WORDS = {
-      disciplined: '5 ft 11 in and 178 lb, a body mass index of 24.9: healthy weight',
-      plain: '5 ft 11 in and 178 lb, a body mass index of 25.0: healthy weight',
-      indulgent: '5 ft 11 in and 179 lb, a body mass index of 25.1: overweight',
+      disciplined: '5 ft 11 in and 178 lb, with a body mass index of 24.9, in the healthy weight range',
+      plain: '5 ft 11 in and 178 lb, with a body mass index of 25.0, in the healthy weight range',
+      indulgent: '5 ft 11 in and 179 lb, with a body mass index of 25.1, in the overweight range',
     } as const;
     for (const who of WHO) {
       const sim = lives[who];

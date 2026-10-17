@@ -572,7 +572,7 @@ describe('l-person', () => {
     const config = play.started()!;
     expect(config).toMatchObject({ homeRegionId: 'uk-eng-london', startLocationId: 'us-ct-newhaven', heightCm: 170.2, weightKg: 64.9 });
     const sim = createSave(1, 'b12-born-london', config);
-    expect(openedFromHome(sim).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, a body mass index of 22.4: healthy weight. In feet, inches and pounds, the units of the United States, where you live.']);
+    expect(openedFromHome(sim).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, with a body mass index of 22.4, in the healthy weight range. In feet, inches and pounds, the units of the United States, where you live.']);
   });
 
   it('born in New York, the same step asks feet, inches and pounds: 5, 7 and 143 are 170.2 cm and 64.9 kg, a body mass index of 22.4, and the look says them back in New Haven', () => {
@@ -596,7 +596,7 @@ describe('l-person', () => {
     const config = play.started()!;
     expect(config).toMatchObject({ homeRegionId: 'us-ny-newyork', heightCm: 170.2, weightKg: 64.9 });
     // The units' why after the figures, from 2026-10-14 (`bodyUnits`).
-    expect(openedFromHome(createSave(1, 'b12-born-newyork', config)).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, a body mass index of 22.4: healthy weight. In feet, inches and pounds, the units of the United States, where you live.']);
+    expect(openedFromHome(createSave(1, 'b12-born-newyork', config)).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, with a body mass index of 22.4, in the healthy weight range. In feet, inches and pounds, the units of the United States, where you live.']);
   });
 
   it('PLAYER JOURNEY: the first morning’s run breaks a bone at 8:30 AM: “till October 6, 2026”, 43 days, inside a broken bone’s 42 to 84; the clock still has it at 8 AM that day and has mended it by 9', () => {
@@ -605,7 +605,7 @@ describe('l-person', () => {
     expect(INJURY_KIND.fracture.days).toEqual([42, 84]);
     // Monday 24 August and 43 days: 7 to the end of August, 30 in September, 6 in October.
     expect((at(2026, 10, 6, 8, 30) - at(2026, 8, 24, 8, 30)) / MS_DAY).toBe(43);
-    const line: [string, string] = ['Mending. ', 'A Broken Bone, till October 6, 2026, and off work till then.'];
+    const line: [string, string] = ['Mending. ', 'A Broken Bone, until October 6, 2026, and laid up until then.'];
     expect(openedFromHome(sim).lines).toContainEqual(line);
     sim.advanceTo(at(2026, 10, 6, 8));
     expect(openedFromHome(sim).lines).toContainEqual(line);
@@ -634,7 +634,7 @@ describe('l-person', () => {
     // A copy of her, she/her, is spoken of as “her” (from 2026-10-15: until then as “they”, whatever the pronouns, so
     // this read “Their body.” above “On their papers. she/her”; tests/scope-people.test.ts holds all three pronouns).
     expect(said).toContain('Her body. ');
-    expect(said).toContain('On her papers. she/her, a citizen of United Kingdom.');
+    expect(said).toContain('On her papers. Pronouns she/her. A citizen of the United Kingdom.');
     expect(said).not.toMatch(/Your body|On your papers/);
   });
 });

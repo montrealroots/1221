@@ -1,0 +1,281 @@
+[
+ {
+  "source": "src/ui/looks/wellbeing.tsx#DIALS [energy]",
+  "kind": "label",
+  "before": "Energy — 69/100, and what the day has left in you",
+  "after": "Energy — 69/100. What’s left in you for today. Sleep brings it back.",
+  "why": "Says what the measure is, and the one thing that restores it, before what it decides.",
+  "meaningSensitive": true,
+  "verified": "brief.json save, person look; tests/evidence-g33-ui.test.ts l-person"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#DIALS [fitness]",
+  "kind": "label",
+  "before": "Fitness — 47/100, and how far rest can mend you, and what a workout costs",
+  "after": "Fitness — 47/100. How trained your body is, the Stamina on your Player Profile. It sets how far rest can mend you and what a workout costs.",
+  "why": "Fitness and Stamina are one figure (attributes.ts reads wellbeing.fitness for stamina); the player saw two names and no link.",
+  "meaningSensitive": true,
+  "verified": "brief.json save; tests/evidence-g33-ui.test.ts; she/he/they variants omit the Player Profile (tests/scope-people.test.ts)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#DIALS [sleepDebt]",
+  "kind": "label",
+  "before": "Sleep Debt — 1 hours on the books, and what sleep pays back",
+  "after": "Sleep Debt — 1 hour. Sleep you owe, which a night pays back.",
+  "why": "The plural now agrees (plural()); \"on the books\" was ledger talk.",
+  "meaningSensitive": false,
+  "verified": "plural() on the figure shown; 0, 3, 5 and 14 hours in render-after-1.txt; tests/looks.test.ts the sleep debt dial"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#WHAT",
+  "kind": "tutorial",
+  "before": "(none: the Energy look said where the figure stood, never what energy was)",
+  "after": "Energy is what you have left for today. It runs down every hour you’re awake, faster when you owe sleep. Only sleep brings it back: a meal doesn’t. Your stamina is something else: how long you can keep going in a long scene or a night on stage. So is your condition: how sound your body is.",
+  "why": "The brief asks the game to say health, stamina and energy apart. Checked: only applySleep raises energy (life.ts); a meal moves nourishment and mood.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-1.txt"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#WHAT",
+  "kind": "tutorial",
+  "before": "(none)",
+  "after": "Condition is how sound your body is, after illness, hunger, stress and short nights. A good night’s rest mends it, as far as your fitness allows. Energy is about today, and condition changes more slowly. Your health is a separate thing again: a long-term condition such as asthma, your health cover and your medical care are on Papers, under Health Cover.",
+  "why": "Condition and a chronic condition share a word; the look now says which is which and where health lives.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-1.txt"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "other",
+  "before": "40. You’re running down, and it shows in everything else.",
+  "after": "40. You’re running low, and it pulls readiness down. Under 15, stress starts to climb.",
+  "why": "\"Shows in everything else\" named no consequence; the new one names the two the engine applies (readinessParts, EMPTY).",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g06-life.test.ts energy PLAYER JOURNEY"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "other",
+  "before": "87. High enough that sleep is going badly and it feeds itself.",
+  "after": "87. High enough to spoil your sleep, and bad sleep adds more. Over 75, it’s wearing your condition down every hour.",
+  "why": "Over OVERWROUGHT the hour costs condition (applyElapsedWellbeing); the old line didn’t say so.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g06-life.test.ts stress over 75"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "other",
+  "before": "47, under the 94 your fitness lets rest mend you to. A night puts back 90% of the energy it would, and each midnight settles it a little toward 94. Under 55, a day off classes called in sick is excused. The lower it is, the likelier a year is to be your last.",
+  "after": "47. At your fitness, rest can mend it to 94. For now, a night gives back 90% of the energy it would at 94, and each midnight brings it a little closer. Under 55, a sick day from classes is excused. The lower it is, the likelier a year is to be your last.",
+  "why": "\"The energy it would\" had no comparison; the share is against the condition rest mends to (0.8 + 0.2 × condition ÷ mendsTo).",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g06-life.test.ts condition, a worn body"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "other",
+  "before": "None to speak of. She’s square with the nights she’s had.",
+  "after": "None to speak of. She’s caught up on sleep.",
+  "why": "Plainer; said in her pronouns as before.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-people.test.ts FIXTURE her dials (she, he, they and you)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "label",
+  "before": "How Well She Would Do Today",
+  "after": "How Ready She Is Today",
+  "why": "Readiness is how ready, not a forecast of a result.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-people.test.ts (she, he, they, you)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "label",
+  "before": "One Of Eight",
+  "after": "Your Wellbeing",
+  "why": "The kind named a count, not a thing; \"dial\" and its count go.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts each meter opens its look"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.",
+  "after": "Seven of the eight measures, all but fitness, from 5 to 100. It sets how much a class, a lab, a rehearsal, an hour of practice or a workout builds, and under 60 it costs you in judged work.",
+  "why": "\"Reads it as its condition\" was engine-speak; the evaluation costs readiness under EVALUATION.sufficientReadiness (60), read from the constant.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-1.txt; tests/looks.test.ts provenance one line"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "On your papers. she/her, a citizen of United States.",
+  "after": "On your papers. Pronouns she/her. A citizen of the United States.",
+  "why": "The country lost its article (\"of United States\"); a sentence began on a lowercase pronoun.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-people.test.ts, tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#bodyWords",
+  "kind": "other",
+  "before": "5 ft 7 in and 143 lb, a body mass index of 22.5: healthy weight",
+  "after": "5 ft 7 in and 143 lb, with a body mass index of 22.5, in the healthy weight range",
+  "why": "The WHO category as a range, not a word after a colon.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g30-ui.test.ts trait-appetite (healthy and overweight), tests/evidence-g07-life.test.ts (underweight)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "It mends by September 5, 2026, and keeps her off work and training till then.",
+  "after": "It mends by September 5, 2026. Until then she’s laid up, kept from classes, work and training.",
+  "why": "Laid up is excused from classes too (school.ts offSick); the old line named work alone.",
+  "meaningSensitive": true,
+  "verified": "tests/scope-people.test.ts FIXTURE her injury"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "It mends by August 28, 2026.",
+  "after": "It mends by August 28, 2026. Until then you can’t work out, and it holds back the physical side of your work.",
+  "why": "A sprain refuses training (trainingRefusal) and limits the body’s dimensions (INJURY_KIND limits body); the look said nothing of either.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-1.txt (a sprain, she/he/they)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "label",
+  "before": "A Condition He Carries",
+  "after": "A Long-Term Condition",
+  "why": "Kept apart from the Condition measure, one press away on the same page.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-people.test.ts, tests/evidence3-person.test.ts"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "He leaves it alone, which costs nothing and does what’s below.",
+  "after": "He’s leaving it untreated. That costs nothing, but it has the effects below.",
+  "why": "Plainer; the same two facts.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-people.test.ts"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#leftAlone",
+  "kind": "other",
+  "before": "Left alone, type 1 makes an emergency 4 times likelier, and either type takes 2 condition a week.",
+  "after": "(type 2) Left untreated, it takes 2 from condition every week.",
+  "why": "A type 2 diabetes was told what type 1 does; it now reads its own type’s effect (illnessWeek reads typeOne).",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-1.txt (type 1 lapsed, type 2 untreated)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#leftAlone",
+  "kind": "other",
+  "before": "Left alone, SLATE draws nothing more from it than the care it goes without. Kept up, it does none of that.",
+  "after": "Left untreated, it has no effect in the game beyond going without its care, which then costs nothing.",
+  "why": "\"Kept up, it does none of that\" followed a line saying it did nothing; dropped for high blood pressure.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-1.txt"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "Drawn once at the start of a life, at a young adult’s rates. Source: …",
+  "after": "It can start with a life, at a young adult’s rates, or begin later, likelier in a heavier body. Source: …",
+  "why": "Diabetes, high blood pressure and arthritis also begin in play (onsetMonth, ONSET.yearly); the footnote said every one was drawn once.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-1.txt"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "+25% +28% with all you are",
+  "after": "+25% +28% all told",
+  "why": "\"With all you are\" was opaque; the footnote says what all told is.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence3-person.test.ts l-trait"
+ },
+ {
+  "source": "src/engine/content/lifespan.ts#AGING",
+  "kind": "narration",
+  "before": "A week off costs a month back.",
+  "after": "A year now takes more from the body than a whole decade did in the twenties.",
+  "why": "Nothing in the game costs a month for a week off; the 70s band does take more a year (1.80 fitness, 1.25 condition) than the 20s took in ten (1.2, 0.5).",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-1.txt (ages 18 to 85)"
+ },
+ {
+  "source": "src/engine/content/lifespan.ts#AGING",
+  "kind": "narration",
+  "before": "What you don’t use, you lose faster than you gain it.",
+  "after": "A night’s rest puts back noticeably less, and what training can reach falls faster than in the fifties.",
+  "why": "Fitness is lost at the same rate at every age (FITNESS.perDay); the new line says what the 60s band changes.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-1.txt"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.how]",
+  "kind": "tutorial",
+  "before": "How You Are keeps three bars in front of you, Energy, Stress and Readiness, under a line that says how you are. Each bar opens into what moves it. The other six dials, sleep debt, morale, condition, fitness, nourishment and hygiene, are on your own page with the traits you hold and the conditions you carry. Readiness is the figure most of your work reads.",
+  "after": "How You Are, on Home, shows how you’re doing today: a line that sums it up, then Energy, Stress and Readiness. Readiness is how sharp you’ll be at today’s work. Behind them are eight measures of your wellbeing, and four things are easy to mix up. Energy is what you have left for today, and only sleep brings it back. Condition is how sound your body is after illness, hunger, stress and short nights. Fitness is how trained your body is, and it’s the Stamina on your Player Profile. Your health, meaning illness, injury, long-term conditions, your care and your health cover, is on Papers, under Health Cover.",
+  "why": "The overview now teaches the four-way distinction the brief names; \"dials\" and \"the figure your work reads\" go.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-1.txt; tests/guide.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.how]",
+  "kind": "tutorial",
+  "before": "(no next step)",
+  "after": "Low on energy: press Sleep in the top bar. | Hungry, grimy or stressed: open Look After Yourself in the top bar, where the line that helps most comes first. | Ill or injured: go to Papers, then Health Cover, for your doctor, your care and its bills.",
+  "why": "The new next field, from the screen’s own labels (Sleep, Look After Yourself, Papers, Health Cover: TimeControls.tsx, the walk’s Papers screens).",
+  "meaningSensitive": false,
+  "verified": "labels in text walk before-1440 direction.json (Papers, Health Cover, Your Doctor, Care And Its Bills)"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.sleep]",
+  "kind": "tutorial",
+  "before": "At 7:00 AM energy is 100, stress and sleep debt are 0, condition is 89.5, morale has risen from 62 to 69.6, and readiness is 96. The same evening slept 5 hours wakes at 4:00 AM with the night counted as slept: some sleep debt stays on the books, and condition falls where 8 hours mended it.",
+  "after": "You wake at 7:00 AM with energy at 100, stress and sleep debt at 0, condition at 89.5, morale up from 62 to 69.6, and readiness at 96. Sleeping 5 hours that same evening instead wakes you at 4:00 AM and counts as the whole night: some sleep debt is left, and condition falls where 8 hours mended it.",
+  "why": "Second person and plain; every figure kept and still read back by the test.",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-start-day-body.test.ts body.sleep"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.look-after]",
+  "kind": "tutorial",
+  "before": "“You’re too tired to train. Sleep first.” Energy is under 25.",
+  "after": "Work Out waits while your energy is under 25: sleep first.",
+  "why": "Each refusal said in the guide’s own words, so a refusal the home or money area rewords doesn’t leave a stale quote here.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-1.txt"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.look-after]",
+  "kind": "tutorial",
+  "before": "A shower skipped costs nothing past its day: the morning washes you to 82 whatever the day before was. That’s the owner’s decision, of 2026-10-14.",
+  "after": "A skipped shower costs nothing past its day: each morning starts you at 82 hygiene or more, whatever the day before was.",
+  "why": "A project decision’s date isn’t the player’s business.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/health/render-after-1.txt"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "100, and nourishment is what’s costing you.",
+  "after": "100. As good as a day gets, even with nourishment short of your best.",
+  "why": "Readiness clamps at 100, so a measure short of its best took nothing off the figure shown; the old line said it was costing you.",
+  "meaningSensitive": true,
+  "verified": "render-after-1.txt, the dir1, dir2 and direction saves"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "79, and energy, morale and stress are what’s costing you.",
+  "after": "79. Energy, morale and stress are holding you back most.",
+  "why": "Names the drags as what holds readiness back, worst first, as dragsOn ranks them.",
+  "meaningSensitive": false,
+  "verified": "render-after-1.txt; tests/scope-people.test.ts (her Readiness)"
+ }
+]

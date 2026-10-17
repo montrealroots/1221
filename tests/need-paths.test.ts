@@ -792,7 +792,7 @@ describe('a body’s units, by where the person lives', () => {
       expect(['height-ft', 'height-in', 'weight-lb'].map((id) => step.control(id).props.value)).toEqual([5, 10, 160]);
       expect(step.text).not.toContain('Centimeters');
       const sim = createSave(1, `need-units-${born}`, config);
-      expect(look(sim, 'person', sim.player.id)).toContain(`Your body. 5 ft 10 in and 160 lb, a body mass index of 23.0: healthy weight. ${US}`);
+      expect(look(sim, 'person', sim.player.id)).toContain(`Your body. 5 ft 10 in and 160 lb, with a body mass index of 23.0, in the healthy weight range. ${US}`);
     });
   }
 
@@ -802,6 +802,6 @@ describe('a body’s units, by where the person lives', () => {
     expect(step.text).toContain('Your height and weight on the first morning. In centimeters and kilograms, the units of the United Kingdom, where you live.');
     expect(['height-cm', 'weight-kg'].map((id) => step.control(id).props.value)).toEqual([177.8, 72.6]);
     const sim = createSave(1, 'need-units-londoner', config);
-    expect(look(sim, 'person', sim.player.id)).toContain('Your body. 178 cm and 72.6 kg, a body mass index of 23.0: healthy weight. In centimeters and kilograms, the units of the United Kingdom, where you live.');
+    expect(look(sim, 'person', sim.player.id)).toContain('Your body. 178 cm and 72.6 kg, with a body mass index of 23.0, in the healthy weight range. In centimeters and kilograms, the units of the United Kingdom, where you live.');
   });
 });

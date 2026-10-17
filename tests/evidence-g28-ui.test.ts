@@ -549,8 +549,8 @@ describe('c-traits', () => {
     // Frugal's own 0.85 on what food costs, −15%; with all she is, 0.85 bent inside [0.7, 1.4], exp(L·tanh(ln 0.85 / L))
     // with L = −ln 0.7: 0.8589, −14%.
     const frugal = look(sim, 'trait', 'frugal');
-    expect([frugal.name, frugal.kind]).toEqual(['Frugal', 'A Trait You Hold']);
-    expect(frugal.body).toContain('What the day’s food costs you −15% −14% with all you are');
+    expect([frugal.name, frugal.kind]).toEqual(['Frugal', 'Your Trait']);
+    expect(frugal.body).toContain('What the day’s food costs you −15% −14% all told');
   });
 
   it('refuses in the engine what the page refuses: a clash, a repeat, an unknown trait and a fifth given to createSave are dropped, the first said kept', () => {
@@ -825,7 +825,7 @@ describe('c-body', () => {
     expect(page.text).toContain('A body mass index of 22.7.');
     const { sim } = begun('g28-body-page', config);
     expect(sim.player.body).toMatchObject({ heightCm: 170.2, weightKg: 65.8, startKg: 65.8 });
-    expect(look(sim, 'person', sim.player.id).body).toContain('Your body. 5 ft 7 in and 145 lb, a body mass index of 22.7: healthy weight.');
+    expect(look(sim, 'person', sim.player.id).body).toContain('Your body. 5 ft 7 in and 145 lb, with a body mass index of 22.7, in the healthy weight range.');
   });
 
   // Until 2026-10-14 the Londoner was a London-born student at Yale, asked in the units of where she was born. Since the

@@ -395,7 +395,7 @@ function playHow() {
 }
 
 function playSleep(hours: number) {
-  const [bedAt] = read(example('body.sleep').setup, /moved on to (\d+:\d+ [AP]M):/);
+  const [bedAt] = read(example('body.sleep').setup, /, at (\d+:\d+ [AP]M): energy/);
   const { hour, minute } = clockOf(bedAt);
   const sim = life();
   // Registration gone to at ten, on the way to the evening's hour.
@@ -418,7 +418,7 @@ function playSleep(hours: number) {
 function sleepHours(): { full: number; short: number } {
   const { steps, result } = example('body.sleep');
   const [full] = read(steps[1]!, /^Press Sleep (\d+) Hours\.$/);
-  const [short] = read(result, /The same evening slept (\d+) hours wakes at/);
+  const [short] = read(result, /Sleeping (\d+) hours that same evening instead wakes you at/);
   return { full: Number(full), short: Number(short) };
 }
 
@@ -696,9 +696,9 @@ describe('looking after yourself', () => {
     asStated(p.first.stress, stress);
     asStated(p.first.nourishment, nourishment);
     asStated(p.first.morale, morale);
-    const [reads, rises, minutes] = read(result, /^Readiness reads (\d+)\. The meal fills you, and readiness rises by ([\d.]+) on what the meal does alone, less what its (\d+) minutes cost\.$/);
+    const [reads, rises, minutes] = read(result, /^Readiness is (\d+)\. The meal fills you up, and readiness rises by ([\d.]+) from the meal itself, less what its (\d+) minutes cost\.$/);
     asStated(p.first.readiness, reads);
-    expect(p.ready.summary.startsWith(`${reads},`)).toBe(true);
+    expect(p.ready.summary.startsWith(`${reads}.`)).toBe(true);
     // The figure is the menu's own (`lookAfterOptions`).
     asStated(p.menu.gain, rises);
     expect(p.done.doneAt - p.startedAt).toBe(Number(minutes) * MS_MINUTE);
@@ -715,7 +715,7 @@ describe('looking after yourself', () => {
     const night = playSleep(hours.full);
     const nap = playSleep(hours.short);
     const { setup, steps, result } = example('body.sleep');
-    const [energy, stress, debt, condition, ready, next, nextHour] = read(setup, /moved on to \d+:\d+ [AP]M: energy ([\d.]+), stress ([\d.]+), sleep debt ([\d.]+) hours, condition ([\d.]+), readiness ([\d.]+), and (.+) at (\w+) the next morning\.$/);
+    const [energy, stress, debt, condition, ready, next, nextHour] = read(setup, /, at \d+:\d+ [AP]M: energy ([\d.]+), stress ([\d.]+), sleep debt ([\d.]+) hours, condition ([\d.]+) and readiness ([\d.]+), with (.+) at (\w+) the next morning\.$/);
     expect(formatTime(night.sleptFrom, night.sim.zone)).toBe(night.bedAt);
     expect(nap.sleptFrom).toBe(night.sleptFrom);
     asStated(night.bedtime.energy, energy);
@@ -729,7 +729,7 @@ describe('looking after yourself', () => {
     expect(night.suggestion.hours).toBe(Number(suggested));
     expect(night.suggestion.reason).toBe(reason);
     expect(night.woke - night.sleptFrom).toBe(hours.full * MS_HOUR);
-    const [wakes, e, zero, c, moraleFrom, moraleTo, r, shortWakes, mended] = read(result, /^At (\d+:\d+ [AP]M) energy is ([\d.]+), stress and sleep debt are ([\d.]+), condition is ([\d.]+), morale has risen from ([\d.]+) to ([\d.]+), and readiness is ([\d.]+)\. The same evening slept \d+ hours wakes at (\d+:\d+ [AP]M) with the night counted as slept: some sleep debt stays on the books, and condition falls where (\d+) hours mended it\.$/);
+    const [wakes, e, zero, c, moraleFrom, moraleTo, r, shortWakes, mended] = read(result, /^You wake at (\d+:\d+ [AP]M) with energy at ([\d.]+), stress and sleep debt at ([\d.]+), condition at ([\d.]+), morale up from ([\d.]+) to ([\d.]+), and readiness at ([\d.]+)\. Sleeping \d+ hours that same evening instead wakes you at (\d+:\d+ [AP]M) and counts as the whole night: some sleep debt is left, and condition falls where (\d+) hours mended it\.$/);
     expect(Number(mended)).toBe(hours.full);
     expect(formatTime(night.woke, night.sim.zone)).toBe(wakes);
     asStated(night.wake.energy, e);
@@ -766,7 +766,7 @@ describe('looking after yourself', () => {
     // Most Worth It: nothing urgent, and half a point or more (`LookAfterMenu`).
     expect(top.urgent).toBe(false);
     expect(top.gain).toBeGreaterThanOrEqual(0.5);
-    const [minutes, price, fills, rises, unwind, shower, workout, costs] = read(result, /^It takes (\d+) minutes and (\$[\d.,]+): nourishment goes to (\d+), and readiness moves ([+−-]?[\d.]+) on what the meal does alone\. Unwind would have given about ([+−-]?[\d.]+) and a Shower ([+−-]?[\d.]+); Work Out, last, about ([+−-]?[\d.]+), for the (\d+) energy it costs today\.$/);
+    const [minutes, price, fills, rises, unwind, shower, workout, costs] = read(result, /^It takes (\d+) minutes and (\$[\d.,]+)\. Nourishment goes to (\d+), and readiness moves ([+−-]?[\d.]+) from the meal itself\. Unwind would have moved it about ([+−-]?[\d.]+) and a Shower ([+−-]?[\d.]+)\. Work Out, last on the list, about ([+−-]?[\d.]+), for the (\d+) energy it costs today\.$/);
     expect(p.done.doneAt - p.startedAt).toBe(Number(minutes) * MS_MINUTE);
     expect(p.paid).toHaveLength(1);
     const charged = p.paid[0]!.postings.filter((x) => x.amount > 0).reduce((a, x) => a + x.amount, 0);

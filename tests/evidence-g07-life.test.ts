@@ -248,7 +248,7 @@ function bodyWords(heightCm: number, weightKg: number): string {
   const inches = Math.round(heightCm / 2.54);
   const bmi = weightKg / (heightCm / 100) ** 2;
   const word = bmi < 18.5 ? 'underweight' : bmi < 25 ? 'healthy weight' : bmi < 30 ? 'overweight' : 'obese';
-  return `${Math.floor(inches / 12)} ft ${inches % 12} in and ${Math.round(weightKg / 0.45359237)} lb, a body mass index of ${bmi.toFixed(1)}: ${word}`;
+  return `${Math.floor(inches / 12)} ft ${inches % 12} in and ${Math.round(weightKg / 0.45359237)} lb, with a body mass index of ${bmi.toFixed(1)}, in the ${word} range`;
 }
 /** The heat index, the NWS's Rothfusz regression with its adjustments (wpc.ncep.noaa.gov/html/heatindex_equation.shtml), in °C. */
 function nwsHeatIndexC(c: number, rh: number): number {
@@ -647,7 +647,7 @@ describe('injuries', () => {
     const gap = () => ({ stress: hurt.player.wellbeing.stress - well.player.wellbeing.stress, morale: hurt.player.wellbeing.morale - well.player.wellbeing.morale });
     expect(gap().stress).toBeCloseTo(6, 9);
     expect(gap().morale).toBeCloseTo(-4, 9);
-    expect(personLook(hurt)).toContain('Mending. A Pulled Muscle, till September 14, 2026.');
+    expect(personLook(hurt)).toContain('Mending. A Pulled Muscle, until September 14, 2026.');
     expect(personLook(well)).not.toContain('Mending.');
     // Across the midnight that ends Monday 24 August, the day hurt weighs 1 on each (`INJURY.weighs`).
     for (const s of [hurt, well]) s.advanceTo(Date.UTC(2026, 7, 25, 4) - 1000);
@@ -727,7 +727,7 @@ describe('injuries', () => {
     // Six hours at the Bulletin's $23.00 an hour is the week's wage the compensation would read.
     expect(healthOf(sim.player).injury).toEqual({ kind: 'strain', at: shift, until: shift + 20 * MS_DAY, atWork: { stateId: 'us-ct', weeklyWage: 138_00, paidDays: 0, noFica: true } });
     expect(notices(sim, 'A Pulled Muscle')[0]!.body).toBe('20 days to mend. It happened at work, so workers’ compensation pays the care.');
-    expect(personLook(sim)).toContain('Mending. A Pulled Muscle, till September 25, 2026, on workers’ compensation.');
+    expect(personLook(sim)).toContain('Mending. A Pulled Muscle, until September 25, 2026, on workers’ compensation.');
     expect(healthOf(sim.player).bills).toHaveLength(0);
     // Not off work, so no week of compensation is scheduled.
     expect(sim.universe.scheduled.filter((i) => i.kind === 'injury.comp')).toHaveLength(0);
@@ -852,7 +852,7 @@ describe('body', () => {
   it('PLAYER JOURNEY: five broke days leave her lighter than her fed twin by 5 × habit × 36/76 ÷ 12,585 kg, and the person look prints both bodies', () => {
     const fed = student('g07-body', { heightCm: 170, weightKg: 65 });
     const poor = student('g07-body', { heightCm: 170, weightKg: 65 });
-    expect(personLook(fed)).toContain('5 ft 7 in and 143 lb, a body mass index of 22.5: healthy weight');
+    expect(personLook(fed)).toContain('5 ft 7 in and 143 lb, with a body mass index of 22.5, in the healthy weight range');
     broke(poor); // TEST SETUP
     // Midnight 25 August buys the day ahead or doesn't; each midnight after weighs the day just gone. Midnight 30
     // August has weighed five broke days, 25 to 29 August.
@@ -890,7 +890,7 @@ describe('body', () => {
     const sim = student('g07-starve', { heightCm: 170, weightKg: 65 });
     sim.player.body!.weightKg = 35; // TEST SETUP: BMI 12.1, just over the survival limit
     broke(sim); // TEST SETUP
-    expect(personLook(sim)).toContain('5 ft 7 in and 77 lb, a body mass index of 12.1: underweight');
+    expect(personLook(sim)).toContain('5 ft 7 in and 77 lb, with a body mass index of 12.1, in the underweight range');
     const weights: number[] = [];
     let ended: number | undefined;
     for (let d = 1; d <= 30 && ended === undefined; d += 1) {
