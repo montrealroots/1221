@@ -14,8 +14,8 @@
    "Explicitly Deferred": 27
   }
  },
- "matrix": "Completion, by the matrix: 568 of 599 rows in scope Implemented And Verified (94.8%); 26 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.",
- "againstTheFullBaseline": "566 of 608 (93.0%)",
+ "matrix": "Completion, by the matrix: 573 of 599 rows in scope Implemented And Verified (95.6%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.",
+ "againstTheFullBaseline": "571 of 608 (93.9%)",
  "actionable": {
   "closed": 39,
   "superseded": 4,
@@ -265,11 +265,6 @@
   }
  ],
  "problems": [
-  "F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now",
-  "MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now",
-  "INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now",
-  "INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now",
-  "INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now",
   "INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now"
  ],
  "rows": [
@@ -4483,7 +4478,7 @@
    "id": "F2-A",
    "group": "Criteria: The Attributes",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
    "disposition": "verified at the baseline"
   },
   {
@@ -4609,7 +4604,7 @@
    "id": "MA5",
    "group": "Criteria: Mastery Through Play",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
    "disposition": "verified at the baseline"
   },
   {
@@ -4693,21 +4688,21 @@
    "id": "INT-skipped",
    "group": "Integration",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
    "disposition": "verified at the baseline"
   },
   {
    "id": "INT-navigation",
    "group": "Integration",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
    "disposition": "verified at the baseline"
   },
   {
    "id": "INT-long-runs",
    "group": "Integration",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
    "disposition": "verified at the baseline"
   },
   {

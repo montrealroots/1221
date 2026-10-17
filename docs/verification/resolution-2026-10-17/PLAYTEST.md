@@ -11,7 +11,7 @@ npx vite preview --port 4173
 
 Then open http://localhost:4173. Each step says what to press, what you should see, and what to report if you don't. The
 built app's acceptance run played every step on the tested commit, at 1440 and at 390 wide (`runs/acceptance/`). The
-step it passed is named in brackets, and the figures quoted are that run's. A life of your own differs in the details,
+step it passed is named in brackets, and the figures quoted are its run at 1440. A life of your own differs in the details,
 not in what happens.
 
 ## 1. A Character
@@ -30,8 +30,8 @@ not in what happens.
 - **Advance → Next Monday** until term. On the way, each stop (registration, orientation, meeting your class) is a
   dialog that says what it asks.
 - **School:** registration and orientation are findable and say what they ask. **Coursework** lists the scenes due.
-- **Money → Accounts:** try **Move It** with more than the account holds. It's refused in words. Then move $1, and it's
-  sent.
+- **Money → Accounts:** try **Move It** with more than the account holds. It's refused in words ("Chase Total Checking
+  holds $90,434."). Then move $1, and it's sent.
 - **Papers:** five tabs open: Tax Returns, Health Cover, Unemployment, Passport And ID, Permission To Work.
 - **Health Cover:**
   - Your Cover says **Yale Health**.
@@ -47,7 +47,7 @@ not in what happens.
 
 - **School → Coursework:** a scene's preparation buttons are Read The Scene, Learn Lines and Rehearse Alone.
 - **Expect:** each spends its minutes, and the clock and the part's figure both move ("Read The Scene: 40 minutes, Knows
-  The Scene up 39%."). A step that waits on something says what, grayed: "Jordan asked to rehearse: answer first."
+  The Scene up 43%."). A step that waits on something says what, grayed: "Jordan asked to rehearse: answer first."
 - **Play It This Way:** choose how to play the scene and rehearse it in. Answer the table work from its list.
 - **Report:** a button that spends time and changes nothing, or a grayed one that doesn't say why.
 - [coursework: a step of preparation done from its button; a way of playing it chosen and rehearsed in; table work

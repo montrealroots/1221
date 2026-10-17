@@ -1,0 +1,35 @@
+{
+ "scenario": "rehearsal",
+ "seed": "sc-0",
+ "ended": "2027-04-24",
+ "log": [],
+ "school": {
+  "standing": "good",
+  "classOf": 2029,
+  "offset": 0,
+  "leaves": [],
+  "welfares": [],
+  "formerClasses": [],
+  "classmates": 15,
+  "terms": [
+   "0:good",
+   "1:good"
+  ],
+  "conferred": [],
+  "credits": [],
+  "joinedHistory": [],
+  "firstClassGraduated": [],
+  "duringLeave": []
+ },
+ "accounts": [
+  "Chase checking",
+  "Chase savings"
+ ],
+ "owedIrs": 0,
+ "irsSubstitute": [],
+ "states": {},
+ "statePlans": {},
+ "breaches": 0,
+ "unbalanced": 0,
+ "reloads": 7
+}

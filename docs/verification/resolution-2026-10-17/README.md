@@ -49,3 +49,51 @@ folder's receipt reads the same frozen baseline.
 
 Four areas work in their own clones from instructions written before their work (`prompts/`): acting, advice, health and
 research. The coordinator works the matrix, the receipt, the final validation, the player walkthrough and the handoff.
+
+## Where It Ended
+
+The tested code is `ed24ff3b`. `RECEIPT.md`, by `receipt.py`, gives every row's category and figure; in short:
+
+| Row | Category | On |
+|---|---|---|
+| `ST6-R.a`, `.c`, `.e`, `.g` | superseded: Explicitly Deferred, their results kept | `acting-result.json` |
+| `ST6-R2.a`, `ST6-R2.g` | replacements, verified on their own evidence | `acting-criteria.md`, `acting/` |
+| `ST6-R2.c`, `ST6-R2.e` | replacements, Decision Required: each fails as written only at a limit its criteria didn't name, and the criteria say that's reported, not moved | `acting-result.json` |
+| `advice.F2A10-f`, `advice.F2A10-h` | closed on the clarified criteria, by the fresh set run once | `advice-criteria.md`, `final-result.json` |
+| `advice.F2A10-c`, `advice.heldout` | closed again, by the regression run on the tested commit | `final-result.json` |
+| `health.enroll` | scope resolution: the work branch cut at the finding, verified at a second reading | `health-criteria.md`, `health-result.json` |
+| `KS-ct-idcard`, `KS-passport-fees` | research assumptions, verified to their specification; Japan's fee a verified fact | `research-criteria.md`, `research-result.json` |
+
+The replacement rows aren't among the 46 actionable rows: they are the superseded rows' replacements, counted apart.
+
+## The Final Validation
+
+On `ed24ff3b`, in clones, every step exit 0 (`runs/README.md`):
+- the build;
+- the 14 scenario saves, made again;
+- the built app at 1440 and 390, 76 of 76 each, with the walkthrough's steps;
+- the long runs and mastery plans, byte for byte brief 11's;
+- the advice's fresh set once, and its regression set;
+- the acting measurement.
+
+The whole suite ran first on `f07fb997` and failed one test, `tests/cohesion.test.ts`, on the advice area's field names.
+`ed24ff3b` renamed them, and the runs were made after. The gate ran last, on the commit `runs/gate.txt` names.
+
+## Added Work, Recorded Apart
+
+Each is a defect or a necessary dependency, not new scope:
+- **Two stale sentences offered work** (`7d82c09a`): SNAP's time-limit notice and the tutorial's unemployment chapter.
+- **merge-review's notes** (`5b94fbd4`): it kept a verified row's open gaps as "Still open" on 43 rows, and repeated
+  closed ones.
+- **health.enroll's records** (`5b94fbd4`):
+  - five test titles still credited "80 hours' work";
+  - the area clone's commit hashes;
+  - a reload claimed of every path;
+  - the guide's "Last Month's Work" label.
+- **The advice's field names** (`ed24ff3b`), read by the cohesion guard as a person's genres.
+- **The built app's walkthrough steps** (`c1388d1b`, `ed24ff3b`): health cover, stamina and recovery, an ID card across a
+  save, and the advice's two new lines.
+- **ST6-R2.g's citation of the gate tests** its mutations failed (`f07fb997`).
+- **The handoff's stale statements** about main and its pull requests (`f6667eda`).
+- **The areas' own defects,** each fixed in its area and listed in its result: the advice's unexplained rise, its unnamed
+  prepared take, and its discipline sentence; the health area's dependencies.
