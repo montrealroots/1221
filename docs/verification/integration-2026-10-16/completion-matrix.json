@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 561 of 599 rows in scope Implemented And Verified (93.6%); 29 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 566 of 599 rows in scope Implemented And Verified (94.4%); 28 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -552,10 +552,9 @@
    "saveLoad": "cover | HealthRecord.program, marketplace, dental, bills, debtSince; the medical debt account",
    "failure": "each refusal said in the player's words (above) | Open: The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute.",
    "implementation": "`systems/health.ts` | PapersWorkspace.tsx:561 (Enroll). Until 2026-10-13 this said :216, and until 2026-10-17 :548",
-   "evidence": "Playable journeys, by path (docs/verification/resolution-2026-10-17/health-result.json, playableJourneys): the student, tests/evidence-g03-life.test.ts ‘at school, refused through the command in Yale Health’s words, and Papers offers no Enroll’, tests/scope-cover.test.ts ‘PLAYER JOURNEY: at the School all of January 2027 and withdrawn on 1 February…’ and ‘PLAYER JOURNEY: on a personal leave from 20 January 2027, she enrolls in HUSKY D on Papers on 21 January, from 1 January…’; eligibility, tests/need-paths.test.ts ‘PLAYER JOURNEY: an Inherited family’s savings at Capital One earn $6,436.10…’, tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000…’, ‘PLAYER JOURNEY: a student born in 1960, 66…’, ‘PLAYER JOURNEY: withdrawn, she applies for SNAP on Papers on 20 November 2026…’; enrollment, tests/evidence-g03-life.test.ts ‘PLAYER JOURNEY: withdrawn, Enroll pressed puts them in HUSKY D from 1 November…’, tests/evidence3-lifepapers.test.ts ‘PLAYER JOURNEY: the Inherited student’s marketplace, Enrolled from 1 November on Papers…’, tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026…’; renewal, tests/need-paths.test.ts ‘PLAYER JOURNEY: on HUSKY D from 1 October 2026 on September’s $900.00…’, ‘PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026…’, tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: with no work and under $580 of income in April to September 2027…’; hardship, tests/remaining-09-hardship.test.ts ‘PLAYER JOURNEY: a stay in hospital in September 2027…’, tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026…’. Internal safeguards, apart: tests/defects-g8-4.test.ts ‘…since then the hours aren’t read: 80 hours paid $400 in June bring a notice of noncompliance…’, tests/remaining-health-billing.test.ts ‘FIXTURE: 80 hours’ work in November 2026 (posted by hand)…’, and the GUARD tests the result lists. Until 2026-10-17 this cited the work arm’s FIXTURE as its evidence for HUSKY D kept through work",
-   "sourceStatus": "partial",
-   "status": "Implemented, Verification Incomplete",
-   "missing": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-17 (brief 12, section 3, a scope resolution): the work arm, unreachable in play since the owner’s scope reset of 2026-10-09 and deciding no outcome where reached, was found to serve no necessary purpose (no save holds 80 paid hours under $580: docs/verification/resolution-2026-10-17/health-criteria.md) and cut, alone (15a24e9d); the notices, Papers, the guide and the tutorial name the routes a player has, a month at the School, $580 of income or an exception, and none names hours of work (ab990173, 1d25b4ec); a renewal kept by a month at the School is played (c8c0b39f). Until then the row stayed partial on the work arm, as brief 11’s second reader decided | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
+   "evidence": "Playable journeys, by path (docs/verification/resolution-2026-10-17/health-result.json, playableJourneys): the student, tests/evidence-g03-life.test.ts ‘at school, refused through the command in Yale Health’s words, and Papers offers no Enroll’, tests/scope-cover.test.ts ‘PLAYER JOURNEY: at the School all of January 2027 and withdrawn on 1 February…’ and ‘PLAYER JOURNEY: on a personal leave from 20 January 2027, she enrolls in HUSKY D on Papers on 21 January, from 1 January…’; eligibility, tests/need-paths.test.ts ‘PLAYER JOURNEY: an Inherited family’s savings at Capital One earn $6,436.10…’, tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000…’, ‘PLAYER JOURNEY: a student born in 1960, 66…’, ‘PLAYER JOURNEY: withdrawn, she applies for SNAP on Papers on 20 November 2026…’; enrollment, tests/evidence-g03-life.test.ts ‘PLAYER JOURNEY: withdrawn, Enroll pressed puts them in HUSKY D from 1 November…’, tests/evidence3-lifepapers.test.ts ‘PLAYER JOURNEY: the Inherited student’s marketplace, Enrolled from 1 November on Papers…’, tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026…’; renewal, tests/need-paths.test.ts ‘PLAYER JOURNEY: on HUSKY D from 1 October 2026 on September’s $900.00…’, ‘PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026…’, tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: with no work and under $580 of income in April to September 2027…’; hardship, tests/remaining-09-hardship.test.ts ‘PLAYER JOURNEY: a stay in hospital in September 2027…’, tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026…’. Internal safeguards, apart: tests/defects-g8-4.test.ts ‘…since then the hours aren’t read: 80 hours paid $400 in June bring a notice of noncompliance…’, tests/remaining-health-billing.test.ts ‘FIXTURE: $600 of wages in November 2026 (posted by hand)…’, and the GUARD tests the result lists. Until 2026-10-17 this cited the work arm’s FIXTURE as its evidence for HUSKY D kept through work",
+   "sourceStatus": "verified",
+   "status": "Implemented And Verified"
   },
   {
    "id": "health.apply",
@@ -906,7 +905,7 @@
    "saveLoad": "health record, ledger",
    "failure": "Open: onsetMonth has no end-to-end test: no test asserts 'Diagnosed: …' or a condition drawn by the month (the row's own issue).; keepUp's lapse, program renewal and the debt report are exercised only by direct healthMonth or keepUp calls, never by the clock firing health.month.; The cited tests are almost all direct-call fixtures in Los Angeles or New York. The New Haven clock evidence (papers.health-cover, defects-g8-5) isn't cited.",
    "implementation": "`systems/health.ts` | armHealth",
-   "evidence": "tests/evidence-g05-life.test.ts health.month ‘PLAYER JOURNEY: diagnoses high blood pressure on the 1st…’, ‘PLAYER JOURNEY: uninsured, a drained twin’s month of care for depression lapses…’, ‘PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported…’, ‘PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where 80 hours of work in July renews it six months’ (since 2026-10-16 the renewal sends a notice of noncompliance and HUSKY D ends on 31 October 2027, said on 6 October; the work a salary posting put in by hand, whose $600 passes the income test too, so the 80 hours aren’t what it holds); tests/evidence-g03-life.test.ts health.enroll (the marketplace’s $706 charged on the 1st); guide-examples-papers.test.ts papers.health-cover; tests/defects-g8-5.test.ts; tests/remaining-health-eligibility.test.ts (the notice, the thirty days, the ending said ten days ahead, one jump against day by day); checking less: carried.test.ts, safetynet.test.ts, medicaluis.",
+   "evidence": "tests/evidence-g05-life.test.ts health.month ‘PLAYER JOURNEY: diagnoses high blood pressure on the 1st…’, ‘PLAYER JOURNEY: uninsured, a drained twin’s month of care for depression lapses…’, ‘PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported…’, ‘PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where $600 of wages in July (TEST SETUP) renews it six months’ (since 2026-10-16 the renewal sends a notice of noncompliance and HUSKY D ends on 31 October 2027, said on 6 October; the work a salary posting put in by hand, whose $600 passes the income test too, so the 80 hours aren’t what it holds); tests/evidence-g03-life.test.ts health.enroll (the marketplace’s $706 charged on the 1st); guide-examples-papers.test.ts papers.health-cover; tests/defects-g8-5.test.ts; tests/remaining-health-eligibility.test.ts (the notice, the thirty days, the ending said ten days ahead, one jump against day by day); checking less: carried.test.ts, safetynet.test.ts, medicaluis.",
    "sourceStatus": "verified",
    "status": "Implemented And Verified"
   },
@@ -11131,7 +11130,7 @@
     "commit": "3de26e0b",
     "watch": "engine"
    },
-   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
+   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11199,14 +11198,9 @@
    "implementation": "systems/advice.ts",
    "evidence": "tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision’ (played tuning case); tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today’ (played tuning cases, a brief taped cold); docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands))",
    "sourceStatus": "owner decision",
-   "status": "Decision Required",
+   "status": "Implemented And Verified",
    "disposition": "owner decision",
-   "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The held-out set on 3de26e0b: preparation apart from training 120 of 120; the near-mastery ladder falls 30 of 30; below three quarters of full the forecast falls with the level on 110 of 111 (adv-h-1 doesn’t)",
-   "decision": {
-    "question": "F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth falls with the level there, as the model gives it (tests/decisions-advice.test.ts, [N], played on tuning seeds). The forecast is in points of result, and what an ability point is worth on the work isn’t monotone in the level everywhere: it is the judge’s curve, and the forecast reads it truly (adv-h-1 forecast 0.828 and brought 1.058; F2-A10 (e) holds). Preparation apart from training holds on 120 of 120, and near mastery the ladder falls on 30 of 30. Should (f)’s diminishing returns be read in the growth the twenty sessions bring, with the forecast’s points left to the judge’s curve; or does (f) stay not met as clarified?",
-    "evidence": "docs/verification/completion-2026-10-16/advice/held-out-summary.json (held-out F2-A10: f.prepApart 120 of 120, f.ladderFalls 30 of 30 near mastery); docs/verification/completion-2026-10-16/advice/held-out-adv-h-0-9.json (adv-h-1’s f.ladder); clarifications.md, F2-A10 (f), with brief 10’s result kept",
-    "recommendation": "Read (f)’s diminishing returns in the growth the model gives (below three quarters of full each rung brings less, from there to full the same), held by the played test on tuning seeds, and leave the forecast’s points to the judge’s curve, which the forecast reads truly. That reading was formed after the held-out run, so it’s the owner’s to approve, not adopted here; until then (f) is counted not met."
-   }
+   "override": "Brief 12, the advice area (docs/verification/resolution-2026-10-17/advice-result.json): Through sim.execute and the drawn Player Profile and brief pane, across loadSave(deserialise(serialise(...))): adv-t-15 near mastery with The Spare Key taped cold (its own preparation held it back most); adv-t-4 beginner with the same take cold (an ability held it back); a take in a genre already known in full (TEST SETUP); the attention verdict driven to all four answers by changing one side at a time (TEST SETUP: every piece's own preparation complete and its genres known in full; every input training reaches at full); adv-t-1, adv-t-6 and adv-t-19 played twenty sessions against a baseline copy for F3, and one session played at 60 and at 85 against the forecast's one session for F6. The measure works every clause on every case, as built and with a cold take drawn from the seed: 30 of 30 tuning cases and 6 of 6 regression cases on 2d71d188."
   },
   {
    "id": "advice.F2A10-g",
@@ -11251,14 +11245,9 @@
    "implementation": "systems/experience.ts recommendations",
    "evidence": "tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the trained input’s forecast falls, and with another’s now ahead, another is named first’ (played tuning case); tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one’ (FIXTURE forecasts); docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands))",
    "sourceStatus": "owner decision",
-   "status": "Decision Required",
+   "status": "Implemented And Verified",
    "disposition": "owner decision",
-   "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The held-out set on 3de26e0b: as clarified, the own part fell on 116 of 120; as written, the forecast fell on 113 of 120; fell, or rose within discipline’s lift and said, 120 of 120",
-   "decision": {
-    "question": "F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 focus at 93), the forecast itself fell, so (h) as written holds there; the input’s own part rose because what an ability point is worth on the work isn’t monotone in the level (the judge’s curve, as in (f)). As written, the forecast fell on 113 of 120; the 7 that rose (adv-h-91, 100, 103, 106, 107, 110, 118, all near mastery) rose by a thousandth or less, each within discipline’s lift and said. Every case fell, or rose within discipline’s lift and said: 120 of 120. The first-named changed wherever another led, 51 of 51. Should (h) read: after the twenty sessions the forecast falls, or a rise is no more than discipline’s lift and is said; or does (h) stay not met, as written and as clarified?",
-    "evidence": "docs/verification/completion-2026-10-16/advice/held-out-summary.json (held-out F2-A10: h.fell 113, h.ownFell 116, h.withinLift 116, h.rose 7, h.explained 7, of 120); the held-out-adv-h-*.json cases’ h records; clarifications.md, F2-A10 (h), with brief 10’s result kept",
-    "recommendation": "Approve (h) as: after the twenty sessions the forecast falls, or a rise is no more than discipline’s lift and the advice says so (120 of 120 held out). That reading was seen to hold only after the held-out run, so it isn’t adopted here; until the owner approves it, (h) is counted not met, as written (113 of 120) and as clarified (116 of 120)."
-   }
+   "override": "Brief 12, the advice area (docs/verification/resolution-2026-10-17/advice-result.json): The players the owner named, through sim.execute and the drawn Player Profile, across loadSave(deserialise(serialise(...))): the follower near mastery (adv-t-19, twenty sessions, its forecast rose); the ignorer (adv-t-5, three weeks of taping, two briefs a week, no practice); the part follower (adv-t-5, seven of the twenty sessions, and twenty of the second-named's exercise); the work changer (adv-t-5, three voice briefs in genres never met); the player who reaches mastery (adv-t-19, practice.exercise up to four hours a day, 51 days to full). The detectors made to fire on adv-0 and adv-t-19 (an earlier read shown after the sessions; a note moved by a hundredth by hand; a note with no state, TEST SETUP). The measure checks every read it makes on every case (as built, the cold take, the follower, the ignorer and each other input's player): 485 reads and 806 changes on the 30 tuning cases, 0 stale and 0 unexplained."
   },
   {
    "id": "advice.F2A10-i",
@@ -11334,7 +11323,7 @@
     "commit": "3de26e0b",
     "watch": "engine"
    },
-   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
+   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -11822,39 +11811,10 @@
    "implementation": "Not recorded",
    "evidence": "tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > a restrained take can carry a scene that leans the other way, where the lean is slight: the specialist playing Earnest’s garden scene restrained is ahead of the even actor playing it expansive, and isn’t once the choice is only half rehearsed in’ (static); docs/verification/decisions-2026-10-16/integrated/after/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement)",
    "sourceStatus": "owner decision",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "disposition": "owner decision",
-   "override": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): Measured through the committed tool (tools/acting-criteria.ts measureST6R, its sorting block added for this): the specialist against its twin with restraint’s abilities at the even actor’s, restraint’s share of a take, (a) as the grain strengthens from nothing and as the budget rises, and the restrained choice in the specialist’s own frame; each of (g)’s mutations in a copy (tools/judge-mutations.mjs). The behaviors the owner asked for are held by gate tests; (a) itself is asserted by none.",
-   "decision": {
-    "question": "ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the nine others 40.56, 600 in all) to be ahead of the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of the 44 materials. Measured, it isn’t (2 of 44), and the sorting brief 11 asked for says why: nothing in the game is missing, and the clause, with (c), (e) and (g)’s second and third items, asks what the approved design rules out at this budget. Which comparison and which floor should hold the owner’s “meaningful opportunities to make a valid restrained interpretation work, even where a scene favors larger expression”, given one strength that mustn’t erase unrelated weaknesses, fair budgets, no restraint bonus and no rebalancing of the judge?",
-    "evidence": [
-     "Not missing gameplay: restraint’s own abilities are read and decide it. With emotional depth, composure and focus at the even actor’s 50 and nothing else changed (its twin, 515), the specialist’s restrained take falls 3.33 to 8.15 on all 96 materials both sides fit, by more than its expansive take on 94 (Hedda’s second act and Riders to the Sea are the two not: restraint suits them most, and the grain eases the take); each of the three alone 0.53 or more on all 96, by more than expansive on 91, 94 and 96. Against the grain the grain costs the specialist less than its twin on 40 of 44. Restraint’s draws are 0.33 to 0.90 of its lift (mean 0.62), on all 96. Restraint is the specialist’s better choice against the grain on 10 of 44, its twin’s on 2, the even actor’s on none. (st6.json, ST6R.sorting and diagnostics; tests/decisions-judge.test.ts, the two tests added.)",
-     "(a)’s floor is what the specialist reaches where the scene decides nothing: with the grain at nothing, 11 of 44 (25%). As the grain strengthens to its 0.3, 11, 5, 4 and 2 (at 0, 0.1, 0.2, 0.3), falling on every one of the 44. With the grain at nothing its wins include Antigone 441 and Oedipus 300 (gap 2), the scenes the gate test names as built on size. So (a) at 25% and (c)’s circumstances clause can’t both hold at this budget: the grain only takes wins away. (ST6R.sorting.grain.)",
-     "Under (g)’s own mutations the clauses move toward met, not away: the grain removed makes (a) met (11 of 44) and (e) met; restrained suitability forced to its least makes (c) met (abilities 0 against 12.9%, circumstances 45.8% against 0%) and (e) met, (a) 22 of 96. (mutations-st6.json.)",
-     "Reached otherwise only by what the approved design rules out: a budget of 631 or more (5.2% over the even actor’s; there the specialist is ahead of the even actor on 43 of the 50 materials restraint suits, both restrained, where restraint’s three carry 30% of a take on average, 19% to 41%: three strengths over nine weaknesses); the whole’s weakest-dimension term removed (brief 10: 11 of 42; H4, and brief 11’s “Do not reopen the entire balance model”); or a restraint bonus without a source (brief 10: “Do not … add an unexplained restraint bonus”). The budget sweep: 600 2, 604 5, 613 6, 622 8, 631 11, 640 19, 645.6 25.",
-     "Where the 25% came from: ST6 as written’s floor, for the specialist’s own restrained take against its own expansive one, carried to a comparison with the even actor and set beside ST6′’s 26 of 42, which compared 645.6 with 600 (the tool defect brief 10 found).",
-     "(c) and (e) rest on (a): (c)’s abilities part needs (a) at 10% or more (the even actor is at 0 of 44) and its circumstances part 5 wins in the slighter half; its preparation (0 half rehearsed against 2) and interpretation parts hold. (e) needs 6 wins from 6 works. (g)’s second item can’t be caught by any clause read on the materials against the grain, which the mutation makes all 96; (f) catches it (0 of 0), as do the stage criteria’s tests."
-    ],
-    "options": [
-     {
-      "option": "1. Keep ST6-R (a), (c) and (e) as written, counted not met, with this cause recorded.",
-      "measured": "(a) 2 of 44; (c) abilities 0 against −5.45%, preparation 0 against 2 (met), circumstances 9.1% against 0%, interpretation met; (e) 2 works, 1 family; (g) item 1 caught by (b′), items 2 and 3 by no clause that holds. ST6-R stays not met for good: the approved design leaves no change that meets it."
-     },
-     {
-      "option": "2. Restate (a) in the frame its 25% was set for: against the grain, restraint the restrained specialist’s better choice (its restrained take ahead of its own expansive one by more than 0.05), with (b′), its twin and the even actor as the controls that keep a useless restraint from passing; (c) and (e) asked in the same frame; (d) and (f) unchanged.",
-      "measured": "10 of 44 (22.7%; 11 of 44 as shown, ST6 as written’s figure), so at 25% still one material short; the twin 2, the even actor 0. In that frame (c): abilities 22.7% against 0% (met), half rehearsed 0 against 10 (met), the slighter half 45.5% against 0% (met), every win allowed; (e): 9 works, 4 families (comedy, drama, tragedy, romantic comedy), at most 2 from one work (met). Under (g): restraint’s draws out, 10 to 7, and (b′) 96 to 0 (caught); the grain removed, 44 of 44 with both halves at 100% (caught by circumstances); restraint’s suitability forced to its least, 46 of 96 (caught by (f), 0 of 0, and the stage criteria’s tests, not by this frame)."
-     },
-     {
-      "option": "3. Record (a), (c), (e) and (g)’s second and third items as superseded criteria, their figures kept (as ST3, ST6, H4 and L3 as written were), on the evidence that they contradict the approved design, with the owner’s ST6 behaviors held by the gate tests: restraint’s own abilities, restraint’s draws (b′), circumstances (the grain), preparation (half rehearsed), the limits, the slight-grain wins, and the materials restraint suits.",
-      "measured": "Every one of those tests passes on 75b5994b and fails under its mutation in a copy (test-mutations.json). No numbered floor for “viable” would remain."
-     },
-     {
-      "option": "4. Change the judge so (a) as written is met.",
-      "measured": "A budget of 631 or more, the weakest-dimension term removed, or a restraint bonus: each ruled out by the approved design (above)."
-     }
-    ],
-    "recommendation": "Option 2, with the floor the owner’s to set. Its frame is the one brief 11 names (“Preserve meaningful restrained choices”), the one the owner’s 25% came from, and the one a player faces: whether to play this scene restrained. It holds every other clause, and with (b′) and the twin it catches a restraint that draws nothing or whose abilities stop mattering. Kept at 25% it’s one material short (10 of 44), and ST6-R stays not met with that cause. Read against the even actor, as (c)’s abilities clause already reads it (at least 10 points more of these materials than the even actor), it’s 22.7% against 0% and met. That second floor is a proposal: it passes, and that isn’t a reason to adopt it; it’s the owner’s."
-   }
+   "override": "Brief 12, the acting area (docs/verification/resolution-2026-10-17/acting-result.json): Not measured again as a criterion. ST6-R’s whole measurement was run again on 86d9c8a5 and came out byte-identical to brief 11’s, so the record stands on the current code.",
+   "deferredBy": "The owner’s brief 12, section 1 (2026-10-17): “I approve judging restrained acting by meaningful, explainable gameplay benefits rather than requiring a specialist to beat a balanced actor a fixed percentage of the time. Revise ST6-R (a), (c), (e), and (g) individually around these requirements … Keep the original definitions and results as historical evidence. Mark them superseded with this authorization, not retroactively passed. Close each replacement clause only when its own evidence supports it.” Replaced by ST6-R2.a."
   },
   {
    "id": "ST6-R.b",
@@ -11899,14 +11859,10 @@
    "implementation": "Not recorded",
    "evidence": "tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > success depends on the scene: every win against the grain is on a material where the grain is slighter than on any of the limits’ (static); docs/verification/decisions-2026-10-16/integrated/after/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement)",
    "sourceStatus": "owner decision",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "disposition": "owner decision",
-   "override": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): Measured with (a) (st6.json, ST6R.verdict.c); each part in the specialist’s own frame (ST6R.sorting.ownChoice); (g)’s mutations in copies.",
-   "decision": {
-    "question": "Rests on ST6-R (a): see its decision. Abilities and circumstances fail only for want of (a)’s wins; preparation and interpretation hold.",
-    "recommendation": "Decided with (a). Under option 2 every part is met in the restrained choice’s frame.",
-    "evidence": "docs/verification/completion-2026-10-16/acting-result.json"
-   }
+   "override": "Brief 12, the acting area (docs/verification/resolution-2026-10-17/acting-result.json): Not measured again as a criterion; ST6-R’s measurement byte-identical on 86d9c8a5.",
+   "deferredBy": "The owner’s brief 12, section 1 (2026-10-17): “I approve judging restrained acting by meaningful, explainable gameplay benefits rather than requiring a specialist to beat a balanced actor a fixed percentage of the time. Revise ST6-R (a), (c), (e), and (g) individually around these requirements … Keep the original definitions and results as historical evidence. Mark them superseded with this authorization, not retroactively passed. Close each replacement clause only when its own evidence supports it.” Replaced by ST6-R2.c."
   },
   {
    "id": "ST6-R.d",
@@ -11951,14 +11907,10 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/integrated/after/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement)",
    "sourceStatus": "owner decision",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "disposition": "owner decision",
-   "override": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): Measured with (a) (st6.json, ST6R.verdict.e) and in the restrained choice’s frame (ST6R.sorting.ownChoice).",
-   "decision": {
-    "question": "Rests on ST6-R (a): see its decision.",
-    "recommendation": "Decided with (a). Under option 2 it’s met.",
-    "evidence": "docs/verification/completion-2026-10-16/acting-result.json"
-   }
+   "override": "Brief 12, the acting area (docs/verification/resolution-2026-10-17/acting-result.json): Not measured again as a criterion; ST6-R’s measurement byte-identical on 86d9c8a5.",
+   "deferredBy": "The owner’s brief 12, section 1 (2026-10-17): “I approve judging restrained acting by meaningful, explainable gameplay benefits rather than requiring a specialist to beat a balanced actor a fixed percentage of the time. Revise ST6-R (a), (c), (e), and (g) individually around these requirements … Keep the original definitions and results as historical evidence. Mark them superseded with this authorization, not retroactively passed. Close each replacement clause only when its own evidence supports it.” Replaced by ST6-R2.e."
   },
   {
    "id": "ST6-R.f",
@@ -12003,14 +11955,10 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/integrated/after/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement)",
    "sourceStatus": "owner decision",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "disposition": "owner decision",
-   "override": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): Each mutation in a copy against the criterion (tools/judge-mutations.mjs, mutations-st6.json) and against the gate tests (test-mutations.json). Clarification A1 reads the first item against (b′); A2 reads “it fails” against a clause that holds without the mutation.",
-   "decision": {
-    "question": "With A1, (g)’s first item is met. Its second and third aren’t caught by the clauses (g) names, and the third by none of ST6-R’s: they rest on what replaces (a) and (c). See ST6-R (a)’s decision.",
-    "recommendation": "Under option 2 all three are caught: the draws by (b′), the suitability by (f), the grain by the choice frame’s circumstances clause. The gate tests catch all three now.",
-    "evidence": "docs/verification/completion-2026-10-16/acting-result.json"
-   }
+   "override": "Brief 12, the acting area (docs/verification/resolution-2026-10-17/acting-result.json): Not run again as a criterion; brief 11’s mutation records stand.",
+   "deferredBy": "The owner’s brief 12, section 1 (2026-10-17): “I approve judging restrained acting by meaningful, explainable gameplay benefits rather than requiring a specialist to beat a balanced actor a fixed percentage of the time. Revise ST6-R (a), (c), (e), and (g) individually around these requirements … Keep the original definitions and results as historical evidence. Mark them superseded with this authorization, not retroactively passed. Close each replacement clause only when its own evidence supports it.” Replaced by ST6-R2.g."
   },
   {
    "id": "ST6.asWritten",
@@ -13758,7 +13706,7 @@
     "commit": "3de26e0b",
     "watch": "engine"
    },
-   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
+   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14177,7 +14125,7 @@
     "commit": "3de26e0b",
     "watch": "engine"
    },
-   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
+   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14478,7 +14426,7 @@
     "commit": "43a82efa",
     "watch": "app"
    },
-   "missing": "It was measured on 43a82efa, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
+   "missing": "It was measured on 43a82efa, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14505,7 +14453,7 @@
     "commit": "43a82efa",
     "watch": "app"
    },
-   "missing": "It was measured on 43a82efa, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
+   "missing": "It was measured on 43a82efa, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14532,7 +14480,7 @@
     "commit": "3de26e0b",
     "watch": "engine"
    },
-   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
+   "missing": "It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14559,7 +14507,7 @@
     "commit": "12f58cec",
     "watch": "app"
    },
-   "missing": "It was measured on 12f58cec, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again"
+   "missing": "It was measured on 12f58cec, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14723,6 +14671,106 @@
    "evidence": "Not recorded; docs/verification/completion-2026-10-16/research-result.json; docs/verification/resolution-2026-10-17/research-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "listed by the handoff or an area"
+  },
+  {
+   "source": "docs/verification/integration-2026-10-16/criteria.json",
+   "id": "ST6-R2.a",
+   "group": "Brief 12: Replacement Criteria",
+   "kind": "criterion",
+   "goal": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.a (committed in b8ac2f74 before any test or tool changed): carries R1, R2 and R8. (a1) emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05; (a2) by more with restraint’s draws than without, and each one’s own +10 by more with its own draw than without it, each more than 1e-9; (a3) each of the three at 0, 20, …, 100 raises the take at every step (more than 1e-9), and past full (110) moves nothing (the cap); (a4) a mastered actor, fully prepared, played restrained, comes to 100 with no draw and with one. On every class scene and play, night and brief reading, for the five actors.",
+   "entry": "Not recorded",
+   "preconditions": "The owner's authorization (Brief 12); it replaces ST6-R.a, which stays as historical evidence",
+   "reads": "Not recorded",
+   "decisions": "None: a criterion, not a player decision",
+   "validation": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.a (committed in b8ac2f74 before any test or tool changed): carries R1, R2 and R8. (a1) emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05; (a2) by more with restraint’s draws than without, and each one’s own +10 by more with its own draw than without it, each more than 1e-9; (a3) each of the three at 0, 20, …, 100 raises the take at every step (more than 1e-9), and past full (110) moves nothing (the cap); (a4) a mastered actor, fully prepared, played restrained, comes to 100 with no draw and with one. On every class scene and play, night and brief reading, for the five actors.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a3), more is better up to the cap: each of the three set to 0, 20, 40, 60, 80 and 100, everything else held, raises the restrained take at every step, on every piece for every actor; set past its full it moves nothing, the cap `termsOf` documents’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a4), the guarantee kept: a mastered actor, fully prepared, played restrained, on a sufficient day, comes to 100 on every class scene, play, night and brief reading, with no draw and with one’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: the measure judges each piece as the game does: with no way chosen, every class scene and play, night and brief reading comes to what tools/pieces.ts gives it, to the last digit; played restrained, every brief at its first reading comes to the brief pane’s own preview for a played save’s actor’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit’; docs/verification/resolution-2026-10-17/acting/st6r2.json ‘npx vite-node tools/interpretation.ts -- --st6r2 <file> --st6r2-only, on 86d9c8a5 (docs/verification/resolution-2026-10-17/acting/exits.txt)’; tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own craft pays: the restrained specialist’s lift over the even actor is larger playing restrained than expansive wherever both fit, and restraint’s draws are part of it on every one’; tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often’; tests/decisions-judge.test.ts ‘M1: mastery at 100 (brief 10) > every judged piece and reading comes to 100 for a mastered actor, prepared, on a sufficient day, with no draw and with a draw; and every class scene and play on every way of playing that fits’; tests/stage-interpretation.test.ts ‘the stage reads the scene, not the house > mastery: a mastered, prepared actor reaches 100 either way on a scene that suits one, the other side fitting’; tests/decisions-judge.test.ts ‘L3-R: real progress, controlled (brief 10) > more never makes it worse: raising any one ability, by ten or to full, never lowers a result, on every fourth piece for the even actor, a specialist, a beginner and a near-master’",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/resolution-2026-10-17/acting-result.json"
+  },
+  {
+   "source": "docs/verification/integration-2026-10-16/criteria.json",
+   "id": "ST6-R2.c",
+   "group": "Brief 12: Replacement Criteria",
+   "kind": "criterion",
+   "goal": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.c: carries R3 and R6. (c1) preparation in its direction; (c2) each circumstance one level up or down, and the scene’s grain read or not, strictly unless the grain’s floor holds it; (c3) a valid interpretation (a callback asking for size); (c4) H4-R (c)’s rule on restrained takes at its 1%, and the restrained specialist’s nine raised to 50.",
+   "entry": "Not recorded",
+   "preconditions": "The owner's authorization (Brief 12); it replaces ST6-R.c, which stays as historical evidence",
+   "reads": "Not recorded",
+   "decisions": "None: a criterion, not a player decision",
+   "validation": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.c: carries R3 and R6. (c1) preparation in its direction; (c2) each circumstance one level up or down, and the scene’s grain read or not, strictly unless the grain’s floor holds it; (c3) a valid interpretation (a callback asking for size); (c4) H4-R (c)’s rule on restrained takes at its 1%, and the restrained specialist’s nine raised to 50.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c2), the scene’s circumstances in their direction: on every class scene, play and night, each circumstance a level up or down, everything else held, moves restraint’s suitability its way and the restrained and expansive takes theirs, strictly wherever the suitability moved; and on every piece, reading the scene’s grain never moves a restrained take the wrong way, and lifts it wherever restraint suits’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c3), a valid interpretation: on every brief reading, under a callback asking for it expansive, restraint doesn’t fit, the chooser’s reason is the director’s, and the take is behind the same take under a callback asking for it restrained by more than 0.05, naming the misfit, for every actor; a mastered actor’s isn’t 100 there’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on’; docs/verification/resolution-2026-10-17/acting/st6r2.json ‘npx vite-node tools/interpretation.ts -- --st6r2 <file> --st6r2-only, on 86d9c8a5 (docs/verification/resolution-2026-10-17/acting/exits.txt)’; tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer’; tests/decisions-judge.test.ts ‘H4-R: every ability’s contribution on its own work (brief 10) > no strength erases an unrelated weakness: where an ability carries under a tenth of what a piece’s abilities move, its specialist is never ahead of the even actor’; tests/stage-interpretation.test.ts ‘the stage reads the scene, not the house > what a scene asks shows each circumstance with its level and its reason from the text, as it shows a feature’; tests/stage-interpretation.test.ts ‘the stage reads the scene, played > PLAYER JOURNEY: a class scene chosen restrained and expansive, its forecast following the scene’s circumstances, the choice kept through a reload’",
+   "status": "Decision Required",
+   "sourceStatus": "docs/verification/resolution-2026-10-17/acting-result.json",
+   "gap": "Two parts don’t hold as written, each from a limit the criteria didn’t name, not from a defect. (c2), the scene read or not: 10 of 784 pieces (50 of 3920 actor cases), every one a brief reading with restraint at exactly −0.01 or 0.01 (brief-grindhouse/terror, brief-isekai/nobody, brief-rockumentary/relief, brief-science_fantasy/wonder, brief-dance-2/two, brief-melodrama-2/pride, brief-musical-2/love, brief-mystery-2/cornered, brief-psychological_horror-2/together, brief-psychological_horror-2/loop), have a grain of 0.003 of difficulty, which `grainOf` keeps to a hundredth and so comes to nothing; none of 784 moves the wrong way. (c4), H4-R (c)’s rule on restrained takes: specialists ahead on 65 of 6344 pairs on every reading (0.0102; 60 of 3,433, 0.0175, on the gate’s first readings) against its 1%, all 65 against the grain, the ability carrying 0.0876 to 0.0995 of the take’s +10 effects, between the equal budget’s break-even (1/12) and a tenth, the most ahead 0.5527; under 1/12, 0 of 5101. 34 of the gate’s 60 are ahead with no way chosen too, and 27 played expansive: it isn’t restraint’s. Neither part is asserted by the gate.",
+   "decision": {
+    "question": "Should (c2)’s strict reading name the grain’s hundredth (`grainOf`) beside its floor as a documented limit, and should (c4) read “unrelated” on restrained takes as an ability carrying under the equal budget’s even share (1/12) rather than under a tenth?",
+    "evidence": "As in gap; the measure’s figures c2grain and c4 (docs/verification/resolution-2026-10-17/acting/st6r2.json).",
+    "recommendation": "Accept both and close ST6-R2.c on its evidence. A suitability of 0.01 is Either Way by the game’s own band, and no piece moves the wrong way; an ability carrying more than its even share at an equal budget is related to the work, and under it no specialist is ahead on any of 5,101 pairs. Both readings were seen after the run, so they’re proposed, not adopted. Keeping the tenth leaves (c4) at 1.02% on every reading, not met."
+   }
+  },
+  {
+   "source": "docs/verification/integration-2026-10-16/criteria.json",
+   "id": "ST6-R2.e",
+   "group": "Brief 12: Replacement Criteria",
+   "kind": "criterion",
+   "goal": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.e: carries R4 and R5. (e1) where the scene favors restraint, restraint the better choice for the beginner, the even actor, the restrained specialist and the near-master across at least 6 works and 3 register families, no work over a quarter, on stage and on tape; (e2) the restrained specialist with more such opportunities than the even actor, on stage and on tape; (e3) the mirror for size, the expansive specialist with more than the even actor.",
+   "entry": "Not recorded",
+   "preconditions": "The owner's authorization (Brief 12); it replaces ST6-R.e, which stays as historical evidence",
+   "reads": "Not recorded",
+   "decisions": "None: a criterion, not a player decision",
+   "validation": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.e: carries R4 and R5. (e1) where the scene favors restraint, restraint the better choice for the beginner, the even actor, the restrained specialist and the near-master across at least 6 works and 3 register families, no work over a quarter, on stage and on tape; (e2) the restrained specialist with more such opportunities than the even actor, on stage and on tape; (e3) the mirror for size, the expansive specialist with more than the even actor.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor’; docs/verification/resolution-2026-10-17/acting/st6r2.json ‘npx vite-node tools/interpretation.ts -- --st6r2 <file> --st6r2-only, on 86d9c8a5 (docs/verification/resolution-2026-10-17/acting/exits.txt)’; tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > where size is what the scene is built on, restraint has its limits: before Thebes, at Antigone’s defiance and in the two meetings the restrained take is behind the even actor’s expansive one, and the expansive specialist is ahead of it’; tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > the other half is kept: the expansive specialist playing expansive is ahead of its own restrained take on at least a quarter of the materials restraint suits better’; tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > success depends on the scene: every win against the grain is on a material where the grain is slighter than on any of the limits’",
+   "status": "Decision Required",
+   "sourceStatus": "docs/verification/resolution-2026-10-17/acting-result.json",
+   "gap": "(e2) and (e3)’s “more than the even actor” fail on stage alone, at a ceiling: the even actor’s opportunities there are already every suitable piece (66 of 66 for restraint, 57 of 57 for size), so neither specialist can have more. Beside it, option 2’s frame: against the grain restraint is the restrained specialist’s better choice on 13 of 57 stage pieces and 214 of 280 brief readings, the even actor’s on 0 and 40. And (e2) didn’t catch g1, restraint’s draws removed, though the criteria named it there: on tape the specialist’s opportunities stay over the even actor’s without them. The stage half isn’t asserted by the gate.",
+   "decision": {
+    "question": "Should (e2) and (e3)’s “more than the even actor” be read only where the even actor’s opportunities fall short of every suitable piece (tape, where both hold), or should R4 and R5 rest on (e1)’s and (e3)’s floors with (d) and (f)?",
+    "evidence": "As in gap; figures.e in docs/verification/resolution-2026-10-17/acting/st6r2.json.",
+    "recommendation": "Read “more” where there’s room above the even actor and close ST6-R2.e: on stage the specialist’s benefit shows against the grain (13 of 57 against 0), which the authorization moved away from making a floor. Seen after the run, so proposed, not adopted."
+   }
+  },
+  {
+   "source": "docs/verification/integration-2026-10-16/criteria.json",
+   "id": "ST6-R2.g",
+   "group": "Brief 12: Replacement Criteria",
+   "kind": "criterion",
+   "goal": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.g: carries R7. Each mutation in a copy runs the ST6-R2 gate tests; caught where a test that passes on the unmutated control fails; met where every mutation R7 names (g1 to g10) is caught, each by a test its clause names; g11 and g12 recorded with what caught them.",
+   "entry": "Not recorded",
+   "preconditions": "The owner's authorization (Brief 12); it replaces ST6-R.g, which stays as historical evidence",
+   "reads": "Not recorded",
+   "decisions": "None: a criterion, not a player decision",
+   "validation": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.g: carries R7. Each mutation in a copy runs the ST6-R2 gate tests; caught where a test that passes on the unmutated control fails; met where every mutation R7 names (g1 to g10) is caught, each by a test its clause names; g11 and g12 recorded with what caught them.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/resolution-2026-10-17/acting/mutations.json ‘VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 node tools/judge-mutations.mjs --list docs/verification/resolution-2026-10-17/acting/mutations.list.json --out docs/verification/resolution-2026-10-17/acting/mutations.json, on f17511ac’; docs/verification/resolution-2026-10-17/acting/mutations.list.json ‘the list, written from the criteria’s table, each edit’s text checked to occur once’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a3), more is better up to the cap: each of the three set to 0, 20, 40, 60, 80 and 100, everything else held, raises the restrained take at every step, on every piece for every actor; set past its full it moves nothing, the cap `termsOf` documents’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a4), the guarantee kept: a mastered actor, fully prepared, played restrained, on a sufficient day, comes to 100 on every class scene, play, night and brief reading, with no draw and with one’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c2), the scene’s circumstances in their direction: on every class scene, play and night, each circumstance a level up or down, everything else held, moves restraint’s suitability its way and the restrained and expansive takes theirs, strictly wherever the suitability moved; and on every piece, reading the scene’s grain never moves a restrained take the wrong way, and lifts it wherever restraint suits’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on’",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/resolution-2026-10-17/acting-result.json"
   }
  ]
 }

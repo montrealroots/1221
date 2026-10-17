@@ -463,6 +463,46 @@
      "title": "the list, written from the criteria’s table, each edit’s text checked to occur once",
      "kind": "guard",
      "proves": "what each mutation changes and which clauses the criteria named"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it",
+     "proves": "A gate test the mutations name: it fails under g1, g2, g3, g4, g5, g11, g11b (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit",
+     "proves": "A gate test the mutations name: it fails under g1, g2, g3, g4, g5, g9, g10 (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a3), more is better up to the cap: each of the three set to 0, 20, 40, 60, 80 and 100, everything else held, raises the restrained take at every step, on every piece for every actor; set past its full it moves nothing, the cap `termsOf` documents",
+     "proves": "A gate test the mutations name: it fails under g5, g11, g11b (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a4), the guarantee kept: a mastered actor, fully prepared, played restrained, on a sufficient day, comes to 100 on every class scene, play, night and brief reading, with no draw and with one",
+     "proves": "A gate test the mutations name: it fails under g5, g12 (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c2), the scene’s circumstances in their direction: on every class scene, play and night, each circumstance a level up or down, everything else held, moves restraint’s suitability its way and the restrained and expansive takes theirs, strictly wherever the suitability moved; and on every piece, reading the scene’s grain never moves a restrained take the wrong way, and lifts it wherever restraint suits",
+     "proves": "A gate test the mutations name: it fails under g6, g7, g8 (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor",
+     "proves": "A gate test the mutations name: it fails under g6, g8, g9 (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing",
+     "proves": "A gate test the mutations name: it fails under g9, g10 (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on",
+     "proves": "A gate test the mutations name: it fails under g11b (mutations.json), and passes on the code as it stands. Cited by the coordinator, 2026-10-17, where (g) had cited only the mutation record, which the gate doesn't run."
     }
    ],
    "mutations": [

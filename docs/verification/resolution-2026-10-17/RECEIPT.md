@@ -2,16 +2,16 @@
 
 Written by `receipt.py` from brief 11’s frozen baseline (the matrix at `main`’s `0e7ff7c2`), its classification, brief 12’s results and the matrix as it stands. Nothing here is typed.
 
-- **Against the original full baseline:** 561 of 608 (92.2%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
-- **The 46 actionable rows, each in one category:** closed 35; superseded 0; scope resolution 1; research assumption 2; remaining 8.
+- **Against the original full baseline:** 564 of 608 (92.7%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
+- **The 46 actionable rows, each in one category:** closed 37; superseded 4; scope resolution 1; research assumption 2; remaining 2.
 - **Outside them:** decision 4’s 23 rows, unchanged; brief 11’s 9 administrative rows.
-- **The matrix’s own count:** 561 of 599 rows in scope Implemented And Verified (93.6%); 29 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.
+- **The matrix’s own count:** 566 of 599 rows in scope Implemented And Verified (94.4%); 28 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
 
 ## The Actionable Rows
 
 | Row | Group | At The Baseline | Now | Category | By |
 |---|---|---|---|---|---|
-| `health.enroll` | Life, Health And Time | Implemented, Verification Incomplete | Implemented, Verification Incomplete | scope resolution | docs/verification/resolution-2026-10-17/health-result.json |
+| `health.enroll` | Life, Health And Time | Implemented, Verification Incomplete | Implemented And Verified | scope resolution | docs/verification/resolution-2026-10-17/health-result.json |
 | `l-actor` | Creation, Profile, Home And The Looks | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `tax.s8.f1_status` | Remaining Area: tax | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `tax.s8.ssn` | Remaining Area: tax | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
@@ -29,16 +29,16 @@ Written by `receipt.py` from brief 11’s frozen baseline (the matrix at `main`�
 | `advice.F2` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `advice.F2A10-a` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `advice.F2A10-c` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented, Verification Incomplete | remaining | nothing yet |
-| `advice.F2A10-f` | Brief 10 Area: advice | Decision Required | Decision Required | remaining | nothing yet |
-| `advice.F2A10-h` | Brief 10 Area: advice | Decision Required | Decision Required | remaining | nothing yet |
+| `advice.F2A10-f` | Brief 10 Area: advice | Decision Required | Implemented And Verified | closed | docs/verification/resolution-2026-10-17/advice-result.json |
+| `advice.F2A10-h` | Brief 10 Area: advice | Decision Required | Implemented And Verified | closed | docs/verification/resolution-2026-10-17/advice-result.json |
 | `advice.tests` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `advice.heldout` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented, Verification Incomplete | remaining | nothing yet |
 | `advice.harness-hospital` | Brief 10 Area: advice | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `ST3-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
-| `ST6-R.a` | Brief 10 Area: judge | Decision Required | Decision Required | remaining | nothing yet |
-| `ST6-R.c` | Brief 10 Area: judge | Decision Required | Decision Required | remaining | nothing yet |
-| `ST6-R.e` | Brief 10 Area: judge | Decision Required | Decision Required | remaining | nothing yet |
-| `ST6-R.g` | Brief 10 Area: judge | Decision Required | Decision Required | remaining | nothing yet |
+| `ST6-R.a` | Brief 10 Area: judge | Decision Required | Explicitly Deferred | superseded | docs/verification/resolution-2026-10-17/acting-result.json |
+| `ST6-R.c` | Brief 10 Area: judge | Decision Required | Explicitly Deferred | superseded | docs/verification/resolution-2026-10-17/acting-result.json |
+| `ST6-R.e` | Brief 10 Area: judge | Decision Required | Explicitly Deferred | superseded | docs/verification/resolution-2026-10-17/acting-result.json |
+| `ST6-R.g` | Brief 10 Area: judge | Decision Required | Explicitly Deferred | superseded | docs/verification/resolution-2026-10-17/acting-result.json |
 | `H4-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `L3-R.a` | Brief 10 Area: judge | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
 | `L3-R.b` | Brief 10 Area: judge | Implemented, Verification Incomplete | Implemented And Verified | closed | brief 11 |
@@ -58,21 +58,21 @@ Written by `receipt.py` from brief 11’s frozen baseline (the matrix at `main`�
 | `KS-ct-idcard` | Known Shortfalls And Missing Tests | Implemented, Verification Incomplete | Implemented And Verified | research assumption | docs/verification/resolution-2026-10-17/research-result.json |
 | `KS-passport-fees` | Known Shortfalls And Missing Tests | Implemented, Verification Incomplete | Implemented And Verified | research assumption | docs/verification/resolution-2026-10-17/research-result.json |
 
-## The Replacement Criteria (0)
+## The Replacement Criteria (4)
 
 | Row | Replaces | Status | Evidence |
 |---|---|---|---|
+| `ST6-R2.a` | ST6-R.a | Implemented And Verified | tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a3), more is better up to the c |
+| `ST6-R2.c` | ST6-R.c | Decision Required | tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST |
+| `ST6-R2.e` | ST6-R.e | Decision Required | tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor’; docs/verification/resolution-2026-10-17/acting/st6r2.json ‘npx vite-node t |
+| `ST6-R2.g` | ST6-R.g | Implemented And Verified | docs/verification/resolution-2026-10-17/acting/mutations.json ‘VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 node tools/judge-mutations.mjs --list docs/verification/resolution-2026-10-17/acting/mutations.list.json --out docs/verification/resolution-2026-10-17/acting/mutations.json, on f17511ac’; docs/verification/resolution-2026-10-17/acting/mutations.list.json ‘the list, written from the criteria’s table, each edit’s text checked to occur once’; tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a1) and (a2), a measurable contrib |
 
 ## What Remains
 
-- `advice.F2A10-c` (Brief 10 Area: advice): Implemented, Verification Incomplete: It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again
-- `advice.F2A10-f` (Brief 10 Area: advice): Decision Required: F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth
-- `advice.F2A10-h` (Brief 10 Area: advice): Decision Required: F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 foc
-- `advice.heldout` (Brief 10 Area: advice): Implemented, Verification Incomplete: It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, src/engine/content/passportsabroad.ts, …): measure it again
-- `ST6-R.a` (Brief 10 Area: judge): Decision Required: ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the nine others 40.56, 600 in all) to be ahead of the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of the 44 materials. Measured, it isn’t (2 of 44), and the sorting brief 11 asked for says why: nothing in the game is missing, and the clause, with (c), (e) and (g)’
-- `ST6-R.c` (Brief 10 Area: judge): Decision Required: Rests on ST6-R (a): see its decision. Abilities and circumstances fail only for want of (a)’s wins; preparation and interpretation hold.
-- `ST6-R.e` (Brief 10 Area: judge): Decision Required: Rests on ST6-R (a): see its decision.
-- `ST6-R.g` (Brief 10 Area: judge): Decision Required: With A1, (g)’s first item is met. Its second and third aren’t caught by the clauses (g) names, and the third by none of ST6-R’s: they rest on what replaces (a) and (c). See ST6-R (a)’s decision.
+- `advice.F2A10-c` (Brief 10 Area: advice): Implemented, Verification Incomplete: It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again
+- `advice.heldout` (Brief 10 Area: advice): Implemented, Verification Incomplete: It was measured on 3de26e0b, and what it reads has changed since (src/engine/content/guide/craft.ts, src/engine/content/guide/documents.ts, src/engine/content/guide/papers.ts, …): measure it again
+- `ST6-R2.c` (replacement): Decision Required: Should (c2)’s strict reading name the grain’s hundredth (`grainOf`) beside its floor as a documented limit, and should (c4) read “unrelated” on restrained takes as an ability carrying under the equal budget’s even share (1/12) rather than under a tenth?
+- `ST6-R2.e` (replacement): Decision Required: Should (e2) and (e3)’s “more than the even actor” be read only where the even actor’s opportunities fall short of every suitable piece (tape, where both hold), or should R4 and R5 rest on (e1)’s and (e3)’s floors with (d) and (f)?
 
 ## Decision 4’s Rows (23), Unchanged
 
@@ -102,9 +102,8 @@ Written by `receipt.py` from brief 11’s frozen baseline (the matrix at `main`�
 | `coverage09.3-unresolved` | Brief 09 Area: coverage | Decision Required | Decision Required |
 | `KS-bank-rows-scope` | Known Shortfalls And Missing Tests | Decision Required | Decision Required |
 
-## What The Receipt Found (7)
+## What The Receipt Found (6)
 
-- health.enroll (Life, Health And Time): called scope resolution, Implemented, Verification Incomplete in the matrix
 - F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now
 - MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now
 - INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now
