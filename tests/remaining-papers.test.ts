@@ -640,23 +640,24 @@ describe('tax.s8.idcard, its term', () => {
     expect(citizen).not.toContain('publishes no term');
   });
 
-  it('PLAYER JOURNEY: the term turned off after her card has come (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): it keeps 31 May 2029 across a save and a load, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost on the day it came, Monday 2 November 2026, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so', () => {
+  it('PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so', () => {
     const sim = withNumber(life('rp-uk-a', 'uk-eng-london'));
     drawn(sim, PassportPane);
     expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card, for $28.00; the card comes November 2, 2026; good until May 31, 2029.']);
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
-    sim.advanceTo(card.readyAt! + MS_HOUR);
-    expect([card.status, card.name, card.realId, card.expiresAt]).toEqual(['valid', 'Non-Driver Identification Card, Limited Term', false, Date.UTC(2029, 4, 31, 12)]);
+    expect([card.status, card.name, card.realId, card.expiresAt]).toEqual(['pending', 'Non-Driver Identification Card, Limited Term', false, Date.UTC(2029, 4, 31, 12)]);
     expect(taken(sim, 'Non-Driver Identification Card')).toEqual([28_00]);
     const posted = JSON.stringify(sim.universe.transactions);
     try {
       NONCITIZEN_ID.toLawfulPresence = false;
       const again = reload(sim);
-      // What was issued keeps its date, and nothing posted or said moves.
+      // What's on its way comes as it was applied for, and nothing posted moves.
+      expect(JSON.stringify(again.universe.transactions)).toBe(posted);
+      again.advanceTo(card.readyAt! + MS_HOUR);
       const kept = documentsOf(again.player).find((d) => d.id === card.id)!;
       expect([kept.status, kept.name, kept.realId, kept.expiresAt]).toEqual(['valid', 'Non-Driver Identification Card, Limited Term', false, Date.UTC(2029, 4, 31, 12)]);
-      expect(JSON.stringify(again.universe.transactions)).toBe(posted);
       expect(titled(again, 'Non-Driver Identification Card, Limited Term Arrived')).toHaveLength(1);
+      expect(taken(again, 'Non-Driver Identification Card')).toEqual([28_00]);
       expect(refusal(again, 'documents.apply_idcard')).toBe('You hold one in force.');
       expect(drawn(again, PassportPane)).toContain('You’re not a US citizen, and your card runs its years to a birthday as anyone’s does. That’s SLATE’s assumption, not the state’s published policy');
       // Reported lost, a new card is applied for, and takes the term as it now stands.
