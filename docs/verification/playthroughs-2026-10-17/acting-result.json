@@ -1,0 +1,539 @@
+{
+ "area": "acting",
+ "on": "2026-10-17",
+ "clone": "acting13, from 09a37a18",
+ "commits": [
+  "e1ed27fa",
+  "0ddfaed1",
+  "c66db54a",
+  "423dc68c",
+  "(this file’s commit)"
+ ],
+ "ruleset": "Unmoved: evaluation-11 (2026-10-16). The one change to src is two comments (grainOf's hundredth documented; the take record's grain line said to be absent where the grain came to nothing). Brief 12's st6r2.json, brief 11's st6.json and brief 10's st3.json and stage.json come out byte-identical on 423dc68c. The save schema stays 94.",
+ "judgedMoved": false,
+ "rows": [
+  {
+   "id": "ST6-R2.c",
+   "group": "Brief 12: Replacement Criteria",
+   "baselineStatus": "Decision Required",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "criterion": "docs/verification/playthroughs-2026-10-17/acting-criteria.md, ST6-R2.c clarified (committed in e1ed27fa before any test, tool or measurement): (c1) and (c3) as brief 12 wrote them; (c2′) the scene's circumstances in their direction down to the engine's precision: (c2.1) a circumstance a level at a time as brief 12 wrote it, (c2.2) the grain read or not never the wrong way, strictly the right way wherever grainOf keeps a share, the same exactly where the rule keeps none (the readings at ±0.01), connected there at full precision, (c2.3) the hundredth, the floor and the hold at ±1, below, at and above, (c2.4) meaningful changes reach the work; (c4′) no erased weakness by the dependency path: (c4.1) the map is the engine's, one input at a time, (c4.2) no unrelated strength ahead at four budgets, (c4.3) each weakness still costing, one input at a time, brief 12's nine raised kept, (c4.4) the equal-budget pairs kept apart and reported. Brief 12's (c) and its results kept word for word beside it; H4-R's tenth and 1/12 decide nothing.",
+   "exercised": "Every piece a player can play restrained (784: 97 class scenes and plays, 30 nights, 657 brief readings), judged through the context the judge reads (`R2Case.context`, checked to give brief 12's measure byte for byte), for brief 12's five actors and the nine fresh comparison actors (the measurement) and the five (the gate); a share of difficulty set directly for the boundary tests (TEST SETUP); and played through the brief commands on Rockumentary's readings at +0.01 and −0.02, taped, saved and opened again.",
+   "trace": {
+    "ten": "The ten brief readings at ±0.01 (brief-grindhouse/terror, brief-isekai/nobody, brief-rockumentary/relief, brief-science_fantasy/wonder, brief-dance-2/two, brief-melodrama-2/pride, brief-musical-2/love, brief-mystery-2/cornered, brief-psychological_horror-2/together, brief-psychological_horror-2/loop): one common cause, grainOf's internal quantization. suitabilityOf keeps each signal and s to a hundredth; grainOf works the share of difficulty as GRAIN.strength × s × stakesScale × (lean − 1)/most, 0.0026 to 0.0039 on believability and 0.0005 to 0.0008 on consistency at stakes 0 to 3, and keeps it to a hundredth: nothing; the mark stays 0.9. The judge gets the same inputs read or not, so the exact takes are equal (50 of 50), which is not display rounding (the result's tenth) and no gameplay limit (no floor, hold or cap reached). Carried at full precision each moves the right way, by 0.0629 at most for brief 12's actors (0.0777 for the fresh ones), 47 of 140 actor-cases a shown tenth. From ±0.02 every take moves the right way (least 0.0061); none of 784 moves the wrong way. The hundredth was undocumented; it is now, in grainOf's comment.",
+    "sixtyFive": "The 65 of 6,344 pairs: one common cause in three parts. Each ability has a path into the take (61 direct, 16 of them restraint's own draws, focus 9 and composure 7; 1 a supporting read, listening in Major Barbara's scene; 3 stamina through the drain; none unrelated). Each lead (0.0509 to 0.5527) is the equal budget's arithmetic: the strength's own gain alone (2.3656 to 3.2484) plus the eleven's own cost alone (−2.2772 to −2.6816) plus an interaction of −0.1654 to +0.0165; every share over 1/12 (0.0876 at least). All 65 are against the grain, and under a tenth, because only there is believability alone at the bottom of every segment of the even actor's take (65 of 65; 171 of the 514 others in the window; 0 of 664 with the grain or level): there a +10 and the specialist's −3.18 move the whole's weakest term alike and the +10 shares are linear (the eleven's cost over what the shares predict, median 1.028), while elsewhere connection, consistency and responsiveness, which read no technique, tie at the bottom and the shares understate the cost by about a third (median 1.344 to 1.379), so the break-even rises to about a tenth: with the grain or level no specialist under a tenth is ahead. 38 are ahead with no way chosen too, 30 played expansive, 33 with the grain at nothing: the work's arithmetic, not restraint's. Under 1/12, 0 of 5,101 above the even actor at all. Each pair is listed with its decomposition and path in acting/trace.json (sixtyFive).",
+    "file": "docs/verification/playthroughs-2026-10-17/acting/trace.json"
+   },
+   "dependencyMap": "From the context the judge reads: direct where restraint draws on it or a dimension reads it at least as much as the work's own profile reads that dimension's leading ability; small but legitimate where only under that (a supporting read); indirect where only the drain reads it (stamina, on every piece); none where nothing in the take does. On the 784: emotional depth, composure, focus (restraint's draws), presence, imagination, memory, adaptability and discipline direct everywhere; listening direct on 73 scenes, 18 nights and every brief reading, small on 24 and 12; vocal direct 70/15/444, small 27/15/12, none on 201 brief readings; physical direct 62/14/516, small 35/16, none on 141 brief readings; stamina indirect everywhere. Outside the take, held fixed by a controlled take: preparation (focus, memory, imagination, adaptability, listening speed a class scene's steps; imagination, memory and listening a brief's; memory and adaptability a night's; the choice's own rehearsal reads no ability), condition (composure and adaptability recover a slip; composure lessens nerves; stamina sets a night's energy), progression (discipline lifts all growth). Unrelated means none: vocal and physical on the 342 brief readings that stage neither. Checked one input at a time: 9,408 of 9,408 on the even actor in the trace, 131,712 of 131,712 for fourteen actors in the measurement.",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.2), the scene read or not, down to the engine’s precision: on every piece, for every actor, reading the scene’s grain never moves a restrained take the wrong way, moves it strictly the right way wherever grainOf keeps a share of it, and leaves it the same exactly where the rule keeps none, the brief readings at a suitability of ±0.01; carried at full precision there, it moves each the right way",
+     "kind": "fixture",
+     "proves": "(c2.2) on every piece for brief 12's five actors: never the wrong way, strict wherever a share is kept (least 0.0061), the same where none is, the excused exactly the pieces at ±0.01, each moving the right way at full precision (under 0.1). Measured for fourteen actors: 10976 actor-cases, 140 excused, at full precision 0.0035 to 0.0777"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.3), the boundaries: on the real readings the grain moves nothing at a suitability of 0 and ±0.01 and every take strictly the right way at ±0.02; the judge reads every hundredth it’s handed, the grain’s floor holds at −0.75 and not past it, and a circumstance moves a side’s suitability and its take until the side’s sum is past ±1, and then neither",
+     "kind": "fixture",
+     "proves": "(c2.3): at s = 0 and ±0.01 the same, at ±0.02 strict (56 actor-cases for fourteen actors, least 0.0061); a share of −0.01/0/+0.01 handed directly moves every actor's take strictly; the floor holds at −0.76 and −0.75 alike and not at −0.74; the hold: 1324 changes inside ±1 and 36 reaching it move suitability and take, 26 past it move neither"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.1), the dependency map is the engine’s: on every piece, for every actor, each of the twelve raised alone by 10 moves the restrained take wherever the context the judge reads gives it a path (directly, as a supporting read or through the drain), and moves nothing where it gives none",
+     "kind": "fixture",
+     "proves": "(c4.1) on the gate's 425 pieces for the five: each ability raised alone by 10 moves the take exactly where the map gives a path; every class present. Measured on every reading for fourteen actors: 131712 checks, least move with a path 0.0312"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.2), no strength where it’s unrelated: on every piece, every ability nothing in the take reads (the voice or the body on a brief with neither in it) leaves its specialist behind its comparison actor, at brief 12’s budget and the three fresh ones",
+     "kind": "fixture",
+     "proves": "(c4.2): every unrelated pair (1368: vocal on 201 and physical on 141 brief readings, at four budgets) has the specialist behind its comparison actor, by 0.4937 at least"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.3), a weakness still costs, one input at a time: on every piece, for each of the twelve specialists at brief 12’s budget, each of its eleven the take reads, raised alone to the even actor’s 50, raises its restrained take, each it doesn’t read moves nothing, and the eleven together raise it",
+     "kind": "fixture",
+     "proves": "(c4.3) on the gate's pieces at brief 12's budget: each weakness the take reads, raised alone, raises the specialist's take, each it doesn't moves nothing, the eleven together raise it. Measured at four budgets on every reading: 37632 specialist-cases, least together {'brief12': 1.8114, 'beginner': 1.8148, 'stronger': 2.3451, 'nearMaster': 0.3747}, least single 0.0028"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2.c and ST6-R2.e clarified (brief 13) > PLAYER JOURNEY: ST6-R2.c’s precision as a player meets it: Rockumentary’s brief read for relief, which restraint suits by 0.01, chosen restrained, prepared and taped, keeps a share of nothing and no line on the scene, its take what it is with the grain taken out; read as the pro, against it by 0.02, it keeps a hundredth on believability and the take is lower for it; saved and opened again, both takes replay to the last digit",
+     "kind": "player journey",
+     "proves": "Through brief.choose, brief.prepare and practice.self_tape: Rockumentary's relief reading (restraint 0.01, Either Way on the chooser) keeps a share of nothing, no grain line, and its take equals its replay with the grain taken out; the pro reading (−0.02) keeps 0.01 on believability and its take is lower than without it; after a save and a load both replay to the last digit"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing",
+     "kind": "fixture",
+     "proves": "(c1) as brief 12 wrote it, asserted as it was"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c2), the scene’s circumstances in their direction: on every class scene, play and night, each circumstance a level up or down, everything else held, moves restraint’s suitability its way and the restrained and expansive takes theirs, strictly wherever the suitability moved; and on every piece, reading the scene’s grain never moves a restrained take the wrong way, and lifts it wherever restraint suits",
+     "kind": "fixture",
+     "proves": "(c2.1), a circumstance a level at a time, for the five, as brief 12 wrote it; measured for fourteen actors on 9,702 changes, none failing"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c3), a valid interpretation: on every brief reading, under a callback asking for it expansive, restraint doesn’t fit, the chooser’s reason is the director’s, and the take is behind the same take under a callback asking for it restrained by more than 0.05, naming the misfit, for every actor; a mastered actor’s isn’t 100 there",
+     "kind": "fixture",
+     "proves": "(c3) as brief 12 wrote it, asserted as it was"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on",
+     "kind": "fixture",
+     "proves": "(c4.3)'s kept part: the nine raised lift the restrained specialist's take by 3.8369 at least"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/acting/st6r2-13-c.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6r2-13 <file> --part c, on c66db54a (acting/exits.txt)",
+     "kind": "measurement",
+     "proves": "every part of (c) met on every reading for brief 12's five actors and the nine fresh comparison actors, and at the three fresh budgets (verdict.c21 to c43 all met); (c4.4)'s pairs kept apart: 65 of 6,344 ahead, 61 direct, 3 indirect, 1 small, all against the grain"
+    }
+   ],
+   "mutations": [
+    {
+     "id": "h1",
+     "what": "the grain removed (GRAIN.strength 0)",
+     "mustFail": "(c2.2)",
+     "caughtBy": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.2), the scene read or not, down to the engine’s precision: on every piece, for every actor, reading the scene’s grain never moves a restrained take the wrong way, moves it strictly the right way wherever grainOf keeps a share of it, and leaves it the same exactly where the rule keeps none, the brief readings at a suitability of ±0.01; carried at full precision there, it moves each the right way; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.3), the boundaries: on the real readings the grain moves nothing at a suitability of 0 and ±0.01 and every take strictly the right way at ±0.02; the judge reads every hundredth it’s handed, the grain’s floor holds at −0.75 and not past it, and a circumstance moves a side’s suitability and its take until the side’s sum is past ±1, and then neither; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e2′), restraint’s abilities widen its opportunities where there’s room: for each comparison actor, its counterpart at the same budget has more where it has room and every suitable piece where it hasn’t (a ceiling case), restraint’s draws carry part of what it gains on every suitable piece, its opportunities and what it gains are varied, and it gains none of size’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > PLAYER JOURNEY: ST6-R2.c’s precision as a player meets it: Rockumentary’s brief read for relief, which restraint suits by 0.01, chosen restrained, prepared and taped, keeps a share of nothing and no line on the scene, its take what it is with the grain taken out; read as the pro, against it by 0.02, it keeps a hundredth on believability and the take is lower for it; saved and opened again, both takes replay to the last digit",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.c"
+    },
+    {
+     "id": "h2",
+     "what": "the grain read backwards (a side against the scene made easier, one with it harder)",
+     "mustFail": "(c2.2)",
+     "caughtBy": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.2), the scene read or not, down to the engine’s precision: on every piece, for every actor, reading the scene’s grain never moves a restrained take the wrong way, moves it strictly the right way wherever grainOf keeps a share of it, and leaves it the same exactly where the rule keeps none, the brief readings at a suitability of ±0.01; carried at full precision there, it moves each the right way; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.3), the boundaries: on the real readings the grain moves nothing at a suitability of 0 and ±0.01 and every take strictly the right way at ±0.02; the judge reads every hundredth it’s handed, the grain’s floor holds at −0.75 and not past it, and a circumstance moves a side’s suitability and its take until the side’s sum is past ±1, and then neither; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e2′), restraint’s abilities widen its opportunities where there’s room: for each comparison actor, its counterpart at the same budget has more where it has room and every suitable piece where it hasn’t (a ceiling case), restraint’s draws carry part of what it gains on every suitable piece, its opportunities and what it gains are varied, and it gains none of size’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > PLAYER JOURNEY: ST6-R2.c’s precision as a player meets it: Rockumentary’s brief read for relief, which restraint suits by 0.01, chosen restrained, prepared and taped, keeps a share of nothing and no line on the scene, its take what it is with the grain taken out; read as the pro, against it by 0.02, it keeps a hundredth on believability and the take is lower for it; saved and opened again, both takes replay to the last digit",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.c"
+    },
+    {
+     "id": "h3",
+     "what": "grainOf keeps the grain's share to a tenth (a coarser precision hiding the mechanic)",
+     "mustFail": "(c2.2)",
+     "caughtBy": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.2), the scene read or not, down to the engine’s precision: on every piece, for every actor, reading the scene’s grain never moves a restrained take the wrong way, moves it strictly the right way wherever grainOf keeps a share of it, and leaves it the same exactly where the rule keeps none, the brief readings at a suitability of ±0.01; carried at full precision there, it moves each the right way; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.3), the boundaries: on the real readings the grain moves nothing at a suitability of 0 and ±0.01 and every take strictly the right way at ±0.02; the judge reads every hundredth it’s handed, the grain’s floor holds at −0.75 and not past it, and a circumstance moves a side’s suitability and its take until the side’s sum is past ±1, and then neither; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e2′), restraint’s abilities widen its opportunities where there’s room: for each comparison actor, its counterpart at the same budget has more where it has room and every suitable piece where it hasn’t (a ceiling case), restraint’s draws carry part of what it gains on every suitable piece, its opportunities and what it gains are varied, and it gains none of size’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > PLAYER JOURNEY: ST6-R2.c’s precision as a player meets it: Rockumentary’s brief read for relief, which restraint suits by 0.01, chosen restrained, prepared and taped, keeps a share of nothing and no line on the scene, its take what it is with the grain taken out; read as the pro, against it by 0.02, it keeps a hundredth on believability and the take is lower for it; saved and opened again, both takes replay to the last digit",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.c"
+    },
+    {
+     "id": "h4",
+     "what": "grainOf keeps the grain's share at full precision (the documented hundredth gone)",
+     "mustFail": "(c2.2)",
+     "caughtBy": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.2), the scene read or not, down to the engine’s precision: on every piece, for every actor, reading the scene’s grain never moves a restrained take the wrong way, moves it strictly the right way wherever grainOf keeps a share of it, and leaves it the same exactly where the rule keeps none, the brief readings at a suitability of ±0.01; carried at full precision there, it moves each the right way; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.3), the boundaries: on the real readings the grain moves nothing at a suitability of 0 and ±0.01 and every take strictly the right way at ±0.02; the judge reads every hundredth it’s handed, the grain’s floor holds at −0.75 and not past it, and a circumstance moves a side’s suitability and its take until the side’s sum is past ±1, and then neither; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > PLAYER JOURNEY: ST6-R2.c’s precision as a player meets it: Rockumentary’s brief read for relief, which restraint suits by 0.01, chosen restrained, prepared and taped, keeps a share of nothing and no line on the scene, its take what it is with the grain taken out; read as the pro, against it by 0.02, it keeps a hundredth on believability and the take is lower for it; saved and opened again, both takes replay to the last digit",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.c"
+    },
+    {
+     "id": "h5",
+     "what": "the grain's floor removed (the difficulty a share leaves no longer held at GRAIN.floor − 1)",
+     "mustFail": "(c2.3)",
+     "caughtBy": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.3), the boundaries: on the real readings the grain moves nothing at a suitability of 0 and ±0.01 and every take strictly the right way at ±0.02; the judge reads every hundredth it’s handed, the grain’s floor holds at −0.75 and not past it, and a circumstance moves a side’s suitability and its take until the side’s sum is past ±1, and then neither",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.c"
+    },
+    {
+     "id": "h6",
+     "what": "a side's suitability no longer held to −1..1",
+     "mustFail": "(c2.3)",
+     "caughtBy": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.3), the boundaries: on the real readings the grain moves nothing at a suitability of 0 and ±0.01 and every take strictly the right way at ±0.02; the judge reads every hundredth it’s handed, the grain’s floor holds at −0.75 and not past it, and a circumstance moves a side’s suitability and its take until the side’s sum is past ±1, and then neither",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.c"
+    },
+    {
+     "id": "h7",
+     "what": "the scene's circumstances not read (CIRCUMSTANCE_AFFINITY skipped)",
+     "mustFail": "(c2.1), (c2.3)",
+     "caughtBy": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c2), the scene’s circumstances in their direction: on every class scene, play and night, each circumstance a level up or down, everything else held, moves restraint’s suitability its way and the restrained and expansive takes theirs, strictly wherever the suitability moved; and on every piece, reading the scene’s grain never moves a restrained take the wrong way, and lifts it wherever restraint suits; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.3), the boundaries: on the real readings the grain moves nothing at a suitability of 0 and ±0.01 and every take strictly the right way at ±0.02; the judge reads every hundredth it’s handed, the grain’s floor holds at −0.75 and not past it, and a circumstance moves a side’s suitability and its take until the side’s sum is past ±1, and then neither; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.c"
+    },
+    {
+     "id": "h8",
+     "what": "every ability read at the performer's strongest (a strength covering every weakness)",
+     "mustFail": "(c4.2), (c4.3)",
+     "caughtBy": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.1), the dependency map is the engine’s: on every piece, for every actor, each of the twelve raised alone by 10 moves the restrained take wherever the context the judge reads gives it a path (directly, as a supporting read or through the drain), and moves nothing where it gives none; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.2), no strength where it’s unrelated: on every piece, every ability nothing in the take reads (the voice or the body on a brief with neither in it) leaves its specialist behind its comparison actor, at brief 12’s budget and the three fresh ones; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.3), a weakness still costs, one input at a time: on every piece, for each of the twelve specialists at brief 12’s budget, each of its eleven the take reads, raised alone to the even actor’s 50, raises its restrained take, each it doesn’t read moves nothing, and the eleven together raise it; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e2′), restraint’s abilities widen its opportunities where there’s room: for each comparison actor, its counterpart at the same budget has more where it has room and every suitable piece where it hasn’t (a ceiling case), restraint’s draws carry part of what it gains on every suitable piece, its opportunities and what it gains are varied, and it gains none of size’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > GUARD: ST6-R2.e, the abilities’ part alone, proposed to the owner and not the clause as written: with the scene’s grain at nothing for both takes, every counterpart’s margin on its own side is ahead of its comparison actor’s by more than 0.05 on every suitable piece, and its margin on the other side behind, both ways, for every comparison actor",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.c"
+    },
+    {
+     "id": "h9",
+     "what": "vocal read on every taped brief's believability, outside the context the map reads (a hidden dependency)",
+     "mustFail": "(c4.1)",
+     "caughtBy": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.1), the dependency map is the engine’s: on every piece, for every actor, each of the twelve raised alone by 10 moves the restrained take wherever the context the judge reads gives it a path (directly, as a supporting read or through the drain), and moves nothing where it gives none; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.3), a weakness still costs, one input at a time: on every piece, for each of the twelve specialists at brief 12’s budget, each of its eleven the take reads, raised alone to the even actor’s 50, raises its restrained take, each it doesn’t read moves nothing, and the eleven together raise it",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.c"
+    },
+    {
+     "id": "h10",
+     "what": "listening not read by the judge (read at 50 whatever its level)",
+     "mustFail": "(c4.1), (c4.3)",
+     "caughtBy": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.1), the dependency map is the engine’s: on every piece, for every actor, each of the twelve raised alone by 10 moves the restrained take wherever the context the judge reads gives it a path (directly, as a supporting read or through the drain), and moves nothing where it gives none; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.3), a weakness still costs, one input at a time: on every piece, for each of the twelve specialists at brief 12’s budget, each of its eleven the take reads, raised alone to the even actor’s 50, raises its restrained take, each it doesn’t read moves nothing, and the eleven together raise it; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e2′), restraint’s abilities widen its opportunities where there’s room: for each comparison actor, its counterpart at the same budget has more where it has room and every suitable piece where it hasn’t (a ceiling case), restraint’s draws carry part of what it gains on every suitable piece, its opportunities and what it gains are varied, and it gains none of size’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.c"
+    },
+    {
+     "id": "h14",
+     "what": "restrained suitability forced to its least on every material",
+     "mustFail": "(e1), (c2.2)",
+     "caughtBy": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing; ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor; ST6-R2: restrained acting judged by what it does for a player (brief 12) > PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.2), the scene read or not, down to the engine’s precision: on every piece, for every actor, reading the scene’s grain never moves a restrained take the wrong way, moves it strictly the right way wherever grainOf keeps a share of it, and leaves it the same exactly where the rule keeps none, the brief readings at a suitability of ±0.01; carried at full precision there, it moves each the right way; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.3), the boundaries: on the real readings the grain moves nothing at a suitability of 0 and ±0.01 and every take strictly the right way at ±0.02; the judge reads every hundredth it’s handed, the grain’s floor holds at −0.75 and not past it, and a circumstance moves a side’s suitability and its take until the side’s sum is past ±1, and then neither; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e2′), restraint’s abilities widen its opportunities where there’s room: for each comparison actor, its counterpart at the same budget has more where it has room and every suitable piece where it hasn’t (a ceiling case), restraint’s draws carry part of what it gains on every suitable piece, its opportunities and what it gains are varied, and it gains none of size’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > PLAYER JOURNEY: ST6-R2.c’s precision as a player meets it: Rockumentary’s brief read for relief, which restraint suits by 0.01, chosen restrained, prepared and taped, keeps a share of nothing and no line on the scene, its take what it is with the grain taken out; read as the pro, against it by 0.02, it keeps a hundredth on believability and the take is lower for it; saved and opened again, both takes replay to the last digit",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.c"
+    }
+   ],
+   "history": "Brief 12's (c2) and (c4) as written stay not met: (c2)'s strict reading on 10 of 784 pieces, (c4)'s 65 of 6,344 pairs (1.02%) against 1%. Neither is passed retroactively; brief 13's clarification replaced the two readings, as the owner authorized, and the clarified clause closes on its own evidence."
+  },
+  {
+   "id": "ST6-R2.e",
+   "group": "Brief 12: Replacement Criteria",
+   "baselineStatus": "Decision Required",
+   "disposition": "remaining",
+   "status": "Decision Required",
+   "criterion": "docs/verification/playthroughs-2026-10-17/acting-criteria.md, ST6-R2.e clarified (committed in e1ed27fa): (e1) as brief 12 wrote it; (e2′) where there's room: (e2.1) ceiling cases kept, (e2.2) the counterpart S(C) (restraint's shift at C's budget) with more opportunities wherever C has room, at least one fresh comparison actor with room on each medium, (e2.3) on every restraint-suitable piece S(C)'s restraint margin ahead of C's by more than 0.05, (e2.4) restraint's draws carrying part of that extra margin, (e2.5) varied existing material: S(C)'s opportunities and the gains across the fresh actors each meeting brief 10's floors; (e3′) the mirror for size; (e4) S(C)'s size margin behind C's on every size-suitable piece and its size opportunities no more than C's, and the mirror.",
+   "exercised": "Equal-budget pairs, fully prepared, on a sufficient day, with no draw, on every suitable piece of every kind: the even actor and the beginner (informing), V1 to V5 for restraint and V1′ to V4′ and V5 for size (fresh, named in the criteria, run once on c66db54a).",
+   "results": {
+    "met": [
+     "(e1) as written",
+     "(e2.1) and (e3.1): the ceiling cases named: for restraint on stage the even actor, the beginner and V5 (66 of 66), for size on stage the even actor and the beginner (57 of 57); a ceiling's limit is that no actor has more than every suitable piece",
+     "(e2.2) and (e3.2): every comparison actor with room, its counterpart has more: even (600): stage 66 → 66 of 66 (ceiling), tape 363 → 369 of 369; beginner (420): stage 66 → 66 of 66 (ceiling), tape 368 → 369 of 369; V1 (600): stage 55 → 66 of 66, tape 268 → 369 of 369; V2 (600): stage 36 → 65 of 66, tape 169 → 366 of 369; V3 (780): stage 50 → 66 of 66, tape 252 → 369 of 369; V4 (420): stage 56 → 66 of 66, tape 287 → 369 of 369; V5 (780): stage 66 → 66 of 66 (ceiling), tape 362 → 369 of 369; size: even (600): stage 57 → 57 of 57 (ceiling), tape 217 → 279 of 280; beginner (420): stage 57 → 57 of 57 (ceiling), tape 215 → 279 of 280; V1′ (600): stage 54 → 57 of 57, tape 208 → 267 of 280; V2′ (600): stage 47 → 57 of 57, tape 150 → 182 of 280; V3′ (780): stage 49 → 57 of 57, tape 196 → 269 of 280; V4′ (420): stage 54 → 57 of 57, tape 203 → 267 of 280; V5 (780): stage 56 → 57 of 57, tape 213 → 279 of 280",
+     "(e2.4) and (e3.4): the side's draws carry part of the extra margin on every suitable piece (least 0.2364 restraint, 0.1881 size)",
+     "(e2.5) for restraint: every counterpart's opportunities varied on both media; the gains together: stage {\"count\": 30, \"works\": 20, \"families\": 6, \"mostFromOneWork\": 3}, tape {\"count\": 200, \"works\": 149, \"families\": 99, \"mostFromOneWork\": 3}",
+     "(e3.5) for size on tape: {\"count\": 130, \"works\": 98, \"families\": 71, \"mostFromOneWork\": 3}; every size counterpart's own opportunities varied on both media",
+     "(e4)'s count: no counterpart has more of the other side's opportunities than its comparison actor, on either medium"
+    ],
+    "notMet": [
+     "(e2.3): on 25 of 3,045 actor-pieces, every one a brief reading, the restraint counterpart's margin isn't ahead by more than 0.05 (even 2, beginner 1, V1 3, V2 5, V3 11, V4 1, V5 2; least −0.691, V3 on brief-espionage/father)",
+     "(e3.3): on 576 of 2,359 the size counterpart's isn't (V1′ 150, V2′ 161, V3′ 139, V4′ 125, V5 1; least −3.6748), mostly against the actors leaning toward restraint",
+     "(e4)'s margin: on 8 of 2,359 size-suitable actor-pieces the restraint counterpart's size margin isn't behind (even 3, beginner 2, V5 3), and on 29 of 3,045 the mirror (V1′ 9, V2′ 6, V3′ 8, V4′ 6)",
+     "(e3.5) on stage: the size counterparts' gains together are 10 pieces from 8 works and 4 families, 3 from Much Ado About Nothing, over brief 10's quarter"
+    ],
+    "cause": "The margin parts fail by one demonstrated cause: the scene's grain is a share of difficulty, read as capacity^(1 + difficulty), whose points depend on the capacity they meet (more for a weaker dimension, up to 1/e, and the weakest dimension counts in the whole twice). Where the grain carries much of a side's benefit, the comparison actor, weaker where that side leans, gains more from it than the counterpart. On brief-romantic_drama-2/plan the even actor's restrained take gains 2.406 from the grain and the restrained specialist's 1.724, so their restraint margins are 3.740 and 3.529; with the grain at nothing, −0.013 and 1.315. On a scene suited to size, an actor weak in presence has its weak connection lifted most. With the grain at nothing for both takes, every margin part holds on every piece for all fourteen comparison actors: the extra margin 0.4668 at least for restraint and 0.5454 for size, the other side's margin behind by 0.4978 and 0.6559 at least. The stage gains for size are few because actors leaning toward restraint by 10 to 20 already have 47 to 56 of the 57 stage pieces size suits."
+   },
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e2′), restraint’s abilities widen its opportunities where there’s room: for each comparison actor, its counterpart at the same budget has more where it has room and every suitable piece where it hasn’t (a ceiling case), restraint’s draws carry part of what it gains on every suitable piece, its opportunities and what it gains are varied, and it gains none of size’s",
+     "kind": "fixture",
+     "proves": "(e2.1), (e2.2), (e2.4), (e2.5) and (e4)'s count, on every reading, for the informing and fresh restraint set: equal budgets, more where there's room and every piece where not, the draws' part on every suitable piece, varied opportunities and gains, none of size's gained; the ceiling cases are the even actor, the beginner and V5 on stage"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s",
+     "kind": "fixture",
+     "proves": "(e3.1), (e3.2), (e3.4), (e3.5) on tape and (e4)'s mirror count, for the size set; the ceiling cases are the even actor and the beginner on stage"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2.c and ST6-R2.e clarified (brief 13) > GUARD: ST6-R2.e, the abilities’ part alone, proposed to the owner and not the clause as written: with the scene’s grain at nothing for both takes, every counterpart’s margin on its own side is ahead of its comparison actor’s by more than 0.05 on every suitable piece, and its margin on the other side behind, both ways, for every comparison actor",
+     "kind": "guard",
+     "proves": "the reading proposed to the owner, not the clause as written: with the grain at nothing every counterpart's margin is ahead by more than 0.05 on every suitable piece and its other side's behind, both sides, every comparison actor"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor",
+     "kind": "fixture",
+     "proves": "(e1) as brief 12 wrote it, asserted as it was"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/acting/st6r2-13-e.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6r2-13 <file> --part e, on c66db54a (acting/exits.txt)",
+     "kind": "measurement",
+     "proves": "verdict.e1 met; verdict.e2 and e3 not met as written, every failing piece listed by actor (extraNotOver005, otherSideNotBehind) with its margin at no grain beside it; atNoGrain 0 exceptions on both sides"
+    }
+   ],
+   "mutations": [
+    {
+     "id": "h11",
+     "what": "restraint's draws removed (APPROACH_EFFECT.restrained.inputs empty)",
+     "mustFail": "(e2′)",
+     "caughtBy": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e2′), restraint’s abilities widen its opportunities where there’s room: for each comparison actor, its counterpart at the same budget has more where it has room and every suitable piece where it hasn’t (a ceiling case), restraint’s draws carry part of what it gains on every suitable piece, its opportunities and what it gains are varied, and it gains none of size’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > GUARD: ST6-R2.e, the abilities’ part alone, proposed to the owner and not the clause as written: with the scene’s grain at nothing for both takes, every counterpart’s margin on its own side is ahead of its comparison actor’s by more than 0.05 on every suitable piece, and its margin on the other side behind, both ways, for every comparison actor",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.e"
+    },
+    {
+     "id": "h12",
+     "what": "size's draws removed (APPROACH_EFFECT.expansive.inputs empty)",
+     "mustFail": "(e3′)",
+     "caughtBy": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > GUARD: ST6-R2.e, the abilities’ part alone, proposed to the owner and not the clause as written: with the scene’s grain at nothing for both takes, every counterpart’s margin on its own side is ahead of its comparison actor’s by more than 0.05 on every suitable piece, and its margin on the other side behind, both ways, for every comparison actor",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.e"
+    },
+    {
+     "id": "h13",
+     "what": "emotional depth, composure and focus read at 50 whatever their level",
+     "mustFail": "(e2.3), which isn't asserted; recorded with what caught it",
+     "caughtBy": "ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.1), the dependency map is the engine’s: on every piece, for every actor, each of the twelve raised alone by 10 moves the restrained take wherever the context the judge reads gives it a path (directly, as a supporting read or through the drain), and moves nothing where it gives none; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.3), a weakness still costs, one input at a time: on every piece, for each of the twelve specialists at brief 12’s budget, each of its eleven the take reads, raised alone to the even actor’s 50, raises its restrained take, each it doesn’t read moves nothing, and the eleven together raise it; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e2′), restraint’s abilities widen its opportunities where there’s room: for each comparison actor, its counterpart at the same budget has more where it has room and every suitable piece where it hasn’t (a ceiling case), restraint’s draws carry part of what it gains on every suitable piece, its opportunities and what it gains are varied, and it gains none of size’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > GUARD: ST6-R2.e, the abilities’ part alone, proposed to the owner and not the clause as written: with the scene’s grain at nothing for both takes, every counterpart’s margin on its own side is ahead of its comparison actor’s by more than 0.05 on every suitable piece, and its margin on the other side behind, both ways, for every comparison actor",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.e"
+    },
+    {
+     "id": "h14",
+     "what": "restrained suitability forced to its least on every material",
+     "mustFail": "(e1), (c2.2)",
+     "caughtBy": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing; ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor; ST6-R2: restrained acting judged by what it does for a player (brief 12) > PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.2), the scene read or not, down to the engine’s precision: on every piece, for every actor, reading the scene’s grain never moves a restrained take the wrong way, moves it strictly the right way wherever grainOf keeps a share of it, and leaves it the same exactly where the rule keeps none, the brief readings at a suitability of ±0.01; carried at full precision there, it moves each the right way; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.3), the boundaries: on the real readings the grain moves nothing at a suitability of 0 and ±0.01 and every take strictly the right way at ±0.02; the judge reads every hundredth it’s handed, the grain’s floor holds at −0.75 and not past it, and a circumstance moves a side’s suitability and its take until the side’s sum is past ±1, and then neither; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e2′), restraint’s abilities widen its opportunities where there’s room: for each comparison actor, its counterpart at the same budget has more where it has room and every suitable piece where it hasn’t (a ceiling case), restraint’s draws carry part of what it gains on every suitable piece, its opportunities and what it gains are varied, and it gains none of size’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s; ST6-R2.c and ST6-R2.e clarified (brief 13) > PLAYER JOURNEY: ST6-R2.c’s precision as a player meets it: Rockumentary’s brief read for relief, which restraint suits by 0.01, chosen restrained, prepared and taped, keeps a share of nothing and no line on the scene, its take what it is with the grain taken out; read as the pro, against it by 0.02, it keeps a hundredth on believability and the take is lower for it; saved and opened again, both takes replay to the last digit",
+     "killed": true,
+     "exit": 1,
+     "record": "docs/verification/playthroughs-2026-10-17/acting/mutations.json",
+     "clause": "ST6-R2.e"
+    }
+   ],
+   "gap": "(e2.3), (e3.3) and (e4)'s margin parts as written fail on brief readings, and on class scenes and nights for size, by the grain's capacity-dependence; (e3.5)'s stage gains for size fail brief 10's quarter (3 of 10 from one play). Not asserted by the gate; every other part is.",
+   "decision": {
+    "question": "Should (e2.3), (e3.3) and (e4)'s margins be read on the abilities' part alone, both takes judged with the scene's grain at nothing, with the margins as played kept as the record; and should (e3.5) on stage be read on the size counterparts' own opportunities (varied on every actor) with their 10 gains reported, rather than the gains alone?",
+    "evidence": "As in results; acting/st6r2-13-e.json (verdict.e2, verdict.e3, atNoGrain, and per actor extraNotOver005 and otherSideNotBehind), and the trace of romantic_drama-2/plan above.",
+    "recommendation": "Accept both and close ST6-R2.e. The specialist advantage the owner asked for is what the specialist's abilities do, and the grain at nothing isolates exactly that, one input held for both actors; it held on every piece for every one of the fourteen comparison actors. It was added to the measure beside the verdict after the informing actors were checked and before the fresh ones ran (0ddfaed1), and the fresh run met it with no exception; it was seen after the informing check, so it's proposed, not adopted. On stage, size's room for actors leaning toward restraint is 1 to 10 pieces each, so a quarter of 10 gained pieces is 2 from one play; the counterparts' own opportunities there meet the floors. Keeping the clause as written leaves ST6-R2.e not met."
+   },
+   "history": "Brief 12's (e2) and (e3) as written stay not met on stage (66 of 66, 57 of 57). Not passed retroactively."
+  }
+ ],
+ "replacements": [],
+ "added": [
+  {
+   "id": "tools/acting-criteria.ts: R2Case.context and .suitability, the clarified measures (ST6R2C, opportunitiesWithRoom, verdictE, traceST6R2, measureST6R2Clarified) and tools/interpretation.ts --st6r2-13",
+   "reason": "the clarified criteria's measure, and the trace made repeatable; a dependency of the clauses",
+   "impact": "brief 12's --st6r2 output and brief 10/11's stage, st3 and st6 outputs byte-identical"
+  },
+  {
+   "id": "src/engine/systems/interpretation.ts grainOf comment; src/engine/systems/briefs.ts Take.grain comment",
+   "reason": "the clarification excuses documented precision, and grainOf's hundredth was documented nowhere; the take record's comment named two of the three cases its grain line is absent in",
+   "impact": "comments only, nothing judged; but completion-matrix.mjs --check reads any change to a watched file, comments included, as one: 49 measured rows read as stale until measured again"
+  }
+ ],
+ "defectsFound": [
+  {
+   "what": "No gameplay defect: the trace found no wrong direction and no disconnected mechanic. A documentation defect: grainOf's hundredth was undocumented, now documented.",
+   "blocksCompletion": false
+  },
+  {
+   "what": "A defect in this area's own measure, fixed before any figure was read: the first --part c run overflowed the call stack in its summary (c66db54a).",
+   "blocksCompletion": false
+  }
+ ],
+ "forTheCoordinator": {
+  "measurements": [
+   {
+    "cmd": "npx vite-node tools/interpretation.ts -- --st6r2-13 <out>/st6r2-13-c.json --part c",
+    "seeds": "none: no draw; brief 12's five actors and the nine fresh comparison actors, four specialist budgets, every piece",
+    "out": "docs/verification/playthroughs-2026-10-17/acting/st6r2-13-c.json (on c66db54a, 4 min 49 s)",
+    "reads": "c.met true; verdict c21 to c43 all met"
+   },
+   {
+    "cmd": "npx vite-node tools/interpretation.ts -- --st6r2-13 <out>/st6r2-13-e.json --part e",
+    "seeds": "none",
+    "out": "docs/verification/playthroughs-2026-10-17/acting/st6r2-13-e.json (on c66db54a, 51 s)",
+    "reads": "e.met false: e1 met, e2 and e3 not met as written (failing lists), atNoGrain 0 exceptions"
+   },
+   {
+    "cmd": "npx vite-node tools/interpretation.ts -- --st6r2-13 <out>/trace.json --part trace",
+    "seeds": "none",
+    "out": "its trace key equals docs/verification/playthroughs-2026-10-17/acting/trace.json in every key (16 s)",
+    "reads": "the ten, the boundary, the 65, the window and the map"
+   },
+   {
+    "cmd": "npx vite-node tools/interpretation.ts -- --st6r2 <out>/st6r2.json --st6r2-only",
+    "seeds": "as brief 12",
+    "out": "byte-identical to docs/verification/resolution-2026-10-17/acting/st6r2.json",
+    "reads": "nothing judged moved"
+   },
+   {
+    "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 node tools/judge-mutations.mjs --list docs/verification/playthroughs-2026-10-17/acting/mutations.list.json --work <scratch outside the tree> --out <out>/mutations.json --only <ids>, in batches: h0,h1,h2 | h3,h4,h5,h6 | h7,h8 | h9,h10,h11 | h12,h13 | h14",
+    "seeds": "none",
+    "out": "docs/verification/playthroughs-2026-10-17/acting/mutations.json (on 423dc68c, about 28 minutes)",
+    "reads": "h0 verdict true (19 of 19 pass unmutated); h1 to h14 killed"
+   }
+  ],
+  "records": "The matrix: ST6-R2.c Implemented And Verified (its tests by title above, measured on c66db54a, mutations on 423dc68c); ST6-R2.e Decision Required with the question, evidence and recommendation above. Brief 12's ST6-R2.c and .e results stay as the record, not passed retroactively. No test was renamed (renames.json unchanged); nine tests were added to tests/decisions-judge.test.ts. RULESET, the save schema, the guide and the tutorial are unchanged: nothing a player sees or the game judges moved. completion-matrix.mjs --check reads the two comment-only src edits as changes to what 49 measured rows read (A1, A2, A3, F2-A, G3, G4, G5, Genre Audit, H2, H5, H7, I1 to I5, INT-gate, INT-long-runs, INT-navigation, INT-skipped, L2, L3-R.b, M1, M3, MA5, O1, O2, S1 to S4, ST1, ST2, ST4, ST5, ST7, ST8, ST9, Stage F1, Stage F2, T2, T3, advice.F2, advice.F2A10-c, advice.F2A10-f, advice.F2A10-h, advice.heldout, genres.7-measured, judge.together; measured on 81eadac9, ed24ff3b and ac79bf4a): they need measuring again on the integrated commit, as section 8 asks anyway; the outputs this area could repeat (st6r2, st6, st3, stage) are byte-identical."
+ },
+ "checks": [
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-judge.test.ts",
+   "exit": 0,
+   "on": "09a37a18 (the starting point)",
+   "result": "39 of 39"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/stage-interpretation.test.ts",
+   "exit": 0,
+   "on": "09a37a18",
+   "result": "12 of 12"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-judge.test.ts",
+   "exit": 0,
+   "on": "423dc68c",
+   "result": "48 of 48"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/stage-interpretation.test.ts",
+   "exit": 0,
+   "on": "423dc68c",
+   "result": "12 of 12"
+  },
+  {
+   "cmd": "npm run typecheck",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "npm run lint",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "npx vite-node tools/interpretation.ts -- --st6r2-13 <file> --part c",
+   "exit": 0,
+   "on": "c66db54a"
+  },
+  {
+   "cmd": "npx vite-node tools/interpretation.ts -- --st6r2-13 <file> --part e",
+   "exit": 0,
+   "on": "c66db54a"
+  },
+  {
+   "cmd": "npx vite-node tools/interpretation.ts -- --st6r2-13 <file> --part trace",
+   "exit": 0,
+   "on": "c66db54a"
+  },
+  {
+   "cmd": "npx vite-node tools/interpretation.ts -- --st6r2-13 <file> --part c",
+   "exit": 1,
+   "on": "0ddfaed1",
+   "result": "stack overflow in the summary, nothing written; fixed in c66db54a"
+  },
+  {
+   "cmd": "npx vite-node tools/interpretation.ts -- --st6r2 <file> --st6r2-only",
+   "exit": 0,
+   "on": "423dc68c",
+   "result": "byte-identical to brief 12's"
+  },
+  {
+   "cmd": "docs/verification/decisions-2026-10-16/measure.sh <scratch> stage",
+   "exit": 0,
+   "on": "423dc68c",
+   "result": "st6, st3, stage byte-identical"
+  },
+  {
+   "cmd": "node tools/judge-mutations.mjs (six batches, h0 to h14)",
+   "exit": 0,
+   "on": "423dc68c",
+   "result": "control passes; 14 of 14 killed"
+  },
+  {
+   "cmd": "node tools/devmap.mjs --check",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/traceability.mjs",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/doc-refs.mjs --check",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/tics.mjs --check",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/voice-check.mjs --check",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/spelling.mjs",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/typos.mjs",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/title-case.mjs --check",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/label-sweep.mjs",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/plural-check.mjs",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/wired.mjs --check",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/deciders.mjs --check",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/inventory.mjs --check",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/capabilities.mjs --check",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/coverage.mjs --check",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/student-matrix.mjs --check",
+   "exit": 0,
+   "on": "423dc68c"
+  },
+  {
+   "cmd": "node tools/completion-matrix.mjs --check",
+   "exit": 1,
+   "on": "423dc68c",
+   "result": "49 measured rows read as stale by the two comment-only edits; the matrix and the handoff are the coordinator's"
+  }
+ ]
+}

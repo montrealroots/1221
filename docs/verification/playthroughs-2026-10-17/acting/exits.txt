@@ -1,0 +1,41 @@
+Brief 13, acting: every command, its commit and its exit (2026-10-17). Each run in the foreground, its output to a file.
+
+Before anything changed, on 09a37a18:
+  VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-judge.test.ts      exit=0  39 of 39, 88 s
+  VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/stage-interpretation.test.ts exit=0  12 of 12
+
+The trace (a probe in the git-ignored probe/ folder, before the criteria): its output is acting/trace.json, committed with
+the criteria in e1ed27fa.
+
+On 0ddfaed1's tree before it was committed (the tool refactored, src unchanged):
+  npx vite-node tools/interpretation.ts -- --st6r2 <scratch>/st6r2.json --st6r2-only                exit=0  byte-identical to ../../resolution-2026-10-17/acting/st6r2.json
+  npx vite-node tools/interpretation.ts -- --st6r2-13 <scratch>/trace.json --part trace             exit=0  every key equal to acting/trace.json
+  The informing actors alone, checked by a probe before any fresh profile ran: every (c) part held; (e2.3) and (e4) didn't
+  (2 and 3 pieces for the even actor, 1 and 2 for the beginner). The criteria were not amended for it.
+
+On 0ddfaed1:
+  npx vite-node tools/interpretation.ts -- --st6r2-13 acting/st6r2-13-c.json --part c               exit=1  after 4 min 51 s: Math.min over the map's checks overflowed the
+                                                                                                             call stack in the summary, before anything was written or read
+
+On c66db54a (the summary's fold, nothing else), the measurement, the fresh profiles' one run:
+  npx vite-node tools/interpretation.ts -- --st6r2-13 docs/verification/playthroughs-2026-10-17/acting/st6r2-13-c.json --part c      exit=0  4 min 49 s
+  npx vite-node tools/interpretation.ts -- --st6r2-13 docs/verification/playthroughs-2026-10-17/acting/st6r2-13-e.json --part e      exit=0  51 s
+  npx vite-node tools/interpretation.ts -- --st6r2-13 <scratch>/trace.json --part trace                                              exit=0  16 s, every key equal to acting/trace.json
+
+On 423dc68c (the gate's tests), nothing uncommitted outside this folder:
+  VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-judge.test.ts      exit=0  48 of 48, 3 min 13 s
+  VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/stage-interpretation.test.ts exit=0  12 of 12
+  npx vite-node tools/interpretation.ts -- --st6r2 <scratch>/st6r2.json --st6r2-only      exit=0  byte-identical to ../../resolution-2026-10-17/acting/st6r2.json
+  docs/verification/decisions-2026-10-16/measure.sh <scratch> stage                       exit=0  st6.json byte-identical to ../../completion-2026-10-16/acting/measured/st6.json;
+                                                                                                  st3.json and stage.json to ../../decisions-2026-10-16/integrated/after/
+  VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 node tools/judge-mutations.mjs --list docs/verification/playthroughs-2026-10-17/acting/mutations.list.json --work <scratch outside the clone> --out docs/verification/playthroughs-2026-10-17/acting/mutations.json --only <ids>
+    h0,h1,h2 exit=0 (5 min 50 s) | h3,h4,h5,h6 exit=0 (6 min 30 s) | h7,h8 exit=0 (4 min 21 s) | h9,h10,h11 exit=0 (5 min 6 s) | h12,h13 exit=0 (3 min 16 s) | h14 exit=0 (2 min 34 s)
+    h0, the control: 19 of 19 ST6-R2 tests pass unmutated; h1 to h14 each killed by the test its clause names
+  npm run typecheck exit=0; npm run lint exit=0
+  node tools/devmap.mjs --check, traceability.mjs, doc-refs.mjs --check, tics.mjs --check, voice-check.mjs --check, spelling.mjs, typos.mjs,
+    title-case.mjs --check, label-sweep.mjs, plural-check.mjs, wired.mjs --check, deciders.mjs --check, inventory.mjs --check,
+    capabilities.mjs --check, coverage.mjs --check, student-matrix.mjs --check: each exit=0
+  node tools/completion-matrix.mjs --check exit=1: 49 measured rows read as measured before what they read last changed
+    (git diff, comments included: the two comment-only edits in src/engine/systems/interpretation.ts and briefs.ts), so the
+    matrix's line moves from 574 to 525 until those measurements are made again. The matrix and the handoff are the
+    coordinator's, and aren't changed here.
