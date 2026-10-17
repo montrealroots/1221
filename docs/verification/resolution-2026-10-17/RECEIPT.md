@@ -2,10 +2,10 @@
 
 Written by `receipt.py` from brief 11’s frozen baseline (the matrix at `main`’s `0e7ff7c2`), its classification, brief 12’s results and the matrix as it stands. Nothing here is typed.
 
-- **Against the original full baseline:** 571 of 608 (93.9%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
+- **Against the original full baseline:** 572 of 608 (94.0%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
 - **The 46 actionable rows, each in one category:** closed 39; superseded 4; scope resolution 1; research assumption 2; remaining 0.
 - **Outside them:** decision 4’s 23 rows, unchanged; brief 11’s 9 administrative rows.
-- **The matrix’s own count:** 573 of 599 rows in scope Implemented And Verified (95.6%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
+- **The matrix’s own count:** 574 of 599 rows in scope Implemented And Verified (95.8%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
 
 ## The Actionable Rows
 
@@ -149,10 +149,11 @@ A scope resolution, Implemented And Verified in the matrix: Removed, alone: the 
 - **INT-long-runs:** lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14
 - **MA5:** musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-28, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]
 - **F2-A:** 40 of 40 advice cases: the first named input the best to raise
+- **INT-gate:** npm run gate on ac79bf4a: 376 of 376 files, 4566 of 4566 tests passed, none skipped, exit=0, the last check, the completion matrix, holding
 - **The walkthrough’s own steps at 1440** (PLAYTEST.md): passed: health: Health Cover names the student’s cover and says the School meets the work rules, o; passed: stamina and recovery: Work Out spends Energy and builds Stamina on the Profile; a night’s ; passed: papers: a Connecticut ID card got from Passport And ID, its fee, its mailing and its term ; passed: [save: brief scenario] advice: What To Work On says what its forecast assumes of the work 
 - **The walkthrough’s own steps at 390** (PLAYTEST.md): passed: health: Health Cover names the student’s cover and says the School meets the work rules, o; passed: stamina and recovery: Work Out spends Energy and builds Stamina on the Profile; a night’s ; passed: papers: a Connecticut ID card got from Passport And ID, its fee, its mailing and its term ; passed: [save: brief scenario] advice: What To Work On says what its forecast assumes of the work 
 - **Merged:** not into main, which is the owner’s word to give (git merge-base, as this was written). **Deployed:** nothing; Base44 deployment is the owner’s word after the gate (rule 14).
 
-## What The Receipt Found (1)
+## What The Receipt Found (0)
 
-- INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now
+Nothing: no baseline row is gone, decision 4 is unchanged, every closed, resolved or assumed row is verified in the matrix, every superseded row is deferred with its replacement, and no row verified at the baseline has fallen back.

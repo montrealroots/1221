@@ -14,16 +14,17 @@ pull request for the owner. **Nothing of it is merged, and nothing is deployed:*
   (`git log --oneline 9302b29c..origin/claude/peaceful-hamilton-59zdbb`), pushed and never force-pushed. Two areas,
   acting and advice, were merged into it with merge commits from their clones.
 - **The tested code is `ed24ff3b`'s.** The final runs, the built app and the advice's fresh set ran on it. The gate ran
-  on the commit `runs/gate.txt` names, with only documents changed in between. Each run's commit, command, exit and seed are in
+  on `ac79bf4a`, with only documents changed in between: 376 of 376 files, 4,566 of 4,566 tests, the completion matrix
+  holding, exit 0 (`runs/gate.txt`). Only documents changed after it. Each run's commit, command, exit and seed are in
   `docs/verification/resolution-2026-10-17/runs/exits-*.txt`, and the gate's in `runs/gate.txt`.
 - **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
   worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
 
 ## 2. Where It Stands
 
-**Completion, by the matrix:** 573 of 599 rows in scope Implemented And Verified (95.6%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 574 of 599 rows in scope Implemented And Verified (95.8%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
 
-- **Against the frozen baseline** (brief 11's, the matrix at `0e7ff7c2`, 608 rows in scope): **571 of 608 (93.9%) Implemented And Verified**; at the baseline it was 530 (87.1%), and at brief 12's start 567 (93.2%).
+- **Against the frozen baseline** (brief 11's, the matrix at `0e7ff7c2`, 608 rows in scope): **572 of 608 (94.0%) Implemented And Verified**; at the baseline it was 530 (87.1%), and at brief 12's start 567 (93.2%).
 - **The 46 actionable rows, each in exactly one category** (`docs/verification/resolution-2026-10-17/RECEIPT.md`, by
   `receipt.py`): 39 closed by implementation or verification, 4 superseded by the owner's authorization, 1 scope resolution, 2 research assumptions and 0 remaining.
 - **Decision 4's 23 rows are unchanged**, and so are brief 11's 9 administrative rows, counted apart.
@@ -74,7 +75,7 @@ pull request for the owner. **Nothing of it is merged, and nothing is deployed:*
   - **The built app,** 76 of 76 steps at 1440 and at 390.
   - **The long runs,** byte for byte brief 11's.
   - **The advice's runs** and the acting measurement.
-  - **The gate,** last.
+  - **The gate,** last, on `ac79bf4a`: 376 of 376 files, 4,566 of 4,566 tests, exit 0.
 - **Section 7, the walkthrough:** `docs/verification/resolution-2026-10-17/PLAYTEST.md`.
   - It is a route for the owner on a local build, with what to expect and what to report.
   - Each step is played by the built app's acceptance run.
@@ -90,8 +91,8 @@ pull request for the owner. **Nothing of it is merged, and nothing is deployed:*
     every suitable piece, 66 of 66.
   - Both readings were seen after the run, so they're proposed, not adopted. The parts that hold are in the gate.
 - **Decision 4, unchanged** (23 rows): its twelve audit rows, three decision rows and the banking area's eight items.
-- **Nothing else is open in the actionable portion.** Of the matrix's rows still Implemented, Verification Incomplete,
-  20 are decision 4's, and the gate's own row waits for the gate.
+- **Nothing else is open in the actionable portion.** The matrix's 20 rows still Implemented, Verification Incomplete
+  are all decision 4's.
 - **Merging and deploying are the owner's.** The pull request waits for "Merge it."; Base44 deployment waits for the
   owner and the gate (rule 14). Read section 10 further down first.
 

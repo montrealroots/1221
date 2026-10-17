@@ -77,7 +77,8 @@ On `ed24ff3b`, in clones, every step exit 0 (`runs/README.md`):
 - the acting measurement.
 
 The whole suite ran first on `f07fb997` and failed one test, `tests/cohesion.test.ts`, on the advice area's field names.
-`ed24ff3b` renamed them, and the runs were made after. The gate ran last, on the commit `runs/gate.txt` names.
+`ed24ff3b` renamed them, and the runs were made after. The gate ran last, on `ac79bf4a`, with only documents changed
+since the tested code: 376 of 376 files, 4,566 of 4,566 tests, every check, exit 0 (`runs/gate.txt`).
 
 ## Added Work, Recorded Apart
 
