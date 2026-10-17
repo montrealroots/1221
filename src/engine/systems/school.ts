@@ -1918,16 +1918,16 @@ export function setStanding(sim: Simulation, person: Person, to: Standing, reaso
   // Faculty keeps as the Bulletin gives it).
   const words: Record<Standing, [string, string]> = {
     good: ['In Good Standing', `The acting faculty find you in good standing. ${reason}`],
-    concern: ['A Notice Of Academic Concern', `The chair of Acting has raised a concern. ${reason} Remedy it by the end of next term, or it becomes an academic warning.`],
-    warning: ['Academic Warning', `A formal meeting with the chair of Acting and an associate dean, as the Bulletin gives a warning. ${reason} Improve by the end of next term, or you may be dismissed.`],
-    dismissed: ['Dismissed From The School', `${reason} Once dismissed, a student isn’t eligible to come back. ${stands}`],
+    concern: ['A Notice Of Academic Concern', `The chair of Acting has raised a concern about your work. ${reason} If your next term review finds you short again, the next step is an academic warning. A term that meets what’s asked puts you back in good standing.`],
+    warning: ['Academic Warning', `You’re on academic warning, given at a formal meeting with the chair of Acting and an associate dean, as the Bulletin sets out. ${reason} If your next term review finds you short, you’ll be dismissed from the School. While you’re on warning, you can’t take part in the Yale Cabaret.`],
+    dismissed: ['Dismissed From The School', `${reason} A dismissed student can’t return to the School. ${stands}`],
     graduated: ['Your MFA Is Conferred', reason],
     withdrawn: ['You Withdrew From The School', reason],
     withheld: ['The Degree Isn’t Recommended', `${reason} The faculty didn’t recommend the degree, and your terms at the School are over. ${stands}`],
   };
   // The last term has no next one to remedy anything in (from 2026-10-10: until then a last-term concern said "by the
   // end of next term").
-  if (to === 'concern' && academicTerm(school, school.termsBegun) >= YALE_DRAMA.terms) words.concern = ['A Notice Of Academic Concern', `The chair of Acting has raised a concern. ${reason} It was your last term: the concern is noted, and doesn’t stand in the way of the degree.`];
+  if (to === 'concern' && academicTerm(school, school.termsBegun) >= YALE_DRAMA.terms) words.concern = ['A Notice Of Academic Concern', `The chair of Acting has raised a concern about your work. ${reason} It was your last term, so the concern is noted and doesn’t stand in the way of your degree.`];
   const [title, body] = words[to];
   sim.notify({ category: 'school', title, body, importance: to === 'good' ? 45 : 85, route: '/workspace/school' });
 }
@@ -1943,7 +1943,7 @@ export function leaveCabaret(sim: Simulation, person: Person, why: string): void
   if (!ahead.length) return;
   for (const i of ahead) sim.timeline.cancel(i.id, sim.now);
   cab.withdrawn = { at: sim.now, why };
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Out Of The Cabaret Show', body: `On ${why}, you can’t take part in the Yale Cabaret, so the ${ahead.length} calls still to come are off and the show goes on without you. What you rehearsed and played stays on your record, and it isn’t held against you as a missed call.`, importance: 70, route: '/workspace/school' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Out Of The Cabaret Show', body: `On ${why}, you can’t take part in the Yale Cabaret, so ${ahead.length === 1 ? 'the one call still to come is' : `the ${ahead.length} calls still to come are`} off and the show goes on without you. What you rehearsed and played stays on your record, and it isn’t held against you as a missed call.`, importance: 70, route: '/workspace/school' });
 }
 
 /**
@@ -2925,6 +2925,22 @@ export function termGrowth(person: Person): { growth: number; classGrowth: numbe
  * warning to dismissal. Meeting both restores good standing and the casting
  * pool. The floors are SLATE's reading of "appropriate standards".
  */
+/** The standing a term found short steps down to, as `evaluate` steps it: concern, warning, dismissal. */
+export const stepDown = (standing: Standing): Standing => (standing === 'good' ? 'concern' : standing === 'concern' ? 'warning' : 'dismissed');
+
+/**
+ * What the term's review would do to a student's standing if it found the term short, in words, as `evaluate` steps it
+ * (from 2026-10-17, brief 14): the coursework warning names it. Until then the warning said “your standing falls a step”.
+ */
+export function shortTermWords(school: SchoolRecord, term: number): string {
+  const reviewed = school.reviews?.at(-1)?.term === term && school.reviews.at(-1)!.outcome === 'warning';
+  const next = reviewed ? 'warning' : stepDown(school.standing);
+  const last = academicTerm(school, term) === YALE_DRAMA.terms - 1 || school.extra?.term === term;
+  if (next === 'dismissed') return 'dismiss you from the School';
+  if (next === 'warning') return last ? 'not recommend your degree' : reviewed ? 'keep you on academic warning' : 'put you on academic warning';
+  return 'give you a notice of academic concern';
+}
+
 export function evaluate(sim: Simulation, person: Person, term: number): TermReview | undefined {
   const school = person.school;
   if (!school || !person.craft || schoolEnded(school.standing)) return undefined;
@@ -2963,17 +2979,17 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   // From 2026-10-17 (`shortCause`): every part of each short, or no part short on more than one, said as that, and not a
   // part named by its tie.
   const most = shortCause(person, tally.unreadyShown);
-  const why = most?.kind === 'part' ? ` Most often short on them: ${most.label.toLowerCase()}, on ${most.n}; ${most.remedy} answers it.` : most?.kind === 'every' ? ' On each of them every part was short of complete.' : most?.kind === 'scattered' ? ' No one part was short on more than one of them.' : '';
-  const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were unready or not shown, short of what the program asks.${why}` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces strong or better.` : '';
-  const notPassed = failedNow.length ? ` Not passed: ${failedNow.map((r) => r.name).join(', ')}.` : '';
+  const why = most?.kind === 'part' ? ` What held most of them back was ${most.label.toLowerCase()}, unfinished on ${most.n} of them. ${most.remedy.charAt(0).toUpperCase()}${most.remedy.slice(1)} works on it.` : most?.kind === 'every' ? ' Every part of each one was unfinished.' : most?.kind === 'scattered' ? ' Each was short on a different part.' : '';
+  const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were Unready or not shown. That’s short of what the program asks.${why}` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.` : '';
+  const notPassed = failedNow.length ? ` You didn’t pass ${failedNow.length === 1 ? failedNow[0]!.name : `${failedNow.slice(0, -1).map((r) => r.name).join(', ')} and ${failedNow.at(-1)!.name}`}.` : '';
   const breached = t.breaches > 0 ? ' A grave breach of professionalism this term keeps you from good standing.' : '';
-  const reason = `You were at ${pct(attendance)} of what was asked of you, and your craft grew ${growth.toFixed(1)} against the class’s ${classGrowth.toFixed(1)}: for the room each of you had to grow, ${pace} the class.${onStage}${inClass}${notPassed}${breached}`;
+  const reason = `You came to ${pct(attendance)} of the classes, calls and shifts asked of you. Your craft grew ${growth.toFixed(1)} points, and the class’s middle student’s grew ${classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s ${pace} the class.${onStage}${inClass}${notPassed}${breached}`;
   const extraTerm = school.extra?.term === term;
   const last = academicTerm(school, term) === YALE_DRAMA.terms - 1 || extraTerm;
   // A faculty review this term that kept them on warning (`facultyReview`) has judged these Fails: the evaluation doesn't
   // step past it on the same Fails (from 2026-10-10).
   const reviewed = school.reviews?.at(-1)?.term === term && school.reviews.at(-1)!.outcome === 'warning';
-  const stepped: Standing = reviewed ? 'warning' : !short ? 'good' : !shortOtherwise ? school.standing : school.standing === 'good' ? 'concern' : school.standing === 'concern' ? 'warning' : 'dismissed';
+  const stepped: Standing = reviewed ? 'warning' : !short ? 'good' : !shortOtherwise ? school.standing : stepDown(school.standing);
   const shortfall = degreeShortfall(school);
   // A last year with a course failed: a repeat offered for thirty days (`offerRepeat`, from 2026-10-10), before the degree
   // is withheld; with a warning unmet, withheld as it was.
@@ -2987,7 +3003,7 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   if (repeatable && !offered) { next = 'withheld'; review.standing = next; }
   if (!short) school.castable = true;
   const withheldWhy = shortfall.failed.length ? `The degree needs every course passed, and ${shortfall.failed.map((r) => r.name).join(', ')} ${shortfall.failed.length === 1 ? 'wasn’t' : 'weren’t'}.` : 'The concern wasn’t remedied.';
-  setStanding(sim, person, next, next === 'dismissed' ? `The warning wasn’t met. ${reason}` : next === 'withheld' ? `${withheldWhy} ${reason}` : reason);
+  setStanding(sim, person, next, next === 'dismissed' ? `You didn’t meet the terms of your academic warning. ${reason}` : next === 'withheld' ? `${withheldWhy} ${reason}` : reason);
   // The tally starts again with the next term (`TERM_KIND`). Until 2026-09-27 it
   // started again here, and a first-year's Carlotta calls in May and the
   // summer's growth went into the next fall's attendance and growth.

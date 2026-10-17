@@ -646,10 +646,10 @@ describe('standing/term evaluation', () => {
     expect(b!.classGrowth).toBeGreaterThan(2 * b!.growth);
     expect(a!.classGrowth).toBeLessThan(2 * a!.growth);
     expect(a!.standing).toBe('good');
-    expect(a!.reason).toBe(`You were at 100% of what was asked of you, and your craft grew ${a!.growth.toFixed(1)} against the class’s ${a!.classGrowth.toFixed(1)}: for the room each of you had to grow, ahead of the class. The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces strong or better.`);
+    expect(a!.reason).toBe(`You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${a!.growth.toFixed(1)} points, and the class’s middle student’s grew ${a!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.`);
     // Behind the class, and nothing else short: a concern for the pace alone.
     expect(b!.standing).toBe('concern');
-    expect(b!.reason).toBe(`You were at 100% of what was asked of you, and your craft grew ${b!.growth.toFixed(1)} against the class’s ${b!.classGrowth.toFixed(1)}: for the room each of you had to grow, behind the class. The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces strong or better.`);
+    expect(b!.reason).toBe(`You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${b!.growth.toFixed(1)} points, and the class’s middle student’s grew ${b!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s behind the class. The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.`);
     expect(driven.player.school!.standing).toBe('concern');
     // The Standing tab, as the player has it.
     const { text } = drawn(driven, SchoolWorkspace, 'standing');
@@ -702,8 +702,8 @@ describe('preparation dims', () => {
     expect([...new Set(four.kept.map((x) => `${x.id} ${x.source}`))]).toEqual(['focus prepare:familiarity']);
     expect(four.familiarity).toBeGreaterThan(two.familiarity);
     // The Coursework tab's figure for the part, as each twin has it before the meeting.
-    expect(drawn(four.s, CourseworkPane).text).toContain(`Knows The Scene ${Math.round(four.familiarity * 100)}% Weighs`);
-    expect(drawn(two.s, CourseworkPane).text).toContain(`Knows The Scene ${Math.round(two.familiarity * 100)}% Weighs`);
+    expect(drawn(four.s, CourseworkPane).text).toContain(`Knows The Scene ${Math.round(four.familiarity * 100)}% Counts for`);
+    expect(drawn(two.s, CourseworkPane).text).toContain(`Knows The Scene ${Math.round(two.familiarity * 100)}% Counts for`);
     for (const t of [four, two]) toMeeting(t.s, '2026-09-08');
     const [f] = shownRecords(four.s, work(four.s, four.id));
     const [n] = shownRecords(two.s, work(two.s, two.id));

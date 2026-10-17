@@ -66,7 +66,7 @@ export function copyAt(person: Person): { library: string } | { no: string } {
     // “A copy is at the Haas Arts Library, in New Haven.” went on 2026-10-13, reached by no play: a life is enrolled only
     // where it begins in New Haven (`populateWorld`, `engine/index.ts`), and nothing has moved a person since the scope
     // reset of 2026-10-09.
-    if (cw && !cw.orientation.done.tour && !cw.orientation.behind) return { no: 'The library isn’t known to you yet: the tour shows you it.' };
+    if (cw && !cw.orientation.done.tour && !cw.orientation.behind) return { no: 'You don’t know where the library is yet. The building tour in Orientation shows you.' };
     return { library: 'The Haas Arts Library' };
   }
   // After the school a town's library card lent one (`systems/reading.ts`), until the cards went in the scope reset of 2026-10-09.

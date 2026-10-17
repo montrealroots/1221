@@ -453,7 +453,7 @@ export function judgeExact(seed: string, performer: Performer, ctx: EvalContext)
       if (p.f >= 1) continue;
       mastery = false;
       const rest = parts.reduce((m, x) => (x === p ? m : Math.min(m, x.f)), 1);
-      limits.push({ kind: 'preparation', what: p.part, label: ctx.task.prepLabel?.[p.part] ?? (p.part === 'approach' ? 'The way you chose to play it, rehearsed in' : p.part), dimension: d, by: cost(dimensionQuality(terms, diff, rest, condition, dr, f, spread).quality) });
+      limits.push({ kind: 'preparation', what: p.part, label: ctx.task.prepLabel?.[p.part] ?? (p.part === 'approach' ? 'Rehearsing the way you chose to play it' : p.part), dimension: d, by: cost(dimensionQuality(terms, diff, rest, condition, dr, f, spread).quality) });
     }
     for (const c of causes) {
       mastery = false;
@@ -646,15 +646,32 @@ export function bandOfQuality(q: number): 'unready' | 'working' | 'strong' | 'ex
   return q >= b.exceptional ? 'exceptional' : q >= b.strong ? 'strong' : q >= b.working ? 'working' : 'unready';
 }
 
-/** The first limit worth saying, in words built from the result. */
-export function chiefLimit(e: Pick<Evaluation, 'limits'>): string | undefined {
+/** A condition's label as the subject of a sentence: “Shaken By A Slip In The Middle” as being shaken by a slip in the middle. */
+function conditionWords(l: Pick<Limit, 'what' | 'label'>): string {
+  const part = (s: string) => s.replace(/^The /, 'the ');
+  if (l.what === 'fatigue') return `Tiredness (${l.label.toLowerCase()})`;
+  if (l.what === 'illness') return 'Being down with the flu';
+  if (l.what === 'injury') return `Working with ${l.label.charAt(0).toLowerCase()}${l.label.slice(1).toLowerCase()}`;
+  if (l.what === 'stamina') return `Your stamina running low${l.label.startsWith('Stamina, By ') ? ` by ${part(l.label.slice('Stamina, By '.length))}` : ''}`;
+  if (l.what === 'shaken') return `Being shaken by a slip${l.label.startsWith('Shaken By A Slip In ') ? ` in ${part(l.label.slice('Shaken By A Slip In '.length))}` : ''}`;
+  return l.label;
+}
+
+/**
+ * The first limit worth saying, in words built from the result: of a piece shown (`past`), or of one as it would be shown
+ * now (`now`, a forecast). From 2026-10-17 (brief 14) the two read in their own tense, and each quality by the name the
+ * screen gives it; until then a forecast said “wasn’t complete”, a condition opened on its Title Case label, and “the
+ * choices wasn’t complete” could be printed.
+ */
+export function chiefLimit(e: Pick<Evaluation, 'limits'>, tense: 'past' | 'now' = 'past'): string | undefined {
   const l = e.limits[0];
   if (!l) return undefined;
-  const dim = DIMENSION_LABEL[l.dimension].toLowerCase();
-  if (l.kind === 'preparation') return `${l.label} wasn’t complete, which cost the ${dim} ${l.by} points`;
-  if (l.kind === 'condition') return `${l.label}, which cost the ${dim} ${l.by} points`;
-  if (l.kind === 'difficulty') return `The work asked more than the craft yet holds, which cost the ${dim} ${l.by} points`;
-  if (l.kind === 'fit') return `The way you played it didn’t fit (${l.label}), which cost the ${dim} ${l.by} points`;
-  if (l.kind === 'suitability') return `Playing it against the grain of the scene (${l.label}) cost the ${dim} ${l.by} points`;
-  return `${l.label} held back the ${dim} by ${l.by} points`;
+  const now = tense === 'now';
+  const cost = `${now ? 'which costs' : 'which cost'} ${DIMENSION_LABEL[l.dimension]} ${l.by} points`;
+  if (l.kind === 'preparation') return `${l.label} ${now ? 'isn’t' : 'wasn’t'} complete, ${cost}`;
+  if (l.kind === 'condition') return `${conditionWords(l)} ${now ? 'costs' : 'cost'} ${DIMENSION_LABEL[l.dimension]} ${l.by} points`;
+  if (l.kind === 'difficulty') return `The piece ${now ? 'asks' : 'asked'} more than your craft can give yet, ${cost}`;
+  if (l.kind === 'fit') return `The way you ${now ? 'are playing it doesn’t' : 'played it didn’t'} fit (${l.label}), ${cost}`;
+  if (l.kind === 'suitability') return `The way you ${now ? 'are playing it doesn’t' : 'played it didn’t'} suit the scene (${l.label}), ${cost}`;
+  return `Your ${l.label} ${now ? 'holds' : 'held'} back ${DIMENSION_LABEL[l.dimension]} by ${l.by} points`;
 }

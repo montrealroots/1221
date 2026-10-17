@@ -683,7 +683,7 @@ describe('school.orientation (kind)', () => {
     play(sim, at(2026, 8, 28, 14));
     const a = courseworkOf(sim, sim.player)!.assignments.find((x) => x.course === 'DRAM 103a/b')!;
     const first = sim.player.school!.classmates[a.partner!]!.name.split(' ')[0];
-    expect(sim.execute({ kind: 'school.ask_partner', payload: { assignmentId: a.id, at: at(2026, 8, 29, 19) } }).error).toBe(`You haven’t met ${first} yet: you’ll meet the class at orientation, or at the first class.`);
+    expect(sim.execute({ kind: 'school.ask_partner', payload: { assignmentId: a.id, at: at(2026, 8, 29, 19) } }).error).toBe(`You haven’t met ${first} yet. You’ll meet your class at orientation, or at your first class.`);
     expect(pressable(drawn(sim, SchoolWorkspace, 'coursework').html, 'Catch Up')).toHaveLength(1);
     // Caught up by command: the session's three hours, and every classmate met.
     const t0 = sim.now;
@@ -708,7 +708,7 @@ describe('school.orientation (kind)', () => {
     sim.advanceTo(ex.at + 151 * 60_000);
     expect(ex.status).toBe('done');
     expect(set(sim)).toEqual(FALL.map((c) => [c, '2026-08-30']));
-    expect(titled(sim, 'The Courses And What They Ask').map((n) => n.body)).toEqual(['Each course set out what it asks. 8 courses gave you their first work now, so you can start before classes.']);
+    expect(titled(sim, 'The Courses And What They Ask').map((n) => n.body)).toEqual(['Each course set out what it asks. 8 courses gave you their first piece now, so you can start before classes.']);
 
     const ward = twinOf(snap);
     // TEST SETUP: in hospital over the session.
@@ -744,11 +744,11 @@ describe('school.orientation (kind)', () => {
     const work = courseworkOf(sim, sim.player)!.assignments;
     const movement = work.find((x) => x.course === 'DRAM 133a/b')!;
     const context = work.find((x) => x.course === 'DRAM 873a/b')!;
-    const studios = 'You don’t know the building yet: the tour shows you the studios.';
-    const library = 'You don’t know the library yet: the tour shows you it.';
+    const studios = 'You don’t know where the studios are yet. The building tour in Orientation shows you.';
+    const library = 'You don’t know where the library is yet. The building tour in Orientation shows you.';
     expect(sim.execute({ kind: 'school.prepare', payload: { assignmentId: movement.id, activity: 'devise' } }).error).toBe(studios);
     expect(sim.execute({ kind: 'school.prepare', payload: { assignmentId: context.id, activity: 'research' } }).error).toBe(library);
-    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'sweat' } }).error).toBe('The library isn’t known to you yet: the tour shows you it.');
+    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'sweat' } }).error).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
     const before = drawn(sim, SchoolWorkspace, 'coursework');
     expect(grayed(before.html, 'Devise The Score', studios)).toHaveLength(1);
     expect(before.shown).toContain(studios);
@@ -821,7 +821,7 @@ describe('school.partner_rehearsal', () => {
     expect(r.said).toBe(`${first} thinks you don’t know the scene well enough yet to play it.`);
     const shown = drawn(sim, SchoolWorkspace, 'coursework').shown;
     expect(shown).toContain(`Rehearsed ${r.said} (Simulated: the game’s words.)`);
-    expect(shown).toContain(`Trust 54 of 100 · Came to 1 of 1 agreed · Reliability 100%`);
+    expect(shown).toContain(`Trust 54 of 100 · Came to 1 of 1 rehearsals agreed · Reliability 100%`);
 
     // The scene read first, by command, at the same evening: the lines are what holds it back now.
     const read = twinOf(snap);
@@ -852,7 +852,7 @@ describe('school.partner_rehearsal', () => {
     expect(titled(sim, `${first} Didn’t Come`)[0]!.body).toMatch(new RegExp(`^You waited for ${first} to rehearse .+, and they didn’t come\\.$`));
     const shown = drawn(sim, SchoolWorkspace, 'coursework').shown;
     expect(shown).toContain(`${first} Didn’t Come`);
-    expect(shown).toContain('Trust 50 of 100 · Came to 0 of 1 agreed · Reliability 0%');
+    expect(shown).toContain('Trust 50 of 100 · Came to 0 of 1 rehearsals agreed · Reliability 0%');
     // In class, within the next two weeks, they apologize.
     const i = a.partner!;
     const apology = () => momentsOf(courseworkOf(sim, sim.player)!).find((m) => m.kind === 'apology' && m.mate === i);
@@ -882,7 +882,7 @@ describe('school.partner_rehearsal', () => {
     expect(titled(sim, `${first} Waited For You`)).toHaveLength(1);
     const shown = drawn(sim, SchoolWorkspace, 'coursework').shown;
     expect(shown).toContain('You Didn’t Come');
-    expect(shown).toContain('Trust 38 of 100 · Came to 0 of 0 agreed · You missed 1');
+    expect(shown).toContain('Trust 38 of 100 · No rehearsals agreed yet · You missed 1');
   }, 60_000);
 
   it('PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)', () => {
@@ -895,12 +895,12 @@ describe('school.partner_rehearsal', () => {
     const before = none();
     // In hospital to Sunday 30 August at noon: the Saturday evening refused, the Sunday's not.
     healthOf(sim.player).inHospitalUntil = at(2026, 8, 30, 12);
-    expect(ask(a, at(2026, 8, 29, 19)).error).toBe('You’ll still be in hospital then: the evening would be called off.');
+    expect(ask(a, at(2026, 8, 29, 19)).error).toBe('You’ll still be in hospital then, so the rehearsal would be called off.');
     expect(askRefusal(sim, sim.player, a, at(2026, 8, 30, 19)).refused).toBeUndefined();
     healthOf(sim.player).inHospitalUntil = sim.now;
     // A broken bone, off work until Monday 31 August at noon.
     healthOf(sim.player).injury = { kind: 'fracture', at: sim.now, until: at(2026, 8, 31, 12), offWorkUntil: at(2026, 8, 31, 12) };
-    const laid = 'You’ll still be laid up then, with a broken bone: the evening would be called off.';
+    const laid = 'You’ll still be laid up with a broken bone then, so the rehearsal would be called off.';
     expect(askRefusal(sim, sim.player, a, at(2026, 8, 29, 19)).refused).toBe(laid);
     expect(ask(a, at(2026, 8, 29, 19)).error).toBe(laid);
     expect(ask(intimacy, at(2026, 8, 30, 19)).error).toBe(laid);
@@ -912,8 +912,8 @@ describe('school.partner_rehearsal', () => {
     // asked for; the intimacy practice, on its feet in a studio, isn't.
     healthOf(sim.player).injury = { kind: 'sprain', at: sim.now, until: sim.now + 8 * MS_DAY };
     expect(askRefusal(sim, sim.player, a, at(2026, 8, 30, 19)).refused).toBeUndefined();
-    expect(askRefusal(sim, sim.player, intimacy, at(2026, 8, 30, 19)).refused).toMatch(/^Not with a sprained ankle; it has \d+ days yet to mend\. Work on its feet with your partner waits for it\.$/);
-    expect(ask(intimacy, at(2026, 8, 30, 19)).error).toMatch(/Work on its feet with your partner waits for it\.$/);
+    expect(askRefusal(sim, sim.player, intimacy, at(2026, 8, 30, 19)).refused).toMatch(/^Not with a sprained ankle; it has \d+ days yet to mend\. Rehearsing on your feet with your partner has to wait for that too\.$/);
+    expect(ask(intimacy, at(2026, 8, 30, 19)).error).toMatch(/Rehearsing on your feet with your partner has to wait for that too\.$/);
   }, 60_000);
 
   it('PLAYER JOURNEY: a sprained ankle excuses the intimacy practice, on its feet in a studio, trust held and the partner told; the scene study, a partner’s work alone, is kept', () => {

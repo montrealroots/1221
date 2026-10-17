@@ -247,10 +247,10 @@ describe('school.prepare', () => {
     expect(m).toMatchObject({ assignmentId: a.id, mate: a.partner, question: 'obstacle' });
     expect(a.asks?.filter((k) => k.status === 'open') ?? []).toEqual([]);
     dials(sim);
-    expect(no(sim, 'school.prepare', { assignmentId: a.id, activity: 'learn' })).toBe('Priya reads the scene another way: answer first.');
+    expect(no(sim, 'school.prepare', { assignmentId: a.id, activity: 'learn' })).toBe('Priya reads the scene differently from you. Answer them first.');
     sim = reload(sim);
     dials(sim);
-    expect(no(sim, 'school.prepare', { assignmentId: a.id, activity: 'learn' })).toBe('Priya reads the scene another way: answer first.');
+    expect(no(sim, 'school.prepare', { assignmentId: a.id, activity: 'learn' })).toBe('Priya reads the scene differently from you. Answer them first.');
     go(sim, 'school.respond', { momentId: m!.id, choice: 'hold' });
     const t0 = sim.now;
     const learned = step(sim, a.id, 'learn');
@@ -271,8 +271,8 @@ describe('school.prepare', () => {
     const score = byTemplate(sim, 'movement-score');
     const context = byTemplate(sim, 'context-presentation');
     dials(sim);
-    expect(no(sim, 'school.prepare', { assignmentId: score.id, activity: 'devise' })).toBe('You don’t know the building yet: the tour shows you the studios.');
-    expect(no(sim, 'school.prepare', { assignmentId: context.id, activity: 'research' })).toBe('You don’t know the library yet: the tour shows you it.');
+    expect(no(sim, 'school.prepare', { assignmentId: score.id, activity: 'devise' })).toBe('You don’t know where the studios are yet. The building tour in Orientation shows you.');
+    expect(no(sim, 'school.prepare', { assignmentId: context.id, activity: 'research' })).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
     // Desk work isn't held by it: the play is read.
     expect(step(sim, context.id, 'read-play').moved).toBeGreaterThan(0);
     const t0 = sim.now;
@@ -301,11 +301,11 @@ describe('school.prepare', () => {
     expect(last).toBeLessThan(0.97);
     expect(work(sim, a.id).prep.familiarity).toBeGreaterThanOrEqual(0.97);
     dials(sim);
-    expect(no(sim, 'school.prepare', { assignmentId: a.id, activity: 'read' })).toBe('There’s nothing more to gain from it now.');
+    expect(no(sim, 'school.prepare', { assignmentId: a.id, activity: 'read' })).toBe('You’ve done all this step can do.');
     sim = reload(sim);
     sim.advanceTo(at(8, 29, 16));
     dials(sim);
-    expect(no(sim, 'school.prepare', { assignmentId: a.id, activity: 'read' })).toBe('There’s nothing more to gain from it now.');
+    expect(no(sim, 'school.prepare', { assignmentId: a.id, activity: 'read' })).toBe('You’ve done all this step can do.');
     // Another part is still to gain.
     expect(step(sim, a.id, 'learn').moved).toBeGreaterThan(0);
   });
@@ -405,7 +405,7 @@ describe('school.prepare', () => {
     expect(read).toMatchObject({ disabled: false, title: '40 minutes' });
     expect(only('school.prepare', 'Learn Lines')).toMatchObject({ disabled: true, title: 'Read it first: lines are learned from a scene you know.' });
     expect(only('school.prepare', 'Rehearse Alone')).toMatchObject({ disabled: true, title: 'Learn some of the lines first.' });
-    expect(only('school.prepare', 'Work On The Note')).toMatchObject({ disabled: true, title: 'There’s no note to work on until it’s been shown.' });
+    expect(only('school.prepare', 'Work On The Note')).toMatchObject({ disabled: true, title: 'You can revise once it’s been shown and you have a note to work on.' });
     expect(text).toContain('Learn Lines: Read it first: lines are learned from a scene you know.');
     const t0 = sim.now;
     const toasts = press(read);
@@ -526,7 +526,7 @@ describe('school.approach', () => {
     expect(press(put)).toEqual(['Put It First: it put first, weighing more when it’s shown.']);
     expect(work(sim, id).approach?.kind).toBe('objective');
     expect(cwOf(sim).assignments.filter((a) => a.approach).map((a) => a.id)).toEqual([id]);
-    expect(drawn(sim).text).toContain('Another Way At It: Put It First. On lines: it put first, weighing more when it’s shown. It doesn’t take the note by itself.');
+    expect(drawn(sim).text).toContain('Another Way At It: Put It First. For lines: it put first, weighing more when it’s shown. It won’t take the note on its own.');
   });
 });
 
@@ -565,7 +565,7 @@ describe('school.choose', () => {
     sim = reload(sim);
     toMeeting(sim, next.dueOn);
     expect(work(sim, next.id).taken).toContain(key);
-    expect(work(sim, next.id).shown!.strengths).toContain(`The note on ${odd.q.label.toLowerCase()} is taken`);
+    expect(work(sim, next.id).shown!.strengths).toContain(`You took the earlier note on ${odd.q.label.toLowerCase()}`);
     expect(notesOf(cwOf(sim)).find((n) => n.key === key)).toMatchObject({ status: 'resolved', resolvedOn: next.dueOn });
     // The third: answered against the text again, the note comes back.
     sim.advanceTo(onDay(next.dueOn, 20) + 4 * 86_400_000);
@@ -587,7 +587,7 @@ describe('school.choose', () => {
     const [first, second] = questionsFor(a);
     const supported = first!.options.find((o) => o.supported)!;
     dials(sim);
-    expect(no(sim, 'school.choose', { assignmentId: a.id, question: first!.q.id, option: supported.id })).toBe('Read it first: table work is done on a text you know.');
+    expect(no(sim, 'school.choose', { assignmentId: a.id, question: first!.q.id, option: supported.id })).toBe('Read the text first. You can only do table work on a text you know.');
     // TEST SETUP: worn out, readiness under 40, as a night without sleep leaves one, so a step reads at the floor of its
     // focus, a half. Read The Scene's 0.55 at half: 0.275, under the 0.3 the table asks.
     Object.assign(sim.player.wellbeing, { energy: 15, stress: 85, sleepDebt: 12, nourishment: 25, morale: 25, hygiene: 40, condition: 100 });
@@ -597,11 +597,11 @@ describe('school.choose', () => {
     // further by focus, 85% at 0 to 115% at 100, this student's about 101%. Still under the 0.3 the table asks.
     expect(a.prep.familiarity).toBeCloseTo(0.55 * 0.5 * speed, 12);
     expect(a.prep.familiarity).toBeLessThan(0.3);
-    expect(no(sim, 'school.choose', { assignmentId: a.id, question: first!.q.id, option: supported.id })).toBe('Read it first: table work is done on a text you know.');
+    expect(no(sim, 'school.choose', { assignmentId: a.id, question: first!.q.id, option: supported.id })).toBe('Read the text first. You can only do table work on a text you know.');
     step(sim, a.id, 'read');
     expect(a.prep.familiarity).toBeGreaterThanOrEqual(0.3);
-    expect(no(sim, 'school.choose', { assignmentId: byTemplate(sim, 'movement-score').id, question: first!.q.id, option: supported.id })).toBe('That isn’t a question this work asks.');
-    expect(no(sim, 'school.choose', { assignmentId: a.id, question: 'nonsense', option: supported.id })).toBe('That isn’t a question this work asks.');
+    expect(no(sim, 'school.choose', { assignmentId: byTemplate(sim, 'movement-score').id, question: first!.q.id, option: supported.id })).toBe('That isn’t a question this piece asks.');
+    expect(no(sim, 'school.choose', { assignmentId: a.id, question: 'nonsense', option: supported.id })).toBe('That isn’t a question this piece asks.');
     expect(no(sim, 'school.choose', { assignmentId: a.id, question: first!.q.id, option: 'nonsense' })).toBe('That isn’t one of the answers.');
     const t0 = sim.now;
     expect(go<{ supported: boolean }>(sim, 'school.choose', { assignmentId: a.id, question: first!.q.id, option: supported.id })).toEqual({ supported: true });
@@ -645,9 +645,9 @@ describe('school.choose', () => {
     }
     expect(html).toMatch(new RegExp(`<option value="${against.id}" selected="">`));
     // Nothing yet says why: that comes with the showing.
-    expect(text).not.toContain('What cuts against it');
+    expect(text).not.toContain('Why the text doesn’t support it');
     toMeeting(sim, a.dueOn);
-    expect(drawn(sim).text).toContain(`What cuts against it: ${textOf(against.why!)}`);
+    expect(drawn(sim).text).toContain(`Why the text doesn’t support it: ${textOf(against.why!)}`);
   });
 });
 
@@ -666,7 +666,7 @@ describe('school.ask_partner', () => {
     const a = actingI(sim);
     expect(mateOf(sim, a).name).toBe('Theo Patel');
     expect(mateRecord(mateOf(sim, a)).met).toBeUndefined();
-    expect(no(sim, 'school.ask_partner', { assignmentId: a.id, at: at(8, 29, 19) })).toBe('You haven’t met Theo yet: you’ll meet the class at orientation, or at the first class.');
+    expect(no(sim, 'school.ask_partner', { assignmentId: a.id, at: at(8, 29, 19) })).toBe('You haven’t met Theo yet. You’ll meet your class at orientation, or at your first class.');
     const caught = reload(sim);
     const waited = reload(sim);
     expect(go<{ told: string }>(caught, 'school.orientation', { task: 'classmates' }).told).toBe('You met the 15 others in your class: you’ll partner them in scenes, rehearse with them and be cast beside them.');
@@ -684,7 +684,7 @@ describe('school.ask_partner', () => {
     const a = actingI(sim);
     expect(no(sim, 'school.ask_partner', { assignmentId: a.id, at: sim.now + 3_600_000 })).toBe('Ask at least 2 hours ahead.');
     // Due at the meeting on Tuesday 8 September: an evening the night before ends in time, one at eight that morning doesn't.
-    expect(no(sim, 'school.ask_partner', { assignmentId: a.id, at: at(9, 8, 8) })).toBe('That’s after it’s due.');
+    expect(no(sim, 'school.ask_partner', { assignmentId: a.id, at: at(9, 8, 8) })).toBe('That’s after the piece is due.');
     expect(ask(sim, a.id, at(8, 29, 19)).accepted).toBe(true);
     expect(no(sim, 'school.ask_partner', { assignmentId: a.id, at: at(8, 29, 19, 30) })).toBe('You’re already rehearsing then.');
     // Another partner's evening: the game played through with Hannah on Sunday at seven.
@@ -697,7 +697,7 @@ describe('school.ask_partner', () => {
     expect(ask(sim, a.id, at(8, 31, 10))).toEqual({ accepted: false, reason: 'Theo is in class until three.' });
     expect(mateRecord(mateOf(sim, a)).log![0]!.what).toBe('Couldn’t rehearse at 10:00 AM: Theo is in class until three.');
     expect(mateRecord(mateOf(sim, a)).log).toHaveLength(before + 1);
-    expect(ask(sim, a.id, at(8, 29, 6))).toEqual({ accepted: false, reason: 'Theo won’t rehearse before 7 or past 22.' });
+    expect(ask(sim, a.id, at(8, 29, 6))).toEqual({ accepted: false, reason: 'Theo won’t rehearse before 7 in the morning or after 10 at night.' });
     expect(work(sim, a.id).rehearsals).toHaveLength(1);
     // A no from their own day costs nothing between you.
     expect(trustOf(mateOf(sim, a))).toBe(50);
@@ -754,8 +754,8 @@ describe('school.ask_partner', () => {
     const a = actingI(sim);
     const { text } = drawn(sim);
     expect(text).toContain('Rehearsing With Theo');
-    expect(text).toContain('Trust 50 of 100 · Came to 0 of 0 agreed · Reliability');
-    expect(only('school.ask_partner', 'Ask Theo')).toMatchObject({ disabled: true, title: 'You haven’t met Theo yet: you’ll meet the class at orientation, or at the first class.' });
+    expect(text).toContain('Trust 50 of 100 · No rehearsals agreed yet · Reliability');
+    expect(only('school.ask_partner', 'Ask Theo')).toMatchObject({ disabled: true, title: 'You haven’t met Theo yet. You’ll meet your class at orientation, or at your first class.' });
     go(sim, 'school.orientation', { task: 'classmates' });
     drawn(sim);
     const ask7 = only('school.ask_partner', 'Ask Theo');
@@ -912,7 +912,7 @@ describe('school.make_amends', () => {
     let { text } = drawn(sim);
     expect(text).toContain('Your Partners');
     expect(text).toContain('Hannah Castillo Trust 34');
-    expect(text).toContain('2 times you let them down, not made right.');
+    expect(text).toContain('You’ve let them down 2 times without making it right.');
     expect(only('school.make_amends', 'Make Amends')).toMatchObject({ disabled: true, title: 'You’re at Classes until 3:00 PM.' });
     sim.advanceTo(at(8, 31, 15, 30));
     drawn(sim);
@@ -1069,7 +1069,7 @@ describe('school.respond', () => {
     expect(sim.player.school!.classmates[m.mate]!.name).toBe('Elena Haddad');
     const game = byTemplate(sim, 'play-game');
     expect(ask(sim, game.id, at(9, 9, 19)).accepted).toBe(true);
-    expect(no(sim, 'school.respond', { momentId: m.id, choice: 'yes' })).toBe('You have Rehearsal With Hannah then: say no instead.');
+    expect(no(sim, 'school.respond', { momentId: m.id, choice: 'yes' })).toBe('You have Rehearsal With Hannah then, so you’ll have to say no.');
     expect(go<{ done: string }>(sim, 'school.respond', { momentId: m.id, choice: 'no' }).done).toBe('You told Elena you can’t.');
     expect(sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === 'school.study_session')).toBe(false);
   });
@@ -1082,7 +1082,7 @@ describe('school.respond', () => {
     let { text } = drawn(sim, 'moments');
     expect(text).toContain('Your Class');
     expect(text).toContain(`Elena Haddad: Run Lines Together?. ${m.text}`);
-    expect(only('school.respond', 'Say Yes')).toMatchObject({ disabled: true, title: 'You have Rehearsal With Hannah then: say no instead.' });
+    expect(only('school.respond', 'Say Yes')).toMatchObject({ disabled: true, title: 'You have Rehearsal With Hannah then, so you’ll have to say no.' });
     const say = only('school.respond', 'Say No');
     expect(say).toMatchObject({ disabled: false, title: 'Say No' });
     expect(press(say)).toEqual(['You told Elena you can’t.']);

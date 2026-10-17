@@ -130,7 +130,7 @@ const still = (sim: Simulation) => JSON.stringify([sim.now, sim.universe.transac
 // journeys.known-graduated-school-page
 // ---------------------------------------------------------------------------
 
-const STALE = ['Only the terms to come stand between you and the degree.', 'courses passed so far', 'In the casting pool.', 'is the floor', 'or more is short', 'Not Cast Yet', 'Nothing set yet'];
+const STALE = ['Only the terms to come stand between you and the degree.', 'courses passed so far', 'In the casting pool.', 'is the floor', 'or more is short', 'Not Cast Yet', 'Nothing is set yet'];
 
 describe('journeys.known-graduated-school-page: the School page once the School has ended', () => {
   it('DEFECT: a life played to the degree reads it on its Standing, Casting and Coursework tabs, before and after a reload: the degree conferred at Commencement on Monday 21 May 2029, every course passed, the last term’s figures with their floors in the past, no casting and no work ahead (until 2026-10-16 “Only the terms to come stand between you and the degree.”, “so far”, “In the casting pool.”, each floor ahead, Not Cast Yet and Nothing set yet)', () => {
@@ -159,7 +159,7 @@ describe('journeys.known-graduated-school-page: the School page once the School 
       expect(casting).toContain('No Casting Ahead');
       expect(casting).toContain('The chair casts students at the School, and your degree is conferred: no casting comes now. The productions you played stay on your Profile.');
       const coursework = drawn(s, SchoolWorkspace, 'coursework');
-      expect(coursework).toContain('Your degree is conferred: no course sets work now.');
+      expect(coursework).toContain('Your degree is conferred, so no course sets work now.');
       for (const page of [standing, casting, coursework]) for (const stale of STALE) expect(page, stale).not.toContain(stale);
     }
     expect(breaches(sim.universe)).toEqual([]);
@@ -184,7 +184,7 @@ describe('journeys.known-graduated-school-page: the School page once the School 
     expect(standing).not.toContain('In Progress');
     expect(standing).not.toMatch(/Acting I: at \d+ of \d+ meetings/);
     expect(drawn(sim, SchoolWorkspace, 'casting')).toContain('The chair casts students at the School, and you’ve left it: no casting comes now.');
-    expect(drawn(sim, SchoolWorkspace, 'coursework')).toContain('You’ve left the School: no course sets work now.');
+    expect(drawn(sim, SchoolWorkspace, 'coursework')).toContain('You’ve left the School, so no course sets work now.');
     for (const tab of ['standing', 'casting', 'coursework']) for (const stale of STALE) expect(drawn(sim, SchoolWorkspace, tab), stale).not.toContain(stale);
   }, 120_000);
 });
@@ -202,7 +202,7 @@ describe('journeys.known-graduated-school-page: a dismissal', () => {
     const passed = all.filter((r) => r.result === 'pass').length;
     expect(standing).toMatch(new RegExp(`${passed} of ${all.length} courses passed\\. You were dismissed(, with [^.]+ not passed)?\\. Once dismissed, a student isn’t eligible to come back\\.`));
     expect(drawn(sim, SchoolWorkspace, 'casting')).toContain('The chair casts students at the School, and you’ve left it: no casting comes now.');
-    expect(drawn(sim, SchoolWorkspace, 'coursework')).toContain('You’ve left the School: no course sets work now.');
+    expect(drawn(sim, SchoolWorkspace, 'coursework')).toContain('You’ve left the School, so no course sets work now.');
     for (const tab of ['standing', 'casting', 'coursework']) for (const stale of STALE) expect(drawn(sim, SchoolWorkspace, tab), stale).not.toContain(stale);
   }, 300_000);
 });

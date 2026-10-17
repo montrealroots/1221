@@ -172,7 +172,7 @@ describe('each course passed, incomplete or failed, and what the degree needs', 
     school.courses = { '0:DRAM 103a': { term: 0, code: 'DRAM 103a', name: 'Acting I', meetings: 20, attended: 10, excused: 0 } };
     settleCourses(sim, sim.player, 0, () => ({ due: 0, notShown: 0 }));
     expect(school.courses['0:DRAM 103a']!.result).toBe('fail');
-    expect(evaluate(sim, sim.player, 0)!.reason).toMatch(/Not passed: Acting I/);
+    expect(evaluate(sim, sim.player, 0)!.reason).toMatch(/You didn’t pass Acting I/);
     // FIXTURE: the last term's evaluation in good standing otherwise.
     Object.assign(school, { standing: 'good', termsBegun: 6 });
     Object.assign(school.tally, { classDays: 40, attended: 40, excused: 0 });

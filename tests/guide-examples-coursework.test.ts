@@ -552,7 +552,7 @@ describe('Feedback And Your Notes, played', () => {
     expect(r.status).toBe('revising');
     expect(r.a.revision!.dueOn).toBe(r.meetings[1]);
     // Marked read, the note worked twice.
-    expect(r.refusedUnread).toBe('There’s new feedback on this: read it first.');
+    expect(r.refusedUnread).toBe('There’s new feedback on this piece. Read it, then press Mark As Read.');
     expect(pct(r.worked)).toBe(figure(result, /bring the note’s work to (\d+)%/));
     // The mark the note's work has to pass, read from the engine (`noteTaken`, as the showing again asks it): with the
     // lines where they were shown, the work at the mark takes the note and the work half a point under it doesn't.
@@ -571,7 +571,7 @@ describe('Another Way At A Note, played', () => {
     const r = playDrill();
     const { steps, result } = example('coursework.approach');
     expect(steps[1]).toMatch(/once a day for three days/);
-    expect(r.again).toBe('Done today already: it takes days, not one long session.');
+    expect(r.again).toBe('You’ve done this today. It builds over several days, not in one long session.');
     expect(r.lines.map(pct)).toEqual(said(result, /The lines go to (\d+)%, then (\d+)%, then (\d+)%/).map(Number));
     expect(r.lines[2]).toBeGreaterThanOrEqual(figure(result, /past (\d+)%/) / 100);
     expect(r.taken).toContain('dim:memorization');

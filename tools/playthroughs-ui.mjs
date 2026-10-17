@@ -487,7 +487,7 @@ async function normal() {
   await step('the work set: the courses’ notices on Home; Go There opens School; Coursework lists each piece with its day', ['notification', 'navigation'], async () => {
     // The criteria named The Courses And What They Ask; where it isn't listed, the step fails and says what Home lists.
     const { row, body } = await readNotice(/^The Courses And What They Ask$/);
-    must(/gave you their first work/.test(body), `it says: ${body}`);
+    must(/gave you (its|their) first piece/.test(body), `it says: ${body}`);
     await press(row.getByRole('button', { name: /^Go There$/ }), 'Go There'); await wait(1200);
     must(hash().startsWith('#/workspace/school'), `Go There opened ${hash()}`);
     await tab('Coursework');
@@ -572,7 +572,7 @@ async function normal() {
       feedback = clean(await again.locator('.eyebrow', { hasText: /^Feedback: / }).first().innerText());
       const gray = again.locator('[data-shown-today] + div').getByRole('button').first();
       const why = await refused(gray, async () => clean(await again.locator('[data-shown-today] ~ p.why-not').first().innerText()));
-      must(/There’s new feedback on this: read it first\./.test(why), `refused for another reason: ${why}`);
+      must(/There’s new feedback on this piece\. Read it, then press Mark As Read\./.test(why), `refused for another reason: ${why}`);
       await press(again.getByRole('button', { name: /^Mark As Read$/ }), 'Mark As Read'); await wait(800);
       must(!/new feedback/.test(clean(await again.locator('[data-shown-today] ~ p.why-not').first().innerText({ timeout: 1000 }).catch(() => ''))), 'the steps still wait on the feedback after Mark As Read');
       const note = again.getByRole('button', { name: /^Work On The Note$/ }).first();
@@ -624,9 +624,9 @@ async function setback() {
     trace.startingPoint.command = 'npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json';
     const { body } = await readNotice(/^A Word On Your Coursework$/);
     must(/\d+ of the \d+ pieces (shown|due) this term so far were Unready/.test(body), `no count: ${body.slice(0, 200)}`);
-    must(/Most often short on them: [^.]+\. .*Run It With A Reader.* answers it\./.test(body), `no cause and remedy naming Run It With A Reader: ${body.slice(0, 300)}`);
-    must(/\d+ pieces? (is|are) still to be shown/.test(body), `no pieces still to be shown: ${body.slice(0, 300)}`);
-    must(/The faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}: half the term’s pieces Unready or not shown by then .* your standing falls a step\./.test(body), `no review day: ${body.slice(0, 400)}`);
+    must(/What held most of them back was [^,]+, unfinished on [^.]+\. To work on it, use .*Run It With A Reader.*\./.test(body), `no cause and remedy naming Run It With A Reader: ${body.slice(0, 300)}`);
+    must(/(One piece is|\d+ pieces are) set and still to be shown/.test(body), `no pieces still to be shown: ${body.slice(0, 300)}`);
+    must(/This is a warning, not the term review\. The faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, .* the review would (give you a notice of academic concern|put you on academic warning|keep you on academic warning|dismiss you from the School|not recommend your degree)\./.test(body), `no review day: ${body.slice(0, 400)}`);
     await shot('warning-on-home');
   });
   await step('the warning opened in place: its look, who sent it and when, and Close', ['drill-down'], async () => {
@@ -704,7 +704,7 @@ async function setback() {
     const after = figureOf(await shownToday(scene));
     must(after > start, `Shown Today ${start} → ${after}`);
     const why = await refused(cardOf(scene).getByRole('button', { name: /^Run It With A Reader$/ }).first(), async () => whyOf(cardOf(scene)));
-    must(/Run It With A Reader: Done today already: it takes days, not one long session\./.test(why) || /^Not now: Done today already/.test(why), `refused for another reason: ${why}`);
+    must(/Run It With A Reader: You’ve done this today\. It builds over several days, not in one long session\./.test(why) || /^Not now: You’ve done this today/.test(why), `refused for another reason: ${why}`);
     await shot('reader-refused-today');
     return `${t0} → ${await clock()}; Shown Today ${start} → ${after}; then refused: ${why.slice(0, 200)}`;
   });
@@ -861,7 +861,7 @@ async function specialist() {
     const text = clean(await briefPane().innerText());
     const grain = text.match(/Played that way it suited the scene \([^)]*\), which gave it [\d.]+ points; your abilities and techniques cost it [\d.]+\./)?.[0];
     must(grain, `the take doesn’t say what the way gave: ${text.slice(text.search(/The Last Take/i), text.search(/The Last Take/i) + 400)}`);
-    must(/held back the|wasn’t complete|didn’t fit|asked more than/.test(text), 'what held it back isn’t said');
+    must(/held back [A-Z]|wasn’t complete|didn’t fit|didn’t suit|asked more than/.test(text), 'what held it back isn’t said');
     must(await briefPane().locator('table[data-takes] tbody tr').count() === 1, 'the take isn’t the one row in the takes table');
     said(grain);
     return said1;

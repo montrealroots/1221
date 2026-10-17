@@ -1,0 +1,374 @@
+{
+ "src/engine/systems/coursework.ts#afterTogether": {
+  "status": "Reviewed And Retained",
+  "hash": "86d1afbc03c9",
+  "on": "2026-10-17",
+  "reason": "A classmate's memory, shown under Your Partners: plain and true, its words unchanged; from 2026-10-17 its piece is the play's name where there's a scene, as the other memory lines are."
+ },
+ "src/engine/systems/coursework.ts#answerRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "ca4a900164f2",
+  "on": "2026-10-17",
+  "evidence": "tests/partners.test.ts (answered already), tests/evidence-g18-school.test.ts (a clash: say no)"
+ },
+ "src/engine/systems/coursework.ts#approachRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "8a6849ea22f3",
+  "on": "2026-10-17",
+  "evidence": "tests/approaches.test.ts, tests/evidence-g18-school.test.ts (school.approach), tests/remaining-school.test.ts (unreached refusals), tests/defects-g8-9.test.ts"
+ },
+ "src/engine/systems/coursework.ts#askRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "84ae621349be",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g18-school.test.ts (school.ask_partner refusals) and tests/evidence-g22-school.test.ts (in hospital, laid up, an injury)"
+ },
+ "src/engine/systems/coursework.ts#BAND_LABEL": {
+  "status": "Reviewed And Retained",
+  "hash": "e4bab7a0d520",
+  "on": "2026-10-17",
+  "reason": "The four bands' names, Unready, Working, Strong and Exceptional: the school's grades as every screen, notice and the review name them; plain words."
+ },
+ "src/engine/systems/coursework.ts#book": {
+  "status": "Reviewed And Retained",
+  "hash": "f3f114facbbe",
+  "on": "2026-10-17",
+  "reason": "The calendar's label for a booked rehearsal, Rehearsal With {name}: plain Title Case."
+ },
+ "src/engine/systems/coursework.ts#feedbackWords": {
+  "status": "Rewritten And Verified",
+  "hash": "693a8e908f67",
+  "on": "2026-10-17",
+  "evidence": "tests/feedback.test.ts (new, again, better, the third and fourth time, the step beyond), rendered.txt (each kind, and back after it was taken)"
+ },
+ "src/engine/systems/coursework.ts#hourWords": {
+  "status": "Rewritten And Verified",
+  "hash": "a6132f5370c8",
+  "on": "2026-10-17",
+  "evidence": "rendered.txt: partner busy, too early; tests/evidence-g18-school.test.ts asserts the sentence it ends"
+ },
+ "src/engine/systems/coursework.ts#mateBusy": {
+  "status": "Rewritten And Verified",
+  "hash": "e787624d1734",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g18-school.test.ts (school.ask_partner declined by the partner's own day), tests/journey-class-left-behind.test.ts (Cabaret calls), rendered.txt (partner busy, too early)"
+ },
+ "src/engine/systems/coursework.ts#meetingWeight": {
+  "status": "Rewritten And Verified",
+  "hash": "fed28a41da3c",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-school-term.test.ts (Not Shown, Excused, Not Shown Again, exact), tests/evidence-g24-school.test.ts (Note Taken titles), rendered.txt (Still There, Shown)"
+ },
+ "src/engine/systems/coursework.ts#needRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "15c8c25b3574",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g18-school.test.ts and tests/evidence-g22-school.test.ts (studios and library before the tour), tests/remaining-school.test.ts (the partner's own step)"
+ },
+ "src/engine/systems/coursework.ts#noteText": {
+  "status": "Rewritten And Verified",
+  "hash": "1e88e90ec969",
+  "on": "2026-10-17",
+  "evidence": "tests/feedback.test.ts, tests/evidence-g24-school.test.ts (the note's words, exact), rendered.txt (the partner note at 0 to 3 rehearsals)"
+ },
+ "src/engine/systems/coursework.ts#orient": {
+  "status": "Rewritten And Verified",
+  "hash": "9ef4f1ccc294",
+  "on": "2026-10-17",
+  "evidence": "rendered.txt: the five sessions' notices of a played first week; tests/evidence-g19-school.test.ts and tests/evidence-g22-school.test.ts (the session on the courses)"
+ },
+ "src/engine/systems/coursework.ts#ORIENTATION [classmates]": {
+  "status": "Reviewed And Retained",
+  "hash": "5137fb3e335a",
+  "on": "2026-10-17",
+  "reason": "The five orientation sessions' names, as the calendar, the Orientation panel and their notices title them: plain Title Case labels that say what each session is."
+ },
+ "src/engine/systems/coursework.ts#ORIENTATION [expectations]": {
+  "status": "Reviewed And Retained",
+  "hash": "481a161c4bcd",
+  "on": "2026-10-17",
+  "reason": "The five orientation sessions' names, as the calendar, the Orientation panel and their notices title them: plain Title Case labels that say what each session is."
+ },
+ "src/engine/systems/coursework.ts#ORIENTATION [faculty]": {
+  "status": "Reviewed And Retained",
+  "hash": "deabbc2eb31a",
+  "on": "2026-10-17",
+  "reason": "The five orientation sessions' names, as the calendar, the Orientation panel and their notices title them: plain Title Case labels that say what each session is."
+ },
+ "src/engine/systems/coursework.ts#ORIENTATION [register]": {
+  "status": "Reviewed And Retained",
+  "hash": "0e9d46bab347",
+  "on": "2026-10-17",
+  "reason": "The five orientation sessions' names, as the calendar, the Orientation panel and their notices title them: plain Title Case labels that say what each session is."
+ },
+ "src/engine/systems/coursework.ts#ORIENTATION [tour]": {
+  "status": "Reviewed And Retained",
+  "hash": "706a3c220681",
+  "on": "2026-10-17",
+  "reason": "The five orientation sessions' names, as the calendar, the Orientation panel and their notices title them: plain Title Case labels that say what each session is."
+ },
+ "src/engine/systems/coursework.ts#orientationRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "07c9f76867a7",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g19-school.test.ts and tests/commands-kept.test.ts (a session still to come, orientation over)"
+ },
+ "src/engine/systems/coursework.ts#partnerAsks": {
+  "status": "Reviewed And Retained",
+  "hash": "4a3b6528a6d7",
+  "on": "2026-10-17",
+  "reason": "A partner's ask: who, the piece, the evening and the hour to answer by. Plain and complete; rendered.txt shows it."
+ },
+ "src/engine/systems/coursework.ts#peerNote": {
+  "status": "Reviewed And Retained",
+  "hash": "c6159dc18442",
+  "on": "2026-10-17",
+  "reason": "A classmate's words after a rehearsal, in their own voice, about the part of your preparation they feel most (or that it's coming together): already plain and specific, marked simulated on the card."
+ },
+ "src/engine/systems/coursework.ts#playingRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "043b6606531a",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-school.test.ts and tests/remaining-09-coverage.test.ts (a shown piece's and a scene-less piece's way of playing refused)"
+ },
+ "src/engine/systems/coursework.ts#prepareRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "1d6eb1e149a9",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g18-school.test.ts (school.prepare refusals, drawn on the tab), tests/classmate-moments.test.ts, tests/attributes-phase-2a.test.ts (a reader's step done today)"
+ },
+ "src/engine/systems/coursework.ts#READER": {
+  "status": "Reviewed And Retained",
+  "hash": "2ba49bf6fb91",
+  "on": "2026-10-17",
+  "reason": "The step's button, Run It With A Reader: a verb that says what it does, and the name the tutorial and the guide teach."
+ },
+ "src/engine/systems/coursework.ts#registerCoursework": {
+  "status": "Rewritten And Verified",
+  "hash": "9b9a869ac3a8",
+  "on": "2026-10-17",
+  "evidence": "rendered.txt: Didn't Hear Back in a played month; tests/partners.test.ts"
+ },
+ "src/engine/systems/coursework.ts#registerCoursework <school.answer_partner>": {
+  "status": "Reviewed And Retained",
+  "hash": "de33df771022",
+  "on": "2026-10-17",
+  "reason": "The partner's log line for a no: plain and true."
+ },
+ "src/engine/systems/coursework.ts#registerCoursework <school.approach>": {
+  "status": "Reviewed And Retained",
+  "hash": "8f86a27d0c7d",
+  "on": "2026-10-17",
+  "reason": "Internal: a way no screen offers (tests/approaches.test.ts sends 'nonsense'); plain."
+ },
+ "src/engine/systems/coursework.ts#registerCoursework <school.ask_partner>": {
+  "status": "Reviewed And Retained",
+  "hash": "3be16f780fe7",
+  "on": "2026-10-17",
+  "reason": "The partner's log line, Couldn't rehearse at {time}: {reason}: plain, and asserted exact by tests/evidence-g18-school.test.ts."
+ },
+ "src/engine/systems/coursework.ts#registerCoursework <school.cancel_rehearsal>": {
+  "status": "Reviewed And Retained",
+  "hash": "08847d76cd8e",
+  "on": "2026-10-17",
+  "reason": "An internal refusal (a rehearsal id none has) and two log lines; plain and true."
+ },
+ "src/engine/systems/coursework.ts#registerCoursework <school.choose>": {
+  "status": "Rewritten And Verified",
+  "hash": "10a4eeb1e788",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g18-school.test.ts (school.choose refused in its own words)"
+ },
+ "src/engine/systems/coursework.ts#registerCoursework <school.read_feedback>": {
+  "status": "Rewritten And Verified",
+  "hash": "c4f98dcc7519",
+  "on": "2026-10-17",
+  "evidence": "tests/classmate-moments.test.ts (feedback read already)"
+ },
+ "src/engine/systems/coursework.ts#rehearsalOutcome": {
+  "status": "Rewritten And Verified",
+  "hash": "ae24c9a82708",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g22-school.test.ts (school.partner_rehearsal: kept, not come, missed by you, drawn), tests/evidence-g19-school.test.ts"
+ },
+ "src/engine/systems/coursework.ts#remedyWords": {
+  "status": "Rewritten And Verified",
+  "hash": "40042ca29712",
+  "on": "2026-10-17",
+  "evidence": "tests/workload.test.ts (the partner part's remedy names the reader), rendered.txt (what works on the partner part, the table work, the lines)"
+ },
+ "src/engine/systems/coursework.ts#reshownWords": {
+  "status": "Rewritten And Verified",
+  "hash": "7f8f23695db4",
+  "on": "2026-10-17",
+  "evidence": "rendered.txt (Note Taken and Note Not Taken Yet with the part's figures); tests/evidence-g24-school.test.ts; tests/evidence2-b11.test.ts holds the notice count"
+ },
+ "src/engine/systems/coursework.ts#revisitWords": {
+  "status": "Rewritten And Verified",
+  "hash": "f58069fabbf3",
+  "on": "2026-10-17",
+  "evidence": "rendered.txt: a scene back, the other part / another reading"
+ },
+ "src/engine/systems/coursework.ts#setWork": {
+  "status": "Rewritten And Verified",
+  "hash": "52d21d57ffa8",
+  "on": "2026-10-17",
+  "evidence": "rendered.txt: the set-work notices of a played month (a scene with a partner, solo work, the Yale Rep presentation, Put … first)"
+ },
+ "src/engine/systems/coursework.ts#show": {
+  "status": "Rewritten And Verified",
+  "hash": "6b64eb0efa05",
+  "on": "2026-10-17",
+  "evidence": "tests/feedback.test.ts and tests/evidence-g18-school.test.ts (the strengths, an earlier note taken), rendered.txt (the Shown notices of two played terms)"
+ },
+ "src/engine/systems/coursework.ts#sinceLast": {
+  "status": "Rewritten And Verified",
+  "hash": "6f817de537c5",
+  "on": "2026-10-17",
+  "evidence": "rendered.txt: Up from, Down from and again, on the Shown notices of a played term"
+ },
+ "src/engine/systems/coursework.ts#tableWorkRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "2d75cae353ae",
+  "on": "2026-10-17",
+  "evidence": "tests/table-work-unread.test.ts and tests/evidence-g18-school.test.ts (school.choose refused before the scene is read)"
+ },
+ "src/engine/systems/coursework.ts#termWarning": {
+  "status": "Rewritten And Verified",
+  "hash": "2ca4e3f5b770",
+  "on": "2026-10-17",
+  "evidence": "tests/workload.test.ts and tests/remaining-school-term.test.ts (count, every and scattered causes, the review's day and consequence), rendered.txt (a played month's A Word On Your Coursework)"
+ },
+ "src/engine/systems/evaluation.ts#chiefLimit": {
+  "status": "Rewritten And Verified",
+  "hash": "e5719a8ccdc0",
+  "on": "2026-10-17",
+  "evidence": "rendered.txt (every kind, shown and today); tests/interpretation.test.ts, tests/attributes-phase-2b.test.ts, tests/workload.test.ts, tests/genre-identity-screens.test.ts"
+ },
+ "src/engine/systems/evaluation.ts#conditionWords": {
+  "status": "Rewritten And Verified",
+  "hash": "9652eb064644",
+  "on": "2026-10-17",
+  "evidence": "rendered.txt: limit, condition, tired / ill / injured / concussed / stamina / shaken, shown and today"
+ },
+ "src/engine/systems/evaluation.ts#halfOf": {
+  "status": "Reviewed And Retained",
+  "hash": "740a7eb0a0e2",
+  "on": "2026-10-17",
+  "reason": "The term's halves, Fall and Spring, as labels."
+ },
+ "src/engine/systems/evaluation.ts#judgeExact": {
+  "status": "Reviewed And Retained",
+  "hash": "e864ad36928a",
+  "on": "2026-10-17",
+  "reason": "The day's condition as chips in a result's limits (Readiness At 61, Under 80; Down With The Flu; An Injury Still Mending; A Concussion Still Mending): Title Case labels, plain; chiefLimit says them as sentences (conditionWords)."
+ },
+ "src/engine/systems/evaluation.ts#judgeExact [difficulty]": {
+  "status": "Reviewed And Retained",
+  "hash": "0fbd482954bf",
+  "on": "2026-10-17",
+  "reason": "The limit's chip, How Hard The Work Is: a plain label; chiefLimit says it as a sentence."
+ },
+ "src/engine/systems/evaluation.ts#judgeExact [preparation]": {
+  "status": "Rewritten And Verified",
+  "hash": "db67a18a61cc",
+  "on": "2026-10-17",
+  "evidence": "rendered.txt (limit, preparation); tests/attributes-phase-2b.test.ts reads a take's preparation limits in the task's words"
+ },
+ "src/engine/systems/school.ts#evaluate": {
+  "status": "Rewritten And Verified",
+  "hash": "fd1a6607381d",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b08.test.ts and tests/evidence3-school.test.ts (the reason, exact), tests/evidence-g21-school.test.ts, tests/evidence-g24-school.test.ts, tests/workload.test.ts, tests/scope-school.test.ts"
+ },
+ "src/engine/systems/school.ts#leaveCabaret": {
+  "status": "Rewritten And Verified",
+  "hash": "8bfd7342f223",
+  "on": "2026-10-17",
+  "evidence": "tests/student-experience.test.ts (Out Of The Cabaret Show, sent on an academic warning); the count is said with one and many"
+ },
+ "src/engine/systems/school.ts#setStanding": {
+  "status": "Rewritten And Verified",
+  "hash": "3363cf7dcd16",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g21-school.test.ts (concern), tests/remaining-school.test.ts (dismissed: what stands), tests/scope-school.test.ts (the warning unmet)"
+ },
+ "src/engine/systems/school.ts#shortTermWords": {
+  "status": "Rewritten And Verified",
+  "hash": "529c4ad7bf82",
+  "on": "2026-10-17",
+  "evidence": "rendered.txt: the review, from good / concern / warning / the last term / kept on warning; tests/workload.test.ts asserts it in the warning"
+ },
+ "src/ui/components/CourseworkPane.tsx#AnotherWay": {
+  "status": "Rewritten And Verified",
+  "hash": "3d239b37d850",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g18-school.test.ts (school.approach: Another Way At It: Put It First, exact)"
+ },
+ "src/ui/components/CourseworkPane.tsx#AssignmentCard": {
+  "status": "Rewritten And Verified",
+  "hash": "74d8f5f39d68",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g24-school.test.ts and tests/evidence2-b08.test.ts (the parts' figures and Counts for), tests/evidence-g18-school.test.ts (steps' toasts, Put First)"
+ },
+ "src/ui/components/CourseworkPane.tsx#CourseworkPane": {
+  "status": "Rewritten And Verified",
+  "hash": "a6846da7d087",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-09-journeys.test.ts (a graduate's and a dismissed student's tab), tests/evidence-g18-school.test.ts (drawn tab)"
+ },
+ "src/ui/components/CourseworkPane.tsx#FeedbackBlock": {
+  "status": "Rewritten And Verified",
+  "hash": "3ff7ed633313",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g24-school.test.ts (the note drawn on the Coursework tab)"
+ },
+ "src/ui/components/CourseworkPane.tsx#FirstWeek": {
+  "status": "Rewritten And Verified",
+  "hash": "4a19a99b06d3",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g19-school.test.ts (Catch Up on the Coursework tab: its titles, exact)"
+ },
+ "src/ui/components/CourseworkPane.tsx#KIND_LABEL": {
+  "status": "Rewritten And Verified",
+  "hash": "3604fb49404b",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g24-school.test.ts (the skill note new, then taken, drawn with its kind)"
+ },
+ "src/ui/components/CourseworkPane.tsx#NotesLedger": {
+  "status": "Rewritten And Verified",
+  "hash": "a5729314ac1b",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g24-school.test.ts (marked taken in the ledger, drawn)"
+ },
+ "src/ui/components/CourseworkPane.tsx#objectiveWhy": {
+  "status": "Rewritten And Verified",
+  "hash": "7f2ac0923e85",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g24-school.test.ts (the objective a note put first, with why, exact)"
+ },
+ "src/ui/components/CourseworkPane.tsx#Partners": {
+  "status": "Rewritten And Verified",
+  "hash": "61d2d867b2cb",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g18-school.test.ts (school.make_amends: You've let them down 2 times without making it right, drawn)"
+ },
+ "src/ui/components/CourseworkPane.tsx#Rehearsals": {
+  "status": "Rewritten And Verified",
+  "hash": "ce06fdeb5db6",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g18-school.test.ts, tests/evidence-g22-school.test.ts and tests/evidence-g24-school.test.ts (trust, rehearsals agreed, the asks, drawn)"
+ },
+ "src/ui/components/CourseworkPane.tsx#Shown": {
+  "status": "Rewritten And Verified",
+  "hash": "9dbf3b57e24f",
+  "on": "2026-10-17",
+  "evidence": "tests/remaining-school-term.test.ts (Work Shown: Not Shown, Not Shown Again, Counted Unready)"
+ },
+ "src/ui/components/CourseworkPane.tsx#TableWork": {
+  "status": "Rewritten And Verified",
+  "hash": "133f741a0c2e",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g18-school.test.ts (school.choose draws the selects and, once shown, why the text doesn't support a choice)"
+ }
+}

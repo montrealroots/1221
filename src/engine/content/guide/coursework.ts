@@ -188,7 +188,7 @@ const SHOWN: Partial<Record<PrepDim, number>> = { familiarity: 0.8, memorization
 const SHORTEST = (Object.entries(SHOWN) as [PrepDim, number][])
   .map(([d, v]) => ({ d, v, short: (LINES_FIRST[d] ?? 0) * (1 - v) + (d === 'memorization' && v < LEARNING.enough ? 0.05 : 0) }))
   .sort((x, y) => y.short - x.short)[0]!;
-const NOTE_TEXT = `${SCENE_STUDY.notes[SHORTEST.d] ?? ''} (${partOf(SCENE_STUDY, SHORTEST.d)}: ${pct(SHORTEST.v)}.) As ${NINA} in ${SEAGULL.play}.`;
+const NOTE_TEXT = `${SCENE_STUDY.notes[SHORTEST.d] ?? ''} (${partOf(SCENE_STUDY, SHORTEST.d)}: ${pct(SHORTEST.v)} prepared.) You played ${NINA} in ${SEAGULL.play}.`;
 /**
  * A step's speed once the showing has met the scene's material: each of its features met once (`featureSpeed`,
  * `noteMaterial` in `show`), so the note's work goes a little faster than the steps before the showing did.

@@ -98,10 +98,10 @@ describe('new feedback', () => {
     const a = { id: 'fb', template: t.id, course: 'x', term: 0, status: 'revising', prep: {}, answers: {}, steps: {}, practicedOn: {}, trained: 0, rehearsals: [], feedback: { course: 'x', teachers: 'y', text: 'z', focus: { kind: 'dim', dim: 'memorization' } } } as unknown as Assignment;
     courseworkOf(sim, sim.player)!.assignments.push(a);
     const step = t.activities.find((x) => x.dim !== 'revision')!.id;
-    expect(prepareRefusal(sim, sim.player, a, step)).toBe('There’s new feedback on this: read it first.');
+    expect(prepareRefusal(sim, sim.player, a, step)).toBe('There’s new feedback on this piece. Read it, then press Mark As Read.');
     expect(sim.execute({ kind: 'school.read_feedback', payload: { assignmentId: 'fb' } }).ok).toBe(true);
-    expect(prepareRefusal(sim, sim.player, a, step)).not.toBe('There’s new feedback on this: read it first.');
-    expect(sim.execute({ kind: 'school.read_feedback', payload: { assignmentId: 'fb' } }).error).toBe('Read already.');
+    expect(prepareRefusal(sim, sim.player, a, step)).not.toBe('There’s new feedback on this piece. Read it, then press Mark As Read.');
+    expect(sim.execute({ kind: 'school.read_feedback', payload: { assignmentId: 'fb' } }).error).toBe('You’ve already read it.');
   });
 });
 

@@ -304,7 +304,7 @@ describe('c-performerTitle', () => {
       const sim = ada('g27-read', { pronouns });
       // Before the tour (Thursday 27 August), refused in its words.
       sim.advanceTo(ET(2026, 8, 26, 18));
-      expect(sim.execute({ kind: 'plays.read', payload: { playId: 'fleabag' } }).error).toBe('The library isn’t known to you yet: the tour shows you it.');
+      expect(sim.execute({ kind: 'plays.read', payload: { playId: 'fleabag' } }).error).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
       sim.advanceTo(ET(2026, 8, 27, 18));
       return sim.must<{ minutes: number; note: string }>({ kind: 'plays.read', payload: { playId: 'fleabag' } }).note;
     };

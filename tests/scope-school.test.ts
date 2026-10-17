@@ -514,7 +514,7 @@ describe('school.request_repeat', () => {
     ]);
     // Dismissed at the same evaluation, in the faculty’s words, with nothing left to ask.
     expect(school().standing).toBe('dismissed');
-    expect(titled(sim, 'Dismissed From The School').map((n) => n.body.split('. ')[0])).toEqual(['The warning wasn’t met']);
+    expect(titled(sim, 'Dismissed From The School').map((n) => n.body.split('. ')[0])).toEqual(['You didn’t meet the terms of your academic warning']);
     expect(sim.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You’re not at school.');
   }, 300_000);
 
@@ -621,7 +621,7 @@ describe('school.request_repeat', () => {
     expect(spring.map(([k]) => k)).toEqual(['3:DRAM 233a/b']);
     expect([school().standing, school().reviews ?? []]).toEqual(['dismissed', []]);
     const dismissed = titled(sim, 'Dismissed From The School');
-    expect(dismissed.map((n) => n.body.split('. ')[0])).toEqual(['The warning wasn’t met']);
+    expect(dismissed.map((n) => n.body.split('. ')[0])).toEqual(['You didn’t meet the terms of your academic warning']);
     // The Fail at the evaluation that dismissed: nothing offered, said after the dismissal at the same instant.
     const name = spring[0]![1].name;
     expect(sim.universe.notifications.filter((n) => n.at === dismissed[0]!.at && n.category === 'school').map((n) => n.title)).toEqual(['Dismissed From The School', `Not Passed: ${name}`]);
@@ -767,7 +767,7 @@ describe('school.request_extra_term', () => {
       'Movement Invention III wasn’t passed: you were at 10 of its 14 meetings you weren’t excused from. The degree needs every course passed.',
     ]);
     // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
-    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['The degree needs every course passed, and Movement Invention III wasn’t. You were at 85% of what was asked of you, and your craft grew 0.1 against the class’s 0.1: for the room each of you had to grow, in line with the class. The faculty noted your coursework: 3 of 3 pieces strong or better. Not passed: Movement Invention III. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.']);
+    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['The degree needs every course passed, and Movement Invention III wasn’t. You came to 85% of the classes, calls and shifts asked of you. Your craft grew 0.1 points, and the class’s middle student’s grew 0.1. Allowing for how much room each of you had to grow, that’s in line with the class. The faculty noted your coursework: 3 of 3 pieces were Strong or better. You didn’t pass Movement Invention III. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.']);
     expect(titled(sim, 'Your MFA Is Conferred')).toHaveLength(0);
     expect(sim.universe.scheduled.filter((i) => i.kind === CONFERRAL_KIND && i.payload.personId === sim.player.id && i.status === 'pending')).toHaveLength(0);
     // Nothing is left to ask: the School is over.

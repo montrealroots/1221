@@ -399,7 +399,7 @@ describe('standing/term evaluation', () => {
     expect(p.growth).toBeLessThan(0.5 * p.classRaw);
     expect(p.paced).toBeGreaterThanOrEqual(1.1 * p.classPace);
     expect(review).toMatchObject({ term: 0, attendance: 1, standing: 'good' });
-    expect(review!.reason.startsWith(`You were at 100% of what was asked of you, and your craft grew ${p.growth.toFixed(1)} against the class’s ${p.classRaw.toFixed(1)}: for the room each of you had to grow, ahead of the class.`)).toBe(true);
+    expect(review!.reason.startsWith(`You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${p.growth.toFixed(1)} points, and the class’s middle student’s grew ${p.classRaw.toFixed(1)}. Allowing for how much room each of you had to grow, that’s ahead of the class.`)).toBe(true);
     expect(near.player.school!.standing).toBe('good');
     expect(drawn(near, SchoolWorkspace, { 'tab:/workspace/school': 'standing' }).text).toContain(`Fall Term 2026 Good Standing 100% ${p.growth.toFixed(1)} ${p.classRaw.toFixed(1)} ${courseworkCell(review!)} ${review!.reason}`);
     // The twin as played began two thirds of the way and grew past half the class's raw points: the same fall otherwise.
@@ -424,7 +424,7 @@ describe('standing/term evaluation', () => {
     expect(review!.coursework!.unready * 2).toBeLessThan(review!.coursework!.shown);
     expect(Object.values(far.player.school!.courses ?? {}).filter((r) => r.result === 'fail')).toEqual([]);
     expect(review!.work).toBeUndefined();
-    expect(review!.reason).toMatch(new RegExp(`^You were at 100% of what was asked of you, and your craft grew ${p.growth.toFixed(1)} against the class’s ${p.classRaw.toFixed(1)}: for the room each of you had to grow, behind the class\\.( The faculty noted your coursework: \\d+ of \\d+ pieces strong or better\\.)?$`));
+    expect(review!.reason).toMatch(new RegExp(`^You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${p.growth.toFixed(1)} points, and the class’s middle student’s grew ${p.classRaw.toFixed(1)}. Allowing for how much room each of you had to grow, that’s behind the class\\.( The faculty noted your coursework: \\d+ of \\d+ pieces were Strong or better\\.)?$`));
     expect(far.player.school!.standing).toBe('concern');
     expect(drawn(far, SchoolWorkspace, { 'tab:/workspace/school': 'standing' }).text).toContain(`Fall Term 2026 Academic Concern 100% ${p.growth.toFixed(1)} ${p.classRaw.toFixed(1)} ${courseworkCell(review!)} ${review!.reason}`);
   }, 60_000);

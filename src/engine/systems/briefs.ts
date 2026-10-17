@@ -463,7 +463,7 @@ export function prepareRefusal(sim: Simulation, person: Person, b: Brief | undef
   // asking up to 100%, stalled at about 93.5%: a mastered actor prepared twenty days taped 99.3 played Set on
   // brief-rockumentary-2, which asks 97%.
   const choiceToRehearse = step === 'rehearse' && sidesOf(rec.playing).length > 0 && rec.playing!.prep < requiredFor(sidesOf(rec.playing), briefMaterial(b), sceneOf(b, readingOf(b, rec.reading)));
-  if (rec.prep[s.part] >= 0.97 && !choiceToRehearse) return 'There’s nothing more to gain from it now.';
+  if (rec.prep[s.part] >= 0.97 && !choiceToRehearse) return 'You’ve done all this step can do.';
   if (step === 'rehearse' && rec.prep.memorization < BRIEF.rehearseNeeds) return 'Learn some of the lines first: there’s nothing to rehearse without them.';
   if (s.feet) {
     if (person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';

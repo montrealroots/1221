@@ -83,7 +83,7 @@ describe('the plays, as facts', () => {
 describe('reading one at school', () => {
   it('needs the library known, takes its time, works the text craft, and leaves a note on what was read', () => {
     const sim = life('pl-read');
-    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'sweat' } }).error).toBe('The library isn’t known to you yet: the tour shows you it.');
+    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'sweat' } }).error).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
     tended(sim, at(9, 5, 18));
     expect(sim.execute({ kind: 'plays.read', payload: { playId: 'nothing' } }).error).toBe('There’s no such play.');
     const before = sim.player.craft!.script;

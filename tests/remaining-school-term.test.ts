@@ -244,8 +244,8 @@ describe('the missed-work term, played', () => {
     expect(before.unready).toBeGreaterThanOrEqual(WARNING_SHARE * before.due);
     expect(dayKey(warnings[0]!.at)).toBe(when!.day);
     expect(zonedParts(warnings[0]!.at, NY).hour).toBe(9);
-    expect(warnings[0]!.body).toMatch(new RegExp(`^${when!.unready} of the ${WARNING_AFTER} pieces due this term so far were Unready or not shown\\. `));
-    expect(warnings[0]!.body).toContain('The faculty reviews the term on December 11, 2026: half the term’s pieces Unready or not shown by then is short of what the program asks, and your standing falls a step.');
+    expect(warnings[0]!.body).toMatch(new RegExp(`^So far this term, ${when!.unready} of the ${WARNING_AFTER} pieces due were Unready or not shown\\. `));
+    expect(warnings[0]!.body).toContain('This is a warning, not the term review. The faculty reviews the term on December 11, 2026. If half or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would give you a notice of academic concern.');
     expect(courseworkOf(sim, sim.player)!.warned).toEqual([0]);
   }, 300_000);
 
@@ -261,7 +261,7 @@ describe('the missed-work term, played', () => {
       const course = pieces.filter((x) => x.course === a.course && firstDay(x) !== undefined && firstDay(x)! <= a.dueOn);
       const notShown = course.filter((x) => !x.shown).length;
       expect(notShown).toBeGreaterThanOrEqual(1);
-      expect(n.body).toBe(`You weren’t there when it was due, and it isn’t taken later. The term’s review counts it as due and Unready, and a course with half or more of its pieces due not shown isn’t passed at the term’s evaluation: ${notShown} of ${course.length} so far.`);
+      expect(n.body).toBe(`You weren’t in class when it was due, and it can’t be shown later. The term review counts it as Unready. A course isn’t passed if half or more of the pieces due in the term weren’t shown: in ${courseName(a.course)}, that’s ${notShown} of ${course.length} so far.`);
     }
     expect(sim.universe.notifications.filter((n) => n.title.startsWith('Not Shown Again: '))).toHaveLength(1);
     // Called in sick on its day: it went on to its course's next meeting and was shown there, counted from then.
@@ -273,7 +273,7 @@ describe('the missed-work term, played', () => {
     const e = pieces.find((a) => a.id === excused.id)!;
     expect(e).toMatchObject({ status: 'excused', dueOn: excused.on });
     expect(e.shown).toBeUndefined();
-    expect(titled(sim, `Excused: ${courseName(e.course)}`).map((n) => n.body)).toEqual(['You were ill on its last meeting, so it isn’t shown this term, and it isn’t held against you.']);
+    expect(titled(sim, `Excused: ${courseName(e.course)}`).map((n) => n.body)).toEqual(['You were ill for the last class it could be shown at, so it won’t be shown this term. It isn’t held against you.']);
     expect(firstDay(e)).toBeUndefined();
   }, 300_000);
 
@@ -289,7 +289,7 @@ describe('the missed-work term, played', () => {
     expect(review.coursework).toEqual({ shown: end.due, unready: end.unready, strong: end.strong });
     // The review's mark, half of three or more, decides its words (`ESTIMATE.coursework`).
     const short = end.due >= 3 && end.unready >= 0.5 * end.due;
-    if (short) expect(review.reason).toContain(`${end.unready} of the ${end.due} pieces due in class were unready or not shown, short of what the program asks.`);
+    if (short) expect(review.reason).toContain(`${end.unready} of the ${end.due} pieces due in class were Unready or not shown. That’s short of what the program asks.`);
     else expect(review.reason).not.toContain('pieces due in class were unready');
     // On the screen: the Evaluations table's Coursework for Fall Term 2026, from the review's own count.
     const shown = text(drawn(sim, 'standing'));

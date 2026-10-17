@@ -637,13 +637,13 @@ describe('school.evaluation', () => {
     const spring = (s: Simulation) => s.player.school!.history.find((r) => r.term === 1)!;
     expect(spring(reach).growth).toBe(0);
     expect(spring(reach).standing).toBe('good');
-    expect(spring(reach).reason).toContain('your craft grew 0.0 against the class’s');
-    expect(spring(reach).reason).toContain('for the room each of you had to grow, in line with the class.');
+    expect(spring(reach).reason).toContain('Your craft grew 0.0 points, and the class’s middle student’s grew');
+    expect(spring(reach).reason).toContain('Allowing for how much room each of you had to grow, that’s in line with the class.');
     expect(reach.player.school!.standing).toBe('good');
     expect(spring(held).standing).toBe('concern');
-    expect(spring(held).reason).toContain('for the room each of you had to grow, behind the class.');
+    expect(spring(held).reason).toContain('Allowing for how much room each of you had to grow, that’s behind the class.');
     expect(held.player.school!.standing).toBe('concern');
-    expect(titled(held, 'A Notice Of Academic Concern')[0]!.body).toContain('Remedy it by the end of next term, or it becomes an academic warning.');
+    expect(titled(held, 'A Notice Of Academic Concern')[0]!.body).toContain('If your next term review finds you short again, the next step is an academic warning.');
     // The standing read: the Summer Cabaret's company takes a student in good standing, by 30 April.
     expect(held.execute({ kind: 'school.summer_cabaret', payload: {} }).error).toBe('The Summer Cabaret’s company takes a student in good standing.');
     expect(reach.execute({ kind: 'school.summer_cabaret', payload: {} }).ok).toBe(true);
@@ -738,11 +738,11 @@ describe('school.evaluation', () => {
     expect(l.shown).toBeGreaterThanOrEqual(3);
     expect(l.unready * 2).toBeGreaterThanOrEqual(l.shown);
     expect(fall(lazy).coursework).toMatchObject({ shown: l.shown, unready: l.unready });
-    expect(fall(lazy).reason).toContain(`${l.unready} of the ${l.shown} pieces due in class were unready or not shown, short of what the program asks.`);
+    expect(fall(lazy).reason).toContain(`${l.unready} of the ${l.shown} pieces due in class were Unready or not shown. That’s short of what the program asks.`);
     expect(fall(lazy).standing).toBe('concern');
     expect(k.unready * 2).toBeLessThan(k.shown);
     expect(fall(keen).coursework).toMatchObject({ shown: k.shown, unready: k.unready });
-    expect(fall(keen).reason).not.toContain('unready or not shown');
+    expect(fall(keen).reason).not.toContain('Unready or not shown');
     expect(fall(keen).standing).toBe('good');
   });
 
@@ -788,7 +788,7 @@ describe('school.evaluation', () => {
     expect(review.attendance).toBeLessThan(0.9);
     expect(school.standing).toBe('dismissed');
     expect(school.endedAt).toBe(at(2026, 12, 11, 17));
-    expect(titled(sim, 'Dismissed From The School')[0]!.body).toMatch(/^The warning wasn’t met\. You were at \d+% of what was asked of you/);
+    expect(titled(sim, 'Dismissed From The School')[0]!.body).toMatch(/^You didn’t meet the terms of your academic warning\. You came to \d+% of the classes, calls and shifts asked of you/);
     // Nothing of the School's left for them on the calendar but the class going on without them, and the moment a
     // classmate brought in that day's class, which lapses at its hour as one does at the School. Until 2026-10-13 this
     // held the class alone: the moment was called off with the rest and stayed open for good (tests/evidence2-b07.test.ts,

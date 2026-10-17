@@ -375,7 +375,7 @@ export function respondRefusal(sim: Simulation, person: Person, m: Moment | unde
     // lapse, which opening a save now lapses (`strandedMoments`).
     if (when <= sim.now) return 'That evening has passed.';
     const clash = sim.universe.scheduled.find((x) => x.status === 'pending' && x.requiresPlayer && x.durationMinutes && x.at < when + CLASS.study.minutes * 60_000 && x.at + x.durationMinutes * 60_000 > when);
-    if (clash) return `You have ${clash.label} then: say no instead.`;
+    if (clash) return `You have ${clash.label} then, so you’ll have to say no.`;
   }
   return undefined;
 }

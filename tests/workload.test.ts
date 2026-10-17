@@ -14,7 +14,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { EVALUATION } from '@/engine/content/tasks';
 import { bandFor, courseworkOf, mostShort, remedyWords, shortAtShowing, shortCause, shortParts, showingForecast, termTally, termWarning, urgentWork, weightsOf, READER, TERM_CHECK, type Assignment } from '@/engine/systems/coursework';
 import { templateById } from '@/engine/content/coursework';
-import { classPeriod, ESTIMATE } from '@/engine/systems/school';
+import { classPeriod, ESTIMATE, shortTermWords } from '@/engine/systems/school';
 import { chiefLimit } from '@/engine/systems/evaluation';
 
 const NY = 'America/New_York';
@@ -45,9 +45,9 @@ describe('school workload, said before it’s held against you', () => {
     // Its figures are the term's own at the moment it was given: at least the mark less the margin, Unready.
     // Nothing was prepared, so each piece was short on every part: that's said, and not one part named by its tie (from
     // 2026-10-17, `shortCause`; until then "Most often short on them: …, on 1 of the 6 shown", brief 13's journey J15).
-    const said = /^(\d+) of the (\d+) pieces shown this term so far were Unready\. On each of them every part was short of complete: it’s the preparation as a whole, not one part, and each one’s steps answer it\./.exec(ws[0]!.body)!;
+    const said = /^So far this term, (\d+) of the (\d+) pieces you’ve shown were Unready\. Every part of each one was unfinished, so it’s the preparation as a whole, not one part\. Work through each piece’s steps\./.exec(ws[0]!.body)!;
     expect(said).not.toBeNull();
-    expect(ws[0]!.body).not.toContain('Most often short');
+    expect(ws[0]!.body).not.toContain('What held most of them back');
     expect(shown.filter((a) => a.shown!.band === 'unready').every((a) => shortParts(sim.player, a).length === Object.keys(templateById(a.template)!.dims).filter((d) => d in weightsOf(a)).length)).toBe(true);
     expect(Number(said[1])).toBeGreaterThanOrEqual((ESTIMATE.coursework.unready - TERM_CHECK.margin) * Number(said[2]));
     expect(ws[0]!.body).toContain(`The faculty reviews the term on ${formatDate(instantFromZoned({ ...classPeriod(term).to, hour: 17 }, NY), NY)}`);
@@ -64,7 +64,7 @@ describe('school workload, said before it’s held against you', () => {
     tended(sim, at(2026, 11, 20), 1, (_, i) => i % 3 < 2);
     const ws = warnings(sim);
     expect(ws).toHaveLength(1);
-    const [, unready, shown] = /^(\d+) of the (\d+) pieces shown/.exec(ws[0]!.body)!.map(Number);
+    const [, unready, shown] = /^So far this term, (\d+) of the (\d+) pieces you’ve shown/.exec(ws[0]!.body)!.map(Number);
     expect(unready).toBeGreaterThanOrEqual((ESTIMATE.coursework.unready - TERM_CHECK.margin) * shown!);
     expect(unready).toBeLessThan(ESTIMATE.coursework.unready * shown!);
   }, 240_000);
@@ -87,7 +87,7 @@ describe('school workload, said before it’s held against you', () => {
     // Interpretation reads the choices answered too, not only its step, so only the partner part is asserted here.
     expect(shortParts(sim.player, a)).toContain('partner');
     expect(remedyWords(a, 'partner')).toContain(READER.label);
-    expect(chiefLimit(without)).toMatch(/wasn’t complete, which cost the /);
+    expect(chiefLimit(without)).toMatch(/wasn’t complete, which cost /);
     // The same piece with the partner part at what completes it: the forecast rises, and nothing is short.
     a.reader = EVALUATION.complete.coursework;
     const withIt = showingForecast(sim, sim.player, a);
@@ -120,8 +120,8 @@ describe('school workload, said before it’s held against you', () => {
     tended(sim, at(2027, 1, 2));
     const concern = sim.universe.notifications.find((n) => n.title === 'A Notice Of Academic Concern');
     expect(concern, 'a term with every piece unprepared draws a concern').toBeDefined();
-    expect(concern!.body).toMatch(/pieces due in class were unready or not shown, short of what the program asks\. On each of them every part was short of complete\./);
-    expect(concern!.body).not.toContain('Most often short');
+    expect(concern!.body).toMatch(/pieces due in class were Unready or not shown\. That’s short of what the program asks\. Every part of each one was unfinished\./);
+    expect(concern!.body).not.toContain('What held most of them back');
   }, 300_000);
 });
 
@@ -150,8 +150,9 @@ describe('school workload, found by the sweep (2026-10-16)', () => {
     expect(t.unready).toBeGreaterThanOrEqual(mark * t.shown);
     termWarning(sim, sim.player, missed[0]!);
     expect(warnings(sim)).toHaveLength(1);
-    expect(warnings(sim)[0]!.body).toMatch(new RegExp(`^${t.unready} of the ${t.shown} pieces due this term so far were Unready or not shown\\.`));
-    expect(warnings(sim)[0]!.body).toContain('your standing falls a step');
+    expect(warnings(sim)[0]!.body).toMatch(new RegExp(`^So far this term, ${t.unready} of the ${t.shown} pieces due were Unready or not shown\\.`));
+    expect(warnings(sim)[0]!.body).toContain(`the review would ${shortTermWords(sim.player.school!, term)}.`);
+    expect(warnings(sim)[0]!.body).toContain('the review would give you a notice of academic concern.');
     expect(warnings(sim)[0]!.body).not.toMatch(/still to come|notice of concern/);
   }, 180_000);
 
@@ -219,8 +220,8 @@ describe('school workload, found by the sweep (2026-10-16)', () => {
     expect(shortCause(sim.player, termTally(cw.assignments, term).unreadyShown)).toEqual({ kind: 'scattered' });
     termWarning(sim, sim.player, picked[0]!);
     expect(warnings(sim)).toHaveLength(1);
-    expect(warnings(sim)[0]!.body).toContain(`${need} of the ${termTally(cw.assignments, term).shown} pieces shown this term so far were Unready. No one part was short on more than one of them: each one’s own forecast says what held it back.`);
-    expect(warnings(sim)[0]!.body).not.toContain('Most often short');
+    expect(warnings(sim)[0]!.body).toContain(`So far this term, ${need} of the ${termTally(cw.assignments, term).shown} pieces you’ve shown were Unready. Each was short on a different part, so there’s no single pattern. Each one’s feedback says what held it back.`);
+    expect(warnings(sim)[0]!.body).not.toContain('What held most of them back');
   }, 180_000);
 
   it('PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)', () => {

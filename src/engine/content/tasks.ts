@@ -101,7 +101,7 @@ const tech = (weight: number): Input => ({ techniques: true, weight });
 const ALL: readonly ConditionKind[] = ['fatigue'];
 
 /** Coursework's parts, by their own words (`content/coursework.ts` `PrepDim`). */
-const COURSEWORK_PREP = { familiarity: 'Knowing the material', memorization: 'The lines', interpretation: 'The choices', rehearsal: 'Rehearsal', partner: 'Work with your partner', revision: 'The revision' } as const;
+const COURSEWORK_PREP = { familiarity: 'Knowing the material', memorization: 'Learning the lines', interpretation: 'Making your choices', rehearsal: 'Rehearsal', partner: 'Work with your partner', revision: 'The revision' } as const;
 
 /**
  * The abilities a scene, a taped brief and a night read of their own, before what the piece demands (from 2026-10-16,
@@ -245,7 +245,7 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
   // absence presence (`BASE_INPUTS`, `DEMAND_EFFECT`): a take with nobody much to play off is a take to the lens.
   tape: {
     id: 'tape', label: 'A Taped Brief', what: 'A practice brief prepared, played to a reader off camera or alone at a microphone, and watched back.',
-    prepLabel: { ...COURSEWORK_PREP, interpretation: 'The breakdown and your reading', rehearsal: 'Rehearsal on your feet', genre: 'Knowing the genre' },
+    prepLabel: { ...COURSEWORK_PREP, interpretation: 'Breaking down the text for your reading', rehearsal: 'Rehearsal on your feet', genre: 'Knowing the genre' },
     dims: {
       believability: { weight: 3, inputs: BASE_INPUTS.tape.believability, prep: ['interpretation', 'memorization'], conditions: ALL },
       interpretation: { weight: 2, inputs: BASE_INPUTS.tape.interpretation, prep: ['interpretation', 'genre'] },
@@ -261,7 +261,7 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
   // been reached by an injury, and the brief inherited that.
   tapeOnFeet: {
     id: 'tapeOnFeet', label: 'A Taped Brief, On Its Feet', what: 'A practice brief built on physical work, prepared, played to a reader off camera, and watched back.',
-    prepLabel: { ...COURSEWORK_PREP, interpretation: 'The breakdown and your reading', rehearsal: 'Rehearsal on your feet', genre: 'Knowing the genre' },
+    prepLabel: { ...COURSEWORK_PREP, interpretation: 'Breaking down the text for your reading', rehearsal: 'Rehearsal on your feet', genre: 'Knowing the genre' },
     dims: {
       believability: { weight: 3, inputs: BASE_INPUTS.tape.believability, prep: ['interpretation', 'memorization'], conditions: ALL },
       interpretation: { weight: 2, inputs: BASE_INPUTS.tape.interpretation, prep: ['interpretation', 'genre'] },
@@ -283,7 +283,7 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
   },
   performance: {
     id: 'performance', label: 'A Night On Stage', what: 'A performance of a production in front of a house.',
-    prepLabel: { lines: 'The lines', blocking: 'The blocking', notes: 'The director’s notes taken' },
+    prepLabel: { lines: 'Learning the lines', blocking: 'The blocking', notes: 'Taking the director’s notes' },
     dims: {
       believability: { weight: 3, inputs: BASE_INPUTS.night.believability, prep: ['lines', 'notes'], conditions: ALL },
       interpretation: { weight: 2, inputs: BASE_INPUTS.night.interpretation, prep: ['notes'] },

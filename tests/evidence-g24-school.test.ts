@@ -341,7 +341,7 @@ describe('classmate trust/bonds', () => {
     const { sim, id } = underWary();
     const { text } = drawn(sim, CourseworkPane);
     expect(text).toContain('Rehearsing With Hannah');
-    expect(text).toContain('Trust 22 of 100 · Came to 0 of 0 agreed · You missed 2');
+    expect(text).toContain('Trust 22 of 100 · No rehearsals agreed yet · You missed 2');
     const words = 'Hannah would rather work on it alone, after last time.';
     const asks = buttons('school.ask_partner', 'Ask Hannah').filter((b) => b.title === words);
     expect(asks).toHaveLength(1);
@@ -477,8 +477,8 @@ describe('standing/term evaluation', () => {
     expect(plain.player.school!.history).toHaveLength(1);
     const [review] = plain.player.school!.history;
     expect(review).toMatchObject({ term: 0, standing: 'concern', attendance: 1, coursework: { shown: n, unready: n, strong: 0 } });
-    expect(review!.reason).toContain('You were at 100% of what was asked of you');
-    expect(review!.reason).toContain(` ${n} of the ${n} pieces due in class were unready or not shown, short of what the program asks.`);
+    expect(review!.reason).toContain('You came to 100% of the classes, calls and shifts asked of you');
+    expect(review!.reason).toContain(` ${n} of the ${n} pieces due in class were Unready or not shown. That’s short of what the program asks.`);
     expect(plain.player.school!.standing).toBe('concern');
     // The twin: under half unready, half or more strong, and the faculty say so.
     const m = pieces(done).length;
@@ -487,7 +487,7 @@ describe('standing/term evaluation', () => {
     expect(unready * 2).toBeLessThan(m);
     expect(strong * 2).toBeGreaterThanOrEqual(m);
     expect(done.player.school!.history[0]).toMatchObject({ term: 0, standing: 'good', attendance: 1, coursework: { shown: m, unready, strong } });
-    expect(done.player.school!.history[0]!.reason).toContain(` The faculty noted your coursework: ${strong} of ${m} pieces strong or better.`);
+    expect(done.player.school!.history[0]!.reason).toContain(` The faculty noted your coursework: ${strong} of ${m} pieces were Strong or better.`);
     expect(done.player.school!.standing).toBe('good');
     // Evaluated once: a reload and the week after add no second review.
     const again = reload(plain);
@@ -524,7 +524,7 @@ describe('standing/term evaluation', () => {
     // Grew under half what the rested twin and the class did, from the same start.
     expect(review!.growth * 2).toBeLessThan(rested.growth);
     expect(review!.growth * 2).toBeLessThan(review!.classGrowth);
-    expect(review!.reason).toContain(`your craft grew ${review!.growth.toFixed(1)} against the class’s ${review!.classGrowth.toFixed(1)}: for the room each of you had to grow, behind the class.`);
+    expect(review!.reason).toContain(`Your craft grew ${review!.growth.toFixed(1)} points, and the class’s middle student’s grew ${review!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s behind the class.`);
     expect(rested.reason).not.toContain('behind the class');
   });
 
@@ -539,7 +539,7 @@ describe('standing/term evaluation', () => {
     expect(review!.growth).toBe(0);
     expect(review!.classGrowth).toBeGreaterThan(0.5);
     expect(review).toMatchObject({ term: 0, standing: 'good', attendance: 1 });
-    expect(review!.reason).toContain(`your craft grew 0.0 against the class’s ${review!.classGrowth.toFixed(1)}: for the room each of you had to grow, in line with the class.`);
+    expect(review!.reason).toContain(`Your craft grew 0.0 points, and the class’s middle student’s grew ${review!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s in line with the class.`);
   });
 
   it('judges a run played after its term’s evaluation at the next, once: its nights with the term’s own at their mean are the term’s work, short, in its words', () => {
@@ -615,7 +615,7 @@ describe('notes and feedback', () => {
     answerAsTheTextSupports(sim, a);
     toMeeting(sim, '2026-10-19');
     const shown = work(sim, a.id);
-    expect(shown.feedback).toMatchObject({ focus: { kind: 'skill', skill: 'character' }, kind: 'new', text: 'It asked more character work than you have yet: that’s the work for the next weeks.' });
+    expect(shown.feedback).toMatchObject({ focus: { kind: 'skill', skill: 'character' }, kind: 'new', text: 'It asked for more character work than you have yet. That’s what to build in class over the next few weeks.' });
     expect(shown.status).toBe('revising');
     expect(shown.revision!.dueOn).toBe('2026-10-26');
     const given = notesOf(cwOf(sim)).find((x) => x.key === 'skill:character')!;
@@ -649,8 +649,8 @@ describe('notes and feedback', () => {
     expect(work(desk, a.id).revision).toMatchObject({ applied: false });
     expect(notesOf(cwOf(practiced)).find((x) => x.key === 'skill:character')).toMatchObject({ status: 'resolved', resolvedOn: '2026-10-26' });
     expect(notesOf(cwOf(desk)).find((x) => x.key === 'skill:character')).toMatchObject({ status: 'open', given: 1 });
-    expect(practiced.universe.notifications.some((x) => x.title === 'The Note Was Taken')).toBe(true);
-    expect(desk.universe.notifications.some((x) => x.title === 'The Note Wasn’t Taken Yet')).toBe(true);
+    expect(practiced.universe.notifications.some((x) => x.title.startsWith('Note Taken: '))).toBe(true);
+    expect(desk.universe.notifications.some((x) => x.title.startsWith('Note Not Taken Yet: '))).toBe(true);
     // The note taken weighs the meeting's growth 1.1; not taken, 0.95.
     const grew = (s: Simulation) => s.player.craft!.scene - before;
     expect(grew(practiced) / grew(desk)).toBeCloseTo(1.1 / 0.95, 9);
@@ -720,7 +720,7 @@ describe('notes and feedback', () => {
     answerAsTheTextSupports(sim, second);
     toMeeting(sim, second.dueOn);
     expect(work(sim, second.id).taken).toContain(key);
-    expect(work(sim, second.id).shown!.strengths).toContain(`The note on ${odd.q.label.toLowerCase()} is taken`);
+    expect(work(sim, second.id).shown!.strengths).toContain(`You took the earlier note on ${odd.q.label.toLowerCase()}`);
     expect(notesOf(cwOf(sim)).find((x) => x.key === key)).toMatchObject({ status: 'resolved', resolvedOn: second.dueOn });
     // The third: answered against the text again, and the note is given again, recurring.
     sim.advanceTo(onDay(second.dueOn, 18, 30) + 24 * MS_HOUR);
@@ -743,7 +743,7 @@ describe('notes and feedback', () => {
     toMeeting(sim, '2026-09-08');
     const first = cwOf(sim).assignments.find((a) => a.course === ACTING_I)!;
     const body = 'The lines weren’t secure, so the attention went to remembering, not to the other person.';
-    expect(first.feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'new', text: `${body} (Lines: 0%.) As Varya in The Cherry Orchard.` });
+    expect(first.feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'new', text: `${body} (Lines: 0% prepared.) You played Varya in The Cherry Orchard.` });
     expect(notesOf(cwOf(sim)).find((x) => x.key === 'dim:memorization')).toMatchObject({ status: 'open', given: 1, level: 0 });
     // The second, set the next day: everything but the lines prepared (TEST SETUP, the table answered through the
     // command), and Learn Lines once, after the partner's ask is answered no.
@@ -761,7 +761,7 @@ describe('notes and feedback', () => {
     expect(lines).toBeLessThan(0.75);
     toMeeting(sim, second.dueOn);
     const pct = Math.round(lines * 100);
-    expect(work(sim, second.id).feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'partial', text: `Better than on September 8, 2026 (0% then, ${pct}% now), not there yet. ${body} (Lines: ${pct}%.) As The Sergeant in The Rising of the Moon.` });
+    expect(work(sim, second.id).feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'partial', text: `This has improved since September 8, 2026 (0% then, ${pct}% now), but it isn’t there yet. ${body} (Lines: ${pct}% prepared.) You played The Sergeant in The Rising of the Moon.` });
     expect(notesOf(cwOf(sim)).find((x) => x.key === 'dim:memorization')).toMatchObject({ status: 'open', given: 2, level: lines });
   });
 
@@ -776,7 +776,7 @@ describe('notes and feedback', () => {
     let { text } = drawn(sim, CourseworkPane);
     // Working until 2026-10-16; the craft set so Character Work holds it (`characterHolds`) shows it Strong.
     expect(text).toContain(`Feedback: ${BAND_LABEL[shown.band]}, ${Math.round(shown.score * 100)} Of 100 · A New Note`);
-    expect(text).toContain('It asked more character work than you have yet: that’s the work for the next weeks.');
+    expect(text).toContain('It asked for more character work than you have yet. That’s what to build in class over the next few weeks.');
     expect(text).toContain('Character Work · Given 1 time');
     for (let day = 19; day <= 25; day += 1) { sim.advanceTo(at(2026, 10, day, 19)); dials(sim); go(sim, 'practice.exercise', { exercise: 'character-work' }); }
     sim.advanceTo(at(2026, 10, 26, 15, 30));
@@ -789,7 +789,7 @@ describe('notes and feedback', () => {
     const rec = notesOf(cwOf(third)).find((x) => x.key === 'dim:rehearsal')!;
     ({ text } = drawn(third, CourseworkPane));
     expect(text).toContain(`Put First: Rehearsal. Your notes have named it ${rec.given} times since`);
-    expect(text).toContain('it weighs more in this showing.');
+    expect(text).toContain('so it counts for more when this piece is shown.');
   });
 });
 
@@ -858,7 +858,7 @@ describe('preparation dims', () => {
     for (let i = 0; i < 2; i += 1) { dials(sim); go(sim, 'school.prepare', { assignmentId: a.id, activity: 'read' }); }
     dials(sim);
     let { text } = drawn(sim, CourseworkPane);
-    expect(text).toContain('Lines 0% Weighs');
+    expect(text).toContain('Lines 0% Counts for');
     const learn = buttons('school.prepare', 'Learn Lines');
     expect(learn.length).toBeGreaterThan(0);
     expect(learn[0]!.disabled).toBe(false);
@@ -868,7 +868,7 @@ describe('preparation dims', () => {
     // The Cherry Orchard's fourth act is a short scene: its lines take 45 minutes.
     expect(toasts).toEqual([`Learn Lines: 45 minutes, Lines up ${pct}%.`]);
     ({ text } = drawn(sim, CourseworkPane));
-    expect(text).toContain(`Lines ${pct}% Weighs`);
+    expect(text).toContain(`Lines ${pct}% Counts for`);
   });
 });
 

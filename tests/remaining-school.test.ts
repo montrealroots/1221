@@ -674,7 +674,7 @@ describe('school.s6.dead-ends: no notice leaves the student without what remains
     expect(sim.player.school!.standing).toBe('dismissed');
     const dismissed = titled(sim, 'Dismissed From The School');
     expect(dismissed).toHaveLength(1);
-    expect(dismissed[0]!.body.endsWith(`Once dismissed, a student isn’t eligible to come back. ${STANDS}`)).toBe(true);
+    expect(dismissed[0]!.body.endsWith(`A dismissed student can’t return to the School. ${STANDS}`)).toBe(true);
     expect(Object.values(sim.player.school!.courses!).filter((r) => r.result === 'pass').length).toBeGreaterThan(0);
     tend(sim, at(2027, 4, 26, 12));
     expect(sim.player.school!.workStudy.owedHours).toBe(0);
@@ -1020,11 +1020,11 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     const partnerStep = (templateById(paired.template)!.activities.find((x) => x.needs?.includes('partner')))!;
     expect(partnerStep).toBeDefined();
     if (paired.feedback && !paired.feedback.seen) paired.feedback.seen = true;
-    expect(refusedLeaving(sim, 'school.prepare', { assignmentId: paired.id, activity: partnerStep.id })).toBe('Work with your partner is a rehearsal you agree with them: ask them on the assignment.');
-    expect(refusedLeaving(sim, 'school.ask_partner', { assignmentId: solo.id, at: sim.now + 3 * MS_DAY })).toBe('This work has no partner.');
-    expect(refusedLeaving(sim, 'school.choose_playing', { assignmentId: shown.id, pace: 'driven' })).toBe('It’s been shown.');
+    expect(refusedLeaving(sim, 'school.prepare', { assignmentId: paired.id, activity: partnerStep.id })).toBe('Work with your partner happens at a rehearsal you both agree to. Ask them for an evening under Rehearsing With on this piece.');
+    expect(refusedLeaving(sim, 'school.ask_partner', { assignmentId: solo.id, at: sim.now + 3 * MS_DAY })).toBe('This piece has no partner.');
+    expect(refusedLeaving(sim, 'school.choose_playing', { assignmentId: shown.id, pace: 'driven' })).toBe('It’s already been shown.');
     const sceneless = open.find((x) => templateById(x.template)!.material === 'none');
-    if (sceneless) expect(refusedLeaving(sim, 'school.choose_playing', { assignmentId: sceneless.id, pace: 'driven' })).toBe('There’s no scene in it to play one way or another.');
+    if (sceneless) expect(refusedLeaving(sim, 'school.choose_playing', { assignmentId: sceneless.id, pace: 'driven' })).toBe('There’s no scene in this piece, so there’s no way of playing it to choose.');
     expect(refusedLeaving(sim, 'school.orientation', { task: 'register' })).toBe('Done on August 24, 2026.');
     const unread = open.find((x) => !x.feedback)!;
     expect(refusedLeaving(sim, 'school.read_feedback', { assignmentId: unread.id })).toBe('There’s no feedback on that.');
@@ -1048,7 +1048,7 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     const solo = cw.assignments.find((a) => a.status === 'open' && a.partner === undefined && persistentFor(cw, a).length > 0)!;
     expect(solo).toBeDefined();
     if (solo.feedback && !solo.feedback.seen) solo.feedback.seen = true;
-    expect(refusedLeaving(sim, 'school.approach', { assignmentId: solo.id, kind: 'partner' })).toBe('This work has no partner.');
+    expect(refusedLeaving(sim, 'school.approach', { assignmentId: solo.id, kind: 'partner' })).toBe('This piece has no partner.');
     // An evening that clashes: the first thing on the calendar she's expected at, held for a while, before a paired piece is due.
     const paired = cw.assignments.filter((a) => a.status === 'open' && a.partner !== undefined);
     const clash = paired.flatMap((a) => sim.universe.scheduled
@@ -1067,7 +1067,7 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     if (paired.feedback && !paired.feedback.seen) paired.feedback.seen = true;
     (cw.notes ??= []).unshift({ key: 'dim:partner', status: 'open', first: '2026-09-08', last: '2026-10-01', given: 9, history: [] });
     expect(persistentFor(cw, paired)[0]!.dim).toBe('partner');
-    expect(refusedLeaving(sim, 'school.approach', { assignmentId: paired.id, kind: 'partner' })).toBe('That’s the work with your partner already.');
+    expect(refusedLeaving(sim, 'school.approach', { assignmentId: paired.id, kind: 'partner' })).toBe('That note is already about work with your partner, so this adds nothing.');
   }, 600_000);
 
   it('PLAYER JOURNEY with TEST SETUP: cast at the Rep and in a School production with calls in the weeks a Cabaret show would rehearse and play, the show is refused in the Bulletin’s words, on its panel and by the command (no played life was double-cast there in the second years of eight seeds searched on 2026-10-16, dc-1 to dc-8, so the two castings’ calls are put on the calendar by hand)', () => {

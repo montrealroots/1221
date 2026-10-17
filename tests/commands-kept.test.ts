@@ -40,7 +40,7 @@ describe('orientation', () => {
     const tour = sim.universe.scheduled.find((i) => i.status === 'pending' && i.kind === 'school.orientation' && i.payload.task === 'tour')!;
     expect(tour).toBeDefined();
     sim.timeline.cancel(tour.id, sim.now);
-    expect(sim.execute({ kind: 'school.orientation', payload: { task: 'tour' } }).error).toBe('Its session is still ahead on the calendar.');
+    expect(sim.execute({ kind: 'school.orientation', payload: { task: 'tour' } }).error).toBe('This session is still to come. It’s on your calendar.');
     expect(sim.execute({ kind: 'school.orientation', payload: { task: 'nonsense' } }).error).toBe('There’s no such session.');
     sim.advanceTo(tour.at + 4 * MS_HOUR);
     expect(cw.orientation.done.tour).toBeUndefined();
