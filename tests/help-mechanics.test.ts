@@ -15,6 +15,10 @@
  *   Escape go to the help alone. Until 2026-10-13 either one closed the menu too.
  * - The live clock’s hold: the real `GameProvider` over a live save, the help open, holds `sim.now` and the save for a
  *   minute; closed, the clock moves five seconds in five. The same for the guide’s own dialog.
+ * - From 2026-10-17 (brief 14): Show Me Where to another screen offers Back To that screen as well as Back To Help, and
+ *   pressed, it returns to the screen and tab the player left with no command run; ? on a screen opens the contents with
+ *   that screen’s entries first, Locked before their chapter; an entry’s sections come in the brief’s eight questions’
+ *   order; and a new life’s guide, read through in its own dialog, shows every chapter’s every paragraph and name.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York and an actor at Yale in
  * New Haven, played a day on the clock (`advanceTo`) before the help is opened.

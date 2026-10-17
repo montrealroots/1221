@@ -95,6 +95,9 @@ async function capture(out, dir, only) {
         for (let i = 0; i < await toc.count(); i++) {
           const title = ((await toc.nth(i).getAttribute('aria-label')) ?? '').replace(/^\d+\.\s*/, '').replace(/, \w+$/, '');
           await toc.nth(i).click().catch(() => {}); await wait(250);
+          // Its details opened, so their words are read too.
+          const more = page.locator('[role=dialog] details.guide-more:not([open]) > summary');
+          if (await more.count()) { await more.first().click().catch(() => {}); await wait(150); }
           await record(`Guide: ${title}`, '[role=dialog]');
         }
         await escape();
@@ -206,6 +209,8 @@ function screensIn(dirs) {
       if (!Array.isArray(list)) continue;
       for (const s of list) {
         if (!s.text && !s.buttons) continue;
+        // The tutorials' own pages can't vouch for what they say: a label is looked for everywhere else.
+        if (/^(Guide|How This Works)(:|$)/.test(s.screen)) continue;
         const parts = [s.text, ...(s.buttons ?? []), ...(s.labels ?? []), ...(s.placeholders ?? []), ...(s.dialogs ?? [])];
         screens.push({ save: f, screen: s.screen, tab: s.tab ?? '', body: norm(parts.join('\n')), lower: norm(parts.join('\n')).toLowerCase() });
       }
@@ -219,7 +224,7 @@ function codeText() {
   const files = [];
   const walk = (d) => { for (const f of readdirSync(d)) { const p = join(d, f); if (statSync(p).isDirectory()) walk(p); else if (/\.(ts|tsx)$/.test(f) && !/\.test\./.test(f)) files.push(p.split('\\').join('/')); } };
   walk('src');
-  return files.filter((f) => !/src\/engine\/content\/tutorial\.ts$|src\/engine\/content\/guide\//.test(f)).map((f) => norm(readFileSync(f, 'utf8'))).join('\n');
+  return files.filter((f) => !/src\/engine\/content\/tutorial\.ts$|src\/engine\/content\/guide\//.test(f)).map((f) => [f, norm(readFileSync(f, 'utf8'))]);
 }
 
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -228,13 +233,23 @@ const wordRe = (w, code) => (/^(?:N|\d+)$/.test(w) ? (code ? String.raw`(?:\d+|\
 /** A label as the code may build it, in its own capitals: its words, with a template's part or a line break allowed between any two. */
 const GAP = String.raw`(?:\s+|\s*\{[^}]*\}\s*|\s*\$\{[^}]*\}\s*|['"\`]\s*\+?\s*['"\`]?\s*)`;
 const TEMPLATE = String.raw`(?:\{[^}]*\}|\$\{[^}]*\})`;
+/**
+ * Where the code writes a label, if it does: its words as written, or with one or two words in a row standing as a
+ * template's part, so long as at least two words and at least half of them are written out. "Apply For HUSKY D" is
+ * "Apply For {PROGRAM_NAMES[state].medicaid}", and "Leave The Pace Open" is "Leave The {AXES[axis].label} Open".
+ */
 const inCode = (code, label) => {
   const words = norm(label).split(' ').map((w) => wordRe(w, true));
-  // Its words as written, or with its last words, or its first, standing for a template's part: "Apply For HUSKY D" is
-  // "Apply For {PROGRAM_NAMES[state].medicaid}".
-  const forms = [words, ...words.slice(1).map((_, k) => [...words.slice(0, k + 1), TEMPLATE]), ...words.slice(1).map((_, k) => [TEMPLATE, ...words.slice(k + 1)])]
-    .filter((f) => f.filter((w) => w !== TEMPLATE).length >= 2 || f.length === words.length);
-  return forms.some((f) => new RegExp(`(?<![A-Za-z])${f.join(GAP)}(?![a-z])`).test(code));
+  const forms = [words];
+  for (let k = 1; k <= 2; k++) {
+    for (let at = 0; at + k <= words.length; at++) {
+      const kept = words.length - k;
+      if (kept >= 2 && kept * 2 >= words.length) forms.push([...words.slice(0, at), TEMPLATE, ...words.slice(at + k)]);
+    }
+  }
+  const res = forms.map((f) => new RegExp(`(?<![A-Za-z])${f.join(GAP)}(?![a-z])`));
+  const hit = code.find(([, text]) => res.some((re) => re.test(text)));
+  return hit ? hit[0] : undefined;
 };
 const onScreen = (s, label) => {
   const pattern = norm(label).split(' ').map((w) => wordRe(w, false)).join(' ');
@@ -249,6 +264,8 @@ function check(dirs) {
   const places = (list) => [...new Set(list.map((s) => `${s.screen}${s.tab ? `, ${s.tab}` : ''}`))];
   /** Where one label is: on the entry's own screen, on any, in the code only, or nowhere. */
   const find = (label, c) => {
+    // A chapter's title, as another chapter names it, is the guide's own: Guide, at the top of the screen, opens it.
+    if (CHAPTERS.some((ch) => ch.title === label)) return { status: 'on a screen', as: label, where: ['Guide'] };
     const tries = [label];
     // A sentence's first word may be an instruction ("Press Go"), not the label's.
     if (c.initial) tries.push(label.split(' ').slice(1).join(' '));
@@ -258,8 +275,11 @@ function check(dirs) {
       const any = screens.filter((s) => onScreen(s, t));
       if (any.length) return { status: 'on a screen', as: t, where: places(any).slice(0, 4) };
     }
-    const coded = tries.find((t) => t && inCode(code, t));
-    return coded ? { status: 'in the code only', as: coded, where: [] } : { status: 'nowhere', where: [] };
+    for (const t of tries.filter(Boolean)) {
+      const file = inCode(code, t);
+      if (file) return { status: 'in the code only', as: t, where: [file] };
+    }
+    return { status: 'nowhere', where: [] };
   };
   const results = [];
   const seen = new Map();
@@ -306,10 +326,10 @@ if (capDir) {
   for (const st of order.slice(0, 2)) {
     const rows = results.filter((r) => r.status === st);
     if (!rows.length) continue;
-    lines.push(`## ${st[0].toUpperCase()}${st.slice(1)}`, '', '| Label | Where It’s Said | Part |', '|---|---|---|');
+    lines.push(`## ${st[0].toUpperCase()}${st.slice(1)}`, '', '| Label | Where It’s Said | Part | Written In |', '|---|---|---|---|');
     const byLabel = new Map();
     for (const r of rows) { const k = r.label; byLabel.set(k, [...(byLabel.get(k) ?? []), r]); }
-    for (const [label, rs] of [...byLabel].sort((a, b) => a[0].localeCompare(b[0]))) lines.push(`| ${label} | ${[...new Set(rs.map((r) => r.from))].join(', ')} | ${[...new Set(rs.map((r) => r.part))].join(', ')} |`);
+    for (const [label, rs] of [...byLabel].sort((a, b) => a[0].localeCompare(b[0]))) lines.push(`| ${label} | ${[...new Set(rs.map((r) => r.from))].join(', ')} | ${[...new Set(rs.map((r) => r.part))].join(', ')} | ${[...new Set(rs.flatMap((r) => r.where ?? []))].map((f) => `\`${f}\``).join(', ') || '—'} |`);
     lines.push('');
   }
   const report = `${lines.join('\n')}\n`;

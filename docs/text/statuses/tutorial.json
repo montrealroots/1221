@@ -1,9 +1,171 @@
 {
+ "src/engine/content/guide/index.ts#GOALS [body]": {
+  "status": "Rewritten And Verified",
+  "hash": "26ed8f871f1c",
+  "on": "2026-10-17",
+  "evidence": "the built app's How This Works contents, recorded by tools/tutorial-routes.mjs --capture (tutorial/capture/brief.json, How This Works), shows each goal's title and new lead"
+ },
+ "src/engine/content/guide/index.ts#GOALS [coursework]": {
+  "status": "Rewritten And Verified",
+  "hash": "8aa56f945953",
+  "on": "2026-10-17",
+  "evidence": "the built app's How This Works contents, recorded by tools/tutorial-routes.mjs --capture (tutorial/capture/brief.json, How This Works), shows each goal's title and new lead"
+ },
+ "src/engine/content/guide/index.ts#GOALS [craft]": {
+  "status": "Rewritten And Verified",
+  "hash": "f5e7dc41e8d8",
+  "on": "2026-10-17",
+  "evidence": "the built app's How This Works contents, recorded by tools/tutorial-routes.mjs --capture (tutorial/capture/brief.json, How This Works), shows each goal's title and new lead"
+ },
+ "src/engine/content/guide/index.ts#GOALS [day]": {
+  "status": "Rewritten And Verified",
+  "hash": "de60dbfb5b6e",
+  "on": "2026-10-17",
+  "evidence": "the built app's How This Works contents, recorded by tools/tutorial-routes.mjs --capture (tutorial/capture/brief.json, How This Works), shows each goal's title and new lead"
+ },
+ "src/engine/content/guide/index.ts#GOALS [money]": {
+  "status": "Rewritten And Verified",
+  "hash": "9a2d9ea2c455",
+  "on": "2026-10-17",
+  "evidence": "the built app's How This Works contents, recorded by tools/tutorial-routes.mjs --capture (tutorial/capture/brief.json, How This Works), shows each goal's title and new lead"
+ },
+ "src/engine/content/guide/index.ts#GOALS [papers]": {
+  "status": "Rewritten And Verified",
+  "hash": "8b0abe60d7c4",
+  "on": "2026-10-17",
+  "evidence": "the built app's How This Works contents, recorded by tools/tutorial-routes.mjs --capture (tutorial/capture/brief.json, How This Works), shows each goal's title and new lead"
+ },
+ "src/engine/content/guide/index.ts#GOALS [productions]": {
+  "status": "Rewritten And Verified",
+  "hash": "cd9ccca3e356",
+  "on": "2026-10-17",
+  "evidence": "the built app's How This Works contents, recorded by tools/tutorial-routes.mjs --capture (tutorial/capture/brief.json, How This Works), shows each goal's title and new lead"
+ },
+ "src/engine/content/guide/index.ts#GOALS [school]": {
+  "status": "Rewritten And Verified",
+  "hash": "54866e56424b",
+  "on": "2026-10-17",
+  "evidence": "the built app's How This Works contents, recorded by tools/tutorial-routes.mjs --capture (tutorial/capture/brief.json, How This Works), shows each goal's title and new lead"
+ },
+ "src/engine/content/guide/index.ts#GOALS [start]": {
+  "status": "Rewritten And Verified",
+  "hash": "700418186a2a",
+  "on": "2026-10-17",
+  "evidence": "the built app's How This Works contents, recorded by tools/tutorial-routes.mjs --capture (tutorial/capture/brief.json, How This Works), shows each goal's title and new lead"
+ },
  "src/engine/content/guide/index.ts#SEARCH_EXAMPLES": {
   "status": "Rewritten And Verified",
   "hash": "8e5813806ca6",
   "on": "2026-10-17",
   "evidence": "tests/guide.test.ts, 'suggests only searches that find an entry'; tests/help-mechanics.test.ts asserts them in the hint"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [advance]": {
+  "status": "Rewritten And Verified",
+  "hash": "2bc4167fa8c2",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere)"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [bank]": {
+  "status": "Rewritten And Verified",
+  "hash": "6611592223b6",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere); tests/defects-g22-1.test.ts holds where Statements are, how long Move Money takes and who gets help with payments"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [body]": {
+  "status": "Rewritten And Verified",
+  "hash": "75f7a6417ef3",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere); tests/defects-g1-1.test.ts holds what it says of your own page"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [calendar]": {
+  "status": "Rewritten And Verified",
+  "hash": "cd7f8952c14a",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere)"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
+  "status": "Rewritten And Verified",
+  "hash": "49bc94ecdb20",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere)"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [documents]": {
+  "status": "Rewritten And Verified",
+  "hash": "44263e7d0129",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere); tests/defects-g27-1.test.ts holds what Report Lost takes and where a lost license is replaced"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [life]": {
+  "status": "Rewritten And Verified",
+  "hash": "ba8756ccd376",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere)"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [looking-after]": {
+  "status": "Rewritten And Verified",
+  "hash": "5c4f37a8b1bd",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere)"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [money]": {
+  "status": "Rewritten And Verified",
+  "hash": "e89af3542672",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere); tests/defects-g12-1.test.ts holds what the Money line is said to show and where the record's figure shows"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [needs]": {
+  "status": "Rewritten And Verified",
+  "hash": "6492383ae195",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere)"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [papers]": {
+  "status": "Rewritten And Verified",
+  "hash": "7efc6750a605",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere); tests/evidence2-b13.test.ts, the health.enroll work-rules journey, asserts its work rules and its renewal in the guide's dialog"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [plans]": {
+  "status": "Rewritten And Verified",
+  "hash": "d7db8579b76e",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere)"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [profile]": {
+  "status": "Rewritten And Verified",
+  "hash": "a23c6d1606ac",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere)"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [school]": {
+  "status": "Rewritten And Verified",
+  "hash": "d11e959febd0",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere); tests/remaining-school.test.ts, 'the guide says whose each rule is…', holds the Bulletin's standings apart from what's estimated, and the note as the game's"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [sleep]": {
+  "status": "Rewritten And Verified",
+  "hash": "f67794cff4e1",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere)"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [weather]": {
+  "status": "Rewritten And Verified",
+  "hash": "97a777a611e9",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere)"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [welcome]": {
+  "status": "Rewritten And Verified",
+  "hash": "d4fb6c1c2063",
+  "on": "2026-10-17",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…', draws every paragraph, detail and name of the chapter on its page; the built app's own chapter page holds each one (tutorial/capture/brief.json, Guide: <title>; 271 of 271 across the chapters); tools/tutorial-routes.mjs finds every label it names on a built-app screen or, for a state the saves didn't reach, in the code (tutorial/routes.md: none nowhere)"
+ },
+ "src/engine/content/tutorial.ts#hoursOf": {
+  "status": "Reviewed And Retained",
+  "hash": "bbce7c890355",
+  "on": "2026-10-17",
+  "reason": "half an hour is how a person says the Sleep dialog's shortest night; the chapter prints it from SHORTEST_SLEEP, and the help journey draws it"
  },
  "src/engine/world/tutorial.ts#lockedBecause": {
   "status": "Rewritten And Verified",

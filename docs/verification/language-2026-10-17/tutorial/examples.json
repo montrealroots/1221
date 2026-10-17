@@ -1,0 +1,592 @@
+[
+ {
+  "batch": 1,
+  "source": "src/engine/world/tutorial.ts#lockedBecause",
+  "kind": "error",
+  "before": "Read “Sleep” in the guide first. The next chapter is “Your Life, Hour By Hour”.",
+  "after": "Read “Sleep” in the guide first. The chapters open in order, and “Your Life, Hour By Hour” is next: press Guide, at the top of the screen.",
+  "why": "Says where the guide is and why another chapter comes first, not only which chapter.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g29-ui.test.ts (c-tutorial) asserts it exactly"
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/world/tutorial.ts#lockedBecause",
+  "kind": "error",
+  "before": "Read “Your Bank” in the guide first.",
+  "after": "Read “Your Bank” in the guide first. Press Guide, at the top of the screen, to read it.",
+  "why": "The variant where the chapter is the next one: names the next step.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g33-ui.test.ts asserts it on Money’s locked bank button and the refused transfer"
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/world/tutorial.ts#registerTutorial",
+  "kind": "error",
+  "before": "This life has no guide to read through; everything is open.",
+  "after": "This life was begun without the guide, so everything is already open.",
+  "why": "Says why there is no guide, in a sentence a player can follow.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g02-life.test.ts and tests/evidence-g29-ui.test.ts assert it"
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/world/tutorial.ts#registerTutorial",
+  "kind": "error",
+  "before": "Read “{…}” first; the chapters go in order.",
+  "after": "Read “{…}” first. The chapters open in order.",
+  "why": "Two sentences, and the guide’s own verb: chapters open.",
+  "meaningSensitive": false,
+  "verified": "tests/trace-commands.test.ts asserts it"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Entry",
+  "kind": "heading",
+  "before": "What The Game Reads",
+  "after": "What Decides It",
+  "why": "The brief’s own example of engine-speak, “what the engine reads”; the facts under it are what decides how a thing goes.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, the way-back journey, asserts the headings in order"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Entry",
+  "kind": "heading",
+  "before": "Connected Systems",
+  "after": "How It Connects",
+  "why": "The sixth question, how it affects other parts of the game, in a player’s words; it moved up from near the end to its place in the eight.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts asserts it; tools/acceptance-ui.mjs and tools/playthroughs-ui.mjs open it by this name"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Entry",
+  "kind": "heading",
+  "before": "Steps · What It Needs · Why It Might Not Be Available",
+  "after": "What To Press · What You Need First · If You Can’t",
+  "why": "The third, fourth and eighth questions as headings, in order: what to press, what you need first, what if you can’t.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, the way-back journey, asserts the order"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#CONNECTION_HEADING",
+  "kind": "label",
+  "before": "Read When Work Is Judged",
+  "after": "Counts Toward",
+  "why": "A tie of the evaluation kind, said as what the thing counts toward.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts asserts How It Connects’ headings for Casting"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Contents",
+  "kind": "other",
+  "before": "The Guide’s Chapters. 15 of 17 read: each opens a part of the game.",
+  "after": "The Guide. You’ve read 15 of its 17 chapters. Each one you read opens a part of the game.",
+  "why": "A sentence with a subject, and a variant for none read.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g02-life.test.ts asserts the 15-of-17 words; tests/help-mechanics.test.ts the none-read words"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Contents",
+  "kind": "other",
+  "before": "The Guide’s Chapters. 0 of 17 read: each opens a part of the game.",
+  "after": "The Guide. You haven’t read any of its 17 chapters yet. Each one you read opens a part of the game.",
+  "why": "The none-read variant had no words of its own: “0 of 17 read”.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, ‘? on School’s Casting tab…’, asserts it"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Results",
+  "kind": "empty",
+  "before": "Nothing matches “sleeep”. Try fewer words, or the contents.",
+  "after": "Nothing matches “sleeep”. Try fewer or different words, or go back to Contents.",
+  "why": "Names the next step by its label, Contents in the trail.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b13.test.ts asserts it exactly"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#HINT",
+  "kind": "tutorial",
+  "before": "Type a feature’s name, a word for it, or a question, such as “why is my rehearsal refused”.",
+  "after": "Type a feature’s name, a word for it or a question, such as “clock stopped” or “how do I pay my card”.",
+  "why": "The old example searched found nothing (defect 1); the new ones are held to finding an entry.",
+  "meaningSensitive": true,
+  "verified": "tests/guide.test.ts, ‘suggests only searches that find an entry’; tests/help-mechanics.test.ts asserts the hint"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Entry",
+  "kind": "tutorial",
+  "before": "Not open on this life yet: “Drama School” in the guide opens it.",
+  "after": "This isn’t open yet. Reading “Drama School” in the guide opens it.",
+  "why": "A sentence with a subject, then the way to open it.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, ‘? on School’s Casting tab…’, asserts it"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Guide.tsx#LockedPanel",
+  "kind": "other",
+  "before": "Opens with “Money” in the guide: everything you have and owe, at a glance.",
+  "after": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+  "why": "“Opens with” had no subject.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g33-ui.test.ts asserts it"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Guide.tsx#GuideDialog",
+  "kind": "tutorial",
+  "before": "Read ahead as you like. Chapters are marked read in order, and “Your Life, Hour By Hour” comes first.",
+  "after": "You can read ahead, but the chapters open in order, and “Your Life, Hour By Hour” is next.",
+  "why": "Says plainly that reading ahead is allowed and what “in order” means.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, the guide journey, asserts it"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Guide.tsx#GuideDialog",
+  "kind": "notification",
+  "before": "Try it now, or go straight on. “What’s Coming” is next, whenever you open the guide.",
+  "after": "It’s open now. Try it, or go straight on to “What’s Coming”. The guide picks up there whenever you open it.",
+  "why": "What happened first (it’s open), then the next step.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, the guide journey, asserts it after every chapter"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#HelpDialog",
+  "kind": "label",
+  "before": "Search The Guide",
+  "after": "Search How This Works",
+  "why": "It searches How This Works, the help this dialog is titled, not the guide’s chapters.",
+  "meaningSensitive": true,
+  "verified": "the built app’s How This Works dialog (tutorial/capture/)"
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#HelpProvider",
+  "kind": "button",
+  "before": "Back To Help",
+  "after": "Back To Help · Back To School",
+  "why": "Following Show Me Where and coming back now keeps the player’s place: a second button returns to the screen and tab they left.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, the way-back journey, presses it: no command, the save the same to the byte, the clock to the millisecond"
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/guide/index.ts#GOALS [school]",
+  "kind": "label",
+  "before": "Your standing, classes, terms, leave, money owed the school, shifts and shows of your own.",
+  "after": "Your standing and classes, calling in sick, orientation, leave, repeating a year, what you owe the school and work-study.",
+  "why": "It named shows of your own, which are Productions And Casting’s, and left calling in sick out; it now names its entries in their order.",
+  "meaningSensitive": true,
+  "verified": "the built app’s How This Works contents (tutorial/capture/)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [welcome]",
+  "kind": "tutorial",
+  "before": "SLATE is one life, lived on a real clock in a real town. Everything you see is worked out from where you are and what day it is: the local time, the season, the money, the prices and the law.",
+  "after": "SLATE is one life, lived hour by hour in a real town. What you see is that town on that day: its local time, its season and weather, its prices, its money and its law.",
+  "why": "“Worked out from” was engine-speak; it says what the player sees.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [welcome]",
+  "kind": "tutorial",
+  "before": "Every place in your life opens from Home, or from the menu down the left once its chapter is read. How This Works, on a panel, says what it does and what it’s connected to; ? anywhere opens that reference by what you’re trying to do, and / searches it. Reading it moves no clock.",
+  "after": "How This Works, on each panel, explains what the panel does and what it’s connected to. Press the question mark key anywhere for the contents of that help, or the slash key to search it. The clock waits while you read, there or here.",
+  "why": "A semicolon run split into steps, each with its key.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [calendar]",
+  "kind": "tutorial",
+  "before": "Go spends the hours it takes, and the clock goes through them. Skip It walks away from a plan of your own. Stand Here closes the question and leaves the clock paused at the commitment; whatever moves it next runs the commitment, with you there if you’re awake, out of hospital and in its town.",
+  "after": "Press Go to be there. Going takes the commitment’s own time, and the clock runs through it. For a plan of your own, Skip It walks away from it instead. Stand Here closes the dialog and leaves the clock paused at the commitment.",
+  "why": "The press first, then what it does; Stand Here’s run-on became its own paragraph.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [clock]",
+  "kind": "tutorial",
+  "before": "Time runs a minute a minute, and stops when you say.",
+  "after": "Starting and stopping time.",
+  "why": "The lead is what the chapter is for.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [needs]",
+  "kind": "tutorial",
+  "before": "A question the world needs you to answer shows here too, with its answers as buttons. Dismiss takes it off the list without answering it, and what it asked still runs out when it would.",
+  "after": "Some notices are questions, with their answers as buttons. Dismiss takes a question off the list without answering it. What it was about still stands: a tax return still falls due, and you can still deal with it on its own screen.",
+  "why": "“Still runs out when it would” said nothing a player could act on; what stands is said, with where to deal with it (`day.needs`’s own words).",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [body]",
+  "kind": "tutorial",
+  "before": "The dials a body runs on.",
+  "after": "Energy, stress, readiness, and the rest of your wellbeing.",
+  "why": "“Dials” is engine-speak; the glossary’s word is wellbeing.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [body]",
+  "kind": "tutorial",
+  "before": "How You Are keeps three dials in front of you. Energy runs down every waking hour and faster on a short night. Stress eases while you have energy left and climbs once it runs out, and owing money adds to it every day. Readiness is how well you’d do something right now, out of all the rest.",
+  "after": "How You Are, on Home, keeps three things in front of you. Energy is how much you have left today: it runs down every waking hour, faster when you owe sleep, and only sleep brings it back. Stress eases while you have energy left and climbs once it runs out, and money you owe adds to it every day. Readiness is how sharp you’d be for work right now, from all the rest.",
+  "why": "Says what energy is and that only sleep brings it back, which `applySleep` alone does (life.ts:901).",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [body]",
+  "kind": "tutorial",
+  "before": "(none: the chapter didn’t say how condition, fitness, energy and health differ)",
+  "after": "Condition is how fit your body is for work today, after illness, injury and rest. Fitness is your Stamina, the ability that keeps you going through a long scene or a night on stage. Neither is your energy, and neither is your health: illness, injury and the care and cover for them are on Papers.",
+  "why": "New: the brief’s distinction of health, stamina and energy, where the player first meets them. Stamina is fitness (`abilityValue`, attributes.ts:150).",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [looking-after]",
+  "kind": "tutorial",
+  "before": "Something you love lifts you more: the menu says so beside it. When one can’t be done, it’s gray, with the reason.",
+  "after": "When something can’t be done right now, it’s grayed out with the reason.",
+  "why": "The first sentence said what went with the interests on 2026-10-10 (defect 2); the second stays, plainer.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [looking-after]",
+  "kind": "tutorial",
+  "before": "Look After Yourself holds what a day needs besides sleep, each with how long it takes, what it costs and what it would do to your dials. It’s in the order of what it’s worth now: first whatever is costing you every hour it’s left (hunger, going unwashed, stress past its line), marked Needed Now, then by how much readiness it gives back. It does what you choose, when you choose it, and only then.",
+  "after": "Look After Yourself, in the top bar, opens a menu of what a day needs besides sleep: Eat A Meal, Order In, Shower, Work Out and Unwind. Each line says how long it takes, what it costs and what it would change, and nothing happens until you press one.",
+  "why": "Where it is and its items by their labels; the order and its chips said separately, and only the top line has a chip (`TimeControls.tsx`).",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [body]",
+  "kind": "label",
+  "before": "Each dial, and readiness, when you press them",
+  "after": "Energy, stress, readiness and the rest of your wellbeing, when you press them",
+  "why": "What reading it opens, without “dial”.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [plans]",
+  "kind": "tutorial",
+  "before": "Open Calendar is the month. Pick a day and Put Something On It: a name, a start time and how long, from half an hour to all day. It wants you in the town you’re in when you make it, and no move in the game takes you out of that town.",
+  "after": "Open Calendar, on Home’s Calendar panel, shows the whole month. Press a day, then Put Something On It, and say what it is, when it starts and how long it takes, from {…} to {…}. Put It On adds it.",
+  "why": "The form’s own button, Put It On, and the lengths from the rules (`PLAN_LENGTHS`), not copied.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "(none: “choose how you’ll play it”, with nothing on rehearsing it)",
+  "after": "Each course sets work at its meetings: a scene, a song, a movement score. On Coursework, prepare each piece a step at a time, answer its questions at the table, and choose how you’ll play it. Where the text supports more than one answer at the table, each is right. Choosing how to play a scene isn’t the same as rehearsing it: the choice pays off once you’ve rehearsed it on your feet.",
+  "why": "New: choosing a way to play against rehearsing it; a choice is rehearsed in by work on your feet (`rehearseChoice`, coursework.ts:686).",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "if a term’s pieces are coming out Unready, A Word On Your Coursework says so in the term, with the day the faculty reviews it.",
+  "after": "If too many of a term’s pieces are coming out Unready, a notice, A Word On Your Coursework, says so during the term, with the day the faculty review it. That’s a warning, not the review itself: the review comes at the end of the term’s classes.",
+  "why": "New paragraph: the coursework warning against the term review that follows.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "Fall short on any and your standing drops a step: good to concern, concern to warning, warning to dismissal.",
+  "after": "At the review, the faculty look at your attendance at classes, calls and assigned shifts, your growth against the class, your work on stage and your coursework. Coursework This Term, on Standing And Craft, counts the term the way the review will. Fall short on any of them and you drop a step: from good standing to academic concern, from concern to academic warning, and from warning to dismissal. Meet them all and you’re back in good standing.",
+  "why": "Names each step in the standings’ own names, so the consequence is the academic one, not “a step”.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "official",
+  "before": "The standings are the Bulletin’s; one review a term, its floors and its steps are SLATE’s reading of a Bulletin that has the faculty evaluate regularly.",
+  "after": "At the review, a piece missed without an excuse counts as due and unready, and a course with half its pieces due not shown isn’t passed. The standings come from the Yale Bulletin. The Bulletin has the faculty evaluate students regularly; one review a term, and its floors and its steps, are estimated.",
+  "why": "“SLATE’s reading” inside a sentence became the glossary’s “estimated”; what the Bulletin publishes is kept apart from what’s estimated.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "feedback",
+  "before": "The note, the game’s words under the course’s teachers and not theirs, names what held it back most.",
+  "after": "Shown Today, on each piece, is its readiness now: what it would come to if it were shown today, which parts are short, and the steps that would answer them. When a piece is shown, your own work is judged, and so is the scene together, with what your partner brought, which also moves the bond between you. Your teacher’s note says what held it back most. The note is the game’s, written as your course’s teachers would say it.",
+  "why": "Says plainly that the teacher’s note is the game’s assessment in a teacher’s voice.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "Practice, an hour on one exercise, goes past it to full: Practice beside each one, which says before the hour about how much it will add and why.",
+  "after": "Classes, coursework, rehearsals and nights on stage grow what they train, up to the level the classes reach. Practice takes you further, all the way to the top. In the Practice column, press the exercise beside an ability or a technique, such as Comic Timing, pick a tier and a focus, and press Practice An Hour. Before the hour, it says about how much it will add, and why.",
+  "why": "It sent the player to a Practice button beside each one (defect 3); the column’s control is the exercise’s name, then Practice An Hour.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md); ProfileWorkspace.tsx:240 and 250"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "(none: the four were named but never told apart)",
+  "after": "Four things make you better, and they aren’t the same. Your abilities are you: how you listen, how you hold your nerve. Your techniques are skills a class trains. Your genre knowledge is how well you know a kind of play or film. Practice is work you set yourself, outside class.",
+  "why": "New: the brief’s distinction of abilities, techniques, genre knowledge and practice, in the glossary’s terms.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "What To Work On forecasts what {…} sessions of practice, a day apart, on each thing your work read would bring, so it can name something other than what held your last take back most, and says when two are about as useful; what finishing a take’s own preparation would bring it says apart.",
+  "after": "What To Work On forecasts what {…} sessions of practice, a day apart, would bring on each thing your work depends on. It’s a forecast, not a result, and it says what it assumes. What finishing a piece’s own preparation would bring is shown apart from it, so you can tell how ready a piece is now from how ready it could be.",
+  "why": "Says it’s a forecast, not a result, and tells how ready a piece is now from how ready it could be.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "How you play a scene suits it or goes against its grain, by what the scene is: its genre, its reader, its tones and its turns, the reading you’ve taken. A side with the grain is easier to make work and quicker to rehearse in, one against it harder; either can be the better take if it plays to what you do well, and the take says which.",
+  "after": "How you play a scene can suit it or go against it, by what the scene is: its genre, its reader, its tones, its turns and the reading you’ve chosen. A way that suits the scene is easier to make work and quicker to rehearse, and one against it is harder. Either can make the better tape if it plays to what you do well, and the tape says which.",
+  "why": "“Grain” and “a side” were engine-speak; the glossary’s “suits the scene”.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "Finished work, a showing, a night or a self-tape, is judged on its own dimensions: believability, interpretation, connection, execution, consistency and responsiveness, as the work asks.",
+  "after": "Finished work, a showing, a night or a self-tape, is judged on what your teacher looks for: believability, interpretation, connection, execution, consistency and responsiveness, as the work asks. Each piece says what held it back, and by how much, and Your Work So Far says what your work shows most and what keeps holding it back.",
+  "why": "“Its own dimensions” is engine-speak.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "(none: the chapter began with Yale’s plan’s end date)",
+  "after": "Papers holds your health cover, your benefits and pension, and your tax returns. Open it with the Papers button on the Papers line in Your Affairs on Home, or from Papers in the menu. The Papers line shows what covers you, any unemployment you’re paid, and anything that needs doing, such as a return that’s due. Its tabs are Tax Returns, Health Cover, Unemployment, Passport And ID, and Permission To Work.",
+  "why": "New: what Papers is for, where it is, and its tabs.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "official",
+  "before": "From {…} days before it ends, Enroll takes you into Medicaid (Medi-Cal in California, HUSKY D in Connecticut), New York’s Essential Plan or Covered Connecticut whenever last month’s income is low enough, with no premium, from the first of the next month, HUSKY D from the first of the month you enroll, or as Yale’s ends if that’s later.",
+  "after": "Yale’s plan covers you to the end of July after school. From {…} days before it ends, Enroll, under The Marketplace on Health Cover, takes you into the cover you qualify for: Medicaid or a state program where your income is low enough, or a marketplace plan. Enrolling starts it, but you’re covered only from its start date, usually the first of the next month. Drop The Plan ends a plan of your own.",
+  "why": "Enrolling against being covered; the programs and their dates kept exactly in The Details.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "Report Stolen as well as Report Lost. File A Police Report online where the police take one that way.",
+  "after": "A police report belongs to a paper you’ve reported lost or stolen: File A Police Report, beside it on Passport And ID, files one online where the police take reports that way. Reporting a paper lost opens with the next chapter.",
+  "why": "The old line named two controls and said nothing of when they’re there; a police report is offered beside a paper reported lost (Documents.tsx:90).",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "In New Haven, Your Doctor chooses the practice: Yale Health Center sees a student it covers the next weekday, at no charge, and its plan pays for a visit only there;",
+  "after": "To see a doctor, choose a practice under Your Doctor on Health Cover, then press Book An Appointment. In New Haven, Yale Health Center sees a student it covers the next weekday, at no charge. A visit you keep is seen and billed; one you miss isn’t, and you can book again.",
+  "why": "The steps in their labels first; the published waits went to The Details.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [documents]",
+  "kind": "official",
+  "before": "The new one cancels the old, and a travel authorization issued on the old one goes with it.",
+  "after": "A passport comes from the country you’re a citizen of, at its office’s fee and in its office’s time. Under Your Passport, press Apply For One, or Renew It, and where the office sells a faster service, Apply Faster. Applying starts it: you hold the new passport only once it’s issued, and it cancels the old one, with any travel authorization issued on it.",
+  "why": "New: applying for a document against holding it, where the passport is first met.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [documents]",
+  "kind": "tutorial",
+  "before": "Your ID is the state’s ID card where you live: Get one at its fee.",
+  "after": "Your ID is the state’s ID card where you live. Under Your ID, press Get with the card’s name to apply for one at its fee. Connecticut mails it, and it’s a photo ID once it arrives. A new bank asks for a photo ID in force, a passport, a license or an ID card, before it takes you on. A license that runs out isn’t renewed in SLATE, so an ID card or a passport takes its place.",
+  "why": "The button is “Get” and the card’s name (Get Non-Driver Identification Card), not “Get one”.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [documents]",
+  "kind": "official",
+  "before": "Where an office’s own fee from abroad couldn’t be read, as New Zealand’s GST, the fine print says it’s SLATE’s assumption.",
+  "after": "Some countries ask your passport to last months past the day you leave. Where an office’s own fee from abroad couldn’t be found, as with New Zealand’s GST, the fine print says so and the fee is estimated. For anyone not a citizen, an ID card’s term is estimated too, since the state publishes none, and Your ID says so.",
+  "why": "“SLATE’s assumption” inside a sentence became the glossary’s “estimated”.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [documents]",
+  "kind": "tutorial",
+  "before": "Pick a country under Going Abroad to see what it asks and what you’re missing: there’s no travel, so it’s the rule to read, not a form.",
+  "after": "Going Abroad says what each country asks of your citizenship: free to enter, a travel authorization first, or a visa. Pick a country to see what it asks and what you’re missing. There’s no travel in SLATE, so it’s a rule to read, not a form to fill in. A visit is only a visit: staying, or working, needs a different permission.",
+  "why": "Where it is first, then what it shows.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [money]",
+  "kind": "tutorial",
+  "before": "(none)",
+  "after": "Press Your Affairs, the panel’s title, to open what you’re worth, and from there each account and each debt.",
+  "why": "New: the way into the looks the chapter opens, which it never said.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [money]",
+  "kind": "official",
+  "before": "Its own figure shows only when a life is made, as a number in the United States and Canada and a word elsewhere; in play you read it in what the banks do.",
+  "after": "You see its figure only when a life is made, as a number in the United States and Canada and a word elsewhere. In play, you read it in what the banks do.",
+  "why": "A clear subject; the condition kept exactly (tests/defects-g12-1.test.ts holds it).",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md); tests/defects-g12-1.test.ts"
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [bank]",
+  "kind": "official",
+  "before": "Move Money moves it between your own accounts: at once between two at one bank, and to another bank in the sending bank’s time, or its country’s where the bank sets none: at once where the country’s banks pay instantly, and otherwise held as Money In Transit until it lands.",
+  "after": "Move Money, on Accounts, moves money between your own accounts. Between two at the same bank it moves at once. To another bank it takes the sending bank’s time, or its country’s where the bank sets none, and it shows as Money In Transit until it lands; where the country’s banks pay instantly, that’s straight away. Money in transit is pending: it has left one account and isn’t in the other yet, so it isn’t available to spend.",
+  "why": "New: money available against money pending; a move out is posted to Money In Transit at once (bankmoves.ts:250).",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md); tests/defects-g22-1.test.ts"
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [bank]",
+  "kind": "official",
+  "before": "A statement paid in full is charged no interest, unless the one before it wasn’t, when the interest built up to the day you cleared it comes on the next statement.",
+  "after": "Your credit card, on Cards, is the bank’s own, under its own name and terms. A statement comes on the 20th. Autopay pays the whole statement, or only the minimum if you choose, from the current account it’s set on, and Pay Card In Full pays the card off now, or as much as you have. Pay each statement in full and you’re charged no interest on it, unless the one before it wasn’t paid in full.",
+  "why": "Plain, with its condition kept.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [bank]",
+  "kind": "official",
+  "before": "Where a bank publishes no rate, the one shown is SLATE’s estimate and says so.",
+  "after": "Interest is paid on the last day of the month, or in the months its bank pays: Germany’s at each quarter’s end, Japan’s in February and August, a Livret A in December. Where the country has the bank take tax off interest first, it does. Where a bank publishes no rate, the rate shown is estimated, and the screen says so.",
+  "why": "“SLATE’s estimate” inside a sentence became “estimated”.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [bank]",
+  "kind": "tutorial",
+  "before": "Apply for a card at any bank in the country that issues one, yours or another: it reads your record and what you have to repay from, and a card comes in about a week.",
+  "after": "Apply for a card at any bank in the country that issues one, yours or another. The bank looks at your credit record and what you have to repay from, and a card comes in about a week. You can hold one card from each bank. The day’s spending goes on the everyday card, and Make It The Everyday Card moves it to another.",
+  "why": "“It reads your record” was engine-speak.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [bank]",
+  "kind": "tutorial",
+  "before": "Somebody else may use a card, as often as the country’s official figures say it happens: the bank stops some of it and asks, and the rest shows up in an alert or on the statement.",
+  "after": "A new card after a report follows in the bank’s days, for its fee, and a card nearing its expiry has a new one sent ahead. Someone else may use a card, as often as the country’s official figures say it happens: the bank stops some of it and asks, and the rest shows up in an alert or on the statement. Where the bank does it, Move My Account To A New Number gives the current account a new number and a new debit card.",
+  "why": "“Somebody” was over the tics budget’s use; the meaning is the same.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [life]",
+  "kind": "tutorial",
+  "before": "Your name on Home, and the line at the top of How You Are, open your own page: all eight dials and readiness, the traits you hold, the conditions you carry and any injury, each of them pressable.",
+  "after": "Press your name on Home, or the line at the top of How You Are, to open your own page: your whole wellbeing and your readiness, the traits you hold, any long-term condition you carry and any injury, each of them pressable.",
+  "why": "“All eight dials” was engine-speak, and a long-term condition is told from the wellbeing measure called condition.",
+  "meaningSensitive": true,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [life]",
+  "kind": "tutorial",
+  "before": "That’s every part of the game. The guide stays at the top whenever you want to read any of it again.",
+  "after": "That’s every part of the game. Guide, at the top of the screen, opens any chapter again whenever you want it.",
+  "why": "Names the control.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [life]",
+  "kind": "narration",
+  "before": "A life ends. Each year carries the chance a real year at your age carries, from the US life table, made lighter or heavier by the life expectancy where you live for the fourteen countries SLATE has it for, heavier for a body worn down and lighter for one kept well. The game never says when.",
+  "after": "A life ends. Each year carries the chance a real year at your age carries, from the US life table, made lighter or heavier by the life expectancy where you live, for the fourteen countries it’s known for, heavier for a body worn down and lighter for one kept well. The game never says when.",
+  "why": "“SLATE has it for” named the game inside the sentence.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter…' renders every paragraph and name of every chapter; tools/tutorial-routes.mjs found its labels on the built app (tutorial/routes.md)"
+ }
+]

@@ -1114,9 +1114,11 @@ describe('school.s6.policy: SLATE’s design not presented as Yale’s policy, n
     expect(repeat.reads!.find((f) => f.label === 'An Incomplete')).toMatchObject({ estimate: true });
     expect(repeat.later!.join(' ')).toContain('the review and its outcomes are SLATE’s faculty model');
     const { CHAPTER_BY_ID } = await import('@/engine/content/tutorial');
-    const school = CHAPTER_BY_ID.school!.body.join(' ');
-    expect(school).toContain('one review a term, its floors and its steps are SLATE’s reading of a Bulletin that has the faculty evaluate regularly');
-    expect(school).toContain('The note, the game’s words under the course’s teachers and not theirs');
+    // From 2026-10-17 (brief 14) the review's rules are behind the chapter's details, and "SLATE's reading" is the
+    // glossary's "estimated", kept apart from the standings the Bulletin gives.
+    const school = [...CHAPTER_BY_ID.school!.body, ...(CHAPTER_BY_ID.school!.more ?? [])].join(' ');
+    expect(school).toContain('The standings come from the Yale Bulletin. The Bulletin has the faculty evaluate students regularly; one review a term, and its floors and its steps, are estimated.');
+    expect(school).toContain('The note is the game’s, written as your course’s teachers would say it.');
   });
 
   it('PLAYER JOURNEY: the notices of a standing and of a casting are SLATE’s words for the decision and name nobody as having said them; the Standing tab keeps the chair and the dean by name, as the Bulletin gives them', () => {
