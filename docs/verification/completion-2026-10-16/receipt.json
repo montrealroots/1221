@@ -14,13 +14,18 @@
    "Explicitly Deferred": 27
   }
  },
- "matrix": "Completion, by the matrix: 541 of 599 rows in scope Implemented And Verified (90.3%); 48 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.",
+ "matrix": "Completion, by the matrix: 542 of 599 rows in scope Implemented And Verified (90.4%); 45 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.",
  "completion": {
-  "againstTheFullBaseline": "541 of 608 (88.9%)",
-  "ofTheActionablePortion": "17 of 46 (36.9%)",
+  "againstTheFullBaseline": "542 of 608 (89.1%)",
+  "ofTheActionablePortion": "18 of 46 (39.1%)",
   "verifiedAtTheBaseline": 530
  },
  "closedByWork": [
+  {
+   "id": "l-actor",
+   "group": "Creation, Profile, Home And The Looks",
+   "baseline": "Implemented, Verification Incomplete"
+  },
   {
    "id": "tax.s8.f1_status",
    "group": "Remaining Area: tax",
@@ -177,13 +182,7 @@
    "id": "health.enroll",
    "group": "Life, Health And Time",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
-  },
-  {
-   "id": "l-actor",
-   "group": "Creation, Profile, Home And The Looks",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "None. The header (actor.tsx:1-4) said 'an interest' was among what it opens until the interests went on 2026-10-10; it now says so in the past tense. | None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the actor look. | no test reaches it"
+   "lacks": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at renewal and at an application, is unreachable in play, since the owner’s scope reset of 2026-10-09 left wages only on the School (work-study, the Summer Cabaret) and a month at the School counts as the School before work; where a fixture reaches it, it changes only the notice’s words, as 80 paid hours always pass the $580 income test. Whether to cut it or keep it as a guard is the owner’s (THE ONE RULE); the row stays partial on it | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
   },
   {
    "id": "genres.7-measured",
@@ -338,13 +337,13 @@
   {
    "id": "KS-ct-idcard",
    "group": "Known Shortfalls And Missing Tests",
-   "now": "Implemented, Verification Incomplete",
+   "now": "Blocked Externally",
    "lacks": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)"
   },
   {
    "id": "KS-passport-fees",
    "group": "Known Shortfalls And Missing Tests",
-   "now": "Implemented, Verification Incomplete",
+   "now": "Blocked Externally",
    "lacks": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)"
   }
  ],
@@ -490,12 +489,12 @@
  ],
  "addedRows": [],
  "problems": [
-  "F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure",
-  "MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure",
-  "INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): meas",
-  "INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): meas",
-  "INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure",
-  "INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): meas"
+  "F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/",
+  "MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/",
+  "INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/",
+  "INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/",
+  "INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/",
+  "INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/"
  ],
  "rows": [
   {
@@ -665,7 +664,7 @@
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
+   "lacks": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at renewal and at an application, is unreachable in play, since the owner’s scope reset of 2026-10-09 left wages only on the School (work-study, the Summer Cabaret) and a month at the School counts as the School before work; where a fixture reaches it, it changes only the notice’s words, as 80 paid hours always pass the $580 income test. Whether to cut it or keep it as a guard is the owner’s (THE ONE RULE); the row stays partial on it | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
   },
   {
    "id": "health.apply",
@@ -2835,8 +2834,7 @@
    "group": "Creation, Profile, Home And The Looks",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "None. The header (actor.tsx:1-4) said 'an interest' was among what it opens until the interests went on 2026-10-10; it now says so in the past tense. | None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the actor look. | no test reaches it"
+   "now": "Implemented And Verified"
   },
   {
    "id": "n-decision-tax",
@@ -4754,7 +4752,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again"
+   "lacks": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again"
   },
   {
    "id": "G1",
@@ -4883,7 +4881,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again"
+   "lacks": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again"
   },
   {
    "id": "MA8",
@@ -4968,7 +4966,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again"
+   "lacks": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again"
   },
   {
    "id": "INT-navigation",
@@ -4976,7 +4974,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again"
+   "lacks": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again"
   },
   {
    "id": "INT-long-runs",
@@ -4984,7 +4982,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again"
+   "lacks": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again"
   },
   {
    "id": "INT-gate",
@@ -4992,7 +4990,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again"
+   "lacks": "It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again"
   },
   {
    "id": "KS-matrix-gate",
@@ -5035,7 +5033,7 @@
    "group": "Known Shortfalls And Missing Tests",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
+   "now": "Blocked Externally",
    "lacks": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)"
   },
   {
@@ -5043,7 +5041,7 @@
    "group": "Known Shortfalls And Missing Tests",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
+   "now": "Blocked Externally",
    "lacks": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)"
   }
  ]

@@ -31,12 +31,23 @@ kept verbatim) is being worked on `claude/peaceful-hamilton-59zdbb`, restarted f
 - **The matrix** may now carry an area item's measurement through an override (`measured`), held current as a
   criterion's is.
 
-**Completion, by the matrix:** 541 of 599 rows in scope Implemented And Verified (90.3%); 48 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 542 of 599 rows in scope Implemented And Verified (90.4%); 45 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.
 
-Against the frozen baseline's 608, the figure is 541 (88.9%), and 17 of the 46 actionable rows are closed by this pass's work:
+Against the frozen baseline's 608, the figure is 542 (89.1%), and 18 of the 46 actionable rows are closed by this pass's work:
 - coverage09.4 to 09.6, genres.4 and genres.6 (`integration-result.json`);
 - the five tax.s8 items (`journeys-result.json`);
-- ST6-R.bPrime, ST3-R.e, H4-R.e, L3-R.a, L3-R.e, judge.tests and judge.coverage-row (`acting-result.json`).
+- ST6-R.bPrime, ST3-R.e, H4-R.e, L3-R.a, L3-R.e, judge.tests and judge.coverage-row (`acting-result.json`);
+- l-actor, Older Saves Only, its test now cited (a second reader's check, `inputs/final-checks/brief11-journeys.json`).
+
+**Blocked Externally** (`research-result.json`):
+- **KS-ct-idcard.** The Connecticut ID card's term (seven years to a birthday) and its mailing now follow the DMV's
+  pages. No published source gives a non-citizen's term.
+- **KS-passport-fees.** The fees for Iceland, Brazil and Latvia now come from their offices' own pages. Japan's
+  consulate and New Zealand's passport office refused every request.
+
+**health.enroll stays partial**, at the second reader's check. Its work arm (HUSKY D kept through 80 hours' work) can't be
+reached in play since the scope reset, and it changes only a notice's words. Whether to cut it or keep it as a guard is
+the owner's decision (THE ONE RULE).
 
 **ST6-R (a), (c), (e) and (g) are the owner's decision** (`acting-result.json`, ST6-R.a's decision). No gameplay is
 missing: restraint's own abilities decide its take. The criterion's 25%, though, is reachable only by what the approved

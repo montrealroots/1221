@@ -76,3 +76,30 @@ and the 9 administrative rows are outside it.
 - **New defects:** none in the game.
 - **Tests:** `tests/decisions-judge.test.ts` 29 passed, `tests/scenes.test.ts` 5, `tests/stage-interpretation.test.ts`
   12, each exit 0; typecheck, lint and the 18 checks each exit 0 on the area's clone.
+
+## Batch 4: Research, And The Journeys' Audit Rows Read Again (`1037b1ce` to `ea66293b`, and the fold after)
+
+- **Rows addressed:** KS-ct-idcard, KS-passport-fees, health.enroll, l-actor.
+- **Actionable incomplete:** 29 before, 28 after.
+- **Implemented and verified:** l-actor. A second reader's check upheld the journeys area's claim. The row is Older Saves
+  Only, a path only a save from before schema 94 reaches, so its audit status stays legacy, and its `tests` field now
+  cites the test. The coordinator recorded the check's verdict as legacy and said why in the check.
+- **Blocked Externally, with the part each source settled implemented and tested:**
+  - **KS-ct-idcard:** seven years to a birthday (CGS 1-1h(b)(2)), the card mailed in twenty business days, and SAVE's ten
+    days first for somebody not a citizen. No source gives a non-citizen's term.
+  - **KS-passport-fees:** Iceland's fee and its express service, Brazil's US$60 and Latvia's €140 from their offices.
+    Japan's consulate and New Zealand's passport office refused every request.
+
+  Both are mutation-tested: M1 to M10 and P1 to P5, each caught.
+- **Not verified:** health.enroll. The second reader kept it partial: its work arm is unreachable in play and changes
+  only the notice's words. The journeys area's verdict didn't hold, and the row stays incomplete with that blocker, the
+  owner's to decide.
+- **Administrative:** the audit rows' own words corrected (`audit-text-result.json`, folded):
+  - documents.apply_idcard and documents.idcard_arrives, for the mail's titles;
+  - l-actor's tests and line;
+  - health.enroll's line references, its tests and the unreachable arm.
+- **New defects:** a dead DMV link and a wrong citation, CGS 14-36(c), for a non-citizen's term, both corrected; and
+  `docs/WORLD.md` said every US state card is REAL ID. None blocks completion.
+- **Tests:** the research area's 19 files, each exit 0 on its clone. Here, `tests/remaining-papers.test.ts` gave 14
+  passed after the merge of the two areas' imports; `tsc -p tsconfig.app.json` and `tsconfig.node.json` 0;
+  `tools/coverage.mjs --check` 0, `tools/capabilities.mjs --check` 0, `tests/audit-pipeline.test.ts` 0.

@@ -1,0 +1,71 @@
+{
+ "rows": [
+  {
+   "id": "health.enroll",
+   "claimed": "verified",
+   "holds": false,
+   "verdict": "partial",
+   "disposition": "working, evidence missing",
+   "problems": [
+    "Closed, the review's four gaps (2026-10-13), each by a gate test I read and ran on dcd59fba. (1) The duplicate refusal: tests/evidence-g03-life.test.ts 'health.enroll > PLAYER JOURNEY: withdrawn, Enroll pressed puts them in HUSKY D from 1 November; …' presses Enroll on the drawn Papers, then sends health.enroll through execute and expects the literal 'You’re enrolled from November 1, 2026.' before and after a reload. tests/evidence3-lifepapers.test.ts does the same on the played marketplace. (2) 'You’re enrolled.' once the plan began, through execute, in both files. (3) Marketplace to premium: Enroll pressed, then the clock takes $706 on 1 November and 1 December at 00:30, once each across a reload, into h.premiums. evidence-g03 does it on $3,000 of September wages set by hand; evidence3-lifepapers does it on the Inherited family's interest the clock paid, with $786 on 1 January 2027. Both expect literal figures, not benchmarkFor. (4) The refusal at school: evidence-g03 sends it through execute and expects 'Yale Health covers you while you’re at the School.', and the drawn Papers has no Enroll. The UI gap is closed too: Enroll is pressed on the rendered Papers and its toast is asserted. By reading, removing mayEnroll's enrolled-ahead refusal (health.ts:662-663) lets the second enrollment through, so those journeys would fail.",
+    "Closed, the latest skeptic's problems 2 to 4. (2) The renewal's end no longer says 'and last month had neither': a renewal short of the rules now sends a notice of noncompliance, and its end names '80 hours’ work, $580.00 of income, school at least half-time or an exception' (workWords, health.ts:1089). need-paths and remaining-health-billing assert those words exactly. (3) repriceCare now writes the plan's part through planPays (health.ts:1786-1789, used at :1939), which reads restrictedScope and outsideItsPractice as careFor does. In both cases the old max(0, price - share) was 0 already, so no test can tell the two apart. It is closed by the code, as statements' zone was. (4) tutorial.ts's papers chapter comment (:272-289) now has past-tense lines for 2026-10-15 and 2026-10-16 covering the cover paragraph's work test, renewal and moves.",
+    "Still open, the latest skeptic's problem 1: HUSKY D kept at a renewal through 80 hours' work is reached only on a FIXTURE (tests/remaining-health-billing.test.ts). The program is set by hand from 1 March 2026 and the wages are posted by hand. I confirmed from the code that no played life reaches it. workedBetween (earnings.ts:207-219) counts only 'salary' postings. Only two exist, both in school.ts: work-study wages (:3369) and the Summer Cabaret stipend (:3954, counted as 40 hours). monthEngagement (health.ts:435-454) returns 'school' before it reads work. enrolledIn (:510-516) counts any month partly at the School, so the month of a withdrawal, a dismissal, the degree or a leave's start is 'school'. Work stops with the School: planWeek returns once it has ended (school.ts:1729), shiftRefusal refuses it and a leave (:1549-1557), startLeave calls off school.* items except the payday (leave.ts:162, :353), and the Summer Cabaret takes only a student in good standing, not on leave, with a year to come (school.ts:1534-1546). So a month wholly off the School can get only the last payday: work-study owed since the Friday before, at most about 29 hours under the 19-hour term cap, or one kept stipend at 40 counted hours. Elective shifts are only in a term (:4036), so the two don't come together. That is never 80.",
+    "Found here: even where the work arm is reached, it never decides an outcome, only the sentence. monthEngagement adds wages the record doesn't hold to the month's income (health.ts:445-447). Every TEST SETUP posting of the work arm is $600 for 80 hours (remaining-health-billing, need-paths, scope-cover, remaining-health-eligibility, evidence-g05-life), which meets the $580 income arm by itself. With the work arm cut, each is still kept or moved, and only the notice changes from 'by 80 hours’ work' to 'by its income, $580.00 or more'. That is how the recorded mutation B2b-work-kept (workHours + 1, remaining/health-billing-result.json) was killed: by the sentence. In play the two arms can't come apart either. SLATE pays $23 an hour for work-study and $375 a week for the stipend, so any 80 hours paid is well over $580. By the falsifiability test, the arm's hours change only the sentence. checks.json's health.month check said the same of the g05 test.",
+    "Decision: an arm play can't reach, held on a fixture, keeps the row partial under the standard. The latest skeptic named this arm. Verified needs every named problem closed by a test that reaches it as a player does, and nothing can. The standard's only other ways out are a defect shown fixed, or the owner removing or deferring the system. Neither applies. The house ruled the same on school.request_repeat and school.request_extra_term (final-checks zz-recheck and zzz-r3-school: fixture-only, unreachable, left partial as the owner's call under THE ONE RULE). It differs from documents.us_status (zzz-r3-lifepapers), which was verified because no review or check had named its unreachable branch. Here one did. Brief 11 §3 says relabeling isn't gameplay progress, and §10 says untested behavior isn't marked verified. So the row's text should say the arm is unreachable in play and, where reached, doesn't change the outcome, but saying so doesn't close it. The owner decides whether to cut the arm or keep it as a guard, with the row recording that decision.",
+    "Still stale, unchanged (the skeptic's problem 5, not gameplay): docs/verification/scope/health-result.json still has the scope-cover leave journey's old title ('is refused HUSKY D on 1 February for January’s 6 hours …') and fixes[2].where's 'enrolled and not on leave'.",
+    "Minor prose, new: src/engine/content/safetynet.ts:203-206, PUBLIC_COVER's comment, still says in the present tense that 2027's law 'asks a Medicaid adult for 80 hours' work or $580 of earnings a month'. Since 2026-10-16, monthEngagement counts income of any kind, school at least half-time and the exceptions. The comment was falsified with no past-tense line.",
+    "Ran alone on dcd59fba, each exit 0: tests/evidence-g03-life.test.ts (25), tests/evidence3-lifepapers.test.ts (16), tests/remaining-health-billing.test.ts (7), tests/need-paths.test.ts (17), tests/scope-cover.test.ts (8)."
+   ],
+   "weakTests": [
+    {
+     "title": "tests/remaining-health-billing.test.ts > HUSKY D kept at its renewal through work, read over Connecticut’s six months > FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: …",
+     "why": "It is the only evidence for the work arm, and play can't reach that arm. HUSKY D is set by hand from 1 March 2026, before any life exists, and the work is a forged 'salary' posting. Its $600 meets the $580 income arm by itself (health.ts:445-447), so 'keeps HUSKY D' would hold without the work arm. Only the notice's 'by 80 hours’ work' depends on it. The journeys result's 'proves: HUSKY D kept at its renewal through work' overstates. Isolating the arm would take 80 hours paid under $580, below the federal minimum wage, which SLATE never pays."
+    },
+    {
+     "title": "tests/need-paths.test.ts > health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock > PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, … with 80 hours’ work she is renewed into HUSKY D …",
+     "why": "The 'moved' twin's work is TEST SETUP ($600, 80 hours), and its own idle twin shows that $930.00 of interest alone renews her into HUSKY D. The work changes only the notice's words."
+    },
+    {
+     "title": "tests/scope-cover.test.ts > a program taken on a personal leave without Affiliate cover, and Yale Health back on the return > PLAYER JOURNEY: a student with need takes HUSKY D on her leave (TEST SETUP: the work it asks); … its renewal on 1 February 2028 is met by her being at the School",
+     "why": "The program reaches the 1 February 2028 renewal 'met at the School' only through a 1 August 2027 renewal held by July's TEST SETUP work ($600, 80 hours), since February to July were wholly on the leave. January's TEST SETUP work is redundant: the leave began on 20 January, so January counts as at the School, and its comment 'January’s work, which no played life on a leave has' was outdated by enrolledIn. The journeys result lists it as a player journey."
+    },
+    {
+     "title": "tests/evidence-g03-life.test.ts > health.enroll > PLAYER JOURNEY: withdrawn with September’s wages over every program’s limit, Enroll puts them in the marketplace from 1 November; …",
+     "why": "September's $3,000 of wages is recorded by hand (recordWages, TEST SETUP). Not load-bearing: evidence3-lifepapers closes the same gap on interest the clock paid."
+    }
+   ],
+   "staleText": [
+    "entry: 'PapersWorkspace.tsx:548 (Enroll)'. Enroll is at PapersWorkspace.tsx:561.",
+    "reads: 'lapseKnown, health.ts:647-653'. lapseKnown is at health.ts:724-731, and marketplaceOpen at :696-722.",
+    "tests: cites only need-paths and remaining-09-journeys ('the rest as written'). The gaps are closed in evidence-g03-life and evidence3-lifepapers, which after.tests lists but tests doesn't.",
+    "after.tests, need-paths' closes: says renewAt is 1 November 2027, reads October 2027's income, and ends HUSKY D at the 00:30 look with 'Medicaid now asks for 80 hours’ work or $580.00 of earnings a month, and last month had neither.'. The test now has renewal on 1 October 2027 reading April to September, a notice of noncompliance at 00:30, and the end said on 5 November with November.",
+    "after.gapsClosed repeats the same eight entries four times over ('A bill records the plan's part …' to 'CGS 20-616 …').",
+    "after.disposition and after.gapsOpen cite engaged() at health.ts:373-378 and enrolledIn at :390-396. engaged() no longer exists: monthEngagement (:435-454) and engagement (:457-460) took its place, and enrolledIn is at :510-516.",
+    "after.check.problems[1] (the end notice leaving out school) is no longer true. The notice now names school and the exceptions (workWords).",
+    "after.gapsOpen calls 'HUSKY D kept by her being at the School' played. The scope-cover journey reaches that renewal only through a renewal held by TEST SETUP work.",
+    "The row should also say that the work arm at renewal (and at an application) is unreachable in play, and that where it is reached it doesn't change the outcome. That wording doesn't verify it."
+   ]
+  },
+  {
+   "id": "l-actor",
+   "claimed": "verified",
+   "holds": true,
+   "verdict": "legacy",
+   "disposition": "verified",
+   "problems": [
+    "Recorded as legacy by the coordinator (2026-10-17): the second reader found the claim holds, and this row is Older Saves Only, a path only a save from before schema 94 reaches, whose status in the audit is its class (docs/GAMEPLAY-COVERAGE.md: the legacy rows are outside what can be verified, and the matrix counts one verified where its tests cite a test). Its test is cited in its tests field from this day.",
+    "Closed, the review's one gap (no test reaches the 'interest' branch) and its UI need (no look or Profile render shows an old interest entry). tests/evidence2-b13.test.ts 'i-ui-text > PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, …' writes a save as 93 wrote it, with a development entry whose source is 'interest:sound_design' (TEST SETUP). It opens the save through openSlot, so migration 94 runs. It asserts the migration 93→94 and the history kept whole. It then draws the ProfileWorkspace and resolves and renders the ability look (resolveLook(at('ability','listening'))) as the screen does.",
+    "The test checks what the row says the change reads: the label in the look's Last Change ('Last Change +0.12 An interest, from before they were removed, August 27, 2026') and its list, and in the Profile's Listening row and Development History. Each is exactly twice, with no other 'interest' on either. It holds after a practice hour and after a save and load.",
+    "Its expectations are independent: a literal string (THE_LINE), not a call to sourceWords. It isn't vacuous: there are exact counts, a twin without the hour that says none, and the line leaving the Listening column after practice while the history keeps it. By reading, cutting the branch at actor.tsx:69 makes sourceWords return the raw 'interest' kind, and every toContain on the line fails. The journeys area's 'removed in a copy fails it' agrees.",
+    "The latest skeptic's checks.json holds no entry for l-actor, so no problem from it stays open. The 93 save is written by hand, but for a branch reached only by a save from before schema 94, opening such a save through openSlot is the player's own path. It is the condition the row describes, not a shortcut past play.",
+    "Ran alone on dcd59fba: tests/evidence2-b13.test.ts, 6 tests, exit 0."
+   ],
+   "weakTests": [],
+   "staleText": [
+    "tests: 'None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the actor look.' tests/evidence2-b13.test.ts reaches it, as after.tests already lists.",
+    "status 'legacy' and after.verdict 'legacy', with after.gapsClosed [] and after.gapsOpen []: the review's gap is closed and should be listed as closed. The class 'Older Saves Only' still describes the branch.",
+    "entry: 'actor.tsx:66'. The interest branch is at src/ui/looks/actor.tsx:69."
+   ]
+  }
+ ]
+}

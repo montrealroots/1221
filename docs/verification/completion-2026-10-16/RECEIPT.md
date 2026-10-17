@@ -2,27 +2,28 @@
 
 Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0e7ff7c2`) and the matrix as it stands. Nothing here is typed.
 
-- **Against the original full baseline:** 541 of 608 (88.9%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
-- **Of the actionable portion:** 17 of 46 (36.9%) closed by implementation or verification.
-- **The matrix’s own count:** 541 of 599 rows in scope Implemented And Verified (90.3%); 48 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
+- **Against the original full baseline:** 542 of 608 (89.1%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
+- **Of the actionable portion:** 18 of 46 (39.1%) closed by implementation or verification.
+- **The matrix’s own count:** 542 of 599 rows in scope Implemented And Verified (90.4%); 45 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
 - **Not complete:** decision 4’s rows stay as authorized, and every remaining row is listed below with what it lacks.
 
 ## Status Now, Of The Baseline’s Rows
 
 | Status | At The Baseline | Now |
 |---|---|---|
-| Implemented And Verified | 530 | 541 |
-| Implemented, Verification Incomplete | 63 | 48 |
+| Implemented And Verified | 530 | 542 |
+| Implemented, Verification Incomplete | 63 | 45 |
 | Partially Implemented | 0 | 0 |
 | Not Implemented | 4 | 0 |
-| Blocked Externally | 0 | 0 |
+| Blocked Externally | 0 | 2 |
 | Decision Required | 11 | 10 |
 | Explicitly Deferred | 27 | 36 |
 
-## Closed By Implementation Or Verification (17)
+## Closed By Implementation Or Verification (18)
 
 | Row | Group | At The Baseline |
 |---|---|---|
+| `l-actor` | Creation, Profile, Home And The Looks | Implemented, Verification Incomplete |
 | `tax.s8.f1_status` | Remaining Area: tax | Implemented, Verification Incomplete |
 | `tax.s8.ssn` | Remaining Area: tax | Implemented, Verification Incomplete |
 | `tax.s8.opt` | Remaining Area: tax | Implemented, Verification Incomplete |
@@ -55,12 +56,11 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 | `L3.asWritten` | Brief 10 Area: judge | superseded | Not Implemented | Explicitly Deferred |
 | `stamina.measure` | Brief 10 Area: stamina | historical-record | Implemented, Verification Incomplete | Explicitly Deferred |
 
-## Remaining In The Actionable Portion (29)
+## Remaining In The Actionable Portion (28)
 
 | Row | Group | Now | What It Lacks |
 |---|---|---|---|
-| `health.enroll` | Life, Health And Time | Implemented, Verification Incomplete | Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). / The duplicate-enrollment refusal 'You’re enrolled from …'  |
-| `l-actor` | Creation, Profile, Home And The Looks | Implemented, Verification Incomplete | None. The header (actor.tsx:1-4) said 'an interest' was among what it opens until the interests went on 2026-10-10; it now says so in the past tense. / None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the actor look. / no test reaches it |
+| `health.enroll` | Life, Health And Time | Implemented, Verification Incomplete | Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at rene |
 | `genres.7-measured` | Brief 09 Area: genres | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it / The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sid |
 | `advice.harness` | Brief 10 Area: advice | Implemented, Verification Incomplete | the area called it implemented and cites no gate test that holds it / TEST SETUP: abilities, techniques and stamina’s fitness drawn within the band and set where each is kept; every calendar hour cleared and the student rested before every command, as F2-A’s set-up does; F2-A’s own adv-N set-up kept exactly as it was, including that it never set the four abilities kept in the craft (it wrote them  |
 | `advice.F2` | Brief 10 Area: advice | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it |
@@ -86,8 +86,8 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 | `F1` | Criteria: The Attributes | Implemented, Verification Incomplete | Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding |
 | `F3` | Criteria: The Attributes | Implemented, Verification Incomplete | Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding |
 | `L1` | Criteria: Long-Term Continuity | Decision Required | L1 held before brief 10 and fails after it. On the final code the week’s top recommendation in the 120-day journeys is focus 8 weeks running for the specialist (51 to 55) and 6 for the beginner (55 to 56), where L1 allows 4 without the input rising 5 points; brief 09 read 4 and 3. The advice area’s change moved it on its own (84db36b7 reads 8 and 6; the judge’s first phase alone read 4 and 3). The |
-| `KS-ct-idcard` | Known Shortfalls And Missing Tests | Implemented, Verification Incomplete | The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json) |
-| `KS-passport-fees` | Known Shortfalls And Missing Tests | Implemented, Verification Incomplete | Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json) |
+| `KS-ct-idcard` | Known Shortfalls And Missing Tests | Blocked Externally | The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json) |
+| `KS-passport-fees` | Known Shortfalls And Missing Tests | Blocked Externally | Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json) |
 
 ## Decision 4’s Rows (23), Unchanged
 
@@ -123,12 +123,12 @@ None: the baseline wasn’t changed.
 
 ## What The Receipt Found (6)
 
-- F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure
-- MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure
-- INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): meas
-- INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): meas
-- INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure
-- INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): meas
+- F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/
+- MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/
+- INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/
+- INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/
+- INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/
+- INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/
 
 ## Every Baseline Row
 
@@ -463,7 +463,7 @@ None: the baseline wasn’t changed.
 | `l-person` | Creation, Profile, Home And The Looks | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `l-dial-stress` | Creation, Profile, Home And The Looks | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `l-trait` | Creation, Profile, Home And The Looks | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `l-actor` | Creation, Profile, Home And The Looks | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `l-actor` | Creation, Profile, Home And The Looks | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `n-decision-tax` | Creation, Profile, Home And The Looks | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `n-decision-unclaimed` | Creation, Profile, Home And The Looks | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `n-decision-us-status` | Creation, Profile, Home And The Looks | verified at the baseline | Implemented And Verified | Implemented And Verified |
@@ -767,5 +767,5 @@ None: the baseline wasn’t changed.
 | `KS-genres-54` | Known Shortfalls And Missing Tests | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `KS-bank-rows-scope` | Known Shortfalls And Missing Tests | decision-4 | Decision Required | Decision Required |
 | `KS-homecloses` | Known Shortfalls And Missing Tests | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `KS-ct-idcard` | Known Shortfalls And Missing Tests | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
-| `KS-passport-fees` | Known Shortfalls And Missing Tests | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `KS-ct-idcard` | Known Shortfalls And Missing Tests | verification | Implemented, Verification Incomplete | Blocked Externally |
+| `KS-passport-fees` | Known Shortfalls And Missing Tests | verification | Implemented, Verification Incomplete | Blocked Externally |

@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 541 of 599 rows in scope Implemented And Verified (90.3%); 48 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 542 of 599 rows in scope Implemented And Verified (90.4%); 45 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -540,9 +540,9 @@
    "kind": "command",
    "source": "audit",
    "goal": "Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt | Enroll checks mayEnroll (state, Yale Health, already enrolled or enrolled ahead, programFor, lawful presence, windows). It enrolls in the state's program, or the marketplace, from the first of next month, or from when Yale Health's cover ends where that is later. coverOn and planOf then read it for every share, and healthMonth renews a program or charges the marketplace premium.",
-   "entry": "PapersWorkspace.tsx:548 (Enroll). Until 2026-10-13 this said :216. | guide: Cover, Benefits And Returns | PapersWorkspace.tsx",
+   "entry": "PapersWorkspace.tsx:561 (Enroll). Until 2026-10-13 this said :216, and until 2026-10-17 :548 | guide: Cover, Benefits And Returns | PapersWorkspace.tsx",
    "preconditions": "mayEnroll (HUSKY D in Connecticut on last month’s income, or the marketplace); a denied bill for an appeal; a bill in the charity window for aid; medical debt to pay | refused where: —",
-   "reads": "mayEnroll, programFor; the marketplace’s 60 days from the loss (marketplaceOpen: Yale Health’s end at its hour, or a lapse reaching back from when it was made, lapseKnown, health.ts:647-653), from 2026-10-16: until then the month’s look’s hour was kept as the loss for Yale Health’s too, so a student withdrawn on 15 February 2027, uncovered from 17 March, was sold a plan until 31 May, not 16 May",
+   "reads": "mayEnroll, programFor; the marketplace’s 60 days from the loss (marketplaceOpen, health.ts:696-722: Yale Health’s end at its hour, or a lapse reaching back from when it was made, lapseKnown, health.ts:724-731), from 2026-10-16: until then the month’s look’s hour was kept as the loss for Yale Health’s too, so a student withdrawn on 15 February 2027, uncovered from 17 March, was sold a plan until 31 May, not 16 May",
    "decisions": "issued with no choice beyond the control",
    "validation": "refusals: — | costs: Cover from the next month, HUSKY D from the first of the month of application and back to an earlier month she was eligible in and had care in uncovered, its care priced again (from 2026-10-16, brief 09’s journeys’ follow-up: until then from the next month too); dropped, it ends at the month’s end. From 2026-10-16 HUSKY D applied for where its work rules weren’t met: a notice of noncompliance, thirty days from its receipt to answer, then decided, or granted at once on a stay in hospital asked for as a hardship. Yale’s dental plan paid for the year at once. An appeal decided after DENIALS.decideDays, overturned or upheld at its published rate. Connecticut’s charity care makes a bill free or discounted by income. An unpaid bill becomes medical debt, paid down from the current account",
    "changes": "the marketplace or Covered Connecticut from next month’s first; HUSKY D from the first of the month of application, reaching back to the first of an earlier month (three for an application in 2026, one from 2027) she was eligible in and had care in with nothing covering her, that care priced again (programStart, retroStart, repriceCare; from 2026-10-16, brief 09’s journeys: until then HUSKY D too began on next month’s first)",
@@ -551,11 +551,11 @@
    "sees": "Papers | looks: debt, account",
    "saveLoad": "cover | HealthRecord.program, marketplace, dental, bills, debtSince; the medical debt account",
    "failure": "each refusal said in the player's words (above) | Open: The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute.",
-   "implementation": "`systems/health.ts` | PapersWorkspace.tsx:548 (Enroll). Until 2026-10-13 this said :216.",
-   "evidence": "tests/need-paths.test.ts ‘PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026 and covered from 1 August, the month of the generic she filled uninsured, comes to its renewal on 1 October 2027: September’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload’ (from 1 August, the 31 August fill’s $41.79 back; renewal 1 October 2027 reading April to September; a notice on 1 October, covered to 30 November, the end said on 5 November, across a reload; renamed, inputs/renames.json); tests/remaining-09-journeys.test.ts journeys.d-medicaid-start and x3’s DEFECT; the rest as written",
+   "implementation": "`systems/health.ts` | PapersWorkspace.tsx:561 (Enroll). Until 2026-10-13 this said :216, and until 2026-10-17 :548",
+   "evidence": "tests/evidence-g03-life.test.ts ‘at school, refused through the command in Yale Health’s words, and Papers offers no Enroll’, ‘PLAYER JOURNEY: withdrawn, Enroll pressed puts them in HUSKY D from 1 November…’ (the duplicate refusal before and after a reload), ‘PLAYER JOURNEY: withdrawn with September’s wages over every program’s limit, Enroll puts them in the marketplace from 1 November…’; tests/evidence3-lifepapers.test.ts ‘PLAYER JOURNEY: the Inherited student’s marketplace, Enrolled from 1 November on Papers, is charged $706 on 1 November and 1 December and $786 on 1 January 2027…’; tests/need-paths.test.ts ‘PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026 and covered from 1 August, the month of the generic she filled uninsured, comes to its renewal on 1 October 2027: September’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload’ (renewal 1 October 2027 reading April to September; a notice on 1 October, covered to 30 November, the end said on 5 November, across a reload; renamed, inputs/renames.json); tests/remaining-09-journeys.test.ts journeys.d-medicaid-start and x3’s DEFECT. Until 2026-10-17 this cited need-paths and remaining-09-journeys alone",
    "sourceStatus": "partial",
    "status": "Implemented, Verification Incomplete",
-   "missing": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
+   "missing": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at renewal and at an application, is unreachable in play, since the owner’s scope reset of 2026-10-09 left wages only on the School (work-study, the Summer Cabaret) and a month at the School counts as the School before work; where a fixture reaches it, it changes only the notice’s words, as 80 paid hours always pass the $580 income test. Whether to cut it or keep it as a guard is the owner’s (THE ONE RULE); the row stays partial on it | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
   },
   {
    "id": "health.apply",
@@ -3085,14 +3085,14 @@
    "reads": "idCardRefusal: the state’s card where they live, a license or card held or pending; for somebody not a citizen at a US state’s counter, in status, lawful presence (an F-1 at school, or a US permit in force, OPT), from 2026-10-16 a primary identity document in force (the passport, or OPT’s EAD), and a Social Security number held",
    "decisions": "issued with no choice beyond the control",
    "validation": "refusals: … is more than the bank can cover. (also idCardRefusal) | moves money through the ledger | costs: A passport paid for and issued after the issuer’s time, faster for a fee; the old one canceled with any authorization on it. Reported lost, a document is canceled. An ID card paid at the state’s fee, an American state’s REAL ID; for somebody not a citizen, a Limited Term card after SAVE’s ten business days, to the end of their lawful presence. A replacement after its time",
-   "changes": "pays the fee; a citizen’s card in force at once and REAL ID; somebody not a citizen’s Limited Term card waiting on SAVE’s ten federal workdays, to the end of their lawful presence, non-verified (Not For Federal Identification, from 2026-10-16: until then marked REAL ID) | documentsOf (added to)",
+   "changes": "pays the fee; Connecticut’s card is mailed, Being Decided until it comes twenty business days on (Central Issuance), a citizen’s to their first birthday at least seven years on (CGS 1-1h(b)(2)) and REAL ID; somebody not a citizen’s Limited Term card waits on SAVE’s ten federal workdays and then the mail’s twenty, to the end of their lawful presence (SLATE’s assumption: the state publishes no term for a non-verified card), non-verified (Not For Federal Identification, from 2026-10-16: until then marked REAL ID). From 2026-10-17 (brief 11’s research): until then a citizen’s was in force at once for six years from the day, and a non-citizen’s came on SAVE’s tenth day | documentsOf (added to)",
    "later": "idcard; documents.idcard_arrives",
    "systems": "photoIdOf, read by an account at a new bank (bank.open_current, bankmoves.ts) and by bank.switch (lending.ts); idCardRefusal blocks a second one | idCardRefusal, which reads a license or ID card held (systems/identity.ts); idReplaceRefusal (systems/identity.ts); photoIdOf, which a new bank asks (bank.open_current, systems/bankmoves.ts); licenseReplaceFee (the MV-78B waiver); mayEnter (Going Abroad, as information)",
    "sees": "toast with fee and expiry; DocumentList row, where from 2026-10-16 a license or an ID card run out says what replaces it (an ID card applied for under Your ID; for a license, that nothing in SLATE renews one, Documents.tsx:76-81): until then the row said nothing past Run Out, and a New Yorker whose license ran out mid-program met it first as a new bank’s refusal (brief 09’s journeys); document look | looks: document, country",
    "saveLoad": "person.documents | Person.documents (status, issuedAt, expiresAt, policeReport, realId), the fees’ ledger postings",
    "failure": "each refusal said in the player's words (above) | Open: No test has a new bank take the ID card: photoIdOf -> openRefusal/bank.open_current is reached only with a passport (commands-kept.test.ts:257-266), and in the guide test photoIdOf returns the passport or license. What the card is for is unproven.; No test checks any ID card's fee leaving the bank. Removing payFromBank at identity.ts:192 survives every test.; SAVE's ten business days are not pinned (pending at t0, valid at +15 days in papers-transitions and g24-1).; These refusals are untested: 'You hold a license here. It serves as your ID.' (identity.ts:80, the CT-born student), 'You hold one in force.' (:103), out of status (:83), and the bank unable to cover the fee (:192).; The row's corrected.status 'verified' contradicts its own text ('no test has a bank take the ID card'). Tested By omits papers-transitions.test.ts, guide-examples-papers.test.ts and defects-g27-1.test.ts.",
    "implementation": "`systems/identity.ts` | Papers > Passport tab > IdPanel 'Get Non-Driver Identification Card' (ui/papers/Documents.tsx:172)",
-   "evidence": "tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card in force at once…, and Citi then opens her account’ (bank.open_current takes the card), ‘PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days…’, the refusals in their words (a second card, a Connecticut license, out of status, a bank short of $28) and IdPanel’s button pressed; tests/defects3-50-70.test.ts ‘…limited-term card applied for at noon on Thursday 5 November 2026 comes ten federal workdays on, Friday the 20th, Veterans Day not among them’ and its 9 PM twin; tests/papers-transitions.test.ts ‘waits for the Social Security number, then for SAVE’s ten business days…’; tests/defects-g24-1.test.ts ‘is issued on OPT in force, and runs to OPT’s end, not the program’s’; tests/defects-r7-1.test.ts and tests/defects-r3d-1.test.ts (the Social Security refusal’s three wordings); tests/guide-examples-papers.test.ts PLAYS['documents.passport-id']. Until 2026-10-13 this said no test had a bank take the ID card",
+   "evidence": "tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card that comes by mail twenty business days on…Citi turns her away until it comes and then opens her account, across a save and a load’ (bank.open_current takes the card once it comes), ‘PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days…’, the refusals in their words (a second card on its way or come, a Connecticut license, out of status, a bank short of $28) and IdPanel’s button pressed; tests/defects3-50-70.test.ts ‘…limited-term card applied for at noon on Thursday 5 November 2026 is approved by SAVE ten federal workdays on, Friday the 20th, Veterans Day not among them, and comes by mail twenty business days later, Monday 21 December, Thanksgiving not among them’ and its 9 PM twin; tests/remaining-papers.test.ts ‘GUARD: the card runs to the first birthday at least seven years on, by New Haven’s calendar…’; tests/papers-transitions.test.ts ‘waits for the Social Security number, then for SAVE’s ten business days…’; tests/defects-g24-1.test.ts ‘is issued on OPT in force, and runs to OPT’s end, not the program’s’; tests/defects-r7-1.test.ts and tests/defects-r3d-1.test.ts (the Social Security refusal’s three wordings); tests/guide-examples-papers.test.ts PLAYS['documents.passport-id']. Until 2026-10-13 this said no test had a bank take the ID card, and until 2026-10-17 it cited the tests by their titles from before the mail",
    "sourceStatus": "verified",
    "status": "Implemented And Verified"
   },
@@ -3602,14 +3602,14 @@
    "reads": "the pending document",
    "decisions": "none: the clock sets it off",
    "validation": "moves money through the ledger",
-   "changes": "valid, issuedAt (identity.ts:212-221) | documentsOf (added to)",
+   "changes": "valid, issuedAt (identity.ts:257-258), on the day the mail brings it: twenty business days after the application for a citizen, after SAVE’s ten federal workdays for somebody not a citizen (from 2026-10-17, brief 11’s research: until then on SAVE’s tenth day, and a citizen’s card was in force at once) | documentsOf (added to)",
    "later": "idcard; documents.idcard_arrives | scheduled by systems/identity.ts",
    "systems": "photoIdOf, read by an account at a new bank (bank.open_current)",
    "sees": "DocumentList status; the ‘<name> Arrived’ notice (from 2026-10-10)",
    "saveLoad": "documents",
    "failure": "Open: No test has a bank take an arrived card or license, the row's own downstream. This path is natural: a student born in New York with only a license (two of the review's probe seeds) who reports it lost holds no photo ID.; The '<name> Arrived' notice (identity.ts:183) is unasserted. The row's issue 'Fires no notice' is stale.; The row cites only idreplace.test.ts (a NY fixture). The student-life tests (papers-transitions, guide passport-id, coverage-gaps license) go uncited.",
    "implementation": "`systems/identity.ts` | replace_idcard, replace_license, and apply_idcard for somebody not a citizen at a US state’s counter (from 2026-10-10)",
-   "evidence": "tests/evidence-g16-papers.test.ts ‘PLAYER JOURNEY: a New York license reported lost leaves no photo ID and Capital One refuses; replaced by mail for $17.50, it arrives 21 days on, is said to, reads In Force, and Capital One opens the account’, ‘PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes ten business days after applying… and Wells Fargo takes it in place of a lost passport’ (ten federal workdays, Columbus Day not among them, from 2026-10-13); tests/defects3-50-70.test.ts ‘…comes ten federal workdays on, Friday the 20th, Veterans Day not among them’; tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: a stolen card replaced for $30…’; tests/idreplace.test.ts ‘is replaced in New York for $8 and comes in three weeks’; tests/papers-transitions.test.ts; tests/guide-examples-papers.test.ts PLAYS['documents.passport-id']. Until 2026-10-13 this said no test had a bank take the card",
+   "evidence": "tests/evidence-g16-papers.test.ts ‘PLAYER JOURNEY: a New York license reported lost leaves no photo ID and Capital One refuses; replaced by mail for $17.50, it arrives 21 days on, is said to, reads In Force, and Capital One opens the account’, ‘PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes by mail twenty business days after SAVE’s ten…and Wells Fargo takes it in place of a lost passport’ (SAVE’s ten federal workdays, Columbus Day not among them, then the mail’s twenty, from 2026-10-17); tests/defects3-50-70.test.ts ‘…is approved by SAVE ten federal workdays on, Friday the 20th, Veterans Day not among them, and comes by mail twenty business days later, Monday 21 December, Thanksgiving not among them’; tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: a stolen card replaced for $30…’; tests/idreplace.test.ts ‘is replaced in New York for $8 and comes in three weeks’; tests/papers-transitions.test.ts; tests/guide-examples-papers.test.ts PLAYS['documents.passport-id']. Until 2026-10-13 this said no test had a bank take the card",
    "sourceStatus": "verified",
    "status": "Implemented And Verified"
   },
@@ -7301,7 +7301,7 @@
    "kind": "look",
    "source": "audit",
    "goal": "sourceWords (looks/actor.tsx:60-75) gives a development-history entry whose source is 'interest:…' the label 'An interest, from before they were removed'. Such entries survive in saves from before schema 94. The header (actor.tsx:1-4) now says in the past tense that an interest was one of the things the profile opens.",
-   "entry": "looks/actor.tsx sourceWords 'interest' branch (actor.tsx:66)",
+   "entry": "looks/actor.tsx sourceWords ‘interest’ branch (actor.tsx:69). Until 2026-10-17 this said :66",
    "preconditions": "Not recorded",
    "reads": "development history source",
    "decisions": "Not recorded",
@@ -7312,11 +7312,10 @@
    "sees": "Labels history entries from before the removal: legitimate.",
    "saveLoad": "Not recorded",
    "failure": "Open: The 'interest' branch is reached only by saves from before schema 94, and no test reaches it. The test the row cites doesn't touch the actor look.",
-   "implementation": "looks/actor.tsx sourceWords 'interest' branch (actor.tsx:66)",
-   "evidence": "None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the actor look.",
+   "implementation": "looks/actor.tsx sourceWords ‘interest’ branch (actor.tsx:69). Until 2026-10-17 this said :66",
+   "evidence": "tests/evidence2-b13.test.ts ‘PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense…’ (a save as 93 wrote it, migrated through openSlot, the line twice on each and nowhere else, its twin without the hour saying none). Until 2026-10-17 this said none reached the branch, which was so when the row was read",
    "sourceStatus": "legacy",
-   "status": "Implemented, Verification Incomplete",
-   "missing": "None. The header (actor.tsx:1-4) said 'an interest' was among what it opens until the interests went on 2026-10-10; it now says so in the past tense. | None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the actor look. | no test reaches it"
+   "status": "Implemented And Verified"
   },
   {
    "id": "n-decision-tax",
@@ -13734,7 +13733,7 @@
     "commit": "57b64401",
     "watch": "engine"
    },
-   "missing": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again"
+   "missing": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14168,7 +14167,7 @@
     "commit": "57b64401",
     "watch": "engine"
    },
-   "missing": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again"
+   "missing": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14469,7 +14468,7 @@
     "commit": "9c40be73",
     "watch": "app"
    },
-   "missing": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again"
+   "missing": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14496,7 +14495,7 @@
     "commit": "9c40be73",
     "watch": "app"
    },
-   "missing": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again"
+   "missing": "It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14523,7 +14522,7 @@
     "commit": "57b64401",
     "watch": "engine"
    },
-   "missing": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again"
+   "missing": "It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14550,7 +14549,7 @@
     "commit": "d9b631ba",
     "watch": "app"
    },
-   "missing": "It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again"
+   "missing": "It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14689,10 +14688,11 @@
    "saveLoad": "Not recorded",
    "failure": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)",
    "implementation": "Not recorded",
-   "evidence": "Not recorded",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "Not recorded; docs/verification/completion-2026-10-16/research-result.json",
+   "status": "Blocked Externally",
    "sourceStatus": "listed by the handoff or an area",
-   "missing": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)"
+   "missing": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)",
+   "blocker": "The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card once its holder is 'no longer entitled to be present', and sets no term; CGS chapter 246 has no such provision (searched for 'authorized stay', 'lawful status', 'immigration status', 'visa', 'legal presence', 'citizen'). SLATE keeps the term to the end of lawful presence as its assumption, said so in systems/identity.ts and on the guide's line ('SLATE's reading where the state publishes none'). Also not said by the DMV, and taken by SLATE: whether a non-citizen the DMV doesn't ask back has the twenty days from the first visit (SLATE takes the later, its described return after SAVE); and whose holidays the twenty business days skip (SLATE counts the federal ones). What would settle it: the DMV's answer in writing (its Contact Center, 860-263-5700, or a published policy). Pages tried and not reached: https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining (2026-10-16: host doesn't resolve, WebFetch ENOTFOUND, the proxy's CONNECT 502); https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1hSection_01-1h-1/ to -8 and Title_01Subtitle_01-1h/ (2026-10-16: 'Unable to Access Resource (HTTP: 404)'; read instead in the DMV's 2007 compilation, https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf). www.cga.ct.gov was reached only after completing its certificate chain with GoDaddy's G2 intermediate from certs.godaddy.com, the server sending its leaf alone (curl error 60 otherwise; WebFetch 503)."
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14712,10 +14712,11 @@
    "saveLoad": "Not recorded",
    "failure": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)",
    "implementation": "Not recorded",
-   "evidence": "Not recorded",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "Not recorded; docs/verification/completion-2026-10-16/research-result.json",
+   "status": "Blocked Externally",
    "sourceStatus": "listed by the handoff or an area",
-   "missing": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)"
+   "missing": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)",
+   "blocker": "Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passport-fee.html , /itpr_ja/m02_01.html , /itpr_ja/index.html , /itpr_ja/11_000001_00472.html , /files/100876429.pdf , /files/101051085.pdf ; https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html ; https://www.boston.us.emb-japan.go.jp/files/100996789.pdf ; https://www.mofa.go.jp/mofaj/ca/pss/pagew_000001_02493.html , /mofaj/files/100482215.pdf , /mofaj/toko/passport/pass_5.html . Search extracts (leads, not sources) show Boston's and Anchorage's tables at US$62 at the window and US$60 online from 1 July 2026, and New York's notice of 8 June 2026 saying its dollar amount would follow; which consulate's district holds Connecticut wasn't read either. New Zealand: whether a student in the US is charged GST, and the urgent fee from overseas (SLATE charges GST and takes the urgent service as at home, NZ$247 more). Tried on 2026-10-17: https://www.passports.govt.nz/passport-costs (Cloudflare challenge 'Just a moment...', 403 to curl; 503 to WebFetch), /urgent-travel and /passport-costs/passport-timeframes (403, the same challenge); https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2015/264/en/latest/ (202 with an empty body to curl, three times; 403 to WebFetch), /2015/264/en/2025-05-02.pdf and /2025/75/en/latest/ (202 empty, three times each), https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/096be8ed81f36d4a.pdf (202 empty); the Internet Archive's captures https://web.archive.org/web/20261001231111/https://www.passports.govt.nz/passport-costs and .../20260919065520/.../urgent-travel (connection reset by the proxy's tunnel, six times; WebFetch refuses web.archive.org). DIA's own release (dia.govt.nz, read) confirms only the adult fee in force, $247 with GST from 2 May 2025. Brazil's Hartford consulate page (https://www.gov.br/mre/pt-br/consulado-hartford/servicos-consulares/passaportes) answered a CAPTCHA to curl and WebFetch; its fee was read in the Diário Oficial instead, so it isn't a blocker. Outside the row's fees and left as labelled: the turnaround estimates (UK, France, Spain, Japan, Korea, Mexico, Iceland, Brazil), Canada's and Germany's faster services not offered from New Haven, and New Zealand's courier."
   }
  ]
 }

@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 541 of 599 rows in scope Implemented And Verified (90.3%); 48 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 542 of 599 rows in scope Implemented And Verified (90.4%); 45 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.
 
 ## Totals
 
@@ -28,7 +28,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Money | 68 | 60 | 8 |  |  |  |  |  |
 | Papers | 51 | 33 | 4 |  |  |  |  | 14 |
 | School | 79 | 79 |  |  |  |  |  |  |
-| Creation, Profile, Home And The Looks | 71 | 69 | 1 |  |  |  |  | 1 |
+| Creation, Profile, Home And The Looks | 71 | 70 |  |  |  |  |  | 1 |
 | Remaining Area: banking | 16 | 16 |  |  |  |  |  |  |
 | Remaining Area: coverage | 11 | 11 |  |  |  |  |  |  |
 | Remaining Area: health-billing | 3 | 3 |  |  |  |  |  |  |
@@ -51,8 +51,8 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Criteria: Mastery Through Play | 8 | 7 | 1 |  |  |  |  |  |
 | Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
 | Integration | 9 | 5 | 4 |  |  |  |  |  |
-| Known Shortfalls And Missing Tests | 7 | 4 | 2 |  |  |  | 1 |  |
-| **All** | **635** | **541** | **48** | **0** | **0** | **0** | **10** | **36** |
+| Known Shortfalls And Missing Tests | 7 | 4 |  |  |  | 2 | 1 |  |
+| **All** | **635** | **542** | **45** | **0** | **0** | **2** | **10** | **36** |
 
 ## Life, Health And Time
 
@@ -81,7 +81,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `health.choose_pharmacy` | Choose your doctor and pharmacy, and book or call off an appointment / In America, the Your Pharmacy select sets health.pharmacy. rxShareOf… | Implemented And Verified | verified | tests/evidence-g03-life.test.ts health.choose_pharmacy ‘PLAYER JOURNEY: Walmart picked on Your Pharmacy, a drawn high blood pressure is filled at its $4 under … |
 | `health.dental` | Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt / Buy Dental: dentalPlanFo… | Implemented And Verified | verified | tests/evidence-g03-life.test.ts health.dental ‘PLAYER JOURNEY: Buy Dental pressed on Papers takes the year’s $312.72 in one posting, runs to 1 October 2027 acr… |
 | `health.drop` | Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt / Drop The Plan ends a pro… | Implemented And Verified | verified | commands-kept.test.ts ‘drops a plan of one’s own at the month’s end’ (coverOn through the month’s end; on a New York life no new one lives, its marketplace pla… |
-| `health.enroll` | Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt / Enroll checks mayEnroll … | Implemented, Verification Incomplete | partial | tests/need-paths.test.ts ‘PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026 and covered from 1 August, the month of the g… |
+| `health.enroll` | Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt / Enroll checks mayEnroll … | Implemented, Verification Incomplete | partial | tests/evidence-g03-life.test.ts ‘at school, refused through the command in Yale Health’s words, and Papers offers no Enroll’, ‘PLAYER JOURNEY: withdrawn, Enrol… |
 | `health.apply` | Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt / Apply For HUSKY D takes … | Implemented And Verified | verified | tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’ … |
 | `health.request_hardship` | Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt / Request A Hardship Excep… | Implemented And Verified | verified | tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the… |
 | `health.extra_supply` | Keep a chronic condition treated, fill a longer supply, prepay prescriptions, and begin a course of therapy / Fill A Longer Supply fills ea… | Implemented And Verified | verified | tests/evidence-g03-life.test.ts health.extra_supply ‘PLAYER JOURNEY: Fill A Longer Supply pressed fills a drawn high blood pressure for 90 days at three of Yal… |
@@ -206,7 +206,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
-| `documents.apply_idcard` | Apply for or renew a passport, get a state ID card, and report, police-report and replace a lost document / Papers > Passport And ID > Your… | Implemented And Verified | verified | tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card in force at once…, and Citi t… |
+| `documents.apply_idcard` | Apply for or renew a passport, get a state ID card, and report, police-report and replace a lost document / Papers > Passport And ID > Your… | Implemented And Verified | verified | tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card that comes by mail twenty bus… |
 | `documents.apply_opt` | Apply for OPT, permission to work in the US after the degree / Papers > Permission To Work > OPT 'Apply For OPT' / 'Apply With Premium Proc… | Implemented And Verified | verified | tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: applied for 40 days into the grace, $470 leaves the bank, the pending application holds her status past the … |
 | `documents.apply_passport` | Apply for or renew a passport, get a state ID card, and report, police-report and replace a lost document / Papers > Passport And ID > Your… | Implemented And Verified | verified | tests/documents.test.ts 'is applied for at the office’s fee and issued in its days...'; tests/commands-kept.test.ts 'lets a new bank take somebody only with a … |
 | `documents.naturalize` | Apply for residence in another country, renew it, settle, and naturalize / Residence Abroad 'Naturalize' runs documents.naturalize. natural… | Explicitly Deferred | deferred | tests/commands-kept.test.ts ‘is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past … |
@@ -407,7 +407,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `l-person` | The person look reads the Person directly. Its ways are the eight dials with their figures, Readiness, each held trait, each carried condit… | Implemented And Verified | verified | tests/evidence-g33-ui.test.ts > l-person; tests/evidence2-b12.test.ts > l-person ('… draws the look’s third person, in her pronouns, without Your Own Plans'); … |
 | `l-dial-stress` | The stress dial's sentence (wellbeing.tsx:260-263, cited as 257-260) has three bands. Below 25: '…not much is adding to it. Running on empt… | Implemented And Verified | verified | tests/evidence-g33-ui.test.ts l-dial-stress: 'PLAYER JOURNEY: a new life’s 18, opened from Home through her name and Stress: “18, and not much is adding to it…… |
 | `l-trait` | The trait look (wellbeing.tsx:350-395) lists each of the trait's systemMods by KNOB_READS with its own figure and, if held, the combined kn… | Implemented And Verified | verified | tests/evidence3-person.test.ts > 'l-trait: the look’s figures are what play charges' and > 'c-traits and trait-receipts: the receipts knob gone'; tests/evidenc… |
-| `l-actor` | sourceWords (looks/actor.tsx:60-75) gives a development-history entry whose source is 'interest:…' the label 'An interest, from before they… | Implemented, Verification Incomplete | legacy | None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the a… |
+| `l-actor` | sourceWords (looks/actor.tsx:60-75) gives a development-history entry whose source is 'interest:…' the label 'An interest, from before they… | Implemented And Verified | legacy | tests/evidence2-b13.test.ts ‘PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and th… |
 | `n-decision-tax` | At tax season (1 Feb), the decision 'Your <year> Tax Return' is raised with File It, which runs tax.file. Filing settles each state, then t… | Implemented And Verified | verified | tests/evidence-g33-ui.test.ts n-decision-tax: 'PLAYER JOURNEY: the clock raises “Your 2026 Tax Return” at nine on 1 February, File It pressed on Home files it … |
 | `n-decision-unclaimed` | At a month's end, a non-primary account that has a balance and has been untouched to within 90 days of the country's unclaimed years gets e… | Implemented And Verified | verified | tests/accountlife.test.ts 'writes ninety days before it goes to the state, and getting in touch keeps it'; tests/guide-examples-money.test.ts, the play of the … |
 | `n-decision-us-status` | When an F-1's permission has run out and the grace has begun, the US_STATUS check raises 'Your US Status Is Ending' (dueAt the status end).… | Implemented And Verified | verified | tests/evidence3-home.test.ts n-decision-us-status (round three, 2026-10-14): the decision on a degree played to Commencement, Apply For OPT pressed on Home; te… |
@@ -826,16 +826,16 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `KS-genres-54` | Each genre’s two briefs ask different things of the actor where its conventions allow | Implemented And Verified | listed by the handoff or an area | docs/verification/integration-2026-10-16/genres-09.md; docs/verification/remaining-09/genres-result.json |
 | `KS-bank-rows-scope` | The nine bank rows no Yale player reaches: kept as unresolved or moved to deferred | Decision Required | listed by the handoff or an area | Not recorded |
 | `KS-homecloses` | A home bank’s own close settles its fees once | Implemented And Verified | listed by the handoff or an area | docs/verification/remaining-09/banking-result.json |
-| `KS-ct-idcard` | A Connecticut ID card’s term and its mailing are the DMV’s | Implemented, Verification Incomplete | listed by the handoff or an area | Not recorded |
-| `KS-passport-fees` | A passport renewed abroad costs its issuer’s published fee | Implemented, Verification Incomplete | listed by the handoff or an area | Not recorded |
+| `KS-ct-idcard` | A Connecticut ID card’s term and its mailing are the DMV’s | Blocked Externally | listed by the handoff or an area | Not recorded; docs/verification/completion-2026-10-16/research-result.json |
+| `KS-passport-fees` | A passport renewed abroad costs its issuer’s published fee | Blocked Externally | listed by the handoff or an area | Not recorded; docs/verification/completion-2026-10-16/research-result.json |
 
 ## What's Left
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (48)
+### Implemented, Verification Incomplete (45)
 
-- **`health.enroll`** (Life, Health And Time): Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). / The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through t…
+- **`health.enroll`** (Life, Health And Time): Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at renewal and at an application, is unreachable in play, since the owner’s scope reset of 2026-10-09 left wages only on the School (work-study, the Summer Cabaret) and a month at the School counts as the S…
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
 - **`bank.cancel_new`** (Money): Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 Au…
 - **`bank.switch`** (Money): Unreachable as a switch. The US has no switching service, so a switch is refused, first for a photo ID where she holds none, then with the steps to take, nothing scheduled across a reload, and Your Banks draws those steps and no Switch Bank panel (tests/scope-money.test.ts ‘PLAYER JOURNEY: in New Haven a switch to Citi is refused first for a photo ID…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a switch is to a bank where she lives, by its country’s service (banksFor and SWITCHIN…
@@ -848,7 +848,6 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`tax.catch_up_state_plan`** (Papers): Unreachable: Connecticut, the only state a life files in, ends its plan at the first payment missed (its cure “none”, SLATE’s reading), so Catch Up is never drawn and the command says the plan isn’t behind (tests/scope-taxpapers.test.ts ‘PLAYER JOURNEY: its first payment missed with her money in the CD, the plan ends at once…’). Read again on 2026-10-16 (brief 09): unchanged; every life still files in Connecticut alone. / tested on fixtures: tests/remaining-tax.test.ts ‘FIXTURE: its payment missed, Catch Up drawn on Papers and pressed…’ (a New York plan kept past the day it would have ended, …
 - **`tax.lien_dispute`** (Papers): Unreachable: Connecticut’s lien always secures tax still owed, since a payment goes to the penalty and interest first, a lien is filed only while something is owed, and DRS assesses from the return’s own figures. Since 2026-10-16 the button is drawn only on a lien filed in error; on a played student’s Connecticut lien Papers says why in the engine’s words and the command is refused (tests/remaining-tax.test.ts ‘PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date…’). Read again on 2026-10-16 (brief 09): unchanged. An Inherited family’s student who files nothing …
 - **`tax.request_waiver`** (Papers): Unreachable: only Oregon charges the three-year penalty, and every life files in Connecticut; shown on the played life, the refusal and no row drawn (tests/scope-taxpapers.test.ts ‘tax.request_waiver: only Oregon charges the three-year penalty…’). Read again on 2026-10-16 (brief 09): unchanged; every life still files in Connecticut alone. / tested on fixtures: tests/remaining-tax.test.ts ‘FIXTURE: her own 2001 return filed before any notice…’ (70%, refunded), ‘FIXTURE: its Demand To File sent, then her own return, unpaid…’ (50%) and ‘FIXTURE: assessed, $990 paid toward its $1,000 of penalties…
-- **`l-actor`** (Creation, Profile, Home And The Looks): None. The header (actor.tsx:1-4) said 'an interest' was among what it opens until the interests went on 2026-10-10; it now says so in the past tense. / None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the actor look. / no test reaches it
 - **`banking.2.arrange_overdraft`** (Brief 09 Area: banking): owner decision
 - **`banking.2.cancel_new`** (Brief 09 Area: banking): owner decision (its last unfinished item implemented: banking.1.pro-rata)
 - **`banking.2.switch`** (Brief 09 Area: banking): owner decision
@@ -869,20 +868,18 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`judge.together`** (Brief 10 Area: judge): Measured on the integrated code by the committed tools (integrated/after/README.md); the criteria that fail, ST6-R (a), (c), (e), (g), F2 as written and the four originals, fail as they did / Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The parts this area’s rows read were measured from this clone: stage (ST3-R, ST6-R, the stage criteria) from 44cd15c2, and the eight journeys with l3r from c3e05866. Each came out byte for byte as brief 10’s integrated/after, but for st6.json’s new sorting block. No engine file changed in this area. / verified as it s…
 - **`A1`** (Brief 10 Area: judge): Measured by tools/ag-baseline.ts and tools/ag-criteria.mjs on the integrated code; no gate test holds A1’s figure. A night drains as it did by WORKLOAD.full’s design, so A1 is met by briefs and scenes, and read at a lead a night would be 0.487, short of 0.5 / verified as it stands
 - **`stamina.A1`** (Brief 10 Area: stamina): Met on brief 10’s integrated code by the judge area’s second phase (remaining-10/judge-result.json, A1): stamina’s briefs 0.53 and scenes 0.54, its nights 0.334 at a supporting part as the tool reads them (0.487 at a lead, 0.138 featured), measured by tools/ag-baseline.ts and tools/ag-criteria.mjs (decisions-2026-10-16/integrated/after/criteria.txt, a1-nights.json); no gate test holds A1’s figure. Which part a night is read at no longer decides A1, and stays the owner’s to change / owner decision
-- **`F2-A`** (Criteria: The Attributes): It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again
+- **`F2-A`** (Criteria: The Attributes): It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again
 - **`A4`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`A5`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`T1`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`O3`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`F1`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`F3`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
-- **`MA5`** (Criteria: Mastery Through Play): It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again
-- **`INT-skipped`** (Integration): It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again
-- **`INT-navigation`** (Integration): It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again
-- **`INT-long-runs`** (Integration): It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts): measure it again
-- **`INT-gate`** (Integration): It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/school.ts, src/engine/index.ts, src/engine/systems/leave.ts, …): measure it again
-- **`KS-ct-idcard`** (Known Shortfalls And Missing Tests): The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)
-- **`KS-passport-fees`** (Known Shortfalls And Missing Tests): Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)
+- **`MA5`** (Criteria: Mastery Through Play): It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again
+- **`INT-skipped`** (Integration): It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again
+- **`INT-navigation`** (Integration): It was measured on 9c40be73, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again
+- **`INT-long-runs`** (Integration): It was measured on 57b64401, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again
+- **`INT-gate`** (Integration): It was measured on d9b631ba, and what it reads has changed since (src/engine/content/guide/documents.ts, src/engine/content/guide/school.ts, src/engine/content/identity.ts, …): measure it again
 
 ### Partially Implemented (0)
 
@@ -892,9 +889,10 @@ None.
 
 None.
 
-### Blocked Externally (0)
+### Blocked Externally (2)
 
-None.
+- **`KS-ct-idcard`** (Known Shortfalls And Missing Tests): The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner re…
+- **`KS-passport-fees`** (Known Shortfalls And Missing Tests): Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passport-fee.html , /itpr_ja/m02_01.html , /itpr_ja/index.html , /itpr_ja/11_000001_00472.html , /files/100876429.pdf , /files/101051085.pdf ; https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html ;…
 
 ### Decision Required (10)
 
