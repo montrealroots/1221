@@ -253,9 +253,11 @@ export const DOCUMENTS: readonly GuideEntry[] = [
       { label: 'OPT', value: `${dollars(OPT.fee)} filed online; premium processing ${dollars(OPT.premiumFee)} more` },
       { label: 'How Long', value: `The card in ${SSN.days} days; OPT decided in ${OPT.standardDays} days, or ${OPT.premiumBusinessDays} business days with premium processing, a weekend or a federal holiday not among them`, estimate: true },
     ],
+    // From 2026-10-17 How School Ended says what becomes of an application decided after school ends without the degree:
+    // until then one was approved whatever came of the degree (found by brief 13's journeys).
     reads: [
       { label: 'Your Program’s End', value: 'May 31 of your class’s last year, or the day you left school without the degree' },
-      { label: 'How School Ended', value: `The grace after the program: ${STATUS_GRACE_DAYS.f1} days with the degree, ${STATUS_GRACE_DAYS.withdrawn} after a withdrawal or a degree withheld, none after a dismissal. OPT follows a degree completed` },
+      { label: 'How School Ended', value: `The grace after the program: ${STATUS_GRACE_DAYS.f1} days with the degree, ${STATUS_GRACE_DAYS.withdrawn} after a withdrawal or a degree withheld, none after a dismissal. OPT follows a degree completed: one applied for while the degree was on its way is denied at its decision if school ends without it, and the fee isn’t refunded` },
       { label: 'Your Registration', value: 'The number needs on-campus work begun or starting within 30 days: registered, the School’s work-study is yours' },
       { label: 'Days Without Work', value: `Counted on OPT a week at a time; past ${OPT.unemploymentDays}, it ends` },
     ],
