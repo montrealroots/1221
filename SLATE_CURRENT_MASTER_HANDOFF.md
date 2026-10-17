@@ -1,6 +1,29 @@
-# Read First: Brief 13, The Final Acting Clauses And The Playthroughs, 2026-10-17
+# Read First: Brief 14, The Player's Language, 2026-10-17 (In Progress)
 
-**This section is the current status, and where a new session starts.** Every section below is history. It was written
+**This section is the current status, and where a new session starts.** It's written while the owner's brief 14,
+"Complete Player-Facing Language And Tutorial Overhaul"
+(`docs/verification/briefs-2026-10-16/14-complete-player-facing-language-and-tutorial-overhaul.txt`, kept verbatim),
+is being worked. Brief 13's section below was the status until it began. Nothing of brief 14 is merged or deployed.
+
+- **The branch:** `claude/peaceful-hamilton-59zdbb`, restarted by a fast-forward from `main` at `0368d46b` (#41's
+  merge). Brief 14's baseline is `d82d38d0`: the standard (`docs/STYLE.md`, "Talking to the player"), the glossary
+  (`docs/GLOSSARY.md`), the text inventory (`tools/text-inventory.mjs`, `docs/text/`), and the gate's nineteenth check.
+  The record is `docs/verification/language-2026-10-17/`.
+- **The work:** eight areas rewrite the game's text in clones in this session's scratchpad (`prompts/` says what each
+  holds). A clone lives only as long as this container. A new session finds what's merged here and nothing else, so it
+  starts again from `docs/text/INVENTORY.md`: every source still Pending is still to do.
+- **The gate on the baseline:** all 376 files and 4,587 tests passed, and the text inventory held. The completion
+  matrix check then failed, because the guide's types gained an optional field. Every row measured on the built app or
+  the engine went stale: 46 rows, from 612 of 636 to 566. The pass changes `src/`, so they stay stale until its final
+  runs measure them again on the merged code (`before/gate-baseline.txt`).
+
+**Completion, by the matrix:** 566 of 636 rows in scope Implemented And Verified (88.9%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+# Earlier: Brief 13, The Final Acting Clauses And The Playthroughs, 2026-10-17
+
+**This section was the current status until brief 14** (**Superseded 2026-10-17:** the current status is the first
+section above, brief 14's, and so is the completion line; the line below is brief 13's as it was). Every section below
+is history. It was written
 at the end of the owner's "Resolve The Final Acting Clauses And Validate Through Multiple Playthroughs"
 (`docs/verification/briefs-2026-10-16/13-resolve-the-final-acting-clauses-and-validate-through-multiple-playthroughs.txt`,
 kept verbatim), worked on `claude/peaceful-hamilton-59zdbb` from `main` at `102ba8f2` (#39's merge). It is pushed and in
