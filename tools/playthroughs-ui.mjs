@@ -1269,6 +1269,7 @@ async function banking() {
     said(`refused (${tone}): ${text}`);
     must(tone === 'negative', `the press wasn’t refused: “${text}” (${tone || 'no toast'})`);
     must(amountsIn(text).includes(held[from]), `the refusal doesn’t name the $${held[from].toLocaleString('en-US')} ${from} holds: ${text}`);
+    await movePanel().scrollIntoViewIfNeeded().catch(() => {});
     await shot('transfer-refused');
     const now = await balances();
     must(JSON.stringify(now) === JSON.stringify(held), `a balance moved: ${JSON.stringify(held)} → ${JSON.stringify(now)}`);
@@ -1319,6 +1320,7 @@ async function banking() {
     must(meal, `no pending line of $${price.toFixed(2)}: ${pending.map((l) => `${l.what} ${l.amount}`).join('; ')}`);
     posts = meal.posts;
     must(posts, `the payment’s line gives no day it posts: ${meal.what}`);
+    await statementPanel().scrollIntoViewIfNeeded().catch(() => {});
     await shot('statement-pending');
     const row = statementPanel().locator('.statement-lines > .row-between.small').nth(meal.i);
     const look = await openLook(row.locator(':scope > span').nth(1).locator('button.link').first());
@@ -1377,6 +1379,7 @@ async function banking() {
     const closing = figure(st, /Closing/i);
     said(`${st.period}: ${Object.entries(st.figures).map(([k, v]) => `${k} ${v}`).join(', ')}`);
     must(Math.abs(closing - notice) < 0.005, `${st.period}’s closing balance $${closing} isn’t the notice’s $${notice}`);
+    await statementPanel().scrollIntoViewIfNeeded().catch(() => {});
     await shot('statement-posted');
     return `${st.period}: ${meal.what} posted; closing $${closing}, the notice’s $${notice}`;
   });
@@ -1440,6 +1443,7 @@ async function documentJourney() {
     const fee = amountsIn(text)[0];
     [comes, until] = datesIn(text);
     must(fee === 28 && comes === 'October 9, 2026' && until === 'June 14, 2034', `expected $28.00, October 9, 2026 and June 14, 2034: ${text}`);
+    await idPanel().scrollIntoViewIfNeeded().catch(() => {});
     await shot('applied');
     const bank = await primaryBalance();
     must(bank.balance === paid - fee, `${bank.name} $${paid} → $${bank.balance}, where the fee was $${fee}`);
@@ -1453,6 +1457,7 @@ async function documentJourney() {
     said(`row: ${r.name} | ${r.issued} | ${r.runsOut} | ${r.status}`);
     must(r.name.startsWith(card), `the row is “${r.name}”`);
     must(!/In Force/i.test(r.status) && !datesIn(r.issued).length, `the row reads ${r.status}, issued ${r.issued}`);
+    await idPanel().scrollIntoViewIfNeeded().catch(() => {});
     await shot('on-its-way');
     refusal = await refused(getButton(), async () => reasonOnScreen(idPanel(), getButton())).catch(async (e) => { throw new Error(`${e.message}${/no reason/.test(e.message) ? ` (its tooltip: “${await getButton().getAttribute('title')}”)` : ''}`); });
     const look = await openLook(r.row.locator('td').first().locator('button.link').first());
@@ -1506,6 +1511,7 @@ async function documentJourney() {
     const look = await openLook(r.row.locator('td').first().locator('button.link').first());
     must(look.summary.includes(until), `its look doesn’t give ${until}: ${look.summary}`);
     await closeLook(look.name);
+    await idPanel().scrollIntoViewIfNeeded().catch(() => {});
     await shot('held');
     return `${r.status} from ${r.issued} to ${r.runsOut}; refused: ${why}; look: ${look.summary}`;
   });
@@ -1594,6 +1600,7 @@ async function health() {
     const first = hits[0];
     const b = stepsOf(cardOf(first.id)).filter({ hasText: new RegExp(`^${escapeRe(first.label)}$`) }).first();
     await refused(b, async () => (await whyOf(cardOf(first.id))).includes(refusal) ? refusal : '');
+    await cardOf(first.id).scrollIntoViewIfNeeded().catch(() => {});
     await shot('coursework-refused');
     return hits.map((h) => `${h.title}: ${h.label}`).join('; ');
   });
@@ -1612,6 +1619,7 @@ async function health() {
     said(`urgent care now $${urgent.toFixed(2)}; the notice’s share: ${Number.isFinite(share) ? `$${share}` : 'none'}; bills that day: ${thatDay.join(' | ') || 'none'}`);
     if (Number.isFinite(share)) must(thatDay.some((b) => amountsIn(b).includes(share)), `the notice’s $${share} isn’t a bill from that day: ${bills.join(' | ')}`);
     else must(urgent === 0 && !thatDay.some((b) => amountsIn(b).some((a) => a > 0)), `the notice names no share, yet urgent care is $${urgent} and that day’s bills are ${thatDay.join(' | ') || 'none'}`);
+    await panelHeaded('Your Doctor').scrollIntoViewIfNeeded().catch(() => {});
     await shot('health-cover');
     return `urgent care $${urgent.toFixed(2)}; ${Number.isFinite(share) ? `a share of $${share}` : 'no share, no bill'}`;
   });
