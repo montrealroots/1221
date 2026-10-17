@@ -24,6 +24,16 @@ each says when it was settled and how.
   - `guide/papers.ts` quotes the health area's refusals at lines 315, 334, 339–344, 454 and 479. The health area
     changed line 375 in that file, to match its new HUSKY D line.
   - `tests/guide-examples-*.test.ts` holds each quote to the live words, so the merged suite finds any left behind.
+- **The papers guide's quotes of health's words.** `guide/papers.ts` quotes the health area's notices and refusals at
+  lines 315, 331, 333, 334, 339–342, 344, 345, 348, 349, 426, 453, 454, 456 and 457, and they no longer match
+  (health `batches.md`, batch 2). Lines 375 and 479 are kept in step by `tests/guide-examples-papers.test.ts`.
+  The others aren't tested, so they're aligned by hand after every area is merged.
+- **Found by the health area on Papers' screens** (merged; the papers area had finished):
+  - "1 days" on Passport And ID (Canada's faster passport);
+  - "HUSKY D: $20.00 of $0.00 paid this year";
+  - "charity", where the button and the new refusals say financial assistance;
+  - the Marketplace paragraph, 246 to 309 words in one block at 390 wide.
+- **Found by the health area on Home:** "Worth -$227" in the money line.
 - **The guide's `next` on every entry.** Once every area is merged, `tests/guide.test.ts` asks it of each entry, as
   the tutorial area proposed. An entry with none says why in its area's batch record (papers: `documents.residence`,
   `papers.pensions`).
