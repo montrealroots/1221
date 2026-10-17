@@ -337,10 +337,17 @@ for f in sorted(x for x in os.listdir(B11) if x.endswith('-result.json')):
         crit = [x for x in rows if x['id'] == r['id'] and x['group'] == r['group']]
         if crit:
             x = crit[0]
+            # What its old status asked goes with it (KS-ct-idcard's missing, once it's Blocked Externally).
+            for k in ('missing', 'gap', 'blocker', 'decision', 'deferredBy'):
+                if k != need: x.pop(k, None)
             x.update({'status': status, 'citations': x['citations'] + cites, 'evidence': f"{x['evidence']}; {B11}/{f}", **extra})
             if status == IAV:
-                x.pop('measured', None)  # verified by the tests it cites, not by the measurement it carried
+                # Verified by the tests it cites, not by the measurement it carried, and no longer a decision (L1, brief 11).
+                x.pop('measured', None)
+                x.pop('decision', None)
             continue
+        # It replaces an earlier override of the same item (stamina.A1's of brief 10), since the matrix reads the first.
+        OVERRIDES[:] = [o for o in OVERRIDES if o['id'] != r['id']]
         OVERRIDES.append({'id': r['id'], 'status': status, 'why': why, 'citations': cites, **extra})
 json.dump({'rows': rows, 'overrides': OVERRIDES}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))

@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 514 of 599 rows in scope Implemented And Verified (85.8%); 73 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 522 of 599 rows in scope Implemented And Verified (87.1%); 68 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 7 Decision Required, 36 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -11021,9 +11021,9 @@
    "implementation": "tools/advice.ts; tools/advice-harness.ts (tapeWaiting)",
    "evidence": "docs/verification/decisions-2026-10-16/advice/tuning-before.json ‘npx vite-node tools/advice.ts -- --cases tuning --out tuning-before.json (on 974785af, before any advice change)’ (measurement (seeded, played through the commands)); docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands))",
    "sourceStatus": "implemented",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "implemented",
-   "missing": "the area called it implemented and cites no gate test that holds it | TEST SETUP: abilities, techniques and stamina’s fitness drawn within the band and set where each is kept; every calendar hour cleared and the student rested before every command, as F2-A’s set-up does; F2-A’s own adv-N set-up kept exactly as it was, including that it never set the four abilities kept in the craft (it wrote them into attrs, where nothing reads them)"
+   "override": "Brief 11, the advice area (docs/verification/completion-2026-10-16/advice-result.json): The harness made reachable without changing what it builds (casesOf and the held-out refusal moved from tools/advice.ts to tools/advice-harness.ts unchanged; tapeWaiting exported; buildCase also returns what each input was drawn at). Then: the seed sets read; three tuning cases built through createSave, brief.choose, brief.prepare, genre.study and practice.self_tape; tools/advice.ts run as the measure is run (a child process) on adv-t-0."
   },
   {
    "id": "advice.F2",
@@ -11069,9 +11069,9 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands)); docs/verification/decisions-2026-10-16/advice/held-out-runs.txt ‘the batches in the order they ran, with exit codes’ (measurement (seeded, played through the commands))",
    "sourceStatus": "implemented",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "implemented",
-   "missing": "the area called it implemented and cites no gate test that holds it"
+   "override": "Brief 11, the advice area (docs/verification/completion-2026-10-16/advice-result.json): As advice.harness: the seed sets read, cases built through the commands, the measure run on a tuning case and refused a held-out one."
   },
   {
    "id": "advice.F2A10-b",
@@ -11186,13 +11186,9 @@
    "implementation": "systems/advice.ts",
    "evidence": "tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision’ (played tuning case); tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today’ (played tuning cases, a brief taped cold); docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands))",
    "sourceStatus": "owner decision",
-   "status": "Decision Required",
+   "status": "Implemented And Verified",
    "disposition": "owner decision",
-   "decision": {
-    "question": "Which preparation the criterion means. As implemented, a take held back most by its own preparation (lines, breakdown, rehearsal, the way of playing rehearsed in) is read as prepared, and knowing the genre is read as it is known today, since familiarity carries from piece to piece and isn’t prepared for one. Read with the genre’s shortfall completed too (the criterion’s words, any preparation): measured on the tuning cases, the advice named the best input in 27 of 30, two of the five near mastery missed (held out unmeasured: the set is run once); every take read complete: 18 of 30. Recommended: accept the implemented reading, since F2-A’s realized gain reads each take as its record stands and the next take is short of the genre again. And the diminishing returns: they hold at full precision, but near mastery they’re a thousandth of a point (median), because the engine’s practice grows at a constant rate from three quarters of full (DEVELOPMENT.floor, systems/attributes.ts abilityGain): a finding for growth, outside this area.",
-    "evidence": "docs/verification/remaining-10/advice-result.json",
-    "recommendation": "Not recorded"
-   }
+   "override": "Brief 11, the advice area (docs/verification/completion-2026-10-16/advice-result.json): Forecast.preparation added: what completing their own preparation would bring the pieces read as prepared, weighted as the work is, never in training’s figure, said once on the first recommendation. Played on tuning seeds: adv-t-15 with The Spare Key taped cold (its rehearsal held it back most), its figure worked independently from the judge’s replay (performerOf, replayAs) of the piece as prepared less as taped; adv-t-1’s first-named input at six levels (TEST SETUP), each copy playing the same twenty sessions through practice.exercise."
   },
   {
    "id": "advice.F2A10-g",
@@ -11237,13 +11233,9 @@
    "implementation": "systems/experience.ts recommendations",
    "evidence": "tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the trained input’s forecast falls, and with another’s now ahead, another is named first’ (played tuning case); tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one’ (FIXTURE forecasts); docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands))",
    "sourceStatus": "owner decision",
-   "status": "Decision Required",
+   "status": "Implemented And Verified",
    "disposition": "owner decision",
-   "decision": {
-    "question": "The nine held-out cases whose trained input’s forecast didn’t fall are all near mastery, each within a thousandth (the largest rise 0.001). Played on tuning case adv-t-19: imagination alone raised to the level twenty sessions reach lowers its forecast (0.547 to 0.546); discipline alone raised to what the twenty days keep raises it (to 0.549), because discipline’s lift (DEVELOPMENT.disciplineLift) makes the next twenty hours grow more, and near mastery the engine’s practice grows at a constant rate (DEVELOPMENT.floor), so the input’s own fall is the smaller. The advice reads both correctly. Options: growth makes deliberate practice past three quarters of full slow (outside this area); or the criterion takes a rise under a hundredth where the days’ discipline lifts the next hours. Recommended: the second, with growth’s floor reported as a finding; not a forecast that holds discipline where it was, which would say less than the engine does.",
-    "evidence": "docs/verification/remaining-10/advice-result.json",
-    "recommendation": "Not recorded"
-   }
+   "override": "Brief 11, the advice area (docs/verification/completion-2026-10-16/advice-result.json): forecastAtDiscipline added (an input’s forecast with discipline set where it was, on a scratch copy), and where the forecast rose since the player’s latest work and discipline rose, the standing says how much is discipline’s. Played on adv-t-19 (near mastery): twenty sessions through practice.exercise, the forecast read before and after, and at the discipline it had (TEST SETUP)."
   },
   {
    "id": "advice.F2A10-i",
@@ -11288,9 +11280,9 @@
    "implementation": "Not recorded",
    "evidence": "tests/decisions-advice.test.ts; docs/verification/decisions-2026-10-16/advice/mutations.json ‘ten mutations in a copy of the clone at 0afc7914’ (mutations)",
    "sourceStatus": "implemented",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "implemented",
-   "missing": "the area called it implemented and cites no gate test that holds it"
+   "override": "Brief 11, the advice area (docs/verification/completion-2026-10-16/advice-result.json): The file run on 2ff661c1 (19 tests, the ten of brief 10 unchanged), each cited by its title; brief 10’s ten mutations made again in a copy of the clone (one, B10-4, whose text moved with brief 11’s advised(), made at its new place)."
   },
   {
    "id": "advice.heldout",
@@ -11336,9 +11328,9 @@
    "implementation": "tools/advice-harness.ts",
    "evidence": "docs/verification/decisions-2026-10-16/advice/held-out-04.json ‘npx vite-node tools/advice.ts -- --cases adv-h-10..19 --held-out’ (measurement (seeded, played through the commands)); docs/verification/decisions-2026-10-16/advice/held-out-08b.json ‘npx vite-node tools/advice.ts -- --cases adv-h-57..59 --held-out’ (measurement (seeded, played through the commands))",
    "sourceStatus": "fixed",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "fixed",
-   "missing": "the area called it fixed and cites no gate test that holds it"
+   "override": "Brief 11, the advice area (docs/verification/completion-2026-10-16/advice-result.json): On tuning case adv-t-0: a brief chosen and prepared, a hospital stay brought on through the function the life’s own health brings one through (careFor, care stay: FIXTURE), the game’s own refusal read, then tapeWaiting; and a take refused for another reason that preparing again would let through. No held-out case is built in a test."
   },
   {
    "id": "arion.AR0.research",
@@ -12789,10 +12781,9 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/stamina/after-ag-criteria.txt ‘A1 FAILS none at 0.5 for stamina’ (measurement (no draw)); tests/attributes-phase-2b.test.ts ‘stamina counts by how long and how hard a piece is > gives +10 stamina half a point or more on a lead’s night, on the mean of the plays, less in a smaller part, and a tenth or less on a light brief’ (test (static))",
    "sourceStatus": "owner decision",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "disposition": "owner decision",
-   "override": "Met on brief 10’s integrated code by the judge area’s second phase (remaining-10/judge-result.json, A1): stamina’s briefs 0.53 and scenes 0.54, its nights 0.334 at a supporting part as the tool reads them (0.487 at a lead, 0.138 featured), measured by tools/ag-baseline.ts and tools/ag-criteria.mjs (decisions-2026-10-16/integrated/after/criteria.txt, a1-nights.json); no gate test holds A1’s figure. Which part a night is read at no longer decides A1, and stays the owner’s to change",
-   "missing": "Met on brief 10’s integrated code by the judge area’s second phase (remaining-10/judge-result.json, A1): stamina’s briefs 0.53 and scenes 0.54, its nights 0.334 at a supporting part as the tool reads them (0.487 at a lead, 0.138 featured), measured by tools/ag-baseline.ts and tools/ag-criteria.mjs (decisions-2026-10-16/integrated/after/criteria.txt, a1-nights.json); no gate test holds A1’s figure. Which part a night is read at no longer decides A1, and stays the owner’s to change | owner decision"
+   "override": "Brief 11, the attributes area (docs/verification/completion-2026-10-16/attributes-result.json): Stamina +10 from the even actor on every class scene, the drain through a scene’s later units, held at 0.5 or more in the gate; and its night effect at a lead’s part, a smaller part and a light brief, held by the test brief 10 left."
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12821,7 +12812,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12850,7 +12841,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12904,7 +12895,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12933,7 +12924,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12987,7 +12978,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13016,7 +13007,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13045,7 +13036,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13074,7 +13065,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13103,7 +13094,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13132,7 +13123,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13161,7 +13152,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13190,7 +13181,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13219,7 +13210,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13248,7 +13239,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13277,7 +13268,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13306,7 +13297,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13335,7 +13326,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13364,7 +13355,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13393,7 +13384,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13422,7 +13413,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13451,7 +13442,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13480,7 +13471,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13509,7 +13500,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13538,7 +13529,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13567,7 +13558,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13596,7 +13587,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13625,7 +13616,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13654,7 +13645,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13683,7 +13674,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13811,8 +13802,7 @@
    "status": "Implemented And Verified",
    "before": "met by review",
    "after": "met by review; A4 brought to restraint’s new draw (composure, focus)",
-   "sourceStatus": "Met",
-   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
+   "sourceStatus": "Met"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13836,8 +13826,7 @@
    "status": "Implemented And Verified",
    "before": "met by review",
    "after": "met by review; unchanged code",
-   "sourceStatus": "Met",
-   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
+   "sourceStatus": "Met"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13861,8 +13850,7 @@
    "status": "Implemented And Verified",
    "before": "met by review",
    "after": "met by review; unchanged code",
-   "sourceStatus": "Met",
-   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
+   "sourceStatus": "Met"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13886,8 +13874,7 @@
    "status": "Implemented And Verified",
    "before": "met by review",
    "after": "met by review; unchanged code",
-   "sourceStatus": "Met",
-   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
+   "sourceStatus": "Met"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13911,8 +13898,7 @@
    "status": "Implemented And Verified",
    "before": "met by review",
    "after": "met by review; unchanged code",
-   "sourceStatus": "Met",
-   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
+   "sourceStatus": "Met"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13936,8 +13922,7 @@
    "status": "Implemented And Verified",
    "before": "met by review",
    "after": "met by review; unchanged code",
-   "sourceStatus": "Met",
-   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
+   "sourceStatus": "Met"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13957,20 +13942,11 @@
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
    "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3; on the integrated tree, brief 09 (c9cba9c8): specialist 4, beginner 3 weeks; on brief 10's tested commit (567d27dd): specialist 8, beginner 6 weeks",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md",
-   "status": "Decision Required",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/advice-result.json",
+   "status": "Implemented And Verified",
    "before": "specialist 4, beginner 3",
    "after": "specialist 4, beginner 3",
-   "sourceStatus": "Met",
-   "measured": {
-    "commit": "567d27dd",
-    "watch": "judge"
-   },
-   "decision": {
-    "question": "L1 held before brief 10 and fails after it. On the final code the week’s top recommendation in the 120-day journeys is focus 8 weeks running for the specialist (51 to 55) and 6 for the beginner (55 to 56), where L1 allows 4 without the input rising 5 points; brief 09 read 4 and 3. The advice area’s change moved it on its own (84db36b7 reads 8 and 6; the judge’s first phase alone read 4 and 3). The journeys’ student never trains the named input, and F2-A10 holds the advice to naming the input whose training brings most. Should the advice change its first-named input after 4 weeks a player hasn’t acted on it, against F2-A10 (b); should L1 be read on a journey whose student acts on the advice, as F2-A10 (h) is; or does L1 stay as written and not met?",
-    "evidence": "docs/verification/decisions-2026-10-16/l1/README.md (each measurement point’s sequence, the 84db36b7 journeys); decisions-2026-10-16/integrated/after/journey-specialist-bj-0.json and journey-beginner-bj-0.json; integrated-09’s for brief 09",
-    "recommendation": "Keep the advice naming the best input, and read L1 on a journey that follows the advice: F2-A10 (h) shows the first-named moves on once it’s followed, which is what “changes or is acted on” asks. Until decided, L1 is counted not met."
-   }
+   "sourceStatus": "Met"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13999,7 +13975,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14250,7 +14226,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14279,7 +14255,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14308,7 +14284,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14337,7 +14313,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14366,7 +14342,7 @@
     "commit": "567d27dd",
     "watch": "judge"
    },
-   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "missing": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14726,7 +14702,6 @@
    "evidence": "Not recorded; docs/verification/completion-2026-10-16/research-result.json",
    "status": "Blocked Externally",
    "sourceStatus": "listed by the handoff or an area",
-   "missing": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)",
    "blocker": "The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card once its holder is 'no longer entitled to be present', and sets no term; CGS chapter 246 has no such provision (searched for 'authorized stay', 'lawful status', 'immigration status', 'visa', 'legal presence', 'citizen'). SLATE keeps the term to the end of lawful presence as its assumption, said so in systems/identity.ts and on the guide's line ('SLATE's reading where the state publishes none'). Also not said by the DMV, and taken by SLATE: whether a non-citizen the DMV doesn't ask back has the twenty days from the first visit (SLATE takes the later, its described return after SAVE); and whose holidays the twenty business days skip (SLATE counts the federal ones). What would settle it: the DMV's answer in writing (its Contact Center, 860-263-5700, or a published policy). Pages tried and not reached: https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining (2026-10-16: host doesn't resolve, WebFetch ENOTFOUND, the proxy's CONNECT 502); https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1hSection_01-1h-1/ to -8 and Title_01Subtitle_01-1h/ (2026-10-16: 'Unable to Access Resource (HTTP: 404)'; read instead in the DMV's 2007 compilation, https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf). www.cga.ct.gov was reached only after completing its certificate chain with GoDaddy's G2 intermediate from certs.godaddy.com, the server sending its leaf alone (curl error 60 otherwise; WebFetch 503)."
   },
   {
@@ -14750,7 +14725,6 @@
    "evidence": "Not recorded; docs/verification/completion-2026-10-16/research-result.json",
    "status": "Blocked Externally",
    "sourceStatus": "listed by the handoff or an area",
-   "missing": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)",
    "blocker": "Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passport-fee.html , /itpr_ja/m02_01.html , /itpr_ja/index.html , /itpr_ja/11_000001_00472.html , /files/100876429.pdf , /files/101051085.pdf ; https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html ; https://www.boston.us.emb-japan.go.jp/files/100996789.pdf ; https://www.mofa.go.jp/mofaj/ca/pss/pagew_000001_02493.html , /mofaj/files/100482215.pdf , /mofaj/toko/passport/pass_5.html . Search extracts (leads, not sources) show Boston's and Anchorage's tables at US$62 at the window and US$60 online from 1 July 2026, and New York's notice of 8 June 2026 saying its dollar amount would follow; which consulate's district holds Connecticut wasn't read either. New Zealand: whether a student in the US is charged GST, and the urgent fee from overseas (SLATE charges GST and takes the urgent service as at home, NZ$247 more). Tried on 2026-10-17: https://www.passports.govt.nz/passport-costs (Cloudflare challenge 'Just a moment...', 403 to curl; 503 to WebFetch), /urgent-travel and /passport-costs/passport-timeframes (403, the same challenge); https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2015/264/en/latest/ (202 with an empty body to curl, three times; 403 to WebFetch), /2015/264/en/2025-05-02.pdf and /2025/75/en/latest/ (202 empty, three times each), https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/096be8ed81f36d4a.pdf (202 empty); the Internet Archive's captures https://web.archive.org/web/20261001231111/https://www.passports.govt.nz/passport-costs and .../20260919065520/.../urgent-travel (connection reset by the proxy's tunnel, six times; WebFetch refuses web.archive.org). DIA's own release (dia.govt.nz, read) confirms only the adult fee in force, $247 with GST from 2 May 2025. Brazil's Hartford consulate page (https://www.gov.br/mre/pt-br/consulado-hartford/servicos-consulares/passaportes) answered a CAPTCHA to curl and WebFetch; its fee was read in the Diário Oficial instead, so it isn't a blocker. Outside the row's fees and left as labelled: the turnaround estimates (UK, France, Spain, Japan, Korea, Mexico, Iceland, Brazil), Canada's and Germany's faster services not offered from New Haven, and New Zealand's courier."
   }
  ]

@@ -1478,8 +1478,7 @@
    ],
    "before": "met by review",
    "after": "met by review; A4 brought to restraint’s new draw (composure, focus)",
-   "sourceStatus": "Met",
-   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
+   "sourceStatus": "Met"
   },
   {
    "id": "A5",
@@ -1533,8 +1532,7 @@
    ],
    "before": "met by review",
    "after": "met by review; unchanged code",
-   "sourceStatus": "Met",
-   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
+   "sourceStatus": "Met"
   },
   {
    "id": "T1",
@@ -1583,8 +1581,7 @@
    ],
    "before": "met by review",
    "after": "met by review; unchanged code",
-   "sourceStatus": "Met",
-   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
+   "sourceStatus": "Met"
   },
   {
    "id": "O3",
@@ -1624,8 +1621,7 @@
    ],
    "before": "met by review",
    "after": "met by review; unchanged code",
-   "sourceStatus": "Met",
-   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
+   "sourceStatus": "Met"
   },
   {
    "id": "F1",
@@ -1661,8 +1657,7 @@
    ],
    "before": "met by review",
    "after": "met by review; unchanged code",
-   "sourceStatus": "Met",
-   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
+   "sourceStatus": "Met"
   },
   {
    "id": "F3",
@@ -1715,8 +1710,7 @@
    ],
    "before": "met by review",
    "after": "met by review; unchanged code",
-   "sourceStatus": "Met",
-   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
+   "sourceStatus": "Met"
   },
   {
    "id": "L1",
@@ -1735,8 +1729,8 @@
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
    "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3; on the integrated tree, brief 09 (c9cba9c8): specialist 4, beginner 3 weeks; on brief 10's tested commit (567d27dd): specialist 8, beginner 6 weeks",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md",
-   "status": "Decision Required",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/advice-result.json",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json"
@@ -1749,20 +1743,31 @@
     },
     {
      "file": "docs/verification/decisions-2026-10-16/final/figures.json"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most, and what it says changes each week with the player’s state, across a save and a load; followed from the same save for twenty sessions, it says what they brought"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/journey-specialist-bj-0.json",
+     "title": "npx vite-node tools/brief-journeys.ts -- --profile specialist --seed bj-0 --days 120 --write docs/verification/completion-2026-10-16/advice/journey-specialist-bj-0.json (on 2ff661c1, clean)"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/journey-beginner-bj-0.json",
+     "title": "npx vite-node tools/brief-journeys.ts -- --profile beginner --seed bj-0 --days 120 --write docs/verification/completion-2026-10-16/advice/journey-beginner-bj-0.json (on 2ff661c1, clean)"
     }
    ],
    "before": "specialist 4, beginner 3",
    "after": "specialist 4, beginner 3",
-   "sourceStatus": "Met",
-   "measured": {
-    "commit": "567d27dd",
-    "watch": "judge"
-   },
-   "decision": {
-    "question": "L1 held before brief 10 and fails after it. On the final code the week’s top recommendation in the 120-day journeys is focus 8 weeks running for the specialist (51 to 55) and 6 for the beginner (55 to 56), where L1 allows 4 without the input rising 5 points; brief 09 read 4 and 3. The advice area’s change moved it on its own (84db36b7 reads 8 and 6; the judge’s first phase alone read 4 and 3). The journeys’ student never trains the named input, and F2-A10 holds the advice to naming the input whose training brings most. Should the advice change its first-named input after 4 weeks a player hasn’t acted on it, against F2-A10 (b); should L1 be read on a journey whose student acts on the advice, as F2-A10 (h) is; or does L1 stay as written and not met?",
-    "evidence": "docs/verification/decisions-2026-10-16/l1/README.md (each measurement point’s sequence, the 84db36b7 journeys); decisions-2026-10-16/integrated/after/journey-specialist-bj-0.json and journey-beginner-bj-0.json; integrated-09’s for brief 09",
-    "recommendation": "Keep the advice naming the best input, and read L1 on a journey that follows the advice: F2-A10 (h) shows the first-named moves on once it’s followed, which is what “changes or is acted on” asks. Until decided, L1 is counted not met."
-   }
+   "sourceStatus": "Met"
   },
   {
    "id": "L2",
@@ -2861,7 +2866,6 @@
      "title": "documents.replace_idcard > on Passport And ID, a lost card’s row offers File A Police Report and Replace It, $30; pressed, it says the day it comes, and the row then reads Being Decided"
     }
    ],
-   "missing": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)",
    "blocker": "The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card once its holder is 'no longer entitled to be present', and sets no term; CGS chapter 246 has no such provision (searched for 'authorized stay', 'lawful status', 'immigration status', 'visa', 'legal presence', 'citizen'). SLATE keeps the term to the end of lawful presence as its assumption, said so in systems/identity.ts and on the guide's line ('SLATE's reading where the state publishes none'). Also not said by the DMV, and taken by SLATE: whether a non-citizen the DMV doesn't ask back has the twenty days from the first visit (SLATE takes the later, its described return after SAVE); and whose holidays the twenty business days skip (SLATE counts the federal ones). What would settle it: the DMV's answer in writing (its Contact Center, 860-263-5700, or a published policy). Pages tried and not reached: https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining (2026-10-16: host doesn't resolve, WebFetch ENOTFOUND, the proxy's CONNECT 502); https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1hSection_01-1h-1/ to -8 and Title_01Subtitle_01-1h/ (2026-10-16: 'Unable to Access Resource (HTTP: 404)'; read instead in the DMV's 2007 compilation, https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf). www.cga.ct.gov was reached only after completing its certificate chain with GoDaddy's G2 intermediate from certs.godaddy.com, the server sending its leaf alone (curl error 60 otherwise; WebFetch 503)."
   },
   {
@@ -2911,7 +2915,6 @@
      "file": "tests/scope-money.test.ts"
     }
    ],
-   "missing": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)",
    "blocker": "Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passport-fee.html , /itpr_ja/m02_01.html , /itpr_ja/index.html , /itpr_ja/11_000001_00472.html , /files/100876429.pdf , /files/101051085.pdf ; https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html ; https://www.boston.us.emb-japan.go.jp/files/100996789.pdf ; https://www.mofa.go.jp/mofaj/ca/pss/pagew_000001_02493.html , /mofaj/files/100482215.pdf , /mofaj/toko/passport/pass_5.html . Search extracts (leads, not sources) show Boston's and Anchorage's tables at US$62 at the window and US$60 online from 1 July 2026, and New York's notice of 8 June 2026 saying its dollar amount would follow; which consulate's district holds Connecticut wasn't read either. New Zealand: whether a student in the US is charged GST, and the urgent fee from overseas (SLATE charges GST and takes the urgent service as at home, NZ$247 more). Tried on 2026-10-17: https://www.passports.govt.nz/passport-costs (Cloudflare challenge 'Just a moment...', 403 to curl; 503 to WebFetch), /urgent-travel and /passport-costs/passport-timeframes (403, the same challenge); https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2015/264/en/latest/ (202 with an empty body to curl, three times; 403 to WebFetch), /2015/264/en/2025-05-02.pdf and /2025/75/en/latest/ (202 empty, three times each), https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/096be8ed81f36d4a.pdf (202 empty); the Internet Archive's captures https://web.archive.org/web/20261001231111/https://www.passports.govt.nz/passport-costs and .../20260919065520/.../urgent-travel (connection reset by the proxy's tunnel, six times; WebFetch refuses web.archive.org). DIA's own release (dia.govt.nz, read) confirms only the adult fee in force, $247 with GST from 2 May 2025. Brazil's Hartford consulate page (https://www.gov.br/mre/pt-br/consulado-hartford/servicos-consulares/passaportes) answered a CAPTCHA to curl and WebFetch; its fee was read in the Diário Oficial instead, so it isn't a blocker. Outside the row's fees and left as labelled: the turnaround estimates (UK, France, Spain, Japan, Korea, Mexico, Iceland, Brazil), Canada's and Germany's faster services not offered from New Haven, and New Zealand's courier."
   }
  ],
@@ -2960,12 +2963,6 @@
    "status": "Explicitly Deferred",
    "deferredBy": "Superseded by ST6-R, approved by the owner in brief 10 (decision 1); as written it holds on brief 10’s final code at its floor to the case (restrained 11 of 44, expansive 24 of 50, decisions-2026-10-16/integrated/after/stage.json), kept as the record, not counted",
    "why": "Measured holding on the final code, where the area’s status said not met",
-   "citations": []
-  },
-  {
-   "id": "stamina.A1",
-   "status": "Implemented, Verification Incomplete",
-   "why": "Met on brief 10’s integrated code by the judge area’s second phase (remaining-10/judge-result.json, A1): stamina’s briefs 0.53 and scenes 0.54, its nights 0.334 at a supporting part as the tool reads them (0.487 at a lead, 0.138 featured), measured by tools/ag-baseline.ts and tools/ag-criteria.mjs (decisions-2026-10-16/integrated/after/criteria.txt, a1-nights.json); no gate test holds A1’s figure. Which part a night is read at no longer decides A1, and stays the owner’s to change",
    "citations": []
   },
   {
@@ -3480,6 +3477,171 @@
     {
      "file": "tests/scenes.test.ts",
      "title": "the scene bank > GUARD: the coverage matrix’s scene bank row states the bank as the code holds it, its scenes, its plays and its exercises, so a scene added or taken away fails here until the row says so"
+    }
+   ]
+  },
+  {
+   "id": "advice.F2A10-f",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the advice area (docs/verification/completion-2026-10-16/advice-result.json): Forecast.preparation added: what completing their own preparation would bring the pieces read as prepared, weighted as the work is, never in training’s figure, said once on the first recommendation. Played on tuning seeds: adv-t-15 with The Spare Key taped cold (its rehearsal held it back most), its figure worked independently from the judge’s replay (performerOf, replayAs) of the piece as prepared less as taped; adv-t-1’s first-named input at six levels (TEST SETUP), each copy playing the same twenty sessions through practice.exercise.",
+   "citations": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: separates preparation from training: what completing a take’s own preparation would bring is its own figure, in the forecast and on the screen, and never in training’s"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: on like-for-like hours, below three quarters of full twenty sessions bring less as the level rises and the forecast falls with them; from there to full they bring the same, played, and the forecast reads that constant rate"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/tuning.json",
+     "title": "npx vite-node tools/advice.ts -- --cases tuning --out docs/verification/completion-2026-10-16/advice/tuning.json (on 2ff661c1, clean); the same command on 7572578b gave tuning-7572578b.json"
+    }
+   ]
+  },
+  {
+   "id": "advice.F2A10-h",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the advice area (docs/verification/completion-2026-10-16/advice-result.json): forecastAtDiscipline added (an input’s forecast with discipline set where it was, on a scratch copy), and where the forecast rose since the player’s latest work and discipline rose, the standing says how much is discipline’s. Played on adv-t-19 (near mastery): twenty sessions through practice.exercise, the forecast read before and after, and at the discipline it had (TEST SETUP).",
+   "citations": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10 (f) and (h), as clarified (brief 11) > PLAYER JOURNEY: followed near mastery, the trained input’s forecast at the discipline it had falls; where it rose, the rise is no more than discipline’s lift, and the advice says so"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the trained input’s forecast falls, and with another’s now ahead, another is named first"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "L1: repeated advice, for a player who ignores it and one who follows it (brief 11) > PLAYER JOURNEY: followed, it moves on where another now brings more, saying what was first and how far it moved, across a save and a load; and where an hour can’t be had now, the next action says why"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/tuning.json",
+     "title": "npx vite-node tools/advice.ts -- --cases tuning --out docs/verification/completion-2026-10-16/advice/tuning.json (on 2ff661c1, clean); the same command on 7572578b gave tuning-7572578b.json"
+    }
+   ]
+  },
+  {
+   "id": "advice.harness",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the advice area (docs/verification/completion-2026-10-16/advice-result.json): The harness made reachable without changing what it builds (casesOf and the held-out refusal moved from tools/advice.ts to tools/advice-harness.ts unchanged; tapeWaiting exported; buildCase also returns what each input was drawn at). Then: the seed sets read; three tuning cases built through createSave, brief.choose, brief.prepare, genre.study and practice.self_tape; tools/advice.ts run as the measure is run (a child process) on adv-t-0.",
+   "citations": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a case is built through the game’s commands: every input drawn within its band, near mastery at least two at full, the stage’s takes taped as its work in its days, each in one of the 149 genres"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a take refused in hospital waits the stay out, is prepared again and taped once she’s out, where until brief 10 the harness threw and the case was never built (adv-h-10, adv-h-57)"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/tuning.json",
+     "title": "npx vite-node tools/advice.ts -- --cases tuning --out docs/verification/completion-2026-10-16/advice/tuning.json (on 2ff661c1, clean); the same command on 7572578b gave tuning-7572578b.json"
+    }
+   ]
+  },
+  {
+   "id": "advice.F2A10-a",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the advice area (docs/verification/completion-2026-10-16/advice-result.json): As advice.harness: the seed sets read, cases built through the commands, the measure run on a tuning case and refused a held-out one.",
+   "citations": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > GUARD: the tuning and held-out seeds are apart: the sets never meet, the 120 fresh held-out cases are four bands by three stages by ten seeds, the tuning cases reach every stratum, and a held-out seed is refused without --held-out"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a case is built through the game’s commands: every input drawn within its band, near mastery at least two at full, the stage’s takes taped as its work in its days, each in one of the 149 genres"
+    }
+   ]
+  },
+  {
+   "id": "advice.harness-hospital",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the advice area (docs/verification/completion-2026-10-16/advice-result.json): On tuning case adv-t-0: a brief chosen and prepared, a hospital stay brought on through the function the life’s own health brings one through (careFor, care stay: FIXTURE), the game’s own refusal read, then tapeWaiting; and a take refused for another reason that preparing again would let through. No held-out case is built in a test.",
+   "citations": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "The F2-A10 harness (brief 11) > PLAYER JOURNEY: a take refused in hospital waits the stay out, is prepared again and taped once she’s out, where until brief 10 the harness threw and the case was never built (adv-h-10, adv-h-57)"
+    }
+   ]
+  },
+  {
+   "id": "advice.tests",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the advice area (docs/verification/completion-2026-10-16/advice-result.json): The file run on 2ff661c1 (19 tests, the ten of brief 10 unchanged), each cited by its title; brief 10’s ten mutations made again in a copy of the clone (one, B10-4, whose text moved with brief 11’s advised(), made at its new place).",
+   "citations": [
+    {
+     "file": "tests/decisions-advice.test.ts"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: followed for twenty sessions through practice.exercise, the advised input brings what it forecast, within 0.3 points or a quarter, from a beginner to near mastery"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the trained input’s forecast falls, and with another’s now ahead, another is named first"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > grows the twenty sessions as the engine grows them: the discipline a played copy keeps is the forecast’s to the last digit, and what the days bring is said apart, nothing at full discipline"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > says why: each recommendation’s figure, how many of the last pieces read it, and the piece it gains most on, by the records"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > passes the floor on the input’s own share: the discipline twenty days keep isn’t advice to train what moves nothing"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads no seed: the case renamed, its save’s seed and every piece’s, gets the same advice"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/mutations.json",
+     "title": "brief 10’s ten mutations made again in a copy of the clone at c1dd1650"
     }
    ]
   },

@@ -31,11 +31,11 @@ kept verbatim) is being worked on `claude/peaceful-hamilton-59zdbb`, restarted f
 - **The matrix** may now carry an area item's measurement through an override (`measured`), held current as a
   criterion's is.
 
-**Completion, by the matrix:** 514 of 599 rows in scope Implemented And Verified (85.8%); 73 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 522 of 599 rows in scope Implemented And Verified (87.1%); 68 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 7 Decision Required, 36 Explicitly Deferred.
 
-Against the frozen baseline's 608, the figure is 514 (84.5%): it fell from 542 because the attributes' change to
-`systems/material.ts` left 41 judge measurements stale until the final run. 25 of the 46 actionable rows are closed by this
-pass's work:
+Against the frozen baseline's 608, the figure is 522 (85.8%). It fell from 542 because the attributes' change to
+`systems/material.ts` and the advice's to `systems/briefs.ts` left 41 judge measurements stale until the final run.
+33 of the 46 actionable rows are closed by this pass's work:
 - coverage09.4 to 09.6, genres.4 and genres.6 (`integration-result.json`);
 - the five tax.s8 items (`journeys-result.json`);
 - ST6-R.bPrime, ST3-R.e, H4-R.e, L3-R.a, L3-R.e, judge.tests and judge.coverage-row (`acting-result.json`);
@@ -43,7 +43,12 @@ pass's work:
 - A4, A5, T1, O3, F1, F3, A1 and stamina.A1 (`attributes-result.json`), with six defects fixed on the way: the ability
   look's own sentence shown nowhere; stamina's readers said as consistency; four ability sentences the code contradicted;
   the history rounded twice; fitness said to the whole point; stamina's drain advised as rest. Health, stamina and
-  energy are checked apart (section 7).
+  energy are checked apart (section 7);
+- L1, advice.F2A10-f, advice.F2A10-h, advice.harness, advice.F2A10-a, advice.harness-hospital and advice.tests
+  (`advice-result.json`). L1, (f) and (h) are verified **as clarified** (`clarifications.md`), each mapped to brief 11,
+  section 8, with its as-written result kept, L1's 8 and 6 weeks among them. The owner can reject a clarification. The
+  repeated advice now says how long it has stood, what has moved and the next action; preparation's gain is said apart
+  from training's; and a near-mastery rise is said to be discipline's.
 
 **Blocked Externally** (`research-result.json`):
 - **KS-ct-idcard.** The Connecticut ID card's term (seven years to a birthday) and its mailing now follow the DMV's

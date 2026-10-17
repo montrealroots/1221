@@ -125,7 +125,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `pension.state` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statepension.ts` | — (also statePensionRefusal) | statePensionFrom | Yes | pension.state_payment | 1 | — |
 | `plays.read` | Verified (journey) | Drama School | SchoolWorkspace.tsx | `systems/playreading.ts` | — (also readRefusal) | — | — | — | 12 | journey-life.test.ts |
 | `plays.research` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/playreading.ts` | — (also researchRefusal) | — | — | — | 3 | — |
-| `practice.exercise` | Implemented But Unverified | You As An Actor | ProfileWorkspace.tsx | `systems/practice.ts` | There’s no such tier. (also practiceRefusal, focusRefusal) | — | — | — | 24 | — |
+| `practice.exercise` | Implemented But Unverified | You As An Actor | ProfileWorkspace.tsx | `systems/practice.ts` | There’s no such tier. (also practiceRefusal, focusRefusal) | — | — | — | 25 | — |
 | `practice.self_tape` | Implemented But Unverified | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 30 | — |
 | `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 5 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.appeal_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | Only a leave the dean imposed can be appealed.; You appealed on ….; The appeal had to be in by …. | — | — | school.leave_appeal | 4 | — |

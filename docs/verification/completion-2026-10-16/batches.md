@@ -130,3 +130,41 @@ and the 9 administrative rows are outside it.
 - **Tests:** the area's 50 files, each exit 0 on its clone. On the combined tree: `tsc -p tsconfig.app.json` 0, lint 0,
   and sixteen of the gate's checks each 0 (devmap, traceability, the document checks, wired, deciders, inventory,
   capabilities, coverage, student-matrix); `tests/audit-pipeline.test.ts` 0.
+
+## Batch 6: The Advice Area (`ab7fcabc` to `b72c22eb`, cherry-picked to `598f5dcd`)
+
+- **Rows addressed:** L1, advice.F2A10-f, advice.F2A10-h, advice.harness, advice.F2A10-a, advice.harness-hospital,
+  advice.tests.
+- **Actionable incomplete:** 21 before, 13 after. Eight closed: the seven here, and stamina.A1, which brief 10's override
+  had kept incomplete over the attributes area's result until the matrix's reader let a later result replace it.
+- **Implemented and verified:** all seven, by 19 tests in `tests/decisions-advice.test.ts` cited by title, the ten of
+  brief 10 unchanged and nine new; 32 mutations in a copy, 31 caught. M20 survives: it removes a guard no tuning seed
+  reaches, since the draw leaves 4 to 11 inputs at full.
+- **Clarifications, committed before any test changed** (`clarifications.md`, `ab7fcabc`). Each is mapped to brief 11,
+  section 8, with the earlier result kept:
+  - **L1:** read on a follower and an ignorer. The ignorer's target may stay while its message changes each week with
+    the player's state. As written, still 8 and 6 weeks.
+  - **F2-A10 (f):** preparation is apart from training, on like-for-like hours. Diminishing returns are held below
+    three quarters of full, and the constant rate above it.
+  - **F2-A10 (h):** the input's own part falls, and a rise is no more than discipline's lift, said.
+- **Added work, each to complete a row:**
+  - the advice's note of what it put first (`Experience.advised`, optional, no schema change);
+  - the state-aware first recommendation, with how long it has stood, what has moved and the next action;
+  - `Forecast.preparation`;
+  - `forecastAtDiscipline`;
+  - the harness made testable.
+- **New defects:**
+  - brief 10's L1 record said the journeys' student never trained the named input, which it does, as the school allows;
+  - a slowdown the area brought in and took out.
+
+  Neither blocks completion.
+- **The judge:** nothing judged moved on the 30 tuning cases or the journeys, and RULESET is unchanged. But
+  `systems/briefs.ts` is watched, so the judge's measurements wait on the final run.
+- **Administrative:**
+  - `clarifications.md` merged from the two areas' copies;
+  - `criteria.py` lets a later result replace an earlier override and drops the fields a row's old status carried;
+  - `receipt.py` reads the field each status asks for.
+- **Tests:** after the merge, `tsc -p tsconfig.app.json` 0, lint 0, the gate's checks each 0 (traceability after
+  `--write`); `decisions-advice` 19, `attributes-phase-2b` 35, `guide-examples-craft` 10, `whynot-profile` 3, `guide` 12,
+  `ability-mastered` 2, `genre-mastered` 5 and `remaining-school` 33 passed, each exit 0. The area ran 55 more files, each
+  exit 0, on its clone.

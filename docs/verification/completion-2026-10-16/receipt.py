@@ -32,12 +32,13 @@ now = {key(r): r for r in matrix['rows']}
 category = {key(r): r['category'] for r in cls['rows']}
 problems = []
 
+NEEDS = {IVI: 'missing', PI: 'gap', NI: 'gap', BE: 'blocker', DR: 'decision', ED: 'deferredBy'}
+
 def why(r):
-    """What a row not verified now lacks, by what its status asks."""
-    for f in ('missing', 'gap', 'blocker', 'deferredBy'):
-        if r.get(f): return str(r[f])
-    d = r.get('decision')
-    return d.get('question', '') if isinstance(d, dict) else ''
+    """What a row not verified now lacks: the field its status asks for."""
+    v = r.get(NEEDS.get(r['status'], ''))
+    if isinstance(v, dict): return v.get('question', '')
+    return str(v or '')
 
 rows = []
 for b in base['rows']:

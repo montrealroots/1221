@@ -14,10 +14,10 @@
    "Explicitly Deferred": 27
   }
  },
- "matrix": "Completion, by the matrix: 514 of 599 rows in scope Implemented And Verified (85.8%); 73 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.",
+ "matrix": "Completion, by the matrix: 522 of 599 rows in scope Implemented And Verified (87.1%); 68 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 7 Decision Required, 36 Explicitly Deferred.",
  "completion": {
-  "againstTheFullBaseline": "514 of 608 (84.5%)",
-  "ofTheActionablePortion": "25 of 46 (54.3%)",
+  "againstTheFullBaseline": "522 of 608 (85.8%)",
+  "ofTheActionablePortion": "33 of 46 (71.7%)",
   "verifiedAtTheBaseline": 530
  },
  "closedByWork": [
@@ -82,6 +82,36 @@
    "baseline": "Implemented, Verification Incomplete"
   },
   {
+   "id": "advice.harness",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.F2A10-a",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.F2A10-f",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Decision Required"
+  },
+  {
+   "id": "advice.F2A10-h",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Decision Required"
+  },
+  {
+   "id": "advice.tests",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.harness-hospital",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
    "id": "ST3-R.e",
    "group": "Brief 10 Area: judge",
    "baseline": "Implemented, Verification Incomplete"
@@ -117,6 +147,11 @@
    "baseline": "Implemented, Verification Incomplete"
   },
   {
+   "id": "stamina.A1",
+   "group": "Brief 10 Area: stamina",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
    "id": "A4",
    "group": "Criteria: The Attributes",
    "baseline": "Implemented, Verification Incomplete"
@@ -145,6 +180,11 @@
    "id": "F3",
    "group": "Criteria: The Attributes",
    "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "L1",
+   "group": "Criteria: Long-Term Continuity",
+   "baseline": "Decision Required"
   }
  ],
  "administrative": [
@@ -226,22 +266,10 @@
    "lacks": "the area called it verified as it stands and cites no gate test that holds it | The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sides and their rewarded specialist than the retired ones’ did (§5)."
   },
   {
-   "id": "advice.harness",
-   "group": "Brief 10 Area: advice",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it implemented and cites no gate test that holds it | TEST SETUP: abilities, techniques and stamina’s fitness drawn within the band and set where each is kept; every calendar hour cleared and the student rested before every command, as F2-A’s set-up does; F2-A’s own adv-N set-up kept exactly as it was, including that it never set the four abilities kept in the craft (it wrote them into attrs, where nothing reads them)"
-  },
-  {
    "id": "advice.F2",
    "group": "Brief 10 Area: advice",
    "now": "Implemented, Verification Incomplete",
    "lacks": "the area called it verified as it stands and cites no gate test that holds it"
-  },
-  {
-   "id": "advice.F2A10-a",
-   "group": "Brief 10 Area: advice",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it implemented and cites no gate test that holds it"
   },
   {
    "id": "advice.F2A10-c",
@@ -250,34 +278,10 @@
    "lacks": "the area called it verified as it stands and cites no gate test that holds it"
   },
   {
-   "id": "advice.F2A10-f",
-   "group": "Brief 10 Area: advice",
-   "now": "Decision Required",
-   "lacks": "Which preparation the criterion means. As implemented, a take held back most by its own preparation (lines, breakdown, rehearsal, the way of playing rehearsed in) is read as prepared, and knowing the genre is read as it is known today, since familiarity carries from piece to piece and isn’t prepared for one. Read with the genre’s shortfall completed too (the criterion’s words, any preparation): measured on the tuning cases, the advice named the best input in 27 of 30, two of the five near mastery missed (held out unmeasured: the set is run once); every take read complete: 18 of 30. Recommended: accept the implemented reading, since F2-A’s realized gain reads each take as its record stands and the next take is short of the genre again. And the diminishing returns: they hold at full precision, but near mastery they’re a thousandth of a point (median), because the engine’s practice grows at a constant rate from three quarters of full (DEVELOPMENT.floor, systems/attributes.ts abilityGain): a finding for growth, outside this area."
-  },
-  {
-   "id": "advice.F2A10-h",
-   "group": "Brief 10 Area: advice",
-   "now": "Decision Required",
-   "lacks": "The nine held-out cases whose trained input’s forecast didn’t fall are all near mastery, each within a thousandth (the largest rise 0.001). Played on tuning case adv-t-19: imagination alone raised to the level twenty sessions reach lowers its forecast (0.547 to 0.546); discipline alone raised to what the twenty days keep raises it (to 0.549), because discipline’s lift (DEVELOPMENT.disciplineLift) makes the next twenty hours grow more, and near mastery the engine’s practice grows at a constant rate (DEVELOPMENT.floor), so the input’s own fall is the smaller. The advice reads both correctly. Options: growth makes deliberate practice past three quarters of full slow (outside this area); or the criterion takes a rise under a hundredth where the days’ discipline lifts the next hours. Recommended: the second, with growth’s floor reported as a finding; not a forecast that holds discipline where it was, which would say less than the engine does."
-  },
-  {
-   "id": "advice.tests",
-   "group": "Brief 10 Area: advice",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it implemented and cites no gate test that holds it"
-  },
-  {
    "id": "advice.heldout",
    "group": "Brief 10 Area: advice",
    "now": "Implemented, Verification Incomplete",
    "lacks": "the area called it implemented and cites no gate test that holds it"
-  },
-  {
-   "id": "advice.harness-hospital",
-   "group": "Brief 10 Area: advice",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it fixed and cites no gate test that holds it"
   },
   {
    "id": "ST6-R.a",
@@ -316,28 +320,16 @@
    "lacks": "Measured on the integrated code by the committed tools (integrated/after/README.md); the criteria that fail, ST6-R (a), (c), (e), (g), F2 as written and the four originals, fail as they did | Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The parts this area’s rows read were measured from this clone: stage (ST3-R, ST6-R, the stage criteria) from 44cd15c2, and the eight journeys with l3r from c3e05866. Each came out byte for byte as brief 10’s integrated/after, but for st6.json’s new sorting block. No engine file changed in this area. | verified as it stands"
   },
   {
-   "id": "stamina.A1",
-   "group": "Brief 10 Area: stamina",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "Met on brief 10’s integrated code by the judge area’s second phase (remaining-10/judge-result.json, A1): stamina’s briefs 0.53 and scenes 0.54, its nights 0.334 at a supporting part as the tool reads them (0.487 at a lead, 0.138 featured), measured by tools/ag-baseline.ts and tools/ag-criteria.mjs (decisions-2026-10-16/integrated/after/criteria.txt, a1-nights.json); no gate test holds A1’s figure. Which part a night is read at no longer decides A1, and stays the owner’s to change | owner decision"
-  },
-  {
-   "id": "L1",
-   "group": "Criteria: Long-Term Continuity",
-   "now": "Decision Required",
-   "lacks": "L1 held before brief 10 and fails after it. On the final code the week’s top recommendation in the 120-day journeys is focus 8 weeks running for the specialist (51 to 55) and 6 for the beginner (55 to 56), where L1 allows 4 without the input rising 5 points; brief 09 read 4 and 3. The advice area’s change moved it on its own (84db36b7 reads 8 and 6; the judge’s first phase alone read 4 and 3). The journeys’ student never trains the named input, and F2-A10 holds the advice to naming the input whose training brings most. Should the advice change its first-named input after 4 weeks a player hasn’t acted on it, against F2-A10 (b); should L1 be read on a journey whose student acts on the advice, as F2-A10 (h) is; or does L1 stay as written and not met?"
-  },
-  {
    "id": "KS-ct-idcard",
    "group": "Known Shortfalls And Missing Tests",
    "now": "Blocked Externally",
-   "lacks": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)"
+   "lacks": "The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card once its holder is 'no longer entitled to be present', and sets no term; CGS chapter 246 has no such provision (searched for 'authorized stay', 'lawful status', 'immigration status', 'visa', 'legal presence', 'citizen'). SLATE keeps the term to the end of lawful presence as its assumption, said so in systems/identity.ts and on the guide's line ('SLATE's reading where the state publishes none'). Also not said by the DMV, and taken by SLATE: whether a non-citizen the DMV doesn't ask back has the twenty days from the first visit (SLATE takes the later, its described return after SAVE); and whose holidays the twenty business days skip (SLATE counts the federal ones). What would settle it: the DMV's answer in writing (its Contact Center, 860-263-5700, or a published policy). Pages tried and not reached: https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining (2026-10-16: host doesn't resolve, WebFetch ENOTFOUND, the proxy's CONNECT 502); https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1hSection_01-1h-1/ to -8 and Title_01Subtitle_01-1h/ (2026-10-16: 'Unable to Access Resource (HTTP: 404)'; read instead in the DMV's 2007 compilation, https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf). www.cga.ct.gov was reached only after completing its certificate chain with GoDaddy's G2 intermediate from certs.godaddy.com, the server sending its leaf alone (curl error 60 otherwise; WebFetch 503)."
   },
   {
    "id": "KS-passport-fees",
    "group": "Known Shortfalls And Missing Tests",
    "now": "Blocked Externally",
-   "lacks": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)"
+   "lacks": "Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passport-fee.html , /itpr_ja/m02_01.html , /itpr_ja/index.html , /itpr_ja/11_000001_00472.html , /files/100876429.pdf , /files/101051085.pdf ; https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html ; https://www.boston.us.emb-japan.go.jp/files/100996789.pdf ; https://www.mofa.go.jp/mofaj/ca/pss/pagew_000001_02493.html , /mofaj/files/100482215.pdf , /mofaj/toko/passport/pass_5.html . Search extracts (leads, not sources) show Boston's and Anchorage's tables at US$62 at the window and US$60 online from 1 July 2026, and New York's notice of 8 June 2026 saying its dollar amount would follow; which consulate's district holds Connecticut wasn't read either. New Zealand: whether a student in the US is charged GST, and the urgent fee from overseas (SLATE charges GST and takes the urgent service as at home, NZ$247 more). Tried on 2026-10-17: https://www.passports.govt.nz/passport-costs (Cloudflare challenge 'Just a moment...', 403 to curl; 503 to WebFetch), /urgent-travel and /passport-costs/passport-timeframes (403, the same challenge); https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2015/264/en/latest/ (202 with an empty body to curl, three times; 403 to WebFetch), /2015/264/en/2025-05-02.pdf and /2025/75/en/latest/ (202 empty, three times each), https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/096be8ed81f36d4a.pdf (202 empty); the Internet Archive's captures https://web.archive.org/web/20261001231111/https://www.passports.govt.nz/passport-costs and .../20260919065520/.../urgent-travel (connection reset by the proxy's tunnel, six times; WebFetch refuses web.archive.org). DIA's own release (dia.govt.nz, read) confirms only the adult fee in force, $247 with GST from 2 May 2025. Brazil's Hartford consulate page (https://www.gov.br/mre/pt-br/consulado-hartford/servicos-consulares/passaportes) answered a CAPTCHA to curl and WebFetch; its fee was read in the Diário Oficial instead, so it isn't a blocker. Outside the row's fees and left as labelled: the turnaround estimates (UK, France, Spain, Japan, Korea, Mexico, Iceland, Brazil), Canada's and Germany's faster services not offered from New Haven, and New Zealand's courier."
   }
  ],
  "decision4": [
@@ -482,43 +474,43 @@
  ],
  "addedRows": [],
  "problems": [
-  "ST1 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "ST2 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "ST4 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "ST5 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "ST7 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "ST8 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "ST9 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "Stage F1 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "Stage F2 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "I1 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "I2 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "I3 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "I4 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "I5 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "A1 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "A2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "A3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "T2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "T3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "G3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "G4 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "G5 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "M1 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "M3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "O1 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "O2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "H2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "H5 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "H7 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
+  "ST1 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "ST2 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "ST4 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "ST5 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "ST7 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "ST8 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "ST9 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "Stage F1 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "Stage F2 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "I1 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "I2 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "I3 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "I4 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "I5 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "A1 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "A2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "A3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "T2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "T3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "G3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "G4 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "G5 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "M1 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "M3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "O1 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "O2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "H2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "H5 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "H7 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
   "F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
-  "L2 (Criteria: Long-Term Continuity): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
+  "L2 (Criteria: Long-Term Continuity): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
   "MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
-  "S1 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "S2 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "S3 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "S4 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
-  "Genre Audit (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material",
+  "S1 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "S2 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "S3 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "S4 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
+  "Genre Audit (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
   "INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
   "INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
   "INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
@@ -4003,8 +3995,7 @@
    "group": "Brief 10 Area: advice",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it implemented and cites no gate test that holds it | TEST SETUP: abilities, techniques and stamina’s fitness drawn within the band and set where each is kept; every calendar hour cleared and the student rested before every command, as F2-A’s set-up does; F2-A’s own adv-N set-up kept exactly as it was, including that it never set the four abilities kept in the craft (it wrote them into attrs, where nothing reads them)"
+   "now": "Implemented And Verified"
   },
   {
    "id": "advice.F2",
@@ -4019,8 +4010,7 @@
    "group": "Brief 10 Area: advice",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it implemented and cites no gate test that holds it"
+   "now": "Implemented And Verified"
   },
   {
    "id": "advice.F2A10-b",
@@ -4056,8 +4046,7 @@
    "group": "Brief 10 Area: advice",
    "category": "design-or-gameplay",
    "baseline": "Decision Required",
-   "now": "Decision Required",
-   "lacks": "Which preparation the criterion means. As implemented, a take held back most by its own preparation (lines, breakdown, rehearsal, the way of playing rehearsed in) is read as prepared, and knowing the genre is read as it is known today, since familiarity carries from piece to piece and isn’t prepared for one. Read with the genre’s shortfall completed too (the criterion’s words, any preparation): measured on the tuning cases, the advice named the best input in 27 of 30, two of the five near mastery missed (held out unmeasured: the set is run once); every take read complete: 18 of 30. Recommended: accept the implemented reading, since F2-A’s realized gain reads each take as its record stands and the next take is short of the genre again. And the diminishing returns: they hold at full precision, but near mastery they’re a thousandth of a point (median), because the engine’s practice grows at a constant rate from three quarters of full (DEVELOPMENT.floor, systems/attributes.ts abilityGain): a finding for growth, outside this area."
+   "now": "Implemented And Verified"
   },
   {
    "id": "advice.F2A10-g",
@@ -4071,8 +4060,7 @@
    "group": "Brief 10 Area: advice",
    "category": "design-or-gameplay",
    "baseline": "Decision Required",
-   "now": "Decision Required",
-   "lacks": "The nine held-out cases whose trained input’s forecast didn’t fall are all near mastery, each within a thousandth (the largest rise 0.001). Played on tuning case adv-t-19: imagination alone raised to the level twenty sessions reach lowers its forecast (0.547 to 0.546); discipline alone raised to what the twenty days keep raises it (to 0.549), because discipline’s lift (DEVELOPMENT.disciplineLift) makes the next twenty hours grow more, and near mastery the engine’s practice grows at a constant rate (DEVELOPMENT.floor), so the input’s own fall is the smaller. The advice reads both correctly. Options: growth makes deliberate practice past three quarters of full slow (outside this area); or the criterion takes a rise under a hundredth where the days’ discipline lifts the next hours. Recommended: the second, with growth’s floor reported as a finding; not a forecast that holds discipline where it was, which would say less than the engine does."
+   "now": "Implemented And Verified"
   },
   {
    "id": "advice.F2A10-i",
@@ -4086,8 +4074,7 @@
    "group": "Brief 10 Area: advice",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it implemented and cites no gate test that holds it"
+   "now": "Implemented And Verified"
   },
   {
    "id": "advice.heldout",
@@ -4102,8 +4089,7 @@
    "group": "Brief 10 Area: advice",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it fixed and cites no gate test that holds it"
+   "now": "Implemented And Verified"
   },
   {
    "id": "arion.AR0.research",
@@ -4535,8 +4521,7 @@
    "group": "Brief 10 Area: stamina",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "Met on brief 10’s integrated code by the judge area’s second phase (remaining-10/judge-result.json, A1): stamina’s briefs 0.53 and scenes 0.54, its nights 0.334 at a supporting part as the tool reads them (0.487 at a lead, 0.138 featured), measured by tools/ag-baseline.ts and tools/ag-criteria.mjs (decisions-2026-10-16/integrated/after/criteria.txt, a1-nights.json); no gate test holds A1’s figure. Which part a night is read at no longer decides A1, and stays the owner’s to change | owner decision"
+   "now": "Implemented And Verified"
   },
   {
    "id": "ST1",
@@ -4544,7 +4529,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "ST2",
@@ -4552,7 +4537,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "ST3",
@@ -4568,7 +4553,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "ST5",
@@ -4576,7 +4561,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "ST6",
@@ -4592,7 +4577,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "ST8",
@@ -4600,7 +4585,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "ST9",
@@ -4608,7 +4593,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "Stage F1",
@@ -4616,7 +4601,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "Stage F2",
@@ -4624,7 +4609,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "I1",
@@ -4632,7 +4617,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "I2",
@@ -4640,7 +4625,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "I3",
@@ -4648,7 +4633,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "I4",
@@ -4656,7 +4641,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "I5",
@@ -4664,7 +4649,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "A1",
@@ -4672,7 +4657,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "A2",
@@ -4680,7 +4665,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "A3",
@@ -4688,7 +4673,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "T2",
@@ -4696,7 +4681,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "T3",
@@ -4704,7 +4689,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "G3",
@@ -4712,7 +4697,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "G4",
@@ -4720,7 +4705,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "G5",
@@ -4728,7 +4713,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "M1",
@@ -4736,7 +4721,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "M3",
@@ -4744,7 +4729,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "O1",
@@ -4752,7 +4737,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "O2",
@@ -4760,7 +4745,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "H2",
@@ -4768,7 +4753,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "H5",
@@ -4776,7 +4761,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "H7",
@@ -4784,7 +4769,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "H4",
@@ -4865,8 +4850,7 @@
    "group": "Criteria: Long-Term Continuity",
    "category": "design-or-gameplay",
    "baseline": "Decision Required",
-   "now": "Decision Required",
-   "lacks": "L1 held before brief 10 and fails after it. On the final code the week’s top recommendation in the 120-day journeys is focus 8 weeks running for the specialist (51 to 55) and 6 for the beginner (55 to 56), where L1 allows 4 without the input rising 5 points; brief 09 read 4 and 3. The advice area’s change moved it on its own (84db36b7 reads 8 and 6; the judge’s first phase alone read 4 and 3). The journeys’ student never trains the named input, and F2-A10 holds the advice to naming the input whose training brings most. Should the advice change its first-named input after 4 weeks a player hasn’t acted on it, against F2-A10 (b); should L1 be read on a journey whose student acts on the advice, as F2-A10 (h) is; or does L1 stay as written and not met?"
+   "now": "Implemented And Verified"
   },
   {
    "id": "L2",
@@ -4874,7 +4858,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "L3",
@@ -4947,7 +4931,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "S2",
@@ -4955,7 +4939,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "S3",
@@ -4963,7 +4947,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "S4",
@@ -4971,7 +4955,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "Genre Audit",
@@ -4979,7 +4963,7 @@
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
    "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/material.ts): measure it again"
+   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
   },
   {
    "id": "INT-determinism",
@@ -5090,7 +5074,7 @@
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
    "now": "Blocked Externally",
-   "lacks": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)"
+   "lacks": "The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card once its holder is 'no longer entitled to be present', and sets no term; CGS chapter 246 has no such provision (searched for 'authorized stay', 'lawful status', 'immigration status', 'visa', 'legal presence', 'citizen'). SLATE keeps the term to the end of lawful presence as its assumption, said so in systems/identity.ts and on the guide's line ('SLATE's reading where the state publishes none'). Also not said by the DMV, and taken by SLATE: whether a non-citizen the DMV doesn't ask back has the twenty days from the first visit (SLATE takes the later, its described return after SAVE); and whose holidays the twenty business days skip (SLATE counts the federal ones). What would settle it: the DMV's answer in writing (its Contact Center, 860-263-5700, or a published policy). Pages tried and not reached: https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining (2026-10-16: host doesn't resolve, WebFetch ENOTFOUND, the proxy's CONNECT 502); https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1hSection_01-1h-1/ to -8 and Title_01Subtitle_01-1h/ (2026-10-16: 'Unable to Access Resource (HTTP: 404)'; read instead in the DMV's 2007 compilation, https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf). www.cga.ct.gov was reached only after completing its certificate chain with GoDaddy's G2 intermediate from certs.godaddy.com, the server sending its leaf alone (curl error 60 otherwise; WebFetch 503)."
   },
   {
    "id": "KS-passport-fees",
@@ -5098,7 +5082,7 @@
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
    "now": "Blocked Externally",
-   "lacks": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)"
+   "lacks": "Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passport-fee.html , /itpr_ja/m02_01.html , /itpr_ja/index.html , /itpr_ja/11_000001_00472.html , /files/100876429.pdf , /files/101051085.pdf ; https://www.anchorage.us.emb-japan.go.jp/itpr_ja/j_fee.html ; https://www.boston.us.emb-japan.go.jp/files/100996789.pdf ; https://www.mofa.go.jp/mofaj/ca/pss/pagew_000001_02493.html , /mofaj/files/100482215.pdf , /mofaj/toko/passport/pass_5.html . Search extracts (leads, not sources) show Boston's and Anchorage's tables at US$62 at the window and US$60 online from 1 July 2026, and New York's notice of 8 June 2026 saying its dollar amount would follow; which consulate's district holds Connecticut wasn't read either. New Zealand: whether a student in the US is charged GST, and the urgent fee from overseas (SLATE charges GST and takes the urgent service as at home, NZ$247 more). Tried on 2026-10-17: https://www.passports.govt.nz/passport-costs (Cloudflare challenge 'Just a moment...', 403 to curl; 503 to WebFetch), /urgent-travel and /passport-costs/passport-timeframes (403, the same challenge); https://www.legislation.govt.nz/secondary-legislation/pco-drafted/2015/264/en/latest/ (202 with an empty body to curl, three times; 403 to WebFetch), /2015/264/en/2025-05-02.pdf and /2025/75/en/latest/ (202 empty, three times each), https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/096be8ed81f36d4a.pdf (202 empty); the Internet Archive's captures https://web.archive.org/web/20261001231111/https://www.passports.govt.nz/passport-costs and .../20260919065520/.../urgent-travel (connection reset by the proxy's tunnel, six times; WebFetch refuses web.archive.org). DIA's own release (dia.govt.nz, read) confirms only the adult fee in force, $247 with GST from 2 May 2025. Brazil's Hartford consulate page (https://www.gov.br/mre/pt-br/consulado-hartford/servicos-consulares/passaportes) answered a CAPTCHA to curl and WebFetch; its fee was read in the Diário Oficial instead, so it isn't a blocker. Outside the row's fees and left as labelled: the turnaround estimates (UK, France, Spain, Japan, Korea, Mexico, Iceland, Brazil), Canada's and Germany's faster services not offered from New Haven, and New Zealand's courier."
   }
  ]
 }
