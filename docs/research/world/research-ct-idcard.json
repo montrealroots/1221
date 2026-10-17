@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "topic": "A Connecticut non-driver ID card's term and its mailing, for a citizen and for somebody not a citizen (brief 11's row KS-ct-idcard)",
+    "dateRead": "2026-10-16",
+    "method": "Each page read on the state's own site with curl and a browser user agent (www.cga.ct.gov's chain completed with GoDaddy's G2 intermediate from certs.godaddy.com, the server sending its leaf alone), and its text quoted. confirmed:true only where read there. A search summary or a secondary site isn't a source and isn't recorded as one.",
+    "settled": [
+      "The term: an original card expires on the holder's birthday, seven years on: the first birthday at least seven years after it's issued (CGS 1-1h(b)(2)'s 'not exceeding seven years following the date of the applicant's next birthday', the DMV's 'valid for 7 years' and 'expires on your birthday'; the one birthday all three allow).",
+      "The mailing: the card isn't handed over at the office; a temporary paper credential is, and the card comes by mail within 20 business days of the appointment (Central Issuance, the non-driver ID page, CGS 14-36d(c)). The paper credential isn't taken alone where an ID is asked: 'Establishments that normally use licenses and ID cards for identity won't accept the TPC as a standalone document.'",
+      "Somebody not a citizen: lawful presence is checked through SAVE, 'ten (10) business days or more', and the applicant 'may be asked to return to the same DMV office when the immigration results have been approved'; the card then comes by mail as anyone's does. SLATE takes the return: SAVE's days, then the card's twenty."
+    ],
+    "notSettled": [
+      "The term of a non-verified (Not For Federal Identification) card issued to somebody not a citizen, such as an F-1 student. No page read gives one: the non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's none), is for DACA holders only ('Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible'); Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card of a non-citizen 'no longer entitled to be present', and sets no term. SLATE's term to the end of lawful presence stays its assumption, said so where it's set (`systems/identity.ts`). CGS 14-36(c), which SLATE cited for it until 2026-10-17, is the youth instruction permit and says nothing of it.",
+      "Whether somebody not a citizen whom the DMV doesn't ask back has the twenty days from the first visit, SAVE inside them: the DMV doesn't say. SLATE takes the later, its described return.",
+      "Whose holidays the DMV's business days skip: not said. SLATE counts weekdays without the federal holidays (`businessDaysOn`)."
+    ]
+  },
+  "sources": [
+    {
+      "title": "Connecticut General Statutes, Sec. 1-1h, Identity cards (2026 revision as published)",
+      "url": "https://www.cga.ct.gov/current/pub/chap_001.htm",
+      "read": "2026-10-16",
+      "confirmed": true,
+      "quotes": [
+        "(2) An original identity card shall expire within a period not exceeding seven years following the date of the applicant's next birthday.",
+        "Upon renewal of an identity card, the commissioner may issue an identity card for a period to be determined by the commissioner, provided such period does not exceed eight years. The fee for the renewal of an identity card that expires eight years from the date of issuance shall be thirty-two dollars.",
+        "The application for an identity card shall be accompanied by ... a fee of twenty-eight dollars."
+      ],
+      "history": "P.A. 19-165, effective January 1, 2020, raised the fee from $22.50 to $28 and the maximum original term from 6 years to 7."
+    },
+    {
+      "title": "Connecticut General Statutes, Sec. 14-36d(c), method of issuance; temporary credential",
+      "url": "https://www.cga.ct.gov/current/pub/chap_246.htm",
+      "read": "2026-10-16",
+      "confirmed": true,
+      "quotes": [
+        "the commissioner may require that such license, instruction or learner's permit or identity card be produced at a centralized location and mailed to the applicant. The commissioner may issue a temporary license, instruction or learner's permit or identity card for use by the applicant for the period prior to the applicant's receipt of the permanent license, instruction or learner's permit or identity card.",
+        "Such temporary ... identity card shall have an expiration date not later than thirty days after the date of issuance and shall remain valid until the earlier of such expiration date or the date the applicant receives such ... identity card."
+      ],
+      "note": "Chapter 246 was searched for a term tied to a non-citizen's status ('authorized stay', 'lawful status', 'immigration status', 'visa', 'legal presence', 'citizen'): only Sec. 14-36m, the drive-only license for somebody who can't establish legal presence, came up. Sec. 14-36(c), which SLATE cited, is the youth instruction permit."
+    },
+    {
+      "title": "Connecticut DMV, Get a non-driver ID",
+      "url": "https://portal.ct.gov/dmv/licenses-permits-ids/get-non-driver-id",
+      "read": "2026-10-16",
+      "confirmed": true,
+      "quotes": [
+        "The fee for a non-driver ID (valid for 7 years) is $28.",
+        "New-issue ID cards are only processed at DMV offices.",
+        "Your non-driver ID card arrives in the mail within 20 business days."
+      ],
+      "note": "No exception for somebody not a citizen; no date on the page."
+    },
+    {
+      "title": "Connecticut DMV, Central Issuance for ID Fraud Protection",
+      "url": "https://portal.ct.gov/dmv/licenses-permits-ids/get-a-drivers-license-ct/protect-your-identity-central-issuance-ct",
+      "read": "2026-10-16",
+      "confirmed": true,
+      "quotes": [
+        "All Connecticut residents get a temporary paper credential (TPC) in an in-person appointment. Your driver's license or ID card arrives in the mail within 20 business days of this appointment.",
+        "Presenting your identity at places that require driver's licenses and ID cards (e.g., banks, retail stores, alcohol retailers). Establishments that normally use licenses and ID cards for identity won't accept the TPC as a standalone document. They will require both the TPC and your expiring/expired license or ID card.",
+        "Don't wait until your license or ID card expires, which is on your birthday."
+      ]
+    },
+    {
+      "title": "Connecticut DMV, Get a driver's license (its Requirements for naturalized and non-U.S. citizens; reached from SLATE's old link Drivers-License--NonUS-Citizen--Requirements, which redirects here)",
+      "url": "https://portal.ct.gov/dmv/licenses-permits-ids/get-a-drivers-license-ct",
+      "read": "2026-10-16",
+      "confirmed": true,
+      "quotes": [
+        "Verification of legal status with USCIS may take 10 days or more, and applicants may be asked to return to the same DMV office when the immigration results have been approved.",
+        "Note that you will not receive a permanent driver's license or ID card while at a DMV location. It will arrive in the mail. You will keep your expiring driver's license/ID and receive a temporary paper card.",
+        "All immigration documents must be valid at the time of Issuance.",
+        "Immigration checks are only valid for one year (unless you were verified with a Certificate of Naturalization or Certificate of Citizenship).",
+        "Only U.S. Citizens and Permanent Residents are eligible for a verified REAL ID driver's license or ID card. If you are not a U.S. Citizen or Permanent Resident, you may be eligible for a Limited Term verified REAL ID.",
+        "If you are not eligible for a verified REAL ID driver's license or ID card, you will be issued a non-verified (Not for Federal Identification) driver's license or ID card."
+      ]
+    },
+    {
+      "title": "Connecticut DMV, Get a REAL ID (its limited-term REAL ID questions)",
+      "url": "https://portal.ct.gov/dmv/licenses-permits-ids/get-real-id",
+      "read": "2026-10-16",
+      "confirmed": true,
+      "quotes": [
+        "Currently, only residents with Deferred Action for Childhood Arrivals (DACA) status are eligible to apply for a limited-term REAL ID in Connecticut. The Department is currently working on including other residents who may qualify for a limited term Real ID.",
+        "In accordance with the REAL ID Act, the expiration date of a limited-term REAL ID must align with the expiration date on the individual's legal status document(s). If there is no expiration date on the legal status document(s), the REAL ID will be valid for one (1) year from the date of its issuance.",
+        "An individual's legal status will be verified through Systematic Alien Verification of Eligibility (SAVE). This may take up to ten (10) business days or more to process.",
+        "Your REAL ID arrives in the mail within 20 business days."
+      ]
+    },
+    {
+      "title": "Connecticut DMV, DI-3 Rev. 6-2026, REAL ID Document Identity Verification Checklist",
+      "url": "https://portal.ct.gov/-/media/DMV/selectct/SelectIDaccptdocs3pdf.pdf",
+      "read": "2026-10-16",
+      "confirmed": true,
+      "quotes": [
+        "Legal status will be verified using Systematic Alien Verification of Eligibility (SAVE) which may take ten (10) business days or more.",
+        "If you are not eligible for a verified REAL ID driver's license or ID card, you will be issued a non-verified (Not for Federal Identification) driver's license or ID card.",
+        "F1 requires I-20 and I-94"
+      ],
+      "note": "No term for a non-verified card."
+    },
+    {
+      "title": "Regulations of Connecticut State Agencies § 14-137-64a, Residence of applicant for operator's license, commercial driver's license or identity card (amended April 25, 2008)",
+      "url": "https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_14Subtitle_14-137Section_14-137-64a/",
+      "read": "2026-10-16",
+      "confirmed": true,
+      "quotes": [
+        "If any applicant indicates that he is not a citizen of the United States of America, the applicant shall be required to submit evidence that he is legally present in the United States and is a lawful resident of the State of Connecticut.",
+        "If the commissioner receives reliable information or becomes aware that a non-citizen who has been issued an operator's license, commercial driver's license, or identity card is no longer entitled to be present in the United States, the commissioner may revoke such license or identity card."
+      ],
+      "note": "No term. The identity card regulations, §§ 1-1h-4 to 1-1h-7, were read in the DMV's compilation (https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf, updated 2/2007): residence, signature, duplicates and contents, no term; the eRegulations pages for §§ 1-1h-1 to 1-1h-8 answered 'Unable to Access Resource (HTTP: 404)'."
+    }
+  ],
+  "unreached": [
+    { "url": "https://digital.ct.gov/dmv/licenses/licenses/non-driver-id-card/non-driver-photo-id---obtaining", "tried": "2026-10-16", "why": "The host no longer resolves (WebFetch: getaddrinfo ENOTFOUND digital.ct.gov; curl: the proxy's CONNECT answered 502). SLATE cited it from 2026-10-10." },
+    { "url": "https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1hSection_01-1h-1/ (and -2 to -8, and the subtitle Title_01Subtitle_01-1h/)", "tried": "2026-10-16", "why": "'Unable to Access Resource (HTTP: 404)'; read instead in the DMV's 2007 compilation." }
+  ]
+}
