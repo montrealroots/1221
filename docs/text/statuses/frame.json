@@ -11,6 +11,12 @@
   "on": "2026-10-17",
   "evidence": "tests/language-frame-ui.test.ts (the provider's own toasts: a fault, a refusal, a clock that threw, a save that failed). Its labels, Home, Calendar and Player Profile, are the keyboard shortcuts' breadcrumbs, the rail's own names."
  },
+ "src/app/game-context.tsx#LIVE_CLOCK_FAULT": {
+  "status": "Rewritten And Verified",
+  "hash": "582217452c07",
+  "on": "2026-10-17",
+  "evidence": "tests/language-crossarea.test.ts 'PLAYER JOURNEY: a tick that throws pauses the save, says so once, and the top bar offers Play; Play pressed is one more try, a second failure pauses it again with one more toast and no loop, and a third press runs the clock' (the real provider's toast, word for word, and the top bar drawn under it saying Play); new words of the cross-area pass, in the frame's voice for a clock that threw (CLOCK_FAULT), naming the bar's Play"
+ },
  "src/app/game-context.tsx#ROUTE_LABELS": {
   "status": "Rewritten And Verified",
   "hash": "9a87b6b0c5d6",

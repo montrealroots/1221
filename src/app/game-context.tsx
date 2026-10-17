@@ -126,6 +126,13 @@ const TICK_MS = 1_000;
  */
 const CLOCK_FAULT = 'An error in the game stopped the clock. Anything that happened before it stopped still stands. You can try moving the clock again.';
 
+/**
+ * What the live clock says when a tick of it throws (from 2026-10-17, brief 14's cross-area pass). The save is paused
+ * with it, so the top bar offers Play, which is the way to try again. Until then the tick stopped without a word and the
+ * save stayed live, so the bar kept offering Pause on a clock that no longer moved (frame `defects.md` 1).
+ */
+const LIVE_CLOCK_FAULT = 'An error in the game stopped the clock, so it’s paused. Anything that happened before it stopped still stands. You can press Play to try again.';
+
 
 export function GameProvider({
   sim, adapter, onExit, children,
@@ -372,10 +379,17 @@ export function GameProvider({
         dirty.current = true;
         halt(result, wanted);
         setVersion((v) => v + 1);
-      } catch {
-        // A handler threw; stop ticking rather than looping on the error.
+      } catch (error) {
+        // A move of the clock threw. The tick stops rather than throwing again every second, and the save is paused, so
+        // the top bar says Play, and the player is told: a press of Play is one more try, and a second failure pauses it
+        // again with one more toast, never a loop. Until 2026-10-17 it only stopped: the save stayed live, the bar kept
+        // offering Pause on a clock that didn't move, and nothing said why (frame `defects.md` 1).
         stopped = true;
         window.clearInterval(handle);
+        console.error(error);
+        sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'paused' } });
+        toast(LIVE_CLOCK_FAULT, 'negative');
+        setVersion((v) => v + 1);
       }
     };
 
@@ -391,7 +405,7 @@ export function GameProvider({
       document.removeEventListener('visibilitychange', shown);
       window.removeEventListener('focus', shown);
     };
-  }, [sim, timeSpeed, halt]);
+  }, [sim, timeSpeed, halt, toast]);
 
 
   // --- Autosave -----------------------------------------------------------

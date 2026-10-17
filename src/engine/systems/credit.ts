@@ -307,9 +307,14 @@ const SUSPEND_AFTER = 2;
 const CHARGE_OFF_AFTER = 6;
 /** How far behind a card is when it's charged off, for words: its statements missed, a month each. */
 export const CHARGE_OFF_DAYS = CHARGE_OFF_AFTER * 30;
-/** How often the limit is reviewed, and the record that earns a raise. */
+/** How often the limit is reviewed. */
 const REVIEW_EVERY = 182 * 86_400_000;
-const RAISE_FROM = 700;
+/**
+ * The record that earns a raise: at the six-monthly review, and for a raise the holder asks for (`card.request_limit` in
+ * `systems/cardlife.ts`), whose notice says it, as the guide's card entry does (`content/guide/money.ts`). Until
+ * 2026-10-17 the ask, its notice and the guide each typed 700 beside this (brief 14's cross-area pass).
+ */
+export const RAISE_FROM = 700;
 
 /**
  * How long a mark stays on the record, by the country it was reported in

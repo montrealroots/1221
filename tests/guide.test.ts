@@ -14,7 +14,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { quickSave } from '@/engine';
@@ -65,6 +65,20 @@ describe('the registry', () => {
       expect(e.example.steps.length, `${e.id} example`).toBeGreaterThan(0);
       expect(e.example.result.length, `${e.id} example result`).toBeGreaterThan(20);
     }
+  });
+
+  // From 2026-10-17 (brief 14's cross-area pass): what to do next, the tutorial's seventh question, is asked of every
+  // entry, as the tutorial area proposed once every area had written it. An entry with nothing to do next says so with
+  // `next: []`, and a batch record of brief 14's language pass says why, as "**`next: []`:** `<its id>`, because …".
+  it('gives every entry what to do next, and leaves it empty only where a batch record of brief 14 says why', () => {
+    const LANGUAGE = fileURLToPath(new URL('../docs/verification/language-2026-10-17/', import.meta.url));
+    const why = new Set(readdirSync(LANGUAGE).map((area) => join(LANGUAGE, area, 'batches.md')).filter((path) => existsSync(path))
+      .flatMap((path) => [...readFileSync(path, 'utf8').matchAll(/\*\*`next: \[\]`:\*\* `([\w.-]+)`, because \S/g)].map((m) => m[1]!)));
+    for (const e of GUIDE) {
+      expect(Array.isArray(e.next), `${e.id} next`).toBe(true);
+      expect(e.next.filter((step) => step.trim() === ''), `${e.id} next`).toEqual([]);
+    }
+    expect(GUIDE.filter((e) => e.next.length === 0).map((e) => e.id).filter((id) => !why.has(id)), 'an empty next with no reason in a batch record').toEqual([]);
   });
 
   it('covers every feature id exactly once', () => {
