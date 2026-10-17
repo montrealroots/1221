@@ -65,6 +65,7 @@ import { WORK, afterTogether, prepLean, reliabilityOf, trustOf } from './coursew
 import { sharedOf, sharedWords, type PartnerRead, type SharedResult } from './ensemble';
 import { abilityFull, abilityOf, stepSpeed } from './attributes';
 import { bandOfQuality, chiefLimit, countDirection, countTogether, performerOf, recordWork, type Evaluation } from './evaluation';
+import { noteAdvice } from './next-steps';
 import { SELF_TAPE, genreState, practiceGenres } from './engagement';
 import { FEATURE_LABEL, featureSpeed, featuresOf, noteMaterial } from './experience';
 import type { Identity } from './artistry';
@@ -614,8 +615,13 @@ export function practiceShare(rec: Pick<BriefRecord, 'prep'>, b: Brief): number 
   return BRIEF.practiceUnprepared + (1 - BRIEF.practiceUnprepared) * done;
 }
 
-/** A brief taped: judged, kept on the work record and the brief's own, practice in its genres and the medium's technique, and a callback where it earned one. */
+/**
+ * A brief taped: judged, kept on the work record and the brief's own, practice in its genres and the medium's technique,
+ * and a callback where it earned one. From brief 11 (2026-10-17) the advice in front of the player as they came to it is
+ * noted first, once a day (`noteAdvice`, `systems/next-steps.ts`): a brief's pane shows it beside the take.
+ */
 export function tapeBrief(sim: Simulation, person: Person, b: Brief, genre: string): { evaluation: Evaluation; take: Take } {
+  noteAdvice(sim, person, 'work');
   const rec = recordOf(person, b.id);
   const focus = focusAt(sim, person, sim.now);
   const condition = conditionAt(sim, person, sim.now);

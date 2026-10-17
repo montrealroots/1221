@@ -4,7 +4,7 @@
  * play a student read this one call, so what the screen advises is what a played student follows.
  *
  * From brief 11 (2026-10-17; L1, docs/verification/completion-2026-10-16/clarifications.md): what was first is noted as the
- * player comes to work (once a day) and to practice after new work (`noteAdvice`, `Experience.advised`), and the first
+ * player comes to tape a brief (once a day) and to practice after new work (`noteAdvice`, `Experience.advised`), and the first
  * recommendation says how long it has been first and what has moved since (`standing`), or what was first before it and
  * how that has moved, and what the player can do about it now (`next`). Measured on 2026-10-16 (decisions-2026-10-16/l1/),
  * a student whose school left few hours to practice read focus first eight weeks running, each week in the same sentence
@@ -57,14 +57,17 @@ const dayOf = (sim: Simulation): string => { const p = zonedParts(sim.now, sim.h
 const exactOf = (f: Forecast | undefined): number | undefined => (f ? f.exact ?? f.points : undefined);
 
 /**
- * What was first, noted (from brief 11): before a judged piece is kept (`recordWork`), once a day, and before an hour of
- * practice (`practice.exercise`) where there's been new work since the last note, so it's the advice that was in front
- * of the player when they came to it, and practice is read against where things stood after their latest work. The same
+ * What was first, noted (from brief 11): before a brief is taped (`tapeBrief`), once a day, and before an hour of practice
+ * (`practice.exercise`) where there's been new work since the last note: the two places the advice is shown beside what
+ * it's for, so it's the advice that was in front of the player when they came to it, and practice is read against where
+ * things stood after their latest work. The same
  * input again keeps when it was first given and its figures then, and where there's been new work since the last note,
  * where it stands now (`last`); another starts its own, keeping what was first before it (`before`). Nothing is noted
  * where there's no work to forecast, and the note goes where nothing is first (every input at full). The player's alone.
- * Noted no more than that, since a forecast costs a few hundredths of a second: noted before each day's first hour of
- * practice as well, the F2-A measure of two tuning cases took 49 seconds where it had taken 9; noted so, 16 (2026-10-17).
+ * Noted no more than that, since a forecast costs a few hundredths of a second (2026-10-17): noted before each day's first
+ * hour of practice as well, the F2-A measure of two tuning cases took 49 seconds where it had taken 9; and noted before
+ * every day's first judged piece of any kind (`recordWork`), a school year of class scenes (tests/remaining-school.test.ts)
+ * took 99 seconds where it had taken 34.
  */
 export function noteAdvice(sim: Simulation, person: Person, when: 'work' | 'practice'): void {
   if (person.id !== sim.universe.playerId) return;

@@ -53,7 +53,7 @@ export interface Experience {
 /**
  * What to improve next as it was given (from brief 11, 2026-10-17; L1, docs/verification/completion-2026-10-16/
  * clarifications.md): the input the advice named first, from when, and where it stood when it was first given and after
- * the player's latest work, noted as they come to work or to practice after new work (`noteAdvice`). It's
+ * the player's latest work, noted as they come to tape a brief or to practice after new work (`noteAdvice`). It's
  * what lets the advice say how long it has been first and what has moved since, rather than the same words week after
  * week. Until then nothing of the advice was kept, and the same advice read the same on every day it was given.
  */

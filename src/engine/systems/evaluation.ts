@@ -88,7 +88,6 @@ import { type Dimension, type DimensionSpec, type TaskProfile, DIMENSION_LABEL, 
 import type { Skill } from '../content/school';
 import { judgePiece, type PieceResult, type PieceSpec } from './piece';
 import { GRAIN } from '../content/interpretation';
-import { noteAdvice } from './next-steps';
 
 export type { Dimension, TaskProfile } from '../content/tasks';
 
@@ -625,13 +624,8 @@ export function milestone(person: Person, m: Journey['milestones'][number]): voi
   if (j.milestones.length > MILESTONES_KEPT) j.milestones.splice(0, j.milestones.length - MILESTONES_KEPT);
 }
 
-/**
- * Keeps a judged piece of work on the person's history, once for its key: judged again, it replaces itself, in the counts
- * too. From brief 11 (2026-10-17) the advice that was in front of the player as they came to it is noted first, once a
- * day (`noteAdvice`, `systems/next-steps.ts`), before the piece changes it.
- */
-export function recordWork(sim: Simulation, person: Person, e: Evaluation, at: { at: number; what: string; band?: string }): WorkRecord {
-  noteAdvice(sim, person, 'work');
+/** Keeps a judged piece of work on the person's history, once for its key: judged again, it replaces itself, in the counts too. */
+export function recordWork(_sim: Simulation, person: Person, e: Evaluation, at: { at: number; what: string; band?: string }): WorkRecord {
   const record: WorkRecord = {
     at: at.at, task: e.task, taskLabel: e.taskLabel, what: at.what, overall: e.overall, ...(at.band ? { band: at.band } : {}),
     dims: Object.fromEntries(e.dimensions.map((d) => [d.dimension, d.quality])), mastery: e.mastery, limits: e.limits.slice(0, 3),
