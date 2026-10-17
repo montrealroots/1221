@@ -22,6 +22,7 @@ import { CONCERN_IDS } from './concerns';
 import { CIRCUMSTANCE_AFFINITY, GRAIN } from './interpretation';
 import { GENRE_REGISTER } from './genre-register';
 import { BRIEFS } from './briefs';
+import { abilityReaders } from '../systems/material';
 
 const SAVED: Readonly<Partial<Record<AbilityId, string>>> = { emotionalDepth: '`craft.emotion`', memory: '`craft.memorization`', vocal: '`craft.voice`', physical: '`craft.movement`', stamina: '`wellbeing.fitness`' };
 const ORDINARY: Readonly<Partial<Record<AbilityId, string>>> = {
@@ -31,7 +32,9 @@ const ORDINARY: Readonly<Partial<Record<AbilityId, string>>> = {
   discipline: 'a call answered, a day practiced', stamina: 'a workout, a run, a class that trains the body as hard (from 2026-10-16)',
 };
 
-const readers = (id: AbilityId) => Object.values(TASK_PROFILES).flatMap((t) => (Object.entries(t.dims) as [Dimension, NonNullable<(typeof t.dims)[Dimension]>][]).filter(([, s]) => s.inputs.some((i) => 'ability' in i && i.ability === id)).map(([d]) => `${t.label}: ${DIMENSION_LABEL[d]}`));
+// From 2026-10-17 the readers the ability's look and the Player Profile name (`abilityReaders`): until then the task
+// profiles' inputs alone, so stamina was a scene's and a night's consistency here too (brief 11, A4).
+const readers = (id: AbilityId) => abilityReaders(id).flatMap((r) => r.dims.map((d) => `${r.label}: ${DIMENSION_LABEL[d]}`));
 const row = (cells: string[]) => `| ${cells.map((c) => c.replace(/\|/g, '/')).join(' | ')} |`;
 const HEAD = row(['Item', 'Saved State', 'Reachable Action', 'Calculation', 'Visible Result', 'Downstream Consumer', 'Test Evidence']) + '\n| --- | --- | --- | --- | --- | --- | --- |';
 

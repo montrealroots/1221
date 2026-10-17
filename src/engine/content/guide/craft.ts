@@ -420,7 +420,9 @@ export const CRAFT: readonly GuideEntry[] = [
       'Six or more sessions in a row on one exercise is said, with whether its gains are slowing as it nears full.',
       `A technique at ${MASTERED} or more is said to be past what any work asks: from there to 100 it moves no result, before the hour and after it, and on the technique’s look.`,
       `Attributes And Craft’s subtitle counts today’s practice against ${plural(PRACTICE.dailyHours, 'hour')}.`,
-      'An ability’s look gives Now, Classes Reach and Last Change, what develops it, where it began, which work reads it, and its exercise, said to be a named exercise, a composite of real practice, or SLATE’s design.',
+      // From 2026-10-17 (brief 11, A4) the look says what the ability does in its own sentence beside which work reads it, where
+      // until then What It Does listed the work that reads it alone.
+      'An ability’s look gives Now, Classes Reach and Last Change, what develops it, where it began, what it does, which work reads it, and its exercise, said to be a named exercise, a composite of real practice, or SLATE’s design.',
     ],
     unavailable: [
       '“Your training hasn’t begun: there’s no craft to practice yet.”',

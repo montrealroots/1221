@@ -528,7 +528,9 @@ const TIRED: Readonly<Record<string, readonly string[]>> = {
   'Vocal Expression': ['execution', 'consistency'],
   'Physical Expression': ['execution'],
   Discipline: ['consistency', 'execution'],
-  Stamina: ['consistency'],
+  // From 2026-10-17 (brief 11, A4) stamina is read in a task judged in parts as the drain on every dimension tiring
+  // reaches (`abilityReaders`, systems/material.ts); until then this said consistency, the input a piece in parts takes out.
+  Stamina: ['believability', 'connection', 'execution', 'consistency', 'responsiveness'],
 };
 
 describe('p-abilities', () => {

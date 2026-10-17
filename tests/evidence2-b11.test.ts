@@ -320,10 +320,13 @@ describe('p-abilities', () => {
      * some task reads the ability and lists fatigue for that dimension. Emotional Depth’s connection is read only in
      * partnered work, which lists no condition for it.
      */
+    // Stamina's from 2026-10-17 (brief 11, A4): in a task judged in parts it's read as the drain on every dimension tiring
+    // reaches, a scene's first (`abilityReaders`, systems/material.ts), where until then this said consistency alone, the
+    // task profiles' input a piece in parts takes out.
     const TIRED: Record<string, string> = {
       'Emotional Depth': 'believability', Imagination: 'believability', Presence: 'connection', 'Listening And Responsiveness': 'connection, responsiveness',
       Focus: 'execution, consistency', Memory: 'execution', Adaptability: 'responsiveness', Composure: 'consistency',
-      'Vocal Expression': 'execution, consistency', 'Physical Expression': 'execution', Discipline: 'consistency, execution', Stamina: 'consistency',
+      'Vocal Expression': 'execution, consistency', 'Physical Expression': 'execution', Discipline: 'consistency, execution', Stamina: 'believability, connection, execution, consistency, responsiveness',
     };
     const twins = [['early_riser'], [], ['night_owl']].map((traits) => {
       const sim = ada('g31-today', { personalityTraits: traits });
@@ -388,7 +391,9 @@ describe('p-abilities', () => {
       'Vocal Expression': mending('execution'),
       'Physical Expression': mending('execution'),
       Discipline: mending('consistency'),
-      Stamina: mending('consistency'),
+      // From 2026-10-17 (brief 11, A4) stamina is read as the drain where an injury reaches a taped brief on its feet's
+      // execution and a night's, as well as movement's and partnered work's consistency; until then consistency alone.
+      Stamina: mending('consistency, execution'),
     });
     // The two the column over-reported still shape both: the column It Shapes is every dimension, condition or none.
     expect(rows.get('Vocal Expression')![5]).toBe('Execution, Consistency');
