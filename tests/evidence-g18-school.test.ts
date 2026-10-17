@@ -518,15 +518,15 @@ describe('school.approach', () => {
     expect(text).toContain('A Note That Keeps Coming Back: Lines, given 3 times.');
     // Acting I's card comes first, with the four ways; the speech drill, which prepares a text too, has its own.
     const first = <T,>(all: T[]) => { expect(all.length).toBeGreaterThan(0); return all[0]!; };
-    expect(first(buttons('school.approach', 'A Targeted Drill'))).toMatchObject({ disabled: false, title: 'a drill of it, half an hour once a day' });
+    expect(first(buttons('school.approach', 'A Targeted Drill'))).toMatchObject({ disabled: false, title: 'a half-hour drill of it, once a day' });
     expect(first(buttons('school.approach', 'A Smaller Piece Of It'))).toMatchObject({ disabled: false });
     expect(first(buttons('school.approach', 'Work On It With Your Partner'))).toMatchObject({ disabled: true, title: 'Hannah would rather work alone, after last time.' });
     const put = first(buttons('school.approach', 'Put It First'));
-    expect(put).toMatchObject({ disabled: false, title: 'it put first, weighing more when it’s shown' });
-    expect(press(put)).toEqual(['Put It First: it put first, weighing more when it’s shown.']);
+    expect(put).toMatchObject({ disabled: false, title: 'it comes first, and counts for more when the work is shown' });
+    expect(press(put)).toEqual(['Put It First: it comes first, and counts for more when the work is shown.']);
     expect(work(sim, id).approach?.kind).toBe('objective');
     expect(cwOf(sim).assignments.filter((a) => a.approach).map((a) => a.id)).toEqual([id]);
-    expect(drawn(sim).text).toContain('Another Way At It: Put It First. On lines: it put first, weighing more when it’s shown. It doesn’t take the note by itself.');
+    expect(drawn(sim).text).toContain('Another Way At It: Put It First. On lines: it comes first, and counts for more when the work is shown. It doesn’t take the note by itself.');
   });
 });
 

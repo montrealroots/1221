@@ -570,7 +570,7 @@ describe('p-abilities', () => {
     expect(row[1]).toBe(one(after));
     expect(row[6]).toBe(`+${(after - before).toFixed(2)}, Circles Of Attention`);
     expect(onScreen(abilities(html))).toContain('Practice today: 1 of 4 hours');
-    expect(onScreen(abilities(html))).toContain('Pitched where you are.');
+    expect(onScreen(abilities(html))).toContain('Pitched at your level.');
     // The exercise's record by its date (from 2026-10-17, brief 14): until then its day key, “last 2026-08-24”.
     expect(onScreen(abilities(html))).toContain('1 session, the last on August 24, 2026.');
     // A day of practice kept grows discipline once, said on its row and first in the history.
@@ -607,11 +607,11 @@ describe('p-abilities', () => {
     expect(matched.energy - above.energy).toBeCloseTo(3, 6);
     expect(below.energy).toBe(matched.energy);
     expect(matched.words).toContain('Developing: ');
-    expect(matched.words).toContain('Pitched where you are.');
+    expect(matched.words).toContain('Pitched at your level.');
     expect(below.words).toContain('Foundation: ');
-    expect(below.words).toContain('It went easily: you’re past it, and the developing tier would ask more.');
+    expect(below.words).toContain('It went easily: you’re past it, and the Developing tier would ask more.');
     expect(above.words).toContain('Advanced: ');
-    expect(above.words).toContain('You struggled to hold it: the developing tier fits where you are now.');
+    expect(above.words).toContain('You struggled to hold it: the Developing tier fits where you are now.');
   });
 
   it('PLAYER JOURNEY: at 7 PM on the first day, Today names what fatigue reaches of each ability, at readiness times the hour’s fit, Imagination’s believability among them', () => {

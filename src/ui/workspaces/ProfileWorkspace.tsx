@@ -19,6 +19,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { targetLabel, targetSubject, sourceWords, masteredOf, readersOf } from '@/ui/looks/actor';
 import { formatDate, ageOn, instantFromZoned } from '@/engine/core/time';
+import { plural } from '@/engine/core/text';
 import { ARTISTRY, identityOf } from '@/engine/systems/artistry';
 import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { ABILITY_DEFS, MASTERED, TECHNIQUES, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
@@ -87,6 +88,11 @@ import { adviceFor } from '@/engine/systems/next-steps';
 
 const one = (x: number) => x.toFixed(1);
 const PAGE = 16;
+/**
+ * Sleep owed, in whole hours (from 2026-10-17, brief 14): until then “Sleep owed 1 hours” at one, found by the health
+ * area's read of the before walk, and “Sleep owed 0 hours” with none.
+ */
+export const sleepOwed = (debt: number): string => { const n = Math.round(debt); return n ? `${plural(n, 'hour')} of sleep owed` : 'No sleep owed'; };
 /** Each part of the first recommendation on a line of its own (from 2026-10-17, brief 14): until then one paragraph. */
 const LINE = { display: 'block', marginTop: 4 } as const;
 /** A day kept as its key at home (`YYYY-MM-DD`), as a date (from 2026-10-17, brief 14: until then printed as the key). */
@@ -492,11 +498,11 @@ function ConditionPanel() {
         <div className="grid grid-3">
           <Stat label="Readiness" value={String(Math.round(readiness(person)))} note={`${Math.round(c.readiness)} at this hour`} />
           <Stat label="For Work" value={sufficient && !c.ill && !c.injured && !c.concussed ? 'Sufficient' : 'Held Back'} tone={sufficient && !c.ill && !c.injured && !c.concussed ? undefined : 'warning'} note={!sufficient ? `Under ${EVALUATION.sufficientReadiness}: tiredness holds your work back` : c.concussed ? 'A concussion holds back all your work' : c.ill ? 'The flu holds back your voice and body work' : c.injured ? 'An injury holds back your physical work' : 'Today, nothing holds your work back'} />
-          <Stat label="Energy, Stress" value={`${Math.round(w.energy)}, ${Math.round(w.stress)}`} note={`Sleep owed ${Math.round(w.sleepDebt)} hours`} />
+          <Stat label="Energy, Stress" value={`${Math.round(w.energy)}, ${Math.round(w.stress)}`} note={sleepOwed(w.sleepDebt)} />
         </div>
         {/* Until 2026-10-13 this named execution, consistency and responsiveness alone, where `TASK_PROFILES` gives fatigue
             to believability and connection too, and Today on the same screen named them (found by that day’s evidence pass). */}
-        <Fine>When you’re tired, your attention and memory go before your reasoning does (Lim &amp; Dinges, 2010), so tiredness reaches your believability, connection, execution, consistency and responsiveness, and leaves only your interpretation alone. An injury holds back what it limits: a sprain, a strain or a break your physical work, a concussion all of it, and a cut or a knock none. None of this lowers an ability. It’s today’s condition, and it passes with rest.</Fine>
+        <Fine>When you’re tired, your attention and memory go before your reasoning does (Lim &amp; Dinges, 2010), so tiredness reaches your believability, connection, execution, consistency and responsiveness, and leaves only your interpretation alone. An injury holds back what it limits: a sprain, a strain or a break your physical work, a concussion all of it, and a cut or a knock none. None of this lowers an ability: it’s how you are today, and it passes as you rest and mend.</Fine>
       </div>
     </Panel>
   );

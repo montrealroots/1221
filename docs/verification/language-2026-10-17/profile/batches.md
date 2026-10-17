@@ -171,3 +171,44 @@ itself on the built app's walk, at the end of the area.
 42 after the subtitle; `tests/evidence-g31-ui.test.ts`'s practice journey with its new assertion of the session's date,
 exit 0; voice-check 0 and text-inventory 0 once marked. A test gained one assertion: that journey now holds the line the
 day key used to print.
+
+## Batch 3: Practice, Studying A Genre, Your Work So Far
+
+**Sources read (47):** `content/practice.ts` (30: the exercises, each exercise's design, the tiers and the focuses),
+`systems/practice.ts` (6), `systems/learning.ts` (4), `systems/engagement.ts` (3), `systems/artistry.ts` (1), and in
+`ui/workspaces/ProfileWorkspace.tsx` the new `sleepOwed` and Current Condition's small print again.
+
+**Rewritten:** the preview before an hour ("Less or more because the advanced tier isn’t yours (×0.8); …; you come at 73%
+of an ordinary day’s focus; hour 3 on it today keeps 25%" became "It’s more or less than an ordinary hour because the
+Advanced tier isn’t your level (×0.8); …; you’re at 73% of a rested day’s focus; hour 3 on it today gives 25% of the
+first"); what the hour found ("Rested, the exactness paid." "You were rested, so the exactness paid off."); tier and
+focus names as the controls show them; the four-hour refusal ("…: past that, more stops helping. Tomorrow." became "…,
+and more stops helping after that. Practice again tomorrow."); three of the Focus choices' lines; the four ways at a
+note that keeps coming back (which read "it put first, weighing more when it’s shown"); a study's "a film of its kind";
+Your Work So Far's lines and their evidence (one printed a raw key, "The experience record: language:verse"; another
+"The journey’s kinds of work"). Sleep owed (below).
+
+**Kept:** the exercises and their designs (plain, in the pedagogy's terms), the tier names, the teacher's advanced
+steps, the note subjects, and the refusals shared across seven systems.
+
+**Meaning-sensitive:** the preview's reasons are each a factor the hour's own formula multiplies by (`practicePreview`,
+the same `terms`); "gives 25% of the first" is `0.5 ** n` of an hour's gain. Put It First's "counts for more when the work
+is shown" is the objective weighing more in the showing (`APPROACHES`' own comment). "Overall" for "for the whole" in a
+strength is the mean of every dimension across the pieces, as before.
+
+**Tests updated:** `tests/whynot-profile.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/attributes-phase-2a.test.ts`,
+`tests/attributes-phase-2b.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence-g18-school.test.ts` (school's,
+the ways at a note are this area's words), `tests/evidence2-b11.test.ts`, `tests/evidence-g23-school.test.ts`,
+`tests/defects-g3-1.test.ts`, `tests/variety.test.ts`; and `tests/evidence-g32-ui.test.ts` gained a test of sleep owed.
+
+**Checks:** tsc 0; eslint 0; vitest on 15 files 234 of 236 with two regexes still on the old words, then those and the
+tier casing, 62 of 62, exit 0; `tests/evidence-g32-ui.test.ts` 43 of 43 with the new test; title-case, label-sweep,
+plural-check, voice-check, tics, spelling, typos, doc-refs, deciders 0; text-inventory 0 once `sleepOwed` was marked.
+
+**Screens verified:** `b3-practice.txt`: the Focus control's lines, the preview at each tier and focus and tired, two
+hours pressed and the third previewed, the four-hour refusal, what the hour found for every focus and gap, a full
+target and one past mastery, the four ways at a note, two studies, and Your Work So Far on a played case (adv-t-10).
+
+**From the coordinator:** "Sleep owed 1 hours", found by the health area, fixed and tested (defects.md). The Core
+glossary's corrections (energy comes back with sleep alone; an injury doesn't lower condition): nothing in this area's
+words said otherwise, and Current Condition's small print no longer calls the day's state "today’s condition".

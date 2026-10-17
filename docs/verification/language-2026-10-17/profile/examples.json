@@ -304,5 +304,95 @@
   "why": "A sentence opening on Nothing; 'step' alone.",
   "meaningSensitive": false,
   "verified": "tests/evidence2-b13.test.ts and tests/evidence-g32-ui.test.ts"
+ },
+ {
+  "source": "src/engine/systems/practice.ts#practicePreview",
+  "kind": "other",
+  "before": "About +0.17 to focus (now 49.8), and +0.18 to discipline for the day kept. Less or more because the foundation tier isn’t yours (×0.75); spaced today makes it ×0.9; discipline makes it ×1.015. The higher it is, the less an hour adds.",
+  "after": "About +0.17 to focus (now 49.8), and +0.18 to discipline for a day of practice kept. It’s more or less than an ordinary hour because the Foundation tier isn’t your level (×0.75); Spaced today makes it ×0.9; your discipline makes it ×1.015. The higher it is, the less an hour adds.",
+  "why": "Says what it's more or less than; the tier and focus by their control labels.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts; docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ {
+  "source": "src/engine/systems/practice.ts#practicePreview",
+  "kind": "other",
+  "before": "… hour 3 on it today keeps 25% …",
+  "after": "… hour 3 on it today gives 25% of the first …",
+  "why": "'Keeps 25%' of what.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2a.test.ts; docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ {
+  "source": "src/engine/systems/practice.ts#practiceRefusal",
+  "kind": "error",
+  "before": "You’ve practiced 4 hours today: past that, more stops helping. Tomorrow.",
+  "after": "You’ve practiced 4 hours today, and more stops helping after that. Practice again tomorrow.",
+  "why": "A one-word sentence for the next step.",
+  "meaningSensitive": false,
+  "verified": "tests/whynot-profile.test.ts and tests/evidence-g20-school.test.ts"
+ },
+ {
+  "source": "src/engine/systems/practice.ts#practiceFeedback",
+  "kind": "feedback",
+  "before": "Tired, the exactness cost more than it gave: a steady hour would have done better today.",
+  "after": "You were tired, so the exactness cost more than it gave. A Steady hour would have done better today.",
+  "why": "A subject for the sentence; the focus by its control's name.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ {
+  "source": "src/engine/systems/practice.ts#practiceFeedback",
+  "kind": "feedback",
+  "before": "It went easily: you’re past it, and the developing tier would ask more.",
+  "after": "It went easily: you’re past it, and the Developing tier would ask more.",
+  "why": "The tier as the Tier control names it.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g31-ui.test.ts"
+ },
+ {
+  "source": "src/engine/systems/learning.ts#APPROACHES",
+  "kind": "confirmation",
+  "before": "Put It First: it put first, weighing more when it’s shown.",
+  "after": "Put It First: it comes first, and counts for more when the work is shown.",
+  "why": "The toast had no verb and said 'weighing'.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g18-school.test.ts (title, toast and the pane's line)"
+ },
+ {
+  "source": "src/engine/systems/artistry.ts#identityOf",
+  "kind": "other",
+  "before": "Mixed Tone: met or practised 54 times, best 71.4. From: The experience record: mixed-tone.",
+  "after": "Mixed Tone: met or practiced 54 times, best 71.4. From: Your experience record.",
+  "why": "A raw key in the evidence; American spelling.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b11.test.ts; docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ {
+  "source": "src/engine/systems/artistry.ts#identityOf",
+  "kind": "other",
+  "before": "Of 17 notes and requests on the craft, 0 answered.",
+  "after": "Of 17 notes and requests on your craft, you answered 0.",
+  "why": "A subject for 'answered'.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b11.test.ts and tests/evidence-g23-school.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/ProfileWorkspace.tsx#sleepOwed",
+  "kind": "other",
+  "before": "Sleep owed 1 hours / Sleep owed 0 hours",
+  "after": "1 hour of sleep owed / No sleep owed",
+  "why": "A plural that disagreed at one, and a zero said as a figure (a defect, found by the health area).",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts, its own test"
+ },
+ {
+  "source": "src/engine/content/practice.ts#FOCUS",
+  "kind": "other",
+  "before": "Picked up cold, a day or more since the last time and within the week; outside that, it costs.",
+  "after": "Picked up cold, a day to a week after your last session. Sooner or later than that, it costs you.",
+  "why": "The window said plainly.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/profile/b3-practice.txt"
  }
 ]

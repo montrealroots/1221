@@ -125,17 +125,221 @@
   "on": "2026-10-17",
   "reason": "A developer document, not player text: genreCoverage() and NO_TECHNIQUE write docs/GENRE-COVERAGE.md (tools/genre-coverage.ts), held byte for byte by tests/genre-coverage.test.ts; neither is imported anywhere under src/ but this file (grep -rn 'genreCoverage\\|NO_TECHNIQUE' src)."
  },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .adjustments": {
+  "status": "Reviewed And Retained",
+  "hash": "d617c4810c2c",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .audition-pieces": {
+  "status": "Reviewed And Retained",
+  "hash": "d6c1115628c5",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .character-work": {
+  "status": "Reviewed And Retained",
+  "hash": "917fdaae3428",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .clown-practice": {
+  "status": "Reviewed And Retained",
+  "hash": "a0b3d9c14e5f",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .cold-reading": {
+  "status": "Reviewed And Retained",
+  "hash": "6b7e921492af",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .combat-drill": {
+  "status": "Reviewed And Retained",
+  "hash": "328c8a0d3a99",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .comic-timing": {
+  "status": "Reviewed And Retained",
+  "hash": "43d072c06fb1",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .concentration": {
+  "status": "Reviewed And Retained",
+  "hash": "178a139ba43d",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .copy-reading": {
+  "status": "Reviewed And Retained",
+  "hash": "88fc97cfa56d",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .dance-class": {
+  "status": "Reviewed And Retained",
+  "hash": "31653c153d45",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .dialect-drill": {
+  "status": "Reviewed And Retained",
+  "hash": "a464f56c259c",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .given-circumstances": {
+  "status": "Reviewed And Retained",
+  "hash": "f95efdf3edd9",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .graded-exposure": {
+  "status": "Reviewed And Retained",
+  "hash": "937dbcbc7275",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .improv-session": {
+  "status": "Reviewed And Retained",
+  "hash": "504231d28053",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .intimacy-study": {
+  "status": "Reviewed And Retained",
+  "hash": "862a33f01626",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .movement-work": {
+  "status": "Reviewed And Retained",
+  "hash": "877ca2e71ff9",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .recall-drill": {
+  "status": "Reviewed And Retained",
+  "hash": "5945572aa3af",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .repetition": {
+  "status": "Reviewed And Retained",
+  "hash": "c9f0ec736100",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .scene-work": {
+  "status": "Reviewed And Retained",
+  "hash": "8c512f9e5c04",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .script-analysis": {
+  "status": "Reviewed And Retained",
+  "hash": "2bb92dea6c6b",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .self-tape-practice": {
+  "status": "Reviewed And Retained",
+  "hash": "effdfc55feaf",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .sense-memory": {
+  "status": "Reviewed And Retained",
+  "hash": "1c53e3abdc64",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .showing-for-classmates": {
+  "status": "Reviewed And Retained",
+  "hash": "9125ee3bb103",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .singing-practice": {
+  "status": "Reviewed And Retained",
+  "hash": "9cf5bb78094b",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .speech-drill": {
+  "status": "Reviewed And Retained",
+  "hash": "fa0ef2146366",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .verse-speaking": {
+  "status": "Reviewed And Retained",
+  "hash": "e6d753885513",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .voice-work": {
+  "status": "Reviewed And Retained",
+  "hash": "55d6cb0ffe16",
+  "on": "2026-10-17",
+  "reason": "Each exercise's challenge and its three tiers of material in the pedagogy's own terms (a familiar object, the small circle, a sonnet's scansion), shown in the opened practice control and the hour's feedback; plain and specific already. 'Its weight and warmth' (sense memory) is an object's weight, not the judge's."
+ },
+ "src/engine/content/practice.ts#EXERCISES": {
+  "status": "Reviewed And Retained",
+  "hash": "7a358141d196",
+  "on": "2026-10-17",
+  "reason": "Each exercise's name and what its hour is, already plain and in the pedagogy's words (Sense Memory, The Repetition Exercise, Circles Of Attention, A Recall Drill and the rest), the names the Profile's Practice column shows. Its source strings, which say 'SLATE’s own' and name research topics, are shown only in the developer's attributes matrix (docs/ATTRIBUTES-MATRIX.md, held byte for byte by tests/attributes-matrix.test.ts), never to a player, so they stay as the matrix keeps them."
+ },
+ "src/engine/content/practice.ts#FOCUS": {
+  "status": "Rewritten And Verified",
+  "hash": "95f8765919c7",
+  "on": "2026-10-17",
+  "evidence": "Every Focus choice and its line printed in docs/verification/language-2026-10-17/profile/b3-practice.txt; tests/evidence-g31-ui.test.ts renders the control with them"
+ },
+ "src/engine/content/practice.ts#TIER": {
+  "status": "Reviewed And Retained",
+  "hash": "e1dea11d0680",
+  "on": "2026-10-17",
+  "reason": "The three tier names, Foundation, Developing and Advanced, as the Tier control lists them."
+ },
  "src/engine/content/reference.ts#Registry": {
   "status": "Reviewed And Retained",
   "hash": "ea85ee40e620",
   "on": "2026-10-17",
   "reason": "Two internal Error messages (a registry built with a duplicate id, or asked for a record it lacks): programming faults thrown while the content tables load or are looked up by id, never a CommandError, so no player action reaches them and the screen never shows them."
  },
+ "src/engine/systems/artistry.ts#identityOf": {
+  "status": "Rewritten And Verified",
+  "hash": "543919707d01",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence2-b11.test.ts (the panel whole, built line by line from the record), tests/evidence-g23-school.test.ts (a strength, Taking Direction), tests/evidence-g32-ui.test.ts; Your Work So Far on a played case printed in docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
  "src/engine/systems/attributes.ts#alreadyApplied": {
   "status": "Rewritten And Verified",
   "hash": "ecc9306fb2d3",
   "on": "2026-10-17",
   "evidence": "tests/fitness.test.ts, tests/evidence-g20-school.test.ts and tests/evidence-g06-life.test.ts assert the new refusal exactly for a workout, an hour of practice, a meal and an order sent twice with one actionId, across a reload; tests/briefs.test.ts and tests/engagement.test.ts match /already done/"
+ },
+ "src/engine/systems/engagement.ts#hourRefusal": {
+  "status": "Reviewed And Retained",
+  "hash": "ac3318c17c60",
+  "on": "2026-10-17",
+  "reason": "The shared refusals for an hour away from the work (Not from a hospital bed., You’re asleep., You’re at … until ….): seven systems say them word for word and five guides quote them, so a change belongs to all of them at once; for the coordinator. Each already names the obstacle and nothing was spent."
+ },
+ "src/engine/systems/engagement.ts#study": {
+  "status": "Rewritten And Verified",
+  "hash": "9190801211ff",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-g3-1.test.ts asserts the study's toast with a play and with 'a film of its kind'; docs/verification/language-2026-10-17/profile/b3-practice.txt prints two studies"
+ },
+ "src/engine/systems/engagement.ts#studyRefusal": {
+  "status": "Reviewed And Retained",
+  "hash": "d022072acab0",
+  "on": "2026-10-17",
+  "reason": "'There’s no such genre.': a payload naming no genre, reached by no press of Study It; plain."
  },
  "src/engine/systems/experience.ts#FEATURE_LABEL": {
   "status": "Reviewed And Retained",
@@ -160,6 +364,30 @@
   "hash": "bc9953061212",
   "on": "2026-10-17",
   "evidence": "docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions), on every training line of adv-t-0 and adv-t-5"
+ },
+ "src/engine/systems/learning.ts#ADVANCED": {
+  "status": "Reviewed And Retained",
+  "hash": "0a1a5e23c0a7",
+  "on": "2026-10-17",
+  "reason": "Seven next steps a teacher gives once the work is sound, in a teacher's voice to the actor ('Do less: find the moments that need nothing added, and trust the text in them'): specific, plain, contracted, and the feedback's own register."
+ },
+ "src/engine/systems/learning.ts#APPROACHES": {
+  "status": "Rewritten And Verified",
+  "hash": "17b21bfe53dd",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g18-school.test.ts (each button's title, the toast, and the coursework line Another Way At It: Put It First. On lines: …); all four printed in docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ "src/engine/systems/learning.ts#DIM_SUBJECT": {
+  "status": "Reviewed And Retained",
+  "hash": "932ecffdae6d",
+  "on": "2026-10-17",
+  "reason": "Six Title Case names of the parts of coursework a note is about (Knowing The Material, Lines, The Choices, Time On Its Feet, Work With Your Partner, Working A Note), the names the coursework pane shows."
+ },
+ "src/engine/systems/learning.ts#noteSubject": {
+  "status": "Reviewed And Retained",
+  "hash": "8ba0eb6cc186",
+  "on": "2026-10-17",
+  "reason": "A note's subject as a label: A Choice: (its question's own label), a skill's name, or The Next Step; plain."
  },
  "src/engine/systems/next-steps.ts#agoOf": {
   "status": "Rewritten And Verified",
@@ -221,6 +449,42 @@
   "on": "2026-10-17",
   "evidence": "tests/decisions-advice.test.ts (its standing assertions: how long first, the pieces since and none held, the hours practiced or not, the other first and its forecast, the hours since a note), and tools/advice-harness.ts S3 reading it; docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions)"
  },
+ "src/engine/systems/practice.ts#focusRefusal": {
+  "status": "Reviewed And Retained",
+  "hash": "e7c8c58e4204",
+  "on": "2026-10-17",
+  "reason": "'There’s no such way to practice.': a payload naming a focus the Focus control doesn't offer, which no press reaches; plain if a script sends one."
+ },
+ "src/engine/systems/practice.ts#pastMastery": {
+  "status": "Rewritten And Verified",
+  "hash": "9b9cfdfec00d",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts asserts it exactly before and after an hour on a technique past 90; docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ "src/engine/systems/practice.ts#practiceFeedback": {
+  "status": "Rewritten And Verified",
+  "hash": "30b6378b8fa8",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g31-ui.test.ts (matched, below and above), tests/attributes-phase-2b.test.ts and tests/variety.test.ts (full, the repeat, a tired day, a run); every focus and gap printed in docs/verification/language-2026-10-17/profile/b3-practice.txt"
+ },
+ "src/engine/systems/practice.ts#practicePreview": {
+  "status": "Rewritten And Verified",
+  "hash": "25d801c860a7",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2a.test.ts and tests/attributes-phase-2b.test.ts (the repeat's share, discipline for a day of practice kept, said and not said); every reason printed in docs/verification/language-2026-10-17/profile/b3-practice.txt (tier, focus, a tired day, a repeat, discipline)"
+ },
+ "src/engine/systems/practice.ts#practiceRefusal": {
+  "status": "Rewritten And Verified",
+  "hash": "0829d4893d9c",
+  "on": "2026-10-17",
+  "evidence": "tests/whynot-profile.test.ts and tests/evidence-g20-school.test.ts assert the four-hours refusal exactly; tests/decisions-advice.test.ts after Not now; docs/verification/language-2026-10-17/profile/b3-practice.txt. The shared refusals (Not from a hospital bed, You’re asleep, You’re at … until …) are kept as seven systems and five guides say them"
+ },
+ "src/engine/systems/practice.ts#registerPractice <practice.exercise>": {
+  "status": "Reviewed And Retained",
+  "hash": "ed440b7536f3",
+  "on": "2026-10-17",
+  "reason": "'There’s no such tier.': a payload outside the Tier control's three, reached by no press; plain."
+ },
  "src/ui/looks/actor.tsx#BAND_WORD": {
   "status": "Reviewed And Retained",
   "hash": "3c7dcf0bad01",
@@ -247,7 +511,7 @@
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#ConditionPanel": {
   "status": "Rewritten And Verified",
-  "hash": "a237a94a0515",
+  "hash": "9a767928bd67",
   "on": "2026-10-17",
   "evidence": "tests/evidence-g32-ui.test.ts (the panel whole on a sufficient day, tired, ill, injured and concussed) and tests/evidence2-b11.test.ts (the small print)"
  },
@@ -303,7 +567,7 @@
   "status": "Rewritten And Verified",
   "hash": "31399ab43011",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g31-ui.test.ts 'Circles Of Attention opened…' (the control opened, an hour pressed, and '1 session, the last on August 24, 2026.' asserted from 2026-10-17); tests/attributes-phase-2b.test.ts A5 (the opened control's words)"
+  "evidence": "tests/evidence-g31-ui.test.ts 'Circles Of Attention opened…' (the control, an hour pressed, Pitched at your level., and '1 session, the last on August 24, 2026.')"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#ProfileWorkspace": {
   "status": "Rewritten And Verified",
@@ -316,6 +580,12 @@
   "hash": "c1e23c5dbefb",
   "on": "2026-10-17",
   "evidence": "tests/need-paths.test.ts (no card, and a card's whole statement) and tests/evidence-g31-ui.test.ts (the minimum over 65, the statement at 65)"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#sleepOwed": {
+  "status": "Rewritten And Verified",
+  "hash": "fac5b0b305b4",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g32-ui.test.ts 'says the sleep owed in whole hours, one hour singular and none as none' (1, 1.4, 3 and 0.3), and the panel's exact lines on a rested and a tired day"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#TechniquesPanel": {
   "status": "Rewritten And Verified",

@@ -166,11 +166,11 @@ export type PracticeFocus = 'steady' | 'precision' | 'spaced' | 'variation' | 'l
  * - `live`: with a classmate, taking what they give: a little less on the target, some to listening and adaptability.
  */
 export const FOCUS: Readonly<Record<PracticeFocus, { label: string; words: string }>> = {
-  steady: { label: 'Steady', words: 'The exercise as it comes, for the hour.' },
+  steady: { label: 'Steady', words: 'The exercise as it comes, for the whole hour.' },
   precision: { label: 'Precision', words: 'Slow and exact, until it’s right. Pays most on a rested day.' },
-  spaced: { label: 'Spaced', words: 'Picked up cold, a day or more since the last time and within the week; outside that, it costs.' },
-  variation: { label: 'Variation', words: 'Under changing conditions: less on the exercise’s own target, some carried to what it’s kin to.' },
-  live: { label: 'Live With A Partner', words: 'With a classmate, taking what they give: some carried to listening and adaptability.' },
+  spaced: { label: 'Spaced', words: 'Picked up cold, a day to a week after your last session. Sooner or later than that, it costs you.' },
+  variation: { label: 'Variation', words: 'Under changing conditions: less for what the exercise trains, and some carried over to related skills.' },
+  live: { label: 'Live With A Partner', words: 'With a classmate, taking what they give: some carried over to listening and adaptability.' },
 };
 
 export const FOCUS_RATE = {

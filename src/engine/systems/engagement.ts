@@ -74,7 +74,7 @@ export function study(sim: Simulation, person: Person, id: string): { familiarit
   g.familiarity = r2(g.familiarity + 100 * ENGAGEMENT.genre.study * 0.5 ** n * (1 - g.familiarity / 100));
   g.lastAt = sim.now;
   const play = playOfGenre(id);
-  return { familiarity: g.familiarity, with: play ? `${play.title}${play.by ? `, by ${play.by}` : ''}` : `a film of the kind` };
+  return { familiarity: g.familiarity, with: play ? `${play.title}${play.by ? `, by ${play.by}` : ''}` : `a film of its kind` };
 }
 
 /** Practice in a work's genres: one session's worth shared among them, so tags don't count twice. */

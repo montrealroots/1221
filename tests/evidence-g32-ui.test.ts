@@ -246,9 +246,21 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     expect(Math.round(byHand(sim.player.wellbeing))).toBe(88);
     const before = asSaved(sim);
     const { html } = drawn(sim, ProfileWorkspace);
-    expect(condition(sim)).toBe('Current Condition Your readiness for work today Readiness 88 88 at this hour For Work Sufficient Today, nothing holds your work back Energy, Stress 95, 15 Sleep owed 0 hours');
+    expect(condition(sim)).toBe('Current Condition Your readiness for work today Readiness 88 88 at this hour For Work Sufficient Today, nothing holds your work back Energy, Stress 95, 15 No sleep owed');
     expect(html).toContain('<span class="stat-label">For Work</span><span class="stat-value">Sufficient</span>');
     expect(asSaved(sim)).toBe(before);
+  });
+
+  it('says the sleep owed in whole hours, one hour singular and none as none (a defect until 2026-10-17: “Sleep owed 1 hours”)', () => {
+    const sim = ada('g32-condition-owed');
+    sim.advanceTo(at(2026, 8, 24, 14));
+    dials(sim); // TEST SETUP
+    const owed = (hours: number) => { sim.player.wellbeing.sleepDebt = hours; return condition(sim); }; // TEST SETUP: the debt set by hand
+    expect(owed(1)).toContain('Energy, Stress 95, 15 1 hour of sleep owed');
+    expect(owed(1)).not.toContain('1 hours');
+    expect(owed(1.4)).toContain(' 1 hour of sleep owed');
+    expect(owed(3)).toContain(' 3 hours of sleep owed');
+    expect(owed(0.3)).toContain(' No sleep owed');
   });
 
   it('PLAYER JOURNEY: an early riser at nine reads 96 at this hour’s fit against her 88, and at six in the evening 79', () => {
@@ -277,7 +289,7 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     const hour = zonedParts(sim.now, NY).hour;
     expect(hour >= 12 && hour < 17, 'an hour that suits everybody the same').toBe(true);
     const { html } = drawn(sim, ProfileWorkspace);
-    expect(condition(sim)).toBe(`Current Condition Your readiness for work today Readiness ${ready} ${ready} at this hour For Work Held Back Under 60: tiredness holds your work back Energy, Stress ${Math.round(w.energy)}, ${Math.round(w.stress)} Sleep owed ${Math.round(w.sleepDebt)} hours`);
+    expect(condition(sim)).toBe(`Current Condition Your readiness for work today Readiness ${ready} ${ready} at this hour For Work Held Back Under 60: tiredness holds your work back Energy, Stress ${Math.round(w.energy)}, ${Math.round(w.stress)} ${Math.round(w.sleepDebt) ? `${Math.round(w.sleepDebt)} ${Math.round(w.sleepDebt) === 1 ? 'hour' : 'hours'} of sleep owed` : 'No sleep owed'}`);
     expect(html).toContain('<span class="stat-label">For Work</span><span class="stat-value warning">Held Back</span>');
     // Kept up to ten, then a night's sleep to seven.
     while (zonedParts(sim.now, NY).hour < 22) sim.advanceTo(sim.now + MS_HOUR);

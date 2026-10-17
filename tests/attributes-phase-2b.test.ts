@@ -1031,7 +1031,7 @@ describe('A5: an action the player chooses develops each ability, and says what 
     const before = abilityOf(sim, sim.player, 'discipline');
     const first = pressPractice(sim, e);
     // Said before the hour, on the control, by the hour's own figure.
-    expect(first.control).toContain(`+${first.discipline.toFixed(2)} to discipline for the day kept`);
+    expect(first.control).toContain(`+${first.discipline.toFixed(2)} to discipline for a day of practice kept`);
     expect(first.discipline).toBeGreaterThan(0);
     expect(abilityOf(sim, sim.player, 'discipline') - before).toBeCloseTo(first.discipline, 12);
     expect(abilityRow(profile(sim).html, 'Discipline')[6]).toBe(`+${first.discipline.toFixed(2)}, ${sourceWords('practice-day')}`);
@@ -1039,7 +1039,7 @@ describe('A5: an action the player chooses develops each ability, and says what 
     freeAndRested(sim);
     const again = pressPractice(sim, exerciseFor('memory')!);
     expect(again.discipline).toBe(0);
-    expect(again.control).not.toContain('to discipline for the day kept');
+    expect(again.control).not.toContain('to discipline for a day of practice kept');
     // The next day's first hour, kept again.
     tended(sim, sim.now + MS_DAY);
     freeAndRested(sim);
@@ -1082,14 +1082,14 @@ describe('T1: training says its value before the hour and after it (brief 11)', 
       // After: the same gain, the tier's material and that it was pitched where they are.
       expect(first.feedback, d.id).toContain(`${d.label} rose ${first.gained.toFixed(2)}`);
       expect(first.feedback, d.id).toContain(`${matched}: ${EXERCISE_DESIGN[e.id]!.tiers[TIER.label.indexOf(matched as never)]}.`);
-      expect(first.feedback, d.id).toContain('Pitched where you are.');
+      expect(first.feedback, d.id).toContain('Pitched at your level.');
       expect(first.feedback, d.id).not.toMatch(/on it today/);
       // Again the same day: said a repeat before, at half, and after.
       freeAndRested(sim);
       const second = pressPractice(sim, e);
-      expect(second.control, d.id).toContain('hour 2 on it today keeps 50%');
+      expect(second.control, d.id).toContain('hour 2 on it today gives 50% of the first');
       expect(second.control, d.id).toContain(`About +${second.gained.toFixed(2)}`);
-      expect(second.feedback, d.id).toContain('Hour 2 on it today: each repeat keeps half the one before, so another exercise would give more.');
+      expect(second.feedback, d.id).toContain('Hour 2 on it today: each repeat gives half the one before, so another exercise would give more.');
       expect(second.gained / first.gained, d.id).toBeGreaterThan(0.45);
       expect(second.gained / first.gained, d.id).toBeLessThan(0.5);
     }
@@ -1120,7 +1120,7 @@ describe('T1: training says its value before the hour and after it (brief 11)', 
   it('PLAYER JOURNEY: every technique past 90 is said to move no result, on its control before the hour and in the hour’s words after; at 85, neither says it', () => {
     const sim = life('p2b-t1-past');
     tended(sim, on(2026, 9, 5, 12));
-    const past = 'Past 90, no piece of work asks more of a technique: what it adds from here moves no result.';
+    const past = 'Past 90, no piece of work asks more of a technique, so what it adds from here changes no result.';
     let hours = 0;
     for (const t of TECHNIQUES) {
       const e = exerciseFor(t)!;

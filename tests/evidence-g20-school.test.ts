@@ -478,7 +478,7 @@ describe('practice.exercise', () => {
         expect(r.ok, r.error).toBe(true);
         today.push({ gained: r.value!.gained, L, D });
       }
-      expect(hourOf(ada, 'sense-memory').error).toBe('You’ve practiced 4 hours today: past that, more stops helping. Tomorrow.');
+      expect(hourOf(ada, 'sense-memory').error).toBe('You’ve practiced 4 hours today, and more stops helping after that. Practice again tomorrow.');
       hours.push(today);
       level([ada, twin]);
     }
@@ -609,7 +609,7 @@ describe('practice.exercise', () => {
     dials(sim); // TEST SETUP: rested again.
     expect(hourOf(sim, 'concentration').ok).toBe(true);
     for (const e of ['recall-drill', 'adjustments']) { dials(sim); /* TEST SETUP */ expect(hourOf(sim, e).ok).toBe(true); }
-    refused('voice-work', 'You’ve practiced 4 hours today: past that, more stops helping. Tomorrow.');
+    refused('voice-work', 'You’ve practiced 4 hours today, and more stops helping after that. Practice again tomorrow.');
   });
 
   it('PLAYER JOURNEY: a run on the first morning breaks a bone, and an exercise on the feet is refused in trainingRefusal’s words while one at a desk is not', () => {

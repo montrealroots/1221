@@ -38,7 +38,7 @@ describe('an hour’s feedback, from the record', () => {
     sim.player.craft.voice = 100;
     const r = practiceHour(sim, sim.player, EXERCISE_BY_ID['voice-work']!);
     expect(r.gained).toBe(0);
-    expect(r.feedback).toMatch(/it’s full: the work now is in new material/);
+    expect(r.feedback).toMatch(/it’s full\. What’s left is new material/);
     expect(r.feedback).not.toMatch(/rose/);
   });
 });
@@ -51,7 +51,7 @@ describe('an hour that gives less, said why', () => {
     const again = practiceHour(sim, sim.player, EXERCISE_BY_ID['given-circumstances']!);
     expect(again.gained).toBeLessThan(first.gained * 0.6);
     expect(first.feedback).not.toMatch(/on it today/);
-    expect(again.feedback).toMatch(/Hour 2 on it today: each repeat keeps half/);
+    expect(again.feedback).toMatch(/Hour 2 on it today: each repeat gives half/);
     // FIXTURE: a night without sleep.
     sim.advanceTo(sim.now + 2 * MS_DAY);
     Object.assign(sim.player.wellbeing, { energy: 25, sleepDebt: 9 });

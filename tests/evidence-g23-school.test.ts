@@ -558,7 +558,7 @@ describe('work records + journey', () => {
     expect(strong.length, 'the played fall has a strength to name').toBeGreaterThan(0);
     for (const [d, xs] of strong) {
       const best = [...xs].sort((a, b) => b.q - a.q).slice(0, 3).map((b) => `${b.what}: ${r1(b.q)}`).join('; ');
-      expect(text).toContain(`Your ${DIMENSION_LABEL[d].toLowerCase()} runs ahead of the rest: ${r1(avg(xs))} on average across ${xs.length} pieces, against ${r1(mean)} for the whole. From: ${best}.`);
+      expect(text).toContain(`Your ${DIMENSION_LABEL[d].toLowerCase()} runs ahead of the rest: ${r1(avg(xs))} on average across ${xs.length} pieces, against ${r1(mean)} overall. From: ${best}.`);
     }
     for (const [d] of not) expect(text).not.toContain(`Your ${DIMENSION_LABEL[d].toLowerCase()} runs ahead of the rest`);
   });
@@ -624,7 +624,7 @@ describe('work records + journey', () => {
     const answered = onCraft.filter((n) => n.taken === true).length;
     expect(onCraft.length).toBeGreaterThanOrEqual(3);
     expect(journeyOf(sim.player).direction).toMatchObject({ given: onCraft.length, answered });
-    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on the craft, ${answered} answered`);
+    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you answered ${answered}`);
   });
 
   it('names a strength at 4 over the mean and not at 3.9', () => {
