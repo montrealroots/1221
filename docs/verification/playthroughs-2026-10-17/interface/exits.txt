@@ -1,0 +1,9 @@
+695683c4 (tracked changes: 0) npm run build exit=0
+695683c4 (tracked changes: 0) npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json exit=0 sha256=3b0b2de7c2a6e6bc18a0c5103b2d20d47b7b45f3d25bda5043d14e58a3bccbfb
+695683c4 (tracked changes: 0) npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json exit=0 sha256=3df3f81c2ebf1bf4f7cd9bb2e9402f2a5fa674ec0016d1725a439f044e166648
+695683c4 (tracked changes: 0) SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 1440 SAVEDIR exit=0
+695683c4 (tracked changes: 0) SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 390 SAVEDIR exit=0
+695683c4 (tracked changes: 0) SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 1440 SAVEDIR exit=0
+695683c4 (tracked changes: 0) SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 390 SAVEDIR exit=0
+695683c4 (tracked changes: 0) SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 1440 SAVEDIR exit=0
+695683c4 (tracked changes: 0) SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 390 SAVEDIR exit=0

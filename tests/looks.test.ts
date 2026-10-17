@@ -218,9 +218,13 @@ describe('the shape of a look', () => {
     // rule was written around. It is anchored at a word boundary so that
     // McAllen, DeLuca and DreamWorks — all real gazetteer and company
     // spellings — are not mistaken for identifiers.
+    // A year is the world's word for a class or a return, not an identifier (from 2026-10-17, brief 13's interface
+    // playthroughs): until then any run of four digits failed here, and the notice and question looks grouped a year as
+    // a count to pass, "Welcome To The Class Of 2,029" and "Your 2,026 Tax Return".
+    const YEARS = /\b(1[89]|2\d)\d\d\b/g;
     for (const [key, look] of looks) {
       for (const [what, text] of [['name', look.name], ['kind', look.kind]] as const) {
-        expect(text, `${key} ${what} reads as an identifier: ${text}`).not.toMatch(/_|\/|\d{4}/);
+        expect(text.replace(YEARS, ''), `${key} ${what} reads as an identifier: ${text}`).not.toMatch(/_|\/|\d{4}/);
         expect(text, `${key} ${what} is a field name: ${text}`).not.toMatch(/\b[a-z]+[A-Z]/);
         expect(text, `${key} ${what} does not start as a name does: ${text}`).toMatch(/^[\p{Lu}0-9]/u);
       }

@@ -674,6 +674,58 @@ describe('h-needs: What Needs You on Home', () => {
     expect(back.execute({ kind: 'tax.file', payload: { year: 2026 } }).ok).toBe(true);
   });
 
+  /**
+   * DEFECT (brief 13's interface playthroughs, 2026-10-17, `tools/playthroughs-ui.mjs normal`, Home's first morning): a
+   * notice's or a question's title, pressed, opened its look under the year grouped as a count, "Welcome To The Class Of
+   * 2,029" and "Your 2,026 Tax Return". The look's name grouped every run of four digits or more by thousands, a census
+   * tract's reading, and each such run a title carries is a year.
+   */
+  it('PLAYER JOURNEY: the first morning’s Welcome To The Class Of 2029 and February’s Your 2026 Tax Return, each title pressed on Home, open their looks under the year as it’s written, never as a count', () => {
+    const sim = fromAbroad('g32-needs');
+    drawn(sim, Home);
+    press(button('Welcome To The Class Of 2029'));
+    let shown = needs(sim);
+    expect(shown).toContain('Something You Were Told Welcome To The Class Of 2029 Close It came in');
+    expect(shown).not.toContain('2,029');
+    sim.advanceTo(at(2027, 2, 1, 12));
+    h.given = new Map();
+    drawn(sim, Home);
+    press(button('Your 2026 Tax Return'));
+    shown = needs(sim);
+    expect(shown).toMatch(/ Your 2026 Tax Return Close /);
+    expect(shown).not.toContain('2,026');
+  });
+
+  /**
+   * DEFECT (brief 13's interface playthroughs, 2026-10-17, `tools/playthroughs-ui.mjs normal`, the first Saturday): the
+   * panel drew the six heaviest unread notices and said nothing of the rest, and Mark N Read marked them all, so a notice
+   * past the sixth was never on any screen. A new life has fourteen unread by its first Saturday, and The Courses And What
+   * They Ask, the orientation session that sets the term's work, was the thirteenth.
+   */
+  it('PLAYER JOURNEY: more unread than the panel’s six: it says how many more wait and offers Show All; pressed, every one is drawn with its Go There, the seventh heaviest among them; Show The Heaviest Six puts it back; Mark N Read still marks every one', () => {
+    const sim = fromAbroad('g32-needs');
+    sim.advanceTo(at(2027, 2, 1, 12));
+    const n = unread(sim);
+    expect(n).toBeGreaterThan(6);
+    const seventh = [...sim.universe.notifications].filter((x) => !x.read).sort((a, b) => b.importance - a.importance || b.at - a.at)[6]!;
+    const rows = (html: string) => html.match(/<div class="list-item list-static">/g)?.length ?? 0;
+    expect(rows(drawn(sim, Home).html)).toBe(6);
+    expect(needs(sim)).toContain(`${n - 6} more waiting. Show All ${n}`);
+    expect(needs(sim)).not.toContain(seventh.body);
+    drawn(sim, Home);
+    press(button(`Show All ${n}`));
+    expect(rows(drawn(sim, Home).html)).toBe(n);
+    expect(needs(sim)).toContain(seventh.body);
+    expect(needs(sim)).toContain(`All ${n} unread, the heaviest first. Show The Heaviest Six`);
+    drawn(sim, Home);
+    expect(h.buttons.filter((b) => b.text === 'Go There').length).toBe(1 + sim.universe.notifications.filter((x) => !x.read && x.route).length);
+    press(button('Show The Heaviest Six'));
+    expect(rows(drawn(sim, Home).html)).toBe(6);
+    expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
+    expect(rows(drawn(sim, Home).html)).toBe(0);
+    expect(needs(sim)).not.toContain('more waiting');
+  });
+
   it('PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused in the guide’s words and the row stays; read, it files the return and pays what the row said was owed', () => {
     const sim = fromAbroad('g32-needs', { tutorial: true });
     const read = (id: string) => expect(sim.execute({ kind: 'tutorial.read', payload: { chapterId: id } }).ok, id).toBe(true);
