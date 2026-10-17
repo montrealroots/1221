@@ -171,3 +171,40 @@ harness that applies it, runs the test file and restores the source byte for byt
   The trim stays in the one parse all three tables share: confining it to the country table would need a second parse
   to change nothing, and the builder emits all three through it, so a regeneration that brings a stray space to a
   region or a city is trimmed too.
+
+## 5. The guide's `next` was optional, and nothing asked it of an entry
+
+- **What:** `src/engine/content/guide/types.ts` declared `next?: readonly string[]`, the tutorial's seventh question
+  (what to do next), optional while the areas wrote it entry by entry; `src/ui/guide/Help.tsx` read it as
+  `e.next ?? []`, so an entry without it showed no What To Do Next and nothing said so. The coordinator's list asked
+  that `tests/guide.test.ts` require it of every entry once every area was merged, with `next: []` and a reason in the
+  area's batch record for an entry that has nothing to do next.
+- **Confirmed:** every one of the 70 entries in `GUIDE` has `next` (a script over `GUIDE` after the merge). Two are
+  empty, and each has its reason in the papers area's `batches.md`: `documents.residence` ("because moving abroad
+  isn't part of the game") and `papers.pensions` ("because no life reaches a pension's age in the game's span"). No
+  entry lacks it, so there's nothing to list for the coordinator.
+- **Fix:** `next: readonly string[]` is required, its comment saying it was optional until every area was merged;
+  `Help.tsx` reads `e.next` without the fallback. No string changed.
+- **Test:** `tests/guide.test.ts`, "gives every entry what to do next, and leaves it empty only where a batch record of
+  brief 14 says why": every entry's `next` is an array with no blank step, and every entry whose `next` is empty is
+  named in a batch record of `docs/verification/language-2026-10-17/` as "**`next: []`:** `<its id>`, because …".
+- **Shown failing without the fix:** an entry's `next` taken out (`start.home`) fails the test (`start.home next:
+  expected false to be true`) and, with the field required, `tsc -p tsconfig.app.json --noEmit` too (`Property 'next'
+  is missing`), exit 2 each. The guide's and the help's tests (`guide`, `help-mechanics`, `language-money`,
+  `tutorial` and the seven `guide-examples-*`) pass 143 of 143 with the fix.
+- **Mutation run** (four mutations, all killed): an entry without `next`; an entry's `next` emptied with no reason
+  recorded (`start.find`); the reason for `documents.residence` taken out of the papers record; a blank step in an
+  entry's `next`.
+
+## The Checks
+
+Run from this clone after each fix, every exit read from a file: `npx tsc -b --noEmit`, and beside it, from the fifth,
+`npx tsc -p tsconfig.app.json --noEmit` and `npx tsc -p tsconfig.node.json --noEmit` (below); `npx eslint` on the files
+changed; `title-case`, `label-sweep`, `plural-check`, `voice-check`, `tics`, `spelling`, `typos`, `text-inventory
+--check`, `doc-refs --check` and `deciders --check`. Each exited 0 after each fix.
+
+One fault of this pass's own: the fourth fix's test cast the three tables' rows to `Record<string, unknown>[]`, which
+the compiler refuses, and `tsc -b --noEmit` reported a pass on it in this clone; `tsc -p tsconfig.app.json --noEmit` on
+an export of that commit (`d182e81b`) fails. The test was corrected in `4f56e99f`, and the plain `tsc -p` runs were
+added to every check after it. Build mode caught the same error when it was put back by hand afterwards, so what made it
+miss it once isn't known.
