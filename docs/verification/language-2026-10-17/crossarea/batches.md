@@ -223,7 +223,29 @@ Pending are the JSON research text (`genre-demands.json` 149, `home-accounts.jso
 
 ## The Checks
 
-{CHECKS}
+After each step, from the clone, each exit read from a file: `npx tsc -b --noEmit` 0; `npx eslint` on the files
+changed 0; the test files that hold the changed words (each named above) 0; `title-case --check`, `label-sweep`,
+`plural-check`, `voice-check --check`, `tics --check`, `spelling`, `typos`, `text-inventory --check`, `doc-refs --check`
+and `deciders --check` 0.
+
+On the final commit (`71706a77`): all of those 0 again, with `npx eslint . --ext .ts,.tsx --max-warnings=0` 0,
+`guide-quotes --check` 0, `npx vite-node tools/geo-check.mjs` 0, `wired --check`, `inventory --check`, `devmap
+--check`, `traceability`, `capabilities --check` and `student-matrix --check` 0, and `completion-matrix --check` 0 (676
+rows; 527 of 636 in scope Implemented And Verified, 4 Decision Required, decision 4's rows unmoved). `coverage --check`
+1, on the one citation that failed at the merge base (Left, below).
+
+**The whole suite.** First on `5eddcaeb`: 378 of 380 files, 4,638 of 4,640 tests, exit 1. The two were tests holding
+words another area had rewritten (`cbae7d32`): `tests/evidence2-b13.test.ts` held the papers guide's stale HUSKY D quote
+that batch 1 had corrected, and `tests/material-words.test.ts` (the material area's) had failed at the merge base too,
+on the school area's new reason labels (“Why the text supports it”, “Why the text doesn’t support it”), a note's “You
+played … in …” and a scene's place in lower case mid-sentence; it reads the screen's words now, as exactly, and the
+glossary's Material row follows the labels. Then on `71706a77`: **380 of 380 files, 4,640 of 4,640 tests, exit 0** (`full-suite.txt`; the merged baseline's 4,587, the
+areas' additions and this pass's three new tests). `final-checks.txt` is the checks' exits on the same commit.
+
+**The built app:** `npm run build` on `9246c074`, exit 0, served on 4211 by one `vite preview` and stopped by its process
+ids. `tools/text-walk.mjs` at 1440 and 390 on the fourteen scenario saves (350 screens each) and the three notice saves
+(60 each), every walk exit 0; `tools/tutorial-routes.mjs --capture` on the fourteen, exit 0. What they found is in the
+batches above.
 
 ## Left For The Coordinator
 
