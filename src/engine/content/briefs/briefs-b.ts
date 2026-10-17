@@ -47,7 +47,7 @@ export const BRIEFS_B: readonly Brief[] = [
     ],
     language: 'everyday', timing: 2, physical: 0, partner: 2, vocal: 1, improvisation: 0,
     why: {
-      timing: 'The drummer’s count runs under the whole exchange, called by the reader, and she has to land the last line before four; on the tape she stands at a mic stand and plays to his eyeline beside the lens.',
+      timing: 'The drummer’s count runs under the whole exchange, called by the reader, and she has to land the last line before four. On the tape she stands at a mic stand and plays to his eyeline beside the lens.',
       partner: 'She plays against an anger he has to keep off his face for the cameras, and she has to read whether he’ll nod.',
       beats: 'A comic exchange through stage smiles, the plain reason that stops it, then a look at the front row as the count runs out.',
     },
@@ -379,8 +379,8 @@ export const BRIEFS_B: readonly Brief[] = [
     why: {
       partner: 'Every line is found from what the reader says, so the scene exists only between the two of them.',
       improvisation: 'There’s no script: the dialogue is improvised from the outline, the way real people would talk.',
-      techniques: 'The scene is improvised to an outline, playing close to yourself the way a docufiction participant does: improv work.',
-      allows: 'The brief gives an outline with no lines, so it can’t be played as a set text: the structure has to stay open.',
+      techniques: 'The scene is improvised to an outline, playing close to yourself the way a docufiction participant does: improvisation.',
+      allows: 'The brief gives an outline and no lines, so there’s no set text to fix. It can only be played open, found fresh from the reader each time.',
       beats: 'An ordinary sale, a question with no answer ready, then a gift taken without a line.',
     },
     readings: [
@@ -407,7 +407,7 @@ export const BRIEFS_B: readonly Brief[] = [
     why: {
       vocal: 'The voice carries everything: twelve years of her life, held to a microphone with no face to help it.',
       timing: 'Each letter is read to footage that’s already cut, so it has to fit its length.',
-      techniques: 'The scene is a narration read alone at a microphone over picture: voiceover work.',
+      techniques: 'The scene is a narration read alone at a microphone over picture: voice-over work.',
       beats: 'A witty young letter, a wartime one with worry under the news, then a last letter that’s a goodbye to the place.',
     },
     readings: [
@@ -431,7 +431,7 @@ export const BRIEFS_B: readonly Brief[] = [
     ],
     language: 'everyday', timing: 1, physical: 0, partner: 2, vocal: 0, improvisation: 0,
     why: {
-      partner: 'An ensemble scene of two: she listens for when he’s ready to stop talking about the heating.',
+      partner: 'She listens for the moment he’s ready to stop talking about the heating, and plays off everything he says until then.',
       beats: 'A small argument with a big one under it, the honest answer, then the thing said and taken back.',
     },
     readings: [
@@ -558,7 +558,7 @@ export const BRIEFS_B: readonly Brief[] = [
       physical: 'The embrace is the scene’s turn, a set of choreographed moves held through dialogue: the lean in, the hand to the pocket, the stillness when she finds the key.',
       partner: 'They’re reading each other’s every move, and the scene changes with every touch and line.',
       timing: 'The search happens inside the embrace, and the key is found on a set moment.',
-      techniques: 'The embrace is staged intimacy, agreed in advance with an intimacy coordinator and played solo: she leans toward his eyeline beside the lens and never touches the reader, and the jacket stays on her own shoulders, on her side of frame, repeatable on every take; nothing explicit is played.',
+      techniques: 'The embrace is staged intimacy, agreed in advance with an intimacy coordinator and played solo. She leans toward his eyeline beside the lens and never touches the reader, and the jacket stays on her own shoulders, on her side of the frame, so it repeats on every take. None of it is explicit.',
       beats: 'Careful talk, an embrace that’s attraction and search at once, then a discovery that changes the danger.',
     },
     readings: [
@@ -635,7 +635,7 @@ export const BRIEFS_B: readonly Brief[] = [
       physical: 'The kiss and the reach for the glovebox are the scene’s action, choreographed and held in a car seat.',
       partner: 'She has to read whether he believes her every second, and he catches her in the end.',
       timing: 'The reach has to be placed inside the kiss, and the catch lands on a set moment the reader calls.',
-      techniques: 'The kiss is staged intimacy, agreed in advance with an intimacy coordinator and played solo: seated, she leans toward his eyeline beside the lens and stops short, the glovebox is a prop at her knee on her side of frame, and when the reader calls the catch her hand stops as if held; nothing explicit is played, and the scene is about power and danger.',
+      techniques: 'The kiss is staged intimacy, agreed in advance with an intimacy coordinator and played solo. Seated, she leans toward his eyeline beside the lens and stops short. The glovebox is a prop at her knee, on her side of the frame, and when the reader calls the catch her hand stops as if held. None of it is explicit: the scene is about power and danger.',
       beats: 'A broad come-on played back too broadly, a kiss that’s a theft, then the catch.',
     },
     readings: [

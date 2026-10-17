@@ -42,7 +42,7 @@ export const SCORED_SCENES: readonly Scene[] = [
     circumstances: [
       yes('street', 'A street in Naples, where Scapin says the swordsmen hold every way to Géronte’s house', 'His enemies “occupy in companies all the thoroughfares leading to your house,” Scapin says, so he can’t get home by the right or the left.'),
       no('house', 'Inside Géronte’s house, behind a barricaded door', 'That’s where Scapin promises to carry him; the scene never gets there.'),
-      no('real', 'A real danger from the bride’s brother', 'Every bully is Scapin: the footnote gives all the parts in inverted commas to the man he’s personating.'),
+      no('real', 'A real danger from the bride’s brother', 'Every bully is Scapin in disguise: the translation’s footnote gives each line in inverted commas to the man he’s pretending to be.'),
     ],
     relationship: [
       yes('servant', 'Géronte’s son’s servant, who has already tricked him once, and the miser who still trusts him', 'Géronte calls him “my dear Scapin” and asks him to show himself a devoted servant, after the galley.'),

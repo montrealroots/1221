@@ -157,7 +157,7 @@ export const BRIEFS_E: readonly Brief[] = [
     id: 'brief-romantic_comedy', title: 'The Parrot Knows', kinds: ['romantic_comedy'], medium: 'camera', size: 'short',
     logline: 'A pet sitter locked out of a client’s apartment has to ask for the spare key from the neighbor she’s been avoiding since their terrible first date.',
     circumstances: 'A fourth-floor landing on a Saturday afternoon. The door clicked shut behind her with the client’s parrot inside and its medication due in ten minutes. The neighbor across the hall keeps the spare. Three weeks ago they had one date, and she left before dessert.',
-    relationship: 'Neighbors of their clients, one date in, neither sure who embarrassed whom.',
+    relationship: 'One date in: he lives across the hall from her client, and neither is sure who embarrassed whom.',
     you: 'Pia Rautio, twenty-nine, a pet sitter with a schedule and a parrot that repeats things.',
     reader: 'Owen, the neighbor, in his doorway with the key on his finger.',
     objective: 'Get the key without admitting the date mattered to her.',
@@ -226,7 +226,7 @@ export const BRIEFS_E: readonly Brief[] = [
       physical: 'The posture, the bow, the draw and the three exchanges are a samurai’s body held to its forms throughout.',
       timing: 'The draw, the exchanges and the stopped blade are placed by the forms, and the silences around them are held exactly.',
       partner: 'Each exchange answers the reader’s called cue, and the decision in the last beat comes from what Sakon has said.',
-      techniques: 'The swordplay is staged in fixed forms of film sword-fighting, with a straight back, planted heels and the etiquette of drawing and sheathing; for the tape Gonroku marks the three exchanges alone at reduced speed with a replica blade, cutting to the reader’s called cues toward an off-camera eyeline, never at the lens or the reader.',
+      techniques: 'The swordplay is staged in fixed forms of film sword-fighting, with a straight back, planted heels and the etiquette of drawing and sheathing. For the tape, Gonroku marks the three exchanges alone at reduced speed with a replica blade, cutting to the reader’s called cues toward an off-camera eyeline, never at the lens or the reader.',
       beats: 'A formal duty, a fight played to its forms, then a choice made with the back turned that holds the grief in it.',
     },
     readings: [
@@ -327,7 +327,7 @@ export const BRIEFS_E: readonly Brief[] = [
       timing: 'The talk is fast and overlapping, each line cut off by the next, and the fall and the bark land on cues.',
       physical: 'She guards the wardrobe with her body, and the fall onto the bed is the scene’s turn.',
       partner: 'The repartee lives on cutting in on the reader, which only works if she’s listening to every word.',
-      techniques: 'The fast overlapping repartee is screwball comedy’s own and asks comic timing; the catch of the heel is a pratfall, played solo with the reader off camera at the door, worked out slowly first onto a bed or a soft mat and repeatable on every take.',
+      techniques: 'The fast, overlapping repartee is screwball comedy’s own, and it asks for comic timing. The catch of the heel is a pratfall, played solo with the reader off camera at the door, worked out slowly first onto a bed or a soft mat, and repeatable on every take.',
       beats: 'Two comic beats that build to a fall, then a confession made funny by where she makes it.',
     },
     readings: [
@@ -378,7 +378,7 @@ export const BRIEFS_E: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 3, partner: 1, vocal: 0, improvisation: 0,
     why: {
       physical: 'The scene has no spoken lines: every thought is mime and gesture, played to the lens through the face and hands.',
-      timing: 'Each beat is a held look or gesture placed so the camera reads it, the way a silent scene works without title cards.',
+      timing: 'Each beat is a held look or gesture placed so the camera catches it, the way a silent scene works without title cards.',
       beats: 'A comic fall of the face that hurts too, a small temptation played for laughs, then a generous smile.',
     },
     readings: [
@@ -406,7 +406,7 @@ export const BRIEFS_E: readonly Brief[] = [
       timing: 'Each gag lands on a cue: the wrap, the swat, the stagger, the reveal.',
       physical: 'The scene is a body fighting a strip of paper on a wobbling step, then a stagger, a fall and a recovery.',
       partner: 'The swat comes from the reader off frame, and his reaction has to meet her cue exactly.',
-      techniques: 'The fight with the paper and the fall are slapstick’s physical comedy; the swat is a staged blow that lands off frame and is played entirely as his reaction, with no contact, and the stagger off a low step onto the dust sheets is worked out solo, slowly first and repeatable on every take; and the gags ask comic timing.',
+      techniques: 'The fight with the paper and the fall are slapstick’s physical comedy. The swat is a staged blow that lands off frame and is played entirely as his reaction, with no contact. The stagger off a low step onto the dust sheets is worked out solo, slowly at first, and repeats on every take. The gags ask for comic timing.',
       beats: 'A comic struggle, a blow and a fall funny and painful at once, then the luck that saves him.',
     },
     readings: [

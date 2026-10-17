@@ -29,7 +29,7 @@ export const SECOND_C: readonly Brief[] = [
       language: 'The lantern can speak only in rhyme, short couplets with a strong beat, so every line has a shape to keep and the sense has to come through it for a girl who thinks she’s dreaming.',
       timing: 'A rhyme lands on its last word, and the bell in the last beat counts down the lines the lantern has left, so the pace tightens as its hours run out.',
       vocal: 'One small, old, vain voice carries a joke, a warning and a goodbye, with no face to help it.',
-      techniques: 'Voiced alone at the microphone for an animated tale, the lantern’s age, its vanity and its love for the girl are all voice-led work, played to a partner who isn’t in the booth.',
+      techniques: 'Voiced alone at a microphone for an animated tale, it’s all voice-over: the lantern’s age, its vanity and its love for the girl, played to a partner who isn’t in the booth.',
       beats: 'A grand introduction played for laughs, a test it shows off in, a warning, and a goodbye against the bell.',
     },
     readings: [
@@ -123,8 +123,8 @@ export const SECOND_C: readonly Brief[] = [
     why: {
       timing: 'Every door opens on a cue, and every story has to be finished before the next door does: the comedy is in landing each lie on its beat.',
       physical: 'Runs between three doors set to the inch on the floor marks, and one beat where he answers all three without moving his feet.',
-      partner: 'Three guests from one reader, each at him in a voice of their own, and every lie shaped to who’s at the door.',
-      techniques: 'Comedy for the lies against three sets of questions; clown for the runs, the doors and the frozen feet, set on floor marks so they repeat safely on every take.',
+      partner: 'One reader plays all three guests, each at him in a voice of their own, and every lie is shaped to who’s at the door.',
+      techniques: 'Comedy carries the lies against three sets of questions, and clowning the runs, the doors and the frozen feet, set on floor marks so they repeat safely on every take.',
       beats: 'Three lies at three doors, a fourth beat where the lies meet, one quiet confession, then a way out.',
     },
     readings: [
@@ -162,7 +162,7 @@ export const SECOND_C: readonly Brief[] = [
       physical: 'The ledger, the dial and the watch are handled on his side of the frame with a steadiness the scene rests on: the hands give nothing away.',
       partner: 'Danny presses from every side, and every answer is shaped to what he has just tried.',
       vocal: 'Two voices: the dry, even one at the counter, and the narration, closer and older, knowing how the night ends.',
-      techniques: 'The narration is an account given afterward, played as voiceover in its own register and recorded off camera in the same session, so it’s played to a microphone with no face to show it.',
+      techniques: 'The narration is an account given afterward, played as voice-over in its own register and recorded off camera in the same session, so it’s played to a microphone with no face to show it.',
       beats: 'A broker’s creed, a joke and a rule, a threat met with a steady hand, an offer in its place, then a narration that won’t say if he was right.',
     },
     readings: [
@@ -218,8 +218,8 @@ export const SECOND_C: readonly Brief[] = [
     why: {
       partner: 'Dana steers every turn from behind the lens, and Rosa plays two eyelines: the lens for the future, and just beside it for her friend.',
       improvisation: 'The brief gives the beats and the objective and leaves every word to the take, the way the form is made.',
-      techniques: 'Improv carries the tape: every line is found live inside the beats, in answer to what Dana asks; the lens she talks to is the screen work every self-tape asks.',
-      allows: 'With no written lines, the words come fresh from what the reader asks in each take, so the scene can’t be set and repeated.',
+      techniques: 'Improvisation carries the tape: every line is found live inside the beats, in answer to what Dana asks. The lens she talks to is the on-camera work every self-tape asks for.',
+      allows: 'With no written lines, the words come fresh from what the reader asks in each take, so it can only be played open, never set and repeated.',
       beats: 'A home video, a question dodged, and the truth told to a listener who doesn’t exist yet.',
     },
     readings: [
@@ -273,8 +273,8 @@ export const SECOND_C: readonly Brief[] = [
       timing: 'Every line has to land on lips already filmed, so the charm, the shock and the cover all come at the picture’s pace.',
       partner: 'The concierge’s recorded lines are fixed, and each of Marta’s has to coax the next one out of her.',
       vocal: 'The voice carries the turn from flattery to dread while the face on the screen is already set.',
-      techniques: 'A dub is voice-led work at a microphone: the performance has to match a face filmed without sound and still sound like a woman thinking in the moment.',
-      allows: 'The filmed lips fix where every line falls and how long it runs, so the scene is set and repeated take to take.',
+      techniques: 'A dub is voice-over work at a microphone: the performance has to match a face filmed without sound and still sound like a woman thinking in the moment.',
+      allows: 'The filmed lips fix where every line falls and how long it runs, so it can only be played set, the same every time.',
       beats: 'Flattery, a description, a detail that turns the scene, and a cover held to the end of the shot.',
     },
     readings: [
@@ -334,10 +334,10 @@ export const SECOND_C: readonly Brief[] = [
     language: 'everyday', timing: 3, physical: 3, partner: 2, vocal: 1, improvisation: 0,
     techniques: { combat: 2 },
     why: {
-      timing: 'The fight is set to the reader’s calls and each move lands on its cue; the jokes around it need the same precision.',
+      timing: 'The fight is set to the reader’s calls, and each move lands on its cue. The jokes around it need the same precision.',
       physical: 'A short, hard fight against two men, four moves and the reactions to them, then stillness, all marked solo at half speed and set so it repeats on every take.',
       partner: 'Lonnie is the only one she talks to, and she plays the fight to his calls and to his embarrassment.',
-      techniques: 'Combat for the four moves, choreographed and marked solo at reduced speed against called cues, contact reacted to and never made, with the reader well clear and every strike angled away from the lens.',
+      techniques: 'Stage combat carries the four moves: choreographed and marked solo at reduced speed against called cues, contact reacted to and never made, with the reader well clear and every strike angled away from the lens.',
       beats: 'Courtesy, an ultimatum, a fight played with grim relish, and a receipt.',
     },
     readings: [
@@ -366,8 +366,8 @@ export const SECOND_C: readonly Brief[] = [
     why: {
       partner: 'The pleasure of the scene is in how she listens to him, and he never takes the same tangent twice.',
       improvisation: 'The brief gives the beats and leaves the talk to the take, so each argument and tangent is found live with the reader.',
-      techniques: 'Improv for the talk, unhurried and found in the moment, built on whatever the reader offers.',
-      allows: 'With the talk left to the take, each night on the roof goes differently, so the scene can’t be set and repeated.',
+      techniques: 'The talk is improvised, unhurried and found in the moment, built on whatever the reader offers.',
+      allows: 'With the talk left to the take, each night on the roof goes differently, so it can only be played open, never set and repeated.',
       beats: 'An argument about clouds, a tangent worth following, a quiet admission, and a streak that keeps him up there.',
     },
     readings: [
@@ -525,7 +525,7 @@ export const SECOND_C: readonly Brief[] = [
     techniques: { voiceover: 3 },
     why: {
       vocal: 'Two voices in one throat: the book’s narration, polished and even, and her own between the lines, held as steady as the narration while it fills with dread.',
-      techniques: 'Audiobook narration is voice-led work at a microphone, and the scene asks for it at its most exact: the read can’t crack even as what it reads turns on her.',
+      techniques: 'Audiobook narration is voice-over work at a microphone, and the scene asks for it at its most exact: her reading can’t crack even as the book turns on her.',
       beats: 'A routine session, a coincidence, a silence on the talkback, and a page turned anyway.',
     },
     readings: [
@@ -556,7 +556,7 @@ export const SECOND_C: readonly Brief[] = [
       physical: 'Flashlight business and the creature’s gestures, played seated and then standing on her side of the frame, while her eyes keep checking the same spot past the lens.',
       partner: 'Owen interrupts somewhere new every time, and she has to fold each interruption into the story.',
       vocal: 'Every voice in the story, the narrator’s hush and the creature’s growl, held steady while her own fear runs under them.',
-      techniques: 'The comedy is in the situation, a storyteller trapped inside her own story, and it lands only with the fear played straight under it; the comic timing of the rewrites is the scene’s own.',
+      techniques: 'The comedy is in the situation, a storyteller trapped inside her own story, and it lands only with the fear played straight under it. The comic timing of the rewrites comes from the scene itself.',
       beats: 'A hammy opening, a heckle, a sighting, a rewrite on the run, and the true ending at full speed.',
     },
     readings: [
@@ -588,7 +588,7 @@ export const SECOND_C: readonly Brief[] = [
       timing: 'Bram’s lines are fixed on the track, so each of hers has to set up the one of his six it will get and fit the space before it.',
       partner: 'His six lines never change, and what they mean changes completely as she learns what she’s up against.',
       vocal: 'The voice goes from a giddy fan in a world she knows by heart to a woman pleading with a man who can’t hear her, with no face to help.',
-      techniques: 'Voiced alone for an animated series against a recorded partner, the scene’s comedy, horror and tenderness are all voice-led work, played to six lines in the headphones.',
+      techniques: 'Voiced alone for an animated series against a recorded partner, it’s all voice-over: the scene’s comedy, horror and tenderness, played to six lines in the headphones.',
       beats: 'Three beats of a fan’s delight, then the chapter she remembers, a plea that hits a wall of fixed lines, and one new word.',
     },
     readings: [
@@ -620,7 +620,7 @@ export const SECOND_C: readonly Brief[] = [
       timing: 'The clappers open and close the scene on a count, the two exchanges are set to the reader’s calls, and the question about the dropped sword needs a pause long enough for the young man to choose his answer.',
       physical: 'A townsman’s bows to a samurai, held low and long, then two exchanges with a six-foot staff and the stillness after them, in an old body that hasn’t done this in years.',
       partner: 'The young man is drunk and changes from one line to the next, so each courtesy answers the mood in front of it, and the last beat waits on what he decides.',
-      techniques: 'Classical for the deferential register and its set phrases, spoken with weight and never modernized; combat for the two staff exchanges, marked solo at half speed with a light replica staff against the reader’s called cues, kept low and angled away from the lens and the reader’s eyeline, the sword reacted to and never shown, and repeated exactly on every take.',
+      techniques: 'Classical text work carries the deferential register and its set phrases, spoken with weight and never modernized. Stage combat carries the two staff exchanges, marked solo at half speed with a light replica staff against the reader’s called cues, kept low and angled away from the lens and the reader’s eyeline, the sword reacted to and never shown, and repeated exactly on every take.',
       beats: 'A rule repeated, an offer taken as an insult, a fight he can’t be seen to win, a fiction that lets the young man keep his face, and one soft clap for the next gate.',
     },
     readings: [
@@ -657,7 +657,7 @@ export const SECOND_C: readonly Brief[] = [
       physical: 'He leads a dance floor through three numbers, a few steps set and danced solo, and keeps them up the length of the medley: the songs carry the scene, and the body keeps time with them.',
       partner: 'His uncle pushes in at every chorus, and each time Tom has to turn him without dropping the song.',
       vocal: 'Three songs sung live as the character, a man who can sing a bit, never as an impression of the records.',
-      techniques: 'Singing for the medley, sung as the character and never as an impression of whoever made the songs famous; dance for the steps he leads, set and danced solo with the reader well clear.',
+      techniques: 'The medley asks for singing, as the character and never as an impression of whoever made the songs famous, and the steps he leads ask for dance, set and danced solo with the reader well clear.',
       beats: 'A speech that fails, a song to the doors, an uncle turned into a dancer, a song to an empty chair, then the doors.',
     },
     readings: [

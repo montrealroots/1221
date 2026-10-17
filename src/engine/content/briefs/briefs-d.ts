@@ -100,14 +100,14 @@ export const BRIEFS_D: readonly Brief[] = [
     ],
     language: 'heightened', timing: 1, physical: 1, partner: 2, vocal: 2, improvisation: 0,
     why: {
-      language: 'The lines are declarations: every feeling is named aloud, at full size, the way the form speaks.',
+      language: 'The lines are declarations: every feeling is named aloud, at full size, the way melodrama speaks.',
       vocal: 'The confrontation rises to its peak and drops to the confession, and the voice carries both.',
       partner: 'Each accusation answers the daughter’s last one.',
       beats: 'Outrage, then a quarrel where her laugh turns ugly, then a secret that turns the scene round.',
     },
     readings: [
-      { id: 'full', label: 'Full Out', reading: 'The form’s register played to the hilt: the outrage, the laugh and the confession each given everything.', rests: 'The lines name every feeling aloud, and she has rehearsed this for a year.', lean: { execution: 1.2, connection: 1.15 }, draws: [{ dim: 'execution', ability: 'vocal', weight: 0.6 }, { dim: 'connection', ability: 'presence', weight: 0.6 }] },
-      { id: 'held', label: 'Held Back', reading: 'The same declarations held under tight control, so the size is in what she won’t let out until the last beat.', rests: 'She has kept a secret all her life, and it comes out only when she gives the ticket back.', lean: { believability: 1.2, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'consistency', ability: 'composure', weight: 0.5 }] },
+      { id: 'full', label: 'Full Out', reading: 'She plays the melodrama to the hilt, and the outrage, the laugh and the confession are each given everything.', rests: 'The lines name every feeling aloud, and she has rehearsed this for a year.', lean: { execution: 1.2, connection: 1.15 }, draws: [{ dim: 'execution', ability: 'vocal', weight: 0.6 }, { dim: 'connection', ability: 'presence', weight: 0.6 }] },
+      { id: 'held', label: 'Held Back', reading: 'She makes the same declarations under tight control, so the size is in what she won’t let out until the last beat.', rests: 'She has kept a secret all her life, and it comes out only when she gives the ticket back.', lean: { believability: 1.2, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'consistency', ability: 'composure', weight: 0.5 }] },
     ],
   },
   {
@@ -156,7 +156,7 @@ export const BRIEFS_D: readonly Brief[] = [
       timing: 'The comedy is in the pauses the producer leaves and how long she lets them run before filling them.',
       partner: 'Each answer is shaped by the question, and by what she guesses the footage shows.',
       techniques: 'The interview is improvised in character, so the scene needs the improviser’s skill of building on each offer without breaking.',
-      allows: 'The brief gives her facts and questions and leaves the words to her, so a version learned word for word would be a different scene.',
+      allows: 'The brief gives her facts and questions and leaves the words to her, so it can only be played open. A version learned word for word would be a different scene.',
       beats: 'A confident pitch, a story that unravels as she tells it, then a sincere moment held together with the joke of her looking at the camera.',
     },
     readings: [
@@ -238,7 +238,7 @@ export const BRIEFS_D: readonly Brief[] = [
       physical: 'The second beat is a dance between the lanes, played to an owner who won’t join in.',
       partner: 'She’s singing to change his mind, and she watches for the line that reaches him.',
       vocal: 'The scene carries a whole song, quiet to full and back.',
-      techniques: 'She sings the song, written for the character, through all its verses, and dances a simple routine in the second beat, beckoning toward the off-camera eyeline where he stands; it’s taped solo, so he never joins her in frame, and both the song and the dance tell the story.',
+      techniques: 'She sings the song, written for the character, through all its verses, and dances a simple routine in the second beat, beckoning toward the off-camera eyeline where he stands. It’s taped solo, so he never joins her in frame, and both the song and the dance tell the story.',
       beats: 'A comic, tender opening, the joy of the dance, a turn into grief in the last verse, then the plain handing over of the keys.',
     },
     readings: [
@@ -291,7 +291,7 @@ export const BRIEFS_D: readonly Brief[] = [
     why: {
       timing: 'Each line is written to a shot and must fit its length, with the pauses left for the pictures.',
       vocal: 'The whole performance is the voice: warmth, clarity and the shifts in tone between beats.',
-      techniques: 'A narration recorded alone to picture is voiceover work: steady at the microphone, timed to the cut, intimate with one listener.',
+      techniques: 'A narration recorded alone to picture is voice-over work: steady at the microphone, timed to the cut, intimate with one listener.',
       beats: 'Quiet wonder, a gentle joke at the heron’s expense, the hard fact of the drought, then relief.',
     },
     readings: [

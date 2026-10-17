@@ -53,7 +53,7 @@ export const MEETING_SCENES: readonly Scene[] = [
     circumstances: [
       yes('meeting', 'Evening, a big old-fashioned room with a platform, nearly filled with a crowd of townspeople of all sorts; the newspaper’s man taking it down', 'The room is soon filled, the citizens have brought their whistles, and Billing sits writing for the People’s Messenger.'),
       no('hall', 'The town’s own hall, lent for the lecture', 'Neither the Householders’ Association nor the Citizens’ Club would lend him their hall, nor the Baths theirs.'),
-      no('private', 'The two brothers alone', 'They speak to the meeting and through its chairman; that was the second act, in the doctor’s sitting room.'),
+      no('private', 'The two brothers alone', 'They speak to the meeting, through its chairman. The brothers were alone in the second act, in the doctor’s sitting room.'),
     ],
     relationship: [
       yes('brothers', 'Brothers, the Mayor and the Medical Officer of the Baths he chairs', 'Peter speaks of “the close relationship in which, as you all know, I stand to the present Medical Officer of the Baths.”'),
