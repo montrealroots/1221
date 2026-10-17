@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 606 of 636 rows in scope Implemented And Verified (95.2%); 26 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 611 of 636 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
 ## Totals
 
@@ -46,16 +46,16 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 10 Area: stamina | 13 | 12 |  |  |  |  |  | 1 |
 | Criteria: The Stage | 11 | 9 |  |  |  |  |  | 2 |
 | Criteria: Interpretation | 5 | 5 |  |  |  |  |  |  |
-| Criteria: The Attributes | 25 | 21 | 1 |  |  |  |  | 3 |
+| Criteria: The Attributes | 25 | 22 |  |  |  |  |  | 3 |
 | Criteria: Long-Term Continuity | 3 | 2 |  |  |  |  |  | 1 |
-| Criteria: Mastery Through Play | 8 | 7 | 1 |  |  |  |  |  |
+| Criteria: Mastery Through Play | 8 | 8 |  |  |  |  |  |  |
 | Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
-| Integration | 9 | 5 | 4 |  |  |  |  |  |
+| Integration | 9 | 8 | 1 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 6 |  |  |  |  | 1 |  |
 | Brief 12: Replacement Criteria | 4 | 3 |  |  |  |  | 1 |  |
 | Brief 13 Area: interface | 4 | 4 |  |  |  |  |  |  |
 | Brief 13 Area: journeys | 33 | 33 |  |  |  |  |  |  |
-| **All** | **676** | **606** | **26** | **0** | **0** | **0** | **4** | **40** |
+| **All** | **676** | **611** | **21** | **0** | **0** | **0** | **4** | **40** |
 
 ## Life, Health And Time
 
@@ -766,7 +766,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `H7` | Randomness doesn’t overwhelm skill, and still exists | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
 | `H4` | Specialists are advantaged on suitable work | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4… |
 | `F2` | Acting on the first-named weakness pays more than training at random (as written) | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md |
-| `F2-A` | The advice’s first-named input is the largest realized gain, played | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/… |
+| `F2-A` | The advice’s first-named input is the largest realized gain, played | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/… |
 | `G1` | A genre’s label predicts what its work asks (as written) | Explicitly Deferred | Superseded | docs/verification/genres-2026-10-16/g1-replacement.md |
 | `A4` | What the game says an ability does, it does | Implemented And Verified | Met | docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A4); docs/verification/compl… |
 | `A5` | Every ability can be developed by an action the player chooses, and says what moved | Implemented And Verified | Met | docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A5); docs/verification/compl… |
@@ -793,7 +793,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `MA4` | An ability read twice by one dimension is counted once, at its summed weight | Implemented And Verified | Met | tests/integration-mastery.test.ts |
 | `MA6` | At mastery no draw moves a result off 100 | Implemented And Verified | Met | tests/engine-properties.test.ts |
 | `MA7` | Each shortfall a take has is named in words | Implemented And Verified | Met | tests/integration-mastery.test.ts |
-| `MA5` | A played mastery plan reaches 100 on every payoff tape | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification… |
+| `MA5` | A played mastery plan reaches 100 on every payoff tape | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification… |
 | `MA8` | Mastery in the work doesn’t stand in for the work the school asks: a mastered student who misses pieces is Unready on them and the review c… | Implemented And Verified | Met | tests/integration-mastery.test.ts |
 
 ## Criteria: The Genres
@@ -815,9 +815,9 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `INT-duplicates` | A command sent twice (a repeat click, a duplicate submission) is lived once, across a reload | Implemented And Verified | Met | tests/briefs.test.ts; tests/engagement.test.ts; tests/base44-contract.test.ts |
 | `INT-migration` | An older save opens, migrates and plays on | Implemented And Verified | Met | tests/save-migration.test.ts; tests/migration-94.test.ts |
 | `INT-missed-term` | A term played with missed pieces and a missed revision: warning, forecast, notices and review count alike, once, through reloads | Implemented And Verified | Met | tests/remaining-school-term.test.ts |
-| `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Implemented, Verification Incomplete | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
-| `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Implemented, Verification Incomplete | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
-| `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/ru… |
+| `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Implemented And Verified | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
+| `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Implemented And Verified | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
+| `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/ru… |
 | `INT-gate` | The gate and the build on the final revision | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-… |
 
 ## Known Shortfalls And Missing Tests
@@ -892,7 +892,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (26)
+### Implemented, Verification Incomplete (21)
 
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
 - **`bank.cancel_new`** (Money): Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 Au…
@@ -914,11 +914,6 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`banking.2.stop_balance_transfer`** (Brief 09 Area: banking): owner decision
 - **`banking.2.take_overrun_loan`** (Brief 09 Area: banking): owner decision
 - **`banking.2.money_transfer`** (Brief 09 Area: banking): owner decision
-- **`F2-A`** (Criteria: The Attributes): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
-- **`MA5`** (Criteria: Mastery Through Play): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
-- **`INT-skipped`** (Integration): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
-- **`INT-navigation`** (Integration): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
-- **`INT-long-runs`** (Integration): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
 - **`INT-gate`** (Integration): It was measured on ac79bf4a, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
 
 ### Partially Implemented (0)

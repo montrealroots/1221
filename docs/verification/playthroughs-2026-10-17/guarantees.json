@@ -3,7 +3,7 @@
  "guarantees": [
   {
    "guarantee": "Maximum-quality prepared mastery",
-   "held": false,
+   "held": true,
    "rows": [
     {
      "id": "M1",
@@ -22,9 +22,9 @@
     {
      "id": "MA5",
      "group": "Criteria: Mastery Through Play",
-     "status": "Implemented, Verification Incomplete",
-     "held": false,
-     "why": "It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again"
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
     },
     {
      "id": "MA6",
@@ -44,14 +44,11 @@
    "figures": [
     {
      "figure": "the mastery plans (runs13.sh D)",
-     "said": "not run",
-     "held": false
+     "said": "6 of 6 played plans at 100 on every payoff tape",
+     "held": true
     }
    ],
-   "open": [
-    "MA5 (Implemented, Verification Incomplete: It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again)",
-    "the mastery plans (runs13.sh D): not run"
-   ],
+   "open": [],
    "beside": []
   },
   {
@@ -202,7 +199,7 @@
   },
   {
    "guarantee": "Accurate advice forecasts",
-   "held": false,
+   "held": true,
    "rows": [
     {
      "id": "advice.F2A10-b",
@@ -243,13 +240,11 @@
    "figures": [
     {
      "figure": "F2-A’s forty cases (runs13.sh ADVR)",
-     "said": "not run",
-     "held": false
+     "said": "40 of 40 advice cases: the first named input the best to raise",
+     "held": true
     }
    ],
-   "open": [
-    "F2-A’s forty cases (runs13.sh ADVR): not run"
-   ],
+   "open": [],
    "beside": []
   },
   {
@@ -347,7 +342,7 @@
   },
   {
    "guarantee": "Ledger balance",
-   "held": false,
+   "held": true,
    "rows": [
     {
      "id": "journeys.7-ledger",
@@ -360,8 +355,8 @@
    "figures": [
     {
      "figure": "the long runs (runs13.sh B, C, D)",
-     "said": "not run",
-     "held": false
+     "said": "breaches 0, unbalanced 0 across the lives, the workload runs and the variety run",
+     "held": true
     },
     {
      "figure": "the journeys’ check on money (check 6, the ledger balanced at every reload)",
@@ -369,9 +364,7 @@
      "held": true
     }
    ],
-   "open": [
-    "the long runs (runs13.sh B, C, D): not run"
-   ],
+   "open": [],
    "beside": []
   },
   {

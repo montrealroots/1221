@@ -2056,7 +2056,7 @@
    "commit": "51cdd7d6",
    "blocksCompletion": false,
    "test": "tools/acceptance-ui.mjs: on the workload save, Table Work offers no way of playing; the circumstances choice on the roundups save's scene study",
-   "rerun": "lane A again on None, the game's code unchanged: 0 steps, not exit 0: A not run (runs/exits-A.txt)"
+   "rerun": "lane A again on 51cdd7d6, the game's code unchanged: 4 steps, every one exit 0 (runs/exits-A.txt)"
   }
  ],
  "limitations": [

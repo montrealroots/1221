@@ -39,7 +39,7 @@ all over. That is the run the figures read.
 |---|---|---|
 | `build.log` | `npm run build` | exit 0 |
 | `saves/` | `node tools/scenario-saves.mjs <dir>` | 14 of 14 exit 0 (the saves aren't kept) |
-| `acceptance/` | `npx vite preview --port 4189`, then `SLATE_BASE=http://localhost:4189 node tools/acceptance-ui.mjs <out> 1440 <saves>` and 390 | ACCEPTANCE |
+| `acceptance/` | `npx vite preview --port 4189`, then `SLATE_BASE=http://localhost:4189 node tools/acceptance-ui.mjs <out> 1440 <saves>` and 390 | 77 passed, 0 failed, 0 skipped, 0 errors, 0 overflows at each width, on `51cdd7d6`; brief 12 had 76, and the workload save’s step is two now (above) |
 | `lives.jsonl` | `npx vite-node tools/lives.ts -- --why --profile <p> --seed lives-<n> --years 3.2`, a life at a time | 24 lives: 20 graduated, the 4 dismissed the autopilot control's (Reykjavík); breaches, unbalanced and errors 0, as brief 12's |
 | `workload-*.json` | `npx vite-node tools/workload.ts -- --seed <s> --profile <p> --years 1.4 --policy <q> --out <file>` | every standing as brief 12's, 0 breaches |
 | `plan-*.json` | `npx vite-node tools/mastery.ts -- --mode plan --genre <g> --seed <s> --years 8` | brief 12's byte for byte: 6 of 6 at 100 on every payoff tape |

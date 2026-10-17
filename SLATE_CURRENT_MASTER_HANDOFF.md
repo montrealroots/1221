@@ -1,6 +1,148 @@
-# Read First: Brief 12, Resolving The Remaining Decisions And Completing The Authorized Build, 2026-10-17
+# Read First: Brief 13, The Final Acting Clauses And The Playthroughs, 2026-10-17
 
 **This section is the current status, and where a new session starts.** Every section below is history. It was written
+at the end of the owner's "Resolve The Final Acting Clauses And Validate Through Multiple Playthroughs"
+(`docs/verification/briefs-2026-10-16/13-resolve-the-final-acting-clauses-and-validate-through-multiple-playthroughs.txt`,
+kept verbatim), worked on `claude/peaceful-hamilton-59zdbb` from `main` at `102ba8f2` (#39's merge). It is pushed, and it
+is not merged: merging is the owner's word. **Nothing is deployed.**
+
+## 1. The Repository
+
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `102ba8f2`, #39's merge.
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 13's commits on `102ba8f2`
+  (`git log --oneline 102ba8f2..origin/claude/peaceful-hamilton-59zdbb`), pushed and never force-pushed. Its three areas
+  (acting, journeys, interface) were merged into it from their clones with merge commits.
+- **The tested code is `7e7a3af6`'s.** Every final run was made on it (`docs/verification/playthroughs-2026-10-17/runs/`),
+  except lane A's second run, on `51cdd7d6`, which changed only the acceptance tool. The gate runs last, on the commit
+  `runs/gate.txt` names, with only documents changed after it. Each run's commit, command and exit is in
+  `runs/exits-*.txt`.
+- **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
+  worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
+
+## 2. Where It Stands
+
+**Completion, by the matrix:** 611 of 636 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+- **Against the frozen baseline** (brief 11's, the matrix at `0e7ff7c2`, 608 rows in scope): **572 of 608 (94.0%)
+  Implemented And Verified**, as at brief 13's start. The 36 others are decision 4's 23, the 4 rows superseded by
+  ST6-R2, and brief 11's 9 administrative rows: no baseline row in the authorized scope is left to close.
+- **The 46 actionable rows** (`docs/verification/playthroughs-2026-10-17/RECEIPT.md`, by `receipt.py`): 39 closed, 4
+  superseded by the owner's authorization, 1 scope resolution, 2 research assumptions, 0 remaining.
+- **The replacement rows:** ST6-R2.a, .c and .g verified; **ST6-R2.e is Decision Required** (section 4).
+- **Brief 13's own clauses,** 37 rows (journeys 33, interface 4): all verified, on the tested commit's runs.
+- **Decision 4's 23 rows are unchanged**, and so are brief 11's 9 administrative rows, counted apart.
+- **The game is not complete, and no score is claimed for it.** What was shown, and what only a person can judge, is in
+  section 4.
+
+## 3. What Brief 13 Did
+
+Three areas, each in its own clone, worked from instructions written before their work
+(`docs/verification/playthroughs-2026-10-17/prompts/`). The coordinator integrated them and ran the final verification.
+
+- **Section 1, ST6-R2.c: verified** (`acting-criteria.md`, committed in `e1ed27fa` before any test, tool or measurement;
+  `acting-result.json`; `acting/trace.json`).
+  - **The ten readings at ±0.01:** one cause, `grainOf`'s internal quantization. It keeps the grain's share of
+    difficulty to a hundredth, and at ±0.01 every share is under half of one (0.0005 to 0.0039), so the grain comes to
+    nothing. That isn't display rounding, which is the result's tenth, and it isn't a gameplay limit, since no floor,
+    hold or cap is reached. Carried at full precision, each would move the right way, by 0.063 at most. From ±0.02 every
+    take moves the right way, and none of 784 moves the wrong way. The hundredth had been undocumented; `grainOf`'s
+    comment now says it.
+  - **"Unrelated," from the engine's dependency path, not a cutoff:** each ability is direct, small, indirect or none,
+    on each piece, from the context the judge reads. 1/12 wasn't adopted.
+  - **The 65 of 6,344 pairs:** none involves an unrelated ability. Each lead is the equal budget's arithmetic, against
+    the grain and under a tenth, where believability alone is the bottom of the even actor's take.
+  - **The rows:** c21 to c43 are met for fourteen actors, and nine tests were added to `tests/decisions-judge.test.ts`.
+    The mutations h1 to h14 were all killed.
+  - **History:** brief 12's (c2) and (c4) stay not met as written, and nothing was passed retroactively.
+- **Section 2, ST6-R2.e: still the owner's** (Decision Required). (e1) holds. The ceiling cases are kept, the
+  comparison actors were made below the ceiling before measuring, the material is the catalog's, and the fresh actors
+  were run once. (e2) and (e3) aren't met as written. On some pieces the scene's grain, not the abilities, decides the
+  margin, and on stage size's ten gains fall too heavily on one play for (e3.5)'s floor. The area's question and recommendation are in section 4.
+- **Section 4, the journeys** (`journeys-criteria.md`, its expectations written before any ran; `journeys-result.json`):
+  - **25 runs:** 23 complete school journeys and 2 focused scenarios, on 19 seeds (each advice triple shares one), from
+    creation to the end, each with ten checks. 22 graduated, two of them in 2030 after a repeated year or a medical
+    leave. The two who neglected the coursework (J15, J16) were dismissed, as expected.
+  - **J21 didn't end as expected:** SLATE's mortality draw (`systems/mortality.ts`) ended the life at 26, on 9 November
+    2028. The area recorded it as not a defect and added J23 to the same health profile; J23 graduated. Whether a draw
+    like that belongs in a school journey is the owner's to judge.
+  - **The players:** beginners, generalists, specialists and mastered actors, who follow, partly follow or ignore the
+    advice, with missed work, money held back and illness or injury. Some fail by neglect, as expected, and some
+    recover.
+  - **Five game defects fixed,** each with a test:
+    - D1, a classmate's evening after the School's end;
+    - D2, a warning naming a part by its tie;
+    - D3, a way of playing on written work;
+    - D4, the next round's parts counted;
+    - D5, a partner's evening asked while hurt.
+  - **Played again on the tested commit** (`journeys-final/`): 25 of 25 to the end, all ten checks passed, each ending
+    as the area's run ended.
+- **Section 5, the interface** (`interface-criteria.md`, `interface-result.json`): three playthroughs of the built app,
+  at 1440 and 390.
+  - **The routes:** a new life to its first scene, a setback and its recovery, and a specialist's preparation,
+    performance, advice and training.
+  - **What each exercised:** navigation, drill-downs, unavailable actions' reasons, confirmations, notifications, and
+    save and continue.
+  - **Two defects fixed:** Home's hidden notices past the sixth, and a year shown as "2,029".
+  - **Played again on a build of the tested commit** (`interface-final/`): 14, 9 and 11 steps, all passed at both
+    widths.
+  - **The owner's route:** `PLAYTEST.md`, about twenty minutes. Automated runs are not usability approval.
+- **Section 6, continuity and freshness:** in the journeys' records (`journeys/`).
+  - Completed work stays completed.
+  - No warning or concern came twice in a term, and nothing of the School's ran after its end.
+  - The advice acknowledged changes in 3,741 weekly reads.
+  - Each repetition was counted and kept where justified. No advice was rotated to make a count smaller.
+- **Section 7, the guarantees:** `GUARANTEES.md`, by `guarantees.py`, from the matrix, the final runs and the gate.
+  It is read again once the gate has run.
+- **Section 8, the final runs** (`runs/README.md`, `final/README.md`).
+  - **The judge's outputs:** byte for byte brief 11's, all 31.
+  - **The acting area's measurements:** byte for byte its own.
+  - **The advice's runs:** brief 12's in every field but the commit, command and paths.
+  - **The mastery plans, variety and freshness:** brief 12's byte for byte.
+  - **What moved:** six of 24 lives, by tenths. Standings, breaches and balance didn't move. Four workloads' warnings
+    now carry D2's words.
+  - **The built app:** 77 of 77 steps at 1440 and at 390, on lane A's second run. Its first, on `7e7a3af6`, had 75 of 76 and found the step that relied on D3.
+- **Found and fixed by the coordinator:**
+  - **OPT approved after the degree was withheld** (`fa36c201`): the journeys' finding. The decision now applies the
+    rule the application was made under.
+  - **The acceptance step that relied on D3** (`51cdd7d6`).
+  - **The matrix's fold dropped a measurement** when a later result carried its own (`criteria.py`).
+
+## 4. What Remains, And What It Waits On
+
+- **ST6-R2.e: the owner's question** (`acting-result.json`, the matrix's row).
+  - **The margins:** should (e2.3), (e3.3) and (e4)'s margins be read on the abilities' part alone, both takes judged
+    with the scene's grain at nothing, with the margins as played kept as the record?
+  - **The stage:** should (e3.5) be read on the size counterparts' own opportunities, with their ten gains reported?
+  - **The area's recommendation:** accept both. On that reading it held for every one of the fourteen actors. That
+    reading was seen after the informing actors were checked, so it's proposed, not adopted.
+- **Limitations left as they are** (`RECEIPT.md`, Remaining Limitations):
+  - **J21's death at 26** by the mortality draw, in a journey meant to reach the degree (section 3).
+  - **J16's "Out Of Status" wording.** It says the visa is void on the day of a dismissal, which needs legal research.
+  - **Financially restricted families end with money to spare.** The living-expense scholarship covers more than SLATE
+    charges.
+  - **The journeys' players file no tax returns.**
+  - **F2's player never moves money from savings,** which is a banking question for decision 4.
+  - **The setback's term review falls in December,** after the interface playthrough ended.
+- **What only a person can judge:** how the game feels to play: clarity, pacing, reward, tedium. That is what
+  `PLAYTEST.md` is for, and no automated run approves it.
+- **Decision 4, unchanged** (23 rows).
+- **Merging and deploying are the owner's.** The pull request waits for "Merge it.", and Base44 deployment waits for
+  the owner and the gate (rule 14). Read section 10 further down first.
+
+## 5. The Rules, The Schema And The Model
+
+CLAUDE.md counts eighteen checks; none was added. The save schema is unchanged: **94** in both places. RULESET is
+**evaluation-11**: nothing the judge reads changed, the acting area's two edits being comments. A save gains one opening
+step, `writtenUnplayed`: a way of playing kept on written work still to be shown is taken off, once (D3).
+
+`criteria.py` reads brief 13's results after brief 12's. A clause of brief 13's own is a row of its own. Brief 13's final
+runs move the measurements brief 11 and brief 12 made, and `verify.py` restates the areas' rows on the tested commit.
+
+# Earlier: Brief 12, Resolving The Remaining Decisions And Completing The Authorized Build, 2026-10-17
+
+**This section was the current status until brief 13** (**Superseded 2026-10-17:** the current status is the first
+section above, brief 13's, and so is the completion line; the line below is brief 12's as it was). Every section below
+is history. It was written
 at the end of the owner's "Resolve The Remaining Decisions And Complete The Authorized Build"
 (`docs/verification/briefs-2026-10-16/12-resolve-the-remaining-decisions-and-complete-the-authorized-build.txt`, kept
 verbatim), worked on `claude/peaceful-hamilton-59zdbb` from `main` at `9302b29c` (#38's merge). It is pushed and in
