@@ -3,8 +3,9 @@
 **This section is the current status, and where a new session starts.** Every section below is history. It was written
 at the end of the owner's "Resolve The Final Acting Clauses And Validate Through Multiple Playthroughs"
 (`docs/verification/briefs-2026-10-16/13-resolve-the-final-acting-clauses-and-validate-through-multiple-playthroughs.txt`,
-kept verbatim), worked on `claude/peaceful-hamilton-59zdbb` from `main` at `102ba8f2` (#39's merge). It is pushed, and it
-is not merged: merging is the owner's word. **Nothing is deployed.**
+kept verbatim), worked on `claude/peaceful-hamilton-59zdbb` from `main` at `102ba8f2` (#39's merge). It is pushed and in
+pull request #40 (https://github.com/yvcbcjhsy7-prog/1221/pull/40), not merged: merging is the owner's word. **Nothing is
+deployed.**
 
 ## 1. The Repository
 
