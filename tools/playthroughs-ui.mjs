@@ -1226,7 +1226,8 @@ async function statementNow() {
   for (let i = 0; i < await rows.count(); i += 1) {
     const cells = (await rows.nth(i).locator(':scope > span').allInnerTexts()).map(clean);
     const note = clean(await rows.nth(i).locator(':scope > span').nth(1).locator('.xs').first().innerText({ timeout: 500 }).catch(() => ''));
-    lines.push({ i, date: cells[0], what: cells[1], amount: amountOf(cells[2]), after: amountOf(cells[3]), pending: /Pending/i.test(note), posts: /Pending/i.test(note) ? datesIn(note)[0] ?? '' : '' });
+    const memo = clean(await rows.nth(i).locator(':scope > span').nth(1).locator('button.link').first().innerText({ timeout: 500 }).catch(() => cells[1]));
+    lines.push({ i, date: cells[0], memo, what: cells[1], amount: amountOf(cells[2]), after: amountOf(cells[3]), pending: /Pending/i.test(note), posts: /Pending/i.test(note) ? datesIn(note)[0] ?? '' : '' });
   }
   return { figures, lines, period: clean(await page.locator('#statement-period option:checked').innerText().catch(() => '')) };
 }
@@ -1247,6 +1248,8 @@ async function banking() {
   let price = NaN;
   let posts = '';
   let held = {};
+  // The payment's line by its day and its words as the statement gives them, so a fee of the same amount isn't taken for it.
+  let paid = { date: '', memo: '' };
   await play('[save: roundups scenario] Money by the rail: Accounts, each account’s balance, Move Money offered', ['navigation'], async () => {
     await openSave('roundups.json');
     trace.startingPoint.command = 'npx vite-node tools/scenarios.ts -- --scenario roundups --seed sc-0 --save SAVEDIR/roundups.json';
@@ -1316,8 +1319,10 @@ async function banking() {
     must(Number.isFinite(avail) && Number.isFinite(posted), `no available and posted figures: ${JSON.stringify(st.figures)}`);
     const sum = pending.reduce((s, l) => s + l.amount, 0);
     must(Math.abs(posted + sum - avail) < 0.005, `available ${avail} isn’t the posted ${posted} less what’s pending (${sum.toFixed(2)})`);
-    const meal = pending.find((l) => Math.abs(-l.amount - price) < 0.005);
-    must(meal, `no pending line of $${price.toFixed(2)}: ${pending.map((l) => `${l.what} ${l.amount}`).join('; ')}`);
+    const today = await dateText();
+    const meal = pending.find((l) => Math.abs(-l.amount - price) < 0.005 && l.date === today);
+    must(meal, `no pending line of $${price.toFixed(2)} dated ${today}: ${pending.map((l) => `${l.date} ${l.what} ${l.amount}`).join('; ')}`);
+    paid = { date: meal.date, memo: meal.memo };
     posts = meal.posts;
     must(posts, `the payment’s line gives no day it posts: ${meal.what}`);
     await statementPanel().scrollIntoViewIfNeeded().catch(() => {});
@@ -1373,8 +1378,8 @@ async function banking() {
   });
   await play('posted: the payment’s line no longer pending; the closed month’s closing balance is the notice’s figure, to the cent', ['drill-down'], async () => {
     const st = await toStatement(from, 1);
-    const meal = st.lines.find((l) => Math.abs(-l.amount - price) < 0.005);
-    must(meal, `no line of $${price.toFixed(2)} in ${st.period}: ${st.lines.map((l) => `${l.what} ${l.amount}`).join('; ').slice(0, 300)}`);
+    const meal = st.lines.find((l) => l.date === paid.date && l.memo === paid.memo && Math.abs(-l.amount - price) < 0.005);
+    must(meal, `no line “${paid.memo}” of $${price.toFixed(2)} dated ${paid.date} in ${st.period}: ${st.lines.map((l) => `${l.date} ${l.what} ${l.amount}`).join('; ').slice(0, 300)}`);
     must(!meal.pending, `the payment is still pending: ${meal.what}`);
     const closing = figure(st, /Closing/i);
     said(`${st.period}: ${Object.entries(st.figures).map(([k, v]) => `${k} ${v}`).join(', ')}`);
@@ -1526,6 +1531,7 @@ async function health() {
   let days = NaN;
   let refusal = '';
   let mends = '';
+  let hurtOn = '';
   const INJURY = /^A Sprained Ankle$/;
   await play('[save: health scenario] the injury’s notice on Home: its name, the days it takes to mend and what it keeps you from', ['notification'], async () => {
     await openSave('health.json');
@@ -1533,6 +1539,7 @@ async function health() {
     trace.startingPoint.testSetup = 'a fall forced through the game’s own mayHurt, with a chance of one, on the first morning from Saturday 12 September 2026 at nine on which a fall would be a sprained ankle (tools/scenarios.ts, health); the run stopped right after it';
     const { title, body } = await readNotice(INJURY);
     injury = title;
+    hurtOn = await dateText();
     days = Number((body.match(/(\d+) days?/) ?? [])[1] ?? NaN);
     must(days === 7, `the notice gives ${days} days to mend, where 7 were expected: ${body}`);
     must(/work out/i.test(body), `the notice doesn’t say it keeps you from working out: ${body}`);
@@ -1615,7 +1622,7 @@ async function health() {
     const urgent = amountOf(line[1]);
     const share = amountsIn(body)[0];
     const bills = (await panelHeaded('Care And Its Bills').locator('tbody tr').allInnerTexts().catch(() => [])).map(clean);
-    const thatDay = bills.filter((b) => b.includes('September 12, 2026'));
+    const thatDay = bills.filter((b) => b.includes(hurtOn));
     said(`urgent care now $${urgent.toFixed(2)}; the notice’s share: ${Number.isFinite(share) ? `$${share}` : 'none'}; bills that day: ${thatDay.join(' | ') || 'none'}`);
     if (Number.isFinite(share)) must(thatDay.some((b) => amountsIn(b).includes(share)), `the notice’s $${share} isn’t a bill from that day: ${bills.join(' | ')}`);
     else must(urgent === 0 && !thatDay.some((b) => amountsIn(b).some((a) => a > 0)), `the notice names no share, yet urgent care is $${urgent} and that day’s bills are ${thatDay.join(' | ') || 'none'}`);
