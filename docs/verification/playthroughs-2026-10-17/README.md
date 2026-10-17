@@ -58,4 +58,5 @@ them. The tested code is `7e7a3af6`'s.
 - **The final runs:** `runs/README.md`, `final/README.md`. The gate ran on `0cf3a9bc`: 376 of 376 files, 4,587 of
   4,587 tests, exit 0 (`runs/gate.txt`).
 - **The figures:** 572 of 608 against the frozen baseline (94.0%); the matrix's own, 612 of 636 (96.2%).
-- **Decision 4's 23 rows are unchanged.** Merging and deploying are the owner's.
+- **Decision 4's 23 rows are unchanged.** Merged to `main` in #40 at the owner's word (`280c9f88`); until then this
+  said merging was the owner's. Deploying still is.

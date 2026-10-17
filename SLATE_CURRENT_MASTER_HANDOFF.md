@@ -4,12 +4,14 @@
 at the end of the owner's "Resolve The Final Acting Clauses And Validate Through Multiple Playthroughs"
 (`docs/verification/briefs-2026-10-16/13-resolve-the-final-acting-clauses-and-validate-through-multiple-playthroughs.txt`,
 kept verbatim), worked on `claude/peaceful-hamilton-59zdbb` from `main` at `102ba8f2` (#39's merge). It is pushed and in
-pull request #40 (https://github.com/yvcbcjhsy7-prog/1221/pull/40), not merged: merging is the owner's word. **Nothing is
-deployed.**
+pull request #40 (https://github.com/yvcbcjhsy7-prog/1221/pull/40), merged to `main` with a merge commit at the owner's
+word ("Merge it.", 2026-10-17, `280c9f88`); until then this said it was not merged. **Merged isn't deployed: nothing
+is.**
 
 ## 1. The Repository
 
-- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `102ba8f2`, #39's merge.
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `280c9f88`, #40's merge;
+  until then this said `102ba8f2`, #39's. No pull request was open before brief 13's, and none after its merge.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 13's commits on `102ba8f2`
   (`git log --oneline 102ba8f2..origin/claude/peaceful-hamilton-59zdbb`), pushed and never force-pushed. Its three areas
   (acting, journeys, interface) were merged into it from their clones with merge commits.
@@ -127,8 +129,9 @@ Three areas, each in its own clone, worked from instructions written before thei
 - **What only a person can judge:** how the game feels to play: clarity, pacing, reward, tedium. That is what
   `PLAYTEST.md` is for, and no automated run approves it.
 - **Decision 4, unchanged** (23 rows).
-- **Merging and deploying are the owner's.** The pull request waits for "Merge it.", and Base44 deployment waits for
-  the owner and the gate (rule 14). Read section 10 further down first.
+- **Deploying is the owner's.** The pull request was merged at the owner's "Merge it." (`280c9f88`); until then this
+  said it waited for that. Base44 deployment waits for the owner and the gate (rule 14). Read section 10 further down
+  first.
 
 ## 5. The Rules, The Schema And The Model
 
