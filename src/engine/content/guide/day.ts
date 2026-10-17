@@ -294,6 +294,7 @@ export const DAY: readonly GuideEntry[] = [
       'Press Go There to open the screen a question or a notice is about.',
       'Press Dismiss to take a question off the list without answering it.',
       'Press Mark N Read, at the top of the panel, to mark every unread notice read at once.',
+      'Press Show All N, under the notices, to see every unread one before you do: the panel draws the six weightiest first, and Show The Heaviest Six goes back to them.',
       'Press a question’s or a notice’s title to open it: how much it weighs, when it closes, and where it sits in the list.',
     ],
     needs: [
@@ -324,7 +325,9 @@ export const DAY: readonly GuideEntry[] = [
       'The stripe beside a question turns amber at an urgency of 65 and red at 85.',
       'Overdue, in red, means a question’s date has passed; it closes at the world’s next look.',
       'All Clear means every question is answered and every notice read, nothing is owed past due, the bank and the card are in order, and the calendar has no clash for a month. No Decisions Waiting lists what still weighs: money owed, an overdrawn account, a card near its limit or behind, a late return, a clash.',
-      'Home shows six questions, with “N more waiting.” for the rest, and the six weightiest unread notices. The others move up as those above them clear.',
+      // Until 2026-10-17 this said the notices past the sixth moved up as those above them cleared, where Mark N Read
+      // cleared them all at once and a notice past the sixth was on no screen (found by brief 13's interface playthroughs).
+      'Home shows six questions, with “N more waiting.” for the rest, and the six weightiest unread notices, with “N more waiting.” and Show All N for the rest. A question moves up as those above it clear. Mark N Read marks every unread notice read, shown or not.',
     ],
     unavailable: [
       `Before ${chapter('needs')} is read, the panel shows Locked, with Read About It.`,

@@ -100,19 +100,24 @@ const categoryLabel = (category: string): string =>
   titleCaseLabel(category.replace(/[_/]+/g, ' ').trim()) || 'Not On File';
 
 /**
- * A title as a name: no underscore, no slash, no run of four digits, and Title
+ * A title as a name: no underscore, no slash, no long run of digits, and Title
  * Case where it reads as a label rather than as a sentence.
  *
  * A title is caller-supplied prose and can carry any of the three. Said aloud
  * there is an "and" in a slash, and a long run of digits is read as the number
  * it is — the same reading `place` gives a census tract, for the same reason:
- * four digits in a row is an identifier, not a name.
+ * a long run of digits is an identifier, not a name. A year is the exception,
+ * and it’s the only four-digit run a title carries ("Welcome To The Class Of
+ * 2029", "Your 2026 Tax Return"): until 2026-10-17 every run of four or more
+ * was grouped, and those looks were named "Class Of 2,029" and "Your 2,026 Tax
+ * Return" (found by brief 13's interface playthroughs).
  */
+const YEAR = /^(1[89]|2\d)\d\d$/;
 function nameOf(title: string, fallback: string): string {
   const plain = title
     .replace(/\s*\/\s*/g, ' and ')
     .replace(/_+/g, ' ')
-    .replace(/\d{4,}/g, (run) => Number(run).toLocaleString('en-US'))
+    .replace(/\d{4,}/g, (run) => (YEAR.test(run) ? run : Number(run).toLocaleString('en-US')))
     .replace(/\s+/g, ' ')
     .trim();
   return plain ? titleCaseLabel(plain) : fallback;
