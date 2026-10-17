@@ -196,6 +196,9 @@ function applySetup(sim: Simulation, setup: Setup): Record<string, unknown> {
     p.attrs = { presence: 100, composure: 100, listening: 100, imagination: 100, focus: 100, adaptability: 100, discipline: 100 };
     p.wellbeing.fitness = abilityFull(sim, p, 'stamina');
   }
+  // The term's own starting point is the craft set (from J02's first run, 2026-10-17): the term had begun at creation
+  // with the craft as admitted, and its review read the setup's lowering as growth of -7.9.
+  if (p.school?.tally) p.school.tally.craftAtStart = { ...p.craft! };
   return { setup, abilities: Object.fromEntries(ABILITY_DEFS.map((d) => [d.id, r1(abilityOf(sim, p, d.id))])), techniques: { ...p.craft } };
 }
 
@@ -584,8 +587,38 @@ function playPart(spec: Spec, part: number, stateDir: string, out: string): Rec 
   const saved = serialise(sim.universe);
   writeFileSync(savePath, saved);
   writeFileSync(statePath, JSON.stringify({ rec, st }));
-  writeFileSync(out, `${JSON.stringify({ ...rec, done }, null, 1)}\n`);
+  writeFileSync(out, `${JSON.stringify(done ? compact(rec) : partSummary(rec), null, 1)}\n`);
   return rec;
+}
+
+/** A part's output while the journey goes on: what it played and what it counted. The whole record is in `--state`. */
+function partSummary(rec: Rec, n = rec.parts.length) {
+  const part = rec.parts[n - 1]!;
+  // Written again after the journey's end (`--recheck`), a part is its own entry alone: the counts below are the part's own only when written as it ends.
+  if (n < rec.parts.length) return { id: rec.id, ...part, done: false, rewritten: 'from the finished record; the counts at the part’s end are in its log' };
+  return { id: rec.id, ...part, done: false, standing: rec.standings.at(-1)?.standing, reloads: rec.reloads.length, notSame: rec.reloads.filter((r) => !r.same).length, notices: rec.notices.length, showings: rec.showings.length, work: rec.work.length, reviews: rec.reviews.map((r) => `${r.term} ${r.at} ${r.standing}`) };
+}
+
+const KEPT_WORDS = /Begins$|Coursework|Concern|Warning|Dismiss|Degree|Commencement|Graduat|Not Passed|Not Registered|Missed Classes|Hold|Repeat|Aid|Tuition|Leave|Return|Status|OPT|Issued|Passport|Plan|Owed|Cover|Enrolled|Incomplete|Called In Sick|Hospital|Injur|Flu/;
+
+/** A finished journey's output: the checks, the continuity record, the end, and compact traces of what the checks read. */
+function compact(rec: Rec) {
+  const shown = /^Shown: /;
+  return {
+    id: rec.id, seed: rec.seed, profile: rec.profile, player: rec.player, expect: rec.expect, done: true, parts: rec.parts,
+    creation: rec.creation, counterfactual: rec.counterfactual, setup: rec.setup, end: rec.end, checks: rec.checks, continuity: rec.continuity,
+    standings: rec.standings, reviews: rec.reviews, acts: rec.acts, health: rec.health, interpretations: rec.interpretations.slice(0, 12), interpretationsSeen: rec.interpretations.length,
+    reloads: { n: rec.reloads.length, notSame: rec.reloads.filter((r) => !r.same) },
+    ledger: { n: rec.ledger.length, bad: rec.ledger.filter((l) => l.audit || l.breaches) },
+    // The notices the checks read, with the start of their words; the rest by day and title.
+    notices: rec.notices.filter((n) => !shown.test(n[2])).map((n) => (KEPT_WORDS.test(n[2]) ? [n[0], n[2], n[3].slice(0, 220)] : [n[0], n[2]])),
+    shownNotices: rec.notices.filter((n) => shown.test(n[2])).length,
+    showings: (rec.showings as { id: string; term: number; course: string; template: string; band: string; score: number; short: string[]; feedback?: { kind?: string; focus: string }; playing?: unknown }[]).map((x) => [x.id, x.term, x.course, x.template, x.band, x.score, x.short.length, x.feedback?.kind ?? '', x.feedback?.focus ?? '', x.playing ? 1 : 0]),
+    workByTerm: Object.entries(rec.work.reduce((o, w) => { const k = `${w.at.slice(0, 4)} ${Number(w.at.slice(5, 7)) < 7 ? 'spring' : 'fall'} ${w.task}`; const b = (o[k] ??= { n: 0, sum: 0, ill: 0, mastery: 0 }); b.n += 1; b.sum += w.overall; if (w.ill || w.hurt) b.ill += 1; if (w.mastery) b.mastery += 1; return o; }, {} as Record<string, { n: number; sum: number; ill: number; mastery: number }>)).map(([k, v]) => `${k}: ${v.n} @ ${r1(v.sum / v.n)}${v.ill ? `, ${v.ill} ill or hurt` : ''}${v.mastery ? `, ${v.mastery} at mastery` : ''}`),
+    advice: rec.advice.map((a) => [a.day, a.target ?? '', a.level ?? null, a.forecast ?? null, a.standing ? 1 : 0, a.recs.join(' ')]),
+    monthly: (rec.monthly as Record<string, unknown>[]).map((m) => ({ ...m, docs: (m.docs as { kind: string; status: string; to?: string; inForce: boolean }[]).map((d) => `${d.kind} ${d.status}${d.to ? ` to ${d.to}` : ''}${d.inForce ? '' : ' (not in force)'}`) })),
+    practice: rec.practice, commands: rec.commands,
+  };
 }
 
 function firstDiff(a: string, b: string): string {
@@ -794,12 +827,16 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
     if (applied.length && !issued.length && e.on && String(e.on) > '2029-08-01') fails.push('OPT applied for and never decided');
     const outs = has(rec, 'Out Of Status');
     if (outs.length && applied.length && issued.length) fails.push('out of status with OPT approved');
-    const passports = rec.acts.filter((x) => x.includes('documents.apply_passport') && !x.includes('refused'));
-    const issuedP = has(rec, /Passport Issued|Passport.*Issued/);
-    if (passports.length && !issuedP.length) fails.push('a passport applied for and never issued');
+    // Each passport applied for is issued after it, or still pending at the end (read from the documents: an issue's notice
+    // is titled with the passport's own name, "Pasaporte ordinario mexicano (tipo "N") Issued").
+    const passports = rec.acts.filter((x) => x.includes('documents.apply_passport') && !x.includes('refused')).map((x) => x.slice(0, 10));
+    const ownPassports = documentsOf(p).filter((d) => d.kind === 'passport');
+    const issuedP = passports.filter((d) => ownPassports.some((x) => x.issuedAt !== undefined && day(x.issuedAt) >= d && x.status !== 'pending'));
+    const pendingP = ownPassports.filter((x) => x.status === 'pending');
+    if (passports.length > issuedP.length + pendingP.length) fails.push(`${passports.length} passports applied for, ${issuedP.length} issued, ${pendingP.length} pending`);
     const validPassports = documentsOf(p).filter((d) => d.kind === 'passport' && d.status === 'valid' && inForce(d, sim.now));
     if (validPassports.length > 1) fails.push(`${validPassports.length} passports valid at once`);
-    put('7 papers', fails, [`photo ID in force ${(rec.monthly as { photoId: boolean }[]).filter((m) => m.photoId).length} of ${rec.monthly.length} months; the bank's asks: ${[...new Set((rec.monthly as { bankAsk: string }[]).map((m) => m.bankAsk.slice(0, 90)))].join(' | ')}`, `OPT: ${[...optWords].map((w) => w.slice(0, 90)).join(' | ')}; applied ${applied.length}, approved ${issued.length}; out of status ${outs.map((n) => n[0]).join(', ') || 'never'}`, `passports applied ${passports.length}, issued ${issuedP.length}; documents at the end: ${(e.documents as string[]).join('; ')}`]);
+    put('7 papers', fails, [`photo ID in force ${(rec.monthly as { photoId: boolean }[]).filter((m) => m.photoId).length} of ${rec.monthly.length} months; the bank's asks: ${[...new Set((rec.monthly as { bankAsk: string }[]).map((m) => m.bankAsk.slice(0, 90)))].join(' | ')}`, `OPT: ${[...optWords].map((w) => w.slice(0, 90)).join(' | ')}; applied ${applied.length}, approved ${issued.length}; out of status ${outs.map((n) => n[0]).join(', ') || 'never'}`, `passports applied ${passports.length}, issued ${issuedP.length}, pending ${pendingP.length}; documents at the end: ${(e.documents as string[]).join('; ')}`]);
   }
 
   // 8. Warnings and the reviews that followed.
@@ -933,7 +970,9 @@ function recheck(spec: Spec, stateDir: string, out: string): void {
   rec.checks = checks(spec, sim, rec);
   rec.continuity = continuity(rec);
   writeFileSync(join(stateDir, `${spec.id}.state.json`), JSON.stringify({ rec, st }));
-  writeFileSync(out, `${JSON.stringify({ ...rec, done: true }, null, 1)}\n`);
+  writeFileSync(out, `${JSON.stringify(compact(rec), null, 1)}\n`);
+  // The parts before, as summaries (their first outputs repeated the whole record so far).
+  rec.parts.slice(0, -1).forEach((_, i) => writeFileSync(out.replace(/-p\d+\.json$/, `-p${i + 1}.json`), `${JSON.stringify(partSummary(rec, i + 1), null, 1)}\n`));
   console.log(JSON.stringify({ id: spec.id, rechecked: true, checks: Object.fromEntries(Object.entries(rec.checks!).map(([k, v]) => [k, v.pass ? 'pass' : v.fails.slice(0, 2)])) }));
 }
 
