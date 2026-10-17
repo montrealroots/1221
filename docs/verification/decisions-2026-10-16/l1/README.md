@@ -50,9 +50,14 @@ The advice now grows the hours as the engine does, reads the work at full precis
 across every recent piece. F2-A10 measured it on 120 fresh held-out cases on the final code
 (`../advice/final/`): its first-named input is the one whose training brings the most.
 
-The journeys' student never trains the named input. `tools/brief-journeys.ts` tapes briefs and reads the weakness only to
-pick a brief that shows it (`nextBrief`). So focus rises only through the work, about a point every two weeks, and
-the right advice stays right for longer than L1 allows.
+Until 2026-10-17 this said the journeys' student never trained the named input, and that `tools/brief-journeys.ts` read the
+weakness only to pick a brief that shows it (`nextBrief`). That wasn't so. Every other free hour the student practices
+what the advice names first (`practiceHour`, `tools/policy.ts`), when the school's hours and the day's energy leave one.
+Counted on 7572578b (brief 10's code, unchanged) with each practice hour's exercise logged, the specialist practiced
+Circles Of Attention, focus's exercise, 29 hours in the eight weeks focus was first: 8 in the first six weeks of the run
+and 21 in its last two. The beginner practiced it 3 hours in its six weeks. So for most of each run focus rose through
+the work alone, about a point every two weeks, and the right advice stayed right for longer than L1 allows
+(`../../completion-2026-10-16/clarifications.md`, L1).
 
 ## Why It Wasn't Fixed
 
