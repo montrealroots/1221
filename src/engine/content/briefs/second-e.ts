@@ -21,7 +21,7 @@ export const SECOND_E: readonly Brief[] = [
     you: 'Dana Whitlock, forty-three, a court stenographer, who remembers everything she hears exactly and always has.',
     reader: 'Detective Ray Corso, who asks the same questions in a different order every time.',
     objective: 'Get through the third telling without giving him anything new, and leave.',
-    obstacle: 'He changes the order of everything, her exactness, only the way her memory has always worked, sounds rehearsed, and there’s one detail she has left out all three times.',
+    obstacle: 'He changes the order of everything, her exactness sounds rehearsed when it’s only how her memory has always worked, and there’s one detail she has left out all three times.',
     beats: [
       { what: 'She begins the story again, with the same first sentence and the stove clock at ten past nine.', tones: ['grave'] },
       { what: 'He starts her in the middle; she goes back to the beginning, politely, and goes on.', tones: ['grave', 'comic'] },
@@ -166,7 +166,7 @@ export const SECOND_E: readonly Brief[] = [
     why: {
       physical: 'He dances a beginner’s foxtrot turn alone, holding his frame for an absent partner, twice: once counted, once not. The steps are simple ballroom basics, danced solo to the eyeline with no partner contact.',
       partner: 'Her answers keep sliding past his question, and he has to find each new way in from what she’s just said.',
-      techniques: 'A few bars of a beginner’s foxtrot, danced solo in a held frame, ask basic ballroom technique.',
+      techniques: 'A few bars of a beginner’s foxtrot, danced solo in a held frame, ask for basic ballroom technique.',
       beats: 'A proud demonstration, a misunderstanding that’s funny and sweet, the word said at last, then the dance again with the counting gone.',
     },
     readings: [
@@ -256,7 +256,7 @@ export const SECOND_E: readonly Brief[] = [
       timing: 'The haggle runs at the merchant’s pace, offer and counter-offer, and the fight’s two exchanges come on the reader’s called cues.',
       physical: 'A swordsman’s carriage kept up through hunger, a fast draw and two short exchanges, then a sheathing done with ceremony while he’s still out of breath.',
       partner: 'Every offer the merchant makes is answered, and the price Kuroda names is always shaped by the last insult.',
-      techniques: 'Two short exchanges with a replica sword, marked solo at reduced speed on the reader’s called cues toward an off-camera eyeline, never at the lens or the reader.',
+      techniques: 'The fight is two short exchanges with a replica sword, marked solo at reduced speed on the reader’s called cues toward an off-camera eyeline, never at the lens or the reader.',
       beats: 'A grand price, a bargain lost to his stomach, a fight over fast, then a joke that names a new price.',
     },
     readings: [
@@ -336,7 +336,7 @@ export const SECOND_E: readonly Brief[] = [
     why: {
       improvisation: 'Clinic rules forbid a script, so each take is found at the microphone in her own words, from what the brief tells her she means to cover.',
       techniques: 'Speaking unscripted, live, to a listener who isn’t in the room asks an improviser’s skill at finding words in the moment.',
-      allows: 'The clinic requires the statement unscripted, so a version learned word for word would break the scene’s own rule: the structure has to stay open.',
+      allows: 'The clinic requires the statement unscripted, so a version learned word for word would break the scene’s own rule. It can only be played open.',
       beats: 'False starts, the plain facts, a secret given away because it can’t be kept, then a blessing with the clock running out.',
     },
     readings: [
@@ -367,7 +367,7 @@ export const SECOND_E: readonly Brief[] = [
       physical: 'She works a mimed board with both hands, plugging and pulling cords, and the tangle that yanks her half off the stool is a lurch she makes herself and catches on her own seat.',
       partner: 'Leo is never the same twice, and every reply she makes has to cover whatever he’s just noticed.',
       vocal: 'She switches between her own voice and a flat operator’s monotone line by line, and mustn’t slip into her own on her fiancé’s calls.',
-      techniques: 'The rapid crossed talk is screwball comedy’s own and asks comic timing; the business with the cords and the lurch off the stool is physical comedy, worked out slowly first and repeatable on every take.',
+      techniques: 'The rapid crossed talk is screwball comedy’s own, and it asks for comic timing. The business with the cords and the lurch off the stool is physical comedy, worked out slowly first and repeatable on every take.',
       beats: 'Chaos at the board, a disguise that works, a tangle that nearly gives her away, then a call that turns into an invitation.',
     },
     readings: [
@@ -459,7 +459,7 @@ export const SECOND_E: readonly Brief[] = [
       timing: 'Each gag lands on the magician’s call, and the calls never come in the same order twice.',
       physical: 'A rope that falls apart, a fall backward off a folding chair, a hat that springs into his face and a grand bow: the scene is a body betrayed by objects.',
       partner: 'Every trick starts on the magician’s call, and he has to take each one as it comes and play it back to her.',
-      techniques: 'The rope, the hat and the wand are slapstick’s physical comedy and ask comic timing; the fall off the child’s chair is a stunt fall backward onto the crash mat hidden behind it, rehearsed slowly first and repeatable on every take, and the hat’s hit is a gag he works with his own hand and sells as a blow.',
+      techniques: 'The rope, the hat and the wand are slapstick’s physical comedy, and they ask for comic timing. The fall off the child’s chair is a stunt fall backward onto the crash mat hidden behind it, rehearsed slowly first and repeatable on every take. The hat’s hit is a gag he works with his own hand and sells as a blow.',
       beats: 'Three gags that climb from embarrassment to a fall to a hit, then a bow that’s funny and tender at once.',
     },
     readings: [
@@ -616,7 +616,7 @@ export const SECOND_E: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 2, partner: 2, vocal: 1, improvisation: 0,
     why: {
       timing: 'Each grisly finding has to land flat on the tail of his routine question, and the pause before she says how many eyes is held.',
-      physical: 'She works below frame with gloved hands and the phone pinned to her shoulder, reaching, counting and recoiling on the reader’s called cues; the creature is her own reach toward an empty space below the lens, the blood is stage blood or none, and no animal is used.',
+      physical: 'She works below frame with gloved hands and the phone pinned to her shoulder, reaching, counting and recoiling on the reader’s called cues. The creature is her own reach toward an empty space below the lens, the blood is stage blood or none, and no animal is used.',
       partner: 'He presses down his checklist one question at a time, and each answer has to keep him on the line without telling him what she’s looking at.',
       beats: 'A call for help he hears as routine, a gruesome inventory given deadpan, then two heartbeats where there should be none, and the plain request at last.',
     },
@@ -670,7 +670,7 @@ export const SECOND_E: readonly Brief[] = [
     why: {
       timing: 'Every group falls on the station’s fixed cadence, and the scene lives in whether the group after four-seven-four-seven lands exactly on time.',
       vocal: 'One flat, exact voice, kept level through news that would break it, with one breath let through at the very end.',
-      allows: 'The station reads at a fixed cadence and any change is logged, so every group falls where the sheet puts it: the structure is set.',
+      allows: 'The station reads at a fixed cadence and any change is logged, so every group falls where the sheet puts it. It can only be played set.',
       beats: 'Routine, the recognition read straight through without a flicker, then the smallest goodbye the form permits.',
     },
     readings: [

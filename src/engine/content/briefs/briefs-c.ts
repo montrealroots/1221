@@ -101,8 +101,8 @@ export const BRIEFS_C: readonly Brief[] = [
       timing: 'Each hiding move lands on one of her lines, so the gags live or die by where they’re placed.',
       physical: 'The scene is a body hiding an object in plain sight: the shuffle, the sit, the hand over the lettering.',
       partner: 'Every move follows where she looks.',
-      techniques: 'Comedy for the timing of his cover stories against her questions; clown for the physical business of hiding the cake in frame, staged with a box so it repeats safely on every take.',
-      allows: 'The cake has to be out of her eyeline on exactly the lines the brief places, so the hiding business is fixed and repeated take to take.',
+      techniques: 'Comedy carries the timing of his cover stories against her questions, and clowning the physical business of hiding the cake in frame, staged with a box so it repeats safely on every take.',
+      allows: 'The cake has to be out of her eyeline on exactly the lines the brief places, so it can only be played set: the hiding business fixed and the same every time.',
       beats: 'Three escalations of one problem, each bigger and sillier than the last, ending on a reversal.',
     },
     readings: [
@@ -131,7 +131,7 @@ export const BRIEFS_C: readonly Brief[] = [
       timing: 'The small talk is a duel of pauses, and any hesitation answers his question.',
       partner: 'She reads him line by line for what he knows.',
       vocal: 'Two voices in one session: the scene’s, live and guarded, and the narration’s, level and finished.',
-      techniques: 'The narration is an account given after the fact, so it’s played as voiceover in its own register, close and even and knowing how the night ends, against a scene that doesn’t know yet. It’s recorded off camera in the same session and laid over the opening and closing of the tape, so it’s played to a microphone with no face to show it.',
+      techniques: 'The narration is an account given after the fact, so it’s played as voice-over in its own register, close and even and knowing how the night ends, against a scene that doesn’t know yet. It’s recorded off camera in the same session and laid over the opening and closing of the tape, so it’s played to a microphone with no face to show it.',
       beats: 'Narration, a guarded duel, a near miss, and narration that keeps the ending back.',
     },
     readings: [
@@ -185,8 +185,8 @@ export const BRIEFS_C: readonly Brief[] = [
     why: {
       partner: 'What she says to Josh depends on how far he’s taking it as a joke.',
       improvisation: 'The brief gives the beats and the objective and no lines: every word is found in the take.',
-      techniques: 'The lines are improvised inside the beat outline, the way the form is made, so improv is the scene’s own; the camera she holds is the screen work every self-tape asks.',
-      allows: 'With no written lines, each take’s words come live from what the reader says, so the scene can’t be fixed and repeated.',
+      techniques: 'The lines are improvised inside the outline of beats, the way the form is made, so the scene asks for improvisation. The camera she holds is the on-camera work every self-tape asks for.',
+      allows: 'With no written lines, each take’s words come live from what the reader says, so it can only be played open, never fixed and repeated.',
       beats: 'A home video, a discovery played down for her mother’s sake, an argument, and a silence she has to fill.',
     },
     readings: [
@@ -486,7 +486,7 @@ export const BRIEFS_C: readonly Brief[] = [
     why: {
       timing: 'The jokes land on the house’s interruptions, so each cover line comes exactly as the scare does.',
       partner: 'He sees none of it, so her cover has to track what he’s looking at.',
-      techniques: 'The comedy is in the situation, a salesperson covering for a haunting, and it lands only when the fear is played straight; that comic timing is the scene’s own.',
+      techniques: 'The comedy is in the situation, a salesperson covering for a haunting, and it lands only when the fear is played straight. The comic timing comes from the scene itself.',
       beats: 'Every beat holds the joke and the fear together, and the last turns the joke against her own interest.',
     },
     readings: [
@@ -513,7 +513,7 @@ export const BRIEFS_C: readonly Brief[] = [
     techniques: { voiceover: 2 },
     why: {
       vocal: 'The voice has to carry thirty years of a working adult’s life inside a child’s instrument, with every change of mind heard and none of it seen.',
-      techniques: 'A voice alone at the microphone carries the whole scene, so the interior life, the reading of the panel and the turn to grief are all voice-led work.',
+      techniques: 'A voice alone at the microphone carries the whole scene, so the interior life, the reading of the panel and the turn to grief are all voice-over work.',
       beats: 'An audit played for laughs, a joke on herself, the loss under it, and a decision.',
     },
     readings: [
@@ -543,7 +543,7 @@ export const BRIEFS_C: readonly Brief[] = [
       timing: 'The draw, the cut and the return to the sheath are set to a count, and the petition resumes on the breath after.',
       physical: 'A formal kneeling posture held through the audience, then one drawn-sword form and a full bow.',
       partner: 'Each refusal is his, and she has to answer it in his own courtesy.',
-      techniques: 'Classical for the formal register and its set phrases, carried with weight and never modernized; combat for the one drawn-sword form, which his doubt makes her show. On the tape the form is marked solo with a replica blade at reduced speed, angled away from the lens and the reader’s eyeline, and repeats exactly on every take.',
+      techniques: 'Classical text work carries the formal register and its set phrases, with weight and never modernized. Stage combat carries the one drawn-sword form, which his doubt makes her show. On the tape the form is marked solo with a replica blade at reduced speed, angled away from the lens and the reader’s eyeline, and repeats exactly on every take.',
       beats: 'A petition, a refusal in the same courtesy, an answer made with the sword in place of words, and the petition again.',
     },
     readings: [

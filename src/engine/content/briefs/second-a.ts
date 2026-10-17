@@ -196,7 +196,7 @@ export const SECOND_A: readonly Brief[] = [
       physical: 'A walrus’s weight, breath and slowness, played full size on a bare stage for the animators to draw from: the stairs, the heavy sitting down, the shaking flippers.',
       partner: 'Tuck’s questions come at every pause, and Barnaby’s patience is played against each one.',
       vocal: 'The voice is recorded in the same take as the body: an old, enormous voice, out of breath, kept the same throughout so it fits what’s drawn.',
-      techniques: 'Voice-led, since the take’s sound is the film’s voice; and character work, since the walrus is built from the actor’s own body and voice with no costume, every gesture sized so the drawing can follow it.',
+      techniques: 'It asks for voice-over, because the take’s sound is the film’s voice, and for character work, because the walrus is built from the actor’s own body and voice with no costume, every gesture sized so the drawing can follow it.',
       beats: 'A grumbling arrival, a failure blamed on the weather, a lesson given low, then a lamp lit and no thanks said.',
     },
     readings: [
@@ -253,8 +253,8 @@ export const SECOND_A: readonly Brief[] = [
       timing: 'The narration is laid over picture, and each couplet has to end where the cut does.',
       vocal: 'One even narrating voice is held through the opening, then gives for a single line in the close, all of it carried on the breath.',
       language: 'The narrator speaks in rhymed lines, four to open each story and four to close it, and the rhyme has to hold when her voice doesn’t.',
-      techniques: 'Rhymed verse spoken to its meter over finished picture asks verse-speaking technique.',
-      allows: 'Every segment opens and closes in the same rhymed shape, and the scene depends on the last one matching the others, so its structure is set and can’t be found anew on the take.',
+      techniques: 'Speaking rhymed verse to its meter over finished picture asks for classical text work.',
+      allows: 'Every story opens and closes in the same rhymed shape, and the scene depends on the last one matching the others. It can only be played set, the same way every time.',
       beats: 'A familiar opening, then a close in which the story turns out to be the narrator’s own.',
     },
     readings: [
@@ -660,7 +660,7 @@ export const SECOND_A: readonly Brief[] = [
     readings: [
       { id: 'pace', label: 'Her Own Pace', reading: 'She was always going to walk it, and the run is the one thing she gives the bus.', rests: 'She trained all spring, and she walks the last block at her own pace.', lean: { consistency: 1.2, believability: 1.05 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.5 }, { dim: 'believability', ability: 'stamina', weight: 0.4 }] },
       { id: 'husband', label: 'For Him', reading: 'The race was her husband’s, and every step past the eleventh mile is one he never got to take.', rests: 'Her husband ran this race every year and never once finished it.', lean: { believability: 1.2, interpretation: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'interpretation', ability: 'imagination', weight: 0.4 }] },
-      { id: 'race', label: 'Racing The Bus', reading: 'Played as the slowest chase in the world, and played all out: she’s racing a bus, and she means to win.', rests: 'The bus is forty yards behind and gaining, and its horn makes her run for the first time all day.', lean: { execution: 1.25, responsiveness: 1.05 }, draws: [{ dim: 'execution', ability: 'physical', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
+      { id: 'race', label: 'Racing The Bus', reading: 'She plays it as the slowest chase in the world, all out: she’s racing a bus, and she means to win.', rests: 'The bus is forty yards behind and gaining, and its horn makes her run for the first time all day.', lean: { execution: 1.25, responsiveness: 1.05 }, draws: [{ dim: 'execution', ability: 'physical', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
     ],
   },
   {
@@ -713,7 +713,7 @@ export const SECOND_A: readonly Brief[] = [
       partner: 'Everything he says is an answer to her, and she takes every word as Santa’s.',
       vocal: 'Santa’s voice, big, warm and practiced, kept up through the whole scene, even when what he says under it is his own.',
       improvisation: 'Her questions change every few seconds, and he has to answer each as Santa, live, without leaving the routine.',
-      techniques: 'Improvisation, since nothing she asks is in his patter; and character work, since Santa is a part he plays in a suit, with a voice and a laugh that aren’t his own.',
+      techniques: 'It asks for improvisation, because nothing she asks is in his patter, and for character work, because Santa is a part he plays in a suit, with a voice and a laugh that aren’t his own.',
       beats: 'The practiced routine, a stall in character, a promise he can keep, then a laugh held until she’s gone.',
     },
     readings: [
@@ -750,7 +750,7 @@ export const SECOND_A: readonly Brief[] = [
     },
     readings: [
       { id: 'list', label: 'The List Is The Love', reading: 'Every instruction is how he says he loves them, and the comedy is in how much love a laminated schedule can hold.', rests: 'He has made a color-coded schedule, laminated it and stuck it to the fridge.', lean: { interpretation: 1.2, believability: 1.1 }, draws: [{ dim: 'interpretation', ability: 'imagination', weight: 0.5 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }] },
-      { id: 'horn', label: 'Against The Horn', reading: 'Played as a race against his wife’s patience, each last thing quicker than the one before.', rests: 'The car horn sounds, and each last thing costs a minute his wife is counting.', lean: { execution: 1.2, consistency: 1.1 }, draws: [{ dim: 'execution', ability: 'focus', weight: 0.6 }, { dim: 'consistency', ability: 'discipline', weight: 0.4 }] },
+      { id: 'horn', label: 'Against The Horn', reading: 'He plays it as a race against his wife’s patience, each last thing quicker than the one before.', rests: 'The car horn sounds, and each last thing costs a minute his wife is counting.', lean: { execution: 1.2, consistency: 1.1 }, draws: [{ dim: 'execution', ability: 'focus', weight: 0.6 }, { dim: 'consistency', ability: 'discipline', weight: 0.4 }] },
       { id: 'tess', label: 'She’s Got This', reading: 'The scene turns on listening to a sixteen-year-old, and the laugh is in how much it costs him to be reassured.', rests: 'She tells him what she’ll do if one of them wakes, and it’s better than his schedule.', lean: { responsiveness: 1.2, connection: 1.1 }, draws: [{ dim: 'responsiveness', ability: 'listening', weight: 0.6 }, { dim: 'connection', ability: 'adaptability', weight: 0.4 }] },
     ],
   },

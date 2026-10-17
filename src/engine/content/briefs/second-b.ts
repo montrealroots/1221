@@ -52,7 +52,7 @@ export const SECOND_B: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 0, partner: 1, vocal: 3, improvisation: 1,
     techniques: { singing: 2 },
     why: {
-      timing: 'The tech’s estimates are called by the reader, never at the same moment twice, and each change has to land on her face before she turns back to the crowd; on the tape she stands at a mic stand and plays him to an eyeline at the side of the lens.',
+      timing: 'The tech’s estimates are called by the reader, never at the same moment twice, and each change has to land on her face before she turns back to the crowd. On the tape she stands at a mic stand and plays him to an eyeline at the side of the lens.',
       vocal: 'She talks to a festival crowd over a stage’s sound and then sings to it unaccompanied, so the voice carries the scene’s size and then its quiet.',
       techniques: 'She sings a verse of an original song, written for this tape, unaccompanied at a mic stand: in tune, with its breaths where the line asks, the same on every take.',
       beats: 'A joke that works, a story that doesn’t, then the song she didn’t want to sing, and a finish she makes look planned.',
@@ -143,7 +143,7 @@ export const SECOND_B: readonly Brief[] = [
     language: 'heightened', timing: 1, physical: 1, partner: 2, vocal: 0, improvisation: 0,
     why: {
       language: 'The lines keep the manners of 1878 between a tradeswoman and her better, on a subject neither of them would name aloud: she may hint and apologize, and the plain sentence is kept for the end.',
-      physical: 'She unpicks the bodice’s side seams with a small seam ripper, at a worktable on her own side of frame, in a period dress and a fitted bodice of her own; the work in her hands is how she avoids looking up.',
+      physical: 'She unpicks the bodice’s side seams with a small seam ripper, at a worktable on her own side of frame, in a period dress and a fitted bodice of her own. The work in her hands is how she avoids looking up.',
       partner: 'Clara is out of sight behind the screen, so Martha has to read her from her voice alone and choose each hint by how the last one landed.',
       beats: 'Happy chatter, a hint that lands, an excuse so thin it’s funny, then the promise in a sentence.',
     },
@@ -193,7 +193,7 @@ export const SECOND_B: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 2, partner: 2, vocal: 1, improvisation: 0,
     why: {
       timing: 'The sounds from the corridor are called by the reader at set moments, and she has to freeze on each one and pick the whisper up where she left it.',
-      physical: 'She plays the scene crouched by the drug cabinet with her back to the barricaded door, a flat on her own side of frame, drawing a dose into a capped prop syringe from a prop vial; the handle turning is a sound cue, and she reacts to it alone.',
+      physical: 'She plays the scene crouched by the drug cabinet with her back to the barricaded door, a flat on her own side of frame, drawing a dose into a capped prop syringe from a prop vial. The handle turning is a sound cue, and she reacts to it alone.',
       partner: 'He’s pushing to run the whole time, and she has to read when he’s about to bolt and stop him with a whisper.',
       beats: 'An argument held in whispers, a sound that ends it, a dose so large it’s funny, then a plan she won’t argue about.',
     },
@@ -274,7 +274,7 @@ export const SECOND_B: readonly Brief[] = [
     techniques: { dance: 2 },
     why: {
       timing: 'The waltz is counted in threes, called by the reader, and the steps have to land on the counts every take.',
-      physical: 'He dances a full waltz solo in an open hold, his arms framed around an absent partner, then talks through being out of breath; the reader calls from a chair off camera, and the dance is never partnered.',
+      physical: 'He dances a full waltz solo in an open hold, his arms framed around an absent partner, then talks through being out of breath. The reader calls from a chair off camera, and the dance is never partnered.',
       partner: 'Every correction comes from Mr. Abara, and the lesson moves only when he’s satisfied.',
       techniques: 'He dances a set waltz, choreographed for this tape and repeatable on every take, with the box step, a turn and the closing hold, danced alone to the eyeline beside the lens.',
       beats: 'Nerves, mistakes, the waltz danced alone, a portrait of her from the man who danced with her, then the last turn again.',
@@ -304,7 +304,7 @@ export const SECOND_B: readonly Brief[] = [
     why: {
       timing: 'The voices change inside a line, and each switch has to land on the exact word the script marks.',
       vocal: 'The mirror speaks in three borrowed voices and at last one of its own, every one of them built and held in the voice alone.',
-      techniques: 'Recorded alone at a microphone before the animation exists, it asks voiceover work; building four distinct people by voice, each with its own age, pitch and manner, kept apart on every take, is character work.',
+      techniques: 'Recorded alone at a microphone before the animation exists, it asks for voice-over. Building four distinct people by voice, each with its own age, pitch and manner, kept apart on every take, is character work.',
       beats: 'Flattery in a borrowed voice, a child’s voice that slips out, the lady breaking through, then a voice of its own.',
     },
     readings: [
@@ -419,8 +419,8 @@ export const SECOND_B: readonly Brief[] = [
       physical: 'The rabbits and the box come down from shelves on her own side of frame and are searched through on camera.',
       partner: 'Every line comes from what the reader offers, and his description changes from take to take.',
       improvisation: 'There’s no script: the dialogue is found from the outline, and the reader brings new details to it on every take.',
-      techniques: 'The scene is improvised to an outline, playing close to yourself the way a docufiction participant does, opposite a reader who improvises too: improv work, carried through a whole transaction.',
-      allows: 'The brief gives an outline and no lines, so it can’t be played as a set text: the structure has to stay open.',
+      techniques: 'The scene is improvised to an outline, playing close to yourself the way a docufiction participant does, opposite a reader who improvises too: improvisation, carried through a whole transaction.',
+      allows: 'The brief gives an outline and no lines, so there’s no set text to fix. It can only be played open, found fresh from the reader each time.',
       beats: 'Forms that turn comic, the wrong rabbits, then the right one found where it nearly went, and a rule to bend on camera.',
     },
     readings: [
@@ -449,7 +449,7 @@ export const SECOND_B: readonly Brief[] = [
       timing: 'Each narration line is recorded to a cut that’s already fixed, so it has to fit its length to the frame.',
       vocal: 'She switches between the narrator’s voice at the microphone and her own voice to him, and the last line has to carry both.',
       partner: 'He objects line by line, and every take she records answers what he just said.',
-      techniques: 'She records documentary narration to picture at a desk microphone, on camera: voiceover work, with a narrator’s timing and read, between the arguments.',
+      techniques: 'She records documentary narration to picture at a desk microphone, on camera: voice-over work, with a narrator’s timing and read, between the arguments.',
       beats: 'A clean take he rejects, a pedantic correction, the truth he never told her, then a line recorded for him.',
     },
     readings: [
@@ -613,7 +613,7 @@ export const SECOND_B: readonly Brief[] = [
     why: {
       physical: 'The embrace is the scene’s turn: she crosses, holds and steps back as set moves, and the stillness inside the embrace is where she gives her answer.',
       partner: 'He gives her calm and little else, and she has to find in what he leaves out whether he’s as sure as he sounds.',
-      techniques: 'The embrace is staged intimacy, agreed in advance with an intimacy coordinator and played solo: she steps toward his eyeline beside the lens and holds the embrace in the air, never touching the reader, the same on every take; nothing explicit is played, and the scene is about power.',
+      techniques: 'The embrace is staged intimacy, agreed in advance with an intimacy coordinator and played solo. She steps toward his eyeline beside the lens and holds the embrace in the air, never touching the reader, the same on every take. None of it is explicit: the scene is about power.',
       beats: 'An ending he accepts too easily, the threat said calmly, her answer given inside a last embrace, then the door.',
     },
     readings: [
@@ -672,7 +672,7 @@ export const SECOND_B: readonly Brief[] = [
       timing: 'Each lot is read at an auctioneer’s even pace, and every change in the voice has to happen inside that pace without breaking it.',
       vocal: 'The voice does everything: one flat list made into a woman’s life, with no other words to help.',
       techniques: 'Recorded alone at a microphone for a sound piece: a fixed text read in one take, with the voice carrying all of it.',
-      allows: 'The piece forbids any word that isn’t on the list, in any order but its own, so the structure is set and can’t be found anew on the take.',
+      allows: 'The piece forbids any word that isn’t on the list, in any order but its own. It can only be played set, the same way every time.',
       beats: 'A plain hallway, a comic kitchen, a room that slows the voice, a bedroom that tells too much, a cheer that turns, then one lot read last.',
     },
     readings: [
@@ -701,7 +701,7 @@ export const SECOND_B: readonly Brief[] = [
       timing: 'The song is the clock: she has to keep her face still for as long as it plays, and the lie lands as the music stops.',
       physical: 'The slow dance is the scene’s center, a set of choreographed moves held through dialogue, danced solo toward his eyeline beside the lens with the jukebox on her own side of frame: he leads, and she keeps her face still at the distance he chooses.',
       partner: 'He’s pressing the whole time, and she has to judge from his guesses how near the truth he’s getting.',
-      techniques: 'The slow dance is staged intimacy, agreed in advance with an intimacy coordinator and played solo: she sways in a hold around no one toward his eyeline, never touching the reader, the same on every take; nothing explicit is played, and the closeness is his, used to read her.',
+      techniques: 'The slow dance is staged intimacy, agreed in advance with an intimacy coordinator and played solo. She sways in a hold around no one toward his eyeline, never touching the reader, the same on every take. None of it is explicit: the closeness is his, used to read her.',
       beats: 'Boredom played to keep him out, a dance he uses to search her face, a right guess she laughs off, then the lie as the music stops.',
     },
     readings: [

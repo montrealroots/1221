@@ -123,7 +123,7 @@ export const HOUSE_SCENES: readonly Scene[] = [
         objective: [
           yes('heart', 'Put heart into his army before the battle', 'He bids any man without the stomach for the fight depart, and promises the rest they’ll be remembered.'),
           yes('honour', 'Make the odds a matter of honor, not of fear', '“The fewer men, the greater share of honor.”'),
-          no('terms', 'Look for terms with the French', 'He answers the herald who comes next to bear his former answer back: no ransom.'),
+          no('terms', 'Look for terms with the French', 'When the herald comes, he sends him back with his former answer: no ransom.'),
         ],
         obstacle: [
           yes('odds', 'Five to one, and the French fresh', 'Exeter says there’s five to one; besides, they all are fresh.'),
@@ -146,7 +146,7 @@ export const HOUSE_SCENES: readonly Scene[] = [
         obstacle: [
           yes('count', 'The count he has just made himself', 'It was Westmorland who put the French at full three-score thousand.'),
           yes('answered', 'His wish answered before the whole host', '“What’s he that wishes so? My cousin Westmorland? No, my fair cousin.”'),
-          no('silenced', 'He isn’t let speak', 'The King asks him outright, “Thou dost not wish more help from England, coz?”'),
+          no('silenced', 'He isn’t allowed to speak', 'The King asks him outright, “Thou dost not wish more help from England, coz?”'),
         ],
         tactic: [
           yes('wish', 'Say the fear aloud, as a wish', 'He wishes for the men “That do no work today.”'),
@@ -220,7 +220,7 @@ export const HOUSE_SCENES: readonly Scene[] = [
     summary: 'On his wedding night Theseus chooses “A tedious brief scene of young Pyramus And his love Thisbe; very tragical mirth,” played by hard-handed workmen who have toiled their unbreathed memories with it, against Philostrate’s warning. Bottom plays Pyramus and Flute plays Thisbe, before the Duke, his bride and the court. Pyramus curses the wall that shows him no Thisbe, and stops the play to tell the Duke that “deceiving me” is Thisbe’s cue; the lovers kiss the wall’s hole and agree to meet at Ninny’s tomb. Thisbe is roared off by the Lion, who tears her mantle; Pyramus finds it bloody, stabs himself and dies five times over; Thisbe finds him, mourns his cherry nose and his leek-green eyes, and dies on his sword, while the court jokes at every line.',
     circumstances: [
       yes('wedding', 'The palace of Theseus on his wedding night, the Duke and his court watching the play', 'Theseus chooses it for the hours between supper and bedtime, and he and his court speak over every scene.'),
-      no('wood', 'A rehearsal in the wood', 'That was the night before; Philostrate says the Prologue is addressed, and this is the performance.'),
+      no('wood', 'A rehearsal in the wood', 'That was the night before. Philostrate says the Prologue is ready, and this is the performance.'),
       no('alone', 'Two lovers alone at night', 'That’s the story they play; they play it before the whole court.'),
     ],
     relationship: [

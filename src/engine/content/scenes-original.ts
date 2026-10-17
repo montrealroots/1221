@@ -60,7 +60,7 @@ export const ORIGINAL_SCENES: readonly Scene[] = [
         ],
         tactic: [
           yes('test', 'Make him earn it: let him talk and see how far he’ll go', 'She holds the last room and the only cot, so she can afford to hear him out.'),
-          yes('deadpan', 'Answer every plea flatly, as if she’s heard it all', 'Nine years of nights at this desk; his story isn’t new to her.'),
+          yes('deadpan', 'Answer every plea flatly, as if she’s heard it all', 'She has worked nights at this desk for nine years, and his story isn’t new to her.'),
           no('call', 'Call the police to have him removed', 'He’s offering to pay and work, not causing trouble, and the road out is closed.'),
         ],
       },
@@ -169,7 +169,7 @@ export const ORIGINAL_SCENES: readonly Scene[] = [
           no('sell', 'Sell everything quickly and split the money', 'She wants the records kept; that’s the fight.'),
         ],
         obstacle: [
-          yes('postcards', 'The postcards show the father treasured the son who left', 'Every postcard he ever sent home, kept in order in a drawer.'),
+          yes('postcards', 'The postcards show the father treasured the son who left', 'Their father kept every postcard Paul sent home, in order, in a kitchen drawer.'),
           no('will', 'The will leaves everything to her brother', 'There’s no will.'),
         ],
         tactic: [
@@ -353,7 +353,7 @@ export const ORIGINAL_SCENES: readonly Scene[] = [
         name: 'The Teacher',
         objective: [
           yes('commit', 'Get the father to see the makeup lab through', 'One makeup lab brings the grade above 60.'),
-          yes('wake-up', 'Make him see that the boy is drifting, team or no team', 'Five lab reports not turned in is more than a grade.'),
+          yes('wake-up', 'Make him see that the boy is drifting, team or no team', 'Five missing lab reports are about more than a grade.'),
           no('punish', 'Punish the boy for skipping labs', 'She’s offering a way to pass.'),
         ],
         obstacle: [
@@ -384,9 +384,9 @@ export const ORIGINAL_SCENES: readonly Scene[] = [
       no('moving-day', 'Moving day, the truck outside', 'Neither has decided to move yet.'),
     ],
     relationship: [
-      yes('couple', 'A long-distance couple, three years in, both afraid to be the one who gives things up', 'Two years apart, and now a promise to close the distance.'),
+      yes('couple', 'A long-distance couple, three years in, both afraid to be the one who gives things up', 'They’ve spent two years apart, and now they’ve promised to close the distance.'),
       no('broken-up', 'Exes negotiating a breakup', 'They agreed to move together; this is about who moves.'),
-      no('married', 'A married couple of twenty years', 'Three years together, two of them apart.'),
+      no('married', 'A married couple of twenty years', 'They’ve been together three years, two of them apart.'),
     ],
     roles: [
       {
@@ -458,7 +458,7 @@ export const ORIGINAL_SCENES: readonly Scene[] = [
           no('sister', 'The sister has already chosen the other man', 'She has asked for an answer tonight; she hasn’t chosen.'),
         ],
         tactic: [
-          yes('polite', 'Stay coldly polite, as if they were strangers', 'Eleven years without a word.'),
+          yes('polite', 'Stay coldly polite, as if they were strangers', 'They haven’t said a word to each other in eleven years.'),
           yes('memory', 'Bring up the three of them in high school', 'They were inseparable from high school.'),
           no('scene', 'Start a loud fight in the hall', 'It’s a funeral reception, among mourners.'),
         ],

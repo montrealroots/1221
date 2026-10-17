@@ -450,12 +450,12 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
         obstacle: [
           yes('portia', 'Portia is dead, and he carries it unsaid through the quarrel', 'He tells Cassius after: “No man bears sorrow better. Portia is dead.”'),
           yes('temper', 'Cassius’s temper, against his own cold pride'),
-          no('mutiny', 'His legions have mutinied', 'Nothing of the kind; the quarrel is over bribes and money.'),
+          no('mutiny', 'His legions have mutinied', 'The legions haven’t mutinied; the quarrel is over bribes and money.'),
         ],
         tactic: [
           yes('scorn', 'Stand cold against his threats', 'He tells Cassius there’s no terror in them: he’s armed so strong in honesty they pass him by.'),
           yes('shame', 'Shame him with the cause they fought for'),
-          no('draw', 'Draw on him', 'Nobody draws; it’s Cassius who offers his own dagger.'),
+          no('draw', 'Draw his sword on him', 'Nobody draws; it’s Cassius who offers his own dagger.'),
         ],
       },
       {
@@ -518,7 +518,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
         obstacle: [
           yes('knock', 'The knocking: Ligarius has come to join them'),
           yes('plot', 'The plot itself, which isn’t his alone to tell'),
-          no('jealousy', 'He suspects her of another man', 'Nothing of the kind is in the scene.'),
+          no('jealousy', 'He suspects her of another man', 'He never suspects her, and there’s no other man in the scene.'),
         ],
         tactic: [
           yes('ill', 'Plead ill health'),
@@ -848,7 +848,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
     relationship: [
       yes('lovers', 'Lovers on the point of marriage, each guarding a freedom', 'She says she won’t be called names of fondness after she is married.'),
       no('strangers', 'Strangers meeting', 'He has loved her through the play.'),
-      no('married', 'Already married', 'This is the bargain before.'),
+      no('married', 'Already married', 'This is the bargain they strike before it.'),
     ],
     roles: [
       {
