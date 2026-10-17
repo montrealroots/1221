@@ -27,7 +27,7 @@ import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 /** What the five scripts read and write, relative to the repository's root. */
-const COPIED = ['docs/verification/pipeline', 'docs/verification/scope', 'docs/verification/remaining', 'docs/verification/remaining-09', 'docs/verification/audit', 'tests'];
+const COPIED = ['docs/verification/pipeline', 'docs/verification/scope', 'docs/verification/remaining', 'docs/verification/remaining-09', 'docs/verification/completion-2026-10-16', 'docs/verification/audit', 'tests'];
 const INPUTS = 'docs/verification/pipeline/inputs';
 const AUDIT = 'docs/verification/audit';
 const MERGE_ARGS = ['evidence-results.json,evidence2-results.json,evidence3-results.json,evidence4-results.json,evidence5-results.json', 'mutations.json,mutations2-final.json,mutations3.json,mutations4-final.json', 'fixes.json', 'checks.json'];

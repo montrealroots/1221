@@ -38,13 +38,20 @@
 // doc-fields.json's acceptance, and what one of a row's tests closes (after.tests[N].closes), written into
 // inputs/closes.json under that test's title as the audit stands, for merge-review.cjs to apply; until then both were
 // listed as no field and left out.
+// From 2026-10-17 (brief 11) it reads docs/verification/completion-2026-10-16/ too, after remaining-09/, keyed `11-<area>`,
+// its records `remaining-11-<area>`: that pass's results list their rows under `rows`, read as items, and a test a row
+// already cites isn't added again, as brief 09's. Only a row whose id is an audit row's, or one mapped in
+// remaining-rows.json, takes its tests; the criteria and area items brief 11 also closed are listed as unmapped. Until
+// then brief 11's tests of the audit's rows (health.enroll, l-actor) would have gone nowhere. Brief 10's results
+// (remaining-10/) were never read, and still aren't: none of its items is an audit row, and its one row text (Arion's
+// close, an `evidence (add)` on bank.close_current) names a test its item's tests don't reach.
 //   node remaining-fold.cjs        (from inputs/, after scope-fold.cjs)
 const fs = require('fs');
 const path = require('path');
 const S = path.join(__dirname, 'inputs') + '/';
 const ROOT = path.join(__dirname, '../../..') + '/';
 /** Each pass's results, in order, and the prefix its keys take. */
-const DIRS = [['docs/verification/remaining/', ''], ['docs/verification/remaining-09/', '09-']];
+const DIRS = [['docs/verification/remaining/', ''], ['docs/verification/remaining-09/', '09-'], ['docs/verification/completion-2026-10-16/', '11-']];
 const FIELDS = ['entry', 'reads', 'changes', 'downstream', 'persistent', 'explanation', 'tests', 'issue', 'corrected.now', 'settled'];
 const added = new Set(Object.keys(fs.existsSync(S + 'added-rows.json') ? JSON.parse(fs.readFileSync(S + 'added-rows.json', 'utf8')).rows : {}));
 const ids = new Set([...JSON.parse(fs.readFileSync(S + 'row-review.json', 'utf8')).map((r) => r.id), ...added]);
@@ -120,7 +127,7 @@ const byFile = {};
 const files = DIRS.flatMap(([dir, prefix]) => (fs.existsSync(ROOT + dir) ? fs.readdirSync(ROOT + dir).filter((f) => f.endsWith('-result.json')).sort().map((f) => ({ resultFile: ROOT + dir + f, key: prefix + f.replace(/-result\.json$/, '') })) : []));
 for (const { resultFile, key } of files) {
   const result = JSON.parse(fs.readFileSync(resultFile, 'utf8'));
-  for (const item of result.items ?? []) {
+  for (const item of result.items ?? result.rows ?? []) {
     // The rows the item's tests reach, as its evidence is mapped below: an `evidence (add)` is placed where they reach it.
     const reached = new Set([...(ids.has(item.id) ? [item.id] : []), ...(map.items?.[`${key}/${item.id}`]?.rows ?? []), ...(item.evidence ?? []).flatMap((e) => ((map.items?.[`${key}/${item.id}`]?.tests ?? map.byTest?.[key] ?? []).find((t) => plain(String(e.title ?? '').split(' > ').pop()).startsWith(plain(t.title)))?.rows ?? []))]);
     // Row text.
@@ -212,7 +219,7 @@ for (const { resultFile, key } of files) {
         // A test the row already cites, in its review or an earlier round's record, isn't added again by brief 09's results
         // (from 2026-10-16): the banking area's readings of the eight bank rows cite the rows' own tests beside the one they
         // added. The last pass's records are folded as they were.
-        if (key.startsWith('09-') && citedBefore(row, String(e.title))) { said.alreadyCited.push(`${key}/${item.id}: ${row} ‘${String(e.title).split(' > ').pop().slice(0, 70)}’`); continue; }
+        if (/^(09|11)-/.test(key) && citedBefore(row, String(e.title))) { said.alreadyCited.push(`${key}/${item.id}: ${row} ‘${String(e.title).split(' > ').pop().slice(0, 70)}’`); continue; }
         rec.testsAdded.push({ title: e.title, closes: e.proves, evidenceKind: kindOf(e.kind, e.title) });
       }
     }
