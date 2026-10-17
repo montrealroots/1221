@@ -43,7 +43,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, formatDate } from '@/engine/core/time';
 import { TASK_PROFILES } from '@/engine/content/tasks';
 import { performerOf, replayAs, type WorkRecord } from '@/engine/systems/evaluation';
-import { ADVICE, assumedOf, forecastChange, genreNow, trainingForecast, trained, type Forecast } from '@/engine/systems/advice';
+import { ADVICE, assumedOf, forecastAtDiscipline, forecastChange, genreNow, trainingForecast, trained, type Forecast } from '@/engine/systems/advice';
 import { abilityFull, abilityOf, isAbility, levelOf } from '@/engine/systems/attributes';
 import { atFull } from '@/engine/systems/briefs';
 import { recommendations } from '@/engine/systems/experience';
@@ -539,6 +539,18 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     expect(said).not.toContain(`In ${held.what}`);
     expect(said).not.toContain('read as if its own preparation were complete');
     for (const [k, f] of trainingForecast(beginner, beginner.player)) expect(Math.abs(exact(f) - forecastByRecords(beginner, k)), k).toBeLessThan(1e-9);
+    // The boundary of known better: a take in a genre already known in full is known no better since (TEST SETUP: its
+    // genre at full before the take), and isn't counted so.
+    const known = tuning('adv-t-15').sim;
+    for (const g of b.kinds) known.player.engagement!.byGenre[g] = { familiarity: 100, practice: 100 };
+    go(known, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id });
+    expect(go(known, 'practice.self_tape', { genre: b.kinds[0], brief: b.id }).ok).toBe(true);
+    rest(known);
+    const fullAtTake = known.player.work!.at(-1)!;
+    expect(fullAtTake.inputs.prep.genre).toBe(1);
+    const ka = assumedOf(known.player)!;
+    expect(ka.genreBetter).toBe(assumedByRecords(known).genreBetter);
+    expect(ka.genreBetter).toBeLessThan(ka.genres);
   }, 240_000);
 
   it('PLAYER JOURNEY: says whether preparation, training or both deserve attention, from what the judge’s replay gives each, and the verdict follows the figures when one side is changed', () => {
@@ -610,6 +622,11 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     expect(ch.parts.own).toBeLessThan(0);
     expect(ch.parts.discipline).toBeGreaterThan(0);
     expect(Math.abs(Object.values(ch.parts).reduce((t, x) => t + x, 0) - (now - was.last.forecast))).toBeLessThan(1e-12);
+    // Discipline's part is worked out last, so it's brief 11's figure, and the standing's two sentences give one figure.
+    const atThen = exact(forecastAtDiscipline(copy, copy.player, id, was.last.discipline));
+    expect(Math.abs(ch.parts.discipline - (now - atThen))).toBeLessThan(1e-12);
+    expect(after.standing).toContain(`so ${signed4(now - atThen)} of the change is discipline’s`);
+    expect(after.standing).toContain(`${PART_WORDS.discipline}, ${signed4(ch.parts.discipline)}`);
     // Said: each part that shows at four places, by name, and nothing untraced.
     const sentence = `What moved its forecast since ${formatDate(was.last.at, copy.zone)}: `;
     expect(after.standing).toContain(sentence);
@@ -814,6 +831,18 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
       const first = firstOf(sim);
       const ladder = growthLadder(sim, first.target);
       expect(ladder.ok, `${seed} ${ladder.growth.join(' ')}`).toBe(true);
+      // The forecast grows as an hour of practice grows: one session through practice.exercise against the forecast's
+      // one session (`trained`), the same ratio (the played day's focus over the forecast's ordinary one) below three
+      // quarters of full and past it, where only the model's rate differs.
+      const ex = exerciseFor(first.target as never)!;
+      const ratio = (level: number) => {
+        const x = clone(sim);
+        setLevel(x, first.target, level);
+        const forecastOne = levelOf(x, trained(x, x.player, first.target as never, 1), first.target as never) - level;
+        expect(go(x, 'practice.exercise', { exercise: ex.id, tier: matchedTier(level), focus: 'steady' }).ok).toBe(true);
+        return (levelOf(x, x.player, first.target as never) - level) / forecastOne;
+      };
+      expect(Math.abs(ratio(60) - ratio(85)), seed).toBeLessThan(1e-9);
       if (ladder.rungs[0]! < 75) expect(ladder.growth[1]!).toBeLessThan(ladder.growth[0]!);
       else expect(Math.abs(ladder.growth[1]! - ladder.growth[0]!)).toBeLessThan(1e-9);
       // F3: the same twenty sessions played, the pieces read as the forecast read them.

@@ -138,7 +138,7 @@ export function levelAfter(level: number, full: number, sessions: number, discip
  * discipline for the day kept (`PRACTICE.disciplineDay`), as the hour keeps it. Nothing of the save is touched: the
  * levels, the body's fitness and the development ledger are the copy's.
  */
-export function trained(sim: Simulation, person: Person, id: AbilityId | Skill, sessions = ADVICE.sessions): Person {
+export function trained(sim: Simulation, person: Person, id: AbilityId | Skill, sessions: number = ADVICE.sessions): Person {
   const p: Person = { ...person, craft: { ...person.craft! }, ...(person.attrs ? { attrs: { ...person.attrs } } : {}), wellbeing: { ...person.wellbeing }, development: { day: '', counts: {}, history: [] } };
   const e = exerciseFor(id)!;
   for (let i = 0; i < sessions; i += 1) {
