@@ -54,6 +54,8 @@ them. The tested code is `7e7a3af6`'s.
   - OPT approved after the degree was withheld (`fa36c201`);
   - the acceptance step that relied on D3 (`51cdd7d6`);
   - the matrix's fold dropping a later result's measurement.
-- **The guarantees** (section 7): `GUARANTEES.md`.
-- **The final runs:** `runs/README.md`, `final/README.md`. The gate is `runs/gate.txt`.
+- **The guarantees** (section 7): `GUARANTEES.md`, all ten held.
+- **The final runs:** `runs/README.md`, `final/README.md`. The gate ran on `0cf3a9bc`: 376 of 376 files, 4,587 of
+  4,587 tests, exit 0 (`runs/gate.txt`).
+- **The figures:** 572 of 608 against the frozen baseline (94.0%); the matrix's own, 612 of 636 (96.2%).
 - **Decision 4's 23 rows are unchanged.** Merging and deploying are the owner's.

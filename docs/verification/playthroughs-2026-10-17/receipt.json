@@ -14,8 +14,8 @@
    "Explicitly Deferred": 27
   }
  },
- "matrix": "Completion, by the matrix: 611 of 636 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.",
- "againstTheFullBaseline": "571 of 608 (93.9%)",
+ "matrix": "Completion, by the matrix: 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.",
+ "againstTheFullBaseline": "572 of 608 (94.0%)",
  "actionable": {
   "closed": 39,
   "superseded": 4,
@@ -263,9 +263,7 @@
    ]
   }
  ],
- "problems": [
-  "INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now"
- ],
+ "problems": [],
  "rows": [
   {
    "id": "life.sleep",
@@ -4708,7 +4706,7 @@
    "id": "INT-gate",
    "group": "Integration",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
+   "now": "Implemented And Verified",
    "disposition": "verified at the baseline"
   },
   {

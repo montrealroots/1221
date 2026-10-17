@@ -194,7 +194,9 @@ def runs_md():
         if not os.path.exists(p): continue
         rep = json.load(open(p, encoding='utf-8'))
         walk = [s for s in rep['steps'] if re.match(r'^(health:|stamina and recovery:|papers: a Connecticut ID card|\[save: brief scenario\] advice:)', s['name'])]
-        out.append(f'- **The walkthrough’s own steps at {w}** (PLAYTEST.md): ' + '; '.join(f'{"passed" if s.get("ok") else "FAILED" if s.get("ok") is False else "skipped"}: {esc(s["name"])[:90]}' for s in walk))
+        # Brief 12's walkthrough's steps, which the acceptance run still plays; brief 13's own route is the interface
+        # area's walkthrough row (B13-UI.walkthrough), played by tools/playthroughs-ui.mjs.
+        out.append(f'- **Brief 12’s walkthrough’s own steps at {w}** (`../resolution-2026-10-17/PLAYTEST.md`): ' + '; '.join(f'{"passed" if s.get("ok") else "FAILED" if s.get("ok") is False else "skipped"}: {esc(s["name"])[:90]}' for s in walk))
     try:
         merged = subprocess.run(['git', 'merge-base', '--is-ancestor', 'HEAD', 'origin/main'], capture_output=True).returncode == 0
         out.append(f'- **Merged:** {"main holds this branch’s head" if merged else "not into main, which is the owner’s word to give"} (git merge-base, as this was written). **Deployed:** nothing; Base44 deployment is the owner’s word after the gate (rule 14).')

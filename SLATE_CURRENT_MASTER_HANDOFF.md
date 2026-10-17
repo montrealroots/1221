@@ -13,15 +13,15 @@ is not merged: merging is the owner's word. **Nothing is deployed.**
   (`git log --oneline 102ba8f2..origin/claude/peaceful-hamilton-59zdbb`), pushed and never force-pushed. Its three areas
   (acting, journeys, interface) were merged into it from their clones with merge commits.
 - **The tested code is `7e7a3af6`'s.** Every final run was made on it (`docs/verification/playthroughs-2026-10-17/runs/`),
-  except lane A's second run, on `51cdd7d6`, which changed only the acceptance tool. The gate runs last, on the commit
-  `runs/gate.txt` names, with only documents changed after it. Each run's commit, command and exit is in
-  `runs/exits-*.txt`.
+  except lane A's second run, on `51cdd7d6`, which changed only the acceptance tool. The gate ran last, on `0cf3a9bc`: 376 of
+  376 files, 4,587 of 4,587 tests, none skipped, the completion matrix holding, exit 0 (`runs/gate.txt`). Only documents
+  changed after it: the gate's figures folded in. Each run's commit, command and exit is in `runs/exits-*.txt`.
 - **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
   worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
 
 ## 2. Where It Stands
 
-**Completion, by the matrix:** 611 of 636 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
 - **Against the frozen baseline** (brief 11's, the matrix at `0e7ff7c2`, 608 rows in scope): **572 of 608 (94.0%)
   Implemented And Verified**, as at brief 13's start. The 36 others are decision 4's 23, the 4 rows superseded by
@@ -92,7 +92,7 @@ Three areas, each in its own clone, worked from instructions written before thei
   - The advice acknowledged changes in 3,741 weekly reads.
   - Each repetition was counted and kept where justified. No advice was rotated to make a count smaller.
 - **Section 7, the guarantees:** `GUARANTEES.md`, by `guarantees.py`, from the matrix, the final runs and the gate.
-  It is read again once the gate has run.
+  All ten are held. ST6-R2.e is named beside the specialist guarantee, not counted in it, since it was never verified.
 - **Section 8, the final runs** (`runs/README.md`, `final/README.md`).
   - **The judge's outputs:** byte for byte brief 11's, all 31.
   - **The acting area's measurements:** byte for byte its own.

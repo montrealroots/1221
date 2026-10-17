@@ -2,7 +2,7 @@
 
 Written by `guarantees.py` from the completion matrix, the final runs on the tested commit and the gate. Nothing here is typed. A guarantee is held when every row it names is Implemented And Verified, as the matrix gives it (a row whose measurement went stale reads as stale), and every figure came out as it says.
 
-- **Held:** 9 of 10.
+- **Held:** 10 of 10.
 
 ## Maximum-quality prepared mastery: held
 
@@ -83,9 +83,9 @@ Written by `guarantees.py` from the completion matrix, the final runs on the tes
 
 - **receipt.py, against brief 11’s frozen baseline:** 23 rows, 0 moved
 
-## Nothing advertised as a functioning mechanic is decoration: open
+## Nothing advertised as a functioning mechanic is decoration: held
 
 - `A4` (Criteria: The Attributes): Implemented And Verified
-- `INT-gate` (Integration): Implemented, Verification Incomplete: It was measured on ac79bf4a, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
-- **tools/wired.mjs --check, in the gate:** the gate not run
-- **tools/capabilities.mjs --check, in the gate:** the gate not run
+- `INT-gate` (Integration): Implemented And Verified
+- **tools/wired.mjs --check, in the gate:** 2 declared words that nothing reads (the ratchet’s person namespace and people table, which bootstrap alone fills: the one player, not a mechanic); the counts in docs/UNWIRED.json didn’t rise
+- **tools/capabilities.mjs --check, in the gate:** 64 capabilities: Missing 0, Partial 11, Implemented 31, Verified 3, Blocked 0, Retired 19. 158 player commands, every one in a live row, and docs/GAMEPLAY-COVERAGE.md agreed with on the 158 both name.

@@ -1,5 +1,5 @@
 {
- "on": "",
+ "on": "0cf3a9bc",
  "guarantees": [
   {
    "guarantee": "Maximum-quality prepared mastery",
@@ -438,7 +438,7 @@
   },
   {
    "guarantee": "Nothing advertised as a functioning mechanic is decoration",
-   "held": false,
+   "held": true,
    "rows": [
     {
      "id": "A4",
@@ -450,28 +450,24 @@
     {
      "id": "INT-gate",
      "group": "Integration",
-     "status": "Implemented, Verification Incomplete",
-     "held": false,
-     "why": "It was measured on ac79bf4a, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again"
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
     }
    ],
    "figures": [
     {
      "figure": "tools/wired.mjs --check, in the gate",
-     "said": "the gate not run",
-     "held": false
+     "said": "2 declared words that nothing reads (the ratchet’s person namespace and people table, which bootstrap alone fills: the one player, not a mechanic); the counts in docs/UNWIRED.json didn’t rise",
+     "held": true
     },
     {
      "figure": "tools/capabilities.mjs --check, in the gate",
-     "said": "the gate not run",
-     "held": false
+     "said": "64 capabilities: Missing 0, Partial 11, Implemented 31, Verified 3, Blocked 0, Retired 19. 158 player commands, every one in a live row, and docs/GAMEPLAY-COVERAGE.md agreed with on the 158 both name.",
+     "held": true
     }
    ],
-   "open": [
-    "INT-gate (Implemented, Verification Incomplete: It was measured on ac79bf4a, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again)",
-    "tools/wired.mjs --check, in the gate: the gate not run",
-    "tools/capabilities.mjs --check, in the gate: the gate not run"
-   ],
+   "open": [],
    "beside": []
   }
  ]
