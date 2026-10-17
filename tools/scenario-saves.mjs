@@ -3,7 +3,8 @@
  * again on the engine as it stands (from 2026-10-16, the sweep). Each is a life played by `tools/scenarios.ts` to where a
  * journey a new life can't reach in a session begins: a tax balance owed, a decision waiting, a later term, a scene with a
  * director's note. Until that day the list of the fourteen, their seeds and their lengths lived in a session's
- * scratchpad, and a fresh session couldn't write them again.
+ * scratchpad, and a fresh session couldn't write them again. From 2026-10-17 it writes a fifteenth, `health.json`, the
+ * sprained ankle brief 14's health journey opens (`tools/playthroughs-ui.mjs`), in a last batch of its own.
  *
  *   node tools/scenario-saves.mjs DIR
  *
@@ -51,6 +52,10 @@ const batches = [
       if (b !== 0) return b;
       return run('direction', ['--scenario', 'direction', '--from', join(DIR, 'dir2.json'), '--years', '0.45', ...save('direction.json')]);
     },
+  ],
+  // The sprained ankle brief 14's health journey opens (from 2026-10-17, `tools/playthroughs-ui.mjs`).
+  [
+    () => run('health', ['--scenario', 'health', '--seed', 'sc-0', ...save('health.json')]),
   ],
 ];
 
