@@ -34,7 +34,7 @@ import { ABILITY_DEFS, MASTERED, type AbilityId } from '../src/engine/content/ab
 import { abilityFull, abilityOf, levelOf } from '../src/engine/systems/attributes';
 import { evenCraft, hasNeed, coursesOn, classPeriod, keyOf, termStart, sickRefusal, STANDING_LABEL } from '../src/engine/systems/school';
 import type { SchoolDate } from '../src/engine/content/school';
-import { courseworkOf, playingPreview, shortParts, questionsFor, type Assignment } from '../src/engine/systems/coursework';
+import { courseworkOf, playingPreview, shortAtShowing, questionsFor, type Assignment } from '../src/engine/systems/coursework';
 import { templateById } from '../src/engine/content/coursework';
 import { exerciseFor, PRACTICE } from '../src/engine/content/practice';
 import { practiceRefusal, practicedToday, matchedTier } from '../src/engine/systems/practice';
@@ -51,6 +51,7 @@ import { genreSpeed } from '../src/engine/systems/engagement';
 import { GENRE_DEFS } from '../src/engine/content/genres';
 import { inTheBank } from '../src/engine/systems/spending';
 import { POLICY, evening, freeHour, keepCovered, lookAfter, practiceHour } from './policy';
+import { fixedPieces } from './pieces';
 
 // ---------------------------------------------------------------------------
 // The journeys, as the criteria name them
@@ -335,7 +336,9 @@ function scan(sim: Simulation, rec: Rec, st: PolicyState, prev: { condition: num
     st.shown.push(a.id);
     const t = templateById(a.template)!;
     const recs = work.filter((w) => w.at === a.shown!.at && w.what === t.title);
-    const short = shortParts(p, a);
+    // As its showing read it: the round shown, for work in rounds (`shortAtShowing`; until 2026-10-17 this read the next
+    // round's parts, J15's three "recurring" notes on table work counted as on a part not short).
+    const short = shortAtShowing(p, a);
     rec.showings.push({
       id: a.id, term: a.term, course: a.course, template: a.template, scene: a.sceneId, at: day(a.shown.at), band: a.shown.band, score: a.shown.score,
       records: recs.length, recordBand: recs[0]?.band, recordOverall: recs[0]?.overall, prep: recs[0] ? Object.fromEntries(Object.entries(recs[0].inputs.prep).map(([k, v]) => [k, r2(v)])) : undefined,
@@ -780,7 +783,7 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
     }
     const targets = new Set(a.map((x) => x.target).filter(Boolean));
     if (spec.player === 'follows' && spec.setup !== 'mastered' && targets.size < 2) fails.push(`a follower's first target never changed: ${[...targets].join(', ')}`);
-    put('4 advice', fails, [`${a.length} weekly reads, ${targets.size} first targets: ${[...targets].join(', ')}`, `all full said in ${a.filter((x) => x.full).length} weeks`, `${belowShown} weeks the same words over a move under what's shown`, `standing said in ${a.filter((x) => x.standing).length} weeks (noted where the player practices or tapes)`]);
+    put('4 advice', fails, [`${a.length} weekly reads, ${targets.size} first targets: ${[...targets].join(', ')}`, `all full said in ${a.filter((x) => x.full).length} weeks`, `${belowShown} weeks the same words over a move under what's shown`, `standing said in ${a.filter((x) => x.standing).length} weeks (noted where the player practices or tapes)`, `circumstances: a condition named among the five in ${a.filter((x) => x.recs.some((r) => r.startsWith('condition:'))).length} weeks (${[...new Set(a.flatMap((x) => x.recs.filter((r) => r.startsWith('condition:')).map((r) => r.split(' ')[0])))].join(', ') || 'none'}), a preparation in ${a.filter((x) => x.recs.some((r) => r.startsWith('prep:'))).length}`]);
   }
 
   // 5. Health, stamina, energy.
@@ -800,9 +803,12 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
     }
     const missedIll = rec.notices.filter((n) => n[2] === 'You Missed Classes' && d.some((x) => x[0] === n[0] && (x[7] === 1)));
     if (missedIll.length) fails.push(`unexcused while in hospital: ${missedIll.map((n) => n[0]).join(', ')}`);
+    const called = new Set(rec.acts.filter((x) => x.includes('school.call_in_sick') && !x.includes('refused')).map((x) => x.slice(0, 10)));
+    const missedCalled = rec.notices.filter((n) => n[2] === 'You Missed Classes' && called.has(n[0]));
+    if (missedCalled.length) fails.push(`unexcused on a day called in sick: ${missedCalled.map((n) => n[0]).join(', ')}`);
     const illWork = rec.work.filter((w) => w.ill || w.hurt); const wellWork = rec.work.filter((w) => !w.ill && !w.hurt);
     const mean = (xs: { overall: number }[]) => xs.length ? r1(xs.reduce((t, x) => t + x.overall, 0) / xs.length) : undefined;
-    put('5 health, stamina, energy', fails, [`daily changes of energy and stamina correlate at ${r2(r)} over ${d.length} mornings`, `health events ${rec.health.length}: ${(rec.health as { at: string; events: string[] }[]).slice(0, 8).map((h) => `${h.at.slice(0, 10)} ${h.events.join('; ')}`).join(' | ')}`, `work ill or hurt ${illWork.length} at ${mean(illWork)}, well ${wellWork.length} at ${mean(wellWork)}; excused class days by term ${rec.reviews.map((r) => (r.tally as Record<string, number> | undefined)?.excused ?? 0).join(',')}`]);
+    put('5 health, stamina, energy', fails, [`daily changes of energy and stamina correlate at ${r2(r)} over ${d.length} mornings`, `health events ${rec.health.length}: ${(rec.health as { at: string; events: string[] }[]).slice(0, 8).map((h) => `${h.at.slice(0, 10)} ${h.events.join('; ')}`).join(' | ')}`, `called in sick ${called.size} days; work ill or hurt ${illWork.length} at ${mean(illWork)}, well ${wellWork.length} at ${mean(wellWork)}; excused class days by term ${rec.reviews.map((r) => (r.tally as Record<string, number> | undefined)?.excused ?? 0).join(',')}`]);
   }
 
   // 6. Money.
@@ -839,6 +845,20 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
     if (applied.length && !issued.length && e.on && String(e.on) > '2029-08-01') fails.push('OPT applied for and never decided');
     const outs = has(rec, 'Out Of Status');
     if (outs.length && applied.length && issued.length) fails.push('out of status with OPT approved');
+    // The day an F-1 status ends, by the rules worked here apart from the engine (8 CFR 214.2(f)(5)(iv), as
+    // `STATUS_GRACE_DAYS` cites it): the program's end and sixty days after the degree, which is the visa's own end, kept
+    // to the program with any leave or year again; the day itself after a dismissal; fifteen days after a withdrawal or a
+    // degree withheld; an OPT's end and sixty days where one was approved. Only where the journey ran past it.
+    const f1 = documentsOf(p).find((d) => d.kind === 'visa' && d.name.startsWith('F-1'));
+    const opt = documentsOf(p).find((d) => d.kind === 'permit' && d.name.includes('OPT') && d.expiresAt !== undefined && d.issuedAt !== undefined);
+    const endedAt = p.school?.endedAt;
+    if (f1 && endedAt !== undefined) {
+      const std = p.school!.standing;
+      const due = opt ? opt.expiresAt! + 60 * MS_DAY : std === 'graduated' ? f1.expiresAt! : std === 'dismissed' ? endedAt : endedAt + 15 * MS_DAY;
+      const outAt = p.usOutOfStatus;
+      if (sim.now > due + MS_DAY && (outAt === undefined || day(outAt) !== day(due))) fails.push(`F-1 status: by the rules out on ${day(due)}, the game ${outAt === undefined ? 'never' : `on ${day(outAt)}`}`);
+      if (sim.now <= due && outAt !== undefined) fails.push(`F-1 status: out on ${day(outAt)}, before its end on ${day(due)}`);
+    }
     // Each passport applied for is issued after it, or still pending at the end (read from the documents: an issue's notice
     // is titled with the passport's own name, "Pasaporte ordinario mexicano (tipo "N") Issued").
     const passports = rec.acts.filter((x) => x.includes('documents.apply_passport') && !x.includes('refused')).map((x) => x.slice(0, 10));
@@ -986,11 +1006,83 @@ function recheck(spec: Spec, stateDir: string, out: string): void {
   writeFileSync(join(stateDir, `${spec.id}.state.json`), JSON.stringify({ rec, st }));
   writeFileSync(out, `${JSON.stringify(compact(rec), null, 1)}\n`);
   // The parts before, as summaries (their first outputs repeated the whole record so far).
-  rec.parts.slice(0, -1).forEach((_, i) => writeFileSync(out.replace(/-p\d+\.json$/, `-p${i + 1}.json`), `${JSON.stringify(partSummary(rec, i + 1), null, 1)}\n`));
+  if (/-p\d+\.json$/.test(out)) rec.parts.slice(0, -1).forEach((_, i) => writeFileSync(out.replace(/-p\d+\.json$/, `-p${i + 1}.json`), `${JSON.stringify(partSummary(rec, i + 1), null, 1)}\n`));
   console.log(JSON.stringify({ id: spec.id, rechecked: true, checks: Object.fromEntries(Object.entries(rec.checks!).map(([k, v]) => [k, v.pass ? 'pass' : v.fails.slice(0, 2)])) }));
 }
 
+/**
+ * `--compare <state> --out <file>`: what the expectations compare across journeys (journeys-criteria.md, Expected Outcomes),
+ * read from the finished saves.
+ * - **The advice's three players** (J03 to J05, J06 to J08): each one seed and one creation, so only how the advice was
+ *   taken differs. How far every ability the follower was advised first rose for each; how far the ignorer's favorite
+ *   (the ability its most practiced exercise trains) rose for each; and the follower's last twelve pieces judged again
+ *   without the draw at each player's final levels (`replayAs`).
+ * - **The specialists against their generalists** (J11 against J09, J12 against J10): one seed and one budget. The fixed
+ *   set of 24 (`tools/pieces.ts`, named in brief 10 before it was measured) judged at the setup's levels and at the final
+ *   ones; each piece's difference split into what the specialist's strengths add (the generalist's levels with the
+ *   strengths put in) and what its 49s cost (with the 49s put in), so a piece reads its strengths where the first is the
+ *   larger, its weaknesses where the second is. And at the end, the strengths against the weaknesses, and the weeks the
+ *   advice named each.
+ */
+function compare(stateDir: string, out: string): void {
+  const open = (id: string) => ({ sim: loadSave(deserialise(readFileSync(join(stateDir, `${id}.save`), 'utf8')) as never), rec: (JSON.parse(readFileSync(join(stateDir, `${id}.state.json`), 'utf8')) as { rec: Rec }).rec });
+  const frozen = (sim: Simulation): Performer => { const p = sim.player; const ab = Object.fromEntries(ABILITY_DEFS.map((d) => [d.id, abilityOf(sim, p, d.id)])); const fu = Object.fromEntries(ABILITY_DEFS.map((d) => [d.id, abilityFull(sim, p, d.id)])); const te = { ...p.craft! }; return { ability: (id) => ab[id] ?? 0, full: (id) => fu[id] ?? 100, technique: (k) => te[k] ?? 0 }; };
+  const ids = ABILITY_DEFS.map((d) => d.id);
+  const result: Record<string, unknown> = {};
+  for (const [f, pt, ig] of [['J03', 'J04', 'J05'], ['J06', 'J07', 'J08']] as const) {
+    const [F, P, I] = [open(f), open(pt), open(ig)];
+    const start = F.rec.creation!.abilities as Record<string, number>;
+    const rise = (x: typeof F) => Object.fromEntries(ids.map((id) => [id, r1(abilityOf(x.sim, x.sim.player, id) - start[id]!)]));
+    const [rf, rp, ri] = [rise(F), rise(P), rise(I)];
+    const named = [...new Set(F.rec.advice.map((a) => a.target).filter((t): t is string => Boolean(t) && ids.includes(t as AbilityId)))];
+    const sum = (r: Record<string, number>) => r1(named.reduce((t, id) => t + r[id]!, 0));
+    const practiced = Object.values(I.rec.practice).reduce((o, m) => { for (const [k, n] of Object.entries(m)) o[k] = (o[k] ?? 0) + n; return o; }, {} as Record<string, number>);
+    const fav = Object.entries(practiced).sort((a, b) => b[1] - a[1])[0]?.[0];
+    const favId = fav ? ids.find((id) => exerciseFor(id)?.id === fav) : undefined;
+    const work = (F.sim.player.work ?? []).filter((w) => w.ruleset === RULESET && w.inputs.seed !== undefined && TASK_PROFILES[w.task]).slice(-12);
+    const at = (perf: Performer) => r2(work.reduce((t, w) => t + (replayAs(w, TASK_PROFILES[w.task]!, perf)?.exact ?? 0), 0) / Math.max(1, work.length));
+    result[`${f} ${pt} ${ig}`] = {
+      advisedToTheFollower: named, risesOfTheAdvised: { follows: sum(rf), partly: sum(rp), ignores: sum(ri) }, byInput: Object.fromEntries(named.map((id) => [id, { follows: rf[id], partly: rp[id], ignores: ri[id] }])),
+      ignorersFavorite: favId ? { ability: favId, exercise: fav, sessions: practiced[fav!], follows: rf[favId], partly: rp[favId], ignores: ri[favId] } : undefined,
+      followersLastTwelve: { pieces: work.length, atFollowers: at(frozen(F.sim)), atPartlys: at(frozen(P.sim)), atIgnorers: at(frozen(I.sim)) },
+      outcome: [F, P, I].map((x) => x.sim.player.school?.standing),
+    };
+  }
+  const STRENGTHS: Record<string, AbilityId[]> = { feeling: ['emotionalDepth', 'composure', 'imagination', 'presence'], body: ['vocal', 'physical', 'memory', 'presence'] };
+  const pieces = fixedPieces();
+  for (const [g, sp] of [['J09', 'J11'], ['J10', 'J12']] as const) {
+    const [G, S] = [open(g), open(sp)];
+    const kind = S.rec.setup!.setup as string;
+    const strong = STRENGTHS[kind]!;
+    const weak = ids.filter((id) => id !== 'stamina' && !strong.includes(id));
+    const fromSetup = (rec: Rec): Performer => { const ab = rec.setup!.abilities as Record<string, number>; const te = rec.setup!.techniques as Record<string, number>; return { ability: (id) => ab[id] ?? 0, full: (id) => (id === 'stamina' ? Math.max(100, ab.stamina ?? 100) : 100), technique: (k) => te[k] ?? 0 }; };
+    const mix = (base: Performer, from: Performer, put: AbilityId[]): Performer => ({ ability: (id) => (put.includes(id) ? from.ability(id) : base.ability(id)), full: base.full, technique: base.technique });
+    const judgeAll = (gp: Performer, spp: Performer) => pieces.map((pc) => {
+      const gv = pc.judge(gp).exact!, sv = pc.judge(spp).exact!;
+      const addStrong = pc.judge(mix(gp, spp, strong)).exact! - gv, costWeak = pc.judge(mix(gp, spp, weak)).exact! - gv;
+      const reads = addStrong > -costWeak ? 'strengths' : 'weaknesses';
+      return { piece: `${pc.kind}:${pc.id}`, generalist: r2(gv), specialist: r2(sv), strengthsAdd: r2(addStrong), weaknessesCost: r2(costWeak), reads, asExpected: reads === 'strengths' ? sv > gv : sv < gv };
+    });
+    const atStart = judgeAll(fromSetup(G.rec), fromSetup(S.rec));
+    const atEnd = judgeAll(frozen(G.sim), frozen(S.sim));
+    const endLevels = Object.fromEntries(ids.map((id) => [id, r1(abilityOf(S.sim, S.sim.player, id))]));
+    const weeks = (list: AbilityId[]) => S.rec.advice.filter((a) => list.includes(a.target as AbilityId)).length;
+    result[`${sp} against ${g}`] = {
+      specialist: kind, strengths: strong, weaknesses: weak,
+      atSetupLevels: { asExpected: atStart.filter((x) => x.asExpected).length, of: atStart.length, readsStrengths: atStart.filter((x) => x.reads === 'strengths').length, pieces: atStart },
+      atFinalLevels: { asExpected: atEnd.filter((x) => x.asExpected).length, of: atEnd.length, pieces: atEnd },
+      finalLevels: endLevels, strengthsMin: Math.min(...strong.map((id) => endLevels[id]!)), weaknessesMax: Math.max(...weak.map((id) => endLevels[id]!)), weaknessesMean: r1(weak.reduce((t, id) => t + endLevels[id]!, 0) / weak.length),
+      adviceWeeks: { strengths: weeks(strong), weaknesses: weeks(weak), all: S.rec.advice.length },
+      strengthsNamed: S.rec.advice.filter((a) => strong.includes(a.target as AbilityId)).map((a) => `${a.day} ${a.target} at ${a.level}`),
+      outcome: [G, S].map((x) => x.sim.player.school?.standing),
+    };
+  }
+  writeFileSync(out, `${JSON.stringify(result, null, 1)}\n`);
+  console.log(JSON.stringify(Object.fromEntries(Object.entries(result).map(([k, v]) => [k, Object.fromEntries(Object.entries(v as Record<string, unknown>).filter(([kk]) => !['byInput', 'pieces', 'atSetupLevels', 'atFinalLevels', 'strengthsNamed', 'finalLevels'].includes(kk)))]))));
+}
+
 if (process.argv.includes('--summarize')) summarize(arg('summarize'));
+else if (process.argv.includes('--compare')) compare(arg('compare'), arg('out'));
 else if (process.argv.includes('--recheck')) {
   const spec = JOURNEYS.find((j) => j.id === arg('journey'));
   if (!spec) throw new Error(`No journey "${arg('journey')}"`);

@@ -74,7 +74,8 @@ import {
 } from './learning';
 import { actingOf } from './school';
 import { CLASS, boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
-import { laidUp, trainingRefusal } from './injury';
+import { injuryOf, laidUp, trainingRefusal } from './injury';
+import { INJURY_KIND } from '../content/injury';
 import { academicTerm, cabaretEvenings, CABARET_RUN, coursesFor, ESTIMATE, type SchoolRecord } from './school';
 import { choose, materialContext, materialOf, rehearseChoice, sidesOf, type Playing } from './material';
 import { PLAYING } from '../content/approaches';
@@ -1149,6 +1150,19 @@ export function showingForecast(sim: Simulation, person: Person, a: Assignment):
   return piece ? judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, piece) : evaluate(sim, person, ctx);
 }
 
+/**
+ * The parts a shown piece was short on, as its last showing read them (from 2026-10-17, brief 13's journeys): for work
+ * shown in rounds, the round last shown, which its band is, and not the next round, which `shortParts` reads as the piece
+ * goes on. Until then the term's warning and its review named the parts of the round still to come as the cause of an
+ * Unready round: a Simulated Rehearsal shown Unready At The Table counted lines, on its feet and with your partner, the
+ * next round's, not yet due (J15 and J16, seeds j13-9 and j13-10).
+ */
+export function shortAtShowing(person: Person, a: Assignment): PrepDim[] {
+  const t = templateById(a.template);
+  if (!t?.rounds || !a.roundsShown?.length) return shortParts(person, a);
+  return shortParts(person, { ...a, round: a.roundsShown.length - 1 });
+}
+
 /** The parts of a piece short of what completes them, as the showing reads them (from 2026-10-16). */
 export function shortParts(person: Person, a: Assignment): PrepDim[] {
   const w = weightsOf(a);
@@ -1204,7 +1218,8 @@ export function termTally(assignments: readonly Assignment[], term: number) {
 
 /**
  * The part most often short on the Unready pieces given, and what answers it (from 2026-10-16). Counted by what the part
- * is on each piece's template and the steps that answer it there. Until later that day it was counted by the part's key
+ * is on each piece's template and the steps that answer it there, and from 2026-10-17 on the round last shown for work in
+ * rounds (`shortAtShowing`). Until later that day it was counted by the part's key
  * alone, which names different work on different templates (rehearsal has nine labels and steps among them), and the
  * first piece's words were said of all of them: "rehearsed in the body … Rehearse The Score answers it" of a song too.
  */
@@ -1213,7 +1228,7 @@ export function mostShort(person: Person, pieces: readonly Assignment[]): { labe
   for (const a of pieces) {
     const t = templateById(a.template);
     if (!t) continue;
-    for (const d of shortParts(person, a)) {
+    for (const d of shortAtShowing(person, a)) {
       const label = t.dims[d]!.label, remedy = remedyWords(a, d);
       const c = by.get(`${label}|${remedy}`) ?? { label, remedy, n: 0 };
       c.n += 1;
@@ -1237,9 +1252,11 @@ export function mostShort(person: Person, pieces: readonly Assignment[]): { labe
  */
 export function shortCause(person: Person, pieces: readonly Assignment[]): { kind: 'every' } | { kind: 'scattered' } | { kind: 'part'; label: string; remedy: string; n: number } | undefined {
   if (!pieces.length) return undefined;
-  // A piece of no template the catalog has reads no parts, as `mostShort` passes it by.
-  const judged = (a: Assignment) => { if (!templateById(a.template)) return 0; const w = weightsOf(a); return Object.keys(preparedParts(person, a, a.status === 'revising' ? a.revision!.dueOn : a.dueOn)).filter((d) => w[d as PrepDim] !== undefined).length; };
-  if (pieces.every((a) => judged(a) > 0 && shortParts(person, a).length === judged(a))) return { kind: 'every' };
+  // A piece of no template the catalog has reads no parts, as `mostShort` passes it by. A piece in rounds reads the round
+  // last shown (`shortAtShowing`).
+  const shownRound = (a: Assignment): Assignment => (templateById(a.template)?.rounds && a.roundsShown?.length ? { ...a, round: a.roundsShown.length - 1 } : a);
+  const judged = (a: Assignment) => { if (!templateById(a.template)) return 0; const w = weightsOf(shownRound(a)); return Object.keys(preparedParts(person, a, a.status === 'revising' ? a.revision!.dueOn : a.dueOn)).filter((d) => w[d as PrepDim] !== undefined).length; };
+  if (pieces.every((a) => judged(a) > 0 && shortAtShowing(person, a).length === judged(a))) return { kind: 'every' };
   const top = mostShort(person, pieces);
   if (!top) return undefined;
   if (top.n < 2 && pieces.length > 1) return { kind: 'scattered' };
@@ -1517,10 +1534,21 @@ export function askRefusal(sim: Simulation, person: Person, a: Assignment | unde
   if (a.rehearsals.some((r) => r.status === 'booked' && Math.abs(r.at - when) < WORK.rehearsal.minutes * 60_000)) return { refused: 'You’re already rehearsing then.' };
   const clash = sim.universe.scheduled.find((x) => x.status === 'pending' && x.requiresPlayer && x.durationMinutes && x.at < when + WORK.rehearsal.minutes * 60_000 && x.at + x.durationMinutes * 60_000 > when);
   if (clash) return { refused: `You have ${clash.label} then.` };
+  const act = templateById(a.template)!.activities.find((x) => x.dim === 'partner');
+  // Not an evening the School already knows it would excuse (from 2026-10-17, brief 13's journeys): in hospital then, laid
+  // up, or, for work on its feet, hurt in a way that stops training, as `rehearsalOutcome` excuses it on the night. Until
+  // then the ask was taken, the partner gave the evening, and it was called off when it came: journey J23 (seed j13-17),
+  // a bone broken in a fall on 1 March 2027 and fifty days to mend, asked for twenty-two evenings to 19 April, each told
+  // “… Knows You’re Ill”.
+  if (inHospital(person, when)) return { refused: 'You’ll still be in hospital then: the evening would be called off.' };
+  const hurt = injuryOf(person, when);
+  if (hurt && laidUp(person, when)) return { refused: `You’ll still be laid up then, with ${INJURY_KIND[hurt.kind].label.toLowerCase()}: the evening would be called off.` };
+  const onFeet = (act?.needs ?? []).some((n) => n === 'studio' || n === 'feet');
+  const noTraining = onFeet ? trainingRefusal(person, when) : undefined;
+  if (noTraining) return { refused: `${noTraining} Work on its feet with your partner waits for it.` };
   // The partner activity's own rule, as the step on your own keeps it (from 2026-10-12): a fight isn't drilled with a
   // partner before the choreography is known, an intimacy scene before its boundaries are set. Until then asking to
   // rehearse skipped it.
-  const act = templateById(a.template)!.activities.find((x) => x.dim === 'partner');
   if (act?.requires && a.prep[act.requires.dim] < act.requires.at) return { refused: act.requires.why };
   const busy = mateBusy(person, a.partner, when, WORK.rehearsal.minutes);
   if (busy) return { declines: busy };

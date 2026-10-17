@@ -686,6 +686,8 @@ export const COURSEWORK: readonly GuideEntry[] = [
       `“Ask at least ${WORK.rehearsal.aheadHours} hours ahead.”`,
       '“That’s after it’s due.”',
       '“You’re already rehearsing then.” and “You have … then.”',
+      // From 2026-10-17 (brief 13's journeys): an evening the School already knows it would excuse isn't asked for.
+      '“You’ll still be in hospital then: the evening would be called off.”, “You’ll still be laid up then, with …: the evening would be called off.”, and for work on its feet “Not with …; it has … days yet to mend. Work on its feet with your partner waits for it.”',
       'A no in their own words: in class until three, a work-study shift, rehearsal calls, a Cabaret show, outside their hours, would rather work alone, or asked to be asked a day ahead.',
       '“You didn’t answer in time.” and “You’ve answered it.”',
       '“There’s no such rehearsal booked.”',

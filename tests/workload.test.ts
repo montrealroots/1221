@@ -12,7 +12,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_HOUR, formatDate, instantFromZoned } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { EVALUATION } from '@/engine/content/tasks';
-import { bandFor, courseworkOf, mostShort, remedyWords, shortCause, shortParts, showingForecast, termTally, termWarning, urgentWork, weightsOf, READER, TERM_CHECK, type Assignment } from '@/engine/systems/coursework';
+import { bandFor, courseworkOf, mostShort, remedyWords, shortAtShowing, shortCause, shortParts, showingForecast, termTally, termWarning, urgentWork, weightsOf, READER, TERM_CHECK, type Assignment } from '@/engine/systems/coursework';
 import { templateById } from '@/engine/content/coursework';
 import { classPeriod, ESTIMATE } from '@/engine/systems/school';
 import { chiefLimit } from '@/engine/systems/evaluation';
@@ -222,6 +222,34 @@ describe('school workload, found by the sweep (2026-10-16)', () => {
     expect(warnings(sim)[0]!.body).toContain(`${need} of the ${termTally(cw.assignments, term).shown} pieces shown this term so far were Unready. No one part was short on more than one of them: each one’s own forecast says what held it back.`);
     expect(warnings(sim)[0]!.body).not.toContain('Most often short');
   }, 180_000);
+
+  it('PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)', () => {
+    const sim = life('workload-rounds');
+    let a: Assignment | undefined;
+    while (!a && sim.now < at(2027, 3, 1)) {
+      tended(sim, sim.now + 24 * MS_HOUR);
+      a = courseworkOf(sim, sim.player)!.assignments.find((x) => x.template === 'simulated-rehearsal' && x.roundsShown?.length === 1 && x.shown?.band === 'unready');
+    }
+    expect(a, 'a Simulated Rehearsal shown At The Table, Unready').toBeDefined();
+    const t = templateById(a!.template)!;
+    expect(a!.round).toBe(1);
+    // As left, nothing prepared: the round shown was its table work, and the round it has gone on to is its lines and its feet.
+    expect(new Set(shortAtShowing(sim.player, a!))).toEqual(new Set(t.rounds![0]!.dims));
+    expect(new Set(shortParts(sim.player, a!))).toEqual(new Set(t.rounds![1]!.dims));
+    // The next round done and the table not: what was short when it was shown is the table.
+    const copy = structuredClone(a!);
+    for (const d of t.rounds![1]!.dims) copy.prep[d as keyof Assignment['prep']] = 1;
+    copy.reader = 1;
+    expect(shortParts(sim.player, copy)).toEqual([]);
+    // Both of the table's parts short: every part of the round shown.
+    expect(shortCause(sim.player, [copy, structuredClone(copy)])).toEqual({ kind: 'every' });
+    // Its scene known, its table work not: the table work, named on both.
+    copy.prep.familiarity = 1;
+    expect(shortAtShowing(sim.player, copy)).toEqual(['interpretation']);
+    const named = mostShort(sim.player, [copy, structuredClone(copy)])!;
+    expect(named).toMatchObject({ label: t.dims.interpretation!.label, n: 2 });
+    expect(shortCause(sim.player, [copy, structuredClone(copy)])).toMatchObject({ kind: 'part', label: t.dims.interpretation!.label, n: 2 });
+  }, 240_000);
 
   it('a scene’s table work is answered by the Table Work’s questions, not by “its own step”', () => {
     const sim = life('workload-forecast');
