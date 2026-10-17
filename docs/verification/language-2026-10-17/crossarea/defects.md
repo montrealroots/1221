@@ -6,10 +6,12 @@ defect, record it separately, fix it where authorized and necessary, and test th
 couldn't settle inside their own files, listed in `coordinator.md` ("Defects Raised Outside Any One Area's Reach") and
 in their `defects.md`. Each is here: what it was, how it was confirmed, the fix, the test, and the mutation run.
 
-The tests are in `tests/language-crossarea.test.ts`. Each fix was shown to matter by putting the code back as it was
-once and running its test, which failed; then each claim the test protects was mutated, one mutation at a time, by a
-harness that applies it, runs the test file and restores the source byte for byte. A mutation the test doesn't fail
-"survived", and each survivor is said here with what it means.
+The tests are in `tests/language-crossarea.test.ts`, the third's in `tests/language-crossarea-raise.test.ts` and the
+fifth's in `tests/guide.test.ts`. Each fix was shown to matter by putting the code back as it was once and running its
+test; where a plain revert can't fail, because the fix keeps every outcome the same (the second) or the values agree
+today (the third), what was run instead is said in place. Then each claim the test protects was mutated, one mutation at
+a time, by a harness that applies it, runs the test file and restores the source byte for byte. A mutation the test
+doesn't fail "survived", and each survivor is said here with what it means.
 
 ## 1. The live clock stopped without a word when a tick threw
 
@@ -20,8 +22,9 @@ harness that applies it, runs the test file and restores the source byte for byt
   clock that didn't.
 - **Confirmed:** reading the code, then the test below on the code as it was: a reactor of time's passing that throws
   on the fourth second's move left `timeSpeed` at `live` (`expected 'live' to be 'paused'`), with no toast.
-  `advanceTo` throws on a reactor's error, on re-entry and on a move backwards; a scheduled item's handler is caught
-  inside it, so a reactor is what reaches the tick's `catch` on a played life.
+  `advanceTo` throws on a reactor's error, on re-entry, on a move backwards and past its limit of items in one move; a
+  scheduled item's handler is caught inside it. The test throws from a reactor, since no reactor the game has throws on
+  a played life.
 - **Fix:** the `catch` keeps stopping the tick, and now also logs the error to the console, pauses the save through
   `world.set_preferences` (as `halt` pauses it at something that wants the player), toasts `LIVE_CLOCK_FAULT` in the
   negative tone, and bumps the provider's version so the screens read the clock where it stopped. The words are new,
@@ -149,7 +152,7 @@ harness that applies it, runs the test file and restores the source byte for byt
   `normalise` already trims; `world/place.ts` compares a region's name with its country's, and Bonaire's regions are
   Bonaire, Saba and Sint Eustatius; ids come from slugs, which keep no spaces. The countries are sorted by name at build
   time, and Bonaire stays between Bolivia and Bosnia. A script reading every field of the three tables found these three
-  and no other: none of the 3,865 regions or the 1,365 bundled cities, and none of the 248 `public/geo/*.tsv` files.
+  and no other: none of the 3,865 regions or the 1,365 bundled cities, and none of the 246 `public/geo/*.tsv` files.
 - **Fix, at the source the game reads:** the parse trims every field,
   `line.split('\t').map((field) => field.trim())`, in the generated file and, the same four lines, in the builder's
   template, so a regeneration emits it (checked: the builder's lines, unescaped as its template emits them, equal the
@@ -188,9 +191,10 @@ harness that applies it, runs the test file and restores the source byte for byt
 - **Test:** `tests/guide.test.ts`, "gives every entry what to do next, and leaves it empty only where a batch record of
   brief 14 says why": every entry's `next` is an array with no blank step, and every entry whose `next` is empty is
   named in a batch record of `docs/verification/language-2026-10-17/` as "**`next: []`:** `<its id>`, because …".
-- **Shown failing without the fix:** an entry's `next` taken out (`start.home`) fails the test (`start.home next:
-  expected false to be true`) and, with the field required, `tsc -p tsconfig.app.json --noEmit` too (`Property 'next'
-  is missing`), exit 2 each. The guide's and the help's tests (`guide`, `help-mechanics`, `language-money`,
+- **Shown failing without the fix:** with `types.ts`, `Help.tsx` and `tests/guide.test.ts` put back as they were
+  (`4f56e99f`) and an entry's `next` taken out (`start.home`), the guide's test passed, 13 of 13, and
+  `tsc -p tsconfig.app.json --noEmit` exited 0: nothing noticed. With the fix, the same entry fails the test
+  (`start.home next: expected false to be true`, exit 1) and the typecheck (`Property 'next' is missing`, exit 2). The guide's and the help's tests (`guide`, `help-mechanics`, `language-money`,
   `tutorial` and the seven `guide-examples-*`) pass 143 of 143 with the fix.
 - **Mutation run** (four mutations, all killed): an entry without `next`; an entry's `next` emptied with no reason
   recorded (`start.find`); the reason for `documents.residence` taken out of the papers record; a blank step in an
@@ -222,3 +226,20 @@ took out, which put the status back before the handler went on. The decision sti
 `node tools/coverage.mjs --check` fails on "life energy: simulation.test.ts:189-256: line 189 isn’t inside a test",
 and did so on the merge this pass began from (`1c3157d4`, checked on an export of it): not this pass's, and left to the
 coordinator.
+
+## The Whole Suite
+
+`npx vitest run` on `b5e3f0a0`, into `crossarea/full-suite.txt`, its exit read from the file: 382 files, 4,644 tests,
+4,643 passed and 1 failed, `exit=1`, in 1,267 seconds. The one failure isn't this pass's:
+`tests/material-words.test.ts`, "shows every scene’s summary and each answer’s reason once it’s shown, and a
+cut-against reason is the note’s", fails the same way, on the same assertion, on an export of the merge this pass began
+from (`1c3157d4`): "seagull-4/storm: its reason" expects "What it rests on: …", the label the material area's test
+(`be05e3fd`) holds, and the school area's batches 2 to 5 (`69ab6cb3`, merged after it) rewrote how a class scene's
+answer gives its reason. It's two areas' words meeting at the merge, for the words pass and the coordinator.
+
+The other gate checks, beyond the ones above, on `b5e3f0a0`: `npm run lint`, `wired --check`, `geo-check`,
+`inventory --check`, `devmap --check`, `traceability`, `capabilities --check`, `student-matrix --check` and
+`completion-matrix --check` exit 0, the matrix written again first (`node tools/completion-matrix.mjs`), since it reads
+TRACEABILITY: its JSON's one change is the order of `tax.apply_plan`'s list of what it changes ("nextDue; status" for
+"status; nextDue"), and no row's status moved. `coverage --check` exits 1 on the audit row named under The Generated
+Maps, as it did on `1c3157d4`. Both typechecks (`tsc -b` and `tsc -p` for each config) exit 0.
