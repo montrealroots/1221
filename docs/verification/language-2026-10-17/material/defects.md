@@ -17,6 +17,17 @@ What was looked for and not found:
 - **Text read for computation.** The judge keys on ids (`callbackFor`), the readings on `lean` and `draws`, and the
   scenes' scoring on `supported`; none reads a brief's or a scene's words.
 
+Two defects outside this area, for the coordinator. `tools/text-render-check.mjs` found them on the built app, in the
+walks before this area's changes and after them alike (`render-after.json` here; the walks' text is otherwise identical
+before and after, every save at both widths). Neither is in a file of this area, so neither is fixed here:
+
+- **"You and Hannah had rehearsed together 1 times."** `noteText` in `src/engine/systems/coursework.ts` (school's),
+  the partner note's count, which doesn't agree with 1. Seen in the `workload` save on School / Coursework.
+- **"Sleep owed 1 hours"** on the Player Profile, `src/ui/workspaces/ProfileWorkspace.tsx` (profile's or health's),
+  the sleep debt's unit, which doesn't agree with 1. Seen in the `direction` save.
+
+The check's other fault, money written "-$3" (`missed-plan`, Money), is the money area's.
+
 One observation that isn't a defect: `riders-sea` has two options with the id `mother`, one under The Relationship (cut
 against) and one under The Obstacle (supported). Option ids are unique within a question, and answers are kept by
 question (`a.answers[q.id]`), so the two never meet.

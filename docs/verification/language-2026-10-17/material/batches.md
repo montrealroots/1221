@@ -173,6 +173,49 @@ can’t crack even as what it reads turns on her" (her reading of the book); the
 
 **Screens:** BriefPane for every brief, by the material-words test. Checks: b3 (second-a, second-b), b4.
 
+## Kept As They Are, For The Coordinator
+
+Two shapes recur through all 298 briefs and were kept: `why.beats`, the arc of the beats said as a run of phrases after
+the Tone line ("Procedure in a whisper, a fight at the hatch, her own town given as numbers, then the order that brings
+it down."), and a noun-phrase gloss after a bold heading ("Techniques It Asks: Voice-Over. A dub recorded alone at a
+microphone, synced to finished animation and his recorded lines."). Each reads as the gloss of the heading before it,
+in the scene's terms, and none names the engine. Where such a gloss was garbled or ran into a second sentence it was
+rewritten (samurai-3, whodunit-2 and the rest above); the rest were kept. If the standard wants a whole sentence after
+every heading, that's every brief's `why.beats` (298) and some fifteen glosses (a scan for sentences with no verb found them: brief-anime's techniques, brief-jidaigeki's physical, brief-chanbara-2's physical and the like), and it's the coordinator's call.
+
 ## The Area's End
 
-The statuses, the whole suite, the build and the walks are recorded below once they ran.
+**Statuses:** all 994 sources, through `tools/text-inventory.mjs --mark --by material`, one call per source: 101
+Rewritten And Verified (4, 10, 33 and 54 by batch), 893 Reviewed And Retained (14, 28, 413 and 438), none Pending or
+Blocked. After the last mark, on the finished tree: text-inventory --check 0 (material 120 engine-speak), tsc 0,
+title-case 0, label-sweep 0, plural-check 0, voice-check 0, tics 0, spelling 0, typos 0, doc-refs 0, deciders 0.
+
+**The whole suite:** `npx vitest run`, exit 0: 377 files, 4,590 tests, all passed (5,584 s on a machine shared by eight
+areas). It ran on the committed rewrites with the allows test in.
+
+**Build:** `npm run build`, exit 0 (tsc, then vite, 30.9 s).
+
+**The gate's other checks**, on the committed tree: wired 0, inventory 0, devmap 0, traceability 0, capabilities 0,
+coverage 0, student-matrix 0, geo-check 0, and **completion-matrix 1**. The matrix demotes a row called Implemented And
+Verified to Implemented, Verification Incomplete when a file its measurement watches differs from the commit it was
+measured on (`current()` in `tools/completion-matrix.mjs`). Its `judge` watch lists `src/engine/content/briefs` and every
+`scenes-*.ts`, and its `engine` and `app` watches all of `src/engine` and `src`, so this area's words alone move 85 rows:
+612 of 636 Implemented And Verified at the baseline, 527 here, and the handoff's completion line no longer matches.
+None of these words is read by the judge (above), so a fresh measurement would find the same; but re-measuring the rows
+and moving the handoff's line is the integration's, not this area's, and every area that changes `src/` will meet it.
+
+**Walks:** the built app served on port 4208 (`vite preview --strictPort`, stopped by its PID), then
+`tools/text-walk.mjs` over the 14 scenario saves at 1440 and at 390 (`after-1440/`, `after-390/`, 25 screens a save,
+both exits 0). The walk's text is identical to the before-walks' (`l14/walk-before-1440`, `walk-before-390`) on every
+save at both widths: the walk opens the rail's screens and their tabs, which never show a brief's pane or a scene's
+reasons, so nothing it reaches changed, as intended.
+
+**Render check:** `tools/text-render-check.mjs` over both walks (`render-after.json`): 129,026 strings, 6 distinct
+faults, exit 1, the same six as the before-walks', none in this area (`defects.md`).
+
+**The changed screens on the built app:** the walk doesn't open a brief, so a scratch script (`m14/tools/brief-shot.mjs`,
+outside the repository) opened the `brief` save, went to Player Profile, filtered Genres, pressed Open Its Brief, chose
+the brief and recorded the pane's text and shots at 1440 and 390 (`screens/`): Anime's "Last Launch From The Roof"
+(its allows note), Tragicomedy's "Episode Two Hundred" (its techniques note and the reading Doing His Half) and
+Tokusatsu's "The Voice In The Armor" (its allows note). Each new string is on the pane at both widths and no old one is
+(`screens/briefs-1440.json`, `briefs-390.json`), and each line wraps inside the pane at 390.
