@@ -1,0 +1,7 @@
+DIMENSION_MEANS.connection: What passes between you and a partner, an audience or a camera.
+TASK_PROFILES.performance.what: A performance of a production in front of an audience.
+SELF_TAPE_MATERIAL.why.allows: A close shot magnifies: what carries to the back row of a theater looks like too much in a frame (Michael Caine, Acting in Film, 1990).
+CALENDAR_LEGEND school: Classes, labs, rehearsal and performance calls, nights on call, the Cabaret and the Summer Cabaret, work-study shifts and paydays, each term’s review, the showcase and Commencement.
+KNOB_READS.moraleSwing: How far your morale moves, up and down
+KNOB_READS.mealMood: How much a meal lifts your morale
+frugal.cost: The cheap version every time: a meal does less for your morale.

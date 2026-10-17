@@ -486,10 +486,10 @@ describe('l-person', () => {
       ['Stress', `${Math.round(w.stress)}/100. How wound up you are. High stress spoils your sleep.`],
       ['Sleep Debt', `${plural(Math.round(w.sleepDebt), 'hour')}. Sleep you owe, which a night pays back.`],
       ['Morale', `${Math.round(w.morale)}/100. Your mood. When it’s up, a night clears more of the day’s stress.`],
-      ['Condition', `${Math.round(w.condition)}/100. How sound your body is. It sets how much a night gives back, your mood, sick days, and how likely each year is to be your last.`],
+      ['Condition', `${Math.round(w.condition)}/100. How sound your body is. It sets how much a night gives back, your morale, sick days, and how likely each year is to be your last.`],
       ['Fitness', `${Math.round(w.fitness)}/100. How trained your body is, the Stamina on your Player Profile. It sets how far rest can mend you and what a workout costs.`],
       ['Nourishment', `${Math.round(w.nourishment)}/100. How well fed you are. A meal puts it back.`],
-      ['Hygiene', `${Math.round(w.hygiene!)}/100. How clean you are. When it’s low, it drags on your mood, and on readiness a little.`],
+      ['Hygiene', `${Math.round(w.hygiene!)}/100. How clean you are. When it’s low, it drags on your morale, and on readiness a little.`],
       ['Readiness', 'How ready you are today, from all of these but fitness. It sets what a class, a lab, a rehearsal, an hour of practice or a workout builds, and how judged work goes.'],
       ['Curious', 'The thing nobody asked you to read gets read: your reading of a scene goes deeper.'],
       ['Depression', 'Kept up, at what your plan doesn’t cover.'],
@@ -842,5 +842,19 @@ describe('n-decision-us-status', () => {
       title: 'Your US Status Is Ending', dueAt: at(2026, 9, 16, 12), actions: [],
       detail: 'Your permission to work in the United States has ended, and your status ends September 16, 2026. If you’re still here after that, you’ll be out of status. In the game, that means you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you from then on.',
     });
+  });
+});
+
+describe('h-money, a worth below nothing', () => {
+  // From 2026-10-17 (brief 14's cross-area pass): a worth below nothing read “Worth -$227” where Money writes a negative
+  // with the minus sign (“−$3.30”). The health area found it on a played New Haven life out of status.
+  it('a worth below nothing is written with the minus sign, as Money writes an overdrawn balance', () => {
+    const sim = life('g33-money-under');
+    // TEST SETUP: the savings emptied and the checking brought to -$227.00, so the worth is -$227 with nothing owed.
+    setBalance(sim, own(sim, 'savings'), 0);
+    setBalance(sim, primary(sim), -227_00);
+    const { affairs } = drawn(sim);
+    expect(affairs).toContain('Money Chase Total Checking: −$227.00. Worth −$227. Your account is overdrawn. Chase How This Works');
+    expect(affairs).not.toMatch(/-\$/);
   });
 });

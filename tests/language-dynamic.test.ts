@@ -385,7 +385,8 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const forecast = (pieces: number, of?: number) => recommendations(() => 50, () => 100, [], (id) => ({ id: `ex-${id}` }), matchedTier, 12, undefined, undefined, new Map([['focus', { points: 0.8, from: 50, to: 55, hours: 20, pieces, ...(of !== undefined ? { of } : {}) }]]))[0]!.why;
     expect(forecast(1, 12)).toContain('(1 of your last 12 pieces calls on it)');
     expect(forecast(5, 12)).toContain('(5 of your last 12 pieces call on it)');
-    expect(forecast(1, 1)).toContain('(1 of your last 1 piece calls on it)');
+    // One piece read of one is “your last piece” (the cross-area words pass, kept at the merge with this file's own fix).
+    expect(forecast(1, 1)).toContain('(your last piece calls on it)');
     expect(forecast(1)).toContain('(1 of the pieces calls on it)');
     expect(forecast(3)).toContain('(3 of the pieces call on it)');
     for (const s of [forecast(1, 12), why({ kind: 'preparation', what: 'memorization', label: 'Lines', by: 4, whole: 1 })]) { sound(s); whole(s); agrees(s, ['point', 'piece']); }
@@ -442,7 +443,7 @@ describe('different names and pronouns: you, she, he, they, pronouns the game do
       expect(debt.kind).toBe(`${c.their} Wellbeing`);
       expect(debt.summary).toBe(`None to speak of. ${c.theyre} caught up on sleep.`);
       sim.universe.people[c.id]!.wellbeing.hygiene = 30;
-      expect(opened(sim, 'dial', `${c.id}/hygiene`).look.summary).toBe(`30. Under 50, it wears on ${c.their.toLowerCase()} mood every hour. A shower puts it back. The morning shower brings it up to at least 82.`);
+      expect(opened(sim, 'dial', `${c.id}/hygiene`).look.summary).toBe(`30. Under 50, it wears on ${c.their.toLowerCase()} morale every hour. A shower puts it back. The morning shower brings it up to at least 82.`);
       // Nobody but the player is called "you" in a sentence about them.
       if (c.kind === 'Somebody') expect(`${look.summary} ${debt.summary}`).not.toMatch(/\byou(?:r|’re)?\b/i);
     }

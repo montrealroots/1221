@@ -441,9 +441,9 @@ describe('c-disp-openness', () => {
 
   it('PLAYER JOURNEY: Openness slid to 90 reads 90/100 on Review, and the page and the Profile say it’s how rehearsing new work does', () => {
     const { sim, page, review } = slidTo('g28-new-work-page', 'openness', 90);
-    expect(page).toContain('Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood.');
+    expect(page).toContain('Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale.');
     expect(review).toContain('Openness 90/100');
-    expect(profile(sim)).toContain('Openness 90, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood;');
+    expect(profile(sim)).toContain('Openness 90, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale;');
   });
 });
 
@@ -477,9 +477,9 @@ describe('c-disp-agreeableness', () => {
 
   it('PLAYER JOURNEY: Agreeableness slid to 10 reads 10/100 on Review, and the page and the Profile say it’s how a rehearsal does', () => {
     const { sim, page, review } = slidTo('g28-company-page', 'agreeableness', 10);
-    expect(page).toContain('Agreeableness: how a day of rehearsal affects your mood.');
+    expect(page).toContain('Agreeableness: how a day of rehearsal affects your morale.');
     expect(review).toContain('Agreeableness 10/100');
-    expect(profile(sim)).toContain('Agreeableness 10, how a day of rehearsal affects your mood.');
+    expect(profile(sim)).toContain('Agreeableness 10, how a day of rehearsal affects your morale.');
   });
 });
 
@@ -632,7 +632,7 @@ describe('c-genres', () => {
   it('PLAYER JOURNEY: Genres & Background marks every chip no play’s kind names with ·, a chip pressed is chosen, Select All takes all 149 and Clear These puts them back; Review, the Profile and Yourself say the one loved back', () => {
     let config = ada();
     let page = creation(STEP.genres, config);
-    expect(page.text).toContain('Rehearsing or performing a play of a genre you love, a comedy or a tragedy, lifts your mood and eases your stress. It doesn’t make you any better at it. A genre marked · has no plays of its kind here, so it’s only shown on your page.');
+    expect(page.text).toContain('Rehearsing or performing a play of a genre you love, a comedy or a tragedy, lifts your morale and eases your stress. It doesn’t make you any better at it. A genre marked · has no plays of its kind here, so it’s only shown on your page.');
     expect(chips(page)).toHaveLength(149);
     expect(chips(page).filter((c) => !c.text.endsWith(' ·')).map((c) => c.first)).toEqual(READ);
     const western = chips(page).find((c) => c.first === 'Western')!;

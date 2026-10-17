@@ -643,7 +643,7 @@ describe('health.enroll: the work rules in the guide and the tutorial, as the pl
     expect(entry.html).toContain('<h3 id="entry-papers.health-cover"');
     expect(entry.text).toContain('From 1 January 2027, some of the month before you enroll spent at the School, or $580 of income of any kind in it, or an exception: 65 or over, SNAP received under its work rules, or a stay in hospital you ask for.');
     expect(entry.text).toContain('A month meets them with any of it spent at the School (the month you leave it, on a leave, by withdrawing or with the degree, counts whole, and so does the month you come back), $580 of income of any kind (pay, an unemployment benefit, interest or a pension)');
-    expect(entry.text).toContain('“From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them.”');
+    expect(entry.text).toContain('HUSKY D, its work rules not shown: “From January 1, 2027, … asks for … in the month before you apply, and last month had none of them.”, naming HUSKY D and what it asks: $580.00 of income, time at the School or an exception.');
     expect(entry.text).not.toMatch(/hours’ work|hours of work|half-time/);
 
     // TEST SETUP: the chapter the guide shows, as pressing it in the contents sets it.

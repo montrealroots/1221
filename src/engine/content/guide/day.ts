@@ -78,7 +78,7 @@ export const DAY: readonly GuideEntry[] = [
     covers: ['ui.calendar', 'ui.go', 'calendar.skip', 'look.entry'],
     synonyms: ['commitment', 'what’s coming', 'go button', 'skip it', 'stand here', 'clock stopped', 'wanted you', 'upcoming', 'due now'],
     questions: ['Why did the clock stop?', 'What happens if I don’t go?', 'What does Stand Here do?', 'Can I walk away from a class?', 'What’s coming up next?'],
-    where: { route: '/home', label: 'Home, The Calendar Panel, And The Dialog When The Clock Stops' },
+    where: { route: '/home', label: 'Home, The Calendar Panel, Open Calendar' },
     available: `From ${chapter('calendar')}: the panel, Go, Skip It and the entries. The clock that brings a commitment round opens with ${chapter('clock')}.`,
     short: 'The Calendar panel at the top of Home is what’s coming: the next thing you need to be at, how far off it is, and up to five more after it. When the clock reaches a commitment, it stops, pauses and asks. Go spends the hours it takes and the clock goes through them; Skip It walks away from a plan of your own, and Call It Off from a rehearsal with a classmate; Stand Here leaves the clock paused at it.',
     steps: [
@@ -423,7 +423,7 @@ export const DAY: readonly GuideEntry[] = [
     unavailable: [
       `Open Calendar, Put Something On It and Call It Off show Locked until ${chapter('plans')} is read.`,
       '“That time has already passed. Pick a time that’s still to come.” The clock passed the start while the form was open.',
-      '“The calendar takes plans up to five years ahead. Pick an earlier day.” The day is past the furthest the calendar takes a plan.',
+      '“The calendar takes plans up to … years ahead. Pick an earlier day.” The day is past the furthest the calendar takes a plan.',
       '“It’s already started, so it can’t be called off now.” Call It Off after the plan’s start has come.',
     ],
     mistakes: [
@@ -507,7 +507,7 @@ export const DAY: readonly GuideEntry[] = [
         'Check the next hour is dry, and not freezing or sweltering.',
         'Open Look After Yourself and press Work Out.',
       ],
-      result: `The hour was a run: ${RUN_MORE}% more fitness than the same hour indoors, for more calories burned and a run’s higher chance of an injury. The Work Out line had said so before you pressed it: “A run in fine weather.”`,
+      result: `The hour was a run: ${RUN_MORE}% more fitness than the same hour indoors, for more calories burned and a run’s higher chance of an injury. The Work Out line had said so before you pressed it, opening “A run in fine weather”.`,
     },
   },
 ];

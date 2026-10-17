@@ -343,7 +343,7 @@ export const TAXES: readonly GuideEntry[] = [
     covers: ['tax.apply_plan', 'tax.catch_up_plan', 'tax.revise_plan', 'tax.apply_state_plan', 'tax.catch_up_state_plan', 'tax.request_waiver'],
     synonyms: ['installment agreement', 'IRS payment plan', 'Simple Payment Plan', 'short-term payment plan', 'Form 9465', 'Notice CP523', 'revise the plan', 'catch up on a plan', 'state payment plan', 'three-year penalty', 'penalty waiver'],
     questions: ['Can I pay my taxes monthly?', 'What does a payment plan cost?', 'What happens if I miss a plan payment?', 'Does a plan stop the levy?', 'Can a state’s penalty be waived?'],
-    where: on('returns', 'Papers, Tax Returns, IRS Payment Plan And Each State’s Plan'),
+    where: on('returns', 'Papers, Tax Returns, IRS Payment Plan And Connecticut DRS Installment Agreement'),
     available: `From the guide’s chapter “${CHAPTER}”. The plan panels show while you owe anything, or once a plan has a history.`,
     short: `A payment plan spreads what you owe over time and stops collection for as long as you keep it up. The IRS Payment Plan covers every year you owe the IRS: monthly payments on up to ${usd(PLAN.longMax)}, or everything paid within ${PLAN.shortDays} days with no fee. Each state has its own plan, separate from the IRS’s. Connecticut’s ${CT.plan.name} runs ${CT.plan.minMonths} to ${CT.plan.maxMonths} months on up to ${usd(CT.plan.max!)}. Interest keeps adding up under every plan.`,
     steps: [
@@ -410,7 +410,7 @@ export const TAXES: readonly GuideEntry[] = [
       '“The IRS needs every return filed first, and your … return isn’t. File it first.”',
       `A short-term plan for ${usd(PLAN.shortMax)} or more: “A short-term plan is for less than ….” A Simple Payment Plan over ${usd(PLAN.longMax)}: a larger balance needs a financial statement, which the game doesn’t offer.`,
       `“The lowest monthly payment is …: what you owe, spread over ${PLAN.leastMonths} months.”`,
-      'For a state: “Connecticut DRS needs every return filed first”, a balance over its limit, months outside its range (“Connecticut DRS sets up a plan over 2 to 12 months.”), a plan already applied for or in force (“You already have a plan with Connecticut DRS.”), or a year it has levied that’s still owed.',
+      'For a state, each refusal names its agency, such as Connecticut DRS: “… needs every return filed first, and your … return isn’t. File it first.”, a balance over its limit, months outside its range (“… sets up a plan over 2 to 12 months.”), a plan already applied for or in force (“You already have a plan with ….”), or a year it has levied that’s still owed.',
       'Catch Up shows only while a plan is behind, and your bank has to cover the payment: “Your bank can’t cover …, so nothing was paid.” On a plan that isn’t behind: “Your plan isn’t behind, so there’s nothing to catch up.”, or for a state’s plan, which Connecticut ends rather than lets fall behind, “That plan isn’t behind, so there’s nothing to catch up.”',
       `Revise The Plan shows only on a monthly IRS plan in force or behind. It refuses a payment under the lowest monthly payment, more than ${usd(PLAN.longMax)} owed now, or a ${usd(PLAN.reviseFee)} fee your bank can’t cover.`,
       'Ask For Its Waiver: “There’s no three-year penalty on that year.”, “Its waiver has already been decided.”, “File your own return for the year first.”, or more than a year since full payment.',
@@ -442,7 +442,7 @@ export const TAXES: readonly GuideEntry[] = [
     covers: ['tax.lien_release', 'tax.lien_dispute', 'tax.federal_lien_withdraw'],
     synonyms: ['tax lien', 'Notice Of Federal Tax Lien', 'Connecticut Tax Lien', 'lien release', 'Form 12277', 'Letter 3172', 'lien filed in error', 'tax warrant', 'lien withdrawal'],
     questions: ['Why was a lien filed?', 'How do I get a tax lien released?', 'Does a tax lien hurt my credit?', 'What if a lien was filed in error?'],
-    where: on('returns', 'Papers, Tax Returns, Under The Year A Lien Secures'),
+    where: on('returns', 'Papers, Tax Returns, The Year’s Return, The IRS’s Lien Or Connecticut DRS’s Lien'),
     available: `From the guide’s chapter “${CHAPTER}”. A lien shows under the year it secures once one is on record.`,
     short: `A lien is a public claim an authority files when a balance stays unpaid deep into collection. Connecticut DRS files one with its notice of intent to levy. The IRS files one at its final notice if you owe ${usd(FEDERAL_LIEN.threshold)} or more on the year. Paying in full is what gets it released. The buttons under it ask for a release where the authority needs asking, or a withdrawal: the IRS’s once it has released its lien, or any lien filed in error. In the game a lien changes only its own record: no credit record or bank reads it.`,
     steps: [
@@ -483,7 +483,7 @@ export const TAXES: readonly GuideEntry[] = [
     ],
     interpret: [
       'Its status is one of: Notice Of Intent Sent, Filed, Paid: Release To Come, Released, Asked To Be Withdrawn, Withdrawn, or Not Filed.',
-      '“Filed when collection reached that step” or “Filed because its payment plan requires one” says why it went on record.',
+      '“when collection reached that stage” or “because the payment plan requires one” says why it went on record.',
       `The line about its effect is in the authority’s own words. Connecticut’s says “${CT_LIEN.effect}” The IRS’s says it may limit your ability to get credit.`,
       'In the game, no credit record or bank reads a lien, so its status is all that changes.',
       'On a lien that secured tax you owed when it was filed, the panel says so instead of offering Ask For Its Withdrawal As Filed In Error: “It secured tax you owed when it was filed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.” Connecticut’s always does, because it takes a payment to its penalty and interest before its tax and files its lien only while something is owed. Your own return in place of its assessment leaves the tax as it was, since DRS assessed it from the same figures.',

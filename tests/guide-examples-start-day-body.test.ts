@@ -664,7 +664,7 @@ describe('the day and the clock', () => {
     expect(p.hour.temperatureC).toBeGreaterThanOrEqual(FINE.runLowC);
     expect(heatIndexC(p.hour.temperatureC, p.hour.humidity)).toBeLessThanOrEqual(FINE.highC);
     expect(p.where.where).toBe('run');
-    const [more, said] = read(result, /^The hour was a run: (\d+)% more fitness than the same hour indoors, for more calories burned and a run’s higher chance of an injury\. The Work Out line had said so before you pressed it: “(.+?)\.?”$/);
+    const [more, said] = read(result, /^The hour was a run: (\d+)% more fitness than the same hour indoors, for more calories burned and a run’s higher chance of an injury\. The Work Out line had said so before you pressed it, opening “(.+?)”\.$/);
     expect(p.line.why.startsWith(`${said}:`)).toBe(true);
     expect(p.run.record.source).toBe('workout:run');
     expect(p.built / p.indoors).toBeCloseTo(1 + Number(more) / 100, 9);

@@ -392,8 +392,8 @@ const percent = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
 export function quoteWords(sim: Simulation, q: AbroadQuote): string {
   const fee = q.fee > 0 ? `for a ${formatMoney(q.fee, q.sentIn)} fee` : 'for no fee';
   const margin = q.marginAssumed
-    ? `At ${percent(q.margin)} under the game’s exchange rate (${ASSUMED_WORDS.margin})`
-    : `At its rate, ${percent(q.margin)} under the game’s exchange rate`;
+    ? `At ${percent(q.margin)} under the estimated exchange rate (${ASSUMED_WORDS.margin})`
+    : `At its rate, ${percent(q.margin)} under the estimated exchange rate`;
   const incoming = q.incoming > 0 ? ` after its ${formatMoney(q.incoming, q.receivedIn)} fee for a payment from abroad` : '';
   const days = q.daysAssumed ? ` (${ASSUMED_WORDS.days})` : '';
   return `${q.from.name} sends ${formatMoney(q.sent, q.sentIn)} ${fee}. ${margin}, ${q.to.name} receives ${formatMoney(q.received, q.receivedIn)}${incoming}, on ${formatWeekdayDate(q.arrives, sim.zone)}${days}.`;
@@ -575,7 +575,7 @@ export function foreignAccountsNotice(sim: Simulation, person: Person, year: num
   const money = (cents: Money) => formatMoney(cents, cur);
   const line = (cents: Money) => formatMoney(usd(cents), cur, { cents: false });
   const on = (d: { month: number; day: number }) => formatDate(instantFromZoned({ year: year + 1, ...d, hour: 12 }, sim.homeZone), sim.homeZone);
-  const fbar = `Your accounts at banks outside America held ${money(most)} together at most in ${year} (the highest each held at a day’s end, at the game’s exchange rate), over ${line(US_REPORTS.fbar.over)}. So FinCEN Form 114, the FBAR, is due ${on(US_REPORTS.fbar.due)}, extended automatically to ${on(US_REPORTS.fbar.extended)}, and is filed online with FinCEN, not with your return.`;
+  const fbar = `Your accounts at banks outside America held ${money(most)} together at most in ${year} (the highest each held at a day’s end, at an estimated exchange rate), over ${line(US_REPORTS.fbar.over)}. So FinCEN Form 114, the FBAR, is due ${on(US_REPORTS.fbar.due)}, extended automatically to ${on(US_REPORTS.fbar.extended)}, and is filed online with FinCEN, not with your return.`;
   const t = US_REPORTS.form8938;
   const over = [
     ...(end > usd(t.yearEnd) ? [`${money(end)} on December 31, over Form 8938’s ${line(t.yearEnd)} at the year’s end`] : []),

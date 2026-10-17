@@ -135,7 +135,7 @@ describe('FBAR and Form 8938, said once at the return, to a US person', () => {
     expect(told(sim)).toEqual([]);
     const again = await reload(sim);
     again.advanceTo(SEASON);
-    expect(told(again)).toEqual([`Your accounts at banks outside America held $45,821.56 together at most in 2026 (the highest each held at a day’s end, at the game’s exchange rate), over $10,000. So FinCEN Form 114, the FBAR, is due April 15, 2027, extended automatically to October 15, 2027, and is filed online with FinCEN, not with your return. ${FOOTER}`]);
+    expect(told(again)).toEqual([`Your accounts at banks outside America held $45,821.56 together at most in 2026 (the highest each held at a day’s end, at an estimated exchange rate), over $10,000. So FinCEN Form 114, the FBAR, is due April 15, 2027, extended automatically to October 15, 2027, and is filed online with FinCEN, not with your return. ${FOOTER}`]);
     expect(at(again, 'gb-hsbc', 'savings').peak?.['2026']?.max).toBe(3_619_903);
     const later = await reload(again);
     later.advanceTo(SEASON + 20 * 86_400_000);
@@ -168,7 +168,7 @@ describe('FBAR and Form 8938, said once at the return, to a US person', () => {
     const none = await make(life('wealthy', { ...american, ...tokyo }));
     none.advanceTo(SEASON);
     expect(returnsOf(none.player)[2026]).toBeUndefined();
-    expect(told(none)).toEqual([`Your accounts at banks outside America held $413,070 together at most in 2026 (the highest each held at a day’s end, at the game’s exchange rate), over $10,000. So FinCEN Form 114, the FBAR, is due April 15, 2027, extended automatically to October 15, 2027, and is filed online with FinCEN, not with your return. They held $413,063 on December 31, over Form 8938’s $50,000 at the year’s end, and $413,070 at most, over Form 8938’s $75,000 at any time, but the form goes only with an income tax return, and you have none to file for 2026. ${FOOTER}`]);
+    expect(told(none)).toEqual([`Your accounts at banks outside America held $413,070 together at most in 2026 (the highest each held at a day’s end, at an estimated exchange rate), over $10,000. So FinCEN Form 114, the FBAR, is due April 15, 2027, extended automatically to October 15, 2027, and is filed online with FinCEN, not with your return. They held $413,063 on December 31, over Form 8938’s $50,000 at the year’s end, and $413,070 at most, over Form 8938’s $75,000 at any time, but the form goes only with an income tax return, and you have none to file for 2026. ${FOOTER}`]);
 
     const filing = await make(life('wealthy', { ...american, ...tokyo }));
     filing.advanceTo(SEASON - 3 * 86_400_000);

@@ -224,9 +224,11 @@ function measure(spec: CaseSpec) {
   const preparation = { pieces: read.filter(ownStep).length, said: prepSaid === undefined ? null : r3(prepSaid), worked: r3(worked), same: read.some(ownStep) ? prepSaid !== undefined && Math.abs(prepSaid - worked) < 1e-9 : prepSaid === undefined, apart: [...predicted.values()].every((x) => Math.abs((x.exact ?? x.points) - ((x.own ?? 0) + (x.days ?? 0))) < 1e-12) };
   const f = { ladder, falls: exactLadder ? falling(exactLadder) : undefined, leastDrop: exactLadder ? drop(exactLadder) : undefined, every: everyLadder ? { n: Object.keys(everyLadder).length, falling: Object.values(everyLadder).filter(falling).length, rising: Object.entries(everyLadder).filter(([, l]) => !falling(l)).map(([k, l]) => `${k} ${l.map((x) => x.toFixed(5)).join(' → ')}`) } : undefined, prep: { limited: prepChief, largest: r3(chiefGap), same: chiefGap < 1e-9, stepsLimited: prepSteps, stepsLargest: r3(stepsGap), stepsSame: stepsGap < 1e-9, anyLimited: prepAny, anyLargest: r3(anyGap), anySame: anyGap < 1e-9, preparation } };
 
-  // (g) the reason: the gain it expects, how many of the pieces it read, and a piece by name.
+  // (g) the reason: the gain it expects, how many of the pieces it read, and a piece by name. One piece read is said as
+  // “your last piece” (from 2026-10-17, brief 14): until then “1 of your last 1 piece”, which the count's match found.
   const titles = [...new Set(takes.slice(-RECENT).map((t) => BRIEF_BY_ID[t.brief]!.title))];
-  const says = (x: Recommendation) => x.why.includes(String(x.points)) && x.why.includes(`${x.forecast!.pieces} of `) && titles.some((t) => x.why.includes(t));
+  const counted = (x: Recommendation) => (x.forecast!.of === 1 && x.forecast!.pieces === 1 ? x.why.includes('(your last piece calls on it') : x.why.includes(`${x.forecast!.pieces} of `));
+  const says = (x: Recommendation) => x.why.includes(String(x.points)) && counted(x) && titles.some((t) => x.why.includes(t));
   const g = { recs: training.length, ok: training.filter(says).length, missing: training.filter((x) => !says(x)).map((x) => x.target) };
 
   // (i) the case renamed: the save's seed and every piece's, the same advice.

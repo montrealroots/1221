@@ -350,7 +350,7 @@ describe('l-trait: the look’s figures are what play charges', () => {
     const generous = look(held, 'trait', 'generous');
     // spending 1.25 × 1.1 = 1.375, bent in [0.7, 1.4]: 1.2819393926, +28%; mealMood 1.15 in [0.7, 1.3]: 1.1364255057.
     expect(spender.words).toContain('What the day’s food costs you +25% +28% all told');
-    expect(spender.words).toContain('How much a meal lifts the mood +15% +14% all told');
+    expect(spender.words).toContain('How much a meal lifts your morale +15% +14% all told');
     expect(generous.words).toContain('What the day’s food costs you +10% +28% all told');
     expect(generous.words).toContain('How fast you warm to a classmate +10% +10% all told');
     const plain = meal(begun('e3-meal', ada()));

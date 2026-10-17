@@ -382,7 +382,7 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
     expect(casting.closed).toBeUndefined();
     expect(school.standing).toBe('warning');
     let { html, text } = drawn(sim, ProfileWorkspace);
-    expect(between(text, 'School Journey', 'Your School')).toBe('School Journey Year 1 of three, academic warning How This Works No production finished yet; A Leading Part In A New Play in Carlotta Festival Of New Plays is running.');
+    expect(between(text, 'School Journey', 'School')).toBe('School Journey Year 1 of three, academic warning How This Works No production finished yet; A Leading Part In A New Play in Carlotta Festival Of New Plays is running.');
     const [halves, work] = tables(journeyHtml(html));
     // Counted here, by task and by half-year, from every piece the save keeps (all of them: fewer than its 160).
     const kept = sim.player.work!;
@@ -439,8 +439,8 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
     sim.advanceTo(at(2027, 9, 15, 12));
     const { text } = drawn(sim, ProfileWorkspace);
     const journey = between(text, 'School Journey', 'Your Work So Far');
-    expect(between(journey, 'School Journey', 'Your School')).toBe('School Journey Year 2 of three, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027.');
-    press(button('Your School'));
+    expect(between(journey, 'School Journey', 'School')).toBe('School Journey Year 2 of three, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027.');
+    press(button('School'));
     expect(h.went).toEqual(['/workspace/school']);
     expect(between(drawn(reload(sim), ProfileWorkspace).text, 'School Journey', 'Your Work So Far')).toBe(journey);
     expect(journey.split('On stage:').length - 1).toBe(1);

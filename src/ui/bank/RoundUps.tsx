@@ -99,7 +99,7 @@ export function RoundUps({ bankId }: { bankId: string }) {
       )}
       {mine && (r?.whole ?? 0) > 0 && (
         <p className="xs dim" style={{ margin: 0 }} data-roundups-whole="">
-          {r!.whole === 1 ? 'One purchase' : `${r!.whole} purchases`} since the last transfer {r!.whole === 1 ? 'was' : 'were'} already a multiple of {money(unitNow)}, so {r!.whole === 1 ? 'it' : 'they'} added nothing.
+          {r!.whole === 1 ? `One purchase since the last transfer was already a multiple of ${money(unitNow)}, so it added nothing.` : `${r!.whole} purchases since the last transfer were already a multiple of ${money(unitNow)}, so they added nothing.`}
         </p>
       )}
       {mine && r?.last && (

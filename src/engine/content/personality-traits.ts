@@ -78,7 +78,7 @@ export const KNOB_READS: Readonly<Record<PersonalityKnob, string>> = {
   sleepQuality: 'How good a night’s sleep is',
   energyRecovery: 'How much energy a night puts back',
   hygieneDrift: 'How fast you stop being clean',
-  moraleSwing: 'How far the mood moves, up and down',
+  moraleSwing: 'How far your morale moves, up and down',
   spending: 'What the day’s food costs you',
   illnessToll: 'How hard an illness hits, and how long an injury takes to mend',
   // `receipts` said how many of the work’s costs you kept a receipt for, and that it decided nothing for a student, until
@@ -94,7 +94,7 @@ export const KNOB_READS: Readonly<Record<PersonalityKnob, string>> = {
   drills: 'How far a step on learning the lines goes',
   skims: 'How far a step on knowing the play goes',
   revises: 'How far a step on revising after a note goes',
-  mealMood: 'How much a meal lifts the mood',
+  mealMood: 'How much a meal lifts your morale',
 };
 
 export interface PersonalityTrait {
@@ -251,7 +251,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'frugal', name: 'Frugal', group: 'Money',
     description: 'You know what everything costs, and the day’s food costs you less.',
-    cost: 'The cheap version every time: a meal does less for your mood.',
+    cost: 'The cheap version every time: a meal does less for your morale.',
     conflictsWith: ['spender'],
     systemMods: { spending: 0.85, mealMood: 0.85 },
   },

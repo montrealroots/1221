@@ -231,8 +231,10 @@ const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 /** A word as a pattern: a figure, or the N a step writes for one, matches any figure. */
 const wordRe = (w, code) => (/^(?:N|\d+)$/.test(w) ? (code ? String.raw`(?:\d+|\{[^}]*\}|\$\{[^}]*\})` : String.raw`\d+`) : escapeRe(w));
 /** A label as the code may build it, in its own capitals: its words, with a template's part or a line break allowed between any two. */
-const GAP = String.raw`(?:\s+|\s*\{[^}]*\}\s*|\s*\$\{[^}]*\}\s*|['"\`]\s*\+?\s*['"\`]?\s*)`;
-const TEMPLATE = String.raw`(?:\{[^}]*\}|\$\{[^}]*\})`;
+// A `${…}` may hold another inside it (`A ${stateName(`us-${claim.state}`)} Claim`), from 2026-10-17: until then such a
+// label read as nowhere.
+const GAP = String.raw`(?:\s+|\s*\{[^}]*\}\s*|\s*\$\{(?:[^{}]|\{[^{}]*\})*\}\s*|['"\`]\s*\+?\s*['"\`]?\s*)`;
+const TEMPLATE = String.raw`(?:\{[^}]*\}|\$\{(?:[^{}]|\{[^{}]*\})*\})`;
 /**
  * Where the code writes a label, if it does: its words as written, or with one or two words in a row standing as a
  * template's part, so long as at least two words and at least half of them are written out. "Apply For HUSKY D" is

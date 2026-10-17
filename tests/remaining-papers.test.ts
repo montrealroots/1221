@@ -46,7 +46,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createElement, isValidElement, type FunctionComponent, type ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { createSave, loadSave } from '@/engine';
+import { createSave, loadSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, instantFromZoned, type Instant } from '@/engine/core/time';
 import { newLifeConfig, withFamily } from '@/engine/world/bootstrap';
@@ -211,6 +211,15 @@ describe('tax.s8.inventory', () => {
 // ---------------------------------------------------------------------------
 
 describe('tax.s8.passport', () => {
+  // From 2026-10-17 (brief 14's cross-area pass): a day's wait was printed “1 days”, found by the health area on a life in
+  // Vancouver, where Canada's faster service takes a day.
+  it('a passport office’s days and years are said in the right number: Canada’s faster service in Vancouver takes “1 day”', () => {
+    const sim = quickSave({ startLocationId: 'ca-bc-vancouver', homeRegionId: 'ca-bc-vancouver', livesWhereBorn: true, wealth: 'comfortable' } as never, 'rp-ca-van', 1);
+    const screen = drawn(sim, PassportPane);
+    expect(screen).toMatch(/ Faster C\$[\d,.]+ 1 day Renew It /);
+    expect(screen).not.toMatch(/\b1 (?:days|years)\b/);
+  });
+
   it('PLAYER JOURNEY: a London-born student renews her British passport on Papers from New Haven: £116.50, the overseas fee, in dollars; no Renew It Faster, the Fast Track not sold abroad, and the command refused; issued in 21 days, the old one canceled on the new one’s day, once across a reload; until 2026-10-16 £102 and Fast Track offered', () => {
     const sim = life('rp-uk-b', 'uk-eng-london');
     const old = passportOf(sim.player, sim.now)!;

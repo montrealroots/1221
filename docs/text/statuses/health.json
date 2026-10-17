@@ -421,21 +421,21 @@
  },
  "src/engine/content/guide/body.ts#BODY [body.how]": {
   "status": "Rewritten And Verified",
-  "hash": "9d0cac164752",
+  "hash": "fde1c7183037",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-start-day-body.test.ts (looking after yourself: body.how, body.sleep, body.look-after examples played and read back), tests/guide.test.ts (the registry, routes, search); every field printed in docs/verification/language-2026-10-17/health/render-after-1.txt (guide); labels checked against src/ui/shell/TimeControls.tsx, src/ui/screens/Home.tsx and the text walk's Papers screens"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md) (the Sleep dialog’s Hours, Now, You’d Wake At, Sleep N Hours and Not Yet on the capture); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-start-day-body.test.ts"
  },
  "src/engine/content/guide/body.ts#BODY [body.look-after]": {
   "status": "Rewritten And Verified",
-  "hash": "cf703cc2cfab",
+  "hash": "5eb2ca403844",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-start-day-body.test.ts (looking after yourself: body.how, body.sleep, body.look-after examples played and read back), tests/guide.test.ts (the registry, routes, search); every field printed in docs/verification/language-2026-10-17/health/render-after-1.txt (guide); labels checked against src/ui/shell/TimeControls.tsx, src/ui/screens/Home.tsx and the text walk's Papers screens"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md) (the Sleep dialog’s Hours, Now, You’d Wake At, Sleep N Hours and Not Yet on the capture); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-start-day-body.test.ts"
  },
  "src/engine/content/guide/body.ts#BODY [body.sleep]": {
   "status": "Rewritten And Verified",
-  "hash": "49160d28e059",
+  "hash": "2e4852d842a6",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-start-day-body.test.ts (looking after yourself: body.how, body.sleep, body.look-after examples played and read back), tests/guide.test.ts (the registry, routes, search); every field printed in docs/verification/language-2026-10-17/health/render-after-1.txt (guide); labels checked against src/ui/shell/TimeControls.tsx, src/ui/screens/Home.tsx and the text walk's Papers screens"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md) (the Sleep dialog’s Hours, Now, You’d Wake At, Sleep N Hours and Not Yet on the capture); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-start-day-body.test.ts"
  },
  "src/engine/content/guide/body.ts#BODY [evaluation]": {
   "status": "Rewritten And Verified",
@@ -955,9 +955,9 @@
  },
  "src/ui/looks/wellbeing.tsx#DIALS [condition]": {
   "status": "Rewritten And Verified",
-  "hash": "29a589b28874",
+  "hash": "37ba838ca4af",
   "on": "2026-10-17",
-  "evidence": "tests/scope-people.test.ts (l-person FIXTURE tests: her, his and their looks, dials, readiness, trait, condition, injury), tests/evidence-g33-ui.test.ts (l-person, l-dial-stress), tests/evidence-g06-life.test.ts (each measure's sentence by band), tests/looks.test.ts (the sleep debt dial, the shape of a look), tests/evidence3-person.test.ts, tests/evidence-g32-ui.test.ts (h-how); every look and variant printed in docs/verification/language-2026-10-17/health/render-after-1.txt (scenario saves, bands, readiness at its ceiling, conditions each way, an injury of each limit, she/he/they)"
+  "evidence": "tests/scope-people.test.ts (the condition and hygiene ways, the hygiene sentence for her, them and you), tests/evidence-g06-life.test.ts (hunger and hygiene sentences); “Morale is your mood.” kept as the measure’s definition"
  },
  "src/ui/looks/wellbeing.tsx#DIALS [energy]": {
   "status": "Rewritten And Verified",
@@ -973,9 +973,9 @@
  },
  "src/ui/looks/wellbeing.tsx#DIALS [hygiene]": {
   "status": "Rewritten And Verified",
-  "hash": "5d588dda7139",
+  "hash": "ccf95150b28c",
   "on": "2026-10-17",
-  "evidence": "tests/scope-people.test.ts (l-person FIXTURE tests: her, his and their looks, dials, readiness, trait, condition, injury), tests/evidence-g33-ui.test.ts (l-person, l-dial-stress), tests/evidence-g06-life.test.ts (each measure's sentence by band), tests/looks.test.ts (the sleep debt dial, the shape of a look), tests/evidence3-person.test.ts, tests/evidence-g32-ui.test.ts (h-how); every look and variant printed in docs/verification/language-2026-10-17/health/render-after-1.txt (scenario saves, bands, readiness at its ceiling, conditions each way, an injury of each limit, she/he/they)"
+  "evidence": "tests/scope-people.test.ts (the condition and hygiene ways, the hygiene sentence for her, them and you), tests/evidence-g06-life.test.ts (hunger and hygiene sentences); “Morale is your mood.” kept as the measure’s definition"
  },
  "src/ui/looks/wellbeing.tsx#DIALS [morale]": {
   "status": "Rewritten And Verified",
@@ -1009,15 +1009,15 @@
  },
  "src/ui/looks/wellbeing.tsx#sentenceFor": {
   "status": "Rewritten And Verified",
-  "hash": "afd0ab24cced",
+  "hash": "03249f19e506",
   "on": "2026-10-17",
-  "evidence": "tests/scope-people.test.ts (l-person FIXTURE tests: her, his and their looks, dials, readiness, trait, condition, injury), tests/evidence-g33-ui.test.ts (l-person, l-dial-stress), tests/evidence-g06-life.test.ts (each measure's sentence by band), tests/looks.test.ts (the sleep debt dial, the shape of a look), tests/evidence3-person.test.ts, tests/evidence-g32-ui.test.ts (h-how); every look and variant printed in docs/verification/language-2026-10-17/health/render-after-1.txt (scenario saves, bands, readiness at its ceiling, conditions each way, an injury of each limit, she/he/they)"
+  "evidence": "tests/scope-people.test.ts (the condition and hygiene ways, the hygiene sentence for her, them and you), tests/evidence-g06-life.test.ts (hunger and hygiene sentences); “Morale is your mood.” kept as the measure’s definition"
  },
  "src/ui/looks/wellbeing.tsx#top": {
   "status": "Rewritten And Verified",
-  "hash": "596277452799",
+  "hash": "d0c5fb29f732",
   "on": "2026-10-17",
-  "evidence": "tests/language-injury.test.ts (notice and look across a student, a withdrawn student, a laid-up injury, a knock and a broken bone; 4 mutations killed) and tests/evidence-g04-life, evidence-g07-life (exact notices); found by brief 14's health journey, defect 6"
+  "evidence": "tests/language-injury.test.ts (the injury look's Call In Sick), tests/language-dynamic.test.ts (pronouns on another's wellbeing, morale named), tests/scope-people.test.ts; the injury's words, the dynamic cases' apostrophes and the cross-area words pass's morale, merged"
  },
  "src/ui/looks/wellbeing.tsx#WHAT": {
   "status": "Rewritten And Verified",

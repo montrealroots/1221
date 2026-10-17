@@ -768,7 +768,10 @@ await step('health: Health Cover names the student’s cover and says the School
   await rail('Papers'); await tab('Health Cover');
   const cover = await statIn(page.locator('section.card', { has: page.getByRole('heading', { name: 'Your Cover', exact: true }) }).first(), 'This Month');
   must(/Yale Health/.test(cover), `Your Cover says “${cover}”`);
-  const market = (await page.locator('section.card', { has: page.getByRole('heading', { name: 'The Marketplace', exact: true }) }).first().innerText()).replace(/\s+/g, ' ');
+  // The rules sit behind three drill-downs from 2026-10-17 (brief 14's cross-area pass), opened here before they're read.
+  const marketCard = page.locator('section.card', { has: page.getByRole('heading', { name: 'The Marketplace', exact: true }) }).first();
+  await marketCard.locator('details').evaluateAll((ds) => ds.forEach((d) => { d.open = true; }));
+  const market = (await marketCard.innerText()).replace(/\s+/g, ' ');
   const rules = market.match(/From 2027 Medicaid also has work rules\. You meet them[^.]*\./)?.[0] ?? '';
   must(/at the School/.test(rules), `the work rules said: ${rules || market.slice(0, 200)}`);
   must(!/\b80 hours|hours’ work|hours of work/i.test(market), `The Marketplace offers work hours: ${market.match(/.{0,60}(80 hours|hours’ work|hours of work).{0,60}/i)?.[0]}`);

@@ -66,7 +66,7 @@ export const DIMENSION_LABEL: Readonly<Record<Dimension, string>> = {
 export const DIMENSION_MEANS: Readonly<Record<Dimension, string>> = {
   believability: 'Whether it reads as true: real feeling under the given circumstances.',
   interpretation: 'The choices made about the text or the score, and how specific they are.',
-  connection: 'What passes between you and a partner, a house or a camera.',
+  connection: 'What passes between you and a partner, an audience or a camera.',
   execution: 'The technique of it: lines, voice, body, the form’s demands, done cleanly.',
   consistency: 'Holding it the whole way through, and under pressure.',
   responsiveness: 'Answering what actually happens, a partner’s offer or a note, not a plan.',
@@ -282,7 +282,7 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
     },
   },
   performance: {
-    id: 'performance', label: 'A Night On Stage', what: 'A performance of a production in front of a house.',
+    id: 'performance', label: 'A Night On Stage', what: 'A performance of a production in front of an audience.',
     prepLabel: { lines: 'Learning the lines', blocking: 'The blocking', notes: 'Taking the director’s notes' },
     dims: {
       believability: { weight: 3, inputs: BASE_INPUTS.night.believability, prep: ['lines', 'notes'], conditions: ALL },

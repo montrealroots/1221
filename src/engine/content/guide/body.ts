@@ -94,7 +94,7 @@ export const BODY: readonly GuideEntry[] = [
       'On Home, read How You Are: the line at the top, then Energy, Stress and Readiness, each out of 100.',
       'Press Energy, Stress or Readiness to open it under the panel. It says where it stands and what that means, and Readiness names what’s holding you back most.',
       'Press the line at the top, the panel’s name or your name in the greeting to open your own page. It has all eight measures, Readiness, your traits, any long-term condition and any injury, and each one opens.',
-      'On the Player Profile, your traits are listed under “Chosen at the start.”, and each opens there.',
+      'On the Player Profile, your traits are listed after “Traits you chose.”, and each opens there.',
     ],
     needs: [
       `The panel and its three bars open with ${chapter('body')}.`,
@@ -113,7 +113,7 @@ export const BODY: readonly GuideEntry[] = [
       { label: 'Condition', value: `How sound your body is. It sets how much energy a night puts back and how likely a year is to be your last. Under ${ESTIMATE.sickBelow}, staying home sick from classes is excused.` },
       { label: 'Fitness', value: `How trained your body is: the same figure as Stamina on the Player Profile. It sets how far rest can mend your condition and what a workout costs. Untrained, it falls toward ${EVERYDAY_FITNESS}, what everyday life keeps.` },
       { label: 'Health', value: 'Illness, injury, long-term conditions, your care and your health cover, all on Papers, under Health Cover. Illness and an emergency take from your condition and energy, and an injury adds to your stress and lowers your mood each day.' },
-      { label: 'Traits', value: 'Each changes what it names: how good a night is, how fast stress clears, how far your mood moves, what food costs' },
+      { label: 'Traits', value: 'Each changes what it names: how good a night is, how fast stress clears, how far your morale moves, what food costs' },
     ],
     now: ['Opening a bar, a measure, a trait or a condition changes nothing. It shows the figure as it stands.'],
     later: [
@@ -173,9 +173,9 @@ export const BODY: readonly GuideEntry[] = [
     steps: [
       'Press Sleep in the top bar.',
       'Read the suggestion at the top: how many hours it suggests, and why.',
-      'Set Hours with the slider, in half hours. “You’d wake at” changes with it.',
-      'Read the warnings: your next commitment, whether this would count as tonight’s sleep, and anything you’d sleep through.',
-      'Press Sleep and the hours, such as Sleep 8 Hours, or Not Yet to close it.',
+      'Set Hours with the slider, in half hours. You’d Wake At, beside Now, changes with it.',
+      'Read the warnings under it: your next commitment, “This would count as tonight’s sleep.” when it would, and any commitments you’d sleep through.',
+      'Press Sleep and the hours, such as Sleep 8 Hours, or Sleep 1 Hour at one hour, or Not Yet to close it.',
     ],
     needs: [
       `It opens with ${chapter('sleep')}.`,
@@ -196,10 +196,10 @@ export const BODY: readonly GuideEntry[] = [
     now: [
       'The clock goes straight to when you wake, and everything due in those hours happens on the way, without you.',
       'Energy comes back with the hours and how well you slept, less for sleep owed, for age and for a worn-down body.',
-      'Stress eases overnight, more when your mood is up.',
+      'Stress eases overnight, more when your morale is up.',
       'Sleep debt clears with a full night. A night under six hours adds to it.',
       'Condition mends with more than about five hours of real rest, up to what your fitness allows. With less, it falls.',
-      'Your mood moves with the rest. A night of eight hours or more brings it about a third of the way back to where your body settles it.',
+      'Your morale moves with the rest. A night of eight hours or more brings it about a third of the way back to where your body settles it.',
     ],
     later: [
       'A commitment you sleep through is missed: an absence from class, a missed call, an unpaid shift, a plan gone by. The next morning’s notice names each one.',
@@ -208,7 +208,7 @@ export const BODY: readonly GuideEntry[] = [
     ],
     interpret: [
       'The suggestion says why it chose that number: a normal night, a clear calendar so you can sleep as long as you need, or the one thing that changes tonight, such as sleep owed, stress, being a light sleeper or a late hour. If a commitment is too soon for a full night, it says how far off it is. If the clock is at a commitment now, it says so, and that any sleep goes through it.',
-      'A warning that this would be tonight’s sleep means you won’t sleep the rest of the night: the game won’t put you back to bed after it.',
+      '“This would count as tonight’s sleep.” means you won’t sleep the rest of the night: the game won’t put you back to bed after it.',
       `With a commitment less than two and a half hours off, or one you’re at now, it suggests the shortest sleep there is: ${SHORTEST_SLEEP} hours on the figure, the slider and the button, and the button sleeps just that.`,
       'The morning after, Energy and Readiness on How You Are show what the night gave back.',
     ],
@@ -271,19 +271,19 @@ export const BODY: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'Your Wellbeing', value: 'Each line shows what it would do to you, and the readiness that would come of it' },
-      { label: 'Hunger, Grime And Stress', value: `Under 20 nourishment, under 50 hygiene or over ${OVERWROUGHT} stress, the line that fixes it moves to the top and is marked Needed Now, because each hour like that costs condition or mood` },
+      { label: 'Hunger, Grime And Stress', value: `Under 20 nourishment, under 50 hygiene or over ${OVERWROUGHT} stress, the line that fixes it moves to the top and is marked Needed Now, because each hour like that costs condition or morale` },
       { label: 'Readiness', value: 'A workout builds more the readier you are, from 0.4 to 1.2 times its usual amount between readiness 0 and 100' },
       { label: 'The Weather', value: `A workout is a run when its hour ends dry, at ${FINE.runLowC}°C or warmer and feeling no hotter than ${FINE.highC}°C` },
-      { label: 'Your Traits', value: 'How much a meal lifts you, how fast stress clears, how far your mood moves and what food costs' },
+      { label: 'Your Traits', value: 'How much a meal lifts you, how fast stress clears, how far your morale moves and what food costs' },
     ],
     now: [
       'A meal is paid for when you order it. Then its time passes and costs what any waking time does, and the line’s changes come on top of that.',
-      'Eat A Meal: nourishment up by as much as 50, to 100 at most, and your mood up by as much as you needed it.',
+      'Eat A Meal: nourishment up by as much as 50, to 100 at most, and your morale up by as much as you needed it.',
       `Order In: the same, and a restaurant’s larger meal, ${A_BODY.eatenOut} calories more toward your weight.`,
       'Shower: hygiene to 100, and stress eased by a tenth of what it put back.',
-      `Work Out: fitness, your Stamina, up 0.6 at readiness 75, ${RUN_MORE}% more on a run, never past what your age allows. Energy, nourishment and hygiene go down, stress eases and your mood lifts.`,
+      `Work Out: fitness, your Stamina, up 0.6 at readiness 75, ${RUN_MORE}% more on a run, never past what your age allows. Energy, nourishment and hygiene go down, stress eases and your morale lifts.`,
       `A second workout the same day builds ${Math.round(DEVELOPMENT.repeat * 100)}% of the first, and a third ${Math.round(DEVELOPMENT.repeat ** 2 * 100)}%. A class that trains the body as hard as a workout counts as one of them, and builds what a workout indoors does: ${CLASS_LIST}, attended.`,
-      'Unwind: stress down and your mood up.',
+      'Unwind: stress down and your morale up.',
     ],
     later: [
       `Fitness holds for ${plural(FITNESS.heldDays, 'day')} after a workout or one of those classes, then falls ${FITNESS.perDay} a day toward ${EVERYDAY_FITNESS}.`,

@@ -133,27 +133,27 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.conditions]": {
   "status": "Rewritten And Verified",
-  "hash": "35227330d3b3",
+  "hash": "73ab3c59145d",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), four of the health-cover and doctor examples’ quotes held exactly by tests/guide-examples-papers.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-papers.test.ts (every papers example played, the health cover example with financial assistance)"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]": {
   "status": "Rewritten And Verified",
-  "hash": "b58a17144db6",
+  "hash": "db704bfd6bb7",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), four of the health-cover and doctor examples’ quotes held exactly by tests/guide-examples-papers.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-papers.test.ts (every papers example played, the health cover example with financial assistance)"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
   "status": "Rewritten And Verified",
-  "hash": "d73a503d2deb",
+  "hash": "6415728e1ded",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words, two of this entry’s example quotes held exactly by tests/guide-examples-papers.test.ts (crossarea/batches.md, batch 1); tests/evidence2-b13.test.ts, ‘PLAYER JOURNEY: Health Cover’s reference, opened by its own address…’, draws the entry and reads its work-rules lines whole; tests/guide-examples-papers.test.ts (its worked example played, financial assistance in its words); tools/tutorial-routes.mjs --check exit 0 on the crossarea walk and capture of 9246c074 (crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.overview]": {
   "status": "Rewritten And Verified",
-  "hash": "99290226fa26",
+  "hash": "6cdc73d92262",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), four of the health-cover and doctor examples’ quotes held exactly by tests/guide-examples-papers.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-papers.test.ts (every papers example played, the health cover example with financial assistance)"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.pensions]": {
   "status": "Rewritten And Verified",
@@ -241,9 +241,9 @@
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.lien]": {
   "status": "Rewritten And Verified",
-  "hash": "02871b5eca95",
+  "hash": "cb94cf58539a",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the taxes entries’ worked examples, played)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), four of the health-cover and doctor examples’ quotes held exactly by tests/guide-examples-papers.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-papers.test.ts (every papers example played, the health cover example with financial assistance)"
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.pay]": {
   "status": "Rewritten And Verified",
@@ -253,9 +253,9 @@
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.plan]": {
   "status": "Rewritten And Verified",
-  "hash": "05a8a44813b5",
+  "hash": "cc2011055fb0",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the taxes entries’ worked examples, played)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), four of the health-cover and doctor examples’ quotes held exactly by tests/guide-examples-papers.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-papers.test.ts (every papers example played, the health cover example with financial assistance)"
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.return]": {
   "status": "Rewritten And Verified",
@@ -1597,9 +1597,9 @@
  },
  "src/engine/systems/abroad.ts#foreignAccountsNotice": {
   "status": "Rewritten And Verified",
-  "hash": "51cdaa078212",
+  "hash": "29373ab50404",
   "on": "2026-10-17",
-  "evidence": "tests/home-account-abroad.test.ts, tests/home-account-tax.test.ts, tests/home-account-transfers.test.ts, tests/remaining-09-banking.test.ts"
+  "evidence": "tests/home-account-tax.test.ts (the yearly report of accounts abroad, “… at an estimated exchange rate)”, exactly, twice); an estimated exchange rate, Core’s word (docs/GLOSSARY.md)"
  },
  "src/engine/systems/abroad.ts#homeAccountLines": {
   "status": "Reviewed And Retained",
@@ -1621,9 +1621,9 @@
  },
  "src/engine/systems/abroad.ts#quoteWords": {
   "status": "Rewritten And Verified",
-  "hash": "7897865f7eec",
+  "hash": "a246bf55f625",
   "on": "2026-10-17",
-  "evidence": "tests/home-account-abroad.test.ts, tests/home-account-tax.test.ts, tests/home-account-transfers.test.ts, tests/remaining-09-banking.test.ts"
+  "evidence": "tests/home-account-transfers.test.ts (Chase’s quote “At 2.6% under the estimated exchange rate (an estimate: …)” and Barclays’ “At its rate, 2.75% under the estimated exchange rate”, exactly); an estimated exchange rate, Core’s word (docs/GLOSSARY.md)"
  },
  "src/engine/systems/abroad.ts#sendAbroad": {
   "status": "Reviewed And Retained",
@@ -2605,9 +2605,9 @@
  },
  "src/ui/papers/Documents.tsx#PassportPane": {
   "status": "Rewritten And Verified",
-  "hash": "fe5eb8d3bece",
+  "hash": "6a2655afc9fe",
   "on": "2026-10-17",
-  "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
+  "evidence": "tests/remaining-papers.test.ts, ‘a passport office’s days and years are said in the right number…’ (fails on the old line); Passport And ID in docs/verification/language-2026-10-17/crossarea/after-notices-1440 and after-notices-390 (the health area’s three notice saves, written on this code), h-van-rx.json: “Faster C$289.25 1 day”"
  },
  "src/ui/papers/Documents.tsx#ResidencePanel": {
   "status": "Rewritten And Verified",
@@ -2664,10 +2664,10 @@
   "evidence": "tests/evidence2-b05.test.ts, tests/remaining-papers.test.ts, tests/evidence-g15-papers.test.ts, tests/residence.test.ts; text walk after-1440 and after-390, Papers, Passport And ID and Permission To Work"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#aidWord": {
-  "status": "Reviewed And Retained",
-  "hash": "8a78331eb345",
+  "status": "Rewritten And Verified",
+  "hash": "b951d9fc1a33",
   "on": "2026-10-17",
-  "reason": "The three outcomes of a charity care request, as the hospital policy names them."
+  "evidence": "tests/defects-g8-6.test.ts (Over The Limit, not Assistance Taken Off, over the limit; Assistance Taken Off within it); financial assistance, the Apply For Assistance button’s word (docs/GLOSSARY.md, Health)"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#amendWords": {
   "status": "Reviewed And Retained",
@@ -2713,9 +2713,9 @@
  },
  "src/ui/workspaces/PapersWorkspace.tsx#HealthPane": {
   "status": "Rewritten And Verified",
-  "hash": "0fe0918b82a5",
+  "hash": "6b6c39ad4154",
   "on": "2026-10-17",
-  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+  "evidence": "tests/defects-g8-4.test.ts (“HUSKY D: $0.00 paid this year”, no “of $0.00”), tests/evidence-g02-life.test.ts (the financial assistance toast), tests/remaining-health-eligibility.test.ts (the work rules’ paragraph whole); Papers, Health Cover in the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves): withdraw.json’s “HUSKY D: $20.00 paid this year” (it read “of $0.00” on the before walk), and on all fourteen the Marketplace as where you stand, a two-sentence overview and three drill-downs at 390 wide; docs/verification/language-2026-10-17/crossarea/after-notices-1440 and after-notices-390 (the health area’s three notice saves, written on this code)"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#HomeClaimsPanel": {
   "status": "Rewritten And Verified",

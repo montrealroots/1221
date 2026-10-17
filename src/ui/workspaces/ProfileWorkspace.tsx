@@ -66,8 +66,8 @@ const DISPOSITIONS: readonly [keyof Personality, string, string | ((person: Pers
   ['ambition', 'Ambition', 'how quickly stress builds, from work and from money alike'],
   ['riskTolerance', 'Risk Tolerance', riskWords],
   ['extraversion', 'Extraversion', 'how being watched as you perform, by an audience or a class, affects your stress'],
-  ['openness', 'Openness', 'how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood'],
-  ['agreeableness', 'Agreeableness', 'how a day of rehearsal affects your mood'],
+  ['openness', 'Openness', 'how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale'],
+  ['agreeableness', 'Agreeableness', 'how a day of rehearsal affects your morale'],
 ];
 import { DIMENSION_LABEL, EVALUATION, TASK_PROFILES } from '@/engine/content/tasks';
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied, genreTags } from '@/engine/content/demands';
@@ -534,7 +534,7 @@ function JourneyPanel() {
   return (
     <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left the school' : `Year ${yearOfStudy(person)} of three`}${standing}` : 'No school'} help="look.work">
       <div className="col gap-3">
-        {school && <p className="small" style={{ margin: 0 }}>{credits.length ? `On stage: ${credits.map((c) => `${c.role} in ${c.production}, ${c.year}${c.yearAsKept ? ' (as first written down)' : ''}`).join('; ')}.` : school.casting?.performed ? `No production finished yet; ${school.casting.role} in ${school.casting.play ?? school.casting.production} is running.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'Your School')}>Your School</button></p>}
+        {school && <p className="small" style={{ margin: 0 }}>{credits.length ? `On stage: ${credits.map((c) => `${c.role} in ${c.production}, ${c.year}${c.yearAsKept ? ' (as first written down)' : ''}`).join('; ')}.` : school.casting?.performed ? `No production finished yet; ${school.casting.role} in ${school.casting.play ?? school.casting.production} is running.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'School')}>School</button></p>}
         {terms.length > 0 && (
           <LookRegion className="table-scroll">
             <table>

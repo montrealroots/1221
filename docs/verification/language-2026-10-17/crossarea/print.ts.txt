@@ -1,0 +1,20 @@
+// Kept as .txt so the lint and the typecheck leave it be: copy it to the clone's root as a .ts with its imports from ./src/, then npx vite-node <file> -- <out.txt>.
+// Prints, from the game's own modules, the words this pass changed that no walked screen shows on its own.
+import { writeFileSync } from 'node:fs';
+import { DIMENSION_MEANS, TASK_PROFILES } from '../l14-xwords/src/engine/content/tasks';
+import { SCENE_MATERIAL, SELF_TAPE_MATERIAL } from '../l14-xwords/src/engine/content/material';
+import { CALENDAR_LEGEND } from '../l14-xwords/src/engine/world/calendar';
+import { KNOB_READS, PERSONALITY_TRAIT_BY_ID } from '../l14-xwords/src/engine/content/personality-traits';
+const out = process.argv.filter((a) => a !== '--').at(-1)!;
+void SCENE_MATERIAL;
+const lines = [
+  `DIMENSION_MEANS.connection: ${DIMENSION_MEANS.connection}`,
+  `TASK_PROFILES.performance.what: ${TASK_PROFILES.performance!.what}`,
+  `SELF_TAPE_MATERIAL.why.allows: ${(SELF_TAPE_MATERIAL as { why: { allows?: string } }).why.allows}`,
+  `CALENDAR_LEGEND school: ${CALENDAR_LEGEND.find((e) => e.category === 'school')!.description}`,
+  `KNOB_READS.moraleSwing: ${KNOB_READS.moraleSwing}`,
+  `KNOB_READS.mealMood: ${KNOB_READS.mealMood}`,
+  `frugal.cost: ${PERSONALITY_TRAIT_BY_ID.frugal!.cost}`,
+];
+writeFileSync(out, `${lines.join('\n')}\n`);
+console.log(lines.join('\n'));
