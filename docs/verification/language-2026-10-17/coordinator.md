@@ -46,6 +46,25 @@ each says when it was settled and how.
 - **A refusal's shape for money that isn't there.** Papers wrote "Your bank can’t cover $…, so nothing was
   charged/paid/changed." Money's own refusals should agree.
 
+- **From the money area:**
+  - "SLATE’s rate" is left in `CharacterCreation.tsx` (frame). Papers' `abroad.ts` now says "the game’s exchange rate".
+  - `spending.ts` keeps "You can’t afford it.", "past its payment ceiling" and "The Day’s Spending", because the
+    health area's `guide/body.ts` quotes them.
+  - The limit review's 700 is a literal in both `cardlife.ts` and the guide's prose. A shared constant would keep them
+    in step.
+  - Glossary terms for Money: "an estimated exchange rate", "credit score" against "credit record", "payment plan",
+    and "the game" in place of SLATE.
+- **From the profile area:**
+  - Core's "work in a genre" counts class scenes, but `practiceGenres` counts only nights and brief takes. Correct
+    Core.
+  - "Audience" against "house": the profile area uses audience throughout.
+  - Creation says "mood" where the wellbeing screens say Morale.
+  - The school's `PlayingChooser` says "with the grain of the scene" (put to the school area).
+  - The advice's "1 of your last 1 piece calls on it" is held by `tools/advice.ts` check (g)'s match on
+    `${pieces} of `.
+- **The JSON the game shows** wasn't in the inventory: `genre-demands.json` (149 genres) and `home-accounts.json`
+  (75 entries). The inventory reads them now, listed Pending, and a json area reviews them through their builders.
+
 ## Defects Raised Outside Any One Area's Reach
 
 - **The live clock stops silently when a tick throws** (frame `defects.md` 1). The top bar keeps showing Pause on a
