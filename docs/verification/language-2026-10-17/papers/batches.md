@@ -173,12 +173,15 @@ still said. `tests/remaining-papers.test.ts` asserts both.
 
 ## Checks, At The End
 
-Run from the clone on the final code, each exit read from a file:
+Run from the clone on the final code, each exit read from a file. Late in the pass the whole suite found five
+assertions this pass's searches had missed, each a short regex or a fragment of the return's decision (“File it by”,
+“You owe $…, on $… of income.”, “completed degree”, “lowest monthly payment”, “record of professional work”, and
+“forty credits to qualify” in `tests/socialsecurity.test.ts`); each now reads the new words as narrowly as before.
 
 | Check | Exit |
 |---|---|
 | `npx tsc -b --noEmit` | 0 |
-| `npx eslint` on the 83 changed files, `--max-warnings=0` | 0 |
+| `npx eslint` on the 89 changed files, `--max-warnings=0` | 0 |
 | `node tools/title-case.mjs --check` | 0 |
 | `node tools/label-sweep.mjs` | 0 |
 | `node tools/plural-check.mjs` | 0 |
@@ -190,7 +193,8 @@ Run from the clone on the final code, each exit read from a file:
 | `node tools/doc-refs.mjs --check` | 0 |
 | `node tools/deciders.mjs --check` | 0 |
 | `npx vitest run` on the 36 files that failed or hold late changes | 1: 8 tests in 6 files still read the old words; each fixed after, and the whole suite below reran them |
-| `npx vitest run`, the whole suite | VITEST_FULL |
+| `npx vitest run`, the whole suite (`vt-full.txt` in the scratchpad) | 1: 4,582 of 4,587 tests passed in 372 of 376 files; the five failures were tests asserting the old words (`evidence2-b11`, `finance-paths`, `naturalize`, `student-experience` twice) |
+| `npx vitest run` on those four files and the four others changed after it started | 0: 111 of 111 in 8 files |
 | `npm run build` | 0 |
 | `node tools/text-walk.mjs`, six saves, at 1440 and at 390 | 0 and 0: 25 screens each, none failed |
 | `node tools/text-render-check.mjs after-1440 after-390` | 1: five faults, none on Papers (“Sleep owed 1 hours” on Player Profile, “-$3” four ways on Money), each in the walk before this pass too |

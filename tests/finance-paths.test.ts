@@ -139,7 +139,7 @@ describe('an IRS payment plan', () => {
     let sim = owingOnTime('fp-plan');
     const r = () => returnsOf(sim.player)['2026']!;
     const owed = owedAll(sim.player, sim.now);
-    expect(sim.execute({ kind: 'tax.apply_plan', payload: { kind: 'long', monthly: leastMonthly(owed) - 1 } }).error).toMatch(/least a month/);
+    expect(sim.execute({ kind: 'tax.apply_plan', payload: { kind: 'long', monthly: leastMonthly(owed) - 1 } }).error).toMatch(/lowest monthly payment/);
     fund(sim, primary(sim).id, 100_00);
     const applied = sim.must<{ decideAt: number; fee: number }>({ kind: 'tax.apply_plan', payload: { kind: 'long', monthly: 1_000_00 } });
     sim.advanceTo(applied.decideAt + MS_HOUR);
