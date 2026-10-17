@@ -189,10 +189,15 @@ Run from the clone on the final code, each exit read from a file:
 | `node tools/text-inventory.mjs --check` | 0 |
 | `node tools/doc-refs.mjs --check` | 0 |
 | `node tools/deciders.mjs --check` | 0 |
-| `npx vitest run` on the 36 files that failed or hold late changes | VITEST_R4 |
+| `npx vitest run` on the 36 files that failed or hold late changes | 1: 8 tests in 6 files still read the old words; each fixed after, and the whole suite below reran them |
 | `npx vitest run`, the whole suite | VITEST_FULL |
 | `npm run build` | 0 |
-| `node tools/text-render-check.mjs after-1440 after-390` | RENDER |
+| `node tools/text-walk.mjs`, six saves, at 1440 and at 390 | 0 and 0: 25 screens each, none failed |
+| `node tools/text-render-check.mjs after-1440 after-390` | 1: five faults, none on Papers (“Sleep owed 1 hours” on Player Profile, “-$3” four ways on Money), each in the walk before this pass too |
+| `node tools/acceptance-ui.mjs`, at 1440 and at 390 | 1 then 0 at 1440: the first run's four papers failures were matchers reading the old words; then 77 of 77 passed at 1440 and at 390, no overflow |
+
+On the six saves' Papers screens, at 1440, “SLATE” fell from 20 mentions to none, and the words from 9,533 to 10,215:
+the sentences are whole now, where they were clipped.
 
 The batches' own runs were the same commands on each batch's files; the earlier runs' logs are in the scratchpad
 (`papers14/vt-b12.txt`, `vt-r3.txt`, `vt-r4.txt`), and each failure they showed was a test asserting the old words,
