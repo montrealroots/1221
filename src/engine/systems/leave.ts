@@ -1286,6 +1286,10 @@ export function registerLeave(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { registeredAt: Instant }>('school.reregister', (_p, { sim: s }) => {
     const school = s.player.school;
     if (!school || schoolEnded(school.standing)) throw new CommandError('You’re not at school.');
+    // On leave the term she left isn't one to register for: the return asks again (`returnFromLeave`). Until 2026-10-17
+    // (brief 11) a term begun under a hold and then left kept its Register on Standing, which, the hold paid on the leave,
+    // registered her for the term she was away from.
+    if (school.leave?.status === 'on') throw new CommandError('You’re on leave: you register for the term you come back to, when it begins.');
     if (!school.mustRegister) throw new CommandError('You’re registered.');
     if (school.hold !== undefined) throw new CommandError(`A financial hold stops registration: ${formatMoney(accountOwed(s, s.player), saveCurrency(s.universe))} is owed on your Yale account.`);
     delete school.mustRegister;

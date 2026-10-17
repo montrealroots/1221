@@ -803,7 +803,7 @@ describe('defect.yale-credit-hold: a credit that clears a held Yale account lift
     sim.must({ kind: 'school.reregister', payload: {} });
   }, 600_000);
 
-  it('PLAYER JOURNEY: Spring Term 2030 begun under the fall’s hold, $49,944.30 owed and registration asked; she pays the fall’s $25,159.65 and takes a medical leave before classes (TEST SETUP: the flu): its Yale Health fee refunded, $2,377.37, leaves the tuition owed and the hold stands; its tuition rebated in full, $22,407.28, clears it, and the hold lifts, said once in the rebate’s words, the registration the term asked for still asked', () => {
+  it('PLAYER JOURNEY: Spring Term 2030 begun under the fall’s hold, $49,944.30 owed and registration asked; she pays the fall’s $25,159.65 and takes a medical leave before classes (TEST SETUP: the flu): its Yale Health fee refunded, $2,377.37, leaves the tuition owed and the hold stands; its tuition rebated in full, $22,407.28, clears it, and the hold lifts, said once in the rebate’s words, the registration the term asked for still asked, kept for her return: on the leave Standing draws no Register and the command is refused', () => {
     const sim = thaw(clownFailed());
     const school = () => sim.player.school!;
     tend(sim, onDay(termStart(7).date, 12));
@@ -822,6 +822,12 @@ describe('defect.yale-credit-hold: a credit that clears a held Yale account lift
     // Lifted by the second credit, not the first, which left the tuition owed.
     expect(titled(sim, 'The Financial Hold Is Lifted').map((n) => n.body)).toEqual(['The tuition rebated on your leave (100%), $22,407.28, clears your Yale account. Registration and the diploma are open to you again.']);
     expect(school().hold).toBeUndefined();
+    expect(school().mustRegister).toBe(true);
+    // On leave, the term she left isn't one to register for: Standing draws no Register, and the command is refused in
+    // its words, the registration kept for the return (until 2026-10-17 both registered her for the term she'd left).
+    expect(drawn(sim, LeavePanel).text).not.toContain('Register for');
+    expect(drew('school.reregister')).toEqual([]);
+    expect(refused(sim, 'school.reregister')).toBe('You’re on leave: you register for the term you come back to, when it begins.');
     expect(school().mustRegister).toBe(true);
   }, 600_000);
 

@@ -154,7 +154,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.request_extra_term` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | — (also extraRefusal) | — | — | school.extra_decide; school.term | 8 | — |
 | `school.request_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | Give a reason. | — | — | school.welfare_decide; medical | 28 | — |
 | `school.request_repeat` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | — | — | — | — | 9 | — |
-| `school.reregister` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not at school.; You’re registered.; A financial hold stops registration: … is owed on your Yale account. | — | — | — | 12 | — |
+| `school.reregister` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not at school.; You’re on leave: you register for the term you come back to, when it begins.; You’re registered.; A financial hold stops registration: … is owed on your Yale account. | — | — | — | 12 | — |
 | `school.respond` | Verified (journey) | Drama School | ClassMoments.tsx | `systems/classmates.ts` | That isn’t a scene you share with …. (also respondRefusal) | — | — | school.study_session | 17 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.return_notice` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not on leave.; You gave notice on ….; Its deadline has passed. | — | — | — | 16 | — |
 | `school.review_blocking` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 10 | journey-school-production.test.ts |
@@ -219,7 +219,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `documents.opt_week` | `systems/permission.ts` | systems/permission.ts | — | — | documents.opt_week | 1 |
 | `documents.permission` | `systems/permission.ts` | systems/permission.ts | — | — | documents.opt_week | 2 |
 | `documents.ssn_arrives` | `systems/taxid.ts` | systems/taxid.ts | ssn | — | — | 2 |
-| `documents.us_status` | `systems/permission.ts` | systems/permission.ts | usOutOfStatus | — | — | 9 |
+| `documents.us_status` | `systems/permission.ts` | systems/permission.ts | usOutOfStatus | — | — | 11 |
 | `documents.visit` | `systems/papervisits.ts` | systems/papervisits.ts | keptAt; missed; at | — | — | 6 |
 | `health.appointment` | `systems/appointments.ts` | systems/appointments.ts | status | — | — | 13 |
 | `health.bill` | `systems/health.ts` | systems/health.ts | — | Yes | loan; school.leave_appeal | 3 |

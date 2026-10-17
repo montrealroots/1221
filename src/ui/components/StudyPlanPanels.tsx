@@ -103,7 +103,8 @@ export function LeavePanel() {
           )}
         </div>
       )}
-      {school.mustRegister && !ended && (
+      {/* Not on a leave, from 2026-10-17: the return asks for registration again (`school.reregister`). */}
+      {school.mustRegister && !ended && l?.status !== 'on' && (
         <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
           <span className="small">Register for {termLabel(Math.max(0, school.termsBegun - 1))}: until you do, classes don’t count you and shifts can’t be worked.{school.hold !== undefined ? ' A financial hold stops it until your Yale account is paid.' : ''}</span>
           <Gated feature="school.reregister" className="btn btn-sm" disabled={school.hold !== undefined} onClick={() => { if (run('school.reregister').ok) toast('Registered.', 'positive'); }}>Register</Gated>
