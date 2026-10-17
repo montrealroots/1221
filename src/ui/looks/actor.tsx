@@ -45,7 +45,7 @@ export const targetLabel = (t: AbilityId | Skill): string => (isAbility(targetId
 /** Where a target opens: an ability’s look, or a technique’s (the school’s skill). */
 export const targetSubject = (t: AbilityId | Skill) => (isAbility(targetId(t)) ? at('ability', targetId(t)) : at('skill', t));
 
-/** The tasks and dimensions that read an ability (`abilityReaders`, systems/material.ts): its look's and the Profile's. */
+/** The tasks and dimensions that read an ability (`abilityReaders`, systems/material.ts): its look’s and the Profile’s. */
 export const readersOf = (id: AbilityId): { task: string; label: string; dims: Dimension[] }[] => abilityReaders(id);
 
 /** The latest changes to an id on the development history, newest first. */
@@ -130,7 +130,7 @@ defineLook<TheAbility>('ability', {
           <p className="small"><strong>What develops it.</strong> {def.develops}</p>
           <p className="small"><strong>Where it began.</strong> {def.derivedFrom}</p>
           {/* What it does, in its own sentence, and which work reads it (from 2026-10-17, brief 11, A4): until then What It Does
-              was the readers alone, and the ability's own sentence, corrected against the code in the attributes brief's
+              was the readers alone, and the ability’s own sentence, corrected against the code in the attributes brief’s
               phase 2, was shown nowhere: every ability has a reader, so the line that fell back to it never did. */}
           <p className="small"><strong>What it does.</strong> {def.affects}</p>
           <p className="small"><strong>Which work reads it.</strong> {readers.map((r) => `${r.label}: ${r.dims.map((d) => DIMENSION_LABEL[d].toLowerCase()).join(', ')}`).join('; ')}.</p>
