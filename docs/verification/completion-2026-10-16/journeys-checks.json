@@ -1,0 +1,34 @@
+{
+ "key": "journeys-2026-10-17",
+ "ran": "brief 11, the journeys area, on its clone",
+ "round": "brief 11",
+ "rows": [
+  {
+   "id": "health.enroll",
+   "claimed": "verified",
+   "holds": true,
+   "verdict": "verified",
+   "disposition": "The four gaps the row named are each closed by a gate test that reaches the command and checks its consequence: tests/evidence-g03-life.test.ts “health.enroll > at school, refused through the command in Yale Health’s words, and Papers offers no Enroll”, “health.enroll > PLAYER JOURNEY: withdrawn, Enroll pressed puts them in HUSKY D from 1 November; …” (the duplicate refusal before and after a reload, “You’re enrolled.” once begun) and “health.enroll > PLAYER JOURNEY: withdrawn with September’s wages over every program’s limit, … $706 on 1 November and 1 December, once each across a reload …”, with tests/evidence3-lifepapers.test.ts’s premium on income the clock paid. Renewal is played where play reaches it: ended for no work, moved between programs, kept by being at the School (need-paths, scope-cover). The one branch held only on a FIXTURE, HUSKY D kept at renewal through 80 hours’ work, is unreachable in play, read in the code: workedBetween (earnings.ts) counts only salary postings, which only school.ts makes (work-study wages, the Summer Cabaret stipend); enrolledIn (health.ts) counts every month a student is at the School, the month a withdrawal or leave begins included, and monthEngagement returns school before work. tests/remaining-health-billing.test.ts holds the arm through healthMonth on the clock with the wages by hand. Run on the journeys clone: each file exit 0; mutations of the duplicate refusal and of the marketplace premium each caught.",
+   "problems": [
+    "The audit row’s tests field and status (partial) are behind the tree; its gapsOpen is the work arm, which no change to play could reach without wages for a life off the School, outside the current scope (docs/REQUIREMENTS.md, the scope reset of 2026-10-09: the career went)."
+   ],
+   "weakTests": [
+    {
+     "title": "tests/remaining-health-billing.test.ts > HUSKY D kept at its renewal through work, read over Connecticut’s six months > FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: …",
+     "why": "Wages posted by hand: the only evidence of the work arm, which no played life reaches."
+    }
+   ]
+  },
+  {
+   "id": "l-actor",
+   "claimed": "verified",
+   "holds": true,
+   "verdict": "verified",
+   "disposition": "tests/evidence2-b13.test.ts “i-ui-text > PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, …” writes a save as 93 wrote it with a development entry whose source is interest:sound_design (TEST SETUP, as tests/migration-94.test.ts writes one), opens it through openSlot so migration 94 runs, and resolves the ability look (src/ui/looks/actor.tsx) as the screen does: “Last Change +0.12 An interest, from before they were removed, August 27, 2026” and the list line, twice and nowhere else, the Profile the same, the twin without the hour saying none, the line kept across a save and a load. Removing the branch in a copy fails it. The audit row’s review (2026-10-13, against fca00d8f) came before that test the same day.",
+   "problems": [
+    "The audit row’s tests field still says no test reaches the branch."
+   ],
+   "weakTests": []
+  }
+ ]
+}

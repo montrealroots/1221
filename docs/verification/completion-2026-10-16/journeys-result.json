@@ -1,0 +1,1222 @@
+{
+ "area": "journeys",
+ "commits": [
+  "bfdbd2e6",
+  "421e952e",
+  "085e1f97",
+  "968d612f"
+ ],
+ "rows": [
+  {
+   "id": "health.enroll",
+   "group": "Life, Health And Time",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "The baseline named four gaps (the duplicate refusal \"You’re enrolled from …\" and \"You’re enrolled.\" through the command, a marketplace enrollment followed to healthMonth’s premium, the refusal at school through execute), all closed on 2026-10-16 by gate tests its evidence field didn’t cite yet; and, from the audit’s last round, HUSKY D kept at a renewal through work held only with wages posted by hand.",
+   "exercised": "Each gap read in its test and the files run on this commit: Enroll pressed on Papers and refused again before and after a reload and once the plan began; the marketplace’s premium charged by the clock once a month across a reload; the refusal at school through execute and on the drawn Papers. The work arm at renewal read in the code: workedBetween (src/engine/systems/earnings.ts) counts only salary postings, which only src/engine/systems/school.ts makes (work-study wages, the Summer Cabaret stipend), and enrolledIn (src/engine/systems/health.ts) counts every month a student is at the School, the month a withdrawal or a leave begins included, which monthEngagement reads before work; so 80 hours decide for nobody in play, and the arm is held through healthMonth on the clock with wages by hand. Two of its rules broken in a copy, each caught.",
+   "evidence": [
+    {
+     "file": "tests/evidence-g03-life.test.ts",
+     "title": "health.enroll > at school, refused through the command in Yale Health’s words, and Papers offers no Enroll",
+     "kind": "player journey",
+     "proves": "The refusal at school through execute, in Yale Health’s words, and Papers drawing no Enroll"
+    },
+    {
+     "file": "tests/evidence-g03-life.test.ts",
+     "title": "health.enroll > PLAYER JOURNEY: withdrawn, Enroll pressed puts them in HUSKY D from 1 November; again that day “You’re enrolled from November 1, 2026.”, in November “You’re enrolled.”, and care is HUSKY D’s",
+     "kind": "player journey",
+     "proves": "Enroll pressed; “You’re enrolled from November 1, 2026.” the same day and after a reload, “You’re enrolled.” once it began; coverOn and planOf read by the care quotes"
+    },
+    {
+     "file": "tests/evidence-g03-life.test.ts",
+     "title": "health.enroll > PLAYER JOURNEY: withdrawn with September’s wages over every program’s limit, Enroll puts them in the marketplace from 1 November; the clock charges Access Health CT’s $706 on 1 November and 1 December, once each across a reload, and a visit is the plan’s $45",
+     "kind": "player journey",
+     "proves": "A marketplace enrollment through the command followed to healthMonth’s $706 on 1 November and 1 December, once each across a reload, and the plan’s $45 visit"
+    },
+    {
+     "file": "tests/evidence3-lifepapers.test.ts",
+     "title": "health.enroll, on income the clock paid (round three) > PLAYER JOURNEY: the Inherited student’s marketplace, Enrolled from 1 November on Papers, is charged $706 on 1 November and 1 December and $786 on 1 January 2027, each once across a reload; it’s refused again in its own words before and after it begins",
+     "kind": "player journey",
+     "proves": "The premium on income the clock paid, $706, $706 and $786 into 2027, refused again in its own words before and after it begins"
+    },
+    {
+     "file": "tests/evidence3-lifepapers.test.ts",
+     "title": "health.enroll, on income the clock paid (round three) > PLAYER JOURNEY: withdrawn after the fifteenth day, on 9 October, Yale Health covers thirty days more, to 8 November, and Enroll gives the marketplace from 1 December, the first of the month after Yale’s end, not 1 November; no premium is taken on 1 November",
+     "kind": "player journey",
+     "proves": "The later of Yale Health’s end and the next month’s first"
+    },
+    {
+     "file": "tests/need-paths.test.ts",
+     "title": "health.enroll: a program’s renewal, reached by the clock > PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026 and covered from 1 August, the month of the generic she filled uninsured, comes to its renewal on 1 October 2027: September’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload",
+     "kind": "player journey",
+     "proves": "A program’s renewal reached by the clock alone, ending HUSKY D for no work, said, across a reload"
+    },
+    {
+     "file": "tests/need-paths.test.ts",
+     "title": "health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock > PLAYER JOURNEY: on HUSKY D from 1 October 2026 on September’s $900.00, her September 2027 is $1,980.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 October 2027 with no gap, and no work is asked",
+     "kind": "player journey",
+     "proves": "A renewal moving HUSKY D to Covered Connecticut with no gap"
+    },
+    {
+     "file": "tests/scope-cover.test.ts",
+     "title": "a program taken on a personal leave without Affiliate cover, and Yale Health back on the return > PLAYER JOURNEY: a student with need takes HUSKY D on her leave (TEST SETUP: the work it asks); back at the School it stays beside Yale Health, and its renewal on 1 February 2028 is met by her being at the School",
+     "kind": "player journey",
+     "proves": "HUSKY D kept at its renewal by her being at the School"
+    },
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "health.apply: HUSKY D applied for on its notice, the month before read, decided after thirty days > PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $182,500, $465.00, she’s shown the work rules short",
+     "kind": "player journey",
+     "proves": "The work rules met by income the clock paid (interest), the arm off the School a played life reaches"
+    },
+    {
+     "file": "tests/remaining-health-billing.test.ts",
+     "title": "HUSKY D kept at its renewal through work, read over Connecticut’s six months > FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice",
+     "kind": "fixture",
+     "proves": "HUSKY D kept at its renewal through work, on the clock, with the wages no played life off the School has posted by hand"
+    }
+   ],
+   "fixes": [],
+   "mutations": [
+    {
+     "what": "mayEnroll’s refusal of a plan waiting for its month removed (src/engine/systems/health.ts)",
+     "caughtBy": "tests/evidence-g03-life.test.ts health.enroll’s HUSKY D and marketplace journeys"
+    },
+    {
+     "what": "healthMonth’s marketplace premium not charged (src/engine/systems/health.ts)",
+     "caughtBy": "tests/evidence-g03-life.test.ts “withdrawn with September’s wages over every program’s limit…”"
+    }
+   ],
+   "trace": [
+    "Player Action: Enroll on Papers (src/ui/workspaces/PapersWorkspace.tsx) sends health.enroll; tests/evidence-g03-life.test.ts presses it.",
+    "Preconditions: mayEnroll (src/engine/systems/health.ts): the state, Yale Health at school, enrolled or enrolled ahead, programFor, lawful presence, the windows; each refusal through execute in evidence-g03-life’s journeys.",
+    "State Read: last month’s income (earningsOf), the School’s standing and Yale Health’s end (marketplaceOpen); evidence3-lifepapers’ later-of journey.",
+    "State Changed: HealthRecord.program or .marketplace with its first day; evidence-g03-life’s HUSKY D journey reads the record.",
+    "Immediate Outcome: the toast “Enrolled in HUSKY D, from November 1, 2026.” and the duplicate refused; evidence-g03-life.",
+    "Scheduled Consequences: healthMonth charges the marketplace premium and renews a program (src/engine/systems/health.ts); evidence-g03-life, evidence3-lifepapers, need-paths, scope-cover, remaining-health-billing.",
+    "Player Explanation: Papers’ This Month line and care quotes, the renewal’s notices; evidence-g03-life, need-paths.",
+    "Save/Load: the record and the premium once each across a reload; evidence-g03-life, evidence3-lifepapers."
+   ]
+  },
+  {
+   "id": "l-actor",
+   "group": "Creation, Profile, Home And The Looks",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "That the actor look’s sourceWords says “An interest, from before they were removed” for a development entry an older save carries: the baseline said no test opened the look on a migrated save.",
+   "exercised": "tests/evidence2-b13.test.ts writes a save as 93 wrote it with an hour of the Sound Design interest on Listening (source interest:sound_design), opens it through openSlot (migration 94), resolves the ability’s look (src/ui/looks/actor.tsx) and draws the Profile, both saying the line in Last Change and the list, its twin without the hour saying none, and the line kept across a save and a load. The branch removed in a copy fails it. The audit row was read against fca00d8f before that test was written the same day.",
+   "evidence": [
+    {
+     "file": "tests/evidence2-b13.test.ts",
+     "title": "i-ui-text > PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense, the one interest wording on either; its twin without the hour says none; an hour of practice takes the Listening column and the history keeps the line, across a save and a load",
+     "kind": "player journey",
+     "proves": "The look and the Profile on a migrated save carrying an interest: source, the line in both places, across a save and a load"
+    }
+   ],
+   "fixes": [],
+   "mutations": [
+    {
+     "what": "sourceWords’ interest branch removed (src/ui/looks/actor.tsx)",
+     "caughtBy": "tests/evidence2-b13.test.ts “i-ui-text > PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest…”"
+    }
+   ],
+   "trace": [
+    "Player Action: the Profile’s ability name opens its look (src/ui/looks/actor.tsx, defineLook ability); evidence2-b13 resolves it as the screen does.",
+    "Preconditions: a save from before schema 94 with an interest: development entry; the test writes one as 93 did (TEST SETUP) and opens it through openSlot.",
+    "State Read: Person.development.history, kept whole by migration 94; evidence2-b13 asserts the entry after the migration.",
+    "State Changed: none; the look reads.",
+    "Immediate Outcome: “Last Change +0.12 An interest, from before they were removed, August 27, 2026” and the list line; evidence2-b13.",
+    "Scheduled Consequences: none; practice an hour later takes the column, the history keeping the line; evidence2-b13.",
+    "Player Explanation: the line itself, in the past tense; evidence2-b13 holds that nothing else on the page says interest.",
+    "Save/Load: the line drawn again after a reload; evidence2-b13."
+   ]
+  },
+  {
+   "id": "tax.s8.f1_status",
+   "group": "Remaining Area: tax",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "The F-1’s issue, term, grace, end and readers, verified as it stood with no gate test cited; and SLATE’s decision that a passport run out ends nothing, which no test held.",
+   "exercised": "Each part read in its test and the files run: the F-1 drawn at creation to the program’s end and sixty days; the clock’s look at the program’s end and the grace’s, out of status at its end, a pending OPT holding it; fifteen days after a withdrawal, none after a dismissal; its readers (the School’s leave, OPT, the Social Security office, the DMV, the 1040-NR); a passport reported lost leaving it in force. Added: a played student whose passport runs out in June 2028 keeps her F-1 and status (tests/remaining-papers.test.ts); a status look made to read the passport fails it.",
+   "evidence": [
+    {
+     "file": "tests/evidence-g27-ui.test.ts",
+     "title": "c-birthplace > PLAYER JOURNEY: gives a license from the birth state, California not Connecticut, and a Tokyo-born student a Japanese passport and an F-1 to 30 July 2029",
+     "kind": "player journey",
+     "proves": "Issued at creation to a student from abroad, to the program’s end and sixty days’ grace"
+    },
+    {
+     "file": "tests/documents.test.ts",
+     "title": "the papers a life begins with > give a student from abroad their passport and an F-1 visa to the degree and its grace, which lets them back into the US",
+     "kind": "player journey",
+     "proves": "The same for a London-born student, in force"
+    },
+    {
+     "file": "tests/evidence3-home.test.ts",
+     "title": "the graduate, played > n-decision-us-status: PLAYER JOURNEY: the played graduate’s F-1 is looked at by the clock on 31 May 2029, due 30 July; Apply For OPT pressed on Home on 1 June pays $470 and leaves a permit pending ninety days, to 30 August, which holds her status past 30 July and is approved for twelve months, across a reload",
+     "kind": "player journey",
+     "proves": "The played graduate’s F-1 looked at on 31 May 2029, due 30 July; a pending OPT holds the status past it"
+    },
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.us_status > the degree: the look armed when the life was made asks “Your US Status Is Ending” on the program’s end, due sixty days on with OPT both ways; out of status the day it falls due, where a twin that presses Apply For OPT keeps hers",
+     "kind": "player journey",
+     "proves": "Out of status the day the grace ends, the F-1 canceled, said once; a twin with OPT applied keeps hers"
+    },
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.us_status > PLAYER JOURNEY: withdrawn on 1 February 2027, an F-1 student keeps fifteen days’ status by the School’s own reschedule; on the sixteenth she is out of status, her F-1 canceled, told once, and refused the marketplace, an ID card and unemployment",
+     "kind": "player journey",
+     "proves": "A withdrawal’s fifteen days, then out of status and refused the marketplace, an ID card and unemployment"
+    },
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.us_status > PLAYER JOURNEY: a student who lets her classes go is dismissed, and is out of status the same hour, with no grace",
+     "kind": "player journey",
+     "proves": "A dismissal ends status the same hour, with no grace"
+    },
+    {
+     "file": "tests/evidence2-b12.test.ts",
+     "title": "n-decision-us-status > PLAYER JOURNEY: an F-1 who withdraws on 1 September 2026 is raised “Your US Status Is Ending” a minute on, due the sixteenth, with nothing to apply for; Home shows it without a button; it lapses with her status, across a reload",
+     "kind": "player journey",
+     "proves": "The status’s end raised on Home, lapsing with the status, across a reload"
+    },
+    {
+     "file": "tests/evidence-g25-school.test.ts",
+     "title": "school.request_leave > an F-1 student’s personal leave is refused through the command, in its words, and nothing is asked",
+     "kind": "player journey",
+     "proves": "The School reads it: a personal leave refused on an F-1"
+    },
+    {
+     "file": "tests/leave.test.ts",
+     "title": "a personal leave > is refused for a professional commitment, and refused to an F-1 student with why; a medical leave extends the I-20",
+     "kind": "player journey",
+     "proves": "A medical leave extends the I-20 a year"
+    },
+    {
+     "file": "tests/remaining-tax.test.ts",
+     "title": "tax.other_refusals > GUARD: the Social Security office’s four its panel never sends: a citizen, an application on its way, a card come, and someone not on an F-1",
+     "kind": "guard",
+     "proves": "The Social Security office refuses someone not on an F-1"
+    },
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.idcard_arrives > PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes ten business days after applying, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport",
+     "kind": "player journey",
+     "proves": "The DMV’s card runs to her program’s end"
+    },
+    {
+     "file": "tests/federal-tax-years.test.ts",
+     "title": "a played student’s returns on the year’s table > PLAYER JOURNEY: born in London, on an F-1, her 2026 1040-NR takes back 2026’s deduction and taxes the $1,656 of work-study at 10% from the first dollar, $165.60",
+     "kind": "player journey",
+     "proves": "The 1040-NR read for a student on an F-1"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.inventory > PLAYER JOURNEY: a London-born student’s papers are her passport and her F-1; the Social Security office, a new bank and the DMV each read the passport, and each says why once it’s reported lost",
+     "kind": "player journey",
+     "proves": "Her passport reported lost, the F-1 holds"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.report_lost > refuses a British student’s F-1 in its words, which holds; her passport reported lost leaves the F-1 in force",
+     "kind": "player journey",
+     "proves": "The F-1 can’t be reported lost, and a lost passport leaves it in force"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.f1_status > PLAYER JOURNEY: a London-born student who keeps up, her British passport run out on 14 June 2028, mid-program, keeps her F-1 and her status: the F-1 in force to 30 July 2029, no ending raised, the status looked at on the program’s end, 31 May 2029, her standing good, across a reload; the passport alone is out of force, and a new bank turns her away for it",
+     "kind": "player journey",
+     "proves": "A passport run out mid-program ends nothing: the F-1 in force, standing good, the status looked at on the program’s end, across a reload, while a new bank refuses the passport"
+    }
+   ],
+   "fixes": [],
+   "mutations": [
+    {
+     "what": "the status look made to read the passport’s end (statusCheckAt, src/engine/systems/permission.ts)",
+     "caughtBy": "tests/remaining-papers.test.ts “tax.s8.f1_status > PLAYER JOURNEY: a London-born student who keeps up…”"
+    }
+   ],
+   "trace": [
+    "Player Action: none to issue it: drawn at creation (startingDocuments, src/engine/systems/documents.ts); a withdrawal, a leave or Apply For OPT moves it; evidence-g27-ui, evidence-g16-papers.",
+    "Preconditions: a citizen of anywhere but the US, at school; documents.test, evidence-g27-ui.",
+    "State Read: the program’s end (programEnd), the standing, permits pending or held (usStatusEnds, src/engine/systems/permission.ts); never the passport, remaining-papers’ tax.s8.f1_status.",
+    "State Changed: Person.usOutOfStatus and the F-1 canceled at the status’s end; evidence-g16-papers.",
+    "Immediate Outcome: “Your US Status Is Ending” raised in the grace, “Out Of Status” once; evidence2-b12, evidence-g16-papers.",
+    "Scheduled Consequences: the US status look (US_STATUS_KIND) at the program’s end and the grace’s; the marketplace, the DMV and unemployment refuse after; evidence-g16-papers, remaining-papers.",
+    "Player Explanation: Permission To Work’s Your Program Ends and Your US Status Ends lines; evidence-g16-papers.",
+    "Save/Load: the look and the status across reloads; evidence-g16-papers, evidence2-b12, remaining-papers."
+   ]
+  },
+  {
+   "id": "tax.s8.ssn",
+   "group": "Remaining Area: tax",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "The number’s eligibility, application, card and readers, verified as it stood with no gate test cited.",
+   "exercised": "Each part read in its test and the files run: refused until she registers and in each of its other words; Apply pressed on Papers, an hour at the office, the card 21 days on, Held once it comes, across a reload; read by the bank’s channel, the DMV, the W-7 on a 1040-NR, the IRS’s payment plan and Discover. A lost card isn’t modeled because nothing reads the card, only the number’s status. The registration check broken in a copy is caught.",
+   "evidence": [
+    {
+     "file": "tests/evidence-g17-papers.test.ts",
+     "title": "documents.apply_ssn > PLAYER JOURNEY: Papers’ Social Security Number panel says Not yet with the button refused until she registers; pressed, an hour at the office and the card 21 days on, the panel saying so and the button gone; Held once it comes, across a reload",
+     "kind": "player journey",
+     "proves": "Eligibility (registered), the application at the office’s hour, the card 21 days on, Held, across a reload"
+    },
+    {
+     "file": "tests/remaining-tax.test.ts",
+     "title": "tax.other_refusals > GUARD: the Social Security office’s four its panel never sends: a citizen, an application on its way, a card come, and someone not on an F-1",
+     "kind": "guard",
+     "proves": "Refused to a citizen, while on its way, once come, and to someone not on an F-1"
+    },
+    {
+     "file": "tests/evidence-g17-papers.test.ts",
+     "title": "documents.apply_ssn > refuses in its words a Call within the hour, a hospital bed and a passport reported lost, the clock and her number left as they were; and a citizen, who holds one",
+     "kind": "player journey",
+     "proves": "Its refusals for the hour, a hospital bed and a passport lost, nothing moved"
+    },
+    {
+     "file": "tests/evidence3-lifepapers.test.ts",
+     "title": "documents.apply_ssn, from a hospital bed the week drew (round three) > PLAYER JOURNEY: the F-1 admitted by her first health week (TEST SETUP: the draw forced to a stay) is refused “Not from a hospital bed.” where her twin, that evening, is sent to the office; discharged, she applies",
+     "kind": "player journey",
+     "proves": "From a hospital bed refused, applied for once discharged"
+    },
+    {
+     "file": "tests/evidence-g17-papers.test.ts",
+     "title": "documents.apply_ssn > the bank’s channel: before the card, Wells Fargo opens her account only in a branch, an hour there; once it has come, online, with no hour",
+     "kind": "player journey",
+     "proves": "Read by the bank’s channel"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_idcard > PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days from Monday 19 October to Monday 2 November 2026, and runs to the program’s end, 31 May 2029",
+     "kind": "player journey",
+     "proves": "Read by the DMV, which asks for the number while it’s on its way"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "documents.apply_ssn on a London-born student > PLAYER JOURNEY: her 1040-NR’s $329.56 back, from the 14% withheld on her scholarship, comes in the IRS’s 21 days with the card in hand; without it the W-7 holds it seven weeks more, 70 days",
+     "kind": "player journey",
+     "proves": "Read by the IRS: the W-7 holds a refund seven weeks more without it"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "documents.apply_ssn on a London-born student > PLAYER JOURNEY: the IRS’s plan on the Wealthy family’s 1040-NR, $165.60 owed with her money in a CD: with the card come, applied for online on Papers and answered in a minute; without it, Form 9465 and 30 days",
+     "kind": "player journey",
+     "proves": "Read by the IRS’s payment plan: online with it, Form 9465 without"
+    },
+    {
+     "file": "tests/evidence2-b06.test.ts",
+     "title": "documents.apply_ssn > Discover reads the number: with it and a month’s wages past $25,000 a year it lends $2,500 over 36 months at $78.33; her twin without it is refused for want of it; no played life’s wages reach that line",
+     "kind": "fixture",
+     "proves": "Read by Discover’s loan"
+    }
+   ],
+   "fixes": [],
+   "mutations": [
+    {
+     "what": "ssnRefusal’s registration check removed (src/engine/systems/taxid.ts)",
+     "caughtBy": "tests/evidence-g17-papers.test.ts “documents.apply_ssn > PLAYER JOURNEY: Papers’ Social Security Number panel says Not yet…”"
+    }
+   ],
+   "trace": [
+    "Player Action: Apply At The Social Security Office on Papers sends documents.apply_ssn; evidence-g17-papers presses it.",
+    "Preconditions: ssnRefusal (src/engine/systems/taxid.ts): an F-1 student registered, not applied, not come, in New Haven and out of hospital, with a passport in force; remaining-tax, evidence-g17-papers.",
+    "State Read: the School’s registration, the passport, the hour; evidence-g17-papers.",
+    "State Changed: Person.ssn applied, then issued; evidence-g17-papers.",
+    "Immediate Outcome: the toast “Applied. The card comes September 20, 2026.” and an hour at the office; evidence-g17-papers.",
+    "Scheduled Consequences: the card comes 21 days on (SSN_ARRIVES_KIND); the bank, the DMV, the W-7 and the plan read it; evidence-g17-papers, scope-taxpapers, evidence-g15-papers.",
+    "Player Explanation: Papers’ Social Security Number line and “Your Social Security Card Came”; evidence-g17-papers.",
+    "Save/Load: applied and held across a reload; evidence-g17-papers."
+   ]
+  },
+  {
+   "id": "tax.s8.opt",
+   "group": "Remaining Area: tax",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "OPT’s window, fee, decision, term, days without work and status, verified as it stood with no gate test cited.",
+   "exercised": "Each part read in its test and the files run: the window from 90 days before the program’s end to 60 after, refused outside it; $470, or $2,250 with premium processing decided in thirty business days; decided 90 days on, twelve months from the later of the program’s end and the approval; ended on the 91st day without work with no grace; a pending application holding the status; the EAD read at the DMV. Played to the degree and applied for on Home. The ninety days broken in a copy are caught.",
+   "evidence": [
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.permission > PLAYER JOURNEY: Apply For OPT on Papers, refused before its window in its words, applied on 5 March 2029 for $470, decided 90 days on, valid twelve calendar months, said with both dates; status held past the degree’s sixty days; ended by its ninety days without work",
+     "kind": "player journey",
+     "proves": "The window, $470, decided 90 days on, twelve calendar months, status held past the sixty days, ended by ninety days without work"
+    },
+    {
+     "file": "tests/evidence-g16-papers.test.ts",
+     "title": "documents.permission > is refused in its words to a citizen, to a student who withdrew, to a life never on an F-1, and once its window has closed",
+     "kind": "player journey",
+     "proves": "Its refusals: a citizen, a withdrawal, never on an F-1, the window closed"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_opt > PLAYER JOURNEY: applied for 40 days into the grace, $470 leaves the bank, the pending application holds her status past the grace’s end, OPT runs a year from its approval 90 days on, and ends on its 91st day without work",
+     "kind": "player journey",
+     "proves": "A pending application holds the status past the grace; approved; ended on its 91st idle day, out of status"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_opt > PLAYER JOURNEY: the status’s ending, raised by the clock on the program’s last day, offers OPT standard then premium; taking the first files OPT at $470 with no premium, and answers it",
+     "kind": "player journey",
+     "proves": "Offered from the status’s ending, standard then premium"
+    },
+    {
+     "file": "tests/evidence2-b12.test.ts",
+     "title": "n-decision-us-status > Apply For OPT, Premium Processing pressed on Home on Friday 1 June 2029 pays $2,250, and is decided in thirty business days with Juneteenth and Independence Day not among them, on Tuesday 17 July",
+     "kind": "player journey",
+     "proves": "Premium: $2,250, thirty business days without the federal holidays"
+    },
+    {
+     "file": "tests/evidence2-b06.test.ts",
+     "title": "documents.permission > PLAYER JOURNEY: a student the clock graduates applies for OPT on Papers before Commencement; the degree moves the look at her status; decided 3 June, valid twelve calendar months, said with both dates; ended by ninety days without work",
+     "kind": "player journey",
+     "proves": "Played to the degree: decided 3 June, twelve months, ended by ninety days without work"
+    },
+    {
+     "file": "tests/evidence3-home.test.ts",
+     "title": "the graduate, played > n-decision-us-status: PLAYER JOURNEY: the played graduate’s F-1 is looked at by the clock on 31 May 2029, due 30 July; Apply For OPT pressed on Home on 1 June pays $470 and leaves a permit pending ninety days, to 30 August, which holds her status past 30 July and is approved for twelve months, across a reload",
+     "kind": "player journey",
+     "proves": "The played graduate applies on Home, the permit pending ninety days holds her status, approved for twelve months"
+    },
+    {
+     "file": "tests/permission.test.ts",
+     "title": "OPT > closes sixty days after the program ends",
+     "kind": "guard",
+     "proves": "The window’s close"
+    },
+    {
+     "file": "tests/permission.test.ts",
+     "title": "OPT > ends after more than ninety days in all without work",
+     "kind": "guard",
+     "proves": "The idle days"
+    },
+    {
+     "file": "tests/permission.test.ts",
+     "title": "a graduate’s US status, and its end > holds while OPT runs and 60 days after it, and not at all after OPT ended for time without work",
+     "kind": "guard",
+     "proves": "The status OPT holds, and none after an end for idle days"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard > GUARD: an Employment Authorization Document in force stands as the primary document without a passport (FIXTURE: an OPT permit put on by hand: no play brings OPT and a lost passport together before 2029)",
+     "kind": "guard",
+     "proves": "The EAD read at the DMV as a primary identity document"
+    },
+    {
+     "file": "tests/defects-g24-1.test.ts",
+     "title": "PLAYER JOURNEY: Connecticut’s ID card for a graduate on OPT > is refused for lawful presence to somebody with neither an F-1 nor a permit, and issued on a permit alone",
+     "kind": "guard",
+     "proves": "The EAD read as lawful presence at the DMV"
+    }
+   ],
+   "fixes": [],
+   "mutations": [
+    {
+     "what": "OPT’s ninety idle days read as a hundred (src/engine/content/workrules.ts)",
+     "caughtBy": "tests/permission.test.ts “OPT > ends after more than ninety days in all without work” and tests/evidence-g15-papers.test.ts “documents.apply_opt > PLAYER JOURNEY: applied for 40 days into the grace…”"
+    }
+   ],
+   "trace": [
+    "Player Action: Apply For OPT on Papers or Home’s decision sends documents.apply_opt; evidence-g16-papers, evidence2-b12, evidence3-home.",
+    "Preconditions: optRefusal (src/engine/systems/permission.ts): on an F-1, a program completed, the window, not applied; evidence-g16-papers.",
+    "State Read: the program’s end, the bank; evidence-g15-papers.",
+    "State Changed: a pending permit, $470 or $2,250 from the bank; evidence-g15-papers.",
+    "Immediate Outcome: the fee and its day said; the status’s ending answered; evidence-g15-papers, evidence-g16-papers.",
+    "Scheduled Consequences: decided (PERMISSION_KIND) 90 days or thirty business days on; each week counted idle (OPT_WEEK_KIND); the status look moved; evidence-g15-papers, permission.test.",
+    "Player Explanation: “OPT Approved” with both dates, Permission To Work’s lines; evidence-g15-papers, evidence-g16-papers.",
+    "Save/Load: pending and approved across a reload, charged once; evidence-g15-papers, evidence3-home."
+   ]
+  },
+  {
+   "id": "tax.s8.license",
+   "group": "Remaining Area: tax",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "A license held from before, identity only since the scope reset: drawn, read, lost and replaced, and run out with no renewal, verified as it stood with no gate test cited.",
+   "exercised": "Each part read in its test and the files run: drawn at creation from the birth state; read as photo ID by a new bank and by the DMV (“You hold a license here.”); lost, reported, a police report, replaced by mail or in person; run out in June 2028 with no renewal, its row saying a passport or an ID card replaces it, the bank refusing and the ID card taking its place. A license read past its date in a copy is caught.",
+   "evidence": [
+    {
+     "file": "tests/evidence-g27-ui.test.ts",
+     "title": "c-birthplace > PLAYER JOURNEY: gives a license from the birth state, California not Connecticut, and a Tokyo-born student a Japanese passport and an F-1 to 30 July 2029",
+     "kind": "player journey",
+     "proves": "Drawn at creation from the birth state, California not Connecticut"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.inventory > PLAYER JOURNEY: a New York-born student’s papers are her license alone: a new bank takes it until it runs out on 14 June 2028, and then turns her away, the state ID card on Papers the next step, which it then takes",
+     "kind": "player journey",
+     "proves": "Read by a new bank until it runs out, then the ID card the next step, taken"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_idcard > refuses a Connecticut-born student holding a Connecticut license: “You hold a license here. It serves as your ID.”",
+     "kind": "player journey",
+     "proves": "The DMV’s “You hold a license here. It serves as your ID.”"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.replace_license > PLAYER JOURNEY: a Connecticut-born student’s only photo ID, her license, lost and replaced for $30 in 30 days, its term and REAL ID kept; Citi takes it once it has come, and the DMV then refuses her an ID card",
+     "kind": "player journey",
+     "proves": "Lost and replaced in Connecticut, its term and REAL ID kept, read again by a bank"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.replace_license > replaces a New Yorker’s license by mail (MV-44): lost, $17.50 leaves the bank; stolen with the police’s report, nothing does; each comes in 21 days",
+     "kind": "player journey",
+     "proves": "Replaced by mail, free when stolen with the police’s report"
+    },
+    {
+     "file": "tests/coverage-gaps-papers.test.ts",
+     "title": "a license from home, lost in New Haven (JOURNEY: a New Yorker at Yale) > is replaced by mail, free when stolen with the police’s report, and not where its issuer sends none out of state",
+     "kind": "player journey",
+     "proves": "The same from home, and refused where its issuer sends none out of state"
+    },
+    {
+     "file": "tests/defects3-50-70.test.ts",
+     "title": "documents.replace_license > PLAYER JOURNEY: a license reported lost in force is refused a replacement once a new card would come after its date, and once the date has passed, in words on Papers and through the command, with nothing charged; a twin who asks in time is sent one in force",
+     "kind": "player journey",
+     "proves": "No replacement past its date"
+    },
+    {
+     "file": "tests/evidence2-b05.test.ts",
+     "title": "documents.report_lost > PLAYER JOURNEY: the New York license issued 14 June 2020 has run out by 15 June 2028: its row reads Run Out with no Report Lost…, and with the passport reported lost Citi turns her away, where a day before the run-out it opened her twin’s account",
+     "kind": "player journey",
+     "proves": "Run out: its row reads Run Out with no Report Lost, and a bank turns her away"
+    },
+    {
+     "file": "tests/remaining-09-journeys.test.ts",
+     "title": "journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, is in force at once, and the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out)",
+     "kind": "player journey",
+     "proves": "Run out mid-program: Papers says nothing renews it and what replaces it; the ID card applied for and the bank opened"
+    }
+   ],
+   "fixes": [],
+   "mutations": [
+    {
+     "what": "a license read as photo ID past its date (photoIdOf, src/engine/systems/documents.ts)",
+     "caughtBy": "tests/remaining-papers.test.ts “tax.s8.inventory > PLAYER JOURNEY: a New York-born student’s papers are her license alone…”"
+    }
+   ],
+   "trace": [
+    "Player Action: none to hold one (drawn at creation, startingDocuments); Report Lost…, File A Police Report and Replace It on Papers; evidence-g15-papers.",
+    "Preconditions: a US-born citizen’s license from the birth state; replacement where its issuer sends one, before its date; evidence-g15-papers, coverage-gaps-papers, defects3-50-70.",
+    "State Read: inForce (status and date), read by photoIdOf and the DMV (src/engine/systems/identity.ts); remaining-papers.",
+    "State Changed: lost or stolen, a replacement pending then issued; evidence-g15-papers.",
+    "Immediate Outcome: the fee and its day said, or refused in its words; evidence-g15-papers.",
+    "Scheduled Consequences: the replacement arrives in 21 or 30 days; run out on its date, a bank refuses; evidence-g16-papers, remaining-09-journeys.",
+    "Player Explanation: Papers’ row (Run Out, nothing renews it, a passport or an ID card in force is your photo ID); remaining-09-journeys.",
+    "Save/Load: reports and replacements across a save and a load; evidence-g15-papers, remaining-09-journeys."
+   ]
+  },
+  {
+   "id": "tax.s8.visas_authorizations",
+   "group": "Remaining Area: tax",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "Visas and travel authorizations, and Going Abroad, verified as they stood with no gate test cited; and that Going Abroad’s rule decides nothing, which no test held.",
+   "exercised": "Each part read in its test and the files run: no command applies for either since 2026-10-09; one pending in an older save is decided, and one held is shown as a reading; Going Abroad says the country would let you in, not that you may go. Added: a guard that Going Abroad says nothing is applied for there, and that only the screens read mayEnter; an engine reader added or the sentence removed in a copy fails it.",
+   "evidence": [
+    {
+     "file": "tests/visas.test.ts",
+     "title": "a visitor visa > isn’t applied for since travel went, and one pending from before is still decided",
+     "kind": "fixture",
+     "proves": "No apply_visa or apply_authorization command; a pending one from before decided"
+    },
+    {
+     "file": "tests/visas.test.ts",
+     "title": "a visitor visa > is what the US asks of a Mexican, issued by its consulate, and a visa held lets them in",
+     "kind": "fixture",
+     "proves": "A visa held read as the rule reads it"
+    },
+    {
+     "file": "tests/coverage-gaps-papers.test.ts",
+     "title": "compatibility paths (LEGACY STATE) > a visit booked before the travel went: kept, its document decided",
+     "kind": "fixture",
+     "proves": "A visit booked before the travel went: kept, its document decided"
+    },
+    {
+     "file": "tests/defects-g25-1.test.ts",
+     "title": "FIXTURE: a travel authorization held from before 2026-10-09 > would let you into its country: a reading, not a door",
+     "kind": "fixture",
+     "proves": "An authorization held from before shown as a reading"
+    },
+    {
+     "file": "tests/defects-g25-1.test.ts",
+     "title": "FIXTURE: a travel authorization held from before 2026-10-09 > on Papers, Going Abroad says the country would let you in, not that you may go",
+     "kind": "fixture",
+     "proves": "Going Abroad’s answer as a reading"
+    },
+    {
+     "file": "tests/defects-g25-1.test.ts",
+     "title": "FIXTURE: a travel authorization held from before 2026-10-09 > GUARD: Going Abroad says a visa or an authorization isn’t applied for here, and the rule it shows decides nothing: `mayEnter` is read by Papers and a document’s page alone, by no system of the engine (brief 11, tax.s8.visas_authorizations, 2026-10-17)",
+     "kind": "guard",
+     "proves": "Its sentence drawn, and mayEnter read by Papers and a document’s page alone"
+    }
+   ],
+   "fixes": [],
+   "mutations": [
+    {
+     "what": "a pending visa from before left undecided (DECIDED_KIND, src/engine/systems/documents.ts)",
+     "caughtBy": "tests/visas.test.ts “a visitor visa > isn’t applied for since travel went, and one pending from before is still decided”"
+    },
+    {
+     "what": "optRefusal made to read mayEnter (an engine reader of the rule)",
+     "caughtBy": "tests/defects-g25-1.test.ts the GUARD"
+    },
+    {
+     "what": "Going Abroad’s sentence that nothing is applied for removed (src/ui/papers/Documents.tsx)",
+     "caughtBy": "tests/defects-g25-1.test.ts the GUARD"
+    }
+   ],
+   "trace": [
+    "Player Action: Going Abroad’s Country select on Papers (src/ui/papers/Documents.tsx); no command applies for a visa or an authorization (registerDocuments); visas.test.",
+    "Preconditions: none; a visa or authorization held or pending only in an older save; visas.test, defects-g25-1.",
+    "State Read: mayEnter (src/engine/systems/documents.ts), read by the screens alone; defects-g25-1’s GUARD.",
+    "State Changed: none from Going Abroad; a pending one from before issued by DECIDED_KIND; visas.test.",
+    "Immediate Outcome: “It would let you in for a week’s visit.” or what it asks; defects-g25-1.",
+    "Scheduled Consequences: none; nothing travels since 2026-10-09.",
+    "Player Explanation: “There’s no travel in SLATE since 2026-10-09, so a visa or an authorization isn’t applied for here…”; defects-g25-1’s GUARD.",
+    "Save/Load: an older save’s pending visa decided after it opens; visas.test, coverage-gaps-papers."
+   ]
+  }
+ ],
+ "added": [
+  {
+   "id": "defect.yale-credit-hold",
+   "reason": "Brief 11, section 5, and the handoff’s open list: a credit that cleared a held Yale account left the hold. Reproduced on a played third year (tests/remaining-school.test.ts): $20,000.00 paid on $24,909.65 owed, a medical leave’s 25% tuition rebate clearing the rest, the hold kept over nothing owed, Pay refused, and the return a year on refused registration for it; and a term begun under the hold, its fee refunded and tuition rebated before classes, held the same way.",
+   "impact": "creditAccount reconciles the hold after every credit (src/engine/systems/leave.ts), lifting it only where nothing is owed, said once with what cleared it; a credit that leaves something owed keeps it; mustRegister and a degree waiting on an Incomplete are left as they stand. A save from before that kept such a hold has it lifted on opening (holdsOverNothing, every opening, src/engine/index.ts). No save schema or ruleset change. The guide’s Yale account entry says so (src/engine/content/guide/school.ts).",
+   "evidence": [
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "defect.yale-credit-hold: a credit that clears a held Yale account lifts the hold, and only that > DEFECT: owing $24,909.65 under the hold, she pays $20,000.00 and takes a medical leave (TEST SETUP: the flu); its quarter of the tuition rebated, $5,601.82, clears the $4,909.65 left and refunds $692.17: the hold lifts at noon on 4 October, said once, across a reload; Pay is refused with nothing owed, no late fee comes, and back for Fall Term 2030 she registers (until 2026-10-17 the hold stayed over nothing owed, and refused that registration)",
+     "kind": "player journey",
+     "proves": "The rebate clears the account: the hold lifts, said once with what cleared it, across a reload; Pay refused with nothing owed; no late fee; registration on the return taken (failed before the fix: the hold stayed)"
+    },
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "defect.yale-credit-hold: a credit that clears a held Yale account lifts the hold, and only that > PLAYER JOURNEY: her twin pays $15,000.00: the same $5,601.82 rebate leaves $4,307.83 owed, and the hold stands, nothing said; the month’s fees go on to the term’s $375.00, $4,557.83, and back for Fall Term 2030 the hold refuses registration until it’s paid, when it lifts, once, and she registers",
+     "kind": "player journey",
+     "proves": "A credit that leaves something owed keeps the hold; the fees go on to the cap; registration on the return refused until paid"
+    },
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "defect.yale-credit-hold: a credit that clears a held Yale account lifts the hold, and only that > PLAYER JOURNEY: Spring Term 2030 begun under the fall’s hold, $49,944.30 owed and registration asked; she pays the fall’s $25,159.65 and takes a medical leave before classes (TEST SETUP: the flu): its Yale Health fee refunded, $2,377.37, leaves the tuition owed and the hold stands; its tuition rebated in full, $22,407.28, clears it, and the hold lifts, said once in the rebate’s words, the registration the term asked for still asked, kept for her return: on the leave Standing draws no Register and the command is refused",
+     "kind": "player journey",
+     "proves": "The fee refunded leaves the tuition owed and the hold stands; the tuition rebated clears it and the hold lifts in the rebate’s words; registration kept for the return (failed before the fix: no lift)"
+    },
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "defect.yale-credit-hold: a credit that clears a held Yale account lifts the hold, and only that > FIXTURE: a save from before 2026-10-17 that kept the hold over nothing owed (TEST SETUP: the hold put back after the rebate cleared the account, as that build left it) has it lifted on opening, said once, and later openings say nothing; one over something owed keeps it",
+     "kind": "fixture",
+     "proves": "An older save’s hold over nothing owed lifted on opening, said once; one over something owed kept"
+    },
+    {
+     "file": "tests/leave.test.ts",
+     "title": "failing, repeating and disqualification > FIXTURE: a save from before 2026-10-17 whose diploma is held for a hold kept over nothing owed (TEST SETUP: the account cleared by a credit posted by hand, as that build’s credits left the hold) opens with the hold lifted and the MFA conferred, “Your Yale account cleared”; its twin with an Incomplete open has the hold lifted and the degree still waiting for it",
+     "kind": "fixture",
+     "proves": "The diploma held only by such a hold conferred on opening, “Your Yale account cleared”; with an Incomplete open, the hold lifted and the degree still waiting"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "creditAccount’s lift removed",
+     "caughtBy": "the DEFECT journey and the Spring Term 2030 journey"
+    },
+    {
+     "what": "liftHold’s nothing-owed condition removed",
+     "caughtBy": "all four of remaining-school’s, and tests/leave.test.ts “a last year failed waits thirty days for a repeat … lifts the hold paid”"
+    },
+    {
+     "what": "the opening’s reconcile (holdsOverNothing) removed",
+     "caughtBy": "both FIXTUREs"
+    },
+    {
+     "what": "the cleared degree’s words left as “Your Yale account paid”",
+     "caughtBy": "tests/leave.test.ts’s FIXTURE"
+    },
+    {
+     "what": "the lift’s refund clause removed",
+     "caughtBy": "the DEFECT journey"
+    }
+   ],
+   "commit": "421e952e"
+  },
+  {
+   "id": "defect.personality-year",
+   "reason": "Brief 11, section 5, and the handoff’s open list. Reproduced: of the six year-long cases in tests/personality.test.ts, five ran 365 steps on a living life, 364.69 to 364.98 days; “keeps somebody with nothing unusual about them at their ceiling on autopilot, at seventy and at eighty-one” ran seed p-old-year, whose draw of mortality ended both lives at 2:29 PM on 16 January 2026 (UTC, Reykjavik’s time), 11.29 days in, and read that stopped clock 365 times.",
+   "impact": "Each year runs until 365 days have passed and asserts the life alive on each day it reads; the seventy and eighty-one case runs seed p-old-year-3, chosen as the same nobody in particular whose draw ends neither life in the year (BMI 24.2 against 22.6, read only by the draw there). Measured on a year: nobody in particular 0.0 below the ceiling at both ages, so the bar holds as written; the comment’s light-sleeper figures (15.4, 4.7) kept in the past tense beside a year’s (0.1, 2.5). Mortality and tests/setup/ended-life.ts untouched; the death and ended-clock tests already held (tests/mortality.test.ts, tests/evidence-g04-life.test.ts, tests/remaining-09-journeys.test.ts).",
+   "evidence": [
+    {
+     "file": "tests/personality.test.ts",
+     "ran": "every test, 43 passed, exit 0 (the year-long cases asserting a year and a living life on each day read)"
+    },
+    {
+     "file": "tests/personality.test.ts",
+     "title": "no single trait or disposition wears a life down > keeps somebody with nothing unusual about them at their ceiling on autopilot, at seventy and at eighty-one",
+     "kind": "player journey",
+     "proves": "The seventy and eighty-one year on seed p-old-year-3, run 365.69 days, alive each day"
+    },
+    {
+     "file": "tests/mortality.test.ts",
+     "title": "a life in the game > ends, stops the clock for good, and keeps the ending through a save",
+     "kind": "player journey",
+     "proves": "A death, and its clock stopped across a save: the existing test of its own"
+    },
+    {
+     "file": "tests/evidence-g04-life.test.ts",
+     "title": "life.end > PLAYER JOURNEY: the student born in 1940 dies at 86 at the end her birthday drew, and the clock stops there",
+     "kind": "player journey",
+     "proves": "A death by the draw, the clock stopping there"
+    },
+    {
+     "file": "tests/remaining-09-journeys.test.ts",
+     "title": "journeys.f-ended-life-loops: a loop waiting for the clock once a life has ended > GUARD: jl-17’s life, ended by mortality’s draw at 9:58 PM on 11 January 2027, tended by this file’s own six-hour loop to the 20th fails at once naming the death (tests/setup/ended-life.ts), where it hung before; a single move of the clock still returns where it stopped",
+     "kind": "guard",
+     "proves": "An ended life’s clock: a loop waiting on it fails naming the death"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "aYearAlone back to 365 steps",
+     "caughtBy": "its year’s length: “expected 364.68748842592595 to be greater than or equal to 365”"
+    },
+    {
+     "what": "the seed back to p-old-year with the alive check removed and 365 steps (the test as it was)",
+     "caughtBy": "nothing: it passes, the defect itself; with the alive check it fails naming the death"
+    }
+   ],
+   "commit": "bfdbd2e6",
+   "reproduced": [
+    {
+     "case": "no single trait or disposition wears a life down > left on autopilot for a year, at twenty-five and at sixty",
+     "lives": 84,
+     "from": "2026-01-05T07:30Z",
+     "lastRead": "2027-01-04T23:59:59Z",
+     "days": 364.69,
+     "ended": "none"
+    },
+    {
+     "case": "no single trait or disposition wears a life down > skipped to the next morning every day for a year, at twenty-five and at sixty",
+     "lives": 84,
+     "from": "2026-01-05T07:30Z",
+     "lastRead": "2027-01-05T07:00Z",
+     "days": 364.98,
+     "ended": "none"
+    },
+    {
+     "case": "no single trait or disposition wears a life down > with a plan in the small hours every night, reached on a skip to the morning, for a year",
+     "lives": 8,
+     "from": "2026-01-05T07:30Z",
+     "lastRead": "2027-01-05T07:00Z",
+     "days": 364.98,
+     "ended": "none"
+    },
+    {
+     "case": "no single trait or disposition wears a life down > with a plan in the night’s first hour every night, on the way of a skip gone on from with Go, for a year",
+     "lives": 8,
+     "from": "2026-01-05T07:30Z",
+     "lastRead": "2027-01-05T01:30Z",
+     "days": 364.75,
+     "ended": "none"
+    },
+    {
+     "case": "no single trait or disposition wears a life down > keeps somebody with nothing unusual about them at their ceiling on autopilot, at seventy and at eighty-one",
+     "lives": 2,
+     "from": "2026-01-05T07:30Z",
+     "lastRead": "2026-01-16T14:29:06Z (the clock stopped; read 365 times)",
+     "days": 11.29,
+     "ended": "both, by the draw of mortality made at the start (aged 70 and 81)"
+    },
+    {
+     "case": "no single trait or disposition wears a life down > keeps the worst four with the worst sliders on their feet on autopilot, at twenty-five",
+     "lives": 3,
+     "from": "2026-01-05T07:30Z",
+     "lastRead": "2027-01-04T23:59:59Z",
+     "days": 364.69,
+     "ended": "none"
+    }
+   ],
+   "failingBefore": "With the assertions and seed p-old-year: “born 1955, no traits: the life ended 11.29 days in, at January 16, 2026 at 2:29 PM, aged 70”; with the loop back at 365 steps: “days from the year’s start: expected 364.68748842592595 to be greater than or equal to 365”."
+  },
+  {
+   "id": "defect.register-on-leave",
+   "reason": "Found on section 6’s journey (the Yale account’s holds and registration): a term begun under a hold asks for registration (mustRegister), and a leave from that term left Standing drawing “Register for Spring Term 2030: until you do, classes don’t count you and shifts can’t be worked.” with a Register button that, once the hold was paid or (now) credited, registered her for the term she was on leave from. Reachable before the credit fix by paying on the leave.",
+   "impact": "On a leave Standing draws no Register, and school.reregister is refused “You’re on leave: you register for the term you come back to, when it begins.”; mustRegister is kept, the return asking again as it did (returnFromLeave). The guide’s refusals list it. Fails before (the prompt drawn), passes after.",
+   "evidence": [
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "defect.yale-credit-hold: a credit that clears a held Yale account lifts the hold, and only that > PLAYER JOURNEY: Spring Term 2030 begun under the fall’s hold, $49,944.30 owed and registration asked; she pays the fall’s $25,159.65 and takes a medical leave before classes (TEST SETUP: the flu): its Yale Health fee refunded, $2,377.37, leaves the tuition owed and the hold stands; its tuition rebated in full, $22,407.28, clears it, and the hold lifts, said once in the rebate’s words, the registration the term asked for still asked, kept for her return: on the leave Standing draws no Register and the command is refused",
+     "kind": "player journey",
+     "proves": "On the leave, Standing draws no Register and the command is refused in its words; mustRegister kept (failed before the fix: the prompt drawn)"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "the on-leave refusal removed",
+     "caughtBy": "the Spring Term 2030 journey"
+    }
+   ],
+   "commit": "968d612f"
+  }
+ ],
+ "defectsFound": [
+  {
+   "what": "defect.yale-credit-hold: a credit clearing a held Yale account left the hold (fixed)",
+   "blocksCompletion": false
+  },
+  {
+   "what": "defect.personality-year: the seventy and eighty-one year ended 11.29 days in by mortality’s draw, and no year asserted its length or a living life (fixed)",
+   "blocksCompletion": false
+  },
+  {
+   "what": "defect.register-on-leave: Register drawn and taken on a leave from a term begun under a hold (fixed)",
+   "blocksCompletion": false
+  },
+  {
+   "what": "tests/setup/ended-life.ts’s comment names personality.test.ts’s aYearAlone, “whose 1955 life ends on 16 January 2026”, as a bounded loop on an ended life; from commit bfdbd2e6 that life doesn’t end and the loop asserts a living life, so the example is history. Not edited: brief 11’s journeys instructions say not to touch the file. The coordinator may put it in the past tense.",
+   "blocksCompletion": false
+  }
+ ],
+ "checks": [
+  {
+   "cmd": "npm run typecheck",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "npm run lint",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/doc-refs.mjs --check",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/tics.mjs --check",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/voice-check.mjs --check",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/spelling.mjs",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/typos.mjs",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/title-case.mjs --check",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/label-sweep.mjs",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/plural-check.mjs",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/wired.mjs --check",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/deciders.mjs --check",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/inventory.mjs --check",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/devmap.mjs --check",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/traceability.mjs",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/capabilities.mjs --check",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/coverage.mjs --check",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/student-matrix.mjs --check",
+   "exit": 0,
+   "on": "968d612f"
+  },
+  {
+   "cmd": "node tools/completion-matrix.mjs --check",
+   "exit": 1,
+   "on": "968d612f",
+   "note": "The matrix is the coordinator’s and isn’t rewritten here. Written on a scratch clone of this branch, it moves six rows measured on an earlier commit (F2-A, MA5, INT-skipped, INT-navigation, INT-long-runs, INT-gate) to Implemented, Verification Incomplete, because files they read changed (src/engine/systems/leave.ts, src/engine/index.ts, src/engine/content/guide/school.ts): measure them again on the tested commit. At 7572578b it exits 0."
+  },
+  {
+   "cmd": "node tools/traceability.mjs --write",
+   "exit": 0,
+   "on": "968d612f",
+   "note": "docs/TRACEABILITY.md written again for the new refusal and a test count, committed in 968d612f"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/personality.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "43 passed (43)",
+   "seconds": 83
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-papers.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "8 passed (8)",
+   "seconds": 13
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g25-1.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "6 passed (6)",
+   "seconds": 7
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-school.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "33 passed (33)",
+   "seconds": 42
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/leave.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "16 passed (16)",
+   "seconds": 13,
+   "note": "run with the register fix in the tree before it was committed; only docs/TRACEABILITY.md differs from 968d612f"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g25-school.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "20 passed (20)",
+   "seconds": 19,
+   "note": "run with the register fix in the tree before it was committed; only docs/TRACEABILITY.md differs from 968d612f"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g26-school.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "24 passed (24)",
+   "seconds": 31,
+   "note": "run with the register fix in the tree before it was committed; only docs/TRACEABILITY.md differs from 968d612f"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-school.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "8 passed (8)",
+   "seconds": 17,
+   "note": "run with the register fix in the tree before it was committed; only docs/TRACEABILITY.md differs from 968d612f"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "12 passed (12)",
+   "seconds": 9,
+   "note": "run with the register fix in the tree before it was committed; only docs/TRACEABILITY.md differs from 968d612f"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-09-journeys.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "22 passed (22)",
+   "seconds": 22,
+   "note": "run with the register fix in the tree before it was committed; only docs/TRACEABILITY.md differs from 968d612f"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g30-ui.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "29 passed (29)",
+   "seconds": 24,
+   "note": "run with the register fix in the tree before it was committed; only docs/TRACEABILITY.md differs from 968d612f"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence3-school.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "11 passed (11)",
+   "seconds": 14,
+   "note": "run with the register fix in the tree before it was committed; only docs/TRACEABILITY.md differs from 968d612f"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g8-3.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "6 passed (6)",
+   "seconds": 11,
+   "note": "run with the register fix in the tree before it was committed; only docs/TRACEABILITY.md differs from 968d612f"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g8-1.test.ts",
+   "exit": 0,
+   "on": "968d612f",
+   "tests": "8 passed (8)",
+   "seconds": 10,
+   "note": "run with the register fix in the tree before it was committed; only docs/TRACEABILITY.md differs from 968d612f"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b13.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "6 passed (6)",
+   "seconds": 12,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g03-life.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "25 passed (25)",
+   "seconds": 12,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence3-lifepapers.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "16 passed (16)",
+   "seconds": 10,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/need-paths.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "17 passed (17)",
+   "seconds": 11,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/scope-cover.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "8 passed (8)",
+   "seconds": 11,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-health-billing.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "7 passed (7)",
+   "seconds": 11,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-health-eligibility.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "11 passed (11)",
+   "seconds": 11,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/scope-health.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "15 passed (15)",
+   "seconds": 10,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g27-ui.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "23 passed (23)",
+   "seconds": 16,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/documents.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "9 passed (9)",
+   "seconds": 8,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g16-papers.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "26 passed (26)",
+   "seconds": 36,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b06.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "15 passed (15)",
+   "seconds": 26,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence3-home.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "38 passed (38)",
+   "seconds": 189,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b12.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "21 passed (21)",
+   "seconds": 20,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g15-papers.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "32 passed (32)",
+   "seconds": 15,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/papers-complete.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "9 passed (9)",
+   "seconds": 8,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-tax.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "20 passed (20)",
+   "seconds": 18,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g17-papers.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "22 passed (22)",
+   "seconds": 24,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/scope-taxpapers.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "17 passed (17)",
+   "seconds": 15,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/federal-tax-years.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "5 passed (5)",
+   "seconds": 9,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/permission.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "4 passed (4)",
+   "seconds": 7,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b05.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "18 passed (18)",
+   "seconds": 22,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/coverage-gaps-papers.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "11 passed (11)",
+   "seconds": 7,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/visas.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "2 passed (2)",
+   "seconds": 6,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g24-1.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "2 passed (2)",
+   "seconds": 6,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects3-50-70.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "7 passed (7)",
+   "seconds": 9,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/commands-kept.test.ts",
+   "exit": 0,
+   "on": "085e1f97",
+   "tests": "15 passed (15)",
+   "seconds": 6,
+   "note": "every file the rows cite; 968d612f changed only the registration refusal, Standing’s Register and the guide after it, and the files those reach (leave, evidence-g25-school, remaining-09-journeys, remaining-school, the guide’s) were run again on it"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/personality.test.ts",
+   "exit": 0,
+   "on": "bfdbd2e6",
+   "tests": "43 passed (43)"
+  }
+ ],
+ "forTheCoordinator": [
+  "docs/verification/audit/life.json health.enroll: its tests field and status are behind the tree; journeys-checks.json claims verified, the work arm at renewal unreachable in play and held on the FIXTURE.",
+  "docs/verification/audit/ui.json l-actor: its tests field says no test reaches the branch; tests/evidence2-b13.test.ts does (journeys-checks.json).",
+  "tax.s8.* items (docs/verification/remaining/tax-result.json cites no test): each row’s evidence here, by title.",
+  "tests/setup/ended-life.ts’s comment, as defectsFound says.",
+  "The handoff’s open list: the Yale credit hold and the personality year are fixed (journeys’ commits)."
+ ]
+}
