@@ -63,8 +63,8 @@ replaced (b) under clarification A1 (`clarifications.md`), mapped to the owner's
 still catch a system where restraint is effectively useless". L3-R.b and judge.together wait on the final measurement.
 
 The engine changes left measured rows stale: six with the Yale fix (F2-A, MA5 and four INT rows), and every judge
-criterion with the attributes' `material.ts`, 41 in all. They're measured again on the final commit. health.enroll and l-actor wait on a second reader's check
-before the audit moves them. `RECEIPT.md`, by `receipt.py`, has every row.
+criterion with the attributes' `material.ts`, 41 in all. They're measured again on the final commit. `RECEIPT.md`, by
+`receipt.py`, has every row.
 
 # Brief 10: The Approved Decisions, 2026-10-16
 
