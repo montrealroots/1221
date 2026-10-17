@@ -1,0 +1,407 @@
+[
+ {
+  "id": "h0",
+  "row": "both",
+  "what": "the control: no change (an edit that writes the same text back)",
+  "mustFail": "",
+  "clause": "none: the control, both ST6-R2 blocks",
+  "edits": [
+   {
+    "file": "src/engine/content/interpretation.ts",
+    "find": "export const GRAIN = { strength: 0.3,",
+    "replace": "export const GRAIN = { strength: 0.3,"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).length === 19 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.startsWith('ST6-R2')).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h1",
+  "row": "ST6-R2.c",
+  "what": "the grain removed (GRAIN.strength 0)",
+  "mustFail": "(c2.2)",
+  "clause": "ST6-R2.c (c2.2)",
+  "edits": [
+   {
+    "file": "src/engine/content/interpretation.ts",
+    "find": "export const GRAIN = { strength: 0.3,",
+    "replace": "export const GRAIN = { strength: 0,"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2.c and ST6-R2.e clarified",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.2)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.2)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h2",
+  "row": "ST6-R2.c",
+  "what": "the grain read backwards (a side against the scene made easier, one with it harder)",
+  "mustFail": "(c2.2)",
+  "clause": "ST6-R2.c (c2.2)",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "d: r2((had?.d ?? 0) - GRAIN.strength * x.s * k * ((lean - 1) / most))",
+    "replace": "d: r2((had?.d ?? 0) + GRAIN.strength * x.s * k * ((lean - 1) / most))"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2.c and ST6-R2.e clarified",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.2)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.2)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h3",
+  "row": "ST6-R2.c",
+  "what": "grainOf keeps the grain's share to a tenth (a coarser precision hiding the mechanic)",
+  "mustFail": "(c2.2)",
+  "clause": "ST6-R2.c (c2.2)",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "d: r2((had?.d ?? 0) - GRAIN.strength * x.s * k * ((lean - 1) / most))",
+    "replace": "d: Math.round(((had?.d ?? 0) - GRAIN.strength * x.s * k * ((lean - 1) / most)) * 10) / 10"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2.c and ST6-R2.e clarified",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.2)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.2)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h4",
+  "row": "ST6-R2.c",
+  "what": "grainOf keeps the grain's share at full precision (the documented hundredth gone)",
+  "mustFail": "(c2.2)",
+  "clause": "ST6-R2.c (c2.2)",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "d: r2((had?.d ?? 0) - GRAIN.strength * x.s * k * ((lean - 1) / most))",
+    "replace": "d: (had?.d ?? 0) - GRAIN.strength * x.s * k * ((lean - 1) / most)"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2.c and ST6-R2.e clarified",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.2)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.2)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h5",
+  "row": "ST6-R2.c",
+  "what": "the grain's floor removed (the difficulty a share leaves no longer held at GRAIN.floor − 1)",
+  "mustFail": "(c2.3)",
+  "clause": "ST6-R2.c (c2.3)",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "const diff = g ? Math.max(GRAIN.floor - 1, ctx.difficulty + g.d) : ctx.difficulty;",
+    "replace": "const diff = g ? ctx.difficulty + g.d : ctx.difficulty;"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2.c and ST6-R2.e clarified",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.3)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.3)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h6",
+  "row": "ST6-R2.c",
+  "what": "a side's suitability no longer held to −1..1",
+  "mustFail": "(c2.3)",
+  "clause": "ST6-R2.c (c2.3)",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "const s = r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));",
+    "replace": "const s = r2(signals.reduce((t, x) => t + x.v, 0) / 2);"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2.c and ST6-R2.e clarified",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.3)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.3)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h7",
+  "row": "ST6-R2.c",
+  "what": "the scene's circumstances not read (CIRCUMSTANCE_AFFINITY skipped)",
+  "mustFail": "(c2.1), (c2.3)",
+  "clause": "ST6-R2.c (c2.1), brief 12's (c2) test as written, and (c2.3)'s hold",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "if (level) push(CIRCUMSTANCE_AFFINITY[c].label",
+    "replace": "if (level && false) push(CIRCUMSTANCE_AFFINITY[c].label"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"FIXTURE: ST6-R2 (c2)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"FIXTURE: ST6-R2 (c2)\")).every((a) => a.status === 'passed') && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.3)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.3)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h8",
+  "row": "ST6-R2.c",
+  "what": "every ability read at the performer's strongest (a strength covering every weakness)",
+  "mustFail": "(c4.2), (c4.3)",
+  "clause": "ST6-R2.c (c4.2), (c4.3)",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "const level = (a: AbilityId) => (abilities[a] ??= performer.ability(a));",
+    "replace": "const level = (a: AbilityId) => (abilities[a] ??= Math.max(...(['emotionalDepth', 'presence', 'listening', 'imagination', 'focus', 'memory', 'adaptability', 'composure', 'vocal', 'physical', 'discipline', 'stamina'] as AbilityId[]).map((x) => performer.ability(x))));"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2.c and ST6-R2.e clarified",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c4.2)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c4.2)\")).every((a) => a.status === 'passed') && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c4.3)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c4.3)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h9",
+  "row": "ST6-R2.c",
+  "what": "vocal read on every taped brief's believability, outside the context the map reads (a hidden dependency)",
+  "mustFail": "(c4.1)",
+  "clause": "ST6-R2.c (c4.1)",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "const spec = specWith(base, ctx.inputs?.[d], ctx.extraPrep?.[d]);",
+    "replace": "const spec = specWith(base, [...(ctx.inputs?.[d] ?? []), ...((ctx.task.id === 'tape' || ctx.task.id === 'tapeOnFeet') && d === 'believability' ? [{ ability: 'vocal' as AbilityId, weight: 0.5 }] : [])], ctx.extraPrep?.[d]);"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2.c and ST6-R2.e clarified",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c4.1)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c4.1)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h10",
+  "row": "ST6-R2.c",
+  "what": "listening not read by the judge (read at 50 whatever its level)",
+  "mustFail": "(c4.1), (c4.3)",
+  "clause": "ST6-R2.c (c4.1), (c4.3)",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "n: clamp(level(input.ability) / full(input.ability), 0, 1) });",
+    "replace": "n: input.ability === 'listening' ? 0.5 : clamp(level(input.ability) / full(input.ability), 0, 1) });"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2.c and ST6-R2.e clarified",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c4.1)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c4.1)\")).every((a) => a.status === 'passed') && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c4.3)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c4.3)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h11",
+  "row": "ST6-R2.e",
+  "what": "restraint's draws removed (APPROACH_EFFECT.restrained.inputs empty)",
+  "mustFail": "(e2′)",
+  "clause": "ST6-R2.e (e2′)",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: {} },"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2.c and ST6-R2.e clarified",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(e2\\u2032)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(e2\\u2032)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h12",
+  "row": "ST6-R2.e",
+  "what": "size's draws removed (APPROACH_EFFECT.expansive.inputs empty)",
+  "mustFail": "(e3′)",
+  "clause": "ST6-R2.e (e3′)",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { connection: [{ ability: 'presence', weight: 1 }], execution: [{ ability: 'vocal', weight: 0.5 }, { ability: 'physical', weight: 0.5 }] } },",
+    "replace": "inputs: {} },"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2.c and ST6-R2.e clarified",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(e3\\u2032)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(e3\\u2032)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h13",
+  "row": "ST6-R2.e",
+  "what": "emotional depth, composure and focus read at 50 whatever their level",
+  "mustFail": "(e2.3), which isn't asserted; recorded with what caught it",
+  "clause": "ST6-R2.e, the guard, and ST6-R2.c (c4.1)",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "n: clamp(level(input.ability) / full(input.ability), 0, 1) });",
+    "replace": "n: ['emotionalDepth', 'composure', 'focus'].includes(input.ability) ? 0.5 : clamp(level(input.ability) / full(input.ability), 0, 1) });"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2.c and ST6-R2.e clarified",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"GUARD: ST6-R2.e\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"GUARD: ST6-R2.e\")).every((a) => a.status === 'passed') && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c4.1)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c4.1)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ },
+ {
+  "id": "h14",
+  "row": "ST6-R2.e",
+  "what": "restrained suitability forced to its least on every material",
+  "mustFail": "(e1), (c2.2)",
+  "clause": "ST6-R2.e (e1), brief 12's test as written, and ST6-R2.c (c2.2)",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "const s = r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));",
+    "replace": "const s = side === 'restrained' ? -1 : r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));"
+   }
+  ],
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "-t",
+   "ST6-R2",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"FIXTURE: ST6-R2 (e1) to (e3)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"FIXTURE: ST6-R2 (e1) to (e3)\")).every((a) => a.status === 'passed') && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.2)\")).length > 0 && o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.fullName.includes(\"(c2.2)\")).every((a) => a.status === 'passed')",
+  "figure": "o.testResults.flatMap((f) => f.assertionResults).filter((a) => a.status !== 'passed').map((a) => a.fullName)"
+ }
+]
