@@ -478,7 +478,7 @@ describe('F2-A10 (f) and (h), as clarified (brief 11)', () => {
 /** Signed to four places, as the advice says a part of a change. */
 const signed4 = (x: number) => `${x >= 0 ? '+' : '−'}${Math.abs(x).toFixed(4)}`;
 /** Every part of a change whose input the save shows didn't move is exactly 0 (H3): its own level, discipline, the work, the genres. */
-function zeroWhereUnmoved(sim: Simulation, id: string, note: { state?: { levels: Record<string, number>; genres: Record<string, number>; key?: string } }, parts: Record<string, number>, what: string) {
+function zeroWhereUnmoved(sim: Simulation, id: string, note: { state?: { levels: Record<string, number>; genreKnowledge: Record<string, number>; key?: string } }, parts: Record<string, number>, what: string) {
   const s = note.state!;
   if (s.levels[id] === levelOf(sim, sim.player, id as never)) expect(parts.own, `${what}: own`).toBe(0);
   if (s.levels.discipline === abilityOf(sim, sim.player, 'discipline')) expect(parts.discipline, `${what}: discipline`).toBe(0);
@@ -503,7 +503,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     const byRecords = assumedByRecords(sim);
     expect(byRecords.prepared).toEqual([cold.what]);
     const a = assumedOf(sim.player)!;
-    expect({ pieces: a.pieces, complete: a.complete, short: a.short, prepared: a.prepared.map((x) => x.what), genres: a.genres, genreShort: a.genreShort, genreBetter: a.genreBetter }).toEqual(byRecords);
+    expect({ pieces: a.pieces, complete: a.complete, short: a.short, prepared: a.prepared.map((x) => x.what), genreCount: a.genreCount, genreShort: a.genreShort, genreBetter: a.genreBetter }).toEqual(byRecords);
     // F4: read exactly as said. Every input's forecast is the one worked from the records with that take alone as
     // prepared, and with it as taped the first-named's figure is the one said.
     for (const [k, f] of trainingForecast(sim, sim.player)) expect(Math.abs(exact(f) - forecastByRecords(sim, k)), k).toBeLessThan(1e-9);
@@ -514,7 +514,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     expect(first.assumes).toContain(`What it assumes of your last ${byRecords.pieces} pieces: `);
     expect(first.assumes).toContain(`In ${cold.what}, the breakdown and your reading stood at 0%, the lines at 0% and rehearsal on your feet at 0% of what completes them.`);
     expect(first.assumes).toContain(`That piece is read as if its own preparation were complete, since that held it back most: read as taped, ${ADVICE.sessions} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} a piece, not ${exact(first.forecast).toFixed(2)}.`);
-    expect(first.assumes).toContain(`Each genre is read as you know it today: of the ${byRecords.genres} pieces’ genres, ${byRecords.genreShort} are short of complete and ${byRecords.genreBetter} known better than when taped.`);
+    expect(first.assumes).toContain(`Each genre is read as you know it today: of the ${byRecords.genreCount} pieces’ genres, ${byRecords.genreShort} are short of complete and ${byRecords.genreBetter} known better than when taped.`);
     // F1: what completing that preparation would bring, the judge's replay worked from the records, said apart.
     const prep = preparationByRecords(sim);
     expect(prep).toBeGreaterThan(0.05);
@@ -550,7 +550,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     expect(fullAtTake.inputs.prep.genre).toBe(1);
     const ka = assumedOf(known.player)!;
     expect(ka.genreBetter).toBe(assumedByRecords(known).genreBetter);
-    expect(ka.genreBetter).toBeLessThan(ka.genres);
+    expect(ka.genreBetter).toBeLessThan(ka.genreCount);
   }, 240_000);
 
   it('PLAYER JOURNEY: says whether preparation, training or both deserve attention, from what the judge’s replay gives each, and the verdict follows the figures when one side is changed', () => {
@@ -559,11 +559,11 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     const att = attentionOf(sim, sim.player, first)!;
     const byRecords = attentionByRecords(sim, exact(first.forecast));
     expect(Math.abs(att.own - byRecords.own)).toBeLessThan(1e-9);
-    expect(Math.abs(att.genres - byRecords.genres)).toBeLessThan(1e-9);
+    expect(Math.abs(att.genre - byRecords.genre)).toBeLessThan(1e-9);
     expect(att.verdict).toBe(byRecords.verdict);
     // Played, not assumed: a take taped cold and genres short, and training worth more than a tenth: both.
     expect(att.verdict).toBe('both');
-    const prepWords = `coming to your recent work fully prepared would have brought it about ${att.preparation.toFixed(2)} a piece as you are now (${att.own.toFixed(2)} from each piece’s own preparation, ${att.genres.toFixed(2)} from knowing its genre in full)`;
+    const prepWords = `coming to your recent work fully prepared would have brought it about ${att.preparation.toFixed(2)} a piece as you are now (${att.own.toFixed(2)} from each piece’s own preparation, ${att.genre.toFixed(2)} from knowing its genre in full)`;
     expect(first.attention).toContain(prepWords);
     expect(first.attention).toContain(`${ADVICE.sessions} hours of ${first.label.toLowerCase()} would bring about ${exact(first.forecast).toFixed(2)}`);
     expect(first.attention!.startsWith(att.preparation > exact(first.forecast) ? 'Both preparation and training deserve attention, preparation most: ' : 'Both training and preparation deserve attention, training most: ')).toBe(true);
@@ -618,7 +618,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     const ch = forecastChange(copy, copy.player, id, was.last)!;
     expect(Math.abs(ch.residual)).toBeLessThan(1e-9);
     expect(ch.parts.work).toBe(0);
-    expect(ch.parts.genres).toBe(0);
+    expect(ch.parts.genre).toBe(0);
     expect(ch.parts.own).toBeLessThan(0);
     expect(ch.parts.discipline).toBeGreaterThan(0);
     expect(Math.abs(Object.values(ch.parts).reduce((t, x) => t + x, 0) - (now - was.last.forecast))).toBeLessThan(1e-12);
@@ -650,8 +650,8 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     const ch0 = forecastChange(sim, sim.player, first0.target, was0.first)!;
     expect(Math.abs(ch0.residual)).toBeLessThan(1e-9);
     zeroWhereUnmoved(sim, first0.target, was0.first, ch0.parts, 'as built');
-    expect(ch0.parts.work + ch0.parts.genres).toBeGreaterThan(0);
-    expect(first0.standing).toContain(`What moved its forecast since it was first given: ${PART_WORDS.work}, ${signed4(ch0.parts.work)}; ${PART_WORDS.genres}, ${signed4(ch0.parts.genres)}`);
+    expect(ch0.parts.work + ch0.parts.genre).toBeGreaterThan(0);
+    expect(first0.standing).toContain(`What moved its forecast since it was first given: ${PART_WORDS.work}, ${signed4(ch0.parts.work)}; ${PART_WORDS.genre}, ${signed4(ch0.parts.genre)}`);
     for (let week = 0; week < 3; week += 1) {
       for (const day of [2, 5]) { sim.advanceTo(sim.now + (day === 2 ? 2 : 3) * MS_DAY); tapeNew(sim); }
       sim.advanceTo(sim.now + 2 * MS_DAY);
@@ -689,7 +689,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     const ch = forecastChange(some, some.player, id, was.last)!;
     expect(Math.abs(ch.residual)).toBeLessThan(1e-9);
     expect(ch.parts.work).toBe(0);
-    expect(ch.parts.genres).toBe(0);
+    expect(ch.parts.genre).toBe(0);
     expect(ch.parts.own).not.toBe(0);
     expect(ch.parts.discipline).not.toBe(0);
     const recs = adviceFor(some, some.player);
@@ -706,7 +706,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     const chA = forecastChange(alt, alt.player, id, wasA.last)!;
     expect(Math.abs(chA.residual)).toBeLessThan(1e-9);
     expect(chA.parts.work).toBe(0);
-    expect(chA.parts.genres).toBe(0);
+    expect(chA.parts.genre).toBe(0);
     // Played, not assumed: its level didn't move, so its own part is nothing, and the other input's hours are.
     expect(lv(alt)).toBe(lv(sim));
     expect(chA.parts.own).toBe(0);
@@ -742,10 +742,10 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     // Played, not assumed: the microphone's pieces moved the forecast through the work and the genres, each said.
     const since = changes.find((x) => x.since === 'first')!;
     expect(since.parts!.work).not.toBe(0);
-    expect(since.parts!.genres).not.toBe(0);
+    expect(since.parts!.genre).not.toBe(0);
     zeroWhereUnmoved(sim, was.target, was.first, since.parts!, 'since it was first given');
     const first = recs.find((r) => r.forecast)!;
-    expect(first.standing).toContain(`${PART_WORDS.genres}, ${signed4(since.parts!.genres!)}`);
+    expect(first.standing).toContain(`${PART_WORDS.genre}, ${signed4(since.parts!.genre!)}`);
     expect(first.assumes).toContain(`What it assumes of your last ${readWork(sim).length} pieces: `);
     expect(profileText(sim)).toContain(first.standing!);
     const again = clone(sim);

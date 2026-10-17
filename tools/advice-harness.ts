@@ -347,14 +347,14 @@ const judged = (w: WorkRecord, p: ReturnType<typeof performerOf>): number => { c
 const weighted = (xs: readonly number[]): number => { const n = xs.length; const W = xs.reduce((t, _x, i) => t + (i + 1) / n, 0); return xs.reduce((t, x, i) => t + (x * (i + 1)) / n, 0) / (W || 1); };
 
 /** F2 and F4, from the records: what the forecast should say it assumes. */
-export function assumedByRecords(sim: Simulation): { pieces: number; complete: number; short: number; prepared: string[]; genres: number; genreShort: number; genreBetter: number } {
+export function assumedByRecords(sim: Simulation): { pieces: number; complete: number; short: number; prepared: string[]; genreCount: number; genreShort: number; genreBetter: number } {
   const work = readWork(sim);
   const today = work.map(genreToday(sim));
   const complete = (w: WorkRecord) => Object.entries(w.inputs.prep).every(([k, x]) => k === 'genre' || x >= (w.inputs.required[k] ?? 1));
   const prepared = work.filter(heldOwn);
   const done = work.filter((w) => !heldOwn(w) && complete(w)).length;
   const g = work.map((w, i) => ({ was: w.inputs.prep.genre, now: today[i]!.inputs.prep.genre, need: w.inputs.required.genre ?? 1 })).filter((x) => x.was !== undefined);
-  return { pieces: work.length, complete: done, short: work.length - done - prepared.length, prepared: prepared.map((w) => w.what), genres: g.length, genreShort: g.filter((x) => x.now! < x.need).length, genreBetter: g.filter((x) => x.now! > x.was! + 1e-12).length };
+  return { pieces: work.length, complete: done, short: work.length - done - prepared.length, prepared: prepared.map((w) => w.what), genreCount: g.length, genreShort: g.filter((x) => x.now! < x.need).length, genreBetter: g.filter((x) => x.now! > x.was! + 1e-12).length };
 }
 
 /** F1 and F4, from the records: what completing the own preparation of the pieces it held back most would bring, as you are now. */
@@ -364,14 +364,14 @@ export function preparationByRecords(sim: Simulation): number {
 }
 
 /** F5, from the records: each piece's own preparation complete, then its genre known in full, against it as taped, as you are now. */
-export function attentionByRecords(sim: Simulation, training: number | undefined): { own: number; genres: number; verdict: 'both' | 'preparation' | 'training' | 'neither' } {
+export function attentionByRecords(sim: Simulation, training: number | undefined): { own: number; genre: number; verdict: 'both' | 'preparation' | 'training' | 'neither' } {
   const me = performerOf(sim, sim.player);
   const work = readWork(sim).map(genreToday(sim));
   const own = weighted(work.map((w) => judged(preparedCopy(w), me) - judged(w, me)));
-  const genres = weighted(work.map((w) => { const p = preparedCopy(w); return p.inputs.prep.genre === undefined ? 0 : judged({ ...p, inputs: { ...p.inputs, prep: { ...p.inputs.prep, genre: Math.max(p.inputs.prep.genre, w.inputs.required.genre ?? 1) } } }, me) - judged(p, me); }));
-  const p = own + genres >= 0.1;
+  const genre = weighted(work.map((w) => { const p = preparedCopy(w); return p.inputs.prep.genre === undefined ? 0 : judged({ ...p, inputs: { ...p.inputs, prep: { ...p.inputs.prep, genre: Math.max(p.inputs.prep.genre, w.inputs.required.genre ?? 1) } } }, me) - judged(p, me); }));
+  const p = own + genre >= 0.1;
   const t = training !== undefined && training >= 0.1;
-  return { own, genres, verdict: p && t ? 'both' : p ? 'preparation' : t ? 'training' : 'neither' };
+  return { own, genre, verdict: p && t ? 'both' : p ? 'preparation' : t ? 'training' : 'neither' };
 }
 
 /**
@@ -418,7 +418,7 @@ export function growthLadder(sim: Simulation, id: string): { rungs: number[]; gr
 const r1 = (x: number) => Math.round(x * 10) / 10;
 const signed4 = (x: number) => `${x >= 0 ? '+' : '−'}${Math.abs(x).toFixed(4)}`;
 /** What each part of a change is said as, read here apart from the advice's own table: a test fails if either moves. */
-export const PART_WORDS: Readonly<Record<string, string>> = { work: 'the work it reads', genres: 'how well you know its genres', others: 'your other abilities and techniques', own: 'its own level', discipline: 'discipline' };
+export const PART_WORDS: Readonly<Record<string, string>> = { work: 'the work it reads', genre: 'how well you know its genres', others: 'your other abilities and techniques', own: 'its own level', discipline: 'discipline' };
 
 /**
  * S1 to S3 (advice-criteria.md): a read of the advice against a fresh forecast of the same save opened anew. Returns each

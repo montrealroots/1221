@@ -228,21 +228,23 @@ const scratchOf = (person: Person): Person => ({ ...person, ...(person.attrs ? {
  * known at all), and the latest piece of work, by its key. Everything a forecast reads but the records themselves, which
  * stay in the save.
  */
-export interface ForecastState { levels: Record<string, number>; staminaFull: number; genres: Record<string, number>; key?: string }
+// Its genre knowledge is `genreKnowledge`, not `genres`, which on a person is the genres they love and only enjoyment
+// reads (tests/cohesion.test.ts).
+export interface ForecastState { levels: Record<string, number>; staminaFull: number; genreKnowledge: Record<string, number>; key?: string }
 
 /** The inputs a state keeps: every ability and every technique. */
 const STATE_INPUTS: readonly string[] = [...ABILITY_DEFS.map((d) => d.id), ...TECHNIQUES];
 
 export function stateOf(sim: Simulation, person: Person): ForecastState {
-  const genres: Record<string, number> = {};
-  for (const [g, x] of Object.entries(person.engagement?.byGenre ?? {})) { const v = Math.max(x.familiarity ?? 0, x.practice ?? 0); if (v > 0) genres[g] = v; }
+  const genreKnowledge: Record<string, number> = {};
+  for (const [g, x] of Object.entries(person.engagement?.byGenre ?? {})) { const v = Math.max(x.familiarity ?? 0, x.practice ?? 0); if (v > 0) genreKnowledge[g] = v; }
   const key = [...(person.work ?? [])].sort((a, b) => a.at - b.at).at(-1)?.inputs.key;
-  return { levels: Object.fromEntries(STATE_INPUTS.map((id) => [id, levelOf(sim, person, id as AbilityId | Skill)])), staminaFull: abilityFull(sim, person, 'stamina'), genres, ...(key ? { key } : {}) };
+  return { levels: Object.fromEntries(STATE_INPUTS.map((id) => [id, levelOf(sim, person, id as AbilityId | Skill)])), staminaFull: abilityFull(sim, person, 'stamina'), genreKnowledge, ...(key ? { key } : {}) };
 }
 
 /** What a change in a forecast is made of, one input at a time from the noted state to now (from brief 12). */
-export type ChangePart = 'work' | 'genres' | 'others' | 'own' | 'discipline';
-export const CHANGE_ORDER: readonly ChangePart[] = ['work', 'genres', 'others', 'own', 'discipline'];
+export type ChangePart = 'work' | 'genre' | 'others' | 'own' | 'discipline';
+export const CHANGE_ORDER: readonly ChangePart[] = ['work', 'genre', 'others', 'own', 'discipline'];
 
 /**
  * One input's forecast with the parts named in `now` as they are, and the rest as the state kept them (from brief 12): a
@@ -263,7 +265,7 @@ function forecastAs(sim: Simulation, person: Person, id: string, s: ForecastStat
   if (!now.has('work') && upTo < 0) return undefined;
   const work = now.has('work') ? sorted : sorted.slice(0, upTo + 1);
   // Knowing each genre as kept: a person whose engagement is the kept one, so `genreKnown` reads it as it read it then.
-  const known: Person = now.has('genres') ? p : { ...p, engagement: { byGenre: Object.fromEntries(Object.entries(s.genres).map(([g, v]) => [g, { familiarity: v, practice: v }])) } };
+  const known: Person = now.has('genre') ? p : { ...p, engagement: { byGenre: Object.fromEntries(Object.entries(s.genreKnowledge).map(([g, v]) => [g, { familiarity: v, practice: v }])) } };
   const f = forecastIn(sim, p, at, work.map(genreNow(known)), [id]).get(id);
   return f ? f.exact ?? f.points : undefined;
 }
@@ -305,7 +307,7 @@ export interface Assumed {
   complete: number;
   short: number;
   prepared: { what: string; key: string; task: string; parts: { part: string; share: number }[] }[];
-  genres: number;
+  genreCount: number;
   genreShort: number;
   genreBetter: number;
 }
@@ -317,31 +319,31 @@ export function assumedOf(person: Person): Assumed | undefined {
   const prepared = kept.filter(heldByPreparation).map((w) => ({ what: w.what, key: w.inputs.key, task: w.task, parts: own(w).filter((x) => x.share < 1) }));
   const complete = kept.filter((w) => !heldByPreparation(w) && own(w).every((x) => x.share >= 1)).length;
   const withGenre = kept.map((w, i) => ({ was: w.inputs.prep.genre, now: today[i]!.inputs.prep.genre, need: w.inputs.required.genre ?? 1 })).filter((x) => x.was !== undefined && x.now !== undefined);
-  return { pieces: kept.length, complete, short: kept.length - complete - prepared.length, prepared, genres: withGenre.length, genreShort: withGenre.filter((x) => x.now! < x.need).length, genreBetter: withGenre.filter((x) => x.now! > x.was! + 1e-12).length };
+  return { pieces: kept.length, complete, short: kept.length - complete - prepared.length, prepared, genreCount: withGenre.length, genreShort: withGenre.filter((x) => x.now! < x.need).length, genreBetter: withGenre.filter((x) => x.now! > x.was! + 1e-12).length };
 }
 
 /**
  * What preparation would bring the recent work, as you are now (from brief 12; advice-criteria.md, F5): each piece with its
- * own preparation complete against it as taped (`own`), and then its genre known in full beside that (`genres`), each
+ * own preparation complete against it as taped (`own`), and then its genre known in full beside that (`genre`), each
  * piece's genre read as known today, weighted to the latest as a forecast is. In points a piece, as training's forecast is.
  */
-export function preparationWorth(sim: Simulation, person: Person): { own: number; genres: number } | undefined {
+export function preparationWorth(sim: Simulation, person: Person): { own: number; genre: number } | undefined {
   const latest = forecastWork(person.work ?? []).map(genreNow(person));
   if (!latest.length) return undefined;
   const me = performerFor(sim, person);
   const exact = (w: WorkRecord) => { const e = replayAs(w, TASK_PROFILES[w.task]!, me); return e ? e.exact ?? e.overall : undefined; };
   const W = latest.reduce((t, _w, i) => t + (i + 1) / latest.length, 0);
   let own = 0;
-  let genres = 0;
+  let genre = 0;
   latest.forEach((w, i) => {
     const prepared = asPrepared(w);
     const known = prepared.inputs.prep.genre === undefined ? prepared : { ...prepared, inputs: { ...prepared.inputs, prep: { ...prepared.inputs.prep, genre: Math.max(prepared.inputs.prep.genre, w.inputs.required.genre ?? 1) } } };
     const [a, b, c] = [exact(w), exact(prepared), exact(known)];
     if (a === undefined || b === undefined || c === undefined) return;
     own += ((b - a) * (i + 1)) / latest.length / W;
-    genres += ((c - b) * (i + 1)) / latest.length / W;
+    genre += ((c - b) * (i + 1)) / latest.length / W;
   });
-  return { own, genres };
+  return { own, genre };
 }
 
 /** What an input's hours bring it to, and discipline with it: the engine's (`trained`), or with no save the curve alone (`levelAfter`). */

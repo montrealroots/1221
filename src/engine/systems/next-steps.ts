@@ -178,7 +178,7 @@ function standingOf(sim: Simulation, person: Person, was: Advised, first: Recomm
 }
 
 /** What each part of a forecast's change is said as (from brief 12; `forecastChange`, `CHANGE_ORDER`). */
-const PART_SAID: Readonly<Record<ChangePart, string>> = { work: 'the work it reads', genres: 'how well you know its genres', others: 'your other abilities and techniques', own: 'its own level', discipline: 'discipline' };
+const PART_SAID: Readonly<Record<ChangePart, string>> = { work: 'the work it reads', genre: 'how well you know its genres', others: 'your other abilities and techniques', own: 'its own level', discipline: 'discipline' };
 
 /**
  * A forecast's change said in parts (from brief 12; advice-criteria.md, H4): each part that shows at four places, by
@@ -215,7 +215,7 @@ function assumesOf(sim: Simulation, person: Person, first: Recommendation): stri
     const taped = exactOf(trainingForecast(sim, person, person.work ?? [], [first.target], true).get(first.target));
     out.push(`${a.prepared.length === 1 ? 'That piece is' : 'Those pieces are'} read as if ${a.prepared.length === 1 ? 'its' : 'their'} own preparation were complete, since that held ${a.prepared.length === 1 ? 'it' : 'each'} back most${taped !== undefined ? `: read as taped, ${first.forecast!.hours} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} a piece, not ${exactOf(first.forecast)!.toFixed(2)}` : ''}.`);
   }
-  out.push(a.genres ? `Each genre is read as you know it today: of the ${a.genres === 1 ? 'piece’s genre' : `${a.genres} pieces’ genres`}, ${a.genreShort} ${a.genreShort === 1 ? 'is' : 'are'} short of complete and ${a.genreBetter} known better than when taped.` : 'None of them reads knowing a genre.');
+  out.push(a.genreCount ? `Each genre is read as you know it today: of the ${a.genreCount === 1 ? 'piece’s genre' : `${a.genreCount} pieces’ genres`}, ${a.genreShort} ${a.genreShort === 1 ? 'is' : 'are'} short of complete and ${a.genreBetter} known better than when taped.` : 'None of them reads knowing a genre.');
   return out.join(' ');
 }
 
@@ -225,11 +225,11 @@ function assumesOf(sim: Simulation, person: Person, first: Recommendation): stri
  * piece's own preparation complete, then its genre known in full, against each as taped with its genre as known today.
  * Training's: the first training recommendation's forecast. Each deserves attention at the advice's floor, a tenth.
  */
-export interface Attention { own: number; genres: number; preparation: number; training?: number; target?: string; verdict: 'both' | 'preparation' | 'training' | 'neither' }
+export interface Attention { own: number; genre: number; preparation: number; training?: number; target?: string; verdict: 'both' | 'preparation' | 'training' | 'neither' }
 export function attentionOf(sim: Simulation, person: Person, first?: Recommendation): Attention | undefined {
   const w = preparationWorth(sim, person);
   if (!w) return undefined;
-  const preparation = w.own + w.genres;
+  const preparation = w.own + w.genre;
   const training = first ? exactOf(first.forecast) : undefined;
   const p = preparation >= ADVICE_FLOOR;
   const t = training !== undefined && training >= ADVICE_FLOOR;
@@ -240,7 +240,7 @@ export function attentionOf(sim: Simulation, person: Person, first?: Recommendat
 function attentionSaid(a: Attention | undefined, first?: Recommendation): string | undefined {
   if (!a) return undefined;
   const n2 = (x: number) => x.toFixed(2);
-  const prep = `coming to your recent work fully prepared would have brought it about ${n2(a.preparation)} a piece as you are now (${n2(a.own)} from each piece’s own preparation, ${n2(a.genres)} from knowing its genre in full)`;
+  const prep = `coming to your recent work fully prepared would have brought it about ${n2(a.preparation)} a piece as you are now (${n2(a.own)} from each piece’s own preparation, ${n2(a.genre)} from knowing its genre in full)`;
   const train = first && a.training !== undefined ? `${first.forecast!.hours} hours of ${first.label.toLowerCase()} would bring about ${n2(a.training)}` : undefined;
   switch (a.verdict) {
     case 'both': return a.preparation > a.training! ? `Both preparation and training deserve attention, preparation most: ${prep}; and ${train}.` : `Both training and preparation deserve attention, training most: ${train} a piece; and ${prep}.`;

@@ -135,7 +135,7 @@ function measure(spec: CaseSpec) {
         stayed: firstAfter === id, leads, changedWhereLed: !leads || firstAfter !== id,
         rose: after !== undefined && pointsOf(after)! > before + 1e-12,
         noted: was?.target === id, change: sinceSessions ? { residual: sinceSessions.residual, parts: Object.fromEntries(Object.entries(sinceSessions.parts).map(([k, v]) => [k, Math.round(v * 1e6) / 1e6])) } : null,
-        attributed: after === undefined || (sinceSessions !== undefined && Math.abs(sinceSessions.residual) < 1e-9 && Math.abs(sinceSessions.parts.work) < 1e-12 && Math.abs(sinceSessions.parts.genres) < 1e-12),
+        attributed: after === undefined || (sinceSessions !== undefined && Math.abs(sinceSessions.residual) < 1e-9 && Math.abs(sinceSessions.parts.work) < 1e-12 && Math.abs(sinceSessions.parts.genre) < 1e-12),
         // Every rise the standing speaks of is said in its parts.
         explained: mine.changes.every((x) => !x.rose || x.said),
         like: { predicted: r3(before), realized: r3(like), within: Math.abs(before - like) <= Math.max(0.3, 0.25 * Math.abs(like)) },
@@ -247,9 +247,9 @@ function measure(spec: CaseSpec) {
     const prepWorked = prepSaid === undefined ? Math.abs(prepBy) < 1e-12 : [...fx.values()].every((y) => Math.abs((y.preparation ?? 0) - prepBy) < 1e-9);
     const a = assumedOf(x.player);
     const byRecords = assumedByRecords(x);
-    const assumedMatch = a !== undefined && a.pieces === byRecords.pieces && a.complete === byRecords.complete && a.short === byRecords.short && a.genres === byRecords.genres && a.genreShort === byRecords.genreShort && a.genreBetter === byRecords.genreBetter && JSON.stringify(a.prepared.map((p) => p.what)) === JSON.stringify(byRecords.prepared);
+    const assumedMatch = a !== undefined && a.pieces === byRecords.pieces && a.complete === byRecords.complete && a.short === byRecords.short && a.genreCount === byRecords.genreCount && a.genreShort === byRecords.genreShort && a.genreBetter === byRecords.genreBetter && JSON.stringify(a.prepared.map((p) => p.what)) === JSON.stringify(byRecords.prepared);
     const says = top?.assumes ?? '';
-    const assumedSaid = top !== undefined && says.startsWith(`What it assumes of your last ${byRecords.pieces === 1 ? 'piece' : `${byRecords.pieces} pieces`}:`) && (byRecords.genres === 0 || (says.includes(`${byRecords.genreShort} ${byRecords.genreShort === 1 ? 'is' : 'are'} short of complete and ${byRecords.genreBetter} known better than when taped`)));
+    const assumedSaid = top !== undefined && says.startsWith(`What it assumes of your last ${byRecords.pieces === 1 ? 'piece' : `${byRecords.pieces} pieces`}:`) && (byRecords.genreCount === 0 || (says.includes(`${byRecords.genreShort} ${byRecords.genreShort === 1 ? 'is' : 'are'} short of complete and ${byRecords.genreBetter} known better than when taped`)));
     // F4: each piece read as prepared named, what the first-named's figure would be read as taped (the forecast's own,
     // checked against the measure's reading), and no other piece read better prepared than its record.
     const taped = top ? forecastByRecords(x, top.target, true) : undefined;
@@ -263,7 +263,7 @@ function measure(spec: CaseSpec) {
     const worth = preparationWorth(x, x.player);
     const verdictWords = { both: 'Both ', preparation: 'Preparation deserves attention now', training: 'Training deserves attention now', neither: 'Neither preparation nor training' } as const;
     const lead = top ?? recs[0];
-    const attention = { verdict: att?.verdict ?? null, own: worth ? r3(worth.own) : null, genres: worth ? r3(worth.genres) : null, matches: att !== undefined && worth !== undefined && Math.abs(worth.own - byRec.own) < 1e-9 && Math.abs(worth.genres - byRec.genres) < 1e-9 && att.verdict === byRec.verdict, said: att !== undefined && (lead?.attention ?? '').startsWith(verdictWords[att.verdict]) };
+    const attention = { verdict: att?.verdict ?? null, own: worth ? r3(worth.own) : null, genres: worth ? r3(worth.genre) : null, matches: att !== undefined && worth !== undefined && Math.abs(worth.own - byRec.own) < 1e-9 && Math.abs(worth.genre - byRec.genre) < 1e-9 && att.verdict === byRec.verdict, said: att !== undefined && (lead?.attention ?? '').startsWith(verdictWords[att.verdict]) };
     return { apart, prepWorked, assumedMatch, assumedSaid, counterfactual, attention, ok: { F1: apart && prepWorked, F2: assumedMatch && assumedSaid, F4: counterfactual.named && counterfactual.taped && counterfactual.readAsSaid, F5: attention.matches && attention.said } };
   };
   const asBuilt = fOn(sim);

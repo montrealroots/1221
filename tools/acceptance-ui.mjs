@@ -1393,6 +1393,14 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     must(await briefPane().locator('table[data-takes] tbody tr').count() === 1, 'the take isn’t in the takes table');
     return `${said} / ${text.match(/What To Work On\n[^\n]+/i)?.[0]?.slice(0, 160)}`;
   });
+  // The advice's two lines brief 12 added (F2-A10 (f) as the owner resolved it), read where the walkthrough sends a player.
+  await step('[save: brief scenario] advice: What To Work On says what its forecast assumes of the work and whether preparation, training or both deserve attention', async () => {
+    const assumes = (await briefPane().locator('[data-assumes]').first().innerText().catch(() => '')).trim();
+    const attention = (await briefPane().locator('[data-attention]').first().innerText().catch(() => '')).trim();
+    must(/^What it assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes said: ${assumes || 'nothing'}`);
+    must(/deserves? attention|^Neither preparation nor training/.test(attention), `the attention said: ${attention || 'nothing'}`);
+    return `${assumes.slice(0, 200)} / ${attention.slice(0, 200)}`;
+  });
   await step('[save: brief scenario] brief: the weakness trained from the brief, an hour of practice', async () => {
     const open = briefPane().locator('button', { hasText: /…$/ }).first();
     if (!(await open.count())) skip('the weakness named is trained by a workout, not an exercise');
