@@ -548,7 +548,7 @@ describe('the marketplace, offered on income the clock paid (health.enroll, heal
 
 /**
  * HUSKY D enrolled in 2026 is renewed twelve months from its start, and from 2027 Connecticut asks a Medicaid adult for
- * 80 hours' work or $580 of earnings in the month before, besides last month's income under 138% of the year's poverty
+ * 80 hours' work or $580 of earnings in the month before (SLATE reads the $580, of any income, alone from 2026-10-17), besides last month's income under 138% of the year's poverty
  * line (2026's $15,960, the last SLATE keeps, so 2027 reads it too: $1,835.40 a month). Until 2026-10-15 a renewal was
  * reached only on wages posted by hand. Here a life with need reaches it by the clock alone, withdrawn, enrolled on
  * Papers, and played thirteen months across a reload. She passes the income test on the bank's interest and fails the
@@ -650,7 +650,7 @@ describe('health.enroll: a program’s renewal, reached by the clock', () => {
  *   Connecticut's;
  * - renewed in 2027, from 1 November, a Connecticut program renews in six months: 1 May 2028.
  *
- * Covered Connecticut into HUSKY D meets HUSKY D's work test, 80 hours or $580 in October 2027 (Pub. L. 119-21 §71119
+ * Covered Connecticut into HUSKY D meets HUSKY D's work test, 80 hours or $580 in October 2027 (the $580 alone from 2026-10-17; Pub. L. 119-21 §71119
  * asks it of an applicant too). Withdrawn, she has no work: SLATE pays wages only for work-study and the Summer Cabaret,
  * both a student's, and a student holds no program, since Enroll is shut while Yale Health covers her. So the move that
  * passes it is played with October's work posted by hand (TEST SETUP, 80 hours and $600, as tests/evidence-g05-life.test.ts
@@ -708,8 +708,9 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
       back.advanceTo(at(2027, 11, 1, 0, 10));
       expect(coverOn(back.player, back.now)).toBe('essential');
       expect(interest(back, 2027, 10)).toEqual([work === 'low' ? 465_00 : 930_00]);
-      // The wages posted by hand are read by the work test (`workedBetween`), not recorded as the month's income; with
-      // them it would be $1,530.00, under the line too.
+      // The wages posted by hand are read by the work rules' income test as pay the record doesn't hold (`workedBetween`;
+      // until 2026-10-17 as 80 hours' work), not recorded as the month's income; with them it would be $1,530.00, under
+      // the line too.
       expect(earningsOf(back.player).months['2027-10']).toBe(work === 'low' ? 465_00 : 930_00);
       back.advanceTo(at(2027, 11, 1, 9));
       return back;
@@ -717,7 +718,8 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     const moved = twin(true);
     expect(healthOf(moved.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2027, 11, 1, 0, 30), band: 'low', renewAt: at(2028, 5, 1, 0) });
     expect(coverOn(moved.player, moved.now)).toBe('medicaid');
-    expect(titled(moved, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is under what HUSKY D allows, which takes the place of Covered Connecticut: you’re renewed into HUSKY D from November 1, 2027, with no gap and no premium, and October 2027 met its work rules by 80 hours’ work.']);
+    // Until 2026-10-17 “by 80 hours’ work”: since then the hours aren’t read, and the $600 they were paid is (brief 12, health-criteria.md).
+    expect(titled(moved, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is under what HUSKY D allows, which takes the place of Covered Connecticut: you’re renewed into HUSKY D from November 1, 2027, with no gap and no premium, and October 2027 met its work rules by its income, $580.00 or more.']);
     expect(titled(moved, 'A Notice Of Noncompliance')).toEqual([]);
     expect(titled(moved, 'Your Public Cover Ends')).toEqual([]);
     expect(titled(moved, 'Your Health Cover Ended').filter((n) => n.at >= at(2026, 11, 1, 0))).toEqual([]);

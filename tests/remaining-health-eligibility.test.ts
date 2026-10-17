@@ -4,7 +4,7 @@
  *
  * What was read, and what changed that day:
  * - HUSKY D's work rules from 1 January 2027 (Pub. L. 119-21 §71119, 42 USC 1396a(xx); CMS-2454-IFC of 3 June 2026,
- *   42 CFR 435.550-559, read 2026-10-16). A month meets them with 80 hours' work, a month's income of $580 or school at
+ *   42 CFR 435.550-559, read 2026-10-16). A month meets them with 80 hours' work (which SLATE stopped reading on 2026-10-17, as 80 hours it pays are always over $580), a month's income of $580 or school at
  *   least half-time; and "the agency must determine the monthly income based on the individual's MAGI-based income"
  *   (435.552(f)(2)), so interest, a benefit or a pension count toward the $580 as pay does. Until that day SLATE counted
  *   work's pay alone.
@@ -398,7 +398,8 @@ describe('HUSKY D’s renewal: the six months before read, then a notice and thi
     june.advanceTo(at(2027, 10, 1, 9));
     expect(healthOf(june.player).program).toMatchObject({ kind: 'medicaid', from: at(2026, 10, 1, 0), renewAt: at(2028, 4, 1, 0) });
     expect(healthOf(june.player).program!.until).toBeUndefined();
-    expect(titled(june, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 1, 0, 30), 'HUSKY D is renewed to its next renewal, April 1, 2028: last month’s income is within what it allows, and June 2027 met its work rules by 80 hours’ work.']]);
+    // Until 2026-10-17 “by 80 hours’ work”: since then the hours aren’t read, and the $600 they were paid is (brief 12, health-criteria.md).
+    expect(titled(june, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 1, 0, 30), 'HUSKY D is renewed to its next renewal, April 1, 2028: last month’s income is within what it allows, and June 2027 met its work rules by its income, $580.00 or more.']]);
     expect(titled(june, 'A Notice Of Noncompliance')).toEqual([]);
     const reloaded = thaw(freeze(june));
     reloaded.advanceTo(at(2027, 11, 2, 9));

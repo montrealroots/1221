@@ -203,8 +203,11 @@ export const POVERTY_LINE: RateSteps = [['2025-01-01', 15_650_00], ['2026-01-01'
  * its band to 250% ended 1 July 2026. From 1 January 2027 the federal law
  * asks a Medicaid adult for 80 hours' work or $580 of income a month, unless
  * they're at school or on SNAP, or a hardship is asked for a month in
- * hospital (`monthEngagement`), and renews them every six months from 1 March
- * 2027. A person a program takes gets no
+ * hospital, and renews them every six months from 1 March 2027. SLATE reads
+ * the $580, the school, SNAP and the hardship (`monthEngagement`): every hour
+ * it has paid was worth at least $7.25, so 80 of them meet the $580 too. Until
+ * 2026-10-17 it read the 80 hours as well, a branch brief 12 had cut as
+ * serving no necessary purpose. A person a program takes gets no
  * marketplace credit. Until 2026-10-17 this said "$580 of earnings", where the
  * month's test reads its income; found by brief 11's second reader.
  */
