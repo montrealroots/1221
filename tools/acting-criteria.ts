@@ -27,7 +27,7 @@ import { difficultyOf } from '../src/engine/systems/coursework';
 import { leanedWeights, replay, replayAs, frozenPerformer, type EvalContext, type Evaluation, type Limit, type Performer, type WorkRecord } from '../src/engine/systems/evaluation';
 import { judgePiece, judgePieceExact, loadOf, nightPiece, unitSegments, type PieceSpec } from '../src/engine/systems/piece';
 import { materialContext, misfitOf } from '../src/engine/systems/material';
-import { requiredFor, sceneOfMaterial, suitabilityOf } from '../src/engine/systems/interpretation';
+import { requiredFor, sceneOfMaterial, stakesScale, suitabilityOf } from '../src/engine/systems/interpretation';
 import { briefContext, briefMaterial, briefPiece, readingOf, sceneOf, type BriefRecord } from '../src/engine/systems/briefs';
 import { runningOf, withPart } from '../src/engine/systems/workload';
 import { NIGHT_DIFFICULTY } from '../src/engine/systems/school';
@@ -377,7 +377,14 @@ export interface R2Case {
   material: MaterialProfile;
   /** No `side`: no way chosen. No `key`: no draw. `callback`: a brief's callback asking for that side. */
   judge(p: Performer, side: Side | undefined, o?: { prep?: number; key?: string; callback?: Side }): Evaluation;
+  /**
+   * What `judge` hands the judge (from 2026-10-17, brief 13): the context and the piece, so a part can read what the take
+   * reads (the dependency map) or hand it something else (TEST SETUP: a share of difficulty set directly).
+   */
+  context(side: Side | undefined, o?: { prep?: number; key?: string; callback?: Side }): { ctx: EvalContext; spec: PieceSpec };
   suit(side: Side): number;
+  /** The side's whole suitability, its signals with it (from 2026-10-17, brief 13): its sum before the hold at ±1 is read from them. */
+  suitability(side: Side): ReturnType<typeof suitabilityOf>;
   /** The rehearsal mark that completes the choice (`requiredFor`): under 0.9 with the scene's grain, over it against. */
   required(side: Side): number;
   /** The same piece with one circumstance at another level: a stage piece's (a brief has none). */
@@ -392,7 +399,9 @@ function sceneR2(m: MaterialProfile): R2Case {
   return {
     kind: 'scene', id: m.id, work: workOf(m), family: familyOf(m), medium: 'stage', material: m,
     judge: (p, side, o = {}) => judgeOn(m, p, side, { ...(o.prep !== undefined ? { prep: o.prep } : {}), ...(o.key ? { key: o.key } : {}) }),
+    context: (side, o = {}) => scenePieceOf(m, side, { ...(o.prep !== undefined ? { prep: o.prep } : {}), ...(o.key ? { key: o.key } : {}) }),
     suit: (side) => suitabilityOf(side, m, scene).s,
+    suitability: (side) => suitabilityOf(side, m, scene),
     required: (side) => requiredFor([side], m, scene),
     at: (c, level) => sceneR2({ ...m, circumstances: { ...(m.circumstances ?? {}), [c]: level } }),
   };
@@ -408,17 +417,20 @@ function nightR2(m: MaterialProfile): R2Case {
   const spec = nightPiece(m, runningOf({ play: m.id }), 'supporting');
   const played = withPart(m, spec.night!);
   const scene = sceneOfMaterial(played);
+  const context: R2Case['context'] = (side, o = {}) => {
+    const prepAt = o.prep ?? 1;
+    const read = materialContext(task, played, side ? { scale: side, chosenAt: 0, prep: prepAt } : undefined);
+    const prep = { lines: 1, blocking: 1, notes: 1, ...(side ? { approach: prepAt } : {}) };
+    const required = { lines: 0.9, blocking: 0.9, notes: 0.9, ...(side ? { approach: read.required } : {}) };
+    const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: o.key ?? `st6r2:night:${m.id}`, ...(o.key ? {} : { expected: true }) };
+    return { ctx, spec };
+  };
   return {
     kind: 'night', id: `night:${m.id}`, work: workOf(m), family: familyOf(m), medium: 'stage', material: played,
-    judge: (p, side, o = {}) => {
-      const prepAt = o.prep ?? 1;
-      const read = materialContext(task, played, side ? { scale: side, chosenAt: 0, prep: prepAt } : undefined);
-      const prep = { lines: 1, blocking: 1, notes: 1, ...(side ? { approach: prepAt } : {}) };
-      const required = { lines: 0.9, blocking: 0.9, notes: 0.9, ...(side ? { approach: read.required } : {}) };
-      const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: o.key ?? `st6r2:night:${m.id}`, ...(o.key ? {} : { expected: true }) };
-      return judgePiece(SEED, p, ctx, spec);
-    },
+    judge: (p, side, o = {}) => { const x = context(side, o); return judgePiece(SEED, p, x.ctx, x.spec); },
+    context,
     suit: (side) => suitabilityOf(side, played, scene).s,
+    suitability: (side) => suitabilityOf(side, played, scene),
     required: (side) => requiredFor([side], played, scene),
     at: (c, level) => nightR2({ ...m, circumstances: { ...(m.circumstances ?? {}), [c]: level } }),
   };
@@ -428,15 +440,18 @@ function nightR2(m: MaterialProfile): R2Case {
 function briefR2(b: Brief, reading: string): R2Case {
   const material = briefMaterial(b);
   const scene = sceneOf(b, readingOf(b, reading));
+  const context: R2Case['context'] = (side, o = {}) => {
+    const prepAt = o.prep ?? 1;
+    const rec: BriefRecord = { prep: { interpretation: 1, memorization: 1, rehearsal: 1 }, takes: [], ...(o.callback ? { callback: { axis: 'scale' as const, side: o.callback, why: '', at: 0 } } : {}) };
+    const ctx = briefContext(nobody, b, rec, { reading, ...(side ? { playing: { scale: side, chosenAt: 0, prep: prepAt } } : {}), prep: { genre: 1, ...(side ? { approach: prepAt } : {}) }, ...(o.callback ? { callback: true } : {}) });
+    return { ctx: { ...ctx, condition: { readiness: 100 }, key: o.key ?? `st6r2:brief:${b.id}`, ...(o.key ? {} : { expected: true }) }, spec: briefPiece(b, { ...rec, reading }, reading) };
+  };
   return {
     kind: 'brief', id: `${b.id}/${reading}`, work: b.id, family: scene.genre ?? 'none', medium: 'tape', material,
-    judge: (p, side, o = {}) => {
-      const prepAt = o.prep ?? 1;
-      const rec: BriefRecord = { prep: { interpretation: 1, memorization: 1, rehearsal: 1 }, takes: [], ...(o.callback ? { callback: { axis: 'scale' as const, side: o.callback, why: '', at: 0 } } : {}) };
-      const ctx = briefContext(nobody, b, rec, { reading, ...(side ? { playing: { scale: side, chosenAt: 0, prep: prepAt } } : {}), prep: { genre: 1, ...(side ? { approach: prepAt } : {}) }, ...(o.callback ? { callback: true } : {}) });
-      return judgePiece(SEED, p, { ...ctx, condition: { readiness: 100 }, key: o.key ?? `st6r2:brief:${b.id}`, ...(o.key ? {} : { expected: true }) }, briefPiece(b, { ...rec, reading }, reading));
-    },
+    judge: (p, side, o = {}) => { const x = context(side, o); return judgePiece(SEED, p, x.ctx, x.spec); },
+    context,
     suit: (side) => suitabilityOf(side, material, scene).s,
+    suitability: (side) => suitabilityOf(side, material, scene),
     required: (side) => requiredFor([side], material, scene),
   };
 }
@@ -657,5 +672,444 @@ export function measureST6R2(o: { heavy?: 'first' | 'all' } = {}) {
     cases: { heavy: count(heavy), every: count(every) },
     budgets: Object.fromEntries(Object.entries(A).map(([n, p]) => [n, budgetOf(p)])),
     verdict, met: verdict.a.met && verdict.c.met && verdict.e.met, figures,
+  };
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// ST6-R2.c and ST6-R2.e clarified (from 2026-10-17, brief 13): docs/verification/playthroughs-2026-10-17/acting-criteria.md,
+// written and committed before this. Each part judges a piece as `judge` does, through the context it hands the judge
+// (`context`); a change a part makes (the grain's strength, restraint's or size's draws) is made in this process and put
+// back, and a share of difficulty set directly is said where it is (TEST SETUP).
+// ---------------------------------------------------------------------------------------------------------------------
+
+/** Where an ability reaches a restrained take: the four classes of the clarified criteria's dependency map. */
+export type PathClass = 'direct' | 'small' | 'indirect' | 'none';
+const RESTRAINT_DRAWS = (): ReadonlySet<AbilityId> => new Set(Object.values(RESTRAINT.inputs).flatMap((xs) => (xs ?? []).map((x) => x.ability)));
+const SIZE = APPROACH_EFFECT.expansive as unknown as { inputs: Inputs };
+/** Size's draws set to `inputs` for the length of `f`, and put back: the mirror of `withRestraintDraws`. */
+export const withSizeDraws = <T,>(inputs: Inputs, f: () => T): T => { const was = SIZE.inputs; SIZE.inputs = inputs; try { return f(); } finally { SIZE.inputs = was; } };
+
+/**
+ * An ability's path into a case played restrained, read from the context the judge reads: each dimension's inputs, the
+ * kind of work's own (stamina out: a piece reads it as the drain) and what the piece, its reading, reader and register and
+ * restraint add. Direct where restraint draws on it, or a dimension reads it at least as much as the kind of work's own
+ * profile reads that dimension's leading ability; small where a dimension reads it, but only under that; indirect where
+ * only the drain does (stamina, on a piece with a later segment and a load); none where nothing does.
+ */
+export function pathOf(c: R2Case, a: AbilityId): { cls: PathClass; reads: { dimension: Dimension; weight: number; leading: number }[] } {
+  const { ctx, spec } = c.context('restrained');
+  const reads: { dimension: Dimension; weight: number; leading: number }[] = [];
+  for (const [d, s] of Object.entries(ctx.task.dims) as [Dimension, NonNullable<(typeof ctx.task.dims)[Dimension]>][]) {
+    const own = s.inputs.filter((i): i is { ability: AbilityId; weight: number } => 'ability' in i && i.ability !== 'stamina');
+    const leading = Math.max(0, ...own.map((i) => i.weight));
+    const w = own.filter((i) => i.ability === a).reduce((t, i) => t + i.weight, 0) + (ctx.inputs?.[d] ?? []).filter((x) => x.ability === a && x.ability !== 'stamina').reduce((t, x) => t + x.weight, 0);
+    if (w > 0) reads.push({ dimension: d, weight: r4(w), leading });
+  }
+  const drains = spec.night ? true : spec.load > 0 && spec.segments.length > 1;
+  const cls: PathClass = RESTRAINT_DRAWS().has(a) || reads.some((x) => x.weight >= x.leading - 1e-12) ? 'direct' : reads.length ? 'small' : a === 'stamina' && drains ? 'indirect' : 'none';
+  return { cls, reads };
+}
+
+/** A performer with some abilities moved and each of the rest moved the other way by an equal share: the budget kept. */
+export const shifted = (p: Performer, up: Partial<Record<AbilityId, number>>): Performer => {
+  const others = ABILITIES.filter((a) => !(a in up));
+  const down = Object.values(up).reduce((t, x) => t + (x ?? 0), 0) / others.length;
+  return { ...p, ability: (id) => p.ability(id) + (up[id] ?? -down) };
+};
+/** Restraint's shift and size's: the restrained and the expansive specialists' own from the even actor. */
+export const RESTRAINT_SHIFT: Partial<Record<AbilityId, number>> = { emotionalDepth: 35, composure: 25, focus: 25 };
+export const SIZE_SHIFT: Partial<Record<AbilityId, number>> = { presence: 35, vocal: 25, physical: 25 };
+
+/** The clarified (e)'s comparison actors, named in the criteria before any was measured (TEST SETUP). */
+const leaning = (high: readonly AbilityId[], low: readonly AbilityId[], hi: number, lo: number, rest: number, tech: number): Performer => actor(Object.fromEntries([...high.map((a) => [a, hi]), ...low.map((a) => [a, lo])]), rest, tech);
+const RESTRAINTS_THREE: readonly AbilityId[] = ['emotionalDepth', 'composure', 'focus'];
+const SIZES_THREE: readonly AbilityId[] = ['presence', 'vocal', 'physical'];
+export const ST6R2_COMPARISON = {
+  /** Brief 12's, informing: ceiling cases on stage. */
+  informing: { even: ST6R2_ACTORS.even, beginner: ST6R2_ACTORS.beginner },
+  /** Fresh, for restraint: each leans toward size, where restraint has room to be the worse choice. */
+  restraint: {
+    V1: leaning(SIZES_THREE, RESTRAINTS_THREE, 60, 40, 50, 50),
+    V2: leaning(SIZES_THREE, RESTRAINTS_THREE, 70, 30, 50, 50),
+    V3: leaning(SIZES_THREE, RESTRAINTS_THREE, 75, 55, 65, 60),
+    V4: leaning(SIZES_THREE, RESTRAINTS_THREE, 45, 25, 35, 30),
+    V5: actor({}, 65, 60),
+  },
+  /** Fresh, for size: the mirror. */
+  size: {
+    'V1′': leaning(RESTRAINTS_THREE, SIZES_THREE, 60, 40, 50, 50),
+    'V2′': leaning(RESTRAINTS_THREE, SIZES_THREE, 70, 30, 50, 50),
+    'V3′': leaning(RESTRAINTS_THREE, SIZES_THREE, 75, 55, 65, 60),
+    'V4′': leaning(RESTRAINTS_THREE, SIZES_THREE, 45, 25, 35, 30),
+    V5: actor({}, 65, 60),
+  },
+} satisfies Record<string, Record<string, Performer>>;
+
+/** The clarified (c4)'s specialists by budget: brief 12's, informing, and three fresh, each against its comparison actor. */
+export const ST6R2_BUDGETS = {
+  brief12: { strength: 85, fill: (600 - 85) / 11, tech: 50, against: ST6R2_ACTORS.even, level: 50 },
+  beginner: { strength: 70, fill: (420 - 70) / 11, tech: 30, against: ST6R2_ACTORS.beginner, level: 35 },
+  stronger: { strength: 95, fill: (600 - 95) / 11, tech: 50, against: ST6R2_ACTORS.even, level: 50 },
+  nearMaster: { strength: 100, fill: (1104 - 100) / 11, tech: 85, against: ST6R2_ACTORS.nearMaster, level: 92 },
+} as const;
+export type R2Budget = keyof typeof ST6R2_BUDGETS;
+export const specialistAt = (b: R2Budget, a: AbilityId): Performer => actor({ [a]: ST6R2_BUDGETS[b].strength }, ST6R2_BUDGETS[b].fill, ST6R2_BUDGETS[b].tech);
+
+/** The grain's share on each dimension restraint leans on, worked by the rule at full precision from the side's suitability. */
+export function shareByRule(c: R2Case, side: Side = 'restrained'): Partial<Record<Dimension, number>> {
+  const e = APPROACH_EFFECT[side];
+  const most = Math.max(...Object.values(e.lean)) - 1;
+  const { ctx } = c.context(side);
+  const s = c.suit(side), k = stakesScale(c.material.stakes);
+  return Object.fromEntries((Object.entries(e.lean) as [Dimension, number][]).filter(([d, lean]) => lean > 1 && ctx.task.dims[d]).map(([d, lean]) => [d, -GRAIN.strength * s * k * ((lean - 1) / most)]));
+}
+/** `grainOf`'s precision: a share kept to a hundredth (`r2`), so one that rounds to nothing comes to nothing. */
+export const keptByRule = (x: number) => Math.round(x * 100) / 100;
+
+const judgeWith = (p: Performer, ctx: EvalContext, spec: PieceSpec) => judgePiece(SEED, p, ctx, spec);
+const exactWith = (p: Performer, ctx: EvalContext, spec: PieceSpec) => judgePieceExact(SEED, p, ctx, spec).evaluation.exact!;
+
+/** One case and actor's (c2.2): the grain read or not, what the rule keeps, and at full precision where it keeps nothing. */
+export interface GrainRow {
+  id: string; kind: R2Case['kind']; actor: string; s: number; kept: boolean; d: number; floorHeld: boolean; keptGrain: Record<string, number>;
+  atFullPrecision?: number; shown?: { take: number; atFullPrecision: number };
+}
+
+/** Each clarified part's measure, case by case: what the gate asserts and `measureST6R2Clarified` summarizes. */
+export const ST6R2C = {
+  /**
+   * (c2.2): the restrained take with the grain at its strength, less with it at nothing; whether the rule keeps a share on
+   * some dimension; whether the floor held it; and on a case the rule keeps nothing of, the take with the share carried
+   * at full precision (TEST SETUP), less the take with none, and its shown tenth beside the take's.
+   */
+  scene(cases: readonly R2Case[], actors: Partial<Record<string, Performer>>) {
+    const floorHeld = (e: Evaluation) => e.dimensions.some((d) => d.grain && e.inputs.difficulty + d.grain.d <= GRAIN.floor - 1 + 1e-12);
+    return cases.flatMap((c) => {
+      const s = c.suit('restrained');
+      const rule = shareByRule(c);
+      const kept = Object.values(rule).some((x) => keptByRule(x!) !== 0);
+      const { ctx, spec } = c.context('restrained');
+      const full: EvalContext = { ...ctx, grain: Object.fromEntries(Object.entries(rule).map(([d, x]) => [d, { d: x!, label: 'at full precision' }])) };
+      return (Object.entries(actors) as [string, Performer][]).map(([n, p]): GrainRow => {
+        const e = c.judge(p, 'restrained');
+        const none = withGrain(0, () => c.judge(p, 'restrained'));
+        const at: GrainRow = { id: c.id, kind: c.kind, actor: n, s, kept, d: e.exact! - none.exact!, floorHeld: floorHeld(e), keptGrain: Object.fromEntries(Object.entries(e.inputs.grain ?? {}).map(([d, x]) => [d, x!.d])) };
+        if (kept || s === 0) return at;
+        return { ...at, atFullPrecision: exactWith(p, full, spec) - none.exact!, shown: { take: e.overall, atFullPrecision: judgeWith(p, full, spec).overall } };
+      });
+    });
+  },
+  /**
+   * (c2.3): the judge handed a share of −0.01, 0 and +0.01 on believability, and the difficulty with a share coming to
+   * −0.76, −0.75 and −0.74 against the floor (TEST SETUP, on `c`); and on stage, each circumstance's change sorted by
+   * where the side's sum stands against the hold at ±1, before and after.
+   */
+  boundaries(c: R2Case, actors: Partial<Record<string, Performer>>, stage: readonly R2Case[]) {
+    const { ctx, spec } = c.context('restrained');
+    const handed = (d: number, difficulty = ctx.difficulty): EvalContext => ({ ...ctx, difficulty, grain: { believability: { d, label: 'set directly' } } });
+    const judgeAt = (p: Performer, x: EvalContext) => exactWith(p, x, spec);
+    const hundredth = (Object.entries(actors) as [string, Performer][]).map(([n, p]) => ({ actor: n, minus: judgeAt(p, handed(-0.01)), zero: judgeAt(p, handed(0)), plus: judgeAt(p, handed(0.01)) }));
+    const floor = (Object.entries(actors) as [string, Performer][]).map(([n, p]) => ({ actor: n, below: judgeAt(p, handed(-0.26, -0.5)), at: judgeAt(p, handed(-0.25, -0.5)), above: judgeAt(p, handed(-0.24, -0.5)) }));
+    const raw = (x: R2Case, side: Side) => x.suitability(side).signals.reduce((t, g) => t + g.v, 0) / 2;
+    const hold = stage.filter((x) => x.at).flatMap((x) => CIRCUMSTANCES.flatMap((k) => {
+      const level = x.material.circumstances?.[k] ?? 0;
+      return ([1, -1] as const).filter((dir) => (dir > 0 ? level < 3 : level > 0)).flatMap((dir) => {
+        const moved = x.at!(k, level + dir);
+        return (['restrained', 'expansive'] as const).map((side) => {
+          const before = raw(x, side), after = raw(moved, side);
+          const where = Math.abs(before) < 1 && Math.abs(after) < 1 ? 'inside' : (Math.abs(before) >= 1) !== (Math.abs(after) >= 1) ? 'reaching' : Math.sign(before) === Math.sign(after) ? 'past' : 'across';
+          const p = ST6R2_ACTORS.even;
+          return { id: x.id, circumstance: k, dir, side, where, raw: [before, after], s: [x.suit(side), moved.suit(side)], take: moved.judge(p, side).exact! - x.judge(p, side).exact! };
+        });
+      });
+    }));
+    return { piece: c.id, hundredth, floor, hold };
+  },
+  /** (c4.1): each ability raised alone by 10 (to 100 at most), against its path. */
+  map(cases: readonly R2Case[], actors: Partial<Record<string, Performer>>) {
+    return cases.flatMap((c) => {
+      const paths = Object.fromEntries(ABILITIES.map((a) => [a, pathOf(c, a as AbilityId).cls])) as Record<AbilityId, PathClass>;
+      return (Object.entries(actors) as [string, Performer][]).flatMap(([n, p]) => {
+        const base = take(c, p);
+        return ABILITIES.map((a) => ({ id: c.id, kind: c.kind, actor: n, ability: a as AbilityId, cls: paths[a as AbilityId], moved: take(c, raised(p, [a as AbilityId], 10)) - base }));
+      });
+    });
+  },
+  /** (c4.2): every ability with no path, its specialist against its comparison actor, at each budget. */
+  unrelated(cases: readonly R2Case[], budgets: readonly R2Budget[]) {
+    return cases.flatMap((c) => ABILITIES.filter((a) => pathOf(c, a as AbilityId).cls === 'none').flatMap((a) => budgets.map((b) => ({ id: c.id, kind: c.kind, ability: a as AbilityId, budget: b, lead: take(c, specialistAt(b, a as AbilityId)) - take(c, ST6R2_BUDGETS[b].against) }))));
+  },
+  /** (c4.3): each specialist's eleven, each raised alone to its comparison actor's level, and all eleven together. */
+  weaknesses(cases: readonly R2Case[], budgets: readonly R2Budget[]) {
+    return cases.flatMap((c) => {
+      const paths = Object.fromEntries(ABILITIES.map((a) => [a, pathOf(c, a as AbilityId).cls])) as Record<AbilityId, PathClass>;
+      return budgets.flatMap((b) => ABILITIES.map((x) => {
+        const S = specialistAt(b, x as AbilityId), base = take(c, S), level = ST6R2_BUDGETS[b].level;
+        const each = ABILITIES.filter((y) => y !== x).map((y) => ({ ability: y as AbilityId, cls: paths[y as AbilityId], rise: take(c, setAt(S, y as AbilityId, level)) - base }));
+        return { id: c.id, kind: c.kind, budget: b, specialist: x as AbilityId, each, together: take(c, actor({ [x]: ST6R2_BUDGETS[b].strength }, level, ST6R2_BUDGETS[b].tech)) - base };
+      }));
+    });
+  },
+  /**
+   * (c4.4), kept apart and not asserted: brief 12's pairs (each ability under a tenth of the twelve's +10 effects on the
+   * even actor's restrained take, its specialist at 85 against the even actor), each with its path; and each pair ahead by
+   * more than 0.05 with its strength's own gain, its eleven's own cost and their interaction.
+   */
+  equalBudget(cases: readonly R2Case[]) {
+    const EVEN = ST6R2_ACTORS.even, fill = ST6R2_BUDGETS.brief12.fill;
+    return cases.flatMap((c) => {
+      const base = take(c, EVEN);
+      const eff = Object.fromEntries(ABILITIES.map((a) => [a, Math.max(0, take(c, actor({ [a]: 60 }, 50)) - base)])) as Record<string, number>;
+      const total = ABILITIES.reduce((t, a) => t + eff[a]!, 0);
+      return ABILITIES.filter((a) => total > 0 && eff[a]! / total < 0.1).map((a) => {
+        const lead = take(c, specialistAt('brief12', a as AbilityId)) - base;
+        const row = { id: c.id, kind: c.kind, ability: a as AbilityId, cls: pathOf(c, a as AbilityId).cls, share: eff[a]! / total, lead };
+        if (!(lead > 0.05)) return row;
+        const gain = take(c, actor({ [a]: 85 }, 50)) - base, cost = take(c, actor({ [a]: 50 }, fill)) - base;
+        return { ...row, gain, cost, interaction: lead - gain - cost };
+      });
+    });
+  },
+};
+
+/**
+ * (e2′), (e3′) and (e4): for each comparison actor and its counterpart (S, restraint's shift; S′, size's), every case's
+ * takes on both sides, fully prepared, and the side's draws taken out for the side under test. `side` is the side under
+ * test: restraint for the restraint set, size for the size set.
+ */
+export function opportunitiesWithRoom(cases: readonly R2Case[], comparison: Partial<Record<string, Performer>>, side: Side) {
+  const other: Side = side === 'restrained' ? 'expansive' : 'restrained';
+  const shift = side === 'restrained' ? RESTRAINT_SHIFT : SIZE_SHIFT;
+  const withoutDraws = <T,>(f: () => T): T => (side === 'restrained' ? withRestraintDraws({}, f) : withSizeDraws({}, f));
+  const suitable = (s: Side) => cases.filter((c) => !misfitOf('scale', s, c.material) && c.suit(s) > c.suit(s === 'restrained' ? 'expansive' : 'restrained'));
+  const forSide = suitable(side), forOther = suitable(other);
+  const tally = (ids: readonly R2Case[]) => { const works = ids.reduce((o, c) => { o[c.work] = (o[c.work] ?? 0) + 1; return o; }, {} as Record<string, number>); return { count: ids.length, works: Object.keys(works).length, families: [...new Set(ids.map((c) => c.family))], mostFromOneWork: Math.max(0, ...Object.values(works)) }; };
+  return (Object.entries(comparison) as [string, Performer][]).map(([name, C]) => {
+    const S = shifted(C, shift);
+    const t = (p: Performer, c: R2Case, s: Side) => take(c, p, s);
+    // Beside the verdict, not part of it (from 2026-10-17, brief 13, added after the informing actors were checked and
+    // before the fresh ones were run): each margin again with the scene's grain at nothing for both takes, the abilities'
+    // part alone, since the grain's points depend on the capacity they meet.
+    const noGrainMargin = (p: Performer, c: R2Case, a: Side, b: Side) => withGrain(0, () => t(p, c, a) - t(p, c, b));
+    const rows = forSide.map((c) => {
+      const mC = t(C, c, side) - t(C, c, other), mS = t(S, c, side) - t(S, c, other);
+      const [rC0, rS0] = withoutDraws(() => [t(C, c, side), t(S, c, side)]);
+      return { id: c.id, kind: c.kind, medium: c.medium, work: c.work, family: c.family, marginC: mC, marginS: mS, extra: mS - mC, drawsPart: (t(S, c, side) - t(C, c, side)) - (rS0! - rC0!), extraAtNoGrain: noGrainMargin(S, c, side, other) - noGrainMargin(C, c, side, other) };
+    });
+    const weak = forOther.map((c) => ({ id: c.id, medium: c.medium, marginC: t(C, c, other) - t(C, c, side), marginS: t(S, c, other) - t(S, c, side), fallAtNoGrain: noGrainMargin(C, c, other, side) - noGrainMargin(S, c, other, side) }));
+    const media = Object.fromEntries((['stage', 'tape'] as const).map((m) => {
+      const of = rows.filter((r) => r.medium === m);
+      const oppC = of.filter((r) => r.marginC > 0.05), oppS = of.filter((r) => r.marginS > 0.05);
+      const gained = oppS.filter((r) => !(r.marginC > 0.05));
+      const byId = new Map(cases.map((c) => [c.id, c]));
+      const w = weak.filter((r) => r.medium === m);
+      return [m, {
+        suitable: of.length, opportunities: { C: oppC.length, S: oppS.length }, room: oppC.length < of.length, gained: gained.map((r) => r.id),
+        variedS: tally(oppS.map((r) => byId.get(r.id)!)), otherSide: { suitable: w.length, C: w.filter((r) => r.marginC > 0.05).length, S: w.filter((r) => r.marginS > 0.05).length },
+      }];
+    }));
+    return { name, budget: { C: budgetOf(C), S: budgetOf(S) }, rows, weak, media };
+  });
+}
+
+/**
+ * ST6-R2.c and .e clarified, each part's verdict and figures. `part` runs the trace, (c) or (e) alone, each under ten
+ * minutes; with none, all three. The informing actors are brief 12's five; the fresh ones are the criteria's.
+ */
+export function measureST6R2Clarified(o: { part?: 'trace' | 'c' | 'e' } = {}) {
+  const every = st6r2Cases('all');
+  const out: Record<string, unknown> = { criterion: 'ST6-R2.c and ST6-R2.e clarified (docs/verification/playthroughs-2026-10-17/acting-criteria.md)', cases: every.length };
+  const first = <T,>(xs: readonly T[]) => xs.slice(0, 20);
+  const fresh = { ...ST6R2_COMPARISON.restraint, ...ST6R2_COMPARISON.size };
+  if (!o.part || o.part === 'trace') out.trace = traceST6R2(every);
+  if (!o.part || o.part === 'c') {
+    const actors = { ...ST6R2_ACTORS, ...fresh };
+    const circumstances = ST6R2.circumstances(every, actors);
+    const strictWhere = (r: (typeof circumstances)[number], side: 'R' | 'E') => (side === 'R' ? r.sR[0] !== r.sR[1] : r.sE[0] !== r.sE[1]) && !r.floorHeld;
+    const c21 = circumstances.filter((r) => !(r.dR >= -1e-9 && r.dE >= -1e-9 && (!strictWhere(r, 'R') || r.dR > 1e-9) && (!strictWhere(r, 'E') || r.dE > 1e-9) && (r.sR[1] - r.sR[0]) * r.want >= 0));
+    const scene = ST6R2C.scene(every, actors);
+    const wrongWay = scene.filter((r) => (r.s > 0 && r.d < -1e-9) || (r.s < 0 && r.d > 1e-9) || (r.s === 0 && Math.abs(r.d) > 1e-9));
+    const notStrict = scene.filter((r) => r.kept && !r.floorHeld && !(Math.sign(r.d) === Math.sign(r.s) && Math.abs(r.d) > 1e-9));
+    const excused = scene.filter((r) => !r.kept && r.s !== 0);
+    const excusedMoved = excused.filter((r) => Math.abs(r.d) > 1e-9);
+    const excusedNotTheRule = excused.filter((r) => Math.abs(r.s) !== 0.01);
+    const ruleMissed = scene.filter((r) => Math.abs(r.s) === 0.01 && r.kept);
+    const disconnected = excused.filter((r) => r.atFullPrecision === undefined || !(Math.sign(r.atFullPrecision) === Math.sign(r.s) && Math.abs(r.atFullPrecision) > 1e-9));
+    const piece = every.find((c) => c.id === 'brief-psychological_horror-2/together')!;
+    const b = ST6R2C.boundaries(piece, actors, every.filter((c) => c.medium === 'stage'));
+    const hundredthBad = b.hundredth.filter((r) => !(r.minus - r.zero > 1e-9 && r.zero - r.plus > 1e-9));
+    const floorBad = b.floor.filter((r) => !(Math.abs(r.below - r.at) <= 1e-9 && r.at - r.above > 1e-9));
+    const realBoundary = Object.fromEntries(['0', '0.01', '0.02'].map((k) => [k, scene.filter((r) => Math.abs(r.s).toFixed(2) === Number(k).toFixed(2))]));
+    const realBad = [...realBoundary['0']!, ...realBoundary['0.01']!].filter((r) => Math.abs(r.d) > 1e-9).concat(realBoundary['0.02']!.filter((r) => !(Math.sign(r.d) === Math.sign(r.s) && Math.abs(r.d) > 1e-9)));
+    const holdBy = (w: string) => b.hold.filter((r) => r.where === w);
+    const holdBad = [...holdBy('inside').filter((r) => !(r.s[0] !== r.s[1] && Math.abs(r.take) > 1e-9)), ...holdBy('reaching').filter((r) => !(r.s[0] !== r.s[1] && Math.abs(r.take) > 1e-9)), ...holdBy('past').filter((r) => !(r.s[0] === r.s[1] && Math.abs(r.take) <= 1e-9))];
+    const map = ST6R2C.map(every, { ...ST6R2_ACTORS, ...fresh });
+    const mapBad = map.filter((r) => (r.cls === 'none' ? Math.abs(r.moved) > 1e-9 : !(r.moved > 1e-9)));
+    const budgets = Object.keys(ST6R2_BUDGETS) as R2Budget[];
+    const unrelated = ST6R2C.unrelated(every, budgets);
+    const unrelatedBad = unrelated.filter((r) => !(r.lead < -1e-9));
+    const weak = ST6R2C.weaknesses(every, budgets);
+    const weakBad = weak.filter((r) => !(r.together > 1e-9 && r.each.every((y) => (y.cls === 'none' ? Math.abs(y.rise) <= 1e-9 : y.rise > 1e-9))));
+    const nine = ST6R2.weakness(every).nine.filter((r) => !(r.rise > 0.05));
+    const eq = ST6R2C.equalBudget(every);
+    const ahead = eq.filter((r) => r.lead > 0.05) as (ReturnType<typeof ST6R2C.equalBudget>[number] & { gain: number; cost: number; interaction: number })[];
+    const count = <T,>(xs: readonly T[], f: (x: T) => string) => xs.reduce((m, x) => { const k = f(x); m[k] = (m[k] ?? 0) + 1; return m; }, {} as Record<string, number>);
+    const lo = <T,>(xs: readonly T[], f: (x: T) => number) => (xs.length ? r4(Math.min(...xs.map(f))) : null);
+    const hi = <T,>(xs: readonly T[], f: (x: T) => number) => (xs.length ? r4(Math.max(...xs.map(f))) : null);
+    const verdict = {
+      c21: { met: !c21.length, of: circumstances.length, failingCount: c21.length, failing: first(c21) },
+      c22: { met: !wrongWay.length && !notStrict.length && !excusedMoved.length && !excusedNotTheRule.length && !ruleMissed.length && !disconnected.length, of: scene.length, wrongWay: first(wrongWay), notStrict: first(notStrict), excusedMoved: first(excusedMoved), excusedNotTheRule: first(excusedNotTheRule), ruleMissed: first(ruleMissed), disconnected: first(disconnected) },
+      c23: { met: !hundredthBad.length && !floorBad.length && !realBad.length && !holdBad.length && ['inside', 'reaching', 'past'].every((w) => holdBy(w).length > 0) && realBoundary['0.01']!.length > 0 && realBoundary['0.02']!.length > 0, hundredthBad, floorBad, realBad: first(realBad), holdBad: first(holdBad) },
+      c41: { met: !mapBad.length, of: map.length, failingCount: mapBad.length, failing: first(mapBad) },
+      c42: { met: !unrelatedBad.length && unrelated.length > 0, of: unrelated.length, failingCount: unrelatedBad.length, failing: first(unrelatedBad) },
+      c43: { met: !weakBad.length && !nine.length, of: weak.length, failingCount: weakBad.length, failing: first(weakBad.map((r) => ({ id: r.id, budget: r.budget, specialist: r.specialist, together: r.together, bad: r.each.filter((y) => (y.cls === 'none' ? Math.abs(y.rise) > 1e-9 : !(y.rise > 1e-9))) }))), nineFailing: first(nine) },
+    };
+    out.c = {
+      verdict, met: Object.values(verdict).every((v) => v.met),
+      figures: {
+        c21: { changes: circumstances.length, actors: Object.keys(actors).length },
+        c22: { actorCases: scene.length, kept: scene.filter((r) => r.kept).length, atZero: scene.filter((r) => r.s === 0).length, excused: { count: excused.length, pieces: [...new Set(excused.map((r) => r.id))], atFullPrecision: { least: lo(excused, (r) => Math.abs(r.atFullPrecision ?? 0)), most: hi(excused, (r) => Math.abs(r.atFullPrecision ?? 0)), byActor: Object.fromEntries(Object.keys(actors).map((n) => [n, hi(excused.filter((r) => r.actor === n), (r) => Math.abs(r.atFullPrecision ?? 0))])), shownTenthMoved: excused.filter((r) => r.shown && r.shown.take !== r.shown.atFullPrecision).length } }, leastStrict: lo(scene.filter((r) => r.kept && !r.floorHeld), (r) => Math.abs(r.d)), floorHeld: scene.filter((r) => r.floorHeld).length },
+        c23: { piece: b.piece, hundredth: b.hundredth.map((r) => ({ actor: r.actor, below: r4(r.minus - r.zero), above: r4(r.zero - r.plus) })), floor: b.floor.map((r) => ({ actor: r.actor, belowLessAt: r.below - r.at, atLessAbove: r4(r.at - r.above) })), real: Object.fromEntries(Object.entries(realBoundary).map(([k, xs]) => [k, { actorCases: xs.length, same: xs.filter((r) => Math.abs(r.d) <= 1e-9).length, strictRightWay: xs.filter((r) => Math.sign(r.d) === Math.sign(r.s) && Math.abs(r.d) > 1e-9).length, leastStrict: lo(xs.filter((r) => Math.abs(r.d) > 1e-9), (r) => Math.abs(r.d)) }])), hold: Object.fromEntries(['inside', 'reaching', 'past', 'across'].map((w) => [w, holdBy(w).length])) },
+        c41: { checks: map.length, byClass: count(map, (r) => r.cls), leastMovedWithAPath: lo(map.filter((r) => r.cls !== 'none'), (r) => r.moved) },
+        c42: { pairs: unrelated.length, byAbility: count(unrelated, (r) => `${r.ability} ${r.budget}`), mostLead: hi(unrelated, (r) => r.lead) },
+        c43: { specialists: weak.length, leastTogether: Object.fromEntries(budgets.map((bu) => [bu, lo(weak.filter((r) => r.budget === bu), (r) => r.together)])), leastEach: lo(weak.flatMap((r) => r.each.filter((y) => y.cls !== 'none')), (y) => y.rise), leastNine: lo(ST6R2.weakness(every).nine, (r) => r.rise) },
+        c44: { pairs: eq.length, ahead: ahead.length, aheadByClass: count(ahead, (r) => r.cls), pairsByClass: count(eq, (r) => r.cls), aheadByWay: count(ahead, (r) => { const c = every.find((x) => x.id === r.id)!; return c.suit('expansive') > c.suit('restrained') ? 'against' : c.suit('restrained') > c.suit('expansive') ? 'with' : 'level'; }), gain: [lo(ahead, (r) => r.gain), hi(ahead, (r) => r.gain)], cost: [lo(ahead, (r) => r.cost), hi(ahead, (r) => r.cost)], interaction: [lo(ahead, (r) => r.interaction), hi(ahead, (r) => r.interaction)], leastShareAhead: lo(ahead, (r) => r.share), underTwelfth: { pairs: eq.filter((r) => r.share < 1 / 12).length, aboveTheEvenActor: eq.filter((r) => r.share < 1 / 12 && r.lead > 1e-9).length } },
+      },
+    };
+  }
+  if (!o.part || o.part === 'e') out.e = verdictE(every);
+  return out;
+}
+
+/** (e1) as brief 12 wrote it, and (e2′), (e3′) and (e4), each with its figures. */
+export function verdictE(every: readonly R2Case[]) {
+  const opp = ST6R2.opportunities(every, ST6R2_ACTORS);
+  const e1 = [...(['beginner', 'even', 'restrainedSpecialist', 'nearMaster'] as const).flatMap((n) => (['stage', 'tape'] as const).filter((m) => !variedEnough(opp.restrained.byActor[n]![m]!)).map((m) => `restraint ${n} ${m}`)), ...(['beginner', 'even', 'expansiveSpecialist', 'nearMaster'] as const).flatMap((n) => (['stage', 'tape'] as const).filter((m) => !variedEnough(opp.expansive.byActor[n]![m]!)).map((m) => `size ${n} ${m}`))];
+  const side = (s: Side, set: Partial<Record<string, Performer>>, freshNames: readonly string[]) => {
+    const all = opportunitiesWithRoom(every, set, s);
+    const bad: string[] = [];
+    for (const x of all) {
+      if (Math.abs(x.budget.C - x.budget.S) > 1e-9) bad.push(`${x.name}: budgets ${x.budget.C} and ${x.budget.S}`);
+      for (const r of x.rows) {
+        if (!(r.extra > 0.05)) bad.push(`${x.name} ${r.id}: extra margin ${r4(r.extra)}`);
+        if (!(r.drawsPart > 1e-9)) bad.push(`${x.name} ${r.id}: the draws' part ${r.drawsPart}`);
+      }
+      for (const r of x.weak) if (!(r.marginS < r.marginC - 1e-9)) bad.push(`${x.name} ${r.id}: the other side's margin ${r4(r.marginS)} against ${r4(r.marginC)}`);
+      for (const [m, v] of Object.entries(x.media)) {
+        if (v.room && !(v.opportunities.S > v.opportunities.C)) bad.push(`${x.name} ${m}: ${v.opportunities.S} with room, against ${v.opportunities.C}`);
+        if (!variedEnough(v.variedS)) bad.push(`${x.name} ${m}: the counterpart's opportunities not varied enough`);
+        if (!(v.otherSide.S <= v.otherSide.C)) bad.push(`${x.name} ${m}: the other side's opportunities ${v.otherSide.S} against ${v.otherSide.C}`);
+      }
+    }
+    const byMedium = Object.fromEntries((['stage', 'tape'] as const).map((m) => {
+      const freshWithRoom = all.filter((x) => freshNames.includes(x.name) && x.media[m]!.room);
+      const gained = [...new Set(freshWithRoom.flatMap((x) => x.media[m]!.gained))];
+      const ids = new Map(every.map((c) => [c.id, c]));
+      const works = gained.reduce((o2, id) => { const w = ids.get(id)!.work; o2[w] = (o2[w] ?? 0) + 1; return o2; }, {} as Record<string, number>);
+      const g = { count: gained.length, works: Object.keys(works).length, families: [...new Set(gained.map((id) => ids.get(id)!.family))], mostFromOneWork: Math.max(0, ...Object.values(works)) };
+      if (!freshWithRoom.length) bad.push(`${m}: no fresh comparison actor has room`);
+      else if (!variedEnough(g)) bad.push(`${m}: the gains together not varied enough`);
+      return [m, { freshWithRoom: freshWithRoom.map((x) => x.name), gained: { count: g.count, works: g.works, families: g.families.length, mostFromOneWork: g.mostFromOneWork } }];
+    }));
+    const lo = <T,>(xs: readonly T[], f: (x: T) => number) => (xs.length ? r4(Math.min(...xs.map(f))) : null);
+    return {
+      met: !bad.length, failingCount: bad.length, failing: bad.slice(0, 20), byMedium,
+      actors: all.map((x) => ({ name: x.name, budget: x.budget.C, media: Object.fromEntries(Object.entries(x.media).map(([m, v]) => [m, { suitable: v.suitable, C: v.opportunities.C, S: v.opportunities.S, ceiling: !v.room, gained: v.gained.length, otherSide: v.otherSide }])), leastExtra: lo(x.rows, (r) => r.extra), leastDrawsPart: lo(x.rows, (r) => r.drawsPart), leastOtherSideFall: lo(x.weak, (r) => r.marginC - r.marginS), extraNotOver005: x.rows.filter((r) => !(r.extra > 0.05)).map((r) => ({ id: r.id, extra: r4(r.extra), marginC: r4(r.marginC), marginS: r4(r.marginS), extraAtNoGrain: r4(r.extraAtNoGrain) })), otherSideNotBehind: x.weak.filter((r) => !(r.marginS < r.marginC - 1e-9)).map((r) => ({ id: r.id, marginC: r4(r.marginC), marginS: r4(r.marginS), fallAtNoGrain: r4(r.fallAtNoGrain) })) })),
+      // Beside the verdict, not part of it: (e2.3) and (e4) read on the abilities' part alone, the scene's grain at nothing.
+      atNoGrain: { extraNotOver005: all.reduce((t, x) => t + x.rows.filter((r) => !(r.extraAtNoGrain > 0.05)).length, 0), leastExtra: lo(all.flatMap((x) => x.rows), (r) => r.extraAtNoGrain), otherSideNotBehind: all.reduce((t, x) => t + x.weak.filter((r) => !(r.fallAtNoGrain > 1e-9)).length, 0), leastFall: lo(all.flatMap((x) => x.weak), (r) => r.fallAtNoGrain), of: all.reduce((t, x) => t + x.rows.length, 0), weakOf: all.reduce((t, x) => t + x.weak.length, 0) },
+    };
+  };
+  const restraint = side('restrained', { ...ST6R2_COMPARISON.informing, ...ST6R2_COMPARISON.restraint }, Object.keys(ST6R2_COMPARISON.restraint));
+  const size = side('expansive', { ...ST6R2_COMPARISON.informing, ...ST6R2_COMPARISON.size }, Object.keys(ST6R2_COMPARISON.size));
+  return { verdict: { e1: { met: !e1.length, failing: e1 }, e2: restraint, e3: size }, met: !e1.length && restraint.met && size.met };
+}
+
+/**
+ * The trace the clarified criteria were written from (docs/verification/playthroughs-2026-10-17/acting/trace.json, made by
+ * a probe before them): the ten readings, the boundary on the real readings, brief 12's pairs and the 65, the window
+ * between 1/12 and a tenth, and the map with its check on the even actor. Made again here, so it can be repeated.
+ */
+export function traceST6R2(cases: readonly R2Case[]) {
+  const EVEN = ST6R2_ACTORS.even;
+  const ids = ['brief-grindhouse/terror', 'brief-isekai/nobody', 'brief-rockumentary/relief', 'brief-science_fantasy/wonder', 'brief-dance-2/two', 'brief-melodrama-2/pride', 'brief-musical-2/love', 'brief-mystery-2/cornered', 'brief-psychological_horror-2/together', 'brief-psychological_horror-2/loop'];
+  const ten = ids.map((id) => {
+    const c = cases.find((x) => x.id === id)!;
+    const { ctx, spec } = c.context('restrained');
+    const rule = shareByRule(c);
+    const su = c.suitability('restrained');
+    const unrounded: EvalContext = { ...ctx, grain: Object.fromEntries(Object.entries(rule).map(([d, x]) => [d, { d: x!, label: 'unrounded' }])) };
+    const none: EvalContext = { ...ctx, grain: {} };
+    return {
+      id, medium: c.material.medium, stakes: c.material.stakes ?? 1, stakesScale: stakesScale(c.material.stakes), signals: su.signals, signalsSumHalved: r4(su.signals.reduce((t, x) => t + x.v, 0) / 2), s: su.s, grainEngine: ctx.grain, grainAtFullPrecision: Object.fromEntries(Object.entries(rule).map(([d, x]) => [d, r4(x!)])), required: c.required('restrained'),
+      actors: Object.fromEntries(Object.entries(ST6R2_ACTORS).map(([n, p]) => [n, { grainReadMinusNot: exactWith(p, ctx, spec) - exactWith(p, none, spec), atFullPrecisionMinusNot: r4(exactWith(p, unrounded, spec) - exactWith(p, none, spec)), shown: { grainRead: judgeWith(p, ctx, spec).overall, notRead: judgeWith(p, none, spec).overall, atFullPrecision: judgeWith(p, unrounded, spec).overall } }])),
+    };
+  });
+  const boundary: Record<string, { cases: number; strictRightWay: number; same: number; wrongWay: number; leastStrict: number | null }> = {};
+  for (const c of cases) {
+    const s = c.suit('restrained');
+    if (Math.abs(s) > 0.05) continue;
+    for (const p of Object.values(ST6R2_ACTORS)) {
+      const d = take(c, p) - withGrain(0, () => take(c, p));
+      const r = (boundary[s.toFixed(2)] ??= { cases: 0, strictRightWay: 0, same: 0, wrongWay: 0, leastStrict: null });
+      r.cases += 1;
+      if (Math.abs(d) <= 1e-9) r.same += 1; else if (Math.sign(d) === Math.sign(s)) { r.strictRightWay += 1; r.leastStrict = r4(Math.min(r.leastStrict ?? Infinity, Math.abs(d))); } else r.wrongWay += 1;
+    }
+  }
+  const fill = ST6R2_BUDGETS.brief12.fill;
+  const pairs: { id: string; kind: string; ability: AbilityId; share: number; lead: number; way: string }[] = [];
+  const sixtyFive: Record<string, unknown>[] = [];
+  const window: Record<string, unknown>[] = [];
+  const weakest = (e: Evaluation) => (e.piece?.segments ?? []).map((s) => { const q = Object.entries(s.dims).sort((x, y) => x[1]! - y[1]!); return { weakest: q[0]![0], byNext: r4(q[1]![1]! - q[0]![1]!) }; });
+  for (const c of cases) {
+    const e0 = c.judge(EVEN, 'restrained');
+    const base = e0.exact!;
+    const eff = Object.fromEntries(ABILITIES.map((a) => [a, Math.max(0, take(c, actor({ [a]: 60 }, 50)) - base)])) as Record<AbilityId, number>;
+    const total = ABILITIES.reduce((t, a) => t + eff[a as AbilityId], 0);
+    const sR = c.suit('restrained'), sE = c.suit('expansive');
+    const way = sE > sR ? 'against' : sR > sE ? 'with' : 'level';
+    for (const a of ABILITIES as AbilityId[]) {
+      if (!(total > 0 && eff[a] / total < 0.1)) continue;
+      const share = eff[a] / total;
+      const S = actor({ [a]: 85 }, fill);
+      const lead = take(c, S) - base;
+      pairs.push({ id: c.id, kind: c.kind, ability: a, share, lead, way });
+      const inWindow = share >= 1 / 12;
+      if (!(lead > 0.05) && !inWindow) continue;
+      const gain = take(c, actor({ [a]: 85 }, 50)) - base;
+      const cost = take(c, actor({ [a]: 50 }, fill)) - base;
+      const row = { id: c.id, kind: c.kind, work: c.work, ability: a, way, sR, sE, share: r4(share), lead: r4(lead), gain: r4(gain), cost: r4(cost), interaction: r4(lead - gain - cost), costOverPredictedByShares: r4(cost / (-((50 - fill) / 10) * (total - eff[a]))), weakest: weakest(e0) };
+      if (inWindow) window.push(row);
+      if (lead > 0.05) {
+        const p = pathOf(c, a);
+        const why = RESTRAINT_DRAWS().has(a) ? 'restraint draws on it' : p.cls === 'direct' ? 'read in a dimension at least as much as the work’s own profile reads that dimension’s leading ability' : p.cls === 'small' ? 'read only under what the profile gives a dimension’s leading ability (a supporting read)' : p.cls === 'indirect' ? 'read through the drain alone (a later segment, a load over nothing)' : 'nothing reads it';
+        sixtyFive.push({ ...row, shareAtTheSpecialistsLevels: r4(gain / (gain - cost)), leadWithTheGrainAtNothing: r4(withGrain(0, () => take(c, S) - take(c, EVEN))), leadNoWayChosen: r4(c.judge(S, undefined).exact! - c.judge(EVEN, undefined).exact!), leadPlayedExpansive: r4(take(c, S, 'expansive') - take(c, EVEN, 'expansive')), path: { cls: p.cls, why, reads: p.reads.map((x) => ({ dimension: x.dimension, weight: x.weight, leading: x.leading, direct: x.weight >= x.leading - 1e-12 })) } });
+      }
+    }
+  }
+  const ahead = pairs.filter((p) => p.lead > 0.05);
+  const count = <T,>(xs: T[], f: (x: T) => string) => xs.reduce((o2, x) => { const k = f(x); o2[k] = (o2[k] ?? 0) + 1; return o2; }, {} as Record<string, number>);
+  const windowSummary = Object.fromEntries(['against', 'with', 'level'].map((w) => {
+    const xs = window.filter((r) => r.way === w) as { lead: number; costOverPredictedByShares: number; weakest: { weakest: string; byNext: number }[] }[];
+    const med = (v: number[]) => { const s = [...v].sort((x, y) => x - y); return s.length ? r4(s[Math.floor(s.length / 2)]!) : null; };
+    const aheadXs = xs.filter((r) => r.lead > 0.05), notXs = xs.filter((r) => !(r.lead > 0.05));
+    const believabilityAlone = (r: (typeof xs)[number]) => r.weakest.every((s) => s.weakest === 'believability' && s.byNext > 0.05);
+    return [w, { pairs: xs.length, ahead: aheadXs.length, costOverPredicted: { ahead: med(aheadXs.map((r) => r.costOverPredictedByShares)), notAhead: med(notXs.map((r) => r.costOverPredictedByShares)) }, believabilityAloneAtTheBottomOfEverySegment: { ahead: aheadXs.filter(believabilityAlone).length, notAhead: notXs.filter(believabilityAlone).length } }];
+  }));
+  const map: Record<string, Record<string, Record<string, number>>> = {};
+  const mapCheck = { agree: 0, disagree: [] as string[] };
+  for (const c of cases) {
+    const base = take(c, EVEN);
+    for (const a of ABILITIES as AbilityId[]) {
+      const cls = pathOf(c, a).cls;
+      ((map[c.kind] ??= {})[a] ??= {})[cls] = (map[c.kind]![a]![cls] ?? 0) + 1;
+      const moved = Math.abs(take(c, actor({ [a]: 60 }, 50)) - base) > 1e-9;
+      if (moved === (cls !== 'none')) mapCheck.agree += 1; else mapCheck.disagree.push(`${c.id} ${a} ${cls}`);
+    }
+  }
+  return {
+    note: 'Brief 13, acting: the trace made before the clarified criteria were written (probe, not a tool). No threshold here decides anything.',
+    ten, boundary,
+    pairs: { counted: pairs.length, ahead: ahead.length, aheadByWay: count(ahead, (p) => p.way), aheadByKind: count(ahead, (p) => p.kind), aheadByAbility: count(ahead, (p) => p.ability), aheadByPath: count(sixtyFive as { path: { cls: string } }[], (p) => p.path.cls), leastShareAhead: r4(Math.min(...ahead.map((p) => p.share))) },
+    window: windowSummary, sixtyFive, map, mapCheck,
   };
 }
