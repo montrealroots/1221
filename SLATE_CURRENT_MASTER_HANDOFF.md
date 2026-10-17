@@ -3,8 +3,8 @@
 **This section is the current status, and where a new session starts.** Every section below is history. It was written
 at the end of the owner's "Finish The Current Build Against A Fixed Checklist"
 (`docs/verification/briefs-2026-10-16/11-finish-the-current-build-against-a-fixed-checklist.txt`, kept verbatim). That
-brief was worked on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `0e7ff7c2` (#37's merge), and prepared as a
-pull request for the owner. **Nothing of it is merged or deployed**, and neither happens without the owner.
+brief was worked on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `0e7ff7c2` (#37's merge), and put to the owner
+in pull request #38 (https://github.com/yvcbcjhsy7-prog/1221/pull/38). **Nothing of it is merged or deployed**, and neither happens without the owner.
 
 ## 1. The Repository
 
