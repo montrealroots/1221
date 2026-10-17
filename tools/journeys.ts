@@ -963,6 +963,13 @@ function continuity(rec: Rec): Record<string, unknown> {
   return {
     undone, saidAgain: again, sameWordsTwice: sameWordsTwice.slice(0, 20),
     onceATerm: Object.fromEntries(Object.entries(byTitle).filter(([t]) => /Begins$|^A Word On Your Coursework$|^A Notice Of Academic Concern$|^Academic Warning$|^Dismissed|^Commencement|^Cast:/.test(t))),
+    // Within each term, from its start to its review: the coursework warning and the review's own notice at most once.
+    twiceInATerm: (rec.reviews as { term: number; at: string }[]).flatMap((r) => {
+      const d = termStart(r.term).date;
+      const from = `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.day).padStart(2, '0')}`;
+      const inTerm = (t: string) => rec.notices.filter((n) => n[2] === t && n[0] >= from && n[0] <= r.at).length + rec.saidAgain.filter((n) => n[1] === t && n[0] >= from && n[0] <= r.at).length;
+      return ['A Word On Your Coursework', 'A Notice Of Academic Concern', 'Academic Warning'].filter((t) => inTerm(t) > 1).map((t) => `term ${r.term}: ${t} ${inTerm(t)} times`);
+    }),
     advice: { weeks: rec.advice.length, targets: tally(rec.advice.map((a) => a.target ?? 'none')), longRuns: runs.filter((r) => r.weeks > 4), runs: runs.length, staleRuns: runs.filter((r) => r.weeks > 4 && r.moved > 0 && r.newWords < r.moved).length, wordsOnlyChanges: runs.reduce((t, r) => t + r.stripped, 0) },
     feedback: { notes: fb.filter((x) => x.feedback).length, recurring: recurring.length, recurringOnAPartNotShort: recurringUnfounded.map((x) => `${x.id} ${x.feedback!.focus}`), kinds: tally(fb.map((x) => x.feedback?.kind ?? 'none')), longestSameNote: longestRun(notes) },
     variety: { templates: Object.keys(tally(templates)).length, pieces: templates.length, longestSameTemplate: longestRun(templates), scenes: new Set(scenes).size, sceneShowings: scenes.length, scenesAgain: Object.entries(tally(scenes)).filter(([, n]) => n > 1).length, exercises: tally(exercises), longestSameExercise: longestRun(exercises).best },
