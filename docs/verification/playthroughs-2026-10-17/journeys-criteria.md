@@ -353,6 +353,19 @@ commands from a start that's TEST SETUP where it says so:
 - **F3 and after, as found:** a financial, document or health branch that turns out unreached by every journey, J20's
   hold included, gets its own, written here before it's run.
 
+## Added After A Journey Ran: J23 (2026-10-17, Before It Ran)
+
+J21's life ended on 9 November 2028, at 26, in its third year, by SLATE's mortality draw (`systems/mortality.ts`: each year
+the chance a real year at that age has, by the 2024 US life table, the country and the body's condition, the day drawn at
+the birthday). That's the end the game gave it, recorded as J21's outcome, and neither a defect nor a reason to move
+J21's expectation. It leaves the health-interruption profile with one seed that reaches the school's end (J22). So one
+journey is added, the same profile as J21 on a seed not played before, its expectation J21's:
+- **J23:** TEST SETUP health: the flu through the game's own care on 15 October and 15 February each year, and an
+  everyday fall on 1 March; calls in sick when ill on a class day. Seed j13-17, Lagos, he/him, scraping family; attentive,
+  keeps papers. Expected: graduates on 21 May 2029. Each illness lowers condition and energy by its toll and not
+  stamina. A class day called in sick is excused. Work judged while ill or hurt is recorded so and comes out lower than
+  the same student's well work.
+
 ## What Counts As Done
 
 Every journey run to its end in parts under ten minutes, each part's output in `journeys/`, the ten checks worked out on
