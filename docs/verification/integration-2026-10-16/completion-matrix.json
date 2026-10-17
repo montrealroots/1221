@@ -343,10 +343,10 @@
    "source": "audit",
    "goal": "Read the guide chapter by chapter, each opening what it teaches | The guide (the Guide button's dialog; How This Works opens the reference, which marks nothing read) sends tutorial.read { chapterId }. It refuses: a life with no guide; an unknown chapter; one already read; one out of order ('Read “X” first; the chapters go in order.'). It appends the chapter to tutorial.read and sets tutorial.finished once none is next. Downstream: the guide's guard (lockedBecause/isOpen) refuses commands, and Gated grays controls, until their chapter is read; a finished guide stays open whatever chapters are added later (tutorial.ts:40, 53; the open-time migration index.ts:297-298).",
    "entry": "the guide (the top bar’s Guide button); from 2026-10-12 How This Works on every panel opens the guide’s reference, which marks no chapter read | Guide.tsx",
-   "preconditions": "A guided life; the next chapter in order, each once | refused where: This life has no guide to read through; everything is open.; There’s no such chapter.; You’ve already read “…”.; Read “…” first; the chapters go in order.",
+   "preconditions": "A guided life; the next chapter in order, each once | refused where: This life was begun without the guide, so everything is already open.; There’s no such chapter.; You’ve already read “…”.; Read “…” first. The chapters open in order.",
    "reads": "tutorial.read order",
    "decisions": "chooses: chapterId, read, next",
-   "validation": "refusals: This life has no guide to read through; everything is open.; There’s no such chapter.; You’ve already read “…”.; Read “…” first; the chapters go in order. | costs: Marks the chapter read and opens the features it names. Until a chapter is read, the guide refuses every command it holds",
+   "validation": "refusals: This life was begun without the guide, so everything is already open.; There’s no such chapter.; You’ve already read “…”.; Read “…” first. The chapters open in order. | costs: Marks the chapter read and opens the features it names. Until a chapter is read, the guide refuses every command it holds",
    "changes": "tutorial.read[]; tutorial.finished once every chapter is read (from 2026-10-12) | read (added to)",
    "later": "Not recorded",
    "systems": "world/tutorial.ts guardCommands (isOpen), open for good once the guide is finished, whatever chapters are added after (from 2026-10-12); the top bar’s Guide (N Left), none on a finished guide (Guide.tsx:148, from 2026-10-13: until then it counted the chapters added after it) | isOpen and lockedBecause (world/tutorial.ts), behind every Gated button and useFeature (ui/guide/Guide.tsx)",
@@ -11130,7 +11130,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11205,7 +11205,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-g",
@@ -11257,7 +11257,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-i",
@@ -11333,7 +11333,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -13716,7 +13716,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14135,7 +14135,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14436,7 +14436,7 @@
     "commit": "51cdd7d6",
     "watch": "app"
    },
-   "missing": "It was measured on 51cdd7d6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 51cdd7d6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14463,7 +14463,7 @@
     "commit": "51cdd7d6",
     "watch": "app"
    },
-   "missing": "It was measured on 51cdd7d6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 51cdd7d6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14490,7 +14490,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14517,7 +14517,7 @@
     "commit": "0cf3a9bc",
     "watch": "app"
    },
-   "missing": "It was measured on 0cf3a9bc, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 0cf3a9bc, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14800,7 +14800,7 @@
     "commit": "7e7a3af6",
     "watch": "app"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14827,7 +14827,7 @@
     "commit": "7e7a3af6",
     "watch": "app"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14854,7 +14854,7 @@
     "commit": "7e7a3af6",
     "watch": "app"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14881,7 +14881,7 @@
     "commit": "7e7a3af6",
     "watch": "app"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14908,7 +14908,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14935,7 +14935,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14962,7 +14962,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14989,7 +14989,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15016,7 +15016,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15043,7 +15043,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15070,7 +15070,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15097,7 +15097,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15124,7 +15124,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15151,7 +15151,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15178,7 +15178,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15205,7 +15205,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15232,7 +15232,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15259,7 +15259,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15286,7 +15286,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15313,7 +15313,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15340,7 +15340,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15367,7 +15367,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15394,7 +15394,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15421,7 +15421,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15448,7 +15448,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15475,7 +15475,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15502,7 +15502,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15529,7 +15529,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15578,7 +15578,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15605,7 +15605,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15632,7 +15632,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15659,7 +15659,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15686,7 +15686,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15713,7 +15713,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15740,7 +15740,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15767,7 +15767,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/types.ts): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/guide/index.ts, src/engine/content/guide/types.ts, src/engine/content/tutorial.ts, …): measure it again"
   }
  ]
 }
