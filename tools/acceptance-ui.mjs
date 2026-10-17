@@ -25,7 +25,9 @@
  * the clock and its part’s figure, a way of playing and a table work answer are taken in the engine’s words,
  * Connecticut’s plan is asked for in its own panel, the IRS plan in force says what it covers and the IRS plan is asked
  * for from its own (on the lien save, which owes it with no plan), and the leave save’s first class’s productions and
- * evaluated terms are read.
+ * evaluated terms are read. From 2026-10-17 (brief 12's walkthrough) it also reads Health Cover's words for a student,
+ * a workout's Energy and Stamina on the Profile and the night's Energy after, and a Connecticut ID card got and still
+ * on its way after Save & Exit and Continue.
  *
  * It writes OUT/report.json (every step, every page or console error, every screen past the right edge) and a
  * screenshot of each failed step.
@@ -752,6 +754,64 @@ await step('interruption: an advance past a commitment stops at it and asks; Sta
   must(at === after, `Stand Here moved the clock: ${at} → ${after}`);
   await advance('One Hour').catch(() => {});
   return `stopped at ${at}; Stand Here kept it there`;
+});
+/**
+ * Brief 12's walkthrough (2026-10-17, `docs/verification/resolution-2026-10-17/PLAYTEST.md`) asks three things the steps
+ * above didn't read: health cover as a student meets it, stamina spent and recovered, and a document got and kept
+ * across a save. Each is read on the screen the walkthrough sends a player to.
+ */
+const condition = () => page.locator('section.card', { has: page.getByRole('heading', { name: 'Current Condition', exact: true }) }).first();
+// The label is drawn in capitals by the stylesheet, and innerText reads it so.
+const energyNow = async () => Number((await statIn(condition(), 'Energy, Stress')).match(/^Energy, Stress (\d+),/i)?.[1] ?? NaN);
+const staminaRow = async () => (await page.locator('tr', { has: page.getByRole('button', { name: /^Stamina$/ }) }).first().locator('td').allInnerTexts()).map((t) => t.replace(/\s+/g, ' ').trim());
+await step('health: Health Cover names the student’s cover and says the School meets the work rules, offering no work hours', async () => {
+  await rail('Papers'); await tab('Health Cover');
+  const cover = await statIn(page.locator('section.card', { has: page.getByRole('heading', { name: 'Your Cover', exact: true }) }).first(), 'This Month');
+  must(/Yale Health/.test(cover), `Your Cover says “${cover}”`);
+  const market = (await page.locator('section.card', { has: page.getByRole('heading', { name: 'The Marketplace', exact: true }) }).first().innerText()).replace(/\s+/g, ' ');
+  const rules = market.match(/From 2027 Medicaid’s work rules[^.]*\./)?.[0] ?? '';
+  must(/at the School/.test(rules), `the work rules said: ${rules || market.slice(0, 200)}`);
+  must(!/\b80 hours|hours’ work|hours of work/i.test(market), `The Marketplace offers work hours: ${market.match(/.{0,60}(80 hours|hours’ work|hours of work).{0,60}/i)?.[0]}`);
+  return `${cover}; ${rules}`;
+});
+await step('stamina and recovery: Work Out spends Energy and builds Stamina on the Profile; a night’s sleep gives the Energy back', async () => {
+  // At seven, before the day's classes, which refuse a workout while they run (“You’re at Classes until 3:00 PM.”).
+  await advance('Tomorrow Morning');
+  await rail('Player Profile');
+  const e0 = await energyNow(); const s0 = await staminaRow();
+  must(Number.isFinite(e0) && s0.length > 1, `Current Condition or the Stamina row unread: ${e0}, ${s0.join(' | ')}`);
+  await page.getByRole('button', { name: /^Look After Yourself/ }).first().click(); await wait(300);
+  const workout = page.getByRole('menuitem', { name: /^Work Out/ }).first();
+  must(await workout.count(), 'no Work Out in Look After Yourself');
+  if (await workout.isDisabled()) { const why = (await workout.innerText()).replace(/\s+/g, ' '); await page.keyboard.press('Escape'); skip(`Work Out refused: ${why}`); }
+  await workout.click(); await wait(1500); await settleDialogs();
+  const said = await toast();
+  const e1 = await energyNow(); const s1 = await staminaRow();
+  must(e1 < e0, `Energy ${e0} → ${e1} after a workout`);
+  must(Number(s1[1]) > Number(s0[1]) || /full/i.test(s1.join(' ')), `Stamina ${s0[1]} → ${s1[1]} after a workout`);
+  const day = await dateText();
+  await advance('Tomorrow Morning');
+  await rail('Player Profile');
+  const e2 = await energyNow();
+  must((await dateText()) !== day, `still ${day} after Tomorrow Morning`);
+  must(e2 > e1, `Energy ${e1} → ${e2} after the night`);
+  return `${said}; Energy ${e0} → ${e1}, Stamina ${s0[1]} → ${s1[1]} (Today: ${s1[4] ?? ''}); slept to ${await dateText()} ${await clock()}, Energy ${e2}`;
+});
+await step('papers: a Connecticut ID card got from Passport And ID, its fee, its mailing and its term said; saved and continued, it’s still on its way', async () => {
+  await rail('Papers'); await tab('Passport And ID');
+  const get = page.getByRole('button', { name: /^Get Non-Driver Identification Card$/ }).first();
+  must(await get.count(), 'no Get Non-Driver Identification Card');
+  must(!(await get.isDisabled()), `refused: ${await get.getAttribute('title')}`);
+  await get.click(); await wait(1000);
+  const said = await toast();
+  must(/Non-Driver Identification Card, for \$28\.00; the card comes [A-Z][a-z]+ \d{1,2}, \d{4}; good until [A-Z][a-z]+ \d{1,2}, \d{4}\./.test(said), `the toast said: ${said}`);
+  await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+  await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+  await rail('Papers'); await tab('Passport And ID');
+  const again = page.getByRole('button', { name: /^Get Non-Driver Identification Card$/ }).first();
+  const why = await again.getAttribute('title');
+  must((await again.isDisabled()) && why === 'One is on its way.', `after Continue the button is ${await again.isDisabled() ? 'refused' : 'open'}: ${why}`);
+  return `${said} After Continue: “${why}”`;
 });
 // Journeys from saves the scenarios wrote: a tax balance owed to the IRS and Connecticut, and a student back from a leave.
 if (DIR && existsSync(`${DIR}/tax.json`)) {
