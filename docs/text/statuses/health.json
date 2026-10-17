@@ -495,7 +495,7 @@
   "status": "Reviewed And Retained",
   "hash": "308fc8f9c0e6",
   "on": "2026-10-17",
-  "reason": "The gazetteer's country table: tab-separated data rows (id, code, name, capital, continent, currency, population, area, currency name, dialling code, languages) in their source's spelling. A screen shows one field at a time, a country's name or capital on Where You Are and the place look, never the row; kept as data. Two stray spaces in the source rows (Bonaire's name, Curacao's capital) are in defects.md."
+  "reason": "The gazetteer's country table: tab-separated data rows (id, code, name, capital, continent, currency, population, area, currency name, dialling code, languages) in their source's spelling. A screen shows one field at a time, a country's name or capital on Where You Are and the place look, never the row; kept as data. Three source fields carry a stray space (Bonaire's name, Curacao's capital, Heard Island's dialling code, health defects.md 7); from 2026-10-17 the parse trims every field (crossarea defects.md 4), so none reaches a screen."
  },
  "src/engine/content/world-data.ts#REGION_TABLE": {
   "status": "Reviewed And Retained",

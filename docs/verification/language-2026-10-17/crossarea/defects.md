@@ -132,3 +132,42 @@ harness that applies it, runs the test file and restores the source byte for byt
 - **Mutation run** (five mutations, all killed): the ask's check typed 700; the notice typed 700; the guide's review
   line typed 700; the guide's ask line typed 700; the ask's boundary moved from `<` to `<=` (a score at the figure
   declined).
+
+## 4. The gazetteer's stray spaces
+
+- **What:** `src/engine/content/world-data.ts`, `COUNTRY_TABLE`, parsed by `rows()`, which split on tabs without trimming.
+  Three fields carried a stray space to the screen (health `defects.md` 7): Bonaire's name
+  ("Bonaire, Saint Eustatius and Saba ", so a sentence ending on it had a space before its stop), Curacao's capital
+  (" Willemstad", which the country look mostly hid by finding the city through `CITIES.byName`), and Heard Island's
+  dialling code (" ", which the country look printed as a Calling Code of "+ " where it means none).
+- **Where the data is built:** `tools/build-world-data.mjs` from the GeoNames dumps (`countryInfo.txt`,
+  `admin1CodesASCII.txt`, `cities1000.txt`), copying each field as GeoNames spells it; it emits `world-data.ts`,
+  tables and parse, and the file says not to edit it by hand. The dumps aren't in the repository or this container, so
+  the file can't be regenerated here.
+- **Whether anything compares these strings:** no. Every reader of a country's `name`, `capital` and `phone`
+  (`content/geography.ts` builds `COUNTRIES` from it) prints it; a name is looked up through `Registry.byName`, whose
+  `normalise` already trims; `world/place.ts` compares a region's name with its country's, and Bonaire's regions are
+  Bonaire, Saba and Sint Eustatius; ids come from slugs, which keep no spaces. The countries are sorted by name at build
+  time, and Bonaire stays between Bolivia and Bosnia. A script reading every field of the three tables found these three
+  and no other: none of the 3,865 regions or the 1,365 bundled cities, and none of the 248 `public/geo/*.tsv` files.
+- **Fix, at the source the game reads:** the parse trims every field,
+  `line.split('\t').map((field) => field.trim())`, in the generated file and, the same four lines, in the builder's
+  template, so a regeneration emits it (checked: the builder's lines, unescaped as its template emits them, equal the
+  file's). The tables keep GeoNames' bytes. The builder's read of the dumps wasn't changed: trimming there could change
+  which rows it keeps (a code with a stray space in a row the bundle doesn't show), which can't be checked without the
+  dumps. No source of text changed; the health area's status for `COUNTRY_TABLE` was marked again `--by health` with
+  its reason brought up to date (three fields, trimmed at the parse).
+- **Test:** `tests/language-crossarea.test.ts`, "holds no field that starts or ends with a space in any country, region
+  or bundled city; Bonaire’s name, Curacao’s capital and Heard Island’s dialling code read as they should, on the
+  country look too": no field of the three tables starts or ends with whitespace; the three read "Bonaire, Saint
+  Eustatius and Saba", "Willemstad" and ""; on the country look, Bonaire's name and its money's line, "The capital is
+  Willemstad.", Heard Island's Calling Code "Not On File", and Curacao's "+599".
+- **Shown failing without the fix:** the parse without the trim: the three fields listed, exit 1. With it, exit 0;
+  `npx vite-node tools/geo-check.mjs` holds, and the geography tests (`cohesion`, `geography`, `world-map`,
+  `citizenship`, `looks`, with this file) pass 104 of 104.
+- **Mutation run:** the trim taken out, killed; `trimStart` only, killed (Bonaire); `trimEnd` only, killed (Curacao); a
+  lone space kept, killed (Heard Island). One survived: trimming the country table alone, leaving the regions and the
+  cities untrimmed. On today's data trimming those two changes nothing, since none of their fields has a stray space.
+  The trim stays in the one parse all three tables share: confining it to the country table would need a second parse
+  to change nothing, and the builder emits all three through it, so a regeneration that brings a stray space to a
+  region or a city is trimmed too.

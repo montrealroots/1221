@@ -42,3 +42,5 @@ Brief 14, 2026-10-17. Functional faults found while reading the health area's so
    fields) changes the parse of all three tables, countries, regions and cities, so it's for the coordinator to place.
    Suggested: `const rows = (table: string) => table.split('\n').map((line) => line.split('\t').map((f) => f.trim()));`
    with a test that `WORLD_COUNTRIES` has no field with a leading or trailing space.
+   **Fixed** on 2026-10-17 by the cross-area pass (`crossarea/defects.md`, 4), as suggested: the parse trims every field,
+   in the generated file and in the builder's template. What's above was true until then.

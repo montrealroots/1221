@@ -8,6 +8,8 @@
  * - The IRS's decision on a payment plan reads the plan's state, never its refusal's words; until then it skipped a
  *   refusal whose words matched /payment plan|application/ (papers `defects.md` 4). Every case of the decision is pinned
  *   here, and held the same on the code before the fix and after it.
+ * - The gazetteer's fields are read trimmed: Bonaire's name, Curacao's capital and Heard Island's dialling code carried
+ *   GeoNames' stray spaces to the screen (health `defects.md` 7).
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, an actress at Yale in New Haven from Monday
  * 24 August 2026 at 7:30 AM. The page's live clock is the real `GameProvider` in a real React root (react-dom/client),
@@ -26,6 +28,11 @@ import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { recordWages } from '@/engine/systems/earnings';
 import { PLAN, owedAll, planRefusal, returnsOf } from '@/engine/systems/taxreturn';
+import { WORLD_CITIES, WORLD_COUNTRIES, WORLD_REGIONS } from '@/engine/content/world-data';
+import { COUNTRIES } from '@/engine/content/geography';
+import '@/ui/looks/all';
+import { resolveLook, type Looked } from '@/ui/looks/registry';
+import { at as subject } from '@/ui/looks/subject';
 import { GameProvider, useGame, useWorld, type GameContextValue } from '@/app/game-context';
 import { TimeControls } from '@/ui/shell/TimeControls';
 
@@ -255,4 +262,31 @@ describe('the IRS’s decision on a payment plan', () => {
       expect(left).toMatchObject({ status, why: undefined, notices: [], fees: 0 });
     }
   }, 120_000);
+});
+
+// ---------------------------------------------------------------------------
+// The gazetteer's fields
+// ---------------------------------------------------------------------------
+
+describe('the gazetteer’s fields', () => {
+  it('holds no field that starts or ends with a space in any country, region or bundled city; Bonaire’s name, Curacao’s capital and Heard Island’s dialling code read as they should, on the country look too', () => {
+    const rows = [...WORLD_COUNTRIES, ...WORLD_REGIONS, ...WORLD_CITIES] as readonly Record<string, unknown>[];
+    const stray = rows.flatMap((row) => Object.entries(row).filter(([, v]) => typeof v === 'string' && v !== v.trim()).map(([k, v]) => `${String(row.id)}.${k} ${JSON.stringify(v)}`));
+    expect(stray).toEqual([]);
+    expect([COUNTRIES.get('bq')!.name, COUNTRIES.get('cw')!.capital, COUNTRIES.get('hm')!.phone]).toEqual(['Bonaire, Saint Eustatius and Saba', 'Willemstad', '']);
+
+    // The country look, as the player reads it: a name that ends a sentence without a space before its stop, the capital
+    // as its own sentence, and no dialling code where there's none.
+    const sim = quickSave({}, 'xarea-gazetteer');
+    const look = (id: string) => {
+      const found = resolveLook(sim, subject('country', id)) as Looked;
+      return { ...found, text: onScreen(renderToStaticMarkup(createElement('div', null, found.body))) };
+    };
+    const bonaire = look('bq');
+    expect(bonaire.name).toBe('Bonaire, Saint Eustatius and Saba');
+    expect(bonaire.ways?.[0]?.detail).toBe('What everything in Bonaire, Saint Eustatius and Saba is priced in');
+    expect(look('cw').text).toMatch(/^The capital is Willemstad\. /);
+    expect(look('hm').text).toContain('Calling Code Not On File Dialed from outside');
+    expect(look('cw').text).toContain('Calling Code +599 Dialed from outside');
+  });
 });
