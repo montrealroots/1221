@@ -3,7 +3,9 @@
  * tapes three briefs through the game's commands, and copies of the save that each train one input for twenty days.
  * `tools/advice.ts` runs it over the seeds; `tests/advice.test.ts` plays one case through it. From brief 10 (later on
  * 2026-10-16) it also builds F2-A10's cases (`buildCase`, below F2-A's own, which are unchanged): a band of ability, a
- * stage of the term, the 149 genres, and the realized gain over the work the advice reads (`worthOf`).
+ * stage of the term, the 149 genres, and the realized gain over the work the advice reads (`worthOf`). From brief 12
+ * (2026-10-17) it also names the fresh validation set (adv-v-0 to 119, refused without --fresh) and holds the workings
+ * and detectors the clarified (f) and (h) are measured by (below `caseOf`'s sets, at the end of the file).
  */
 
 import { createSave, loadSave } from '../src/engine';
