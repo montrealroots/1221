@@ -17,7 +17,17 @@
  * Latvia's at its embassy in the US weren't found, and SLATE took Iceland's and Brazil's fees at home (Brazil's R$257.25,
  * the Polícia Federal's) and the Latvian embassy in Ireland's fees and times, its €165 urgent service with them, for the
  * embassy in the US; Iceland's express wasn't offered from abroad. Japan's consulate and New Zealand's office refused
- * every request that day (403s, a Cloudflare challenge), and their entries still say what's SLATE's.
+ * every request that day (403s, a Cloudflare challenge), and their entries still said what was SLATE's.
+ *
+ * Japan's and New Zealand's tried again on 2026-10-17 (brief 12's KS-passport-fees, the same record's `brief12`). Japan's
+ * settled in its own law, read on e-Gov: US$62, set for the whole country by MOFA's ordinance from 1 July 2026, where
+ * until then SLATE charged the window fee in Japan, 9,300 yen, at its own rate, the same $62.00 said to be SLATE's. New
+ * Zealand's GST and urgent fee from abroad stayed behind challenges (passports.govt.nz's Cloudflare, legislation.govt.nz's
+ * AWS WAF), and are SLATE's assumptions, each one value in `NZ_FROM_ABROAD`, labelled so on the screen.
+ *
+ * A value here is read when an application is made, and what it charged is posted then: changed later, a fee already
+ * paid stands and a passport on its way comes as it was applied for, and the new value applies to what's applied for
+ * after. A passport's term is set when it's issued, from the office's years at home, which nothing here touches.
  *
  * The United States isn't here: a US citizen in New Haven applies at home, and renews by mail (`US_RENEWAL`).
  */
@@ -79,10 +89,17 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
     basis: 'At the consulate, for a Spaniard registered there (Registro de Matrícula Consular), the same 30 EUR; not issued on the spot, about three weeks on average.',
     assumed: ['SLATE takes a student as registered with the consulate in New York.'],
   },
+  // MOFA Ordinance 4 of 2006 on passport fees abroad (国外における旅券手数料の額を定める省令), as amended by MOFA Ordinance
+  // 19 of 2026, promulgated 24 June 2026, in force for applications from 1 July 2026, its table's row for the United
+  // States: US$62 for a ten-year passport on paper, US$60 online. The Passport Act's Enforcement Order, art. 5, sets the
+  // fee abroad for each country where the consular officer is posted, in its currency, so the consulate for Connecticut
+  // charges what every Japanese post in the US does. Both read on laws.e-gov.go.jp on 2026-10-17, every emb-japan.go.jp
+  // and mofa.go.jp page refusing SLATE (403). Until 2026-10-17 SLATE charged the window fee in Japan, 9,300 yen, at its
+  // own rate, which came to the same $62.00, and said the figure was its own.
   JP: {
-    fee: 9300, currency: 'JPY', days: 30, daysEstimated: true, expedite: null,
-    basis: 'At a Japanese embassy or consulate, charged in local currency at the mission’s published rate; about a month, the passport made in Japan.',
-    assumed: ['The consulate’s dollar fee wasn’t read, its site refusing SLATE’s requests on 2026-10-17: SLATE charges the yen fee at its rate.'],
+    fee: 62, currency: 'USD', days: 30, daysEstimated: true, expedite: null,
+    basis: 'At a Japanese embassy or consulate in the US, on paper: US$62 from 1 July 2026, the fee MOFA’s ordinance on passport fees abroad sets for the United States (US$60 applied for online); about a month, the passport made in Japan.',
+    assumed: [],
   },
   KR: {
     fee: 52, currency: 'USD', days: 30, daysEstimated: true, expedite: null,
@@ -108,11 +125,10 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
     basis: 'Issued by Brazilian embassies and consulates through e-consular, at the consular fee from 1 June 2026: 60 reais-ouro, a real-ouro being a dollar, so US$60.',
     assumed: ['The consulate’s time wasn’t found: SLATE takes the days at home.', 'The Polícia Federal’s urgent service isn’t consular: none offered.'],
   },
-  NZ: {
-    fee: 247, currency: 'NZD', days: 28, daysEstimated: false, expedite: { extra: 247, days: 5, note: 'Urgent service; its fee is from search extracts, not read from the office itself' },
-    basis: 'Online to DIA from overseas, at the same New Zealand dollar fees.',
-    assumed: ['A non-resident for New Zealand tax applying online pays no GST; whether a student in the US is one isn’t known, so SLATE charges it.', 'Courier delivery, NZD 7 to 78, isn’t charged.', 'Its urgent service from overseas is taken as at home.'],
-  },
+  // Read when it's asked for, so a change to `NZ_FROM_ABROAD` reaches the screen and the command alike (from 2026-10-17:
+  // until then its figures were written here, NZ$247 and NZ$247 more, GST in both, the same as `nzTerms` gives by
+  // default).
+  get NZ(): AbroadTerms { return nzTerms(); },
   // The Embassy of Latvia to the USA (usa.mfa.gov.lv, "Applying for passport and ID card", updated 27.05.2026, read
   // 2026-10-17): a passport alone €140, €115 under 20 or over 65, from 1 May 2026, in about eight weeks, no urgent
   // service. Until 2026-10-17 SLATE took the embassy in Ireland's for it: €140 in about five weeks, and €165 urgent.
@@ -122,6 +138,50 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
     assumed: ['Shipment by FedEx, €35, isn’t charged: SLATE takes the passport collected at the embassy, where it’s applied for in person.'],
   },
 };
+
+/**
+ * New Zealand's office from abroad (brief 12's KS-passport-fees; `docs/research/world/research-passports-abroad.json`,
+ * its `brief12`, read 2026-10-17). What's DIA's: the adult fee, NZ$247 with GST from 2 May 2025 (DIA's release of 1 May
+ * 2025), NZ$214.78 before it, the regulations setting fees before GST (DIA's 2022 Cabinet papers); DIA's 2022 schedule
+ * charging no GST on "online applications from outside New Zealand"; and its priority fee for an application "New
+ * Zealand or on line" equal to the standard fee. What's SLATE's, each one value here, said so on the screen:
+ *
+ * - `gstCharged`: whether a New Zealander applying online from New Haven pays GST. DIA's costs page (behind a Cloudflare
+ *   challenge; seen in search extracts) spares "a non-resident for New Zealand tax purposes", and IRD makes that a
+ *   person with no permanent place of abode in New Zealand who's away more than 325 days in a year, which turns on a home
+ *   SLATE knows nothing of. SLATE charges it, the price DIA publishes, as it did from 2026-10-16. Off, NZ$214.78.
+ * - `urgentBeforeGst`: the urgent fee for an online application from overseas, taken as the standard fee, as DIA's 2022
+ *   schedule set it, Cabinet's 2025 increase of about 14.9% applying to every passport fee alike; the 2025 regulations
+ *   (SL 2025/75) were behind an AWS WAF challenge. GST on it follows `gstCharged`.
+ *
+ * Changed, it's read on the next application: a fee already charged stands (`content/passportsabroad.ts`'s header).
+ */
+export const NZ_FROM_ABROAD: { feeBeforeGst: number; urgentBeforeGst: number; gstRate: number; gstCharged: boolean } = {
+  feeBeforeGst: 214.78,
+  urgentBeforeGst: 214.78,
+  gstRate: 0.15,
+  gstCharged: true,
+};
+
+/** A New Zealand fee before GST, with GST where SLATE charges it, to the cent. */
+const nzFee = (beforeGst: number): number => Math.round(beforeGst * (NZ_FROM_ABROAD.gstCharged ? 1 + NZ_FROM_ABROAD.gstRate : 1) * 100) / 100;
+
+/** New Zealand's terms from abroad, as `NZ_FROM_ABROAD` stands now. */
+function nzTerms(): AbroadTerms {
+  const gst = NZ_FROM_ABROAD.gstCharged;
+  return {
+    fee: nzFee(NZ_FROM_ABROAD.feeBeforeGst), currency: 'NZD', days: 28, daysEstimated: false,
+    expedite: { extra: nzFee(NZ_FROM_ABROAD.urgentBeforeGst), days: 5, note: 'Urgent service, its fee from overseas SLATE’s assumption' },
+    basis: `Online to DIA from overseas: NZ$${NZ_FROM_ABROAD.feeBeforeGst.toFixed(2)} before GST, NZ$${(NZ_FROM_ABROAD.feeBeforeGst * (1 + NZ_FROM_ABROAD.gstRate)).toFixed(2)} with it, from 2 May 2025.`,
+    assumed: [
+      gst
+        ? 'SLATE’s assumption, not DIA’s published policy: GST is charged. DIA charges none to a non-resident for New Zealand tax applying online, and whether you’re one turns on a home in New Zealand that SLATE doesn’t keep.'
+        : 'SLATE’s assumption, not DIA’s published policy: no GST is charged, taking you as a non-resident for New Zealand tax.',
+      'SLATE’s assumption: the urgent fee from overseas is the standard fee, as DIA’s 2022 schedule set it for an application online.',
+      'Courier delivery, NZD 7 to 78, isn’t charged.',
+    ],
+  };
+}
 
 /**
  * A US passport renewed by mail on Form DS-82 (from 2026-10-16): $130 to the Department of State, with no acceptance

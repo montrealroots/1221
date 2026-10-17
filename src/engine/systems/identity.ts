@@ -33,7 +33,8 @@ import { schoolEnded } from './school';
  * ID, whose expiration "must align with the expiration date on the individual's legal status document(s)", is for DACA
  * holders only, and Regs. Conn. State Agencies § 14-137-64a(c) lets the commissioner revoke the card once its holder is
  * "no longer entitled to be present", with no term), so it stays SLATE's, the limited-term card's rule, and said to be
- * (`docs/research/world/research-ct-idcard.json`, brief 11's KS-ct-idcard). Once SAVE has approved it the card is mailed
+ * (`docs/research/world/research-ct-idcard.json`, brief 11's KS-ct-idcard), and from 2026-10-17 it's one value,
+ * `toLawfulPresence`, its basis said there (brief 12). Once SAVE has approved it the card is mailed
  * as anyone's is: the DMV asks the applicant back "when the immigration results have been approved", and the card
  * "will arrive in the mail", within twenty business days (`ID_CARDS`, from 2026-10-17: until then it came on SAVE's
  * day). Once school is over the lawful presence is a US
@@ -49,7 +50,37 @@ import { schoolEnded } from './school';
  * to Friday, and a card applied for on the evening of 29 September 2026 came on 13 October, Columbus Day counted, not
  * on the 14th (left by that day’s second round).
  */
-export const NONCITIZEN_ID = { saveBusinessDays: 10, source: 'https://portal.ct.gov/dmv/licenses-permits-ids/get-a-drivers-license-ct; https://portal.ct.gov/dmv/licenses-permits-ids/get-real-id' } as const;
+export const NONCITIZEN_ID: { readonly saveBusinessDays: number; toLawfulPresence: boolean; readonly source: string } = {
+  saveBusinessDays: 10,
+  /**
+   * SLATE's assumption, not the state's published policy (brief 12's KS-ct-idcard, 2026-10-17): the card runs to the end
+   * of its holder's lawful presence, never past the seven years to a birthday anyone's runs. Tried again that day, no
+   * source gives a term for the card the DMV doesn't verify: chapters 1 and 246 of the statutes have none, the DMV's
+   * pages say "valid for 7 years" with no exception, and 2005's Substitute SB 189, which would have restricted it "to a
+   * term limited to coincide with the period of such person's lawful presence", failed in committee
+   * (`docs/research/world/research-ct-idcard.json`, its `brief12`). Its basis: the DMV's limited-term REAL ID, whose
+   * expiration "must align with the expiration date on the individual's legal status document(s)", and § 14-137-64a(c),
+   * which lets the commissioner revoke the card once its holder is "no longer entitled to be present". Off, the card
+   * takes the seven years to a birthday, still after SAVE and the mail and still non-verified. Read when the card is
+   * applied for and written on it (`expiresAt`): changed, a card already issued or on its way keeps its date, a fee paid
+   * stands, and a new card takes the new term. Your ID on Papers says so (`noncitizenTermNote`).
+   */
+  toLawfulPresence: true,
+  source: 'https://portal.ct.gov/dmv/licenses-permits-ids/get-a-drivers-license-ct; https://portal.ct.gov/dmv/licenses-permits-ids/get-real-id',
+};
+
+/**
+ * What Your ID tells somebody not a citizen at a US state's counter about the card's term: that it's SLATE's assumption,
+ * as `NONCITIZEN_ID.toLawfulPresence` stands; nothing for a citizen, whose term is the state's (from 2026-10-17: until
+ * then the screen said nothing of it, and only the guide called it SLATE's reading).
+ */
+export function noncitizenTermNote(person: Person): string | undefined {
+  const here = idCardHere(person);
+  if (!here || !here.jurisdiction.startsWith('us-') || citizenOf(person, 'US')) return undefined;
+  return NONCITIZEN_ID.toLawfulPresence
+    ? 'You’re not a US citizen, so your card runs to the end of your lawful presence: the program’s end at school, OPT’s end on OPT. That’s SLATE’s assumption, not the state’s published policy: the state publishes no term for a card it doesn’t verify. A card already issued keeps its date if that’s ever corrected.'
+    : 'You’re not a US citizen, and your card runs its years to a birthday as anyone’s does. That’s SLATE’s assumption, not the state’s published policy: the state publishes no term for a card it doesn’t verify. A card already issued keeps its date if that’s ever corrected.';
+}
 
 /**
  * When a card issued now runs out: its years from the day, or, where the state runs it to a birthday (Connecticut's,
@@ -270,21 +301,23 @@ export function registerIdentity(sim: Simulation): void {
     const id = s.nextId('document');
     // Ireland's passport card runs five years or to the book's expiry; the Ontario, BC and INE cards' terms weren't read.
     const book = card.passportBook ? documentsOf(person).find((d) => d.kind === 'passport' && d.issuer === 'IE' && inForce(d, s.now)) : undefined;
-    // A non-citizen's runs to the end of their lawful presence, and waits on SAVE (`NONCITIZEN_ID`, from 2026-10-10).
-    const limited = jurisdiction.startsWith('us-') ? presenceEnds(person, s.now) : undefined;
+    // A non-citizen's waits on SAVE (from 2026-10-10), and runs to the end of their lawful presence where SLATE's assumption
+    // has it (`NONCITIZEN_ID.toLawfulPresence`, from 2026-10-17: until then always, with no one value to change it).
+    const presence = jurisdiction.startsWith('us-') ? presenceEnds(person, s.now) : undefined;
+    const limited = NONCITIZEN_ID.toLawfulPresence ? presence : undefined;
     const term = idCardExpires(card, person, s.now);
     const expiresAt = term !== undefined ? Math.min(term, book?.expiresAt ?? Infinity, limited ?? Infinity) : undefined;
     // SAVE's check first for somebody not a citizen, then the mail where the state mails the card (Connecticut's twenty
     // business days, `ID_CARDS`, from 2026-10-17: until then a citizen's was in force at the counter, and a
     // non-citizen's came on SAVE's day).
-    const decided = limited !== undefined ? businessDaysOn(s.now, NONCITIZEN_ID.saveBusinessDays, true) : s.now;
+    const decided = presence !== undefined ? businessDaysOn(s.now, NONCITIZEN_ID.saveBusinessDays, true) : s.now;
     const readyAt = card.mailedBusinessDays ? businessDaysOn(decided, card.mailedBusinessDays, true) : decided;
     if (readyAt > s.now) {
       // Not REAL ID for somebody not a citizen: “Only U.S. Citizens and Permanent Residents are eligible for a verified
       // REAL ID driver’s license”, and anyone else is “issued a non-verified (Not for Federal Identification) driver’s
       // license or ID card” (Connecticut DMV, Non-US Citizen Requirements and DI-3 Rev. 6-2026, read 2026-10-16). Until
       // 2026-10-16 it was marked REAL ID, and its page said it met it (`nonCitizenCards` corrects one a save holds).
-      documentsOf(person).push({ id, kind: 'idcard', issuer: jurisdiction, name: limited !== undefined ? `${card.name}, Limited Term` : card.name, number: numberFor('ID', id), status: 'pending', appliedAt: s.now, readyAt, ...(expiresAt ? { expiresAt } : {}), ...(jurisdiction.startsWith('us-') ? { realId: limited === undefined } : {}) } as PersonDocument);
+      documentsOf(person).push({ id, kind: 'idcard', issuer: jurisdiction, name: limited !== undefined ? `${card.name}, Limited Term` : card.name, number: numberFor('ID', id), status: 'pending', appliedAt: s.now, readyAt, ...(expiresAt ? { expiresAt } : {}), ...(jurisdiction.startsWith('us-') ? { realId: presence === undefined } : {}) } as PersonDocument);
       s.schedule({ at: readyAt, kind: ID_CARD_KIND, label: 'The ID Card Comes', category: 'personal', priority: 30, payload: { personId: person.id, documentId: id } });
       return { expiresAt, fee, readyAt };
     }

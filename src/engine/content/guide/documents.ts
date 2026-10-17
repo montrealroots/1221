@@ -47,11 +47,17 @@
  * said the card was good for six years, SLATE's term for the state's "up to seven", and in force at once for a citizen,
  * a non-citizen's coming on SAVE's day; the DMV gives seven years to a birthday and mails the card within twenty business
  * days, after SAVE's check for somebody not a citizen.
+ *
+ * Later on 2026-10-17 (brief 12's KS-ct-idcard and KS-passport-fees): until then the ID card's line called a non-citizen's
+ * term "SLATE's reading where the state publishes none", and the passport's line didn't say where a fee from abroad was
+ * SLATE's. Each now says it's SLATE's assumption, read from the one value that sets it (`NONCITIZEN_ID.toLawfulPresence`,
+ * `NZ_FROM_ABROAD`), and what a later correction does: a card keeps its date, a fee paid stands. Japan's fee from abroad
+ * was read that day in its own law, US$62, and stopped being SLATE's.
  */
 
 import { CHAPTER_FOR } from '../tutorial';
 import { PASSPORTS } from '../passports';
-import { PASSPORTS_ABROAD, US_RENEWAL } from '../passportsabroad';
+import { NZ_FROM_ABROAD, PASSPORTS_ABROAD, US_RENEWAL } from '../passportsabroad';
 import { ID_CARDS } from '../identity';
 import { ID_CARD_REPLACEMENT, LICENSE_REPLACEMENT } from '../replacements';
 import { WORK_RULES } from '../workrules';
@@ -85,6 +91,7 @@ const US = PASSPORTS['US']!;
 const US_FASTER = US.expedite!;
 const UK_ABROAD = PASSPORTS_ABROAD['GB']!;
 const AU_ABROAD = PASSPORTS_ABROAD['AU']!;
+const JP_ABROAD = PASSPORTS_ABROAD['JP']!;
 /** A fee in an office's own money, as its screen gives it (`content/passportsabroad.ts`). */
 const inOwn = (units: number, currency: string): string => formatMoney(Math.round(units * 100), currency, { cents: units % 1 !== 0 });
 const CT_ID = ID_CARDS['us-ct']!;
@@ -151,8 +158,8 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     costs: [
       { label: 'Time', value: 'None: applying, reporting and replacing move no clock' },
       { label: 'A US Passport', value: `${dollars(US.fee)} the first time or after one is lost, ready in up to ${US.days} days, good for ${US.validityYears} years; renewed by mail on Form ${US_RENEWAL.form}, ${dollars(US_RENEWAL.fee)}, where your most recent was issued within ${US_RENEWAL.withinYears} years, at ${US_RENEWAL.issuedFromAge} or older, and never reported lost; ${dollars(US_FASTER.extra)} more for ${US_FASTER.days} days`, estimate: US.daysEstimated },
-      { label: 'Another Country’s Passport', value: `Applied for from New Haven, so from abroad: its office’s fee and time for an applicant outside the country, where SLATE has them, as the UK’s ${inOwn(UK_ABROAD.fee, UK_ABROAD.currency)} online and Australia’s ${inOwn(AU_ABROAD.fee, AU_ABROAD.currency)} with its overseas surcharge; its faster service only where it’s sold abroad, which the UK’s Fast Track isn’t`, estimate: true },
-      { label: 'Connecticut’s ID Card', value: `${dollars(CT_ID.fee)}, good for ${CT_ID.years} years, to your first birthday at least ${CT_ID.years} years on; mailed, it comes ${CT_ID.mailedBusinessDays} business days after you apply, weekends and federal holidays not among them. For anyone not a citizen, the DMV’s SAVE check comes first, ${NONCITIZEN_ID.saveBusinessDays} federal workdays, and the card runs to the program’s end at school, or on OPT to the end printed on it, ${OPT.months} months from its start, SLATE’s reading where the state publishes none. OPT canceled for its days without work leaves the card in force to that printed end`, estimate: true },
+      { label: 'Another Country’s Passport', value: `Applied for from New Haven, so from abroad: its office’s fee and time for an applicant outside the country, where SLATE has them, as the UK’s ${inOwn(UK_ABROAD.fee, UK_ABROAD.currency)} online, Australia’s ${inOwn(AU_ABROAD.fee, AU_ABROAD.currency)} with its overseas surcharge, and Japan’s ${inOwn(JP_ABROAD.fee, JP_ABROAD.currency)} at a consulate in the US; its faster service only where it’s sold abroad, which the UK’s Fast Track isn’t. Where an office’s own figure couldn’t be read, the fine print says it’s SLATE’s assumption: New Zealand’s GST, ${NZ_FROM_ABROAD.gstCharged ? 'charged' : 'not charged'}, and its urgent fee from overseas, taken as its standard fee. Corrected later, a fee you’ve paid stands, and the new figure is for what you apply for after`, estimate: true },
+      { label: 'Connecticut’s ID Card', value: `${dollars(CT_ID.fee)}, good for ${CT_ID.years} years, to your first birthday at least ${CT_ID.years} years on; mailed, it comes ${CT_ID.mailedBusinessDays} business days after you apply, weekends and federal holidays not among them. For anyone not a citizen, the DMV’s SAVE check comes first, ${NONCITIZEN_ID.saveBusinessDays} federal workdays, and ${NONCITIZEN_ID.toLawfulPresence ? `the card runs to the program’s end at school, or on OPT to the end printed on it, ${OPT.months} months from its start, SLATE’s assumption, not the state’s published policy, since the state publishes no term for a card it doesn’t verify. OPT canceled for its days without work leaves the card in force to that printed end` : 'the card runs its years to a birthday as anyone’s does, SLATE’s assumption, not the state’s published policy, since the state publishes no term for a card it doesn’t verify'}. Corrected later, a card already issued keeps its date`, estimate: true },
       { label: 'Replacing An ID Card', value: `Connecticut ${dollars(CT_ID_AGAIN.fee)} in ${CT_ID_AGAIN.days} days; New York ${dollars(NY_ID_AGAIN.fee)} in ${NY_ID_AGAIN.days}; California ${dollars(CA_ID_AGAIN.fee)} in ${CA_ID_AGAIN.days}` },
       { label: 'Replacing A License', value: `Connecticut ${dollars(CT_LICENSE.fee)} in ${CT_LICENSE.days} days; New York ${dollars(NY_LICENSE.fee)} in ${NY_LICENSE.days}, free when it was stolen and the police have your report; California ${dollars(CA_LICENSE.fee)} in ${CA_LICENSE.days}` },
       { label: 'A Police Report', value: 'Free, and filed at once' },

@@ -37,7 +37,7 @@ import {
   authorizationFor, isoOfCountry, documentsOf, isoOfCity, mayEnter,
   LOSABLE, citizenOf, passportOf, passportOffice, passportRefusal, passportRuleFor, type PersonDocument, policeReportRefusal } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
-import { idCardHere, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal } from '@/engine/systems/identity';
+import { idCardHere, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal, noncitizenTermNote } from '@/engine/systems/identity';
 import { f1Of, optRefusal, programEnd, usStatusEnds } from '@/engine/systems/permission';
 import { hasSsn, ssnRefusal } from '@/engine/systems/taxid';
 import { WORK_RULES } from '@/engine/content/workrules';
@@ -172,6 +172,7 @@ function IdPanel() {
   const person = useWorld((s) => s.player);
   const card = idCardHere(person);
   const idNo = idCardRefusal(person, sim.now);
+  const term = noncitizenTermNote(person);
   return (
     <Panel title="Your ID" subtitle={card ? card.card.name : 'Where SLATE issues one'} help="documents.passport-id">
       <LookRegion className="col gap-3">
@@ -183,6 +184,8 @@ function IdPanel() {
           }}>Get {card?.card.name ?? 'An ID Card'}</Gated>
         </div>
         <DocumentList kinds={['idcard', 'license', 'idp']} />
+        {/* Where the card's term is SLATE's assumption, said (from 2026-10-17, brief 12's KS-ct-idcard: until then only the guide said it). */}
+        {term && <Fine>{term}</Fine>}
       </LookRegion>
     </Panel>
   );
