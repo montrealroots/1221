@@ -1,0 +1,647 @@
+ok   src/engine/content/guide/body.ts:16 “The payment didn’t go through.”
+ok   src/engine/content/guide/coursework.ts:34 “Not from a hospital bed.”
+ok   src/engine/content/guide/coursework.ts:61 “The studios are in New Haven.”
+ok   src/engine/content/guide/coursework.ts:61 “The Haas Arts Library is in New Haven.”
+ok   src/engine/content/guide/coursework.ts:62 “… is in New Haven.”
+ok   src/engine/content/guide/coursework.ts:300 “Not Shown Again, Counted Unready”
+ok   src/engine/content/guide/coursework.ts:301 “Not Shown Again, Counted Unready”
+ok   src/engine/content/guide/coursework.ts:306 “There’s no note to work on until it’s been shown.”
+ok   src/engine/content/guide/coursework.ts:307 “There’s new feedback on this: read it first.”
+ok   src/engine/content/guide/coursework.ts:308 “… asked to rehearse: answer first.”
+ok   src/engine/content/guide/coursework.ts:308 “… reads the scene another way: answer first.”
+ok   src/engine/content/guide/coursework.ts:309 “There’s nothing more to gain from it now.”
+ok   src/engine/content/guide/coursework.ts:309 “Done today already: it takes days, not one long session.”
+ok   src/engine/content/guide/coursework.ts:310 “You’re too tired to work on your feet. Sleep first.”
+GONE src/engine/content/guide/coursework.ts:310 “Not with …; it has … days yet to mend.”
+       not said: “days yet to mend.”
+ok   src/engine/content/guide/coursework.ts:311 “Not from a hospital bed.”
+ok   src/engine/content/guide/coursework.ts:312 “You don’t know the building yet: the tour shows you the studios.”
+ok   src/engine/content/guide/coursework.ts:383 “Your reading differs from last time’s.”
+ok   src/engine/content/guide/coursework.ts:383 “Your reading is last time’s so far.”
+ok   src/engine/content/guide/coursework.ts:387 “Read it first: table work is done on a text you know.”
+ok   src/engine/content/guide/coursework.ts:446 “Chosen: rehearsed in to …%.”
+ok   src/engine/content/guide/coursework.ts:458 “Your choice now is rehearsed in to …% (complete at …%)”
+ok   src/engine/content/guide/coursework.ts:463 “There’s no scene in it to play one way or another.”
+ok   src/engine/content/guide/coursework.ts:465 “It’s written work, presented at the table and never played: there’s no way of playing it to choose.”
+ok   src/engine/content/guide/coursework.ts:522 “It didn’t come together today:”
+ok   src/engine/content/guide/coursework.ts:527 “There’s no feedback on that.”
+ok   src/engine/content/guide/coursework.ts:563 “A Note That Keeps Coming Back:”
+ok   src/engine/content/guide/coursework.ts:596 “It doesn’t take the note by itself.”
+ok   src/engine/content/guide/coursework.ts:600 “You chose … for this work already.”
+ok   src/engine/content/guide/coursework.ts:601 “No note keeps coming back that this work can help with.”
+ok   src/engine/content/guide/coursework.ts:602 “This work can’t put that first.”
+ok   src/engine/content/guide/coursework.ts:603 “This work has no partner.”
+ok   src/engine/content/guide/coursework.ts:603 “That’s the work with your partner already.”
+ok   src/engine/content/guide/coursework.ts:604 “… would rather work alone, after last time.”
+ok   src/engine/content/guide/coursework.ts:605 “Here the table work is your answers: change one at the table.”
+ok   src/engine/content/guide/coursework.ts:679 “Trust … of 100 · Came to … of … agreed”
+ok   src/engine/content/guide/coursework.ts:685 “You haven’t met … yet: you’ll meet the class at orientation, or at the first class.”
+ok   src/engine/content/guide/coursework.ts:686 “Ask at least ${WORK.rehearsal.aheadHours} hours ahead.”
+ok   src/engine/content/guide/coursework.ts:690 “You’ll still be in hospital then: the evening would be called off.”
+ok   src/engine/content/guide/coursework.ts:690 “You’ll still be laid up then, with …: the evening would be called off.”
+GONE src/engine/content/guide/coursework.ts:690 “Not with …; it has … days yet to mend. Work on its feet with your partner waits for it.”
+       not said: “days yet to mend. Work on its feet with your partner waits for it.”
+ok   src/engine/content/guide/coursework.ts:692 “You didn’t answer in time.”
+ok   src/engine/content/guide/coursework.ts:693 “There’s no such rehearsal booked.”
+ok   src/engine/content/guide/coursework.ts:768 “Ask A Day Ahead (Lifts After … More Kept)”
+ok   src/engine/content/guide/coursework.ts:768 “Has Stopped Asking You To Run Lines”
+ok   src/engine/content/guide/coursework.ts:769 “One time you let them down, not made right.”
+ok   src/engine/content/guide/coursework.ts:772 “It’s too late to answer: the moment passed.”
+ok   src/engine/content/guide/coursework.ts:775 “You have … then: say no instead.”
+ok   src/engine/content/guide/coursework.ts:777 “Your terms at the School are over: there’s no scene left to run lines for. Say no instead.”
+ok   src/engine/content/guide/coursework.ts:781 “There’s nothing between you to make right.”
+ok   src/engine/content/guide/coursework.ts:857 “No way at it is left here”
+ok   src/engine/content/guide/coursework.ts:857 “Ask … to rehearse it with you.”
+ok   src/engine/content/guide/coursework.ts:861 “Name the problem you’re working on first.”
+ok   src/engine/content/guide/coursework.ts:862 “Keep or put back the change you tried first.”
+ok   src/engine/content/guide/coursework.ts:863 “That isn’t a problem the work shows now.”
+ok   src/engine/content/guide/coursework.ts:864 “You tried that for this and put it back.”
+ok   src/engine/content/guide/coursework.ts:864 “That doesn’t answer the problem you’re working on.”
+ok   src/engine/content/guide/coursework.ts:865 “Choose a reading first: the work is on the scene played one way.”
+ok   src/engine/content/guide/coursework.ts:866 “Learn some of the lines first: there’s nothing to rehearse without them.”
+ok   src/engine/content/guide/coursework.ts:866 “Learn some of the part first: there’s nothing to rehearse without it.”
+ok   src/engine/content/guide/coursework.ts:867 “You’re too tired to work on your feet. Sleep first.”
+ok   src/engine/content/guide/coursework.ts:867 “Not from a hospital bed.”
+ok   src/engine/content/guide/coursework.ts:868 “There’s no change waiting to be kept or put back.”
+ok   src/engine/content/guide/craft.ts:331 “From your work for life:”
+ok   src/engine/content/guide/craft.ts:352 “This life began outside drama school, so it has no craft to read.”
+ok   src/engine/content/guide/craft.ts:424 “Hour 2 on it today”
+ok   src/engine/content/guide/craft.ts:433 “Your training hasn’t begun: there’s no craft to practice yet.”
+ok   src/engine/content/guide/craft.ts:434 “Not from a hospital bed.”
+ok   src/engine/content/guide/craft.ts:434 “… starts at …: there isn’t the time before it.”
+ok   src/engine/content/guide/craft.ts:435 “You’ve practiced ${plural(PRACTICE.dailyHours, 'hour')} today: past that, more stops helping. Tomorrow.”
+ok   src/engine/content/guide/craft.ts:436 “You’re too tired to work on your feet. Sleep first.”
+GONE src/engine/content/guide/craft.ts:436 “Not with …; it has … days yet to mend.”
+       not said: “days yet to mend.”
+ok   src/engine/content/guide/craft.ts:437 “It takes a classmate, and you have no class to ask.”
+ok   src/engine/content/guide/craft.ts:510 “Not established: the research rests on one example”
+ok   src/engine/content/guide/craft.ts:510 “Nothing past the camera’s own”
+GONE src/engine/content/guide/craft.ts:513 “Composure held back the consistency by 4.2 points: Nordic Noir’s Feeling Held In asks for it”
+       not said: “Composure held back the consistency by”, “points: Nordic Noir’s Feeling Held In asks for it”
+ok   src/engine/content/guide/craft.ts:518 “Not from a hospital bed.”
+ok   src/engine/content/guide/craft.ts:518 “… starts at …: there isn’t the time before it.”
+ok   src/engine/content/guide/craft.ts:594 “There’s nothing more to gain from it now.”
+ok   src/engine/content/guide/craft.ts:595 “Learn some of the lines first: there’s nothing to rehearse without them.”
+ok   src/engine/content/guide/craft.ts:596 “You’re too tired to work on your feet. Sleep first.”
+ok   src/engine/content/guide/craft.ts:597 “Not from a hospital bed.”
+ok   src/engine/content/guide/craft.ts:597 “… starts at …: there isn’t the time before it.”
+ok   src/engine/content/guide/craft.ts:668 “That isn’t a reading this brief supports.”
+ok   src/engine/content/guide/craft.ts:735 “Together it came to …, about what your own work did”
+ok   src/engine/content/guide/craft.ts:735 “Your own result stands as it is.”
+ok   src/engine/content/guide/craft.ts:740 “It’s recorded alone at a microphone: there’s nobody to read with.”
+ok   src/engine/content/guide/craft.ts:741 “That isn’t one of your classmates.”
+ok   src/engine/content/guide/craft.ts:742 “… would rather not, after how things have gone.”
+ok   src/engine/content/guide/craft.ts:820 “Played against the callback’s note: the callback is still yours.”
+ok   src/engine/content/guide/craft.ts:822 “No practice brief reads …, so a take won’t show it and none is suggested for it.”
+ok   src/engine/content/guide/craft.ts:825 “Choose a reading first: a take is of the scene played one way, and you should know which before the camera rolls.”
+ok   src/engine/content/guide/craft.ts:826 “Your training hasn’t begun: there’s no craft to tape yet.”
+ok   src/engine/content/guide/craft.ts:827 “… isn’t a scene of that genre.”
+ok   src/engine/content/guide/craft.ts:828 “Not from a hospital bed.”
+ok   src/engine/content/guide/craft.ts:828 “… starts at …: there isn’t the time before it.”
+ok   src/engine/content/guide/craft.ts:895 “Everything it asked was met: the most it can be.”
+ok   src/engine/content/guide/craft.ts:900 “That work isn’t on your record any more: the record keeps the latest ${WORK_KEPT}.”
+ok   src/engine/content/guide/craft.ts:961 “It’s your … again: it’s held back … of your pieces before this.”
+ok   src/engine/content/guide/craft.ts:979 “You play it ${APPROACH_EFFECT.measured.label.toLowerCase()}: ${ARTISTRY.habitAt} of ${ARTISTRY.habitAt} choices on ${AXES.pace.label.toLower”
+ok   src/engine/content/guide/day.ts:122 “It hasn’t started yet. To drop it, open it on the Calendar and press Call It Off.”
+ok   src/engine/content/guide/day.ts:123 “Only a plan you made yourself can be skipped.”
+ok   src/engine/content/guide/day.ts:124 “That’s already over: it was kept, missed or called off.”
+ok   src/engine/content/guide/day.ts:347 “That question is already settled: it was answered, or its date passed.”
+ok   src/engine/content/guide/day.ts:425 “That time has already passed. Pick a time that’s still to come.”
+GONE src/engine/content/guide/day.ts:426 “The calendar takes plans up to five years ahead. Pick an earlier day.”
+       not said: “The calendar takes plans up to five years ahead. Pick an earlier day.”
+ok   src/engine/content/guide/day.ts:427 “It’s already started, so it can’t be called off now.”
+GONE src/engine/content/guide/day.ts:510 “A run in fine weather.”
+       not said: “A run in fine weather.”
+ok   src/engine/content/guide/documents.ts:34 “The Social Security office is in New Haven, at 150 Court Street.”
+ok   src/engine/content/guide/documents.ts:189 “It’s marked Not For Federal Identification: it isn’t REAL ID.”
+ok   src/engine/content/guide/documents.ts:198 “Your country’s passport office isn’t in the game yet.”
+ok   src/engine/content/guide/documents.ts:198 “You’ve already applied, and it’s being decided.”
+ok   src/engine/content/guide/documents.ts:199 “… offers no faster service to applicants abroad.”
+ok   src/engine/content/guide/documents.ts:200 “The DMV asks for a primary identity document in force: your passport, with your I-94 and I-20. Apply for a passport or renew it under Your P”
+ok   src/engine/content/guide/documents.ts:201 “You hold a driving license from here, and it already serves as your ID.”
+ok   src/engine/content/guide/documents.ts:201 “You already hold one in force.”
+ok   src/engine/content/guide/documents.ts:201 “One is already on its way.”
+ok   src/engine/content/guide/documents.ts:202 “The DMV checks lawful presence through SAVE, and you stayed past the end of your status.”
+ok   src/engine/content/guide/documents.ts:202 “On an F-1, the DMV asks for your I-20 and proof that you’re enrolled, and you’re not at school.”
+ok   src/engine/content/guide/documents.ts:202 “The DMV asks for your Social Security number, or the SSA’s letter that you can’t have one.”
+ok   src/engine/content/guide/documents.ts:202 “You can get one through work-study: apply for it first, under Social Security Number on Papers.”
+ok   src/engine/content/guide/documents.ts:202 “Yours is on its way.”
+ok   src/engine/content/guide/documents.ts:202 “In the game, the number goes only to an F-1 student at school, through work-study, and the letter is never issued.”
+ok   src/engine/content/guide/documents.ts:204 “Here lost property is reported in person at a police station, not online.”
+ok   src/engine/content/guide/documents.ts:204 “Here a theft is reported in person at a police station, not online.”
+ok   src/engine/content/guide/documents.ts:205 “It’s replaced only where it was issued, for someone living there.”
+ok   src/engine/content/guide/documents.ts:205 “It ran out on …”
+ok   src/engine/content/guide/documents.ts:205 “It runs out on …, before a new card would come”
+ok   src/engine/content/guide/documents.ts:205 “, and a replacement keeps the same date, so it can’t be replaced. Apply for a new card instead, if you can.”
+ok   src/engine/content/guide/documents.ts:206 “Its issuer replaces it only for someone living there, and no way to send one out of state was found.”
+ok   src/engine/content/guide/documents.ts:207 “It ran out on …”
+ok   src/engine/content/guide/documents.ts:207 “It runs out on …, before a new card would come”
+ok   src/engine/content/guide/documents.ts:208 “What its issuer charges to replace it isn’t in the game.”
+ok   src/engine/content/guide/documents.ts:209 “Your bank can’t cover …, so nothing was charged.”
+ok   src/engine/content/guide/documents.ts:291 “On an F-1, the number needs on-campus work that has begun or starts within 30 days. Register at the School first, and the School’s work-stud”
+ok   src/engine/content/guide/documents.ts:291 “On an F-1, the number needs on-campus work, and that ended with your program.”
+ok   src/engine/content/guide/documents.ts:292 “The office asks for your passport, and you don’t have one in force.”
+ok   src/engine/content/guide/documents.ts:293 “You can apply from …”
+ok   src/engine/content/guide/documents.ts:293 “The time to apply closed on …”
+ok   src/engine/content/guide/documents.ts:294 “OPT follows a completed degree, and you left without one.”
+ok   src/engine/content/guide/documents.ts:295 “You’ve already applied for OPT.”
+ok   src/engine/content/guide/documents.ts:295 “OPT is for a student on an F-1, and you’re a US citizen.”
+ok   src/engine/content/guide/documents.ts:364 “Your bank can’t cover …, so nothing was charged.”
+ok   src/engine/content/guide/index.ts:43 “why is my rehearsal refused”
+ok   src/engine/content/guide/money.ts:199 “in the bank or in hand”
+ok   src/engine/content/guide/money.ts:200 “on its way between your banks”
+ok   src/engine/content/guide/money.ts:200 “in SNAP on your EBT card”
+ok   src/engine/content/guide/money.ts:214 “They’re charged no interest today.”
+ok   src/engine/content/guide/money.ts:220 “You don’t owe anybody anything, so there’s nothing standing against your name to look at.”
+ok   src/engine/content/guide/money.ts:221 “That account is closed. Whatever was in it went somewhere else a while ago.”
+GONE src/engine/content/guide/money.ts:238 “${CHECKING.name}: ${formatMoney(MODEST.checking, 'USD')}. Worth ${formatMoney(WORTH, 'USD', { cents: false })}, ${formatMoney(OWED, 'USD', {”
+       not said: “)} of it owed.”
+ok   src/engine/content/guide/money.ts:290 “This month is waived so far”
+ok   src/engine/content/guide/money.ts:291 “Its rate wasn’t found, so SLATE pays none on it”
+ok   src/engine/content/guide/money.ts:296 “Savings opens beside a current account of yours at that bank.”
+ok   src/engine/content/guide/money.ts:297 “You already have a savings account at”
+ok   src/engine/content/guide/money.ts:298 “There’s no current account to move the money into.”
+ok   src/engine/content/guide/money.ts:299 “Notice is given: … closes on ….”
+ok   src/engine/content/guide/money.ts:371 “The month’s free withdrawals are used: this one costs …”
+ok   src/engine/content/guide/money.ts:374 “Money moves here between your own current and savings accounts.”
+ok   src/engine/content/guide/money.ts:375 “Say how much to move.”
+ok   src/engine/content/guide/money.ts:377 “… is dormant; use Reactivate first.”
+ok   src/engine/content/guide/money.ts:378 “… can let … out, with the … withdrawal fee.”
+ok   src/engine/content/guide/money.ts:379 “… lets … more out this month without notice; more takes three months’ notice.”
+ok   src/engine/content/guide/money.ts:380 “… is blocked to everything but paying off what it owes, since the switch.”
+ok   src/engine/content/guide/money.ts:381 “Citi lets ${usd(CITI_OPEN.limits?.outDay ?? 0)} a day out to other banks, and … has gone today.”
+ok   src/engine/content/guide/money.ts:381 “Citi lets ${usd(CITI_OPEN.limits?.outMonth ?? 0)} a month out to other banks, and … has gone this month.”
+ok   src/engine/content/guide/money.ts:451 “Broken now it costs …”
+ok   src/engine/content/guide/money.ts:451 “Broken now it comes out whole”
+ok   src/engine/content/guide/money.ts:452 “Too near its end to change: the bank needs … days’ notice.”
+ok   src/engine/content/guide/money.ts:453 “Renewed: until … it can be taken whole.”
+ok   src/engine/content/guide/money.ts:454 “SLATE’s estimate of the bank’s penalty”
+ok   src/engine/content/guide/money.ts:457 “… publishes no term deposit rate SLATE has.”
+ok   src/engine/content/guide/money.ts:458 “A term deposit at … is funded from your current account there: open one first.”
+ok   src/engine/content/guide/money.ts:460 “… doesn’t let a term deposit end that way.”
+ok   src/engine/content/guide/money.ts:460 “… needs … days’ notice before the end to change it.”
+ok   src/engine/content/guide/money.ts:461 “… doesn’t let a term deposit be broken before its end.”
+ok   src/engine/content/guide/money.ts:461 “It closes on …, on the notice given.”
+ok   src/engine/content/guide/money.ts:462 “… pays a term deposit’s interest at its end.”
+ok   src/engine/content/guide/money.ts:462 “It hasn’t earned anything to take yet.”
+ok   src/engine/content/guide/money.ts:463 “You need a current account for the money.”
+ok   src/engine/content/guide/money.ts:548 “… is inactive, untouched for months”
+ok   src/engine/content/guide/money.ts:549 “… is dormant, blocked until it’s used again.”
+ok   src/engine/content/guide/money.ts:550 “… went to … after years untouched.”
+GONE src/engine/content/guide/money.ts:551 “Canceling it now charges its fees to the day, …”
+       not said: “Canceling it now charges its fees to the day”
+ok   src/engine/content/guide/money.ts:556 “Its cooling-off period has passed, or there isn’t one here for it.”
+ok   src/engine/content/guide/money.ts:557 “Your primary current account can’t be canceled. Make another primary first.”
+ok   src/engine/content/guide/money.ts:558 “Money is on its way into or out of it.”
+ok   src/engine/content/guide/money.ts:558 “… is open beside it. Close it first.”
+ok   src/engine/content/guide/money.ts:558 “Card payments are still pending on it.”
+GONE src/engine/content/guide/money.ts:558 “Its fees, …, are more than it holds. Pay in … first.”
+       not said: “are more than it holds. Pay in”
+GONE src/engine/content/guide/money.ts:558 “Its overdraft interest, …, and its fees, …, are more than it holds. Pay in … first.”
+       not said: “are more than it holds. Pay in”
+GONE src/engine/content/guide/money.ts:559 “The interest it was paid, …, goes back, and is more than it holds. Pay in … first.”
+       not said: “goes back, and is more than it holds. Pay in”
+GONE src/engine/content/guide/money.ts:559 “Its fees, …, and the interest it was paid, …, are more than it holds. Pay in … first.”
+       not said: “are more than it holds. Pay in”
+ok   src/engine/content/guide/money.ts:561 “The interest it paid into …, …, goes back out of it, and is more than it holds. Pay in … first.”
+ok   src/engine/content/guide/money.ts:562 “No money of yours is held as unclaimed.”
+GONE src/engine/content/guide/money.ts:563 “Set the low balance as an amount, or turn it off.”
+       not said: “Set the low balance as an amount, or turn it off.”
+ok   src/engine/content/guide/money.ts:632 “to move at the next business day’s start”
+GONE src/engine/content/guide/money.ts:636 “… purchases since the last transfer were already a multiple of …, so rounded up to nothing.”
+       not said: “purchases since the last transfer were already a multiple of”
+ok   src/engine/content/guide/money.ts:640 “… doesn’t round purchases up into savings.”
+ok   src/engine/content/guide/money.ts:641 “Round-ups go into savings at …: open easy-access savings there first.”
+ok   src/engine/content/guide/money.ts:642 “Choose what to round up to: …”
+ok   src/engine/content/guide/money.ts:643 “Round-ups at … run from a … current account made your primary one.”
+ok   src/engine/content/guide/money.ts:709 “A Standing Order Didn’t Go”
+ok   src/engine/content/guide/money.ts:711 “A Scheduled Payment Didn’t Go”
+ok   src/engine/content/guide/money.ts:719 “… has no easy-access savings at … to draw on.”
+ok   src/engine/content/guide/money.ts:720 “There’s no easy-access savings at … for it to draw on, so On covers nothing until there is.”
+ok   src/engine/content/guide/money.ts:723 “Everyday spending goes in cash, on the debit card or on the credit card.”
+GONE src/engine/content/guide/money.ts:724 “There’s no savings account at … to cover the current account.”
+       not said: “to cover the current account.”
+GONE src/engine/content/guide/money.ts:724 “… to cover the current accounts your payments come from.”
+       not said: “to cover the current accounts your payments come from.”
+ok   src/engine/content/guide/money.ts:725 “A standing order of your own goes into one of your savings accounts.”
+ok   src/engine/content/guide/money.ts:725 “… is a term deposit, locked until its end: a standing order goes into easy-access savings.”
+ok   src/engine/content/guide/money.ts:726 “Say how much each month.”
+ok   src/engine/content/guide/money.ts:726 “Pick a day of the month, 1 to 31.”
+ok   src/engine/content/guide/money.ts:727 “There’s no standing order by that name.”
+ok   src/engine/content/guide/money.ts:727 “There’s no payment waiting by that name.”
+ok   src/engine/content/guide/money.ts:728 “A scheduled payment goes between two of your own accounts.”
+ok   src/engine/content/guide/money.ts:728 “… is a term deposit, locked until its end: a payment set for a date goes between your current and easy-access savings accounts.”
+GONE src/engine/content/guide/money.ts:729 “It pays into that account.”
+       not said: “It pays into that account.”
+ok   src/engine/content/guide/money.ts:731 “A standing order pays from an open current account of yours.”
+ok   src/engine/content/guide/money.ts:732 “Wages are paid into an open current or savings account of yours.”
+ok   src/engine/content/guide/money.ts:753 “A Standing Order Didn’t Go”
+ok   src/engine/content/guide/money.ts:808 “You need a bank account to take cash out of.”
+ok   src/engine/content/guide/money.ts:809 “… is dormant; use Reactivate first.”
+ok   src/engine/content/guide/money.ts:810 “Your debit card hasn’t arrived yet; the counter can still pay out.”
+ok   src/engine/content/guide/money.ts:810 “Your debit card is stopped; the counter can still pay out.”
+ok   src/engine/content/guide/money.ts:810 “Your debit card is locked.”
+ok   src/engine/content/guide/money.ts:811 “… customers can’t use the Post Office for cash.”
+ok   src/engine/content/guide/money.ts:812 “… lets … out of machines in a day, and … has come out today.”
+ok   src/engine/content/guide/money.ts:814 “The card has … free, and this takes … with its fee.”
+ok   src/engine/content/guide/money.ts:814 “The card lets … out as cash, and … is out already.”
+ok   src/engine/content/guide/money.ts:815 “Cash goes into your current account or savings.”
+ok   src/engine/content/guide/money.ts:815 “… customers can’t pay cash in at the Post Office.”
+ok   src/engine/content/guide/money.ts:815 “… is dormant; use Reactivate first.”
+ok   src/engine/content/guide/money.ts:815 “Your debit card is locked; the counter can still take it.”
+ok   src/engine/content/guide/money.ts:815 “Your debit card is stopped; the counter can still take it.”
+ok   src/engine/content/guide/money.ts:815 “Your debit card hasn’t arrived yet; the counter can still take it.”
+ok   src/engine/content/guide/money.ts:900 “A record today would get …”
+ok   src/engine/content/guide/money.ts:905 “A record today would get”
+ok   src/engine/content/guide/money.ts:908 “You have no credit record to apply with.”
+ok   src/engine/content/guide/money.ts:908 “A card is already on its way.”
+ok   src/engine/content/guide/money.ts:908 “You need a bank to apply to.”
+ok   src/engine/content/guide/money.ts:909 “A card is applied for in the country you bank in; … is elsewhere.”
+ok   src/engine/content/guide/money.ts:909 “… doesn’t issue a credit card.”
+ok   src/engine/content/guide/money.ts:909 “You hold …’s card already.”
+ok   src/engine/content/guide/money.ts:911 “You don’t have a card.”
+ok   src/engine/content/guide/money.ts:911 “You don’t owe anything on it.”
+ok   src/engine/content/guide/money.ts:911 “There’s nothing in the bank to pay it with.”
+ok   src/engine/content/guide/money.ts:912 “… takes the whole statement from your account each month; the … can’t carry a balance.”
+ok   src/engine/content/guide/money.ts:913 “Pick a day from the 1st to the 28th.”
+ok   src/engine/content/guide/money.ts:913 “Say the limit you want.”
+ok   src/engine/content/guide/money.ts:913 “Opting in to going over the limit is a US card’s choice.”
+ok   src/engine/content/guide/money.ts:914 “You’re on a plan already.”
+ok   src/engine/content/guide/money.ts:914 “You could pay it off today: a hardship plan is for when you can’t.”
+ok   src/engine/content/guide/money.ts:915 “The card holds no credit to send back.”
+ok   src/engine/content/guide/money.ts:915 “Autopay pays from an open current account of yours.”
+ok   src/engine/content/guide/money.ts:988 “… on purchases until …, then ….”
+GONE src/engine/content/guide/money.ts:989 “A plan: … left, … a month for … more months, and … a month in place of interest.”
+       not said: “more months, and”
+ok   src/engine/content/guide/money.ts:990 “One made while the introductory rate runs, until …, is free to its last month; one made after costs … of it a month”
+ok   src/engine/content/guide/money.ts:994 “The … doesn’t offer money transfers.”
+ok   src/engine/content/guide/money.ts:994 “You need a current account for the money.”
+ok   src/engine/content/guide/money.ts:995 “The card has … free, and this takes … with its fee.”
+ok   src/engine/content/guide/money.ts:996 “The … has no plan SLATE has terms for.”
+ok   src/engine/content/guide/money.ts:996 “A plan runs ${PLAN_MONTHS.join(', ')} months.”
+ok   src/engine/content/guide/money.ts:996 “Purchases owe … that can go into a plan.”
+ok   src/engine/content/guide/money.ts:996 “A plan takes … at least.”
+ok   src/engine/content/guide/money.ts:997 “The card has no rewards to redeem.”
+ok   src/engine/content/guide/money.ts:998 “A balance moves onto a card at another bank.”
+ok   src/engine/content/guide/money.ts:998 “It would come with a … limit, and moving … takes … with its fee. Pay the old card down first.”
+ok   src/engine/content/guide/money.ts:1080 “Locked: nothing new goes on it.”
+GONE src/engine/content/guide/money.ts:1080 “Lost: stopped. A new one arrives …”
+       not said: “Lost: stopped. A new one arrives”
+ok   src/engine/content/guide/money.ts:1081 “A new account’s first card … arrives …”
+ok   src/engine/content/guide/money.ts:1082 “The law gives … days from the statement to report it, and they’ve passed.”
+ok   src/engine/content/guide/money.ts:1083 “isn’t known to be exposed”
+ok   src/engine/content/guide/money.ts:1086 “You have no current account.”
+ok   src/engine/content/guide/money.ts:1086 “You don’t have a card.”
+ok   src/engine/content/guide/money.ts:1087 “That card is stopped; a new one is on its way.”
+ok   src/engine/content/guide/money.ts:1087 “That card is stopped already; a new one is on its way.”
+ok   src/engine/content/guide/money.ts:1088 “… has no rush replacement SLATE knows of.”
+ok   src/engine/content/guide/money.ts:1088 “… doesn’t publish what it charges for a rush, so SLATE can’t send one.”
+ok   src/engine/content/guide/money.ts:1089 “… doesn’t say it moves an account to a new number; closing it and opening another does.”
+ok   src/engine/content/guide/money.ts:1090 “The law gives … days from the statement to report it, and they’ve passed.”
+ok   src/engine/content/guide/money.ts:1167 “It covers up to about …, SLATE’s estimate”
+GONE src/engine/content/guide/money.ts:1168 “… overdraft fee is held …: each comes off after the end of … unless the account is back to …”
+       not said: “overdraft fee is held”
+ok   src/engine/content/guide/money.ts:1169 “…% a year: … a month for … months”
+ok   src/engine/content/guide/money.ts:1170 “Every loan you hold, at any bank, counts against the same wages.”
+ok   src/engine/content/guide/money.ts:1173 “Your bank doesn’t ask you this.”
+ok   src/engine/content/guide/money.ts:1173 “… never pays a debit card purchase into an overdraft.”
+ok   src/engine/content/guide/money.ts:1174 “… doesn’t offer an overdraft SLATE has terms for.”
+ok   src/engine/content/guide/money.ts:1174 “… doesn’t arrange one: it runs overdrafts its own way, and the bank screen says how.”
+ok   src/engine/content/guide/money.ts:1175 “The bank turns down a credit record this poor.”
+ok   src/engine/content/guide/money.ts:1176 “The bank arranges one against wages paid in, and not enough has been paid in this month.”
+ok   src/engine/content/guide/money.ts:1176 “The bank arranges between … and ….”
+ok   src/engine/content/guide/money.ts:1177 “You’re overdrawn by more than that already.”
+ok   src/engine/content/guide/money.ts:1177 “No overdraft is arranged on it.”
+ok   src/engine/content/guide/money.ts:1177 “Pay the overdraft back before closing it.”
+ok   src/engine/content/guide/money.ts:1178 “… lends to its customers: open a current account there first.”
+ok   src/engine/content/guide/money.ts:1178 “… lends to customers of … months or more; …”
+ok   src/engine/content/guide/money.ts:1179 “… publishes only its lowest rate, and SLATE lends at it only to a good record.”
+ok   src/engine/content/guide/money.ts:1180 “The bank lends over … to … months.”
+ok   src/engine/content/guide/money.ts:1180 “The bank lends … or more.”
+ok   src/engine/content/guide/money.ts:1180 “The bank lends up to ….”
+ok   src/engine/content/guide/money.ts:1181 “The bank lends against wages paid in, and none has been paid in this month.”
+ok   src/engine/content/guide/money.ts:1181 “A payment of … a month is more than the bank lets a loan take of … of wages.”
+ok   src/engine/content/guide/money.ts:1182 “You already have a loan with ….”
+ok   src/engine/content/guide/money.ts:1182 “… doesn’t lend for a post-secondary education expense.”
+ok   src/engine/content/guide/money.ts:1182 “… asks for a Social Security number.”
+ok   src/engine/content/guide/money.ts:1183 “Paying it off takes …, and the bank can’t cover it all.”
+ok   src/engine/content/guide/money.ts:1183 “You don’t owe anything in collections.”
+ok   src/engine/content/guide/money.ts:1183 “There’s nothing in the account to pay it with.”
+ok   src/engine/content/guide/money.ts:1184 “Your bank has offered no loan for an overrun.”
+GONE src/engine/content/guide/money.ts:1269 “Waiting for its opening deposit”
+       not said: “Waiting for its opening deposit”
+GONE src/engine/content/guide/money.ts:1272 “Closing it now charges its fees to the day, …”
+       not said: “Closing it now charges its fees to the day”
+ok   src/engine/content/guide/money.ts:1276 “That isn’t a bank where you live.”
+ok   src/engine/content/guide/money.ts:1276 “You already keep a current account at ….”
+ok   src/engine/content/guide/money.ts:1277 “… is still reviewing your application.”
+ok   src/engine/content/guide/money.ts:1279 “… asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.”
+ok   src/engine/content/guide/money.ts:1280 “… opens an account on your own from ….”
+ok   src/engine/content/guide/money.ts:1280 “… opens this account for US citizens and permanent residents; on an F-1 you’re neither.”
+ok   src/engine/content/guide/money.ts:1284 “Not from a hospital bed.”
+ok   src/engine/content/guide/money.ts:1284 “… starts at …: there isn’t the time before it.”
+ok   src/engine/content/guide/money.ts:1285 “… asks for an opening deposit of …, sent from another of your accounts.”
+ok   src/engine/content/guide/money.ts:1285 “That account is at … already.”
+ok   src/engine/content/guide/money.ts:1286 “It’s your only current account.”
+ok   src/engine/content/guide/money.ts:1286 “It’s your primary account. Make another primary first.”
+ok   src/engine/content/guide/money.ts:1286 “Money is on its way into or out of it.”
+ok   src/engine/content/guide/money.ts:1286 “… is open beside it. Close it first.”
+ok   src/engine/content/guide/money.ts:1286 “Card payments are still pending on it.”
+GONE src/engine/content/guide/money.ts:1286 “Its fees, …, are more than it holds. Pay in … first.”
+       not said: “are more than it holds. Pay in”
+ok   src/engine/content/guide/money.ts:1286 “Its overdraft interest, …, is more than it holds.”
+GONE src/engine/content/guide/money.ts:1286 “Its overdraft interest, …, and its fees, …, are more than it holds.”
+       not said: “are more than it holds.”
+ok   src/engine/content/guide/money.ts:1287 “There’s no switching service here: …”
+ok   src/engine/content/guide/money.ts:1287 “A switch is already under way.”
+ok   src/engine/content/guide/money.ts:1287 “Clear the overdraft before switching; the new bank won’t take it on.”
+ok   src/engine/content/guide/money.ts:1287 “A partial switch is a Current Account Switch Service step, in Britain only.”
+ok   src/engine/content/guide/money.ts:1288 “This country’s switching service publishes no right to call a switch off: it runs to its date.”
+ok   src/engine/content/guide/money.ts:1288 “It could be called off until …”
+ok   src/engine/content/guide/money.ts:1289 “No switch is under way.”
+ok   src/engine/content/guide/money.ts:1289 “This country’s switching service publishes no such step.”
+ok   src/engine/content/guide/money.ts:1289 “Its balance transfer is stopped already.”
+ok   src/engine/content/guide/money.ts:1289 “The transfer could be stopped until close of business ….”
+GONE src/engine/content/guide/money.ts:1378 “You lived in America before Yale; your account is the one here.”
+       not said: “You lived in America before Yale; your account is the one here.”
+ok   src/engine/content/guide/money.ts:1379 “SLATE has no research on what … does when a customer moves to America.”
+ok   src/engine/content/guide/money.ts:1380 “… opens an account from …; you left at ….”
+GONE src/engine/content/guide/money.ts:1380 “You began living there after Yale began.”
+       not said: “You began living there after Yale began.”
+ok   src/engine/content/guide/money.ts:1382 “Yale pays into an account in America.”
+GONE src/engine/content/guide/money.ts:1383 “SLATE has no research on what … charges to send a payment abroad.”
+       not said: “charges to send a payment abroad.”
+ok   src/engine/content/guide/money.ts:1384 “SMBC stops its payments abroad while the Global Service fee can’t be taken.”
+ok   src/engine/content/guide/papers.ts:204 “You have no health cover.”
+ok   src/engine/content/guide/papers.ts:288 “Your plan ends at the end of the month. Dropping it doesn’t open a special enrollment period.”
+ok   src/engine/content/guide/papers.ts:288 “Dropped: it ends on …”
+ok   src/engine/content/guide/papers.ts:290 “Your Public Cover Is Renewed”
+ok   src/engine/content/guide/papers.ts:290 “Your Public Cover Changed At Renewal”
+ok   src/engine/content/guide/papers.ts:292 “The hospital applied its charity care to this bill.”
+GONE src/engine/content/guide/papers.ts:299 “Your Public Cover Ended At Renewal”
+       not said: “Your Public Cover Ended At Renewal”
+ok   src/engine/content/guide/papers.ts:300 “Your Public Cover Is Renewed”
+ok   src/engine/content/guide/papers.ts:300 “Your Public Cover Changed At Renewal”
+ok   src/engine/content/guide/papers.ts:306 “Your Public Cover Has Ended”
+ok   src/engine/content/guide/papers.ts:307 “Your Public Cover Has Ended”
+ok   src/engine/content/guide/papers.ts:311 “Your Marketplace Plan Has Ended”
+ok   src/engine/content/guide/papers.ts:311 “Your Public Cover Has Ended”
+ok   src/engine/content/guide/papers.ts:311 “Your Marketplace Plan Won’t Begin”
+ok   src/engine/content/guide/papers.ts:311 “Your Public Cover Won’t Begin”
+ok   src/engine/content/guide/papers.ts:312 “A Medical Bill Went Unpaid”
+ok   src/engine/content/guide/papers.ts:313 “A Medical Debt Is On Your Record”
+ok   src/engine/content/guide/papers.ts:319 “You have ${SPECIAL} days to enroll in the marketplace”
+ok   src/engine/content/guide/papers.ts:319 “You can enroll in the marketplace until …”
+ok   src/engine/content/guide/papers.ts:336 “Yale Health covers you while you’re at the School.”
+GONE src/engine/content/guide/papers.ts:337 “Yale Health covers you until …; you can enroll from …, ${SPECIAL} days before that cover ends.”
+       not said: “you can enroll from”
+GONE src/engine/content/guide/papers.ts:338 “Outside open enrollment, ${OPEN_FROM} to ${OPEN_UNTIL}, and not within ${SPECIAL} days of losing cover.”
+       not said: “Outside open enrollment”
+GONE src/engine/content/guide/papers.ts:343 “From January 1, 2027, HUSKY D asks an applicant for ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of income, time at the School or an exc”
+       not said: “HUSKY D asks an applicant for”, “of income, time at the School or an exception in the month before, and last mont”
+ok   src/engine/content/guide/papers.ts:344 “Your application waits on its notice: answer it by …”
+GONE src/engine/content/guide/papers.ts:344 “Last month meets its work rules: Enroll gives it.”
+       not said: “Last month meets its work rules: Enroll gives it.”
+GONE src/engine/content/guide/papers.ts:345 “No notice of noncompliance waits on an answer.”
+       not said: “No notice of noncompliance waits on an answer.”
+GONE src/engine/content/guide/papers.ts:345 “The thirty days to answer ended on …”
+       not said: “The thirty days to answer ended on”
+GONE src/engine/content/guide/papers.ts:345 “No month it assessed, …, had a stay in hospital, the hardship SLATE keeps.”
+       not said: “No month it assessed”, “had a stay in hospital, the hardship SLATE keeps.”
+ok   src/engine/content/guide/papers.ts:346 “You have no plan of your own to drop.”
+GONE src/engine/content/guide/papers.ts:346 “It’s dropped: it ends on …”
+       not said: “It’s dropped: it ends on”
+GONE src/engine/content/guide/papers.ts:347 “… has ended, so there’s no renewal left to answer.”
+       not said: “has ended, so there’s no renewal left to answer.”
+ok   src/engine/content/guide/papers.ts:347 “… ends on …, so there’s no renewal left to answer.”
+GONE src/engine/content/guide/papers.ts:348 “An appeal is filed within ${DENIALS.appealDays} days of the denial.”
+       not said: “An appeal is filed within”, “days of the denial.”
+GONE src/engine/content/guide/papers.ts:349 “Only a Connecticut hospital’s bill.”
+       not said: “Only a Connecticut hospital’s bill.”
+GONE src/engine/content/guide/papers.ts:349 “It’s settled or past due.”
+       not said: “It’s settled or past due.”
+GONE src/engine/content/guide/papers.ts:349 “The hospital’s charity is off it already.”
+       not said: “The hospital’s charity is off it already.”
+GONE src/engine/content/guide/papers.ts:349 “It’s been put to the hospital’s charity.”
+       not said: “It’s been put to the hospital’s charity.”
+ok   src/engine/content/guide/papers.ts:351 “You owe nothing for care.”
+ok   src/engine/content/guide/papers.ts:351 “… holds … of the …: move money into it first, on your bank’s Move Money.”
+ok   src/engine/content/guide/papers.ts:351 “… has nothing to pay it with: …”
+ok   src/engine/content/guide/papers.ts:352 “The year is …, which the bank can’t cover.”
+GONE src/engine/content/guide/papers.ts:353 “It’s England’s, for its prescription charge.”
+       not said: “It’s England’s, for its prescription charge.”
+GONE src/engine/content/guide/papers.ts:384 “From January 1, 2027, HUSKY D asks for ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of income, time at the School or an exception in the”
+       not said: “HUSKY D asks for”, “of income, time at the School or an exception in the month before you apply, and”
+GONE src/engine/content/guide/papers.ts:387 “Enrolled in the marketplace, from September 1, …”
+       not said: “Enrolled in the marketplace, from”
+ok   src/engine/content/guide/papers.ts:432 “… is now your doctor.”
+ok   src/engine/content/guide/papers.ts:432 “… is now your pharmacy.”
+ok   src/engine/content/guide/papers.ts:435 “${LONGEST} days of medicine filled.”
+GONE src/engine/content/guide/papers.ts:435 “It comes to more than the bank can cover.”
+       not said: “It comes to more than the bank can cover.”
+ok   src/engine/content/guide/papers.ts:439 “Not Seen At Your Practice”
+ok   src/engine/content/guide/papers.ts:442 “Your Appointment Is Outside Yale Health”
+ok   src/engine/content/guide/papers.ts:448 “What it would cost you here now”
+ok   src/engine/content/guide/papers.ts:460 “There’s nothing to see a doctor about.”
+ok   src/engine/content/guide/papers.ts:461 “You have an appointment already.”
+GONE src/engine/content/guide/papers.ts:462 “No wait is published where you live; you’re seen when it comes up.”
+       not said: “No wait is published where you live; you’re seen when it comes up.”
+GONE src/engine/content/guide/papers.ts:463 “Your doctor is in the town you live in.”
+       not said: “Your doctor is in the town you live in.”
+ok   src/engine/content/guide/papers.ts:463 “That isn’t a doctor’s practice.”
+ok   src/engine/content/guide/papers.ts:464 “Yale Health sees Yale students it covers, and it doesn’t cover you now.”
+GONE src/engine/content/guide/papers.ts:465 “A pharmacy’s own cash price is kept only in America.”
+       not said: “A pharmacy’s own cash price is kept only in America.”
+GONE src/engine/content/guide/papers.ts:466 “It comes to more than the bank can cover.”
+       not said: “It comes to more than the bank can cover.”
+GONE src/engine/content/guide/papers.ts:492 “A doctor’s visit: booked at ${YALE_PRACTICE} for …, the wait where you live.”
+       not said: “A doctor’s visit: booked at”
+GONE src/engine/content/guide/papers.ts:494 “A doctor’s visit: not yet seen”
+       not said: “A doctor’s visit: not yet seen”
+ok   src/engine/content/guide/papers.ts:535 “Kept up from this month.”
+ok   src/engine/content/guide/papers.ts:552 “Choose a therapist where you live.”
+ok   src/engine/content/guide/papers.ts:552 “A course of therapy here is for depression.”
+ok   src/engine/content/guide/papers.ts:552 “You’re in a course already.”
+ok   src/engine/content/guide/papers.ts:553 “${YALE_COUNSELING.name} sees students Yale Health covers.”
+ok   src/engine/content/guide/papers.ts:635 “Connecticut treats a full-time student as not available for work (CGS 31-235(b)), so a claim pays only once you’ve left school.”
+ok   src/engine/content/guide/papers.ts:636 “Unemployment pays a noncitizen only with permission to work in the US, such as OPT (FUTA 3304(a)(14)).”
+ok   src/engine/content/guide/papers.ts:637 “Connecticut asks for base-period wages of ${CONNECTICUT_UI.totalTimesWeekly} times the weekly benefit: …”
+ok   src/engine/content/guide/papers.ts:638 “You already have a claim open.”
+ok   src/engine/content/guide/papers.ts:639 “In the game, SNAP is only for US citizens, because a noncitizen’s eligibility depends on immigration details the game doesn’t track.”
+ok   src/engine/content/guide/papers.ts:640 “A student in the summer without work-study or 20 hours of work a week isn’t eligible for SNAP (7 CFR 273.5).”
+ok   src/engine/content/guide/papers.ts:665 “Filed now, your base period, …, pays …”
+ok   src/engine/content/guide/papers.ts:714 “You need forty to qualify, and years at school earn only a few”
+ok   src/engine/content/guide/papers.ts:716 “It’s only for Mexican citizens living in Mexico.”
+ok   src/engine/content/guide/papers.ts:719 “You can claim it from ${SS.earliestAge}. It’s full at ${SS.fullAge}, and more if you wait until ${SS.latestAge}.”
+ok   src/engine/content/guide/papers.ts:720 “It takes forty credits to qualify, and your US work has earned …”
+ok   src/engine/content/guide/papers.ts:739 “You can claim it from ${SS.earliestAge}. It’s full at ${SS.fullAge}, and more if you wait until ${SS.latestAge}.”
+ok   src/engine/content/guide/productions.ts:39 “A copy is at the Haas Arts Library, in New Haven.”
+ok   src/engine/content/guide/productions.ts:288 “Out of the casting pool after missed calls. A good evaluation puts you back.”
+ok   src/engine/content/guide/productions.ts:367 “Be off book: the lines aren’t there yet, and the scene can’t start until they are.”
+ok   src/engine/content/guide/productions.ts:373 “You aren’t cast in anything there.”
+ok   src/engine/content/guide/productions.ts:376 “You haven’t missed any blocking.”
+ok   src/engine/content/guide/productions.ts:377 “… starts at …: there isn’t the time before it.”
+ok   src/engine/content/guide/productions.ts:446 “Better since the last note.”
+ok   src/engine/content/guide/productions.ts:452 “I don’t know what you want…”
+ok   src/engine/content/guide/productions.ts:452 “Who are they to you…?”
+ok   src/engine/content/guide/productions.ts:452 “You’re not taking what they give you…”
+ok   src/engine/content/guide/productions.ts:452 “The physical life … isn’t clean yet”
+ok   src/engine/content/guide/productions.ts:452 “The change into … lurches”
+ok   src/engine/content/guide/productions.ts:453 “Better since the last note.”
+ok   src/engine/content/guide/productions.ts:454 “It’s your … again: it’s held back … of your pieces before this.”
+ok   src/engine/content/guide/productions.ts:458 “There’s no note to work on.”
+ok   src/engine/content/guide/productions.ts:459 “You’ve worked on it: the next call will show it.”
+ok   src/engine/content/guide/productions.ts:460 “This note asks for the part played another way: change it under How You’ll Play It.”
+ok   src/engine/content/guide/productions.ts:460 “You’ve changed how you play it: the next call will show it.”
+ok   src/engine/content/guide/productions.ts:461 “That isn’t one of the ways at this note.”
+GONE src/engine/content/guide/productions.ts:462 “There’s no way left at this note that hasn’t been tried and put back.”
+       not said: “There’s no way left at this note that hasn’t been tried and put back.”
+ok   src/engine/content/guide/productions.ts:463 “Keep or put back the change you tried first.”
+ok   src/engine/content/guide/productions.ts:464 “Learn some of the part first: there’s nothing to rehearse without it.”
+ok   src/engine/content/guide/productions.ts:465 “Not from a hospital bed.”
+ok   src/engine/content/guide/productions.ts:465 “You’re too tired to work on your feet. Sleep first.”
+GONE src/engine/content/guide/productions.ts:465 “Not with …; it has … days yet to mend.”
+       not said: “days yet to mend.”
+ok   src/engine/content/guide/productions.ts:466 “… starts at …: there isn’t the time before it.”
+ok   src/engine/content/guide/productions.ts:467 “You aren’t cast in anything there.”
+GONE src/engine/content/guide/productions.ts:486 “You’re spent by the second half: find where the play lets you breathe.”
+       not said: “You’re spent by the second half: find where the play lets you breathe.”
+ok   src/engine/content/guide/productions.ts:539 “The director has asked for it …”
+ok   src/engine/content/guide/productions.ts:540 “Your choice now is rehearsed in to …% (complete at …%)”
+ok   src/engine/content/guide/productions.ts:543 “You aren’t cast in anything there.”
+ok   src/engine/content/guide/productions.ts:619 “The run went on without you: …”
+ok   src/engine/content/guide/productions.ts:656 “Shaken by the slip before: ${pct(1 - W_SHAKEN)} off”
+ok   src/engine/content/guide/productions.ts:707 “The company let you go”
+ok   src/engine/content/guide/productions.ts:711 “The Cabaret is for students.”
+ok   src/engine/content/guide/productions.ts:712 “Nobody on academic warning may take part in the Cabaret.”
+ok   src/engine/content/guide/productions.ts:713 “You’re on leave: a student on leave takes no part in the Yale Cabaret.”
+ok   src/engine/content/guide/productions.ts:714 “The Cabaret’s season begins with the term.”
+ok   src/engine/content/guide/productions.ts:715 “You’re in a Cabaret show this term already.”
+ok   src/engine/content/guide/productions.ts:716 “No Cabaret week this term is three weeks off and clear of your recesses and calls.”
+ok   src/engine/content/guide/productions.ts:717 “Cast in two productions at once, you can’t take a Cabaret show: the Bulletin bars double-cast actors from it.”
+ok   src/engine/content/guide/productions.ts:718 “The Summer Cabaret’s company takes a student in good standing.”
+ok   src/engine/content/guide/productions.ts:719 “You’re on leave: a student on leave takes no part in the Summer Cabaret.”
+ok   src/engine/content/guide/productions.ts:720 “The company forms in the spring, for students with a year still to come.”
+ok   src/engine/content/guide/productions.ts:721 “You’re in this summer’s company.”
+ok   src/engine/content/guide/productions.ts:722 “This summer’s company has formed.”
+ok   src/engine/content/guide/productions.ts:791 “Too soon after it to see it fresh.”
+ok   src/engine/content/guide/productions.ts:795 “The library isn’t known to you yet: the tour shows you it.”
+ok   src/engine/content/guide/productions.ts:796 “A copy is borrowed from the Haas Arts Library, which lends to students.”
+ok   src/engine/content/guide/productions.ts:797 “Read it first: research needs questions.”
+ok   src/engine/content/guide/productions.ts:798 “Its first production is researched: there’s nothing more on record to find.”
+ok   src/engine/content/guide/productions.ts:799 “… starts at …: there isn’t the time before it.”
+ok   src/engine/content/guide/productions.ts:816 “The cast as published: ${PLAY_CAST}.”
+ok   src/engine/content/guide/school.ts:53 “Its month has run out.”
+ok   src/engine/content/guide/school.ts:53 “Its teachers are in New Haven.”
+ok   src/engine/content/guide/school.ts:55 “Orientation is in New Haven.”
+ok   src/engine/content/guide/school.ts:264 “Only the terms to come stand between you and the degree.”
+ok   src/engine/content/guide/school.ts:349 “You’ve called in sick today already.”
+ok   src/engine/content/guide/school.ts:350 “There’s nothing at school today to miss.”
+ok   src/engine/content/guide/school.ts:351 “Today’s classes have been and gone; calling in sick now excuses nothing.”
+ok   src/engine/content/guide/school.ts:352 “You’re well enough to go: staying away would be an unexcused absence.”
+ok   src/engine/content/guide/school.ts:424 “Its session is still ahead on the calendar.”
+ok   src/engine/content/guide/school.ts:425 “Not from a hospital bed.”
+ok   src/engine/content/guide/school.ts:504 “The term it began in is over.”
+ok   src/engine/content/guide/school.ts:507 “You didn’t come to the assessment, which the Bulletin names as a ground of its own.”
+ok   src/engine/content/guide/school.ts:510 “A leave is from the program, and your first term hasn’t begun.”
+ok   src/engine/content/guide/school.ts:511 “Your request is with the chair and the dean, decided by …”
+ok   src/engine/content/guide/school.ts:511 “Your leave is granted, from …”
+ok   src/engine/content/guide/school.ts:512 “Your request to repeat the year is being decided.”
+ok   src/engine/content/guide/school.ts:512 “Your terms are done; what’s left is the degree.”
+ok   src/engine/content/guide/school.ts:512 “Your terms in the program are done.”
+ok   src/engine/content/guide/school.ts:513 “A personal leave comes after one term completed.”
+ok   src/engine/content/guide/school.ts:514 “A personal leave asks you to be current with your requirements…”
+ok   src/engine/content/guide/school.ts:515 “The School doesn’t normally grant a leave to take on a professional commitment.”
+ok   src/engine/content/guide/school.ts:516 “On an F-1, a personal leave ends your status …”
+ok   src/engine/content/guide/school.ts:517 “A medical leave is on a Yale Health physician’s written recommendation, and nothing in the last ${LEAVE_RULES.medicalLookbackDays} days woul”
+GONE src/engine/content/guide/school.ts:518 “You’ve had N terms of leave; the Bulletin allows ${LEAVE_RULES.maxTerms} in all.”
+       not said: “terms of leave; the Bulletin allows”
+ok   src/engine/content/guide/school.ts:521 “A financial hold stops registration: … is owed on your Yale account.”
+ok   src/engine/content/guide/school.ts:521 “You’re on leave: you register for the term you come back to, when it begins.”
+ok   src/engine/content/guide/school.ts:523 “Your bank can’t cover it.”
+ok   src/engine/content/guide/school.ts:524 “The School pays for your Affiliate cover.”
+ok   src/engine/content/guide/school.ts:524 “It could be bought until …”
+GONE src/engine/content/guide/school.ts:524 “Your current account and the savings beside it can pay … of it now: it’s paid in full, so move money into your current account first.”
+       not said: “of it now: it’s paid in full, so move money into your current account first.”
+ok   src/engine/content/guide/school.ts:524 “… have nothing to pay it with: move money into your current account first.”
+ok   src/engine/content/guide/school.ts:525 “Only a leave the dean imposed can be appealed.”
+ok   src/engine/content/guide/school.ts:525 “The appeal had to be in by …”
+GONE src/engine/content/guide/school.ts:526 “The dean imposed this leave, so it isn’t yours to call off: appeal it in writing to the dean by …”
+       not said: “The dean imposed this leave, so it isn’t yours to call off: appeal it in writing”
+GONE src/engine/content/guide/school.ts:577 “A course failed that year”
+       not said: “A course failed that year”
+GONE src/engine/content/guide/school.ts:618 “only where that can still be asked”
+       not said: “only where that can still be asked”
+ok   src/engine/content/guide/school.ts:626 “There’s no Incomplete in that course to make up.”
+ok   src/engine/content/guide/school.ts:626 “Its month runs out at …: there isn’t the time for a session before it.”
+ok   src/engine/content/guide/school.ts:628 “It’s been extended once already.”
+ok   src/engine/content/guide/school.ts:629 “A year is repeated from its end, after the spring’s evaluation.”
+ok   src/engine/content/guide/school.ts:630 “Every course this year was passed: there’s nothing to repeat it for.”
+ok   src/engine/content/guide/school.ts:631 “SLATE’s faculty don’t approve year N a second time.”
+ok   src/engine/content/guide/school.ts:632 “Your request for an additional term is with the chair and the dean, decided by …”
+ok   src/engine/content/guide/school.ts:632 “Your additional term is …”
+ok   src/engine/content/guide/school.ts:632 “Your request to repeat the year is being decided.”
+ok   src/engine/content/guide/school.ts:633 “Not with a leave under way.”
+ok   src/engine/content/guide/school.ts:634 “Repeating would make N semesters, past the nine the Bulletin allows for the degree.”
+ok   src/engine/content/guide/school.ts:634 “It would make N semesters, past the nine the Bulletin allows.”
+ok   src/engine/content/guide/school.ts:635 “Its thirty days have run out.”
+ok   src/engine/content/guide/school.ts:636 “The next year has begun.”
+ok   src/engine/content/guide/school.ts:637 “An additional term comes after your last year’s evaluation, for what it left unpassed.”
+ok   src/engine/content/guide/school.ts:638 “The faculty’s disqualification stands against it.”
+ok   src/engine/content/guide/school.ts:707 “The Financial Hold Is Lifted”
+ok   src/engine/content/guide/school.ts:713 “The Financial Hold Is Lifted”
+ok   src/engine/content/guide/school.ts:726 “Your bank can’t cover it.”
+ok   src/engine/content/guide/school.ts:728 “Your Yale account owes no balance.”
+ok   src/engine/content/guide/school.ts:728 “… is owed; pay that or less.”
+GONE src/engine/content/guide/school.ts:728 “Your current account and the savings beside it can pay … of it now: pay that or less, or move money into your current account first.”
+       not said: “of it now: pay that or less, or move money into your current account first.”
+ok   src/engine/content/guide/school.ts:728 “Your current account and the savings beside it have nothing to pay it with: move money into your current account first.”
+ok   src/engine/content/guide/school.ts:729 “Support past six terms is reviewed once a seventh is coming: you’re within the six.”
+ok   src/engine/content/guide/school.ts:730 “It’s with the aid office, decided by …”
+ok   src/engine/content/guide/school.ts:730 “The aid office has reviewed your support.”
+ok   src/engine/content/guide/school.ts:731 “Conversion to grant aid is for students on financial aid, and no need was found for you.”
+ok   src/engine/content/guide/school.ts:732 “Not while on leave: a student on leave has no aid.”
+ok   src/engine/content/guide/school.ts:733 “Your request is in, for the next processing.”
+ok   src/engine/content/guide/school.ts:734 “No hours to convert: …”
+ok   src/engine/content/guide/school.ts:734 “No hours to convert yet: …”
+ok   src/engine/content/guide/school.ts:734 “No hours to convert at January’s processing: …”
+ok   src/engine/content/guide/school.ts:814 “You’re on leave: no shifts until you’re back.”
+ok   src/engine/content/guide/school.ts:815 “No free evening in the next two weeks within Yale’s cap of ${WORK_LIMITS.weekHours} hours a week in term, across all your Yale jobs.”
+ok   src/engine/content/guide/school.ts:816 “No free evening in the term in the next two weeks.”
+ok   src/engine/content/guide/school.ts:817 “It’s ${formatMoney(REQUIRED_PPE.cost, 'USD')}, which the bank can’t cover.”
+ok   src/engine/content/guide/taxes.ts:202 “no change in the total”
+ok   src/engine/content/guide/taxes.ts:227 “An amended return for this year is already with the IRS.”
+ok   src/engine/content/guide/taxes.ts:228 “Your return as filed matches what’s on record, so there’s nothing to amend.”
+ok   src/engine/content/guide/taxes.ts:306 “None added: this state’s rules aren’t researched”
+ok   src/engine/content/guide/taxes.ts:307 “paid through the payment plan”
+ok   src/engine/content/guide/taxes.ts:315 “Enter an amount above zero.”
+ok   src/engine/content/guide/taxes.ts:316 “You owe …. Pay that amount or less.”
+ok   src/engine/content/guide/taxes.ts:317 “Your bank can’t cover …, so nothing was paid.”
+ok   src/engine/content/guide/taxes.ts:409 “Your bank can’t cover the … setup fee, so you haven’t applied and nothing was charged.”
+ok   src/engine/content/guide/taxes.ts:410 “The IRS needs every return filed first, and your … return isn’t. File it first.”
+ok   src/engine/content/guide/taxes.ts:411 “A short-term plan is for less than ….”
+ok   src/engine/content/guide/taxes.ts:412 “The lowest monthly payment is …: what you owe, spread over ${PLAN.leastMonths} months.”
+GONE src/engine/content/guide/taxes.ts:413 “Connecticut DRS needs every return filed first”
+       not said: “Connecticut DRS needs every return filed first”
+GONE src/engine/content/guide/taxes.ts:413 “Connecticut DRS sets up a plan over 2 to 12 months.”
+       not said: “Connecticut DRS sets up a plan over”
+GONE src/engine/content/guide/taxes.ts:413 “You already have a plan with Connecticut DRS.”
+       not said: “You already have a plan with Connecticut DRS.”
+ok   src/engine/content/guide/taxes.ts:414 “Your bank can’t cover …, so nothing was paid.”
+ok   src/engine/content/guide/taxes.ts:414 “Your plan isn’t behind, so there’s nothing to catch up.”
+ok   src/engine/content/guide/taxes.ts:414 “That plan isn’t behind, so there’s nothing to catch up.”
+ok   src/engine/content/guide/taxes.ts:416 “There’s no three-year penalty on that year.”
+ok   src/engine/content/guide/taxes.ts:416 “Its waiver has already been decided.”
+ok   src/engine/content/guide/taxes.ts:416 “File your own return for the year first.”
+GONE src/engine/content/guide/taxes.ts:486 “Filed when collection reached that step”
+       not said: “Filed when collection reached that step”
+GONE src/engine/content/guide/taxes.ts:486 “Filed because its payment plan requires one”
+       not said: “Filed because its payment plan requires one”
+ok   src/engine/content/guide/taxes.ts:489 “It secured tax you owed when it was filed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.”
+ok   src/engine/content/guide/taxes.ts:499 “The lien has already been released.”
+ok   src/engine/content/guide/taxes.ts:499 “The lien has already been withdrawn.”
+ok   src/engine/content/guide/taxes.ts:500 “You can ask for its release once the balance it secures is paid in full.”
+ok   src/engine/content/guide/taxes.ts:501 “There’s nothing to ask: it’s released on its own”
+ok   src/engine/content/guide/taxes.ts:502 “You can ask for a withdrawal once the lien is released, which happens within ${FEDERAL_LIEN.releaseDays} days of paying in full. Only a lien”
+ok   src/engine/content/guide/taxes.ts:503 “The IRS withdraws a lien after payment only if your last three years’ returns are filed”
+580 quoted sentences in the guide; 514 the game says, 66 it no longer says.
