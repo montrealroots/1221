@@ -16,7 +16,7 @@
  *   node tools/text-inventory.mjs --prune             removes the statuses of sources that are gone, and lists them
  *
  * A string is a string literal, a template (its ${…} written as {…}) or JSX text, in `src/` but the tests and the
- * gazetteer's data, that reads as words: two or more of them, or one capitalised word a label would be. Ids, keys,
+ * gazetteer's data, or a string in a JSON file under `src/` the game imports, that reads as words: two or more of them, or one capitalised word a label would be. Ids, keys,
  * class names, comparisons, `case` labels, import paths and console lines are left out. A source is the file, the
  * top-level declaration and, inside it, the nearest entry with an id or the command it registers: what a writer can read
  * as one thing.
@@ -50,9 +50,9 @@ const SUBSYSTEMS = [
   ['start', 'Startup, Save Selection, Character Creation And Onboarding', [/^src\/ui\/(startup|saves|creation)\//, /^src\/engine\/content\/(entry|personality-traits|personality|names|backgrounds|birthplace|creation)[\w-]*\.ts$/, /^src\/engine\/systems\/(creation|bootstrap)\.ts$/, /^src\/engine\/(index|decided)\.ts$/, /^src\/engine\/persistence\//, /^src\/engine\/content\/(languages|ethnicity|identity)\.ts$/, /^src\/engine\/content\/guide\/start\.ts$/, /^src\/app\//, /^src\/main\.tsx$/]],
   ['tutorial', 'Tutorials, Guides, Help Panels And Connected-System Explanations', [/^src\/engine\/content\/tutorial\.ts$/, /^src\/engine\/content\/guide\/(index|types)\.ts$/, /^src\/ui\/guide\//, /^src\/engine\/world\/tutorial\.ts$/]],
   ['home', 'Home And Its Retained Actions', [/^src\/ui\/screens\//, /^src\/engine\/systems\/(life|meals|food|hygiene|chores)\.ts$/]],
-  ['profile', 'Player Profile, Attributes, Genres, Mastery And Progression', [/^src\/ui\/workspaces\/ProfileWorkspace\.tsx$/, /^src\/ui\/components\/AttributesPanel\.tsx$/, /^src\/ui\/looks\/(actor|person|craft|genre)[\w-]*\.tsx?$/, /^src\/engine\/content\/(abilities|attributes-matrix|genres?|genre-[\w-]+|interpretation|approaches|personality-traits|contemporary|practice)\.ts$/, /^src\/engine\/systems\/(attributes|development|advice|experience|interpretation[\w-]*|genre[\w-]*|mastery|personality|practice|next-steps)\.ts$/, /^src\/engine\/content\/guide\/craft\.ts$/, /^src\/engine\/systems\/(register|engagement|artistry|learning)\.ts$/, /^src\/engine\/content\/(film-genres|demands|reference)\.ts$/]],
+  ['profile', 'Player Profile, Attributes, Genres, Mastery And Progression', [/^src\/ui\/workspaces\/ProfileWorkspace\.tsx$/, /^src\/ui\/components\/AttributesPanel\.tsx$/, /^src\/ui\/looks\/(actor|person|craft|genre)[\w-]*\.tsx?$/, /^src\/engine\/content\/(abilities|attributes-matrix|genres?|genre-[\w-]+|interpretation|approaches|personality-traits|contemporary|practice)\.ts$/, /^src\/engine\/systems\/(attributes|development|advice|experience|interpretation[\w-]*|genre[\w-]*|mastery|personality|practice|next-steps)\.ts$/, /^src\/engine\/content\/guide\/craft\.ts$/, /^src\/engine\/systems\/(register|engagement|artistry|learning)\.ts$/, /^src\/engine\/content\/(film-genres|demands|reference)\.ts$/, /^src\/engine\/content\/genre-demands\.json$/]],
   ['school', 'School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion', [/^src\/ui\/workspaces\/SchoolWorkspace\.tsx$/, /^src\/ui\/components\/(BriefPane|ClassMoments|CourseworkPane|PlayingChooser|RehearsalProcess|StudyPlanPanels|WorkThrough)\.tsx$/, /^src\/ui\/looks\/classmate\.tsx$/, /^src\/ui\/looks\/school[\w-]*\.tsx?$/, /^src\/ui\/workspaces\/(school|coursework|classes|production|briefs?|practice)[\w-]*\.tsx?$/, /^src\/engine\/systems\/(school|coursework|classmates|production|plays?|briefs|evaluation|piece|material|ensemble|leave|cabaret|orientation|workload|grades?|review)[\w-]*\.ts$/, /^src\/engine\/content\/(school|coursework|tasks|material|piece|concerns|courses?|production|plays|roundups)[\w-]*\.ts$/, /^src\/engine\/content\/guide\/(school|coursework|productions)\.ts$/, /^src\/engine\/systems\/(workbook|workpieces|courserecord)\.ts$/, /^src\/engine\/content\/(workload|workbook|replacements)\.ts$/]],
-  ['money', 'Money, Banking, Payments, Fees, Holds, Statements And Transactions', [/^src\/ui\/workspaces\/BankWorkspace\.tsx$/, /^src\/ui\/looks\/bank\.tsx$/, /^src\/ui\/bank\//, /^src\/ui\/looks\/money[\w-]*\.tsx?$/, /^src\/ui\/workspaces\/(money|bank)[\w-]*\.tsx?$/, /^src\/engine\/systems\/(bank\w*|banking|cards?|cardoffers|payments?|statements|lending|money|accounts?|security|savings|overdraft|switching|transfers?|fraud|rewards|credit\w*|bills?|rent|prices?|spend\w*|collections?|homeaccounts|roundups?|ledger)\.ts$/, /^src\/engine\/content\/(bank[\w-]*|cards|payments|accountlife|security|homeaccounts|pending|lending|fees|prices|currenc\w*|credit\w*)\.ts$/, /^src\/engine\/core\/(money|ledger|banknumbers)\.ts$/, /^src\/engine\/content\/guide\/money\.ts$/, /^src\/engine\/systems\/(accountlife|cardlife|cash|homeaccount|routing|obligations|earnings)\.ts$/, /^src\/engine\/content\/(cash|rents)\.ts$/]],
+  ['money', 'Money, Banking, Payments, Fees, Holds, Statements And Transactions', [/^src\/ui\/workspaces\/BankWorkspace\.tsx$/, /^src\/ui\/looks\/bank\.tsx$/, /^src\/ui\/bank\//, /^src\/ui\/looks\/money[\w-]*\.tsx?$/, /^src\/ui\/workspaces\/(money|bank)[\w-]*\.tsx?$/, /^src\/engine\/systems\/(bank\w*|banking|cards?|cardoffers|payments?|statements|lending|money|accounts?|security|savings|overdraft|switching|transfers?|fraud|rewards|credit\w*|bills?|rent|prices?|spend\w*|collections?|homeaccounts|roundups?|ledger)\.ts$/, /^src\/engine\/content\/(bank[\w-]*|cards|payments|accountlife|security|homeaccounts|pending|lending|fees|prices|currenc\w*|credit\w*)\.ts$/, /^src\/engine\/core\/(money|ledger|banknumbers)\.ts$/, /^src\/engine\/content\/guide\/money\.ts$/, /^src\/engine\/systems\/(accountlife|cardlife|cash|homeaccount|routing|obligations|earnings)\.ts$/, /^src\/engine\/content\/(cash|rents)\.ts$/, /^src\/engine\/content\/home-accounts\.json$/]],
   ['papers', 'Papers, Documents, Applications, Taxes And Status Notices', [/^src\/ui\/workspaces\/PapersWorkspace\.tsx$/, /^src\/ui\/components\/LienPanels\.tsx$/, /^src\/ui\/papers\//, /^src\/ui\/looks\/papers[\w-]*\.tsx?$/, /^src\/ui\/workspaces\/papers[\w-]*\.tsx?$/, /^src\/engine\/systems\/(documents?|passports?|licen[sc]es?|permission|visas?|status|tax\w*|benefits?|pension\w*|citizenship|residence|identity|idcard)\.ts$/, /^src\/engine\/content\/(passports|licenses|licensepaths|tax|statetax|visas?|documents?|benefits?|pensions?|safetynet|idcards?|permits?)[\w-]*\.ts$/, /^src\/engine\/content\/guide\/(papers|documents|taxes)\.ts$/, /^src\/engine\/systems\/(statetax|abroad|unemployment|assistance|homepensions|homebenefits|universalcredit|imss|socialsecurity|statepension|eiself|papervisits)\.ts$/, /^src\/engine\/content\/workrules\.ts$/]],
   ['health', 'Health, Treatment, Coverage, Stamina, Energy And Recovery', [/^src\/ui\/looks\/(wellbeing|health|body)[\w-]*\.tsx?$/, /^src\/ui\/workspaces\/(health|life|body)[\w-]*\.tsx?$/, /^src\/engine\/systems\/(health\w*|body|injury|illness|therapy|appointments?|insurance|coverage|stamina|workload|energy|sleep|mortality|condition|pharmacy|prescriptions?|dental|hospital|care)\.ts$/, /^src\/engine\/content\/(health\w*|illness\w*|conditions?|insurance|clinics?|medic\w*|body)[\w-]*\.ts$/, /^src\/engine\/content\/guide\/body\.ts$/, /^src\/engine\/systems\/clinics\.ts$/, /^src\/engine\/content\/(carevisits|injury|lifespan)\.ts$/]],
   ['calendar', 'Calendar, Schedules, Time Advancement And Reminders', [/^src\/ui\/workspaces\/CalendarWorkspace\.tsx$/, /^src\/ui\/looks\/plans\.tsx$/, /^src\/ui\/looks\/(day|calendar|time|weather|place)[\w-]*\.tsx?$/, /^src\/engine\/systems\/(calendar|plans?|weather|time|day)\.ts$/, /^src\/engine\/world\/plans\.ts$/, /^src\/engine\/core\/(time|scheduler|sun|realclock)\.ts$/, /^src\/engine\/content\/guide\/day\.ts$/, /^src\/engine\/systems\/(seasons|birthdays)\.ts$/, /^src\/engine\/content\/(holidays|holiday-data|climate|thunder)\.ts$/]],
@@ -99,6 +99,14 @@ function walk(dir) {
     const p = join(dir, f);
     if (statSync(p).isDirectory()) return SKIP_DIRS.has(f) ? [] : walk(p);
     return /\.(ts|tsx)$/.test(f) && !/\.test\.tsx?$|\.d\.ts$/.test(f) ? [slashes(p)] : [];
+  });
+}
+/** The JSON files under src/ that the game imports. */
+function walkJson(dir) {
+  return readdirSync(dir).flatMap((f) => {
+    const p = join(dir, f);
+    if (statSync(p).isDirectory()) return SKIP_DIRS.has(f) ? [] : walkJson(p);
+    return f.endsWith('.json') ? [slashes(p)] : [];
   });
 }
 /** Words, not an id, a key, a class name, a path, a format or a number. */
@@ -218,6 +226,25 @@ export function inventory() {
         if (!sources.has(id)) sources.set(id, { id, file, decl: top, anchor, subsystem: subsystemOf(file), strings: [] });
         sources.get(id).strings.push({ line: f.line, kind: f.kind, text: f.text });
       }
+    }
+  }
+  // JSON a screen reads (from 2026-10-17: the profile area found the genres' research text in `genre-demands.json`
+  // shown on the genre look and in no source). Each top-level key is a declaration; its entries, by key or by id, are
+  // the sources; every string in them that reads as words is a string, at the line it's written on.
+  for (const file of walkJson(ROOT)) {
+    const raw = readFileSync(file, 'utf8');
+    const data = JSON.parse(raw);
+    const lines = raw.split('\n');
+    const lineOf = (text) => { const needle = JSON.stringify(text).slice(1, 41); const i = lines.findIndex((l) => l.includes(needle)); return i + 1; };
+    const add = (id, decl, anchor, text) => {
+      if (!sources.has(id)) sources.set(id, { id, file, decl, anchor, subsystem: subsystemOf(file), strings: [] });
+      sources.get(id).strings.push({ line: lineOf(text), kind: /[.?!]$/.test(text.trim()) || text.split(' ').length > 7 ? 'prose' : 'label', text });
+    };
+    const leaves = (v, cb) => { if (typeof v === 'string') { if (isWords(v)) cb(v); } else if (Array.isArray(v)) v.forEach((x) => leaves(x, cb)); else if (v && typeof v === 'object') Object.values(v).forEach((x) => leaves(x, cb)); };
+    for (const [top, v] of Object.entries(data)) {
+      const entries = v && typeof v === 'object' ? (Array.isArray(v) ? v.map((x, i) => [x && typeof x === 'object' && typeof x.id === 'string' ? x.id : String(i), x]) : Object.entries(v)) : null;
+      if (entries && entries.length > 1 && entries.every(([, x]) => x && typeof x === 'object')) for (const [k, x] of entries) leaves(x, (t) => add(`${file}#${top} [${k}]`, top, `[${k}]`, t));
+      else leaves(v, (t) => add(`${file}#${top}`, top, null, t));
     }
   }
   for (const s of sources.values()) {

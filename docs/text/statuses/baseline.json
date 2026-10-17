@@ -7589,6 +7589,751 @@
   "hash": "82fd9a7986ba",
   "on": "2026-10-17"
  },
+ "src/engine/content/genre-demands.json#absurdist": {
+  "status": "Pending",
+  "hash": "359d59c28586",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#action": {
+  "status": "Pending",
+  "hash": "6cee3e50d9eb",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#action_comedy": {
+  "status": "Pending",
+  "hash": "685f43a60cfe",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#adventure": {
+  "status": "Pending",
+  "hash": "461c98020381",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#alternate_history": {
+  "status": "Pending",
+  "hash": "f4881756fb3a",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#animated": {
+  "status": "Pending",
+  "hash": "9aa9b4066dd8",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#anime": {
+  "status": "Pending",
+  "hash": "8944b389d428",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#anthology": {
+  "status": "Pending",
+  "hash": "8096ed9900ff",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#apocalyptic": {
+  "status": "Pending",
+  "hash": "3e6c4e0fc767",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#art_house": {
+  "status": "Pending",
+  "hash": "ba28c62f7712",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#avant_garde": {
+  "status": "Pending",
+  "hash": "42768ff5d8cf",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#backstage_musical": {
+  "status": "Pending",
+  "hash": "a92eba66cb94",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#biker": {
+  "status": "Pending",
+  "hash": "d66bc0e34355",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#biographical": {
+  "status": "Pending",
+  "hash": "0cc2f3eb0c95",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#black_comedy": {
+  "status": "Pending",
+  "hash": "3d4aa8c73bd4",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#blaxploitation": {
+  "status": "Pending",
+  "hash": "8ae58b831883",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#body_horror": {
+  "status": "Pending",
+  "hash": "4c82b0c14d02",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#buddy_comedy": {
+  "status": "Pending",
+  "hash": "7c74997590f5",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#buddy_cop": {
+  "status": "Pending",
+  "hash": "6d94e95ebd68",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#caper": {
+  "status": "Pending",
+  "hash": "a24648614951",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#chanbara": {
+  "status": "Pending",
+  "hash": "35f17316880d",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#chase": {
+  "status": "Pending",
+  "hash": "c18e8031418d",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#childrens": {
+  "status": "Pending",
+  "hash": "c0bcddab890b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#christmas": {
+  "status": "Pending",
+  "hash": "7d71f9739683",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#comedy": {
+  "status": "Pending",
+  "hash": "55be74b895fe",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#coming_of_age": {
+  "status": "Pending",
+  "hash": "d461d1a0d849",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#concert_film": {
+  "status": "Pending",
+  "hash": "8fdcf5e783c1",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#conspiracy_thriller": {
+  "status": "Pending",
+  "hash": "bd155b46770a",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#cosmic_horror": {
+  "status": "Pending",
+  "hash": "833b4ab978c3",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#costume_drama": {
+  "status": "Pending",
+  "hash": "e0e3125790d5",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#courtroom_drama": {
+  "status": "Pending",
+  "hash": "b99db5cb5f75",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#creature_feature": {
+  "status": "Pending",
+  "hash": "c998a147f41c",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#crime": {
+  "status": "Pending",
+  "hash": "95e145e93798",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#cyberpunk": {
+  "status": "Pending",
+  "hash": "abfdcaacd915",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#dance": {
+  "status": "Pending",
+  "hash": "4fb01c7f73a0",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#dark_fantasy": {
+  "status": "Pending",
+  "hash": "15019f637d97",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#detective": {
+  "status": "Pending",
+  "hash": "43091f031503",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#disaster": {
+  "status": "Pending",
+  "hash": "aeed46637169",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#docudrama": {
+  "status": "Pending",
+  "hash": "731567c9c8e2",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#docufiction": {
+  "status": "Pending",
+  "hash": "1ca8aa8da94c",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#documentary": {
+  "status": "Pending",
+  "hash": "4ddb4f4ced73",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#domestic_drama": {
+  "status": "Pending",
+  "hash": "3169f5e4e6a0",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#drama": {
+  "status": "Pending",
+  "hash": "563d4160c165",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#dystopian": {
+  "status": "Pending",
+  "hash": "e7cf38ec967b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#eco_horror": {
+  "status": "Pending",
+  "hash": "5b5e9cf9f1a6",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#epic": {
+  "status": "Pending",
+  "hash": "ea4681bf78ee",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#erotic_thriller": {
+  "status": "Pending",
+  "hash": "f3de2fc3560b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#espionage": {
+  "status": "Pending",
+  "hash": "d138eaede0a5",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#experimental": {
+  "status": "Pending",
+  "hash": "57eb557fc88c",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#exploitation": {
+  "status": "Pending",
+  "hash": "d81945e18d2a",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#fairy_tale": {
+  "status": "Pending",
+  "hash": "03620dc29229",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#family": {
+  "status": "Pending",
+  "hash": "e66a013bc210",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#fantasy": {
+  "status": "Pending",
+  "hash": "960e745e6d9c",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#farce": {
+  "status": "Pending",
+  "hash": "e5d9f5b2cc89",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#film_noir": {
+  "status": "Pending",
+  "hash": "7a51b2eb0ced",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#folk_horror": {
+  "status": "Pending",
+  "hash": "7efba677aa63",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#found_footage": {
+  "status": "Pending",
+  "hash": "45e8529f25bc",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#gangster": {
+  "status": "Pending",
+  "hash": "23187d6c1729",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#giallo": {
+  "status": "Pending",
+  "hash": "ad7626097195",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#gothic_horror": {
+  "status": "Pending",
+  "hash": "2d49beee8707",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#grindhouse": {
+  "status": "Pending",
+  "hash": "8e0bf248bd40",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#hangout": {
+  "status": "Pending",
+  "hash": "77e047b4c337",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#heist": {
+  "status": "Pending",
+  "hash": "6b5b750460f7",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#historical_drama": {
+  "status": "Pending",
+  "hash": "af410b44d6f7",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#historical_fiction": {
+  "status": "Pending",
+  "hash": "0b697a898547",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#holiday": {
+  "status": "Pending",
+  "hash": "edb97a2145ba",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#hood_film": {
+  "status": "Pending",
+  "hash": "15128bd23c7f",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#horror": {
+  "status": "Pending",
+  "hash": "4ce3d07603b1",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#horror_comedy": {
+  "status": "Pending",
+  "hash": "4ca174b87d5b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#isekai": {
+  "status": "Pending",
+  "hash": "5cea71f198bb",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#jidaigeki": {
+  "status": "Pending",
+  "hash": "1bb6ce957010",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#jukebox_musical": {
+  "status": "Pending",
+  "hash": "0c13acc45b40",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#kaiju": {
+  "status": "Pending",
+  "hash": "5e403e13b163",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#kitchen_sink": {
+  "status": "Pending",
+  "hash": "5e237b04f85d",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#legal_drama": {
+  "status": "Pending",
+  "hash": "0c61fea80592",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#magical_realism": {
+  "status": "Pending",
+  "hash": "5d998b0c9fb4",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#martial_arts": {
+  "status": "Pending",
+  "hash": "99b49db50b7b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#medical_drama": {
+  "status": "Pending",
+  "hash": "61381aa1e625",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#melodrama": {
+  "status": "Pending",
+  "hash": "97c01af826ec",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#military": {
+  "status": "Pending",
+  "hash": "afdf56180040",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#mockumentary": {
+  "status": "Pending",
+  "hash": "94864115d817",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#monster_movie": {
+  "status": "Pending",
+  "hash": "a93f002a8955",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#mumblecore": {
+  "status": "Pending",
+  "hash": "2a0a201ef008",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#musical": {
+  "status": "Pending",
+  "hash": "e5397768e310",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#mystery": {
+  "status": "Pending",
+  "hash": "634811c839d2",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#nature_documentary": {
+  "status": "Pending",
+  "hash": "fb8eae3d0391",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#neo_noir": {
+  "status": "Pending",
+  "hash": "c64368808569",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#neorealism": {
+  "status": "Pending",
+  "hash": "a68c9a3d9ba8",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#new_wave": {
+  "status": "Pending",
+  "hash": "0695b01a5e37",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#nordic_noir": {
+  "status": "Pending",
+  "hash": "56dbeabee17c",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#occult": {
+  "status": "Pending",
+  "hash": "dadb9c83e6bb",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#parody": {
+  "status": "Pending",
+  "hash": "d7054078619c",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#period_drama": {
+  "status": "Pending",
+  "hash": "4d8e870c8baf",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#picaresque": {
+  "status": "Pending",
+  "hash": "ddfe0e749df0",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#police_procedural": {
+  "status": "Pending",
+  "hash": "756b36cc5d83",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#political_drama": {
+  "status": "Pending",
+  "hash": "d8559893bbcd",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#political_thriller": {
+  "status": "Pending",
+  "hash": "24088daaa45f",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#post_apocalyptic": {
+  "status": "Pending",
+  "hash": "89a045f3e65e",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#prison_film": {
+  "status": "Pending",
+  "hash": "29d16475aeea",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#psychological_horror": {
+  "status": "Pending",
+  "hash": "f259eeab212e",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#psychological_thriller": {
+  "status": "Pending",
+  "hash": "a38d274ef695",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#queer_cinema": {
+  "status": "Pending",
+  "hash": "8bc40471e16a",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#revenge": {
+  "status": "Pending",
+  "hash": "498c32de2d60",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#road_movie": {
+  "status": "Pending",
+  "hash": "f00710bd252a",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#rockumentary": {
+  "status": "Pending",
+  "hash": "69a8473eeeab",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#romance": {
+  "status": "Pending",
+  "hash": "410ac3b1135b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#romantic_comedy": {
+  "status": "Pending",
+  "hash": "c3c6b75441ef",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#romantic_drama": {
+  "status": "Pending",
+  "hash": "352e65b87435",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#samurai": {
+  "status": "Pending",
+  "hash": "e42bae6cf1b2",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#satire": {
+  "status": "Pending",
+  "hash": "addd6705b43b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#science_fantasy": {
+  "status": "Pending",
+  "hash": "d4bb662f83a4",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#science_fiction": {
+  "status": "Pending",
+  "hash": "144ea5aa4e66",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#screwball_comedy": {
+  "status": "Pending",
+  "hash": "0dffb96ab109",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#sea_adventure": {
+  "status": "Pending",
+  "hash": "fe3b7a8d3440",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#silent_film": {
+  "status": "Pending",
+  "hash": "58c755839939",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#slapstick": {
+  "status": "Pending",
+  "hash": "14bf7d8e6634",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#slasher": {
+  "status": "Pending",
+  "hash": "76bb92424fe3",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#slice_of_life": {
+  "status": "Pending",
+  "hash": "8305f6b49086",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#social_realism": {
+  "status": "Pending",
+  "hash": "79ca96e79c5e",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#space_opera": {
+  "status": "Pending",
+  "hash": "920756d9ac67",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#spaghetti_western": {
+  "status": "Pending",
+  "hash": "5739b07c8933",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#splatter": {
+  "status": "Pending",
+  "hash": "94e946bebdcc",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#sports": {
+  "status": "Pending",
+  "hash": "352aa7439069",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#spy": {
+  "status": "Pending",
+  "hash": "2086935f3021",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#steampunk": {
+  "status": "Pending",
+  "hash": "18f10f17e0ce",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#stoner_comedy": {
+  "status": "Pending",
+  "hash": "6f84fcb57618",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#superhero": {
+  "status": "Pending",
+  "hash": "13e40315662b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#supernatural": {
+  "status": "Pending",
+  "hash": "0afc53e4cc94",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#surrealist": {
+  "status": "Pending",
+  "hash": "55d1d6dde2b0",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#survival": {
+  "status": "Pending",
+  "hash": "3a79f11997c5",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#swashbuckler": {
+  "status": "Pending",
+  "hash": "1bf70abe053e",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#sword_and_sandal": {
+  "status": "Pending",
+  "hash": "cc8879de27af",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#sword_and_sorcery": {
+  "status": "Pending",
+  "hash": "7559211436e0",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#techno_thriller": {
+  "status": "Pending",
+  "hash": "94b4785edc8c",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#teen": {
+  "status": "Pending",
+  "hash": "346554083387",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#thriller": {
+  "status": "Pending",
+  "hash": "bfbe159e00eb",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#time_travel": {
+  "status": "Pending",
+  "hash": "d5fc4ec77954",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#tokusatsu": {
+  "status": "Pending",
+  "hash": "70541ac514aa",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#tragedy": {
+  "status": "Pending",
+  "hash": "273b7ddf1a56",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#tragicomedy": {
+  "status": "Pending",
+  "hash": "45603b642519",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#true_crime": {
+  "status": "Pending",
+  "hash": "5946ce828301",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#vampire": {
+  "status": "Pending",
+  "hash": "e2f4b46ef8b1",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#war": {
+  "status": "Pending",
+  "hash": "eedd53d5d16f",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#werewolf": {
+  "status": "Pending",
+  "hash": "7cae3d135c0e",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#western": {
+  "status": "Pending",
+  "hash": "e2690399f328",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#whodunit": {
+  "status": "Pending",
+  "hash": "fb8a9d0c368f",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#wuxia": {
+  "status": "Pending",
+  "hash": "dba74b39d67c",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#yakuza": {
+  "status": "Pending",
+  "hash": "fc6923ad4367",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/genre-demands.json#zombie": {
+  "status": "Pending",
+  "hash": "9714338c554c",
+  "on": "2026-10-17"
+ },
  "src/engine/content/genre-register.ts#GENRE_REGISTER .absurdist": {
   "status": "Pending",
   "hash": "93568de9c8be",
@@ -10372,6 +11117,381 @@
  "src/engine/content/holidays.ts#loadCountryHolidays": {
   "status": "Pending",
   "hash": "161ffe931bab",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [au-anz]": {
+  "status": "Pending",
+  "hash": "fa7eb1c0ca19",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [au-commbank]": {
+  "status": "Pending",
+  "hash": "23e3d7a6fcde",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [au-nab]": {
+  "status": "Pending",
+  "hash": "f2f0b97ba2cf",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [au-westpac]": {
+  "status": "Pending",
+  "hash": "a4cd17d1492a",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [ca-bmo]": {
+  "status": "Pending",
+  "hash": "019a48429893",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [ca-cibc]": {
+  "status": "Pending",
+  "hash": "815abcf38004",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [ca-rbc]": {
+  "status": "Pending",
+  "hash": "98cf2e50cee1",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [ca-scotiabank]": {
+  "status": "Pending",
+  "hash": "751ae67a9cf4",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [ca-td]": {
+  "status": "Pending",
+  "hash": "852a5217605e",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [de-berliner-sparkasse]": {
+  "status": "Pending",
+  "hash": "a11cdb546422",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [de-commerzbank]": {
+  "status": "Pending",
+  "hash": "e6a1aee583eb",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [de-deutsche-bank]": {
+  "status": "Pending",
+  "hash": "fa5bbb947a30",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [de-ing]": {
+  "status": "Pending",
+  "hash": "e05dbd0d4231",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [de-postbank]": {
+  "status": "Pending",
+  "hash": "2bda7293b85b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [es-bankinter]": {
+  "status": "Pending",
+  "hash": "903c552f4875",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [es-bbva]": {
+  "status": "Pending",
+  "hash": "c45d24d8b433",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [es-caixabank]": {
+  "status": "Pending",
+  "hash": "3ebc4eab8f71",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [es-sabadell]": {
+  "status": "Pending",
+  "hash": "9200a86b6c2b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [es-santander]": {
+  "status": "Pending",
+  "hash": "f82303725b16",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [fr-bnp-paribas]": {
+  "status": "Pending",
+  "hash": "b1b95adb3151",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [fr-credit-agricole]": {
+  "status": "Pending",
+  "hash": "fa4adb1fb0fb",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [fr-la-banque-postale]": {
+  "status": "Pending",
+  "hash": "9b3e3a6a10ec",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [fr-lcl]": {
+  "status": "Pending",
+  "hash": "029dcd00cad5",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [fr-societe-generale]": {
+  "status": "Pending",
+  "hash": "c5a662fc7110",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [gb-barclays]": {
+  "status": "Pending",
+  "hash": "b2e16c37c365",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [gb-hsbc]": {
+  "status": "Pending",
+  "hash": "6913665c2ae3",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [gb-lloyds]": {
+  "status": "Pending",
+  "hash": "bc3420c0acdf",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [gb-nationwide]": {
+  "status": "Pending",
+  "hash": "98ee7d1d0e99",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [gb-natwest]": {
+  "status": "Pending",
+  "hash": "31aefc6b214b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [gb-santander]": {
+  "status": "Pending",
+  "hash": "7de9a5113d76",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [ie-aib]": {
+  "status": "Pending",
+  "hash": "c0465ebf2917",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [ie-bank-of-ireland]": {
+  "status": "Pending",
+  "hash": "e36a403b9243",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [ie-ptsb]": {
+  "status": "Pending",
+  "hash": "4239f69470fb",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [is-arion]": {
+  "status": "Pending",
+  "hash": "b35f442477a7",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [is-islandsbanki]": {
+  "status": "Pending",
+  "hash": "8780fe0cefd8",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [is-landsbankinn]": {
+  "status": "Pending",
+  "hash": "ba5779eb005a",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [jp-japan-post-bank]": {
+  "status": "Pending",
+  "hash": "2adaecc6d7a9",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [jp-mizuho]": {
+  "status": "Pending",
+  "hash": "652343955003",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [jp-mufg]": {
+  "status": "Pending",
+  "hash": "2fc94c84c675",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [jp-resona]": {
+  "status": "Pending",
+  "hash": "9eb505a3a3bd",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [jp-smbc]": {
+  "status": "Pending",
+  "hash": "362918db5d9e",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [kr-hana]": {
+  "status": "Pending",
+  "hash": "b5a75c78e822",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [kr-kakaobank]": {
+  "status": "Pending",
+  "hash": "8f3e9df0c89d",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [kr-kb-kookmin]": {
+  "status": "Pending",
+  "hash": "05c20b68a54b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [kr-nh]": {
+  "status": "Pending",
+  "hash": "dc35266a3754",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [kr-shinhan]": {
+  "status": "Pending",
+  "hash": "4e4340c145bf",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [mx-banamex]": {
+  "status": "Pending",
+  "hash": "7203f8d82bc6",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [mx-banorte]": {
+  "status": "Pending",
+  "hash": "5836bf972d6d",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [mx-bbva]": {
+  "status": "Pending",
+  "hash": "d4c7e61e408c",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [mx-santander]": {
+  "status": "Pending",
+  "hash": "d56b94d7fbb8",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [nz-anz]": {
+  "status": "Pending",
+  "hash": "6328528c5b53",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [nz-asb]": {
+  "status": "Pending",
+  "hash": "3a02bb69ec55",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [nz-bnz]": {
+  "status": "Pending",
+  "hash": "9b9a682799a8",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [nz-kiwibank]": {
+  "status": "Pending",
+  "hash": "fd3f92c28c7e",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [nz-westpac]": {
+  "status": "Pending",
+  "hash": "a8741499e10c",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [us-bank-of-america]": {
+  "status": "Pending",
+  "hash": "278b0a773eef",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [us-capital-one]": {
+  "status": "Pending",
+  "hash": "c7b203dd2ccb",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [us-chase]": {
+  "status": "Pending",
+  "hash": "507b0a9a9ed5",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [us-citi]": {
+  "status": "Pending",
+  "hash": "fb2e830b8cae",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#banks [us-wells-fargo]": {
+  "status": "Pending",
+  "hash": "8b78d2c110f8",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [AU]": {
+  "status": "Pending",
+  "hash": "4bad036b2385",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [CA]": {
+  "status": "Pending",
+  "hash": "30ffaa6a915b",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [DE]": {
+  "status": "Pending",
+  "hash": "47a9ab68422d",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [ES]": {
+  "status": "Pending",
+  "hash": "7f63423e1f5d",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [FR]": {
+  "status": "Pending",
+  "hash": "6cbf6f5fd197",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [GB]": {
+  "status": "Pending",
+  "hash": "b4251787d9fc",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [IE]": {
+  "status": "Pending",
+  "hash": "954c53ee350f",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [IS]": {
+  "status": "Pending",
+  "hash": "9e784eb3a707",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [JP]": {
+  "status": "Pending",
+  "hash": "2325f81eb8d3",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [KR]": {
+  "status": "Pending",
+  "hash": "435b50dbcb8d",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [MX]": {
+  "status": "Pending",
+  "hash": "1fa7a0ba5b71",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [NZ]": {
+  "status": "Pending",
+  "hash": "a5f39935fe3a",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#countries [US]": {
+  "status": "Pending",
+  "hash": "963951d73e8f",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#us": {
+  "status": "Pending",
+  "hash": "269dc5f6a8cc",
+  "on": "2026-10-17"
+ },
+ "src/engine/content/home-accounts.json#world": {
+  "status": "Pending",
+  "hash": "67bdf2db5612",
   "on": "2026-10-17"
  },
  "src/engine/content/homeaccounts.ts#ABROAD": {
