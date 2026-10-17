@@ -25,8 +25,8 @@ keeps it.
 | **fully prepared forecast** | What the game expects the piece would get if every step were done, on a good day. Always called a forecast, never a result. | the forecast as if prepared |
 | **how you play it**, **a way of playing it** | An interpretation chosen for a scene: restrained or expansive and the other choices the scene offers. Choosing one isn't rehearsing it: the choice has to be rehearsed before it pays off. | approach, a choice rehearsed in, a side |
 | **suits the scene** | The scene favors a way of playing it (`suitabilityOf`, the grain). | with the grain, against the grain, the grain |
-| **condition** | How fit your body is for work today, after illness, injury and rest. | |
-| **energy** | How much you have left today. Sleep and food bring it back. | |
+| **condition** | How sound your body is. Illness, going hungry, heavy stress and short nights wear it down, and a night of real rest mends it as far as your fitness allows. An injury doesn't lower it. Until 2026-10-17 this said injury did; the health area found it doesn't (`life.ts`, `mendsTo`). | what a body is fit for |
+| **energy** | What you have left for today. Every waking hour uses some, and only sleep brings it back (`applySleep`): a meal doesn't. Until 2026-10-17 this said food did too. | |
 | **stamina** | An ability: how long you can keep going in a long scene or a night on stage before you tire. It's trained by working out and falls without it. | |
 | **health** | Illness, injury and the care you get for them, and your health cover. Not the same as condition, energy or stamina. | |
 | **wellbeing** | Energy, stress, sleep debt, nourishment, morale, hygiene, condition and fitness, as the screen labels them. | dials |
