@@ -8,6 +8,7 @@
  * reliability, beside what’s happened between you. Their own figures are the game’s; nothing here is drawn to show.
  */
 import { dateKey, formatDate } from '@/engine/core/time';
+import { plural } from '@/engine/core/text';
 import { CITIES } from '@/engine/content/geography';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { templateById } from '@/engine/content/coursework';
@@ -52,7 +53,9 @@ defineLook<TheClassmate>('classmate', {
     return {
       name: mate.name,
       kind: 'A Classmate',
-      summary: `${asked ? `Came to ${came} of ${asked} rehearsals with you` : 'You haven’t rehearsed together yet'}; their trust in you is ${Math.round(trust)} of 100${r.reliability !== undefined ? `, and they come through ${pct(r.reliability)} of the time` : ''}.${bond ? ` ${bond}.` : ''}`,
+      // The rehearsals counted in the singular at one (from 2026-10-17, brief 14's dynamic cases: until then “Came to 1 of 1
+      // rehearsals”, and a boundary “lifts after 1 more rehearsals kept”).
+      summary: `${asked ? `Came to ${came} of ${plural(asked, 'rehearsal')} with you` : 'You haven’t rehearsed together yet'}; their trust in you is ${Math.round(trust)} of 100${r.reliability !== undefined ? `, and they come through ${pct(r.reliability)} of the time` : ''}.${bond ? ` ${bond}.` : ''}`,
       parent: at('school', YALE_DRAMA.id),
       body: (
         <div className="col gap-3">
@@ -75,7 +78,7 @@ defineLook<TheClassmate>('classmate', {
           )}
           <ul className="small" style={{ margin: 0, paddingLeft: 'var(--s4)' }}>
             {p.priority && <li>Cares most about {PRIORITY_WORDS[p.priority].toLowerCase()}.</li>}
-            {p.boundary && <li>Wants a day’s notice: that lifts after {Math.max(0, boundaryLiftsAfter(p.boundary) - p.boundary.keptSince)} more rehearsals kept.</li>}
+            {p.boundary && <li>Wants a day’s notice: that lifts after {(() => { const n = Math.max(0, boundaryLiftsAfter(p.boundary) - p.boundary.keptSince); return `${n} more ${n === 1 ? 'rehearsal' : 'rehearsals'}`; })()} kept.</li>}
             {(r.missedByYou ?? 0) > 0 && <li>You missed {r.missedByYou} rehearsal{r.missedByYou === 1 ? '' : 's'} with them.</li>}
             {(r.log ?? []).slice(0, 5).map((x) => <li key={`${x.at}-${x.what}`}>{formatDate(x.at, zone())}: {x.what}</li>)}
           </ul>

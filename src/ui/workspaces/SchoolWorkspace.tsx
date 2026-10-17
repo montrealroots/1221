@@ -25,6 +25,7 @@ import { CONTEMPORARY_PLAYS } from '@/engine/content/contemporary';
 import { copyAt, partFor, readRefusal, researchRefusal } from '@/engine/systems/playreading';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { dateKey, formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
+import { plural } from '@/engine/core/text';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { COST_2026_27, COURSES, REQUIRED_PPE, SCHOOL_POLICIES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
@@ -164,7 +165,7 @@ function StandingPane() {
               <Stat label={ended ? 'Coursework Last Term' : 'Coursework This Term'} value={work.shown ? `${work.unready} of ${work.shown}` : ended ? 'None' : 'None Yet'} note={`Unready or not shown, of the pieces due. Once ${ESTIMATE.coursework.shown} or more are due, half or more ${ended ? 'was' : 'is'} short of what’s asked`} tone={workShort ? 'warning' : undefined} />
             </div>
             <p className="small" style={{ margin: 0 }}>
-              Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. At the term review, a term falls short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course, or if half or more of your coursework due was Unready or not shown (once {ESTIMATE.coursework.shown} or more pieces are due). A term that falls short moves your standing one step: from good standing to academic concern, then to academic warning, then to dismissal. A term that meets them all puts you back in good standing. Missing a performance or an understudy call is a grave breach: it puts you straight on academic warning, or dismisses you if you’re already on warning{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After your last term, Commencement confers the degree if you’re in good standing or have a concern; if your last term ends on academic warning, the faculty don’t recommend it.
+              Attendance counts {t.attended} of {plural(t.classDays - t.excused, 'class day')}{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {plural(t.calls, 'call')} and {t.worked} of {plural(t.shifts, 'assigned shift')}. At the term review, a term falls short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course, or if half or more of your coursework due was Unready or not shown (once {ESTIMATE.coursework.shown} or more pieces are due). A term that falls short moves your standing one step: from good standing to academic concern, then to academic warning, then to dismissal. A term that meets them all puts you back in good standing. Missing a performance or an understudy call is a grave breach: it puts you straight on academic warning, or dismisses you if you’re already on warning{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After your last term, Commencement confers the degree if you’re in good standing or have a concern; if your last term ends on academic warning, the faculty don’t recommend it.
             </p>
             {!ended && <p className="small" style={{ margin: 0 }}>{school.castable ? 'You’re in the casting pool.' : 'You’re out of the casting pool after missed calls, until a term review finds you in good standing.'}</p>}
             <WithdrawControl />
@@ -610,7 +611,7 @@ function CoursesPanel() {
         const no = left ? undefined : makeUpRefusal(sim, person, key);
         return (
           <div key={key} className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
-            <span className="small"><strong>{r.name}</strong>, Incomplete: {(r.owed ?? 0) - (r.madeUp ?? 0)} of {r.owed} make-up sessions left, by {formatDate(r.dueBy!, sim.zone)}.</span>
+            <span className="small"><strong>{r.name}</strong>, Incomplete: {(r.owed ?? 0) - (r.madeUp ?? 0)} of {r.owed} make-up {r.owed === 1 ? 'session' : 'sessions'} left, by {formatDate(r.dueBy!, sim.zone)}.</span>
             {!left && <Gated feature="school.make_up" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ passed: boolean }>('school.make_up', { key }); if (a.ok) toast(a.value!.passed ? `${r.name}: passed.` : 'A session made up.', 'positive'); }}>Make Up A Session</Gated>}
             {!extendRefusal(sim, person, key) && <Gated feature="school.extend_incomplete" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ dueBy: number }>('school.extend_incomplete', { key }); if (a.ok) toast(`Extended to ${formatDate(a.value!.dueBy, sim.zone)}.`, 'positive'); }}>Ask For A Month More</Gated>}
             {no && <span className="xs dim">{no}</span>}
@@ -620,7 +621,7 @@ function CoursesPanel() {
       {failed.map((r) => <p key={`${r.term}:${r.code}`} className="small" style={{ margin: 0 }}><strong>{r.name}</strong>, {word(r)}: {r.why}.</p>)}
       {now.length > 0 && !ended && (
         <ul className="small" style={{ margin: 0 }}>
-          {now.map(([key, r]) => <li key={key}>{r.name}: at {r.attended} of {r.meetings} classes{r.excused ? `, ${r.excused} excused` : ''}.</li>)}
+          {now.map(([key, r]) => <li key={key}>{r.name}: at {r.attended} of {plural(r.meetings, 'class', 'classes')}{r.excused ? `, ${r.excused} excused` : ''}.</li>)}
         </ul>
       )}
       <details className="small"><summary>Every Course</summary>

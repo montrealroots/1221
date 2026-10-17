@@ -753,7 +753,7 @@ describe('school.make_up', () => {
     tended(sim, at(2027, 1, 12, 8));
     const early = 'Classes starts at 9:00 AM: there isn’t the time before it.';
     let shown = drawn(sim, SchoolWorkspace, [], 'standing');
-    expect(shown.text).toContain('Acting I , Incomplete: 1 of 1 make-up sessions left, by February 9, 2027.');
+    expect(shown.text).toContain('Acting I , Incomplete: 1 of 1 make-up session left, by February 9, 2027.');
     expect(button(shown.html, 'Make Up A Session')).toContain('disabled=""');
     expect(shown.text).toContain(early);
     expect(sim.execute({ kind: 'school.make_up', payload: { key: KEY } }).error).toBe(early);

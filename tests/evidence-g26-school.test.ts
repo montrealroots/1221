@@ -367,7 +367,7 @@ describe('school.extend_incomplete', () => {
     expect(dueItems(sim, ACTING_I)).toEqual([[at(2027, 1, 3, 17), true], [at(2027, 1, 10, 17), false]]);
 
     const before = drawn(sim, SchoolWorkspace);
-    expect(before.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up sessions left, by January 10, 2027.');
+    expect(before.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up session left, by January 10, 2027.');
     const rows = incompleteRows(before.html);
     expect(rows).toHaveLength(4);
     expect(rows).toContain('Acting I');
@@ -381,7 +381,7 @@ describe('school.extend_incomplete', () => {
     expect(dueItems(sim, ACTING_I)).toEqual([[at(2027, 2, 2, 17), true], [at(2027, 2, 9, 17), false]]);
 
     const after = drawn(sim, SchoolWorkspace);
-    expect(after.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up sessions left, by February 9, 2027.');
+    expect(after.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up session left, by February 9, 2027.');
     expect(drew('school.extend_incomplete')).toHaveLength(3);
     expect(rowOf(after.html, 'Acting I')).toContain('Make Up A Session');
     expect(rowOf(after.html, 'Acting I')).not.toContain('Ask For A Month More');

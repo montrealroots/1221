@@ -7,7 +7,7 @@
  *
  * - `h-money`: an overdraft reached by play, where the first round brought one about by hand: debit card coverage opted
  *   into at Chase, the checking's $92,391.00 moved to savings, and the first midnight's $10.00 of groceries reads
- *   "-$10.00" and "Your account is overdrawn." (Chase charges nothing overdrawn by $50 or less), where a twin that
+ *   "−$10.00" (a hyphen until 2026-10-17) and "Your account is overdrawn." (Chase charges nothing overdrawn by $50 or less), where a twin that
  *   never opted in owes the $10.00 instead and shows no alert. "No account" stays a fixture's: with the savings closed
  *   into the checking and the card closed, the bank refuses the checking, and the line names it; only every account
  *   closed by hand draws "No account: $0.00. Worth $0." and its "Your Bank" button.
@@ -249,7 +249,7 @@ describe('h-money', () => {
     // $92,391 and $413,043 less the fall’s Yale Health plan, $1,882, owed at nine on the first morning for want of money
     // in checking and paid back out of savings at midnight, and the $10.00: $503,542. Until 2026-10-13 this read $505,424:
     // the plan the bank couldn’t pay was dropped (tests/evidence2-b10.test.ts, c-wealth).
-    const line = 'Money Chase Total Checking: -$10.00. Worth $503,542. Your account is overdrawn. Chase How This Works';
+    const line = 'Money Chase Total Checking: −$10.00. Worth $503,542. Your account is overdrawn. Chase How This Works';
     expect(drawn(sim).affairs).toContain(line);
     press('Chase');
     expect(h.went).toEqual([['/workspace/bank', 'Money']]);

@@ -230,7 +230,7 @@ describe('h-money', () => {
     // TEST SETUP: the checking brought to -$25.00, $92,416.00 out of the worth.
     setBalance(sim, checking, -25_00);
     // $413,043 in savings less the $25.00 overdrawn: $413,018.
-    expect(drawn(sim).affairs).toContain('Money Chase Total Checking: -$25.00. Worth $413,018. Your account is overdrawn. Chase How This Works');
+    expect(drawn(sim).affairs).toContain('Money Chase Total Checking: −$25.00. Worth $413,018. Your account is overdrawn. Chase How This Works');
     const moved = sim.must<{ moved: number }>({ kind: 'bank.transfer', payload: { fromId: own(sim, 'savings').id, toId: checking.id, amount: 1_000_00 } });
     expect(moved.moved).toBe(1_000_00);
     const after = drawn(sim).affairs;
