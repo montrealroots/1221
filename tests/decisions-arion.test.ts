@@ -484,8 +484,9 @@ function asOlderBuild(sim: Simulation): Record<string, unknown> {
   // The stamina area's `timeTheCalls` follows `cardYears` from brief 10's integration (2026-10-16), and a build before
   // brief 10 named neither, so both come off: until then the list ended at `cardYears` and only that came off. From later
   // that day `briefsMastered` follows them (the genre row's Mastered), and comes off too.
-  expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered']);
-  older.opened = older.opened!.filter((x) => x !== 'cardYears' && x !== 'timeTheCalls' && x !== 'briefsMastered');
+  // From 2026-10-17 `writtenUnplayed` (brief 13's journeys) follows, and comes off too.
+  expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed']);
+  older.opened = older.opened!.filter((x) => x !== 'cardYears' && x !== 'timeTheCalls' && x !== 'briefsMastered' && x !== 'writtenUnplayed');
   for (const a of Object.values(older.accounts)) {
     if (a.bankId !== 'is-arion') continue;
     delete a.cardYearRule;
@@ -505,7 +506,7 @@ describe('arion.AR7: a save from before brief 10 opens with its card year as it 
     const balances = Object.fromEntries(Object.values(written.accounts).map((a) => [a.id, [a.balance, a.held]]));
     const count = written.transactions.length;
     const older = loadSave(written as never);
-    expect(older.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered']);
+    expect(older.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed']);
     expect(older.universe.transactions).toHaveLength(count);
     expect(Object.fromEntries(Object.values(older.universe.accounts).filter((a) => a.id in balances).map((a) => [a.id, [a.balance, a.held]]))).toEqual(balances);
     const a = older.universe.accounts[arion.id]!;
@@ -515,7 +516,7 @@ describe('arion.AR7: a save from before brief 10 opens with its card year as it 
     expect(closeVeltu(older).ok).toBe(true);
     expect(cardPosts(older, arion.id).at(-1)).toEqual([older.now, 'Debit card yearly fee refunded: Veltureikningur', 5_92, 817_00]);
     const again = reload(older);
-    expect(again.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered']);
+    expect(again.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed']);
     expect(again.universe.transactions).toHaveLength(older.universe.transactions.length);
   }, 300_000);
 

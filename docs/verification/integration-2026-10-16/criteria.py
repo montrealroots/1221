@@ -369,6 +369,45 @@ if FIG12R and FIG11R:
         r['failure'] = f"{r['failure']}; brief 12 ({r['measured']['commit']}): {'the same' if FIG12R[r['id']] == FIG11R.get(r['id']) else FIG12R[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {B12R}/README.md"
         r['citations'] = r['citations'] + [{'file': f'{B12R}/figures.json'}] + ([{'file': f'{B12R}/gate.txt'}] if gate else [])
+# Brief 13's final runs (playthroughs-2026-10-17/), as brief 11's and brief 12's. The acting area's comments on grainOf and
+# briefs.ts, and the interface area's fixes to Home and the looks, changed files the measurements watch. So:
+# - the judge's are made again (final/, figures.json by integrated-09/figures.py), and each row brief 11's judge
+#   measurement held moves to brief 13's commit, with its figure beside brief 11's;
+# - an area item it held, which has no figure of its own, moves only where every output both folders make is byte for
+#   byte the same;
+# - the long runs, the built app and the gate (runs/, by its runs/figures.py) as brief 12's did.
+import filecmp
+B13F = 'docs/verification/playthroughs-2026-10-17/final'
+if os.path.exists(f'{B13F}/figures.json') and os.path.exists(f'{B11F}/figures.json'):
+    FIG13 = json.load(open(f'{B13F}/figures.json', encoding='utf-8'))
+    B13AT = re.search(r'^at (\w+)', open(f'{B13F}/exits.txt', encoding='utf-8').read(), re.M).group(1)
+    shared = sorted(f for f in os.listdir(B11F) if f.endswith('.json') and f != 'figures.json' and os.path.exists(f'{B13F}/{f}'))
+    SAME13 = bool(shared) and all(filecmp.cmp(f'{B11F}/{f}', f'{B13F}/{f}', shallow=False) for f in shared)
+    for r in rows:
+        if r.get('measured') == {'commit': B11AT, 'watch': 'judge'}:
+            assert r['id'] in FIG13, r['id']
+            r['measured'] = {'commit': B13AT, 'watch': 'judge'}
+            r['failure'] = f"{r['failure']}; on brief 13's tested commit ({B13AT}): {'the same' if FIG13[r['id']] == FIG11.get(r['id']) else FIG13[r['id']]}"
+            r['evidence'] = f"{r['evidence']}; {B13F}/README.md"
+            r['citations'] = r['citations'] + [{'file': f'{B13F}/figures.json'}]
+B13R = 'docs/verification/playthroughs-2026-10-17/runs'
+FIG13R = json.load(open(f'{B13R}/figures.json', encoding='utf-8')) if os.path.exists(f'{B13R}/figures.json') else {}
+if FIG13R and FIG12R:
+    lane13 = lambda name: re.search(r'^at (\w+)', open(f'{B13R}/exits-{name}.txt', encoding='utf-8').read(), re.M).group(1)
+    R13 = {'app': lane13('A'), 'engine': lane13('B')}
+    GATE13 = re.search(r'^at (\w+)', open(f'{B13R}/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG13R else None
+    for r in rows:
+        m = r.get('measured')
+        gate = r['id'] == 'INT-gate'
+        if not (m and r['id'] in FIG12R and (gate or m.get('commit') == R12.get(m.get('watch')))):
+            continue
+        if gate and not GATE13:
+            continue  # the gate's figure, folded in once it has run
+        assert r['id'] in FIG13R, r['id']
+        r['measured'] = {'commit': GATE13, 'watch': 'app'} if gate else {'commit': R13[m['watch']], 'watch': m['watch']}
+        r['failure'] = f"{r['failure']}; brief 13 ({r['measured']['commit']}): {'the same' if FIG13R[r['id']] == FIG12R.get(r['id']) else FIG13R[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {B13R}/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{B13R}/figures.json'}] + ([{'file': f'{B13R}/gate.txt'}] if gate else [])
 # Brief 11's areas' results (completion-2026-10-16/<area>-result.json, the coordinator's integration-result.json among
 # them): each row an area worked, its status and the tests it cites, read onto the matrix, never typed here. An area's
 # item takes an override; a criterion or shortfall row here is changed in place. The audit's rows aren't taken: their
@@ -380,7 +419,10 @@ NEEDS11 = {IVI: 'missing', PI: 'gap', NI: 'gap', BE: 'blocker', DR: 'decision', 
 # earlier override; and a replacement criterion it writes (`replacements`: ST6-R2's four, which supersede ST6-R's (a), (c),
 # (e) and (g) at the owner's authorization) is a row of its own, closed on its own evidence and never on its original's.
 B12 = 'docs/verification/resolution-2026-10-17'
-PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else [])
+# Brief 13's (playthroughs-2026-10-17/, from 2026-10-17) after brief 12's: its ST6-R2.c and .e rows change the replacement
+# rows brief 12 wrote, in place.
+B13 = 'docs/verification/playthroughs-2026-10-17'
+PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else []) + ([(B13, 'Brief 13')] if os.path.isdir(B13) else [])
 for d, brief, f in [(d, brief, f) for d, brief in PASSES for f in sorted(x for x in os.listdir(d) if x.endswith('-result.json'))]:
     area = f[:-len('-result.json')]
     result = json.load(open(f'{d}/{f}', encoding='utf-8'))
@@ -413,6 +455,15 @@ for d, brief, f in [(d, brief, f) for d, brief in PASSES for f in sorted(x for x
             said = {**said, 'evidence': f'{d}/{f}'}
         extra = {**({need: said} if need else {}), **({'measured': r['measured']} if r.get('measured') else {})}
         crit = [x for x in rows if x['id'] == r['id'] and x['group'] == r['group']]
+        # A clause of brief 13's own (its journeys' and its interface's, from 2026-10-17), which no earlier brief made a row
+        # of: a row of its own, in its area's group, the first result to write it making it and a later one changing it.
+        if not crit and brief == 'Brief 13' and str(r.get('group', '')).startswith('Brief 13'):
+            rows.append({'id': r['id'], 'group': r['group'], 'kind': 'criterion', 'goal': r.get('ownersWords') or r.get('criterion', 'Not recorded'),
+                         'entry': r.get('exercised', 'Not recorded'), 'preconditions': f"The owner's brief 13 ({d}/{f})", 'reads': 'Not recorded',
+                         'decisions': 'None: a measurement of play, not a player decision', 'validation': r.get('criterion', 'Not recorded'), 'changes': 'Not recorded',
+                         'later': 'None', 'systems': 'Not recorded', 'sees': 'Not recorded', 'saveLoad': 'Not recorded', 'failure': r.get('statusNote', 'Not recorded'),
+                         'implementation': 'Not recorded', 'evidence': f'{d}/{f}', 'status': status, 'sourceStatus': f'{d}/{f}', 'citations': cites, **extra})
+            continue
         if crit:
             x = crit[0]
             # What its old status asked goes with it (KS-ct-idcard's missing, once it's Blocked Externally).
@@ -421,11 +472,21 @@ for d, brief, f in [(d, brief, f) for d, brief in PASSES for f in sorted(x for x
             x.update({'status': status, 'citations': x['citations'] + cites, 'evidence': f"{x['evidence']}; {d}/{f}", **extra})
             if status == IAV:
                 # Verified by the tests it cites, not by the measurement it carried, and no longer a decision (L1, brief 11).
-                x.pop('measured', None)
+                # A result that measures it again keeps its own measurement (brief 13's verify.py, from 2026-10-17): until
+                # then this dropped it, and a row its area had verified by a run lost what verified it.
+                if not r.get('measured'):
+                    x.pop('measured', None)
                 x.pop('decision', None)
             continue
         # It replaces an earlier override of the same item (stamina.A1's of brief 10), since the matrix reads the first.
         OVERRIDES[:] = [o for o in OVERRIDES if o['id'] != r['id']]
         OVERRIDES.append({'id': r['id'], 'status': status, 'why': why, 'citations': cites, **extra})
+# The area items brief 11's judge measurement held, after the results that write them: moved to brief 13's commit only where
+# every output both final folders make is byte for byte the same (above).
+if os.path.exists(f'{B13F}/figures.json') and SAME13:
+    for o in OVERRIDES:
+        if o.get('measured') == {'commit': B11AT, 'watch': 'judge'}:
+            o['measured'] = {'commit': B13AT, 'watch': 'judge'}
+            o['citations'] = o.get('citations', []) + [{'file': f'{B13F}/README.md'}]
 json.dump({'rows': rows, 'overrides': OVERRIDES}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))

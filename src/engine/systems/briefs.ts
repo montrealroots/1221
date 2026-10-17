@@ -191,7 +191,8 @@ export interface Take {
   /**
    * What the way it was played came to against the scene (from 2026-10-16, `grainRead`): the points it gave the take (or,
    * negative, cost it), what the actor's abilities and techniques cost it, and the sides' suitability. Absent on a take
-   * from before, or one played with nothing chosen.
+   * from before, one played with nothing chosen, and one where the grain came to under 0.05 points on every dimension, as
+   * it does at a suitability of ±0.01, which `grainOf` keeps as nothing. Until 2026-10-17 this named only the first two.
    */
   grain?: { points: number; ability: number; why: string };
   purpose: Purpose;

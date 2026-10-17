@@ -1,0 +1,136 @@
+{
+ "seed": "lives-0",
+ "profile": "london",
+ "policy": "neglect",
+ "ended": "2027-12-10",
+ "standing": "dismissed",
+ "hours": 11363,
+ "terms": [
+  {
+   "termsBegun": 0,
+   "supply": {
+    "idle:other": 1
+   },
+   "shown": 0,
+   "unready": 0,
+   "partsShortAtShowing": {}
+  },
+  {
+   "termsBegun": 1,
+   "supply": {
+    "at:health.appointment": 0.3,
+    "at:school.classes": 390,
+    "at:school.lab": 42,
+    "at:school.orientation": 11.5,
+    "at:school.shift": 72,
+    "idle:other": 658,
+    "idle:working-hours": 1007,
+    "life.sleep": 931
+   },
+   "demand": {
+    "pieces": 47,
+    "hoursToComplete": 581.5,
+    "partnerHours": 87,
+    "byPart": {
+     "familiarity": 78,
+     "memorization": 63,
+     "rehearsal": 175.5,
+     "partner": 87,
+     "revision": 64,
+     "interpretation": 114
+    }
+   },
+   "shown": 47,
+   "unready": 47,
+   "partsShortAtShowing": {
+    "familiarity": 31,
+    "memorization": 14,
+    "interpretation": 28,
+    "rehearsal": 39,
+    "partner": 15,
+    "revision": 8
+   }
+  },
+  {
+   "termsBegun": 2,
+   "supply": {
+    "at:health.appointment": 0.7,
+    "at:school.call:performance": 7,
+    "at:school.call:rehearsal": 72,
+    "at:school.classes": 390,
+    "at:school.lab": 30,
+    "at:school.shift": 72,
+    "idle:other": 1508,
+    "idle:working-hours": 1761,
+    "life.sleep": 1617
+   },
+   "demand": {
+    "pieces": 45,
+    "hoursToComplete": 502.5,
+    "partnerHours": 57,
+    "byPart": {
+     "familiarity": 84,
+     "memorization": 51,
+     "rehearsal": 148.5,
+     "partner": 57,
+     "interpretation": 114,
+     "revision": 48
+    }
+   },
+   "shown": 45,
+   "unready": 45,
+   "partsShortAtShowing": {
+    "memorization": 12,
+    "rehearsal": 33,
+    "partner": 9,
+    "interpretation": 24,
+    "familiarity": 27,
+    "revision": 12
+   }
+  },
+  {
+   "termsBegun": 3,
+   "supply": {
+    "at:school.call:performance": 16.7,
+    "at:school.call:rehearsal": 120,
+    "at:school.classes": 414,
+    "at:school.shift": 78,
+    "idle:other": 452,
+    "idle:working-hours": 693,
+    "life.sleep": 763
+   },
+   "demand": {
+    "pieces": 46,
+    "hoursToComplete": 563.3,
+    "partnerHours": 87,
+    "byPart": {
+     "familiarity": 48,
+     "memorization": 76.5,
+     "interpretation": 111.3,
+     "rehearsal": 192.5,
+     "partner": 87,
+     "revision": 48
+    }
+   },
+   "shown": 46,
+   "unready": 46,
+   "partsShortAtShowing": {
+    "familiarity": 24,
+    "memorization": 17,
+    "interpretation": 30,
+    "rehearsal": 42,
+    "partner": 15,
+    "revision": 4
+   }
+  }
+ ],
+ "notices": [
+  "2026-09-14 A Word On Your Coursework: 6 of the 6 pieces shown this term so far were Unready. On each of them every part was short of complete: it’s the preparation as a whole, not one part, and each one’s steps answer it. Of the work set so far, 7 pieces are still to be shown. The faculty reviews the term on December 11, 2026: half the term’s pieces Unready or not shown by then is short of what the program asks, and your standing fall",
+  "2026-12-11 A Notice Of Academic Concern: The chair of Acting has raised a concern. You were at 100% of what was asked of you, and your craft grew 1.5 against the class’s 1.2: for the room each of you had to grow, ahead of the class. 47 of the 47 pieces due in class were unready or not shown, short of what the program asks. On each of them every part was short of complete. Remedy it by the end of next term, or it becomes an academic warni",
+  "2027-01-29 A Word On Your Coursework: 6 of the 6 pieces shown this term so far were Unready. On each of them every part was short of complete: it’s the preparation as a whole, not one part, and each one’s steps answer it. Of the work set so far, 7 pieces are still to be shown. The faculty reviews the term on April 23, 2027: half the term’s pieces Unready or not shown by then is short of what the program asks, and your standing falls a",
+  "2027-04-23 Academic Warning: A formal meeting with the chair of Acting and an associate dean, as the Bulletin gives a warning. You were at 100% of what was asked of you, and your craft grew 1.2 against the class’s 1.0: for the room each of you had to grow, ahead of the class. 45 of the 45 pieces due in class were unready or not shown, short of what the program asks. On each of them every part was short of complete. Improve by",
+  "2027-09-22 A Word On Your Coursework: 6 of the 6 pieces shown this term so far were Unready. On each of them every part was short of complete: it’s the preparation as a whole, not one part, and each one’s steps answer it. Of the work set so far, 10 pieces are still to be shown. The faculty reviews the term on December 10, 2027: half the term’s pieces Unready or not shown by then is short of what the program asks, and your standing fal",
+  "2027-12-10 Dismissed From The School: The warning wasn’t met. You were at 100% of what was asked of you, and your craft grew 1.6 against the class’s 1.4: for the room each of you had to grow, ahead of the class. Your work in Carlotta Festival Of New Plays and Blood Wedding fell short of what the program asks. 46 of the 46 pieces due in class were unready or not shown, short of what the program asks. On each of them every part was shor"
+ ],
+ "breaches": 0
+}

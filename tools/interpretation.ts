@@ -6,11 +6,15 @@
  * strengths were set) and, held out, on the further briefs (`brief-<genre>-2` and on), which weren't. `--off` sets the
  * grain's strength and its rehearsal shift to 0: the way of playing as it was before, which the criteria should fail.
  *
- *   npx vite-node tools/interpretation.ts -- [--off] [--fresh] [--stage] [--out file.json] [--md file.md] [--st3 file.json] [--st6 file.json] [--st6r2 file.json [--st6r2-only]]
+ *   npx vite-node tools/interpretation.ts -- [--off] [--fresh] [--stage] [--out file.json] [--md file.md] [--st3 file.json] [--st6 file.json] [--st6r2 file.json [--st6r2-only]] [--st6r2-13 file.json --part trace|c|e]
  *
  * `--st6r2` (from 2026-10-17, brief 12): ST6-R2, the replacements of ST6-R (a), (c), (e) and (g)
  * (docs/verification/resolution-2026-10-17/acting-criteria.md), every part on every brief reading (`measureST6R2`);
  * `--st6r2-only` writes it and stops before the measures above.
+ *
+ * `--st6r2-13` (from 2026-10-17, brief 13): ST6-R2.c and ST6-R2.e clarified
+ * (docs/verification/playthroughs-2026-10-17/acting-criteria.md, `measureST6R2Clarified`), one part a run (`--part`: the
+ * trace the criteria were written from, (c) or (e)), each under ten minutes; it writes the part and stops.
  */
 import { writeFileSync } from 'node:fs';
 import { BRIEFS, type Brief } from '../src/engine/content/briefs';
@@ -31,7 +35,7 @@ import { difficultyOf } from '../src/engine/systems/coursework';
 import { materialContext } from '../src/engine/systems/material';
 import { misfitOf, type Playing } from '../src/engine/systems/material';
 import { sceneOfMaterial, suitabilityOf } from '../src/engine/systems/interpretation';
-import { measureST3R, measureST6R, measureST6R2 } from './acting-criteria';
+import { measureST3R, measureST6R, measureST6R2, measureST6R2Clarified } from './acting-criteria';
 
 const flag = (n: string) => process.argv.includes(`--${n}`);
 const arg = (n: string, d: string) => { const i = process.argv.indexOf(`--${n}`); return i >= 0 ? process.argv[i + 1]! : d; };
@@ -362,6 +366,12 @@ function measureST6Cases() {
   };
 }
 
+const clarified = arg('st6r2-13', '');
+if (clarified) {
+  const part = arg('part', '') as 'trace' | 'c' | 'e' | '';
+  writeFileSync(clarified, `${JSON.stringify(measureST6R2Clarified(part ? { part } : {}), null, 1)}\n`);
+  process.exit(0);
+}
 const st6r2 = arg('st6r2', '');
 if (st6r2) {
   writeFileSync(st6r2, `${JSON.stringify(measureST6R2(), null, 1)}\n`);

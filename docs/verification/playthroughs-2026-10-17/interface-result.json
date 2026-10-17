@@ -1,0 +1,890 @@
+{
+ "area": "interface",
+ "on": "2026-10-17",
+ "clone": "interface13, from 09a37a18",
+ "commits": [
+  "ef04047e",
+  "db193b50",
+  "c323f5ce",
+  "695683c4",
+  "(this file’s commit)"
+ ],
+ "testedCommit": "695683c4",
+ "ruleset": "Unmoved: evaluation-11. Nothing the judge reads changed: the fixes are Home’s panel (src/ui/screens/Home.tsx), a look’s name (src/ui/looks/attention.tsx) and the guide’s words for What Needs You (src/engine/content/guide/day.ts). The save schema is 94 in both places, unchanged: no field’s meaning moved.",
+ "judgedMoved": false,
+ "rows": [
+  {
+   "id": "B13-UI.normal",
+   "group": "Brief 13 Area: interface",
+   "baselineStatus": "new: brief 13, section 5 (a normal student journey)",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "criterion": "interface-criteria.md, Playthrough 1: a new life made through creation, through orientation week to the first Acting I scene shown and its feedback read, then Papers, Money and save and continue, every step showing what it says, at 1440 and at 390, each of the six exercised by a passed step.",
+   "exercised": "tools/playthroughs-ui.mjs normal at 1440 and at 390 on the built app (npx vite preview, port 4187), through its visible controls only; a new life in a browser with no saves, its seed read from the save afterwards.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/normal-1440/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 1440 SAVEDIR, on 695683c4",
+     "kind": "player journey",
+     "proves": "14 of 14 steps passed at 1440; exercised: navigation (steps 9, 12, 13); drill-down (steps 4, 5); unavailable (steps 2, 10, 12); confirmation (steps 6, 7, 14); notification (steps 4, 7, 9, 12); save-continue (steps 14)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/normal-390/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 390 SAVEDIR, on 695683c4",
+     "kind": "player journey",
+     "proves": "14 of 14 steps passed at 390; exercised: navigation (steps 9, 12, 13); drill-down (steps 4, 5); unavailable (steps 2, 10, 12); confirmation (steps 6, 7, 14); notification (steps 4, 7, 9, 12); save-continue (steps 14)"
+    },
+    {
+     "file": "tests/evidence-g32-ui.test.ts",
+     "title": "h-needs: What Needs You on Home > PLAYER JOURNEY: more unread than the panel",
+     "kind": "player journey",
+     "proves": "every unread notice reachable from Home, as the run then found The Courses And What They Ask by Show All"
+    },
+    {
+     "file": "tests/evidence-g32-ui.test.ts",
+     "title": "h-needs: What Needs You on Home > PLAYER JOURNEY: the first morning",
+     "kind": "player journey",
+     "proves": "the welcome’s look named with its year as written"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Home drew the six heaviest unread notices and nothing of the rest, while Mark N Read marked every one read, so a notice past the sixth was on no screen. The panel now says “N more waiting.” and offers Show All N (and Show The Heaviest Six back); Mark N Read still marks them all, as the guide and the notice look say.",
+     "where": "src/ui/screens/Home.tsx; the guide’s words, src/engine/content/guide/day.ts (day.needs)",
+     "failingTest": "tests/evidence-g32-ui.test.ts ‘h-needs: What Needs You on Home > PLAYER JOURNEY: more unread than the panel’s six: it says how many more wait and offers Show All; pressed, every one is drawn with its Go There, the seventh heaviest among them; Show The Heaviest Six puts it back; Mark N Read still marks every one’, failing before (“expected … to contain ‘153 more waiting. Show All 159’”) and passing after"
+    },
+    {
+     "summary": "A notice’s or a question’s look grouped every run of four digits as a count, so the first morning’s welcome opened as “Welcome To The Class Of 2,029” and February’s return as “Your 2,026 Tax Return”. nameOf keeps a year as written; the drill-down rule (docs/DRILL-DOWN.md, rule 5 and the name gate) and its guard (tests/looks.test.ts) take a year out before they look for a run of four digits, which is how the looks came to group one.",
+     "where": "src/ui/looks/attention.tsx (nameOf); docs/DRILL-DOWN.md; tests/looks.test.ts",
+     "failingTest": "tests/evidence-g32-ui.test.ts ‘h-needs: What Needs You on Home > PLAYER JOURNEY: the first morning’s Welcome To The Class Of 2029 and February’s Your 2026 Tax Return, each title pressed on Home, open their looks under the year as it’s written, never as a count’, failing before (“Welcome To The Class Of 2,029”) and passing after"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "nameOf grouping every run of four digits again (the year exemption taken out)",
+     "caughtBy": "tests/evidence-g32-ui.test.ts, the year test above (1 failed); tests/looks.test.ts passes, as it now takes years out first: the year test is the guard"
+    },
+    {
+     "what": "nameOf keeping every four-digit run, year or not (YEAR = /^\\d{4}$/)",
+     "caughtBy": "survives: no title any notice or question carries has a four-digit run that isn’t a year, so nothing reaches the difference; the looks crawl’s name gate would fail one that appeared"
+    },
+    {
+     "what": "Show All pressed, and the list still the six",
+     "caughtBy": "tests/evidence-g32-ui.test.ts, the Show All test (1 failed)"
+    },
+    {
+     "what": "the “N more waiting.” line and its Show All taken out",
+     "caughtBy": "tests/evidence-g32-ui.test.ts, the Show All test (1 failed)"
+    },
+    {
+     "what": "Mark N Read marking only the six drawn",
+     "caughtBy": "tests/evidence-g32-ui.test.ts, the Show All test and ‘PLAYER JOURNEY: Dismiss and Mark N Read, pressed on the panel …’ (2 failed)"
+    }
+   ]
+  },
+  {
+   "id": "B13-UI.setback",
+   "group": "Brief 13 Area: interface",
+   "baselineStatus": "new: brief 13, section 5 (a setback-and-recovery journey)",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "criterion": "interface-criteria.md, Playthrough 2: the workload scenario’s save (no TEST SETUP), the term’s warning on coursework read, opened and followed to the scene it names, its remedy worked each day until the scene is shown Working or better where it stood Unready, then saved and continued, at 1440 and at 390, each of the six exercised.",
+   "exercised": "tools/playthroughs-ui.mjs setback at 1440 and at 390, from npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/setback-1440/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 1440 SAVEDIR, on 695683c4",
+     "kind": "player journey",
+     "proves": "9 of 9 steps passed at 1440; exercised: navigation (steps 3); drill-down (steps 2, 4); unavailable (steps 5); confirmation (steps 6, 7); notification (steps 1, 8); save-continue (steps 1, 9)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/setback-390/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 390 SAVEDIR, on 695683c4",
+     "kind": "player journey",
+     "proves": "9 of 9 steps passed at 390; exercised: navigation (steps 3); drill-down (steps 2, 4); unavailable (steps 5); confirmation (steps 6, 7); notification (steps 1, 8); save-continue (steps 1, 9)"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "gap": "The term’s own review (December 10, 2027) falls after the playthrough ends: whether the warning and the review agree over a whole term is the journeys area’s (section 4)."
+  },
+  {
+   "id": "B13-UI.specialist",
+   "group": "Brief 13 Area: interface",
+   "baselineStatus": "new: brief 13, section 5 (a specialist’s preparation, performance, advice and training journey)",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "criterion": "interface-criteria.md, Playthrough 3: the specialist scenario’s save (TEST SETUP: four abilities at 90, the rest at 49), Nordic Noir’s brief prepared, played on the side its scene suits, taped and read, What To Work On read (naming none of the four strengths), its exercise trained to the day’s limit and again the next day, the brief taped again higher, then saved and continued, at 1440 and at 390, each of the six exercised.",
+   "exercised": "tools/playthroughs-ui.mjs specialist at 1440 and at 390, from npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/specialist-1440/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 1440 SAVEDIR, on 695683c4",
+     "kind": "player journey",
+     "proves": "11 of 11 steps passed at 1440; exercised: navigation (steps 2); drill-down (steps 2); unavailable (steps 3, 7); confirmation (steps 8, 11); notification (steps 1); save-continue (steps 11)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/specialist-390/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 390 SAVEDIR, on 695683c4",
+     "kind": "player journey",
+     "proves": "11 of 11 steps passed at 390; exercised: navigation (steps 2); drill-down (steps 2); unavailable (steps 3, 7); confirmation (steps 8, 11); notification (steps 1); save-continue (steps 11)"
+    }
+   ],
+   "fixes": [],
+   "mutations": []
+  },
+  {
+   "id": "B13-UI.walkthrough",
+   "group": "Brief 13 Area: interface",
+   "baselineStatus": "new: brief 13, section 5 (a separate short walkthrough for the owner)",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "criterion": "interface-criteria.md, The Owner’s Walkthrough: PLAYTEST.md, a different route from brief 12’s, about twenty minutes from a new life, carrying a setback the game gives and its recovery, and a specialist’s training, each step saying what to press, what to expect and what to report, and saying plainly that the automated runs aren’t a judgment of how the game feels.",
+   "exercised": "Its steps are the normal playthrough’s through orientation and the first showing (the runs above); its leaning, its unprepared scene and the note taken, and its four hours of Graded Exposure were played in the engine through the commands to check the document’s figures (probes in the scratchpad: Composure 58.3 at Emotional Stability 95; the scene left alone Shown Unready at 22 of 100 on 8 September, the note taken the next day and the band still Unready; 58.3 to 58.6 after four hours, the fifth refused in the day’s words). Those probes check the document, not the interface.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/PLAYTEST.md",
+     "title": "the walkthrough",
+     "kind": "fixture",
+     "proves": "the route and its expectations, as the owner plays it"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "gap": "How the game feels to play is the owner’s to judge, by playing it: no automated run is human usability approval."
+  }
+ ],
+ "playthroughs": [
+  {
+   "playthrough": "normal",
+   "width": 1440,
+   "commit": "695683c4",
+   "trackedChangesWhenRun": 0,
+   "startingPoint": {
+    "kind": "new life",
+    "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
+    "seed": "1-AlexRivera-mvc40hlk"
+   },
+   "steps": 14,
+   "passed": 14,
+   "failed": [],
+   "exercised": {
+    "navigation": [
+     9,
+     12,
+     13
+    ],
+    "drill-down": [
+     4,
+     5
+    ],
+    "unavailable": [
+     2,
+     10,
+     12
+    ],
+    "confirmation": [
+     6,
+     7,
+     14
+    ],
+    "notification": [
+     4,
+     7,
+     9,
+     12
+    ],
+    "save-continue": [
+     14
+    ]
+   },
+   "sixMissing": [],
+   "gameFrom": "August 24, 2026 7:30 AM",
+   "gameTo": "September 9, 2026 8:00 AM",
+   "dialogsGoneThrough": 24,
+   "errors": 0,
+   "overflows": 0,
+   "trace": "docs/verification/playthroughs-2026-10-17/interface/normal-1440/trace.json",
+   "log": "docs/verification/playthroughs-2026-10-17/interface/normal-1440/run.log",
+   "screenshots": [
+    "docs/verification/playthroughs-2026-10-17/interface/normal-1440/01-creation-review.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/normal-1440/02-home-notice-look.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/normal-1440/03-first-preparation.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/normal-1440/04-showing-notice.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/normal-1440/05-confirm-deletion.jpg"
+   ],
+   "stepNames": [
+    "1. passed: the save slots, emptied first: New Save offered",
+    "2. passed: creation: Continue grayed with what the step needs listed; the five steps; Review names the choices; Begin",
+    "3. passed: the guide: controls locked until its chapters are read; read, none locked",
+    "4. passed: Home, the first morning: Welcome To The Class Of 2029 read; its look opened and closed",
+    "5. passed: Home: How You Are’s sentence opened into your own look, Readiness inside it, the outer Close shutting both",
+    "6. passed: Tomorrow Morning, asked before the orientation: On The Way names it, Cancel leaves the clock",
+    "7. passed: Tomorrow Morning, taken: On The Way’s Advance, the orientation’s stop and Go, Tuesday morning; Registration And Your Account on Home",
+    "8. passed: the orientation week: each morning to the weekend, each stop gone to",
+    "9. passed: the work set: the courses’ notices on Home; Go There opens School; Coursework lists each piece with its day",
+    "10. passed: the first step of preparation on the scene: its minutes, the clock and its part’s figure; a step refused, its reason on the card",
+    "11. passed: to the first showing: each day every step the scene allows, a partner answered, each stop gone to; Shown Today rises on each day of work",
+    "12. passed: the showing: “Shown: …” on Home, Go There, the scene’s feedback with its band and score; Working or better; steps refused until it’s read",
+    "13. passed: Papers and Money by the rail, and School’s tab kept on the way back",
+    "14. passed: Save & Exit; Delete asked and kept; Continue: the same moment, the scene’s showing as it was"
+   ]
+  },
+  {
+   "playthrough": "normal",
+   "width": 390,
+   "commit": "695683c4",
+   "trackedChangesWhenRun": 0,
+   "startingPoint": {
+    "kind": "new life",
+    "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
+    "seed": "1-AlexRivera-mvc44kpp"
+   },
+   "steps": 14,
+   "passed": 14,
+   "failed": [],
+   "exercised": {
+    "navigation": [
+     9,
+     12,
+     13
+    ],
+    "drill-down": [
+     4,
+     5
+    ],
+    "unavailable": [
+     2,
+     10,
+     12
+    ],
+    "confirmation": [
+     6,
+     7,
+     14
+    ],
+    "notification": [
+     4,
+     7,
+     9,
+     12
+    ],
+    "save-continue": [
+     14
+    ]
+   },
+   "sixMissing": [],
+   "gameFrom": "August 24, 2026 7:30 AM",
+   "gameTo": "September 9, 2026 8:00 AM",
+   "dialogsGoneThrough": 24,
+   "errors": 0,
+   "overflows": 0,
+   "trace": "docs/verification/playthroughs-2026-10-17/interface/normal-390/trace.json",
+   "log": "docs/verification/playthroughs-2026-10-17/interface/normal-390/run.log",
+   "screenshots": [
+    "docs/verification/playthroughs-2026-10-17/interface/normal-390/01-creation-review.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/normal-390/02-home-notice-look.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/normal-390/03-first-preparation.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/normal-390/04-showing-notice.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/normal-390/05-confirm-deletion.jpg"
+   ],
+   "stepNames": [
+    "1. passed: the save slots, emptied first: New Save offered",
+    "2. passed: creation: Continue grayed with what the step needs listed; the five steps; Review names the choices; Begin",
+    "3. passed: the guide: controls locked until its chapters are read; read, none locked",
+    "4. passed: Home, the first morning: Welcome To The Class Of 2029 read; its look opened and closed",
+    "5. passed: Home: How You Are’s sentence opened into your own look, Readiness inside it, the outer Close shutting both",
+    "6. passed: Tomorrow Morning, asked before the orientation: On The Way names it, Cancel leaves the clock",
+    "7. passed: Tomorrow Morning, taken: On The Way’s Advance, the orientation’s stop and Go, Tuesday morning; Registration And Your Account on Home",
+    "8. passed: the orientation week: each morning to the weekend, each stop gone to",
+    "9. passed: the work set: the courses’ notices on Home; Go There opens School; Coursework lists each piece with its day",
+    "10. passed: the first step of preparation on the scene: its minutes, the clock and its part’s figure; a step refused, its reason on the card",
+    "11. passed: to the first showing: each day every step the scene allows, a partner answered, each stop gone to; Shown Today rises on each day of work",
+    "12. passed: the showing: “Shown: …” on Home, Go There, the scene’s feedback with its band and score; Working or better; steps refused until it’s read",
+    "13. passed: Papers and Money by the rail, and School’s tab kept on the way back",
+    "14. passed: Save & Exit; Delete asked and kept; Continue: the same moment, the scene’s showing as it was"
+   ]
+  },
+  {
+   "playthrough": "setback",
+   "width": 1440,
+   "commit": "695683c4",
+   "trackedChangesWhenRun": 0,
+   "startingPoint": {
+    "kind": "save",
+    "file": "workload.json",
+    "bytes": 1039043,
+    "sha256": "3b0b2de7c2a6e6bc18a0c5103b2d20d47b7b45f3d25bda5043d14e58a3bccbfb",
+    "seed": "sc-0",
+    "command": "npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json"
+   },
+   "steps": 9,
+   "passed": 9,
+   "failed": [],
+   "exercised": {
+    "navigation": [
+     3
+    ],
+    "drill-down": [
+     2,
+     4
+    ],
+    "unavailable": [
+     5
+    ],
+    "confirmation": [
+     6,
+     7
+    ],
+    "notification": [
+     1,
+     8
+    ],
+    "save-continue": [
+     1,
+     9
+    ]
+   },
+   "sixMissing": [],
+   "gameFrom": "September 22, 2027 9:30 AM",
+   "gameTo": "October 1, 2027 7:00 AM",
+   "dialogsGoneThrough": 22,
+   "errors": 0,
+   "overflows": 0,
+   "trace": "docs/verification/playthroughs-2026-10-17/interface/setback-1440/trace.json",
+   "log": "docs/verification/playthroughs-2026-10-17/interface/setback-1440/run.log",
+   "screenshots": [
+    "docs/verification/playthroughs-2026-10-17/interface/setback-1440/01-warning-on-home.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/setback-1440/02-scene-before-the-remedy.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/setback-1440/03-reader-refused-today.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/setback-1440/04-scene-shown.jpg"
+   ],
+   "stepNames": [
+    "1. passed: [save: workload scenario] continued: A Word On Your Coursework on Home, its count, its cause, its remedy and the review’s day",
+    "2. passed: the warning opened in place: its look, who sent it and when, and Close",
+    "3. passed: Go There: School at Coursework; Due Soonest; the scene with a partner the warning names, Shown Today Unready",
+    "4. passed: the scene’s How This Works: its entry, a connected system followed and Back, then closed with the tab and the clock as they were",
+    "5. passed: Run It With A Reader: an hour, Shown Today rises; again the same day it’s refused, its reason on the card",
+    "6. passed: the next morning, Tomorrow Morning asked: On The Way lists the day’s classes and calls, Cancel leaves the clock",
+    "7. passed: the days to the scene’s meeting: every step the scene allows each morning, then on, each stop gone to; Shown Today rises on each day of work, Working by the eve",
+    "8. passed: the scene shown: “Shown: …, Working or better” on Home; the other pieces shown on the way recorded",
+    "9. passed: Save & Exit, Continue: the same moment, the showing’s notice and Coursework as they were"
+   ]
+  },
+  {
+   "playthrough": "setback",
+   "width": 390,
+   "commit": "695683c4",
+   "trackedChangesWhenRun": 0,
+   "startingPoint": {
+    "kind": "save",
+    "file": "workload.json",
+    "bytes": 1039043,
+    "sha256": "3b0b2de7c2a6e6bc18a0c5103b2d20d47b7b45f3d25bda5043d14e58a3bccbfb",
+    "seed": "sc-0",
+    "command": "npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json"
+   },
+   "steps": 9,
+   "passed": 9,
+   "failed": [],
+   "exercised": {
+    "navigation": [
+     3
+    ],
+    "drill-down": [
+     2,
+     4
+    ],
+    "unavailable": [
+     5
+    ],
+    "confirmation": [
+     6,
+     7
+    ],
+    "notification": [
+     1,
+     8
+    ],
+    "save-continue": [
+     1,
+     9
+    ]
+   },
+   "sixMissing": [],
+   "gameFrom": "September 22, 2027 9:30 AM",
+   "gameTo": "October 1, 2027 7:00 AM",
+   "dialogsGoneThrough": 22,
+   "errors": 0,
+   "overflows": 0,
+   "trace": "docs/verification/playthroughs-2026-10-17/interface/setback-390/trace.json",
+   "log": "docs/verification/playthroughs-2026-10-17/interface/setback-390/run.log",
+   "screenshots": [
+    "docs/verification/playthroughs-2026-10-17/interface/setback-390/01-warning-on-home.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/setback-390/02-scene-before-the-remedy.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/setback-390/03-reader-refused-today.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/setback-390/04-scene-shown.jpg"
+   ],
+   "stepNames": [
+    "1. passed: [save: workload scenario] continued: A Word On Your Coursework on Home, its count, its cause, its remedy and the review’s day",
+    "2. passed: the warning opened in place: its look, who sent it and when, and Close",
+    "3. passed: Go There: School at Coursework; Due Soonest; the scene with a partner the warning names, Shown Today Unready",
+    "4. passed: the scene’s How This Works: its entry, a connected system followed and Back, then closed with the tab and the clock as they were",
+    "5. passed: Run It With A Reader: an hour, Shown Today rises; again the same day it’s refused, its reason on the card",
+    "6. passed: the next morning, Tomorrow Morning asked: On The Way lists the day’s classes and calls, Cancel leaves the clock",
+    "7. passed: the days to the scene’s meeting: every step the scene allows each morning, then on, each stop gone to; Shown Today rises on each day of work, Working by the eve",
+    "8. passed: the scene shown: “Shown: …, Working or better” on Home; the other pieces shown on the way recorded",
+    "9. passed: Save & Exit, Continue: the same moment, the showing’s notice and Coursework as they were"
+   ]
+  },
+  {
+   "playthrough": "specialist",
+   "width": 1440,
+   "commit": "695683c4",
+   "trackedChangesWhenRun": 0,
+   "startingPoint": {
+    "kind": "save",
+    "file": "specialist.json",
+    "bytes": 103308,
+    "sha256": "3df3f81c2ebf1bf4f7cd9bb2e9402f2a5fa674ec0016d1725a439f044e166648",
+    "seed": "sc-0",
+    "command": "npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
+    "testSetup": "emotional depth, composure, imagination and presence at 90; memory, voice, movement, listening, focus, adaptability and discipline at 49 (tools/brief-journeys.ts’s specialist), on the first morning"
+   },
+   "steps": 11,
+   "passed": 11,
+   "failed": [],
+   "exercised": {
+    "navigation": [
+     2
+    ],
+    "drill-down": [
+     2
+    ],
+    "unavailable": [
+     3,
+     7
+    ],
+    "confirmation": [
+     8,
+     11
+    ],
+    "notification": [
+     1
+    ],
+    "save-continue": [
+     11
+    ]
+   },
+   "sixMissing": [],
+   "gameFrom": "September 12, 2026 4:05 PM",
+   "gameTo": "September 13, 2026 2:05 PM",
+   "dialogsGoneThrough": 0,
+   "errors": 0,
+   "overflows": 0,
+   "trace": "docs/verification/playthroughs-2026-10-17/interface/specialist-1440/trace.json",
+   "log": "docs/verification/playthroughs-2026-10-17/interface/specialist-1440/run.log",
+   "screenshots": [
+    "docs/verification/playthroughs-2026-10-17/interface/specialist-1440/01-profile-abilities.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/specialist-1440/02-brief-before-the-take.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/specialist-1440/03-take-and-advice.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/specialist-1440/04-second-take.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/specialist-1440/05-confirm-deletion.jpg"
+   ],
+   "stepNames": [
+    "1. passed: [save: specialist scenario] continued: the first term’s showings on Home, one read",
+    "2. passed: the Player Profile: the four strengths at 90.0 and the rest about 49; Composure opened, its look, a way further in, Close",
+    "3. passed: Nordic Noir’s brief: the scene, what the take weighs, its readings; Tape It refused until a reading is chosen",
+    "4. passed: prepared: broken down, the lines learned, a reading chosen; the side The Scene says suits it chosen, its mark said; rehearsed on the feet",
+    "5. passed: taped: the figure, what the way gave apart from what the abilities cost, what held it back; one take in the table",
+    "6. passed: the advice: What To Work On names what to train, its forecast, what it assumes, and what deserves attention; none of the four strengths",
+    "7. passed: trained: the exercise the advice names, an hour at a time until the day’s practice is spent; then refused, its reason under it",
+    "8. passed: One Week, asked: On The Way lists Monday’s labs, Cancel leaves the clock",
+    "9. passed: Sunday: Tomorrow Morning, the exercise practiced again, and what it trains higher than at the first take",
+    "10. passed: taped again: prepared further, the second take above the first, two rows, the newest better prepared or better able; the advice read again",
+    "11. passed: Save & Exit; Delete asked and kept; Continue: the same moment, the brief’s two takes, its reading and its last take as they were"
+   ]
+  },
+  {
+   "playthrough": "specialist",
+   "width": 390,
+   "commit": "695683c4",
+   "trackedChangesWhenRun": 0,
+   "startingPoint": {
+    "kind": "save",
+    "file": "specialist.json",
+    "bytes": 103308,
+    "sha256": "3df3f81c2ebf1bf4f7cd9bb2e9402f2a5fa674ec0016d1725a439f044e166648",
+    "seed": "sc-0",
+    "command": "npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
+    "testSetup": "emotional depth, composure, imagination and presence at 90; memory, voice, movement, listening, focus, adaptability and discipline at 49 (tools/brief-journeys.ts’s specialist), on the first morning"
+   },
+   "steps": 11,
+   "passed": 11,
+   "failed": [],
+   "exercised": {
+    "navigation": [
+     2
+    ],
+    "drill-down": [
+     2
+    ],
+    "unavailable": [
+     3,
+     7
+    ],
+    "confirmation": [
+     8,
+     11
+    ],
+    "notification": [
+     1
+    ],
+    "save-continue": [
+     11
+    ]
+   },
+   "sixMissing": [],
+   "gameFrom": "September 12, 2026 4:05 PM",
+   "gameTo": "September 13, 2026 2:05 PM",
+   "dialogsGoneThrough": 0,
+   "errors": 0,
+   "overflows": 0,
+   "trace": "docs/verification/playthroughs-2026-10-17/interface/specialist-390/trace.json",
+   "log": "docs/verification/playthroughs-2026-10-17/interface/specialist-390/run.log",
+   "screenshots": [
+    "docs/verification/playthroughs-2026-10-17/interface/specialist-390/01-profile-abilities.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/specialist-390/02-brief-before-the-take.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/specialist-390/03-take-and-advice.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/specialist-390/04-second-take.jpg",
+    "docs/verification/playthroughs-2026-10-17/interface/specialist-390/05-confirm-deletion.jpg"
+   ],
+   "stepNames": [
+    "1. passed: [save: specialist scenario] continued: the first term’s showings on Home, one read",
+    "2. passed: the Player Profile: the four strengths at 90.0 and the rest about 49; Composure opened, its look, a way further in, Close",
+    "3. passed: Nordic Noir’s brief: the scene, what the take weighs, its readings; Tape It refused until a reading is chosen",
+    "4. passed: prepared: broken down, the lines learned, a reading chosen; the side The Scene says suits it chosen, its mark said; rehearsed on the feet",
+    "5. passed: taped: the figure, what the way gave apart from what the abilities cost, what held it back; one take in the table",
+    "6. passed: the advice: What To Work On names what to train, its forecast, what it assumes, and what deserves attention; none of the four strengths",
+    "7. passed: trained: the exercise the advice names, an hour at a time until the day’s practice is spent; then refused, its reason under it",
+    "8. passed: One Week, asked: On The Way lists Monday’s labs, Cancel leaves the clock",
+    "9. passed: Sunday: Tomorrow Morning, the exercise practiced again, and what it trains higher than at the first take",
+    "10. passed: taped again: prepared further, the second take above the first, two rows, the newest better prepared or better able; the advice read again",
+    "11. passed: Save & Exit; Delete asked and kept; Continue: the same moment, the brief’s two takes, its reading and its last take as they were"
+   ]
+  }
+ ],
+ "allRunsPassed": true,
+ "replacements": [],
+ "defectsFound": [
+  {
+   "what": "Home drew the six heaviest unread notices and nothing of the rest, while Mark N Read marked every one read, so a notice past the sixth was on no screen. The panel now says “N more waiting.” and offers Show All N (and Show The Heaviest Six back); Mark N Read still marks them all, as the guide and the notice look say.",
+   "foundBy": "tools/playthroughs-ui.mjs normal 1440, step 9, its first run (no notice “The Courses And What They Ask” among Home’s six)",
+   "fixed": "src/ui/screens/Home.tsx; the guide’s words, src/engine/content/guide/day.ts (day.needs)",
+   "test": "tests/evidence-g32-ui.test.ts ‘h-needs: What Needs You on Home > PLAYER JOURNEY: more unread than the panel’s six: it says how many more wait and offers Show All; pressed, every one is drawn with its Go There, the seventh heaviest among them; Show The Heaviest Six puts it back; Mark N Read still marks every one’, failing before (“expected … to contain ‘153 more waiting. Show All 159’”) and passing after",
+   "blocksCompletion": false
+  },
+  {
+   "what": "A notice’s or a question’s look grouped every run of four digits as a count, so the first morning’s welcome opened as “Welcome To The Class Of 2,029” and February’s return as “Your 2,026 Tax Return”. nameOf keeps a year as written; the drill-down rule (docs/DRILL-DOWN.md, rule 5 and the name gate) and its guard (tests/looks.test.ts) take a year out before they look for a run of four digits, which is how the looks came to group one.",
+   "foundBy": "tools/playthroughs-ui.mjs normal 1440, step 4, its first run (opened “Welcome To The Class Of 2,029”)",
+   "fixed": "src/ui/looks/attention.tsx (nameOf); docs/DRILL-DOWN.md; tests/looks.test.ts",
+   "test": "tests/evidence-g32-ui.test.ts ‘h-needs: What Needs You on Home > PLAYER JOURNEY: the first morning’s Welcome To The Class Of 2029 and February’s Your 2026 Tax Return, each title pressed on Home, open their looks under the year as it’s written, never as a count’, failing before (“Welcome To The Class Of 2,029”) and passing after",
+   "blocksCompletion": false
+  }
+ ],
+ "expectationsWrong": [
+  {
+   "step": "setback, step 4 (the remedy, once)",
+   "expected": "Run It With A Reader pressed on the save’s own morning",
+   "found": "the save’s 9:30 AM is inside the day’s classes, nine to three: the button is refused, “Not now: You’re at Classes until 3:00 PM.”",
+   "why": "the criteria were written from a probe whose times were printed in UTC, where the classes begin at 13:00; the game was right, and the playthrough now waits for the evening the refusal names, recording that refusal as one more unavailable action’s reason"
+  },
+  {
+   "step": "setback, step 5 (Tomorrow Morning asked and refused)",
+   "expected": "On The Way before Tomorrow Morning on the save’s day",
+   "found": "from the evening nothing lies between the player and the morning, so no question is asked",
+   "why": "a consequence of the one above: the question is now asked the next morning, with the day’s classes and calls ahead, and On The Way lists them"
+  },
+  {
+   "step": "specialist, step 8 (One Week asked)",
+   "expected": "On The Way “lists Monday’s labs”",
+   "found": "it lists Monday’s commitments by their course, “Drama 50: The Theatrical Event — September 14, 2026 at 3:00 PM”",
+   "why": "“lab” is the engine’s kind for them, not their name on the screen; the tool’s check looked for the word, and now looks for Monday’s date"
+  },
+  {
+   "step": "specialist, step 9 (the trained ability higher)",
+   "expected": "higher than at the first take",
+   "found": "the tool first compared the Profile’s 49.9 with the forecast’s words, “from 50”, which round to the whole",
+   "why": "the tool’s reading, not the game: the level is now read on the Profile before the hours, to the tenth (49.6 to 50.3 across the two days)"
+  },
+  {
+   "step": "setback, step 2 (the warning opened in place)",
+   "expected": "a way further in followed inside the warning’s look",
+   "found": "the notice’s look offers none, and says so: nothing in the world names what a notice is about yet",
+   "why": "the criteria had “where the look offers one”; so that the setback’s drill-down follows a way further in, as the criteria’s own definition asks, a step was added after Go There: the scene’s How This Works, a connected system followed, its Help Trail, Back, closed with the tab and the clock kept (setback step 4)"
+  },
+  {
+   "step": "normal, step 9 (the work set)",
+   "expected": "The Courses And What They Ask listed on Home",
+   "found": "on the first run it was the thirteenth of fourteen unread, and on no screen",
+   "why": "a game defect, not the expectation: fixed (the first fix above), and the run then found it by Show All"
+  }
+ ],
+ "added": [
+  {
+   "id": "tools/playthroughs-ui.mjs",
+   "reason": "brief 13, section 5: the multi-step playthroughs of the built app, beside tools/acceptance-ui.mjs, whose 76 steps are unchanged",
+   "impact": "a tool; nothing in the game"
+  },
+  {
+   "id": "tools/scenarios.ts --scenario specialist",
+   "reason": "the specialist’s starting point: a new life can’t be a specialist through creation (its dispositions set composure and discipline alone), so the brief scenario’s student is given tools/brief-journeys.ts’s specialist spread by hand on the first morning, said as TEST SETUP",
+   "impact": "a scenario; nothing in the game, and the fourteen saves tools/scenario-saves.mjs writes are as they were"
+  },
+  {
+   "id": "Home’s Show All N under the notices",
+   "reason": "the fix to the first defect: the smallest change that lets a player read a notice past the sixth",
+   "impact": "Home draws the six heaviest as before, says how many more wait, and lists every one on request; Mark N Read unchanged"
+  },
+  {
+   "id": "docs/verification/playthroughs-2026-10-17/interface/summary.py",
+   "reason": "the six traces summed, so the figures here are read, not typed",
+   "impact": "a document tool"
+  }
+ ],
+ "forTheCoordinator": {
+  "measurements": [
+   {
+    "cmd": "npm run build && npx vite preview --port 4187 --strictPort",
+    "seeds": "-",
+    "out": "-",
+    "reads": "the built app the runs drive"
+   },
+   {
+    "cmd": "npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json; npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
+    "seeds": "sc-0",
+    "out": "SAVEDIR (not kept; their sha256 is in each trace’s startingPoint and in interface/exits.txt)",
+    "reads": "the two starting saves"
+   },
+   {
+    "cmd": "for p in normal setback specialist; do for w in 1440 390; do SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs $p $w SAVEDIR; done; done",
+    "seeds": "normal: a new life, its seed from the slot, the name and the moment (recorded in its trace); setback and specialist: sc-0",
+    "out": "docs/verification/playthroughs-2026-10-17/interface/<playthrough>-<width>/trace.json, run.log and its milestone .jpg files",
+    "reads": "each exits 0 where every step passed, each of the six has a passed step, and there was no page error and no screen past the right edge"
+   },
+   {
+    "cmd": "python3 docs/verification/playthroughs-2026-10-17/interface/summary.py",
+    "seeds": "-",
+    "out": "docs/verification/playthroughs-2026-10-17/interface/summary.json",
+    "reads": "allPassed"
+   }
+  ],
+  "records": "The four rows above (B13-UI.normal, .setback, .specialist, .walkthrough) for the matrix. The handoff and the receipt should say the two defects and their fixes, that nothing judged moved, and that the automated runs aren’t human usability approval. The built app’s acceptance run (tools/acceptance-ui.mjs, 76 steps) reads Home’s panel and should be run again on the integrated build; its new-life steps were run here on the tested commit (checks, below).",
+  "matrixStale": "node tools/completion-matrix.mjs --check fails on this branch (exit 1): ten rows measured on ed24ff3b or ac79bf4a read files this area changed (src/engine/content/guide/day.ts for all ten, and src/ui/looks/attention.tsx and src/ui/screens/Home.tsx for INT-skipped, INT-navigation and INT-gate), so the matrix reads them as Implemented, Verification Incomplete until they’re measured again: advice.F2A10-c, advice.F2A10-f, advice.F2A10-h, advice.heldout, F2-A, MA5, INT-skipped, INT-navigation, INT-long-runs, INT-gate. On 09a37a18 the check passed (574 of 599). The final runs on the integrated code measure them again; the matrix, the handoff’s completion line and criteria.py are the coordinator’s."
+ },
+ "checks": [
+  {
+   "cmd": "npm run typecheck",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "npm run lint",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g32-ui.test.ts",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": " Tests 42 passed (42)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/looks.test.ts",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": " Tests 23 passed (23)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide.test.ts",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": " Tests 12 passed (12)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/help-mechanics.test.ts",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": " Tests 8 passed (8)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-start-day-body.test.ts",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": " Tests 14 passed (14)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence3-home.test.ts",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": " Tests 38 passed (38)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b01.test.ts",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": " Tests 10 passed (10)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b11.test.ts",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": " Tests 15 passed (15)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g03-life.test.ts",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": " Tests 25 passed (25)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects3-50-70.test.ts",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": " Tests 7 passed (7)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g33-ui.test.ts",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": " Tests 35 passed (35)"
+  },
+  {
+   "cmd": "node tools/doc-refs.mjs --check",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "node tools/tics.mjs --check",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "node tools/voice-check.mjs --check",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "node tools/spelling.mjs",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "node tools/typos.mjs",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "node tools/title-case.mjs --check",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "node tools/label-sweep.mjs",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "node tools/plural-check.mjs",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "node tools/wired.mjs --check",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "node tools/deciders.mjs --check",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "node tools/inventory.mjs --check",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": "Inventory matches the code: 158 commands, 96 scheduled kinds, 2 passage reactors, 3 events, 1 listener, 0 scenes, 5 routes."
+  },
+  {
+   "cmd": "node tools/capabilities.mjs --check",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "node tools/devmap.mjs --check",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": "docs/DEVMAP.md matches the code: 158 commands."
+  },
+  {
+   "cmd": "node tools/traceability.mjs",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": "docs/TRACEABILITY.md matches the code: 158 commands, 96 scheduled kinds."
+  },
+  {
+   "cmd": "node tools/coverage.mjs --check",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": "docs/GAMEPLAY-COVERAGE.md matches the audit: 339 items."
+  },
+  {
+   "cmd": "node tools/student-matrix.mjs --check",
+   "exit": 0,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": "docs/verification/STUDENT-MATRIX.md matches: 57 of 57 verified."
+  },
+  {
+   "cmd": "node tools/completion-matrix.mjs --check",
+   "exit": 1,
+   "on": "c323f5ce (the tested commit, 695683c4, differs from it only in tools/playthroughs-ui.mjs, which no check reads)",
+   "said": ""
+  },
+  {
+   "cmd": "SLATE_BASE=http://localhost:4187 node tools/acceptance-ui.mjs OUT 1440 (no SAVEDIR: the new life’s steps alone, the scenario saves’ steps left to the coordinator’s run on the integrated build)",
+   "exit": 0,
+   "on": "695683c4",
+   "said": "32 passed, 0 failed, 0 skipped; 0 errors; 0 overflows"
+  },
+  {
+   "cmd": "npm run build",
+   "exit": 0,
+   "on": "695683c4",
+   "said": "interface/exits.txt"
+  },
+  {
+   "cmd": "six runs of tools/playthroughs-ui.mjs",
+   "exit": 0,
+   "on": "695683c4",
+   "said": "each exit 0, interface/exits.txt"
+  }
+ ],
+ "remaining": [
+  "How the game feels to play: the owner’s walkthrough is for that, and no automated run approves it.",
+  "The setback’s term review falls in December, after the playthrough: the journeys area plays whole terms.",
+  "The ten matrix rows made stale by these changes, until the coordinator’s final runs measure them again."
+ ]
+}

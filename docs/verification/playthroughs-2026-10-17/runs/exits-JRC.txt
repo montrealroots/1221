@@ -1,0 +1,5 @@
+at 7e7a3af6, 0 tracked files uncommitted, 2026-10-17T14:21:38Z
+journeys-compare exit=0 secs=6 cmd: npx vite-node tools/journeys.ts -- --compare /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/jr13-state --out docs/verification/playthroughs-2026-10-17/journeys-final/compare.json
+journeys-summarize exit=0 secs=5 cmd: npx vite-node tools/journeys.ts -- --summarize docs/verification/playthroughs-2026-10-17/journeys-final
+DONE 2026-10-17T14:21:49Z
+DONE 2026-10-17T14:50:09Z

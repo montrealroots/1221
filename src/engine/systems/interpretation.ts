@@ -114,6 +114,14 @@ export const stakesScale = (stakes: number | undefined) => 1 + GRAIN.stakesStep 
  * What the chosen sides' suitability asks of the evaluation: on each dimension a side leans on, by how far it leans there
  * against its most, a share of difficulty, negative with the grain and positive against it; and how much of the
  * choice's rehearsal completes it, the sides' mean suitability moving it from `PLAYING.complete`.
+ *
+ * Each share and the mark are kept to a hundredth (`r2`), as each signal and a side's suitability are (`suitabilityOf`),
+ * since this was written on 2026-10-16; nothing said so until 2026-10-17 (brief 13). So a share under half a hundredth
+ * comes to nothing. At a suitability of ±0.01 every share is under it (0.3 × 0.01 × at most 1.3, 0.0039), the grain moves
+ * no take, and the take's line says nothing of it (`grainRead`); from ±0.02 believability's share is a hundredth or more
+ * at every stakes the catalog holds, and every take moves the right way. Carried at full precision, the grain at ±0.01
+ * would have moved a take by 0.063 at most, under a shown tenth, the right way on every one
+ * (docs/verification/playthroughs-2026-10-17/acting-criteria.md, measured on the ten brief readings at ±0.01).
  */
 export function grainOf(task: TaskProfile, sides: readonly AxisValue[], material: MaterialProfile | undefined, scene: Scene = {}): { grain: Partial<Record<Dimension, { d: number; label: string }>>; required: number; suits: Suitability[] } {
   const grain: Partial<Record<Dimension, { d: number; label: string }>> = {};

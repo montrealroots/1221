@@ -20,12 +20,17 @@ dates the work 2026-10-16, as the work plan does, so the commits' dates and the 
 | `08-complete-integration-and-acceptance-pass.txt`: "Implement SLATE’s Complete Integration And Acceptance Pass" | 2026-10-16, in the session on `claude/peaceful-hamilton-59zdbb` | `../integration-2026-10-16/`, work plan section 11 | #35, `64b69fc7` | merged at the owner's word ("Merge it all."); ST3, ST6, H4 and L3 short, carried to 09 |
 | `09-remaining-integration-gaps-and-completion-evidence.txt`: "Finish SLATE’s Remaining Integration Gaps And Reconcile The Completion Evidence" | 2026-10-16, the same session, on the branch restarted from `main` at `64b69fc7` | `../integration-2026-10-16/`, work plan section 12; its account `../integration-2026-10-16/brief-09.md` | #36 (`44dcd973`), at the owner's word | merged, not deployed (in progress until brief 10) |
 | `10-approved-acting-advice-banking-and-stamina-decisions.txt`: "Implement The Approved Acting, Advice, Banking, And Stamina Decisions" | 2026-10-16, the same session, on the branch restarted from `main` at `44dcd973` | `../decisions-2026-10-16/`, work plan section 13; its account `../decisions-2026-10-16/brief-10.md` | #37 (`0e7ff7c2`), at the owner's word | merged, not deployed; ST6-R, F2-A10 (f) and (h), L1 and Arion's real timing with the owner |
+| `11-finish-the-current-build-against-a-fixed-checklist.txt`: "Finish The Current Build Against A Fixed Checklist" | 2026-10-16, the same session, on the branch restarted from `main` at `0e7ff7c2` | `../completion-2026-10-16/`; its receipt `RECEIPT.md` | #38 (`9302b29c`), at the owner's word | merged, not deployed; ST6-R, F2-A10 (f) and (h) and health.enroll with the owner |
+| `12-resolve-the-remaining-decisions-and-complete-the-authorized-build.txt`: "Resolve The Remaining Decisions And Complete The Authorized Build" | 2026-10-17, the same session, on the branch restarted from `main` at `9302b29c` | `../resolution-2026-10-17/`; its receipt `RECEIPT.md` | #39 (`102ba8f2`), at the owner's word | merged, not deployed; ST6-R2.c and ST6-R2.e with the owner |
+| `13-resolve-the-final-acting-clauses-and-validate-through-multiple-playthroughs.txt`: "Resolve The Final Acting Clauses And Validate Through Multiple Playthroughs" | 2026-10-17, the same session, on the branch restarted from `main` at `102ba8f2` | `../playthroughs-2026-10-17/` | — | in progress |
 | `08-next-integration-and-acceptance-pass.md`: the scope the owner recorded for it before it was given | — | — | — | superseded by the brief's text |
 
 `short-directives.txt` keeps the owner's short instructions between the briefs, verbatim: the session's first message
 (which continued the work plan: banking's open defects and skeptics, merged in #30), "Merge and push all of this." (which
 merged #32), "Merge it all." (which merged #35), and the requests for screen captures (answered with images sent in the session, not kept in the repository;
-`tools/captures.mjs` takes them again).
+`tools/captures.mjs` takes them again). From 2026-10-16T20:00 it also holds the requests for the mastered badges, and the
+three "Merge it." that merged #37, #38 and #39, each after a "Yes." to watching the pull request. Until 2026-10-17 it
+stopped at 14:58 the day before: brief 13's coordinator added the rest from the session's transcript.
 
 What isn't here: the session's own summaries of itself, written when its context ran out, are the model's words, not
 the owner's, and the briefs of the sessions before this one are in `../prompts-2026-10-16/` where they were kept.

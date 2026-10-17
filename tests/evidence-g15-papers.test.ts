@@ -415,6 +415,36 @@ describe('documents.apply_opt', () => {
     expect(titled(back, 'Out Of Status')).toHaveLength(1);
   });
 
+  /**
+   * Applied for in the 90 days before the program's end, then the degree withheld before it's decided (brief 13's
+   * journeys found an application approved after the degree was withheld): denied in `optRefusal`'s words, the $470 kept.
+   * TEST SETUP: the F-1's end moved so the program ends in 30 days, and the School's own step withholds the degree, or, for
+   * her twin, confers it. A played withholding comes at a last review, three years in.
+   */
+  it('PLAYER JOURNEY: an application made in the window before the program’s end is denied at its decision when the degree is withheld meanwhile, the fee kept, and approved for a twin whose degree is conferred', () => {
+    const decided = (to: 'withheld' | 'graduated') => {
+      const sim = life(`g15-opt-${to}`, 'uk-eng-london');
+      documentsOf(sim.player).find((d) => d.kind === 'visa' && d.name.startsWith('F-1'))!.expiresAt = sim.now + (30 + 60) * MS_DAY;
+      const r = sim.must<{ readyAt: number }>(APPLY_OPT);
+      setStanding(sim, sim.player, to, `TEST SETUP: the degree ${to === 'withheld' ? 'withheld' : 'conferred'} before OPT is decided.`);
+      tended(sim, r.readyAt + MS_HOUR);
+      return sim;
+    };
+    const withheld = decided('withheld');
+    expect(held(withheld, 'permit')).toEqual([expect.objectContaining({ name: 'Employment Authorization, OPT', status: 'cancelled' })]);
+    expect(titled(withheld, 'OPT Denied').map((n) => n.body)).toEqual(['OPT follows a degree completed, and you left without it. The fee isn’t refunded.']);
+    expect(titled(withheld, 'OPT Approved')).toEqual([]);
+    expect(memos(withheld, /OPT/).map((t) => taken(withheld, t))).toEqual([470_00]);
+    // Across a save and a load, denied once and not again.
+    const back = reload(withheld);
+    tended(back, back.now + 7 * MS_DAY);
+    expect(titled(back, 'OPT Denied')).toHaveLength(1);
+    const conferred = decided('graduated');
+    expect(held(conferred, 'permit')).toEqual([expect.objectContaining({ status: 'valid' })]);
+    expect(titled(conferred, 'OPT Approved')).toHaveLength(1);
+    expect(titled(conferred, 'OPT Denied')).toEqual([]);
+  });
+
   it('PLAYER JOURNEY: the status’s ending, raised by the clock on the program’s last day, offers OPT standard then premium; taking the first files OPT at $470 with no premium, and answers it', () => {
     const sim = life('g15-opt-decision', 'uk-eng-london');
     graduated(sim, -1);

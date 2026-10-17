@@ -57,7 +57,7 @@ import { formatDate, formatTime, instantFromZoned, zonedParts, type Instant } fr
 import { CITIES } from '../content/geography';
 import { YALE_DRAMA, type SchoolDate } from '../content/school';
 import { sceneById } from '../content/coursework';
-import { bondMove, keyOf, type Classmate } from './school';
+import { bondMove, keyOf, schoolEnded, type Classmate } from './school';
 import {
   WORK, courseworkOf, mateBusy, mateRecord, questionsFor, trustOf, type Assignment, type Coursework, type MateRecord,
 } from './coursework';
@@ -360,6 +360,12 @@ export function respondRefusal(sim: Simulation, person: Person, m: Moment | unde
     if (busy) return busy;
   }
   if (m.kind === 'study' && choice === 'yes') {
+    // Not once the School has ended (from 2026-10-17, brief 13's journeys): the moment stays open to its lapse, as one at
+    // the School does (`setStanding`), and can be declined, but the evening it asks for is the School's, called off with
+    // the rest at the end. Until then a yes put it on the calendar after the end, and it was played, where one booked an
+    // hour before the end was called off: journey J02's first run (seed j13-2), its degree withheld at five on 27 April
+    // 2029, said yes to Hannah's invitation of that morning at eight, and ran Hannah's lines at seven the next evening.
+    if (person.school && schoolEnded(person.school.standing)) return 'Your terms at the School are over: there’s no scene left to run lines for. Say no instead.';
     const when = m.when!;
     // A guard, reached by no save this build opens (from 2026-10-15). A moment lapses 22 hours after its nine o’clock
     // class (`CLASS.answerHours`, 22 since 2026-10-07), at least twelve before the evening it asks for. Until 2026-10-15

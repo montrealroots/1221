@@ -1,0 +1,185 @@
+SLATE: Resolve The Final Acting Clauses And Validate Through Multiple Playthroughs
+
+Continue from the latest verified main branch. At the last review, PR #39 was merged at 102ba8f2. Verify the current state, read the repository instructions and latest handoff, and preserve unrelated work.
+
+Finish the two remaining restrained-acting clauses, ST6-R2.c and ST6-R2.e, then validate the current game through multiple complete playthroughs.
+
+Do not expand scope, rebuild functioning systems, restore removed features, or change decision #4’s protected rows.
+
+1. Resolve ST6-R2.c With Defensible Comparisons
+
+I authorize the following clarification:
+
+A tiny circumstance change may legitimately produce no measurable score change because of documented precision, a cap, or another limiting factor. It must not produce an unexplained change in the wrong direction.
+
+* Trace each previously identified ±0.01 case through the actual calculations.
+* Distinguish display rounding from internal quantization and genuine gameplay limits.
+* Test changes immediately below, at, and above relevant boundaries.
+* Require meaningful circumstance changes to affect applicable work where the model says they should.
+* Ensure precision limits do not conceal a disconnected mechanic.
+
+Define “unrelated ability” from the actual dependency path through the engine—not from a cutoff selected because it makes the observed failures disappear.
+
+Separate:
+
+* An ability with no relevant dependency.
+* A small but legitimate contribution.
+* A direct contribution.
+* An indirect contribution through preparation, condition, or progression.
+
+Use controlled single-input comparisons to establish causality. Keep equal-budget specialist comparisons separately, because redistributing a budget changes several abilities at once.
+
+Do not automatically adopt the proposed 1/12 cutoff. Justify any threshold before validation. Explain the previously reported 65 of 6,344 comparisons individually or by demonstrated common cause.
+
+2. Resolve ST6-R2.e Without An Impossible Ceiling Requirement
+
+I authorize comparing specialist advantages where the comparison actor has room to improve.
+
+An actor already succeeding on all suitable pieces cannot be required to succeed on more pieces than exist. However, excluding ceiling cases must not leave the test without meaningful evidence.
+
+* Keep ceiling cases in the report and explain their limits.
+* Establish appropriate below-ceiling profiles before measuring them.
+* Compare equal-budget actors under equivalent preparation and conditions.
+* Measure relevant differences in quality, preparation burden, endurance, or another established mechanic where appropriate.
+* Require varied existing material and justified specialist advantages.
+* Preserve the fact that specialization does not erase unrelated weaknesses.
+* Do not manufacture harder material or favorable profiles merely to secure a pass.
+
+Use fresh validation profiles beyond those that informed these clarifications.
+
+3. Preserve Honest Criterion History
+
+Write the clarified criteria before tuning or final measurement.
+
+Retain:
+
+* Original definitions and results.
+* The exact clarification authorized here.
+* Why the previous comparison was unsuitable.
+* New tests and their evidence.
+* Any actual gameplay changes needed.
+
+Do not call a historical failure passed retroactively. Do not alter the scoring engine solely to satisfy a flawed comparison.
+
+Verify that tests detect removal of the relevant ability and circumstance effects. Close each clause only when its own acceptance conditions pass.
+
+4. Perform Multiple Complete Playthroughs
+
+Run at least twelve complete school journeys across multiple seeds and distinct player profiles. Reuse existing simulation tools where appropriate, but play through normal commands and progression rather than directly assigning successful outcomes.
+
+Include:
+
+* Beginners.
+* Balanced generalists.
+* Specialists with different strengths.
+* Highly developed or mastered actors.
+* Players who follow advice.
+* Players who partly follow or ignore advice.
+* Players who experience missed work, financial restrictions, or health interruptions.
+
+Set expected outcomes before running each scenario. A deliberate neglect scenario may legitimately fail academically; the game must explain and apply the consequences correctly. Do not count every dismissal as a defect or force every player to graduate.
+
+At least some journeys must recover from setbacks through available gameplay.
+
+For each complete journey verify:
+
+* Creation choices affect the intended state.
+* Classes, preparation, rehearsal, interpretation, and showings connect.
+* Attributes and genres develop and influence applicable work.
+* Advice responds to progress and changing circumstances.
+* Health, stamina, and energy remain distinct and interact correctly.
+* Money, school charges, holds, and payments reconcile.
+* Papers and document status affect the appropriate actions.
+* Warnings arrive consistently with later evaluations.
+* Term progression and the school endpoint work.
+* Saving, exiting, reloading, and continuing preserve the journey.
+
+Use additional focused scenarios where a full school journey cannot naturally reach an important financial, document, or health branch.
+
+5. Test The Actual Interface Too
+
+Complete at least three distinct multi-step interface playthroughs on the built application, covering both desktop and mobile widths overall.
+
+Include:
+
+* A normal student journey.
+* A setback-and-recovery journey.
+* A specialist’s preparation, performance, advice, and training journey.
+
+Exercise navigation, drill-down explanations, unavailable-action reasons, confirmation steps, notifications, and save/continue.
+
+Use screenshots or structured traces where supported. Do not substitute engine-only tests for interface verification.
+
+Provide a separate short walkthrough for me to play manually. Automated interface tests must not be described as human usability approval.
+
+6. Verify Continuity And Freshness
+
+Inspect progression across the playthroughs, not just final scores.
+
+Check:
+
+* Previously completed actions remain completed.
+* Consequences and scheduled events occur once.
+* Advice acknowledges what has changed.
+* Repeated feedback reflects the current state.
+* Different suitable interpretations produce understandable differences.
+* Exercises and situations vary where the current catalog supports variation.
+* Repetition is not disguised by changing words alone.
+
+Record repeated situations and recommendations, their frequency, and whether they remain justified. Do not rotate to inferior advice just to make a repetition count smaller.
+
+Fix concrete defects found during these journeys. Add regression tests and rerun the affected scenarios.
+
+7. Protect Existing Guarantees
+
+Confirm that the final changes preserve:
+
+* Maximum-quality prepared mastery.
+* Relevant attribute improvement without unintended regression.
+* Genre-specific benefits without unrelated leakage.
+* Specialist opportunities and valid limitations.
+* Accurate advice forecasts.
+* Stamina’s duration, participation, intensity, and recovery behavior.
+* Ledger balance.
+* Save compatibility and historical results.
+* Decision #4’s unchanged protected rows.
+
+Nothing advertised as a functioning mechanic may be decoration. Its stated behavior must be connected, persistent, and demonstrated.
+
+8. Run Final Verification On The Integrated Code
+
+After fixes, run the required full gate, production build, regenerated scenarios, desktop/mobile acceptance checks, and relevant long-run tests.
+
+Record:
+
+* Tested commit.
+* Commands and exit codes.
+* Seeds and player profiles.
+* Scenario expectations and actual outcomes.
+* Bugs found and fixes.
+* Rerun results.
+* Any skipped or unverified behavior.
+
+If source code changes after verification, rerun the affected checks and required final gate.
+
+Use additional playthroughs when a specific unresolved risk justifies them. Do not repeat identical runs indefinitely or claim that a large run count proves the absence of all possible bugs.
+
+9. Deliver The Final Close-Out
+
+Provide:
+
+* ST6-R2.c and ST6-R2.e results with evidence.
+* A playthrough table listing each profile, seed, duration, outcome, and issues.
+* Interface-playthrough results.
+* Defects found, fixed, and retested.
+* Remaining limitations, if any.
+* Updated frozen-baseline and actionable-scope completion figures.
+* Decision #4’s exclusions separately and unchanged.
+* An accurate handoff and PR description.
+* My manual playtest route.
+
+Do not award “10/10” merely because tests pass. State precisely which requirements were demonstrated and what still needs human judgment.
+
+Commit and push the completed work and prepare the appropriate PR. Follow established merge and deployment authorization rules.
+
+Continue through implementation, debugging, and verification until these authorized requirements pass or a concrete blocker remains after all independent work is complete.

@@ -8,6 +8,7 @@
  * the scope reset of 2026-10-09; the rest is as it stood on 2026-09-29.
  */
 
+import { useState } from 'react';
 import { formatDaylight } from '@/engine/core/sun';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
@@ -45,6 +46,11 @@ export function Home() {
   const worth = useWorld((s) => netWorth(s, s.player.id));
   const cur = saveCurrency(sim.universe);
   const unread = useWorld(unreadNotifications);
+  // Every unread notice drawn, not only the six heaviest (from 2026-10-17, brief 13's interface playthroughs): until then
+  // the panel drew six and said nothing of the rest, and Mark N Read marked them all, so a notice past the sixth was on
+  // no screen at all. A new life has fourteen unread by its first Saturday, and The Courses And What They Ask was the
+  // thirteenth.
+  const [allNotices, setAllNotices] = useState(false);
   // What still weighs with nothing to decide: a notice, what money weighs
   // with (`troubles`, which the day's worry reads too), a clash in the next
   // month. "All Clear" was said over all of them, and until 2026-09-27 it
@@ -298,7 +304,7 @@ export function Home() {
           )}
           {unread.length > 0 && (
             <LookRegion className="list">
-              {unread.slice(0, 6).map((note) => (
+              {(allNotices ? unread : unread.slice(0, 6)).map((note) => (
                 <div key={note.id} className="list-item list-static">
                   <div className="grow">
                     <div className="small strong">
@@ -320,6 +326,14 @@ export function Home() {
                 </div>
               ))}
             </LookRegion>
+          )}
+          {unread.length > 6 && (
+            <div className="row-between xs dim" style={{ padding: 'var(--s3) var(--s4)' }}>
+              <span>{allNotices ? `All ${unread.length} unread, the heaviest first.` : `${unread.length - 6} more waiting.`}</span>
+              <button type="button" className="btn btn-ghost btn-sm" onClick={() => setAllNotices(!allNotices)}>
+                {allNotices ? 'Show The Heaviest Six' : `Show All ${unread.length}`}
+              </button>
+            </div>
           )}
         </Panel>
         )}

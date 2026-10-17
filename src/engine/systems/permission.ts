@@ -250,6 +250,16 @@ export function registerPermission(sim: Simulation): void {
     const mine = person.id === s.universe.playerId;
     const tell = (title: string, body: string) => { if (mine) s.notify({ category: 'personal', title, body, importance: 75, route: '/workspace/papers' }); };
     if (doc.name.includes('OPT')) {
+      // Decided by the rule it was applied for under: a program left without its degree, dismissed, withdrawn or its degree
+      // withheld after the application, is denied in `optRefusal`'s words, and USCIS keeps the fee (from 2026-10-17: until
+      // then an application made in the 90 days before the program's end was approved whatever came of the degree, found
+      // by brief 13's journeys). Its status's ending is then worked out as without it.
+      if (person.school && leftWithout(person.school.standing)) {
+        doc.status = 'cancelled';
+        scheduleUsStatus(s, person);
+        tell('OPT Denied', 'OPT follows a degree completed, and you left without it. The fee isn’t refunded.');
+        return;
+      }
       // Twelve months from the later of the program's end and the approval.
       const start = Math.max(programEnd(person) ?? s.now, s.now);
       doc.status = 'valid';

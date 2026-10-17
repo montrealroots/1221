@@ -1,0 +1,32 @@
+{
+ "scenario": "roundups",
+ "seed": "sc-0",
+ "ended": "2026-08-28",
+ "log": [],
+ "school": {
+  "standing": "good",
+  "classOf": 2029,
+  "offset": 0,
+  "leaves": [],
+  "welfares": [],
+  "formerClasses": [],
+  "classmates": 15,
+  "terms": [],
+  "conferred": [],
+  "credits": [],
+  "joinedHistory": [],
+  "firstClassGraduated": [],
+  "duringLeave": []
+ },
+ "accounts": [
+  "Citi checking",
+  "Citi savings"
+ ],
+ "owedIrs": 0,
+ "irsSubstitute": [],
+ "states": {},
+ "statePlans": {},
+ "breaches": 0,
+ "unbalanced": 0,
+ "reloads": 0
+}

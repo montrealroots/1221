@@ -57,9 +57,13 @@ resolves to nothing says what became of it, in a sentence, in its own voice.
    subject is no longer there.
 5. **`name` is the world's word for the thing** and is the only string the
    trail prints. `kind` renders as an eyebrow above it and never enters it. No
-   `name` or `kind` carries an underscore, a slash, a run of four digits or a
-   lowercase word running into a capital, and every one of them starts with a
-   capital or a digit.
+   `name` or `kind` carries an underscore, a slash, a run of four digits other
+   than a year, or a lowercase word running into a capital, and every one of
+   them starts with a capital or a digit. A year is the world's word for a
+   class or a return ("Welcome To The Class Of 2029"). Until 2026-10-17 this
+   said any run of four digits, and the notice and question looks grouped a
+   year as a count to pass it, "Class Of 2,029" (found by brief 13's interface
+   playthroughs).
 6. **Prose first, facts second, ways third.** A body holds at most one grid of
    `Stat`s, and only below its opening sentence. A body that is only a grid of
    `Stat`s is a record view and is rejected.
@@ -189,7 +193,7 @@ the sixth is answered but unpopulated:
   every way transitively to a fixed point, and assert each edge resolves onto
   something. The same guarantee as `tests/navigation.test.ts`, whose own header
   records that this class of bug has shipped twice.
-- The name gate — `name` and `kind` must fail `/_|\/|\d{4}/`, must fail
+- The name gate — `name` and `kind`, a year taken out, must fail `/_|\/|\d{4}/`, must fail
   `/\b[a-z]+[A-Z]/`, and must start with a capital or a digit. The middle
   clause is the one that matters and the one this spec first got wrong:
   `sleepDebt` carries no underscore, no slash and no run of digits, so the

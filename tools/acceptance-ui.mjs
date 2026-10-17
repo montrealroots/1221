@@ -1269,7 +1269,25 @@ if (DIR) {
   // A stage scene's way of playing (from 2026-10-16, docs/verification/stage-2026-10-16/): The Scene names what the
   // scene's circumstances ask of its scale, never the house, and the side that suits it is chosen, rehearsed-in mark
   // said, and kept through a reload.
-  await step('[save: workload scenario] coursework: a stage scene’s How You’ll Play It names its circumstances, not the house; the side that suits it chosen and kept', async () => {
+  // Table Work is written work, presented at the table and never played: from 2026-10-17 (brief 13's journeys, D3) it
+  // offers no way of playing. Until then the step below ran here, and the only stage scene it found on this save whose
+  // suited side rests on its circumstances was Table Work's; it chose a way for it, which came to the showing unrehearsed.
+  await step('[save: workload scenario] coursework: Table Work, written work, offers no way of playing it', async () => {
+    await rail('School'); await tab('Coursework');
+    const card = page.locator('section.card').filter({ has: page.getByRole('heading', { name: /: Table Work/ }) }).first();
+    must(await card.count(), 'no Table Work open on the workload save');
+    must(!(await card.getByRole('button', { name: /^(Play It This Way|Change How You Play It)$/ }).count()), 'Table Work offers a way of playing');
+    return (await card.locator('h2, h3').first().innerText()).trim();
+  });
+  await overflow('school coursework (workload save)');
+}
+
+// A performed stage scene whose suited side rests on its circumstances: on the Spend & Save save, whose scene study suits
+// restraint by what's kept hidden and a private exchange (from 2026-10-17: until then it ran on the workload save, on
+// Table Work, as said above).
+if (DIR && existsSync(`${DIR}/roundups.json`)) {
+  await step('[save: roundups scenario] coursework: a stage scene’s How You’ll Play It names its circumstances, not the house; the side that suits it chosen and kept', async () => {
+    await openSave('roundups.json');
     await rail('School'); await tab('Coursework');
     const CIRC = /What’s Kept Hidden|A Private Exchange|Spoken To Many|A Conflict Out Loud/;
     const tables = page.locator('table').filter({ has: page.locator('td[data-suit]') });
@@ -1300,7 +1318,7 @@ if (DIR) {
     must(/rehearsed in to \d+% \(complete at \d+%\)/.test((await page.locator('body').innerText()).replace(/\s+/g, ' ')), 'the choice wasn’t kept through the reload');
     return picked;
   });
-  await overflow('school coursework (workload save)');
+  await overflow('school coursework (roundups save)');
 }
 
 // From the limitations pass of 2026-10-11: a class left behind, and a return a state assessed itself.

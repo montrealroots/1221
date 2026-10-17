@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 574 of 599 rows in scope Implemented And Verified (95.8%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
 ## Totals
 
@@ -52,8 +52,10 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
 | Integration | 9 | 9 |  |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 6 |  |  |  |  | 1 |  |
-| Brief 12: Replacement Criteria | 4 | 2 |  |  |  |  | 2 |  |
-| **All** | **639** | **574** | **20** | **0** | **0** | **0** | **5** | **40** |
+| Brief 12: Replacement Criteria | 4 | 3 |  |  |  |  | 1 |  |
+| Brief 13 Area: interface | 4 | 4 |  |  |  |  |  |  |
+| Brief 13 Area: journeys | 33 | 33 |  |  |  |  |  |  |
+| **All** | **676** | **612** | **20** | **0** | **0** | **0** | **4** | **40** |
 
 ## Life, Health And Time
 
@@ -835,9 +837,56 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
 | `ST6-R2.a` | docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.a (committed in b8ac2f74 before any test or tool changed): carries R1, R… | Implemented And Verified | docs/verification/resolution-2026-10-17… | tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a1) and (a2), a measurable contribut… |
-| `ST6-R2.c` | docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.c: carries R3 and R6. (c1) preparation in its direction; (c2) each circu… | Decision Required | docs/verification/resolution-2026-10-17… | tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c1), preparation in its direction: t… |
+| `ST6-R2.c` | docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.c: carries R3 and R6. (c1) preparation in its direction; (c2) each circu… | Implemented And Verified | docs/verification/resolution-2026-10-17… | tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c1), preparation in its direction: t… |
 | `ST6-R2.e` | docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.e: carries R4 and R5. (e1) where the scene favors restraint, restraint t… | Decision Required | docs/verification/resolution-2026-10-17… | tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever… |
 | `ST6-R2.g` | docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.g: carries R7. Each mutation in a copy runs the ST6-R2 gate tests; caugh… | Implemented And Verified | docs/verification/resolution-2026-10-17… | docs/verification/resolution-2026-10-17/acting/mutations.json ‘VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 node tools/judge-mutations.mjs --list docs/verification/re… |
+
+## Brief 13 Area: interface
+
+| Row | Goal | Status | Source's Word | Evidence |
+|---|---|---|---|---|
+| `B13-UI.normal` | interface-criteria.md, Playthrough 1: a new life made through creation, through orientation week to the first Acting I scene shown and its … | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `B13-UI.setback` | interface-criteria.md, Playthrough 2: the workload scenario’s save (no TEST SETUP), the term’s warning on coursework read, opened and follo… | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `B13-UI.specialist` | interface-criteria.md, Playthrough 3: the specialist scenario’s save (TEST SETUP: four abilities at 90, the rest at 49), Nordic Noir’s brie… | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `B13-UI.walkthrough` | interface-criteria.md, The Owner’s Walkthrough: PLAYTEST.md, a different route from brief 12’s, about twenty minutes from a new life, carry… | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+
+## Brief 13 Area: journeys
+
+| Row | Goal | Status | Source's Word | Evidence |
+|---|---|---|---|---|
+| `journeys.4-complete-journeys` | Run at least twelve complete school journeys across multiple seeds and distinct player profiles. Reuse existing simulation tools where appr… | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-profiles` | Include: Beginners. Balanced generalists. Specialists with different strengths. Highly developed or mastered actors. Players who follow adv… | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-expected-first` | Set expected outcomes before running each scenario. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-neglect` | A deliberate neglect scenario may legitimately fail academically; the game must explain and apply the consequences correctly. Do not count … | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-recovery` | At least some journeys must recover from setbacks through available gameplay. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-check-1` | Creation choices affect the intended state. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-check-2` | Classes, preparation, rehearsal, interpretation, and showings connect. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-check-3` | Attributes and genres develop and influence applicable work. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-check-4` | Advice responds to progress and changing circumstances. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-check-5` | Health, stamina, and energy remain distinct and interact correctly. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-check-6` | Money, school charges, holds, and payments reconcile. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-check-7` | Papers and document status affect the appropriate actions. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-check-8` | Warnings arrive consistently with later evaluations. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-check-9` | Term progression and the school endpoint work. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-check-10` | Saving, exiting, reloading, and continuing preserve the journey. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.4-focused` | Use additional focused scenarios where a full school journey cannot naturally reach an important financial, document, or health branch. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.6-completed-stay` | Previously completed actions remain completed. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.6-once` | Consequences and scheduled events occur once. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.6-advice-acknowledges` | Advice acknowledges what has changed. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.6-feedback-current` | Repeated feedback reflects the current state. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.6-variety` | Exercises and situations vary where the current catalog supports variation. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.6-words-alone` | Repetition is not disguised by changing words alone. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.6-repetition-record` | Record repeated situations and recommendations, their frequency, and whether they remain justified. Do not rotate to inferior advice just t… | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.6-defects-fixed` | Fix concrete defects found during these journeys. Add regression tests and rerun the affected scenarios. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.6-interpretations` | Different suitable interpretations produce understandable differences. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.7-mastery` | Maximum-quality prepared mastery. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.7-attributes` | Relevant attribute improvement without unintended regression. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.7-genres` | Genre-specific benefits without unrelated leakage. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.7-specialists` | Specialist opportunities and valid limitations. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.7-advice-forecasts` | Accurate advice forecasts. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.7-stamina` | Stamina's duration, participation, intensity, and recovery behavior. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.7-ledger` | Ledger balance. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
+| `journeys.7-save` | Save compatibility and historical results. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json |
 
 ## What's Left
 
@@ -878,13 +927,12 @@ None.
 
 None.
 
-### Decision Required (5)
+### Decision Required (4)
 
 - **`banking.2.scope`** (Brief 09 Area: banking): What's missing: nothing to implement. Each of the eight commands works and is tested on labelled lives abroad (each row's tests), and each row's unfinished work is none (bank.cancel_new's last item, Germany's fee to the day, is implemented above). What a played life lacks is a way to reach them: a life living outside America, which the owner's scope reset of 2026-10-09 removed and the briefs forbid restoring, or a New Haven bank offering what no US bank offers (a switching service, an arranged overdraft at the five, a money transfer card, a cooling-off period, France's overrun loan). Whether …
 - **`coverage09.3-unresolved`** (Brief 09 Area: coverage): [object Object] Evidence: docs/verification/remaining-09/coverage-result.json. Recommended: Not recorded
 - **`KS-bank-rows-scope`** (Known Shortfalls And Missing Tests): Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred? Evidence: docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2; each row’s four-part acceptance on docs/GAMEPLAY-COVERAGE.md. Recommended: Defer them with the scope reset’s lives abroad, keeping their fixture tests, unless a home-country account now reaches one (being read…
-- **`ST6-R2.c`** (Brief 12: Replacement Criteria): Should (c2)’s strict reading name the grain’s hundredth (`grainOf`) beside its floor as a documented limit, and should (c4) read “unrelated” on restrained takes as an ability carrying under the equal budget’s even share (1/12) rather than under a tenth? Evidence: As in gap; the measure’s figures c2grain and c4 (docs/verification/resolution-2026-10-17/acting/st6r2.json).. Recommended: Accept both and close ST6-R2.c on its evidence. A suitability of 0.01 is Either Way by the game’s own band, and no piece moves the wrong way; an ability carrying more than its even share at an equal budget is rel…
-- **`ST6-R2.e`** (Brief 12: Replacement Criteria): Should (e2) and (e3)’s “more than the even actor” be read only where the even actor’s opportunities fall short of every suitable piece (tape, where both hold), or should R4 and R5 rest on (e1)’s and (e3)’s floors with (d) and (f)? Evidence: As in gap; figures.e in docs/verification/resolution-2026-10-17/acting/st6r2.json.. Recommended: Read “more” where there’s room above the even actor and close ST6-R2.e: on stage the specialist’s benefit shows against the grain (13 of 57 against 0), which the authorization moved away from making a floor. Seen after the run, so proposed, not adopted.
+- **`ST6-R2.e`** (Brief 12: Replacement Criteria): Should (e2.3), (e3.3) and (e4)'s margins be read on the abilities' part alone, both takes judged with the scene's grain at nothing, with the margins as played kept as the record; and should (e3.5) on stage be read on the size counterparts' own opportunities (varied on every actor) with their 10 gains reported, rather than the gains alone? Evidence: As in results; acting/st6r2-13-e.json (verdict.e2, verdict.e3, atNoGrain, and per actor extraNotOver005 and otherSideNotBehind), and the trace of romantic_drama-2/plan above.. Recommended: Accept both and close ST6-R2.e. The specialist advantage th…
 
 ### Explicitly Deferred (40)
 

@@ -48,6 +48,14 @@
  * that authorization and stay unasserted, their figures kept as the record. Where an ST6-R2 part didn't hold as written,
  * it isn't asserted here either: what it measured is in docs/verification/resolution-2026-10-17/acting-result.json, for
  * the owner.
+ *
+ * Added on 2026-10-17 by brief 13's acting area: ST6-R2.c and ST6-R2.e as the owner clarified them
+ * (docs/verification/playthroughs-2026-10-17/acting-criteria.md, committed before any of this was written, with the trace
+ * it was written from): (c2) down to the engine's documented precision and its boundaries; an unrelated ability defined
+ * by its path into the take, each ability's path checked one input at a time, and a weakness still costing; and (e)'s
+ * count asked only where the comparison actor has room, its ceiling cases named, below-ceiling and fresh profiles
+ * named first. What held is asserted; (e2.3), (e3.3) and (e4)'s margins and (e3)'s gains on stage didn't, and aren't
+ * (docs/verification/playthroughs-2026-10-17/acting-result.json).
  */
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -82,7 +90,8 @@ import { abilityFull, abilityOf, attributesOf, ATTRIBUTES } from '@/engine/syste
 import { personalityOf } from '@/engine/systems/personality';
 import { ALL_PIECES, FIXED_SET, briefReadingPiece, fixedPieces, workPiece } from '../tools/pieces';
 import { attentiveHour, life as policyLife } from '../tools/policy';
-import { ARGUES_FOR_RESTRAINT, CIRCUMSTANCES, RESTRAINTS_OWN, ST6R2, ST6R2_ACTORS, st6r2Cases, variedEnough, withRestraintDraws, type R2Case } from '../tools/acting-criteria';
+import { ARGUES_FOR_RESTRAINT, CIRCUMSTANCES, RESTRAINTS_OWN, ST6R2, ST6R2C, ST6R2_ACTORS, ST6R2_BUDGETS, ST6R2_COMPARISON, keptByRule, opportunitiesWithRoom, shareByRule, st6r2Cases, variedEnough, withRestraintDraws, type R2Budget, type R2Case } from '../tools/acting-criteria';
+import { takeGrainWords } from '@/engine/systems/interpretation-read';
 import { briefContext, briefMaterial, briefPiece, preview, readingOf, recordOf, sceneOf, taskOf } from '@/engine/systems/briefs';
 import type { Skill } from '@/engine/content/school';
 
@@ -432,8 +441,10 @@ describe('ST6-R2: restrained acting judged by what it does for a player (brief 1
     // The scene read or not. Measured on 2026-10-17 on every reading, 10 of the 784 pieces are brief readings with
     // restraint at −0.01 or 0.01 (one a first reading, brief-psychological_horror-2's together), whose grain, 0.003 of
     // difficulty, is kept to a hundredth (`grainOf`) and so comes to nothing; none of the 784 moves the wrong way. The
-    // criteria's strict reading isn't met on those ten, which is the owner's to settle
-    // (docs/verification/resolution-2026-10-17/acting-result.json). What holds on the gate's pieces is asserted.
+    // criteria's strict reading isn't met on those ten, which was the owner's to settle
+    // (docs/verification/resolution-2026-10-17/acting-result.json); what held on the gate's pieces was asserted, and still
+    // is. The owner's brief 13 settled it: the engine's documented precision may leave a take where it was, and the block
+    // below asserts the clarified part on every piece, the ten among them.
     for (const r of ST6R2.grain(HEAVY, A)) {
       if (r.s > 0) expect(r.d, where(r)).toBeGreaterThan(1e-9);
       else if (r.s < 0) expect(r.d, where(r)).toBeLessThanOrEqual(1e-9);
@@ -455,8 +466,9 @@ describe('ST6-R2: restrained acting judged by what it does for a player (brief 1
   // H4-R (c)'s rule read on restrained takes, the clause's other part, measured on 2026-10-17 at 60 of 3,433 pairs (1.75%)
   // on the gate's pieces and 65 of 6,344 (1.02%) on every reading, against its 1%: every one against the grain, its
   // ability carrying between the equal budget's break-even (1/12) and a tenth of the take's ability effects, and none of
-  // the 2,757 under 1/12 on the gate's pieces. It isn't asserted here; it's the owner's
-  // (docs/verification/resolution-2026-10-17/acting-result.json).
+  // the 2,757 under 1/12 on the gate's pieces. It wasn't asserted here, as the owner's
+  // (docs/verification/resolution-2026-10-17/acting-result.json), and isn't: brief 13 defined an unrelated ability by its
+  // path into the take, not a share, and the block below asserts that ((c4.1) to (c4.3)); these pairs stay the record.
   it('FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on', () => {
     const rows = ST6R2.weakness(HEAVY).nine;
     expect(rows.length).toBe(HEAVY.length);
@@ -465,7 +477,8 @@ describe('ST6-R2: restrained acting judged by what it does for a player (brief 1
 
   // On stage each specialist's count equals the even actor's, measured on 2026-10-17: every stage piece the scene favors
   // restraint on (66) or size on (57) is already the even actor's better choice, so neither specialist can have more
-  // there, which the criteria's "more" didn't foresee. It isn't asserted here; it's the owner's (acting-result.json).
+  // there, which the criteria's "more" didn't foresee. It wasn't asserted here, as the owner's (acting-result.json), and
+  // isn't: brief 13 asked the count only where the comparison actor has room, which the block below asserts ((e2′), (e3′)).
   it('FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor', () => {
     const o = ST6R2.opportunities(EVERY, A);
     for (const m of ['stage', 'tape'] as const) {
@@ -570,6 +583,201 @@ describe('ST6-R2: restrained acting judged by what it does for a player (brief 1
     expect(back.overall).toBe(work.overall);
     expect(replay(back, taskOf(b))!.exact).toBe(replayed);
     expect(replay(back, taskOf(b))!.overall).toBe(work.overall);
+  }, 180_000);
+});
+
+describe('ST6-R2.c and ST6-R2.e clarified (brief 13)', () => {
+  // docs/verification/playthroughs-2026-10-17/acting-criteria.md, written and committed before any of this, with the trace it
+  // was written from (acting/trace.json). Every piece a player can play restrained, as brief 12's block reads them; its
+  // five actors, brief 12's specialists by budget, and the comparison actors and their counterparts the criteria named
+  // before any was measured (`ST6R2_COMPARISON`, `ST6R2_BUDGETS`), all TEST SETUP. `tools/interpretation.ts -- --st6r2-13`
+  // measures every part on every reading with the fresh profiles too (acting/st6r2-13-c.json, st6r2-13-e.json).
+  const HEAVY = st6r2Cases('first'), EVERY = st6r2Cases('all');
+  const A = ST6R2_ACTORS;
+  const ACTORS = Object.keys(A).length;
+  const where = (r: { id: string; actor?: string }) => `${r.id}${r.actor ? ` ${r.actor}` : ''}`;
+  let grainRows: ReturnType<typeof ST6R2C.scene> | undefined;
+  const scene = () => (grainRows ??= ST6R2C.scene(EVERY, A));
+  const rooms: Partial<Record<'restrained' | 'expansive', ReturnType<typeof opportunitiesWithRoom>>> = {};
+  const room = (side: 'restrained' | 'expansive') => (rooms[side] ??= opportunitiesWithRoom(EVERY, { ...ST6R2_COMPARISON.informing, ...(side === 'restrained' ? ST6R2_COMPARISON.restraint : ST6R2_COMPARISON.size) }, side));
+
+  it('FIXTURE: ST6-R2.c (c2.2), the scene read or not, down to the engine’s precision: on every piece, for every actor, reading the scene’s grain never moves a restrained take the wrong way, moves it strictly the right way wherever grainOf keeps a share of it, and leaves it the same exactly where the rule keeps none, the brief readings at a suitability of ±0.01; carried at full precision there, it moves each the right way', () => {
+    const rows = scene();
+    expect(rows.length).toBe(EVERY.length * ACTORS);
+    for (const r of rows) {
+      if (r.s > 0) expect(r.d, where(r)).toBeGreaterThanOrEqual(-1e-9);
+      else if (r.s < 0) expect(r.d, where(r)).toBeLessThanOrEqual(1e-9);
+      else expect(Math.abs(r.d), where(r)).toBeLessThanOrEqual(1e-9);
+      if (r.kept && !r.floorHeld) { expect(Math.sign(r.d), where(r)).toBe(Math.sign(r.s)); expect(Math.abs(r.d), where(r)).toBeGreaterThan(1e-9); }
+      if (!r.kept) expect(Math.abs(r.d), where(r)).toBeLessThanOrEqual(1e-9);
+    }
+    // What the precision excuses is predicted by the rule, and at the catalog's stakes (0 to 3) it's exactly the pieces at
+    // ±0.01: measured on 2026-10-17, the ten brief readings brief 12 named, no class scene, play or night among them.
+    const excused = rows.filter((r) => !r.kept && r.s !== 0);
+    expect(new Set(excused.map((r) => r.id))).toEqual(new Set(EVERY.filter((c) => Math.abs(c.suit('restrained')) === 0.01).map((c) => c.id)));
+    expect(excused.length).toBeGreaterThan(0);
+    for (const r of excused) {
+      // Kept as nothing: −0 where it's with the grain, as `Math.round` gives it.
+      for (const [d, x] of Object.entries(shareByRule(EVERY.find((c) => c.id === r.id)!))) expect(Math.abs(keptByRule(x!)), `${where(r)} ${d}`).toBe(0);
+      expect(Math.sign(r.atFullPrecision!), where(r)).toBe(Math.sign(r.s));
+      expect(Math.abs(r.atFullPrecision!), where(r)).toBeGreaterThan(1e-9);
+      expect(Math.abs(r.atFullPrecision!), where(r)).toBeLessThan(0.1);
+    }
+  }, 120_000);
+
+  it('FIXTURE: ST6-R2.c (c2.3), the boundaries: on the real readings the grain moves nothing at a suitability of 0 and ±0.01 and every take strictly the right way at ±0.02; the judge reads every hundredth it’s handed, the grain’s floor holds at −0.75 and not past it, and a circumstance moves a side’s suitability and its take until the side’s sum is past ±1, and then neither', () => {
+    const rows = scene();
+    const at = (k: number) => rows.filter((r) => Math.abs(r.s).toFixed(2) === k.toFixed(2));
+    for (const r of [...at(0), ...at(0.01)]) expect(Math.abs(r.d), where(r)).toBeLessThanOrEqual(1e-9);
+    for (const r of at(0.02)) { expect(Math.sign(r.d), where(r)).toBe(Math.sign(r.s)); expect(Math.abs(r.d), where(r)).toBeGreaterThan(1e-9); }
+    expect(at(0.01).length).toBeGreaterThan(0);
+    expect(at(0.02).length).toBeGreaterThan(0);
+    // TEST SETUP on brief-psychological_horror-2's first reading, one of the ten: the share set directly on believability,
+    // and the difficulty with a share coming to −0.76, −0.75 and −0.74 (`GRAIN.floor` − 1 = −0.75).
+    const b = ST6R2C.boundaries(EVERY.find((c) => c.id === 'brief-psychological_horror-2/together')!, A, EVERY.filter((c) => c.medium === 'stage'));
+    expect(b.hundredth.length).toBe(ACTORS);
+    for (const r of b.hundredth) { expect(r.minus - r.zero, r.actor).toBeGreaterThan(1e-9); expect(r.zero - r.plus, r.actor).toBeGreaterThan(1e-9); }
+    for (const r of b.floor) { expect(Math.abs(r.below - r.at), r.actor).toBeLessThanOrEqual(1e-9); expect(r.at - r.above, r.actor).toBeGreaterThan(1e-9); }
+    const hold = (w: string) => b.hold.filter((r) => r.where === w);
+    for (const r of [...hold('inside'), ...hold('reaching')]) { expect(r.s[0], `${r.id} ${r.circumstance} ${r.side}`).not.toBe(r.s[1]); expect(Math.abs(r.take), `${r.id} ${r.circumstance} ${r.side}`).toBeGreaterThan(1e-9); }
+    for (const r of hold('past')) { expect(r.s[0], `${r.id} ${r.circumstance} ${r.side}`).toBe(r.s[1]); expect(Math.abs(r.take), `${r.id} ${r.circumstance} ${r.side}`).toBeLessThanOrEqual(1e-9); }
+    for (const w of ['inside', 'reaching', 'past']) expect(hold(w).length, w).toBeGreaterThan(0);
+  }, 120_000);
+
+  it('FIXTURE: ST6-R2.c (c4.1), the dependency map is the engine’s: on every piece, for every actor, each of the twelve raised alone by 10 moves the restrained take wherever the context the judge reads gives it a path (directly, as a supporting read or through the drain), and moves nothing where it gives none', () => {
+    const rows = ST6R2C.map(HEAVY, A);
+    expect(rows.length).toBe(HEAVY.length * ACTORS * ABILITIES.length);
+    for (const r of rows) {
+      if (r.cls === 'none') expect(Math.abs(r.moved), `${where(r)} ${r.ability}`).toBeLessThanOrEqual(1e-9);
+      else expect(r.moved, `${where(r)} ${r.ability} ${r.cls}`).toBeGreaterThan(1e-9);
+    }
+    // Every class is there, so no half of the rule holds on nothing.
+    for (const k of ['direct', 'small', 'indirect', 'none'] as const) expect(rows.filter((r) => r.cls === k).length, k).toBeGreaterThan(0);
+  }, 120_000);
+
+  it('FIXTURE: ST6-R2.c (c4.2), no strength where it’s unrelated: on every piece, every ability nothing in the take reads (the voice or the body on a brief with neither in it) leaves its specialist behind its comparison actor, at brief 12’s budget and the three fresh ones', () => {
+    const rows = ST6R2C.unrelated(EVERY, Object.keys(ST6R2_BUDGETS) as R2Budget[]);
+    expect(rows.length).toBeGreaterThan(0);
+    for (const r of rows) expect(r.lead, `${r.id} ${r.ability} ${r.budget}`).toBeLessThan(-1e-9);
+    expect(new Set(rows.map((r) => r.ability))).toEqual(new Set(['vocal', 'physical']));
+    expect(rows.every((r) => r.kind === 'brief')).toBe(true);
+  }, 120_000);
+
+  it('FIXTURE: ST6-R2.c (c4.3), a weakness still costs, one input at a time: on every piece, for each of the twelve specialists at brief 12’s budget, each of its eleven the take reads, raised alone to the even actor’s 50, raises its restrained take, each it doesn’t read moves nothing, and the eleven together raise it', () => {
+    const rows = ST6R2C.weaknesses(HEAVY, ['brief12']);
+    expect(rows.length).toBe(HEAVY.length * ABILITIES.length);
+    for (const r of rows) {
+      expect(r.together, `${r.id} ${r.specialist}`).toBeGreaterThan(1e-9);
+      for (const y of r.each) {
+        if (y.cls === 'none') expect(Math.abs(y.rise), `${r.id} ${r.specialist} ${y.ability}`).toBeLessThanOrEqual(1e-9);
+        else expect(y.rise, `${r.id} ${r.specialist} ${y.ability}`).toBeGreaterThan(1e-9);
+      }
+    }
+  }, 120_000);
+
+  // (e2.3) as written isn't asserted: measured on 2026-10-17, on 25 of 3,045 actor-pieces (all brief readings) a counterpart's
+  // restraint margin isn't ahead of its comparison actor's by more than 0.05, and on 8 of 2,359 its size margin isn't behind
+  // ((e4)). The scene's grain is a share of difficulty, and moves a weaker dimension more in points, so where it carries
+  // much of a side's benefit the actor weaker there gains more from it. It's the owner's
+  // (docs/verification/playthroughs-2026-10-17/acting-result.json); the reading on the abilities alone is the guard below.
+  it('FIXTURE: ST6-R2.e (e2′), restraint’s abilities widen its opportunities where there’s room: for each comparison actor, its counterpart at the same budget has more where it has room and every suitable piece where it hasn’t (a ceiling case), restraint’s draws carry part of what it gains on every suitable piece, its opportunities and what it gains are varied, and it gains none of size’s', () => {
+    const fresh = Object.keys(ST6R2_COMPARISON.restraint);
+    for (const x of room('restrained')) {
+      expect(Math.abs(x.budget.C - x.budget.S), x.name).toBeLessThan(1e-9);
+      for (const r of x.rows) expect(r.drawsPart, `${x.name} ${r.id}`).toBeGreaterThan(1e-9);
+      for (const [m, v] of Object.entries(x.media)) {
+        if (v.room) expect(v.opportunities.S, `${x.name} ${m}`).toBeGreaterThan(v.opportunities.C); else expect(v.opportunities.C, `${x.name} ${m}`).toBe(v.suitable);
+        expect(variedEnough(v.variedS), `${x.name} ${m}`).toBe(true);
+        expect(v.otherSide.S, `${x.name} ${m}`).toBeLessThanOrEqual(v.otherSide.C);
+      }
+    }
+    for (const m of ['stage', 'tape'] as const) {
+      const withRoom = room('restrained').filter((x) => fresh.includes(x.name) && x.media[m]!.room);
+      expect(withRoom.length, m).toBeGreaterThan(0);
+      const gained = [...new Set(withRoom.flatMap((x) => x.media[m]!.gained))].map((id) => EVERY.find((c) => c.id === id)!);
+      const works = gained.reduce((o, c) => { o[c.work] = (o[c.work] ?? 0) + 1; return o; }, {} as Record<string, number>);
+      expect(variedEnough({ count: gained.length, works: Object.keys(works).length, families: [...new Set(gained.map((c) => c.family))], mostFromOneWork: Math.max(0, ...Object.values(works)) }), m).toBe(true);
+    }
+    // The ceiling cases, kept: brief 12's even actor and beginner, and V5, have every suitable stage piece already.
+    expect(room('restrained').filter((x) => !x.media.stage!.room).map((x) => x.name).sort()).toEqual(['V5', 'beginner', 'even']);
+  }, 120_000);
+
+  // (e3.3) as written isn't asserted, nor (e3.5)'s gains on stage: measured on 2026-10-17, on 576 of 2,359 actor-pieces a size
+  // counterpart's margin isn't ahead by more than 0.05, by the same cause, mostly against the comparison actors leaning
+  // toward restraint, whose weak presence the scene's grain lifts most; on 29 of 3,045 its restraint margin isn't behind;
+  // and on stage it gained 10 pieces, 3 of them from one play, over the quarter brief 10's floor allows. It's the owner's.
+  it('FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s', () => {
+    const fresh = Object.keys(ST6R2_COMPARISON.size);
+    for (const x of room('expansive')) {
+      expect(Math.abs(x.budget.C - x.budget.S), x.name).toBeLessThan(1e-9);
+      for (const r of x.rows) expect(r.drawsPart, `${x.name} ${r.id}`).toBeGreaterThan(1e-9);
+      for (const [m, v] of Object.entries(x.media)) {
+        if (v.room) expect(v.opportunities.S, `${x.name} ${m}`).toBeGreaterThan(v.opportunities.C); else expect(v.opportunities.C, `${x.name} ${m}`).toBe(v.suitable);
+        expect(variedEnough(v.variedS), `${x.name} ${m}`).toBe(true);
+        expect(v.otherSide.S, `${x.name} ${m}`).toBeLessThanOrEqual(v.otherSide.C);
+      }
+    }
+    for (const m of ['stage', 'tape'] as const) expect(room('expansive').filter((x) => fresh.includes(x.name) && x.media[m]!.room).length, m).toBeGreaterThan(0);
+    const gained = [...new Set(room('expansive').filter((x) => fresh.includes(x.name) && x.media.tape!.room).flatMap((x) => x.media.tape!.gained))].map((id) => EVERY.find((c) => c.id === id)!);
+    const works = gained.reduce((o, c) => { o[c.work] = (o[c.work] ?? 0) + 1; return o; }, {} as Record<string, number>);
+    expect(variedEnough({ count: gained.length, works: Object.keys(works).length, families: [...new Set(gained.map((c) => c.family))], mostFromOneWork: Math.max(0, ...Object.values(works)) })).toBe(true);
+    expect(room('expansive').filter((x) => !x.media.stage!.room).map((x) => x.name).sort()).toEqual(['beginner', 'even']);
+  }, 120_000);
+
+  it('GUARD: ST6-R2.e, the abilities’ part alone, proposed to the owner and not the clause as written: with the scene’s grain at nothing for both takes, every counterpart’s margin on its own side is ahead of its comparison actor’s by more than 0.05 on every suitable piece, and its margin on the other side behind, both ways, for every comparison actor', () => {
+    for (const side of ['restrained', 'expansive'] as const) {
+      for (const x of room(side)) {
+        for (const r of x.rows) expect(r.extraAtNoGrain, `${side} ${x.name} ${r.id}`).toBeGreaterThan(0.05);
+        for (const r of x.weak) expect(r.fallAtNoGrain, `${side} ${x.name} ${r.id}`).toBeGreaterThan(1e-9);
+      }
+    }
+  }, 120_000);
+
+  it('PLAYER JOURNEY: ST6-R2.c’s precision as a player meets it: Rockumentary’s brief read for relief, which restraint suits by 0.01, chosen restrained, prepared and taped, keeps a share of nothing and no line on the scene, its take what it is with the grain taken out; read as the pro, against it by 0.02, it keeps a hundredth on believability and the take is lower for it; saved and opened again, both takes replay to the last digit', () => {
+    const NY = 'America/New_York';
+    const at = (day: number, hour: number) => instantFromZoned({ year: 2026, month: 9, day, hour }, NY);
+    const b = BRIEF_BY_ID['brief-rockumentary']!;
+    expect(suitabilityOf('restrained', briefMaterial(b), sceneOf(b, readingOf(b, 'relief'))).s).toBe(0.01);
+    expect(suitabilityOf('restrained', briefMaterial(b), sceneOf(b, readingOf(b, 'pro'))).s).toBe(-0.02);
+    let sim = createSave(1, 'st6r2-13-precision', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    h.sim = sim;
+    const rec = () => recordOf(sim.player, b.id);
+    const step = (s: 'read' | 'lines' | 'rehearse') => sim.execute({ kind: 'brief.prepare', payload: { brief: b.id, step: s } }).ok;
+    sim.advanceTo(at(4, 18));
+    expect(sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading: 'relief', scale: 'restrained' } }).ok).toBe(true);
+    // The chooser, drawn as the brief pane draws it: restraint Either Way at 0.01.
+    const html = renderToStaticMarkup(createElement(PlayingChooser, { material: briefMaterial(b), scene: sceneOf(b, readingOf(b, 'relief')), current: rec().playing, feature: 'brief.choose', preview: (x) => preview(sim, sim.player, b, 'relief', x), onChoose: () => undefined })).replace(/<!-- -->/g, '');
+    expect(html.split('<tr').find((r) => r.includes('<strong>Restrained</strong>'))!).toContain('Either Way');
+    expect(step('read')).toBe(true);
+    expect(step('lines')).toBe(true);
+    sim.advanceTo(at(4, 20));
+    expect(step('rehearse')).toBe(true);
+    const tape = (day: number) => { sim.advanceTo(at(day, 20)); const t = sim.execute<{ overall: number }>({ kind: 'practice.self_tape', payload: { genre: b.kinds[0]!, brief: b.id } }); expect(t.ok, String(t.error)).toBe(true); return { take: rec().takes.at(-1)!, work: sim.player.work!.at(-1)! }; };
+    const withoutGrain = (w: WorkRecord) => replay({ ...w, inputs: { ...w.inputs, grain: {} } }, taskOf(b))!.exact!;
+    const first = tape(5);
+    expect(first.take.reading).toBe('relief');
+    expect(first.take.sides).toEqual(['restrained']);
+    expect(first.take.grain).toBeUndefined();
+    for (const x of Object.values(first.work.inputs.grain ?? {})) expect(Math.abs(x!.d)).toBe(0);
+    expect(replay(first.work, taskOf(b))!.exact).toBe(withoutGrain(first.work));
+    sim.advanceTo(at(6, 18));
+    expect(sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading: 'pro', scale: 'restrained' } }).ok).toBe(true);
+    if (rec().prep.interpretation < 0.9) step('read');
+    const second = tape(7);
+    expect(second.take.reading).toBe('pro');
+    expect(second.work.inputs.grain?.believability?.d).toBe(0.01);
+    expect(withoutGrain(second.work) - replay(second.work, taskOf(b))!.exact!).toBeGreaterThan(1e-9);
+    // The take's line follows its own shown figures: against the grain where it cost a shown tenth, nothing either way where not.
+    if (second.take.grain) expect(takeGrainWords(second.take.grain)).toContain(second.take.grain.points < 0 ? 'against the grain' : 'nothing either way');
+    const kept = [first, second].map((x) => ({ key: x.work.inputs.key, exact: replay(x.work, taskOf(b))!.exact, overall: x.work.overall }));
+    sim = loadSave(deserialise(serialise(sim.universe)) as never);
+    h.sim = sim;
+    for (const k of kept) {
+      const back = sim.player.work!.find((w) => w.inputs.key === k.key)!;
+      expect(back.overall).toBe(k.overall);
+      expect(replay(back, taskOf(b))!.exact).toBe(k.exact);
+    }
+    expect(rec().takes.find((t) => t.reading === 'relief')!.grain).toBeUndefined();
   }, 180_000);
 });
 

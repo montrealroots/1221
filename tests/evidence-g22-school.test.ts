@@ -82,7 +82,7 @@ import {
   CABARET_KIND, COMPANY_KIND, LAB_KIND, STIPEND_KIND, SUMMER_KIND, castFit, classmatePerformer, evenCraft, mateAbilities, rankIn,
 } from '@/engine/systems/school';
 import { NEW_PLAYS_READ } from '@/engine/content/plays';
-import { ORIENTATION_KIND, courseworkOf, mateRecord, notesOf, preparedParts, trustOf, type Assignment } from '@/engine/systems/coursework';
+import { ORIENTATION_KIND, askRefusal, courseworkOf, mateRecord, notesOf, preparedParts, trustOf, type Assignment } from '@/engine/systems/coursework';
 import { momentsOf, personOf } from '@/engine/systems/classmates';
 import { attributesOf, developmentOf } from '@/engine/systems/attributes';
 import { DEVELOPMENT } from '@/engine/content/abilities';
@@ -883,6 +883,37 @@ describe('school.partner_rehearsal', () => {
     const shown = drawn(sim, SchoolWorkspace, 'coursework').shown;
     expect(shown).toContain('You Didn’t Come');
     expect(shown).toContain('Trust 38 of 100 · Came to 0 of 0 agreed · You missed 1');
+  }, 60_000);
+
+  it('PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)', () => {
+    const { sim, a } = partnered('g22-partner-hurt-ask');
+    const intimacy = courseworkOf(sim, sim.player)!.assignments.find((x) => x.course === 'DRAM 403a/b')!;
+    sim.must({ kind: 'school.prepare', payload: { assignmentId: intimacy.id, activity: 'protocol' } });
+    sim.must({ kind: 'school.prepare', payload: { assignmentId: intimacy.id, activity: 'protocol' } });
+    const ask = (x: Assignment, when: number) => sim.execute<{ accepted: boolean }>({ kind: 'school.ask_partner', payload: { assignmentId: x.id, at: when } });
+    const none = () => pending(sim, 'school.partner_rehearsal').length;
+    const before = none();
+    // In hospital to Sunday 30 August at noon: the Saturday evening refused, the Sunday's not.
+    healthOf(sim.player).inHospitalUntil = at(2026, 8, 30, 12);
+    expect(ask(a, at(2026, 8, 29, 19)).error).toBe('You’ll still be in hospital then: the evening would be called off.');
+    expect(askRefusal(sim, sim.player, a, at(2026, 8, 30, 19)).refused).toBeUndefined();
+    healthOf(sim.player).inHospitalUntil = sim.now;
+    // A broken bone, off work until Monday 31 August at noon.
+    healthOf(sim.player).injury = { kind: 'fracture', at: sim.now, until: at(2026, 8, 31, 12), offWorkUntil: at(2026, 8, 31, 12) };
+    const laid = 'You’ll still be laid up then, with a broken bone: the evening would be called off.';
+    expect(askRefusal(sim, sim.player, a, at(2026, 8, 29, 19)).refused).toBe(laid);
+    expect(ask(a, at(2026, 8, 29, 19)).error).toBe(laid);
+    expect(ask(intimacy, at(2026, 8, 30, 19)).error).toBe(laid);
+    expect(none()).toBe(before);
+    expect(a.rehearsals.filter((r) => r.status === 'booked')).toHaveLength(0);
+    // Mended by the evening asked for: booked, or the partner's own answer, not a refusal.
+    expect(askRefusal(sim, sim.player, a, at(2026, 9, 1, 19)).refused).toBeUndefined();
+    // A sprain, eight days, which stops training and keeps nobody off work: the scene study, a partner's work alone, is
+    // asked for; the intimacy practice, on its feet in a studio, isn't.
+    healthOf(sim.player).injury = { kind: 'sprain', at: sim.now, until: sim.now + 8 * MS_DAY };
+    expect(askRefusal(sim, sim.player, a, at(2026, 8, 30, 19)).refused).toBeUndefined();
+    expect(askRefusal(sim, sim.player, intimacy, at(2026, 8, 30, 19)).refused).toMatch(/^Not with a sprained ankle; it has \d+ days yet to mend\. Work on its feet with your partner waits for it\.$/);
+    expect(ask(intimacy, at(2026, 8, 30, 19)).error).toMatch(/Work on its feet with your partner waits for it\.$/);
   }, 60_000);
 
   it('PLAYER JOURNEY: a sprained ankle excuses the intimacy practice, on its feet in a studio, trust held and the partner told; the scene study, a partner’s work alone, is kept', () => {
