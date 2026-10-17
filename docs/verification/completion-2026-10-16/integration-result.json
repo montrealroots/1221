@@ -309,7 +309,7 @@
    "baselineStatus": "Implemented, Verification Incomplete",
    "status": "Implemented And Verified",
    "notProved": "Measured on brief 10’s code; the advice area of brief 11 changed what the advice says",
-   "exercised": "The held-out set run once on the tested commit, 81eadac9, its tree clean: the advised input’s realized gain at or above the median of the others’ on 120 of 120 fresh cases (95% asked), its mean 0.763 against 0.388 for an input chosen at random, 1.965 times (1.5 asked); every stratum the same (beginner 1.864, developing 2.057, advanced 1.961, near mastery 2.046; first week 1.976, mid-term 1.855, later 2.079); F2-A’s 30 held out, 2.187",
+   "exercised": "The held-out set on the tested commit, 3de26e0b, every figure the same as its first run on 81eadac9, made before the tutorial’s and a comment’s words changed: the advised input’s realized gain at or above the median of the others’ on 120 of 120 fresh cases (95% asked), its mean 0.763 against 0.388 for an input chosen at random, 1.965 times (1.5 asked); every stratum the same (beginner 1.864, developing 2.057, advanced 1.961, near mastery 2.046; first week 1.976, mid-term 1.855, later 2.079); F2-A’s 30 held out, 2.187",
    "evidence": [
     {
      "file": "docs/verification/completion-2026-10-16/advice/held-out-summary.json",
@@ -323,7 +323,7 @@
     }
    ],
    "measured": {
-    "commit": "81eadac9",
+    "commit": "3de26e0b",
     "watch": "engine"
    },
    "fixes": [],
@@ -335,7 +335,7 @@
    "baselineStatus": "Implemented, Verification Incomplete",
    "status": "Implemented And Verified",
    "notProved": "The held-out run was made on brief 10’s code; the code to be reported changed in brief 11",
-   "exercised": "The held-out set run once on the tested commit, 81eadac9, its tree clean, in fifteen batches (F2-A’s adv-10 to 39 and the 120 fresh adv-h-0 to 119), each exit 0, its commit written in each file, then summarized with the tuning cases apart; each stratum reported (four bands, three stages). Every figure brief 10’s summary shares is the same, 390 of 390",
+   "exercised": "The held-out set run on 81eadac9, its tree clean, and again on the tested commit, 3de26e0b, once the tutorial’s and a comment’s words had changed, every figure the same; on the second each batch’s file reads not clean only because it rewrote its own committed output as it ran, in fifteen batches (F2-A’s adv-10 to 39 and the 120 fresh adv-h-0 to 119), each exit 0, its commit written in each file, then summarized with the tuning cases apart; each stratum reported (four bands, three stages). Every figure brief 10’s summary shares is the same, 390 of 390",
    "evidence": [
     {
      "file": "docs/verification/completion-2026-10-16/advice/held-out-summary.json",
@@ -347,7 +347,7 @@
     }
    ],
    "measured": {
-    "commit": "81eadac9",
+    "commit": "3de26e0b",
     "watch": "engine"
    },
    "fixes": [],
@@ -359,7 +359,7 @@
    "baselineStatus": "Decision Required",
    "status": "Decision Required",
    "notProved": "The advice area verified (f) as clarified on tuning seeds; the held-out run on the tested commit is the measure",
-   "exercised": "The held-out set on 81eadac9: preparation apart from training 120 of 120; the near-mastery ladder falls 30 of 30; below three quarters of full the forecast falls with the level on 110 of 111 (adv-h-1 doesn’t)",
+   "exercised": "The held-out set on 3de26e0b: preparation apart from training 120 of 120; the near-mastery ladder falls 30 of 30; below three quarters of full the forecast falls with the level on 110 of 111 (adv-h-1 doesn’t)",
    "evidence": [
     {
      "file": "docs/verification/completion-2026-10-16/advice/held-out-summary.json",
@@ -367,7 +367,7 @@
     }
    ],
    "decision": {
-    "question": "F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth falls with the level there, as the model gives it (tests/decisions-advice.test.ts, [N], played on tuning seeds). The forecast is in points of result, and what an ability point is worth on the work isn’t monotone in the level everywhere: it is the judge’s curve, and the forecast reads it truly (adv-h-1 forecast 0.828 and brought 1.058; F2-A10 (e) holds). Preparation apart from training holds on 120 of 120, and near mastery the ladder falls on 30 of 30. Should (f)’s diminishing returns be read in the growth the twenty sessions bring, with the forecast’s points left to the judge’s curve; or does (f) stay not met as clarified?",
+    "question": "F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth falls with the level there, as the model gives it (tests/decisions-advice.test.ts, [N], played on tuning seeds). The forecast is in points of result, and what an ability point is worth on the work isn’t monotone in the level everywhere: it is the judge’s curve, and the forecast reads it truly (adv-h-1 forecast 0.828 and brought 1.058; F2-A10 (e) holds). Preparation apart from training holds on 120 of 120, and near mastery the ladder falls on 30 of 30. Should (f)’s diminishing returns be read in the growth the twenty sessions bring, with the forecast’s points left to the judge’s curve; or does (f) stay not met as clarified?",
     "evidence": "docs/verification/completion-2026-10-16/advice/held-out-summary.json (held-out F2-A10: f.prepApart 120 of 120, f.ladderFalls 30 of 30 near mastery); docs/verification/completion-2026-10-16/advice/held-out-adv-h-0-9.json (adv-h-1’s f.ladder); clarifications.md, F2-A10 (f), with brief 10’s result kept",
     "recommendation": "Read (f)’s diminishing returns in the growth the model gives (below three quarters of full each rung brings less, from there to full the same), held by the played test on tuning seeds, and leave the forecast’s points to the judge’s curve, which the forecast reads truly. That reading was formed after the held-out run, so it’s the owner’s to approve, not adopted here; until then (f) is counted not met."
    },
@@ -380,7 +380,7 @@
    "baselineStatus": "Decision Required",
    "status": "Decision Required",
    "notProved": "The advice area verified (h) as clarified on tuning seeds; the held-out run on the tested commit is the measure",
-   "exercised": "The held-out set on 81eadac9: as clarified, the own part fell on 116 of 120; as written, the forecast fell on 113 of 120; fell, or rose within discipline’s lift and said, 120 of 120",
+   "exercised": "The held-out set on 3de26e0b: as clarified, the own part fell on 116 of 120; as written, the forecast fell on 113 of 120; fell, or rose within discipline’s lift and said, 120 of 120",
    "evidence": [
     {
      "file": "docs/verification/completion-2026-10-16/advice/held-out-summary.json",
@@ -388,7 +388,7 @@
     }
    ],
    "decision": {
-    "question": "F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 focus at 93), the forecast itself fell, so (h) as written holds there; the input’s own part rose because what an ability point is worth on the work isn’t monotone in the level (the judge’s curve, as in (f)). As written, the forecast fell on 113 of 120; the 7 that rose (adv-h-91, 100, 103, 106, 107, 110, 118, all near mastery) rose by a thousandth or less, each within discipline’s lift and said. Every case fell, or rose within discipline’s lift and said: 120 of 120. The first-named changed wherever another led, 51 of 51. Should (h) read: after the twenty sessions the forecast falls, or a rise is no more than discipline’s lift and is said; or does (h) stay not met, as written and as clarified?",
+    "question": "F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 focus at 93), the forecast itself fell, so (h) as written holds there; the input’s own part rose because what an ability point is worth on the work isn’t monotone in the level (the judge’s curve, as in (f)). As written, the forecast fell on 113 of 120; the 7 that rose (adv-h-91, 100, 103, 106, 107, 110, 118, all near mastery) rose by a thousandth or less, each within discipline’s lift and said. Every case fell, or rose within discipline’s lift and said: 120 of 120. The first-named changed wherever another led, 51 of 51. Should (h) read: after the twenty sessions the forecast falls, or a rise is no more than discipline’s lift and is said; or does (h) stay not met, as written and as clarified?",
     "evidence": "docs/verification/completion-2026-10-16/advice/held-out-summary.json (held-out F2-A10: h.fell 113, h.ownFell 116, h.withinLift 116, h.rose 7, h.explained 7, of 120); the held-out-adv-h-*.json cases’ h records; clarifications.md, F2-A10 (h), with brief 10’s result kept",
     "recommendation": "Approve (h) as: after the twenty sessions the forecast falls, or a rise is no more than discipline’s lift and the advice says so (120 of 120 held out). That reading was seen to hold only after the held-out run, so it isn’t adopted here; until the owner approves it, (h) is counted not met, as written (113 of 120) and as clarified (116 of 120)."
    },

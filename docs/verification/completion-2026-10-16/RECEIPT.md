@@ -2,24 +2,24 @@
 
 Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0e7ff7c2`) and the matrix as it stands. Nothing here is typed.
 
-- **Against the original full baseline:** 559 of 608 (91.9%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
-- **Of the actionable portion:** 35 of 46 (76.0%) closed by implementation or verification.
-- **The matrix’s own count:** 559 of 599 rows in scope Implemented And Verified (93.3%); 29 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
+- **Against the original full baseline:** 561 of 608 (92.2%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
+- **Of the actionable portion:** 37 of 46 (80.4%) closed by implementation or verification.
+- **The matrix’s own count:** 561 of 599 rows in scope Implemented And Verified (93.6%); 27 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
 - **Not complete:** decision 4’s rows stay as authorized, and every remaining row is listed below with what it lacks.
 
 ## Status Now, Of The Baseline’s Rows
 
 | Status | At The Baseline | Now |
 |---|---|---|
-| Implemented And Verified | 530 | 559 |
-| Implemented, Verification Incomplete | 63 | 29 |
+| Implemented And Verified | 530 | 561 |
+| Implemented, Verification Incomplete | 63 | 27 |
 | Partially Implemented | 0 | 0 |
 | Not Implemented | 4 | 0 |
 | Blocked Externally | 0 | 2 |
 | Decision Required | 11 | 9 |
 | Explicitly Deferred | 27 | 36 |
 
-## Closed By Implementation Or Verification (35)
+## Closed By Implementation Or Verification (37)
 
 | Row | Group | At The Baseline |
 |---|---|---|
@@ -39,7 +39,9 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 | `advice.harness` | Brief 10 Area: advice | Implemented, Verification Incomplete |
 | `advice.F2` | Brief 10 Area: advice | Implemented, Verification Incomplete |
 | `advice.F2A10-a` | Brief 10 Area: advice | Implemented, Verification Incomplete |
+| `advice.F2A10-c` | Brief 10 Area: advice | Implemented, Verification Incomplete |
 | `advice.tests` | Brief 10 Area: advice | Implemented, Verification Incomplete |
+| `advice.heldout` | Brief 10 Area: advice | Implemented, Verification Incomplete |
 | `advice.harness-hospital` | Brief 10 Area: advice | Implemented, Verification Incomplete |
 | `ST3-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete |
 | `H4-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete |
@@ -73,15 +75,13 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 | `L3.asWritten` | Brief 10 Area: judge | superseded | Not Implemented | Explicitly Deferred |
 | `stamina.measure` | Brief 10 Area: stamina | historical-record | Implemented, Verification Incomplete | Explicitly Deferred |
 
-## Remaining In The Actionable Portion (11)
+## Remaining In The Actionable Portion (9)
 
 | Row | Group | Now | What It Lacks |
 |---|---|---|---|
 | `health.enroll` | Life, Health And Time | Implemented, Verification Incomplete | Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at rene |
-| `advice.F2A10-c` | Brief 10 Area: advice | Implemented, Verification Incomplete | It was measured on 81eadac9, and what it reads has changed since (src/engine/content/safetynet.ts, src/engine/content/tutorial.ts): measure it again |
-| `advice.F2A10-f` | Brief 10 Area: advice | Decision Required | F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth falls with the level ther |
-| `advice.F2A10-h` | Brief 10 Area: advice | Decision Required | F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 focus at 93), the forecast it |
-| `advice.heldout` | Brief 10 Area: advice | Implemented, Verification Incomplete | It was measured on 81eadac9, and what it reads has changed since (src/engine/content/safetynet.ts, src/engine/content/tutorial.ts): measure it again |
+| `advice.F2A10-f` | Brief 10 Area: advice | Decision Required | F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth |
+| `advice.F2A10-h` | Brief 10 Area: advice | Decision Required | F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (3de26e0b, and the same on 81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 foc |
 | `ST6-R.a` | Brief 10 Area: judge | Decision Required | ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the nine others 40.56, 600 in all) to be ahead of the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of the 44 materials. Measured, it isn’t (2 of 44), and the sorting brief 11 asked for says why: nothing in the game is missing, and the clause, with (c), (e) and (g)’ |
 | `ST6-R.c` | Brief 10 Area: judge | Decision Required | Rests on ST6-R (a): see its decision. Abilities and circumstances fail only for want of (a)’s wins; preparation and interpretation hold. |
 | `ST6-R.e` | Brief 10 Area: judge | Decision Required | Rests on ST6-R (a): see its decision. |
@@ -626,7 +626,7 @@ None: the baseline wasn’t changed.
 | `advice.F2` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `advice.F2A10-a` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `advice.F2A10-b` | Brief 10 Area: advice | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `advice.F2A10-c` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `advice.F2A10-c` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `advice.F2A10-d` | Brief 10 Area: advice | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `advice.F2A10-e` | Brief 10 Area: advice | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `advice.F2A10-f` | Brief 10 Area: advice | design-or-gameplay | Decision Required | Decision Required |
@@ -634,7 +634,7 @@ None: the baseline wasn’t changed.
 | `advice.F2A10-h` | Brief 10 Area: advice | design-or-gameplay | Decision Required | Decision Required |
 | `advice.F2A10-i` | Brief 10 Area: advice | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `advice.tests` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
-| `advice.heldout` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `advice.heldout` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `advice.harness-hospital` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `arion.AR0.research` | Brief 10 Area: arion | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `arion.AR0.assumption` | Brief 10 Area: arion | verified at the baseline | Implemented And Verified | Implemented And Verified |

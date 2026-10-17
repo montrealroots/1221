@@ -330,7 +330,10 @@ if os.path.exists(f'{B11F}/figures.json'):
 B11R = f'{B11}/runs'
 FIG11R = json.load(open(f'{B11R}/figures.json', encoding='utf-8')) if os.path.exists(f'{B11R}/figures.json') else {}
 if FIG11R:
-    R11 = re.search(r'^at (\w+)', open(f'{B11R}/exits-A.txt', encoding='utf-8').read(), re.M).group(1)
+    # Each by the commit its lane ran on: the built app's (lane A) and the engine's runs (the lives' lane, B) can differ
+    # where a commit between changed a screen and no engine file (43a82efa's comments).
+    lane = lambda name: re.search(r'^at (\w+)', open(f'{B11R}/exits-{name}.txt', encoding='utf-8').read(), re.M).group(1)
+    R11 = {'app': lane('A'), 'engine': lane('B')}
     GATE11 = re.search(r'^at (\w+)', open(f'{B11R}/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG11R else None
     for r in rows:
         m = r.get('measured')
@@ -340,7 +343,7 @@ if FIG11R:
         if gate and not GATE11:
             continue  # the gate's figure, folded in once it has run
         assert r['id'] in FIG11R, r['id']
-        r['measured'] = {'commit': GATE11, 'watch': 'app'} if gate else {'commit': R11, 'watch': m['watch']}
+        r['measured'] = {'commit': GATE11, 'watch': 'app'} if gate else {'commit': R11[m['watch']], 'watch': m['watch']}
         r['failure'] = f"{r['failure']}; brief 11 ({r['measured']['commit']}): {'the same' if FIG11R[r['id']] == FIG10R.get(r['id']) else FIG11R[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {B11R}/README.md"
         r['citations'] = r['citations'] + [{'file': f'{B11R}/figures.json'}] + ([{'file': f'{B11R}/gate.txt'}] if gate else [])

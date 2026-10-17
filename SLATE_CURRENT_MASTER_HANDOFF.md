@@ -31,7 +31,7 @@ kept verbatim) is being worked on `claude/peaceful-hamilton-59zdbb`, restarted f
 - **The matrix** may now carry an area item's measurement through an override (`measured`), held current as a
   criterion's is.
 
-**Completion, by the matrix:** 559 of 599 rows in scope Implemented And Verified (93.3%); 29 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 561 of 599 rows in scope Implemented And Verified (93.6%); 27 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.
 
 Against the frozen baseline's 608, the figure is 561 (92.2%). The judge's 35 measurements were made again on the
 tested commit `81eadac9`, byte for byte brief 10's (`final/README.md`). Six rows wait on the runs: F2-A, MA5 and
