@@ -37,9 +37,9 @@ export const go = (sim: Simulation, kind: string, payload: Record<string, unknow
 export const clone = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)));
 const nextDay = (sim: Simulation, hour: number) => { const p = zonedParts(sim.now + MS_DAY, NY); return instantFromZoned({ year: p.year, month: p.month, day: p.day, hour }, NY); };
 
-/** Twenty days, a session of the exercise each (or none, for the baseline), at the first free hour. */
-export function live(sim: Simulation, exercise: string | undefined) {
-  for (let d = 0; d < SESSIONS; d += 1) {
+/** Twenty days, a session of the exercise each (or none, for the baseline), at the first free hour. `days` (from brief 12): fewer, for a player who follows the advice in part. */
+export function live(sim: Simulation, exercise: string | undefined, days = SESSIONS) {
+  for (let d = 0; d < days; d += 1) {
     sim.advanceTo(nextDay(sim, 7));
     if (!exercise) continue;
     for (const hour of [7, 8, 20, 21, 12, 17]) {
