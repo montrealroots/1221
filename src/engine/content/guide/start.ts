@@ -61,7 +61,7 @@ export const START: readonly GuideEntry[] = [
     covers: ['tutorial.read'],
     synonyms: ['tutorial', 'help', 'how this works', 'chapters', 'onboarding', 'locked', 'manual', 'reference'],
     questions: ['Why is a button locked?', 'How do I open the rest of the game?', 'Can I skip the guide?', 'Does reading help cost time?', 'How do I find out what something does?'],
-    where: { route: '/home', label: 'The top bar’s Guide button; How This Works on every panel; ? or / anywhere' },
+    where: { route: '/home', label: 'Guide, How This Works, And ? Or / On Any Screen' },
     available: 'Always.',
     short: `Two things share one button. The guide’s ${CHAPTERS.length} chapters teach the game in order: each opens a part of it, and a part that isn’t open yet shows as Locked. The reference is everything else: an entry for each feature, opened by How This Works beside it, and searchable, with what it does, what it changes now and later, and what it affects. Reading either moves no clock, and changes nothing in your save but which chapters you’ve read.`,
     steps: [
@@ -109,7 +109,7 @@ export const START: readonly GuideEntry[] = [
     covers: [],
     synonyms: ['navigation', 'menu', 'rail', 'breadcrumbs', 'back', 'keyboard', 'shortcuts', 'link', 'address', 'search'],
     questions: ['How do I get back?', 'What are the keyboard shortcuts?', 'Can I link to a screen?', 'Where is the menu on a phone?'],
-    where: { route: '/home', label: 'The Menu Down The Left, The Breadcrumbs, The Browser’s Address' },
+    where: { route: '/home', label: 'The Menu And The Breadcrumb' },
     available: 'Always; a destination joins the menu once its chapter is read.',
     short: 'The menu down the left lists every place the guide has opened, with Home at the top wearing the count of what’s waiting on you. Below a laptop’s width it folds behind Menu. The breadcrumbs above a screen go back along where you’ve been, and the browser’s Back and Forward move between screens. Every screen has an address, so a reload or a link opens it.',
     steps: [

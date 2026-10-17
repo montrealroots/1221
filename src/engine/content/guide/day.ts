@@ -78,7 +78,7 @@ export const DAY: readonly GuideEntry[] = [
     covers: ['ui.calendar', 'ui.go', 'calendar.skip', 'look.entry'],
     synonyms: ['commitment', 'what’s coming', 'go button', 'skip it', 'stand here', 'clock stopped', 'wanted you', 'upcoming', 'due now'],
     questions: ['Why did the clock stop?', 'What happens if I don’t go?', 'What does Stand Here do?', 'Can I walk away from a class?', 'What’s coming up next?'],
-    where: { route: '/home', label: 'Home, The Calendar Panel, And The Dialog When The Clock Stops' },
+    where: { route: '/home', label: 'Home, The Calendar Panel, Open Calendar' },
     available: `From ${chapter('calendar')}: the panel, Go, Skip It and the entries. The clock that brings a commitment round opens with ${chapter('clock')}.`,
     short: 'The Calendar panel at the top of Home is what’s coming: the next thing you need to be at, how far off it is, and up to five more after it. When the clock reaches a commitment, it stops, pauses and asks. Go spends the hours it takes and the clock goes through them; Skip It walks away from a plan of your own, and Call It Off from a rehearsal with a classmate; Stand Here leaves the clock paused at it.',
     steps: [

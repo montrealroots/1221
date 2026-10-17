@@ -656,7 +656,7 @@ export const CRAFT: readonly GuideEntry[] = [
     steps: [
       'In an open brief, under Your Reading, read each one: what it takes the scene to be, what in the brief it rests on, and what it would come to for you now, fully prepared.',
       'Pick one and press Read It This Way, or Change The Reading once one is chosen.',
-      'Under How You’ll Play It, pick a side of any axis; each shows What It Draws On and what the take would come to Fully Prepared. Leave The Pace Open, or the Scale or the Structure, takes a side back.',
+      'Under How You’ll Play It, make a choice on any aspect; each row shows The Scene, Abilities It Uses and what the tape would come to Fully Prepared. Leave The Pace Open, or the Scale or the Structure, takes the choice back.',
       'Press Play It This Way, or Change How You Play It.',
       `Then ${BRIEF.steps.rehearse.label}: that’s where the way you chose gets rehearsed.`,
     ],
@@ -668,7 +668,7 @@ export const CRAFT: readonly GuideEntry[] = [
     reads: [
       { label: 'A Reading', value: `What it leans toward, raised to the power ${BRIEF.readingLean}, and the abilities it calls on at ${BRIEF.readingDraw} times their share, then evened out so the balance shifts and the total stays the same`, estimate: true },
       { label: 'The Reading’s Heart', value: `The beat whose tones lean most the way the reading leans counts ${BRIEF.readingHeart} times the others in the take, where one beat does`, estimate: true },
-      { label: 'A Way Of Playing It', value: 'Each side leans what you’re judged on toward what it is, and calls on the abilities shown under What It Draws On. Stamina isn’t among them for a brief: a take uses stamina only as it drains through the beats, however you play it' },
+      { label: 'A Way Of Playing It', value: 'Each choice leans what you’re judged on toward what it is, and calls on the abilities shown under Abilities It Uses. Stamina isn’t among them for a brief: a tape uses stamina only as it drains through the beats, however you play it' },
       { label: 'How Rehearsed It Is', value: `Complete at the scene’s own mark, ${pct(PLAYING.complete)} where it leans neither way on the side and ${pct(PLAYING.complete - GRAIN.prep)} to ${pct(Math.min(1, PLAYING.complete + GRAIN.prep))} by how well it suits it; ${BRIEF.steps.rehearse.label} moves it ${pct(PLAYING.gainShare)} of the step’s reach, of what’s left, until it’s there` },
       { label: 'Fit', value: `A side the brief’s text forbids, or the other side to a callback’s note, holds what it leans on to ${pct(MISFIT)} of itself`, estimate: true },
     ],

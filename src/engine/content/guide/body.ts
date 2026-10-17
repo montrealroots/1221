@@ -94,7 +94,7 @@ export const BODY: readonly GuideEntry[] = [
       'On Home, read How You Are: the line at the top, then Energy, Stress and Readiness, each out of 100.',
       'Press Energy, Stress or Readiness to open it under the panel. It says where it stands and what that means, and Readiness names what’s holding you back most.',
       'Press the line at the top, the panel’s name or your name in the greeting to open your own page. It has all eight measures, Readiness, your traits, any long-term condition and any injury, and each one opens.',
-      'On the Player Profile, your traits are listed under “Chosen at the start.”, and each opens there.',
+      'On the Player Profile, your traits are listed after “Traits you chose.”, and each opens there.',
     ],
     needs: [
       `The panel and its three bars open with ${chapter('body')}.`,

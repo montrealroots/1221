@@ -181,7 +181,7 @@ export const PAPERS: readonly GuideEntry[] = [
     covers: ['ui.papers'],
     synonyms: ['paperwork', 'your affairs', 'forms', 'papers screen', 'papers tabs'],
     questions: ['Where are my tax returns?', 'Where do I see my health cover?', 'Where do I claim unemployment or SNAP?', 'Where are my passport and ID?', 'Why is Papers locked?'],
-    where: { route: ROUTE, label: 'Papers, From Your Affairs On Home Or The Menu' },
+    where: { route: ROUTE, label: 'Papers, Your Affairs On Home, Or The Menu' },
     available: `From the guide’s chapter “${CHAPTER}”.`,
     short: 'Papers is where your official paperwork lives: each year’s tax return, your health cover and the bills for your care, unemployment, SNAP and pensions, your passport and ID, and your permission to work. Its five tabs are Tax Returns, Health Cover, Unemployment, Passport And ID and Permission To Work. You reach it from the Papers button on the Papers line in Your Affairs on Home, from Papers on the menu, or from Go There on a notice about any of these.',
     steps: [
@@ -510,7 +510,7 @@ export const PAPERS: readonly GuideEntry[] = [
       'Open Papers, Health Cover, Your Conditions. Each row reads Kept Up, Left Alone, Out Of Medicine, or Kept Up, But This Month’s Care Went Unpaid, with the date your medicine lasts to.',
       'Let It Go stops a condition’s care and its medicine. Keep It Up starts them again.',
       `With depression, pick a Therapist where you live and press Begin A Course Of ${THERAPY.sessions} Sessions. In New Haven that’s ${YALE_COUNSELING.name}, Free With Yale Health, or ${PRIVATE_THERAPIST.name}, ${PRIVATE_SESSION} A Session.`,
-      `While the course runs, the panel reads “Therapy with ${YALE_COUNSELING.name}: 2 of ${THERAPY.sessions} sessions”, and so on. Each session is a commitment the clock stops at.`,
+      `While the course runs, the panel reads “Therapy with …: 2 of ${THERAPY.sessions} sessions”, naming ${YALE_COUNSELING.name}, and so on. Each session is a commitment the clock stops at.`,
     ],
     needs: [
       'A condition you carry: drawn once when a life begins; one that begins later comes with a “Diagnosed” notice and is kept up from the start.',
