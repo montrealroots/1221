@@ -380,7 +380,10 @@ NEEDS11 = {IVI: 'missing', PI: 'gap', NI: 'gap', BE: 'blocker', DR: 'decision', 
 # earlier override; and a replacement criterion it writes (`replacements`: ST6-R2's four, which supersede ST6-R's (a), (c),
 # (e) and (g) at the owner's authorization) is a row of its own, closed on its own evidence and never on its original's.
 B12 = 'docs/verification/resolution-2026-10-17'
-PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else [])
+# Brief 13's (playthroughs-2026-10-17/, from 2026-10-17) after brief 12's: its ST6-R2.c and .e rows change the replacement
+# rows brief 12 wrote, in place.
+B13 = 'docs/verification/playthroughs-2026-10-17'
+PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else []) + ([(B13, 'Brief 13')] if os.path.isdir(B13) else [])
 for d, brief, f in [(d, brief, f) for d, brief in PASSES for f in sorted(x for x in os.listdir(d) if x.endswith('-result.json'))]:
     area = f[:-len('-result.json')]
     result = json.load(open(f'{d}/{f}', encoding='utf-8'))

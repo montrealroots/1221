@@ -152,7 +152,7 @@ A scope resolution, Implemented And Verified in the matrix: Removed, alone: the 
 - **INT-gate:** npm run gate on ac79bf4a: 376 of 376 files, 4566 of 4566 tests passed, none skipped, exit=0, the last check, the completion matrix, holding
 - **The walkthrough’s own steps at 1440** (PLAYTEST.md): passed: health: Health Cover names the student’s cover and says the School meets the work rules, o; passed: stamina and recovery: Work Out spends Energy and builds Stamina on the Profile; a night’s ; passed: papers: a Connecticut ID card got from Passport And ID, its fee, its mailing and its term ; passed: [save: brief scenario] advice: What To Work On says what its forecast assumes of the work 
 - **The walkthrough’s own steps at 390** (PLAYTEST.md): passed: health: Health Cover names the student’s cover and says the School meets the work rules, o; passed: stamina and recovery: Work Out spends Energy and builds Stamina on the Profile; a night’s ; passed: papers: a Connecticut ID card got from Passport And ID, its fee, its mailing and its term ; passed: [save: brief scenario] advice: What To Work On says what its forecast assumes of the work 
-- **Merged:** not into main, which is the owner’s word to give (git merge-base, as this was written). **Deployed:** nothing; Base44 deployment is the owner’s word after the gate (rule 14).
+- **Merged:** main holds this branch’s head (git merge-base, as this was written). **Deployed:** nothing; Base44 deployment is the owner’s word after the gate (rule 14).
 
 ## What The Receipt Found (0)
 
