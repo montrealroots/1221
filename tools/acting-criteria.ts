@@ -950,12 +950,13 @@ export function measureST6R2Clarified(o: { part?: 'trace' | 'c' | 'e' } = {}) {
     const unrelatedBad = unrelated.filter((r) => !(r.lead < -1e-9));
     const weak = ST6R2C.weaknesses(every, budgets);
     const weakBad = weak.filter((r) => !(r.together > 1e-9 && r.each.every((y) => (y.cls === 'none' ? Math.abs(y.rise) <= 1e-9 : y.rise > 1e-9))));
-    const nine = ST6R2.weakness(every).nine.filter((r) => !(r.rise > 0.05));
+    const nineAll = ST6R2.weakness(every).nine, nine = nineAll.filter((r) => !(r.rise > 0.05));
     const eq = ST6R2C.equalBudget(every);
     const ahead = eq.filter((r) => r.lead > 0.05) as (ReturnType<typeof ST6R2C.equalBudget>[number] & { gain: number; cost: number; interaction: number })[];
     const count = <T,>(xs: readonly T[], f: (x: T) => string) => xs.reduce((m, x) => { const k = f(x); m[k] = (m[k] ?? 0) + 1; return m; }, {} as Record<string, number>);
-    const lo = <T,>(xs: readonly T[], f: (x: T) => number) => (xs.length ? r4(Math.min(...xs.map(f))) : null);
-    const hi = <T,>(xs: readonly T[], f: (x: T) => number) => (xs.length ? r4(Math.max(...xs.map(f))) : null);
+    // By a fold, not a spread: the map's checks run to six figures, past what a call's arguments hold.
+    const lo = <T,>(xs: readonly T[], f: (x: T) => number) => (xs.length ? r4(xs.reduce((m, x) => Math.min(m, f(x)), Infinity)) : null);
+    const hi = <T,>(xs: readonly T[], f: (x: T) => number) => (xs.length ? r4(xs.reduce((m, x) => Math.max(m, f(x)), -Infinity)) : null);
     const verdict = {
       c21: { met: !c21.length, of: circumstances.length, failingCount: c21.length, failing: first(c21) },
       c22: { met: !wrongWay.length && !notStrict.length && !excusedMoved.length && !excusedNotTheRule.length && !ruleMissed.length && !disconnected.length, of: scene.length, wrongWay: first(wrongWay), notStrict: first(notStrict), excusedMoved: first(excusedMoved), excusedNotTheRule: first(excusedNotTheRule), ruleMissed: first(ruleMissed), disconnected: first(disconnected) },
@@ -972,7 +973,7 @@ export function measureST6R2Clarified(o: { part?: 'trace' | 'c' | 'e' } = {}) {
         c23: { piece: b.piece, hundredth: b.hundredth.map((r) => ({ actor: r.actor, below: r4(r.minus - r.zero), above: r4(r.zero - r.plus) })), floor: b.floor.map((r) => ({ actor: r.actor, belowLessAt: r.below - r.at, atLessAbove: r4(r.at - r.above) })), real: Object.fromEntries(Object.entries(realBoundary).map(([k, xs]) => [k, { actorCases: xs.length, same: xs.filter((r) => Math.abs(r.d) <= 1e-9).length, strictRightWay: xs.filter((r) => Math.sign(r.d) === Math.sign(r.s) && Math.abs(r.d) > 1e-9).length, leastStrict: lo(xs.filter((r) => Math.abs(r.d) > 1e-9), (r) => Math.abs(r.d)) }])), hold: Object.fromEntries(['inside', 'reaching', 'past', 'across'].map((w) => [w, holdBy(w).length])) },
         c41: { checks: map.length, byClass: count(map, (r) => r.cls), leastMovedWithAPath: lo(map.filter((r) => r.cls !== 'none'), (r) => r.moved) },
         c42: { pairs: unrelated.length, byAbility: count(unrelated, (r) => `${r.ability} ${r.budget}`), mostLead: hi(unrelated, (r) => r.lead) },
-        c43: { specialists: weak.length, leastTogether: Object.fromEntries(budgets.map((bu) => [bu, lo(weak.filter((r) => r.budget === bu), (r) => r.together)])), leastEach: lo(weak.flatMap((r) => r.each.filter((y) => y.cls !== 'none')), (y) => y.rise), leastNine: lo(ST6R2.weakness(every).nine, (r) => r.rise) },
+        c43: { specialists: weak.length, leastTogether: Object.fromEntries(budgets.map((bu) => [bu, lo(weak.filter((r) => r.budget === bu), (r) => r.together)])), leastEach: lo(weak.flatMap((r) => r.each.filter((y) => y.cls !== 'none')), (y) => y.rise), leastNine: lo(nineAll, (r) => r.rise) },
         c44: { pairs: eq.length, ahead: ahead.length, aheadByClass: count(ahead, (r) => r.cls), pairsByClass: count(eq, (r) => r.cls), aheadByWay: count(ahead, (r) => { const c = every.find((x) => x.id === r.id)!; return c.suit('expansive') > c.suit('restrained') ? 'against' : c.suit('restrained') > c.suit('expansive') ? 'with' : 'level'; }), gain: [lo(ahead, (r) => r.gain), hi(ahead, (r) => r.gain)], cost: [lo(ahead, (r) => r.cost), hi(ahead, (r) => r.cost)], interaction: [lo(ahead, (r) => r.interaction), hi(ahead, (r) => r.interaction)], leastShareAhead: lo(ahead, (r) => r.share), underTwelfth: { pairs: eq.filter((r) => r.share < 1 / 12).length, aboveTheEvenActor: eq.filter((r) => r.share < 1 / 12 && r.lead > 1e-9).length } },
       },
     };
@@ -1011,7 +1012,7 @@ export function verdictE(every: readonly R2Case[]) {
       else if (!variedEnough(g)) bad.push(`${m}: the gains together not varied enough`);
       return [m, { freshWithRoom: freshWithRoom.map((x) => x.name), gained: { count: g.count, works: g.works, families: g.families.length, mostFromOneWork: g.mostFromOneWork } }];
     }));
-    const lo = <T,>(xs: readonly T[], f: (x: T) => number) => (xs.length ? r4(Math.min(...xs.map(f))) : null);
+    const lo = <T,>(xs: readonly T[], f: (x: T) => number) => (xs.length ? r4(xs.reduce((m, x) => Math.min(m, f(x)), Infinity)) : null);
     return {
       met: !bad.length, failingCount: bad.length, failing: bad.slice(0, 20), byMedium,
       actors: all.map((x) => ({ name: x.name, budget: x.budget.C, media: Object.fromEntries(Object.entries(x.media).map(([m, v]) => [m, { suitable: v.suitable, C: v.opportunities.C, S: v.opportunities.S, ceiling: !v.room, gained: v.gained.length, otherSide: v.otherSide }])), leastExtra: lo(x.rows, (r) => r.extra), leastDrawsPart: lo(x.rows, (r) => r.drawsPart), leastOtherSideFall: lo(x.weak, (r) => r.marginC - r.marginS), extraNotOver005: x.rows.filter((r) => !(r.extra > 0.05)).map((r) => ({ id: r.id, extra: r4(r.extra), marginC: r4(r.marginC), marginS: r4(r.marginS), extraAtNoGrain: r4(r.extraAtNoGrain) })), otherSideNotBehind: x.weak.filter((r) => !(r.marginS < r.marginC - 1e-9)).map((r) => ({ id: r.id, marginC: r4(r.marginC), marginS: r4(r.marginS), fallAtNoGrain: r4(r.fallAtNoGrain) })) })),
