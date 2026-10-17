@@ -20,6 +20,8 @@
  * - `roundups`: a New Haven student at Citi, a few days in, round-ups not yet set up (from 2026-10-13).
  * - `workload`: a student who prepares everything but the scenes' partner part, as the policy did until 2026-10-16,
  *   stopped the day the term's warning comes (A Word On Your Coursework), with a scene still open to answer it.
+ * - `specialist`: `brief`'s student and Saturday with TEST SETUP the specialist's abilities on the first morning (from
+ *   2026-10-17, brief 13's interface playthroughs, `tools/playthroughs-ui.mjs`).
  *
  *   npx vite-node tools/scenarios.ts -- --scenario leave --seed sc-0 [--watch] [--years 1.5 --save leave.json]
  *   npx vite-node tools/scenarios.ts -- --scenario direction --from part.json --years 0.2 --save part2.json   # goes on
@@ -218,6 +220,22 @@ const SCENARIOS: Record<string, Hook> = {
   brief: {
     years: 0.053, config: { homeRegionId: 'us-ny-newyork' }, partnerPart: false,
     daily() {},
+  },
+  // The same student and the same Saturday as a specialist (from 2026-10-17, brief 13's interface playthroughs,
+  // `tools/playthroughs-ui.mjs`): TEST SETUP on the first morning, the specialist's spread `tools/brief-journeys.ts`
+  // gives (emotional depth, composure, imagination and presence at 90; memory, voice, movement, listening, focus,
+  // adaptability and discipline at 49; the other techniques as made), so the weeks before the save are played with it.
+  // Everything after that is the policy's play through the commands. A new life can't be made a specialist through
+  // creation: its dispositions set composure and discipline only.
+  specialist: {
+    years: 0.053, config: { homeRegionId: 'us-ny-newyork' }, partnerPart: false,
+    daily(sim, log) {
+      if (log.some((l) => l.includes('TEST SETUP: a specialist'))) return;
+      const p = sim.player;
+      p.craft!.emotion = 90; p.craft!.memorization = 49; p.craft!.voice = 49; p.craft!.movement = 49;
+      p.attrs = { ...(p.attrs ?? {}), composure: 90, imagination: 90, presence: 90, listening: 49, focus: 49, adaptability: 49, discipline: 49 } as typeof p.attrs;
+      log.push(`${new Date(sim.now).toISOString().slice(0, 10)} TEST SETUP: a specialist`);
+    },
   },
   withdraw: {
     years: 2.9, config: { homeRegionId: 'us-ny-newyork' },
