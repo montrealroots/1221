@@ -248,7 +248,7 @@ const PLAYS: Record<string, () => void> = {
     setBalance(sim, checking, started.checking); // TEST SETUP: kept in money, so the card is all that's owed
     const after = owedLook();
     expect(after.summary).toContain(`all of it on the ${card.name}`);
-    const yearly = Math.round(Number(renderToStaticMarkup(after.body).match(/come to about \$([\d,]+\.\d\d) a year/)![1]!.replace(/,/g, '')) * 100);
+    const yearly = Math.round(Number(renderToStaticMarkup(after.body).match(/would cost about \$([\d,]+\.\d\d) a year/)![1]!.replace(/,/g, '')) * 100);
     expect(Math.abs(yearly - sum(result, 'about ', ' a year'))).toBeLessThanOrEqual(50);
   },
 

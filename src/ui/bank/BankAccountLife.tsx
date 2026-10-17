@@ -47,7 +47,7 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
   if (terms.length === 0 && !ROUND_UPS[bankId] && dormant.length === 0 && inactive.length === 0 && cancelable.length === 0 && unclaimed.length === 0 && !rules?.withdrawalFee) return null;
 
   return (
-    <Panel title="Your Accounts Over Time" subtitle="Term deposits, round-ups, idle accounts, and changing your mind." help="bank.upkeep">
+    <Panel title="Your Accounts Over Time" subtitle="Term deposits, round-ups, accounts left unused, and canceling something new." help="bank.upkeep">
       <LookRegion className="col gap-3">
         {terms.map((term) => {
           const quote = breakQuote(sim, term);
@@ -60,12 +60,12 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
               <div className="strong small"><Open subject={at('account', term.id)}>{term.name}</Open>, <Open subject={at('account', term.id)}>{money(term.balance)}</Open> at {((term.fixedRate ?? 0) * 100).toFixed(2)}%</div>
               <p className="small" style={{ margin: '2px 0' }}>
                 {term.maturesAt ? `On ${formatDate(term.maturesAt, sim.zone)} it ${END_WORDS[termEndOf(term)]}.` : ''}
-                {term.graceUntil && sim.now <= term.graceUntil ? ` Renewed: until ${formatDate(term.graceUntil, sim.zone)} it can be taken whole.` : ''}
-                {(life?.endChoices?.length ?? 0) > 1 && notice > 0 && term.maturesAt ? (tooNear ? ` Too near its end to change: the bank needs ${notice} days’ notice.` : ` It can be changed until ${formatDate(term.maturesAt - notice * DAY, sim.zone)}.`) : ''}
+                {term.graceUntil && sim.now <= term.graceUntil ? ` It renewed, and until ${formatDate(term.graceUntil, sim.zone)} you can take it out whole, with no penalty.` : ''}
+                {(life?.endChoices?.length ?? 0) > 1 && notice > 0 && term.maturesAt ? (tooNear ? ` It’s too near its end to change: the bank needs ${notice} days’ notice.` : ` You can change that until ${formatDate(term.maturesAt - notice * DAY, sim.zone)}.`) : ''}
               </p>
               {life?.maturityWords && <p className="xs dim" style={{ margin: '0 0 4px' }}>The bank’s terms at the end: {life.maturityWords}</p>}
               <Fine>
-                {term.breakAt !== undefined ? `Closing on ${formatDate(term.breakAt, sim.zone)}, on the notice given. ` : ''}{quote.refused ?? (quote.penalty > 0 ? `Broken now it costs ${money(quote.penalty)}${quote.estimate ? ', the interest so far: SLATE’s estimate of the bank’s penalty' : ''}.` : 'Broken now it comes out whole.')}
+                {term.breakAt !== undefined ? `It closes on ${formatDate(term.breakAt, sim.zone)}, on the notice you gave. ` : ''}{quote.refused ?? (quote.penalty > 0 ? `Breaking it now costs ${money(quote.penalty)}${quote.estimate ? ', the interest earned so far' : ''}.` : 'Breaking it now costs nothing.')}{!quote.refused && quote.penalty > 0 && quote.estimate ? ' The penalty is estimated as the interest so far, because the bank words its penalty another way.' : ''}
                 {quote.words ? ` The bank’s terms: ${quote.words}` : ''}
               </Fine>
               <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
@@ -86,18 +86,18 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
           );
         })}
         {rules?.withdrawalFee !== undefined && rules.freeWithdrawals !== undefined && (
-          <p className="small" style={{ margin: 0 }}>Savings here: {rules.freeWithdrawals} withdrawal{rules.freeWithdrawals === 1 ? '' : 's'} free a month, a payment the savings makes counted among them, then {money(inSaveMoney(sim, rules.withdrawalFee, bank?.currency ?? cur))} each.</p>
+          <p className="small" style={{ margin: 0 }}>Savings here: {rules.freeWithdrawals} free withdrawal{rules.freeWithdrawals === 1 ? '' : 's'} a month, counting any payment the savings makes, then {money(inSaveMoney(sim, rules.withdrawalFee, bank?.currency ?? cur))} each.</p>
         )}
         <RoundUps bankId={bankId} />
         {inactive.map((a) => (
           <p key={a.id} className="small" style={{ margin: 0 }}>
-            <Open subject={at('account', a.id)}>{a.name}</Open> is inactive, untouched for months{a.bankId && ACCOUNT_LIFE[a.bankId]?.dormantMonths !== undefined ? `, and goes dormant at ${ACCOUNT_LIFE[a.bankId]!.dormantMonths} months untouched` : ''}. Using it wakes it.
+            <Open subject={at('account', a.id)}>{a.name}</Open> is inactive: it hasn’t been used for months{a.bankId && ACCOUNT_LIFE[a.bankId]?.dormantMonths !== undefined ? `, and it goes dormant after ${ACCOUNT_LIFE[a.bankId]!.dormantMonths} months unused` : ''}. Using it makes it active again.
           </p>
         ))}
         {(inactive.length > 0 || dormant.length > 0) && rules?.dormancyWords && <p className="xs dim" style={{ margin: 0 }}>The bank’s terms: {rules.dormancyWords}</p>}
         {dormant.map((a) => (
           <div key={a.id} className="row-between small">
-            <span><Open subject={at('account', a.id)}>{a.name}</Open> is dormant, blocked until it’s used again.</span>
+            <span><Open subject={at('account', a.id)}>{a.name}</Open> is dormant: the bank has blocked it until you reactivate it.</span>
             <Gated feature="bank.reactivate" className="btn btn-sm" onClick={() => run('bank.reactivate', { accountId: a.id })}>Reactivate</Gated>
           </div>
         ))}
@@ -127,11 +127,11 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
         })}
         {unclaimed.length > 0 && (
           <div className="row-between small">
-            <span>{money(unclaimed.reduce((sum, one) => sum + one.amount, 0))} went to {unclaimed[0]!.to} after years untouched.{country?.claimBack ? ` ${country.claimBack}` : ''}</span>
+            <span>{money(unclaimed.reduce((sum, one) => sum + one.amount, 0))} went to {unclaimed[0]!.to} after years unused.{country?.claimBack ? ` ${country.claimBack}` : ''}</span>
             <Gated feature="bank.claim_unclaimed" className="btn btn-sm" onClick={() => run('bank.claim_unclaimed', {})}>Claim It Back</Gated>
           </div>
         )}
-        <p className="xs dim" style={{ margin: 0 }}>{rules ? `From the bank’s terms: ${rules.source}.` : 'This bank’s terms for these weren’t found.'}{country && (cancelable.length > 0 || unclaimed.length > 0 || dormant.length > 0) ? ` The country’s rules: ${country.source}.` : ''}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{rules ? `Source: the bank’s terms, ${rules.source}.` : 'This bank’s terms for these weren’t found.'}{country && (cancelable.length > 0 || unclaimed.length > 0 || dormant.length > 0) ? ` The country’s rules: ${country.source}.` : ''}</p>
       </LookRegion>
     </Panel>
   );

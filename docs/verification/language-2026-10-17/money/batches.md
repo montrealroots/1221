@@ -123,3 +123,46 @@ savings: $…" and "… so they added nothing."
 text-inventory --check 0 (the two "to draw on" hits in `coverText` were said another way); doc-refs 0; deciders 0.
 Vitest: the 28 files rendering these panels, 4 failures at first (old words my first pass missed), then 385 of 385, and
 `tests/language-money.test.ts` 13 of 13.
+
+## Batch 3: Borrowing, Statements, Your Accounts Over Time, And The Money Looks
+
+**Sources (27):** `src/ui/bank/BankLending.tsx` (2), `BankStatements.tsx` (8), `BankAccountLife.tsx` (2),
+`src/ui/looks/money.tsx` (15). Rewritten And Verified 16, Reviewed And Retained 11.
+
+**What changed.**
+- Borrowing: every "SLATE’s estimate" (nine engine-speak hits in this file) moved to the sources line ("How far the bank
+  lets the account go below zero is estimated: it publishes no limit."), and "… publishes no … SLATE found" became "No
+  … was found for Chase." Two mentions of removed systems went: the opt-in line said "Bills and checks go into the
+  overdraft either way" (now "Other payments, like autopay and standing orders"), and the no-overdraft line said "a bill
+  or the rent comes back unpaid". The German switch's "€2,000" is read from the bank's own rule, where it was typed.
+- Statements: "The least you can pay is …", interest "charged" for "draws", the plan's callout in two sentences, the
+  Alerts subtitle saying its own alert is the game's (where it said "(SLATE’s design)") with its days read from
+  `LOOKAHEAD_DAYS`, and every figure tile's control named with a space between its label, figure and note.
+- Your Accounts Over Time: "Breaking it now costs $10.48." / "costs nothing.", the estimated penalty said with its
+  reason, and a dormant account names the next step.
+- The looks: each account's kind is its plain name ("Current Account", "Savings Account", "Credit Card"), its sentence
+  says what's in it and what it's for in separate sentences, an overdrawn account "can cost you" (an overdraft in its
+  grace costs nothing), and the provenances say "added up from every payment in and out" for "the sum of the postings".
+
+**Kept, and why:** Past Switches' outcomes, the statement's column heads, `yearsAndMonths`, the term deposit's end
+buttons, the looks' month and category words, `HELD_AS` and the spending facet, each plain already.
+
+**Meaning-sensitive changes:** the removed bills, checks and rent (above, read against the scope reset's notes in
+`BankPayments.tsx` and `looks/money.tsx`); "every day it stays under costs you" became "can cost you"; "Broken now it
+comes out whole" became "Breaking it now costs nothing" (the quote's penalty is 0 in both its cases: a grace window, or
+a cap at the interest earned with none earned); and "Pending" kept apart from posted ("Posted payments only: what’s
+pending hasn’t posted yet").
+
+**Tests updated:** defects-g13-1, evidence-g10-money, evidence-g11-money, evidence-g13-money, evidence-g14-money,
+evidence2-b04, guide-examples-money (the year's-interest pattern), hardship-plan-minimum, home-account-screens,
+money-plan-interest, scope-money, statements-hardship; `tests/language-money.test.ts` gained four cases (Borrowing, the
+Alerts panel, the account looks in each balance's variant, an empty card statement).
+
+**Checks:** tsc 0; eslint 0; title-case 0; label-sweep 0; plural-check 0; voice-check 0; tics 1, then 0 (two empty
+statements opened on "Nothing"); spelling 0; typos 0; text-inventory --check 0; doc-refs 0; deciders 0. Vitest: the 22
+files rendering these panels, 5 failures at first (old words), then all; `language-money` 17 of 17.
+
+**Screens read:** a fresh build, `text-walk.mjs` on the missed-plan, round-ups and lien saves at 1440 and 390
+(`walk-b3-*`), then `text-render-check.mjs`: the money faults the before-walk found are gone ("−$3.30", "Balance
+−$3.30"); the one left, "Sleep owed 1 hours", is the profile area's. The Statements tab reads "Posted payments only:
+what’s pending hasn’t posted yet" under Posted Balance, and Borrowing reads as the test asserts.

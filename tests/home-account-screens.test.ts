@@ -123,7 +123,7 @@ describe('an account kept at home, in its own money on every screen', () => {
     expect(s.bankLook).toContain(`You have ${held(saver.held! + current.held!)} ($`);
     // August's statement, in pounds: the split brought in on the first morning, £100 out, its interest in (139¢ for the
     // seven nights on 693,798¢ at 1.05%, 109.81p, so 110p).
-    expect(s.statement).toContain('In GBP, as HSBC UK keeps it, with the dollars at SLATE’s rate under each figure.');
+    expect(s.statement).toContain('In GBP, as HSBC UK keeps it, with the dollars at the game’s exchange rate under each figure.');
     expect(s.statement).toContain('Opening Balance £0.00 $0.00 in dollars Money In £5,582.10 $7,065.95 in dollars Money Out £100.00 $126.58 in dollars');
     expect([paid.amount, paid.native]).toEqual([139, 110]);
     expect(s.statement).toContain('Opening balance: Flexible Saver +£5,581.00 £5,581.00');

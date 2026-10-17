@@ -206,7 +206,7 @@ describe('bank.borrow', () => {
     expect(before.player.credit!.score).toBe(795);
     const start = checking.balance;
     const shown = lending(before, 'us-citi', ['borrowing'], checking, { borrow: '2000', months: '60' });
-    expect(shown.text).toContain('10.24% to 18.49% a year, by your record.');
+    expect(shown.text).toContain('10.24% to 18.49% a year, set by your credit record.');
     expect(shown.text).toContain('The bank lends against wages paid in, and none has been paid in this month.');
     expect(shown.button('Borrow It').disabled).toBe(true);
     expect(refused(before, 'bank.borrow', ASK)).toBe('The bank lends against wages paid in, and none has been paid in this month.');
@@ -297,7 +297,7 @@ describe('bank.break_term', () => {
     const screen = accountLife(sim, 'us-chase');
     // Citi's CDs of a year or less: 90 days' simple interest on the principal, $1,000 × 4.25% × 90 ÷ 365 = $10.479.
     expect(screen.text).toContain('CD, $1,000.00 at 4.25%');
-    expect(screen.text).toContain('Broken now it costs $10.48.');
+    expect(screen.text).toContain('Breaking it now costs $10.48.');
     expect(screen.text).toContain('The bank’s terms: On the principal withdrawn: 90 days\' simple interest for CD terms of 1 year or less');
     const press = screen.button('Break It Early');
     expect(press.disabled).toBe(false);
@@ -354,7 +354,7 @@ describe('bank.break_term', () => {
     give.onClick!();
     expect(term.breakAt).toBe(asked + 35 * MS_DAY);
     const closing = accountLife(sim, 'gb-natwest');
-    expect(closing.text).toContain('Closing on February 9, 2026, on the notice given.');
+    expect(closing.text).toContain('It closes on February 9, 2026, on the notice you gave.');
     expect(closing.button('Give 35 Days’ Notice').disabled).toBe(true);
     expect(refused(sim, 'bank.break_term', { accountId })).toBe('It closes on February 9, 2026, on the notice given.');
     sim.advanceTo(asked + 34 * MS_DAY);
@@ -400,7 +400,7 @@ describe('bank.claim_unclaimed', () => {
     const liability = again.nominalAccount('liability_other', 'Unclaimed Money');
     expect(liability.balance).toBe(held);
     const screen = accountLife(again, 'us-chase');
-    expect(screen.text).toContain(`${whole} went to the state’s unclaimed-property office after years untouched. It can be claimed back from that office.`);
+    expect(screen.text).toContain(`${whole} went to the state’s unclaimed-property office after years unused. It can be claimed back from that office.`);
     expect(screen.text).not.toMatch(/New York|Comptroller|yes, from/);
     // The rules shown are Connecticut’s, by its statute, which gives the three years taken: until the third round of
     // 2026-10-13 they were New York’s research, a law firm’s note on its Comptroller (defect 58 of that round).
@@ -441,7 +441,7 @@ describe('bank.debit_overdraft', () => {
   it('at Chase: opted in by its button, the clock’s groceries go into the overdraft, and the $34 fee is held and charged after the next business day; opted out, nothing is bought and nothing charged', () => {
     const { sim, checking } = lockedOut('g10-optin', 'us-chase', -45_00);
     const asked = lending(sim, 'us-chase', ['borrowing'], checking);
-    expect(asked.text).toContain('You haven’t opted in, so an everyday debit card purchase the account can’t cover goes on the card, or is declined, and costs no fee. Bills and checks go into the overdraft either way. The law has a US bank ask first.');
+    expect(asked.text).toContain('You haven’t opted in, so an everyday debit card purchase the account can’t cover goes on the card, or is declined, and costs no fee. Other payments, like autopay and standing orders, go into the overdraft either way. The law requires a US bank to ask you first.');
     asked.button('Opt In To Debit Card Overdrafts').onClick!();
     expect(checking.debitOverdraft).toBe(true);
     expect(lending(sim, 'us-chase', ['borrowing'], checking).text).toContain('You’ve opted in: an everyday debit card purchase the account can’t cover is paid into the overdraft, with its fee.');
@@ -456,7 +456,7 @@ describe('bank.debit_overdraft', () => {
     expect(c.balance).toBe(-55_00);
     expect(c.pendingItems).toEqual([{ day: '2026-08-25', count: 1 }]);
     expect(fees(opted, c)).toEqual([]);
-    expect(lending(opted, 'us-chase', ['borrowing'], c).text).toContain('1 overdraft fee is held, $34.00: each comes off after the end of August 26, 2026 unless the account is back to −$50.00 or better.');
+    expect(lending(opted, 'us-chase', ['borrowing'], c).text).toContain('1 overdraft fee is on hold, $34.00. It’s charged after the end of August 26, 2026, unless the account is back to −$50.00 or better by then.');
     // Wednesday is the next business day: still held through it, charged once it has ended.
     opted.advanceTo(at(2026, 8, 26));
     expect(fees(opted, c)).toEqual([]);
@@ -680,11 +680,11 @@ describe('bank.pay_collections', () => {
     const bankOf = bankById(moved.bankId!)!;
     const panel = lending(sim, bankOf.id, ['borrowing'], moved, { toCollections: '100' });
     expect(panel.text).toContain(`In Collections $${Math.round(owed / 100)} owed`);
-    expect(panel.text).toContain('Chase closed your account after it was overdrawn for 60 days, SLATE’s estimate of how long a bank lets one run, and charged off what it couldn’t recover. It’s on your record until it’s paid.');
+    expect(panel.text).toContain('Chase closed your account after it was overdrawn for 60 days, and charged off what it couldn’t recover. How long a bank lets an overdraft run is estimated. It’s on your record until it’s paid.');
     const b0 = moved.balance;
     expect(b0).toBeGreaterThanOrEqual(100_00);
     panel.button('Pay It').onClick!();
-    expect(h.toasts).toEqual(['Paid.']);
+    expect(h.toasts).toEqual([expect.stringMatching(/^Paid \$[\d,]+ toward the debt\.$/)]);
     expect(moved.balance - b0).toBe(-100_00);
     expect(debt.balance).toBe(-(owed - 100_00));
     expect(debt.closedAt).toBeUndefined();
@@ -823,8 +823,8 @@ describe('bank.reactivate', () => {
 
     // Your Accounts Over Time, as the player has it: a line and a Reactivate for each.
     const screen = accountLife(sim, 'us-capital-one');
-    expect(screen.text).toContain('360 Checking is dormant, blocked until it’s used again.');
-    expect(screen.text).toContain('360 Performance Savings is dormant, blocked until it’s used again.');
+    expect(screen.text).toContain('360 Checking is dormant: the bank has blocked it until you reactivate it.');
+    expect(screen.text).toContain('360 Performance Savings is dormant: the bank has blocked it until you reactivate it.');
     expect(screen.text).toContain('The bank’s terms: Dormant after 24 months with no transactional activity.');
     const presses = screen.buttons.filter((b) => b.text === 'Reactivate');
     expect(presses).toHaveLength(2);

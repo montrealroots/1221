@@ -102,9 +102,9 @@ describe('the Statements tab on a hardship plan', () => {
     const card = own(planned, 'credit_card');
     const onPlan = statementsScreen(planned, card.id, 1);
     expect(onPlan).toContain('New Balance $4,800.00');
-    expect(onPlan).toContain('The least to pay is $100.00, the plan’s payment, by October 11, 2026.');
-    expect(onPlan).not.toContain('The least to pay is $48.00');
-    expect(statementsScreen(twin, own(twin, 'credit_card').id, 1)).toContain('The least to pay is $48.00, by October 11, 2026.');
+    expect(onPlan).toContain('The least you can pay is $100.00, the plan’s payment, by October 11, 2026.');
+    expect(onPlan).not.toContain('The least you can pay is $48.00');
+    expect(statementsScreen(twin, own(twin, 'credit_card').id, 1)).toContain('The least you can pay is $48.00, by October 11, 2026.');
 
     // What the tab said before 2026-10-13, paid: the card’s $48 minimum by hand, the bank emptied the minute before the
     // due date, and the due date finds $48 of the plan’s $100 paid, late. Chase’s late fee held to the US safe harbor’s
@@ -142,8 +142,8 @@ describe('the Statements tab on a hardship plan', () => {
     // plan’s payment $99; the due date judges the lesser of the plan’s payment and the statement, $60.
     const october = statementsScreen(sim, card.id, 1);
     expect(october).toContain('New Balance $60.00');
-    expect(october).toContain('The least to pay is $60.00, the plan’s payment, by November 10, 2026.');
+    expect(october).toContain('The least you can pay is $60.00, the plan’s payment, by November 10, 2026.');
     // The statement of 20 September was due on 11 October, before the plan: the card’s minimum, as it was judged.
-    expect(statementsScreen(sim, card.id, 2)).toContain('The least to pay is $48.00, by October 11, 2026.');
+    expect(statementsScreen(sim, card.id, 2)).toContain('The least you can pay is $48.00, by October 11, 2026.');
   });
 });

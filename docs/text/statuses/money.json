@@ -131,6 +131,18 @@
   "on": "2026-10-17",
   "reason": "'Yale’s payroll', the one payer a change of deposit names apart: plain"
  },
+ "src/ui/bank/BankAccountLife.tsx#BankAccountLife": {
+  "status": "Rewritten And Verified",
+  "hash": "8bbd06c1995c",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g10-money.test.ts (Breaking it now costs $10.48; the notice line; dormant: the bank has blocked it…; years unused); tests/evidence-g11-money.test.ts (Breaking it now costs nothing); tests/evidence2-b04.test.ts (It closes on …, on the notice you gave); tests/scope-money.test.ts (Savings here: … free withdrawal …)"
+ },
+ "src/ui/bank/BankAccountLife.tsx#END_BUTTON": {
+  "status": "Reviewed And Retained",
+  "hash": "2eb4ee10a9c3",
+  "on": "2026-10-17",
+  "reason": "Renew It At The End, Move It To Savings At The End, Pay It Out At The End: each button says what the deposit will do at its end"
+ },
  "src/ui/bank/BankCard.tsx#CardApplication": {
   "status": "Rewritten And Verified",
   "hash": "ba83d826f713",
@@ -167,6 +179,18 @@
   "on": "2026-10-17",
   "evidence": "tests/evidence-g12-money.test.ts (You have $0.00 in cash; the quote 'It costs $15.00. A cash advance is charged 28.49% a year…'; It’s free.); tests/language-money.test.ts (the subtitle and the field's label)"
  },
+ "src/ui/bank/BankLending.tsx#BankLending": {
+  "status": "Rewritten And Verified",
+  "hash": "ce4d373b4ebc",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says the overdraft’s terms, with its unpublished limit called estimated at the foot'; tests/evidence-g10-money.test.ts (the opt-in line, an overdraft fee on hold, the collections panel and its toast, the loan's range); tests/scope-money.test.ts (You don’t have one arranged; the switch panels, decision 4's words only); tests/evidence-g14-money.test.ts (the loan's repayment line, Repay From This Account)"
+ },
+ "src/ui/bank/BankLending.tsx#SWITCH_OUTCOME": {
+  "status": "Reviewed And Retained",
+  "hash": "fbf242f1a86e",
+  "on": "2026-10-17",
+  "reason": "Past Switches' outcomes ('declined by the new bank', 'called off', 'complete, the balance left in the old account'): plain fragments after a date and the banks, each the outcome a switch recorded"
+ },
  "src/ui/bank/BankMoves.tsx#BankMoves": {
   "status": "Rewritten And Verified",
   "hash": "0d7d9a037b3f",
@@ -197,6 +221,54 @@
   "on": "2026-10-17",
   "reason": "Why a card was stopped, as one word or two before ': stopped' (Lost, Stolen, Damaged, Used by somebody else, Not arrived yet): plain"
  },
+ "src/ui/bank/BankStatements.tsx#AccountStatementView": {
+  "status": "Rewritten And Verified",
+  "hash": "7686e1f1d768",
+  "on": "2026-10-17",
+  "evidence": "tests/home-account-screens.test.ts (In GBP, as HSBC UK keeps it, with the dollars at the game’s exchange rate…); the built app's Statements tab on the missed-plan save (Posted Balance's note, the pending lines), walk-b3 in the scratch folder"
+ },
+ "src/ui/bank/BankStatements.tsx#AlertsView": {
+  "status": "Rewritten And Verified",
+  "hash": "0e18cd6cc827",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says the Alerts panel’s own alert is the game’s, with its days in words'"
+ },
+ "src/ui/bank/BankStatements.tsx#BankStatements": {
+  "status": "Rewritten And Verified",
+  "hash": "cfe5cbcee395",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says the Alerts panel’s own alert is the game’s, with its days in words' (the panel's subtitle); tests/evidence-g13-money.test.ts and tests/evidence2-b04.test.ts (Rebuilt: …)"
+ },
+ "src/ui/bank/BankStatements.tsx#CardStatementView": {
+  "status": "Rewritten And Verified",
+  "hash": "ee5b1526aa5f",
+  "on": "2026-10-17",
+  "evidence": "tests/hardship-plan-minimum.test.ts and tests/statements-hardship.test.ts (The least you can pay is …; On the plan there’s no interest…); tests/evidence-g13-money.test.ts (none of it is charged interest); tests/language-money.test.ts 'says the card wasn’t used or paid'"
+ },
+ "src/ui/bank/BankStatements.tsx#Lines": {
+  "status": "Reviewed And Retained",
+  "hash": "539711eda9c3",
+  "on": "2026-10-17",
+  "reason": "The statement's column heads (Date, What, In / Out, Balance; Charged / Paid, Owed After) and '· Pending, posts …': the words a bank statement uses, and pending kept apart from posted"
+ },
+ "src/ui/bank/BankStatements.tsx#PendingTerms": {
+  "status": "Rewritten And Verified",
+  "hash": "f8f3c9142fd6",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says the Alerts panel’s own alert…' renders the Statements tab with Chase's pending terms and their source line; the estimate sentence, for a bank with no published pending days, reviewed in code against `PENDING[bank].pendingDays`"
+ },
+ "src/ui/bank/BankStatements.tsx#yearsAndMonths": {
+  "status": "Reviewed And Retained",
+  "hash": "11162576bc93",
+  "on": "2026-10-17",
+  "reason": "'a year', 'a month', 'under a month', joined as '4 years and 2 months': plain"
+ },
+ "src/ui/bank/BankStatements.tsx#YearView": {
+  "status": "Rewritten And Verified",
+  "hash": "3ac0ed902fcb",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'says the Alerts panel’s own alert…' renders The Year with its subtitle and figures"
+ },
  "src/ui/bank/feeWords.ts#waiverWords": {
   "status": "Rewritten And Verified",
   "hash": "0f1f60a74bd7",
@@ -226,6 +298,96 @@
   "hash": "dfc1e8944a89",
   "on": "2026-10-17",
   "evidence": "tests/language-money.test.ts 'opens on the bank and on a statement line in words a player reads' (the bank's kind, summary, body and provenance; the entry's kind, body and provenance)"
+ },
+ "src/ui/looks/money.tsx#ACCOUNT_KIND": {
+  "status": "Rewritten And Verified",
+  "hash": "fdeb1c4dcece",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'opens an account in words for each balance…' (Savings Account); the other kinds are the same plain names"
+ },
+ "src/ui/looks/money.tsx#accountBody": {
+  "status": "Rewritten And Verified",
+  "hash": "6cea616fd726",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'opens an account in words…' renders the body (its movement line); tests/guide-examples-money.test.ts 'money.affairs' (an account's Balance, Rate and Ends In)"
+ },
+ "src/ui/looks/money.tsx#accountSentence": {
+  "status": "Rewritten And Verified",
+  "hash": "12fe0c6696c0",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'opens an account in words for each balance…' ($250, empty and $3.30 overdrawn savings, the primary account); tests/defects-g13-1.test.ts (Bills Owed, paid from the first money in your primary account)"
+ },
+ "src/ui/looks/money.tsx#CATEGORY_WORDS": {
+  "status": "Reviewed And Retained",
+  "hash": "5f3bdad5ae05",
+  "on": "2026-10-17",
+  "reason": "Where It Went's category names ('Carried From Before', 'Food'): plain"
+ },
+ "src/ui/looks/money.tsx#debtBody": {
+  "status": "Rewritten And Verified",
+  "hash": "829253aab3a7",
+  "on": "2026-10-17",
+  "evidence": "tests/money-plan-interest.test.ts (would cost about $… a year); tests/guide-examples-money.test.ts 'money.affairs' (They’re charged no interest today; You’re using …%; a year's interest)"
+ },
+ "src/ui/looks/money.tsx#HELD_AS": {
+  "status": "Reviewed And Retained",
+  "hash": "34e6c4ec54b5",
+  "on": "2026-10-17",
+  "reason": "'on its way between your banks', 'in SNAP on your EBT card': plain, and each names where the held money is"
+ },
+ "src/ui/looks/money.tsx#heldFor": {
+  "status": "Reviewed And Retained",
+  "hash": "e9b6ed9efdb0",
+  "on": "2026-10-17",
+  "reason": "'this month', 'last month', '3 months ago', '2 years ago' after 'opened it': plain"
+ },
+ "src/ui/looks/money.tsx#movementSentence": {
+  "status": "Rewritten And Verified",
+  "hash": "59c1e836adda",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'opens an account in words for each balance…' (the four variants, one of which the account shows); tests/statements.test.ts"
+ },
+ "src/ui/looks/money.tsx#RECENT_WORDS": {
+  "status": "Reviewed And Retained",
+  "hash": "2621e83aee36",
+  "on": "2026-10-17",
+  "reason": "'thirty days', the window the look's 'lately' sentences name, in words as prose writes a number under a hundred here"
+ },
+ "src/ui/looks/money.tsx#spendBody": {
+  "status": "Reviewed And Retained",
+  "hash": "481c0b86004c",
+  "on": "2026-10-17",
+  "reason": "'You have spent nothing at all in the last thirty days.' and '$X has gone out in the last thirty days, and food and transport are where most of it went.': plain and exact, the categories from the ledger"
+ },
+ "src/ui/looks/money.tsx#tailFor": {
+  "status": "Rewritten And Verified",
+  "hash": "9f1d4d2b4cd2",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts (savings and the primary account's sentences, exact); tests/defects-g13-1.test.ts (savings pays off anything left unpaid)"
+ },
+ "src/ui/looks/money.tsx#top": {
+  "status": "Rewritten And Verified",
+  "hash": "f1cb83182b02",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'opens an account in words for each balance, and what’s owed with a year of its interest' (the debt look's kind and provenance or its gone line, the net worth look's provenance); tests/guide-examples-money.test.ts 'money.affairs: Your Affairs And What You’re Worth' (the Owed look)"
+ },
+ "src/ui/looks/money.tsx#top [went]": {
+  "status": "Reviewed And Retained",
+  "hash": "db1cca7b2b3e",
+  "on": "2026-10-17",
+  "reason": "'Where It Went', the facet's title for the last thirty days' spending: plain"
+ },
+ "src/ui/looks/money.tsx#worthBody": {
+  "status": "Rewritten And Verified",
+  "hash": "6865d22ec6e4",
+  "on": "2026-10-17",
+  "evidence": "tests/language-money.test.ts 'opens an account in words…' (… is your primary account, where the day’s spending comes from.)"
+ },
+ "src/ui/looks/money.tsx#worthSentence": {
+  "status": "Rewritten And Verified",
+  "hash": "575f9fa37347",
+  "on": "2026-10-17",
+  "evidence": "tests/guide-examples-money.test.ts 'money.affairs: Your Affairs And What You’re Worth' (the net worth sentence the Money line and its look share); the empty variant 'You’re worth nothing today: no money anywhere, and nothing owed.' reviewed in code"
  },
  "src/ui/workspaces/BankWorkspace.tsx#BankTabs": {
   "status": "Reviewed And Retained",

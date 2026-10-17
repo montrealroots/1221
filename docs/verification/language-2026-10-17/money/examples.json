@@ -484,5 +484,203 @@
   "why": "An overdrawn balance to the cent, with a minus sign and a word, where whole dollars and a hyphen read '-$3' (text-render-check's 'money written oddly')",
   "meaningSensitive": true,
   "verified": "tests/language-money.test.ts (the markup and the words)"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "… Payments at the same moment post largest first. It covers up to about $500, SLATE’s estimate: the bank publishes no limit.",
+  "after": "… Payments at the same moment post largest first. It covers up to about $500. (At the foot: How far the bank lets the account go below zero is estimated: it publishes no limit.)",
+  "why": "The estimate in the sources line, not the sentence",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "You haven’t opted in, so an everyday debit card purchase the account can’t cover goes on the card, or is declined, and costs no fee. Bills and checks go into the overdraft either way. The law has a US bank ask first.",
+  "after": "You haven’t opted in, so an everyday debit card purchase the account can’t cover goes on the card, or is declined, and costs no fee. Other payments, like autopay and standing orders, go into the overdraft either way. The law requires a US bank to ask you first.",
+  "why": "Bills and checks went with the home in the scope reset; the payments that do go into the overdraft are named",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g10-money.test.ts; tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "Chase has no overdraft terms SLATE found, so the account never goes below zero here: a payment it can’t cover comes from savings if you’ve linked it; the day’s shopping then goes on the card, and a bill or the rent comes back unpaid with its fee and is owed.",
+  "after": "No overdraft terms were found for Chase, so the account never goes below zero here. A payment it can’t cover comes from savings if you’ve linked them. Otherwise the day’s shopping goes on the card, and any other payment comes back unpaid, with its fee.",
+  "why": "'the rent' and 'a bill' were removed systems; three sentences",
+  "meaningSensitive": true,
+  "verified": "reviewed in code: this variant shows for a bank with no `overdraft` in `LENDING`; the same panel's other variants in tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "1 overdraft fee is held, $34.00: each comes off after the end of August 26, 2026 unless the account is back to −$50.00 or better.",
+  "after": "1 overdraft fee is on hold, $34.00. It’s charged after the end of August 26, 2026, unless the account is back to −$50.00 or better by then.",
+  "why": "One fee is 'it', not 'each'; the condition with its deadline",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "Chase closed your account after it was overdrawn for 60 days, SLATE’s estimate of how long a bank lets one run, and charged off what it couldn’t recover. It’s on your record until it’s paid.",
+  "after": "Chase closed your account after it was overdrawn for 60 days, and charged off what it couldn’t recover. How long a bank lets an overdraft run is estimated. It’s on your record until it’s paid.",
+  "why": "What happened first; the estimate as its own sentence",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "notification",
+  "before": "Paid.",
+  "after": "Paid $… toward the debt. (the amount typed)",
+  "why": "Says what was paid and to what",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts (a regex over the amount)"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "Savings past the month’s €2,000 isn’t moved: notice is given on it, and it follows in three months.",
+  "after": "Savings over the €2,000 you can take out in a month without notice isn’t moved: notice is given on it, and it follows three months later.",
+  "why": "The figure read from the bank's rule (`CASH[bank].savingsMonthly`), where it was typed for every German bank, two of which have no such rule",
+  "meaningSensitive": true,
+  "verified": "reviewed in code: the switch panel at Deutsche Bank, Postbank or Berliner Sparkasse; tests/scope-money.test.ts renders the switch panels"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "Chase reported you to ChexSystems on October 30, 2026; it stands until October 30, 2031. A bank here turns a report away about 85% of the time, SLATE’s estimate, and the ones that have are left off the list.",
+  "after": "Chase reported you to ChexSystems on October 30, 2026, and the report stays on your record until October 30, 2031. A bank here turns down about 85% of applicants with a report, and the banks that turned you down are left off the list. Source: … That share is estimated.",
+  "why": "Who does what, and the estimate after the source",
+  "meaningSensitive": false,
+  "verified": "reviewed in code (the switch panel with a report); the refusals it explains in tests/evidence2-b05.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankStatements.tsx#AccountStatementView",
+  "kind": "label",
+  "before": "Completed items only; what’s pending is still to post",
+  "after": "Posted payments only: what’s pending hasn’t posted yet",
+  "why": "Pending kept apart from posted, in plain words",
+  "meaningSensitive": true,
+  "verified": "the built app's Statements tab, missed-plan save (walk-b3)"
+ },
+ {
+  "source": "src/ui/bank/BankStatements.tsx#PendingTerms",
+  "kind": "official",
+  "before": "The bank doesn’t say how long a card payment stays pending, so SLATE’s estimate holds it. Source: …",
+  "after": "Source: … How long a card payment stays pending is estimated: the bank doesn’t say.",
+  "why": "The estimate after the source",
+  "meaningSensitive": false,
+  "verified": "reviewed in code against `PENDING[bank].pendingDays`"
+ },
+ {
+  "source": "src/ui/bank/BankStatements.tsx#CardStatementView",
+  "kind": "official",
+  "before": "The least to pay is $40.00, by December 11, 2026. Pay the whole $2,000.00 and none of it draws interest.",
+  "after": "The least you can pay is $40.00, by December 11, 2026. Pay the whole $2,000.00 and none of it is charged interest.",
+  "why": "'draws' was the engine's verb",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g13-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankStatements.tsx#CardStatementView",
+  "kind": "official",
+  "before": "On the plan nothing draws interest and nothing new goes on the card: $101.00 a month clears the $4,830.00 in 4 years, $4,830.00 in all, so long as none is missed.",
+  "after": "On the plan there’s no interest, and nothing new goes on the card. Paying $101.00 a month clears the $4,830.00 in 4 years, $4,830.00 in all, as long as no payment is missed.",
+  "why": "Two sentences; the condition plainly",
+  "meaningSensitive": false,
+  "verified": "tests/hardship-plan-minimum.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankStatements.tsx#CardStatementView",
+  "kind": "empty",
+  "before": "The card went unused and unpaid in this period.",
+  "after": "The card wasn’t used or paid in this period.",
+  "why": "Plain words for an empty statement",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts 'says the card wasn’t used or paid'"
+ },
+ {
+  "source": "src/ui/bank/BankStatements.tsx#AlertsView",
+  "kind": "label",
+  "before": "… due from it in the next three days (SLATE’s design).",
+  "after": "… due from it in the next three days. That alert is the game’s own, not a feature of a real bank.",
+  "why": "What '(SLATE’s design)' meant, said; the days read from `LOOKAHEAD_DAYS`",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankAccountLife.tsx#BankAccountLife",
+  "kind": "official",
+  "before": "Broken now it costs $10.48. / Broken now it comes out whole. / …, the interest so far: SLATE’s estimate of the bank’s penalty.",
+  "after": "Breaking it now costs $10.48. / Breaking it now costs nothing. / … The penalty is estimated as the interest so far, because the bank words its penalty another way.",
+  "why": "A quote of the penalty as an action's cost; the estimate said with its reason",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts; tests/evidence-g11-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankAccountLife.tsx#BankAccountLife",
+  "kind": "official",
+  "before": "360 Checking is dormant, blocked until it’s used again.",
+  "after": "360 Checking is dormant: the bank has blocked it until you reactivate it.",
+  "why": "Names the next step, the Reactivate button beside it",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts"
+ },
+ {
+  "source": "src/ui/looks/money.tsx#accountSentence",
+  "kind": "narration",
+  "before": "You’re $3.30 under at Chase, and every day it stays under costs you.",
+  "after": "It’s $3.30 overdrawn at Chase, and every day it stays overdrawn can cost you.",
+  "why": "'under' named nothing; 'can' because an overdraft within its grace costs nothing",
+  "meaningSensitive": true,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/looks/money.tsx#tailFor",
+  "kind": "narration",
+  "before": "You have $250.00 in it at Chase, set aside, and drawn on to pay what the current account can’t where you’ve linked it, and for what went unpaid.",
+  "after": "You have $250.00 in it at Chase. It’s money set aside. Where you’ve linked it, it pays what the current account can’t, and it pays off anything left unpaid.",
+  "why": "One sentence of three thoughts made three",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts; tests/defects-g13-1.test.ts"
+ },
+ {
+  "source": "src/ui/looks/money.tsx#ACCOUNT_KIND",
+  "kind": "label",
+  "before": "What You Spend From / What You Put Aside / A Line Of Credit",
+  "after": "Current Account / Savings Account / Credit Card",
+  "why": "The plain name of each kind",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/looks/money.tsx#top",
+  "kind": "empty",
+  "before": "You don’t owe anybody anything, so there’s nothing standing against your name to look at.",
+  "after": "You don’t owe anyone anything, so there’s nothing to show here.",
+  "why": "Plain",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/looks/money.tsx#debtBody",
+  "kind": "official",
+  "before": "Carried at the rates they charge now, that would come to about $… a year, or $… a month for standing still. A card paid in full each month is charged none.",
+  "after": "At today’s rates, carrying it would cost about $… a year, or $… a month, if the balances stay as they are. A card paid in full each month is charged none of it.",
+  "why": "'for standing still' said as the condition it is",
+  "meaningSensitive": false,
+  "verified": "tests/money-plan-interest.test.ts; tests/guide-examples-money.test.ts"
+ },
+ {
+  "source": "src/ui/looks/money.tsx#top",
+  "kind": "other",
+  "before": "The rates come off the accounts themselves, and a card’s is charged at each statement on a balance carried. None of it is run forward — it’s what the balances are at this minute.",
+  "after": "The rates are the accounts’ own, and a card’s is charged at each statement on a balance carried. These are the balances right now, not a projection.",
+  "why": "'run forward' and the dash",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
  }
 ]

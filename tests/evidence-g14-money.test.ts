@@ -625,14 +625,14 @@ describe('bank.set_loan_repayment', () => {
     const loanId = run<{ loanId: string }>(sim, 'bank.borrow', { amount: 3_000_00, months: 24, bankId: 'us-citi', intoId: chase, repayFromId: citi }).loanId;
     const panel = () => render(sim, createElement(BankLending, { bank: bankById('us-citi')!, account: acct(sim, citi), show: ['borrowing'] }));
     const first = panel();
-    expect(first.words).toContain('$3,000 owed at 10.24% a year, $139 a month over the 24 months it was taken for, next on September 24, 2026 , from Citi Access Checking at Citi. A change of primary account doesn’t move it.');
-    expect(control('bank.set_loan_repayment', 'Repay From There').disabled).toBe(true);
+    expect(first.words).toContain('$3,000 owed at 10.24% a year, $139 a month over the 24 months it was taken for, next on September 24, 2026 , from Citi Access Checking at Citi. Changing your primary account doesn’t move it.');
+    expect(control('bank.set_loan_repayment', 'Repay From This Account').disabled).toBe(true);
     // TEST SETUP: Chase chosen in Repaid From (BankLending's second state).
     h.states = [h.keep, chase];
     panel();
-    press(control('bank.set_loan_repayment', 'Repay From There'));
+    press(control('bank.set_loan_repayment', 'Repay From This Account'));
     expect(acct(sim, loanId).repayFromId).toBe(chase);
-    expect(panel().words).toContain('from Chase Total Checking at Chase. A change of primary account doesn’t move it.');
+    expect(panel().words).toContain('from Chase Total Checking at Chase. Changing your primary account doesn’t move it.');
   });
 });
 

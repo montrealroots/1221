@@ -248,7 +248,7 @@ describe('bank.break_term', () => {
     press(first.button('Give 35 Days’ Notice'));
     expect(term.breakAt).toBe(gmt(2, 10, 7, 30));
     const closing = draw(sim, createElement(BankAccountLife, { bankId: 'gb-natwest' }));
-    expect(closing.text).toContain('Closing on February 10, 2026, on the notice given.');
+    expect(closing.text).toContain('It closes on February 10, 2026, on the notice you gave.');
     expect(closing.button('Give 35 Days’ Notice').disabled).toBe(true);
     const s0 = select.balance;
 
@@ -488,11 +488,11 @@ describe('card.request_hardship', () => {
     ]);
     const october = draw(sim, createElement(BankStatements), [card.id, 1]).text;
     expect(october).toContain('Brought Forward $4,800.00 Payments And Credits $0.00 Spending $0.00 Fees $30.00 Interest $0.00 New Balance $4,830.00');
-    expect(october).toContain('The least to pay is $101.00, the plan’s payment, by November 10, 2026.');
+    expect(october).toContain('The least you can pay is $101.00, the plan’s payment, by November 10, 2026.');
     const september = draw(sim, createElement(BankStatements), [card.id, 2]).text;
-    expect(september).not.toContain('Rebuilt: this statement is from before the card’s statements were kept');
+    expect(september).not.toContain('Rebuilt: this statement comes from before the card’s statements were kept');
     expect(september).toContain('New Balance $4,800.00');
-    expect(september).toContain('The least to pay is $48.00, by October 11, 2026.');
+    expect(september).toContain('The least you can pay is $48.00, by October 11, 2026.');
     expect(september).not.toContain('the plan’s payment');
   });
 });

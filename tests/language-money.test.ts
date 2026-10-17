@@ -29,7 +29,18 @@ const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
   clicks: [] as { feature: string; label: string; onClick?: () => void }[],
   toasts: [] as string[],
+  /** FIXTURE: what a screen's first useStates start at, in place of their own initial values (a statement's Account and Period). */
+  states: [] as unknown[],
 }));
+
+vi.mock('react', async (orig) => {
+  const real = await orig<typeof import('react')>();
+  const useState = ((initial: unknown) => {
+    const [value, set] = real.useState(initial);
+    return h.states.length ? [h.states.shift(), set] : [value, set];
+  }) as typeof real.useState;
+  return { ...real, default: { ...real, useState }, useState };
+});
 
 vi.mock('@/ui/kept', async (orig) => {
   const real = await orig<typeof import('@/ui/kept')>();
@@ -67,6 +78,8 @@ const { BankCardOffers } = await import('@/ui/bank/BankCardOffers');
 const { BankSecurity } = await import('@/ui/bank/BankSecurity');
 const { BankPayments } = await import('@/ui/bank/BankPayments');
 const { BankCash } = await import('@/ui/bank/BankCash');
+const { BankLending } = await import('@/ui/bank/BankLending');
+const { BankStatements } = await import('@/ui/bank/BankStatements');
 
 const onScreen = (html: string) => html.replace(/\stitle="[^"]*"/g, '').replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ')
   .replace(/&quot;/g, '"').replace(/&#x27;/g, '\'').replace(/&amp;/g, '&').replace(/\s+/g, ' ').replace(/\s+([,.;:])/g, '$1');
@@ -271,5 +284,60 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Cards and Payments A
     const sim = nyStudent('lang14-pay');
     expect(drawn(sim, BankPayments as FunctionComponent<{ bankId: string }>)).toContain('How the day’s spending is paid, and which account each payment comes from. How This Works The Day’s Spending In Cash, Then The Debit Card On The Credit Card On The Debit Card When this is on, a payment a current account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows. Chase Savings covers Chase Total Checking, which pays the day’s spending and the Chase Freedom Unlimited’s autopay.');
     expect(drawn(sim, BankCash as FunctionComponent<{ bankId: string }>)).toContain('Cash You have $0.00 in cash. How This Works Amount To Take Out (USD)');
+  });
+});
+
+describe('PLAYER JOURNEY: a New York student at Chase reads Borrowing, Statements and the looks behind them', () => {
+  it('says the overdraft’s terms, with its unpublished limit called estimated at the foot', () => {
+    const sim = nyStudent('lang14-lend');
+    h.sim = sim;
+    const words = onScreen(renderToStaticMarkup(createElement(BankLending as FunctionComponent<{ bank: unknown; show: string[] }>, { bank: bankById('us-chase')!, show: ['borrowing', 'term'] })));
+    expect(words).toContain('Payments at the same moment post largest first. It covers up to about $500. You haven’t opted in, so an everyday debit card purchase the account can’t cover goes on the card, or is declined, and costs no fee. Other payments, like autopay and standing orders, go into the overdraft either way. The law requires a US bank to ask you first.');
+    expect(words).toContain('How far the bank lets the account go below zero is estimated: it publishes no limit.');
+    expect(words).toContain('Personal Loan None on record How This Works No personal loan rate was found for Chase.');
+    expect(words).not.toMatch(/SLATE/);
+  });
+
+  it('says the Alerts panel’s own alert is the game’s, with its days in words', () => {
+    const words = drawn(nyStudent('lang14-statements'), BankStatements as FunctionComponent<{ bankId: string }>);
+    expect(words).toContain('Statements Every payment in and out of each account, with the balance after it.');
+    expect(words).toContain('Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.');
+  });
+
+  it('opens an account in words for each balance, and what’s owed with a year of its interest', () => {
+    const sim = nyStudent('lang14-account-look');
+    const savings = savingsOf(sim);
+    const checking = checkingOf(sim);
+    const account = () => resolveLook(sim, lookAt('account', savings.id)) as Looked;
+    setBalance(sim, savings, 250_00);
+    expect(account().kind).toBe('Savings Account');
+    expect(account().summary).toBe('You have $250.00 in it at Chase. It’s money set aside. Where you’ve linked it, it pays what the current account can’t, and it pays off anything left unpaid.');
+    setBalance(sim, savings, 0);
+    expect(account().summary).toBe('There’s nothing in it at Chase. It’s money set aside. Where you’ve linked it, it pays what the current account can’t, and it pays off anything left unpaid.');
+    setBalance(sim, savings, -3_30);
+    expect(account().summary).toBe('It’s $3.30 overdrawn at Chase, and every day it stays overdrawn can cost you.');
+    expect((resolveLook(sim, lookAt('account', checking.id)) as Looked).summary).toMatch(/^You have \$[\d,.]+ in it at Chase\. It’s your primary account, so the day’s spending comes out of it\.$/);
+    expect(text(account().body)).toMatch(/(No money has gone in or out|has come in over the last thirty days, and none has gone out|has gone out over the last thirty days, and none has come in|Over the last thirty days, \$[\d,.]+ came in and \$[\d,.]+ went out)/);
+    const owed = resolveLook(sim, lookAt('debt', sim.player.id));
+    if (owed && !('gone' in owed)) {
+      expect(owed.kind).toBe('What You Owe');
+      expect(owed.provenance).toBe('The rates are the accounts’ own, and a card’s is charged at each statement on a balance carried. These are the balances right now, not a projection.');
+    } else {
+      expect(owed && 'gone' in owed ? owed.gone : '').toBe('You don’t owe anyone anything, so there’s nothing to show here.');
+    }
+    const worth = resolveLook(sim, lookAt('networth', sim.player.id)) as Looked;
+    expect(worth.provenance).toBe('Added up from your accounts each time you look, and stored nowhere. Every payment behind it has a matching entry on the other side, and the books balance to the cent.');
+    expect(text(worth.body)).toContain('is your primary account, where the day’s spending comes from.');
+  });
+});
+
+describe('PLAYER JOURNEY: a statement with nothing on it', () => {
+  it('says the card wasn’t used or paid', () => {
+    const sim = nyStudent('lang14-empty');
+    const card = cardsOf(sim, sim.player)[0]!;
+    h.states = [card.id, 0];
+    const cardWords = drawn(sim, BankStatements as FunctionComponent<{ bankId: string }>);
+    h.states = [];
+    expect(cardWords).toContain('The card wasn’t used or paid in this period.');
   });
 });

@@ -305,7 +305,7 @@ describe('bank.repay_loan', () => {
 
     // The panel offers a loan again, and Citi lends.
     expect(panel()).not.toContain('owed at');
-    expect(panel()).toContain('10.24% to 18.49% a year, by your record.');
+    expect(panel()).toContain('10.24% to 18.49% a year, set by your credit record.');
     const again = ok<{ loanId: string }>(sim, 'bank.borrow', { amount: 2_000_00, months: 12 });
     expect(again.loanId).not.toBe(loanId);
 
@@ -692,7 +692,7 @@ describe('bank.take_term_interest', () => {
     sim = reload(sim);
     // 182 day-ends at 3.5% on $10,000: 182 × 10,000 × 0.035 / 365 = $174.5205. Broken now, Chase asks 180 days'
     // interest on a term of 6 to 24 months, 10,000 × 0.035 × 180 / 365 = $172.60, capped at what's earned.
-    expect(panel()).toContain('Broken now it costs $172.60.');
+    expect(panel()).toContain('Breaking it now costs $172.60.');
     const before = account(sim, checking).balance;
     const year = yearOf(sim.player, 2027).interest ?? 0;
     press('bank.take_term_interest', 'Take The Interest So Far ($174.52)');
@@ -704,7 +704,7 @@ describe('bank.take_term_interest', () => {
     expect(taken[0]!.postings.filter((p) => p.amount > 0)).toHaveLength(1);
     expect(yearOf(sim.player, 2027).interest).toBe(year + 174_52);
     expect(account(sim, accountId).accrued).toBeLessThan(1);
-    expect(panel()).toContain('Broken now it comes out whole.');
+    expect(panel()).toContain('Breaking it now costs nothing.');
     expect(take()).toMatchObject({ says: 'Take The Interest So Far ($0.00)', disabled: true });
 
     // The renewal, at the midnight that opens 24 March, reinvests what was left, 0.0548¢, and what the 30 day-ends

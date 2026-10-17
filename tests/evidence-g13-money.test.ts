@@ -701,7 +701,7 @@ describe('statements', () => {
     expect(november).toContain('Brought Forward $0.00');
     expect(november).toContain('Spending $2,000.00');
     expect(november).toContain('New Balance $2,000.00');
-    expect(november).toContain('The least to pay is $40.00, by December 11, 2026. Pay the whole $2,000.00 and none of it draws interest.');
+    expect(november).toContain('The least you can pay is $40.00, by December 11, 2026. Pay the whole $2,000.00 and none of it is charged interest.');
     expect(november).toContain('Paying only the minimum, and spending nothing more, takes 7 years and a month and $3,507.30 in all. $72.77 a month pays it off in three years, $2,619.72 in all.');
     expect(november).toContain('TEST SETUP: purchases');
     expect(november).toContain('Charged / Paid Owed After');
@@ -709,7 +709,7 @@ describe('statements', () => {
     // Before the first statement kept, 20 September 2026, the card's months are drawn back to its opening, and said so.
     const august = periodsOf(sim, card(sim)).findIndex((p) => p.label === 'Statement Of August 20, 2026 (Rebuilt)');
     expect(august).toBeGreaterThan(4);
-    expect(shown[august]).toContain('Rebuilt: this statement is from before the card’s statements were kept');
+    expect(shown[august]).toContain('Rebuilt: this statement comes from before the card’s statements were kept');
   });
 
   it('ends a current account’s last period at its closing, and says so', () => {

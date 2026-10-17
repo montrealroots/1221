@@ -420,7 +420,7 @@ describe('bank.arrange_overdraft', () => {
     const barclays = bankById('gb-barclays')!;
     const panel = () => drawn(sim, createElement(BankLending, { bank: barclays, show: ['borrowing'] }));
     // A month of wages paid in, £2,000, is what SLATE's estimate lets it arrange; Barclays' rate is 35%.
-    expect(panel()).toContain('None arranged. 35% a year on what’s used. The first £15 is free.');
+    expect(panel()).toContain('You don’t have one arranged. 35% a year on what’s used. The first £15 is free.');
     expect(panel()).toContain('It would arrange up to £2,000 at 35%');
     type('od-limit', '1000');
     panel();
@@ -444,7 +444,7 @@ describe('bank.arrange_overdraft', () => {
     expect(h.answers.at(-1)).toMatchObject({ ok: true });
     sim = reload(sim);
     expect(primary(sim).overdraftLimit).toBeUndefined();
-    expect(panel()).toContain('None arranged.');
+    expect(panel()).toContain('You don’t have one arranged.');
     expect(buttons('Close The Overdraft')).toEqual([]);
   });
 });
