@@ -10,6 +10,13 @@
  * a student whose school left few hours to practice read focus first eight weeks running, each week in the same sentence
  * but for its figures and the piece it named; the advice keeps naming what brings most (F2-A10 (b)), and what it says now
  * changes with the player's state.
+ *
+ * From brief 12 (2026-10-17; docs/verification/resolution-2026-10-17/advice-criteria.md): a note keeps the state its
+ * forecast was made in, and every change since a note is said in parts (`forecastChange`): the work read, knowing its
+ * genres, the other abilities and techniques, the input's own level and discipline, with whatever none of them accounts
+ * for said as untraced. Until then only discipline's part of a rise was said. The first training recommendation also says
+ * what the forecast assumes of the work (`assumes`) and whether preparation, training or both deserve attention
+ * (`attention`).
  */
 
 import type { Simulation } from '../core/simulation';
@@ -19,10 +26,11 @@ import { DEVELOPMENT, MASTERED, TECHNIQUE_LABEL, type AbilityId } from '../conte
 import { EXERCISE_BY_ID, PRACTICE, TIER, exerciseFor } from '../content/practice';
 import { abilityFull, abilityOf, isAbility, levelOf, targetId } from './attributes';
 import { identityOf } from './artistry';
-import { experienceOf, practicedDaysAgo, recommendations, type Advised, type AdvisedAt, type Recommendation } from './experience';
+import { ADVICE_FLOOR, experienceOf, practicedDaysAgo, recommendations, type Advised, type AdvisedAt, type Recommendation } from './experience';
 import { matchedTier, practicePreview, practiceRefusal } from './practice';
-import { atFullRead, forecastAtDiscipline, forecastWork, trainingForecast, type Forecast } from './advice';
+import { CHANGE_ORDER, assumedOf, atFullRead, forecastAtDiscipline, forecastChange, forecastWork, preparationWorth, stateOf, trainingForecast, type ChangePart, type Forecast, type ForecastChange } from './advice';
 import { ABILITY_DEFS } from '../content/abilities';
+import { TASK_PROFILES } from '../content/tasks';
 
 /**
  * From brief 10 (later on 2026-10-16): the forecast is passed only where work is kept under today's rules, and passed
@@ -32,15 +40,20 @@ import { ABILITY_DEFS } from '../content/abilities';
  *
  * From brief 11: the first training recommendation carries `standing` and `next`. Reading it changes nothing: the save is
  * the same before and after, and the same save gives the same advice.
+ *
+ * From brief 12: it carries `assumes` too, and the first recommendation, training or not, `attention`.
  */
 export function adviceFor(sim: Simulation, person: Person): Recommendation[] {
   const { recs, forecast } = advised(sim, person);
   const first = recs.find((r) => r.forecast);
-  if (!first) return recs;
+  const lead = first ?? recs[0];
+  if (!lead) return recs;
   const was = person.experience?.advised;
-  const standing = was ? standingOf(sim, person, was, first, forecast) : undefined;
-  const next = nextOf(sim, person, first);
-  return recs.map((r) => (r === first ? { ...r, ...(standing ? { standing } : {}), ...(next ? { next } : {}) } : r));
+  const standing = first && was ? standingOf(sim, person, was, first, forecast) : undefined;
+  const next = first ? nextOf(sim, person, first) : undefined;
+  const assumes = first ? assumesOf(sim, person, first) : undefined;
+  const attention = attentionSaid(attentionOf(sim, person, first), first);
+  return recs.map((r) => (r === lead ? { ...r, ...(standing ? { standing } : {}), ...(next ? { next } : {}), ...(assumes ? { assumes } : {}), ...(attention ? { attention } : {}) } : r));
 }
 
 /** The recommendations and the forecast they read, as they stand: what `adviceFor` says and `noteAdvice` notes. */
@@ -80,7 +93,8 @@ export function noteAdvice(sim: Simulation, person: Person, when: 'work' | 'prac
   const first = recs.find((r) => r.forecast);
   const xp = experienceOf(person);
   if (!first) { delete xp.advised; return; }
-  const at = { at: sim.now, level: levelOf(sim, person, first.target as never), forecast: exactOf(first.forecast)!, discipline: abilityOf(sim, person, 'discipline') };
+  // The state the forecast was made in (from brief 12), so what moves it from here can be worked out in parts.
+  const at = { at: sim.now, level: levelOf(sim, person, first.target as never), forecast: exactOf(first.forecast)!, discipline: abilityOf(sim, person, 'discipline'), state: stateOf(sim, person) };
   const last = { ...at, ...(key ? { key } : {}) };
   if (was?.target === first.target) {
     xp.advised = { ...was, day, ...(was.last.key !== key ? { last } : {}) };
@@ -117,7 +131,9 @@ function standingOf(sim: Simulation, person: Person, was: Advised, first: Recomm
     const mine = exactOf(first.forecast)!;
     const why = now === undefined ? `${labelOf(was.target).toLowerCase()} has nothing left to forecast on your recent work` : `${first.label.toLowerCase()}’s forecast, ${said(mine, mine - now)}, is now the larger`;
     const from = dateOfDay(sim, was.day) === date(was.since) ? '' : `, first since ${date(was.since)}`;
-    return `When it was last noted, on ${dateOfDay(sim, was.day)}, the first was ${labelOf(was.target).toLowerCase()}${from}: since it was first given ${moved}, and ${why}.`;
+    // What moved the one that was first (from brief 12), where its forecast changed since it was first given.
+    const whatMoved = now !== undefined && Math.abs(now - was.first.forecast) > 1e-12 ? movedSaid(forecastChange(sim, person, was.target, was.first), `${labelOf(was.target).toLowerCase()}’s forecast since it was first given`, now > was.first.forecast) : undefined;
+    return `When it was last noted, on ${dateOfDay(sim, was.day)}, the first was ${labelOf(was.target).toLowerCase()}${from}: since it was first given ${moved}, and ${why}.${whatMoved ? ` ${whatMoved}` : ''}`;
   }
   const level = levelOf(sim, person, first.target as never);
   const now = exactOf(first.forecast)!;
@@ -140,6 +156,9 @@ function standingOf(sim: Simulation, person: Person, was: Advised, first: Recomm
   const hoursSince = (from: number) => (ex ? hist.filter((h) => h.at >= from && h.id === targetId(first.target as never) && h.source === `practice:${ex.id}`).length : 0);
   if (ex) { const n = hoursSince(was.since); parts.push(n ? `you’ve practiced ${ex.label} for ${short(was.since) ? 'at least ' : ''}${n} ${n === 1 ? 'hour' : 'hours'} since` : `you haven’t practiced ${ex.label} since`); }
   out.push(`${parts.join('; ')}.`);
+  // What moved its forecast since it was first given, in parts (from brief 12): until then a rise there was said with
+  // nothing to account for it (adv-t-5's composure, still at 42, "its forecast from 1.00 to 1.28").
+  if (Math.abs(change) > 1e-12) { const m = movedSaid(forecastChange(sim, person, first.target, was.first), 'its forecast since it was first given', change > 0); if (m) out.push(m); }
   // Since the latest work (`last`): what practice did, and where the forecast rose, discipline's part of the rise
   // (F2-A10 (h), brief 11): a small increase explained by what improved.
   const last = was.last;
@@ -153,7 +172,82 @@ function standingOf(sim: Simulation, person: Person, was: Advised, first: Recomm
   } else if (part) {
     out.push(`Its forecast is a little up on ${said(last.forecast, now - last.forecast)}: ${part}.`);
   }
+  // And since the latest work, where that's a later note than the first (from brief 12).
+  if (last.at > was.since && Math.abs(now - last.forecast) > 1e-12) { const m = movedSaid(forecastChange(sim, person, first.target, last), `its forecast since ${date(last.at)}`, now > last.forecast); if (m) out.push(m); }
   return out.join(' ');
+}
+
+/** What each part of a forecast's change is said as (from brief 12; `forecastChange`, `CHANGE_ORDER`). */
+const PART_SAID: Readonly<Record<ChangePart, string>> = { work: 'the work it reads', genres: 'how well you know its genres', others: 'your other abilities and techniques', own: 'its own level', discipline: 'discipline' };
+
+/**
+ * A forecast's change said in parts (from brief 12; advice-criteria.md, H4): each part that shows at four places, by
+ * name, and whatever the parts don't account for (`residual`) as untraced. Undefined where nothing shows at four places.
+ * Where a rise can't be worked out (a note from before brief 12, or the work it read no longer kept), it says so; a fall
+ * that can't is said as brief 11 said it.
+ */
+function movedSaid(ch: ForecastChange | undefined, what: string, rose: boolean): string | undefined {
+  if (!ch) return rose ? `What moved ${what} can’t be worked out: it was noted before the advice kept what it reads, or the work it read then is no longer kept.` : undefined;
+  const shown = CHANGE_ORDER.filter((k) => Math.abs(ch.parts[k]) >= 0.00005).map((k) => `${PART_SAID[k]}, ${signed(ch.parts[k], 4)}`);
+  const untraced = Math.abs(ch.residual) >= 0.00005 ? `${signed(-ch.residual, 4)} the advice can’t trace to anything it reads` : undefined;
+  if (!shown.length && !untraced) return undefined;
+  return `What moved ${what}: ${[...shown, ...(untraced ? [untraced] : [])].join('; ')}.`;
+}
+
+/**
+ * What the forecast assumes of the work it read (from brief 12; advice-criteria.md, F2 and F4): its own preparation as
+ * taped, each piece read as prepared named with how far short each part was and the first's figure read as taped, and each
+ * genre as known today, with how many are short of complete and how many known better than when taped.
+ */
+function assumesOf(sim: Simulation, person: Person, first: Recommendation): string | undefined {
+  const a = assumedOf(person);
+  if (!a) return undefined;
+  const list = (xs: readonly string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs.at(-1)}` : xs[0] ?? '');
+  const was = (n: number) => (n === 1 ? 'was' : 'were');
+  const own: string[] = [];
+  if (a.complete) own.push(`${a.complete} ${was(a.complete)} taped with ${a.complete === 1 ? 'its' : 'their'} own preparation complete`);
+  if (a.short) own.push(`${a.short} ${a.complete ? '' : `${was(a.short)} taped `}short of it and read as taped`);
+  if (a.prepared.length) own.push(`${a.prepared.length} short of it and read as if complete`);
+  const out = [`What it assumes of your last ${a.pieces === 1 ? 'piece' : `${a.pieces} pieces`}: ${list(own)}.`];
+  if (a.prepared.length) {
+    const label = (task: string, part: string) => (TASK_PROFILES[task]?.prepLabel?.[part] ?? (part === 'approach' ? 'The way you chose to play it, rehearsed in' : part)).toLowerCase();
+    for (const p of a.prepared) out.push(`In ${p.what}, ${list(p.parts.map((x, i) => `${label(p.task, x.part)} ${p.parts.length > 1 && i > 0 ? '' : 'stood '}at ${Math.round(x.share * 100)}%`))} of what completes ${p.parts.length === 1 ? 'it' : 'them'}.`);
+    const taped = exactOf(trainingForecast(sim, person, person.work ?? [], [first.target], true).get(first.target));
+    out.push(`${a.prepared.length === 1 ? 'That piece is' : 'Those pieces are'} read as if ${a.prepared.length === 1 ? 'its' : 'their'} own preparation were complete, since that held ${a.prepared.length === 1 ? 'it' : 'each'} back most${taped !== undefined ? `: read as taped, ${first.forecast!.hours} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} a piece, not ${exactOf(first.forecast)!.toFixed(2)}` : ''}.`);
+  }
+  out.push(a.genres ? `Each genre is read as you know it today: of the ${a.genres === 1 ? 'piece’s genre' : `${a.genres} pieces’ genres`}, ${a.genreShort} ${a.genreShort === 1 ? 'is' : 'are'} short of complete and ${a.genreBetter} known better than when taped.` : 'None of them reads knowing a genre.');
+  return out.join(' ');
+}
+
+/**
+ * Whether preparation, ability development or both deserve attention now (from brief 12; advice-criteria.md, F5): two
+ * figures in the same units, points a piece on the recent work as you are now. Preparation's (`preparationWorth`): each
+ * piece's own preparation complete, then its genre known in full, against each as taped with its genre as known today.
+ * Training's: the first training recommendation's forecast. Each deserves attention at the advice's floor, a tenth.
+ */
+export interface Attention { own: number; genres: number; preparation: number; training?: number; target?: string; verdict: 'both' | 'preparation' | 'training' | 'neither' }
+export function attentionOf(sim: Simulation, person: Person, first?: Recommendation): Attention | undefined {
+  const w = preparationWorth(sim, person);
+  if (!w) return undefined;
+  const preparation = w.own + w.genres;
+  const training = first ? exactOf(first.forecast) : undefined;
+  const p = preparation >= ADVICE_FLOOR;
+  const t = training !== undefined && training >= ADVICE_FLOOR;
+  return { ...w, preparation, ...(training !== undefined ? { training, target: first!.target } : {}), verdict: p && t ? 'both' : p ? 'preparation' : t ? 'training' : 'neither' };
+}
+
+/** The verdict said, with both figures, the larger first where both deserve attention. */
+function attentionSaid(a: Attention | undefined, first?: Recommendation): string | undefined {
+  if (!a) return undefined;
+  const n2 = (x: number) => x.toFixed(2);
+  const prep = `coming to your recent work fully prepared would have brought it about ${n2(a.preparation)} a piece as you are now (${n2(a.own)} from each piece’s own preparation, ${n2(a.genres)} from knowing its genre in full)`;
+  const train = first && a.training !== undefined ? `${first.forecast!.hours} hours of ${first.label.toLowerCase()} would bring about ${n2(a.training)}` : undefined;
+  switch (a.verdict) {
+    case 'both': return a.preparation > a.training! ? `Both preparation and training deserve attention, preparation most: ${prep}; and ${train}.` : `Both training and preparation deserve attention, training most: ${train} a piece; and ${prep}.`;
+    case 'training': return `Training deserves attention now, and preparation doesn’t: ${train} a piece, and ${prep}, under the tenth a result shows.`;
+    case 'preparation': return `Preparation deserves attention now, and training doesn’t: ${prep}${train ? `, and ${train}, under a tenth` : ', and no hours of practice are forecast to bring a tenth'}.`;
+    default: return `Neither preparation nor training would bring your recent work a tenth of a point now: ${prep}${train ? `, and ${train}` : ', and no hours of practice are forecast to bring a tenth'}.`;
+  }
 }
 
 /**
@@ -166,7 +260,9 @@ function disciplinePart(sim: Simulation, person: Person, id: string, then: Advis
   const lifts = `each hour grows ×${liftAt(discipline).toFixed(3)} where it grew ×${liftAt(then.discipline).toFixed(3)}, and twenty days would add less discipline beside it`;
   if (atThen === undefined) return `discipline went from ${r1(then.discipline)} to ${r1(discipline)}: ${lifts}`;
   const places = Math.abs(now - then.forecast) < 0.001 ? 4 : 3;
-  return `discipline went from ${r1(then.discipline)} to ${r1(discipline)} (${lifts}): at discipline ${r1(then.discipline)} its forecast would be ${atThen.toFixed(places)}, so ${signed(now - atThen, places)} of the change is discipline’s and ${signed(atThen - then.forecast, places)} its own`;
+  // Until brief 12 (2026-10-17) the rest was said as "its own", where it holds whatever else moved (the work, the genres,
+  // the other inputs) beside the input's own level; the parts are said after it where the note kept its state.
+  return `discipline went from ${r1(then.discipline)} to ${r1(discipline)} (${lifts}): at discipline ${r1(then.discipline)} its forecast would be ${atThen.toFixed(places)}, so ${signed(now - atThen, places)} of the change is discipline’s and ${signed(atThen - then.forecast, places)} everything else’s`;
 }
 
 /** A noted day (`Advised.day`, at home), as a date. */

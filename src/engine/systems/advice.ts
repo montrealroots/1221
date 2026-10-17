@@ -51,11 +51,28 @@
  *   (`prepared`), and what its preparation was worth was said nowhere beside training's; it's never added to training's.
  * - **One input's forecast at another discipline** (`forecastAtDiscipline`): what the advice reads to say how much of a
  *   change since it was first given is discipline's lift (`DEVELOPMENT.disciplineLift`) and how much the input's own.
+ *
+ * From brief 12 (2026-10-17; docs/verification/resolution-2026-10-17/advice-criteria.md, F2-A10 (f) and (h) as the owner
+ * resolved them):
+ * - **What a forecast assumes** (`assumedOf`): of the pieces it reads, how many were taped with their own preparation
+ *   complete, how many short and read as taped, which are read as prepared and how far short each part was; and how many
+ *   pieces' genres, read as known today, are short of complete or known better than when taped. Until then a take read
+ *   as prepared was counted on the screen and named nowhere, and the genre read as known today was said only in the guide.
+ * - **The counterfactual's own effect** (`trainingForecast`'s `asTaped`): an input's forecast with every piece read as
+ *   taped, so the advice can say what reading a take as prepared did to the figure.
+ * - **Preparation's figures beside training's** (`preparationWorth`): what each recent piece's own preparation complete,
+ *   and then its genre known in full, would bring as you are now, against each as taped, for whether preparation,
+ *   ability development or both deserve attention.
+ * - **A forecast change, worked out in parts** (`forecastChange`): a note keeps the state it was made in (`stateOf`), so a
+ *   change since is worked out one input at a time: the work read, knowing its genres, the other abilities and
+ *   techniques, the input's own level, and discipline. What the parts don't account for is the residual, which is what
+ *   an unexplained change is. Until then only discipline's part was worked out: adv-t-5's composure, still at 42, read
+ *   "its forecast from 1.00 to 1.28" with nothing to say why.
  */
 
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { DEVELOPMENT, MASTERED, TECHNIQUES, type AbilityId } from '../content/abilities';
+import { ABILITY_DEFS, DEVELOPMENT, MASTERED, TECHNIQUES, type AbilityId } from '../content/abilities';
 import { PRACTICE, TIER, exerciseFor } from '../content/practice';
 import type { Skill } from '../content/school';
 import { TASK_PROFILES } from '../content/tasks';
@@ -172,11 +189,16 @@ export function genreNow(person: Person): (w: WorkRecord) => WorkRecord {
 }
 
 /** The candidates' forecasts for a person, from their recent work: what `ADVICE.sessions` hours of each would be worth, grown through the engine. `only` (from brief 11) forecasts those inputs alone. */
-export function trainingForecast(sim: Simulation, person: Person, work: readonly WorkRecord[] = person.work ?? [], only?: readonly string[]): Map<string, Forecast> {
-  return forecastFor(performerFor(sim, person), work.map(genreNow(person)), (id) => {
+export function trainingForecast(sim: Simulation, person: Person, work: readonly WorkRecord[] = person.work ?? [], only?: readonly string[], asTaped = false): Map<string, Forecast> {
+  return forecastIn(sim, person, performerFor(sim, person), work.map(genreNow(person)), only, asTaped);
+}
+
+/** The forecast for a person as given (a scratch copy where it's a state worked again), on work already read. `asTaped` (from brief 12): every piece as taped. */
+function forecastIn(sim: Simulation, person: Person, now: Performer, work: readonly WorkRecord[], only?: readonly string[], asTaped = false): Map<string, Forecast> {
+  return forecastFor(now, work, (id) => {
     const p = trained(sim, person, id as AbilityId | Skill);
     return { to: levelOf(sim, p, id as AbilityId | Skill), discipline: abilityOf(sim, p, 'discipline') };
-  }, only);
+  }, only, asTaped);
 }
 
 /**
@@ -197,6 +219,131 @@ function setAbility(sim: Simulation, p: Person, id: AbilityId, v: number): void 
   else (attributesOf(sim, p) as unknown as Record<string, number>)[id] = v;
 }
 
+/** A scratch copy of a person: what's set on it never reaches the save. */
+const scratchOf = (person: Person): Person => ({ ...person, ...(person.attrs ? { attrs: { ...person.attrs } } : {}), craft: person.craft ? { ...person.craft } : person.craft, wellbeing: { ...person.wellbeing } });
+
+/**
+ * The state a forecast was made in, as a note keeps it (from brief 12): every ability and technique, stamina's full (which
+ * age sets), how well each genre was known (the better of studied and worked in, as `genreKnown` reads it, where it was
+ * known at all), and the latest piece of work, by its key. Everything a forecast reads but the records themselves, which
+ * stay in the save.
+ */
+export interface ForecastState { levels: Record<string, number>; staminaFull: number; genres: Record<string, number>; key?: string }
+
+/** The inputs a state keeps: every ability and every technique. */
+const STATE_INPUTS: readonly string[] = [...ABILITY_DEFS.map((d) => d.id), ...TECHNIQUES];
+
+export function stateOf(sim: Simulation, person: Person): ForecastState {
+  const genres: Record<string, number> = {};
+  for (const [g, x] of Object.entries(person.engagement?.byGenre ?? {})) { const v = Math.max(x.familiarity ?? 0, x.practice ?? 0); if (v > 0) genres[g] = v; }
+  const key = [...(person.work ?? [])].sort((a, b) => a.at - b.at).at(-1)?.inputs.key;
+  return { levels: Object.fromEntries(STATE_INPUTS.map((id) => [id, levelOf(sim, person, id as AbilityId | Skill)])), staminaFull: abilityFull(sim, person, 'stamina'), genres, ...(key ? { key } : {}) };
+}
+
+/** What a change in a forecast is made of, one input at a time from the noted state to now (from brief 12). */
+export type ChangePart = 'work' | 'genres' | 'others' | 'own' | 'discipline';
+export const CHANGE_ORDER: readonly ChangePart[] = ['work', 'genres', 'others', 'own', 'discipline'];
+
+/**
+ * One input's forecast with the parts named in `now` as they are, and the rest as the state kept them (from brief 12): a
+ * scratch copy of the person with the kept levels set, stamina's full as kept, the work read up to the kept latest piece,
+ * and each genre known as kept. Undefined where the work then is no longer kept, or the input has no forecast.
+ */
+function forecastAs(sim: Simulation, person: Person, id: string, s: ForecastState, now: ReadonlySet<ChangePart>): number | undefined {
+  const p = scratchOf(person);
+  for (const [x, v] of Object.entries(s.levels)) {
+    const part: ChangePart = x === id ? 'own' : x === 'discipline' ? 'discipline' : 'others';
+    if (now.has(part)) continue;
+    if (isAbility(x as never)) setAbility(sim, p, x as AbilityId, v); else p.craft = { ...p.craft!, [x]: v };
+  }
+  const performer = performerFor(sim, p);
+  const at = now.has('others') ? performer : { ...performer, full: (x: AbilityId) => (x === 'stamina' ? s.staminaFull : performer.full(x)) };
+  const sorted = [...(person.work ?? [])].sort((a, b) => a.at - b.at);
+  const upTo = s.key === undefined ? -1 : sorted.findIndex((w) => w.inputs.key === s.key);
+  if (!now.has('work') && upTo < 0) return undefined;
+  const work = now.has('work') ? sorted : sorted.slice(0, upTo + 1);
+  // Knowing each genre as kept: a person whose engagement is the kept one, so `genreKnown` reads it as it read it then.
+  const known: Person = now.has('genres') ? p : { ...p, engagement: { byGenre: Object.fromEntries(Object.entries(s.genres).map(([g, v]) => [g, { familiarity: v, practice: v }])) } };
+  const f = forecastIn(sim, p, at, work.map(genreNow(known)), [id]).get(id);
+  return f ? f.exact ?? f.points : undefined;
+}
+
+/**
+ * A forecast's change since a note, in parts (from brief 12; advice-criteria.md, H3 to H5): from the state the note kept to
+ * the present, one input at a time in `CHANGE_ORDER` (the work read, knowing its genres, the other abilities and
+ * techniques with stamina's full, the input's own level, and discipline last, so its part is the forecast now less the
+ * forecast now at the discipline it had, as brief 11 worked it). A part whose input didn't change is exactly 0. The parts
+ * sum to the change from the forecast worked again from the kept state (`then`); `residual` is the forecast the note kept
+ * less that one, what nothing the forecast reads accounts for. Undefined where the note kept no state (one from before
+ * brief 12), the work it read is no longer kept, or the input has no forecast now.
+ */
+export interface ForecastChange { noted: number; then: number; now: number; parts: Record<ChangePart, number>; residual: number }
+export function forecastChange(sim: Simulation, person: Person, id: string, noted: { forecast: number; state?: ForecastState }): ForecastChange | undefined {
+  const s = noted.state;
+  if (!s) return undefined;
+  const steps: number[] = [];
+  const now = new Set<ChangePart>();
+  for (let k = 0; k <= CHANGE_ORDER.length; k += 1) {
+    const x = forecastAs(sim, person, id, s, now);
+    if (x === undefined) return undefined;
+    steps.push(x);
+    if (k < CHANGE_ORDER.length) now.add(CHANGE_ORDER[k]!);
+  }
+  const parts = Object.fromEntries(CHANGE_ORDER.map((part, k) => [part, steps[k + 1]! - steps[k]!])) as Record<ChangePart, number>;
+  return { noted: noted.forecast, then: steps[0]!, now: steps.at(-1)!, parts, residual: noted.forecast - steps[0]! };
+}
+
+/**
+ * What every input's forecast assumes of the pieces it reads (from brief 12; advice-criteria.md, F2 and F4): of their own
+ * preparation (every part but knowing the genre, against what completes it), how many were complete as taped, how many
+ * short and read as taped, and each read as prepared, its own preparation what held it back most, with how far each part
+ * fell short; of knowing their genres, read as known today, how many are short of complete and how many are known better
+ * than when taped (of the pieces with a genre part).
+ */
+export interface Assumed {
+  pieces: number;
+  complete: number;
+  short: number;
+  prepared: { what: string; key: string; task: string; parts: { part: string; share: number }[] }[];
+  genres: number;
+  genreShort: number;
+  genreBetter: number;
+}
+export function assumedOf(person: Person): Assumed | undefined {
+  const kept = forecastWork(person.work ?? []);
+  if (!kept.length) return undefined;
+  const today = kept.map(genreNow(person));
+  const own = (w: WorkRecord) => Object.entries(w.inputs.prep).filter(([k]) => !ACROSS_PIECES.includes(k)).map(([part, x]) => ({ part, share: Math.min(1, (w.inputs.required[part] ?? 1) > 0 ? x / (w.inputs.required[part] ?? 1) : 1) }));
+  const prepared = kept.filter(heldByPreparation).map((w) => ({ what: w.what, key: w.inputs.key, task: w.task, parts: own(w).filter((x) => x.share < 1) }));
+  const complete = kept.filter((w) => !heldByPreparation(w) && own(w).every((x) => x.share >= 1)).length;
+  const withGenre = kept.map((w, i) => ({ was: w.inputs.prep.genre, now: today[i]!.inputs.prep.genre, need: w.inputs.required.genre ?? 1 })).filter((x) => x.was !== undefined && x.now !== undefined);
+  return { pieces: kept.length, complete, short: kept.length - complete - prepared.length, prepared, genres: withGenre.length, genreShort: withGenre.filter((x) => x.now! < x.need).length, genreBetter: withGenre.filter((x) => x.now! > x.was! + 1e-12).length };
+}
+
+/**
+ * What preparation would bring the recent work, as you are now (from brief 12; advice-criteria.md, F5): each piece with its
+ * own preparation complete against it as taped (`own`), and then its genre known in full beside that (`genres`), each
+ * piece's genre read as known today, weighted to the latest as a forecast is. In points a piece, as training's forecast is.
+ */
+export function preparationWorth(sim: Simulation, person: Person): { own: number; genres: number } | undefined {
+  const latest = forecastWork(person.work ?? []).map(genreNow(person));
+  if (!latest.length) return undefined;
+  const me = performerFor(sim, person);
+  const exact = (w: WorkRecord) => { const e = replayAs(w, TASK_PROFILES[w.task]!, me); return e ? e.exact ?? e.overall : undefined; };
+  const W = latest.reduce((t, _w, i) => t + (i + 1) / latest.length, 0);
+  let own = 0;
+  let genres = 0;
+  latest.forEach((w, i) => {
+    const prepared = asPrepared(w);
+    const known = prepared.inputs.prep.genre === undefined ? prepared : { ...prepared, inputs: { ...prepared.inputs, prep: { ...prepared.inputs.prep, genre: Math.max(prepared.inputs.prep.genre, w.inputs.required.genre ?? 1) } } };
+    const [a, b, c] = [exact(w), exact(prepared), exact(known)];
+    if (a === undefined || b === undefined || c === undefined) return;
+    own += ((b - a) * (i + 1)) / latest.length / W;
+    genres += ((c - b) * (i + 1)) / latest.length / W;
+  });
+  return { own, genres };
+}
+
 /** What an input's hours bring it to, and discipline with it: the engine's (`trained`), or with no save the curve alone (`levelAfter`). */
 export type Grow = (id: string, from: number, full: number) => { to: number; discipline: number };
 
@@ -214,10 +361,12 @@ export function readOf(latest: readonly WorkRecord[]): string[] {
 const workFull = (now: Performer, id: string) => (isAbility(id as never) ? now.full(id as AbilityId) : MASTERED);
 
 /** The same, for any performer: the pure part, which tools and tests read with an actor of their own. `only` (from brief 11): those inputs alone. */
-export function forecastFor(now: Performer, work: readonly WorkRecord[], grow?: Grow, only?: readonly string[]): Map<string, Forecast> {
+export function forecastFor(now: Performer, work: readonly WorkRecord[], grow?: Grow, only?: readonly string[], asTaped = false): Map<string, Forecast> {
   const kept = forecastWork(work);
-  const latest = kept.map((w) => (heldByPreparation(w) ? asPrepared(w) : w));
-  const prepared = kept.filter(heldByPreparation).length;
+  // `asTaped` (from brief 12): every piece as its record keeps it, the counterfactual the advice says beside the forecast.
+  const held = (w: WorkRecord) => !asTaped && heldByPreparation(w);
+  const latest = kept.map((w) => (held(w) ? asPrepared(w) : w));
+  const prepared = kept.filter(held).length;
   const out = new Map<string, Forecast>();
   if (!latest.length) return out;
   const weights = latest.map((_, i) => (i + 1) / latest.length);
@@ -226,7 +375,7 @@ export function forecastFor(now: Performer, work: readonly WorkRecord[], grow?: 
   const base = latest.map((w) => exact(w, now));
   // Preparation's figure (from brief 11): each piece read as prepared, as prepared against as it was taped, both as you
   // are now and weighted as the rest; said apart, and never in what training brings.
-  const preparation = prepared ? kept.reduce((t, w, i) => { if (!heldByPreparation(w)) return t; const a = base[i]; const b = exact(w, now); return a === undefined || b === undefined ? t : t + ((a - b) * weights[i]!) / W; }, 0) : undefined;
+  const preparation = prepared ? kept.reduce((t, w, i) => { if (!held(w)) return t; const a = base[i]; const b = exact(w, now); return a === undefined || b === undefined ? t : t + ((a - b) * weights[i]!) / W; }, 0) : undefined;
   const growth: Grow = grow ?? ((id, from, full) => ({ to: levelAfter(from, full, ADVICE.sessions, now.ability('discipline'), id === 'discipline'), discipline: now.ability('discipline') }));
   const set = (p: Performer, x: string, v: number): Performer => (isAbility(x as never) ? { ...p, ability: (y) => (y === x ? v : p.ability(y)) } : { ...p, technique: (y) => (y === x ? v : p.technique(y)) });
   // What the days' discipline brings, on every recent piece, whatever is trained (a day kept grows it the same for any
