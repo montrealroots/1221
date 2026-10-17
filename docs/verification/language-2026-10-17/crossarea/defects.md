@@ -56,3 +56,49 @@ harness that applies it, runs the test file and restores the source byte for byt
 
 - **Text status:** `src/app/game-context.tsx#LIVE_CLOCK_FAULT`, new, marked Rewritten And Verified `--by frame` with the
   test as its evidence. `#GameProvider`'s strings didn't change.
+
+## 2. The IRS's decision on a payment plan read its refusal's words
+
+- **What:** `src/engine/systems/taxreturn.ts`, the `TAX_PLAN_DECIDE_KIND` handler. It set the pending plan's status to
+  refused, asked `planRefusal`, set it back, and refused the plan only where the refusal didn't match
+  `/payment plan|application/`. The match was meant to skip the refusal that names the plan's own application. That
+  was logic keyed on the player's words: a rewording of any refusal the decision can reach would have changed what the
+  IRS decided (papers `defects.md` 4).
+- **Confirmed:** reading every sentence `planRefusal` can return. With the status flipped, the held-plan sentences
+  ("Your application is already with the IRS. …", "You already have a payment plan with the IRS.") can't be reached;
+  the four it can reach ("You owe the IRS nothing.", the unfiled return's, the short-term limit's and the Simple
+  Payment Plan's) don't match, the last only because the match is case-sensitive and "Payment Plan" is capitalized. So
+  with today's words the match never fires, and it never has: `git log -S` finds it first in `7e44117b`, with the
+  status flip beside it. Then the words mutation below: a refusal reworded to contain "payment plan" or "application"
+  made the old decision approve a plan it should have refused.
+- **Fix:** `planRefusal` takes the plan being decided (`deciding`), which is its own application, not a plan held
+  against it: `const held = person.taxPlan !== deciding ? person.taxPlan : undefined`. The decision passes its plan
+  and refuses on any refusal, with no status flip and no match. The application and the Papers screen call it without
+  `deciding`, so they're unchanged. Its strings are unchanged too (the inventory writes a template's expression as
+  `{…}`), so no source of text went Pending.
+- **Test:** `tests/language-crossarea.test.ts`, describe "the IRS’s decision on a payment plan", pinning every case
+  of the decision on a played life (a New Yorker with $60,000 of 2026 wages, her return filed unpaid on 1 February
+  2027, $9,614.89 owed), with what the refusal said just before the answer:
+  - approved: a monthly plan, its $29 fee charged once, and a short-term one with none, each while the refusal named
+    its own application ("Your application is already with the IRS. …");
+  - refused, each in its own words and its notice: nothing owed by the answer (paid on Papers in between), a 2025
+    return past due and unfiled (FIXTURE), a balance past $50,000 on a monthly plan and past $100,000 on a short-term one
+    (FIXTURE: tax added by hand, as a processed amendment would add it), and a $29 fee the emptied bank can't cover;
+  - answered nothing: a plan not waiting on the answer (FIXTURE: its status set to refused, or active).
+- **Pinned before and after:** the three tests passed on the code as it was (4 of 4 with item 1's) and pass with the
+  fix; the nine files that hold the plan (`language-crossarea`, `defects-g8-7`, `finance-paths`, `remaining-tax`,
+  `evidence-g17-papers`, `scope-taxpapers`, `guide-examples-papers`, `state-tax`, `defects-g8-8`) pass 121 of 121.
+- **Shown failing without the fix:** reverting the fix alone fails nothing, which is what "the same outcomes in every
+  case" means: with today's words the old decision and the new agree. What the fix changes is that the outcome no
+  longer depends on the words, so it's shown with the words changed:
+
+  | Mutation | Fix in | Fix reverted |
+  |---|---|---|
+  | "You owe the IRS nothing." reworded "…, so there’s no payment plan to set up." (source and pin) | passes | killed: the plan approved with nothing owed |
+  | The unfiled refusal reworded "…File it before your application." (source and pin) | passes | killed: the plan approved with a return unfiled |
+
+- **Mutation run** of the fix (all killed): the decision not naming its plan (every plan refused as its own
+  application); `planRefusal` ignoring `deciding` (the same); `planRefusal` taking every plan as the one decided (the
+  application no longer refuses a second plan: killed by `tests/evidence-g17-papers.test.ts`, "You already have a
+  payment plan with the IRS."); the decision refusing nothing; the decision's pending guard dropped (a plan set refused by
+  hand was decided anyway, and approved).

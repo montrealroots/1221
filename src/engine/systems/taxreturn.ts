@@ -559,9 +559,16 @@ export const owedAll = (person: Person, at: Instant): Money => Object.values(per
 /** What's owed to anyone for income tax, the IRS and every state, now: what a budget sets aside. */
 export const owedEverywhere = (person: Person, at: Instant): Money => owedAll(person, at) + owedToStates(person, at);
 
-/** Why a plan can't be applied for, or nothing; and what it would be. */
-export function planRefusal(sim: Simulation, person: Person, kind: 'short' | 'long'): string | undefined {
-  if (person.taxPlan && ['pending', 'active', 'default'].includes(person.taxPlan.status)) return person.taxPlan.status === 'pending' ? `Your application is already with the IRS. It answers by ${formatDate(person.taxPlan.decideAt, HOME)}.` : 'You already have a payment plan with the IRS.';
+/**
+ * Why a plan can't be applied for, or nothing; and what it would be. `deciding` is the plan the IRS is answering
+ * (`TAX_PLAN_DECIDE_KIND`), which is its own application, not a plan held against it: what's asked of it is what's owed
+ * and filed. Until 2026-10-17 the decision asked this with the plan's status set to refused for the call, then skipped
+ * any refusal whose words matched /payment plan|application/, so a rewording here could have changed what the IRS
+ * decided (papers `defects.md` 4).
+ */
+export function planRefusal(sim: Simulation, person: Person, kind: 'short' | 'long', deciding?: TaxPlan): string | undefined {
+  const held = person.taxPlan !== deciding ? person.taxPlan : undefined;
+  if (held && ['pending', 'active', 'default'].includes(held.status)) return held.status === 'pending' ? `Your application is already with the IRS. It answers by ${formatDate(held.decideAt, HOME)}.` : 'You already have a payment plan with the IRS.';
   const owed = owedAll(person, sim.now);
   if (owed <= 0) return 'You owe the IRS nothing.';
   const unfiled = Object.values(person.returns ?? {}).find((r) => r.filedAt === undefined && r.due < sim.now);
@@ -1494,11 +1501,10 @@ export function registerTaxReturn(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const p = person?.taxPlan;
     if (!person || !p || p.status !== 'pending') return;
-    // Decided on the day: a new unfiled return or a balance past its limit is refused, as the IRS would.
-    p.status = 'refused';
-    const no = planRefusal(s, person, p.kind);
-    p.status = 'pending';
-    if (no && !/payment plan|application/.test(no)) { refusePlan(s, person, p, no); return; }
+    // Decided on the day: a new unfiled return or a balance past its limit is refused, as the IRS would. The plan is
+    // asked about as the one being decided, by its state, never by its refusal's words (from 2026-10-17).
+    const no = planRefusal(s, person, p.kind, p);
+    if (no) { refusePlan(s, person, p, no); return; }
     // The setup fee, paid on approval; a bank emptied in Form 9465's thirty days can't, and there's no plan (from
     // 2026-10-12).
     if (p.fee > 0 && !payFromBank(s, person, p.fee, 'IRS payment plan setup fee', 'tax')) { refusePlan(s, person, p, `Your bank couldn’t cover the ${formatMoney(p.fee, saveCurrency(s.universe))} setup fee, so the plan wasn’t set up.`); return; }

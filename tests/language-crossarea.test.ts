@@ -5,6 +5,9 @@
  *
  * - The live clock, when a tick of it throws, pauses the save, says so, and offers Play; until then it stopped without a
  *   word and the top bar kept offering Pause (frame `defects.md` 1).
+ * - The IRS's decision on a payment plan reads the plan's state, never its refusal's words; until then it skipped a
+ *   refusal whose words matched /payment plan|application/ (papers `defects.md` 4). Every case of the decision is pinned
+ *   here, and held the same on the code before the fix and after it.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, an actress at Yale in New Haven from Monday
  * 24 August 2026 at 7:30 AM. The page's live clock is the real `GameProvider` in a real React root (react-dom/client),
@@ -17,9 +20,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createRoot } from 'react-dom/client';
-import { createSave } from '@/engine';
+import { createSave, loadSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
+import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { newLifeConfig } from '@/engine/world/bootstrap';
+import { recordWages } from '@/engine/systems/earnings';
+import { PLAN, owedAll, planRefusal, returnsOf } from '@/engine/systems/taxreturn';
 import { GameProvider, useGame, useWorld, type GameContextValue } from '@/app/game-context';
 import { TimeControls } from '@/ui/shell/TimeControls';
 
@@ -145,4 +151,108 @@ describe('the live clock when a tick throws', () => {
     expect(held.shown().map((t) => t.message)).toEqual([SAID, SAID]);
     held.unmount();
   });
+});
+
+// ---------------------------------------------------------------------------
+// The IRS's decision on a payment plan
+// ---------------------------------------------------------------------------
+
+const NY = 'America/New_York';
+const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
+const primary = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
+/** TEST SETUP: money into the primary account, by a posting, so the ledger still balances. */
+const fund = (sim: Simulation, amount: number) => sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: primary(sim).id, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
+/** FIXTURE: every account of the player's with money in it emptied, by a posting, so the ledger still balances. */
+const empty = (sim: Simulation) => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings')) sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('expense', 'Test').id, amount: a.balance }] }); };
+
+/**
+ * LIFE FIXTURE (`quickSave`): a New Yorker of wealthy means with $60,000 of 2026 wages, played to 1 February 2027 and her
+ * accounts emptied, files her 2026 return, so its balance is owed: past the low-income fee, with a Social Security
+ * number, so a plan is decided online a minute after it's asked. Played once and copied for each case.
+ */
+let owing: string | undefined;
+const owingSave = (): Simulation => {
+  if (!owing) {
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'xarea-plan');
+    recordWages(sim.player, at(2026, 5, 1), NY, { gross: 60_000_00 });
+    while (sim.now < at(2027, 2, 1, 12)) sim.advanceTo(Math.min(at(2027, 2, 1, 12), sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true });
+    empty(sim);
+    sim.must({ kind: 'tax.file', payload: { year: 2026 } });
+    owing = JSON.stringify(sim.universe);
+  }
+  return loadSave(JSON.parse(owing) as never);
+};
+
+const PLAN_TITLES = new Set(['Your IRS Payment Plan Is Approved', 'The IRS Declined Your Payment Plan']);
+/**
+ * A plan asked for with $100 in the bank for its fee, what `between` does before the IRS answers, and the answer: the
+ * plan's status and why, what the plan's refusal said just before the answer, the notices about it, and the setup fees
+ * charged.
+ */
+function decided(kind: 'short' | 'long', between: (sim: Simulation) => void = () => undefined) {
+  const sim = owingSave();
+  fund(sim, 100_00);
+  const asked = sim.must<{ decideAt: number }>({ kind: 'tax.apply_plan', payload: { kind } });
+  const since = sim.universe.notifications.length;
+  between(sim);
+  const before = planRefusal(sim, sim.player, kind);
+  sim.advanceTo(asked.decideAt + MS_HOUR);
+  const p = sim.player.taxPlan!;
+  return {
+    status: p.status,
+    why: p.why,
+    before,
+    notices: sim.universe.notifications.slice(since).filter((n) => PLAN_TITLES.has(n.title)).map((n) => `${n.title}: ${n.body}`),
+    fees: sim.universe.transactions.filter((t) => t.memo === 'IRS payment plan setup fee').length,
+  };
+}
+/** FIXTURE: tax added to the 2026 return by hand, as an amendment processed before the IRS answers would add it. */
+const moreTax = (sim: Simulation, amount: number) => {
+  const r = returnsOf(sim.player)['2026']!;
+  r.parts = { ...r.parts!, tax: r.parts!.tax + amount };
+  r.owed = r.owed! + amount;
+  r.base = (r.base ?? 0) + amount;
+};
+const DECLINED = 'The IRS Declined Your Payment Plan: ';
+const LETTERS = ' Its letters about what you owe will start again.';
+
+describe('the IRS’s decision on a payment plan', () => {
+  it('approves a plan nothing bars, though the plan’s own application is what the refusal names until the answer: a monthly plan, its fee charged once, and a short-term one with none', () => {
+    const monthly = decided('long');
+    expect(monthly.before).toMatch(/^Your application is already with the IRS\. It answers by /);
+    expect(monthly).toMatchObject({ status: 'active', why: undefined, fees: 1 });
+    expect(monthly.notices).toHaveLength(1);
+    expect(monthly.notices[0]).toMatch(/^Your IRS Payment Plan Is Approved: /);
+    const short = decided('short');
+    expect(short.before).toMatch(/^Your application is already with the IRS\. It answers by /);
+    expect(short).toMatchObject({ status: 'active', why: undefined, fees: 0 });
+    expect(short.notices).toEqual([expect.stringMatching(/^Your IRS Payment Plan Is Approved: Pay what you owe by /)]);
+  }, 120_000);
+
+  it('refuses one for nothing owed by the answer, a return left unfiled past its due date, a balance past the plan’s limit, and a fee the bank can’t cover, each in its refusal’s words', () => {
+    const paid = decided('long', (sim) => { fund(sim, owedAll(sim.player, sim.now)); sim.must({ kind: 'tax.pay', payload: { year: 2026 } }); });
+    expect(paid).toEqual({ status: 'refused', why: 'You owe the IRS nothing.', before: paid.before, notices: [`${DECLINED}You owe the IRS nothing.`], fees: 0 });
+    // FIXTURE: a 2025 return past its due date and not filed, as defects-g8-7 holds it.
+    const unfiled = decided('long', (sim) => { returnsOf(sim.player)['2025'] = { year: 2025, due: sim.now - MS_DAY, figures: { ...returnsOf(sim.player)['2026']!.figures, balance: 0, owedTo: { irs: 0, states: {} } } } as never; });
+    const file = 'The IRS needs every return filed first, and your 2025 return isn’t. File it first.';
+    expect(unfiled).toEqual({ status: 'refused', why: file, before: unfiled.before, notices: [`${DECLINED}${file}${LETTERS}`], fees: 0 });
+    const long = decided('long', (sim) => moreTax(sim, PLAN.longMax));
+    const longMax = 'A Simple Payment Plan is for $50,000 or less. A larger balance needs a financial statement, which the game doesn’t offer.';
+    expect(long).toEqual({ status: 'refused', why: longMax, before: long.before, notices: [`${DECLINED}${longMax}${LETTERS}`], fees: 0 });
+    const short = decided('short', (sim) => moreTax(sim, PLAN.shortMax));
+    const shortMax = 'A short-term plan is for less than $100,000.';
+    expect(short).toEqual({ status: 'refused', why: shortMax, before: short.before, notices: [`${DECLINED}${shortMax}${LETTERS}`], fees: 0 });
+    const broke = decided('long', empty);
+    const fee = 'Your bank couldn’t cover the $29.00 setup fee, so the plan wasn’t set up.';
+    expect(broke).toEqual({ status: 'refused', why: fee, before: broke.before, notices: [`${DECLINED}${fee}${LETTERS}`], fees: 0 });
+    // Each was its own application until the answer.
+    for (const one of [paid, unfiled, long, short, broke]) expect(one.before).toMatch(/^Your application is already with the IRS\. /);
+  }, 120_000);
+
+  it('answers nothing for a plan that isn’t waiting on it (FIXTURE: its status set by hand)', () => {
+    for (const status of ['refused', 'active'] as const) {
+      const left = decided('long', (sim) => { sim.player.taxPlan!.status = status; });
+      expect(left).toMatchObject({ status, why: undefined, notices: [], fees: 0 });
+    }
+  }, 120_000);
 });
