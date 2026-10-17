@@ -40,7 +40,8 @@ The file runs in about 20 seconds (8 of them the tests themselves): 33 tests in 
 main tree's branch merged in (`961b3f08`, the journeys area and the injury's words): 33 of 33. Every other test file
 that imports a source changed here (110 files, 1,673 tests) was run on the merged code: four failed where they held
 the old words (`defects.md` lists them, and one comment's apostrophes from the merge), were updated, and passed, 97
-of 97.
+of 97. The main tree's cross-area code pass (`9b313002`) was merged after: the file, the cross-area pass's own two and
+six more that hold words changed here ran on it, 184 of 184, with the typecheck and every language check at exit 0.
 
 ## The Cases
 
