@@ -641,8 +641,9 @@ describe('injuries', () => {
     expect(injury).toMatchObject({ kind: 'strain', at: Date.UTC(2026, 7, 24, 12, 30), until: Date.UTC(2026, 8, 14, 12, 30) });
     const told = notices(hurt, 'A Pulled Muscle');
     expect(told).toHaveLength(1);
-    // Yale Health pays a student's care in full: no bill, and the notice names no cost.
-    expect(told[0]!.body.trim()).toBe('It takes 21 days to mend, and you can’t work out until then.');
+    // Yale Health pays a student's care in full: no bill. Until 2026-10-17 the notice named no cost; it now says the care
+    // cost nothing, and that Call In Sick excuses a day of classes while it mends (brief 14's health journey).
+    expect(told[0]!.body.trim()).toBe('It takes 21 days to mend, and you can’t work out until then. Its care, a visit to urgent care and 2 sessions of physical therapy, costs you nothing. Call In Sick, on School, excuses a day of classes while it mends.');
     expect(healthOf(hurt.player).bills).toHaveLength(0);
     const gap = () => ({ stress: hurt.player.wellbeing.stress - well.player.wellbeing.stress, morale: hurt.player.wellbeing.morale - well.player.wellbeing.morale });
     expect(gap().stress).toBeCloseTo(6, 9);
@@ -726,7 +727,7 @@ describe('injuries', () => {
     expect(sim.player.school!.tally.worked).toBe(1);
     // Six hours at the Bulletin's $23.00 an hour is the week's wage the compensation would read.
     expect(healthOf(sim.player).injury).toEqual({ kind: 'strain', at: shift, until: shift + 20 * MS_DAY, atWork: { stateId: 'us-ct', weeklyWage: 138_00, paidDays: 0, noFica: true } });
-    expect(notices(sim, 'A Pulled Muscle')[0]!.body).toBe('It takes 20 days to mend, and you can’t work out until then. It happened at work, so workers’ compensation pays for the care.');
+    expect(notices(sim, 'A Pulled Muscle')[0]!.body).toBe('It takes 20 days to mend, and you can’t work out until then. It happened at work, so workers’ compensation pays for the care. Call In Sick, on School, excuses a day of classes while it mends.');
     expect(personLook(sim)).toContain('Mending. A Pulled Muscle, until September 25, 2026, on workers’ compensation.');
     expect(healthOf(sim.player).bills).toHaveLength(0);
     // Not off work, so no week of compensation is scheduled.

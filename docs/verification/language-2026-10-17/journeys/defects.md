@@ -104,6 +104,12 @@ screen; the rest are for the coordinator, with where each is and what fixing it 
 - **Why not fixed:** the health area's merged words, and meaning-sensitive: a covered injury's care isn't recorded
   anywhere, so what the sentence may claim needs that area's reading. Proposed: "Your cover pays for its care." where the
   share is nothing, and "Call In Sick, on School, excuses a day of classes while it mends." beside what it keeps you from.
+- **Fixed at the merge** (the coordinator, 2026-10-17). The notice now names the care and says it cost nothing where
+  the plan paid it whole ("Its care, a visit to urgent care and 2 sessions of physical therapy, costs you nothing."),
+  and, for a student whose injury limits the work without laying them up, ends "Call In Sick, on School, excuses a day of
+  classes while it mends." The injury's look says the same last sentence to the player. `tests/language-injury.test.ts`
+  holds a student, one who has left, a laid-up injury, a knock and a broken bone; four mutations each failed it (the
+  enrollment ignored in the notice and in the look, the care's sentence dropped, and the laid-up exclusion dropped).
 
 ## Seen, Not Counted As Defects
 

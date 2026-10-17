@@ -875,6 +875,12 @@
   "on": "2026-10-17",
   "reason": "What the work rules ask, “… of income, time at the School or an exception”, in the words Papers uses; read inside the notices verified in tests/defects-g8-4.test.ts and tests/remaining-health-eligibility.test.ts."
  },
+ "src/engine/systems/injury.ts#CARE_WORDS": {
+  "status": "Rewritten And Verified",
+  "hash": "f39a3438f04e",
+  "on": "2026-10-17",
+  "evidence": "tests/language-injury.test.ts (notice and look across a student, a withdrawn student, a laid-up injury, a knock and a broken bone; 4 mutations killed) and tests/evidence-g04-life, evidence-g07-life (exact notices); found by brief 14's health journey, defect 6"
+ },
  "src/engine/systems/injury.ts#compWeek": {
   "status": "Reviewed And Retained",
   "hash": "c8857468d385",
@@ -883,9 +889,9 @@
  },
  "src/engine/systems/injury.ts#mayHurt": {
   "status": "Rewritten And Verified",
-  "hash": "6197fa2048c7",
+  "hash": "154dc83c191d",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g07-life.test.ts (a pulled muscle; a sprain’s bill; a work-study shift); tests/evidence2-b02.test.ts (a concussion; a sprain); tests/evidence-g05-life.test.ts (a broken bone at work); tests/evidence-g04-life.test.ts (a bad knock); tests/evidence-g09-life.test.ts; tests/evidence-g30-ui.test.ts; tests/defects-g8-13.test.ts"
+  "evidence": "tests/language-injury.test.ts (notice and look across a student, a withdrawn student, a laid-up injury, a knock and a broken bone; 4 mutations killed) and tests/evidence-g04-life, evidence-g07-life (exact notices); found by brief 14's health journey, defect 6"
  },
  "src/engine/systems/injury.ts#registerInjury": {
   "status": "Reviewed And Retained",
@@ -1009,9 +1015,9 @@
  },
  "src/ui/looks/wellbeing.tsx#top": {
   "status": "Rewritten And Verified",
-  "hash": "af393fb6cb2a",
+  "hash": "596277452799",
   "on": "2026-10-17",
-  "evidence": "tests/scope-people.test.ts (l-person FIXTURE tests: her, his and their looks, dials, readiness, trait, condition, injury), tests/evidence-g33-ui.test.ts (l-person, l-dial-stress), tests/evidence-g06-life.test.ts (each measure's sentence by band), tests/looks.test.ts (the sleep debt dial, the shape of a look), tests/evidence3-person.test.ts, tests/evidence-g32-ui.test.ts (h-how); every look and variant printed in docs/verification/language-2026-10-17/health/render-after-1.txt (scenario saves, bands, readiness at its ceiling, conditions each way, an injury of each limit, she/he/they)"
+  "evidence": "tests/language-injury.test.ts (notice and look across a student, a withdrawn student, a laid-up injury, a knock and a broken bone; 4 mutations killed) and tests/evidence-g04-life, evidence-g07-life (exact notices); found by brief 14's health journey, defect 6"
  },
  "src/ui/looks/wellbeing.tsx#WHAT": {
   "status": "Rewritten And Verified",
