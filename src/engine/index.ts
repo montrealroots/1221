@@ -67,7 +67,7 @@ import { WORK_KEPT, countWork, limitsOnce } from './systems/evaluation';
 import { bodyOf } from './systems/body';
 import { drawMateAbilities } from './systems/school';
 import { bindCeiling, ceilingBefore, focusAt, ordinary, redateCredits, upgradeCraft } from './systems/school';
-import { registerCoursework } from './systems/coursework';
+import { registerCoursework, writtenUnplayed } from './systems/coursework';
 import { registerClassmates, strandedMoments } from './systems/classmates';
 import { WHICH, hasProcess, holderFor, registerProduction } from './systems/production';
 import { registerPractice } from './systems/practice';
@@ -279,7 +279,7 @@ export function refreshMeta(sim: Simulation): void {
 }
 
 /** The one-time steps `loadSave` takes on an older build's save, by the name `SaveUniverse.opened` keeps (from 2026-10-15). */
-const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered'] as const;
+const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered', 'writtenUnplayed'] as const;
 
 /**
  * A save from before evaluation-10 (2026-10-16) has its work on a scene's or a play's segments moved to the units it's cut
@@ -440,6 +440,11 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (!opened.includes('briefsMastered')) {
     briefsMastered(Object.values(universe.people));
     opened.push('briefsMastered');
+  }
+  // A way of playing kept on written work still to be shown, from before 2026-10-17 (`writtenUnplayed`), taken off, once.
+  if (!opened.includes('writtenUnplayed')) {
+    writtenUnplayed(sim);
+    opened.push('writtenUnplayed');
   }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;

@@ -47,7 +47,7 @@ import { BRIEF_BY_ID } from '@/engine/content/briefs';
 import { APPROACH_EFFECT, PLAYING } from '@/engine/content/approaches';
 import type { AxisValue } from '@/engine/content/material';
 import { BRIEF, recordOf } from '@/engine/systems/briefs';
-import { courseworkOf } from '@/engine/systems/coursework';
+import { courseworkOf, playingRefusal, writtenUnplayed } from '@/engine/systems/coursework';
 import { materialOf } from '@/engine/systems/material';
 import { optionsOf, problemsOf } from '@/engine/systems/workbook';
 import { workPiece } from '@/engine/systems/workpieces';
@@ -279,6 +279,75 @@ describe('a scene for class: its way of playing and a segment’s way kept, read
 // ---------------------------------------------------------------------------
 // school.choose_part_playing
 // ---------------------------------------------------------------------------
+
+/**
+ * Written work has no way of playing (from 2026-10-17, brief 13's journeys, docs/verification/playthroughs-2026-10-17/
+ * journeys-criteria.md, check 2): Table Work sets a scene, but it's presented at the table, its task isn't performed
+ * (`UNPERFORMED`), and no step of it rehearses a way in. Until then a way could be chosen for it, previewed as if rehearsed
+ * in full, and it came to the showing at nothing: journey J12 (seed j13-6) chose ways on seven pieces of it.
+ */
+describe('written work: no way of playing to choose', () => {
+  /** The first Table Work the clock sets: the save then, and its id. */
+  const set = (() => {
+    let found: { snap: string; id: string } | undefined;
+    return () => {
+      if (!found) {
+        const sim = student('written-playing');
+        for (;;) {
+          tended(sim, sim.now + 6 * MS_HOUR);
+          const a = courseworkOf(sim, sim.player)?.assignments.find((x) => x.status === 'open' && x.template === 'table-work');
+          if (a) { found = { snap: freeze(sim), id: a.id }; break; }
+          expect(sim.now).toBeLessThan(at(2027, 3, 1));
+        }
+      }
+      return { sim: thaw(found.snap), id: found.id };
+    };
+  })();
+  const words = 'It’s written work, presented at the table and never played: there’s no way of playing it to choose.';
+
+  it('PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked', () => {
+    const { sim, id } = set();
+    const a = () => courseworkOf(sim, sim.player)!.assignments.find((x) => x.id === id)!;
+    expect(a().sceneId).toBeDefined();
+    expect(playingRefusal(a())).toBe(words);
+    kept(sim);
+    expect(sim.execute({ kind: 'school.choose_playing', payload: { assignmentId: id, scale: 'expansive' } }).error).toBe(words);
+    expect(a().playing).toBeUndefined();
+    const back = reload(sim);
+    expect(back.execute({ kind: 'school.choose_playing', payload: { assignmentId: id, pace: 'driven' } }).error).toBe(words);
+    const due = a().dueOn;
+    const until = at(Number(due.slice(0, 4)), Number(due.slice(5, 7)), Number(due.slice(8, 10)) + 2, 0);
+    while (!a().shown && sim.now < until) tended(sim, sim.now + 6 * MS_HOUR);
+    const w = (sim.player.work ?? []).find((x) => x.at === a().shown!.at)!;
+    expect(w).toBeDefined();
+    expect(Object.keys(w.inputs.prep)).not.toContain('approach');
+    expect(Object.keys(w.inputs.required)).not.toContain('approach');
+  }, 300_000);
+
+  it('FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)', () => {
+    const { sim, id } = set();
+    const scene = courseworkOf(sim, sim.player)!.assignments.find((x) => x.id !== id && !playingRefusal(x))!;
+    expect(scene, 'a performed piece open beside it').toBeDefined();
+    go(sim, 'school.choose_playing', { assignmentId: scene.id, pace: 'driven' });
+    const table = courseworkOf(sim, sim.player)!.assignments.find((x) => x.id === id)!;
+    table.playing = { chosenAt: sim.now, prep: 0, scale: 'expansive' };
+    // And one shown, its way part of how it went, which opening leaves.
+    const shown = { ...structuredClone(table), id: 'shown-table-work', status: 'done' as const, shown: { band: 'working' as const, score: 0.6, at: sim.now - MS_DAY, strengths: [] } };
+    courseworkOf(sim, sim.player)!.assignments.push(shown);
+    sim.universe.opened = (sim.universe.opened ?? []).filter((x) => x !== 'writtenUnplayed');
+    const opened = reload(sim);
+    const of = (s: Simulation, x: string) => courseworkOf(s, s.player)!.assignments.find((y) => y.id === x)!;
+    expect(of(opened, id).playing).toBeUndefined();
+    expect(of(opened, scene.id).playing).toMatchObject({ pace: 'driven' });
+    expect(of(opened, 'shown-table-work').playing).toMatchObject({ scale: 'expansive' });
+    expect(opened.universe.opened).toContain('writtenUnplayed');
+    // Once: a way on it again (TEST SETUP) is left by the next opening, the step taken.
+    of(opened, id).playing = { chosenAt: opened.now, prep: 0, scale: 'expansive' };
+    expect(of(reload(opened), id).playing).toMatchObject({ scale: 'expansive' });
+    expect(writtenUnplayed(opened)).toBe(1);
+    expect(of(opened, id).playing).toBeUndefined();
+  }, 300_000);
+});
 
 describe('school.choose_part_playing: a part’s way, kept across a reload', () => {
   it('PLAYER JOURNEY: the first spring’s part played Driven from the read-through, rehearsed in at two calls, saved and loaded, and rehearsed in at the third as far as the twin that wasn’t reloaded', () => {
