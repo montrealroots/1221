@@ -3332,7 +3332,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 13,
+        "rounds": 19,
         "tests": [
           {
             "file": "evidence-g03-life.test.ts",
@@ -3617,6 +3617,20 @@
             "kind": "fixture",
             "closes": "retroStart on a withdrawn life with one visit on 28 August 2026 (FIXTURE): from 1 August; with September’s income set over the line, the reach stops at October, giving the month of application’s first; with a Covered Connecticut plan set on September, the same.",
             "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "health.apply: HUSKY D applied for on its notice, the month before read, decided after thirty days > PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $182,500, $465.00, she’s shown the work rules short",
+            "kind": "fixture",
+            "closes": "The work rules met by income the clock paid (interest), the arm off the School a played life reaches",
+            "round": "remaining-11-journeys"
+          },
+          {
+            "file": "remaining-health-billing.test.ts",
+            "title": "HUSKY D kept at its renewal through work, read over Connecticut’s six months > FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice",
+            "kind": "fixture",
+            "closes": "HUSKY D kept at its renewal through work, on the clock, with the wages no played life off the School has posted by hand",
+            "round": "remaining-11-journeys"
           }
         ],
         "gapsClosed": [

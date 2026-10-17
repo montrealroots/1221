@@ -7974,6 +7974,28 @@
       "verification": {
         "class": "legacy",
         "label": "Older Saves Only"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "evidence2-b13.test.ts",
+            "title": "i-ui-text > PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense, the one interest wording on either; its twin without the hour says none; an hour of practice takes the Listening column and the history keeps the line, across a save and a load",
+            "kind": "fixture",
+            "closes": "The look and the Profile on a migrated save carrying an interest: source, the line in both places, across a save and a load",
+            "round": "remaining-11-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "legacy"
       }
     },
     {
