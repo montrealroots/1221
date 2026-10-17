@@ -372,7 +372,7 @@ export const PAPERS: readonly GuideEntry[] = [
       setup: 'A US citizen in New Haven who graduated in the spring of 2027, with no pay in July.',
       steps: [
         'On 1 August a notice says “Your Health Cover Ended”.',
-        `Open Papers, Health Cover. Under The Marketplace: “From January 1, 2027, HUSKY D asks an applicant for ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of income, time at the School or an exception in the month before, and last month had none of them. The marketplace is open to you: within ${SPECIAL} days of losing cover.”`,
+        `Open Papers, Health Cover. Under The Marketplace: “From January 1, 2027, HUSKY D asks for ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of income, time at the School or an exception in the month before you apply, and last month had none of them. The marketplace is open to you, because you’re within ${SPECIAL} days of losing cover.”`,
         'Press Enroll.',
       ],
       result: `The toast says “Enrolled in the marketplace, from September 1, …”. From 1 September its premium is taken on each month’s first, and a visit costs ${usd(SILVER.visit)}. Care in August, uncovered, is billed at the uninsured price, less the hospital’s charity on an emergency or a stay. Enrolled ahead, from ${ENROLL_OPENS_ON} while Yale Health still covered them, their cover would have begun 1 August.`,

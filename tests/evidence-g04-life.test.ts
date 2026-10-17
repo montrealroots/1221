@@ -208,8 +208,8 @@ describe('health.therapy', () => {
       // Free on Yale Health: nothing posted for it.
       expect(sim.universe.transactions.filter((t) => t.memo.includes('Yale Mental Health'))).toHaveLength(0);
       // Said once, either way; lifted, the depression is off the record, and not, it's as it was, left alone.
-      expect(titled(sim, 'The Depression Has Lifted').map((n) => n.body)).toEqual(lifts ? ['After 8 sessions with Yale Mental Health & Counseling, it no longer weighs on you.'] : []);
-      expect(titled(sim, 'The Course Is Done').map((n) => n.body)).toEqual(lifts ? [] : ['8 sessions with Yale Mental Health & Counseling; it hasn’t lifted yet, and another course can be had.']);
+      expect(titled(sim, 'The Depression Has Lifted').map((n) => n.body)).toEqual(lifts ? ['After 8 sessions with Yale Mental Health & Counseling, your depression has lifted. It no longer needs care, and it no longer takes from your morale.'] : []);
+      expect(titled(sim, 'The Course Is Done').map((n) => n.body)).toEqual(lifts ? [] : ['You’ve finished 8 sessions with Yale Mental Health & Counseling. The depression hasn’t lifted yet, and you can start another course on Papers, under Health Cover.']);
       expect(healthOf(sim.player).chronic?.depression).toEqual(lifts ? undefined : { treated: false });
       // The next health week, Monday 26 October: depression left alone takes its 3 morale (SLATE's estimate); lifted, none.
       const week = atHealthWeek(sim, 'morale');
@@ -283,7 +283,7 @@ describe('health.therapy', () => {
     // By the fifteenth day of classes: the cover ends that day.
     expect(sim.must<{ early: boolean }>({ kind: 'school.withdraw', payload: { confirm: true } }).early).toBe(true);
     sim.advanceTo(r.first + 7 * MS_DAY + 60_000);
-    expect(titled(sim, 'Your Counseling At Yale Ended').map((n) => n.body)).toEqual(['Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, after 1 of 8 sessions. A therapist outside Yale can take it on.']);
+    expect(titled(sim, 'Your Counseling At Yale Ended').map((n) => n.body)).toEqual(['Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, after 1 of 8 sessions. A therapist outside Yale can take it on: choose one on Papers, under Health Cover.']);
     expect(sim.player.therapy).toBeUndefined();
     expect(sessions(sim).filter((i) => i.status === 'pending')).toHaveLength(0);
     sim.advanceTo(r.first + 14 * MS_DAY + 60_000);
@@ -332,7 +332,7 @@ describe('health.treat', () => {
     let sim = newYorker('g04-ny-care');
     expect(Object.keys(healthOf(sim.player).chronic ?? {})).toEqual(['depression', 'asthma']);
     // A condition not carried is refused in its own words, and nothing is paid for it.
-    expect(sim.execute({ kind: 'health.treat', payload: { condition: 'arthritis', on: true } }).error).toBe('You don’t have that.');
+    expect(sim.execute({ kind: 'health.treat', payload: { condition: 'arthritis', on: true } }).error).toBe('You don’t have that condition.');
     expect(memos(sim, 'Care for arthritis')).toHaveLength(0);
     h.toasts = [];
     const letGo = conditionButton(sim, 0);

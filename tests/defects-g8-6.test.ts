@@ -149,12 +149,12 @@ describe('a specialist booked again after it was called off is told so in plain 
     const zone = CITIES.require(sim.player.currentLocationId).timeZone;
     // The referral, as a kept visit draws one (odds 1 stands in for the draw).
     const a = mayRefer(sim, sim.player, { id: 'v1', at: sim.now, what: 'A checkup' }, 1)!;
-    expect(titled(sim, 'A Referral').at(-1)!.body).toBe(`Referred after a checkup: a specialist, booked for ${formatDate(a.at, zone)}, the wait where you live.`);
+    expect(titled(sim, 'A Referral').at(-1)!.body).toBe(`Referred after a checkup: a specialist, booked for ${formatDate(a.at, zone)}, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.`);
     sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: a.id } });
     expect(healthOf(sim.player).owedVisit).toBe(SPECIALIST);
     const again = sim.must<{ at: number }>({ kind: 'health.book', payload: {} });
     const body = titled(sim, 'A Referral').at(-1)!.body;
-    expect(body).toBe(`A specialist, referred: booked for ${formatDate(again.at, zone)}, the wait where you live.`);
+    expect(body).toBe(`A specialist, referred: booked for ${formatDate(again.at, zone)}, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.`);
     expect(body).not.toMatch(/booked specialist/);
     expect(appointmentsOf(sim.player)).toHaveLength(1);
   });
@@ -212,8 +212,8 @@ describe('an uninsured hospital bill says what the charity did with it', () => {
     const { text } = drawn(sim, PapersWorkspace, healthTab);
     expect(text).toContain('Over The Limit');
     expect(text).not.toContain('Charity Taken Off');
-    expect(aidRefusal(bill, sim.now)).toBe('It’s been put to the hospital’s charity.');
-    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: bill.id } }).error).toBe('It’s been put to the hospital’s charity.');
+    expect(aidRefusal(bill, sim.now)).toBe('It’s already been put in for the hospital’s financial assistance.');
+    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: bill.id } }).error).toBe('It’s already been put in for the hospital’s financial assistance.');
   });
 
   it('within it, something came off: Charity Taken Off, and the application is refused for that', () => {
@@ -221,7 +221,7 @@ describe('an uninsured hospital bill says what the charity did with it', () => {
     expect(bill.aid).toBe('screened');
     const { text } = drawn(sim, PapersWorkspace, healthTab);
     expect(text).toContain('Charity Taken Off');
-    expect(aidRefusal(bill, sim.now)).toBe('The hospital’s charity is off it already.');
+    expect(aidRefusal(bill, sim.now)).toBe('The hospital’s financial assistance has already come off it.');
   });
 });
 

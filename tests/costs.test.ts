@@ -163,7 +163,7 @@ describe('a dental plan of their own', () => {
     // A health plan that pays for teeth pays first: New York's Medicaid all of it. Until 2026-10-09, SAG-AFTRA's.
     healthOf(sim.player).program = { kind: 'medicaid', state: 'ny', from: at(2027, 1, 1, 0), band: 'low', renewAt: at(2028, 1, 1, 0) };
     expect(teethAndEyesShareOf(sim.player, 'filling', when)).toBe(0);
-    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'You have a dental plan.' });
+    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'You already have a dental plan.' });
     expect(sim.execute({ kind: 'health.dental', payload: { on: false } }).ok).toBe(true);
   });
 

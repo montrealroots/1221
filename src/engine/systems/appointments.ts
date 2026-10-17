@@ -162,7 +162,8 @@ function bookIn(sim: Simulation, person: Person, what: string, days: number, why
   const a: Appointment = { id: `a${h.seq}`, at: slot(sim, person, days), what, ...(clinic ? { clinicId: clinic.id } : {}) };
   appointmentsOf(person).push(a);
   sim.schedule({ at: a.at, kind: APPOINTMENT_KIND, label: what === SPECIALIST ? 'A Specialist' : `The Doctor${clinic ? `, ${clinic.name}` : ''}`, category: 'personal', priority: 35, requiresPlayer: true, durationMinutes: CONSULT_MINUTES, locationId: homeCity(person), payload: { personId: person.id, appointmentId: a.id } });
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: what === SPECIALIST ? 'A Referral' : 'A Doctor’s Appointment', body: `${why ? `${why}: a` : `${what}: booked`}${what === SPECIALIST ? (why ? ' specialist, booked' : '') : clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, the wait where you live.`, importance: 50, route: '/workspace/papers' });
+  // What to do about it, from 2026-10-17 (brief 14): be there, or call it off. Until then it ended at "the wait where you live".
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: what === SPECIALIST ? 'A Referral' : 'A Doctor’s Appointment', body: `${why ? `${why}: a` : `${what}: booked`}${what === SPECIALIST ? (why ? ' specialist, booked' : '') : clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.`, importance: 50, route: '/workspace/papers' });
   return a;
 }
 
@@ -210,7 +211,7 @@ export function registerAppointments(sim: Simulation): void {
     if (!presentForCare(person, item.at)) {
       item.status = 'missed';
       healthOf(person).owedVisit = a.what;
-      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Missed The Doctor', body: `${a.what}: you weren’t there, so you weren’t seen. Book again when you can.`, importance: 60, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Missed The Doctor', body: `${a.what}: you weren’t there, so you weren’t seen. Book again with Book An Appointment, on Papers under Health Cover.`, importance: 60, route: '/workspace/papers' });
       return;
     }
     // A practice for its members that doesn't see them now (from 2026-10-15): not seen, and owed, as a visit missed is.
@@ -218,7 +219,7 @@ export function registerAppointments(sim: Simulation): void {
     if (at && at.members !== null && !seesThem(person, at, item.at)) {
       item.status = 'missed';
       healthOf(person).owedVisit = a.what;
-      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Not Seen At Your Practice', body: `${a.what}: ${MEMBERS_ONLY[at.members]} You weren’t seen at ${at.name}. Book again, and it’s at ${clinicFor(person, 'visit', item.at)?.name ?? 'the town’s first practice'}.`, importance: 60, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Not Seen At Your Practice', body: `${a.what}: ${MEMBERS_ONLY[at.members]} You weren’t seen at ${at.name}. If you book again, with Book An Appointment on Papers under Health Cover, it’s at ${clinicFor(person, 'visit', item.at)?.name ?? 'the town’s first practice'}.`, importance: 60, route: '/workspace/papers' });
       return;
     }
     careFor(s, person, { care: 'visit', what: a.what, ...(a.clinicId ? { clinicId: a.clinicId } : {}) }, item.at);
@@ -236,7 +237,7 @@ export function registerAppointments(sim: Simulation): void {
     if (!what) throw new CommandError('There’s nothing to see a doctor about.');
     if (appointmentsOf(person).length) throw new CommandError('You have an appointment already.');
     const a = book(s, person, what);
-    if (!a) throw new CommandError('No wait is published where you live; you’re seen when it comes up.');
+    if (!a) throw new CommandError('No waiting time is published where you live, so there’s nothing to book: you’re seen when you need care.');
     delete healthOf(person).owedVisit;
     return { at: a.at };
   });

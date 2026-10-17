@@ -637,7 +637,7 @@ describe('life.look_after:exercise', () => {
     expect(bill.dueAt).toBe(sim.now + 30 * MS_DAY);
     expect(bill.amount).toBeGreaterThan(0);
     const dollars = `$${(bill.amount / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    expect(notices(sim, hurt.label)[0]!.body).toContain(`Its care comes to ${dollars}, due in 30 days.`);
+    expect(notices(sim, hurt.label)[0]!.body).toContain(`Your share of its care is ${dollars}, due in 30 days.`);
     expect(sim.universe.scheduled.filter((i) => i.label === `Medical Bill Due: ${hurt.bill}` && i.at === bill.dueAt)).toHaveLength(1);
     // Refused while it mends; reloaded, still one bill.
     expect(lookAfter(sim, 'exercise').error).toMatch(/^Not with /);

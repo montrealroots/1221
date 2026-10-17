@@ -658,12 +658,12 @@ export function retroStart(person: Person, appliedAt: Instant, start: Instant, i
  */
 export function mayEnroll(person: Person, at: Instant, into = 'USD', sim?: Simulation): { ok: boolean; why: string; program?: 'medicaid' | 'essential' } {
   const state = BENEFIT_STATE[homeOf(person)];
-  if (!state) return { ok: false, why: 'SLATE has public cover and the marketplace in New York, Los Angeles and New Haven.' };
+  if (!state) return { ok: false, why: 'You can enroll in public cover or the marketplace only while you live in New York, Los Angeles or New Haven.' };
   const h = healthOf(person);
-  if (active(h.program, at) || active(h.marketplace, at)) return { ok: false, why: 'You’re enrolled.' };
+  if (active(h.program, at) || active(h.marketplace, at)) return { ok: false, why: 'You’re already enrolled.' };
   // Enrolled already from a month ahead (from 2026-10-10: until then a second enrollment could be made while the first waited).
   const ahead = [h.program, h.marketplace].find((c) => c !== undefined && c.from > at && (c.until === undefined || c.until > c.from));
-  if (ahead) return { ok: false, why: `You’re enrolled from ${formatDate(ahead.from, HOME)}.` };
+  if (ahead) return { ok: false, why: `You’re already enrolled, from ${formatDate(ahead.from, HOME)}.` };
   // Covered by Yale Health, which the school bills for: a plan beside it would be paid for twice (from 2026-10-10).
   // Its end in sight (after the degree, a withdrawal or a dismissal), the 60 days open before it, as 45 CFR
   // 155.420(c)(2) opens them before an expected loss, and the cover starts as Yale Health's ends (`yaleEndsAhead`,
@@ -671,7 +671,7 @@ export function mayEnroll(person: Person, at: Instant, into = 'USD', sim?: Simul
   // the month after enrolling, so a graduate went uninsured through August.
   const yale = yaleUntil(person);
   const opensAt = yale !== undefined && Number.isFinite(yale) ? yale - ENROLLMENT.specialDays * MS_DAY : undefined;
-  if (yale !== undefined && yale > at && !yaleLapsed(person, at) && (opensAt === undefined || at < opensAt)) return { ok: false, why: opensAt !== undefined ? `Yale Health covers you until ${formatDate(yale, HOME)}; you can enroll from ${formatDate(opensAt, HOME)}, ${ENROLLMENT.specialDays} days before that cover ends.` : 'Yale Health covers you while you’re at the School.' };
+  if (yale !== undefined && yale > at && !yaleLapsed(person, at) && (opensAt === undefined || at < opensAt)) return { ok: false, why: opensAt !== undefined ? `Yale Health covers you until ${formatDate(yale, HOME)}. You can enroll from ${formatDate(opensAt, HOME)}, ${ENROLLMENT.specialDays} days before that cover ends.` : 'Yale Health covers you while you’re at the School.' };
   const endsAhead = yaleEndsAhead(person, at) !== undefined;
   const program = programFor(person, at, into, enrollStart(person, at));
   // From 2027 Medicaid's community engagement is asked of an applicant as of a member: Connecticut reads the one month
@@ -689,21 +689,21 @@ export function mayEnroll(person: Person, at: Instant, into = 'USD', sim?: Simul
   // names income, not earnings, and an exception, from 2026-10-16 (`monthEngagement`): until then it said "of earnings".
   const months = lookBack(at, state, 'apply');
   const unengaged = program !== undefined && engagementAsked(program, at) && !(sim !== undefined && engagement(sim, person, months, into));
-  const refused = unengaged ? `From January 1, 2027, ${PROGRAM_NAMES[state].medicaid} asks an applicant for ${workWords(into)} in the month before, and last month had none of them.` : undefined;
-  if (program && !refused) return { ok: true, why: `Last month’s income qualifies you for ${PROGRAM_NAMES[state][program.kind]}, at any time and with no premium.`, program: program.kind };
-  const also = (r: { ok: boolean; why: string }) => (refused ? { ok: r.ok, why: `${refused} ${r.ok ? `The marketplace is open to you: ${r.why.charAt(0).toLowerCase()}${r.why.slice(1)}` : r.why}` } : r);
+  const refused = unengaged ? `From January 1, 2027, ${PROGRAM_NAMES[state].medicaid} asks for ${workWords(into)} in the month before you apply, and last month had none of them.` : undefined;
+  if (program && !refused) return { ok: true, why: `Last month’s income qualifies you for ${PROGRAM_NAMES[state][program.kind]}. You can enroll at any time, with no premium.`, program: program.kind };
+  const also = (r: { ok: boolean; why: string }) => (refused ? { ok: r.ok, why: `${refused} ${r.ok ? `The marketplace is open to you, because ${r.why.charAt(0).toLowerCase()}${r.why.slice(1)}` : r.why}` } : r);
   return also(marketplaceOpen(person, at, state, endsAhead, h));
 }
 
 /** Whether the marketplace takes them now: in open enrollment, or the 60 days around a loss of cover. */
 function marketplaceOpen(person: Person, at: Instant, state: BenefitState, endsAhead: boolean, h: HealthRecord): { ok: boolean; why: string } {
-  if (!lawfullyPresent(person)) return { ok: false, why: 'The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.' };
+  if (!lawfullyPresent(person)) return { ok: false, why: 'The marketplace is only for citizens and people lawfully present, and you’re out of status.' };
   const p = zonedParts(at, HOME);
   const window = state === 'ct' ? CONNECTICUT_ENROLLMENT : ENROLLMENT;
   const open = (p.month > window.openFrom[0] || (p.month === window.openFrom[0] && p.day >= window.openFrom[1]))
     || (p.month < window.openUntil[0] || (p.month === window.openUntil[0] && p.day <= window.openUntil[1]));
-  if (open) return { ok: true, why: 'Open enrollment.' };
-  if (endsAhead) return { ok: true, why: `Within ${ENROLLMENT.specialDays} days before Yale Health’s cover ends.` };
+  if (open) return { ok: true, why: 'It’s open enrollment.' };
+  if (endsAhead) return { ok: true, why: `You’re within ${ENROLLMENT.specialDays} days before Yale Health’s cover ends.` };
   // The 60 days run from the loss itself (45 CFR 155.420(c)(1)): Yale Health's end, or its lapse on a leave, counts from
   // that hour, not from the month's look that next finds her uncovered. From 2026-10-15: until then an F-1 student who
   // withdrew on 20 January 2027, Yale Health ending that hour, was told she was outside open enrollment and not within
@@ -714,8 +714,8 @@ function marketplaceOpen(person: Person, at: Instant, state: BenefitState, endsA
   // when it was made, the day she learned of it (45 CFR 155.420(c)(5)), as `lapseKnown` says (from 2026-10-16).
   const yaleLost = lapse ? lapseKnown(person, lapse.from) : yale !== undefined && Number.isFinite(yale) && yale <= at ? yale : undefined;
   const lost = Math.max(h.lostAt ?? Number.NEGATIVE_INFINITY, yaleLost ?? Number.NEGATIVE_INFINITY);
-  if (at - lost <= ENROLLMENT.specialDays * MS_DAY) return { ok: true, why: `Within ${ENROLLMENT.specialDays} days of losing cover.` };
-  return { ok: false, why: `Outside open enrollment, ${window.openFrom[1]} ${MONTH_NAMES[window.openFrom[0] - 1]} to ${window.openUntil[1]} ${MONTH_NAMES[window.openUntil[0] - 1]}, and not within ${ENROLLMENT.specialDays} days of losing cover.` };
+  if (at - lost <= ENROLLMENT.specialDays * MS_DAY) return { ok: true, why: `You’re within ${ENROLLMENT.specialDays} days of losing cover.` };
+  return { ok: false, why: `It’s outside open enrollment, ${MONTH_NAMES[window.openFrom[0] - 1]} ${window.openFrom[1]} to ${MONTH_NAMES[window.openUntil[0] - 1]} ${window.openUntil[1]}, and you haven’t lost cover in the last ${ENROLLMENT.specialDays} days.` };
 }
 
 /**
@@ -834,7 +834,7 @@ export function onsetMonth(sim: Simulation, person: Person, at: Instant): Condit
     const chance = onsetYearly(condition, age, bmi) / 12;
     if (rng.next() >= chance) continue;
     (h.chronic ??= {})[condition] = { treated: true, since: at };
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: `Diagnosed: ${CONDITION_LABEL[condition]}`, body: `A doctor found it this month. Its care begins now, at what your plan leaves; Let It Go on Papers stops it.`, importance: 75, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: `Diagnosed: ${CONDITION_LABEL[condition]}`, body: `A doctor found it this month. Its care starts now, and each month you pay what your plan doesn’t cover. You can see the cost, or stop the care with Let It Go, on Papers, under Health Cover.`, importance: 75, route: '/workspace/papers' });
     return condition;
   }
   return undefined;
@@ -857,7 +857,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     const begun = h.marketplace.from <= at;
     h.marketplace.until = at;
     if (begun) h.lostAt = at;
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: begun ? 'Your Marketplace Plan Has Ended' : 'Your Marketplace Plan Won’t Begin', body: 'The marketplace covers a citizen or somebody lawfully present, and you stayed past your status.', importance: 80, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: begun ? 'Your Marketplace Plan Has Ended' : 'Your Marketplace Plan Won’t Begin', body: 'The marketplace is only for citizens and people lawfully present, and you’re out of status.', importance: 80, route: '/workspace/papers' });
   }
   const prog = h.program;
   // And so do the Essential Plan and Covered Connecticut, which are the lawfully present’s as the marketplace is
@@ -872,7 +872,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     prog.until = at;
     const plan = PROGRAM_NAMES[prog.state].essential;
     const Plan = `${plan.charAt(0).toUpperCase()}${plan.slice(1)}`;
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: begun ? 'Your Public Cover Has Ended' : 'Your Public Cover Won’t Begin', body: `${Plan} is for a citizen or a noncitizen lawfully present, and you stayed past your status.`, importance: 80, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: begun ? 'Your Public Cover Has Ended' : 'Your Public Cover Won’t Begin', body: `${Plan} is only for citizens and noncitizens lawfully present, and you’re out of status.`, importance: 80, route: '/workspace/papers' });
   }
   // Covered Connecticut held into 2027 by somebody the premium tax credit no longer takes, a student in F-1 status or a
   // graduate on OPT, ends with 2026: it's had with the credit, which from taxable years beginning after 31 December 2026
@@ -897,8 +897,8 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     const Plan = `${plan.charAt(0).toUpperCase()}${plan.slice(1)}`;
     if (person.id === sim.universe.playerId) sim.notify({
       category: 'health', title: begun ? 'Your Public Cover Has Ended' : 'Your Public Cover Won’t Begin', importance: 80, route: '/workspace/papers',
-      body: yaleAgain ? `${Plan} is for a person with no other cover that counts, and Yale Health’s student cover covers you again.`
-        : `${Plan} comes with the premium tax credit, which from January 1, 2027, a noncitizen has only with a green card, as a Cuban or Haitian entrant or under a Compact of Free Association. The marketplace still sells to you, with no credit.`,
+      body: yaleAgain ? `${Plan} is only for people with no other qualifying cover, and Yale Health’s student cover covers you again.`
+        : `${Plan} depends on the premium tax credit. From January 1, 2027, a noncitizen gets that credit only with a green card, as a Cuban or Haitian entrant, or under a Compact of Free Association. You can still buy a marketplace plan, without the credit.`,
     });
   }
   // A program's renewal: its income test, and from 2027 Medicaid's work (`renewProgram`). Once, at its date: not again
@@ -943,8 +943,8 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     const yale = yaleUntil(person);
     const chose = own?.ended !== undefined && !(yale !== undefined && yale <= at && yale > own.until!);
     const state = BENEFIT_STATE[home];
-    const back = !state ? 'open enrollment' : `open enrollment, or a month’s income that qualifies you for ${PROGRAM_NAMES[state].medicaid}${state === 'ca' ? '' : ` or ${PROGRAM_NAMES[state].essential}`},`;
-    const penalty = inCalifornia(home) ? ', and every month uncovered in California costs its penalty on your return' : '';
+    const back = !state ? '' : `, or once a month’s income qualifies you for ${PROGRAM_NAMES[state].medicaid}${state === 'ca' ? '' : ` or ${PROGRAM_NAMES[state].essential}`}`;
+    const penalty = inCalifornia(home) ? '. Each month without cover in California adds to the penalty on your state tax return' : '';
     // Uncovered from when the last cover in force ended, which can be after last month’s look and before this one’s:
     // Yale Health ends at the hour its days run out. Until 2026-10-14 the notice gave this look’s day, so an F-1 who
     // withdrew on 2 October, Yale Health ended at eight on 1 November, was told on 1 December that she was uncovered
@@ -969,17 +969,17 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     const opens = byYale ? knew : at;
     const closes = opens + ENROLLMENT.specialDays * MS_DAY;
     // Told a day or more after the window opened, its last day; on the day, its 60 days.
-    const window = at - opens >= MS_DAY ? `You can enroll in the marketplace until ${formatDate(closes, HOME)}, ${ENROLLMENT.specialDays} days from ${knew > from ? 'when it was canceled back' : 'losing cover'}` : `You have ${ENROLLMENT.specialDays} days to enroll in the marketplace`;
+    const window = at - opens >= MS_DAY ? `You can enroll in the marketplace until ${formatDate(closes, HOME)}, ${ENROLLMENT.specialDays} days after ${knew > from ? 'the cancellation was made' : 'you lost cover'}` : `You have ${ENROLLMENT.specialDays} days to enroll in the marketplace`;
     // And the state's program where it takes her now, at any time (`mayEnroll`), which until 2026-10-16 the notice left out:
     // a student who withdrew was told only of the marketplace's days while HUSKY D would have taken her that morning.
     const may = state && !chose && lawfullyPresent(person) ? mayEnroll(person, at, cur, sim) : undefined;
-    const program = may?.ok && may.program && state ? `; ${PROGRAM_NAMES[state][may.program]} takes you at any time on last month’s income, with no premium` : '';
+    const program = may?.ok && may.program && state ? `. ${capital(PROGRAM_NAMES[state][may.program])} can take you at any time on last month’s income, with no premium` : '';
     // Out of status there’s no way back to name: the marketplace and the state’s plan for the lawfully present refuse
     // you (`mayEnroll`). Until 2026-10-13 the notice offered the marketplace’s 60 days to somebody it refused.
-    const way = chose ? `A plan dropped or left unpaid opens no special enrollment: ${back} is the way back`
-      : !lawfullyPresent(person) && state ? `Out of status, neither the marketplace nor ${PROGRAM_NAMES[state].essential} will take you`
-        : `${window}${program}`;
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Health Cover Ended', body: `You’re uncovered from ${formatDate(from, HOME)}. ${way}${penalty}.`, importance: 80, route: '/workspace/papers' });
+    const way = chose ? `Dropping a plan or leaving it unpaid doesn’t open special enrollment. You can enroll again in open enrollment${back}`
+      : !lawfullyPresent(person) && state ? `You’re out of status, so neither the marketplace nor ${PROGRAM_NAMES[state].essential} can take you`
+        : `${window}${program}. Enroll on Papers, under Health Cover`;
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Health Cover Ended', body: `You have no health cover from ${formatDate(from, HOME)}. ${way}${penalty}.`, importance: 80, route: '/workspace/papers' });
   }
   h.covered = cover !== undefined;
   // A medical debt a year past due, $500 or more, goes on the record, outside the states that bar it. The notice reads
@@ -989,7 +989,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     && !MEDICAL_DEBT.barredIn.includes(CITIES.get(home)?.parentId ?? '') && !h.reported && person.credit) {
     h.reported = true;
     markRecord(person, MEDICAL_DEBT.recordHit, at, home);
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Medical Debt Is On Your Record', body: `Unpaid a year and ${formatMoney(usd(MEDICAL_DEBT.reportAt, cur), cur)} or more, it’s reported now.`, importance: 80, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Medical Debt Is On Your Record', body: `Your medical debt is ${formatMoney(usd(MEDICAL_DEBT.reportAt, cur), cur)} or more and has gone unpaid for a year, so it’s now on your credit record. You can still clear it with Pay It Off, on Papers, under Health Cover.`, importance: 80, route: '/workspace/papers' });
   }
 }
 
@@ -997,10 +997,10 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
  * How a month met the work rules, in a sentence (`renewProgram`, `health.request_hardship`). Until 2026-10-17 a month of
  * 80 hours' work was said "by 80 hours’ work", which `monthEngagement` no longer reads.
  */
-const BY_WORDS: Readonly<Record<EngagedBy, string>> = {
-  income: 'by its income, $580.00 or more', school: 'at the School', age: 'by your age, which they aren’t asked of',
-  snap: 'by SNAP, whose work rules you were under', hardship: 'by a stay in hospital, on your request',
-};
+const byWords = (by: EngagedBy, cur: string): string => ({
+  income: `with ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} or more of income`, school: 'with time at the School', age: 'because people your age are exempt',
+  snap: 'because you received SNAP under its work rules', hardship: 'through a stay in hospital you asked to count',
+})[by];
 const capital = (s: string): string => `${s.charAt(0).toUpperCase()}${s.slice(1)}`;
 
 /**
@@ -1031,7 +1031,7 @@ function renewProgram(sim: Simulation, person: Person, prog: NonNullable<HealthR
     // round). Over every line, the work isn't asked: until 2026-10-16 a member over the line with no work was told the
     // work was why.
     const admitted = prog.kind !== 'medicaid' || prog.scope !== undefined || medicaidStatus(person, at);
-    endAhead(sim, person, prog, at, !admitted ? `From October 1, 2026, ${names.medicaid} is for a US citizen, or somebody with a green card for five years, and renewing it reads that` : 'Last month’s income is over what it allows');
+    endAhead(sim, person, prog, at, !admitted ? `From October 1, 2026, ${names.medicaid} is only for US citizens and people who’ve held a green card for five years, and renewal checks that` : 'Last month’s income is over its limit');
     return;
   }
   let met: { month: string; by: EngagedBy } | undefined;
@@ -1063,20 +1063,20 @@ function applyRenewal(sim: Simulation, person: Person, prog: NonNullable<HealthR
   const h = healthOf(person);
   const names = PROGRAM_NAMES[prog.state];
   const mine = person.id === sim.universe.playerId;
-  const work = met ? `, and ${monthWords(met.month)} met its work rules ${BY_WORDS[met.by]}` : '';
+  const work = met ? `, and ${monthWords(met.month)} met its work rules ${byWords(met.by, saveCurrency(sim.universe))}` : '';
   if (still.kind === prog.kind) {
     prog.band = still.band;
     if (still.scope) prog.scope = still.scope; else delete prog.scope;
     prog.renewAt = next;
-    if (mine) sim.notify({ category: 'health', title: 'Your Public Cover Is Renewed', body: `${capital(names[prog.kind])} is renewed to its next renewal, ${formatDate(next, HOME)}: last month’s income is within what it allows${work}.`, importance: 60, route: '/workspace/papers' });
+    if (mine) sim.notify({ category: 'health', title: 'Your Public Cover Is Renewed', body: `${capital(names[prog.kind])} is renewed until its next renewal, on ${formatDate(next, HOME)}. Last month’s income is within its limit${work}.`, importance: 60, route: '/workspace/papers' });
     return;
   }
-  const why = still.kind === 'medicaid' ? `Last month’s income is under what ${names.medicaid} allows, which takes the place of ${names.essential}`
-    : prog.kind === 'medicaid' && prog.scope === undefined && !medicaidStatus(person, at) ? `From October 1, 2026, ${names.medicaid} is for a US citizen, or a green card holder of five years`
-      : `Last month’s income is over what ${names.medicaid} allows and within what ${names.essential} does`;
+  const why = still.kind === 'medicaid' ? `Last month’s income is within ${names.medicaid}’s limit, and ${names.medicaid} replaces ${names.essential}`
+    : prog.kind === 'medicaid' && prog.scope === undefined && !medicaidStatus(person, at) ? `From October 1, 2026, ${names.medicaid} is only for US citizens and people who’ve held a green card for five years`
+      : `Last month’s income is over ${names.medicaid}’s limit and within ${names.essential}’s`;
   prog.until = at;
   h.program = { kind: still.kind, state: prog.state, from: at, band: still.band, renewAt: next, ...(still.scope ? { scope: still.scope } : {}) };
-  if (mine) sim.notify({ category: 'health', title: 'Your Public Cover Changed At Renewal', body: `${why}: you’re renewed into ${names[still.kind]} from ${formatDate(at, HOME)}, with no gap and no premium${work}.`, importance: 80, route: '/workspace/papers' });
+  if (mine) sim.notify({ category: 'health', title: 'Your Public Cover Changed At Renewal', body: `${why}, so you’re renewed into ${names[still.kind]} from ${formatDate(at, HOME)}, with no gap in cover and no premium${work}.`, importance: 80, route: '/workspace/papers' });
 }
 
 /**
@@ -1087,8 +1087,8 @@ function applyRenewal(sim: Simulation, person: Person, prog: NonNullable<HealthR
 function endAhead(sim: Simulation, person: Person, prog: NonNullable<HealthRecord['program']>, at: Instant, why: string, credit = ''): void {
   const until = endsAfterNotice(at);
   prog.until = until;
-  const name = capital(PROGRAM_NAMES[prog.state][prog.kind]);
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Public Cover Ends', body: `${why}: ${name} ends on ${formatDate(lastDayBefore(until), HOME)}, ${lawfullyPresent(person) ? `and losing it opens ${ENROLLMENT.specialDays} days to enroll in the marketplace${credit}` : 'and out of status the marketplace won’t take you'}.`, importance: 80, route: '/workspace/papers' });
+  const name = PROGRAM_NAMES[prog.state][prog.kind];
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Public Cover Ends', body: `${why}, so ${name} ends on ${formatDate(lastDayBefore(until), HOME)}. ${lawfullyPresent(person) ? `Losing it gives you ${ENROLLMENT.specialDays} days to enroll in the marketplace${credit}.` : 'You’re out of status, so the marketplace can’t take you.'}`, importance: 80, route: '/workspace/papers' });
 }
 
 /**
@@ -1117,11 +1117,11 @@ function noticeOfNoncompliance(sim: Simulation, person: Person, pend: PendingDet
   if (person.id !== sim.universe.playerId) return;
   const names = PROGRAM_NAMES[pend.state];
   const by = formatDate(answerBy(pend.noticeAt), HOME);
-  const read = `Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in ${pend.months.length > 1 ? 'those months' : 'that month'} counts if you ask for it (Request A Hardship Exception on Papers).`;
-  const after = `the premium tax credit isn’t yours while ${names.medicaid} would take you but for its work rules, and you can apply again in any month after one that meets them.`;
+  const read = `Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in ${pend.months.length > 1 ? 'those months' : 'that month'} counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover.`;
+  const after = `you won’t get the premium tax credit while ${names.medicaid} would take you if not for its work rules. You can apply again in any month after one that meets them.`;
   const body = pend.kind === 'renewal'
-    ? `${names.medicaid} couldn’t find ${workWords(cur)} ${inMonths(pend.months)}${held && held.kind !== 'medicaid' ? `, and last month’s income places you in it in place of ${names.essential}` : ''}. You’re covered while you answer, to ${by}. ${read} Unanswered, ${held ? names[held.kind] : names.medicaid} ends on ${formatDate(lastDayBefore(endsAfterNotice(pend.decideAt)), HOME)}, said on ${formatDate(pend.decideAt, HOME)}, and ${after}`
-    : `${names.medicaid} couldn’t find ${workWords(cur)} ${inMonths(pend.months)}, before the month you applied. Answer by ${by}. ${read} Unanswered, the application is denied on ${formatDate(pend.decideAt, HOME)}; the marketplace sells to you meanwhile in its own windows, ${after}`;
+    ? `${names.medicaid} couldn’t find ${workWords(cur)} ${inMonths(pend.months)}${held && held.kind !== 'medicaid' ? `, and last month’s income moves you from ${names.essential} to ${names.medicaid}` : ''}. You stay covered while you answer, until ${by}. ${read} If you don’t answer, ${held ? names[held.kind] : names.medicaid} ends on ${formatDate(lastDayBefore(endsAfterNotice(pend.decideAt)), HOME)}, and you’ll be told on ${formatDate(pend.decideAt, HOME)}. After that, ${after}`
+    : `${names.medicaid} couldn’t find ${workWords(cur)} ${inMonths(pend.months)}, before the month you applied. Answer by ${by}. ${read} If you don’t answer, the application is denied on ${formatDate(pend.decideAt, HOME)}. Meanwhile you can buy a marketplace plan in its enrollment windows, but ${after}`;
   sim.notify({ category: 'health', title: 'A Notice Of Noncompliance', body: capital(body), importance: 80, route: '/workspace/papers' });
 }
 
@@ -1155,14 +1155,14 @@ function grantPending(sim: Simulation, person: Person, pend: PendingDeterminatio
   armHealth(sim, person);
   if (from < at) repriceCare(sim, person, from, at, `${PROGRAM_NAMES[pend.state].medicaid}, from ${formatDate(from, HOME)}`);
   const names = PROGRAM_NAMES[pend.state];
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Public Cover Approved', body: `${capital(names.medicaid)} is yours from ${formatDate(from, HOME)}, with no premium: ${monthWords(met.month)} met its work rules ${BY_WORDS[met.by]}${ended ? ', and your marketplace plan ends as it begins' : ''}.`, importance: 80, route: '/workspace/papers' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Public Cover Approved', body: `${capital(names.medicaid)} covers you from ${formatDate(from, HOME)}, with no premium. ${monthWords(met.month)} met its work rules ${byWords(met.by, saveCurrency(sim.universe))}${ended ? '. Your marketplace plan ends as it begins' : ''}.`, importance: 80, route: '/workspace/papers' });
 }
 
 /** Why a hardship can't be asked for now, or nothing: a notice waiting on an answer, and a stay in hospital in a month it assessed. */
 export function hardshipRefusal(_sim: Simulation, person: Person, at: Instant): string | undefined {
   const pend = person.health?.pending;
-  if (!pend) return 'No notice of noncompliance waits on an answer.';
-  if (at >= pend.decideAt) return `The thirty days to answer ended on ${formatDate(answerBy(pend.noticeAt), HOME)}.`;
+  if (!pend) return 'There’s no notice of noncompliance waiting for an answer.';
+  if (at >= pend.decideAt) return `The ${PUBLIC_COVER.answerDays} days to answer ended on ${formatDate(answerBy(pend.noticeAt), HOME)}.`;
   // A renewal's notice with nothing left to renew: the program ended or ending (from 2026-10-16: until then the hardship
   // was taken, `grantPending` passed it by, and Papers said “The hardship is granted, and the work rules met.” while
   // nothing was renewed; found by the coverage area, reproduced by play in tests/remaining-09-journeys.test.ts). Dropping
@@ -1170,9 +1170,9 @@ export function hardshipRefusal(_sim: Simulation, person: Person, at: Instant): 
   const prog = person.health?.program;
   if (pend.kind === 'renewal' && (!prog || !active(prog, at) || prog.until !== undefined)) {
     const name = prog ? PROGRAM_NAMES[prog.state][prog.kind] : PROGRAM_NAMES[pend.state].medicaid;
-    return `${name} ${prog?.until !== undefined && prog.until > at ? `ends on ${formatDate(prog.until, HOME)}` : 'has ended'}, so there’s no renewal left to answer.`;
+    return `${capital(name)} ${prog?.until !== undefined && prog.until > at ? `ends on ${formatDate(prog.until, HOME)}` : 'has ended'}, so there’s no renewal left to answer.`;
   }
-  if (!(person.health?.careLog ?? []).some((e) => e.care === 'stay' && pend.months.includes(monthKey(e.at)))) return `No month it assessed, ${monthsWords(pend.months)}, had a stay in hospital, the hardship SLATE keeps.`;
+  if (!(person.health?.careLog ?? []).some((e) => e.care === 'stay' && pend.months.includes(monthKey(e.at)))) return `None of the months it checked, ${monthsWords(pend.months)}, had a stay in hospital, the one hardship the game counts.`;
   return undefined;
 }
 
@@ -1184,19 +1184,19 @@ export function hardshipRefusal(_sim: Simulation, person: Person, at: Instant): 
  */
 export function applyRefusal(sim: Simulation, person: Person, at: Instant): string | undefined {
   const state = BENEFIT_STATE[homeOf(person)];
-  if (!state) return 'SLATE has public cover and the marketplace in New York, Los Angeles and New Haven.';
+  if (!state) return 'You can enroll in public cover or the marketplace only while you live in New York, Los Angeles or New Haven.';
   const h = healthOf(person);
   const pend = h.pending;
   if (pend?.kind === 'application') return `Your application waits on its notice: answer it by ${formatDate(answerBy(pend.noticeAt), HOME)}.`;
   const prog = h.program;
-  if (prog && (prog.until === undefined || prog.until > at) && (prog.until === undefined || prog.until > prog.from)) return prog.from > at ? `You’re enrolled from ${formatDate(prog.from, HOME)}.` : 'You’re enrolled.';
+  if (prog && (prog.until === undefined || prog.until > at) && (prog.until === undefined || prog.until > prog.from)) return prog.from > at ? `You’re already enrolled, from ${formatDate(prog.from, HOME)}.` : 'You’re already enrolled.';
   const yale = yaleUntil(person);
   const opensAt = yale !== undefined && Number.isFinite(yale) ? yale - ENROLLMENT.specialDays * MS_DAY : undefined;
   if (yale !== undefined && yale > at && !yaleLapsed(person, at) && (opensAt === undefined || at < opensAt)) return 'Yale Health covers you while you’re at the School.';
   const cur = saveCurrency(sim.universe);
   const program = programFor(person, at, cur, enrollStart(person, at));
-  if (program?.kind !== 'medicaid') return `Last month’s income or your status doesn’t place you in ${PROGRAM_NAMES[state].medicaid}.`;
-  if (!engagementAsked(program, at) || engagement(sim, person, lookBack(at, state, 'apply'), cur)) return 'Last month meets its work rules: Enroll gives it.';
+  if (program?.kind !== 'medicaid') return `Last month’s income or your status doesn’t qualify you for ${PROGRAM_NAMES[state].medicaid}.`;
+  if (!engagementAsked(program, at) || engagement(sim, person, lookBack(at, state, 'apply'), cur)) return 'Last month meets its work rules, so press Enroll instead.';
   return undefined;
 }
 
@@ -1365,8 +1365,10 @@ export function fillMedicine(sim: Simulation, person: Person, at: Instant, days?
 function renewalDue(sim: Simulation, person: Person, condition: Condition): void {
   const h = healthOf(person);
   if (appointmentsOf(person).length) return;
-  if (book(sim, person, h.owedVisit ?? RX.renewal)) delete h.owedVisit;
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Prescription Ran Out', body: `The prescription for your ${CONDITION_LABEL[condition].toLowerCase()} medicine is past its date. It’s filled again once a doctor renews it.`, importance: 60, route: '/workspace/papers' });
+  // Said with whether its visit was booked (from 2026-10-17, brief 14: until then it said a doctor renews it, booked or not).
+  const booked = book(sim, person, h.owedVisit ?? RX.renewal);
+  if (booked) delete h.owedVisit;
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Prescription Ran Out', body: `The prescription for your ${CONDITION_LABEL[condition].toLowerCase()} medicine has run out, so it can’t be filled until a doctor renews it. ${booked ? 'A visit to renew it is booked.' : 'Book An Appointment, on Papers under Health Cover, to have it renewed.'}`, importance: 60, route: '/workspace/papers' });
 }
 
 /** Their medical debt, if any: what bills they couldn't pay. */
@@ -1599,10 +1601,10 @@ function canadianDrugShare(person: Person, at: Instant, price: Money, into: stri
 /** Why England's prescription prepayment certificate can't be bought now, or nothing: for someone in England who pays the charge. */
 export function prepayRefusal(sim: Simulation, person: Person): string | undefined {
   const city = CITIES.get(homeOf(person));
-  if (city?.parentId !== 'uk-eng') return 'It’s England’s, for its prescription charge.';
+  if (city?.parentId !== 'uk-eng') return 'The prepayment certificate is only for England’s prescription charge.';
   if (publicCareShareOf(person, 'rx-generic', sim.now, 'GBP') === undefined) return 'You aren’t treated by the NHS.';
-  if ((sim.now - person.birthInstant) / (365.25 * MS_DAY) >= NHS.prescriptionFreeFrom) return `Prescriptions are free at ${NHS.prescriptionFreeFrom}.`;
-  if ((person.health?.prepaidUntil ?? 0) > sim.now + 30 * MS_DAY) return 'Yours runs more than another month.';
+  if ((sim.now - person.birthInstant) / (365.25 * MS_DAY) >= NHS.prescriptionFreeFrom) return `Prescriptions are free from age ${NHS.prescriptionFreeFrom}.`;
+  if ((person.health?.prepaidUntil ?? 0) > sim.now + 30 * MS_DAY) return 'Yours has more than a month left to run.';
   return undefined;
 }
 
@@ -1799,6 +1801,15 @@ function planPays(person: Person, care: Care, clinic: ReturnType<typeof clinicBy
 }
 
 /**
+ * What the flu means for the days it lasts (from 2026-10-17, brief 14): no workout (`lookAfterRefusal`), and a day of
+ * classes excused through Call In Sick (`school.call_in_sick` takes the flu as reason enough). Until then the notice
+ * said only "The flu. It costs nothing."
+ */
+function fluMeans(person: Person): string {
+  return `Work Out waits until it passes${person.school ? ', and Call In Sick, on School, excuses a day of classes' : ''}.`;
+}
+
+/**
  * An illness or a piece of care: what it takes from the body, a stay's days, and the bill. An appointment's visit is had
  * at the practice it was booked at (`clinicId`, from 2026-10-15: until then at whichever was their doctor on the day).
  */
@@ -1821,7 +1832,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   // and the player was never told of the flu that cost them condition and energy and stopped their workouts; found by the
   // review of that day).
   if (event.flu && event.care === 'visit') {
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'You Have The Flu', body: `${event.what}. It costs nothing.`, importance: 60, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'You Have The Flu', body: `You have the flu until ${formatDate(h.fluUntil!, HOME)}. It takes from your condition and energy. You didn’t see a doctor, so it costs nothing. ${fluMeans(person)}`, importance: 60, route: '/workspace/papers' });
     return undefined;
   }
   // Where it was had: a named practice, clinic or hospital in the town they're in (`systems/clinics.ts`), the practice
@@ -1862,7 +1873,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   const logged = MEDICAL.includes(event.care) ? { at, care: event.care, what: event.what, share: amount, ...(event.care === 'visit' && clinic ? { clinicId: clinic.id } : {}), planPaid: planPart } as NonNullable<HealthRecord['careLog']>[number] : undefined;
   if (logged) { h.careLog = [...(h.careLog ?? []), logged]; pruneCareLog(h, at); }
   if (person.id === sim.universe.playerId && MEDICAL.includes(event.care)) {
-    sim.notify({ category: 'health', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: `${event.what}${event.care === 'stay' ? `, ${CARE.stayDays} days` : ''}. ${outside ? 'Yale Health pays for a visit at its own Health Center, not here. ' : ''}${amount > 0 ? `Your share is ${formatMoney(amount, cur)}, due in ${MEDICAL_DEBT.dueDays} days.` : 'Nothing to pay.'}`, importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
+    sim.notify({ category: 'health', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: [`${event.what}${event.care === 'stay' ? `, for ${CARE.stayDays} days` : ''}.`, outside ? 'Yale Health pays for a visit only at its own Health Center, not here.' : '', event.flu ? fluMeans(person) : (event.care === 'stay' || event.care === 'emergency') && person.school ? 'Classes you miss while you’re there are excused.' : '', amount > 0 ? `Your share is ${formatMoney(amount, cur)}, due on ${formatDate(at + MEDICAL_DEBT.dueDays * MS_DAY, HOME)}. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt.` : 'There’s nothing to pay.'].filter(Boolean).join(' '), importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
   }
   if (amount <= 0) return undefined;
   h.seq = (h.seq ?? 0) + 1;
@@ -1880,7 +1891,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   const price = paying ? planPrice(event.care as 'visit' | 'urgent' | 'emergency' | 'stay', at, cur) : 0;
   if (logged && denied) logged.planPaid = 0;
   const bill: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount: full, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY, ...(hospital ? { hospital: true, cityId: homeOf(person) } : {}), ...(screening ? { aid: screening } : {}), ...(denied ? { denied: { share: amount } } : {}), ...(paying ? { covered: { price, planPaid: denied ? 0 : Math.max(0, price - amount) } } : {}) };
-  if (denied && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Claim Denied', body: `Your plan denied the claim for ${inSentence(event.what)}: ${formatMoney(full, cur)} is yours to pay unless an appeal overturns it.`, importance: 60, route: '/workspace/papers' });
+  if (denied && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Claim Denied', body: `Your plan denied the claim for ${inSentence(event.what)}, so the bill is ${formatMoney(full, cur)} unless an appeal overturns it. You can appeal within ${DENIALS.appealDays} days with Appeal It, on Papers, under Health Cover.`, importance: 60, route: '/workspace/papers' });
   h.bills.push(bill);
   h.bills = keptBills(h.bills);
   if (logged) logged.billId = bill.id;
@@ -2011,7 +2022,7 @@ export function repriceCare(sim: Simulation, person: Person, from: Instant, to: 
     if (diff > 0) { sim.schedule({ at: line.dueAt, kind: BILL_KIND, label: `Medical Bill Due: ${line.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: line.id } }); continue; }
     sim.post({ memo: `Refund: ${f.what}, ${why}`, category: 'health', postings: [{ accountId: payeeAccount(sim, person).id, amount: -diff }, { accountId: sim.nominalAccount('expense', expenseFor('health')).id, amount: diff }] });
   }
-  if (net !== 0 && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: net > 0 ? 'Care Billed Again' : 'Care Credited', body: `${why}: care you had from ${formatDate(from, HOME)} is billed as that cover pays, ${net > 0 ? `${formatMoney(net, cur)} more, on a bill of its own` : `${formatMoney(-net, cur)} less, off what was open or owed and the rest back to your bank`}.`, importance: 75, route: '/workspace/papers' });
+  if (net !== 0 && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: net > 0 ? 'Care Billed Again' : 'Care Credited', body: `${capital(why)}. Care you had from ${formatDate(from, HOME)} is billed again as that cover pays: ${net > 0 ? `${formatMoney(net, cur)} more, on a bill of its own` : `${formatMoney(-net, cur)} less, taken off what was open or owed, with the rest back in your bank`}.`, importance: 75, route: '/workspace/papers' });
   return net;
 }
 
@@ -2026,10 +2037,10 @@ export function repriceCare(sim: Simulation, person: Person, from: Instant, to: 
  * applied for it.", which a bill screened over the limit never was).
  */
 export function aidRefusal(bill: MedicalBill, at: Instant): string | undefined {
-  if (!bill.hospital || CITIES.get(bill.cityId ?? '')?.parentId !== 'us-ct') return 'Only a Connecticut hospital’s bill.';
-  if (bill.paid || at >= bill.dueAt) return 'It’s settled or past due.';
-  if (bill.aid === 'screened') return 'The hospital’s charity is off it already.';
-  if (bill.aid) return 'It’s been put to the hospital’s charity.';
+  if (!bill.hospital || CITIES.get(bill.cityId ?? '')?.parentId !== 'us-ct') return 'Only a Connecticut hospital’s bill can be put in for its financial assistance.';
+  if (bill.paid || at >= bill.dueAt) return 'It’s already settled or past its due date.';
+  if (bill.aid === 'screened') return 'The hospital’s financial assistance has already come off it.';
+  if (bill.aid) return 'It’s already been put in for the hospital’s financial assistance.';
   return undefined;
 }
 
@@ -2049,9 +2060,9 @@ export function billCare(sim: Simulation, person: Person, what: string, amount: 
  * live has been where they are (`homeOf`) since the journeys went on 2026-10-09, so that refusal could never be given.
  */
 export function extraSupplyRefusal(person: Person, days: number): string | undefined {
-  if (!Object.values(healthOf(person).chronic ?? {}).some((c) => c?.treated)) return 'You take no medicine for a condition.';
+  if (!Object.values(healthOf(person).chronic ?? {}).some((c) => c?.treated)) return 'You don’t take medicine for a long-term condition.';
   const most = longestFillOf(person);
-  if (!Number.isInteger(days) || days <= 0 || days > most) return `At most ${most} days at once here.`;
+  if (!Number.isInteger(days) || days <= 0 || days > most) return `You can fill at most ${most} days at once here.`;
   return undefined;
 }
 
@@ -2067,7 +2078,7 @@ export const uninsuredPrice = (sim: Simulation, c: 'visit' | 'urgent' | 'emergen
 export function appealRefusal(bill: MedicalBill | undefined, at: Instant): string | undefined {
   if (!bill?.denied) return 'That claim wasn’t denied.';
   if (bill.denied.appealedAt !== undefined) return 'It’s been appealed.';
-  if (at > bill.at + DENIALS.appealDays * MS_DAY) return `An appeal is filed within ${DENIALS.appealDays} days of the denial.`;
+  if (at > bill.at + DENIALS.appealDays * MS_DAY) return `An appeal has to be filed within ${DENIALS.appealDays} days of the denial, and that time has passed.`;
   return undefined;
 }
 
@@ -2146,7 +2157,7 @@ export function registerHealth(sim: Simulation): void {
     const debt = medicalDebtOf(s, person) ?? s.openAccount({ id: s.nextId('account'), kind: 'loan', category: 'medical', name: 'Owed For Medical Care', ownerId: person.id, institution: 'Your Providers', openedAt: s.now });
     s.post({ memo: `Medical bill unpaid: ${bill.what}`, category: 'health', postings: [{ accountId: debt.id, amount: -bill.amount }, { accountId: s.nominalAccount('expense', 'Medical Care').id, amount: bill.amount }] });
     h.debtSince ??= s.now;
-    if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'A Medical Bill Went Unpaid', body: `${formatMoney(bill.amount, saveCurrency(s.universe))} for ${inSentence(bill.what)} is a medical debt now.`, importance: 75, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'A Medical Bill Went Unpaid', body: `${formatMoney(bill.amount, saveCurrency(s.universe))} for ${inSentence(bill.what)} couldn’t be paid from your current account on its due date, so it’s medical debt now. Pay It Off, on Papers under Health Cover, clears it.`, importance: 75, route: '/workspace/papers' });
   });
 
   sim.onCommand<{ billId: string }, { decidedAt: Instant }>('health.appeal', (p, { sim: s }) => {
@@ -2186,7 +2197,7 @@ export function registerHealth(sim: Simulation): void {
       // And the plan pays its part of the price (from 2026-10-15).
       if (bill.covered) bill.covered.planPaid = Math.max(0, bill.covered.price - bill.denied.share);
     }
-    if (person.id === s.universe.playerId) s.notify({ category: 'health', title: upheld ? 'Appeal Upheld' : 'Appeal Won', body: upheld ? `The plan kept its denial for ${inSentence(bill.what)}.` : `The plan reversed its denial for ${inSentence(bill.what)}: you owe its share, ${formatMoney(bill.denied.share, saveCurrency(s.universe))}.`, importance: 55, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'health', title: upheld ? 'Appeal Upheld' : 'Appeal Won', body: upheld ? `The plan kept its denial for ${inSentence(bill.what)}, so the full bill stands.` : `The plan reversed its denial for ${inSentence(bill.what)}. You owe only your share, ${formatMoney(bill.denied.share, saveCurrency(s.universe))}.`, importance: 55, route: '/workspace/papers' });
   });
 
   // England's prescription prepayment certificate: three months or twelve, every prescription free while it runs.
@@ -2199,7 +2210,7 @@ export function registerHealth(sim: Simulation): void {
     if (no) throw new CommandError(no);
     const skipped: Condition[] = [];
     const paid = fillMedicine(s, person, s.now, Number(p.days), skipped);
-    if (skipped.length) throw new CommandError('It comes to more than the bank can cover.');
+    if (skipped.length) throw new CommandError('It costs more than your bank can cover.');
     return { paid };
   });
   sim.onCommand<{ months: 3 | 12 }, { paid: Money; until: Instant }>('health.prepay', (p, { sim: s }) => {
@@ -2210,7 +2221,7 @@ export function registerHealth(sim: Simulation): void {
     const pounds = months === 3 ? NHS.prepayment.months3 : NHS.prepayment.months12;
     const cur = saveCurrency(s.universe);
     const paid = cur === 'GBP' ? Math.round(pounds * 100) : exchange(Math.round(pounds * 100), 'GBP', cur) ?? Math.round(pounds * 100);
-    if (!payFromCurrent(s, person, paid, `A prescription prepayment certificate, ${months} months`, 'health')) throw new CommandError(`It comes to ${formatMoney(paid, cur)}, more than you can pay.`);
+    if (!payFromCurrent(s, person, paid, `A prescription prepayment certificate, ${months} months`, 'health')) throw new CommandError(`It costs ${formatMoney(paid, cur)}, more than your bank can cover.`);
     const h = healthOf(person);
     const from = Math.max(s.now, h.prepaidUntil ?? 0);
     h.prepaidUntil = from + Math.round((months * 365.25) / 12) * MS_DAY;
@@ -2288,9 +2299,9 @@ export function registerHealth(sim: Simulation): void {
     delete h.pending;
     const names = PROGRAM_NAMES[pend.state];
     const why = `${pend.months.length > 1 ? `No month from ${monthsWords(pend.months)} showed` : `${monthsWords(pend.months)} didn’t show`} ${workWords(cur)}, and none was shown by ${formatDate(answerBy(pend.noticeAt), HOME)}`;
-    const credit = `, without the premium tax credit while ${names.medicaid} would take you but for its work rules; you can apply again in any month after one that meets them`;
+    const credit = `, but without the premium tax credit while ${names.medicaid} would take you if not for its work rules. You can apply for ${names.medicaid} again in any month after one that meets them`;
     if (pend.kind === 'application') {
-      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Public Cover Denied', body: `${why}: ${names.medicaid} is denied. The marketplace sells to you in its own windows${credit}.`, importance: 80, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Public Cover Denied', body: `${why}, so your application for ${names.medicaid} is denied. You can still buy a marketplace plan in its enrollment windows${credit}.`, importance: 80, route: '/workspace/papers' });
       return;
     }
     const prog = h.program;
@@ -2305,7 +2316,7 @@ export function registerHealth(sim: Simulation): void {
     const plan = [h.marketplace, h.program].find((r) => r && (r.until === undefined || r.until > s.now));
     if (!plan) throw new CommandError('You have no plan of your own to drop.');
     // Dropped once is dropped (from 2026-10-16: until then a second press set the same day again and said so again).
-    if (plan.ended === 'voluntary' && plan.until !== undefined) throw new CommandError(`It’s dropped: it ends on ${formatDate(plan.until, HOME)}.`);
+    if (plan.ended === 'voluntary' && plan.until !== undefined) throw new CommandError(`It’s already dropped, and it ends on ${formatDate(plan.until, HOME)}.`);
     plan.until = until;
     // Dropped, it opens no special enrollment (`HealthRecord.lostAt`, from 2026-10-12).
     plan.ended = 'voluntary';
@@ -2323,7 +2334,7 @@ export function registerHealth(sim: Simulation): void {
   sim.onCommand<{ chain: string }, { chain: string }>('health.choose_pharmacy', (p, { sim: s }) => {
     const chain = US_PHARMACIES.find((c) => c.id === String(p?.chain));
     if (!chain) throw new CommandError('There’s no such pharmacy.');
-    if (CITIES.get(homeOf(s.player))?.countryId !== 'us') throw new CommandError('A pharmacy’s own cash price is kept only in America.');
+    if (CITIES.get(homeOf(s.player))?.countryId !== 'us') throw new CommandError('You can choose a pharmacy only in the United States.');
     healthOf(s.player).pharmacy = chain.id;
     return { chain: chain.id };
   });
@@ -2337,7 +2348,7 @@ export function registerHealth(sim: Simulation): void {
 
   sim.onCommand<{ condition: Condition; on: boolean }, { treated: boolean }>('health.treat', (p, { sim: s }) => {
     const state = healthOf(s.player).chronic?.[p.condition];
-    if (!state) throw new CommandError('You don’t have that.');
+    if (!state) throw new CommandError('You don’t have that condition.');
     const was = state.treated;
     state.treated = p.on === true;
     // Switched on, the month's care is paid now, as the 1st would have; if it can't be, it's lapsed (from 2026-10-10:
@@ -2361,9 +2372,9 @@ export function registerHealth(sim: Simulation): void {
       now.until = firstOf(d.year, d.month + 1);
       return { until: now.until };
     }
-    if (now) throw new CommandError('You have a dental plan.');
+    if (now) throw new CommandError('You already have a dental plan.');
     const plan = dentalPlanFor(person, s.now);
-    if (!plan) throw new CommandError(BENEFIT_STATE[homeOf(person)] === 'ca' ? 'Covered California sells dental only beside its own health plan.' : 'SLATE sells a dental plan of your own in New York, beside a Covered California plan, and at Yale.');
+    if (!plan) throw new CommandError(BENEFIT_STATE[homeOf(person)] === 'ca' ? 'Covered California sells dental only alongside one of its health plans.' : 'You can buy a dental plan of your own only in New York, alongside a Covered California plan, or at Yale.');
     const d = DENTAL_PLANS[plan];
     const from = s.now;
     let until: Instant | undefined;
@@ -2373,11 +2384,11 @@ export function registerHealth(sim: Simulation): void {
       // one bought in August or September ran to the coming 30 September, a few weeks for the year's price.
       const t = zonedParts(s.now, HOME);
       until = firstOf(t.month >= 8 ? t.year + 1 : t.year, 10);
-      if (!payFromCurrent(s, person, usd(d.premium, cur), `${d.label}, the year`, 'health')) throw new CommandError(`The year is ${formatMoney(usd(d.premium, cur), cur)}, which the bank can’t cover.`);
+      if (!payFromCurrent(s, person, usd(d.premium, cur), `${d.label}, the year`, 'health')) throw new CommandError(`The year costs ${formatMoney(usd(d.premium, cur), cur)}, more than your bank can cover.`);
     } else if (!payFromCurrent(s, person, usd(d.premium, cur), `${d.label} premium`, 'health')) {
       // A monthly plan's first month, paid as it starts covering (from 2026-10-06; until then its first premium came on
       // the 1st of the next month, and the days to it were covered and never paid for).
-      throw new CommandError(`The month is ${formatMoney(usd(d.premium, cur), cur)}, which the bank can’t cover.`);
+      throw new CommandError(`The month costs ${formatMoney(usd(d.premium, cur), cur)}, more than your bank can cover.`);
     }
     h.dental = { plan, from, ...(until ? { until } : {}), deductible: {}, paid: {} };
     armHealth(s, person);

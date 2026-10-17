@@ -697,7 +697,7 @@ describe('injuries', () => {
     // $180 and $100, × 1.75 uninsured, grown to 2026).
     // Named in sentence case, as every other bill is, from 2026-10-13: until then “A Sprained Ankle: its care”.
     expect(bills[0]).toMatchObject({ what: 'A sprained ankle: its care', at: midnight, amount: 699_13, dueAt: Date.UTC(2026, 1, 5, 5) });
-    expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('10 days to mend. Its care comes to $699.13, due in 30 days.');
+    expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('10 days to mend. Your share of its care is $699.13, due in 30 days.');
     sim.advanceTo(Date.UTC(2026, 0, 6, 15)); // 10:00 AM
     clearCalendar(sim); // TEST SETUP
     sim.player.wellbeing.energy = 90; // TEST SETUP
@@ -726,7 +726,7 @@ describe('injuries', () => {
     expect(sim.player.school!.tally.worked).toBe(1);
     // Six hours at the Bulletin's $23.00 an hour is the week's wage the compensation would read.
     expect(healthOf(sim.player).injury).toEqual({ kind: 'strain', at: shift, until: shift + 20 * MS_DAY, atWork: { stateId: 'us-ct', weeklyWage: 138_00, paidDays: 0, noFica: true } });
-    expect(notices(sim, 'A Pulled Muscle')[0]!.body).toBe('20 days to mend. It happened at work, so workers’ compensation pays the care.');
+    expect(notices(sim, 'A Pulled Muscle')[0]!.body).toBe('20 days to mend. It happened at work, so workers’ compensation pays for the care.');
     expect(personLook(sim)).toContain('Mending. A Pulled Muscle, until September 25, 2026, on workers’ compensation.');
     expect(healthOf(sim.player).bills).toHaveLength(0);
     // Not off work, so no week of compensation is scheduled.
@@ -754,7 +754,7 @@ describe('chronic', () => {
     expect(healthOf(heavy.player).chronic!.diabetes).toMatchObject({ treated: true, since: month });
     const told = notices(heavy, 'Diagnosed: Diabetes');
     expect(told).toHaveLength(1);
-    expect(told[0]!.body).toBe('A doctor found it this month. Its care begins now, at what your plan leaves; Let It Go on Papers stops it.');
+    expect(told[0]!.body).toBe('A doctor found it this month. Its care starts now, and each month you pay what your plan doesn’t cover. You can see the cost, or stop the care with Let It Go, on Papers, under Health Cover.');
     expect(healthOf(lean.player).chronic?.diabetes).toBeUndefined();
     expect(notices(lean, 'Diagnosed: Diabetes')).toHaveLength(0);
     // The next health week fills its medicine, America's 30-day fill (CMS), kept across a reload.

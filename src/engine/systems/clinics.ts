@@ -95,13 +95,13 @@ export function selfPayAt(clinic: Clinic | undefined, into: string): Money | und
 }
 
 /** What a practice for its members says to somebody it doesn't see. */
-export const MEMBERS_ONLY: Readonly<Record<'yale', string>> = { yale: 'Yale Health sees Yale students it covers, and it doesn’t cover you now.' };
+export const MEMBERS_ONLY: Readonly<Record<'yale', string>> = { yale: 'Yale Health only sees the Yale students it covers, and it doesn’t cover you now.' };
 
 /** Why this can't be their doctor at a moment, or nothing; a practice for its members refuses somebody it doesn't see (from 2026-10-15). */
 export function clinicRefusal(person: Person, clinicId: string, at?: Instant): string | undefined {
   const c = clinicById(clinicId);
   if (!c) return 'No such practice.';
-  if (c.cityId !== person.currentLocationId) return 'Your doctor is in the town you live in.';
+  if (c.cityId !== person.currentLocationId) return 'Your doctor has to be in the town you live in.';
   if (!DOCTOR_KINDS.includes(c.kind)) return 'That isn’t a doctor’s practice.';
   if (c.members !== null && !seesThem(person, c, at)) return MEMBERS_ONLY[c.members];
   return undefined;

@@ -27,6 +27,8 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { INJURY, INJURY_KIND, INJURY_MIX, WORKERS_COMP, type CompRules, type InjuryKind } from '../content/injury';
 import { computeAnnualTax } from '../content/tax';
+import { MEDICAL_DEBT } from '../content/safetynet';
+import { plural } from '../core/text';
 import { personalityOf } from './personality';
 import { billCare, healthOf, shareOf } from './health';
 import { payeeAccount } from './cash';
@@ -117,7 +119,9 @@ export function mayHurt(sim: Simulation, person: Person, source: InjurySource, c
       category: 'health', title: spec.label,
       // The second sentence only where it has words (from 2026-10-16: until then a care of nothing left the notice ending
       // in a space, “19 days to mend. ”; found playing a withdrawal, brief 09's journeys).
-      body: [`${days} days to mend${spec.offWork ? ', and off work for them' : ''}.`, work ? 'It happened at work, so workers’ compensation pays the care' + (spec.offWork && rules ? ` and ${shareWords(rules, weekly, work.weeklyWage)} while you’re off.` : '.') : care > 0 ? `Its care comes to ${formatMoney(care, cur)}, due in 30 days.` : ''].filter(Boolean).join(' '),
+      // What it keeps them from, from 2026-10-17 (brief 14): until then a sprain, which stops a workout (`trainingRefusal`),
+      // said only its days, and the bill's 30 days were written in, not read from `MEDICAL_DEBT`.
+      body: [`It takes ${plural(days, 'day')} to mend${spec.offWork ? ', and you’re laid up until then, kept from classes, work and training' : spec.limits !== 'none' ? ', and you can’t work out until then' : ''}.`, work ? 'It happened at work, so workers’ compensation pays for the care' + (spec.offWork && rules ? `, and ${shareWords(rules, weekly, work.weeklyWage)} while you’re off.` : '.') : care > 0 ? `Your share of its care is ${formatMoney(care, cur)}, due in ${MEDICAL_DEBT.dueDays} days.` : ''].filter(Boolean).join(' '),
       importance: 80, route: '/workspace/papers',
     });
   }

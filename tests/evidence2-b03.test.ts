@@ -233,7 +233,7 @@ describe('holidays', () => {
     // AMN Healthcare's 23.5 days, to 24: Friday 26 March, Good Friday in Connecticut, then the weekend: 10:00 AM EDT
     // on Monday 29 March (clocks went forward on 14 March).
     expect(sim.must<{ at: number }>({ kind: 'health.book', payload: {} }).at).toBe(Date.UTC(2027, 2, 29, 14));
-    expect(notices(sim, 'A Doctor’s Appointment').at(-1)!.body).toContain('for March 29, 2027, the wait where you live.');
+    expect(notices(sim, 'A Doctor’s Appointment').at(-1)!.body).toContain('for March 29, 2027, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.');
     // Thursday 25 March at 7 PM EDT: a meal by debit card. Chase's two business days: Good Friday is one of them, as the
     // Federal Reserve keeps it as one, then Monday. Were the state's holiday the bank's, it would post on Tuesday 30.
     sim.advanceTo(Date.UTC(2027, 2, 25, 23));
@@ -250,11 +250,11 @@ describe('holidays', () => {
     const again = reload(sim);
     again.advanceTo(Date.UTC(2027, 2, 29, 14) + 60_000);
     expect(again.universe.scheduled.filter((i) => i.kind === 'health.appointment' && i.at === Date.UTC(2027, 2, 29, 14)).map((i) => i.status)).toEqual(['done']);
-    // Until 2026-10-15 it was Yale Health's $0, "Nothing to pay."; from that day Yale Health pays none of a member's
+    // Until 2026-10-15 it was Yale Health's $0, "There’s nothing to pay."; from that day Yale Health pays none of a member's
     // visit outside its Health Center, and Fair Haven, publishing no fee, bills SLATE's uninsured price: $100 of 2024
     // grown by the physicians' services index to 2027, the last print (439.389, 2026) carried on at 1.75% a year:
     // 10,000 × 439.389 × 1.0175 ÷ 417.93 = 10,697.44, 10,697 cents, times 1.75 = 18,719.75, $187.20, due in 30 days.
-    expect(notices(again, 'A Doctor’s Visit').filter((x) => x.at === Date.UTC(2027, 2, 29, 14)).map((x) => x.body)).toEqual(['A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit at its own Health Center, not here. Your share is $187.20, due in 30 days.']);
+    expect(notices(again, 'A Doctor’s Visit').filter((x) => x.at === Date.UTC(2027, 2, 29, 14)).map((x) => x.body)).toEqual(['A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $187.20, due in 30 days.']);
     expect(healthOf(again.player).bills.filter((b) => b.at === Date.UTC(2027, 2, 29, 14)).map((b) => [b.amount, b.covered])).toEqual([[187_20, undefined]]);
     expect((healthOf(again.player).appointments ?? []).filter((a) => a.what === 'A doctor’s visit')).toEqual([]);
     again.advanceTo(Date.UTC(2027, 2, 29, 23) + 1000);
@@ -432,7 +432,7 @@ describe('injuries', () => {
     expect(healthOf(sim.player).injury).toMatchObject({ kind: 'sprain', at: midnight });
     // Named in sentence case, as every other bill is, from 2026-10-13: until then “A Sprained Ankle: its care”.
     expect(healthOf(sim.player).bills.map((b) => ({ what: b.what, amount: b.amount, dueAt: b.dueAt }))).toEqual([{ what: 'A sprained ankle: its care', amount: care, dueAt: midnight + 30 * MS_DAY }]);
-    expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('10 days to mend. Its care comes to $699.13, due in 30 days.');
+    expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('10 days to mend. Your share of its care is $699.13, due in 30 days.');
     const again = reload(sim);
     setBalance(again, again.player.primaryAccountId!, 2_000_00); // TEST SETUP: enough in checking when it falls due
     again.advanceTo(midnight + 31 * MS_DAY);

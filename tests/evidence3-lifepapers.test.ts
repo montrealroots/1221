@@ -245,10 +245,10 @@ describe('health.enroll, on income the clock paid (round three)', () => {
     // Papers draws no Enroll while the plan waits, and the command says why.
     papers(sim);
     expect(drew('health.enroll')).toHaveLength(0);
-    expect(sim.execute({ kind: 'health.enroll', payload: {} }).error).toBe('You’re enrolled from November 1, 2026.');
+    expect(sim.execute({ kind: 'health.enroll', payload: {} }).error).toBe('You’re already enrolled, from November 1, 2026.');
     sim.advanceTo(at(2026, 11, 2, 9));
     expect(coverOn(sim.player, sim.now)).toBe('marketplace');
-    expect(sim.execute({ kind: 'health.enroll', payload: {} }).error).toBe('You’re enrolled.');
+    expect(sim.execute({ kind: 'health.enroll', payload: {} }).error).toBe('You’re already enrolled.');
     const nov = freeze(sim);
     const again = thaw(nov);
     again.advanceTo(at(2027, 1, 2, 9));
@@ -366,7 +366,7 @@ describe('health.appeal_decided, on the marketplace a family’s savings reach (
     expect(bill.denied!.outcome).toBe('upheld');
     expect(bill.amount).toBe(UNINSURED);
     expect(memos(sim, /^Appeal won: /)).toHaveLength(0);
-    expect(titled(sim, 'Appeal Upheld').map((n) => n.body)).toEqual([`The plan kept its denial for ${bill.what.charAt(0).toLowerCase()}${bill.what.slice(1)}.`]);
+    expect(titled(sim, 'Appeal Upheld').map((n) => n.body)).toEqual([`The plan kept its denial for ${bill.what.charAt(0).toLowerCase()}${bill.what.slice(1)}, so the full bill stands.`]);
     expect(titled(sim, 'Appeal Won')).toHaveLength(0);
     expect(papers(sim).text).toContain('$183.98 Settled Denial Upheld');
     // Nothing about the bill moved money at the decision: no posting at its hour names it.
@@ -450,7 +450,7 @@ describe('documents.us_status, a marketplace plan bought in the grace (round thr
     expect(healthOf(f.player).marketplace!.until).toBe(at(2026, 11, 1, 0, 30));
     expect(premiums(f)).toEqual([]);
     expect(coverOn(f.player, f.now)).toBeUndefined();
-    expect(f.execute({ kind: 'health.enroll', payload: {} }).error).toBe('The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.');
+    expect(f.execute({ kind: 'health.enroll', payload: {} }).error).toBe('The marketplace is only for citizens and people lawfully present, and you’re out of status.');
     const u = thaw(us.dec);
     expect(u.player.usOutOfStatus).toBeUndefined();
     expect(healthOf(u.player).marketplace!.until).toBeUndefined();
@@ -477,7 +477,7 @@ describe('documents.us_status, a marketplace plan bought in the grace (round thr
     expect(coverOn(f.player, at(2026, 11, 1, 8, 30))).toBeUndefined();
     const ended = titled(f, 'Your Health Cover Ended');
     expect(ended.map((n) => n.at)).toEqual([at(2026, 12, 1, 0, 30)]);
-    expect(ended[0]!.body).toMatch(/^You’re uncovered from November 1, 2026\. Out of status, neither the marketplace nor /);
+    expect(ended[0]!.body).toMatch(/^You have no health cover from November 1, 2026\. You’re out of status, so neither the marketplace nor /);
   }, 60_000);
 });
 
