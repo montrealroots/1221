@@ -36,7 +36,7 @@ import { adviceFor } from '../src/engine/systems/next-steps';
 import { trainingForecast, type Forecast } from '../src/engine/systems/advice';
 import { abilityFull, isAbility, levelOf } from '../src/engine/systems/attributes';
 import type { Recommendation } from '../src/engine/systems/experience';
-import { RECENT, caseOf, candidatesOf, clone, buildCase, f2aCase, isFull, live, setLevel, worthOf, type CaseSpec } from './advice-harness';
+import { RECENT, casesOf, candidatesOf, clone, buildCase, f2aCase, heldOutRefusal, isFull, live, setLevel, worthOf, type CaseSpec } from './advice-harness';
 
 const argv = process.argv.slice(2);
 const arg = (n: string, d = '') => { const i = argv.indexOf(`--${n}`); return i >= 0 ? argv[i + 1]! : d; };
@@ -46,20 +46,8 @@ const pointsOf = (f: Forecast | undefined): number | undefined => (f ? ((f as Fo
 const r3 = (x: number) => Math.round(x * 1000) / 1000;
 const median = (xs: readonly number[]) => { const s = [...xs].sort((a, b) => a - b); const m = Math.floor(s.length / 2); return s.length % 2 ? s[m]! : (s[m - 1]! + s[m]!) / 2; };
 
-/** The cases a `--cases` list names: `tuning`, `held-out`, a seed, or a range `adv-h-0..9`. */
-function casesOf(list: string): CaseSpec[] {
-  const out: string[] = [];
-  for (const item of list.split(',').map((x) => x.trim()).filter(Boolean)) {
-    if (item === 'tuning') out.push(...Array.from({ length: 10 }, (_, i) => `adv-${i}`), ...Array.from({ length: 20 }, (_, i) => `adv-t-${i}`));
-    else if (item === 'held-out') out.push(...Array.from({ length: 30 }, (_, i) => `adv-${i + 10}`), ...Array.from({ length: 120 }, (_, i) => `adv-h-${i}`));
-    else {
-      const m = /^(.*-)(\d+)\.\.(\d+)$/.exec(item);
-      if (m) for (let n = Number(m[2]); n <= Number(m[3]); n += 1) out.push(`${m[1]}${n}`);
-      else out.push(item);
-    }
-  }
-  return out.map((seed) => { const c = caseOf(seed); if (!c) throw new Error(`${seed} is no case of F2-A or F2-A10`); return c; });
-}
+// The cases a `--cases` list names (`casesOf`) and the held-out refusal (`heldOutRefusal`) moved to
+// tools/advice-harness.ts on 2026-10-17 (brief 11), unchanged, so a gate test reads what this runs.
 
 /** The work the advice and the realized gain read: the latest `RECENT` pieces. */
 const recentWork = (sim: Simulation): WorkRecord[] => [...(sim.player.work ?? [])].sort((a, b) => a.at - b.at).slice(-RECENT);
@@ -248,7 +236,8 @@ if (argv.includes('--summarize')) {
   if (out) writeFileSync(out, `${JSON.stringify(summary, null, 1)}\n`);
 } else {
   const specs = casesOf(arg('cases', 'tuning'));
-  if (specs.some((x) => x.set === 'held-out') && !argv.includes('--held-out')) throw new Error('A held-out seed is run only with --held-out, once, on the code to be reported.');
+  const refused = heldOutRefusal(specs, argv.includes('--held-out'));
+  if (refused) throw new Error(refused);
   const cases: CaseOut[] = [];
   for (const spec of specs) {
     const x = measure(spec);
