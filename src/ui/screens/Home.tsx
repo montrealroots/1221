@@ -397,7 +397,7 @@ export function Home() {
                   label="Daylight"
                   value={place.sun.polar === 'day' ? 'Midnight Sun' : place.sun.polar === 'night' ? 'Polar Night'
                     : `${formatTime(place.sun.sunrise ?? sim.now, place.zone)} – ${formatTime(place.sun.sunset ?? sim.now, place.zone)}`}
-                  note={`${formatDaylight(place.sun.daylightMinutes)} of light`}
+                  note={`${formatDaylight(place.sun.daylightMinutes)} of daylight`}
                   look={at('daylight', place.city.id)}
                 />
                 </div>

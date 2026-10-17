@@ -805,7 +805,7 @@ describe('calendar.schedule', () => {
     };
     const blank = form('');
     expect(blank.text).toContain('Put Something On August 24, 2026');
-    expect(blank.text).toContain('It will want you in New Haven, and the clock stops when it comes round.');
+    expect(blank.text).toContain('You’ll need to be in New Haven for it, and the clock stops when it comes round.');
     expect(blank.put.disabled).toBe(true);
     const named = form('Gym');
     expect(named.put.disabled).toBe(false);

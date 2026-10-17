@@ -5,6 +5,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
+import { said, toStart } from '@/ui/looks/words';
 import { monthGrid, entriesBetween, keptCalendars, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
 import { formatDate, formatDuration, formatTime, startOfDay, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
 import { LONGEST_TITLE, PLAN_KIND, PLAN_LENGTHS, type PlanResult } from '@/engine/world/plans';
@@ -60,18 +61,17 @@ export function CalendarWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">Calendar</div>
-        <h1>Every Commitment You Have.</h1>
+        <h1>Your Plans And Commitments</h1>
         <p className="muted">
-          Everything on your calendar, and the holidays kept where you’re
-          standing. If two things want you at once, they’re flagged here
-          first.
+          Everything on your calendar, and the holidays kept where you are. When two things you need to be at
+          overlap, they’re flagged here as a clash.
         </p>
       </div>
 
       {/* A collision is a run of items that overlap, however many are in it: until 2026-09-27 it was the items over two, rounded up, so three at once read as two. */}
       {conflicts.length > 0 && (
         <div className="callout callout-negative" style={{ marginBottom: 'var(--s5)' }}>
-          <strong>{collisions === 1 ? 'A collision' : `${collisions} collisions`} in the next month.</strong>
+          <strong>{collisions === 1 ? 'A clash' : toStart(said(collisions, 'clash', 'clashes'))} in the next month.</strong>
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {conflicts.slice(0, 6).map((entry) => (
               <li key={entry.id}>
@@ -168,8 +168,8 @@ export function CalendarWorkspace() {
             <Empty
               title="No Plans"
               body={canPlan(selectedDay, sim.now, sim.homeZone)
-                ? 'That day is entirely yours. Put something on it if you want it spoken for.'
-                : 'That day was entirely yours.'}
+                ? 'You have nothing on that day. Press Put Something On It to add a plan.'
+                : 'You had nothing on that day.'}
             />
           ) : (
             <div className="list">
@@ -272,7 +272,7 @@ function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => v
       title, at, durationMinutes: minutes,
     });
     if (result.value?.ok) { onDone(); return; }
-    setError(result.value?.error ?? result.error ?? 'The calendar wouldn’t take it.');
+    setError(result.value?.error ?? result.error ?? 'That plan couldn’t be added, so the calendar is as it was.');
   };
 
   return (
@@ -295,7 +295,7 @@ function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => v
           type="text"
           value={title}
           maxLength={LONGEST_TITLE}
-          placeholder="Something you’d recognize on the day"
+          placeholder="A name you’ll recognize on the day"
           onChange={(e) => { setTitle(e.target.value); setError(undefined); }}
         />
       </div>
@@ -320,9 +320,8 @@ function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => v
         </div>
       </div>
       <p className="xs dim" style={{ margin: 0 }}>
-        It will want you in {CITIES.get(sim.player.currentLocationId)?.name ?? 'where you are'}, and the clock
-        stops when it comes round. Two things at once are allowed — the calendar flags them rather than
-        refusing.
+        You’ll need to be in {CITIES.get(sim.player.currentLocationId)?.name ?? 'the place you are now'} for it, and the clock
+        stops when it comes round. Two things at the same time are allowed, and the calendar flags the clash.
       </p>
       {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
     </Modal>
@@ -381,10 +380,10 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
 
       <p className="small muted">
         {entry.status === 'observance'
-          ? 'An observance. It’s on the calendar so you know; nothing about it is yours to change.'
+          ? 'An observance. It’s on the calendar so you know, and there’s nothing for you to do about it.'
           : entry.requiresPlayer
-            ? 'This one wants you there. Move the clock to it and it happens.'
-            : 'The world handles this one on its own when the clock reaches it.'}
+            ? 'You need to be there. The clock stops when it comes round, so you can go.'
+            : 'It happens on its own when the clock reaches it.'}
         {mine && ' You put it there, so you can take it off again.'}
       </p>
       {error && <p className="small negative">{error}</p>}

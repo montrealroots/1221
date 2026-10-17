@@ -450,7 +450,7 @@ describe('life.birthday', () => {
     // TEST SETUP: the band the year was drawn at put out of reach of any body, so its redraw at the birthday shows.
     healthOf(sim.player).endBand = 99;
     sim.advanceTo(EDT(2026, 8, 30, 9, 1));
-    expect(titled(sim, 'Happy Birthday: 24').map((n) => n.body)).toEqual(['You\'re 24 today.']);
+    expect(titled(sim, 'Happy Birthday: 24').map((n) => n.body)).toEqual(['You’re 24 today.']);
     expect(birthdays(sim, 'done').map((i) => i.at)).toEqual([EDT(2026, 8, 30, 9)]);
     expect(birthdays(sim, 'pending').map((i) => [i.at, i.label])).toEqual([[EDT(2027, 8, 30, 9), 'Your Birthday']]);
     // The year's band from the body at the birthday, by the rule's own figures (`bandFor`).
@@ -477,7 +477,7 @@ describe('life.birthday', () => {
     sim.advanceTo(EST(2027, 2, 28, 9, 1));
     // The day the birthday falls on is the day the age turns: 2027 − 2004 = 23. `ageOn` counted it from 1 March until
     // 2026-10-13; fixed that day.
-    expect(sim.universe.notifications.filter((n) => n.title.startsWith('Happy Birthday')).map((n) => [n.title, n.body])).toEqual([['Happy Birthday: 23', 'You\'re 23 today.']]);
+    expect(sim.universe.notifications.filter((n) => n.title.startsWith('Happy Birthday')).map((n) => [n.title, n.body])).toEqual([['Happy Birthday: 23', 'You’re 23 today.']]);
   });
 
   it('PLAYER JOURNEY: a student born in 1940, who turns 86 on the Sunday, has the coming year drawn at the birthday: its end, none before it', () => {

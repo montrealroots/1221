@@ -65,7 +65,7 @@ describe('the place look, home and another city', () => {
 
     const home = look(sim, 'place', 'us-ct-newhaven');
     expect([home.name, home.kind]).toEqual(['New Haven', 'Where You Live']);
-    expect(home.summary).toMatch(/^You’re home, it’s 7:30 AM on the clock you keep, and [\d.,]+[KMB]? people are keeping it with you\.$/);
+    expect(home.summary).toMatch(/^This is where you live\. It’s 7:30 AM, and [\d.,]+[KMB]? people live here\.$/);
     expect(home.body).not.toContain('from home');
     expect(home.ways.map((w) => w.label)).not.toContain('New Haven');
 
@@ -80,7 +80,7 @@ describe('the place look, home and another city', () => {
     expect(miles(CITIES.get('us-ct-newhaven')!, CITIES.get('us-ct-litchfield')!)).toBe(33);
     const away = look(sim, 'place', town.to.id);
     expect([away.name, away.kind]).toEqual(['Litchfield', 'A City On The Map']);
-    expect(away.summary).toBe('It’s 7:30 AM there, 33 mi from home, and you’re not in it.');
+    expect(away.summary).toBe('It’s 7:30 AM there, 33 mi from home.');
     expect(away.body).toContain('It’s 33 mi from home in New Haven, and on the same clock as home.');
     expect(away.ways.find((w) => w.to.kind === 'place' && w.to.id === 'us-ct-newhaven')).toMatchObject({ label: 'New Haven', detail: 'Where you actually live, and it’s 7:30 AM there' });
   });

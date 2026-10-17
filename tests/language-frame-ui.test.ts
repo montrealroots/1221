@@ -456,3 +456,42 @@ describe('creation, step by step', () => {
     expect(text).toContain('This life begins with the clock paused. Once you press Play, time passes a minute for every minute, and the calendar fills whether you’re watching or not.');
   });
 });
+
+describe('the Calendar screen', () => {
+  it('says what the calendar holds, a clash in the next month, the legend’s kinds, and a day with nothing on it, still to come or gone', async () => {
+    const { CalendarWorkspace } = await import('@/ui/workspaces/CalendarWorkspace');
+    const { monthGrid } = await import('@/engine/world/calendar');
+    const { canPlan } = await import('@/ui/workspaces/cell');
+    const sim = createSave(1, 'frame-calendar', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork' });
+    // Two plans of your own at the same hour tomorrow: a clash, which the calendar flags and allows.
+    const at = sim.now + 26 * MS_HOUR;
+    sim.must({ kind: 'calendar.schedule', payload: { title: 'Dinner With Sam', at, durationMinutes: 120 } });
+    sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at, durationMinutes: 60 } });
+
+    const first = drawn(sim, CalendarWorkspace);
+    expect(first.text).toContain('Calendar Your Plans And Commitments Everything on your calendar, and the holidays kept where you are. When two things you need to be at overlap, they’re flagged here as a clash.');
+    expect(first.text).toContain('A clash in the next month.');
+    // The legend's kinds, each with what it holds on hover; the World row, whose items are never drawn, isn't shown.
+    expect(first.html).toContain('title="Your own plans, and your birthday, appointments and tax dates."');
+    expect(first.html).not.toContain('Background world processing.');
+    // A day's cell says what's on it in words: tomorrow holds the two plans, and more where the school booked it too.
+    expect(first.html).toMatch(/aria-label="[A-Z][a-z]+ \d+, \d{4} (Two|Three|Four|Five) things on it\."/);
+    expect(first.html).not.toMatch(/\d things on it/);
+
+    // The screen's own state, in the order it asks for it: the month shown, then the day picked.
+    const view = h.inits.findIndex((v) => v !== null && typeof v === 'object' && 'year' in (v as object) && 'month' in (v as object));
+    expect(view).toBeGreaterThanOrEqual(0);
+    const { year, month } = h.inits[view] as { year: number; month: number };
+    const days = monthGrid(sim, year, month).filter((d) => d.inMonth && d.entries.length === 0);
+    const ahead = days.find((d) => canPlan(d, sim.now, sim.homeZone));
+    const gone = days.find((d) => !canPlan(d, sim.now, sim.homeZone));
+    expect(ahead).toBeDefined();
+    h.given = new Map<number, unknown>([[view, h.inits[view]], [view + 1, ahead!.key]]);
+    expect(drawn(sim, CalendarWorkspace).text).toContain('No Plans You have nothing on that day. Press Put Something On It to add a plan.');
+    expect(h.buttons.map((b) => b.text)).toContain('Put Something On It');
+    if (gone) {
+      h.given = new Map<number, unknown>([[view, h.inits[view]], [view + 1, gone.key]]);
+      expect(drawn(sim, CalendarWorkspace).text).toContain('No Plans You had nothing on that day.');
+    }
+  });
+});

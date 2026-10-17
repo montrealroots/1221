@@ -74,19 +74,19 @@ const BRINGS: Record<WeatherCondition, string> = {
 
 /** What each band is like to live in, in the words a person would use. */
 const BAND: Record<ClimateType, string> = {
-  equatorial: 'hot and wet the year round, with no season worth the name',
-  monsoon: 'a long dry stretch, and then months of rain that don’t let up',
-  savanna: 'hot all year, cut into a wet half and a dry one',
-  arid: 'dry, glaring and hard on anything left standing outside',
-  semi_arid: 'dry most of the year, and the rain that comes arrives all at once',
-  mediterranean: 'bright dry summers, and mild winters that take the rain',
-  humid_subtropical: 'heavy, humid summers and a winter that barely turns up',
-  oceanic: 'gray, mild and wet, without much of an extreme in either direction',
-  continental: 'a real summer and a real winter, with little patience in between',
-  subpolar_oceanic: 'cool and wet the year round, with the sea holding both ends of it in check',
-  subarctic: 'long dark winters and a summer that never quite gets warm',
-  polar: 'cold that runs straight through the calendar, and light that comes and goes',
-  highland: 'thin air, warm days and cold nights, whatever the month says',
+  equatorial: 'hot and wet all year, with little change between the seasons',
+  monsoon: 'a long dry season, then months of heavy rain',
+  savanna: 'hot all year, with a wet season and a dry one',
+  arid: 'hot, dry and sunny, with very little rain',
+  semi_arid: 'dry most of the year, with rain that comes in short, heavy bursts',
+  mediterranean: 'dry, sunny summers and mild, rainy winters',
+  humid_subtropical: 'hot, humid summers and short, mild winters',
+  oceanic: 'mild and often wet and gray, without extremes of heat or cold',
+  continental: 'warm summers and cold winters, with short springs and autumns between them',
+  subpolar_oceanic: 'cool and wet all year, with the sea keeping summers cool and winters mild',
+  subarctic: 'long, dark, cold winters and short, cool summers',
+  polar: 'cold all year, with daylight that changes hugely between the seasons',
+  highland: 'thin air, warm days and cold nights, in any month',
 };
 
 /** What the eyebrow calls a day, counting from today. */
@@ -136,8 +136,8 @@ function offNormal(day: DayWeather): number {
 /** "three degrees warmer than the date usually is", or nothing worth saying. */
 function againstNormal(day: DayWeather): string {
   const off = offNormal(day);
-  if (Math.abs(off) < 2) return 'sitting about where the date usually does';
-  return `${Math.abs(off)}° ${off > 0 ? 'warmer' : 'colder'} than the date usually is`;
+  if (Math.abs(off) < 2) return 'about normal for the date';
+  return `${Math.abs(off)}° ${off > 0 ? 'warmer' : 'colder'} than normal for the date`;
 }
 
 /** The high the date usually brings here, in the degrees this country reads. */
@@ -155,7 +155,7 @@ function normalHigh(sim: Simulation, city: City, day: DayWeather): number {
 interface Sky { city: City; now: WeatherNow; week: DayWeather[] }
 
 defineLook<Sky>('weather', {
-  gone: 'Nowhere on the map answers to that, so there’s no sky here to check.',
+  gone: 'That place isn’t on the map, so there’s no weather to show for it.',
   resolve: (sim, id) => {
     const city = cityFor(sim, id);
     if (!city) return undefined;
@@ -187,8 +187,8 @@ defineLook<Sky>('weather', {
         to: at('hours', `${city.id}/${today.dateKey}`),
         label: 'The Rest Of Today',
         detail: left <= 1
-          ? 'The last hour of it, and what it is doing'
-          : `${countWord(left)} hours left, hour by hour to midnight`,
+          ? 'The last hour of the day, and its weather'
+          : `${toStart(countWord(left))} hours left, hour by hour to midnight`,
       });
     }
     if (tomorrow) {
@@ -201,41 +201,41 @@ defineLook<Sky>('weather', {
     ways.push({
       to: at('skyweek', city.id),
       label: 'The Week Ahead',
-      detail: `${toStart(countWord(week.length))} days of it, and every one of them opens`,
+      detail: `${toStart(countWord(week.length))} days, each of which you can open`,
     });
 
     return {
       name: `Weather In ${spokenName(city.name)}`,
-      kind: 'Out The Window',
+      kind: 'Weather Now',
       parent: at('place', city.id),
       summary: city.id === sim.player.currentLocationId
         ? `It’s ${now.temperature}${unit} and ${DOING[now.condition]} where you are, `
-          + `${now.high}${unit} over ${now.low}${unit} on the day.`
-        : `You’re not in ${spokenName(city.name)}, where it’s ${now.temperature}${unit} and `
-          + `${DOING[now.condition]}, ${now.high}${unit} over ${now.low}${unit} on the day.`,
+          + `with a high of ${now.high}${unit} and a low of ${now.low}${unit} today.`
+        : `It’s ${now.temperature}${unit} and ${DOING[now.condition]} in ${spokenName(city.name)}, `
+          + `with a high of ${now.high}${unit} and a low of ${now.low}${unit} today. You’re not there.`,
       body: (
         <>
           <p className="small">
-            The wind’s at {windOf(now)} and the air is {now.humidity}% humid. The day itself is{' '}
+            The wind is {windOf(now)} and the humidity is {now.humidity}%. Today is{' '}
             {againstNormal(now)}.
           </p>
           <p className="small">
             {wetNames.length === 0
-              ? `Dry right through the ${countWord(ahead.length)} days after today.`
+              ? `The ${countWord(ahead.length)} days after today are all dry.`
               : wetNames.length === ahead.length
-                ? `Every one of the ${countWord(ahead.length)} days after today is wet.`
-                : `${spokenList(wetNames)} ${isAre(wetNames.length)} wet, and the rest of the week stays dry.`}
+                ? `The ${countWord(ahead.length)} days after today are all wet.`
+                : `${spokenList(wetNames)} ${isAre(wetNames.length)} wet, and the rest of the week is dry.`}
           </p>
           <div className="grid grid-3">
             <Stat label="Right Now" value={`${now.temperature}${unit}`} note={now.condition} />
             <Stat label="High" value={`${now.high}${unit}`} note="The warmest it gets today" />
             <Stat label="Low" value={`${now.low}${unit}`} note="Overnight" />
-            <Stat label="Wind" value={windOf(now)} note={now.condition === 'Windy' ? 'Enough to be the story' : 'Not the story today'} />
-            <Stat label="Humidity" value={`${now.humidity}%`} note="Water the air is carrying" />
+            <Stat label="Wind" value={windOf(now)} note={now.condition === 'Windy' ? 'A windy day' : 'Not a windy day'} />
+            <Stat label="Humidity" value={`${now.humidity}%`} note="How much water is in the air" />
             <Stat
               label="Against Usual"
               value={`${offNormal(now) > 0 ? '+' : ''}${offNormal(now)}°`}
-              note="Set beside the date’s normal"
+              note="Compared with this date’s normal"
             />
           </div>
         </>
@@ -247,22 +247,22 @@ defineLook<Sky>('weather', {
           body: (
             <>
               <p className="small">
-                {spokenName(city.name)} is {now.climateName.toLowerCase()} country — {BAND[now.climate]}.
+                {spokenName(city.name)} has a {now.climateName.toLowerCase()} climate: {BAND[now.climate]}.
               </p>
               <p className="small">
-                {dateWords(now.dateKey)} here normally runs to about {normalHigh(sim, city, now)}{unit} by day,
+                On {dateWords(now.dateKey)} it usually reaches about {normalHigh(sim, city, now)}{unit} here,
                 and today is {againstNormal(now)}.
               </p>
               {/* Where the thunder’s count comes from: until 2026-09-27 its source was kept and not shown. */}
               <p className="xs dim">
-                About {thunderDaysFor(city.id, now.climate)} days of thunder a year here{THUNDER_DAYS[city.id] ? `, as published: ${THUNDER_DAYS[city.id]!.source}` : `, SLATE’s estimate for ${now.climateName.toLowerCase()} country`}.
+                About {thunderDaysFor(city.id, now.climate)} days of thunder a year here{THUNDER_DAYS[city.id] ? `, as published: ${THUNDER_DAYS[city.id]!.source}` : `, estimated for a ${now.climateName.toLowerCase()} climate`}.
               </p>
             </>
           ),
         },
       ],
       ways,
-      provenance: `SLATE’s climate model for ${spokenName(city.name)} — the season, the latitude and the kind of place this is. It isn’t a forecast service, and it never was one.`,
+      provenance: `Estimated from a climate model for ${spokenName(city.name)}: the season, the latitude and the kind of climate it has. It isn’t a real forecast.`,
     };
   },
 });
@@ -281,7 +281,7 @@ function splitDayId(id: string): { cityId: string; dateKey: string } | undefined
 }
 
 defineLook<Ahead>('forecastday', {
-  gone: 'That day has been and gone, and the week ahead has moved on without it.',
+  gone: 'That day has passed, so it’s no longer in the week ahead.',
   resolve: (sim, id) => {
     const split = splitDayId(id);
     if (!split) return undefined;
@@ -305,9 +305,9 @@ defineLook<Ahead>('forecastday', {
       to: at('hours', `${city.id}/${day.dateKey}`),
       label: offset === 0 ? 'The Rest Of Today' : 'Hour By Hour',
       detail: offset === 0
-        ? 'The hours you have left of it, one at a time'
+        ? 'The hours left today, one at a time'
         // From the day’s first hour, which is one where the clocks skip midnight.
-        : `What it does through the day, ${clockSaid(zonedParts(startOfDay(instant, city.timeZone), city.timeZone).hour)} to ${clockSaid(23)}`,
+        : `Its weather through the day, ${clockSaid(zonedParts(startOfDay(instant, city.timeZone), city.timeZone).hour)} to ${clockSaid(23)}`,
     }];
     // Either side of it, but only inside the week. Any day resolves — a
     // commitment three weeks out opens into the sky over it — and offering
@@ -325,34 +325,34 @@ defineLook<Ahead>('forecastday', {
         label: weekdayAt(sim, city, offset + step),
         detail: step < 0
           ? `The day before it: ${beside.condition}, ${beside.low}${unit} to ${beside.high}${unit}`
-          : `What follows it: ${beside.condition}, ${beside.low}${unit} to ${beside.high}${unit}`,
+          : `The day after it: ${beside.condition}, ${beside.low}${unit} to ${beside.high}${unit}`,
       });
     }
 
     return {
       name: weekdayAt(sim, city, offset),
-      kind: WHEN_KIND[offset] ?? (offset < 0 ? 'A Sky That Has Been' : 'Further Out'),
+      kind: WHEN_KIND[offset] ?? (offset < 0 ? 'A Day Gone' : 'Further Out'),
       // A day sits inside the week, and the week inside the sky. The trail
       // reads Reykjavík · Weather · The Week Ahead · Thursday, which is the
       // way a person got there.
       parent: at('skyweek', city.id),
-      summary: `You’re looking at ${BRINGS[day.condition]} in ${spokenName(city.name)} ${when}, `
+      summary: `${toStart(BRINGS[day.condition])} in ${spokenName(city.name)} ${when}, `
         + `${day.low}${unit} to ${day.high}${unit}.`,
       body: (
         <>
           <p className="small">
-            {dateWords(day.dateKey)}: the wind at {windOf(day)}, humidity {day.humidity}%, and the day{' '}
+            {dateWords(day.dateKey)}: wind {windOf(day)}, humidity {day.humidity}%, and the day is{' '}
             {againstNormal(day)}.
           </p>
           <div className="grid grid-3">
-            <Stat label="High" value={`${day.high}${unit}`} note="Mid-afternoon" />
-            <Stat label="Low" value={`${day.low}${unit}`} note="A little before dawn" />
+            <Stat label="High" value={`${day.high}${unit}`} note="Around 3 PM" />
+            <Stat label="Low" value={`${day.low}${unit}`} note="Around 3 AM" />
             <Stat label="Wind" value={windOf(day)} note={day.condition} />
           </div>
         </>
       ),
       ways,
-      provenance: 'Its own draw, blended with the two days before it, which is why a cold snap lasts and a wet spell lingers.',
+      provenance: 'Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.',
     };
   },
 });
@@ -465,16 +465,16 @@ function hoursFor(sim: Simulation, city: City, key: string): { hours: HourWeathe
 /** When the wet stretch of a day runs, said as a person would say it. */
 function spellSentence(hours: readonly HourWeather[]): string {
   const wet = hours.filter((h) => h.wet);
-  if (wet.length === 0) return 'Every one of them stays dry.';
+  if (wet.length === 0) return 'They’re all dry.';
   const first = wet[0]!;
   const last = wet[wet.length - 1]!;
-  if (wet.length === 1) return `It comes on for the one hour, around ${clockSaid(first.hour)}.`;
-  return `It comes on around ${clockSaid(first.hour)} and holds until about `
-    + `${clockSaid(Math.min(23, last.hour + 1))} — ${countWord(wet.length)} hours of it.`;
+  if (wet.length === 1) return `It’s wet for one hour, around ${clockSaid(first.hour)}.`;
+  return `It’s wet from around ${clockSaid(first.hour)} until about `
+    + `${clockSaid(Math.min(23, last.hour + 1))}: ${countWord(wet.length)} hours.`;
 }
 
 defineLook<Hours>('hours', {
-  gone: 'That day is behind you, and the hours in it aren’t something anybody is forecasting now.',
+  gone: 'That day has passed, so its hours aren’t shown any more.',
   resolve: (sim, id) => {
     const split = splitDayId(id);
     if (!split) return undefined;
@@ -502,16 +502,16 @@ defineLook<Hours>('hours', {
       kind: 'Hour By Hour',
       parent: at('forecastday', `${city.id}/${day.dateKey}`),
       summary: today
-        ? `You have ${countWord(hours.length)} hours of ${dateWords(day.dateKey)} left, and they run between `
+        ? `There are ${countWord(hours.length)} hours of ${dateWords(day.dateKey)} left, between `
           + `${coldest.temperature}${unit} and ${warmest.temperature}${unit}.`
-        : `${dateWords(day.dateKey)} runs from ${coldest.temperature}${unit} before dawn up to `
-          + `${warmest.temperature}${unit} by ${clockSaid(warmest.hour)}.`,
+        : `${dateWords(day.dateKey)} goes from ${coldest.temperature}${unit} at ${clockSaid(coldest.hour)} up to `
+          + `${warmest.temperature}${unit} at ${clockSaid(warmest.hour)}.`,
       body: (
         <>
           <p className="small">
-            The warmest of them is {clockSaid(warmest.hour)} at {warmest.temperature}{unit}, the
-            coldest {clockSaid(coldest.hour)} at {coldest.temperature}{unit}, and{' '}
-            {dark === 0 ? 'the sun is up for all of them' : `${countWord(dark)} of them are after dark`}.
+            The warmest hour is {clockSaid(warmest.hour)}, at {warmest.temperature}{unit}, and the
+            coldest is {clockSaid(coldest.hour)}, at {coldest.temperature}{unit}.{' '}
+            {dark === 0 ? 'The sun is up for all of them.' : dark === hours.length ? 'They’re all after dark.' : `${toStart(countWord(dark))} of them ${dark === 1 ? 'is' : 'are'} after dark.`}
           </p>
           <p className="small">{spellSentence(hours)}</p>
         </>
@@ -526,7 +526,7 @@ defineLook<Hours>('hours', {
           lines: [`${hour.temperature}°`, hour.daylight ? 'Light' : 'Dark'],
         },
       })),
-      provenance: 'One curve between the day’s high and its low, coldest before dawn and warmest at three, and a wet spell that falls where the day puts it rather than all day long.',
+      provenance: 'Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.',
     };
   },
 });
@@ -538,7 +538,7 @@ defineLook<Hours>('hours', {
 interface OneHour { city: City; day: DayWeather; hour: HourWeather; hours: HourWeather[]; index: number }
 
 defineLook<OneHour>('skyhour', {
-  gone: 'That hour has gone by, and what it was doing is nobody’s business now.',
+  gone: 'That hour has passed, so it isn’t shown any more.',
   resolve: (sim, id) => {
     const cut = id.lastIndexOf('/');
     if (cut <= 0) return undefined;
@@ -594,19 +594,19 @@ defineLook<OneHour>('skyhour', {
       body: (
         <>
           <p className="small">
-            {hour.daylight ? 'The sun is up for it' : 'It’s dark'}, the wind is at {windOf(day)}, and{' '}
+            {hour.daylight ? 'The sun is up' : 'It’s dark'}, the wind is {windOf(day)}, and{' '}
             {hour.wet
-              ? `${BRINGS[hour.condition]} is falling through it.`
-              : 'nothing is falling.'}
+              ? `there’s ${BRINGS[hour.condition]}.`
+              : 'it’s dry.'}
             {' '}
-            {swing === 0 ? 'The hour after it is no different.'
+            {swing === 0 ? 'The next hour is the same temperature.'
               : swing > 0 ? `The next hour is ${countWord(Math.abs(swing))} degrees warmer.`
                 : `The next hour is ${countWord(Math.abs(swing))} degrees colder.`}
           </p>
         </>
       ),
       ways,
-      provenance: `Read off ${dateWords(day.dateKey)}’s own curve. No hour is stored anywhere — ask twice and it says the same thing.`,
+      provenance: `Estimated from ${dateWords(day.dateKey)}’s forecast, and the same every time you look.`,
     };
   },
 });
@@ -618,7 +618,7 @@ defineLook<OneHour>('skyhour', {
 interface TheWeek { city: City; days: DayWeather[] }
 
 defineLook<TheWeek>('skyweek', {
-  gone: 'There’s nowhere by that name to have a week of weather.',
+  gone: 'That place isn’t on the map, so there’s no week of weather to show for it.',
   resolve: (sim, id) => {
     const city = cityFor(sim, id);
     if (!city) return undefined;
@@ -640,23 +640,23 @@ defineLook<TheWeek>('skyweek', {
 
     return {
       name: 'The Week Ahead',
-      kind: 'Six Days Of Sky',
+      kind: 'Six Days Of Weather',
       parent: at('weather', city.id),
       summary: `${sentenceStart(countWord(days.length))} days in ${spokenName(city.name)}, from ${Math.min(...lows)}${unit} `
-        + `to ${Math.max(...highs)}${unit}, and ${wet.length === 0 ? 'not one of them wet' : `${countWord(wet.length)} of them wet`}.`,
+        + `to ${Math.max(...highs)}${unit}, ${wet.length === 0 ? 'and all of them dry' : `with ${countWord(wet.length)} of them wet`}.`,
       body: (
         <>
           <p className="small">
             The warmest is {dayName(days.indexOf(warmest))} at {warmest.high}{unit}.{' '}
             {wetNames.length === 0
-              ? 'Dry all week.'
+              ? 'It’s dry all week.'
               : wetNames.length === days.length
-                ? `Every one of the ${countWord(days.length)} is wet.`
+                ? `All ${countWord(days.length)} days are wet.`
                 : `${sentenceStart(spokenList(wetNames))} ${isAre(wetNames.length)} the wet ${wetNames.length === 1 ? 'one' : 'ones'}.`}
           </p>
           <p className="small">
-            Each day is its own draw blended with the two before it, so the week has a shape rather than
-            six unrelated days: a cold snap lasts, and a wet spell lingers.
+            Each day’s weather is blended with the two days before it, so the days follow on from each other:
+            a cold snap lasts, and a wet spell lingers.
           </p>
         </>
       ),
@@ -670,7 +670,7 @@ defineLook<TheWeek>('skyweek', {
           lines: [weatherShort(day.condition), `${day.high}° / ${day.low}°`],
         },
       })),
-      provenance: 'SLATE’s climate model, six days of it. It isn’t a forecast service, and it never was one.',
+      provenance: 'Six days estimated from a climate model. It isn’t a real forecast.',
     };
   },
 });

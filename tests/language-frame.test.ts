@@ -159,3 +159,26 @@ describe('a life’s own words: the night, a failure to start or open', () => {
     expect(OPEN_FAILURE).toBe('That save couldn’t be opened because of an error in the game. Restart SLATE to try again, or restore the slot’s backup if it has one.');
   });
 });
+
+describe('the entry rules’ notes, as the Papers screen’s fine print shows them', () => {
+  it('keeps a note’s first word whole, and says a country’s own citizen is one', async () => {
+    const { ENTRY } = await import('@/engine/content/entry');
+    // Until 2026-10-17 the builder took "Visa exempt" off "Visa exemption", and Japan's rule read "Ion for short-term stay".
+    expect(ENTRY.JP!.citizens.US!.note).toBe('Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).');
+    expect(Object.values(ENTRY).flatMap((d) => Object.values(d.citizens)).filter((r) => /^Ion\b/.test(r.note))).toEqual([]);
+    expect(ENTRY.US!.citizens.US).toMatchObject({ status: 'citizen', note: 'You’re one of its citizens.' });
+    expect(Object.values(ENTRY).flatMap((d) => Object.values(d.citizens)).filter((r) => r.note === 'Own nationals.')).toEqual([]);
+  });
+});
+
+describe('the breadcrumbs’ names', () => {
+  it('name a screen reached without a label, by a notice’s Go There or an address, as the rail names it', async () => {
+    const { labelForRoute } = await import('@/app/game-context');
+    const { RAIL_DESTINATIONS } = await import('@/ui/shell/destinations');
+    const rail = RAIL_DESTINATIONS.flatMap((g) => g.items);
+    expect(rail.length).toBeGreaterThan(0);
+    for (const d of rail) expect(labelForRoute(d.route), d.route).toBe(d.label);
+    // Until 2026-10-17 School's breadcrumb was "Your School" where its rail entry, its Home line and its own heading say School.
+    expect(['/home', '/workspace/calendar', '/workspace/school'].map(labelForRoute)).toEqual(['Home', 'Calendar', 'School']);
+  });
+});

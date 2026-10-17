@@ -484,10 +484,10 @@ describe('h-head: the head of Home', () => {
       ['Monday, August 24, 2026', 'The Day Monday, August 24 Close It’s 7:30 AM in New Haven on Monday, August 24'],
       ['Actress', 'Yourself Ada Cole Close'],
       ['Ada', 'Yourself Ada Cole Close'],
-      ['New Haven', 'Where You Live New Haven Close You’re home, it’s 7:30 AM'],
+      ['New Haven', 'Where You Live New Haven Close This is where you live. It’s 7:30 AM'],
       ['EDT', 'Where You Live New Haven Close'],
-      ['Summer', 'A Quarter Of The Year Summer Close You’re in Summer in New Haven, which here runs June, July and August.'],
-      [`${w.temperature}°F ${w.condition}`, `Out The Window Weather In New Haven Close It’s ${w.temperature}°F and ${w.condition.toLowerCase()} where you are, ${w.high}°F over ${w.low}°F on the day.`],
+      ['Summer', 'Season Summer Close It’s summer in New Haven. Here it runs through June, July and August.'],
+      [`${w.temperature}°F ${w.condition}`, `Weather Now Weather In New Haven Close It’s ${w.temperature}°F and ${w.condition.toLowerCase()} where you are, with a high of ${w.high}°F and a low of ${w.low}°F today.`],
     ];
     for (const [word, look] of looks) {
       h.given = new Map();
@@ -1008,7 +1008,7 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
     const shown = where(drawn(sim, Home).text);
     // 130,322 people, to the thousand.
     expect(shown.startsWith('Where You Are How This Works New Haven, Connecticut · United States Home. 130K people. Local Time 7:30 AM EDT Daylight ')).toBe(true);
-    const [, rise, set, hours, minutes] = shown.match(/Daylight (\d+:\d+ AM) – (\d+:\d+ PM) (\d+)h (\d+)m of light$/)!;
+    const [, rise, set, hours, minutes] = shown.match(/Daylight (\d+:\d+ AM) – (\d+:\d+ PM) (\d+)h (\d+)m of daylight$/)!;
     // New Haven at 41.3081° N, 72.9282° W.
     const sun = sunByHand(2026, 8, 24, 41.3081, -72.9282);
     expect(Math.abs(clockMinutes(rise!) - edtMinutes(sun.rise))).toBeLessThanOrEqual(2);
@@ -1044,8 +1044,7 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
     drawn(sim, Home);
     press(button('Tue'));
     const look = opened(drawn(sim, Home).html);
-    expect(look).toContain('Tomorrow Tuesday Close You’re looking at');
-    expect(look).toContain(`${tue.low}°F to ${tue.high}°F`);
+    expect(look).toMatch(new RegExp(`Tomorrow Tuesday Close [A-Z][a-z ]+ in New Haven tomorrow, ${tue.low}°F to ${tue.high}°F\\.`));
   });
 
   it('Home profiles where she is: a life in London (quickSave: no student’s life is lived there) reads London, England · United Kingdom, Home. with the city’s own tags, 7:30 AM GMT, its short January daylight by the sunrise equation, and the sky in °C with the wind in km/h', () => {

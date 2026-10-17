@@ -73,7 +73,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "CA": {
@@ -213,7 +213,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.gov.uk/guidance/apply-for-an-electronic-travel-authorisation-eta"
       },
       "IE": {
@@ -353,7 +353,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "US": {
@@ -482,7 +482,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.irishimmigration.ie/coming-to-visit-ireland/"
       },
       "GB": {
@@ -638,7 +638,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "DE": {
@@ -773,7 +773,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "FR": {
@@ -908,7 +908,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "ES": {
@@ -1043,7 +1043,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "JP": {
@@ -1220,7 +1220,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       }
     }
@@ -1238,98 +1238,98 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "US": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "IS": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "FR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "ES": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "LV": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
+        "note": "Visa exemption up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "IE": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
+        "note": "Visa exemption up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "DE": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
+        "note": "Visa exemption up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
+        "note": "Visa exemption up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "BR": {
@@ -1365,7 +1365,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.k-eta.go.kr/"
       },
       "US": {
@@ -1486,7 +1486,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "US": {
@@ -1624,7 +1624,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601"
       },
       "NZ": {
@@ -1764,7 +1764,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.gov.br/mre/pt-br/assuntos/portal-consular/vistos/quadro-geral-de-regime-de-vistos-para-a-entrada-de-estrangeiros-no-brasil"
       },
       "GB": {
@@ -1894,7 +1894,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "AU": {

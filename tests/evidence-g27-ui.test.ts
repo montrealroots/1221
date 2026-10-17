@@ -412,7 +412,7 @@ describe('c-birthdate', () => {
     const kept = reload(sim);
     kept.advanceTo(ET(2027, 3, 1, 12));
     // 2027 has no 29 February: the birthday is the 28th, at 9 AM on New Haven's clock (EST, 14:00 UTC), and it's 23.
-    expect(titled(kept, 'Happy Birthday').map((n) => [n.title, n.body, n.at])).toEqual([['Happy Birthday: 23', 'You\'re 23 today.', Date.UTC(2027, 1, 28, 14)]]);
+    expect(titled(kept, 'Happy Birthday').map((n) => [n.title, n.body, n.at])).toEqual([['Happy Birthday: 23', 'You’re 23 today.', Date.UTC(2027, 1, 28, 14)]]);
     expect(drawn(kept, ProfileWorkspace)).toContain('Age 23 Born February 29, 2004');
   });
 

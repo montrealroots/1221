@@ -289,6 +289,193 @@ left as they are. Rerun: `evidence-g27-ui`, `evidence-g28-ui`, `personality`, `l
 tests, exit 0; then eslint 0 and tsc 0 on the four test files. PortraitPicker was first marked on `tests/portrait.test.ts`,
 which doesn't draw it; it was re-marked on `language-frame-ui`'s creation walk, which does.
 
+## Batch 6: The Calendar, The Day, A Place And The Weather
+
+**Sources (about 80, in 17 files):** `src/ui/looks/day.tsx` (a day, an entry and a season opened), `src/ui/looks/place.tsx`
+(a place, a region, a country, its money and its daylight), `src/ui/looks/weather.tsx` (the weather, a day, its hours,
+an hour and the week), `src/ui/looks/plans.tsx` (your own plans, and the hours one takes),
+`src/ui/workspaces/CalendarWorkspace.tsx` (the screen, the plan form, an entry's detail), `src/engine/world/calendar.ts`
+(the legend, Skip To Event's travel note), `src/engine/systems/birthdays.ts`, and the names the calendar reads:
+`core/time.ts` (weekdays, months, durations, seasons), `core/sun.ts`, `systems/weather.ts` (the conditions),
+`systems/seasons.ts`, `world/plans.ts#PLAN_LENGTHS`, `content/climate.ts`, `content/thunder.ts`, `content/holidays.ts`,
+`content/holiday-data.ts`.
+
+**What changed:**
+
+- **"Wants you" is "you need to be there"**, and the two kinds an entry opens as are A Commitment and Happens Without
+  You (they were Something You Have To Be At and Something The World Handles). Two commitments at once are a **clash**,
+  on the screen, its callout, a way's detail and the look's source line, where they were a collision, things landing on
+  top of each other, or "both want you".
+- **The Calendar screen**: its heading is Your Plans And Commitments (it was "Every Commitment You Have."); an empty day
+  says "You have nothing on that day. Press Put Something On It to add a plan.", or "You had nothing on that day." for
+  one gone (it was "That day is entirely yours. Put something on it if you want it spoken for."); the plan form says
+  "You’ll need to be in New Haven for it" and that the calendar flags the clash; an entry's detail says "You need to be
+  there. The clock stops when it comes round, so you can go." (it said "Move the clock to it and it happens", which
+  isn't what a stop does: it asks).
+- **SLATE as the narrator went from the calendar's looks.** "SLATE’s climate model", "SLATE’s reckoning", "SLATE’s
+  calibration", "SLATE can name", "SLATE prices" are "estimated", "a climate model", "on the map", "It’s used in"; the
+  forecast's honesty stays, plainly: "It isn’t a real forecast."
+- **A place's money said "priced in dollar"** and "SLATE puts it at about 1 to the dollar" for the dollar itself; a
+  country's money is "the dollar", the dollar's own line says every exchange rate is quoted against it, and every other
+  money is "to the US dollar" (an Australian dollar's line said "1.53 to the dollar"). "English is spoken, in that
+  order." for one language; "in the order the country lists them" only for two or more. A currency's countries were
+  "at the middle of" their capitals, and Bouvet Island had "0 people, and no capital"; it's "Nobody lives there".
+- **The region's count** was "pieces the map cuts" a country into; it's parts it divides it into (the word "states"
+  stays out, because the gazetteer's 51 for the United States include the District of Columbia). "one of its one place"
+  is "its only place"; "Its towns on your map are Longyearbyen." is "Its one town on your map is Longyearbyen."
+- **The weather's flourishes went:** "Not the story today", "Water the air is carrying", "with little patience in
+  between", "hard on anything left standing outside", "what it was doing is nobody’s business now". The climates say
+  what they're like plainly. The high and low say "Around 3 PM" and "Around 3 AM", where the hourly curve
+  (`weather.ts`, one cosine peaking at 15:00) puts them (they said "Mid-afternoon" and "A little before dawn").
+- **The light:** "the only difference between two in the afternoon and two in the morning is the color of it" and
+  "That gap is the whole difference between living here and living somewhere flat" went; the longest and shortest day
+  name the solstice the code reads (June 21 in the north, December 21 in the south).
+- **A past day** says "That was winter in New Haven, and the season was nearly over then." (it said "That’s … is
+  nearly over"); a day's empty line no longer said "yet" of a day gone.
+- **The legend's Personal** said "Time that’s yours."; it says what's drawn in it: "Your own plans, and your birthday,
+  appointments and tax dates." (plans, `birthdays.ts`, `appointments.ts`, `taxreturn.ts`).
+- **The birthday notice's body** had a straight apostrophe ("You're 24 today."); it's curly.
+- **The missed-class cost** says "at the term review", the glossary's word, where it said "the term’s evaluation".
+
+**Kept:** the month and weekday names, the seasons' names, the durations' readout, the weather conditions' names
+(they're keys too), the plan lengths, the region words (State, Province, Prefecture, Canton, County, Nation, Region),
+the climate names, the thunder counts' citations and the holiday table (data, shown as published), the legend's School
+and Money rows (School's "each term’s evaluation" names the calendar entries the school area titles "Fall Term
+Evaluation"; if that area renames them, the legend follows), and its World row, never shown (`system` items are kept off
+every calendar surface). Skip To Event's travel note is plain already. The holidays' load failure is caught where it's
+called and never shown.
+
+**Meaning-sensitive:** "The clock stops when it comes round, so you can go" against DueNow (the live clock pauses at a
+`requiresPlayer` item; Advance stops at each); "it’s in the city you’re in when you make it" against `calendar.schedule`
+(`locationId` is the player's city); "A country’s towns are loaded once your life has a place in it" against
+`loadPlacesFor`; "a life started here keeps its money in euros" against `currencyFor`; the solstices against the daylight
+look's `Date.UTC(year, lat >= 0 ? 5 : 11, 21)`; "good to a minute or two" against `sun.ts` (the NOAA calculation);
+"Each day’s weather is simulated and blended with the two days before it" against `weather.ts`'s anomaly blend.
+
+**Evidence:** every look in every variant the six lives reach, rendered under the real provider before and after
+(`render-looks.mjs`; the after is `looks-after.txt` in this folder), plus the tests below.
+
+**Tests and tool matchers updated** (each as exact as before; titles unchanged): `tests/evidence-g01-life` (the plan
+form's note), `evidence-g02-life` (an entry's detail), `evidence-g32-ui` (New Haven, Summer and the sky opened from
+Home's head; Tuesday's forecast, now matched as the condition's sentence with its low and high; Daylight's "of
+daylight"), `defects3-place` (a place's two summaries), `evidence-g04-life` and `evidence-g27-ui` (the birthday's
+apostrophe). Two that batch 5 and batch 2 had missed came up in this batch's run and were brought into line:
+`evidence2-b10` (the traits' "how much a slight from one hurts") and `evidence-g08-life` (A Life, Ended's "Wages, before
+tax", held to the tile after it as before). New in `tests/language-frame-ui.test.ts`: the Calendar screen (its heading,
+a clash, the legend, an empty day ahead and gone).
+
+**Tests, batch 6:** 22 files, 390 tests: 5 failed, each an assertion of the old words (above), each updated; the rerun
+of those and the new: 7 files, 146 tests, one failure (the birthday's second assertion, in `evidence-g04-life`, updated
+with `evidence-g27-ui`'s, both rerun in batch 7's round).
+
+**Checks:** tsc 0, eslint 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0, tics 0, spelling 0, typos 0,
+text-inventory 0, doc-refs 0, deciders 0.
+
+**Screens:** every look in this batch rendered for six lives (`looks-after.txt`); the Calendar screen under the real
+provider in the test above; the built app at the area's end.
+
+## Batch 7: The Guide's Start And Day Chapters, And The Entry Rules' Notes
+
+**Sources (37, in 4 files):** `src/engine/content/guide/start.ts` (Home And Where You Are, The Guide And This Help,
+Finding Your Way, and their connections), `src/engine/content/guide/day.ts` (The Calendar, The Clock, Moving Time On,
+What Needs You, Your Own Plans, The Weather, their connections, and the thunder and run figures' words),
+`src/engine/content/entry.ts` (the entry rules, 16 sources), changed through `tools/build-entry.mjs`.
+
+**What changed:**
+
+- **`next` on every entry** (the brief's seventh question), each naming a control that exists: Home And Where You Are
+  (the Calendar and Weather panels; the next chapter if something is Locked), The Guide And This Help (the next chapter;
+  How This Works), Finding Your Way (? for the contents), The Calendar (Go or Stand Here; Open Calendar on Home), The
+  Clock (Play and Pause; Advance), Moving Time On (Sleep before a long move through the night; each stop), What Needs You
+  (answer or dismiss before its date; Go There, then Mark N Read), Your Own Plans (Go, or Skip It), The Weather (Work
+  Out on a dry, mild day, whose line says whether it'll be a run).
+- **"Wants you" is "you need to be at"**, or a commitment, through the day chapter, as the calendar's own words have
+  been since batch 6; the entry kinds it names are A Commitment and Happens Without You; the reads' label What Wants You
+  is What Needs You There; a clash is a clash, not a collision.
+- **"Command" went from the player's sentences:** an answer "does what the same button does on its own screen", its
+  cost is "what the same button costs on its own screen", and one that can't be done keeps the question open with the
+  reason.
+- **"Weight" and "heaviest"** are urgency and importance, the words Home and the looks use: A Question's Urgency, A
+  Notice's Importance, "the most urgent", "the most important".
+- **Figures said as the code has them:** the high around 3 PM and the low around 3 AM (the hourly curve); "worked out"
+  is "calculated" for the season, the daylight and the weather; "SLATE’s weather is a climate model" is "The weather is
+  estimated from a climate model"; the thunder count without a published figure is "estimated for a continental
+  climate", as the weather's look says it.
+- **Home And Where You Are** said Where You Are shows the season and the zone; it shows the town, its region and
+  country, Local Time with its zone, and Daylight. The season is in the line under the greeting, and the entry says so.
+- **The Guide And This Help** called the chapters "the onboarding" and the reference "what it reads"; the chapters
+  "teach the game in order", and an entry says "what it does, what it changes now and later, and what it affects".
+- **Your Own Plans:** "moves no dial" is "costs no money and changes nothing in your wellbeing beyond the hours it
+  takes" (the plan's handler marks it kept or missed and touches nothing else; the hours are charged as any are).
+- **The entry rules' notes:** the builder took "Visa exempt" off the front of "Visa exemption", so Japan's rule for
+  thirteen citizenships read "Ion for short-term stay up to 90 days" and "Ion up to 90 days"; it's held to a word's end
+  now. "Own nationals." is "You’re one of its citizens.", said to the player who is one. Regenerated by the builder; the
+  diff is those 28 lines and nothing else.
+
+**Kept:** every id, cover, goal, question and route; every figure, still read from its constant; the reads' labels but
+the four above; the examples' setups and results but the one quoting a plan "wanting you in New Haven"; the synonyms
+(search words, which keep "wanted you" for a player who types it). In `entry.ts`, the research's own words, sources and
+British spellings (an authority's text quoted, with its source), the authorizations' official names, and
+`ENTRY_UNCERTAIN`, which nothing shows.
+
+**Which of entry.ts reaches a screen:** a citizen's rule's `note` and `source` (the Papers screen's travel fine print,
+`Documents.tsx`), an authorization's `name`, `fee`, `currency` and `validityYears`, and a rule's `visa` (what's
+missing, `systems/documents.ts`), and `ENTRY_AS_OF`. The passport rule's text, `authority`, `processing`,
+`statedDate` and `ENTRY_UNCERTAIN` reach none.
+
+**Meaning-sensitive:** the answer's gate against `world.take_decision_action` (the answer's command is held to its own
+chapter, as from its screen); "if it can’t be done, the question stays open and the reason shows" against the same
+(a refused command leaves the row open and its error on screen); urgency and importance against `openDecisions`'s and
+the notices' sorts; the high and low against `weather.ts`'s curve; Where You Are's contents against `Home.tsx`; the
+plan's wellbeing against its handler (`world/plans.ts`).
+
+**Tests and tool matchers updated:** `tests/guide-examples-start-day-body.test.ts`: the calendar example's count is
+read from "passes one commitment" and turned to a number by the file's own `word`, and the plans example's result is
+read as "from 8:00 to 10:00 PM, in New Haven", each still played and compared as before. New in
+`tests/language-frame.test.ts`: the entry rules' notes.
+
+**Tests, batch 7:** `guide`, `guide-examples-start-day-body`, `help-mechanics`, `tutorial`, `evidence2-b08`,
+`language-frame`, `documents`, `evidence-g04-life`, `evidence-g27-ui` (the last two for batch 6's birthday): 9 files,
+125 tests, exit 0.
+
+**Checks:** tsc 0, eslint 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0, tics 0, spelling 0, typos 0,
+text-inventory 0, doc-refs 0, deciders 0.
+
+**Screens:** each label the entries name was looked for on the built app's walk (`after-1440`, `after-390`).
+
+## The End: The Built App, The Walks And The Whole Suite
+
+**Built** with `npm run build` (exit 0), served on port 4201, and stopped by the PID holding the port.
+
+**The text walk** at 1440 and 390 on brief 13's fourteen scenario saves (`after-1440/`, `after-390/`): every save 25
+screens, none unreachable or failed. Set beside `walk-before-1440` for the frame's screens: the slots' header, the empty
+slot's line and Save Format; Home's Calendar line, "No questions are waiting on you.", "N more unread.", How You Are's
+last line, Daylight's "of daylight"; the rail's descriptions. Each label the start and day chapters name was looked for
+in the walk; those it doesn't reach (Show The Six Most Important, All Clear, No Questions Waiting, "N more waiting.",
+Read About It, Keep The Account) are each drawn in a test (`evidence-g32-ui`, `evidence-g33-ui`, `evidence3-home`,
+`guide-examples-money`).
+
+**The render check** (`render-check.json`): 128,200 strings, 6 distinct faults, none in the frame's screens: "Sleep owed
+1 hours" (the Player Profile, the profile area's), "rehearsed together 1 times" (Coursework, the school area's), and
+"-$3" written four ways on Money (the money area's). They're for the coordinator.
+
+**The frame walk** (`frame-walk.mjs`, `frame-walk-1440.json`, `frame-walk-390.json`): what the text walk doesn't reach.
+Three slots set in the browser's store, one this version's save, one marked as an older version's, one not a save. The
+startup sequence's every stage label, Ready, Before You Continue with "Slot 3: That save file is damaged and can’t be
+read." and "Slot 2 was saved by an older version of SLATE. It’s updated when you open it, and a backup of it is kept
+first.", Version 1.1.0 · Save Format 94; the slots, with Save Format 93 · Updated When Opened and the unreadable slot;
+then the top bar (Not Saved Yet, Save & Exit), the Advance menu, the phone's Menu, and the Calendar by the C key, its
+breadcrumb Home › Calendar, its heading Your Plans And Commitments and its legend.
+
+**Found by the walks and fixed:** a calendar cell's accessible name said "One thing on it." and "2 things on it."
+side by side (`ui/workspaces/cell.ts`); a count under ten is a word now ("Two things on it."), held in the Calendar
+screen's test. The breadcrumbs' names (`ROUTE_LABELS`) are held against the rail's in `tests/language-frame.test.ts`.
+
+**Not reached on screen, and why:** the startup's failure (Startup Stopped, "… failed.", Try Again): the adapter always
+answers in a browser with storage; its words are read where they're set.
+
+SUITE_PLACEHOLDER
+
 ## For The Coordinator: Labels Other Areas Quote
 
 The guide's body chapter (the health area's) names the Sleep dialog's labels. What batch 2 changed in that dialog

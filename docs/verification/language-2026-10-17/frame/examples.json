@@ -709,5 +709,212 @@
   "why": "Its only change is a better night (sleepQuality 1.18): no cost is modeled.",
   "meaningSensitive": false,
   "verified": "read: its systemMods"
+ },
+ {
+  "source": "src/ui/workspaces/CalendarWorkspace.tsx#EntryDetail",
+  "kind": "narration",
+  "before": "This one wants you there. Move the clock to it and it happens.",
+  "after": "You need to be there. The clock stops when it comes round, so you can go.",
+  "why": "Moving the clock to it doesn't make it happen: the clock stops at it and asks (DueNow: Go or Stand Here).",
+  "meaningSensitive": true,
+  "verified": "read: DueNow in TimeControls.tsx; tests/evidence-g02-life.test.ts"
+ },
+ {
+  "source": "src/ui/looks/day.tsx#top",
+  "kind": "label",
+  "before": "Something You Have To Be At / Something The World Handles",
+  "after": "A Commitment / Happens Without You",
+  "why": "The kinds an entry opens as, in the glossary's word, and plain.",
+  "meaningSensitive": false,
+  "verified": "looks-after.txt (an entry in each kind)"
+ },
+ {
+  "source": "src/ui/workspaces/CalendarWorkspace.tsx#CalendarWorkspace",
+  "kind": "empty",
+  "before": "That day is entirely yours. Put something on it if you want it spoken for.",
+  "after": "You have nothing on that day. Press Put Something On It to add a plan.",
+  "why": "Says what's there and names the button that adds a plan.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts 'the Calendar screen'"
+ },
+ {
+  "source": "src/ui/looks/place.tsx#top",
+  "kind": "narration",
+  "before": "You’re in the United States today, 327M people are in it with you, and everything you buy is priced in dollar.",
+  "after": "You’re in the United States, a country of 327M people, and its money is the dollar.",
+  "why": "\"priced in dollar\" wasn't English, and a country whose money has no exchange rate keeps a life's money in euros, so \"everything you buy\" wasn't always true.",
+  "meaningSensitive": true,
+  "verified": "read: currencyFor (world/bootstrap.ts); looks-after.txt"
+ },
+ {
+  "source": "src/ui/looks/place.tsx#top",
+  "kind": "narration",
+  "before": "English is spoken, in that order.",
+  "after": "English is spoken.",
+  "why": "\"in that order\" with one language; it's said only for two or more, as the country lists them.",
+  "meaningSensitive": false,
+  "verified": "looks-after.txt (Australia, the United States)"
+ },
+ {
+  "source": "src/ui/looks/place.tsx#rateLine",
+  "kind": "label",
+  "before": "About 1.53 to the dollar, by SLATE’s reckoning",
+  "after": "About 1.53 to the US dollar, estimated",
+  "why": "An Australian dollar's line said \"to the dollar\"; the game isn't a narrator, and the rate is an estimate.",
+  "meaningSensitive": false,
+  "verified": "looks-after.txt (Sydney)"
+ },
+ {
+  "source": "src/ui/looks/weather.tsx#top",
+  "kind": "label",
+  "before": "Mid-afternoon / A little before dawn",
+  "after": "Around 3 PM / Around 3 AM",
+  "why": "The hourly curve peaks at 15:00 and bottoms at 03:00 (one cosine in weather.ts).",
+  "meaningSensitive": true,
+  "verified": "read: hourTemperature in systems/weather.ts; looks-after.txt (the hours)"
+ },
+ {
+  "source": "src/ui/looks/weather.tsx#top",
+  "kind": "narration",
+  "before": "SLATE’s climate model for New Haven — the season, the latitude and the kind of place this is. It isn’t a forecast service, and it never was one.",
+  "after": "Estimated from a climate model for New Haven: the season, the latitude and the kind of climate it has. It isn’t a real forecast.",
+  "why": "The model's honesty kept, said plainly, without the narrator.",
+  "meaningSensitive": false,
+  "verified": "looks-after.txt"
+ },
+ {
+  "source": "src/ui/looks/place.tsx#top",
+  "kind": "narration",
+  "before": "You’re inside it, in Longyearbyen, one of the one place in it SLATE can name.",
+  "after": "You’re in it, in Longyearbyen, its only place on the map.",
+  "why": "A region with one town said \"one of the one place\".",
+  "meaningSensitive": false,
+  "verified": "looks-after.txt (Longyearbyen)"
+ },
+ {
+  "source": "src/ui/looks/day.tsx#top",
+  "kind": "narration",
+  "before": "Summer in New Haven on it, and Summer here is nearly over.",
+  "after": "That was summer in New Haven, and the season was nearly over then.",
+  "why": "A day gone is said in the past tense.",
+  "meaningSensitive": false,
+  "verified": "looks-after.txt (yesterday)"
+ },
+ {
+  "source": "src/ui/looks/place.tsx#yearLine",
+  "kind": "narration",
+  "before": "On the longest day of the year you get 15h 10m; on the shortest, you get 9h 11m. That gap is the whole difference between living here and living somewhere flat.",
+  "after": "On the longest day of the year there’s 15h 10m of daylight, and on the shortest, there’s 9h 11m.",
+  "why": "The last sentence was a flourish that said nothing true.",
+  "meaningSensitive": false,
+  "verified": "looks-after.txt (New Haven)"
+ },
+ {
+  "source": "src/engine/systems/birthdays.ts#registerBirthdays",
+  "kind": "notification",
+  "before": "You're 24 today.",
+  "after": "You’re 24 today.",
+  "why": "A straight apostrophe in a notice.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g04-life.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.calendar]",
+  "kind": "tutorial",
+  "before": "The Calendar panel at the top of Home is what’s coming: the next thing that wants you, how far off it is, and up to five more after it. When the clock reaches something that wants you, it stops, pauses and asks.",
+  "after": "The Calendar panel at the top of Home is what’s coming: the next thing you need to be at, how far off it is, and up to five more after it. When the clock reaches a commitment, it stops, pauses and asks.",
+  "why": "The glossary's commitment, the calendar's own words since batch 6.",
+  "meaningSensitive": false,
+  "verified": "tests/guide.test.ts; tests/guide-examples-start-day-body.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.calendar]",
+  "kind": "tutorial",
+  "before": "An entry opened says Something You Have To Be At, or Something The World Handles.",
+  "after": "An entry, opened, says A Commitment or Happens Without You.",
+  "why": "The kinds an entry opens as were renamed in batch 6; the guide names them as they are.",
+  "meaningSensitive": false,
+  "verified": "looks-after.txt (entries of each kind)"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.calendar]",
+  "kind": "tutorial",
+  "before": "On The Way says the jump comes to 1 commitment; press Advance.",
+  "after": "On The Way says the move passes one commitment; press Advance.",
+  "why": "On The Way's own words since batch 2.",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-start-day-body.test.ts (the example's count read from the words and played)"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.needs]",
+  "kind": "tutorial",
+  "before": "An answer runs a command of its own, and that command’s chapter has to have been read too.",
+  "after": "An answer does what the same button does on its own screen, so that screen’s chapter has to have been read too.",
+  "why": "A command is the engine's word; the player knows the button.",
+  "meaningSensitive": true,
+  "verified": "read: requireDecision and the answer's gate in world.ts"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.needs]",
+  "kind": "tutorial",
+  "before": "A Question’s Weight: Its urgency, out of a hundred. Overdue ones come first, then the heaviest, then the soonest due.",
+  "after": "A Question’s Urgency: Out of a hundred. Overdue ones come first, then the most urgent, then the soonest due.",
+  "why": "Weight was the code's word; Home and the question's look say urgency.",
+  "meaningSensitive": true,
+  "verified": "read: openDecisions' sort in world.ts"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.plans]",
+  "kind": "tutorial",
+  "before": "Keeping one moves no dial and costs no money.",
+  "after": "Keeping one costs no money and changes nothing in your wellbeing beyond the hours it takes.",
+  "why": "\"Dial\" is engine-speak; the health area says \"your wellbeing\".",
+  "meaningSensitive": true,
+  "verified": "read: the plan's handler in world/plans.ts (it marks the plan kept or missed, and touches no wellbeing; the hours are charged as any hours are)"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.weather]",
+  "kind": "tutorial",
+  "before": "The high comes mid-afternoon and the low a little before dawn.",
+  "after": "The high comes around 3 PM and the low around 3 AM.",
+  "why": "Where the hourly curve puts them, as the weather's look now says.",
+  "meaningSensitive": true,
+  "verified": "read: hourTemperature in systems/weather.ts"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#HAVEN_THUNDER_FROM",
+  "kind": "tutorial",
+  "before": "SLATE’s estimate for continental country, where no count is published",
+  "after": "estimated for a continental climate, where no count is published",
+  "why": "The game isn't a narrator; the weather look says it the same way.",
+  "meaningSensitive": false,
+  "verified": "tests/guide.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/start.ts#START [start.home]",
+  "kind": "tutorial",
+  "before": "Home is the day you’re standing in. Where You Are names your town, its region and country, the local time and zone, the season and the daylight",
+  "after": "Home is your day at a glance. The line under the greeting gives the time, your town, its time zone, the season and the sky; Where You Are names your town, its region and country, with the local time and the daylight.",
+  "why": "Where You Are doesn't show the season: Home's head does.",
+  "meaningSensitive": true,
+  "verified": "read: Home.tsx's head and Where You Are panel"
+ },
+ {
+  "source": "src/engine/content/entry.ts#ENTRY .JP",
+  "kind": "official",
+  "before": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+  "after": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+  "why": "The builder took \"Visa exempt\" off \"Visa exemption\"; it's held to a word's end now.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts 'keeps a note’s first word whole'"
+ },
+ {
+  "source": "src/engine/content/entry.ts#ENTRY .US",
+  "kind": "official",
+  "before": "Own nationals.",
+  "after": "You’re one of its citizens.",
+  "why": "Shown to the player, who is one, on the Papers screen's fine print.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts"
  }
 ]
