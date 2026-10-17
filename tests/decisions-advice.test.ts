@@ -539,9 +539,14 @@ describe('The F2-A10 harness (brief 11)', () => {
     expect(sim.player.work!.at(-1)!.what).toContain(b.title);
     expect(sim.player.work!.at(-1)!.at).toBeGreaterThanOrEqual(until);
     expect(inHospital(sim.player, sim.now)).toBe(false);
-    // The falsifiability test: a take refused for another reason isn't waited on; it throws, as a broken case should.
-    const busy = clone(sim);
-    expect(() => tapeWaiting(busy, 'adv-t-0 no such brief', () => undefined, () => go(busy, 'practice.self_tape', { genre: 'drama', brief: 'brief-none' }))).toThrow('adv-t-0 no such brief');
+    // The falsifiability test: a take refused for another reason isn't waited on or tried again, even where preparing
+    // again would let it through (here no reading had been chosen); it throws, as a broken case should.
+    const other = clone(sim);
+    const c = BRIEFS.find((x) => x.medium === 'camera' && !other.player.briefs?.[x.id])!;
+    const choose = () => { go(other, 'brief.choose', { brief: c.id, reading: c.readings[0]!.id }); };
+    const tapeOther = () => go(other, 'practice.self_tape', { genre: c.kinds[0], brief: c.id });
+    expect(tapeOther().error).toContain('Choose a reading first');
+    expect(() => tapeWaiting(other, 'adv-t-0 no reading', choose, tapeOther)).toThrow('adv-t-0 no reading: Choose a reading first');
   }, 240_000);
 });
 
