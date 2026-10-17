@@ -169,7 +169,7 @@ describe('F2-A10: What To Improve Next, followed through the commands (brief 10)
       expect(f.pieces, r.target).toBe(n);
       expect(f.of).toBe(latest.length);
       expect(r.why).toContain(`worth about ${r.points} point`);
-      expect(r.why).toContain(`(${n} of your last ${latest.length} pieces call on it; ${f.most!.what} would gain most`);
+      expect(r.why).toContain(`(${n} of your last ${latest.length} pieces ${n === 1 ? 'calls' : 'call'} on it; ${f.most!.what} would gain most`);
       expect(latest.filter((w) => reads(w, r.target)).map((w) => w.what)).toContain(f.most!.what);
     }
   }, 240_000);

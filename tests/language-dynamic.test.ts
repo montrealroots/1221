@@ -26,7 +26,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { newLifeFrom, type NewSaveConfig } from '@/engine/world/bootstrap';
 import { deserialise } from '@/engine/persistence/adapter';
 import { MS_DAY, MS_HOUR, formatDate, formatRelative, instantFromZoned, type Instant } from '@/engine/core/time';
-import { mateRecord, setWork, termWarning } from '@/engine/systems/coursework';
+import { mateRecord, setWork, termWarning, weightsOf } from '@/engine/systems/coursework';
 import { personOf } from '@/engine/systems/classmates';
 import { healthOf } from '@/engine/systems/health';
 import { trainingRefusal } from '@/engine/systems/injury';
@@ -119,11 +119,14 @@ function faults(text: string): string[] {
 const sound = (text: string) => expect(faults(text), text.slice(0, 400)).toEqual([]);
 /** A sentence a notice or a refusal says ends whole: a stop, a question or a closing quote or bracket, never a fragment. */
 const whole = (text: string) => expect(/[.?!”’)]$/.test(text.trim()), `whole: ${text}`).toBe(true);
-/** Every date in it as the game writes one (`formatDate`): never an ISO day, a slashed date or a timestamp. */
+/**
+ * Every date in it as the game writes one (`formatDate`): "August 24, 2026", never an ISO day, a slashed date, a year
+ * run on without its comma, or a day before its month. A day and month alone stay a sentence's own ("August 24 to 28").
+ */
 const MONTH = '(?:January|February|March|April|May|June|July|August|September|October|November|December)';
 const dated = (text: string) => {
-  expect(text.split('\n').filter((line) => /\b\d{4}-\d{2}-\d{2}\b|\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/.test(line.replace(/\bhttps?:\/\/\S+/g, ''))), 'no ISO or slashed date').toEqual([]);
-  for (const m of text.match(new RegExp(`${MONTH} \\d{1,2}(?!\\d)(?:, \\d{4})?`, 'g')) ?? []) expect(m, 'a date with its year').toMatch(new RegExp(`^${MONTH} \\d{1,2}, \\d{4}$`));
+  const odd = new RegExp(`\\b\\d{4}-\\d{2}-\\d{2}\\b|\\b\\d{1,2}\\/\\d{1,2}\\/\\d{2,4}\\b|${MONTH} \\d{1,2},?\\d{4}\\b|${MONTH} \\d{1,2} \\d{4}\\b|\\b\\d{1,2} ${MONTH},? \\d{4}\\b`);
+  expect(text.split('\n').filter((line) => odd.test(line.replace(/\bhttps?:\/\/\S+/g, ''))), 'a date as the game writes one').toEqual([]);
 };
 /** A count's noun agrees with it: "1 rehearsal", "of 1 class", never "1 rehearsals" or "of 1 classes". */
 const agrees = (text: string, nouns: readonly string[]) => {
@@ -199,11 +202,13 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     // Eight pieces of the first fall, set as each course sets one (`setWork`), then TEST SETUP: six of them due, their
     // showings' bands and statuses put on by hand as the review's tally reads them (`termTally`), and the warning given
     // as the game gives it after a piece is due.
-    const warned = (seed: string, unready: number, missed: number, open: number) => {
+    const warned = (seed: string, unready: number, missed: number, open: number, oneShort = false) => {
       const sim = student(seed);
-      const courses = ['DRAM 103a/b', 'DRAM 113a/b', 'DRAM 123a/b', 'DRAM 133a/b', 'DRAM 143a/b', 'DRAM 873a/b', 'DRAM 403a/b', 'DRAM 153a'];
+      const courses = ['DRAM 113a/b', 'DRAM 103a/b', 'DRAM 123a/b', 'DRAM 133a/b', 'DRAM 143a/b', 'DRAM 873a/b', 'DRAM 403a/b', 'DRAM 153a'];
       const set = courses.map((c, i) => setWork(sim, sim.player, c, { year: 2026, month: 9, day: 1 + i })!);
       expect(set.every(Boolean)).toBe(true);
+      // TEST SETUP: Voice I's sequence, the first Unready, prepared but for one part, where `oneShort` asks it.
+      if (oneShort) { const a = set[0]!; for (const d of Object.keys(a.prep) as (keyof typeof a.prep)[]) a.prep[d] = 1; a.prep[Object.keys(weightsOf(a))[0] as keyof typeof a.prep] = 0; }
       set.forEach((a, i) => {
         if (i < unready) { a.shown = { band: 'unready', score: 0.3, at: sim.now, strengths: [] }; a.status = 'done'; }
         else if (i < unready + missed) a.status = 'missed';
@@ -218,9 +223,10 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const none = warned('dyn-warn-none', 3, 0, 0);
     expect(none.body).toMatch(/^So far this term, 3 of the 6 pieces you’ve shown were Unready\./);
     expect(none.body).toContain('Everything set so far has been shown.');
-    const one = warned('dyn-warn-one', 1, 2, 1);
+    const one = warned('dyn-warn-one', 1, 2, 1, true);
     expect(one.body).toMatch(/^So far this term, 3 of the 6 pieces due were Unready or not shown\./);
-    expect(one.body).toMatch(/unfinished on the one you showed\.|Every part of each one was unfinished/);
+    // The one Unready piece shown, short on one part: that part, on the one you showed, and the steps that answer it.
+    expect(one.body).toMatch(/ What held most of them back was “[^”]+”, unfinished on the one you showed\. To work on it, use [^.]+\./);
     expect(one.body).toContain('One piece is set and still to be shown.');
     const many = warned('dyn-warn-many', 3, 0, 2);
     expect(many.body).toContain('2 pieces are set and still to be shown.');
@@ -348,9 +354,41 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     expect(held()).toHaveLength(1);
     const row = papers().split('\n');
     expect(row.slice(row.indexOf(held()[0]!.name), row.indexOf(held()[0]!.name) + 4)).toEqual([held()[0]!.name, held()[0]!.number, '—', `Ready ${formatDate(applied.readyAt, sim.zone)}`]);
+    // Several: a student from London holds her British passport and her F-1 visa, each its own line.
+    const abroad = student('dyn-documents-abroad', { homeRegionId: 'uk-eng-london' });
+    const theirs = documentsOf(abroad.player).filter((d) => ['passport', 'visa', 'authorization'].includes(d.kind));
+    expect(theirs.length).toBeGreaterThan(1);
+    const listed = drawn(abroad, PassportPane);
+    // Each on its own row: its name, then its number.
+    for (const d of theirs) expect(listed).toContain(`${d.name}${d.destination ? '' : `\n${d.number}`}`);
+    sound(listed);
     // The entry rules' day, as the game writes a date (`ENTRY_AS_OF`, the data's own ISO day).
     expect(papers()).toContain('. Researched September 29, 2026. Permission to live or work there is separate.');
     sound(papers()); dated(papers());
+  });
+
+  it('the advice’s counts: a cost of one point and several, and the pieces that call on an ability, one and several', async () => {
+    const { recommendations } = await import('@/engine/systems/experience');
+    const { matchedTier } = await import('@/engine/systems/practice');
+    // TEST SETUP: one judged piece kept, its limits as a judgment records them (`whole`, what each cost the whole), the
+    // advice made of it as `adviceFor` makes it where no forecast is kept.
+    type Limit = { kind: string; what: string; label: string; by: number; whole: number };
+    const why = (limit: Limit) => recommendations(() => 50, () => 100, [{ at: 1, limits: [limit], inputs: { abilities: { focus: 50 } } }], (id) => ({ id: `ex-${id}` }), matchedTier, 12).map((r) => r.why).join(' ');
+    for (const [whole, said] of [[1, '1 point'], [2.5, '2.5 points']] as const) {
+      expect(why({ kind: 'preparation', what: 'memorization', label: 'Lines', by: 4, whole })).toContain(`Coming to your work short on lines cost about ${said} off the whole a piece. That’s preparation, not training.`);
+      expect(why({ kind: 'condition', what: 'injury', label: 'An Injury Still Mending', by: 4, whole })).toContain(`An Injury Still Mending cost about ${said} off the whole a piece. Come to the work rested and well`);
+      expect(why({ kind: 'condition', what: 'stamina', label: 'Stamina, By Beat 2', by: 4, whole })).toContain(`Tiring through the later moments of a piece cost about ${said} off the whole a piece.`);
+      expect(why({ kind: 'fit', what: 'tempo', label: 'Played Against The Scene', by: 4, whole })).toContain(`Playing it a way that didn’t fit cost about ${said} off the whole a piece.`);
+      expect(why({ kind: 'ability', what: 'focus', label: 'Focus', by: 4, whole })).toContain(`It cost your recent work about ${said} off the whole a piece`);
+    }
+    // A forecast's count of the recent pieces that call on it: the verb agrees with the count that leads.
+    const forecast = (pieces: number, of?: number) => recommendations(() => 50, () => 100, [], (id) => ({ id: `ex-${id}` }), matchedTier, 12, undefined, undefined, new Map([['focus', { points: 0.8, from: 50, to: 55, hours: 20, pieces, ...(of !== undefined ? { of } : {}) }]]))[0]!.why;
+    expect(forecast(1, 12)).toContain('(1 of your last 12 pieces calls on it)');
+    expect(forecast(5, 12)).toContain('(5 of your last 12 pieces call on it)');
+    expect(forecast(1, 1)).toContain('(1 of your last 1 piece calls on it)');
+    expect(forecast(1)).toContain('(1 of the pieces calls on it)');
+    expect(forecast(3)).toContain('(3 of the pieces call on it)');
+    for (const s of [forecast(1, 12), why({ kind: 'preparation', what: 'memorization', label: 'Lines', by: 4, whole: 1 })]) { sound(s); whole(s); agrees(s, ['point', 'piece']); }
   });
 
   it('nights with the company and the calls and notes of a run, as the run looks back on them: none, one and several', async () => {
@@ -447,7 +485,7 @@ describe('different names and pronouns: you, she, he, they, pronouns the game do
     for (const s of [busy, unmet, refused!]) { sound(s); whole(s); }
   });
 
-  it('a teacher and a cast member are named as the school names them, in the term’s notes, the feedback and the cast', () => {
+  it('a teacher and a cast member are named as the school names them, in the term’s notes and the cast', () => {
     const sim = journey('year-one');
     const standing = drawn(sim, SchoolWorkspace);
     const notes = sim.player.school!.history.at(-1)!.notes!;
@@ -505,7 +543,7 @@ describe('missing optional information: each part absent, and the sentence still
     expect(noteText(solo, { kind: 'dim', dim: Object.keys(solo.prep)[0] as never }, 0.5)).not.toContain('You played');
   });
 
-  it('a date not yet known: a passport applied for and not yet issued, and a document issued with no application on record', async () => {
+  it('a date not yet known: a passport applied for, with its ready day and without one, then issued on its day', async () => {
     const sim = student('dyn-dates');
     const applied = sim.must<{ readyAt: number }>({ kind: 'documents.apply_passport', payload: {} });
     const { documentsOf } = await import('@/engine/systems/documents');
@@ -542,7 +580,7 @@ describe('missing optional information: each part absent, and the sentence still
     sound(text);
   });
 
-  it('a document’s missing number: a student on an F-1 with no Social Security number, then one applied for', async () => {
+  it('a document’s missing number: a student on an F-1 with no Social Security number, its status in the number’s place and why it can’t be applied for yet', async () => {
     const { WorkPane } = await import('@/ui/papers/Documents');
     const sim = student('dyn-ssn', { homeRegionId: 'uk-eng-london' });
     const pane = drawn(sim, WorkPane).split('\n');
@@ -784,13 +822,15 @@ describe('deadlines upcoming, due and missed: coursework, a document’s renewal
     expect(opened(sim, 'document', passport.id).look.summary).toBe(`It’s in force until September 1, 2026, and its number ends ${last}.`);
     let pane = drawn(sim, PassportPane);
     expect(pane).toContain(`Passport\nIn Force\n${passport.number}, runs out September 1, 2026`);
-    sound(pane); dated(pane);
+    // The pane's own words read whole; its fine print's dates are the passport office's, as its source wrote them
+    // ("from 8 April 2026"), and recorded, not held here (docs/verification/language-2026-10-17/dynamic/defects.md).
+    sound(pane);
     tended(sim, on(2026, 9, 2, 12));
     expect(opened(sim, 'document', passport.id).look.summary).toBe('It ran out on September 1, 2026 and no longer counts for anything.');
     pane = drawn(sim, PassportPane);
     expect(pane).toContain('Passport\nNone In Force');
     expect(pane).toMatch(/\nRun Out\nApply for a new one under Your Passport, above\.\n/);
-    sound(pane); dated(pane);
+    sound(pane);
   });
 
   it('a tax return: its date ahead, its last day, and passed unfiled, with what being late means', async () => {
@@ -940,5 +980,192 @@ describe('positive, zero and negative balances: an account, a card, a payment pl
     r.figures = { ...r.figures, balance: 0 };
     expect(returns()).toContain('Nothing Owed Or Due Back\n$0.00');
     expect(returns()).not.toContain('Your Refund\n$0.00');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 8. A new player, an advanced one and a finished school journey
+// ---------------------------------------------------------------------------
+
+describe('a new player, an advanced one and a finished school journey: the Profile, the advice, Home and School', () => {
+  /** Journey J01's life at its start, as part 1 of `tools/journeys.ts` makes it, and its two saves (FIXTURE). */
+  const stages = () => [
+    ['new', createSave(1, 'j13-1', newLifeFrom({ firstName: 'Ada', lastName: 'Cole', homeRegionId: 'us-ny-newyork', pronouns: 'she/her', wealth: 'wealthy' }))],
+    ['a year played', journey('year-one')],
+    ['the degree', journey('degree')],
+  ] as const;
+
+  it('each screen at each stage says where the life stands, and every word of it is sound', () => {
+    for (const [stage, sim] of stages()) {
+      const screens = {
+        home: drawn(sim, Home),
+        profile: drawn(sim, ProfileWorkspace),
+        school: drawn(sim, SchoolWorkspace),
+        coursework: drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'coursework' }),
+      };
+      for (const [name, text] of Object.entries(screens)) {
+        expect(faults(text), `${stage}: ${name}`).toEqual([]);
+        dated(text);
+      }
+      const lines = (t: string) => t.split('\n');
+      const affairs = lines(screens.home).find((l) => l.startsWith('School '))!;
+      const head = lines(screens.school).find((l) => l.startsWith('MFA in Acting, class of 2029.'))!;
+      const profileSchool = lines(screens.profile).slice(lines(screens.profile).indexOf('School'), lines(screens.profile).indexOf('School') + 3);
+      if (stage === 'new') {
+        expect(affairs).toMatch(/^School Arriving, good standing, \d+ of 16 in the class\. Next: Registration And Your Account, August 24, 2026 at 10:00 AM\.$/);
+        expect(profileSchool).toEqual(['School', 'Year 1', 'Class of 2029, good standing']);
+        expect(screens.profile).toContain('None of your work has been judged yet. What to work on comes from what holds judged work back, so it starts after your first showing, night on stage or self-tape.');
+        expect(head).toBe('MFA in Acting, class of 2029. Arriving for the fall term.');
+        expect(screens.school).toContain('Attendance This Term\nNone Yet');
+        expect(screens.school).toContain('Coursework This Term\nNone Yet');
+        expect(screens.coursework).toContain('Nothing is set yet. Each course sets its work in class, and in your first week the orientation session The Courses And What They Ask sets the first pieces.');
+      } else if (stage === 'a year played') {
+        expect(affairs).toMatch(/^School Year 1, good standing, \d+ of 16 in the class\. Next: Classes, August 30, 2027 at 9:00 AM\.$/);
+        expect(profileSchool).toEqual(['School', 'Year 1', 'Class of 2029, good standing']);
+        expect(screens.profile).toContain('What To Work On Next');
+        expect(head).toBe('MFA in Acting, class of 2029. Year 1 of three, good standing.');
+        // Both of the year's reviews, in good standing, and the spring's teachers' notes.
+        expect(screens.school).toMatch(/\nFall Term 2026\nGood Standing\n\d+%/);
+        expect(screens.school).toMatch(/\nSpring Term 2027\nGood Standing\n\d+%/);
+        expect(screens.school).toContain('From Your Teachers\nOn Spring Term 2027');
+        expect(screens.school).toContain('Attendance This Term');
+      } else {
+        expect(affairs).toMatch(/^School Graduated, \d+ of 16 in the class\.$/);
+        expect(profileSchool).toEqual(['School', 'Graduated', 'Class of 2029, graduated']);
+        expect(head).toBe('MFA in Acting, class of 2029. Graduated.');
+        expect(screens.school).toContain('Attendance Last Term');
+        expect(screens.school).toContain('Every course the degree needs was passed, and it was conferred on May 21, 2029.');
+        expect(screens.coursework).toContain('Your degree is conferred, so no course sets work now.');
+        expect(screens.school).not.toMatch(/This Term\b/);
+      }
+    }
+  });
+
+  it('the advice: none before any work is judged, then what to work on, with the pieces it reads counted and agreeing', async () => {
+    const { adviceFor } = await import('@/engine/systems/next-steps');
+    for (const [stage, sim] of stages()) {
+      const recs = adviceFor(sim, sim.player);
+      if (stage === 'new') { expect(recs).toEqual([]); continue; }
+      expect(recs.length, stage).toBeGreaterThan(0);
+      for (const r of recs) {
+        for (const s of [r.why, r.standing, r.next, r.attention].filter((x): x is string => typeof x === 'string')) {
+          expect(faults(s), `${stage}: ${r.label}`).toEqual([]);
+          whole(s);
+          agrees(s, ['piece', 'point', 'hour']);
+          // "N of your last M pieces call on it": a count of the work it read, never more than the work.
+          for (const m of s.matchAll(/(\d+) of your last (\d+) (piece|pieces) call/g)) {
+            expect(Number(m[1])).toBeLessThanOrEqual(Number(m[2]));
+            expect(m[3]).toBe(Number(m[2]) === 1 ? 'piece' : 'pieces');
+          }
+        }
+      }
+      // The Profile shows the same advice it was given, the first of it by its own label.
+      expect(drawn(sim, ProfileWorkspace)).toContain(recs[0]!.label);
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Section 8. Repetition said through what changed
+// ---------------------------------------------------------------------------
+
+describe('repetition: a note said before says so, a warning repeated says what changed and what’s open, a refusal met twice still says why', () => {
+  it('a teacher’s note on an unchanged weakness says it was said before, how often, and when; never as a new discovery', async () => {
+    const { courseworkOf, feedbackWords, persistentFor } = await import('@/engine/systems/coursework');
+    const { noteSubject } = await import('@/engine/systems/learning');
+    // A first fall left unprepared (TEST SETUP: rested, so only the preparation is short), the notes as the showings give them.
+    const sim = student('dyn-repeat');
+    tended(sim, on(2026, 10, 10, 12));
+    const cw = courseworkOf(sim, sim.player)!;
+    const given = cw.assignments.filter((a) => a.feedback && a.feedback.focus.kind !== 'advanced');
+    const recurring = given.filter((a) => a.feedback!.kind === 'recurring');
+    expect(recurring.length).toBeGreaterThan(3);
+    for (const a of given) {
+      const t = a.feedback!.text;
+      const said = /^(?:You had the same note in .+ on (\w+ \d{1,2}, \d{4}), and it’s still there\.|This is the (\d+)(st|nd|rd|th) time you’ve had this note \(last in .+ on (\w+ \d{1,2}, \d{4})\), and it’s still there\.|You’d put this right on .+, but it has slipped back\.)/.exec(t);
+      if (a.feedback!.kind === 'recurring') {
+        expect(said, t).not.toBeNull();
+        // Said before: on this piece's day or one before it.
+        expect(Date.parse(`${said![1] ?? said![4]} 00:00 EDT`)).toBeLessThanOrEqual(a.shown!.at);
+        if (said![2]) {
+          const n = Number(said![2]);
+          expect(n).toBeGreaterThanOrEqual(3);
+          expect(said![3]).toBe(n % 100 >= 11 && n % 100 <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'));
+        }
+      } else expect(said, t).toBeNull();
+      sound(t); whole(t); dated(t);
+    }
+    // A weakness that keeps coming back: a notice a week at most, its count, and the open piece's way at it.
+    const still = sim.universe.notifications.filter((n) => n.title.startsWith('Still There: '));
+    expect(still.length).toBeGreaterThan(0);
+    const bySubject = new Map<string, number[]>();
+    for (const n of still) {
+      const m = /, and the same note came back: (\d+) times now\. It stays open under Your Notes\./.exec(n.body)!;
+      expect(m, n.body).not.toBeNull();
+      expect(Number(m[1])).toBeGreaterThan(3);
+      (bySubject.get(n.title) ?? bySubject.set(n.title, []).get(n.title)!).push(n.at);
+      sound(n.body); whole(n.body);
+    }
+    for (const [title, ats] of bySubject) for (let i = 1; i < ats.length; i += 1) expect(ats[i]! - ats[i - 1]!, title).toBeGreaterThanOrEqual(7 * MS_DAY);
+    const open = cw.assignments.find((a) => (a.status === 'open' || a.status === 'revising') && persistentFor(cw, a).length > 0)!;
+    expect(open).toBeDefined();
+    const weak = persistentFor(cw, open)[0]!;
+    expect(drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'coursework' })).toContain(`A Note That Keeps Coming Back: ${noteSubject(weak.key)}, given ${weak.given} times.`);
+    // Better but not there, and back after it was taken: each says so, with the day and the figures.
+    expect(feedbackWords('partial', 'Lines weren’t secure.', { on: '2026-09-08', course: 'Acting I', level: 0.2 }, 0.5)).toBe('This has improved since September 8, 2026 (20% then, 50% now), but it isn’t there yet. Lines weren’t secure.');
+    expect(feedbackWords('recurring', 'Lines weren’t secure.', { on: '2026-09-08', course: 'Acting I', given: 1, taken: '2026-09-15' })).toBe('You’d put this right on September 15, 2026, but it has slipped back. Lines weren’t secure.');
+    expect(feedbackWords('recurring', 'Lines weren’t secure.', { on: '2026-09-08', course: 'Acting I', given: 10 })).toBe('This is the 11th time you’ve had this note (last in Acting I on September 8, 2026), and it’s still there. Lines weren’t secure.');
+  });
+
+  it('a warning repeated says what changed and what’s still open: an Incomplete, then a week before its deadline, after a session made up', async () => {
+    const { settleCourses } = await import('@/engine/systems/courserecord');
+    for (const [made, left] of [[1, '2 make-up sessions'], [2, 'One make-up session']] as const) {
+      const sim = student(`dyn-week-left-${made}`);
+      tended(sim, on(2026, 9, 14, 17));
+      const courses = sim.player.school!.courses as Record<string, { code: string; term: number; meetings: number; excused: number; attended: number; name: string; dueBy?: number }>;
+      const key = Object.keys(courses).find((k) => courses[k]!.code === 'DRAM 103a/b')!;
+      // TEST SETUP: Acting I's term as an illness leaves it, 28 meetings, 10 excused, 18 attended: under three quarters of
+      // its meetings, and none of the rest missed, settled as the term's end settles it.
+      Object.assign(courses[key]!, { meetings: 28, excused: 10, attended: 18 });
+      settleCourses(sim, sim.player, courses[key]!.term, () => ({ due: 0, notShown: 0 }));
+      const due = formatDate(courses[key]!.dueBy!, sim.zone);
+      const first = titled(sim, 'Incomplete: Acting I')[0]!;
+      expect(first.body).toBe(`You were ill for 10 of its 28 classes. To complete it, make up 3 sessions of work with its teachers by ${due}, each covering a week of the course: press Make Up A Session on the Standing tab. You can ask for a month more once. If it isn’t made up in time, it becomes a Permanent Incomplete, with no credit, and the degree can’t be completed without it.`);
+      // Made up, one evening at a time, as the Standing tab's Make Up A Session does it.
+      for (let i = 1; i <= made; i += 1) {
+        tended(sim, on(2026, 9, 14 + i, 18));
+        expect(sim.must<{ madeUp: number; owed: number }>({ kind: 'school.make_up', payload: { key } })).toMatchObject({ madeUp: i, owed: 3 });
+      }
+      tended(sim, courses[key]!.dueBy! - 7 * MS_DAY + MS_HOUR);
+      const week = titled(sim, 'A Week Left: Acting I');
+      expect(week).toHaveLength(1);
+      expect(week[0]!.body).toBe(`${left} still to do, by ${due}. Press Make Up A Session on the Standing tab.`);
+      for (const s of [first.body, week[0]!.body]) { sound(s); whole(s); dated(s); }
+    }
+  });
+
+  it('a refusal met twice says the same why and the same next step, and changes nothing', () => {
+    const sim = student('dyn-twice', { homeRegionId: 'uk-eng-london' });
+    const ask = () => sim.execute({ kind: 'documents.apply_ssn', payload: {} });
+    const balance = () => sim.ledger.accountsOf(sim.player.id).filter((a) => !a.nominal).reduce((n, a) => n + a.balance, 0);
+    const before = balance();
+    // Before registration, an hour apart: nothing between them has changed what the office asks.
+    const once = ask();
+    tended(sim, sim.now + MS_HOUR);
+    const twice = ask();
+    expect(once.ok).toBe(false);
+    expect(twice.error).toBe(once.error);
+    // Why (the number needs on-campus work) and the next step (register, and the School's work-study is yours).
+    expect(once.error).toMatch(/^On an F-1, the number needs on-campus work that has begun or starts within 30 days\. Register at the School first, and the School’s work-study is yours\.$/);
+    expect(sim.player.ssn).toBeUndefined();
+    expect(balance()).toBeLessThanOrEqual(before);
+    // And a medical leave asked twice with nothing to recommend it: the same reason each time, with its lookback.
+    const leave = () => sim.execute({ kind: 'school.request_leave', payload: { kind: 'medical', reason: 'illness' } }).error;
+    tended(sim, on(2026, 9, 7, 12));
+    const l1 = leave();
+    tended(sim, sim.now + 2 * MS_DAY);
+    expect(leave()).toBe(l1);
+    expect(sim.player.school!.leave).toBeUndefined();
+    for (const s of [once.error!, l1!]) { sound(s); whole(s); }
   });
 });

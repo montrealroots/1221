@@ -194,6 +194,9 @@ export function practicedDaysAgo(person: Person, now: Instant, zone: string): (e
   };
 }
 
+/** A cost in points, the noun agreeing at exactly one (from 2026-10-17, brief 14's dynamic cases: until then “1 points”). */
+const pointsWords = (n: number): string => `${n} ${n === 1 ? 'point' : 'points'}`;
+
 /**
  * From 2026-10-12 a limit counts by what it cost the whole (`Limit.whole`), not its own dimension's points, and the
  * figure said is a mean per piece, weighted to the latest: until then the weighted sum of dimension points was said as
@@ -253,7 +256,10 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
       const label = cost.get(what)?.label ?? labelOf(what);
       const each = Math.round(f.points * 10) / 10;
       // The work it read and the gain it expects, by name (from brief 10, F2-A10 (g)): until then "(N of the pieces read it)".
-      const read = f.of !== undefined ? ` (${f.pieces} of your last ${f.of} ${f.of === 1 ? 'piece calls' : 'pieces call'} on it${f.most ? `; ${f.most.what} would gain most, about ${f.most.points >= 0 ? '+' : ''}${Math.round(f.most.points * 10) / 10}` : ''})` : ` (${f.pieces} of the pieces call on it)`;
+      // The verb agrees with the count that leads (from 2026-10-17, brief 14's dynamic cases: until then “1 of your last 12
+      // pieces call on it”).
+      const calls = f.pieces === 1 ? 'calls' : 'call';
+      const read = f.of !== undefined ? ` (${f.pieces} of your last ${f.of} ${f.of === 1 ? 'piece' : 'pieces'} ${calls} on it${f.most ? `; ${f.most.what} would gain most, about ${f.most.points >= 0 ? '+' : ''}${Math.round(f.most.points * 10) / 10}` : ''})` : ` (${f.pieces} of the pieces ${calls} on it)`;
       const prepared = f.prepared ? ` It counts ${f.prepared === 1 ? 'the piece' : `the ${f.prepared} pieces`} held back most by ${f.prepared === 1 ? 'its' : 'their'} own preparation as fully prepared.` : '';
       const days = (f.days ?? 0) >= 0.05 ? ` About ${Math.round(f.days! * 10) / 10} of it is the discipline ${f.hours} days of practice build, which any exercise kept up daily would bring.` : '';
       out.push({ target: what, label, exercise: ex.id, tier: matchedTier(f.from), focus, points: each, forecast: f, why: `${f.hours} hours of its exercise${f.of !== undefined ? ', a session a day,' : ''} would take it from ${Math.round(f.from)} to about ${Math.round(f.to)}. On your recent work, replayed with you as you are now, that’s forecast to be worth about ${each} ${each === 1 ? 'point' : 'points'} a piece${read}.${prepared}${days} ${focus === 'spaced' ? SPACED_NOW : STEADY_FIRST}` });
@@ -275,7 +281,7 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
   }
   for (const [what, c] of prepCost) {
     if (c.points < RECOMMEND.floor) continue;
-    out.push({ target: `prep:${what}`, label: c.label, focus: 'preparation', points: Math.round(c.points * 10) / 10, why: `Coming to your work short on ${c.label.toLowerCase()} cost about ${Math.round(c.points * 10) / 10} points off the whole a piece. That’s preparation, not training.` });
+    out.push({ target: `prep:${what}`, label: c.label, focus: 'preparation', points: Math.round(c.points * 10) / 10, why: `Coming to your work short on ${c.label.toLowerCase()} cost about ${pointsWords(Math.round(c.points * 10) / 10)} off the whole a piece. That’s preparation, not training.` });
   }
   for (const [k, c] of dayCost) {
     if (c.points < RECOMMEND.floor) continue;
@@ -286,8 +292,8 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     // first found in, "Stamina, By Beat 2 cost about 2.7 points of the whole a piece: come to the work rested and well, or
     // find places to breathe in it", at fitness 15 on long taped briefs: rest restores energy, and a brief's drain reads
     // none of it.
-    if (k === 'condition:stamina') { out.push({ target: k, label: 'Stamina', focus: 'stamina', points: each, why: `Tiring through the later moments of a piece cost about ${each} points off the whole a piece. Stamina is your fitness, and Work Out, under Look After Yourself, builds it. Places to breathe in a piece leave less of it to drain, and on a night so does coming to the curtain rested. Rest restores energy, not fitness.` }); continue; }
-    out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: each, why: c.kind === 'fit' ? `Playing it a way that didn’t fit cost about ${each} points off the whole a piece. Choose a way the material or the direction allows.` : `${c.label} cost about ${each} points off the whole a piece. Come to the work rested and well, or find places to breathe in it.` });
+    if (k === 'condition:stamina') { out.push({ target: k, label: 'Stamina', focus: 'stamina', points: each, why: `Tiring through the later moments of a piece cost about ${pointsWords(each)} off the whole a piece. Stamina is your fitness, and Work Out, under Look After Yourself, builds it. Places to breathe in a piece leave less of it to drain, and on a night so does coming to the curtain rested. Rest restores energy, not fitness.` }); continue; }
+    out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: each, why: c.kind === 'fit' ? `Playing it a way that didn’t fit cost about ${pointsWords(each)} off the whole a piece. Choose a way the material or the direction allows.` : `${c.label} cost about ${pointsWords(each)} off the whole a piece. Come to the work rested and well, or find places to breathe in it.` });
   }
   // Ranked by the forecast's own figure where there is one: the tenth said can make two forecasts equal that aren't. From
   // brief 10 at full precision (`exact`), what the hours are forecast to bring, which is what's said and what's played
