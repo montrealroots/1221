@@ -1316,7 +1316,7 @@ describe('F3: feedback says the condition and the preparation apart from ability
     for (const r of prep) {
       expect(r.focus).toBe('preparation');
       expect(r.exercise).toBeUndefined();
-      expect(r.why).toMatch(/^Coming to the work with .+ short cost about [\d.]+ points of the whole a piece: that’s preparation, not training\.$/);
+      expect(r.why).toMatch(/^Coming to your work short on .+ cost about [\d.]+ points off the whole a piece\. That’s preparation, not training\.$/);
       expect(cold.next).toContain(`${r.label}. ${r.why}`);
     }
     const ready = taped('p2b-f3-cold', LONG, preparedFully);
@@ -1329,7 +1329,7 @@ describe('F3: feedback says the condition and the preparation apart from ability
     expect(flu, JSON.stringify(ill.recs.map((r) => r.target))).toBeDefined();
     expect(flu!.focus).toBe('condition');
     expect(flu!.exercise).toBeUndefined();
-    expect(flu!.why).toMatch(/^Down With The Flu cost about [\d.]+ points of the whole a piece: come to the work rested and well, or find places to breathe in it\.$/);
+    expect(flu!.why).toMatch(/^Down With The Flu cost about [\d.]+ points off the whole a piece\. Come to the work rested and well, or find places to breathe in it\.$/);
     expect(ill.next).toContain(`${flu!.label}. ${flu!.why}`);
     const well = taped('p2b-f3-flu', LONG, preparedFully);
     expect(well.recs.some((r) => r.target === 'condition:illness')).toBe(false);
@@ -1352,7 +1352,7 @@ describe('F3: feedback says the condition and the preparation apart from ability
     expect(fit, JSON.stringify(adviceFor(sim, sim.player).map((r) => r.target))).toBeDefined();
     expect(fit!.focus).toBe('choice');
     expect(fit!.exercise).toBeUndefined();
-    expect(fit!.why).toMatch(/^A way of playing that didn’t fit cost about [\d.]+ points of the whole a piece: choose one the material or the direction takes\.$/);
+    expect(fit!.why).toMatch(/^Playing it a way that didn’t fit cost about [\d.]+ points off the whole a piece\. Choose a way the material or the direction allows\.$/);
     expect(nextWork(sim)).toContain(`${fit!.label}. ${fit!.why}`);
   }, 120_000);
 
@@ -1365,7 +1365,7 @@ describe('F3: feedback says the condition and the preparation apart from ability
     expect(s!.exercise).toBeUndefined();
     expect(s!.why).toContain('Work Out');
     expect(s!.why).toContain('Rest restores energy, not fitness.');
-    expect(s!.why).not.toContain('come to the work rested');
+    expect(s!.why).not.toContain('Come to the work rested');
     expect(unfit.next).toContain(`${s!.label}. ${s!.why}`);
     const fit = taped('p2b-f3-stamina', LONG, (sim, b) => { preparedFully(sim, b); sim.player.wellbeing.fitness = abilityFull(sim, sim.player, 'stamina'); });
     expect(fit.recs.some((r) => r.target === 'condition:stamina')).toBe(false);

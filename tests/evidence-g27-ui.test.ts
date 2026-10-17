@@ -616,7 +616,7 @@ describe('c-disp-emotionalStability', () => {
     expect(shown.step).toContain('Emotional Stability 5 Volatile Steady');
     expect(shown.step).toContain('Emotional Stability sets how quickly stress arrives and how quickly it clears');
     expect(shown.step).toContain('Two set where an ability starts: Conscientiousness your discipline, and Emotional Stability your composure, which the work’s judging reads.');
-    expect(shown.profile).toContain('Emotional Stability 5, how fast stress comes and clears, and where composure starts');
+    expect(shown.profile).toContain('Emotional Stability 5, how fast stress builds and clears, and where your composure started');
   });
 
   it('PLAYER JOURNEY: the same performance, fired by the clock, takes stress from 20 to 25.330 at stability 5 and to 21.463 at 95', () => {
@@ -658,7 +658,7 @@ describe('c-disp-conscientiousness', () => {
     const shown = dispositionsShown(answers(leaning('conscientiousness', 95)));
     expect(shown.step).toContain('Conscientiousness 95 Loose Meticulous');
     expect(shown.step).toContain('Conscientiousness sets how well the nights go');
-    expect(shown.profile).toContain('Conscientiousness 95, how well a night’s sleep restores you, and where discipline starts');
+    expect(shown.profile).toContain('Conscientiousness 95, how much a night’s sleep restores you, and where your discipline started');
   });
 
   it('PLAYER JOURNEY: the same hour of The Given Circumstances through practice.exercise grows imagination 1.0933 times as much at 95 as at 5', () => {
@@ -734,6 +734,6 @@ describe('c-disp-ambition', () => {
     const shown = dispositionsShown(answers(leaning('ambition', 95)));
     expect(shown.step).toContain('Ambition 95 Content Driven');
     expect(shown.step).toContain('Ambition adds to how quickly every stress arrives, work’s and money’s alike');
-    expect(shown.profile).toContain('Ambition 95, how fast every stress comes');
+    expect(shown.profile).toContain('Ambition 95, how fast stress builds, whatever causes it');
   });
 });

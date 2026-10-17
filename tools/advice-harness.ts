@@ -418,7 +418,7 @@ export function growthLadder(sim: Simulation, id: string): { rungs: number[]; gr
 const r1 = (x: number) => Math.round(x * 10) / 10;
 const signed4 = (x: number) => `${x >= 0 ? '+' : '−'}${Math.abs(x).toFixed(4)}`;
 /** What each part of a change is said as, read here apart from the advice's own table: a test fails if either moves. */
-export const PART_WORDS: Readonly<Record<string, string>> = { work: 'the work it reads', genre: 'how well you know its genres', others: 'your other abilities and techniques', own: 'its own level', discipline: 'discipline' };
+export const PART_WORDS: Readonly<Record<string, string>> = { work: 'the work it’s forecast on', genre: 'how well you know its genres', others: 'your other abilities and techniques', own: 'its own level', discipline: 'discipline' };
 
 /**
  * S1 to S3 (advice-criteria.md): a read of the advice against a fresh forecast of the same save opened anew. Returns each
@@ -448,7 +448,7 @@ export function staleOf(sim: Simulation, recs: readonly Recommendation[]): strin
     const level = r1(levelOf(fresh, fresh.player, first.target as never));
     const at = (x: number) => [2, 3, 4].map((k) => x.toFixed(k));
     if (now === undefined) out.push(`S3: ${first.target} has no forecast now`);
-    else if (first.standing.startsWith('When it was last noted')) { if (!first.standing.includes('has nothing left to forecast on your recent work') && !at(now).some((s) => first.standing!.includes(`${first.label.toLowerCase()}’s forecast, ${s}, is now the larger`))) out.push(`S3: ${first.target}’s forecast now, ${now}, isn’t what the standing says`); }
+    else if (first.standing.includes(', the last time the advice was noted, ')) { if (!first.standing.includes('has nothing left to forecast on your recent work') && !at(now).some((s) => first.standing!.includes(`${first.label.toLowerCase()}’s forecast, ${s}, is now the larger`))) out.push(`S3: ${first.target}’s forecast now, ${now}, isn’t what the standing says`); }
     else {
       if (!first.standing.includes(`it’s still at ${level}`) && !first.standing.includes(` to ${level}, and its forecast from`)) out.push(`S3: ${first.target}’s level now, ${level}, isn’t what the standing says`);
       if (!at(now).some((s) => first.standing!.includes(` to ${s} a piece`))) out.push(`S3: ${first.target}’s forecast now, ${now}, isn’t what the standing says`);
@@ -479,7 +479,7 @@ export function changesOf(sim: Simulation, recs: readonly Recommendation[]): { s
     const shown = ch ? Object.entries(ch.parts).filter(([, x]) => Math.abs(x) >= 0.00005) : [];
     // The standing's own sentence for this change: since it was first given, or since the latest note's date.
     const sentences = (first.standing ?? '').split(/(?<=\.) (?=What moved)/).filter((x) => x.startsWith('What moved'));
-    const mine = sentences.find((x) => (since === 'first') === x.includes('since it was first given:'));
+    const mine = sentences.find((x) => (since === 'first') === x.includes('since the advice first named it:'));
     const said = ch !== undefined && (shown.length === 0 && Math.abs(ch.residual) < 0.00005 ? true : mine !== undefined && shown.every(([k, x]) => mine.includes(`${PART_WORDS[k]}, ${signed4(x)}`)) && (Math.abs(ch.residual) < 0.00005 || mine.includes(`${signed4(-ch.residual)} the advice can’t trace`)));
     out.push({ since, rose: by > 1e-12, by, ...(ch ? { residual: ch.residual, parts: ch.parts } : {}), said, unexplained: ch ? Math.abs(ch.residual) >= 1e-9 || (by > 1e-12 && !said) : by > 1e-12 });
   }

@@ -219,7 +219,7 @@ const PLAYS = {
     // The Techniques table, as the Profile draws it.
     h.sim = sim;
     const screen = renderToStaticMarkup(createElement(ProfileWorkspace));
-    const techniques = screen.slice(screen.indexOf(`learned methods; mastered at ${MASTERED}`));
+    const techniques = screen.slice(screen.indexOf(`techniques, each mastered at ${MASTERED}`));
     const row = new RegExp(`<tr>(?:(?!</tr>).)*?${TECHNIQUE_LABEL.scene}(?:(?!</tr>).)*</tr>`).exec(techniques)?.[0] ?? '';
     return { opened, look, lookText, sceneRow: row.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(), scene: sim.player.craft!.scene, moved: sim.now - t0 };
   },

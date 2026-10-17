@@ -239,7 +239,7 @@ describe('i-ui-text', () => {
     // Attributes And Craft: Listening's last change is the hour, to two places.
     expect(listeningRow(page.text)).toContain(`+0.12, ${THE_LINE} `);
     // Development History, newest first: the day, the ability by name, to three places.
-    expect(historyPanel(page.text)).toContain(`Development History The latest 400 changes, newest first August 27, 2026: Listening And Responsiveness +0.120, ${THE_LINE}`);
+    expect(historyPanel(page.text)).toContain(`Development History Your last 400 changes, newest first August 27, 2026: Listening And Responsiveness +0.120, ${THE_LINE}`);
     // Twice, in those two places, and nothing else on the page or its controls says interest.
     expect(count(page.text, THE_LINE)).toBe(2);
     expect(page.text.split(THE_LINE).join('')).not.toMatch(/\binterests?\b/i);
@@ -265,7 +265,7 @@ describe('i-ui-text', () => {
     const twin = drawn(await opened('b13-sound-hour', false), ProfileWorkspace);
     expect(twin.text).not.toMatch(/interest/i);
     expect(listeningRow(twin.text)).toContain(' None yet ');
-    expect(historyPanel(twin.text)).toContain('Nothing yet: the history begins with the first class, step or hour of practice.');
+    expect(historyPanel(twin.text)).toContain('No changes yet. The history begins with your first class, preparation step or hour of practice.');
 
     // An hour of the Repetition Exercise at 1 PM, the Profile's Practice An Hour for Listening.
     tended(game, EDT(2026, 8, 28, 13));

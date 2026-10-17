@@ -137,6 +137,90 @@
   "on": "2026-10-17",
   "evidence": "tests/fitness.test.ts, tests/evidence-g20-school.test.ts and tests/evidence-g06-life.test.ts assert the new refusal exactly for a workout, an hour of practice, a meal and an order sent twice with one actionId, across a reload; tests/briefs.test.ts and tests/engagement.test.ts match /already done/"
  },
+ "src/engine/systems/experience.ts#FEATURE_LABEL": {
+  "status": "Reviewed And Retained",
+  "hash": "9f8d988aface",
+  "on": "2026-10-17",
+  "reason": "Twelve Title Case names of the kinds of material (Exact Timing, Playing Off A Partner, Verse, The Camera, Two Tones At Once and the rest), shown in Your Work So Far and an exercise's control: plain, and the same names the brief panes use."
+ },
+ "src/engine/systems/experience.ts#recommendations": {
+  "status": "Rewritten And Verified",
+  "hash": "f4f0b5a61798",
+  "on": "2026-10-17",
+  "evidence": "tests/decisions-advice.test.ts, tests/advice.test.ts, tests/defects-r8-1.test.ts and tests/attributes-phase-2b.test.ts (each kind of line: a forecast, the preparation, a condition, a misfit, stamina, the recurring weakness, the tie, preparation apart); docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions)"
+ },
+ "src/engine/systems/experience.ts#SPACED_NOW": {
+  "status": "Rewritten And Verified",
+  "hash": "6355c1d97c0d",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-r8-1.test.ts asserts 'Choose Spaced: your last session was a day to a week ago, when spacing pays.'"
+ },
+ "src/engine/systems/experience.ts#STEADY_FIRST": {
+  "status": "Rewritten And Verified",
+  "hash": "bc9953061212",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions), on every training line of adv-t-0 and adv-t-5"
+ },
+ "src/engine/systems/next-steps.ts#agoOf": {
+  "status": "Rewritten And Verified",
+  "hash": "785e0e5c4537",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions), adv-t-10: 'It has come first since December 7, 2026, today'; tests/decisions-advice.test.ts on weeks"
+ },
+ "src/engine/systems/next-steps.ts#allFull": {
+  "status": "Rewritten And Verified",
+  "hash": "be1f8923a9a2",
+  "on": "2026-10-17",
+  "evidence": "tests/decisions-advice.test.ts (full:all, every input at full, stamina isn’t and no exercise trains it)"
+ },
+ "src/engine/systems/next-steps.ts#assumesOf": {
+  "status": "Rewritten And Verified",
+  "hash": "f02f55a187a0",
+  "on": "2026-10-17",
+  "evidence": "tests/decisions-advice.test.ts (what the forecast assumes, the piece counted as prepared by name and its taped figure, each genre counted as known today) and tools/advice.ts F2 and F4 reading it; docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions)"
+ },
+ "src/engine/systems/next-steps.ts#attentionSaid": {
+  "status": "Rewritten And Verified",
+  "hash": "811400904477",
+  "on": "2026-10-17",
+  "evidence": "tests/decisions-advice.test.ts (the verdict's opening, both figures, on the Profile and a brief's pane); docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions)"
+ },
+ "src/engine/systems/next-steps.ts#disciplinePart": {
+  "status": "Rewritten And Verified",
+  "hash": "25fcd7fd2434",
+  "on": "2026-10-17",
+  "evidence": "tests/decisions-advice.test.ts (a little up because discipline went from … ; at discipline … its forecast would be …, so … of the change is discipline’s); tools/advice.ts H reads 'of the change is discipline’s'"
+ },
+ "src/engine/systems/next-steps.ts#heldVersusNext": {
+  "status": "Rewritten And Verified",
+  "hash": "ac708d8a5d0d",
+  "on": "2026-10-17",
+  "evidence": "docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions), adv-t-5 and adv-t-10 beside a brief (1 point, singular)"
+ },
+ "src/engine/systems/next-steps.ts#movedSaid": {
+  "status": "Rewritten And Verified",
+  "hash": "0db5594c30b9",
+  "on": "2026-10-17",
+  "evidence": "tests/decisions-advice.test.ts: the parts since the advice first named it, the untraced −0.0100 and 'can’t be worked out' on a stateless note; docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions)"
+ },
+ "src/engine/systems/next-steps.ts#nextOf": {
+  "status": "Rewritten And Verified",
+  "hash": "d26a728f5af5",
+  "on": "2026-10-17",
+  "evidence": "tests/decisions-advice.test.ts (the next hour's exercise, its cost, what it would add, and Not now with the command's refusal); docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions)"
+ },
+ "src/engine/systems/next-steps.ts#PART_SAID": {
+  "status": "Rewritten And Verified",
+  "hash": "d4f966de3d6e",
+  "on": "2026-10-17",
+  "evidence": "tests/decisions-advice.test.ts asserts each part by PART_WORDS (tools/advice-harness.ts) with its signed figure; docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions)"
+ },
+ "src/engine/systems/next-steps.ts#standingOf": {
+  "status": "Rewritten And Verified",
+  "hash": "2860132b205c",
+  "on": "2026-10-17",
+  "evidence": "tests/decisions-advice.test.ts (its standing assertions: how long first, the pieces since and none held, the hours practiced or not, the other first and its forecast, the hours since a note), and tools/advice-harness.ts S3 reading it; docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions)"
+ },
  "src/ui/looks/actor.tsx#BAND_WORD": {
   "status": "Reviewed And Retained",
   "hash": "3c7dcf0bad01",
@@ -154,5 +238,101 @@
   "hash": "b976563de028",
   "on": "2026-10-17",
   "evidence": "tests/defects-g30-1.test.ts (the genre's Preparation note; a piece's small print, its parts and its genres), tests/evidence2-b08.test.ts (the farce's What a self-tape in it asks), tests/guide-examples-craft.test.ts (the look's parts, the work's provenance and Moment By Moment), tests/decisions-stamina.test.ts (an old ruleset's provenance), tests/attributes-phase-2b.test.ts (the ability look); all three looks rendered in docs/verification/language-2026-10-17/profile/b1-looks.txt, the genre look for five kinds of demand and after study and a take"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#AbilitiesPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "88bb862e6984",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g31-ui.test.ts (the subtitle, Not held back today), tests/ability-mastered.test.ts (the Mastered chips), tests/evidence2-b11.test.ts (stamina's sentence and Today)"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#ConditionPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "a237a94a0515",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g32-ui.test.ts (the panel whole on a sufficient day, tired, ill, injured and concussed) and tests/evidence2-b11.test.ts (the small print)"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#DISPOSITIONS": {
+  "status": "Rewritten And Verified",
+  "hash": "aa9e367c8fff",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g31-ui.test.ts (all seven exactly), tests/evidence-g27-ui.test.ts, tests/evidence-g28-ui.test.ts, tests/evidence-g34-ui.test.ts"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#GenresPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "df27852555cc",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g31-ui.test.ts (the subtitle, Studied Or Worked In pressed, No more than any self-tape asks, the suggested genre both ways), tests/evidence-g28-ui.test.ts, tests/genre-mastered.test.ts (the Mastered chip)"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#HistoryPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "80b8705ad0b0",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g23-school.test.ts, tests/evidence2-b13.test.ts and tests/evidence-g32-ui.test.ts (the subtitle and the empty history)"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#IdentityPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "668a5a1d92ef",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g31-ui.test.ts p-identity (Goes by, the full name, Papers, Health Cover Held and No Health Cover pressed), tests/evidence-g28-ui.test.ts (Traits you chose)"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#JourneyPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "f9eaf982aca1",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g32-ui.test.ts and tests/evidence2-b11.test.ts (the panel whole); its two changed lines are its empty state and its small print, read in tests/evidence-g24-school.test.ts's journey"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#ListControls": {
+  "status": "Reviewed And Retained",
+  "hash": "a358c6ce8e26",
+  "on": "2026-10-17",
+  "reason": "Find, Type a name, Show and the count shown: the plainest words for a filter box, the same on every list."
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#NextWork": {
+  "status": "Rewritten And Verified",
+  "hash": "a9c2f6330446",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g23-school.test.ts (What To Work On Next, the tier and the forecast's line), tests/defects-r8-1.test.ts (From your record), tests/evidence-g31-ui.test.ts (the empty state on a new life), tests/decisions-advice.test.ts (profileText holds every part)"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#PracticeButton": {
+  "status": "Rewritten And Verified",
+  "hash": "cd04270bf36d",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g31-ui.test.ts (stamina's row: Work Out, under Look After Yourself, held until and falling); discipline's line read on the rendered row in the same file"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#PracticeControl": {
+  "status": "Rewritten And Verified",
+  "hash": "31399ab43011",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g31-ui.test.ts 'Circles Of Attention opened…' (the control opened, an hour pressed, and '1 session, the last on August 24, 2026.' asserted from 2026-10-17); tests/attributes-phase-2b.test.ts A5 (the opened control's words)"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#ProfileWorkspace": {
+  "status": "Rewritten And Verified",
+  "hash": "f02e72869fb1",
+  "on": "2026-10-17",
+  "evidence": "Its one changed line, the life without training's empty state, is the Empty component's body; tests/whynot-profile.test.ts and tests/ui-fixes.test.ts render the workspace; the rest are the screen's title and region name, kept"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#riskWords": {
+  "status": "Rewritten And Verified",
+  "hash": "c1e23c5dbefb",
+  "on": "2026-10-17",
+  "evidence": "tests/need-paths.test.ts (no card, and a card's whole statement) and tests/evidence-g31-ui.test.ts (the minimum over 65, the statement at 65)"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#TechniquesPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "88f174f11860",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g31-ui.test.ts (Seventeen techniques, each mastered at 90; To Go) and tests/guide-examples-craft.test.ts (finds the table by it)"
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#todayFor": {
+  "status": "Reviewed And Retained",
+  "hash": "e67a55f11362",
+  "on": "2026-10-17",
+  "reason": "Already plain: Readiness 52, under 60; The flu; An injury mending; A concussion mending, each followed by the qualities it reaches (tests/evidence2-b11.test.ts reads each)."
+ },
+ "src/ui/workspaces/ProfileWorkspace.tsx#WorkSoFarPanel": {
+  "status": "Rewritten And Verified",
+  "hash": "4ebb13e55b03",
+  "on": "2026-10-17",
+  "evidence": "tests/evidence-g32-ui.test.ts (Early days, and From N pieces judged on a played year) and tests/evidence2-b11.test.ts (the panel whole)"
  }
 }

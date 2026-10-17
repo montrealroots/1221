@@ -548,7 +548,7 @@ describe('i-genres-dispositions-intact', () => {
     expect(game.player.attrs!.discipline).toBe(40);
     expect(game.player.attrs!.composure).toBe(35.5);
     const page = drawn(game, ProfileWorkspace).text;
-    expect(page).toContain('Emotional Stability 30, how fast stress comes and clears, and where composure starts; Conscientiousness 20, how well a night’s sleep restores you, and where discipline starts; Ambition 70, how fast every stress comes; Risk Tolerance 90, over 65, so the card’s autopay started on the minimum; Extraversion 90, how a house watching sits with you; Openness 80, how rehearsing new work does; Agreeableness 10, how a rehearsal does.');
+    expect(page).toContain('Emotional Stability 30, how fast stress builds and clears, and where your composure started; Conscientiousness 20, how much a night’s sleep restores you, and where your discipline started; Ambition 70, how fast stress builds, whatever causes it; Risk Tolerance 90, over 65, so your card’s autopay began on the minimum payment; Extraversion 90, how you feel with an audience watching; Openness 80, how rehearsing new work goes for you; Agreeableness 10, how a rehearsal goes for you.');
     expect(page).toContain('You love: Comedy.');
     expect(page).toContain('Discipline 40.0 ');
     expect(page).toContain('Composure 35.5 ');

@@ -68,7 +68,7 @@ describe('an ability marked Mastered, on the Player Profile', () => {
     const r = sim.execute<{ gained: number; level: number }>({ kind: 'practice.exercise', payload: { exercise: exerciseFor('presence')!.id } });
     expect(r.ok, r.error).toBe(true);
     expect(abilityOf(sim, p, 'presence')).toBe(full);
-    expect(rowOf(sim, 'Presence')).toEqual({ text: 'Presence Mastered', chip: `At its full, ${full.toFixed(1)}: work that reads it asks nothing more of it` });
+    expect(rowOf(sim, 'Presence')).toEqual({ text: 'Presence Mastered', chip: `At its full, ${full.toFixed(1)}: no work asks more of it` });
     expect(rowOf(sim, 'Focus')).toEqual({ text: 'Focus', chip: undefined });
   });
 

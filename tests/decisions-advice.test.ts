@@ -121,7 +121,7 @@ describe('F2-A10: What To Improve Next, followed through the commands (brief 10)
     expect(abilityOf(sim, trained(sim, sim.player, first.target as AbilityId), 'discipline')).toBe(abilityOf(copy, copy.player, 'discipline'));
     expect(abilityOf(copy, copy.player, 'discipline')).toBeGreaterThan(abilityOf(sim, sim.player, 'discipline'));
     expect(first.forecast!.days!).toBeGreaterThan(0);
-    expect(first.why).toContain(`of it is the discipline ${ADVICE.sessions} days of practice keep`);
+    expect(first.why).toContain(`of it is the discipline ${ADVICE.sessions} days of practice build`);
     // The falsifiability test: at full discipline (TEST SETUP) the days bring nothing more, and the words don't say they do.
     const full = clone(sim);
     setLevel(full, 'discipline', 'full');
@@ -147,7 +147,7 @@ describe('F2-A10: What To Improve Next, followed through the commands (brief 10)
     const advice = adviceFor(all, all.player);
     expect(advice[0]!.target).toBe('full:all');
     expect(advice.filter((x) => x.exercise)).toEqual([]);
-    expect(advice[0]!.why).toContain('Every ability and technique your recent work read that an exercise trains is at its full');
+    expect(advice[0]!.why).toContain('Every ability and technique your recent work called on that an exercise trains is at its full');
     expect(advice[0]!.why).toContain('stamina isn’t, and no exercise trains it: workouts build it');
     // The falsifiability test: one ability the work read brought back under full, and it's named again, not the statement.
     const some = clone(all);
@@ -169,7 +169,7 @@ describe('F2-A10: What To Improve Next, followed through the commands (brief 10)
       expect(f.pieces, r.target).toBe(n);
       expect(f.of).toBe(latest.length);
       expect(r.why).toContain(`worth about ${r.points} point`);
-      expect(r.why).toContain(`(${n} of your last ${latest.length} pieces read it; it gains most on ${f.most!.what}`);
+      expect(r.why).toContain(`(${n} of your last ${latest.length} pieces call on it; ${f.most!.what} would gain most`);
       expect(latest.filter((w) => reads(w, r.target)).map((w) => w.what)).toContain(f.most!.what);
     }
   }, 240_000);
@@ -192,7 +192,7 @@ describe('F2-A10: What To Improve Next, followed through the commands (brief 10)
     const own = sim.player.work!.slice(-ADVICE.recent).filter((w) => w.limits[0]?.kind === 'preparation' && w.limits[0].what !== 'genre').length;
     expect(own).toBeGreaterThanOrEqual(1);
     expect([...f.values()][0]!.prepared).toBe(own);
-    expect(firstOf(sim).why).toContain(own === 1 ? 'the piece its own preparation held back most is read as prepared' : `the ${own} pieces its own preparation held back most are read as prepared`);
+    expect(firstOf(sim).why).toContain(own === 1 ? 'It counts the piece held back most by its own preparation as fully prepared.' : `It counts the ${own} pieces held back most by their own preparation as fully prepared.`);
     // Knowing the genre as it's known today: the genre studied again, and the forecast moves with it.
     const studied = clone(sim);
     expect(go(studied, 'genre.study', { genre: b.kinds[0] }).ok).toBe(true);
@@ -226,7 +226,7 @@ describe('F2-A10: What To Improve Next, followed through the commands (brief 10)
     const recurring = { target: 'focus', label: 'Focus', pieces: 9, whole: 12, last: 0, evidence: ['An ability, 12 points in all'] };
     const rs = recommendations(() => 50, () => 100, [], (id) => ({ id: `ex-${id}` }), matchedTier, 12, undefined, recurring, map);
     expect(rs.map((r) => r.target)).toEqual(['presence', 'focus', 'memory']);
-    expect(rs[1]!.why).toContain('Your work keeps coming back to it: it’s held back 9 of your pieces for life');
+    expect(rs[1]!.why).toContain('Your work keeps coming back to it: it has held back 9 of your pieces in all');
     expect(rs[0]!.tiedWith).toEqual(['Focus']);
     // The falsifiability test: ahead of presence by its forecast, it's first.
     const ahead = recommendations(() => 50, () => 100, [], (id) => ({ id: `ex-${id}` }), matchedTier, 12, undefined, recurring, new Map([...map, ['focus', f(0.83)]]));
@@ -288,11 +288,11 @@ describe('L1: repeated advice, for a player who ignores it and one who follows i
       // What it says, worked from the records: since when, its level then and now, and the pieces since that it held back.
       const since = (sim.player.work ?? []).filter((w) => w.at >= was.since);
       const held = since.filter((w) => w.limits.some((l) => l.what === first.target));
-      expect(first.standing).toContain(`It has been first since ${formatDate(was.since, sim.zone)}`);
-      expect(first.standing).toContain(`of the ${since.length} pieces you’ve done since, it held back ${held.length}`);
-      expect(first.standing).toContain(`you haven’t practiced ${EXERCISE_BY_ID[first.exercise!]!.label} since`);
+      expect(first.standing).toContain(`It has come first since ${formatDate(was.since, sim.zone)}`);
+      expect(first.standing).toContain(`Of the ${since.length} pieces you’ve done since, it held back ${held.length || 'none'}`);
+      expect(first.standing).toContain(`You haven’t practiced ${EXERCISE_BY_ID[first.exercise!]!.label} since`);
       expect(first.next).toContain(`Next: ${EXERCISE_BY_ID[first.exercise!]!.label} at the`);
-      expect(first.next).toContain(`an hour, and ${EXERCISE_BY_ID[first.exercise!]!.feet ? PRACTICE.energy.feet : PRACTICE.energy.desk} energy`);
+      expect(first.next).toContain(`An hour costs ${EXERCISE_BY_ID[first.exercise!]!.feet ? PRACTICE.energy.feet : PRACTICE.energy.desk} energy`);
       weeks.push({ target: first.target, standing: first.standing!, next: first.next!, pieces: since.length });
     }
     // Played, not assumed: one input stayed first all five weeks, which L1 as written allows four of (brief 10: 8 and 6).
@@ -324,12 +324,12 @@ describe('L1: repeated advice, for a player who ignores it and one who follows i
     const nowForecast = exact(after.forecast);
     expect(nowForecast).toBeLessThan(fromForecast);
     const ex = EXERCISE_BY_ID[after.exercise!]!;
-    expect(after.standing).toContain(`${ADVICE.sessions} hours of ${ex.label}: it went from ${Math.round(from * 10) / 10} to ${Math.round(now * 10) / 10}, and its forecast from ${fromForecast.toFixed(2)} to ${nowForecast.toFixed(2)}`);
+    expect(after.standing).toContain(`you’ve put in ${ADVICE.sessions} hours of ${ex.label}: it went from ${Math.round(from * 10) / 10} to ${Math.round(now * 10) / 10}, and its forecast from ${fromForecast.toFixed(2)} to ${nowForecast.toFixed(2)}`);
     expect(after.standing).not.toBe(weeks.at(-1)!.standing);
     // Its forecast fell here, as the input's own should: nothing is said of a rise.
     expect(after.standing).not.toContain('a little up');
     // And the ignorer, the same five weeks on, never trained it: it says so.
-    expect(weeks.at(-1)!.standing).toContain(`you haven’t practiced ${ex.label} since`);
+    expect(weeks.at(-1)!.standing).toContain(`You haven’t practiced ${ex.label} since`);
     expect(adviceFor(clone(follower), follower.player)).toEqual(adviceFor(follower, follower.player));
   }, 240_000);
 
@@ -356,11 +356,11 @@ describe('L1: repeated advice, for a player who ignores it and one who follows i
     // The next action reads the hour's own refusal: with today's hours of practice used, it says why not now.
     const ex = EXERCISE_BY_ID[after.exercise!]!;
     expect(after.next).toContain(`Next: ${ex.label} at the`);
-    expect(after.next).toContain('for about +');
+    expect(after.next).toContain('it would add about +');
     while (practicedToday(copy, copy.player) < PRACTICE.dailyHours) { copy.advanceTo(copy.now + 60 * 60_000); expect(go(copy, 'practice.exercise', { exercise: ex.id, focus: 'steady' }).ok).toBe(true); }
     const refused = firstOf(copy);
     expect(refused.next).toContain(`Not now: You’ve practiced ${PRACTICE.dailyHours} hours today`);
-    expect(refused.next).not.toContain('for about +');
+    expect(refused.next).not.toContain('it would add about +');
   }, 240_000);
 });
 
@@ -391,9 +391,9 @@ describe('F2-A10 (f) and (h), as clarified (brief 11)', () => {
     }
     const first = firstOf(sim);
     const n = own.length;
-    const words = `Apart from training: completing the preparation of ${n === 1 ? 'the piece' : `the ${n} pieces`} its own preparation held back most would bring ${n === 1 ? 'it' : 'them'} about ${Math.round(expected * 100) / 100}`;
+    const words = `Apart from training, fully preparing ${n === 1 ? 'the piece' : `the ${n} pieces`} held back most by ${n === 1 ? 'its' : 'their'} own preparation would bring ${n === 1 ? 'it' : 'them'} about ${Math.round(expected * 100) / 100}`;
     expect(first.why).toContain(words);
-    expect(first.why).toContain(`that’s preparation, not training, and it isn’t in the ${first.points} above`);
+    expect(first.why).toContain(`That’s preparation, not training, and it isn’t part of the ${first.points} above`);
     expect(profileText(sim)).toContain(words);
     // The falsifiability test: the same work with that take's own steps complete has no preparation to say.
     const cold = sim.player.work!.at(-1)!;
@@ -469,8 +469,8 @@ describe('F2-A10 (f) and (h), as clarified (brief 11)', () => {
     const said = firstOf(copy);
     expect(said.target).toBe(id);
     const r1 = (x: number) => Math.round(x * 10) / 10;
-    expect(said.standing).toContain(`its forecast from ${before.toFixed(4)} to ${after.toFixed(4)}, a little up: discipline went from ${r1(d0)} to ${r1(d1)}`);
-    expect(said.standing).toContain(`at discipline ${r1(d0)} its forecast would be ${atD0.toFixed(4)}, so +${(after - atD0).toFixed(4)} of the change is discipline’s`);
+    expect(said.standing).toContain(`its forecast from ${before.toFixed(4)} to ${after.toFixed(4)}, a little up because discipline went from ${r1(d0)} to ${r1(d1)}`);
+    expect(said.standing).toContain(`At discipline ${r1(d0)} its forecast would be ${atD0.toFixed(4)}, so +${(after - atD0).toFixed(4)} of the change is discipline’s`);
     expect(profileText(copy)).toContain(said.standing!);
   }, 240_000);
 });
@@ -511,15 +511,15 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     expect(Math.abs(taped - exact(trainingForecast(sim, sim.player, sim.player.work, [first.target], true).get(first.target)))).toBeLessThan(1e-9);
     // Played, not assumed: here reading the cold take as taped would say less.
     expect(taped).toBeLessThan(exact(first.forecast));
-    expect(first.assumes).toContain(`What it assumes of your last ${byRecords.pieces} pieces: `);
-    expect(first.assumes).toContain(`In ${cold.what}, the breakdown and your reading stood at 0%, the lines at 0% and rehearsal on your feet at 0% of what completes them.`);
-    expect(first.assumes).toContain(`That piece is read as if its own preparation were complete, since that held it back most: read as taped, ${ADVICE.sessions} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} a piece, not ${exact(first.forecast).toFixed(2)}.`);
-    expect(first.assumes).toContain(`Each genre is read as you know it today: of the ${byRecords.genreCount} pieces’ genres, ${byRecords.genreShort} are short of complete and ${byRecords.genreBetter} known better than when taped.`);
+    expect(first.assumes).toContain(`What the forecast assumes of your last ${byRecords.pieces} pieces: `);
+    expect(first.assumes).toContain(`In ${cold.what}, the breakdown and your reading stood at 0%, the lines at 0% and rehearsal on your feet at 0% of the way to complete.`);
+    expect(first.assumes).toContain(`The forecast counts that piece as fully prepared, since its own preparation held it back most. Counted as taped, ${ADVICE.sessions} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} a piece, not ${exact(first.forecast).toFixed(2)}.`);
+    expect(first.assumes).toContain(`Each genre is counted as you know it today: of the ${byRecords.genreCount} pieces’ genres, ${byRecords.genreShort} are short of complete and ${byRecords.genreBetter} known better than when taped.`);
     // F1: what completing that preparation would bring, the judge's replay worked from the records, said apart.
     const prep = preparationByRecords(sim);
     expect(prep).toBeGreaterThan(0.05);
     for (const f of trainingForecast(sim, sim.player).values()) { expect(Math.abs(f.preparation! - prep)).toBeLessThan(1e-9); expect(Math.abs(exact(f) - (f.own! + f.days!))).toBeLessThan(1e-12); }
-    expect(first.why).toContain(`would bring it about ${Math.round(prep * 100) / 100} points a piece as you are now: that’s preparation, not training`);
+    expect(first.why).toContain(`would bring it about ${Math.round(prep * 100) / 100} points a piece as you are now. That’s preparation, not training`);
     expect(profileText(sim)).toContain(first.assumes!);
     expect(paneText(sim, 'brief-drama')).toContain(first.assumes!);
     const again = clone(sim);
@@ -537,7 +537,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     expect(assumedOf(beginner.player)!.short).toBe(assumedByRecords(beginner).short);
     const said = firstOf(beginner).assumes!;
     expect(said).not.toContain(`In ${held.what}`);
-    expect(said).not.toContain('read as if its own preparation were complete');
+    expect(said).not.toContain('as fully prepared, since');
     for (const [k, f] of trainingForecast(beginner, beginner.player)) expect(Math.abs(exact(f) - forecastByRecords(beginner, k)), k).toBeLessThan(1e-9);
     // The boundary of known better: a take in a genre already known in full is known no better since (TEST SETUP: its
     // genre at full before the take), and isn't counted so.
@@ -614,7 +614,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     // there (a day's own change, the body's fitness among the other inputs, is the note's, not the sessions').
     expect(was.last.at).toBeGreaterThan(sim.now);
     expect(was.last.at).toBeLessThan(sim.now + 2 * MS_DAY);
-    expect(after.standing).toContain(`Since ${formatDate(was.last.at, copy.zone)}, ${ADVICE.sessions} hours of `);
+    expect(after.standing).toContain(`Since ${formatDate(was.last.at, copy.zone)} you’ve put in ${ADVICE.sessions} hours of `);
     const ch = forecastChange(copy, copy.player, id, was.last)!;
     expect(Math.abs(ch.residual)).toBeLessThan(1e-9);
     expect(ch.parts.work).toBe(0);
@@ -651,7 +651,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     expect(Math.abs(ch0.residual)).toBeLessThan(1e-9);
     zeroWhereUnmoved(sim, first0.target, was0.first, ch0.parts, 'as built');
     expect(ch0.parts.work + ch0.parts.genre).toBeGreaterThan(0);
-    expect(first0.standing).toContain(`What moved its forecast since it was first given: ${PART_WORDS.work}, ${signed4(ch0.parts.work)}; ${PART_WORDS.genre}, ${signed4(ch0.parts.genre)}`);
+    expect(first0.standing).toContain(`What moved its forecast since the advice first named it: ${PART_WORDS.work}, ${signed4(ch0.parts.work)}; ${PART_WORDS.genre}, ${signed4(ch0.parts.genre)}`);
     for (let week = 0; week < 3; week += 1) {
       for (const day of [2, 5]) { sim.advanceTo(sim.now + (day === 2 ? 2 : 3) * MS_DAY); tapeNew(sim); }
       sim.advanceTo(sim.now + 2 * MS_DAY);
@@ -746,7 +746,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     zeroWhereUnmoved(sim, was.target, was.first, since.parts!, 'since it was first given');
     const first = recs.find((r) => r.forecast)!;
     expect(first.standing).toContain(`${PART_WORDS.genre}, ${signed4(since.parts!.genre!)}`);
-    expect(first.assumes).toContain(`What it assumes of your last ${readWork(sim).length} pieces: `);
+    expect(first.assumes).toContain(`What the forecast assumes of your last ${readWork(sim).length} pieces: `);
     expect(profileText(sim)).toContain(first.standing!);
     const again = clone(sim);
     expect(adviceFor(again, again.player)).toEqual(recs);
@@ -813,7 +813,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     const note = f.player.experience!.advised!.last;
     note.forecast += 0.01;
     const moved = adviceFor(f, f.player).find((r) => r.forecast)!;
-    expect(moved.standing).toContain('−0.0100 the advice can’t trace to anything it reads');
+    expect(moved.standing).toContain('−0.0100 the advice can’t trace to anything it’s forecast on');
     expect(changesOf(f, adviceFor(f, f.player)).filter((x) => x.unexplained).map((x) => x.since)).toEqual(['last']);
     note.forecast -= 0.01;
     // A note from before brief 12, with no state (TEST SETUP): the rise since it is said to be beyond working out, and counted.

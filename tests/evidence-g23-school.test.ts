@@ -499,7 +499,7 @@ describe('development ledger', () => {
     expect(now.slice(0, 400 - came)).toEqual(was.slice(came));
     expect(now.slice(0, 400 - came).every((x, k) => x === was[came + k])).toBe(true);
     expect(now.at(-1)!.at).toBeGreaterThanOrEqual(was.at(-1)!.at);
-    expect(shown(sim, ProfileWorkspace)).toContain('Development History The latest 400 changes, newest first');
+    expect(shown(sim, ProfileWorkspace)).toContain('Development History Your last 400 changes, newest first');
     const back = reload(sim);
     expect(developmentOf(back.player).history).toEqual(now);
   });
@@ -596,7 +596,7 @@ describe('work records + journey', () => {
     const exercise = EXERCISES.find((e) => e.trains === what)!;
     const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const each = r1(top.points);
-    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*, ${esc(exercise.label)} at the \\w+ tier\\. ${top.hours} hours of its exercise would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}, worth about ${esc(String(each))} points? a piece on your recent work`));
+    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*, ${esc(exercise.label)} at the \\w+ tier\\. ${top.hours} hours of its exercise(?:, a session a day,)? would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}\\. On your recent work, replayed with you as you are now, that’s forecast to be worth about ${esc(String(each))} points? a piece`));
   });
 
   it('PLAYER JOURNEY: Taking Direction reads, for life, the notes on the craft a run gave and those the work answered', () => {

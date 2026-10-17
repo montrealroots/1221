@@ -95,3 +95,79 @@ a life that never trained, and every kind of development source. The built app's
 - The Core glossary's **work in a genre** says class scenes count toward a genre. They don't: `practiceGenres` is called
   for a night of a play of the kind and a brief's take only. This area's words say "nights on stage and self-tapes".
 - "An audience" for "a house": this area says audience. The school area may still say house.
+
+## Batch 2: The Player Profile And The Advice
+
+**Sources read (27):** `ui/workspaces/ProfileWorkspace.tsx` (16), `systems/next-steps.ts` (9 at the start, 10 with
+`agoOf`), `systems/experience.ts` (2 at the start, 4 with the two pacing lines it now says once).
+
+**Rewritten:**
+- The advice's every line, kept to its figures, its conditions and its forecast. A training line was one sentence of
+  some ninety words ("20 hours of its exercise would take it from 55 to about 59, worth about 0.8 points a piece on your
+  recent work (3 of your last 5 pieces read it; it gains most on …), worked out again with you as you are now, a session
+  a day; about 0.4 of it is the discipline 20 days of practice keep, …"); it's four now, and says "forecast" where the
+  figure is one: "20 hours of its exercise, a session a day, would take it from 55 to about 59. On your recent work,
+  replayed with you as you are now, that’s forecast to be worth about 0.8 points a piece (3 of your last 5 pieces call
+  on it; A Voice Sequence would gain most, about +1.3). About 0.4 of it is the discipline 20 days of practice build, …
+  Choose Steady to begin; Spaced pays once your last session is a day to a week old." The pacing line names the Focus
+  control's own choices.
+- What it has done since (`standing`): sentences, not one list joined by semicolons; "first since" became "come first
+  since"; "since it was first given" "since the advice first named it"; "the work it reads" "the work it’s forecast on";
+  "0 days ago" (a note made the same day) became "today"; "it held back 0" "it held back none"; the other first's line
+  opens on its date ("On October 14, 2026, the last time the advice was noted, the first was …").
+- What it assumes, the next hour, discipline's part, the verdict on preparation and training, the all-full line and
+  the line beside a brief (`heldVersusNext`, which printed "about 1 points"). "Read as if complete" is "counts as fully
+  prepared"; "the way you chose to play it, rehearsed in" is "rehearsing how you play it"; the next hour names its tier
+  and focus as the controls do and says what it costs before what it adds.
+- The Profile: its dispositions, identity, every panel's subtitle and small print, the genre table's second score (Work
+  In It, and Studied Or Worked In in its filter), the Today column's "Not held back today" and Current Condition's
+  notes, the empty states, the work kept and the history. The first recommendation's parts each sit on a line of their
+  own (`LINE`), where they had run on as one paragraph of up to 300 words. An exercise's last session printed its day
+  key ("last 2026-09-12"); it's a date now (`dayWords`). Health cover's button said "Papers, Covered"; it says "Papers,
+  Health Cover Held".
+
+**Kept:** the panel and column titles, the Mastered chips' figures, the For Work values Sufficient and Held Back, the
+milestones, and Work Out, under Look After Yourself (exactly as the stamina row has said it, a place in words).
+
+**Meaning-sensitive, and how each was held:**
+- Every figure in the advice is still the engine's, in the same place: brief 12's measures read the advice by its
+  words, so `tools/advice-harness.ts` (S3's two openings, the change's parts, what can't be traced) and `tools/advice.ts`
+  (what it assumes) were moved to the new words, and `tests/decisions-advice.test.ts`, which plays brief 12's F1 to F6
+  and H1 to H6 on tuning cases (the same-case figures, the parts of a change summing with no residual, the standing's
+  level and forecast as a fresh forecast gives them), passes on them: 29 of 29.
+- "Replayed with you as you are now" for "worked out again with you as you are now": `trainingForecast` judges the
+  recent pieces again at the player's levels now, as the old words said.
+- "It counts the piece held back most by its own preparation as fully prepared" for "the piece its own preparation
+  held back most is read as prepared": the same piece (`f.prepared`), the same assumption.
+- "Tiring through the later moments" for "stamina draining through the later parts": the condition limit
+  `condition:stamina`, the drain by beat.
+- Risk Tolerance's line: read against `riskWords` and `openCredit` (autopay set to the minimum over 65, the statement at
+  65 or under). Tiredness on Current Condition: "holds your work back" where it said "the work that reads it": the
+  dimensions it reaches are still listed in Today and in the small print.
+
+**Tests and tool matchers updated:** `tests/decisions-advice.test.ts`, `tests/advice.test.ts`,
+`tests/defects-r8-1.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/evidence-g23-school.test.ts`,
+`tests/need-paths.test.ts`, `tests/evidence-g27-ui.test.ts`, `tests/evidence-g28-ui.test.ts` (the Profile's lines only;
+creation's own words, which are the frame area's, untouched), `tests/evidence-g31-ui.test.ts`,
+`tests/evidence-g32-ui.test.ts`, `tests/evidence-g34-ui.test.ts`, `tests/evidence2-b11.test.ts`,
+`tests/evidence2-b13.test.ts`, `tests/evidence-g07-life.test.ts`, `tests/ability-mastered.test.ts`,
+`tests/guide-examples-craft.test.ts` (the Techniques subtitle it finds the table by). Tools: `tools/advice-harness.ts`,
+`tools/advice.ts`, `tools/acceptance-ui.mjs` and `tools/playthroughs-ui.mjs` (the forecast and what-it-assumes matchers).
+
+**Checks:** `npx tsc -b --noEmit` 0; eslint on the changed files 0; `npx vitest run` on the 26 files that hold the
+Profile and the advice: 438 of 449 at first, the 11 failures every one an assertion still on the old words, then those
+six files 119 of 119, exit 0; the final run after the last fixes is below. title-case 0, label-sweep 0, plural-check 0,
+tics 0, spelling 0, typos 0, doc-refs 0, deciders 0; voice-check failed on "How ready you are for work today" (its
+contraction would be wrong) and the subtitle was rephrased; text-inventory failed on the three new sources until they
+were marked.
+
+**Screens verified:** `b2-advice.txt`, the advice printed on three of brief 12's tuning cases as built and after twenty
+sessions of what each names first: every kind of line (a training forecast, a preparation line, the recurring weakness,
+the tie, the standing in both shapes, the next hour, what it assumes, the verdict, the line beside a brief). The Profile
+itself on the built app's walk, at the end of the area.
+
+**After the last fixes:** `tests/decisions-advice.test.ts`, `tests/defects-r8-1.test.ts`,
+`tests/attributes-phase-2b.test.ts` and `tests/advice.test.ts` 79 of 79, exit 0; `tests/evidence-g32-ui.test.ts` 42 of
+42 after the subtitle; `tests/evidence-g31-ui.test.ts`'s practice journey with its new assertion of the session's date,
+exit 0; voice-check 0 and text-inventory 0 once marked. A test gained one assertion: that journey now holds the line the
+day key used to print.
