@@ -474,7 +474,12 @@ screen's test. The breadcrumbs' names (`ROUTE_LABELS`) are held against the rail
 **Not reached on screen, and why:** the startup's failure (Startup Stopped, "… failed.", Try Again): the adapter always
 answers in a browser with storage; its words are read where they're set.
 
-SUITE_PLACEHOLDER
+**The whole suite**, once (`npx vitest run`, its exit read from the file): 378 files, 4,609 tests, 3 failed, each an
+assertion of the old words that no batch's own run had reached: `tests/sleep-commitments.test.ts` (You Slept Through's
+body is a sentence since batch 4), `tests/defects-g5-1.test.ts` (an entry's "If you aren’t, it’s missed." begins a
+sentence since batch 6), `tests/migration-94.test.ts` (an unknown command's player sentence, and its name in `detail`
+since batch 1; the test now holds both). Each updated as exactly as before; the three rerun: 3 files, 9 tests, exit
+0; eslint 0 and tsc 0 on them.
 
 ## For The Coordinator: Labels Other Areas Quote
 

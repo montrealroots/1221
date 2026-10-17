@@ -85,7 +85,7 @@ describe('a save that kept a settled audition, a job’s day and a showcase from
 
     for (const id of ids) {
       const text = entryText(old, id);
-      expect(text, id).toContain('if you aren’t, it’s missed.');
+      expect(text, id).toContain('If you aren’t, it’s missed.');
       expect(text, id).not.toMatch(/agency|the job ends|the room never sees you/);
     }
   });

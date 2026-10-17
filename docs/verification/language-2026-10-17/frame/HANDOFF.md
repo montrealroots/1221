@@ -19,7 +19,7 @@ home, calendar, notifications and controls). The batches, each committed:
 - **Batch 6:** the Calendar screen; the day, place, weather and plans looks; the names the calendar reads.
 - **Batch 7:** the guide's start and day chapters, each entry with `next`; the entry rules' notes, through their builder.
 - **The end:** the built app (`after-1440/`, `after-390/`, `render-check.json`, the frame walk's two files), and the
-  whole suite.
+  whole suite (378 files, 4,609 tests; the 3 that asserted old words updated and rerun, exit 0).
 
 ## Left
 
