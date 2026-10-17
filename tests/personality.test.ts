@@ -27,7 +27,7 @@ import {
   A_NORMAL_DAYS_DEBT, ENERGY_DRAIN_PER_HOUR, applyElapsedWellbeing, applySleep, freshWellbeing, sleepQuality,
   suggestedSleep, unattendedNight,
 } from '@/engine/systems/life';
-import { MS_DAY, addDays, instantFromZoned, zonedParts } from '@/engine/core/time';
+import { MS_DAY, addDays, formatDateTime, instantFromZoned, zonedParts, type Instant } from '@/engine/core/time';
 import { ceilingAt } from '@/engine/content/lifespan';
 import { healthOf } from '@/engine/systems/health';
 import type { Simulation } from '@/engine';
@@ -151,6 +151,33 @@ function sleepAsSuggested(
 }
 
 /**
+ * A year is a year (from 2026-10-16, brief 11): each year below runs until
+ * 365 days have passed from where it starts, and every day it reads is one
+ * the life is alive in. Until then each ran 365 steps, which came to 364.69
+ * to 364.98 days, and nothing asked whether the life was still going: the
+ * draw of mortality ended both lives that "at seventy and at eighty-one"
+ * measured at 2:29 PM on 16 January 2026, 11.29 days in, and its 365 looks
+ * read that stopped clock again (`tests/setup/ended-life.ts`). A death and an
+ * ended life's clock are tests of their own: `tests/mortality.test.ts` ("ends,
+ * stops the clock for good, and keeps the ending through a save"),
+ * `tests/evidence-g04-life.test.ts` (life.end) and
+ * `tests/remaining-09-journeys.test.ts` (journeys.f-ended-life-loops).
+ */
+const A_YEAR = 365 * MS_DAY;
+const whoseLife = (sim: Simulation) => `born ${zonedParts(sim.player.birthInstant, sim.zone).year}, ${sim.player.personalityTraits?.join(' and ') || 'no traits'}`;
+
+/** The life is still going on the day a year reads, or the year names its end. */
+function alive(sim: Simulation, start: Instant): void {
+  const ended = sim.universe.meta.endedAt;
+  expect(ended, ended === undefined ? '' : `${whoseLife(sim)}: the life ended ${((ended - start) / MS_DAY).toFixed(2)} days in, at ${formatDateTime(ended, sim.zone)}, aged ${sim.universe.meta.endedAge}`).toBeUndefined();
+}
+
+/** The year ran its 365 days. */
+function aYearRan(sim: Simulation, start: Instant): void {
+  expect((sim.now - start) / MS_DAY, `${whoseLife(sim)}: days from the year's start`).toBeGreaterThanOrEqual(365);
+}
+
+/**
  * A year left alone, looked at in the last second of every day, once the day
  * has been charged. The rollover used to charge the day ahead at midnight, so
  * half past seven in the morning saw all of it. The clock charges it as it
@@ -160,16 +187,19 @@ function sleepAsSuggested(
  * that night was made to end where the clock stops.
  */
 function aYearAlone(sim: Simulation): { lowest: number; belowCeiling: number } {
+  const start = sim.now;
   let lowest = 100;
   let belowCeiling = 0;
-  for (let day = 0; day < 365; day += 1) {
+  while (sim.now < start + A_YEAR) {
     const p = zonedParts(sim.now, sim.zone);
     let last = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 23, minute: 59, second: 59 }, sim.zone);
     while (last <= sim.now) last += MS_DAY;
     sim.advanceTo(last);
+    alive(sim, start);
     lowest = Math.min(lowest, sim.player.wellbeing.condition);
     belowCeiling = Math.max(belowCeiling, ceilingAt(ageOf(sim)).condition - sim.player.wellbeing.condition);
   }
+  aYearRan(sim, start);
   return { lowest, belowCeiling };
 }
 
@@ -178,13 +208,16 @@ function aYearAlone(sim: Simulation): { lowest: number; belowCeiling: number } {
  * clock: seven the next day, every day, stopping for the player.
  */
 function aYearOfMornings(sim: Simulation): { lowest: number } {
+  const start = sim.now;
   let lowest = 100;
-  for (let day = 0; day < 365; day += 1) {
+  while (sim.now < start + A_YEAR) {
     const p = zonedParts(sim.now, sim.zone);
     const seven = addDays(instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 7 }, sim.zone), 1, sim.zone);
     sim.advanceTo(seven, { stopOnPlayerRequired: true });
+    alive(sim, start);
     lowest = Math.min(lowest, sim.player.wellbeing.condition);
   }
+  aYearRan(sim, start);
   return { lowest };
 }
 
@@ -194,12 +227,13 @@ function aYearOfMornings(sim: Simulation): { lowest: number } {
  * seven. With no plan, the same year without the stop.
  */
 function aYearOfLatePlans(sim: Simulation, plan: boolean): { lowest: number } {
+  const start = sim.now;
   let lowest = 100;
   const at = (days: number, hour: number, minute = 0) => {
     const p = zonedParts(sim.now, sim.zone);
     return addDays(instantFromZoned({ year: p.year, month: p.month, day: p.day, hour, minute }, sim.zone), days, sim.zone);
   };
-  for (let day = 0; day < 365; day += 1) {
+  while (sim.now < start + A_YEAR) {
     sim.advanceTo(at(sim.now >= at(0, 23, 30) ? 1 : 0, 23, 30), { stopOnPlayerRequired: true });
     const seven = at(1, 7);
     if (plan) {
@@ -207,8 +241,10 @@ function aYearOfLatePlans(sim: Simulation, plan: boolean): { lowest: number } {
       expect(sim.advanceTo(seven, { stopOnPlayerRequired: true }).interruptedBy).toBeDefined();
     }
     sim.advanceTo(seven, { stopOnPlayerRequired: true });
+    alive(sim, start);
     lowest = Math.min(lowest, sim.player.wellbeing.condition);
   }
+  aYearRan(sim, start);
   return { lowest };
 }
 
@@ -219,12 +255,13 @@ function aYearOfLatePlans(sim: Simulation, plan: boolean): { lowest: number } {
  * without the stop.
  */
 function aYearOfSkipsWithAPlanOnTheWay(sim: Simulation, plan: boolean): { lowest: number } {
+  const start = sim.now;
   let lowest = 100;
   const at = (days: number, hour: number, minute = 0) => {
     const p = zonedParts(sim.now, sim.zone);
     return addDays(instantFromZoned({ year: p.year, month: p.month, day: p.day, hour, minute }, sim.zone), days, sim.zone);
   };
-  for (let day = 0; day < 365; day += 1) {
+  while (sim.now < start + A_YEAR) {
     sim.advanceTo(at(sim.now >= at(0, 23, 30) ? 1 : 0, 23, 30), { stopOnPlayerRequired: true });
     const event = at(1, 1, 30);
     expect(sim.execute({ kind: 'calendar.schedule', payload: { title: 'Event', at: event } }).ok).toBe(true);
@@ -233,8 +270,10 @@ function aYearOfSkipsWithAPlanOnTheWay(sim: Simulation, plan: boolean): { lowest
     while (moved.interruptedBy && sim.now < event) {
       moved = sim.advanceTo(event, { stopOnPlayerRequired: true, resumes: moved.sentFrom });
     }
+    alive(sim, start);
     lowest = Math.min(lowest, sim.player.wellbeing.condition);
   }
+  aYearRan(sim, start);
   return { lowest };
 }
 
@@ -701,13 +740,26 @@ describe('no single trait or disposition wears a life down', () => {
   });
 
   it('keeps somebody with nothing unusual about them at their ceiling on autopilot, at seventy and at eighty-one', () => {
-    // Nobody in particular never ended a day below the ceiling. A light
-    // sleeper does, by 15.4 at seventy and 4.7 at eighty-one, and the worst
-    // four with the worst sliders reach condition 0 within the year, as they
-    // did before the waking day was charged as the clock moves: that is
-    // `SLATE_CURRENT_MASTER_HANDOFF.md` §10, and no bar here.
+    // Nobody in particular never ends a day of the year below the ceiling.
+    // The worst four with the worst sliders reach condition 0 within the
+    // year, as they did before the waking day was charged as the clock moves:
+    // that is `SLATE_CURRENT_MASTER_HANDOFF.md` §10, and no bar here.
+    //
+    // Until 2026-10-16 (brief 11) this ran on seed p-old-year, whose draw of
+    // mortality, made at the start, ended both lives at 2:29 PM on 16 January
+    // 2026, 11.29 days in; the 365 looks read that day again, and the bar was
+    // met on eleven days. It said then that a light sleeper ends days below
+    // the ceiling by 15.4 at seventy and 4.7 at eighty-one. Measured on a year
+    // on 2026-10-16, seed p-old-year-3: nobody in particular 0.0 at both ages;
+    // a light sleeper 0.1 and 2.5; the worst four 77.8 to 79.1 and 64.3, their
+    // condition 0. Seed p-old-year-3 was chosen as the same case with a draw
+    // that doesn't end either life in the year (p-old-year-6 ended both on 27
+    // February): a body mass index of 24.2 against 22.6, which only the draw
+    // reads here (`build` calls health's monthly onset off), so condition and
+    // its ceiling are measured as before. The year still holds mortality: a
+    // draw that ended it would fail it by name.
     for (const birthYear of [1955, 1944]) {
-      const sim = build(singles[0]!, birthYear, 'p-old-year');
+      const sim = build(singles[0]!, birthYear, 'p-old-year-3');
       const { belowCeiling } = aYearAlone(sim);
       expect(belowCeiling, `born ${birthYear}`).toBeLessThan(0.5);
     }
