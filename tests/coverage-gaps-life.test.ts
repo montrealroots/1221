@@ -36,7 +36,7 @@ describe('a plan skipped (the New Haven student’s own calendar)', () => {
     expect(sim.timeline.get(id)!.status).toBe('missed');
     expect(lookAfterRefusal(sim, 'wash')).toBeUndefined();
     expect(sim.execute({ kind: 'life.look_after', payload: { action: 'wash' } }).ok).toBe(true);
-    expect(sim.must<{ ok: boolean; error?: string }>({ kind: 'calendar.skip', payload: { entryId: id } }).error).toBe('That’s already settled one way or the other.');
+    expect(sim.must<{ ok: boolean; error?: string }>({ kind: 'calendar.skip', payload: { entryId: id } }).error).toBe('That’s already over: it was kept, missed or called off.');
   });
 });
 

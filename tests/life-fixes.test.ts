@@ -115,10 +115,10 @@ describe('a decision', () => {
     sim.requireDecision({ urgency: 50, category: 'test', title: 'Sleep', detail: 'A test', dueAt: sim.now + 30 * MS_DAY, refType: 'test', refId: 'one', actions: [{ label: 'Sleep', commandKind: 'life.sleep', payload: { hours: 1 } }] });
     const id = Object.values(sim.universe.decisions).find((d) => d.refId === 'one')!.id;
     sim.universe.decisions[id]!.resolvedAt = sim.now;
-    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: id, actionIndex: 0 } }).error).toBe('That’s been done already.');
+    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: id, actionIndex: 0 } }).error).toBe('That question is already settled: it was answered, or its date passed.');
     delete sim.universe.decisions[id]!.resolvedAt;
     sim.universe.decisions[id]!.dismissedAt = sim.now;
-    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: id, actionIndex: 0 } }).error).toBe('It’s dismissed.');
+    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: id, actionIndex: 0 } }).error).toBe('You dismissed that question, so it can’t be answered from What Needs You.');
   });
 
   it('runs its command past the same guards as the command given directly', () => {

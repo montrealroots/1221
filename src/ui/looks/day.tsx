@@ -44,7 +44,7 @@ import { Stat } from '@/ui/components/primitives';
 import { Open } from './Look';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
-import { isAre, spokenList } from './words';
+import { isAre, spokenList, toStart } from './words';
 
 /** How far either side of today one day will walk to another. */
 const REACH = 6;
@@ -175,7 +175,7 @@ function missCost(sim: Simulation, id: string): string {
   const item = sim.universe.scheduled.find((one) => one.id === id);
   const call = item?.payload.call;
   switch (item?.kind) {
-    case 'school.classes': return ': an unexcused absence, which the faculty weigh at the term’s evaluation, unless you’re sick or in hospital';
+    case 'school.classes': return ': an unexcused absence, which the faculty weigh at the term review, unless you’re sick or in hospital';
     case 'school.call':
       return call === 'performance' ? ': a grave breach, straight to academic warning, or from warning to dismissal'
         : call === 'oncall' ? ', and if you’re sent on and not there, it’s a grave breach, straight to academic warning'
@@ -214,9 +214,9 @@ function entryDetail(entry: CalendarEntry, zone: TimeZone): string {
   const city = cityOf(entry);
   if (city) parts.push(city.name);
   const line = parts.join(' · ');
-  if (entry.conflicted) return `${line} — and something else wants you in the same hour`;
+  if (entry.conflicted) return `${line} — it clashes with something else you need to be at`;
   if (entry.status === 'observance') return `${line} — an observance, not a commitment`;
-  return entry.requiresPlayer ? `${line} — and it wants you there` : `${line} — the world handles it`;
+  return entry.requiresPlayer ? `${line} — you need to be there` : `${line} — it happens without you`;
 }
 
 // ---------------------------------------------------------------------------
@@ -305,7 +305,7 @@ defineLook<TheDay>('day', {
     ways.push({
       to: at('season', `${city.id}/${day.season}`),
       label: day.season,
-      detail: `What ${day.season} is in ${city.name}, and how much of the year it takes`,
+      detail: `What ${day.season.toLowerCase()} is like in ${city.name}, and how long it lasts`,
     });
     ways.push({
       to: at('daylight', city.id),
@@ -352,35 +352,35 @@ defineLook<TheDay>('day', {
           <p className="small muted">
             {lightSentence(day)}{' '}
             {offset === 0
-              ? `${quarterSentence(day)}.`
-              : `${day.season} in ${city.name} on it, and ${quarterSentence(day)}.`}
+              ? `${day.season} here ${quarterSentence(day, false)}.`
+              : `${offset < 0 ? 'That was' : 'That’s'} ${day.season.toLowerCase()} in ${city.name}, and the season ${quarterSentence(day, offset < 0)} then.`}
           </p>
           <p className="small muted">
             {entries.length === 0
-              ? offset === 0
-                ? 'Not a thing booked on it, either.'
-                : 'Not a thing booked on it yet.'
-              : `The day is carrying ${count(entries.length, 'thing')}: ${spokenList(entries.map((e) => asName(e.title)))}.`}
-            {wants.length > 0 && ` You have to be at ${count(wants.length, 'of them', 'of them')}.`}
-            {clashes.length > 0 && ` The calendar has flagged ${count(clashes.length, 'of them', 'of them')} as landing on top of each other.`}
+              ? offset < 0
+                ? 'You had nothing booked on it.'
+                : 'You have nothing booked on it yet.'
+              : `${entries.length === 1 ? 'There’s' : 'There are'} ${count(entries.length, 'thing')} on it: ${spokenList(entries.map((e) => asName(e.title)))}.`}
+            {wants.length > 0 && ` You need to be at ${count(wants.length, 'of them', 'of them')}.`}
+            {clashes.length > 0 && ` ${toStart(count(clashes.length, 'of them', 'of them'))} ${clashes.length === 1 ? 'clashes with something else' : 'clash'}.`}
             {keptHere.length > 0 && ` ${spokenList(keptHere)} ${isAre(keptHere.length)} kept in ${country} that day.`}
           </p>
           {sim.zone !== zone && (
             <p className="small muted">
-              You’re keeping {zoneAbbreviation(sim.now, sim.zone)} out there, and the calendar is still
-              cut into days by {zoneAbbreviation(sim.now, zone)}, where you live.
+              The time where you are is {zoneAbbreviation(sim.now, sim.zone)}, and the calendar’s days still
+              follow {zoneAbbreviation(sim.now, zone)}, the time where you live.
             </p>
           )}
           <div className="grid grid-3">
             <Stat
               label="Sunrise"
               value={day.sun.polar ? 'None' : formatTime(day.sun.sunrise ?? 0, city.timeZone)}
-              note={day.sun.polar === 'day' ? 'It never gets dark' : day.sun.polar === 'night' ? 'It stays under the horizon' : 'Local clock'}
+              note={day.sun.polar === 'day' ? 'It never gets dark' : day.sun.polar === 'night' ? 'It stays below the horizon' : 'Local time'}
             />
             <Stat
               label="Sunset"
               value={day.sun.polar ? 'None' : formatTime(day.sun.sunset ?? 0, city.timeZone)}
-              note={day.sun.polar ? 'It never clears the horizon' : 'Local clock'}
+              note={day.sun.polar ? 'The sun doesn’t cross the horizon' : 'Local time'}
             />
             <Stat
               label="Daylight"
@@ -392,13 +392,13 @@ defineLook<TheDay>('day', {
               label="On The Calendar"
               value={entries.length}
               note={entries.length > 0
-                ? 'Things the day is carrying'
+                ? 'Plans and commitments'
                 : holidays.length > 0 ? 'No plans, and a holiday' : 'No plans'}
             />
             <Stat
-              label="Wants You"
+              label="Commitments"
               value={wants.length}
-              note={wants.length === 0 ? 'None of it needs you' : 'You have to be at these'}
+              note={wants.length === 0 ? 'None of it needs you' : 'You need to be at these'}
               tone={clashes.length > 0 ? 'negative' : undefined}
             />
             <Stat label="Where" value={city.name} note={zoneAbbreviation(day.start, city.timeZone)} look={placeOpens(city) ? at('place', city.id) : undefined} />
@@ -421,7 +421,7 @@ defineLook<TheDay>('day', {
                   ? 'Public ones close offices and banks in the places that keep them.'
                   : holidays.some((h) => h.type === 'bank' || h.type === 'school')
                     ? 'None of them is a public holiday, though the banks or the schools shut for one.'
-                    : 'None of them is a day off — they’re marked, not taken.'}
+                    : 'None of them is a day off: they’re marked, not taken.'}
                 {regional > 0
                   ? ` ${count(regional, 'of them', 'of them')} ${isAre(regional)} kept here and not in the rest of ${country}.`
                   : ''}
@@ -431,7 +431,7 @@ defineLook<TheDay>('day', {
         }]
         : undefined,
       ways,
-      provenance: 'The light is worked out from the tilt, the date and this latitude — not looked up. The observances are the ones kept where you’re standing.',
+      provenance: 'Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.',
     };
   },
 });
@@ -489,25 +489,25 @@ function daySentence(day: TheDay, sim: Simulation, keptHere: string[]): string {
 /** What the light does on a day, said the way a person standing in it would. */
 function lightSentence(day: TheDay): string {
   const { sun, city } = day;
-  if (sun.polar === 'day') return 'The sun doesn’t go down on it at all — twenty-four hours of light, and the only difference between two in the afternoon and two in the morning is the color of it.';
-  if (sun.polar === 'night') return 'The sun doesn’t clear the horizon on it — a few hours of blue in the middle, and that’s the whole of the day.';
-  return `Light from ${formatTime(sun.sunrise ?? 0, city.timeZone)} to ${formatTime(sun.sunset ?? 0, city.timeZone)}, ${formatDaylight(sun.daylightMinutes)} of it.`;
+  if (sun.polar === 'day') return 'The sun stays up all day and all night.';
+  if (sun.polar === 'night') return 'The sun stays below the horizon all day.';
+  return `Daylight from ${formatTime(sun.sunrise ?? 0, city.timeZone)} to ${formatTime(sun.sunset ?? 0, city.timeZone)}: ${formatDaylight(sun.daylightMinutes)}.`;
 }
 
 /** The same, compressed into the line a way into the light carries. */
 function lightDetail(day: TheDay): string {
   if (day.sun.polar === 'day') return 'The sun never sets on it here';
-  if (day.sun.polar === 'night') return 'No sunrise on it here at all';
-  return `${formatTime(day.sun.sunrise ?? 0, day.city.timeZone)} to ${formatTime(day.sun.sunset ?? 0, day.city.timeZone)}, ${formatDaylight(day.sun.daylightMinutes)} of it`;
+  if (day.sun.polar === 'night') return 'The sun doesn’t rise on it here';
+  return `${formatTime(day.sun.sunrise ?? 0, day.city.timeZone)} to ${formatTime(day.sun.sunset ?? 0, day.city.timeZone)}, ${formatDaylight(day.sun.daylightMinutes)} of daylight`;
 }
 
 /** Where the day sits inside its season, without ever printing a fraction. */
-function quarterSentence(day: TheDay): string {
+function quarterSentence(day: TheDay, past: boolean): string {
   const months = monthsOfSeason(day.city, day.season, day.parts.year);
   const place = months.indexOf(day.parts.month);
-  if (place === 0) return `${day.season} here has only just started`;
-  if (place === months.length - 1) return `${day.season} here is nearly over`;
-  return `${day.season} here is at its middle`;
+  if (place === 0) return past ? 'had only just started' : 'has only just started';
+  if (place === months.length - 1) return past ? 'was nearly over' : 'is nearly over';
+  return past ? 'was at its middle' : 'is at its middle';
 }
 
 // ---------------------------------------------------------------------------
@@ -571,7 +571,7 @@ defineLook<TheEntry>('entry', {
     const ways: Way[] = clashes.map((other) => ({
       to: at('entry', other.id),
       label: asName(other.title),
-      detail: `What it collides with: ${formatTime(other.at, clockOf(other, zone))}, and that one wants you too`,
+      detail: `It clashes with this one, at ${formatTime(other.at, clockOf(other, zone))}, and you need to be at both`,
     }));
 
     // The hours it actually takes, and the sky over them. A commitment is a
@@ -580,7 +580,7 @@ defineLook<TheEntry>('entry', {
       ways.push({
         to: at('stretch', entry.id),
         label: `${formatTime(entry.at, clock)} To ${formatTime(endOf(entry), clock)}`,
-        detail: 'How many hours it takes, and what the sky is doing across them',
+        detail: 'Its hours, and the weather across them',
       });
     }
     // Everything else you decided to do, where this is one of them.
@@ -588,7 +588,7 @@ defineLook<TheEntry>('entry', {
       ways.push({
         to: at('plans'),
         label: 'Your Own Plans',
-        detail: 'Everything else you have put on the calendar yourself',
+        detail: 'Everything else you’ve put on the calendar yourself',
       });
     }
 
@@ -597,8 +597,8 @@ defineLook<TheEntry>('entry', {
         to: at('place', city.id),
         label: city.name,
         detail: elsewhere
-          ? `Where this one is, and you’re in ${elsewhere.name} instead`
-          : 'Where this one is — where you already are',
+          ? `Where it is. You’re in ${elsewhere.name}`
+          : 'Where it is, and you’re already there',
       });
     }
     if (next) {
@@ -612,7 +612,7 @@ defineLook<TheEntry>('entry', {
       ways.push({
         to: at('day', found.day.key),
         label: dayName(found.day.parts),
-        detail: `Which day it sits in: ${loadOf(found.day)}`,
+        detail: `The day it’s on: ${loadOf(found.day)}`,
       });
     }
 
@@ -620,7 +620,7 @@ defineLook<TheEntry>('entry', {
       name: asName(entry.title),
       kind: entry.status === 'observance'
         ? 'An Observance'
-        : entry.requiresPlayer ? 'Something You Have To Be At' : 'Something The World Handles',
+        : entry.requiresPlayer ? 'A Commitment' : 'Happens Without You',
       // The day it sits in, and where that cannot be read, the city it names —
       // never `at('place', '')`, which resolves to wherever the player happens
       // to be standing and would hang the thing beneath a town it is not in.
@@ -631,10 +631,10 @@ defineLook<TheEntry>('entry', {
         <>
           <p className="small">
             {entry.status === 'observance'
-              ? 'An observance. It’s on the calendar so you know; nothing about it is yours to change.'
+              ? 'An observance. It’s on the calendar so you know, and there’s nothing for you to do about it.'
               : entry.requiresPlayer
-                ? `This one wants you there, awake${city ? ` and in ${city.name}` : ''}, when the clock reaches it; if you aren’t, it’s missed${missCost(sim, entry.id)}.`
-                : 'This one the world handles on its own when the clock reaches it.'}
+                ? `You need to be there, awake${city ? ` and in ${city.name}` : ''}, when the clock reaches it. If you aren’t, it’s missed${missCost(sim, entry.id)}.`
+                : 'It happens on its own when the clock reaches it, without you needing to be there.'}
             {length && ` It runs ${length}, ${formatTime(entry.at, clock)} to ${formatTime(endOf(entry), clock)}.`}
           </p>
           {/* Until 2026-10-12 an entry somewhere else said "a job’s travel takes you there on its own, and anything
@@ -646,11 +646,11 @@ defineLook<TheEntry>('entry', {
               ? elsewhere
                 ? <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open> and you’re in {elsewhere.name}{entry.requiresPlayer && entry.status === 'pending' ? ', and nothing takes you there, so it’ll be missed' : ''}.</>
                 : <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open>, where you already are.</>
-              : 'It names no city, so wherever you are is close enough.'}
+              : 'It isn’t tied to a city, so wherever you are is fine.'}
             {clashes.length > 0
-              ? ` ${spokenList(clashes.map((c) => asName(c.title)))} ${isAre(clashes.length)} inside the same hour, and both want you.`
+              ? ` ${spokenList(clashes.map((c) => asName(c.title)))} ${isAre(clashes.length)} at the same time, and you need to be at ${clashes.length === 1 ? 'both' : 'all of them'}.`
               : entry.requiresPlayer && entry.status === 'pending'
-                ? ' No other booking clashes with it.'
+                ? ' It doesn’t clash with anything else.'
                 : ''}
           </p>
           <div className="grid grid-2">
@@ -683,7 +683,7 @@ defineLook<TheEntry>('entry', {
         </>
       ),
       ways,
-      provenance: 'The calendar is the collision detector: anything that wants you inside the same hour as something else is flagged here before you get to it.',
+      provenance: 'The calendar flags anything you need to be at that overlaps something else, before you get to it.',
     };
   },
 });
@@ -709,21 +709,21 @@ function entrySentence(found: TheEntry, sim: Simulation): string {
       : `at ${time} on ${WEEKDAY_NAMES[zonedParts(entry.at, zone).weekday]}, ${when}`;
 
   if (entry.status === 'observance') {
-    return `That’s ${when}, and it’s an observance — on the calendar so you know, and nothing about it is yours to change.`;
+    return `That’s ${when}. It’s an observance, on the calendar so you know, and there’s nothing for you to do about it.`;
   }
   if (entry.status !== 'pending') {
-    return `That was ${lead}, and it’s down as ${statusWord(entry).toLowerCase()}.`;
+    return `That was ${lead}, and it’s marked ${statusWord(entry).toLowerCase()}.`;
   }
   if (clashes.length > 0) {
-    return `It wants you ${lead}, and so does ${asName(clashes[0]?.title ?? 'something else')}.`;
+    return `You need to be at it ${lead}, and at ${asName(clashes[0]?.title ?? 'something else')} too.`;
   }
   if (elsewhere && city) {
-    return `It wants you in ${city.name} ${lead}, and you’re in ${elsewhere.name}.`;
+    return `It’s in ${city.name} ${lead}, and you’re in ${elsewhere.name}.`;
   }
   if (entry.requiresPlayer) {
-    return `It wants you ${lead}${city ? `, in ${city.name}` : ''}.`;
+    return `You need to be at it ${lead}${city ? `, in ${city.name}` : ''}.`;
   }
-  return `The world handles this one ${lead}, without needing you there.`;
+  return `It happens ${lead}, without you needing to be there.`;
 }
 
 // ---------------------------------------------------------------------------
@@ -765,7 +765,7 @@ function splitSeasonId(id: string): { cityId: string; season: Season } | undefin
 }
 
 defineLook<TheSeason>('season', {
-  gone: 'There’s no season by that name where you’re standing.',
+  gone: 'There’s no season by that name where you are.',
   resolve: (sim, id) => {
     const split = splitSeasonId(id);
     if (!split) return undefined;
@@ -810,34 +810,34 @@ defineLook<TheSeason>('season', {
       {
         to: at('season', `${city.id}/${after}`),
         label: after,
-        detail: `What follows it here, ${spokenList(monthsOfSeason(city, after, zonedParts(sim.now, city.timeZone).year).map((m) => MONTH_NAMES[m - 1] ?? ''))}`,
+        detail: `What comes after it here: ${spokenList(monthsOfSeason(city, after, zonedParts(sim.now, city.timeZone).year).map((m) => MONTH_NAMES[m - 1] ?? ''))}`,
       },
       {
         to: at('daylight', city.id),
         label: 'Daylight',
-        detail: `What the light is doing in ${city.name} today, and which way it’s going`,
+        detail: `Today’s daylight in ${city.name}, and whether the days are getting longer`,
       },
     ];
 
     return {
       name: season.season,
-      kind: 'A Quarter Of The Year',
+      kind: 'Season',
       parent: placeOpens(city) ? at('place', city.id) : undefined,
       summary: isNow
-        ? `You’re in ${season.season} in ${city.name}, which here runs ${spokenList(names)}.`
-        : `${season.season} in ${city.name} runs ${spokenList(names)}, so you’re ${count(monthsUntil(season, sim), 'month')} off it.`,
+        ? `It’s ${season.season.toLowerCase()} in ${city.name}. Here it runs through ${spokenList(names)}.`
+        : `${season.season} in ${city.name} runs through ${spokenList(names)}. It’s ${count(monthsUntil(season, sim), 'month')} away.`,
       body: (
         <>
           <p className="small muted">
-            {city.name} sits at {Math.abs(Math.round(city.latitude))}° {south ? 'south' : 'north'},{' '}
+            {city.name} is at {Math.abs(Math.round(city.latitude))}° {south ? 'south' : 'north'},{' '}
             {south
-              ? `so the seasons run the other way around from the ones a northern calendar prints — ${season.season} is ${spokenList(names)} here, and nobody down here thinks that’s strange.`
-              : `so ${season.season} is ${spokenList(names)}, the way the northern half of the world keeps it.`}
+              ? `so its seasons run the other way round from the northern half of the world’s: ${season.season.toLowerCase()} is ${spokenList(names)} here.`
+              : `so ${season.season.toLowerCase()} is ${spokenList(names)}, as in the rest of the northern half of the world.`}
           </p>
           <p className="small muted">
-            At the middle of it a day here normally reaches {high}{unit} and falls to {low}{unit},
-            with {sun.polar === 'day' ? 'the sun never setting' : sun.polar === 'night' ? 'the sun never rising' : `${formatDaylight(sun.daylightMinutes)} of light in it`}.
-            {' '}Something like {spokenNumber(wet)} days in a hundred come wet.
+            In the middle of it, a day here usually reaches {high}{unit} and falls to {low}{unit},
+            with {sun.polar === 'day' ? 'the sun never setting' : sun.polar === 'night' ? 'the sun never rising' : `${formatDaylight(sun.daylightMinutes)} of daylight`}.
+            {' '}About {spokenNumber(wet)} days in a hundred are wet.
           </p>
           <div className="grid grid-3">
             <Stat label="Runs" value={`${names[0]} To ${names[names.length - 1]}`} note={`${plural(months.length, 'month')} of the year`} />
@@ -849,12 +849,12 @@ defineLook<TheSeason>('season', {
               note="On the middle day of it"
             />
             <Stat label="Wet Days" value={`${wet}%`} note="Of the days in it" />
-            <Stat label="Where" value={city.name} note={isNow ? 'And this is the season you’re in' : 'Not the season you’re in'} look={placeOpens(city) ? at('place', city.id) : undefined} />
+            <Stat label="Where" value={city.name} note={isNow ? 'The season you’re in now' : 'Not the season you’re in'} look={placeOpens(city) ? at('place', city.id) : undefined} />
           </div>
         </>
       ),
       ways,
-      provenance: 'SLATE’s climate model for this latitude and this kind of place — what the date usually brings here, not a forecast of any particular one.',
+      provenance: 'Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.',
     };
   },
 });

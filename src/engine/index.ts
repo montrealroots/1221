@@ -634,7 +634,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 
   if (from > SAVE_SCHEMA_VERSION) {
     problems.push(
-      `This save was written by a newer version of SLATE (schema ${from}, this build understands ${SAVE_SCHEMA_VERSION}). Loading it could corrupt it.`,
+      `This save was made by a newer version of SLATE, so this version can’t open it without risking damage to it. It hasn’t been changed.`,
     );
     return { migrated: false, from, to: SAVE_SCHEMA_VERSION, steps, problems };
   }
@@ -1028,7 +1028,11 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     if (undecided > 0) steps.push(`Let go ${plural(undecided, 'decision', 'decisions')} that nothing here can carry out.`);
     // Where it's unsafe to bring forward, it isn't: a ledger that doesn't reconcile is refused, and the slot left as it was.
     const unbalanced = probe.ledger.audit();
-    if (unbalanced.length > 0) problems.push(`This save’s money doesn’t reconcile (${unbalanced[0]}), so it can’t be brought forward safely. It hasn’t been changed.`);
+    // The audit's own words are a developer's, in the console (from 2026-10-17, brief 14: until then in the sentence).
+    if (unbalanced.length > 0) {
+      console.error('The ledger audit, bringing a save forward:', unbalanced);
+      problems.push('This save’s accounts don’t add up, so it can’t be updated safely. It hasn’t been changed. If the slot has a backup, you can restore that instead.');
+    }
   }
 
   // 91, the connected world of 2026-10-09: what only the home, the career and the move home reached. Run on every
@@ -1174,12 +1178,12 @@ export async function openSlot(
 ): Promise<{ universe: SaveUniverse; migration: MigrationResult } | { error: string }> {
   const fromBackup = opts.fromBackup ?? false;
   const universe = fromBackup ? await adapter.restoreBackup(slot) : await adapter.load(slot);
-  if (!universe) return { error: fromBackup ? 'There’s no backup for that slot.' : 'That slot is empty.' };
+  if (!universe) return { error: fromBackup ? 'That slot has no backup to restore.' : 'That slot is empty.' };
 
   const from = universe.meta.schemaVersion ?? 1;
   if (from > SAVE_SCHEMA_VERSION) {
     return {
-      error: `Slot ${slot} was written by a newer version of SLATE (schema ${from}). Opening it here could damage it, so it hasn’t been loaded.`,
+      error: `Slot ${slot} was saved by a newer version of SLATE, so this version won’t open it: that could damage it. It hasn’t been opened or changed.`,
     };
   }
 

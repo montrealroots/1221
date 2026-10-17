@@ -221,7 +221,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'resilient', name: 'Resilient', group: 'Body',
     description: 'Illness, injury, a bad year: all of it clears faster in you than in the people around you.',
-    cost: 'None. This one is simply luck, and there’s one of it.',
+    cost: 'None. This one is simply luck.',
     systemMods: { stressRecovery: 1.2, energyRecovery: 1.1, illnessToll: 0.6 },
     conflictsWith: ['burns_out'],
   },
@@ -242,7 +242,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'sleeps_anywhere', name: 'Sleeps Anywhere', group: 'Body',
     description: 'Floors, chairs, the twenty minutes between two things. You take it where you find it.',
-    cost: 'None that SLATE draws. Like resilience, it’s luck.',
+    cost: 'None. Like Resilient, it’s simply luck.',
     systemMods: { sleepQuality: 1.18 },
     conflictsWith: ['light_sleeper'],
   },

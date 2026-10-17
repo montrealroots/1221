@@ -82,7 +82,9 @@ export function LocationPicker({
     loadCountryCities(countryId)
       .then(() => { if (!cancelled) setLoadedTick((n) => n + 1); })
       .catch((error: unknown) => {
-        if (!cancelled) setProblem(error instanceof Error ? error.message : 'That country couldn’t be loaded.');
+        // The fetch's own words are a developer's (from 2026-10-17, brief 14); the draft keeps the form through a reload.
+        console.error(error);
+        if (!cancelled) setProblem('That country’s towns couldn’t be loaded. Reload SLATE to try again: your answers so far are kept.');
       })
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };

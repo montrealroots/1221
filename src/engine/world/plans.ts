@@ -60,6 +60,14 @@ export interface PlanResult {
   error?: string;
 }
 
+/** A small count as a word, for the refusals below: numbers under ten are words in prose. */
+const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'] as const;
+const inWords = (n: number): string => WORDS[n] ?? String(n);
+
+/** A plan the timeline doesn't hold, a plan already settled: said alike by Skip It and Call It Off. */
+const NOT_ON_CALENDAR = 'That isn’t on your calendar.';
+const ALREADY_OVER = 'That’s already over: it was kept, missed or called off.';
+
 /** Whitespace collapsed and length capped, or nothing. */
 function cleanTitle(raw: unknown): string {
   return typeof raw === 'string' ? raw.replace(/\s+/g, ' ').trim().slice(0, LONGEST_TITLE) : '';
@@ -73,29 +81,29 @@ function cleanTitle(raw: unknown): string {
  */
 export function checkPlan(sim: Simulation, spec: Partial<PlanSpec>): PlanResult {
   const title = cleanTitle(spec.title);
-  if (!title) return { ok: false, error: 'It needs a name — something you’d recognize on the day.' };
+  if (!title) return { ok: false, error: 'Give it a name you’ll recognize on the day.' };
 
   const at = spec.at;
   if (typeof at !== 'number' || !Number.isFinite(at)) {
-    return { ok: false, error: 'That isn’t a time.' };
+    return { ok: false, error: 'Pick a time for it to start.' };
   }
   if (at < sim.now) {
-    return { ok: false, error: 'That’s already been and gone. Pick a time you can still get to.' };
+    return { ok: false, error: 'That time has already passed. Pick a time that’s still to come.' };
   }
   if (at > sim.now + FURTHEST_AHEAD_DAYS * MS_DAY) {
-    return { ok: false, error: 'That’s further out than the calendar goes.' };
+    return { ok: false, error: `The calendar takes plans up to ${inWords(Math.round(FURTHEST_AHEAD_DAYS / 365))} years ahead. Pick an earlier day.` };
   }
 
   const minutes = spec.durationMinutes ?? 60;
   if (!Number.isFinite(minutes) || minutes < SHORTEST_MINUTES) {
-    return { ok: false, error: 'That’s too short to be worth writing down. Give it five minutes at least.' };
+    return { ok: false, error: `A plan needs to be at least ${inWords(SHORTEST_MINUTES)} minutes long.` };
   }
   if (minutes > LONGEST_MINUTES) {
-    return { ok: false, error: 'That runs longer than a day. Put down the part you’ll actually be there for.' };
+    return { ok: false, error: 'A plan can’t run longer than a day. Put down the part you’ll be there for.' };
   }
 
   if (spec.category !== undefined && !PLANNABLE.includes(spec.category)) {
-    return { ok: false, error: 'You can’t put that kind of day on the calendar yourself.' };
+    return { ok: false, error: 'You can only add personal plans to the calendar.' };
   }
 
   if (spec.locationId !== undefined && !CITIES.get(spec.locationId)) {
@@ -134,8 +142,8 @@ export function registerPlans(sim: Simulation): void {
     if (inPlace || !player || !wanted) return;
 
     item.status = 'missed';
-    const there = CITIES.get(wanted)?.name ?? 'somewhere else';
-    const here = CITIES.get(player.currentLocationId)?.name ?? 'where you are';
+    const there = CITIES.get(wanted)?.name;
+    const here = CITIES.get(player.currentLocationId)?.name;
     // On the place’s own clock, with its zone, where that isn’t home’s, as Home’s Calendar gives it. Until 2026-10-13
     // the notice gave the home clock with no zone, so a call Home showed at 4:30 AM PDT was missed “at 7:30 AM” (found
     // by that day’s third round). Only the command reaches a plan elsewhere: the plan form sends no place.
@@ -144,7 +152,8 @@ export function registerPlans(sim: Simulation): void {
     s.notify({
       category: 'personal',
       title: `You Missed ${item.label}`,
-      body: `It wanted you in ${there} at ${when}, and you were in ${here}.`,
+      // Nothing reads a plan missed but this notice: the world holds you to your own plan by saying so, and no more.
+      body: `${there ? `It was in ${there}` : 'It was somewhere else'} at ${when}, and ${here ? `you were in ${here}` : 'you weren’t there'}. Missing a plan of your own costs nothing else.`,
       importance: 60,
     });
   });
@@ -175,18 +184,18 @@ export function registerPlans(sim: Simulation): void {
    */
   sim.onCommand<{ entryId: Id }, PlanResult>('calendar.skip', (payload, { sim: s }) => {
     const item = s.timeline.get(payload.entryId);
-    if (!item) return { ok: false, error: 'There’s nothing by that name on the calendar.' };
-    if (item.kind !== PLAN_KIND) return { ok: false, error: 'That one isn’t yours to walk away from.' };
-    if (item.status !== 'pending') return { ok: false, error: 'That’s already settled one way or the other.' };
+    if (!item) return { ok: false, error: NOT_ON_CALENDAR };
+    if (item.kind !== PLAN_KIND) return { ok: false, error: 'Only a plan you made yourself can be skipped.' };
+    if (item.status !== 'pending') return { ok: false, error: ALREADY_OVER };
     if (item.at > s.now) {
-      return { ok: false, error: 'It hasn’t come round yet. Call it off instead.' };
+      return { ok: false, error: 'It hasn’t started yet. To drop it, open it on the Calendar and press Call It Off.' };
     }
     item.status = 'missed';
     item.resolvedAt = s.now;
     s.notify({
       category: 'personal',
       title: `You Didn’t Go To ${item.label}`,
-      body: 'Nobody was waiting on it but you, so it cost you nothing but the plan.',
+      body: 'It was your own plan, so skipping it costs you nothing else.',
       importance: 35,
     });
     return { ok: true, id: item.id };
@@ -194,18 +203,18 @@ export function registerPlans(sim: Simulation): void {
 
   sim.onCommand<{ entryId: Id }, PlanResult>('calendar.cancel', (payload, { sim: s }) => {
     const item = s.timeline.get(payload.entryId);
-    if (!item) return { ok: false, error: 'There’s nothing by that name on the calendar.' };
+    if (!item) return { ok: false, error: NOT_ON_CALENDAR };
     if (item.kind !== PLAN_KIND) {
-      return { ok: false, error: 'That one isn’t yours to call off.' };
+      return { ok: false, error: 'Only a plan you made yourself can be called off here.' };
     }
     if (item.status !== 'pending') {
-      return { ok: false, error: 'That’s already settled one way or the other.' };
+      return { ok: false, error: ALREADY_OVER };
     }
     if (item.at <= s.now) {
-      return { ok: false, error: 'It’s already started. You either went or you didn’t.' };
+      return { ok: false, error: 'It’s already started, so it can’t be called off now.' };
     }
     if (!s.timeline.cancel(item.id, s.now)) {
-      return { ok: false, error: 'It wouldn’t come off the calendar.' };
+      return { ok: false, error: 'It couldn’t be taken off the calendar, so it’s still there.' };
     }
     return { ok: true, id: item.id };
   });

@@ -82,7 +82,7 @@ describe('a save that will not read', () => {
   });
 
   it('still says so when the file parses but is not a SLATE save', () => {
-    expect(() => deserialise('{"hello":"world"}')).toThrow(/isn’t a SLATE universe/);
+    expect(() => deserialise('{"hello":"world"}')).toThrow(/isn’t a SLATE save/);
   });
 
   it('puts that sentence on the slot rather than a prefix and a parser', async () => {

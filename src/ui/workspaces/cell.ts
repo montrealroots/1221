@@ -15,6 +15,7 @@
 import { formatDate, startOfDay, startOfNextDay, zonedParts, MS_MINUTE } from '@/engine/core/time';
 import { holidayLabel } from '@/engine/content/holidays';
 import type { CalendarDay, CalendarEntry } from '@/engine/world/calendar';
+import { said, toStart } from '@/ui/looks/words';
 
 /** Chips a cell holds before it has to start hiding things. */
 export const CHIPS = 3;
@@ -62,11 +63,9 @@ export const hiddenIn = (day: CalendarDay): number =>
 export function dayLabel(day: CalendarDay, zone: string): string {
   const kept = day.holidays.map(holidayLabel);
   const standing = standingIn(day);
-  const booked = standing.length === 0
-    ? ''
-    : standing.length === 1
-      ? 'One thing on it.'
-      : `${standing.length} things on it.`;
+  // A count under ten is a word, as in the rest of the game's prose; until 2026-10-17 two or more were figures
+  // ("2 things on it.") beside "One thing on it." (brief 14).
+  const booked = standing.length === 0 ? '' : `${toStart(said(standing.length, 'thing'))} on it.`;
   return [
     formatDate(day.date, zone),
     kept.length > 0 ? `${kept.join('. ')}.` : '',

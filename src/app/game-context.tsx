@@ -119,6 +119,13 @@ const SPEED_MULTIPLIER: Record<string, number> = {
 /** How often the loop wakes. Often enough to feel continuous, cheap to ignore. */
 const TICK_MS = 1_000;
 
+/**
+ * What a move of the clock that threw says (from 2026-10-17, brief 14). Until then the toast was the engine's own
+ * message ("advanceTo called re-entrantly…", "Refusing to move the world clock backwards…"), now in the console. A
+ * move isn't rolled back: what came due before the error was worked.
+ */
+const CLOCK_FAULT = 'An error in the game stopped the clock. Anything that happened before it stopped still stands. You can try moving the clock again.';
+
 
 export function GameProvider({
   sim, adapter, onExit, children,
@@ -169,7 +176,9 @@ export function GameProvider({
     options: { silent?: boolean } = {},
   ): CommandResult<R> => {
     const result = sim.execute<R>({ kind, payload });
-    if (!result.ok && !options.silent) toast(result.error ?? 'That couldn’t be done.', 'negative');
+    // A fault's detail is for a developer, in the console; the player reads `error` (from 2026-10-17, brief 14).
+    if (result.detail) console.error(result.detail);
+    if (!result.ok && !options.silent) toast(result.error ?? 'That didn’t go through, and nothing was changed.', 'negative');
     if (result.ok) dirty.current = true;
     refresh();
     return result;
@@ -212,7 +221,8 @@ export function GameProvider({
       refresh();
       return result;
     } catch (error) {
-      toast((error as Error).message, 'negative');
+      console.error(error);
+      toast(CLOCK_FAULT, 'negative');
       refresh();
       return undefined;
     }
@@ -226,7 +236,8 @@ export function GameProvider({
       refresh();
       return result;
     } catch (error) {
-      toast((error as Error).message, 'negative');
+      console.error(error);
+      toast(CLOCK_FAULT, 'negative');
       refresh();
       return undefined;
     }
@@ -448,7 +459,7 @@ export function GameProvider({
 const ROUTE_LABELS: Record<string, string> = {
   '/home': 'Home',
   '/workspace/calendar': 'Calendar',
-  '/workspace/school': 'Your School',
+  '/workspace/school': 'School',
   '/workspace/bank': 'Money',
   '/workspace/papers': 'Papers',
   '/workspace/profile': 'Player Profile',

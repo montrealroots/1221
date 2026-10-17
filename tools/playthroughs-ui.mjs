@@ -198,7 +198,7 @@ const needsPanel = () => page.locator('section.card', { has: page.getByRole('hea
 const notices = async () => (await needsPanel().locator('.list-item').allInnerTexts().catch(() => [])).map(clean);
 /** Home's notices as a fresh Home draws them, the six heaviest: Show All is the panel's own, and a screen opened again starts without it. */
 async function homeAsOpened() {
-  const back = needsPanel().getByRole('button', { name: /^Show The Heaviest Six$/ });
+  const back = needsPanel().getByRole('button', { name: /^Show The Six Most Important$/ });
   if (await back.count()) await press(back);
   await rail('Home');
   return notices();
@@ -326,7 +326,7 @@ async function onTheWayCancelled(item) {
   const d = page.getByRole('dialog', { name: 'On The Way' }).first();
   must(await d.isVisible().catch(() => false), `no On The Way before ${item}: ${clean(await page.locator('[role=dialog]:visible').first().innerText().catch(() => 'no dialog'))}`);
   const words = clean(await d.innerText());
-  must(/comes to \d+ commitments? on the way\. The clock stops at each\./.test(words), `On The Way says: ${words.slice(0, 240)}`);
+  must(/passes \w+ commitments?, and the clock stops at each one\./.test(words), `On The Way says: ${words.slice(0, 240)}`);
   said(`On The Way: ${words.replace(/^On The Way /, '').slice(0, 400)}`);
   await press(d.getByRole('button', { name: /^Cancel$/ }).first(), 'Cancel'); await wait(600);
   must(!(await page.locator('[role=dialog]:visible').count()), 'a dialog still open after Cancel');
@@ -354,7 +354,7 @@ async function deleteKeptThenContinue() {
   const d = page.getByRole('dialog', { name: 'Confirm Deletion' });
   must(await d.isVisible().catch(() => false), 'no Confirm Deletion');
   const words = clean(await d.innerText());
-  must(/^Delete Slot 1\?/.test(words) && /This ends that universe\./.test(words) && /(A backup is kept|There’s no backup of this slot)/.test(words), `Confirm Deletion says: ${words.slice(0, 300)}`);
+  must(/^Delete Slot 1\?/.test(words) && /This ends that universe\./.test(words) && /(A backup is kept|This slot has no backup)/.test(words), `Confirm Deletion says: ${words.slice(0, 300)}`);
   said(`Confirm Deletion: ${words}`);
   await shot('confirm-deletion');
   await press(d.getByRole('button', { name: /^Keep It$/ }), 'Keep It'); await wait(600);
@@ -436,8 +436,8 @@ async function normal() {
     must(/MFA in Acting/.test(body), `the welcome doesn’t name the MFA in Acting: ${body.slice(0, 200)}`);
     const look = await openLook(row.locator('.strong button.link').first());
     // The kind is drawn in capitals by the stylesheet, and innerText reads it so.
-    must(look.name === 'Welcome To The Class Of 2029' && look.kind.toLowerCase() === 'something you were told', `opened “${look.name}” (${look.kind})`);
-    must(/^It came in .+ and it’s (the only thing you haven’t read|\w+ of the \w+ you haven’t read)\.$/.test(look.summary), `its summary: ${look.summary}`);
+    must(look.name === 'Welcome To The Class Of 2029' && look.kind.toLowerCase() === 'notice', `opened “${look.name}” (${look.kind})`);
+    must(/^It came in [^.]+(, and it’s your only unread notice|\. It’s \w+ of your [\w,]+ unread notices)\.$/.test(look.summary), `its summary: ${look.summary}`);
     await shot('home-notice-look');
     await closeLook(look.name);
   });
@@ -468,7 +468,7 @@ async function normal() {
     const stop = page.locator('[role=dialog]:visible').last();
     must(await stop.count(), 'the clock didn’t stop at the orientation');
     const words = clean(await stop.innerText());
-    must(/this is what wanted you/.test(words) && await stop.getByRole('button', { name: /^Go$/ }).count() && await stop.getByRole('button', { name: /^Stand Here$/ }).count(), `the stop says: ${words.slice(0, 240)}`);
+    must(/this needs you now/.test(words) && await stop.getByRole('button', { name: /^Go$/ }).count() && await stop.getByRole('button', { name: /^Stand Here$/ }).count(), `the stop says: ${words.slice(0, 240)}`);
     said(`stopped: ${words.slice(0, 300)}`);
     await press(stop.getByRole('button', { name: /^Go$/ }), 'Go'); await wait(1500); await settle();
     must((await dateText()) !== day && /^7:00\s?AM$/.test(await clock()), `after Go: ${await when()}`);
@@ -632,9 +632,9 @@ async function setback() {
   await step('the warning opened in place: its look, who sent it and when, and Close', ['drill-down'], async () => {
     const row = noticeRow(/^A Word On Your Coursework$/);
     const look = await openLook(row.locator('.strong button.link').first());
-    must(look.kind.toLowerCase() === 'something you were told' && look.name === 'A Word On Your Coursework', `opened “${look.name}” (${look.kind})`);
+    must(look.kind.toLowerCase() === 'notice' && look.name === 'A Word On Your Coursework', `opened “${look.name}” (${look.kind})`);
     const stats = clean(await look.look.locator('.stat').allInnerTexts().then((a) => a.join(' | ')));
-    must(/Sent By/i.test(stats) && /Weight/i.test(stats), `the look’s figures: ${stats}`);
+    must(/About/i.test(stats) && /Importance/i.test(stats), `the look’s figures: ${stats}`);
     said(`its figures: ${stats}`);
     await closeLook(look.name);
   });

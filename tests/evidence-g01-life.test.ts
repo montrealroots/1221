@@ -253,16 +253,16 @@ describe('life.sleep', () => {
     const { id } = sim.must<{ id: string }>({ kind: 'calendar.schedule', payload: { title: 'Gym', at: NH(9, 30), durationMinutes: 60 } });
     // TEST SETUP: the bar with Sleep open (its first state), the slider at 8 hours (the dialog's own state).
     const { text, buttons } = bar(sim, [true, false, null, false, false, 8]);
-    expect(text).toContain('"Gym" is in 2.0 hours, and getting up and there takes an hour and a half, so a full night isn’t available.');
-    expect(text).toContain('You’d wake at 3:30 PM, August 24, 2026');
-    expect(text).toContain('You would sleep through 1 commitment: Gym — 9:30 AM');
+    expect(text).toContain('“Gym” is in 2 hours. Getting up and there takes an hour and a half, so there isn’t time for a full night.');
+    expect(text).toContain('You’d Wake At 3:30 PM, August 24, 2026');
+    expect(text).toContain('You’d sleep through one commitment: Gym — 9:30 AM');
     buttons.find((b) => b.text === 'Sleep 8 Hours')!.onClick!();
 
     expect(sim.now).toBe(NH(15, 30));
     expect(sim.player.lastSleptAt).toBe(NH(15, 30));
     // Missed, and quietly: the night says what it slept through, the plan's own handler doesn't say it again.
     expect(sim.timeline.get(id)!.status).toBe('missed');
-    expect(notices(sim, 'You Slept Through 1 Commitment').map((n) => n.body)).toEqual(['Gym']);
+    expect(notices(sim, 'You Slept Through 1 Commitment').map((n) => n.body)).toEqual(['You were asleep for Gym, so you missed it.']);
     expect(notices(sim, 'You Missed Gym')).toHaveLength(0);
 
     const again = reload(sim);
@@ -278,7 +278,7 @@ describe('life.sleep', () => {
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at: NH(9, 30), durationMinutes: 60 } });
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Lunch', at: NH(12), durationMinutes: 60 } });
     expect(sleep(sim, { hours: 8 }).ok).toBe(true);
-    expect(notices(sim, 'You Slept Through 2 Commitments').map((n) => n.body)).toEqual(['Gym, Lunch']);
+    expect(notices(sim, 'You Slept Through 2 Commitments').map((n) => n.body)).toEqual(['You were asleep for Gym and Lunch, so you missed them.']);
     expect(notices(sim, 'You Slept Through 1 Commitment')).toHaveLength(0);
   });
 
@@ -805,7 +805,7 @@ describe('calendar.schedule', () => {
     };
     const blank = form('');
     expect(blank.text).toContain('Put Something On August 24, 2026');
-    expect(blank.text).toContain('It will want you in New Haven, and the clock stops when it comes round.');
+    expect(blank.text).toContain('You’ll need to be in New Haven for it, and the clock stops when it comes round.');
     expect(blank.put.disabled).toBe(true);
     const named = form('Gym');
     expect(named.put.disabled).toBe(false);

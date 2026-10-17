@@ -39,7 +39,7 @@ export function LockedScreen({ feature }: { feature: string }) {
   return (
     <div className="empty">
       <h3>{label}, Locked</h3>
-      <p className="small">{chapter ? `It opens with “${chapter.title}” in the guide: ${chapter.lead.charAt(0).toLowerCase()}${chapter.lead.slice(1)}` : 'It isn’t open yet.'}</p>
+      <p className="small">{chapter ? `It opens once you read “${chapter.title}” in the guide. ${chapter.lead}` : 'It isn’t open yet.'}</p>
       {chapter && <button type="button" className="btn btn-primary" onClick={() => guide.show(chapter.id)}>Read About It</button>}
     </div>
   );

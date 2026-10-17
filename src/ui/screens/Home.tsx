@@ -62,7 +62,7 @@ export function Home() {
     const said: string[] = [];
     for (const t of troubles(s, s.player)) {
       if (t.kind === 'owed') said.push(`You owe ${m(t.amount)} that went unpaid.`);
-      else if (t.kind === 'overdrawn') said.push(`Your current account is ${m(t.amount)} overdrawn.`);
+      else if (t.kind === 'overdrawn') said.push(`Your account is ${m(t.amount)} overdrawn.`);
       else if (t.kind === 'card') said.push(`Your card is nearly at its limit, owing ${m(t.amount)}.`);
       else if (t.kind === 'card_behind') {
         // The card named, where there's more than one.
@@ -74,12 +74,12 @@ export function Home() {
         // no played life once a card paid off reset its count (defect 68 of that day’s third round; found by its final checks).
         said.push(`${which} is ${state?.suspended ? 'suspended' : 'a payment behind'}, owing ${m(t.amount)}.`);
       }
-      else if (t.kind === 'return_late') said.push(`A tax return is past its day, unfiled, ${m(t.amount)} with its penalty so far.`);
+      else if (t.kind === 'return_late') said.push(`A tax return is past its due date and unfiled: ${m(t.amount)}, with its penalty so far.`);
       else if (t.kind === 'medical') said.push(`You owe ${m(t.amount)} for medical care.`);
-      else if (t.kind === 'collections') said.push(`${m(t.amount)} is with collections.`);
+      else if (t.kind === 'collections') said.push(`${m(t.amount)} you owe is with a collection agency.`);
       else said.push(`You owe ${m(t.amount)} of income tax.`);
     }
-    if (clash) said.push('Two things on your calendar in the next month want you at once.');
+    if (clash) said.push('Two things on your calendar in the next month are at the same time.');
     return said;
   });
 
@@ -164,7 +164,7 @@ export function Home() {
       <Panel
         look={at('day', today)}
         title="Calendar"
-        subtitle={next ? 'What is coming, and when.' : undefined}
+        subtitle={next ? 'What’s coming up, and when.' : undefined}
         actions={(
           <Gated feature="ui.open-calendar" className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
             Open Calendar
@@ -228,7 +228,7 @@ export function Home() {
         {!shows.needs ? <LockedPanel feature="ui.needs" title="What Needs You" /> : (
         <Panel
           title="What Needs You"
-          subtitle={decisions.length === 0 ? 'No decision is waiting on you.' : `${decisions.length} open`}
+          subtitle={decisions.length === 0 ? 'No questions are waiting on you.' : `${decisions.length} open`}
           flush
           actions={unread.length > 0 ? (
             <Gated feature="world.mark_read" className="btn btn-ghost btn-sm" onClick={() => run('world.mark_read')}>
@@ -244,7 +244,7 @@ export function Home() {
                 body="You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do."
               />
             ) : (
-              <Empty title="No Decisions Waiting" body={weighing.join(' ')} />
+              <Empty title="No Questions Waiting" body={weighing.join(' ')} />
             )
           ) : (
             <LookRegion className="list">
@@ -297,7 +297,8 @@ export function Home() {
               ))}
               {decisions.length > 6 && (
                 <div className="xs dim" style={{ padding: 'var(--s3) var(--s4)' }}>
-                  {decisions.length - 6} more waiting.
+                  {/* Past the sixth there's nothing to open: each comes up as one above it closes (`openDecisions`' order). */}
+                  {decisions.length - 6} more waiting. Each one comes up here as one above it closes.
                 </div>
               )}
             </LookRegion>
@@ -329,9 +330,9 @@ export function Home() {
           )}
           {unread.length > 6 && (
             <div className="row-between xs dim" style={{ padding: 'var(--s3) var(--s4)' }}>
-              <span>{allNotices ? `All ${unread.length} unread, the heaviest first.` : `${unread.length - 6} more waiting.`}</span>
+              <span>{allNotices ? `All ${unread.length} unread, the most important first.` : `${unread.length - 6} more unread.`}</span>
               <button type="button" className="btn btn-ghost btn-sm" onClick={() => setAllNotices(!allNotices)}>
-                {allNotices ? 'Show The Heaviest Six' : `Show All ${unread.length}`}
+                {allNotices ? 'Show The Six Most Important' : `Show All ${unread.length}`}
               </button>
             </div>
           )}
@@ -396,7 +397,7 @@ export function Home() {
                   label="Daylight"
                   value={place.sun.polar === 'day' ? 'Midnight Sun' : place.sun.polar === 'night' ? 'Polar Night'
                     : `${formatTime(place.sun.sunrise ?? sim.now, place.zone)} – ${formatTime(place.sun.sunset ?? sim.now, place.zone)}`}
-                  note={`${formatDaylight(place.sun.daylightMinutes)} of light`}
+                  note={`${formatDaylight(place.sun.daylightMinutes)} of daylight`}
                   look={at('daylight', place.city.id)}
                 />
                 </div>
@@ -532,8 +533,8 @@ function SchoolLine() {
     <AffairLine
       title="School"
       line={`${where}${standing}, ${rankIn(person)} of ${YALE_DRAMA.classSize} in the class.${next ? ` Next: ${next.label}, ${formatDateTime(next.at, zone)}.` : ''}`}
-      alert={troubled ? `Your standing is ${STANDING_LABEL[school.standing].toLowerCase()}: the School screen says why.` : undefined}
-      action={<Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'Your School')}>{YALE_DRAMA.short}</Gated>}
+      alert={troubled ? `Your standing is ${STANDING_LABEL[school.standing].toLowerCase()}. The School screen says why.` : undefined}
+      action={<Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'School')}>{YALE_DRAMA.short}</Gated>}
       help="school.standing"
     />
   );

@@ -9,9 +9,11 @@
  * them with.
  *
  * - n-dismiss-expire: the tax season's row for a London-born student, Dismiss pressed on Home, takes it off What Needs
- *   You at once; a second press is refused with "It’s dismissed already." and the day of the first is kept, across a
+ *   You at once; a second press is refused with "You’ve already dismissed that question." ("It’s dismissed already."
+ *   until 2026-10-17, brief 14) and the day of the first is kept, across a
  *   save and a load; through its due date nothing asks again; it's kept for 180 days from the dismissal and gone at the
- *   first world tick after, when the command says "No such decision.". Until 2026-10-14 an undated row left alone was
+ *   first world tick after, when the command says "That question isn’t in What Needs You any more." ("No such
+ *   decision." until 2026-10-17). Until 2026-10-14 an undated row left alone was
  *   dismissed by the world at the first tick past 90 days, and a dismissed row dated 300 days on outlived the 180 until
  *   its date, rules no play reached, held here on rows raised by hand; the owner had both go that day, and a dismissed
  *   row dated 300 days on is gone at the first tick past its 180; and Home lists what's open overdue first, then by urgency, then
@@ -229,21 +231,21 @@ describe('n-dismiss-expire', () => {
     expect(sim.universe.decisions[row.id]!.resolvedAt).toBeUndefined();
     expect(openDecisions(sim)).toEqual([]);
     const after = drawn(sim, Home);
-    expect(needs(after.text)).toContain('What Needs You No decision is waiting on you.');
+    expect(needs(after.text)).toContain('What Needs You No questions are waiting on you.');
     expect(after.text).not.toContain('Your 2026 Tax Return');
     expect(after.controls.some((c) => c.type === 'button' && c.text === 'Dismiss')).toBe(false);
 
     // Pressed again an hour on: refused in its own words, and the day it was dismissed is the first press's.
     sim.advanceTo(EST(2027, 2, 1, 11));
     const twice = dismiss(sim, row.id);
-    expect([twice.ok, twice.error]).toEqual([false, 'It’s dismissed already.']);
+    expect([twice.ok, twice.error]).toEqual([false, 'You’ve already dismissed that question.']);
     expect(sim.universe.decisions[row.id]!.dismissedAt).toBe(EST(2027, 2, 1, 10));
 
     // Saved and loaded a month on: still dismissed, from the same day, and still refused.
     sim.advanceTo(EST(2027, 3, 1, 12));
     sim = reload(sim);
     expect(sim.universe.decisions[row.id]!.dismissedAt).toBe(EST(2027, 2, 1, 10));
-    expect(dismiss(sim, row.id).error).toBe('It’s dismissed already.');
+    expect(dismiss(sim, row.id).error).toBe('You’ve already dismissed that question.');
 
     // Past its date: nothing asks again, the one row is the one dismissed, and it was never resolved.
     sim.advanceTo(EDT(2027, 4, 20, 12));
@@ -257,8 +259,8 @@ describe('n-dismiss-expire', () => {
     sim.advanceTo(EST(2027, 2, 1, 10) + 182 * MS_DAY + MS_HOUR);
     expect(sim.universe.decisions[row.id], 'a dismissed row outlived 180 days and its date').toBeUndefined();
     const gone = dismiss(sim, row.id);
-    expect([gone.ok, gone.error]).toEqual([false, 'No such decision.']);
-    expect(dismiss(sim, 'decision_999999').error).toBe('No such decision.');
+    expect([gone.ok, gone.error]).toEqual([false, 'That question isn’t in What Needs You any more.']);
+    expect(dismiss(sim, 'decision_999999').error).toBe('That question isn’t in What Needs You any more.');
   }, 60_000);
 
   // Until 2026-10-14 a test here held a rule no play reached, on a row raised by hand with no date: an undated row left

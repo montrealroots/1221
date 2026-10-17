@@ -116,7 +116,7 @@ export class Base44SaveAdapter implements SaveAdapter {
    */
   private async call(name: string, payload: Record<string, unknown>, what: string): Promise<FunctionReply> {
     const fn = this.fn;
-    if (!fn) throw new PersistenceError(`${what} is unavailable: this deployment has no backend functions.`, true);
+    if (!fn) throw new PersistenceError(`${what} isn’t possible here, because this version of SLATE has no server to save to.`, true);
 
     let reply: FunctionReply | undefined;
     try {
@@ -127,14 +127,12 @@ export class Base44SaveAdapter implements SaveAdapter {
       if (body?.error) {
         throw new PersistenceError(body.error, isRetryable(body.status ?? thrown.response?.status));
       }
-      throw new PersistenceError(
-        `${what} couldn’t reach the server: ${thrown.message ?? 'the connection failed'}.`,
-        true,
-      );
+      console.error(error);
+      throw new PersistenceError(`${what} couldn’t reach the server. Check your connection, then try again.`, true);
     }
 
-    if (!reply) throw new PersistenceError(`${what} came back empty from the server.`, true);
-    if (!reply.ok) throw new PersistenceError(reply.error ?? `${what} was refused by the server.`, isRetryable(reply.status));
+    if (!reply) throw new PersistenceError(`${what} got no answer from the server. Try again in a moment.`, true);
+    if (!reply.ok) throw new PersistenceError(reply.error ?? `${what} didn’t go through: the server turned it down without saying why. Try again in a moment.`, isRetryable(reply.status));
     return reply;
   }
 
@@ -179,10 +177,8 @@ export class Base44SaveAdapter implements SaveAdapter {
       records = await entity.filter({});
     } catch (error) {
       // A network failure must not look like an empty save file.
-      throw new PersistenceError(
-        `Your saves couldn’t be reached: ${(error as Error).message}. They aren’t lost; try again in a moment.`,
-        true,
-      );
+      console.error(error);
+      throw new PersistenceError('Your saves couldn’t be reached. They aren’t lost: check your connection, then try again.', true);
     }
 
     return ([1, 2, 3] as Slot[]).map((slot) => {
@@ -277,10 +273,9 @@ export class Base44SaveAdapter implements SaveAdapter {
     } catch (error) {
       // Local mirror is the recovery path, so say so honestly.
       await this.fallback.save(universe).catch(() => undefined);
-      throw new PersistenceError(
-        `The save couldn’t be written to Base44: ${(error as Error).message}. A copy has been kept on this device and will sync when the connection returns.`,
-        true,
-      );
+      // The next save writes the whole save to the server again, so it catches up then.
+      console.error(error);
+      throw new PersistenceError('The save couldn’t reach the server. A copy is kept on this device, and the next save tries the server again.', true);
     }
   }
 

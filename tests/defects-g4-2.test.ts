@@ -99,7 +99,7 @@ describe('standing at a commitment', () => {
     expect(hoursUntilNextCommitment(sim)).toBe(0);
     const suggestion = suggestedSleep(sim);
     expect(suggestion.reason).not.toMatch(/calendar’s clear/);
-    expect(suggestion.reason).toBe('It’s time for "Gym", and you’re standing at it. Any sleep goes through it.');
+    expect(suggestion.reason).toBe('It’s time for “Gym”, and you’re standing at it, so any sleep would go through it.');
     const crossed = sim.timeline.between(sim.now, sim.now + suggestion.hours * MS_HOUR).filter((i) => i.requiresPlayer);
     expect(crossed.map((i) => i.id)).toEqual([id]);
     // The dialog's own line for it says it's now, where "in less than a minute" said it hadn't come yet.
@@ -111,7 +111,7 @@ describe('standing at a commitment', () => {
     clearCalendar(sim);
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at: sim.now + 2 * MS_HOUR, durationMinutes: 60 } });
     expect(hoursUntilNextCommitment(sim)).toBe(2);
-    expect(suggestedSleep(sim).reason).toMatch(/^"Gym" is in 2\.0 hours/);
+    expect(suggestedSleep(sim).reason).toMatch(/^“Gym” is in 2 hours\./);
   });
 });
 

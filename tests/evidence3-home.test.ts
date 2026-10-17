@@ -203,8 +203,8 @@ describe('h-needs', () => {
     drawn(sim, Home);
     expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
   };
-  const WAITING = 'What Needs You No decision is waiting on you. How This Works No Decisions Waiting';
-  const ALL_CLEAR = 'What Needs You No decision is waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.';
+  const WAITING = 'What Needs You No questions are waiting on you. How This Works No Questions Waiting';
+  const ALL_CLEAR = 'What Needs You No questions are waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.';
 
   it('PLAYER JOURNEY: the checking moved to savings at 7:30 on the first morning, the fall’s Yale Health plan, $1,882, goes unpaid at nine: “You owe $1,882 that went unpaid.” at noon, across a reload, paid back out of savings at midnight; her twin who kept it is All Clear', () => {
     const played = (move: boolean) => {
@@ -285,7 +285,7 @@ describe('h-needs', () => {
     if (openDecisions(sim).some((d) => d.title === 'Your 2026 Tax Return')) expect(press(button('File It'))).toMatchObject({ ok: true });
     expect(openDecisions(sim)).toEqual([]);
     markRead(sim);
-    const said = `${WAITING} $1,999 is with collections.`;
+    const said = `${WAITING} $1,999 you owe is with a collection agency.`;
     expect(needs(sim)).toBe(said);
     expect(needs(reload(sim))).toBe(said);
     // h-money: the card closed to collections, the checking stays, and the Money line names it.
@@ -326,7 +326,7 @@ describe('h-needs', () => {
     // Chase pays an item up to $500 past zero (`perItemCover`, SLATE's estimate), so the bill is paid into an overdraft.
     const chase = played(true, 'us-chase');
     expect(healthOf(chase.player).bills[0]!.paid).toBe(true);
-    expect(needs(chase)).toBe(`${WAITING} Your current account is $50 overdrawn.`);
+    expect(needs(chase)).toBe(`${WAITING} Your account is $50 overdrawn.`);
   });
 });
 

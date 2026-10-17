@@ -57,7 +57,7 @@ describe('a night booked ahead, and the commitments around it', () => {
     const lunch = plan(sim, 'Lunch With Sam', 2, 1);
     sim.must({ kind: 'life.sleep', payload: { hours: 8 } });
     expect(lunch.status).toBe('missed');
-    expect(slept(sim).map((n) => [n.title, n.body])).toEqual([['You Slept Through 1 Commitment', 'Lunch With Sam']]);
+    expect(slept(sim).map((n) => [n.title, n.body])).toEqual([['You Slept Through 1 Commitment', 'You were asleep for Lunch With Sam, so you missed it.']]);
     const again = (deserialise(serialise(sim.universe)) as { notifications: { title: string }[] }).notifications.filter((n) => n.title.startsWith('You Slept Through'));
     expect(again).toHaveLength(1);
   });

@@ -88,7 +88,7 @@ export function registerBirthdays(sim: Simulation): void {
       s.notify({
         category: 'personal',
         title: `Happy Birthday: ${age}`,
-        body: `You're ${age} today.`,
+        body: `You’re ${age} today.`,
         importance: 55,
       });
     }

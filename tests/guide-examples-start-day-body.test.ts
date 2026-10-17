@@ -488,8 +488,8 @@ describe('the day and the clock', () => {
     expect(formatTime(p.startedAt, p.sim.zone)).toBe(startsAt);
     expect(titleCaseLabel(p.first.label)).toBe(firstName);
     expect(zonedParts(p.first.at, p.sim.zone).hour).toBe(word(firstHour));
-    const [onTheWay] = read(steps[1]!, /comes to (\d+) commitments?/);
-    expect(p.onTheWay.length).toBe(Number(onTheWay));
+    const [onTheWay] = read(steps[1]!, /passes (\w+) commitments?/);
+    expect(p.onTheWay.length).toBe(word(onTheWay));
     const [stopsAt, dialog, takes] = read(steps[2]!, /The clock stops at (\d+:\d+ [AP]M), and a dialog named (.+) says going takes (.+)\. Press Go\./);
     expect(formatTime(p.stoppedAt, p.sim.zone)).toBe(stopsAt);
     expect(titleCaseLabel(p.stop.label)).toBe(dialog);
@@ -604,7 +604,7 @@ describe('the day and the clock', () => {
     expect(formatTime(p.morning, p.sim.zone)).toBe(at7);
     expect(p.evening).toEqual([]);
     expect(p.made.ok, p.made.error).toBe(true);
-    const [name, from, to, wantedIn, stopsAt, goesTo] = read(result, /^(.+) is on the calendar from (\d+:\d+) to (\d+:\d+ [AP]M), wanting you in (.+?)\. At (\w+) the clock stops and asks, and Go takes the clock to (\w+),/);
+    const [name, from, to, wantedIn, stopsAt, goesTo] = read(result, /^(.+) is on the calendar from (\d+:\d+) to (\d+:\d+ [AP]M), in (.+?)\. At (\w+) the clock stops and asks, and Go takes the clock to (\w+),/);
     expect(p.plan.kind).toBe(PLAN_KIND);
     expect(p.plan.label).toBe(name);
     expect(formatTime(p.plan.at, p.sim.zone)).toMatch(new RegExp(`^${from} [AP]M$`));

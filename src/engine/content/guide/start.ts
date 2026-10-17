@@ -15,10 +15,10 @@ export const START: readonly GuideEntry[] = [
     questions: ['Where am I?', 'What time is it here?', 'What do the underlined words do?', 'What currency do I use?'],
     where: { route: '/home', label: 'Home, The Where You Are Panel' },
     available: `From the guide’s first chapter, “${CHAPTERS[0]!.title}”.`,
-    short: 'Home is the day you’re standing in. Where You Are names your town, its region and country, the local time and zone, the season and the daylight, all worked out from where you are and what day it is. Every underlined word opens into what it names, with more to press inside.',
+    short: 'Home is your day at a glance. The line under the greeting gives the time, your town, its time zone, the season and the sky; Where You Are names your town, its region and country, with the local time and the daylight. Every underlined word opens into what it names, with more to press inside.',
     steps: [
       'Open Home: the SLATE mark at top left, the Home line on the menu, or the H key.',
-      'Read Where You Are: the town, the region and the country, then the local time, the zone, the season and the daylight.',
+      'Read Where You Are: the town, the region and the country, then Local Time and Daylight. The season is in the line under the greeting.',
       'Press an underlined word to open it under its line. Press a word inside it to go deeper; Close, or the word again, folds it.',
     ],
     needs: ['Home is always there, from the first moment of a life.'],
@@ -26,7 +26,7 @@ export const START: readonly GuideEntry[] = [
     reads: [
       { label: 'The Town And Its Zone', value: 'The place your life is in, from the world’s gazetteer, with its time zone and daylight saving' },
       { label: 'The Day', value: 'The clock’s own moment, in the town’s local time' },
-      { label: 'The Season And The Daylight', value: 'Worked out from the town’s latitude and the date' },
+      { label: 'The Season And The Daylight', value: 'Calculated from the town’s latitude and the date' },
     ],
     now: ['The world stays as it was: Home and its words show it, they don’t move it.'],
     later: ['As the clock moves the time, the season and the daylight move with it.'],
@@ -38,6 +38,10 @@ export const START: readonly GuideEntry[] = [
     ],
     unavailable: ['A word stays plain text until the guide’s chapter that opens it has been read.'],
     mistakes: ['Pressing a word opens it in place: nothing on the screen behind it is lost, so there’s nothing to undo.'],
+    next: [
+      'Read the Calendar panel on Home for what’s coming, and the Weather panel for the sky.',
+      'If a word or a panel is still Locked, read the next chapter in the guide.',
+    ],
     related: ['start.guide', 'start.find', 'day.calendar', 'body.how'],
     connections: [
       { to: 'start.guide', kind: 'prerequisite', why: 'Each underlined word opens once the guide’s chapter for it has been read.' },
@@ -59,7 +63,7 @@ export const START: readonly GuideEntry[] = [
     questions: ['Why is a button locked?', 'How do I open the rest of the game?', 'Can I skip the guide?', 'Does reading help cost time?', 'How do I find out what something does?'],
     where: { route: '/home', label: 'The top bar’s Guide button; How This Works on every panel; ? or / anywhere' },
     available: 'Always.',
-    short: `Two things share one button. The guide’s ${CHAPTERS.length} chapters are the onboarding: read in order, each opens a part of the game, and a part that isn’t open yet shows as Locked. The reference is everything else: an entry for each feature, opened by How This Works beside it, searchable, with what it reads, what it changes now and later, and what it’s connected to. Reading either moves no clock and changes nothing in your save but which chapters you’ve read.`,
+    short: `Two things share one button. The guide’s ${CHAPTERS.length} chapters teach the game in order: each opens a part of it, and a part that isn’t open yet shows as Locked. The reference is everything else: an entry for each feature, opened by How This Works beside it, and searchable, with what it does, what it changes now and later, and what it affects. Reading either moves no clock, and changes nothing in your save but which chapters you’ve read.`,
     steps: [
       'To read the next chapter, press Guide in the top bar, or Read on the strip under it, and I’ve Read It at its end. What it opened is listed.',
       'For a part of the game you’re looking at, press How This Works on its panel.',
@@ -80,10 +84,14 @@ export const START: readonly GuideEntry[] = [
       'Closing the guide doesn’t lose your place: it opens again at the next unread chapter.',
       'Show Me Where in an entry takes you to the feature’s screen and tab; the reference’s trail is kept, and Back To Help returns to it.',
     ],
+    next: [
+      'Read the next chapter, then try what it opened.',
+      'On any panel, press How This Works for its entry.',
+    ],
     related: ['start.home', 'start.find'],
     connections: [
       { to: 'start.home', kind: 'immediate', why: 'Reading a chapter opens Home’s panels and the underlined words it names.' },
-      { to: 'day.calendar', kind: 'immediate', why: '“What’s Coming” opens the calendar and the dialog that asks when something wants you.' },
+      { to: 'day.calendar', kind: 'immediate', why: '“What’s Coming” opens the calendar and the dialog that asks when a commitment comes round.' },
       { to: 'day.clock', kind: 'prerequisite', why: 'The clock starts paused on a guided life, and “The Clock” opens Play.' },
     ],
     // The menu's own button, Locked while its chapter is unread (`ui/shell/TimeControls.tsx`). Until 2026-10-12 this
@@ -117,6 +125,7 @@ export const START: readonly GuideEntry[] = [
     interpret: ['The number beside Home is the notices and questions waiting in What Needs You.'],
     unavailable: ['A place stays off the menu until its chapter is read.'],
     mistakes: ['Leaving a screen with a form half filled in loses what was typed in it; opening help over it doesn’t.'],
+    next: ['Press ? anywhere for the guide’s contents, grouped by what you want to do.'],
     related: ['start.guide', 'start.home', 'day.needs'],
     connections: [
       { to: 'start.guide', kind: 'prerequisite', why: 'A place joins the menu once its chapter is read.' },

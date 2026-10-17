@@ -661,7 +661,7 @@ describe('mortality', () => {
       expect(text).toContain('A Life, Ended');
       expect(text).toContain('Ada Cole');
       expect(text).toContain('August 25, 1940 – September 13, 2026 · Aged 86 · Actress · New Haven');
-      expect(text).toContain(`Earned ${dollars(6 * 23_00)} Wages, before tax and commission`);
+      expect(text).toContain(`Earned ${dollars(6 * 23_00)} Wages, before tax Left Behind`);
       expect(text).toContain(`Left Behind ${dollars(left)} What they were worth`);
       expect(buttons.map((b) => b.text)).toEqual(['Back To The Slots']);
       buttons[0]!.onClick!();

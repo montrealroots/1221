@@ -75,8 +75,9 @@ export function GameShell() {
           onClick={() => setRailOpen((open) => !open)}
           aria-expanded={railOpen}
           aria-controls="rail"
-          aria-label="Toggle Navigation"
         >
+          {/* Named by its word, Menu, as it's seen (from 2026-10-17, brief 14): until then its accessible name was
+              "Toggle Navigation", which a player using speech to press "Menu" couldn't reach. */}
           Menu
         </button>
 
@@ -153,7 +154,7 @@ export function GameShell() {
               className="rail-you rail-item"
               aria-current={route === '/workspace/profile' ? 'page' : undefined}
               aria-label={`${sim.player.displayName}, Open Your Player Profile`}
-              title={profileOpen ? 'Your Player Profile' : 'Locked: opens with its chapter in the guide'}
+              title={profileOpen ? 'Your Player Profile' : 'Locked until you read its chapter in the guide'}
               onClick={() => go('/workspace/profile', 'Player Profile')}
             >
               <span className="col">
@@ -224,7 +225,7 @@ function SaveIndicator() {
   if (saveError) {
     return (
       <button className="btn btn-sm btn-danger" onClick={() => void saveNow()} title={saveError}>
-        Save Failed — Retry
+        Save Failed: Try Again
       </button>
     );
   }

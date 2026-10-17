@@ -9,7 +9,7 @@
  *   eat) costs $4.29, $5.00 and $6.08, and the next midnight's groceries $8.59, $10.00 and $12.16; a meal ordered in
  *   costs LendingTree's 21/3.03 of each one's meal; on the same $4.50 the frugal life eats and the plain twin is refused
  *   in `spendRefusal`'s words; the price holds across a save and a load and the groceries are bought once a midnight;
- *   and creation's Review, rendered as the player has it, shows Going Out A Month as $261, $304 and $370.
+ *   and creation's Review, rendered as the player has it, shows Food Each Month (Going Out A Month until 2026-10-17) as $261, $304 and $370.
  * - `knob:illnessToll` (resilient 0.6 → 0.6474, inside [0.5, 1.5]): the same fall on the same morning's run breaks a
  *   bone that mends in 43 days for a plain body and 28 for a resilient one; Work Out is refused in `trainingRefusal`'s
  *   words till each mends, across a reload; laid up (`laidUp`), the plain twin is excused from the classes of Monday
@@ -214,7 +214,7 @@ describe('knob:spending', () => {
       expect(h.states).toHaveLength(0);
       return text;
     };
-    const month = (text: string) => text.match(/Going Out A Month \$([\d,]+)/)?.[1];
+    const month = (text: string) => text.match(/Food Each Month \$([\d,]+)/)?.[1];
     // A day's $10.00 of groceries in New Haven at the knob, 365/12 days: $261.24, $304.17 and $369.77, to the dollar.
     const frugal = review(['frugal']);
     expect(month(frugal)).toBe('261');

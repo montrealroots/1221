@@ -608,7 +608,7 @@ describe('the sleep the game suggests, and why', () => {
       personality: { emotionalStability: 5, ambition: 95, conscientiousness: 5 },
     });
     expect(hopeless.hours).toBe(14);
-    expect(hopeless.reason).toMatch(/not even fourteen hours makes up a whole day/);
+    expect(hopeless.reason).toMatch(/not even fourteen hours of sleep would make up for a whole day/);
   });
 });
 

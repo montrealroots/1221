@@ -20,6 +20,8 @@ export function SaveSlots({
   const [slots, setSlots] = useState(initialSlots);
   const [busy, setBusy] = useState<Slot | null>(null);
   const [error, setError] = useState<string | null>(null);
+  /** What a check found wrong with a save, for a player who wants it: behind a disclosure, not in the sentence. */
+  const [errorDetail, setErrorDetail] = useState<string[]>([]);
   const [confirmDelete, setConfirmDelete] = useState<Slot | null>(null);
 
   const reload = useCallback(async () => {
@@ -35,6 +37,7 @@ export function SaveSlots({
   const load = async (slot: Slot, fromBackup = false) => {
     setBusy(slot);
     setError(null);
+    setErrorDetail([]);
     try {
       const opened = await openSlot(adapter, slot, { fromBackup });
       if ('error' in opened) {
@@ -46,11 +49,11 @@ export function SaveSlots({
       // The save's towns are known only once their countries are loaded.
       await loadPlacesFor(universe);
       const validation = validateUniverse(universe);
+      // What the check found is a developer's words, kept behind What’s Wrong With It (from 2026-10-17, brief 14):
+      // until then the sentence was "That save didn’t pass validation: <the first of them> (and n more)."
       if (!validation.ok) {
-        setError(
-          `That save didn’t pass validation: ${validation.errors[0]}${validation.errors.length > 1 ? ` (and ${validation.errors.length - 1} more)` : ''}.` +
-          `${slots.find((s) => s.slot === slot)?.hasBackup ? ' A backup is available to restore from.' : ''}`,
-        );
+        setError(`The save in Slot ${slot} is damaged, so it can’t be opened.${slots.find((s) => s.slot === slot)?.hasBackup ? ' Its backup can be restored instead: press Restore Backup.' : ''}`);
+        setErrorDetail(validation.errors);
         return;
       }
 
@@ -81,12 +84,20 @@ export function SaveSlots({
         <div className="center" style={{ marginBottom: 'var(--s7)', paddingTop: 'var(--s6)' }}>
           <div style={{ fontSize: 44, marginBottom: 'var(--s3)' }} aria-hidden="true">🎬</div>
           <div className="wordmark" style={{ fontSize: 32 }}>SLATE</div>
-          <p className="muted">Three slots, Three separate lives. Neither of the others knows this one exists.</p>
+          <p className="muted">Three slots, three separate lives. What happens in one never touches the others.</p>
         </div>
 
         {error && (
           <div className="callout callout-negative" style={{ marginBottom: 'var(--s5)' }}>
             {error}
+            {errorDetail.length > 0 && (
+              <details style={{ marginTop: 'var(--s2)' }}>
+                <summary className="xs">What’s Wrong With It</summary>
+                <ul className="xs" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
+                  {errorDetail.map((one) => <li key={one}>{one}</li>)}
+                </ul>
+              </details>
+            )}
           </div>
         )}
 
@@ -101,8 +112,8 @@ export function SaveSlots({
                   <div className="slot-number">Slot {slot}</div>
                   <p className="small dim center" style={{ maxWidth: 220 }}>
                     {info.hasBackup
-                      ? 'Empty, but the save that was here is still kept as a backup.'
-                      : 'An empty universe, waiting for somebody to live in it.'}
+                      ? 'Empty, but a backup of the save that was here is kept.'
+                      : 'An empty slot. Press New Save to start a life here.'}
                   </p>
                   <div className="col gap-2" style={{ alignItems: 'center' }}>
                     <button className="btn btn-primary" onClick={() => onNew(slot)} disabled={working}>
@@ -182,8 +193,8 @@ export function SaveSlots({
                     </div>
 
                     <div className="xs dim">
-                      Version {meta?.appVersion ?? '—'} · Schema {meta?.schemaVersion ?? '—'}
-                      {meta && meta.schemaVersion < SAVE_SCHEMA_VERSION && ' · Updates On Load'}
+                      Version {meta?.appVersion ?? '—'} · Save Format {meta?.schemaVersion ?? '—'}
+                      {meta && meta.schemaVersion < SAVE_SCHEMA_VERSION && ' · Updated When Opened'}
                       {info.bytes !== undefined && ` · ${formatBytes(info.bytes)}`}
                     </div>
                     {info.hasBackup && <BackupNote label={info.backupDateLabel} />}
@@ -212,7 +223,7 @@ export function SaveSlots({
 
         <p className="center dim xs" style={{ marginTop: 'var(--s7)' }}>
           SLATE {APP_VERSION} · Saved To {adapter.name}
-          {adapter.serverAuthoritative ? ' · Server Authoritative For Critical State' : ''}
+          {adapter.serverAuthoritative ? ' · The Server Checks Each Save' : ''}
         </p>
       </div>
 
@@ -224,13 +235,13 @@ export function SaveSlots({
             </div>
             <div className="modal-body">
               <p>
-                This ends that universe. The character, everywhere they have been and everything
-                that happened to them stops existing.
+                This ends that universe. The character, everywhere they’ve been and everything that happened to them
+                is gone from the slot.
               </p>
               <p className="muted small">
                 {restorableAfterDelete(slots.find((s) => s.slot === confirmDelete))
-                  ? 'A backup is kept, so this can be undone from this screen if you change your mind.'
-                  : 'There’s no backup of this slot, so nothing will be left to restore.'}
+                  ? 'A backup is kept, so if you change your mind you can bring it back here with Restore Backup.'
+                  : 'This slot has no backup, so it can’t be brought back afterwards.'}
               </p>
             </div>
             <div className="modal-foot">

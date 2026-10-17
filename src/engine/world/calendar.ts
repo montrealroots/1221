@@ -35,7 +35,7 @@ export interface CalendarLegendEntry {
  * drawn in it. Home, which was rent and bills, is the money's since the home went.
  */
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
-  { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Time that’s yours.' },
+  { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Your own plans, and your birthday, appointments and tax dates.' },
   { category: 'school', label: 'School', colour: '#6b8ca8', description: 'Classes, labs, rehearsal and performance calls, nights on call, the Cabaret and the Summer Cabaret, work-study shifts and paydays, each term’s evaluation, the showcase and Commencement.' },
   { category: 'home', label: 'Money', colour: '#8ca86b', description: 'The card’s statement and payment, a new card’s arrival, and a savings account’s notice.' },
   { category: 'holiday', label: 'Holiday', colour: '#8c8c8c', description: 'Public holidays and observances.' },

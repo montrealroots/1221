@@ -298,7 +298,7 @@ describe('h-school', () => {
     expect(affairs).toContain(`School Arriving, good standing, ${rankOf(sim)} of 16 in the class. Next: Registration And Your Account, August 24, 2026 at 10:00 AM. Yale How This Works`);
     expect(affairs).not.toContain('Your standing is');
     press('Yale');
-    expect(h.went).toEqual([['/workspace/school', 'Your School']]);
+    expect(h.went).toEqual([['/workspace/school', 'School']]);
   });
 
   it('a day in, “Year 1, good standing”, and Next is the next thing booked: “Meeting The Acting Faculty, August 26, 2026 at 10:00 AM.”', () => {
@@ -312,7 +312,7 @@ describe('h-school', () => {
     expect(sim.player.school!.standing).toBe('concern');
     expect(titled(sim, 'A Notice Of Academic Concern')).toHaveLength(1);
     // Classes run nine to three on the class days: at noon on Monday 1 February, Monday's began at nine.
-    const line = `School Year 1, academic concern, ${rankOf(sim)} of 16 in the class. Next: Classes, February 2, 2027 at 9:00 AM. Your standing is academic concern: the School screen says why. Yale How This Works`;
+    const line = `School Year 1, academic concern, ${rankOf(sim)} of 16 in the class. Next: Classes, February 2, 2027 at 9:00 AM. Your standing is academic concern. The School screen says why. Yale How This Works`;
     expect(drawn(sim).affairs).toContain(line);
     expect(drawn(reload(sim)).affairs).toContain(line);
   });
@@ -325,7 +325,7 @@ describe('h-school', () => {
     sim.advanceTo(asked.decideAt + MS_HOUR);
     expect(sim.player.school!.leave!.status).toBe('on');
     const { affairs } = drawn(sim);
-    expect(affairs).toMatch(new RegExp(`School On Leave, [a-z ]+, ${rankOf(sim)} of 16 in the class\\.( Your standing is [a-z ]+: the School screen says why\\.)? Yale How This Works`));
+    expect(affairs).toMatch(new RegExp(`School On Leave, [a-z ]+, ${rankOf(sim)} of 16 in the class\\.( Your standing is [a-z ]+\\. The School screen says why\\.)? Yale How This Works`));
     expect(affairs).not.toContain('Next:');
   });
 
@@ -388,7 +388,7 @@ describe('h-papers', () => {
     const mark = h.buttons.filter((b) => /^Mark \d+ Read$/.test(b.text));
     expect(mark).toHaveLength(1);
     (mark[0]!.props.onClick as () => void)();
-    expect(drawn(sim).text).toContain('No Decisions Waiting A tax return is past its day, unfiled, $174 with its penalty so far.');
+    expect(drawn(sim).text).toContain('No Questions Waiting A tax return is past its due date and unfiled: $174, with its penalty so far.');
   });
 
   it('filed on 1 February with nothing in the bank: “$166 of tax owed” to the due date, nothing accruing before it, and $169 sixty days past it, where the balance last stored reads $168; a reload says the same', () => {
@@ -652,7 +652,7 @@ describe('n-decision-tax', () => {
     expect(paid).toHaveLength(1);
     expect(fromPlayer(sim, paid[0]!)).toBe(-165_60);
     expect(drawn(sim).affairs).toContain('Papers Cover: Yale Health. Papers How This Works');
-    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 0 } }).error).toBe('That’s been done already.');
+    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 0 } }).error).toBe('That question is already settled: it was answered, or its date passed.');
     expect(sim.execute({ kind: 'tax.file', payload: { year: 2026 } }).error).toBe('You’ve filed it. A change is an amended return.');
     const kept = reload(sim);
     kept.advanceTo(DUE + 3 * MS_DAY);
@@ -686,7 +686,7 @@ describe('n-decision-tax', () => {
     expect(troubles(sim, sim.player).filter((t) => t.kind === 'return_late')).toEqual([{ kind: 'return_late', amount: 173_88 }]);
     // The IRS's substitute return is on the calendar for a year past the due date.
     expect(sim.universe.scheduled.filter((i) => i.kind === 'tax.substitute' && i.status === 'pending').map((i) => i.at)).toEqual([DUE + 365 * MS_DAY]);
-    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 0 } }).error).toBe('That’s been done already.');
+    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 0 } }).error).toBe('That question is already settled: it was answered, or its date passed.');
     sim.must({ kind: 'tax.file', payload: { year: 2026 } });
     // Three days' interest at 7% a year compounded daily on $165.60: 9.53 cents, 10.
     const paid = memoed(sim, 'Federal income tax, 2026, with late penalties and interest');
@@ -777,7 +777,7 @@ describe('n-decision-us-status', () => {
     expect(optPermits(sim)[0]).toMatchObject({ status: 'pending', appliedAt: PROGRAM_END + 60_000, readyAt: at(2027, 6, 30, 12, 1) });
     expect(d!.resolvedAt).toBe(PROGRAM_END + 60_000);
     expect(openDecisions(sim).filter((x) => x.refType === 'us-status')).toEqual([]);
-    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 1 } }).error).toBe('That’s been done already.');
+    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: d!.id, actionIndex: 1 } }).error).toBe('That question is already settled: it was answered, or its date passed.');
     expect(sim.execute({ kind: 'documents.apply_opt', payload: {} }).error).toBe('You’ve applied for OPT already.');
     const kept = reload(sim);
     // Past the status's old end, the application pending holds it.

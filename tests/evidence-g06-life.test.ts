@@ -313,7 +313,7 @@ describe('energy', () => {
     expect(sim.player.wellbeing.energy).toBeCloseTo(82 - 3 * 14, 9);
     const evening = howYouAre(sim);
     expect(evening.bars.Energy).toEqual({ shows: 40, tone: 'positive' });
-    expect(evening.text).toContain('Holding up, and no dial is far enough out to be worth naming.');
+    expect(evening.text).toContain('Holding up, with nothing out of the ordinary to worry about.');
     expect(dial(sim, 'energy')).toEqual({ name: 'Energy', says: '40. You’re running down, and it shows in everything else.' });
 
     // On to 8:30 the next morning, kept up an hour at a time: the tank passes fifteen at 82 − 15 = 67 / 3 = 22⅓ hours.

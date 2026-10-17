@@ -13,8 +13,22 @@ import { GameShell } from '@/ui/shell/GameShell';
 import { GameProvider } from './game-context';
 import { createSave, loadPlacesFor, loadSave, refreshMeta, type Simulation } from '@/engine';
 import type { NewSaveConfig } from '@/engine/world/bootstrap';
-import type { SaveAdapter, Slot } from '@/engine/persistence/adapter';
+import { PersistenceError, type SaveAdapter, type Slot } from '@/engine/persistence/adapter';
 import type { SaveUniverse } from '@/engine/domain/model';
+
+/**
+ * Why a new life didn't start: a storage failure in its own words, which say what the slot holds; anything else a fault
+ * before the save was written, so the slot holds nothing new (from 2026-10-17, brief 14: until then both read "That save
+ * couldn’t be created: <the message>").
+ */
+export function startFailure(e: unknown): string {
+  return e instanceof PersistenceError
+    ? `That life couldn’t be saved, so it wasn’t started. ${e.message}`
+    : 'That life couldn’t be started because of an error in the game, so nothing was saved to the slot.';
+}
+
+/** Why a save didn't open, past the slots' own checks: a fault, its message in the console. */
+export const OPEN_FAILURE = 'That save couldn’t be opened because of an error in the game. Restart SLATE to try again, or restore the slot’s backup if it has one.';
 
 type Phase =
   | { kind: 'startup' }
@@ -53,7 +67,10 @@ export function SlateApp() {
       await startup.adapter.save(sim.universe);
       setPhase({ kind: 'playing', adapter: startup.adapter, sim });
     } catch (e) {
-      setError(`That save couldn’t be created: ${(e as Error).message}`);
+      // A storage failure is said in its own words; anything else is a fault, its message for a developer (from
+      // 2026-10-17, brief 14: until then both read "That save couldn’t be created: <the message>").
+      if (!(e instanceof PersistenceError)) console.error(e);
+      setError(startFailure(e));
     }
   }, []);
 
@@ -69,7 +86,8 @@ export function SlateApp() {
       const sim = loadSave(universe);
       setPhase({ kind: 'playing', adapter: startup.adapter, sim });
     } catch (e) {
-      setError(`That save couldn’t be opened: ${(e as Error).message}`);
+      console.error(e);
+      setError(OPEN_FAILURE);
     }
   }, []);
 

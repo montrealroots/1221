@@ -448,10 +448,10 @@ describe('p-identity-buttons', () => {
     expect(h.navigated).toEqual([['/workspace/bank', 'Money'], ['/workspace/papers', 'Papers']]);
     const bank = screenAt(sim, '/workspace/bank');
     expect(bank).toContain('Money, Locked');
-    expect(bank).toContain(`It opens with “${CHAPTERS[index('ui.bank')]!.title}” in the guide`);
+    expect(bank).toContain(`It opens once you read “${CHAPTERS[index('ui.bank')]!.title}” in the guide. ${CHAPTERS[index('ui.bank')]!.lead}`);
     const papers = screenAt(sim, '/workspace/papers');
     expect(papers).toContain('Papers, Locked');
-    expect(papers).toContain(`It opens with “${CHAPTERS[index('ui.papers')]!.title}” in the guide`);
+    expect(papers).toContain(`It opens once you read “${CHAPTERS[index('ui.papers')]!.title}” in the guide. ${CHAPTERS[index('ui.papers')]!.lead}`);
     for (const c of CHAPTERS.slice(profileAt + 1, index('ui.bank') + 1)) sim.must({ kind: 'tutorial.read', payload: { chapterId: c.id } });
     expect(screenAt(sim, '/workspace/bank')).not.toContain('Money, Locked');
     expect(screenAt(sim, '/workspace/papers')).not.toContain('Papers, Locked');
