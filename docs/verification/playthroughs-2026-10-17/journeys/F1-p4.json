@@ -14,21 +14,21 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 17,
+   "secs": 18,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 60,
+   "secs": 63,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 85,
+   "secs": 94,
    "reloads": 12
   },
   {
@@ -519,7 +519,8 @@
     "153 weekly reads, 6 first targets: vocal, imagination, focus, physical, composure, adaptability",
     "all full said in 0 weeks",
     "0 weeks the same words over a move under what's shown",
-    "standing said in 0 weeks (noted where the player practices or tapes)"
+    "standing said in 0 weeks (noted where the player practices or tapes)",
+    "circumstances: a condition named among the five in 0 weeks (none), a preparation in 84"
    ],
    "fails": []
   },
@@ -528,7 +529,7 @@
    "evidence": [
     "daily changes of energy and stamina correlate at 0.07 over 1077 mornings",
     "health events 5: 2026-12-08 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-11-29 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2027-11-29 | 2027-12-27 care urgent: The flu, at urgent care, PhysicianOne Urgent Care (Yale New Haven Health Urgent Care), New Haven; the flu to 2028-01-01 | 2028-10-31 care visit: A doctor’s visit, Yale Health Center, Student Health | 2029-06-24 injury sprain 7 days",
-    "work ill or hurt 0 at undefined, well 367 at 58.5; excused class days by term 0,0,0,0,0,0"
+    "called in sick 0 days; work ill or hurt 0 at undefined, well 367 at 58.5; excused class days by term 0,0,0,0,0,0"
    ],
    "fails": []
   },
@@ -637,6 +638,7 @@
    "Spring Term 2029 Begins": 1,
    "Cast: Shakespeare Repertory Project I": 1
   },
+  "twiceInATerm": [],
   "advice": {
    "weeks": 153,
    "targets": {
@@ -4541,7 +4543,7 @@
    "simulated-rehearsal",
    "working",
    0.552,
-   2,
+   0,
    "advanced",
    "advanced",
    0
@@ -4613,7 +4615,7 @@
    "simulated-rehearsal",
    "working",
    0.614,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4721,7 +4723,7 @@
    "simulated-rehearsal",
    "working",
    0.628,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4781,7 +4783,7 @@
    "simulated-rehearsal",
    "working",
    0.615,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4865,7 +4867,7 @@
    "simulated-rehearsal",
    "working",
    0.637,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4973,7 +4975,7 @@
    "simulated-rehearsal",
    "working",
    0.637,
-   2,
+   0,
    "advanced",
    "advanced",
    0

@@ -14,28 +14,28 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 18,
+   "secs": 21,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 61,
+   "secs": 67,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 92,
+   "secs": 106,
    "reloads": 12
   },
   {
    "part": 4,
    "from": "2029-06-01",
    "to": "2029-08-04",
-   "secs": 3,
+   "secs": 4,
    "reloads": 2
   }
  ],
@@ -517,7 +517,8 @@
     "153 weekly reads, 5 first targets: vocal, imagination, focus, physical, composure",
     "all full said in 0 weeks",
     "15 weeks the same words over a move under what's shown",
-    "standing said in 0 weeks (noted where the player practices or tapes)"
+    "standing said in 0 weeks (noted where the player practices or tapes)",
+    "circumstances: a condition named among the five in 20 weeks (condition:injury, condition:stamina), a preparation in 72"
    ],
    "fails": []
   },
@@ -526,7 +527,7 @@
    "evidence": [
     "daily changes of energy and stamina correlate at 0.06 over 1077 mornings",
     "health events 10: 2027-04-23 injury strain 17 days | 2027-07-27 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-09-04 injury cut 5 days | 2027-10-26 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-02-15 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-02-29 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-05-30 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-12-26 care visit: A doctor’s visit, Yale Health Center, Student Health",
-    "work ill or hurt 6 at 45.3, well 361 at 57.6; excused class days by term 0,0,0,0,0,0"
+    "called in sick 0 days; work ill or hurt 6 at 45.3, well 361 at 57.6; excused class days by term 0,0,0,0,0,0"
    ],
    "fails": []
   },
@@ -634,6 +635,7 @@
    "Spring Term 2029 Begins": 1,
    "Cast: Shakespeare Repertory Project I": 1
   },
+  "twiceInATerm": [],
   "advice": {
    "weeks": 153,
    "targets": {
@@ -5273,7 +5275,7 @@
    "simulated-rehearsal",
    "working",
    0.556,
-   3,
+   0,
    "advanced",
    "advanced",
    0
@@ -5345,7 +5347,7 @@
    "simulated-rehearsal",
    "working",
    0.592,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -5453,7 +5455,7 @@
    "simulated-rehearsal",
    "working",
    0.614,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -5513,7 +5515,7 @@
    "simulated-rehearsal",
    "working",
    0.605,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -5597,7 +5599,7 @@
    "simulated-rehearsal",
    "working",
    0.635,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -5705,7 +5707,7 @@
    "simulated-rehearsal",
    "working",
    0.634,
-   2,
+   0,
    "advanced",
    "advanced",
    0

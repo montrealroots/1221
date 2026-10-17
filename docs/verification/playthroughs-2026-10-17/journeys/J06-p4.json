@@ -14,28 +14,28 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 52,
+   "secs": 50,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 133,
+   "secs": 127,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 184,
+   "secs": 179,
    "reloads": 11
   },
   {
    "part": 4,
    "from": "2029-06-01",
    "to": "2029-08-04",
-   "secs": 26,
+   "secs": 25,
    "reloads": 3
   }
  ],
@@ -514,7 +514,8 @@
     "153 weekly reads, 10 first targets: imagination, focus, vocal, listening, composure, script, adaptability, physical, presence, emotionalDepth",
     "all full said in 0 weeks",
     "0 weeks the same words over a move under what's shown",
-    "standing said in 145 weeks (noted where the player practices or tapes)"
+    "standing said in 145 weeks (noted where the player practices or tapes)",
+    "circumstances: a condition named among the five in 5 weeks (condition:stamina), a preparation in 67"
    ],
    "fails": []
   },
@@ -523,7 +524,7 @@
    "evidence": [
     "daily changes of energy and stamina correlate at 0.04 over 1077 mornings",
     "health events 11: 2027-01-12 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-02-13 injury sprain 9 days | 2027-02-23 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-03-08 the flu to 2027-03-13 | 2027-06-22 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-10-19 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-09-12 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-10-13 care visit: A specialist, referred, Yale Health Center, Student Health",
-    "work ill or hurt 2 at 58.4, well 363 at 64.9; excused class days by term 0,0,0,0,0,0"
+    "called in sick 0 days; work ill or hurt 2 at 58.4, well 363 at 64.9; excused class days by term 0,0,0,0,0,0"
    ],
    "fails": []
   },
@@ -635,6 +636,7 @@
    "Spring Term 2029 Begins": 1,
    "Cast: Shakespeare Repertory Project I": 1
   },
+  "twiceInATerm": [],
   "advice": {
    "weeks": 153,
    "targets": {
@@ -4555,7 +4557,7 @@
    "simulated-rehearsal",
    "working",
    0.589,
-   2,
+   0,
    "advanced",
    "advanced",
    0
@@ -4627,7 +4629,7 @@
    "simulated-rehearsal",
    "working",
    0.631,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4735,7 +4737,7 @@
    "simulated-rehearsal",
    "working",
    0.623,
-   2,
+   0,
    "advanced",
    "advanced",
    0
@@ -4795,7 +4797,7 @@
    "simulated-rehearsal",
    "working",
    0.633,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4879,7 +4881,7 @@
    "simulated-rehearsal",
    "strong",
    0.656,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4987,7 +4989,7 @@
    "simulated-rehearsal",
    "strong",
    0.656,
-   2,
+   0,
    "advanced",
    "advanced",
    0

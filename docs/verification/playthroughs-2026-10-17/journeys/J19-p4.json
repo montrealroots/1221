@@ -14,21 +14,21 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 18,
+   "secs": 19,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 60,
+   "secs": 62,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 87,
+   "secs": 90,
    "reloads": 12
   },
   {
@@ -508,7 +508,8 @@
     "153 weekly reads, 6 first targets: vocal, imagination, focus, composure, physical, adaptability",
     "all full said in 0 weeks",
     "5 weeks the same words over a move under what's shown",
-    "standing said in 0 weeks (noted where the player practices or tapes)"
+    "standing said in 0 weeks (noted where the player practices or tapes)",
+    "circumstances: a condition named among the five in 0 weeks (none), a preparation in 65"
    ],
    "fails": []
   },
@@ -517,7 +518,7 @@
    "evidence": [
     "daily changes of energy and stamina correlate at 0.05 over 1077 mornings",
     "health events 7: 2027-04-20 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-05-21 care visit: A specialist, referred, Yale Health Center, Student Health | 2027-11-23 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-12-21 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-01-11 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-04-24 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2028-04-24 | 2028-12-12 care visit: A doctor’s visit, Yale Health Center, Student Health",
-    "work ill or hurt 0 at undefined, well 365 at 59.9; excused class days by term 0,0,0,1,0,0"
+    "called in sick 0 days; work ill or hurt 0 at undefined, well 365 at 59.9; excused class days by term 0,0,0,1,0,0"
    ],
    "fails": []
   },
@@ -631,6 +632,7 @@
    "Spring Term 2029 Begins": 1,
    "Cast: Shakespeare Repertory Project I": 1
   },
+  "twiceInATerm": [],
   "advice": {
    "weeks": 153,
    "targets": {
@@ -4651,7 +4653,7 @@
    "simulated-rehearsal",
    "working",
    0.572,
-   2,
+   0,
    "advanced",
    "advanced",
    0
@@ -4723,7 +4725,7 @@
    "simulated-rehearsal",
    "working",
    0.628,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4831,7 +4833,7 @@
    "simulated-rehearsal",
    "working",
    0.643,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4891,7 +4893,7 @@
    "simulated-rehearsal",
    "working",
    0.611,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4975,7 +4977,7 @@
    "simulated-rehearsal",
    "working",
    0.645,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -5083,7 +5085,7 @@
    "simulated-rehearsal",
    "working",
    0.641,
-   2,
+   0,
    "advanced",
    "advanced",
    0

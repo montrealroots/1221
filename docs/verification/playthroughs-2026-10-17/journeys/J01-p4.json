@@ -21,14 +21,14 @@
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 60,
+   "secs": 58,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 83,
+   "secs": 86,
    "reloads": 12
   },
   {
@@ -513,7 +513,8 @@
     "153 weekly reads, 5 first targets: imagination, physical, focus, vocal, composure",
     "all full said in 0 weeks",
     "6 weeks the same words over a move under what's shown",
-    "standing said in 0 weeks (noted where the player practices or tapes)"
+    "standing said in 0 weeks (noted where the player practices or tapes)",
+    "circumstances: a condition named among the five in 22 weeks (condition:injury, condition:stamina), a preparation in 58"
    ],
    "fails": []
   },
@@ -522,7 +523,7 @@
    "evidence": [
     "daily changes of energy and stamina correlate at 0.06 over 1077 mornings",
     "health events 6: 2026-10-13 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-04-29 injury sprain 8 days | 2027-10-11 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2027-10-11 | 2027-10-19 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-06-06 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-10-18 injury strain 19 days",
-    "work ill or hurt 13 at 38.2, well 352 at 60.7; excused class days by term 0,0,0,0,0,0"
+    "called in sick 0 days; work ill or hurt 13 at 38.2, well 352 at 60.7; excused class days by term 0,0,0,0,0,0"
    ],
    "fails": []
   },
@@ -638,6 +639,7 @@
    "Spring Term 2029 Begins": 1,
    "Cast: Shakespeare Repertory Project I": 1
   },
+  "twiceInATerm": [],
   "advice": {
    "weeks": 153,
    "targets": {
@@ -4433,7 +4435,7 @@
    "simulated-rehearsal",
    "working",
    0.567,
-   2,
+   0,
    "advanced",
    "advanced",
    0
@@ -4505,7 +4507,7 @@
    "simulated-rehearsal",
    "working",
    0.618,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4613,7 +4615,7 @@
    "simulated-rehearsal",
    "working",
    0.625,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4673,7 +4675,7 @@
    "simulated-rehearsal",
    "working",
    0.643,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4757,7 +4759,7 @@
    "simulated-rehearsal",
    "working",
    0.625,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4865,7 +4867,7 @@
    "simulated-rehearsal",
    "working",
    0.612,
-   3,
+   0,
    "advanced",
    "advanced",
    0

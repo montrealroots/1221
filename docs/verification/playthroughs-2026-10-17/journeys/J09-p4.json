@@ -14,29 +14,29 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 50,
+   "secs": 58,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 123,
+   "secs": 130,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 162,
+   "secs": 166,
    "reloads": 11
   },
   {
    "part": 4,
    "from": "2029-06-01",
    "to": "2029-08-04",
-   "secs": 30,
-   "reloads": 2
+   "secs": 31,
+   "reloads": 3
   }
  ],
  "creation": {
@@ -190,14 +190,14 @@
    "unsized": 1
   },
   "abilities": {
-   "emotionalDepth": 80.5,
+   "emotionalDepth": 80.2,
    "presence": 67,
    "listening": 85,
    "imagination": 97.3,
-   "focus": 98.1,
-   "memory": 70.5,
-   "adaptability": 71.7,
-   "composure": 70.6,
+   "focus": 98,
+   "memory": 70.6,
+   "adaptability": 71.8,
+   "composure": 70.7,
    "vocal": 98.7,
    "physical": 77.4,
    "discipline": 100,
@@ -220,8 +220,8 @@
   "replays": [
    {
     "what": "Two Contrasting Monologues",
-    "own": 72.46,
-    "atStart": 61.15,
+    "own": 72.51,
+    "atStart": 61.11,
     "rose": [
      "emotionalDepth",
      "adaptability",
@@ -238,11 +238,11 @@
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 73.26
+    "fallsUndone": 73.31
    },
    {
     "what": "Your Showcase Scene",
-    "own": 74.86,
+    "own": 74.85,
     "atStart": 59.29,
     "rose": [
      "emotionalDepth",
@@ -282,11 +282,11 @@
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 75.96
+    "fallsUndone": 75.95
    },
    {
     "what": "Directions In Daily Life",
-    "own": 78.44,
+    "own": 78.43,
     "atStart": 66.3,
     "rose": [
      "physical",
@@ -301,7 +301,7 @@
    },
    {
     "what": "Sound Changes And A Text",
-    "own": 87.19,
+    "own": 87.18,
     "atStart": 68.68,
     "rose": [
      "vocal",
@@ -332,7 +332,7 @@
    },
    {
     "what": "A Movement Score",
-    "own": 76.4,
+    "own": 76.39,
     "atStart": 66.42,
     "rose": [
      "physical",
@@ -347,8 +347,8 @@
    },
    {
     "what": "A Self-Tape",
-    "own": 78.52,
-    "atStart": 66.18,
+    "own": 78.4,
+    "atStart": 66.08,
     "rose": [
      "emotionalDepth",
      "adaptability",
@@ -361,12 +361,12 @@
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 78.83
+    "fallsUndone": 78.71
    },
    {
     "what": "A Self-Tape",
-    "own": 77.79,
-    "atStart": 65.06,
+    "own": 77.78,
+    "atStart": 65.07,
     "rose": [
      "emotionalDepth",
      "adaptability",
@@ -380,7 +380,7 @@
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 78.48
+    "fallsUndone": 78.47
    },
    {
     "what": "A Voice Sequence",
@@ -399,8 +399,8 @@
    },
    {
     "what": "Two Contrasting Monologues",
-    "own": 72.7,
-    "atStart": 60.79,
+    "own": 72.72,
+    "atStart": 60.83,
     "rose": [
      "emotionalDepth",
      "adaptability",
@@ -417,12 +417,12 @@
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 73.64
+    "fallsUndone": 73.66
    },
    {
     "what": "Your Showcase Scene",
-    "own": 72.09,
-    "atStart": 59.03,
+    "own": 74.21,
+    "atStart": 60.84,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -439,7 +439,7 @@
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 72.47
+    "fallsUndone": 74.6
    }
   ],
   "keptReplayed": 160,
@@ -493,8 +493,8 @@
    "speedUnknown": 1
   },
   "firstLimits": {
-   "ability": 288,
-   "preparation": 49,
+   "ability": 287,
+   "preparation": 50,
    "technique": 14,
    "condition": 13
   },
@@ -534,7 +534,7 @@
    "pass": true,
    "evidence": [
     "275 showings, each with its record; 79 with table work answered; 0 with a way of playing",
-    "6 terms' last pieces judged again: 24.3 < 68.7 ≤ 68.7; 25.7 < 73.5 ≤ 73.5; 25.3 < 66.8 ≤ 71.5; 28.6 < 78.3 ≤ 81.8; 27.6 < 78.5 ≤ 78.5; 26.5 < 72.1 ≤ 75.2",
+    "6 terms' last pieces judged again: 24.3 < 68.7 ≤ 68.7; 25.7 < 73.5 ≤ 73.5; 25.3 < 66.8 ≤ 71.5; 28.6 < 78.3 ≤ 81.8; 27.6 < 78.5 ≤ 78.5; 26.5 < 74.2 ≤ 75.2",
     "class days attended over the reviews 396; calls on the calendar kept 50, missed 6"
    ],
    "fails": []
@@ -542,10 +542,10 @@
   "3 development": {
    "pass": true,
    "evidence": [
-    "abilities emotionalDepth 63.9→80.5, presence 63.9→67, listening 63.9→85, imagination 63.9→97.3, focus 63.9→98.1, memory 63.9→70.5, adaptability 63.9→71.7, composure 63.9→70.6, vocal 63.9→98.7, physical 63.9→77.4, discipline 63.9→100, stamina 50→35",
-    "last pieces at their own levels, then with what rose put back: 72.46/61.15 74.86/59.29 74.88/59.29 78.44/66.3 87.19/68.68 83.48/69.96 76.4/66.42 78.52/66.18 77.79/65.06 89.9/69.06 72.7/60.79 72.09/59.03",
-    "with what fell put back up: 72.46→73.26 (stamina) 74.86→75.93 (stamina) 74.88→75.96 (stamina) 78.44→81.86 (stamina) 87.19→89.12 (stamina) 83.48→84.95 (stamina) 76.4→79.48 (stamina) 78.52→78.83 (stamina) 77.79→78.48 (stamina) 89.9→91.84 (stamina) 72.7→73.64 (stamina) 72.09→72.47 (stamina)",
-    "first limits short of mastery: {\"ability\":288,\"preparation\":49,\"technique\":14,\"condition\":13}",
+    "abilities emotionalDepth 63.9→80.2, presence 63.9→67, listening 63.9→85, imagination 63.9→97.3, focus 63.9→98, memory 63.9→70.6, adaptability 63.9→71.8, composure 63.9→70.7, vocal 63.9→98.7, physical 63.9→77.4, discipline 63.9→100, stamina 50→35",
+    "last pieces at their own levels, then with what rose put back: 72.51/61.11 74.85/59.29 74.88/59.29 78.43/66.3 87.18/68.68 83.48/69.96 76.39/66.42 78.4/66.08 77.78/65.07 89.9/69.06 72.72/60.83 74.21/60.84",
+    "with what fell put back up: 72.51→73.31 (stamina) 74.85→75.93 (stamina) 74.88→75.95 (stamina) 78.43→81.86 (stamina) 87.18→89.12 (stamina) 83.48→84.95 (stamina) 76.39→79.48 (stamina) 78.4→78.71 (stamina) 77.78→78.47 (stamina) 89.9→91.84 (stamina) 72.72→73.66 (stamina) 74.21→74.6 (stamina)",
+    "first limits short of mastery: {\"ability\":287,\"preparation\":50,\"technique\":14,\"condition\":13}",
     "genres known 8; drama speed 1.09, unmet absurdist 1",
     "fell: stamina 50→35 (stamina falls unworked: `settleTheBody`)"
    ],
@@ -557,7 +557,8 @@
     "153 weekly reads, 10 first targets: vocal, imagination, focus, script, presence, physical, listening, adaptability, emotionalDepth, composure",
     "all full said in 0 weeks",
     "1 weeks the same words over a move under what's shown",
-    "standing said in 146 weeks (noted where the player practices or tapes)"
+    "standing said in 146 weeks (noted where the player practices or tapes)",
+    "circumstances: a condition named among the five in 35 weeks (condition:stamina), a preparation in 81"
    ],
    "fails": []
   },
@@ -566,14 +567,14 @@
    "evidence": [
     "daily changes of energy and stamina correlate at 0.07 over 1077 mornings",
     "health events 5: 2026-09-29 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-05-04 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-09-13 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2027-09-13 | 2028-04-03 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2028-04-03 | 2029-01-09 injury concussion 14 days",
-    "work ill or hurt 0 at undefined, well 364 at 69.9; excused class days by term 0,0,1,1,0,6"
+    "called in sick 0 days; work ill or hurt 0 at undefined, well 364 at 70; excused class days by term 0,0,1,1,0,6"
    ],
    "fails": []
   },
   "6 money": {
    "pass": true,
    "evidence": [
-    "34 reloads with the ledger balanced and no breach; at the end audit 0, breaches 0",
+    "35 reloads with the ledger balanced and no breach; at the end audit 0, breaches 0",
     "memos: Living-expense scholarship, the fall term of 2026: David Gef ×1; Living-expense scholarship, the spring term of 2027: David G ×1; Living-expense scholarship, the fall term of 2027: David Gef ×1; Living-expense scholarship, the spring term of 2028: David G ×1; Living-expense scholarship, the fall term of 2028: David Gef ×1; Living-expense scholarship, the spring term of 2029: David G ×1",
     "holds 0, lifted 0; owed at the end 0; bank 132641"
    ],
@@ -609,7 +610,7 @@
   "10 save and reload": {
    "pass": true,
    "evidence": [
-    "37 reloads (every thirty days and at each part), every one the same to the byte: true",
+    "38 reloads (every thirty days and at each part), every one the same to the byte: true",
     "160 kept results replayed from their inputs, 0 different"
    ],
    "fails": []
@@ -659,13 +660,12 @@
    "The Summer Is Yours": 1,
    "Marcus: An Apology": 1,
    "Ran Lines With Julian": 1,
-   "Shown: A Voice Sequence, Exceptional": 5,
+   "Shown: A Voice Sequence, Exceptional": 6,
    "Shown: Sound Changes And A Text, Exceptional": 5,
-   "Caleb Knows You’re Ill": 2,
    "Daniel: An Apology": 1,
-   "Shown: A Self-Tape, Strong": 4,
-   "Shown: Two Contrasting Monologues, Strong": 2,
+   "Shown: A Self-Tape, Strong": 2,
    "Shown: Your Showcase Scene, Strong": 2,
+   "Shown: Two Contrasting Monologues, Strong": 2,
    "Shown: A Song Worked Through, Exceptional": 1
   },
   "sameWordsTwice": [
@@ -687,6 +687,7 @@
    "Spring Term 2029 Begins": 1,
    "Cast: Shakespeare Repertory Project I": 1
   },
+  "twiceInATerm": [],
   "advice": {
    "weeks": 153,
    "targets": {
@@ -695,12 +696,12 @@
     "imagination": 22,
     "focus": 33,
     "script": 3,
-    "presence": 5,
+    "presence": 6,
     "physical": 10,
     "listening": 17,
     "adaptability": 12,
     "emotionalDepth": 9,
-    "composure": 2
+    "composure": 1
    },
    "longRuns": [
     {
@@ -758,7 +759,7 @@
      "stripped": 11
     }
    ],
-   "runs": 64,
+   "runs": 65,
    "staleRuns": 0,
    "wordsOnlyChanges": 49
   },
@@ -767,13 +768,13 @@
    "recurring": 28,
    "recurringOnAPartNotShort": [],
    "kinds": {
-    "advanced": 239,
+    "advanced": 238,
     "new": 4,
     "recurring": 28,
-    "partial": 4
+    "partial": 5
    },
    "longestSameNote": {
-    "run": 24,
+    "run": 31,
     "best": 48,
     "what": "advanced"
    }
@@ -790,21 +791,21 @@
    "sceneShowings": 81,
    "scenesAgain": 17,
    "exercises": {
-    "sense-memory": 108,
+    "sense-memory": 105,
     "showing-for-classmates": 13,
     "repetition": 211,
     "given-circumstances": 522,
     "concentration": 524,
     "recall-drill": 2,
-    "adjustments": 53,
-    "graded-exposure": 8,
+    "adjustments": 55,
+    "graded-exposure": 9,
     "voice-work": 503,
     "movement-work": 89,
     "script-analysis": 30
    },
    "longestSameExercise": 432
   },
-  "interpretations": 55
+  "interpretations": 56
  },
  "standings": [
   {
@@ -812,7 +813,7 @@
    "standing": "good"
   },
   {
-   "at": "2029-05-21T14:05",
+   "at": "2029-05-21T14:30",
    "standing": "graduated"
   }
  ],
@@ -972,11 +973,11 @@
    },
    "prepReplay": {
     "piece": "assignment_00007n",
-    "kept": 72.1,
-    "again": 72.1,
-    "none": 26.52383526283917,
-    "full": 75.16442058654276,
-    "exact": 72.05001089508687
+    "kept": 74.2,
+    "again": 74.2,
+    "none": 26.522741705653104,
+    "full": 75.15913112765716,
+    "exact": 74.1825426724501
    }
   }
  ],
@@ -1663,13 +1664,13 @@
    "chosen": "not a chooser"
   }
  ],
- "interpretationsSeen": 55,
+ "interpretationsSeen": 56,
  "reloads": {
-  "n": 37,
+  "n": 38,
   "notSame": []
  },
  "ledger": {
-  "n": 34,
+  "n": 35,
   "bad": []
  },
  "notices": [
@@ -3702,10 +3703,6 @@
    "Taming The Cyclops: A Self-Tape"
   ],
   [
-   "2029-01-21",
-   "Caleb Knows You’re Ill"
-  ],
-  [
    "2029-01-24",
    "Still There: Time On Its Feet"
   ],
@@ -3752,6 +3749,10 @@
   [
    "2029-02-04",
    "Ran Lines With Mateo"
+  ],
+  [
+   "2029-02-06",
+   "Still There: Work With Your Partner"
   ],
   [
    "2029-02-07",
@@ -3843,10 +3844,6 @@
   ],
   [
    "2029-03-02",
-   "Still There: Time On Its Feet"
-  ],
-  [
-   "2029-03-02",
    "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
   ],
   [
@@ -3934,6 +3931,10 @@
    "Hannah: A Different Reading"
   ],
   [
+   "2029-04-09",
+   "Hannah Didn’t Come"
+  ],
+  [
    "2029-04-17",
    "Actor Showcase: Your Showcase Scene"
   ],
@@ -3949,10 +3950,6 @@
   [
    "2029-04-20",
    "Your Card Limit Went Up"
-  ],
-  [
-   "2029-04-23",
-   "Julian Didn’t Come"
   ],
   [
    "2029-04-25",
@@ -4003,7 +4000,7 @@
    "You’re uncovered from August 1, 2029. You have 60 days to enroll in the marketplace."
   ]
  ],
- "shownNotices": 173,
+ "shownNotices": 174,
  "showings": [
   [
    "assignment_000001",
@@ -4576,7 +4573,7 @@
    "simulated-rehearsal",
    "strong",
    0.66,
-   2,
+   0,
    "advanced",
    "advanced",
    0
@@ -4648,7 +4645,7 @@
    "simulated-rehearsal",
    "strong",
    0.703,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4756,7 +4753,7 @@
    "simulated-rehearsal",
    "strong",
    0.722,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4816,7 +4813,7 @@
    "simulated-rehearsal",
    "strong",
    0.708,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4900,7 +4897,7 @@
    "simulated-rehearsal",
    "strong",
    0.731,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -5008,7 +5005,7 @@
    "simulated-rehearsal",
    "strong",
    0.735,
-   2,
+   0,
    "advanced",
    "advanced",
    0
@@ -6758,8 +6755,8 @@
    5,
    "DRAM 793b",
    "showcase-scene",
-   "unready",
-   0.448,
+   "working",
+   0.557,
    2,
    "recurring",
    "dim:rehearsal",
@@ -6783,7 +6780,7 @@
    "DRAM 323a/b",
    "speech-drill",
    "exceptional",
-   0.874,
+   0.87,
    1,
    "advanced",
    "advanced",
@@ -6818,11 +6815,11 @@
    5,
    "DRAM 793b",
    "showcase-scene",
-   "strong",
-   0.658,
+   "working",
+   0.621,
    1,
-   "advanced",
-   "advanced",
+   "recurring",
+   "dim:partner",
    0
   ],
   [
@@ -6831,7 +6828,7 @@
    "DRAM 463a/b",
    "self-tape",
    "strong",
-   0.76,
+   0.759,
    0,
    "advanced",
    "advanced",
@@ -6855,7 +6852,7 @@
    "DRAM 343a/b",
    "alexander-practice",
    "strong",
-   0.702,
+   0.73,
    1,
    "advanced",
    "advanced",
@@ -6867,7 +6864,7 @@
    "DRAM 313a/b",
    "voice-sequence",
    "exceptional",
-   0.809,
+   0.844,
    1,
    "advanced",
    "advanced",
@@ -6879,7 +6876,7 @@
    "DRAM 423a/b",
    "song",
    "strong",
-   0.767,
+   0.768,
    1,
    "advanced",
    "advanced",
@@ -6891,7 +6888,7 @@
    "DRAM 323a/b",
    "speech-drill",
    "strong",
-   0.726,
+   0.727,
    1,
    "advanced",
    "advanced",
@@ -6927,10 +6924,10 @@
    "DRAM 793b",
    "showcase-scene",
    "strong",
-   0.716,
+   0.717,
    1,
-   "advanced",
-   "advanced",
+   "partial",
+   "dim:partner",
    0
   ],
   [
@@ -6999,7 +6996,7 @@
    "DRAM 473b",
    "self-tape",
    "strong",
-   0.766,
+   0.764,
    0,
    "advanced",
    "advanced",
@@ -7010,11 +7007,11 @@
    5,
    "DRAM 743b",
    "audition-pair",
-   "working",
-   0.619,
+   "strong",
+   0.721,
    1,
-   "recurring",
-   "dim:rehearsal",
+   "advanced",
+   "advanced",
    0
   ],
   [
@@ -7095,7 +7092,7 @@
    "DRAM 743b",
    "audition-pair",
    "strong",
-   0.741,
+   0.742,
    0,
    "advanced",
    "advanced",
@@ -7239,7 +7236,7 @@
    "DRAM 463a/b",
    "self-tape",
    "strong",
-   0.784,
+   0.782,
    0,
    "advanced",
    "advanced",
@@ -7275,7 +7272,7 @@
    "DRAM 313a/b",
    "voice-sequence",
    "exceptional",
-   0.892,
+   0.891,
    0,
    "advanced",
    "advanced",
@@ -7299,7 +7296,7 @@
    "DRAM 793b",
    "showcase-scene",
    "strong",
-   0.721,
+   0.742,
    1,
    "advanced",
    "advanced",
@@ -7343,11 +7340,11 @@
   "2028 fall movement: 5 @ 63.5",
   "2028 fall song: 3 @ 64.6",
   "2028 fall performance: 8 @ 69.5",
-  "2029 spring scene: 15 @ 69.9",
-  "2029 spring voice: 12 @ 86.5",
-  "2029 spring movement: 9 @ 76.6",
-  "2029 spring audition: 6 @ 67.6",
-  "2029 spring performance: 2 @ 69.9",
+  "2029 spring scene: 15 @ 70.6",
+  "2029 spring voice: 12 @ 86.7",
+  "2029 spring movement: 9 @ 76.9",
+  "2029 spring audition: 6 @ 69.4",
+  "2029 spring performance: 2 @ 70",
   "2029 spring camera: 8 @ 76.5",
   "2029 spring song: 3 @ 80.9"
  ],
@@ -8366,7 +8363,7 @@
    70.86,
    0.15,
    1,
-   "prep:rehearsal prep:partner adaptability 0.15 emotionalDepth 0.14 listening 0.13"
+   "prep:rehearsal adaptability 0.15 emotionalDepth 0.14 listening 0.13 composure 0.12"
   ],
   [
    "2029-02-04",
@@ -8374,15 +8371,15 @@
    69.61,
    0.17,
    1,
-   "prep:rehearsal prep:partner composure 0.17 vocal 0.16 imagination 0.13"
+   "prep:rehearsal composure 0.17 vocal 0.16 imagination 0.13 focus 0.13"
   ],
   [
    "2029-02-11",
-   "emotionalDepth",
-   75.37,
-   0.32,
+   "presence",
+   66.98,
+   0.34,
    1,
-   "prep:rehearsal condition:stamina prep:partner emotionalDepth 0.32 presence 0.29"
+   "prep:rehearsal condition:stamina prep:partner presence 0.34 emotionalDepth 0.32"
   ],
   [
    "2029-02-18",
@@ -8390,7 +8387,7 @@
    75.38,
    0.18,
    1,
-   "prep:rehearsal emotionalDepth 0.18 focus 0.15 vocal 0.14 imagination 0.13"
+   "prep:rehearsal emotionalDepth 0.18 focus 0.16 vocal 0.14 presence 0.14"
   ],
   [
    "2029-02-25",
@@ -8404,25 +8401,25 @@
    "2029-03-04",
    "emotionalDepth",
    75.4,
-   0.28,
+   0.27,
    1,
-   "prep:rehearsal emotionalDepth 0.28 composure 0.23 focus 0.17 imagination 0.17"
+   "emotionalDepth 0.27 focus 0.17 imagination 0.17 composure 0.14 listening 0.12"
   ],
   [
    "2029-03-11",
    "emotionalDepth",
    75.4,
-   0.28,
+   0.27,
    1,
-   "prep:rehearsal emotionalDepth 0.28 composure 0.23 focus 0.17 imagination 0.17"
+   "emotionalDepth 0.27 focus 0.17 imagination 0.17 composure 0.14 listening 0.12"
   ],
   [
    "2029-03-18",
    "emotionalDepth",
    76.48,
-   0.28,
+   0.27,
    1,
-   "prep:rehearsal emotionalDepth 0.28 composure 0.22 imagination 0.18 focus 0.16"
+   "emotionalDepth 0.27 imagination 0.18 focus 0.16 listening 0.16 composure 0.14"
   ],
   [
    "2029-03-25",
@@ -8430,15 +8427,15 @@
    77.14,
    0.2,
    1,
-   "physical 0.2 emotionalDepth 0.19 imagination 0.15 composure 0.14 focus 0.14"
+   "physical 0.2 emotionalDepth 0.18 imagination 0.15 focus 0.14 dance 0.12"
   ],
   [
    "2029-04-01",
-   "composure",
-   69.94,
+   "emotionalDepth",
+   77.1,
    0.21,
    1,
-   "condition:stamina composure 0.21 emotionalDepth 0.2 focus 0.17 imagination 0.14"
+   "condition:stamina emotionalDepth 0.21 composure 0.2 focus 0.17 imagination 0.14"
   ],
   [
    "2029-04-08",
@@ -8459,31 +8456,31 @@
   [
    "2029-04-22",
    "focus",
-   79.46,
+   79.42,
    0.23,
    1,
-   "focus 0.23 emotionalDepth 0.19 physical 0.14 imagination 0.14 screen 0.12"
+   "focus 0.23 emotionalDepth 0.18 physical 0.14 imagination 0.14 screen 0.12"
   ],
   [
    "2029-04-29",
    "focus",
-   80.88,
+   80.85,
    0.23,
    1,
-   "focus 0.23 composure 0.2 adaptability 0.18 emotionalDepth 0.17 imagination 0.14"
+   "focus 0.23 composure 0.2 adaptability 0.19 emotionalDepth 0.17 imagination 0.14"
   ],
   [
    "2029-05-06",
    "focus",
-   82.36,
+   82.33,
    0.23,
    1,
-   "focus 0.23 composure 0.2 adaptability 0.18 emotionalDepth 0.17 imagination 0.14"
+   "focus 0.23 composure 0.2 adaptability 0.19 emotionalDepth 0.17 imagination 0.14"
   ],
   [
    "2029-05-13",
    "focus",
-   83.85,
+   83.81,
    0.23,
    1,
    "focus 0.23 composure 0.2 adaptability 0.19 emotionalDepth 0.17 imagination 0.14"
@@ -8491,15 +8488,15 @@
   [
    "2029-05-20",
    "focus",
-   85.33,
+   85.3,
    0.22,
    1,
-   "focus 0.22 composure 0.2 adaptability 0.19 emotionalDepth 0.18 imagination 0.14"
+   "focus 0.22 composure 0.2 adaptability 0.19 emotionalDepth 0.17 imagination 0.14"
   ],
   [
    "2029-05-27",
    "focus",
-   86.83,
+   86.8,
    0.21,
    1,
    "focus 0.21 composure 0.2 adaptability 0.19 emotionalDepth 0.18 imagination 0.14"
@@ -8507,7 +8504,7 @@
   [
    "2029-06-03",
    "focus",
-   88.32,
+   88.29,
    0.21,
    1,
    "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.19 imagination 0.14"
@@ -8515,55 +8512,55 @@
   [
    "2029-06-10",
    "focus",
-   89.8,
+   89.77,
    0.21,
    1,
-   "focus 0.21 composure 0.2 emotionalDepth 0.2 adaptability 0.2 imagination 0.14"
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.2 imagination 0.14"
   ],
   [
    "2029-06-17",
    "focus",
-   91.29,
+   91.25,
    0.21,
    1,
-   "focus 0.21 composure 0.2 emotionalDepth 0.2 adaptability 0.2 imagination 0.14"
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.2 imagination 0.14"
   ],
   [
    "2029-06-24",
    "focus",
-   92.77,
+   92.74,
    0.21,
    1,
-   "focus 0.21 composure 0.2 emotionalDepth 0.2 adaptability 0.2 imagination 0.14"
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.2 imagination 0.14"
   ],
   [
    "2029-07-01",
    "focus",
-   94.25,
+   94.22,
    0.21,
    1,
-   "focus 0.21 composure 0.2 emotionalDepth 0.2 adaptability 0.2 imagination 0.14"
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.2 imagination 0.14"
   ],
   [
    "2029-07-08",
    "focus",
-   95.74,
+   95.7,
    0.21,
    1,
-   "focus 0.21 composure 0.2 emotionalDepth 0.2 adaptability 0.2 imagination 0.14"
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.2 imagination 0.14"
   ],
   [
    "2029-07-15",
    "focus",
-   97.22,
+   97.19,
    0.21,
    1,
-   "focus 0.21 composure 0.2 emotionalDepth 0.2 adaptability 0.2 imagination 0.14"
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.2 imagination 0.14"
   ],
   [
    "2029-07-22",
    "emotionalDepth",
-   77.94,
+   77.64,
    0.2,
    1,
    "emotionalDepth 0.2 adaptability 0.19 composure 0.19 focus 0.19 imagination 0.14"
@@ -8571,10 +8568,10 @@
   [
    "2029-07-29",
    "emotionalDepth",
-   79.36,
+   79.08,
    0.19,
    1,
-   "emotionalDepth 0.19 adaptability 0.19 composure 0.19 focus 0.19 imagination 0.14"
+   "emotionalDepth 0.19 adaptability 0.19 focus 0.19 composure 0.19 imagination 0.14"
   ]
  ],
  "monthly": [
@@ -9810,7 +9807,7 @@
     "listening": 85,
     "imagination": 97.3,
     "focus": 81.3,
-    "memory": 70.5,
+    "memory": 70.6,
     "adaptability": 70.9,
     "composure": 69.9,
     "vocal": 98.7,
@@ -9847,8 +9844,8 @@
     "presence": 67,
     "listening": 85,
     "imagination": 97.3,
-    "focus": 87.9,
-    "memory": 70.5,
+    "focus": 87.8,
+    "memory": 70.6,
     "adaptability": 70.9,
     "composure": 69.9,
     "vocal": 98.7,
@@ -9885,8 +9882,8 @@
     "presence": 67,
     "listening": 85,
     "imagination": 97.3,
-    "focus": 94.3,
-    "memory": 70.5,
+    "focus": 94.2,
+    "memory": 70.6,
     "adaptability": 70.9,
     "composure": 69.9,
     "vocal": 98.7,
@@ -9919,14 +9916,14 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 79.9,
+    "emotionalDepth": 79.7,
     "presence": 67,
     "listening": 85,
     "imagination": 97.3,
     "focus": 98,
-    "memory": 70.5,
-    "adaptability": 71.4,
-    "composure": 70.5,
+    "memory": 70.6,
+    "adaptability": 71.7,
+    "composure": 70.6,
     "vocal": 98.7,
     "physical": 77.4,
     "discipline": 100,
@@ -10078,26 +10075,25 @@
    "concentration": 120
   },
   "2029-07": {
-   "concentration": 68,
-   "graded-exposure": 4,
-   "sense-memory": 48,
-   "adjustments": 4
+   "concentration": 69,
+   "graded-exposure": 5,
+   "adjustments": 7,
+   "sense-memory": 43
   },
   "2029-08": {
-   "sense-memory": 8,
-   "adjustments": 2,
-   "graded-exposure": 1,
-   "concentration": 1
+   "sense-memory": 10,
+   "adjustments": 1,
+   "graded-exposure": 1
   }
  },
  "commands": {
   "practice.exercise": 2063,
   "life.sleep": 1076,
-  "school.prepare": 3945,
+  "school.prepare": 3952,
   "school.choose": 395,
-  "school.ask_partner": 1325,
+  "school.ask_partner": 1339,
   "school.read_feedback": 57,
-  "school.choose refused": 2155,
+  "school.choose refused": 2145,
   "school.answer_partner refused": 43,
   "school.respond": 75,
   "school.respond refused": 12,

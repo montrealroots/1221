@@ -28,7 +28,7 @@
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 84,
+   "secs": 80,
    "reloads": 12
   },
   {
@@ -549,7 +549,8 @@
     "153 weekly reads, 6 first targets: vocal, imagination, focus, physical, presence, composure",
     "all full said in 0 weeks",
     "0 weeks the same words over a move under what's shown",
-    "standing said in 0 weeks (noted where the player practices or tapes)"
+    "standing said in 0 weeks (noted where the player practices or tapes)",
+    "circumstances: a condition named among the five in 0 weeks (none), a preparation in 30"
    ],
    "fails": []
   },
@@ -558,7 +559,7 @@
    "evidence": [
     "daily changes of energy and stamina correlate at 0.05 over 1077 mornings",
     "health events 10: 2027-09-07 care visit: A review of your high blood pressure, Yale Health Center, Student Health | 2027-10-08 care visit: A specialist, referred, Yale Health Center, Student Health | 2027-11-23 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-12-28 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-09-12 care visit: A review of your high blood pressure, Yale Health Center, Student Health | 2028-10-02 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2028-10-02 | 2028-10-16 in hospital to 2028-10-16 | 2029-01-15 care urgent: The flu, at urgent care, PhysicianOne Urgent Care (Yale New Haven Health Urgent Care), New Haven; the flu to 2029-01-20",
-    "work ill or hurt 1 at 50.1, well 359 at 52.5; excused class days by term 0,0,0,0,2,1"
+    "called in sick 0 days; work ill or hurt 1 at 50.1, well 359 at 52.5; excused class days by term 0,0,0,0,2,1"
    ],
    "fails": []
   },
@@ -655,6 +656,7 @@
    "Spring Term 2029 Begins": 1,
    "Cast: Shakespeare Repertory Project II": 1
   },
+  "twiceInATerm": [],
   "advice": {
    "weeks": 153,
    "targets": {
@@ -4996,7 +4998,7 @@
    "simulated-rehearsal",
    "unready",
    0.47,
-   2,
+   0,
    "recurring",
    "skill",
    0
@@ -5068,7 +5070,7 @@
    "simulated-rehearsal",
    "working",
    0.528,
-   1,
+   0,
    "recurring",
    "skill",
    0
@@ -5176,7 +5178,7 @@
    "simulated-rehearsal",
    "working",
    0.538,
-   1,
+   0,
    "recurring",
    "skill",
    0
@@ -5236,7 +5238,7 @@
    "simulated-rehearsal",
    "working",
    0.547,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -5320,7 +5322,7 @@
    "simulated-rehearsal",
    "working",
    0.552,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -5428,7 +5430,7 @@
    "simulated-rehearsal",
    "working",
    0.551,
-   2,
+   0,
    "advanced",
    "advanced",
    0

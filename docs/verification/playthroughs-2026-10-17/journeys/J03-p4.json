@@ -14,28 +14,28 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 49,
+   "secs": 53,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 129,
+   "secs": 135,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 173,
+   "secs": 185,
    "reloads": 12
   },
   {
    "part": 4,
    "from": "2029-06-01",
    "to": "2029-08-04",
-   "secs": 33,
+   "secs": 34,
    "reloads": 2
   }
  ],
@@ -521,7 +521,8 @@
     "153 weekly reads, 10 first targets: vocal, focus, imagination, script, listening, adaptability, physical, composure, clown, emotionalDepth",
     "all full said in 0 weeks",
     "1 weeks the same words over a move under what's shown",
-    "standing said in 145 weeks (noted where the player practices or tapes)"
+    "standing said in 145 weeks (noted where the player practices or tapes)",
+    "circumstances: a condition named among the five in 3 weeks (condition:stamina), a preparation in 63"
    ],
    "fails": []
   },
@@ -530,7 +531,7 @@
    "evidence": [
     "daily changes of energy and stamina correlate at 0.05 over 1077 mornings",
     "health events 5: 2027-02-02 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-02-08 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2027-02-08 | 2027-04-18 injury bruise 5 days | 2028-09-18 in hospital to 2028-09-18 | 2028-10-30 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2028-10-30",
-    "work ill or hurt 0 at undefined, well 365 at 65.2; excused class days by term 0,1,0,0,2,0"
+    "called in sick 0 days; work ill or hurt 0 at undefined, well 365 at 65.2; excused class days by term 0,1,0,0,2,0"
    ],
    "fails": []
   },
@@ -647,6 +648,7 @@
    "Spring Term 2029 Begins": 1,
    "Cast: Shakespeare Repertory Project I": 1
   },
+  "twiceInATerm": [],
   "advice": {
    "weeks": 153,
    "targets": {
@@ -4518,7 +4520,7 @@
    "simulated-rehearsal",
    "working",
    0.59,
-   2,
+   0,
    "advanced",
    "advanced",
    0
@@ -4590,7 +4592,7 @@
    "simulated-rehearsal",
    "strong",
    0.66,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4698,7 +4700,7 @@
    "simulated-rehearsal",
    "working",
    0.64,
-   1,
+   0,
    "new",
    "dim:familiarity",
    0
@@ -4758,7 +4760,7 @@
    "simulated-rehearsal",
    "strong",
    0.654,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4842,7 +4844,7 @@
    "simulated-rehearsal",
    "strong",
    0.665,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4950,7 +4952,7 @@
    "simulated-rehearsal",
    "strong",
    0.669,
-   2,
+   0,
    "advanced",
    "advanced",
    0

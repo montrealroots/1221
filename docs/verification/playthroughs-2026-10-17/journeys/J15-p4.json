@@ -14,14 +14,14 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 7,
+   "secs": 6,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-02-23",
-   "secs": 10,
+   "secs": 9,
    "reloads": 9
   },
   {
@@ -447,7 +447,8 @@
     "78 weekly reads, 7 first targets: vocal, imagination, focus, physical, adaptability, listening, composure",
     "all full said in 0 weeks",
     "0 weeks the same words over a move under what's shown",
-    "standing said in 0 weeks (noted where the player practices or tapes)"
+    "standing said in 0 weeks (noted where the player practices or tapes)",
+    "circumstances: a condition named among the five in 0 weeks (none), a preparation in 76"
    ],
    "fails": []
   },
@@ -456,7 +457,7 @@
    "evidence": [
     "daily changes of energy and stamina correlate at 0 over 549 mornings",
     "health events 4: 2026-09-12 injury bruise 4 days | 2027-01-12 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-05-25 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-01-24 the flu to 2028-01-29",
-    "work ill or hurt 0 at undefined, well 177 at 26.1; excused class days by term 0,0,0"
+    "called in sick 0 days; work ill or hurt 0 at undefined, well 177 at 26.1; excused class days by term 0,0,0"
    ],
    "fails": []
   },
@@ -528,6 +529,7 @@
    "Cast: Directors’ Thesis Production I": 1,
    "Dismissed From The School": 1
   },
+  "twiceInATerm": [],
   "advice": {
    "weeks": 78,
    "targets": {
@@ -585,14 +587,7 @@
   "feedback": {
    "notes": 138,
    "recurring": 133,
-   "recurringOnAPartNotShort": [
-    "assignment_00001c dim:interpretation",
-    "assignment_00001l dim:interpretation",
-    "assignment_00001s dim:interpretation",
-    "assignment_00001z dim:interpretation",
-    "assignment_000027 dim:interpretation",
-    "assignment_00002f dim:interpretation"
-   ],
+   "recurringOnAPartNotShort": [],
    "kinds": {
     "new": 5,
     "recurring": 133
@@ -2708,7 +2703,7 @@
    "simulated-rehearsal",
    "unready",
    0.437,
-   3,
+   2,
    "recurring",
    "dim:interpretation",
    0
@@ -2780,7 +2775,7 @@
    "simulated-rehearsal",
    "unready",
    0.443,
-   3,
+   2,
    "recurring",
    "dim:interpretation",
    0
@@ -2888,7 +2883,7 @@
    "simulated-rehearsal",
    "unready",
    0.431,
-   3,
+   2,
    "recurring",
    "dim:interpretation",
    0
@@ -2948,7 +2943,7 @@
    "simulated-rehearsal",
    "unready",
    0.428,
-   3,
+   2,
    "recurring",
    "dim:interpretation",
    0
@@ -3032,7 +3027,7 @@
    "simulated-rehearsal",
    "unready",
    0.433,
-   3,
+   2,
    "recurring",
    "dim:interpretation",
    0
@@ -3140,7 +3135,7 @@
    "simulated-rehearsal",
    "unready",
    0.434,
-   3,
+   2,
    "recurring",
    "dim:interpretation",
    0

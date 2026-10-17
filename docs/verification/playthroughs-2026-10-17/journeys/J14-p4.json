@@ -14,21 +14,21 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 15,
+   "secs": 14,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 55,
+   "secs": 53,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-01",
-   "secs": 84,
+   "secs": 80,
    "reloads": 12
   },
   {
@@ -222,33 +222,33 @@
   "replays": [
    {
     "what": "Two Contrasting Monologues",
-    "own": 85.7,
-    "atStart": 85.7,
+    "own": 84.3,
+    "atStart": 84.3,
     "rose": [],
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 97.84
+    "fallsUndone": 96.23
    },
    {
     "what": "Your Showcase Scene",
-    "own": 91.82,
-    "atStart": 91.82,
+    "own": 91.81,
+    "atStart": 91.81,
     "rose": [],
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 98.83
+    "fallsUndone": 98.82
    },
    {
     "what": "Your Showcase Scene, revised",
-    "own": 91.82,
-    "atStart": 91.82,
+    "own": 91.81,
+    "atStart": 91.81,
     "rose": [],
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 98.83
+    "fallsUndone": 98.82
    },
    {
     "what": "Directions In Daily Life",
@@ -292,23 +292,23 @@
    },
    {
     "what": "A Self-Tape",
-    "own": 93.12,
-    "atStart": 93.12,
+    "own": 93.14,
+    "atStart": 93.14,
     "rose": [],
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 96.66
+    "fallsUndone": 96.68
    },
    {
     "what": "A Self-Tape",
-    "own": 96.61,
-    "atStart": 96.61,
+    "own": 96.77,
+    "atStart": 96.77,
     "rose": [],
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 98.74
+    "fallsUndone": 98.92
    },
    {
     "what": "A Voice Sequence",
@@ -322,23 +322,23 @@
    },
    {
     "what": "Two Contrasting Monologues",
-    "own": 98.04,
-    "atStart": 98.04,
+    "own": 97.68,
+    "atStart": 97.68,
     "rose": [],
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 99.69
+    "fallsUndone": 99.32
    },
    {
     "what": "Your Showcase Scene",
-    "own": 87.74,
-    "atStart": 87.74,
+    "own": 93.32,
+    "atStart": 93.32,
     "rose": [],
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 93.09
+    "fallsUndone": 99.04
    }
   ],
   "keptReplayed": 160,
@@ -387,9 +387,9 @@
    "speedUnknown": 1
   },
   "firstLimits": {
-   "preparation": 93,
+   "preparation": 102,
    "ability": 120,
-   "condition": 124
+   "condition": 115
   },
   "afterEnd": [],
   "memos": {
@@ -427,7 +427,7 @@
    "pass": true,
    "evidence": [
     "275 showings, each with its record; 79 with table work answered; 25 with a way of playing",
-    "6 terms' last pieces judged again: 34.8 < 98.4 ≤ 98.4; 34.1 < 97.3 ≤ 97.3; 33.9 < 96.0 ≤ 96.0; 33.3 < 95.3 ≤ 95.3; 33.1 < 93.7 ≤ 94.0; 33.0 < 87.7 ≤ 93.6",
+    "6 terms' last pieces judged again: 34.8 < 98.4 ≤ 98.4; 34.1 < 97.3 ≤ 97.3; 33.9 < 96.0 ≤ 96.0; 33.3 < 95.3 ≤ 95.3; 33.1 < 93.1 ≤ 93.9; 33.0 < 93.3 ≤ 93.7",
     "class days attended over the reviews 401; calls on the calendar kept 65, missed 0"
    ],
    "fails": []
@@ -436,9 +436,9 @@
    "pass": true,
    "evidence": [
     "abilities emotionalDepth 100→100, presence 100→100, listening 100→100, imagination 100→100, focus 100→100, memory 100→100, adaptability 100→100, composure 100→100, vocal 100→100, physical 100→100, discipline 100→100, stamina 99.4→35",
-    "last pieces at their own levels, then with what rose put back: 85.7/85.7 91.82/91.82 91.82/91.82 86.32/86.32 92.48/92.48 94.13/94.13 87.68/87.68 93.12/93.12 96.61/96.61 91.95/91.95 98.04/98.04 87.74/87.74",
-    "with what fell put back up: 85.7→97.84 (stamina) 91.82→98.83 (stamina) 91.82→98.83 (stamina) 86.32→100 (stamina) 92.48→100 (stamina) 94.13→100 (stamina) 87.68→100 (stamina) 93.12→96.66 (stamina) 96.61→98.74 (stamina) 91.95→100 (stamina) 98.04→99.69 (stamina) 87.74→93.09 (stamina)",
-    "first limits short of mastery: {\"preparation\":93,\"ability\":120,\"condition\":124}",
+    "last pieces at their own levels, then with what rose put back: 84.3/84.3 91.81/91.81 91.81/91.81 86.32/86.32 92.48/92.48 94.13/94.13 87.68/87.68 93.14/93.14 96.77/96.77 91.95/91.95 97.68/97.68 93.32/93.32",
+    "with what fell put back up: 84.3→96.23 (stamina) 91.81→98.82 (stamina) 91.81→98.82 (stamina) 86.32→100 (stamina) 92.48→100 (stamina) 94.13→100 (stamina) 87.68→100 (stamina) 93.14→96.68 (stamina) 96.77→98.92 (stamina) 91.95→100 (stamina) 97.68→99.32 (stamina) 93.32→99.04 (stamina)",
+    "first limits short of mastery: {\"preparation\":102,\"ability\":120,\"condition\":115}",
     "genres known 7; drama speed 1.12, unmet absurdist 1",
     "fell: stamina 99.4→35 (stamina falls unworked: `settleTheBody`)"
    ],
@@ -450,7 +450,8 @@
     "153 weekly reads, 1 first targets: full:all",
     "all full said in 151 weeks",
     "0 weeks the same words over a move under what's shown",
-    "standing said in 0 weeks (noted where the player practices or tapes)"
+    "standing said in 0 weeks (noted where the player practices or tapes)",
+    "circumstances: a condition named among the five in 108 weeks (condition:stamina, condition:injury), a preparation in 69"
    ],
    "fails": []
   },
@@ -459,7 +460,7 @@
    "evidence": [
     "daily changes of energy and stamina correlate at 0.05 over 1077 mornings",
     "health events 12: 2026-09-01 care visit: A doctor’s visit, Yale Health Center, Student Health | 2026-11-16 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2026-11-16 | 2027-03-29 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2027-03-29 | 2027-05-18 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-08-23 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2027-08-23 | 2027-09-21 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-11-27 injury sprain 8 days | 2028-01-29 injury strain 20 days",
-    "work ill or hurt 24 at 67.6, well 355 at 90.9; excused class days by term 1,1,0,1,0,0"
+    "called in sick 0 days; work ill or hurt 24 at 67.3, well 355 at 90.8; excused class days by term 1,1,0,1,0,0"
    ],
    "fails": []
   },
@@ -511,8 +512,8 @@
  "continuity": {
   "undone": [],
   "saidAgain": {
-   "Elena Didn’t Come": 2,
-   "The Note Was Taken": 33,
+   "Elena Didn’t Come": 3,
+   "The Note Was Taken": 34,
    "Shown: A Movement Score, Exceptional": 13,
    "Shown: A Play In Its Context, Exceptional": 11,
    "Shown: Directions In Daily Life, Exceptional": 9,
@@ -534,33 +535,33 @@
    "Elena: Asks For Help": 3,
    "Mateo: Asks For Help": 2,
    "Shown: A Clown Turn, Exceptional": 4,
-   "Priya Knows You’re Ill": 1,
-   "Chloe: An Apology": 2,
    "Lucia: Asks For Help": 2,
-   "Priya: An Apology": 2,
+   "Chloe: An Apology": 2,
    "Caleb: Asks For Help": 2,
-   "Elena: An Apology": 3,
    "Daniel: Asks For Help": 2,
-   "Sofia Didn’t Come": 1,
-   "Sofia: An Apology": 2,
-   "Shown: Heightened Text Scene, Exceptional": 5,
+   "Priya: An Apology": 1,
+   "Shown: Heightened Text Scene, Exceptional": 4,
+   "Chloe Didn’t Come": 1,
    "Shown: A Song Worked Through, Exceptional": 2,
-   "The Note Wasn’t Taken Yet": 1,
-   "Shown: A Scene From The Greeks, Exceptional": 2,
-   "Grace: An Apology": 1,
+   "Mateo Didn’t Come": 1,
+   "Elena: An Apology": 1,
+   "The Note Wasn’t Taken Yet": 2,
    "The Summer Is Yours": 1,
-   "Zoe: An Apology": 1,
+   "Lucia: An Apology": 1,
    "Ran Lines With Sofia": 1,
+   "Sofia: An Apology": 1,
    "Shown: A Self-Tape, Exceptional": 2,
    "Shown: Your Showcase Scene, Exceptional": 2,
-   "Ran Lines With Imani": 1,
-   "Shown: Two Contrasting Monologues, Exceptional": 1,
-   "Imani Didn’t Come": 1
+   "Ethan Didn’t Come": 1,
+   "Mateo: An Apology": 1,
+   "Daniel: An Apology": 1,
+   "Shown: Two Contrasting Monologues, Exceptional": 1
   },
   "sameWordsTwice": [
+   "Ethan: An Apology | Ethan apologizes for not coming to rehearse: they lost track of the day. ×2",
    "Ran Lines With Elena | You share no open scene with Elena, so you ran theirs: it helped them, and nothing of yours moved. ×2",
    "You’re On Tonight As Nina | The role’s actor is out: you go on in Yale Rep’s The Seagull tonight at 2:00 PM. ×2",
-   "Shown: Heightened Text Scene, Exceptional | Knows The Scene was there; Lines was there; Scansion And Table Work was there; Rehearsal was the ×3",
+   "Shown: Heightened Text Scene, Exceptional | Knows The Scene was there; Lines was there; Scansion And Table Work was there; Rehearsal was the ×4",
    "Shown: Heightened Text Scene, Exceptional | Knows The Scene was there; Lines was there; Scansion And Table Work was there; Rehearsal was the ×3"
   ],
   "onceATerm": {
@@ -577,6 +578,7 @@
    "Spring Term 2029 Begins": 1,
    "Cast: Shakespeare Repertory Project I": 1
   },
+  "twiceInATerm": [],
   "advice": {
    "weeks": 153,
    "targets": {
@@ -589,23 +591,23 @@
      "to": "2029-07-29",
      "target": "full:all",
      "weeks": 151,
-     "newWords": 92,
+     "newWords": 94,
      "moved": 0,
-     "stripped": 88
+     "stripped": 90
     }
    ],
    "runs": 3,
    "staleRuns": 0,
-   "wordsOnlyChanges": 88
+   "wordsOnlyChanges": 90
   },
   "feedback": {
    "notes": 275,
-   "recurring": 29,
+   "recurring": 31,
    "recurringOnAPartNotShort": [],
    "kinds": {
-    "advanced": 236,
+    "advanced": 234,
     "new": 5,
-    "recurring": 29,
+    "recurring": 31,
     "partial": 5
    },
    "longestSameNote": {
@@ -636,7 +638,7 @@
    "standing": "good"
   },
   {
-   "at": "2029-05-21T14:25",
+   "at": "2029-05-21T14:00",
    "standing": "graduated"
   }
  ],
@@ -744,9 +746,9 @@
     "piece": "assignment_000053",
     "kept": 95.3,
     "again": 95.3,
-    "none": 33.347425701063024,
-    "full": 95.27835914589437,
-    "exact": 95.27835914589437
+    "none": 33.34740802772026,
+    "full": 95.27830865062933,
+    "exact": 95.27830865062933
    }
   },
   {
@@ -759,9 +761,9 @@
    "coursework": {
     "shown": 45,
     "unready": 8,
-    "strong": 33
+    "strong": 32
    },
-   "reason": "You were at 100% of what was asked of you, and your craft grew 0.0 against the class’s 1.1: for the room each of you had to grow, in line with the class. The faculty noted your strong work in An Enemy Of The People. The faculty noted your coursework: 33 of 45 pieces strong or better.",
+   "reason": "You were at 100% of what was asked of you, and your craft grew 0.0 against the class’s 1.1: for the room each of you had to grow, in line with the class. The faculty noted your strong work in An Enemy Of The People. The faculty noted your coursework: 32 of 45 pieces strong or better.",
    "tally": {
     "classDays": 64,
     "attended": 64,
@@ -769,11 +771,11 @@
    },
    "prepReplay": {
     "piece": "assignment_000069",
-    "kept": 93.7,
-    "again": 93.7,
-    "none": 33.14758990981352,
-    "full": 94.04759568305377,
-    "exact": 93.72335486146306
+    "kept": 93.1,
+    "again": 93.1,
+    "none": 33.14752999557332,
+    "full": 93.87602284330268,
+    "exact": 93.12048940161509
    }
   },
   {
@@ -796,11 +798,11 @@
    },
    "prepReplay": {
     "piece": "assignment_00007n",
-    "kept": 87.7,
-    "again": 87.7,
+    "kept": 93.3,
+    "again": 93.3,
     "none": 32.96680773789455,
-    "full": 93.63079924728976,
-    "exact": 87.7370273290949
+    "full": 93.66953608807158,
+    "exact": 93.31705604881077
    }
   }
  ],
@@ -808,9 +810,9 @@
   "2027-10-06 school.choose_playing",
   "2028-01-12 school.choose_playing",
   "2028-01-25 school.choose_playing",
+  "2028-01-25 school.choose_playing",
   "2028-02-03 school.choose_playing",
-  "2028-02-05 school.choose_playing",
-  "2028-03-03 school.choose_playing",
+  "2028-02-18 school.choose_playing",
   "2028-04-04 school.choose_playing",
   "2028-04-15 school.choose_playing",
   "2028-09-06 school.choose_playing",
@@ -966,55 +968,55 @@
    }
   },
   {
-   "at": "2028-02-28T14:05",
+   "at": "2028-02-28T14:25",
    "events": [
     "in hospital to 2028-02-28"
    ],
    "before": {
     "condition": 99.7,
-    "fitness": 58.76,
+    "fitness": 58.77,
     "energy": 97
    },
    "after": {
     "condition": 79.7,
-    "fitness": 58.76,
+    "fitness": 58.77,
     "energy": 74
    }
   },
   {
-   "at": "2028-08-14T13:25",
+   "at": "2028-08-14T13:05",
    "events": [
     "in hospital to 2028-08-14"
    ],
    "before": {
     "condition": 96.9,
-    "fitness": 38.55,
+    "fitness": 38.54,
     "energy": 97
    },
    "after": {
     "condition": 76.9,
-    "fitness": 38.55,
+    "fitness": 38.54,
     "energy": 74
    }
   },
   {
-   "at": "2028-09-12T14:25",
+   "at": "2028-09-12T14:20",
    "events": [
     "care visit: A doctor’s visit, Yale Health Center, Student Health"
    ],
    "before": {
     "condition": 91.9,
-    "fitness": 35.15,
+    "fitness": 35.16,
     "energy": 88
    },
    "after": {
     "condition": 91.9,
-    "fitness": 35.15,
+    "fitness": 35.16,
     "energy": 85
    }
   },
   {
-   "at": "2028-10-24T14:05",
+   "at": "2028-10-24T14:30",
    "events": [
     "care visit: A doctor’s visit, Yale Health Center, Student Health"
    ],
@@ -2781,12 +2783,20 @@
    "Priya Knows You’re Ill"
   ],
   [
+   "2027-11-30",
+   "Daniel Didn’t Come"
+  ],
+  [
    "2027-12-01",
    "Mateo: Run Lines Together?"
   ],
   [
    "2027-12-05",
    "Ran Lines With Mateo"
+  ],
+  [
+   "2027-12-08",
+   "Daniel: An Apology"
   ],
   [
    "2027-12-10",
@@ -2862,6 +2872,10 @@
    "Ran Lines With Isaiah"
   ],
   [
+   "2028-01-18",
+   "Nadia Didn’t Come"
+  ],
+  [
    "2028-01-19",
    "Lucia Asks To Rehearse"
   ],
@@ -2871,7 +2885,11 @@
   ],
   [
    "2028-01-21",
-   "Still There: Time On Its Feet"
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2028-01-23",
+   "Lucia Didn’t Come"
   ],
   [
    "2028-01-24",
@@ -2879,11 +2897,15 @@
   ],
   [
    "2028-01-24",
-   "The Note Was Taken"
+   "The Note Wasn’t Taken Yet"
   ],
   [
    "2028-01-24",
    "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2028-01-25",
+   "Still There: Time On Its Feet"
   ],
   [
    "2028-01-25",
@@ -2922,10 +2944,6 @@
    "Looking Back: Three Sisters"
   ],
   [
-   "2028-02-01",
-   "Still There: Time On Its Feet"
-  ],
-  [
    "2028-02-02",
    "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
   ],
@@ -2935,7 +2953,15 @@
   ],
   [
    "2028-02-02",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2028-02-02",
    "Clown: A Clown Turn"
+  ],
+  [
+   "2028-02-04",
+   "The Note Was Taken"
   ],
   [
    "2028-02-04",
@@ -2947,7 +2973,7 @@
   ],
   [
    "2028-02-07",
-   "Sofia Didn’t Come"
+   "Nadia: An Apology"
   ],
   [
    "2028-02-08",
@@ -3002,6 +3028,14 @@
    "The Greeks: A Scene From The Greeks"
   ],
   [
+   "2028-02-20",
+   "Imani Didn’t Come"
+  ],
+  [
+   "2028-02-21",
+   "Chloe Didn’t Come"
+  ],
+  [
    "2028-02-22",
    "Voice II: A Voice Sequence"
   ],
@@ -3016,6 +3050,10 @@
   [
    "2028-02-24",
    "Imani: A Different Reading"
+  ],
+  [
+   "2028-02-25",
+   "Still There: Work With Your Partner"
   ],
   [
    "2028-02-29",
@@ -3058,8 +3096,16 @@
    "Singing II And Tutorials: A Song Worked Through"
   ],
   [
+   "2028-03-18",
+   "Daniel Didn’t Come"
+  ],
+  [
    "2028-03-20",
    "Your Card Limit Went Up"
+  ],
+  [
+   "2028-03-20",
+   "Priya Didn’t Come"
   ],
   [
    "2028-03-21",
@@ -3082,6 +3128,10 @@
    "The Greeks: A Scene From The Greeks"
   ],
   [
+   "2028-03-23",
+   "Imani: An Apology"
+  ],
+  [
    "2028-03-24",
    "Lucia Asks To Rehearse"
   ],
@@ -3096,6 +3146,10 @@
   [
    "2028-03-25",
    "Ran Lines With Priya"
+  ],
+  [
+   "2028-03-26",
+   "Mateo Didn’t Come"
   ],
   [
    "2028-03-27",
@@ -3146,10 +3200,6 @@
    "Ethan Didn’t Hear Back"
   ],
   [
-   "2028-04-08",
-   "Grace Didn’t Come"
-  ],
-  [
    "2028-04-11",
    "Voice II: A Voice Sequence"
   ],
@@ -3170,6 +3220,10 @@
    "The Greeks: A Scene From The Greeks"
   ],
   [
+   "2028-04-16",
+   "Caleb Didn’t Come"
+  ],
+  [
    "2028-04-19",
    "Your 2027 Return Is Late",
    "The IRS’s refund waits for the return, with no penalty on it. Connecticut charges its own on what it’s owed."
@@ -3181,14 +3235,6 @@
   [
    "2028-04-22",
    "Zoe Didn’t Hear Back"
-  ],
-  [
-   "2028-04-23",
-   "Zoe Didn’t Come"
-  ],
-  [
-   "2028-04-25",
-   "The Note Wasn’t Taken Yet"
   ],
   [
    "2028-04-28",
@@ -3319,6 +3365,10 @@
    "A Doctor’s Appointment"
   ],
   [
+   "2028-10-02",
+   "Caleb: An Apology"
+  ],
+  [
    "2028-10-03",
    "Voice III: A Voice Sequence"
   ],
@@ -3359,6 +3409,10 @@
    "Still There: Work With Your Partner"
   ],
   [
+   "2028-10-15",
+   "Sofia Didn’t Come"
+  ],
+  [
    "2028-10-16",
    "Shakespeare Practicum: Heightened Text Scene"
   ],
@@ -3369,6 +3423,10 @@
   [
    "2028-10-16",
    "Alexander Technique III Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2028-10-16",
+   "Imani Didn’t Come"
   ],
   [
    "2028-10-17",
@@ -3411,10 +3469,6 @@
    "A Doctor’s Appointment"
   ],
   [
-   "2028-10-23",
-   "Elena Didn’t Come"
-  ],
-  [
    "2028-10-24",
    "Daniel: A Different Reading"
   ],
@@ -3437,6 +3491,10 @@
   [
    "2028-10-29",
    "Looking Back: An Enemy Of The People"
+  ],
+  [
+   "2028-10-29",
+   "Daniel Didn’t Come"
   ],
   [
    "2028-10-30",
@@ -3473,6 +3531,10 @@
   [
    "2028-11-03",
    "Zoe: A Word After Class"
+  ],
+  [
+   "2028-11-07",
+   "Lucia Didn’t Come"
   ],
   [
    "2028-11-07",
@@ -3519,8 +3581,20 @@
    "Connecticut DRS Intends To Levy"
   ],
   [
+   "2028-11-17",
+   "Still There: Work With Your Partner"
+  ],
+  [
    "2028-11-20",
    "Shakespeare Practicum: Heightened Text Scene"
+  ],
+  [
+   "2028-11-27",
+   "Ethan Didn’t Come"
+  ],
+  [
+   "2028-11-29",
+   "Ethan: An Apology"
   ],
   [
    "2028-12-08",
@@ -3624,10 +3698,6 @@
    "Elena: A Word After Class"
   ],
   [
-   "2029-02-05",
-   "Priya Didn’t Come"
-  ],
-  [
    "2029-02-07",
    "The Director’s Note: Julius Caesar"
   ],
@@ -3690,10 +3760,6 @@
   [
    "2029-02-19",
    "Hannah: A Different Reading"
-  ],
-  [
-   "2029-02-20",
-   "The Note Wasn’t Taken Yet"
   ],
   [
    "2029-02-20",
@@ -3796,6 +3862,10 @@
    "Taming The Cyclops: A Self-Tape"
   ],
   [
+   "2029-03-31",
+   "Ethan Didn’t Come"
+  ],
+  [
    "2029-04-04",
    "Actor Showcase: Your Showcase Scene"
   ],
@@ -3820,12 +3890,12 @@
    "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
   ],
   [
-   "2029-04-12",
-   "Imani: Run Lines Together?"
+   "2029-04-09",
+   "Elena Didn’t Come"
   ],
   [
-   "2029-04-17",
-   "The Note Wasn’t Taken Yet"
+   "2029-04-12",
+   "Imani: Run Lines Together?"
   ],
   [
    "2029-04-17",
@@ -3847,14 +3917,6 @@
   [
    "2029-04-20",
    "Your Card Limit Went Up"
-  ],
-  [
-   "2029-04-22",
-   "Imani Didn’t Come"
-  ],
-  [
-   "2029-04-23",
-   "Imani: An Apology"
   ],
   [
    "2029-04-25",
@@ -3896,7 +3958,7 @@
    "You’re uncovered from August 1, 2029. You have 60 days to enroll in the marketplace."
   ]
  ],
- "shownNotices": 161,
+ "shownNotices": 162,
  "showings": [
   [
    "assignment_000001",
@@ -4469,7 +4531,7 @@
    "simulated-rehearsal",
    "exceptional",
    0.993,
-   2,
+   0,
    "advanced",
    "advanced",
    0
@@ -4541,7 +4603,7 @@
    "simulated-rehearsal",
    "exceptional",
    0.951,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4649,7 +4711,7 @@
    "simulated-rehearsal",
    "exceptional",
    0.992,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4709,7 +4771,7 @@
    "simulated-rehearsal",
    "exceptional",
    0.971,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4793,7 +4855,7 @@
    "simulated-rehearsal",
    "exceptional",
    0.976,
-   1,
+   0,
    "advanced",
    "advanced",
    0
@@ -4901,7 +4963,7 @@
    "simulated-rehearsal",
    "exceptional",
    0.956,
-   2,
+   0,
    "advanced",
    "advanced",
    0
@@ -5572,10 +5634,10 @@
    "DRAM 293b",
    "greek-scene",
    "unready",
-   0.437,
+   0.334,
    4,
    "recurring",
-   "dim:rehearsal",
+   "dim:partner",
    1
   ],
   [
@@ -5607,11 +5669,11 @@
    3,
    "DRAM 203a/b",
    "classical-scene",
-   "unready",
-   0.459,
+   "working",
+   0.502,
    2,
-   "recurring",
-   "dim:rehearsal",
+   "partial",
+   "dim:partner",
    1
   ],
   [
@@ -5632,11 +5694,11 @@
    "DRAM 293b",
    "greek-scene",
    "working",
-   0.586,
+   0.547,
    2,
    "recurring",
    "dim:rehearsal",
-   0
+   1
   ],
   [
    "assignment_00003z",
@@ -5716,7 +5778,7 @@
    "DRAM 203a/b",
    "classical-scene",
    "working",
-   0.592,
+   0.537,
    1,
    "recurring",
    "dim:rehearsal",
@@ -5728,11 +5790,11 @@
    "DRAM 293b",
    "greek-scene",
    "working",
-   0.507,
+   0.587,
    2,
    "recurring",
    "dim:rehearsal",
-   1
+   0
   ],
   [
    "assignment_00004b",
@@ -5764,7 +5826,7 @@
    "DRAM 203a/b",
    "classical-scene",
    "exceptional",
-   0.931,
+   0.899,
    1,
    "advanced",
    "advanced",
@@ -5787,12 +5849,12 @@
    3,
    "DRAM 293b",
    "greek-scene",
-   "exceptional",
-   0.863,
+   "strong",
+   0.796,
    1,
-   "advanced",
-   "advanced",
-   0
+   "recurring",
+   "dim:partner",
+   1
   ],
   [
    "assignment_00004c",
@@ -5860,7 +5922,7 @@
    "DRAM 203a/b",
    "classical-scene",
    "exceptional",
-   0.912,
+   0.909,
    0,
    "advanced",
    "advanced",
@@ -5872,11 +5934,11 @@
    "DRAM 293b",
    "greek-scene",
    "exceptional",
-   0.955,
+   0.953,
    0,
    "advanced",
    "advanced",
-   1
+   0
   ],
   [
    "assignment_00004k",
@@ -5920,7 +5982,7 @@
    "DRAM 203a/b",
    "classical-scene",
    "exceptional",
-   0.912,
+   0.858,
    1,
    "advanced",
    "advanced",
@@ -5944,7 +6006,7 @@
    "DRAM 293b",
    "greek-scene",
    "exceptional",
-   0.864,
+   0.859,
    1,
    "advanced",
    "advanced",
@@ -5980,7 +6042,7 @@
    "DRAM 203a/b",
    "classical-scene",
    "exceptional",
-   0.898,
+   0.948,
    1,
    "advanced",
    "advanced",
@@ -6028,7 +6090,7 @@
    "DRAM 293b",
    "greek-scene",
    "exceptional",
-   0.904,
+   0.868,
    1,
    "advanced",
    "advanced",
@@ -6064,7 +6126,7 @@
    "DRAM 203a/b",
    "classical-scene",
    "exceptional",
-   0.929,
+   0.928,
    0,
    "advanced",
    "advanced",
@@ -6076,7 +6138,7 @@
    "DRAM 293b",
    "greek-scene",
    "exceptional",
-   0.898,
+   0.933,
    1,
    "advanced",
    "advanced",
@@ -6161,7 +6223,7 @@
    "scene-study",
    "unready",
    0.395,
-   4,
+   3,
    "new",
    "dim:memorization",
    1
@@ -6172,7 +6234,7 @@
    "DRAM 363a",
    "play-game",
    "strong",
-   0.689,
+   0.688,
    2,
    "recurring",
    "dim:rehearsal",
@@ -6208,7 +6270,7 @@
    "DRAM 313a/b",
    "voice-sequence",
    "strong",
-   0.689,
+   0.691,
    1,
    "partial",
    "dim:rehearsal",
@@ -6232,7 +6294,7 @@
    "DRAM 423a/b",
    "song",
    "working",
-   0.604,
+   0.606,
    1,
    "partial",
    "dim:rehearsal",
@@ -6244,7 +6306,7 @@
    "DRAM 323a/b",
    "speech-drill",
    "unready",
-   0.323,
+   0.345,
    3,
    "recurring",
    "dim:rehearsal",
@@ -6280,7 +6342,7 @@
    "DRAM 303a",
    "scene-study",
    "strong",
-   0.723,
+   0.688,
    2,
    "recurring",
    "dim:partner",
@@ -6292,7 +6354,7 @@
    "DRAM 343a/b",
    "alexander-practice",
    "strong",
-   0.725,
+   0.726,
    1,
    "advanced",
    "advanced",
@@ -6303,10 +6365,10 @@
    4,
    "DRAM 363a",
    "play-game",
-   "strong",
-   0.751,
+   "working",
+   0.643,
    2,
-   "partial",
+   "recurring",
    "dim:rehearsal",
    0
   ],
@@ -6376,7 +6438,7 @@
    "DRAM 190a",
    "classical-scene",
    "exceptional",
-   0.907,
+   0.859,
    1,
    "advanced",
    "advanced",
@@ -6388,7 +6450,7 @@
    "DRAM 303a",
    "scene-study",
    "strong",
-   0.695,
+   0.764,
    2,
    "recurring",
    "dim:partner",
@@ -6400,7 +6462,7 @@
    "DRAM 313a/b",
    "voice-sequence",
    "exceptional",
-   0.817,
+   0.821,
    1,
    "advanced",
    "advanced",
@@ -6424,7 +6486,7 @@
    "DRAM 423a/b",
    "song",
    "working",
-   0.603,
+   0.611,
    1,
    "partial",
    "dim:rehearsal",
@@ -6436,7 +6498,7 @@
    "DRAM 323a/b",
    "speech-drill",
    "unready",
-   0.347,
+   0.363,
    3,
    "recurring",
    "dim:rehearsal",
@@ -6448,7 +6510,7 @@
    "DRAM 363a",
    "play-game",
    "exceptional",
-   1,
+   0.999,
    0,
    "advanced",
    "advanced",
@@ -6472,7 +6534,7 @@
    "DRAM 463a/b",
    "self-tape",
    "exceptional",
-   0.932,
+   0.931,
    0,
    "advanced",
    "advanced",
@@ -6484,7 +6546,7 @@
    "DRAM 343a/b",
    "alexander-practice",
    "exceptional",
-   0.835,
+   0.853,
    1,
    "advanced",
    "advanced",
@@ -6520,7 +6582,7 @@
    "DRAM 323a/b",
    "speech-drill",
    "exceptional",
-   0.819,
+   0.82,
    1,
    "advanced",
    "advanced",
@@ -6543,11 +6605,11 @@
    4,
    "DRAM 303a",
    "scene-study",
-   "exceptional",
-   0.854,
-   1,
-   "advanced",
-   "advanced",
+   "strong",
+   0.781,
+   2,
+   "recurring",
+   "dim:partner",
    1
   ],
   [
@@ -6580,7 +6642,7 @@
    "DRAM 190a",
    "classical-scene",
    "exceptional",
-   0.945,
+   0.942,
    0,
    "advanced",
    "advanced",
@@ -6640,7 +6702,7 @@
    "DRAM 463a/b",
    "self-tape",
    "exceptional",
-   0.937,
+   0.931,
    0,
    "advanced",
    "advanced",
@@ -6652,7 +6714,7 @@
    "DRAM 793b",
    "showcase-scene",
    "exceptional",
-   0.893,
+   0.894,
    1,
    "advanced",
    "advanced",
@@ -6712,7 +6774,7 @@
    "DRAM 793b",
    "showcase-scene",
    "exceptional",
-   0.809,
+   0.857,
    1,
    "advanced",
    "advanced",
@@ -6736,7 +6798,7 @@
    "DRAM 473b",
    "self-tape",
    "exceptional",
-   0.898,
+   0.895,
    0,
    "advanced",
    "advanced",
@@ -6772,7 +6834,7 @@
    "DRAM 423a/b",
    "song",
    "exceptional",
-   0.884,
+   0.883,
    1,
    "advanced",
    "advanced",
@@ -6784,7 +6846,7 @@
    "DRAM 323a/b",
    "speech-drill",
    "strong",
-   0.757,
+   0.756,
    1,
    "advanced",
    "advanced",
@@ -6820,7 +6882,7 @@
    "DRAM 793b",
    "showcase-scene",
    "exceptional",
-   0.92,
+   0.918,
    1,
    "advanced",
    "advanced",
@@ -6868,7 +6930,7 @@
    "DRAM 463a/b",
    "self-tape",
    "exceptional",
-   0.975,
+   0.98,
    0,
    "advanced",
    "advanced",
@@ -6892,7 +6954,7 @@
    "DRAM 473b",
    "self-tape",
    "exceptional",
-   0.947,
+   0.949,
    0,
    "advanced",
    "advanced",
@@ -6988,7 +7050,7 @@
    "DRAM 743b",
    "audition-pair",
    "exceptional",
-   0.978,
+   0.973,
    0,
    "advanced",
    "advanced",
@@ -7000,7 +7062,7 @@
    "DRAM 463a/b",
    "self-tape",
    "exceptional",
-   0.95,
+   0.964,
    0,
    "advanced",
    "advanced",
@@ -7012,7 +7074,7 @@
    "DRAM 473b",
    "self-tape",
    "exceptional",
-   0.964,
+   0.962,
    0,
    "advanced",
    "advanced",
@@ -7024,7 +7086,7 @@
    "DRAM 793b",
    "showcase-scene",
    "exceptional",
-   0.921,
+   0.841,
    1,
    "advanced",
    "advanced",
@@ -7072,7 +7134,7 @@
    "DRAM 743b",
    "audition-pair",
    "exceptional",
-   0.857,
+   0.843,
    0,
    "advanced",
    "advanced",
@@ -7156,7 +7218,7 @@
    "DRAM 473b",
    "self-tape",
    "exceptional",
-   0.966,
+   0.968,
    0,
    "advanced",
    "advanced",
@@ -7180,7 +7242,7 @@
    "DRAM 743b",
    "audition-pair",
    "exceptional",
-   0.98,
+   0.977,
    0,
    "advanced",
    "advanced",
@@ -7192,7 +7254,7 @@
    "DRAM 793b",
    "showcase-scene",
    "exceptional",
-   0.877,
+   0.933,
    1,
    "advanced",
    "advanced",
@@ -7221,7 +7283,7 @@
   "2027 fall partnered: 3 @ 87, 1 ill or hurt",
   "2027 fall song: 3 @ 73.3, 1 ill or hurt",
   "2027 fall performance: 9 @ 96.3",
-  "2028 spring scene: 32 @ 80.3, 8 ill or hurt",
+  "2028 spring scene: 32 @ 78.9, 8 ill or hurt",
   "2028 spring performance: 7 @ 94.9, 1 ill or hurt",
   "2028 spring voice: 14 @ 90.4, 2 ill or hurt",
   "2028 spring clown: 4 @ 82.2, 1 ill or hurt, 3 at mastery",
@@ -7229,19 +7291,19 @@
   "2028 spring partnered: 3 @ 71.5, 1 ill or hurt",
   "2028 spring song: 3 @ 96.7, 1 ill or hurt",
   "2028 fall clown: 8 @ 83.2, 5 at mastery",
-  "2028 fall scene: 17 @ 80.8",
-  "2028 fall voice: 12 @ 65.3",
-  "2028 fall improvisation: 4 @ 86, 1 at mastery",
-  "2028 fall camera: 4 @ 63.7",
-  "2028 fall movement: 5 @ 84.2",
-  "2028 fall song: 3 @ 71.7",
+  "2028 fall scene: 17 @ 79.7",
+  "2028 fall voice: 12 @ 65.6",
+  "2028 fall improvisation: 4 @ 83.3, 1 at mastery",
+  "2028 fall camera: 4 @ 63.6",
+  "2028 fall movement: 5 @ 84.6",
+  "2028 fall song: 3 @ 72",
   "2028 fall performance: 20 @ 98.5",
   "2029 spring performance: 3 @ 95.5",
   "2029 spring scene: 15 @ 91.5",
   "2029 spring voice: 12 @ 89.2",
   "2029 spring movement: 9 @ 86.9",
-  "2029 spring audition: 6 @ 80.6",
-  "2029 spring camera: 8 @ 95.1",
+  "2029 spring audition: 6 @ 80.3",
+  "2029 spring camera: 8 @ 95.3",
   "2029 spring song: 3 @ 92.5"
  ],
  "advice": [
@@ -7835,7 +7897,7 @@
    100,
    null,
    0,
-   "full:all condition:injury prep:rehearsal prep:partner condition:stamina"
+   "full:all condition:injury prep:rehearsal prep:partner prep:approach"
   ],
   [
    "2028-01-30",
@@ -7843,7 +7905,7 @@
    100,
    null,
    0,
-   "full:all prep:rehearsal condition:injury condition:stamina"
+   "full:all prep:rehearsal condition:injury condition:stamina prep:approach"
   ],
   [
    "2028-02-06",
@@ -7867,7 +7929,7 @@
    100,
    null,
    0,
-   "full:all prep:rehearsal condition:injury prep:approach prep:partner"
+   "full:all prep:rehearsal condition:injury prep:partner prep:interpretation"
   ],
   [
    "2028-02-27",
@@ -7875,7 +7937,7 @@
    100,
    null,
    0,
-   "full:all prep:rehearsal prep:partner prep:approach"
+   "full:all prep:rehearsal prep:partner"
   ],
   [
    "2028-03-05",
@@ -7883,7 +7945,7 @@
    100,
    null,
    0,
-   "full:all prep:rehearsal condition:stamina prep:partner"
+   "full:all prep:rehearsal prep:partner condition:stamina"
   ],
   [
    "2028-03-12",
@@ -7891,7 +7953,7 @@
    100,
    null,
    0,
-   "full:all prep:rehearsal condition:stamina prep:partner"
+   "full:all prep:rehearsal prep:partner condition:stamina"
   ],
   [
    "2028-03-19",
@@ -7915,7 +7977,7 @@
    100,
    null,
    0,
-   "full:all condition:stamina prep:partner"
+   "full:all prep:partner condition:stamina"
   ],
   [
    "2028-04-09",
@@ -7931,7 +7993,7 @@
    100,
    null,
    0,
-   "full:all condition:stamina"
+   "full:all prep:partner condition:stamina"
   ],
   [
    "2028-04-23",
@@ -7939,7 +8001,7 @@
    100,
    null,
    0,
-   "full:all condition:stamina"
+   "full:all prep:partner condition:stamina"
   ],
   [
    "2028-04-30",
@@ -8115,7 +8177,7 @@
    100,
    null,
    0,
-   "full:all prep:rehearsal condition:stamina prep:approach prep:memorization"
+   "full:all prep:rehearsal prep:approach condition:stamina prep:memorization"
   ],
   [
    "2028-10-01",
@@ -8147,7 +8209,7 @@
    100,
    null,
    0,
-   "full:all prep:rehearsal prep:interpretation condition:stamina"
+   "full:all prep:rehearsal prep:interpretation prep:partner condition:stamina"
   ],
   [
    "2028-10-29",
@@ -8163,7 +8225,7 @@
    100,
    null,
    0,
-   "full:all prep:rehearsal prep:partner condition:stamina"
+   "full:all prep:rehearsal prep:partner"
   ],
   [
    "2028-11-12",
@@ -8187,7 +8249,7 @@
    100,
    null,
    0,
-   "full:all prep:rehearsal condition:stamina prep:partner"
+   "full:all prep:rehearsal prep:partner condition:stamina"
   ],
   [
    "2028-12-03",
@@ -8195,7 +8257,7 @@
    100,
    null,
    0,
-   "full:all prep:rehearsal condition:stamina prep:partner"
+   "full:all prep:rehearsal prep:partner condition:stamina"
   ],
   [
    "2028-12-10",
@@ -8339,7 +8401,7 @@
    100,
    null,
    0,
-   "full:all condition:stamina"
+   "full:all prep:partner condition:stamina"
   ],
   [
    "2029-04-15",
@@ -8347,7 +8409,7 @@
    100,
    null,
    0,
-   "full:all condition:stamina"
+   "full:all condition:stamina prep:partner"
   ],
   [
    "2029-04-22",
@@ -9849,16 +9911,16 @@
  "practice": {},
  "commands": {
   "life.sleep": 1076,
-  "school.prepare": 3703,
+  "school.prepare": 3706,
   "school.choose": 395,
-  "school.ask_partner": 1305,
-  "school.answer_partner refused": 50,
+  "school.ask_partner": 1326,
+  "school.answer_partner refused": 51,
   "school.read_feedback": 58,
-  "school.choose refused": 2245,
+  "school.choose refused": 2225,
   "school.respond": 76,
-  "school.respond refused": 12,
+  "school.respond refused": 13,
   "school.answer_partner": 26,
-  "school.learn_part": 67,
+  "school.learn_part": 68,
   "school.work_note": 38,
   "school.choose_playing": 25,
   "documents.apply_opt": 1,
