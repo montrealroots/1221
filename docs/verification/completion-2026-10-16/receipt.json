@@ -14,10 +14,10 @@
    "Explicitly Deferred": 27
   }
  },
- "matrix": "Completion, by the matrix: 557 of 599 rows in scope Implemented And Verified (92.9%); 33 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 7 Decision Required, 36 Explicitly Deferred.",
+ "matrix": "Completion, by the matrix: 561 of 599 rows in scope Implemented And Verified (93.6%); 27 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.",
  "completion": {
-  "againstTheFullBaseline": "557 of 608 (91.6%)",
-  "ofTheActionablePortion": "33 of 46 (71.7%)",
+  "againstTheFullBaseline": "561 of 608 (92.2%)",
+  "ofTheActionablePortion": "37 of 46 (80.4%)",
   "verifiedAtTheBaseline": 530
  },
  "closedByWork": [
@@ -77,6 +77,11 @@
    "baseline": "Implemented, Verification Incomplete"
   },
   {
+   "id": "genres.7-measured",
+   "group": "Brief 09 Area: genres",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
    "id": "judge.coverage-row",
    "group": "Brief 09 Area: judge",
    "baseline": "Implemented, Verification Incomplete"
@@ -87,22 +92,27 @@
    "baseline": "Implemented, Verification Incomplete"
   },
   {
+   "id": "advice.F2",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
    "id": "advice.F2A10-a",
    "group": "Brief 10 Area: advice",
    "baseline": "Implemented, Verification Incomplete"
   },
   {
-   "id": "advice.F2A10-f",
+   "id": "advice.F2A10-c",
    "group": "Brief 10 Area: advice",
-   "baseline": "Decision Required"
-  },
-  {
-   "id": "advice.F2A10-h",
-   "group": "Brief 10 Area: advice",
-   "baseline": "Decision Required"
+   "baseline": "Implemented, Verification Incomplete"
   },
   {
    "id": "advice.tests",
+   "group": "Brief 10 Area: advice",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.heldout",
    "group": "Brief 10 Area: advice",
    "baseline": "Implemented, Verification Incomplete"
   },
@@ -127,7 +137,17 @@
    "baseline": "Implemented, Verification Incomplete"
   },
   {
+   "id": "L3-R.b",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
    "id": "L3-R.e",
+   "group": "Brief 10 Area: judge",
+   "baseline": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "judge.together",
    "group": "Brief 10 Area: judge",
    "baseline": "Implemented, Verification Incomplete"
   },
@@ -260,28 +280,16 @@
    "lacks": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at renewal and at an application, is unreachable in play, since the owner’s scope reset of 2026-10-09 left wages only on the School (work-study, the Summer Cabaret) and a month at the School counts as the School before work; where a fixture reaches it, it changes only the notice’s words, as 80 paid hours always pass the $580 income test. Whether to cut it or keep it as a guard is the owner’s (THE ONE RULE); the row stays partial on it | The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
   },
   {
-   "id": "genres.7-measured",
-   "group": "Brief 09 Area: genres",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it | The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sides and their rewarded specialist than the retired ones’ did (§5)."
+   "id": "advice.F2A10-f",
+   "group": "Brief 10 Area: advice",
+   "now": "Decision Required",
+   "lacks": "F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth falls with the level there, as the model gives it (tests/decisions-advice.test.ts, [N], played on tuning seeds). The forecast is in points of result, and what an ability point is worth on the work isn’t monotone in the level everywhere: it is the judge’s curve, and the forecast reads it truly (adv-h-1 forecast 0.828 and brought 1.058; F2-A10 (e) holds). Preparation apart from training holds on 120 of 120, and near mastery the ladder falls on 30 of 30. Should (f)’s diminishing returns be read in the growth the twenty sessions bring, with the forecast’s points left to the judge’s curve; or does (f) stay not met as clarified?"
   },
   {
-   "id": "advice.F2",
+   "id": "advice.F2A10-h",
    "group": "Brief 10 Area: advice",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
-  },
-  {
-   "id": "advice.F2A10-c",
-   "group": "Brief 10 Area: advice",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
-  },
-  {
-   "id": "advice.heldout",
-   "group": "Brief 10 Area: advice",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it implemented and cites no gate test that holds it"
+   "now": "Decision Required",
+   "lacks": "F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 focus at 93), the forecast itself fell, so (h) as written holds there; the input’s own part rose because what an ability point is worth on the work isn’t monotone in the level (the judge’s curve, as in (f)). As written, the forecast fell on 113 of 120; the 7 that rose (adv-h-91, 100, 103, 106, 107, 110, 118, all near mastery) rose by a thousandth or less, each within discipline’s lift and said. Every case fell, or rose within discipline’s lift and said: 120 of 120. The first-named changed wherever another led, 51 of 51. Should (h) read: after the twenty sessions the forecast falls, or a rise is no more than discipline’s lift and is said; or does (h) stay not met, as written and as clarified?"
   },
   {
    "id": "ST6-R.a",
@@ -306,18 +314,6 @@
    "group": "Brief 10 Area: judge",
    "now": "Decision Required",
    "lacks": "With A1, (g)’s first item is met. Its second and third aren’t caught by the clauses (g) names, and the third by none of ST6-R’s: they rest on what replaces (a) and (c). See ST6-R (a)’s decision."
-  },
-  {
-   "id": "L3-R.b",
-   "group": "Brief 10 Area: judge",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "Measured on the integrated code by the committed tools (integrated/after/); no gate test holds this clause itself | Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The eight journeys measured from c3e05866 through tools/brief-journeys.ts (the attentive policy and the brief policy, public commands only), each exit 0, and read by tools/l3r.mjs. | verified as it stands"
-  },
-  {
-   "id": "judge.together",
-   "group": "Brief 10 Area: judge",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "Measured on the integrated code by the committed tools (integrated/after/README.md); the criteria that fail, ST6-R (a), (c), (e), (g), F2 as written and the four originals, fail as they did | Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The parts this area’s rows read were measured from this clone: stage (ST3-R, ST6-R, the stage criteria) from 44cd15c2, and the eight journeys with l3r from c3e05866. Each came out byte for byte as brief 10’s integrated/after, but for st6.json’s new sorting block. No engine file changed in this area. | verified as it stands"
   },
   {
    "id": "KS-ct-idcard",
@@ -3722,8 +3718,7 @@
    "group": "Brief 09 Area: genres",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it | The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sides and their rewarded specialist than the retired ones’ did (§5)."
+   "now": "Implemented And Verified"
   },
   {
    "id": "genres.8-docs",
@@ -3967,8 +3962,7 @@
    "group": "Brief 10 Area: advice",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
+   "now": "Implemented And Verified"
   },
   {
    "id": "advice.F2A10-a",
@@ -3989,8 +3983,7 @@
    "group": "Brief 10 Area: advice",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it verified as it stands and cites no gate test that holds it"
+   "now": "Implemented And Verified"
   },
   {
    "id": "advice.F2A10-d",
@@ -4011,7 +4004,8 @@
    "group": "Brief 10 Area: advice",
    "category": "design-or-gameplay",
    "baseline": "Decision Required",
-   "now": "Implemented And Verified"
+   "now": "Decision Required",
+   "lacks": "F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth falls with the level there, as the model gives it (tests/decisions-advice.test.ts, [N], played on tuning seeds). The forecast is in points of result, and what an ability point is worth on the work isn’t monotone in the level everywhere: it is the judge’s curve, and the forecast reads it truly (adv-h-1 forecast 0.828 and brought 1.058; F2-A10 (e) holds). Preparation apart from training holds on 120 of 120, and near mastery the ladder falls on 30 of 30. Should (f)’s diminishing returns be read in the growth the twenty sessions bring, with the forecast’s points left to the judge’s curve; or does (f) stay not met as clarified?"
   },
   {
    "id": "advice.F2A10-g",
@@ -4025,7 +4019,8 @@
    "group": "Brief 10 Area: advice",
    "category": "design-or-gameplay",
    "baseline": "Decision Required",
-   "now": "Implemented And Verified"
+   "now": "Decision Required",
+   "lacks": "F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 focus at 93), the forecast itself fell, so (h) as written holds there; the input’s own part rose because what an ability point is worth on the work isn’t monotone in the level (the judge’s curve, as in (f)). As written, the forecast fell on 113 of 120; the 7 that rose (adv-h-91, 100, 103, 106, 107, 110, 118, all near mastery) rose by a thousandth or less, each within discipline’s lift and said. Every case fell, or rose within discipline’s lift and said: 120 of 120. The first-named changed wherever another led, 51 of 51. Should (h) read: after the twenty sessions the forecast falls, or a rise is no more than discipline’s lift and is said; or does (h) stay not met, as written and as clarified?"
   },
   {
    "id": "advice.F2A10-i",
@@ -4046,8 +4041,7 @@
    "group": "Brief 10 Area: advice",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "the area called it implemented and cites no gate test that holds it"
+   "now": "Implemented And Verified"
   },
   {
    "id": "advice.harness-hospital",
@@ -4307,8 +4301,7 @@
    "group": "Brief 10 Area: judge",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "Measured on the integrated code by the committed tools (integrated/after/); no gate test holds this clause itself | Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The eight journeys measured from c3e05866 through tools/brief-journeys.ts (the attentive policy and the brief policy, public commands only), each exit 0, and read by tools/l3r.mjs. | verified as it stands"
+   "now": "Implemented And Verified"
   },
   {
    "id": "L3-R.c",
@@ -4351,8 +4344,7 @@
    "group": "Brief 10 Area: judge",
    "category": "verification",
    "baseline": "Implemented, Verification Incomplete",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "Measured on the integrated code by the committed tools (integrated/after/README.md); the criteria that fail, ST6-R (a), (c), (e), (g), F2 as written and the four originals, fail as they did | Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The parts this area’s rows read were measured from this clone: stage (ST3-R, ST6-R, the stage criteria) from 44cd15c2, and the eight journeys with l3r from c3e05866. Each came out byte for byte as brief 10’s integrated/after, but for st6.json’s new sorting block. No engine file changed in this area. | verified as it stands"
+   "now": "Implemented And Verified"
   },
   {
    "id": "judge.tests",

@@ -1,5 +1,5 @@
 {
- "commit": "2ff661c18e99f05ad1be41d038086fb2f1008d39",
+ "commit": "81eadac92a67d95da8aeb1ffe3980088e8882eae",
  "clean": true,
  "command": "npx vite-node tools/advice.ts -- --cases tuning --out docs/verification/completion-2026-10-16/advice/tuning.json",
  "cases": [
@@ -966,7 +966,7 @@
     {
      "target": "condition:stamina",
      "points": 1.1,
-     "why": "Stamina, By Beat 2 cost about 1.1 points of the whole a piece: come to the work rested and well, or find places to breathe in it."
+     "why": "Stamina draining through the later parts of a piece cost about 1.1 points of the whole a piece. It’s your fitness: Work Out, under Look After Yourself, builds it, and places to breathe in a piece leave less of it to drain; on a night, so does coming to the curtain rested. Rest restores energy, not fitness."
     },
     {
      "target": "physical",

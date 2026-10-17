@@ -173,6 +173,227 @@
      "caughtBy": "as genres.4-kept"
     }
    ]
+  },
+  {
+   "id": "genres.7-measured",
+   "group": "Brief 09 Area: genres",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "The genre measures after brief 09’s changes were made on d7127819 and 488fe999; the engine they read has changed since, and nothing held them on the code as it stands",
+   "exercised": "The same commands and seeds on the tested commit, 81eadac9, through measure.sh (genres-a, genres-b, stage, ag): every output byte for byte brief 10’s final, so each genre criterion holds where it held and fails where it failed: S1 designed 0.905 (least 0.847); held out 0.884 (least 0.793); fresh designed 0.903 (least 0.847); fresh held out 0.877 (least 0.784); S2 designed 1.597×; held out 1.615×; fresh designed 1.598×; fresh held out 1.615×; S3 designed 12,742 of 14,350 (88.8%); held out 11,670 of 14,350 (81.3%); fresh designed 24,871 of 28,413 (87.5%); fresh held out 23,222 of 28,413 (81.7%); S4 0 briefs of different genres identical in every number; Genre Audit helps its own brief in 149 of 149, moves another genre’s in 0; G3 Meets: the most any actor is best on: 49 of 149; 8 actors best on 10 or more; G4 Meets: 2 briefs, 4 readings at least; 4 reader behaviors; G5 Meets: 50.66 at 30 known, 53.1 at 100",
+   "evidence": [
+    {
+     "file": "docs/verification/completion-2026-10-16/final/signature.json",
+     "kind": "measurement",
+     "proves": "S1 to S4 on the tested commit"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/final/signature-fresh.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/final/signature-validate.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/final/genre-identity.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/final/genre-audit.md",
+     "kind": "measurement",
+     "proves": "149 genres audited"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/final/ag-baseline.json",
+     "kind": "measurement",
+     "proves": "G3 to G5"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/final/README.md",
+     "kind": "measurement",
+     "proves": "every output the same as brief 10’s final"
+    }
+   ],
+   "measured": {
+    "commit": "81eadac9",
+    "watch": "judge"
+   },
+   "fixes": [],
+   "mutations": []
+  },
+  {
+   "id": "L3-R.b",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "Measured on brief 10’s integrated code and on the acting area’s clone; the gate can’t carry the eight 120-day journeys",
+   "exercised": "measure.sh journeys-a, journeys-b and l3r on the tested commit, 81eadac9, seeds bj-0 and bj-1, all four profiles: l3r.json byte for byte brief 10’s, met: (b) met on 8 journeys, beginner 2, developing 2, generalist 2, specialist 2; (c) growth 1.253 at least, 0 falls unexplained; L3-R met: True",
+   "evidence": [
+    {
+     "file": "docs/verification/completion-2026-10-16/final/l3r.json",
+     "kind": "measurement",
+     "proves": "L3-R on the eight journeys"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/final/exits.txt",
+     "kind": "measurement",
+     "proves": "every part exit 0 on 81eadac9"
+    }
+   ],
+   "measured": {
+    "commit": "81eadac9",
+    "watch": "engine"
+   },
+   "fixes": [],
+   "mutations": []
+  },
+  {
+   "id": "judge.together",
+   "group": "Brief 10 Area: judge",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "Every criterion of brief 10’s section 5, measured on its integrated code; its own changes and brief 11’s since left them unmeasured on the code as it stands",
+   "exercised": "Every part of measure.sh but the two mutation runs on the tested commit, 81eadac9: every output byte for byte brief 10’s final but for the fields this pass added to two tools, so every criterion that held holds and those that failed (ST6-R (a), (c), (e), (g); F2, ST3, ST6, H4 and L3 as written) fail as they did; L1 as written fails as it did and holds as clarified (final/README.md)",
+   "evidence": [
+    {
+     "file": "docs/verification/completion-2026-10-16/final/README.md",
+     "kind": "measurement",
+     "proves": "the outputs compared with brief 10’s final, file by file"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/final/figures.json",
+     "kind": "measurement",
+     "proves": "every criterion’s figure, the same file as brief 10’s"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/final/exits.txt",
+     "kind": "measurement"
+    }
+   ],
+   "measured": {
+    "commit": "81eadac9",
+    "watch": "engine"
+   },
+   "fixes": [],
+   "mutations": []
+  },
+  {
+   "id": "advice.F2",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "F2 as written, kept in the record and still reported, was measured on brief 10’s code and not on the code as it stands",
+   "exercised": "tools/ag-baseline.ts and tools/ag-criteria.mjs on the tested commit, 81eadac9 (measure.sh ag): F2 as written fails as before, named 2.43 against 1.14 (2.13×), unread 0, the largest gain in 308 of 447 (68.9%), reported beside F2-A10 and not counted for the advice; the output is byte for byte brief 10’s",
+   "evidence": [
+    {
+     "file": "docs/verification/completion-2026-10-16/final/criteria.txt",
+     "kind": "measurement",
+     "proves": "F2 as written on 81eadac9"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/final/ag-baseline.json",
+     "kind": "measurement"
+    }
+   ],
+   "measured": {
+    "commit": "81eadac9",
+    "watch": "judge"
+   },
+   "fixes": [],
+   "mutations": []
+  },
+  {
+   "id": "advice.F2A10-c",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "Measured on brief 10’s code; the advice area of brief 11 changed what the advice says",
+   "exercised": "The held-out set run once on the tested commit, 81eadac9, its tree clean: the advised input’s realized gain at or above the median of the others’ on 120 of 120 fresh cases (95% asked), its mean 0.763 against 0.388 for an input chosen at random, 1.965 times (1.5 asked); every stratum the same (beginner 1.864, developing 2.057, advanced 1.961, near mastery 2.046; first week 1.976, mid-term 1.855, later 2.079); F2-A’s 30 held out, 2.187",
+   "evidence": [
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/held-out-summary.json",
+     "kind": "measurement",
+     "proves": "(c) by group and stratum"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/exits.txt",
+     "kind": "measurement",
+     "proves": "every batch exit 0 on 81eadac9"
+    }
+   ],
+   "measured": {
+    "commit": "81eadac9",
+    "watch": "engine"
+   },
+   "fixes": [],
+   "mutations": []
+  },
+  {
+   "id": "advice.heldout",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
+   "notProved": "The held-out run was made on brief 10’s code; the code to be reported changed in brief 11",
+   "exercised": "The held-out set run once on the tested commit, 81eadac9, its tree clean, in fifteen batches (F2-A’s adv-10 to 39 and the 120 fresh adv-h-0 to 119), each exit 0, its commit written in each file, then summarized with the tuning cases apart; each stratum reported (four bands, three stages). Every figure brief 10’s summary shares is the same, 390 of 390",
+   "evidence": [
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/held-out-summary.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/exits.txt",
+     "kind": "measurement"
+    }
+   ],
+   "measured": {
+    "commit": "81eadac9",
+    "watch": "engine"
+   },
+   "fixes": [],
+   "mutations": []
+  },
+  {
+   "id": "advice.F2A10-f",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Decision Required",
+   "status": "Decision Required",
+   "notProved": "The advice area verified (f) as clarified on tuning seeds; the held-out run on the tested commit is the measure",
+   "exercised": "The held-out set on 81eadac9: preparation apart from training 120 of 120; the near-mastery ladder falls 30 of 30; below three quarters of full the forecast falls with the level on 110 of 111 (adv-h-1 doesn’t)",
+   "evidence": [
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/held-out-summary.json",
+     "kind": "measurement"
+    }
+   ],
+   "decision": {
+    "question": "F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth falls with the level there, as the model gives it (tests/decisions-advice.test.ts, [N], played on tuning seeds). The forecast is in points of result, and what an ability point is worth on the work isn’t monotone in the level everywhere: it is the judge’s curve, and the forecast reads it truly (adv-h-1 forecast 0.828 and brought 1.058; F2-A10 (e) holds). Preparation apart from training holds on 120 of 120, and near mastery the ladder falls on 30 of 30. Should (f)’s diminishing returns be read in the growth the twenty sessions bring, with the forecast’s points left to the judge’s curve; or does (f) stay not met as clarified?",
+    "evidence": "docs/verification/completion-2026-10-16/advice/held-out-summary.json (held-out F2-A10: f.prepApart 120 of 120, f.ladderFalls 30 of 30 near mastery); docs/verification/completion-2026-10-16/advice/held-out-adv-h-0-9.json (adv-h-1’s f.ladder); clarifications.md, F2-A10 (f), with brief 10’s result kept",
+    "recommendation": "Read (f)’s diminishing returns in the growth the model gives (below three quarters of full each rung brings less, from there to full the same), held by the played test on tuning seeds, and leave the forecast’s points to the judge’s curve, which the forecast reads truly. That reading was formed after the held-out run, so it’s the owner’s to approve, not adopted here; until then (f) is counted not met."
+   },
+   "fixes": [],
+   "mutations": []
+  },
+  {
+   "id": "advice.F2A10-h",
+   "group": "Brief 10 Area: advice",
+   "baselineStatus": "Decision Required",
+   "status": "Decision Required",
+   "notProved": "The advice area verified (h) as clarified on tuning seeds; the held-out run on the tested commit is the measure",
+   "exercised": "The held-out set on 81eadac9: as clarified, the own part fell on 116 of 120; as written, the forecast fell on 113 of 120; fell, or rose within discipline’s lift and said, 120 of 120",
+   "evidence": [
+    {
+     "file": "docs/verification/completion-2026-10-16/advice/held-out-summary.json",
+     "kind": "measurement"
+    }
+   ],
+   "decision": {
+    "question": "F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 focus at 93), the forecast itself fell, so (h) as written holds there; the input’s own part rose because what an ability point is worth on the work isn’t monotone in the level (the judge’s curve, as in (f)). As written, the forecast fell on 113 of 120; the 7 that rose (adv-h-91, 100, 103, 106, 107, 110, 118, all near mastery) rose by a thousandth or less, each within discipline’s lift and said. Every case fell, or rose within discipline’s lift and said: 120 of 120. The first-named changed wherever another led, 51 of 51. Should (h) read: after the twenty sessions the forecast falls, or a rise is no more than discipline’s lift and is said; or does (h) stay not met, as written and as clarified?",
+    "evidence": "docs/verification/completion-2026-10-16/advice/held-out-summary.json (held-out F2-A10: h.fell 113, h.ownFell 116, h.withinLift 116, h.rose 7, h.explained 7, of 120); the held-out-adv-h-*.json cases’ h records; clarifications.md, F2-A10 (h), with brief 10’s result kept",
+    "recommendation": "Approve (h) as: after the twenty sessions the forecast falls, or a rise is no more than discipline’s lift and the advice says so (120 of 120 held out). That reading was seen to hold only after the held-out run, so it isn’t adopted here; until the owner approves it, (h) is counted not met, as written (113 of 120) and as clarified (116 of 120)."
+   },
+   "fixes": [],
+   "mutations": []
   }
  ],
  "administrative": [
@@ -239,6 +460,14 @@
   },
   {
    "cmd": "npx eslint tests/audit-pipeline.test.ts tests/remaining-genres.test.ts",
+   "exit": 0
+  },
+  {
+   "cmd": "bash docs/verification/decisions-2026-10-16/measure.sh <final> <part>, every part but the mutation runs, on 81eadac9",
+   "exit": 0
+  },
+  {
+   "cmd": "npx vite-node tools/advice.ts -- --cases <batch> [--held-out], fifteen batches and adv-0..9 on 81eadac9, then --summarize and --cases tuning",
    "exit": 0
   }
  ]

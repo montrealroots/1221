@@ -1,0 +1,276 @@
+adv-h-60 advanced firstWeek first=imagination best=imagination (0.917) first gained 0.917 predicted 0.694 PASS median=true e=true f=true prep=- g=4/4 h=true/true i=true d=0/true
+adv-h-61 advanced firstWeek first=emotionalDepth best=emotionalDepth (0.57) first gained 0.57 predicted 0.421 PASS median=true e=true f=true prep=- g=4/4 h=true/true i=true d=0/true
+adv-h-62 advanced firstWeek first=imagination best=imagination (0.585) first gained 0.585 predicted 0.495 PASS median=true e=true f=true prep=false g=4/4 h=true/true i=true d=0/true
+adv-h-63 advanced firstWeek first=imagination best=imagination (0.75) first gained 0.75 predicted 0.561 PASS median=true e=true f=true prep=false g=4/4 h=true/true i=true d=0/true
+adv-h-64 advanced firstWeek first=imagination best=imagination (0.69) first gained 0.69 predicted 0.501 PASS median=true e=true f=true prep=false g=4/4 h=true/true i=true d=0/true
+adv-h-65 advanced firstWeek first=imagination best=presence (0.618) first gained 0.276 predicted 0.338 MISS median=true e=true f=true prep=true g=4/4 h=true/true i=true d=0/true
+adv-h-66 advanced firstWeek first=imagination best=imagination (0.505) first gained 0.505 predicted 0.364 PASS median=true e=true f=true prep=false g=4/4 h=true/true i=true d=0/true
+adv-h-67 advanced firstWeek first=imagination best=listening (0.462) first gained 0.456 predicted 0.365 PASS median=true e=true f=true prep=true g=4/4 h=true/true i=true d=0/true
+adv-h-68 advanced firstWeek first=emotionalDepth best=emotionalDepth (0.613) first gained 0.613 predicted 0.445 PASS median=true e=true f=true prep=false g=4/4 h=true/true i=true d=0/true
+adv-h-69 advanced firstWeek first=emotionalDepth best=emotionalDepth (0.509) first gained 0.509 predicted 0.369 PASS median=true e=true f=true prep=- g=3/3 h=true/true i=true d=0/true
+{
+ "held-out": {
+  "n": 10,
+  "b": {
+   "pass": 9,
+   "share": 0.9,
+   "noAdvice": 0,
+   "exactBest": 8,
+   "tieSaid": 6,
+   "chiefIsFirst": 8
+  },
+  "c": {
+   "named": 10,
+   "atOrAboveMedian": 10,
+   "share": 1,
+   "firstMean": 0.587,
+   "randomMean": 0.323,
+   "ratio": 1.815
+  },
+  "d": {
+   "casesWithViolation": 0,
+   "nearMastery": 0,
+   "allFullSaid": 0,
+   "allFullSaidEveryCase": 10
+  },
+  "e": {
+   "named": 10,
+   "within": 10,
+   "share": 1,
+   "meanError": 0.132
+  },
+  "f": {
+   "prepPieces": 0,
+   "prepSaid": 0,
+   "prepSameEvery": 10,
+   "prepApart": 10,
+   "nearMastery": 0,
+   "ladderFalls": 0,
+   "everyCandidate": 0,
+   "ofCandidates": 0,
+   "prepLimited": 7,
+   "prepSame": 2,
+   "prepStepsLimited": 0,
+   "prepStepsSame": 0,
+   "prepAnyLimited": 10,
+   "prepAnySame": 3
+  },
+  "g": {
+   "recs": 39,
+   "ok": 39
+  },
+  "h": {
+   "cases": 10,
+   "fell": 10,
+   "leads": 4,
+   "changedWhereLed": 4,
+   "leadsWithinATie": 4,
+   "ownFell": 10,
+   "rose": 0,
+   "withinLift": 10,
+   "roseSinceNote": 0,
+   "explained": 0
+  },
+  "i": {
+   "same": 10
+  }
+ },
+ "held-out F2-A10": {
+  "n": 10,
+  "b": {
+   "pass": 9,
+   "share": 0.9,
+   "noAdvice": 0,
+   "exactBest": 8,
+   "tieSaid": 6,
+   "chiefIsFirst": 8
+  },
+  "c": {
+   "named": 10,
+   "atOrAboveMedian": 10,
+   "share": 1,
+   "firstMean": 0.587,
+   "randomMean": 0.323,
+   "ratio": 1.815
+  },
+  "d": {
+   "casesWithViolation": 0,
+   "nearMastery": 0,
+   "allFullSaid": 0,
+   "allFullSaidEveryCase": 10
+  },
+  "e": {
+   "named": 10,
+   "within": 10,
+   "share": 1,
+   "meanError": 0.132
+  },
+  "f": {
+   "prepPieces": 0,
+   "prepSaid": 0,
+   "prepSameEvery": 10,
+   "prepApart": 10,
+   "nearMastery": 0,
+   "ladderFalls": 0,
+   "everyCandidate": 0,
+   "ofCandidates": 0,
+   "prepLimited": 7,
+   "prepSame": 2,
+   "prepStepsLimited": 0,
+   "prepStepsSame": 0,
+   "prepAnyLimited": 10,
+   "prepAnySame": 3
+  },
+  "g": {
+   "recs": 39,
+   "ok": 39
+  },
+  "h": {
+   "cases": 10,
+   "fell": 10,
+   "leads": 4,
+   "changedWhereLed": 4,
+   "leadsWithinATie": 4,
+   "ownFell": 10,
+   "rose": 0,
+   "withinLift": 10,
+   "roseSinceNote": 0,
+   "explained": 0
+  },
+  "i": {
+   "same": 10
+  }
+ },
+ "held-out F2-A10 advanced": {
+  "n": 10,
+  "b": {
+   "pass": 9,
+   "share": 0.9,
+   "noAdvice": 0,
+   "exactBest": 8,
+   "tieSaid": 6,
+   "chiefIsFirst": 8
+  },
+  "c": {
+   "named": 10,
+   "atOrAboveMedian": 10,
+   "share": 1,
+   "firstMean": 0.587,
+   "randomMean": 0.323,
+   "ratio": 1.815
+  },
+  "d": {
+   "casesWithViolation": 0,
+   "nearMastery": 0,
+   "allFullSaid": 0,
+   "allFullSaidEveryCase": 10
+  },
+  "e": {
+   "named": 10,
+   "within": 10,
+   "share": 1,
+   "meanError": 0.132
+  },
+  "f": {
+   "prepPieces": 0,
+   "prepSaid": 0,
+   "prepSameEvery": 10,
+   "prepApart": 10,
+   "nearMastery": 0,
+   "ladderFalls": 0,
+   "everyCandidate": 0,
+   "ofCandidates": 0,
+   "prepLimited": 7,
+   "prepSame": 2,
+   "prepStepsLimited": 0,
+   "prepStepsSame": 0,
+   "prepAnyLimited": 10,
+   "prepAnySame": 3
+  },
+  "g": {
+   "recs": 39,
+   "ok": 39
+  },
+  "h": {
+   "cases": 10,
+   "fell": 10,
+   "leads": 4,
+   "changedWhereLed": 4,
+   "leadsWithinATie": 4,
+   "ownFell": 10,
+   "rose": 0,
+   "withinLift": 10,
+   "roseSinceNote": 0,
+   "explained": 0
+  },
+  "i": {
+   "same": 10
+  }
+ },
+ "held-out F2-A10 firstWeek": {
+  "n": 10,
+  "b": {
+   "pass": 9,
+   "share": 0.9,
+   "noAdvice": 0,
+   "exactBest": 8,
+   "tieSaid": 6,
+   "chiefIsFirst": 8
+  },
+  "c": {
+   "named": 10,
+   "atOrAboveMedian": 10,
+   "share": 1,
+   "firstMean": 0.587,
+   "randomMean": 0.323,
+   "ratio": 1.815
+  },
+  "d": {
+   "casesWithViolation": 0,
+   "nearMastery": 0,
+   "allFullSaid": 0,
+   "allFullSaidEveryCase": 10
+  },
+  "e": {
+   "named": 10,
+   "within": 10,
+   "share": 1,
+   "meanError": 0.132
+  },
+  "f": {
+   "prepPieces": 0,
+   "prepSaid": 0,
+   "prepSameEvery": 10,
+   "prepApart": 10,
+   "nearMastery": 0,
+   "ladderFalls": 0,
+   "everyCandidate": 0,
+   "ofCandidates": 0,
+   "prepLimited": 7,
+   "prepSame": 2,
+   "prepStepsLimited": 0,
+   "prepStepsSame": 0,
+   "prepAnyLimited": 10,
+   "prepAnySame": 3
+  },
+  "g": {
+   "recs": 39,
+   "ok": 39
+  },
+  "h": {
+   "cases": 10,
+   "fell": 10,
+   "leads": 4,
+   "changedWhereLed": 4,
+   "leadsWithinATie": 4,
+   "ownFell": 10,
+   "rose": 0,
+   "withinLift": 10,
+   "roseSinceNote": 0,
+   "explained": 0
+  },
+  "i": {
+   "same": 10
+  }
+ }
+}

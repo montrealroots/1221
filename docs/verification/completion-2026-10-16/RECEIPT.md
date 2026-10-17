@@ -2,24 +2,24 @@
 
 Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0e7ff7c2`) and the matrix as it stands. Nothing here is typed.
 
-- **Against the original full baseline:** 557 of 608 (91.6%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
-- **Of the actionable portion:** 33 of 46 (71.7%) closed by implementation or verification.
-- **The matrix’s own count:** 557 of 599 rows in scope Implemented And Verified (92.9%); 33 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 7 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
+- **Against the original full baseline:** 561 of 608 (92.2%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
+- **Of the actionable portion:** 37 of 46 (80.4%) closed by implementation or verification.
+- **The matrix’s own count:** 561 of 599 rows in scope Implemented And Verified (93.6%); 27 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
 - **Not complete:** decision 4’s rows stay as authorized, and every remaining row is listed below with what it lacks.
 
 ## Status Now, Of The Baseline’s Rows
 
 | Status | At The Baseline | Now |
 |---|---|---|
-| Implemented And Verified | 530 | 557 |
-| Implemented, Verification Incomplete | 63 | 33 |
+| Implemented And Verified | 530 | 561 |
+| Implemented, Verification Incomplete | 63 | 27 |
 | Partially Implemented | 0 | 0 |
 | Not Implemented | 4 | 0 |
 | Blocked Externally | 0 | 2 |
-| Decision Required | 11 | 7 |
+| Decision Required | 11 | 9 |
 | Explicitly Deferred | 27 | 36 |
 
-## Closed By Implementation Or Verification (33)
+## Closed By Implementation Or Verification (37)
 
 | Row | Group | At The Baseline |
 |---|---|---|
@@ -34,17 +34,21 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 | `coverage09.6-journeys-followup-fold` | Brief 09 Area: coverage | Implemented, Verification Incomplete |
 | `genres.4-kept` | Brief 09 Area: genres | Implemented, Verification Incomplete |
 | `genres.6-table` | Brief 09 Area: genres | Implemented, Verification Incomplete |
+| `genres.7-measured` | Brief 09 Area: genres | Implemented, Verification Incomplete |
 | `judge.coverage-row` | Brief 09 Area: judge | Implemented, Verification Incomplete |
 | `advice.harness` | Brief 10 Area: advice | Implemented, Verification Incomplete |
+| `advice.F2` | Brief 10 Area: advice | Implemented, Verification Incomplete |
 | `advice.F2A10-a` | Brief 10 Area: advice | Implemented, Verification Incomplete |
-| `advice.F2A10-f` | Brief 10 Area: advice | Decision Required |
-| `advice.F2A10-h` | Brief 10 Area: advice | Decision Required |
+| `advice.F2A10-c` | Brief 10 Area: advice | Implemented, Verification Incomplete |
 | `advice.tests` | Brief 10 Area: advice | Implemented, Verification Incomplete |
+| `advice.heldout` | Brief 10 Area: advice | Implemented, Verification Incomplete |
 | `advice.harness-hospital` | Brief 10 Area: advice | Implemented, Verification Incomplete |
 | `ST3-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete |
 | `H4-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete |
 | `L3-R.a` | Brief 10 Area: judge | Implemented, Verification Incomplete |
+| `L3-R.b` | Brief 10 Area: judge | Implemented, Verification Incomplete |
 | `L3-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete |
+| `judge.together` | Brief 10 Area: judge | Implemented, Verification Incomplete |
 | `judge.tests` | Brief 10 Area: judge | Implemented, Verification Incomplete |
 | `ST6-R.bPrime` | Brief 10 Area: judge | Decision Required |
 | `A1` | Brief 10 Area: judge | Implemented, Verification Incomplete |
@@ -71,21 +75,17 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 | `L3.asWritten` | Brief 10 Area: judge | superseded | Not Implemented | Explicitly Deferred |
 | `stamina.measure` | Brief 10 Area: stamina | historical-record | Implemented, Verification Incomplete | Explicitly Deferred |
 
-## Remaining In The Actionable Portion (13)
+## Remaining In The Actionable Portion (9)
 
 | Row | Group | Now | What It Lacks |
 |---|---|---|---|
 | `health.enroll` | Life, Health And Time | Implemented, Verification Incomplete | Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). 2026-10-17 (brief 11’s second reader): the work arm, at rene |
-| `genres.7-measured` | Brief 09 Area: genres | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it / The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sid |
-| `advice.F2` | Brief 10 Area: advice | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it |
-| `advice.F2A10-c` | Brief 10 Area: advice | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it |
-| `advice.heldout` | Brief 10 Area: advice | Implemented, Verification Incomplete | the area called it implemented and cites no gate test that holds it |
+| `advice.F2A10-f` | Brief 10 Area: advice | Decision Required | F2-A10 (f), as clarified (clarifications.md), said that below three quarters of full the forecast falls as the level rises. On the held-out set, run once on the tested commit (81eadac9), it does on 110 of 111 cases below three quarters: adv-h-1’s vocal, at 32, reads 0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions’ growth falls with the level ther |
+| `advice.F2A10-h` | Brief 10 Area: advice | Decision Required | F2-A10 (h), as clarified (clarifications.md), said the trained input’s forecast at the discipline it had when it was advised falls after the twenty sessions, on every case. On the held-out set, run once on the tested commit (81eadac9), it does on 116 of 120. In the four that didn’t (adv-h-1 vocal at 32, adv-h-22 emotional depth at 27, adv-h-102 memory at 91, adv-h-111 focus at 93), the forecast it |
 | `ST6-R.a` | Brief 10 Area: judge | Decision Required | ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the nine others 40.56, 600 in all) to be ahead of the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of the 44 materials. Measured, it isn’t (2 of 44), and the sorting brief 11 asked for says why: nothing in the game is missing, and the clause, with (c), (e) and (g)’ |
 | `ST6-R.c` | Brief 10 Area: judge | Decision Required | Rests on ST6-R (a): see its decision. Abilities and circumstances fail only for want of (a)’s wins; preparation and interpretation hold. |
 | `ST6-R.e` | Brief 10 Area: judge | Decision Required | Rests on ST6-R (a): see its decision. |
 | `ST6-R.g` | Brief 10 Area: judge | Decision Required | With A1, (g)’s first item is met. Its second and third aren’t caught by the clauses (g) names, and the third by none of ST6-R’s: they rest on what replaces (a) and (c). See ST6-R (a)’s decision. |
-| `L3-R.b` | Brief 10 Area: judge | Implemented, Verification Incomplete | Measured on the integrated code by the committed tools (integrated/after/); no gate test holds this clause itself / Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The eight journeys measured from c3e05866 through tools/brief-journeys.ts (the attentive policy and the brief policy, public commands only), each exit 0, and read by tools/l3r.mjs. / verified as i |
-| `judge.together` | Brief 10 Area: judge | Implemented, Verification Incomplete | Measured on the integrated code by the committed tools (integrated/after/README.md); the criteria that fail, ST6-R (a), (c), (e), (g), F2 as written and the four originals, fail as they did / Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The parts this area’s rows read were measured from this clone: stage (ST3-R, ST6-R, the stage criteria) from 44cd15c2, a |
 | `KS-ct-idcard` | Known Shortfalls And Missing Tests | Blocked Externally | The term of a non-verified (Not For Federal Identification) Connecticut card issued to somebody not a citizen, such as an F-1 student: no page or law the state publishes gives one. The non-driver ID page says 'valid for 7 years' with no exception; the limited-term REAL ID, whose expiration 'must align with the expiration date on the individual's legal status document(s)' (one year where there's no |
 | `KS-passport-fees` | Known Shortfalls And Missing Tests | Blocked Externally | Two offices' figures from abroad couldn't be read on their own pages, so they stay labelled assumptions. Japan: the dollar fee at the consulate for Connecticut from 1 July 2026 (SLATE charges the window fee, 9,300 yen, at its own rate). Tried on 2026-10-17 and refused, 403 Access Denied (Akamai) to curl and to WebFetch: https://www.ny.us.emb-japan.go.jp/ , /itpr_ja/passport02.html , /itpr_ja/passp |
 
@@ -589,7 +589,7 @@ None: the baseline wasn’t changed.
 | `genres.4-kept` | Brief 09 Area: genres | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `genres.5-saves` | Brief 09 Area: genres | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `genres.6-table` | Brief 09 Area: genres | verification | Implemented, Verification Incomplete | Implemented And Verified |
-| `genres.7-measured` | Brief 09 Area: genres | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `genres.7-measured` | Brief 09 Area: genres | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `genres.8-docs` | Brief 09 Area: genres | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `journeys.known-graduated-school-page` | Brief 09 Area: journeys | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `journeys.x1-yale-payment-savings-hold-registration` | Brief 09 Area: journeys | verified at the baseline | Implemented And Verified | Implemented And Verified |
@@ -623,18 +623,18 @@ None: the baseline wasn’t changed.
 | `judge.classes-fitness` | Brief 09 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `judge.coverage-row` | Brief 09 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `advice.harness` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
-| `advice.F2` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `advice.F2` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `advice.F2A10-a` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `advice.F2A10-b` | Brief 10 Area: advice | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `advice.F2A10-c` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `advice.F2A10-c` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `advice.F2A10-d` | Brief 10 Area: advice | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `advice.F2A10-e` | Brief 10 Area: advice | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `advice.F2A10-f` | Brief 10 Area: advice | design-or-gameplay | Decision Required | Implemented And Verified |
+| `advice.F2A10-f` | Brief 10 Area: advice | design-or-gameplay | Decision Required | Decision Required |
 | `advice.F2A10-g` | Brief 10 Area: advice | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `advice.F2A10-h` | Brief 10 Area: advice | design-or-gameplay | Decision Required | Implemented And Verified |
+| `advice.F2A10-h` | Brief 10 Area: advice | design-or-gameplay | Decision Required | Decision Required |
 | `advice.F2A10-i` | Brief 10 Area: advice | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `advice.tests` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
-| `advice.heldout` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `advice.heldout` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `advice.harness-hospital` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `arion.AR0.research` | Brief 10 Area: arion | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `arion.AR0.assumption` | Brief 10 Area: arion | verified at the baseline | Implemented And Verified | Implemented And Verified |
@@ -670,13 +670,13 @@ None: the baseline wasn’t changed.
 | `H4-R.e` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `H4.asWritten` | Brief 10 Area: judge | superseded | Not Implemented | Explicitly Deferred |
 | `L3-R.a` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
-| `L3-R.b` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `L3-R.b` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `L3-R.c` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `L3-R.d` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `L3-R.e` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `L3.asWritten` | Brief 10 Area: judge | superseded | Not Implemented | Explicitly Deferred |
 | `M1` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `judge.together` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `judge.together` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `judge.tests` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `judge.stamina` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `judge.memory` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |

@@ -169,6 +169,16 @@ criterion's words read as any preparation, the genre's included, 16 of 57; any t
 the tuning cases the genre's shortfall read complete named the best input in 27 of 30, and every take read complete in 18
 of 30.
 
+**Measured on the held-out set, after the clarification** (2026-10-17, the coordinator, on the tested commit `81eadac9`,
+`advice/held-out-summary.json`). Preparation apart from training holds on 120 of 120, and the near-mastery ladder falls on
+30 of 30. Below three quarters of full the forecast falls with the level on 110 of 111: adv-h-1's vocal, at 32, reads
+0.828, 0.899 and 0.764 at its level, a third and two thirds of the way to full. The twenty sessions' growth falls there,
+as the model gives it, but the forecast is in points of result, and what an ability point is worth on the work is the
+judge's curve, not monotone in the level everywhere. The forecast reads it truly: adv-h-1's forecast was 0.828, and
+training brought 1.058. So **(f) as clarified isn't met on the held-out set**, and goes to the owner
+(`integration-result.json`, advice.F2A10-f). The reading that would hold was seen only after the held-out run, so it isn't
+adopted here.
+
 ### F2-A10 (h): It Updates
 
 **As written** (`../decisions-2026-10-16/criteria.md`, section 2): "(h) It updates. After the player follows it (20
@@ -196,3 +206,11 @@ each hour grow more. The first-named changes wherever another input's gain now l
 **The earlier result, kept.** Brief 10: fell on 141 of 150 held-out cases (111 of 120 fresh), the nine that didn't all
 near mastery and within a thousandth (adv-h-91, 98, 100, 103, 106, 107, 108, 110 and 118); on the integrated code 113 of
 120; the first-named changed wherever another led, 62 of 62 (51 of 51 on the integrated code).
+
+**Measured on the held-out set, after the clarification** (2026-10-17, the coordinator, on the tested commit `81eadac9`,
+`advice/held-out-summary.json`). The own part fell on 116 of 120. In the four that didn't (adv-h-1, adv-h-22, adv-h-102,
+adv-h-111), the forecast itself fell, and the input's own part rose for the same reason as (f)'s exception: the judge's
+curve. As written, the forecast fell on 113 of 120; the seven that rose, all near mastery, rose by a thousandth or less,
+each within discipline's lift and said. Every case fell, or rose within discipline's lift and said: 120 of 120. So **(h)
+as clarified isn't met on the held-out set**, and goes to the owner with that reading proposed, seen only after the run
+(`integration-result.json`, advice.F2A10-h).

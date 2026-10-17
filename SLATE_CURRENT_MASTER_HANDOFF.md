@@ -31,11 +31,12 @@ kept verbatim) is being worked on `claude/peaceful-hamilton-59zdbb`, restarted f
 - **The matrix** may now carry an area item's measurement through an override (`measured`), held current as a
   criterion's is.
 
-**Completion, by the matrix:** 557 of 599 rows in scope Implemented And Verified (92.9%); 33 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 7 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 561 of 599 rows in scope Implemented And Verified (93.6%); 27 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 9 Decision Required, 36 Explicitly Deferred.
 
-Against the frozen baseline's 608, the figure is 522 (85.8%). It fell from 542 because the attributes' change to
-`systems/material.ts` and the advice's to `systems/briefs.ts` left 41 judge measurements stale until the final run.
-33 of the 46 actionable rows are closed by this pass's work:
+Against the frozen baseline's 608, the figure is 561 (92.2%). The judge's 35 measurements were made again on the
+tested commit `81eadac9`, byte for byte brief 10's (`final/README.md`). Six rows wait on the runs: F2-A, MA5 and
+four INT rows.
+37 of the 46 actionable rows are closed by this pass's work:
 - coverage09.4 to 09.6, genres.4 and genres.6 (`integration-result.json`);
 - the five tax.s8 items (`journeys-result.json`);
 - ST6-R.bPrime, ST3-R.e, H4-R.e, L3-R.a, L3-R.e, judge.tests and judge.coverage-row (`acting-result.json`);
@@ -44,11 +45,21 @@ Against the frozen baseline's 608, the figure is 522 (85.8%). It fell from 542 b
   look's own sentence shown nowhere; stamina's readers said as consistency; four ability sentences the code contradicted;
   the history rounded twice; fitness said to the whole point; stamina's drain advised as rest. Health, stamina and
   energy are checked apart (section 7);
-- L1, advice.F2A10-f, advice.F2A10-h, advice.harness, advice.F2A10-a, advice.harness-hospital and advice.tests
-  (`advice-result.json`). L1, (f) and (h) are verified **as clarified** (`clarifications.md`), each mapped to brief 11,
-  section 8, with its as-written result kept, L1's 8 and 6 weeks among them. The owner can reject a clarification. The
-  repeated advice now says how long it has stood, what has moved and the next action; preparation's gain is said apart
-  from training's; and a near-mastery rise is said to be discipline's.
+- L1, advice.harness, advice.F2A10-a, advice.harness-hospital and advice.tests (`advice-result.json`). L1 is verified
+  **as clarified** (`clarifications.md`), mapped to brief 11, section 8, with its as-written result kept, 8 and 6 weeks.
+  The owner can reject the clarification. The repeated advice now says how long it has stood, what has moved and the next
+  action, and preparation's gain is said apart from training's;
+- by measurement on the tested commit `81eadac9`: genres.7, L3-R.b, judge.together, advice.F2, advice.F2A10-c and
+  advice.heldout (`integration-result.json`, `final/`, `advice/`).
+
+**F2-A10 (f) and (h) are the owner's decision.** The advice area verified both as clarified on tuning seeds. The held-out
+set, run once on the tested commit, didn't bear the clarifications out:
+- **(f):** the forecast falls with the level on 110 of 111 cases below three quarters of full.
+- **(h):** the input's own part falls on 116 of 120.
+
+Both exceptions have one cause: the forecast is in points of result, and what an ability point is worth on the work is
+the judge's curve. The forecast reads it truly. The reading that holds on 120 of 120 is that the forecast falls, or rises
+within discipline's lift and says so. It was seen only after the run, so it's proposed, not adopted.
 
 **Blocked Externally** (`research-result.json`):
 - **KS-ct-idcard.** The Connecticut ID card's term (seven years to a birthday) and its mailing now follow the DMV's
