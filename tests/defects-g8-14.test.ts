@@ -96,13 +96,13 @@ describe('PLAYER JOURNEY: a medical leave in the first spring', () => {
     const school = sim.player.school!;
     expect(school.leave?.status).toBe('on');
     expect(school.standing).toBe('good');
-    expect(summerRefusal(sim, sim.player)).toBe('You’re on leave: a student on leave takes no part in the Summer Cabaret.');
-    expect(sim.execute({ kind: 'school.summer_cabaret', payload: {} }).error).toBe('You’re on leave: a student on leave takes no part in the Summer Cabaret.');
+    expect(summerRefusal(sim, sim.player)).toBe('You’re on leave, and a student on leave can’t take part in the Summer Cabaret.');
+    expect(sim.execute({ kind: 'school.summer_cabaret', payload: {} }).error).toBe('You’re on leave, and a student on leave can’t take part in the Summer Cabaret.');
     expect(school.summer).toBeUndefined();
-    expect(cabaretRefusal(sim, sim.player)).toBe('You’re on leave: a student on leave takes no part in the Yale Cabaret.');
-    expect(sim.execute({ kind: 'school.cabaret', payload: {} }).error).toBe('You’re on leave: a student on leave takes no part in the Yale Cabaret.');
+    expect(cabaretRefusal(sim, sim.player)).toBe('You’re on leave, and a student on leave can’t take part in the Yale Cabaret.');
+    expect(sim.execute({ kind: 'school.cabaret', payload: {} }).error).toBe('You’re on leave, and a student on leave can’t take part in the Yale Cabaret.');
     // What was refused before the leave for its own reason is still told apart from the leave.
-    expect(cabaretBefore).not.toBe('You’re on leave: a student on leave takes no part in the Yale Cabaret.');
+    expect(cabaretBefore).not.toBe('You’re on leave, and a student on leave can’t take part in the Yale Cabaret.');
   }, 240_000);
 });
 

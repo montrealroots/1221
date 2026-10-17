@@ -118,7 +118,7 @@ describe('Ask For Conversion To Grant Aid says why it’s refused on the screen'
     const sim = student('wn-convert', onAid);
     tended(sim, at(2026, 10, 2, 8));
     const none = conversionRefusal(sim, sim.player)!;
-    expect(none).toMatch(/No hours to convert/);
+    expect(none).toMatch(/There are no hours to convert/);
     refusedOnScreen(drawn(sim, WorkLimitsBlock), label, none);
     // Called in sick on a Saturday with an assigned shift, as tests/work-limits.test.ts plays it. TEST SETUP: not well.
     const sat = sim.universe.scheduled.find((i) => i.kind === SHIFT_KIND && i.status === 'pending' && i.payload.elective === false)!;
@@ -131,7 +131,7 @@ describe('Ask For Conversion To Grant Aid says why it’s refused on the screen'
     openOnScreen(drawn(sim, WorkLimitsBlock), label, none);
     sim.must({ kind: 'school.request_conversion', payload: {} });
     const asked = conversionRefusal(sim, sim.player)!;
-    expect(asked).toBe('Your request is in, for the next processing.');
+    expect(asked).toBe('Your request is already in for the next processing.');
     refusedOnScreen(drawn(sim, WorkLimitsBlock), label, asked);
     // No aid, a different reason, said the same way.
     const rich = student('wn-rich', { family: 'wealthy' });

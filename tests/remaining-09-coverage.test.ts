@@ -303,7 +303,7 @@ describe('written work: no way of playing to choose', () => {
       return { sim: thaw(found.snap), id: found.id };
     };
   })();
-  const words = 'It’s written work, presented at the table and never played: there’s no way of playing it to choose.';
+  const words = 'It’s written work: you present it at the table and don’t perform it, so there’s no way of playing it to choose.';
 
   it('PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked', () => {
     const { sim, id } = set();

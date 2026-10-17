@@ -463,7 +463,7 @@ export function prepareRefusal(sim: Simulation, person: Person, b: Brief | undef
   // asking up to 100%, stalled at about 93.5%: a mastered actor prepared twenty days taped 99.3 played Set on
   // brief-rockumentary-2, which asks 97%.
   const choiceToRehearse = step === 'rehearse' && sidesOf(rec.playing).length > 0 && rec.playing!.prep < requiredFor(sidesOf(rec.playing), briefMaterial(b), sceneOf(b, readingOf(b, rec.reading)));
-  if (rec.prep[s.part] >= 0.97 && !choiceToRehearse) return 'There’s nothing more to gain from it now.';
+  if (rec.prep[s.part] >= 0.97 && !choiceToRehearse) return 'You’ve done all this step can do.';
   if (step === 'rehearse' && rec.prep.memorization < BRIEF.rehearseNeeds) return 'Learn some of the lines first: there’s nothing to rehearse without them.';
   if (s.feet) {
     if (person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';
@@ -547,7 +547,7 @@ export function tapeRefusal(sim: Simulation, person: Person, genre: string, b: B
   if (!b.kinds.includes(genre)) return `${b.title} isn’t a scene of that genre.`;
   // A craft is the School's to begin (`enroll`): a life with none (a test's or a tool's, never a new life's) is refused.
   if (!person.craft) return 'Your training hasn’t begun: there’s no craft to tape yet.';
-  if (!peek(person, b.id).reading) return 'Choose a reading first: a take is of the scene played one way, and you should know which before the camera rolls.';
+  if (!peek(person, b.id).reading) return 'Choose a reading first. A self-tape plays the scene one way, so decide which before the camera rolls.';
   return hourRefusal(sim, person, SELF_TAPE.minutes);
 }
 
@@ -763,12 +763,12 @@ export function suggestions(person: Person, weakness?: { target: string; label: 
     const fresh = free.find((x) => !recs[x.b.id]?.takes.length);
     const pick = fresh ?? free[0];
     const than = fresh && fresh !== ranked[0] ? 'any brief you haven’t taped' : 'any other brief';
-    if (pick) out.push({ brief: pick.b.id, genre: pick.b.kinds[0]!, why: weakness.full ? `It leans on ${weakness.label.toLowerCase()} more than ${than} (${Math.round(pick.s * 100)}% of the work), which recent work names as a weakness, at ${Math.round(weakness.level)} of ${Math.round(weakness.full)}.` : `It leans on ${weakness.label.toLowerCase()} more than ${than} (${Math.round(pick.s * 100)}% of the work): your work so far names it as a weakness that keeps coming back.` });
+    if (pick) out.push({ brief: pick.b.id, genre: pick.b.kinds[0]!, why: weakness.full ? `It leans on ${weakness.label.toLowerCase()} more than ${than} (${Math.round(pick.s * 100)}% of what its tape is judged on), and your recent work shows it as a weakness, at ${Math.round(weakness.level)} of ${Math.round(weakness.full)}.` : `It leans on ${weakness.label.toLowerCase()} more than ${than} (${Math.round(pick.s * 100)}% of what its tape is judged on): your work so far names it as a weakness that keeps coming back.` });
   }
   // Material never met: the first brief built on it, untaped.
   if (identity?.untried) {
     const b = BRIEFS.find((x) => !recs[x.id] && featuresOf(briefMaterial(x)).includes(identity.untried!) && !out.some((o) => o.brief === x.id));
-    if (b) out.push({ brief: b.id, genre: b.kinds[0]!, why: `It’s built on ${(FEATURE_LABEL[identity.untried] ?? identity.untried).toLowerCase()}, which none of your work has met yet.` });
+    if (b) out.push({ brief: b.id, genre: b.kinds[0]!, why: `It’s built on ${(FEATURE_LABEL[identity.untried] ?? identity.untried).toLowerCase()}, which you haven’t worked with yet.` });
   }
   // A habit: a brief taped before, which takes it the other way.
   if (identity?.habit) {
@@ -782,7 +782,7 @@ export function suggestions(person: Person, weakness?: { target: string; label: 
   // (`tools/freshness.ts`: a mastered student's 20 takes fell on 7 briefs, with 141 never offered). What the record
   // knows of a genre is familiarity, how much of it they've done; what they love is never read here.
   const fresh = BRIEFS.filter((b) => !recs[b.id] && !out.some((o) => o.brief === b.id)).map((b) => ({ b, known: familiarityOf(person, b.kinds[0]!) })).sort((x, y) => x.known - y.known || x.b.id.localeCompare(y.b.id))[0];
-  if (fresh) out.push({ brief: fresh.b.id, genre: fresh.b.kinds[0]!, why: `${GENRE_BY_ID[fresh.b.kinds[0]!]?.label ?? fresh.b.kinds[0]} is the genre your work knows least (${Math.round(fresh.known)} of 100), and ${fresh.b.title} is new to you.` });
+  if (fresh) out.push({ brief: fresh.b.id, genre: fresh.b.kinds[0]!, why: `${GENRE_BY_ID[fresh.b.kinds[0]!]?.label ?? fresh.b.kinds[0]} is the genre you know least (${Math.round(fresh.known)} of 100), and ${fresh.b.title} is new to you.` });
   for (const [id, r] of Object.entries(recs)) {
     const b = BRIEF_BY_ID[id];
     if (!b || !r.takes.length || out.some((o) => o.brief === id)) continue;

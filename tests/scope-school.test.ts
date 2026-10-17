@@ -288,7 +288,7 @@ describe('school.respond', () => {
     tend(open, at(2028, 2, 23, 7, 1));
     expect(momentOf(open, m!.id).status).toBe('lapsed');
     expect(trustOf(open.player.school!.classmates[m!.mate]!)).toBe(trust);
-    for (const choice of ['help', 'no']) expect(respond(open, m!.id, choice).error).toBe('It’s too late to answer: the moment passed.');
+    for (const choice of ['help', 'no']) expect(respond(open, m!.id, choice).error).toBe('It’s too late to answer. The moment has passed.');
     expect(momentOf(reload(open), m!.id).status).toBe('lapsed');
   }, 120_000);
 
@@ -312,7 +312,7 @@ describe('school.respond', () => {
     }
     // At half past seven on the 23rd, its evening past: refused as the moment passed, not as the evening has.
     tend(sim, at(2027, 1, 23, 19, 30));
-    for (const choice of ['yes', 'no']) expect(respond(sim, m!.id, choice).error).toBe('It’s too late to answer: the moment passed.');
+    for (const choice of ['yes', 'no']) expect(respond(sim, m!.id, choice).error).toBe('It’s too late to answer. The moment has passed.');
     expect(pendingOf(sim, STUDY_KIND)).toHaveLength(0);
   }, 120_000);
 
@@ -329,7 +329,7 @@ describe('school.respond', () => {
     const sim = await opened(text);
     expect(momentOf(sim, m!.id).status).toBe('lapsed');
     expect(trustOf(sim.player.school!.classmates[m!.mate]!)).toBe(trust - 1);
-    for (const choice of ['yes', 'no']) expect(respond(sim, m!.id, choice).error).toBe('It’s too late to answer: the moment passed.');
+    for (const choice of ['yes', 'no']) expect(respond(sim, m!.id, choice).error).toBe('It’s too late to answer. The moment has passed.');
     const back = await opened(serialise(sim.universe));
     expect(trustOf(back.player.school!.classmates[m!.mate]!)).toBe(trust - 1);
     expect(pendingOf(back, MOMENT_KIND)).toHaveLength(0);
@@ -509,12 +509,12 @@ describe('school.request_repeat', () => {
     // The first time, the year's end was offered; the second, not, as it isn't to be had. Until 2026-10-15 both offered it.
     const name = 'Text Analysis I: The Actor’s Table Work';
     expect(titled(sim, `Not Passed: ${name}`).map((n) => n.body)).toEqual([
-      `${name} wasn’t passed: you were at 9 of its 13 meetings you weren’t excused from. The degree needs every course passed: at the year’s end you can ask to repeat the year, on the Standing tab.`,
-      `${name} wasn’t passed: you were at 11 of its 15 meetings you weren’t excused from. The degree needs every course passed.`,
+      `You didn’t pass ${name}: you came to 9 of the 13 classes you weren’t excused from. The degree needs every course passed. At the year’s end you can ask to repeat the year on the Standing tab.`,
+      `You didn’t pass ${name}: you came to 11 of the 15 classes you weren’t excused from. The degree needs every course passed.`,
     ]);
     // Dismissed at the same evaluation, in the faculty’s words, with nothing left to ask.
     expect(school().standing).toBe('dismissed');
-    expect(titled(sim, 'Dismissed From The School').map((n) => n.body.split('. ')[0])).toEqual(['The warning wasn’t met']);
+    expect(titled(sim, 'Dismissed From The School').map((n) => n.body.split('. ')[0])).toEqual(['You didn’t meet the terms of your academic warning']);
     expect(sim.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You’re not at school.');
   }, 300_000);
 
@@ -530,7 +530,7 @@ describe('school.request_repeat', () => {
     expect(fall.sort()).toEqual([['0:DRAM 113a/b', 18, 26], ['0:DRAM 153a', 9, 13], ['0:DRAM 403a/b', 9, 13]]);
     // Three Fails in a term, past the Bulletin’s two: the first review keeps them on warning, the year to be repeated.
     expect([school().standing, school().reviews!.map((r) => r.outcome)]).toEqual(['warning', ['warning']]);
-    const offered = /: at the year’s end you can ask to repeat the year, on the Standing tab\.$/;
+    const offered = /\. At the year’s end you can ask to repeat the year on the Standing tab\.$/;
     const fallFails = sim.universe.notifications.filter((n) => n.title.startsWith('Not Passed: '));
     expect(fallFails).toHaveLength(3);
     for (const n of fallFails) expect(n.body).toMatch(offered);
@@ -546,7 +546,7 @@ describe('school.request_repeat', () => {
     const name = 'Text Analysis I: The Actor’s Table Work';
     const evaluated = at(2027, 4, 23, 17);
     expect(sim.universe.notifications.filter((n) => n.at === evaluated && n.category === 'school').map((n) => n.title)).toEqual(['Dismissed From The School', `Not Passed: ${name}`]);
-    expect(titled(sim, `Not Passed: ${name}`).map((n) => n.body)).toEqual([`${name} wasn’t passed: you were at 9 of its 13 meetings you weren’t excused from. The degree needs every course passed.`]);
+    expect(titled(sim, `Not Passed: ${name}`).map((n) => n.body)).toEqual([`You didn’t pass ${name}: you came to 9 of the 13 classes you weren’t excused from. The degree needs every course passed.`]);
     expect(sim.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You’re not at school.');
   }, 300_000);
 
@@ -558,11 +558,11 @@ describe('school.request_repeat', () => {
     expect(sleepThrough(sim, 0, 'DRAM 153a', 4)).toHaveLength(4);
     tend(sim, at(2026, 12, 11, 18));
     expect(school().courses!['0:DRAM 153a']).toMatchObject({ result: 'fail', academic: 0, attended: 9, meetings: 13, excused: 0 });
-    expect(titled(sim, 'Not Passed: Play').map((n) => [n.at, n.body])).toEqual([[at(2026, 12, 11, 17), 'Play wasn’t passed: you were at 9 of its 13 meetings you weren’t excused from. The degree needs every course passed: at the year’s end you can ask to repeat the year, on the Standing tab.']]);
+    expect(titled(sim, 'Not Passed: Play').map((n) => [n.at, n.body])).toEqual([[at(2026, 12, 11, 17), 'You didn’t pass Play: you came to 9 of the 13 classes you weren’t excused from. The degree needs every course passed. At the year’s end you can ask to repeat the year on the Standing tab.']]);
     expect(school().standing).toBe('concern');
     // Monday 14 December, the fall evaluated: a leave begins at the spring. Not a personal one, with Play unpassed.
     tend(sim, at(2026, 12, 14, 10));
-    expect(sim.execute({ kind: 'school.request_leave', payload: { kind: 'personal', reason: 'family', terms: 2 } }).error).toBe('A personal leave asks you to be current with your requirements, and Play isn’t passed.');
+    expect(sim.execute({ kind: 'school.request_leave', payload: { kind: 'personal', reason: 'family', terms: 2 } }).error).toBe('For a personal leave you need to be current with your requirements, and Play isn’t passed.');
     // TEST SETUP: the flu, as illness comes by the draw, for a physician's recommendation. From a spring a leave is two
     // terms: one, or three, would bring them back in a fall to the second halves of year-long courses (`leaveLengths`).
     flu(sim);
@@ -601,7 +601,7 @@ describe('school.request_repeat', () => {
     let sim = thaw(firstSpring().afterSpring1);
     const school = () => sim.player.school!;
     expect(school().standing).toBe('concern');
-    const offered = /: at the year’s end you can ask to repeat the year, on the Standing tab\.$/;
+    const offered = /\. At the year’s end you can ask to repeat the year on the Standing tab\.$/;
     expect(titled(sim, 'Not Passed: Text Analysis I: The Actor’s Table Work').map((n) => n.body)).toEqual([expect.stringMatching(offered)]);
     tend(sim, at(2027, 8, 30, 0));
     // Four Mondays of Fall Term 2027 slept through: Mondays-only DRAM 263a/b at 9 of 13.
@@ -621,7 +621,7 @@ describe('school.request_repeat', () => {
     expect(spring.map(([k]) => k)).toEqual(['3:DRAM 233a/b']);
     expect([school().standing, school().reviews ?? []]).toEqual(['dismissed', []]);
     const dismissed = titled(sim, 'Dismissed From The School');
-    expect(dismissed.map((n) => n.body.split('. ')[0])).toEqual(['The warning wasn’t met']);
+    expect(dismissed.map((n) => n.body.split('. ')[0])).toEqual(['You didn’t meet the terms of your academic warning']);
     // The Fail at the evaluation that dismissed: nothing offered, said after the dismissal at the same instant.
     const name = spring[0]![1].name;
     expect(sim.universe.notifications.filter((n) => n.at === dismissed[0]!.at && n.category === 'school').map((n) => n.title)).toEqual(['Dismissed From The School', `Not Passed: ${name}`]);
@@ -666,7 +666,7 @@ describe('school.request_repeat', () => {
     expect([school().standing, school().endedAt]).toEqual(['warning', undefined]);
     // From 2026-10-15: no repeat offered, which `repeatRefusal` would refuse at the year's end. From 2026-10-16 the additional
     // term the last year's end will offer is named in its place (tests/remaining-school.test.ts, “no dead-end warning”).
-    expect(titled(sim, 'Permanent Incomplete: Acting I').map((n) => [n.at, n.body])).toEqual([[at(2028, 1, 9, 17), 'Its month ran out, so Acting I carries no credit, and the degree can’t be completed without it. Its year can’t be repeated within the nine semesters the Bulletin allows; after your last year’s evaluation, unless it leaves you on academic warning, you can ask for an additional term to retake it, on the Standing tab.']]);
+    expect(titled(sim, 'Permanent Incomplete: Acting I').map((n) => [n.at, n.body])).toEqual([[at(2028, 1, 9, 17), 'The month to make it up ran out, so Acting I carries no credit, and the degree can’t be completed without it. Its year can’t be repeated within the nine semesters the Bulletin allows. After your last year’s term review, unless it puts you on academic warning, you can ask for an additional term to retake it on the Standing tab.']]);
   }, 300_000);
 
   it('PLAYER JOURNEY: a first year repeated and passed, then the second fall’s Clown slept through: its Fail, at an evaluation that steps good to concern, offers no repeat, and at the second spring’s end the Standing tab has no Ask To Repeat The Year…, the command refused past the nine semesters', () => {
@@ -691,7 +691,7 @@ describe('school.request_repeat', () => {
     // year's two again and the program's two after it make ten, past the Bulletin's nine. Until 2026-10-15 it was offered.
     expect([school().standing, school().endedAt]).toEqual(['concern', undefined]);
     // From 2026-10-16 the additional term the last year's end will offer is named in its place (tests/remaining-school.test.ts).
-    expect(titled(sim, 'Not Passed: Clown').map((n) => [n.at, n.body])).toEqual([[at(2028, 12, 8, 17), 'Clown wasn’t passed: you were at 7 of its 11 meetings you weren’t excused from. The degree needs every course passed. Its year can’t be repeated within the nine semesters the Bulletin allows; after your last year’s evaluation, unless it leaves you on academic warning, you can ask for an additional term to retake it, on the Standing tab.']]);
+    expect(titled(sim, 'Not Passed: Clown').map((n) => [n.at, n.body])).toEqual([[at(2028, 12, 8, 17), 'You didn’t pass Clown: you came to 7 of the 11 classes you weren’t excused from. The degree needs every course passed. Its year can’t be repeated within the nine semesters the Bulletin allows. After your last year’s term review, unless it puts you on academic warning, you can ask for an additional term to retake it on the Standing tab.']]);
     sim = reload(sim);
     // The year's end: the second spring, Spring Term 2029, played through to its evaluation of Friday 27 April at five.
     tend(sim, at(2029, 4, 27, 18));
@@ -719,7 +719,7 @@ describe('school.request_repeat', () => {
     tend(sim, at(2027, 4, 30, 19));
     const why = '2 courses failed in Spring Term 2027: the Bulletin disqualifies a student with 2 Failures in a term.';
     expect(school.repeat).toMatchObject({ status: 'refused', why });
-    expect(titled(sim, 'Your Repeat Is Refused').map((n) => n.body)).toEqual([`The chair and the dean refused it. ${why}`]);
+    expect(titled(sim, 'Your Repeat Isn’t Granted').map((n) => n.body)).toEqual([`The chair and the dean refused it. ${why}`]);
     expect([school.offset ?? 0, school.classOf, school.repeatedYears]).toEqual([0, 2029, undefined]);
     expect(pendingOf(sim, REPEAT_DECIDE_KIND)).toHaveLength(0);
   }, 300_000);
@@ -763,11 +763,11 @@ describe('school.request_extra_term', () => {
     // The Fail's notice promises nothing the withholding at the same evaluation takes away: until 2026-10-15 it told
     // them to ask to repeat the year at its end, which `You’re not at school.` then refused.
     expect(titled(sim, 'Not Passed: Movement Invention III').map((n) => n.body)).toEqual([
-      'Movement Invention III wasn’t passed: you were at 9 of its 13 meetings you weren’t excused from. The degree needs every course passed: at the year’s end you can ask to repeat the year, on the Standing tab.',
-      'Movement Invention III wasn’t passed: you were at 10 of its 14 meetings you weren’t excused from. The degree needs every course passed.',
+      'You didn’t pass Movement Invention III: you came to 9 of the 13 classes you weren’t excused from. The degree needs every course passed. At the year’s end you can ask to repeat the year on the Standing tab.',
+      'You didn’t pass Movement Invention III: you came to 10 of the 14 classes you weren’t excused from. The degree needs every course passed.',
     ]);
     // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
-    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['The degree needs every course passed, and Movement Invention III wasn’t. You were at 85% of what was asked of you, and your craft grew 0.1 against the class’s 0.1: for the room each of you had to grow, in line with the class. The faculty noted your coursework: 3 of 3 pieces strong or better. Not passed: Movement Invention III. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.']);
+    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['The degree needs every course passed, and Movement Invention III wasn’t. You came to 85% of the classes, calls and shifts asked of you. Your craft grew 0.1 points, and the class’s middle student’s grew 0.1. Allowing for how much room each of you had to grow, that’s in line with the class. The faculty noted your coursework: 3 of 3 pieces were Strong or better. You didn’t pass Movement Invention III. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.']);
     expect(titled(sim, 'Your MFA Is Conferred')).toHaveLength(0);
     expect(sim.universe.scheduled.filter((i) => i.kind === CONFERRAL_KIND && i.payload.personId === sim.player.id && i.status === 'pending')).toHaveLength(0);
     // Nothing is left to ask: the School is over.
@@ -856,7 +856,7 @@ describe('school.request_conversion', () => {
   it('PLAYER JOURNEY: in the first fall with no hours excused, the drawn button is grayed and the command refused in January’s words, and neither moves the clock, the ledger, the calendar or the bank, through a save', () => {
     let sim = life('sc-c0', SCRAPING);
     tend(sim, at(2026, 9, 14, 12));
-    const words = 'No hours to convert at January’s processing: only assigned hours missed ill or hurt count then.';
+    const words = 'There are no hours to convert at January’s processing. Only assigned hours you missed while ill or hurt count then.';
     const panel = drawn(sim, WorkLimitsBlock);
     expect(stat(panel.html, 'Convertible To Grant Aid')).toEqual({ value: '0 hours', note: '$0.00 at the rate; 0 converted' });
     expect(drew('school.request_conversion').map((c) => [c.label, c.disabled, c.title])).toEqual([['Ask For Conversion To Grant Aid', true, words]]);
@@ -883,9 +883,9 @@ describe('school.request_conversion', () => {
     const [now, txs, items, bank] = JSON.parse(before) as number[];
     expect(JSON.parse(untouched(sim))).toEqual([now, txs, items! + 1, bank]);
     expect(pendingOf(sim, 'school.convert').map((i) => [i.at, i.payload.year])).toEqual([[at(2027, 1, 15, 12), '0']]);
-    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Your request is in, for the next processing.');
+    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Your request is already in for the next processing.');
     sim = reload(sim);
-    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Your request is in, for the next processing.');
+    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Your request is already in for the next processing.');
     // The bank across the processing: up by the six hours' $138.00 and nothing else, one posting made.
     const first = acrossProcessing(sim, at(2027, 1, 15, 12));
     expect(first.moved).toBe(138_00);
@@ -895,7 +895,7 @@ describe('school.request_conversion', () => {
     expect(grantsOf(sim).map((t) => [t.at, t.postings.map((p) => p.amount).sort((a, b) => a - b)])).toEqual([[at(2027, 1, 15, 12), [-6 * RATE, 6 * RATE]]]);
     expect(school().convertedHours).toEqual({ 0: 6 });
     // Asked again: the six are converted, and nothing else is to be had before May.
-    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('No hours to convert yet: hours missed ill or hurt count now, and hours never assigned from May, once the spring’s shifts are done.');
+    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('There are no hours to convert yet. Hours you missed while ill or hurt count now; hours never assigned count from May, once the spring’s shifts are done.');
 
     // The first spring failed, Text Analysis I slept through from the 15th on, and the year repeated.
     expect(sleepThrough(sim, 1, TABLE_WORK, 4)).toHaveLength(4);

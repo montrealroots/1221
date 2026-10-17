@@ -248,7 +248,7 @@ function tailFor(kind: AccountKind, spendsFromIt: boolean): string {
     case 'brokerage':
       return 'What it’s worth moves with the market.';
     case 'escrow':
-      return 'It isn’t yours to touch until the thing it’s for happens.';
+      return 'It’s held for one purpose, and you can use it only when that happens.';
     case 'cash':
       return 'It’s yours to spend, with no bank involved.';
     default:

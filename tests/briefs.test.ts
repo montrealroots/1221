@@ -321,7 +321,7 @@ describe('what the record makes of it', () => {
     go(sim, 'brief.choose', { brief: 'brief-drama', reading: 'guarded' });
     go(sim, 'practice.self_tape', { genre: 'drama' });
     const s = suggestions(sim.player);
-    const fresh = s.findIndex((x) => /knows least/.test(x.why));
+    const fresh = s.findIndex((x) => /is the genre you know least/.test(x.why));
     const again = s.findIndex((x) => /another reading/.test(x.why));
     expect(fresh).toBeGreaterThanOrEqual(0);
     expect(again).toBeGreaterThan(fresh);
@@ -357,7 +357,7 @@ describe('found by the played runs (2026-10-12)', () => {
     const sim = student('brief-late-choice');
     go(sim, 'brief.choose', { brief: 'brief-drama', reading: 'guarded' });
     recordOf(sim.player, 'brief-drama').prep = { interpretation: 1, memorization: 1, rehearsal: 1 };
-    expect(go(sim, 'brief.prepare', { brief: 'brief-drama', step: 'rehearse' }).error).toMatch(/nothing more to gain/);
+    expect(go(sim, 'brief.prepare', { brief: 'brief-drama', step: 'rehearse' }).error).toMatch(/You’ve done all this step can do/);
     go(sim, 'brief.choose', { brief: 'brief-drama', reading: 'guarded', pace: 'measured' });
     const before = recordOf(sim.player, 'brief-drama').playing!.prep;
     expect(go(sim, 'brief.prepare', { brief: 'brief-drama', step: 'rehearse' }).ok).toBe(true);
@@ -399,7 +399,7 @@ describe('found by the played runs (2026-10-12)', () => {
     a.prep.memorization = 1;
     a.prep.rehearsal = 0.99;
     rest(sim);
-    expect(prepareRefusal(sim, sim.player, a, act.id)).toMatch(/nothing more to gain/);
+    expect(prepareRefusal(sim, sim.player, a, act.id)).toMatch(/You’ve done all this step can do/);
     a.playing = { pace: 'driven', chosenAt: sim.now, prep: 0.2 };
     expect(prepareRefusal(sim, sim.player, a, act.id)).toBeUndefined();
   });
@@ -499,7 +499,7 @@ describe('found by the sweep (2026-10-16)', () => {
     expect(go(sim, 'brief.prepare', { brief: ROCK.id, step: 'rehearse' }).ok).toBe(true);
     expect(rec.playing!.prep).toBeGreaterThan(0.93);
     rec.playing!.prep = rockMark();
-    expect(go(sim, 'brief.prepare', { brief: ROCK.id, step: 'rehearse' }).error).toMatch(/nothing more to gain/);
+    expect(go(sim, 'brief.prepare', { brief: ROCK.id, step: 'rehearse' }).error).toMatch(/You’ve done all this step can do/);
   });
 
   it('PLAYER JOURNEY: a mastered actor, prepared a day at a time, reaches 100 on a side against the grain that asks 97%', () => {
@@ -533,6 +533,6 @@ describe('found by the sweep (2026-10-16)', () => {
     expect(choiceMark(a)).toBeGreaterThan(0.95);
     expect(prepareRefusal(sim, sim.player, a, act.id)).toBeUndefined();
     a.playing.prep = choiceMark(a);
-    expect(prepareRefusal(sim, sim.player, a, act.id)).toMatch(/nothing more to gain/);
+    expect(prepareRefusal(sim, sim.player, a, act.id)).toMatch(/You’ve done all this step can do/);
   });
 });

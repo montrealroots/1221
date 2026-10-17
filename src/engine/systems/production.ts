@@ -515,7 +515,7 @@ export function ownWorkRefusal(sim: Simulation, person: Person, which: Which, wh
   // A run over: nothing left to rehearse for. Until the first version was checked in the running app, a finished run's part could still be learned.
   if (!pendingOf(sim, person, which).length) return 'The run is over.';
   const p = processOf(casting);
-  if (what === 'part' && p.lines >= 0.97) return 'You know the part.';
+  if (what === 'part' && p.lines >= 0.97) return 'You already know the part.';
   if (what === 'blocking' && p.blockingMissed === 0) return 'You haven’t missed any blocking.';
   if (what === 'note') {
     const last = p.notes.at(-1);

@@ -78,7 +78,7 @@ describe('the Incomplete notice', () => {
     const said = sim.universe.notifications.slice(before).filter((n) => n.category === 'school');
     expect(said.map((n) => n.title).sort()).toEqual(['Incomplete: Acting I', 'Not Passed: Voice I']);
     const incomplete = said.find((n) => n.title === 'Incomplete: Acting I')!;
-    expect(incomplete.body).toContain('a week’s each');
+    expect(incomplete.body).toContain('each covering a week of the course');
     for (const n of said) expect(`${n.title} ${n.body}`, n.title).not.toContain("'");
   });
 });

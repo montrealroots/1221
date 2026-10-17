@@ -191,7 +191,7 @@ describe('school.orientation', () => {
     expect(cw(sim).orientation.done[task as 'tour']).toBe(sim.now);
     return r.told;
   };
-  const LIBRARY = 'The library isn’t known to you yet: the tour shows you it.';
+  const LIBRARY = 'You don’t know where the library is yet. The building tour in Orientation shows you.';
 
   it('PLAYER JOURNEY: the week missed in New York, caught up in New Haven: each session takes its own minutes and opens what it arranges, once, across a reload', () => {
     const sim = student('g19-orientation');
@@ -216,7 +216,7 @@ describe('school.orientation', () => {
     expect(firstYearFall).toHaveLength(8);
     const open = cw(sim).assignments.filter((a) => a.status === 'open');
     expect(open.map((a) => a.course).sort()).toEqual(firstYearFall);
-    expect(told).toContain(`${open.length} courses gave you their first work now`);
+    expect(told).toContain(`${open.length} courses gave you their first piece now`);
     tended(there, on(2026, 8, 29, 9));
     const shape = (s: Simulation) => cw(s).assignments.map((a) => [a.course, a.template, a.dueOn, a.sceneId ?? '']).sort();
     expect(shape(sim)).toEqual(shape(there));
@@ -227,7 +227,7 @@ describe('school.orientation', () => {
     const mate = sim.player.school!.classmates[scene.partner!]!;
     const first = mate.name.split(' ')[0];
     const ask = { kind: 'school.ask_partner', payload: { assignmentId: scene.id, at: on(2026, 8, 30, 14) } };
-    expect(sim.execute(ask).error).toBe(`You haven’t met ${first} yet: you’ll meet the class at orientation, or at the first class.`);
+    expect(sim.execute(ask).error).toBe(`You haven’t met ${first} yet. You’ll meet your class at orientation, or at your first class.`);
     expect(sim.player.school!.classmates.every((m) => mateRecord(m).met === undefined)).toBe(true);
     caughtUp(sim, 'classmates', 180);
     expect(sim.player.school!.classmates.every((m) => mateRecord(m).met === sim.now)).toBe(true);
@@ -240,13 +240,13 @@ describe('school.orientation', () => {
     const talk = open.find((a) => a.template === 'context-presentation')!;
     const studioStep = { kind: 'school.prepare', payload: { assignmentId: score.id, activity: 'devise' } };
     const libraryStep = { kind: 'school.prepare', payload: { assignmentId: talk.id, activity: 'research' } };
-    expect(sim.execute(studioStep).error).toBe('You don’t know the building yet: the tour shows you the studios.');
-    expect(sim.execute(libraryStep).error).toBe('You don’t know the library yet: the tour shows you it.');
+    expect(sim.execute(studioStep).error).toBe('You don’t know where the studios are yet. The building tour in Orientation shows you.');
+    expect(sim.execute(libraryStep).error).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
     caughtUp(sim, 'tour', 120);
     const devised = sim.execute<{ moved: number }>(studioStep);
     expect(devised.ok, devised.error).toBe(true);
     expect(devised.value!.moved).toBeGreaterThan(0);
-    expect(sim.execute(libraryStep).error).not.toBe('You don’t know the library yet: the tour shows you it.');
+    expect(sim.execute(libraryStep).error).not.toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
     const read = sim.execute({ kind: 'plays.read', payload: { playId: 'fleabag' } });
     expect(read.ok, read.error).toBe(true);
 
@@ -287,13 +287,13 @@ describe('school.orientation', () => {
     expect(busy.player.school!.classmates.every((m) => mateRecord(m).met === undefined)).toBe(true);
 
     const fresh = student('g19-orientation-fresh');
-    expect(fresh.execute({ kind: 'school.orientation', payload: { task: 'tour' } }).error).toBe('Its session is still ahead on the calendar.');
+    expect(fresh.execute({ kind: 'school.orientation', payload: { task: 'tour' } }).error).toBe('This session is still to come. It’s on your calendar.');
     expect(fresh.execute({ kind: 'school.orientation', payload: { task: 'nonsense' } }).error).toBe('There’s no such session.');
 
     // A life begun on 7 September, after the first week: orientation is behind it, and what it arranges is taken as done.
     const late = student('g19-orientation-late', { startMonth: 9, startDay: 7 });
     expect(zonedParts(late.now, NY)).toMatchObject({ month: 9, day: 7 });
-    expect(late.execute({ kind: 'school.orientation', payload: { task: 'register' } }).error).toBe('Orientation is behind you.');
+    expect(late.execute({ kind: 'school.orientation', payload: { task: 'register' } }).error).toBe('Orientation is over.');
     expect(registered(late.player.school, courseworkOf(late, late.player))).toBe(true);
     const read = late.execute({ kind: 'plays.read', payload: { playId: 'fleabag' } });
     expect(read.ok, read.error).toBe(true);
@@ -310,7 +310,7 @@ describe('school.orientation', () => {
     const here = drawn(sim, 'coursework');
     const offered = here.buttons.filter((b) => b.text === 'Catch Up');
     expect(offered.map((b) => [b.disabled, b.title])).toEqual([
-      [false, 'Catch it up: 120 minutes'], [false, 'Catch it up: 180 minutes'], [false, 'Catch it up: 120 minutes'], [false, 'Catch it up: 120 minutes'], [false, 'Catch it up: 150 minutes'],
+      [false, 'Catch up on it: 120 minutes'], [false, 'Catch up on it: 180 minutes'], [false, 'Catch up on it: 120 minutes'], [false, 'Catch up on it: 120 minutes'], [false, 'Catch up on it: 150 minutes'],
     ]);
     const t0 = sim.now;
     // The second row is Meeting Your Class.
@@ -428,7 +428,7 @@ describe('school.learn_part', () => {
     // An hour at a time whenever there's one free, until the lines are known.
     for (let n = 0; proc(sim).lines < 0.97 && n < 60; n += 1) if (!sim.execute(learn).ok) tended(sim, sim.now + MS_HOUR);
     expect(proc(sim).lines).toBeGreaterThanOrEqual(0.97);
-    unchanged({}, 'You know the part.');
+    unchanged({}, 'You already know the part.');
     // The closing night played: nothing left to rehearse for.
     tended(sim, nights.at(-1)!.at + 4 * MS_HOUR);
     expect(sim.player.school!.casting!.performed).toBe(4);
@@ -936,7 +936,7 @@ describe('school.cabaret', () => {
     expect(you.from).toContainEqual({ what: SEASON, source: 'cabaret', nights: 5, delivery, weight });
     // A fifth of the fit by the delivery, as the chair reads it.
     expect(Math.abs(you.score - (you.fit * (0.8 + 0.2 * delivery) + you.balance))).toBeLessThanOrEqual(0.15);
-    expect(drawn(sim, 'casting').shown).toContain(`${SEASON}, the Yale Cabaret, 5 nights (${Math.round(delivery * 100)}%, weighted 2.5)`);
+    expect(drawn(sim, 'casting').shown).toContain(`${SEASON}, the Yale Cabaret, 5 nights (${Math.round(delivery * 100)}%, counted ×2.5)`);
     // Never joined: nothing to read, everything delivered.
     expect(never.player.school!.lastWork?.from ?? []).toEqual([]);
     expect(never.player.school!.castRead!.rows.find((r) => r.you)!.delivery).toBe(1);

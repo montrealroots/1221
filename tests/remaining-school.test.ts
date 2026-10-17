@@ -387,8 +387,8 @@ const B_STEPS: readonly Step[] = [
 const journeyB = once(() => journey('g26-l3', {}, B_STEPS, false));
 const journeyBReloaded = once(() => journey('g26-l3', {}, B_STEPS, true));
 
-const OFFERED = ': at the year’s end you can ask to repeat the year, on the Standing tab.';
-const permanentBody = (name: string, tail: string) => `Its month ran out, so ${name} carries no credit, and the degree can’t be completed without it${tail}`;
+const OFFERED = '. At the year’s end you can ask to repeat the year on the Standing tab.';
+const permanentBody = (name: string, tail: string) => `The month to make it up ran out, so ${name} carries no credit, and the degree can’t be completed without it${tail}`;
 
 // ---------------------------------------------------------------------------
 // school.repeat-room-leave
@@ -603,7 +603,7 @@ describe('school.continuity: earned results across leave, return, a repeat, an a
 // ---------------------------------------------------------------------------
 
 const STANDS = 'What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.';
-const EXTRA_LATER = '. Its year can’t be repeated within the nine semesters the Bulletin allows; after your last year’s evaluation, unless it leaves you on academic warning, you can ask for an additional term to retake it, on the Standing tab.';
+const EXTRA_LATER = '. Its year can’t be repeated within the nine semesters the Bulletin allows. After your last year’s term review, unless it puts you on academic warning, you can ask for an additional term to retake it on the Standing tab.';
 
 /**
  * sc-x3 (the scope tests' seed): Text Analysis I (Thursdays) slept through four times in Spring Term 2027, failed, the
@@ -627,7 +627,7 @@ describe('school.s6.dead-ends: no notice leaves the student without what remains
     const school = () => sim.player.school!;
     expect(school().courses!['4:DRAM 263a/b']).toMatchObject({ result: 'fail', academic: 2 });
     expect([school().standing, school().endedAt]).toEqual(['concern', undefined]);
-    expect(titled(sim, 'Not Passed: Clown').map((n) => [n.at, n.body])).toEqual([[at(2028, 12, 8, 17), `Clown wasn’t passed: you were at 7 of its 11 meetings you weren’t excused from. The degree needs every course passed${EXTRA_LATER}`]]);
+    expect(titled(sim, 'Not Passed: Clown').map((n) => [n.at, n.body])).toEqual([[at(2028, 12, 8, 17), `You didn’t pass Clown: you came to 7 of the 11 classes you weren’t excused from. The degree needs every course passed${EXTRA_LATER}`]]);
     sim = reload(sim);
     // The third year, its terms past the six the scholarship supports billed and paid as each begins (unpaid, a hold
     // stops its registration: the next test); the last spring, Spring Term 2030, to its evaluation of Friday 26 April at five.
@@ -674,7 +674,7 @@ describe('school.s6.dead-ends: no notice leaves the student without what remains
     expect(sim.player.school!.standing).toBe('dismissed');
     const dismissed = titled(sim, 'Dismissed From The School');
     expect(dismissed).toHaveLength(1);
-    expect(dismissed[0]!.body.endsWith(`Once dismissed, a student isn’t eligible to come back. ${STANDS}`)).toBe(true);
+    expect(dismissed[0]!.body.endsWith(`A dismissed student can’t return to the School. ${STANDS}`)).toBe(true);
     expect(Object.values(sim.player.school!.courses!).filter((r) => r.result === 'pass').length).toBeGreaterThan(0);
     tend(sim, at(2027, 4, 26, 12));
     expect(sim.player.school!.workStudy.owedHours).toBe(0);
@@ -697,8 +697,8 @@ describe('school.d-not-registered-hold: a term begun under a financial hold', ()
     // with the late fee's cap for the first, $375: $49,944.30.
     expect(accountOwed(sim, sim.player)).toBe(49_944_30);
     expect(onDay(spring, 9) < sim.now).toBe(true);
-    expect(titled(sim, 'Not Registered').map((n) => n.body)).toEqual(['You haven’t registered, so today’s classes didn’t count you. A financial hold stops registration: $49,944.30 is owed on your Yale account. Pay it on the Terms And Award tab, then register on the Standing tab.']);
-    expect(refused(sim, 'school.reregister')).toBe('A financial hold stops registration: $49,944.30 is owed on your Yale account.');
+    expect(titled(sim, 'Not Registered').map((n) => n.body)).toEqual(['You haven’t registered, so today’s classes didn’t count your attendance. A financial hold stops registration: $49,944.30 is owed on your Yale account. Pay it on the Terms And Award tab, then register on the Standing tab.']);
+    expect(refused(sim, 'school.reregister')).toBe('A financial hold stops registration: $49,944.30 is owed on your Yale account. Pay it on the Terms And Award tab.');
     sim.must({ kind: 'school.pay_balance', payload: {} });
     sim.must({ kind: 'school.reregister', payload: {} });
     const before = sim.player.school!.tally.attended;
@@ -720,7 +720,7 @@ describe('school.d-not-registered-hold: a term begun under a financial hold', ()
  * scholarship aids, an appeal is decided within twelve days of the leave (seven to appeal, five working days to decide),
  * before the thirty days that returned scholarship is due in, and the only hold an aided term can begin under is cleared
  * by its own scholarship first (journeys.d-aid-past-balance). Nor does any credit reach a degree held for the account:
- * a leave is refused once the terms are done (“Your terms are done; what’s left is the degree.”), so the degree's
+ * a leave is refused once the terms are done (“Your terms are done. All that’s left is the degree.”), so the degree's
  * conferral on the hold's lift is the payment's (tests/leave.test.ts).
  *
  * Figures worked from the rules, as this file's others are: Fall Term 2029's $22,407.28 tuition and $2,377.37 Yale Health
@@ -796,7 +796,7 @@ describe('defect.yale-credit-hold: a credit that clears a held Yale account lift
     sim.must({ kind: 'school.return_notice', payload: {} });
     tend(sim, onDay(termStart(8).date, 12));
     expect(school().hold).toBe(at(2029, 9, 26));
-    expect(refused(sim, 'school.reregister')).toMatch(/^A financial hold stops registration: \$30,256\.57 is owed on your Yale account\.$/);
+    expect(refused(sim, 'school.reregister')).toMatch(/^A financial hold stops registration: \$30,256\.57 is owed on your Yale account\. Pay it on the Terms And Award tab\.$/);
     sim.must({ kind: 'school.pay_balance', payload: {} });
     expect(school().hold).toBeUndefined();
     expect(titled(sim, 'The Financial Hold Is Lifted').map((n) => n.body)).toEqual(['Your Yale account is paid. Registration and the diploma are open to you again.']);
@@ -881,18 +881,18 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
   it('PLAYER JOURNEY: at 7:30 on 24 August 2026, before the fall term begins at nine, a leave and a Cabaret show are refused in their words, and nothing moves', () => {
     const sim = life('ur-1', SCRAPING);
     expect(sim.player.school!.termsBegun).toBe(0);
-    expect(refusedLeaving(sim, 'school.request_leave', { kind: 'personal', reason: 'family', terms: 2 })).toBe('A leave is from the program, and your first term hasn’t begun.');
-    expect(refusedLeaving(sim, 'school.cabaret')).toBe('The Cabaret’s season begins with the term.');
+    expect(refusedLeaving(sim, 'school.request_leave', { kind: 'personal', reason: 'family', terms: 2 })).toBe('You can’t take a leave before your first term has begun.');
+    expect(refusedLeaving(sim, 'school.cabaret')).toBe('The Cabaret’s season starts with the term. Ask again once it’s begun.');
     // Said on the Cabaret's panel where its button would be.
-    expect(drawn(sim, SchoolWorkspace, 'casting').text).toContain('The Cabaret’s season begins with the term.');
+    expect(drawn(sim, SchoolWorkspace, 'casting').text).toContain('The Cabaret’s season starts with the term. Ask again once it’s begun.');
   }, 120_000);
 
   it('PLAYER JOURNEY: in the first fall, a leave is refused in each of the Bulletin’s words (a personal one before a term is completed, one for a professional commitment, a medical one with nothing to recommend it), on the Leave form and by the command alike', () => {
     const sim = thaw(graduate().marks['term 0 begins']!);
     tend(sim, at(2026, 9, 8, 12));
-    expect(refusedLeaving(sim, 'school.request_leave', { kind: 'personal', reason: 'family', terms: 2 })).toBe('A personal leave comes after one term completed.');
+    expect(refusedLeaving(sim, 'school.request_leave', { kind: 'personal', reason: 'family', terms: 2 })).toBe('You can take a personal leave only after you’ve completed one term.');
     expect(refusedLeaving(sim, 'school.request_leave', { kind: 'personal', reason: 'professional', terms: 2 })).toBe('The School doesn’t normally grant a leave to take on a professional commitment.');
-    const medical = 'A medical leave is on a Yale Health physician’s written recommendation, and nothing in the last 30 days would bring one: no illness, injury or stay in hospital.';
+    const medical = 'A medical leave needs a Yale Health physician’s written recommendation, and nothing in the last 30 days would lead to one: no illness, injury or stay in hospital.';
     expect(refusedLeaving(sim, 'school.request_leave', { kind: 'medical', reason: 'illness', terms: 2 })).toBe(medical);
     // The form opens on Medical, Illness: its refusal said under it, Ask For A Leave… grayed.
     expect(drawn(sim, LeavePanel).text).toContain(medical);
@@ -903,7 +903,7 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     const sim = thaw(graduate().marks['term 0 begins']!);
     tend(sim, at(2026, 9, 8, 12));
     expect(refusedLeaving(sim, 'school.request_leave', { kind: 'medical', reason: 'family', terms: 2 })).toBe('Family is a reason for a personal leave.');
-    expect(refusedLeaving(sim, 'school.request_leave', { kind: 'medical', reason: 'nonsense', terms: 2 })).toBe('Give a reason.');
+    expect(refusedLeaving(sim, 'school.request_leave', { kind: 'medical', reason: 'nonsense', terms: 2 })).toBe('Choose a reason for the leave.');
     // TEST SETUP: the flu, so the request reaches its length.
     flu(sim);
     expect(refusedLeaving(sim, 'school.request_leave', { kind: 'medical', reason: 'illness', terms: 4 })).toBe('A leave is one, two or three terms.');
@@ -912,7 +912,7 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
   it('PLAYER JOURNEY: the fall’s last weeks have no Cabaret week three weeks off, said on its panel and by the command', () => {
     const sim = thaw(graduate().marks['term 0 begins']!);
     tend(sim, at(2026, 12, 1, 12));
-    const no = 'No Cabaret week this term is three weeks off and clear of your recesses and calls.';
+    const no = 'There’s no Cabaret week left this term that’s at least three weeks away and clear of your recesses and calls.';
     expect(refusedLeaving(sim, 'school.cabaret')).toBe(no);
     expect(drawn(sim, SchoolWorkspace, 'casting').text).toContain(no);
   }, 600_000);
@@ -930,20 +930,20 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     const ws = sim.player.school!;
     expect(ws.excusedHours?.['2'] ?? 0).toBe(0);
     expect(ws.workStudy.assignedBooked).toBe(150);
-    expect(refusedLeaving(sim, 'school.request_conversion')).toBe('No hours to convert: only assigned hours missed ill or hurt, or never assigned, can be.');
+    expect(refusedLeaving(sim, 'school.request_conversion')).toBe('There are no hours to convert. Only assigned hours you missed while ill or hurt, or hours never assigned, can be converted.');
   }, 600_000);
 
   it('PLAYER JOURNEY: between the last spring’s evaluation, every course passed, and Commencement, a leave and a repeat are refused as done; after the degree, the Cabaret says so on its panel, and the protective equipment, which the screen no longer offers, is refused by the command', () => {
     const before = thaw(graduate().marks['before commencement']!);
     expect(before.player.school!.standing).toBe('good');
     expect(refusedLeaving(before, 'school.request_leave', { kind: 'personal', reason: 'family', terms: 2 })).toBe('Your terms in the program are done.');
-    expect(refusedLeaving(before, 'school.request_repeat')).toBe('Your last year’s evaluation is past.');
+    expect(refusedLeaving(before, 'school.request_repeat')).toBe('Your last year’s term review is past.');
     expect(drawn(before, RepeatPanel).text).not.toContain('Ask To Repeat The Year…');
     const after = thaw(graduate().marks.after!);
     expect(after.player.school!.standing).toBe('graduated');
     expect(refusedLeaving(after, 'school.cabaret')).toBe('The Cabaret is for students.');
     expect(drawn(after, SchoolWorkspace, 'casting').text).toContain('The Cabaret is for students.');
-    expect(refusedLeaving(after, 'school.buy_ppe')).toBe('It’s for students’ work-study.');
+    expect(refusedLeaving(after, 'school.buy_ppe')).toBe('Only students on work-study need it.');
   }, 600_000);
 
   it('PLAYER JOURNEY: on journey A’s leave, granted and not begun it can’t be asked again; on it, Give Notice Of Return is refused while she’s ill in each of the clearance’s words (TEST SETUP: in hospital, laid up, the flu, unwell), grayed with them on the panel; given, it’s refused a second time; and back, another leave is refused at the Bulletin’s three terms', () => {
@@ -970,7 +970,7 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     expect(refusedLeaving(sim, 'school.return_notice')).toBe('You’re not well enough yet for a Yale Health physician to clear you to come back.');
     sim = on();
     sim.must({ kind: 'school.return_notice', payload: {} });
-    expect(refusedLeaving(sim, 'school.return_notice')).toBe('You gave notice on January 4, 2027.');
+    expect(refusedLeaving(sim, 'school.return_notice')).toBe('You already gave notice on January 4, 2027.');
     drawn(sim, LeavePanel);
     expect(drew('school.return_notice')).toEqual([]);
     const back = thaw(a.marks['term 3 begins']!);
@@ -1000,7 +1000,7 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
   it('PLAYER JOURNEY: in a last year’s thirty days, a leave is refused: what’s left is the degree', () => {
     const sim = thaw(journeyB().marks['term 5 evaluated']!);
     expect(sim.player.school!.repeatBy).toBeDefined();
-    expect(refusedLeaving(sim, 'school.request_leave', { kind: 'personal', reason: 'family', terms: 2 })).toBe('Your terms are done; what’s left is the degree.');
+    expect(refusedLeaving(sim, 'school.request_leave', { kind: 'personal', reason: 'family', terms: 2 })).toBe('Your terms are done. All that’s left is the degree.');
   }, 900_000);
 
   it('GUARD: commands the coursework screen never sends (an id no piece has, a step the work hasn’t, the partner’s own step, a solo piece’s partner, a shown piece’s or a scene-less piece’s way of playing, a done session, feedback not given, a conversation that isn’t, an answer that isn’t, a scene not shared) are refused in their words', () => {
@@ -1020,11 +1020,11 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     const partnerStep = (templateById(paired.template)!.activities.find((x) => x.needs?.includes('partner')))!;
     expect(partnerStep).toBeDefined();
     if (paired.feedback && !paired.feedback.seen) paired.feedback.seen = true;
-    expect(refusedLeaving(sim, 'school.prepare', { assignmentId: paired.id, activity: partnerStep.id })).toBe('Work with your partner is a rehearsal you agree with them: ask them on the assignment.');
-    expect(refusedLeaving(sim, 'school.ask_partner', { assignmentId: solo.id, at: sim.now + 3 * MS_DAY })).toBe('This work has no partner.');
-    expect(refusedLeaving(sim, 'school.choose_playing', { assignmentId: shown.id, pace: 'driven' })).toBe('It’s been shown.');
+    expect(refusedLeaving(sim, 'school.prepare', { assignmentId: paired.id, activity: partnerStep.id })).toBe('Work with your partner happens at a rehearsal you both agree to. Ask them for an evening under Rehearsing With on this piece.');
+    expect(refusedLeaving(sim, 'school.ask_partner', { assignmentId: solo.id, at: sim.now + 3 * MS_DAY })).toBe('This piece has no partner.');
+    expect(refusedLeaving(sim, 'school.choose_playing', { assignmentId: shown.id, pace: 'driven' })).toBe('It’s already been shown.');
     const sceneless = open.find((x) => templateById(x.template)!.material === 'none');
-    if (sceneless) expect(refusedLeaving(sim, 'school.choose_playing', { assignmentId: sceneless.id, pace: 'driven' })).toBe('There’s no scene in it to play one way or another.');
+    if (sceneless) expect(refusedLeaving(sim, 'school.choose_playing', { assignmentId: sceneless.id, pace: 'driven' })).toBe('There’s no scene in this piece, so there’s no way of playing it to choose.');
     expect(refusedLeaving(sim, 'school.orientation', { task: 'register' })).toBe('Done on August 24, 2026.');
     const unread = open.find((x) => !x.feedback)!;
     expect(refusedLeaving(sim, 'school.read_feedback', { assignmentId: unread.id })).toBe('There’s no feedback on that.');
@@ -1048,7 +1048,7 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     const solo = cw.assignments.find((a) => a.status === 'open' && a.partner === undefined && persistentFor(cw, a).length > 0)!;
     expect(solo).toBeDefined();
     if (solo.feedback && !solo.feedback.seen) solo.feedback.seen = true;
-    expect(refusedLeaving(sim, 'school.approach', { assignmentId: solo.id, kind: 'partner' })).toBe('This work has no partner.');
+    expect(refusedLeaving(sim, 'school.approach', { assignmentId: solo.id, kind: 'partner' })).toBe('This piece has no partner.');
     // An evening that clashes: the first thing on the calendar she's expected at, held for a while, before a paired piece is due.
     const paired = cw.assignments.filter((a) => a.status === 'open' && a.partner !== undefined);
     const clash = paired.flatMap((a) => sim.universe.scheduled
@@ -1067,7 +1067,7 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     if (paired.feedback && !paired.feedback.seen) paired.feedback.seen = true;
     (cw.notes ??= []).unshift({ key: 'dim:partner', status: 'open', first: '2026-09-08', last: '2026-10-01', given: 9, history: [] });
     expect(persistentFor(cw, paired)[0]!.dim).toBe('partner');
-    expect(refusedLeaving(sim, 'school.approach', { assignmentId: paired.id, kind: 'partner' })).toBe('That’s the work with your partner already.');
+    expect(refusedLeaving(sim, 'school.approach', { assignmentId: paired.id, kind: 'partner' })).toBe('That note is already about work with your partner, so this adds nothing.');
   }, 600_000);
 
   it('PLAYER JOURNEY with TEST SETUP: cast at the Rep and in a School production with calls in the weeks a Cabaret show would rehearse and play, the show is refused in the Bulletin’s words, on its panel and by the command (no played life was double-cast there in the second years of eight seeds searched on 2026-10-16, dc-1 to dc-8, so the two castings’ calls are put on the calendar by hand)', () => {
@@ -1078,7 +1078,7 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     expect(week).toBeDefined();
     const inWindow = at(week.year, week.month, week.day, 15) - 14 * MS_DAY;
     for (const which of ['school', 'rep']) sim.schedule({ at: inWindow, kind: CALL_KIND, label: `TEST SETUP ${which} call`, category: 'school', priority: 30, payload: { personId: sim.player.id, call: 'rehearsal', ...(which === 'rep' ? { which: 'rep' } : {}) } });
-    const no = 'Cast in two productions at once, you can’t take a Cabaret show: the Bulletin bars double-cast actors from it.';
+    const no = 'You’re cast in two productions at once, and the Bulletin doesn’t allow a double-cast actor to take a Cabaret show.';
     expect(refusedLeaving(sim, 'school.cabaret')).toBe(no);
     expect(drawn(sim, SchoolWorkspace, 'casting').text).toContain(no);
   }, 600_000);
@@ -1102,17 +1102,17 @@ describe('school.s6.policy: SLATE’s design not presented as Yale’s policy, n
     const { GUIDE_BY_ID } = await import('@/engine/content/guide');
     const standing = GUIDE_BY_ID['school.standing']!;
     const fact = (label: string) => standing.reads!.find((f) => f.label === label)!.value;
-    expect(fact('A Course Failed')).toContain('SLATE’s rule');
+    expect(fact('A Course Failed')).toContain('This is the game’s rule');
     expect(fact('A Grave Breach')).toContain('which the Bulletin calls a grave breach that may be grounds for dismissal');
-    expect(fact('A Grave Breach')).toContain('by SLATE’s rule');
-    expect(standing.interpret!.join(' ')).toContain('one evaluation a term at the end of its classes, its floors and marks, and a standing stepped one at a time are SLATE’s reading');
-    expect(standing.interpret!.join(' ')).toContain('The notices that tell a standing are SLATE’s words for the faculty’s decision, not the School’s or its staff’s.');
+    expect(fact('A Grave Breach')).toContain('This is the game’s rule');
+    expect(standing.interpret!.join(' ')).toContain('One review a term at the end of its classes, what it asks, and a standing that moves one step at a time are the game’s reading');
+    expect(standing.interpret!.join(' ')).toContain('The notices that tell you your standing are the game’s words for the faculty’s decision, not the School’s or its staff’s.');
     const repeat = GUIDE_BY_ID['school.repeat']!;
-    expect(repeat.short).toContain('An Incomplete comes of classes missed excused, by SLATE’s rule (the Bulletin has the student ask the instructor for one)');
-    expect(repeat.short).toContain('SLATE’s limit on the extension the Bulletin lets the instructor grant');
-    expect(repeat.short).toContain('Repeating and the additional term are SLATE’s faculty model: the Bulletin has no rule for either.');
+    expect(repeat.short).toContain('An Incomplete comes from classes you missed while excused; this is the game’s rule (the Bulletin has the student ask the instructor for one)');
+    expect(repeat.short).toContain('that limit on the extension the Bulletin lets the instructor grant is the game’s');
+    expect(repeat.short).toContain('Repeating and the additional term are the game’s model of the faculty: the Bulletin has no rule for either.');
     expect(repeat.reads!.find((f) => f.label === 'An Incomplete')).toMatchObject({ estimate: true });
-    expect(repeat.later!.join(' ')).toContain('the review and its outcomes are SLATE’s faculty model');
+    expect(repeat.later!.join(' ')).toContain('the review and its outcomes are the game’s model of the faculty');
     const { CHAPTER_BY_ID } = await import('@/engine/content/tutorial');
     // From 2026-10-17 (brief 14) the review's rules are behind the chapter's details, and "SLATE's reading" is the
     // glossary's "estimated", kept apart from the standings the Bulletin gives.
@@ -1131,6 +1131,6 @@ describe('school.s6.policy: SLATE’s design not presented as Yale’s policy, n
     expect(decided.filter((n) => n.title.startsWith('Cast: ')).every((n) => n.body.startsWith('The chair of Acting has cast you '))).toBe(true);
     const tab = drawn(sim, SchoolWorkspace, 'standing').text;
     expect(tab).toContain(`${chair}: Chair Of Acting`);
-    expect(tab).toContain('SLATE’s too: an Incomplete given for meetings missed ill, where the Bulletin has the student ask the instructor for one and petition for any extension.');
+    expect(tab).toContain('The game also gives an Incomplete for classes missed ill, where the Bulletin has the student ask the instructor for one and petition for any extension.');
   }, 900_000);
 });

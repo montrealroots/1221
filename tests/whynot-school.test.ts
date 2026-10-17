@@ -66,7 +66,7 @@ describe('Call In Sick, grayed, says why under the week’s head', () => {
   it('PLAYER JOURNEY: well on a class-day morning, and then called in sick, each in words, not only in the tooltip', () => {
     const sim = student('whynot-school-sick');
     tended(sim, at(2026, 9, 8, 7));
-    const well = 'You’re well enough to go: staying away would be an unexcused absence.';
+    const well = 'You’re well enough to go. Staying away would count as an unexcused absence.';
     expect(sickRefusal(sim, sim.player)).toBe(well);
     const before = drawn(sim, 'classes');
     expect(grayed(before.html, 'Call In Sick', well)).toHaveLength(1);
@@ -87,7 +87,7 @@ describe('Call In Sick, grayed, says why under the week’s head', () => {
 describe('Read It and Research It, grayed, say why above the plays', () => {
   it('PLAYER JOURNEY: before the tour every Read It is grayed, and the reason is said once in words', () => {
     const sim = student('whynot-school-read');
-    const why = 'The library isn’t known to you yet: the tour shows you it.';
+    const why = 'You don’t know where the library is yet. The building tour in Orientation shows you.';
     expect(CONTEMPORARY_PLAYS.map((p) => readRefusal(sim, sim.player, p.id))).toEqual(CONTEMPORARY_PLAYS.map(() => why));
     const { html, shown } = drawn(sim, 'coursework');
     expect(grayed(html, 'Read It', why)).toHaveLength(CONTEMPORARY_PLAYS.length);

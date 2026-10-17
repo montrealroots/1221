@@ -251,7 +251,7 @@ await step('coursework: a step of preparation done from its button, the clock mo
     must(why.length > 0, 'preparation grayed with no reason on the screen');
     await advance('This Evening'); await rail('School'); await tab('Coursework');
     // A partner's request to rehearse comes first, as the reason says: answered, as a player would.
-    if (/asked to rehearse: answer first/.test(await page.locator('.why-not').first().innerText().catch(() => ''))) {
+    if (/has asked to rehearse\. Answer them first/.test(await page.locator('.why-not').first().innerText().catch(() => ''))) {
       const yes = page.getByRole('button', { name: /^Say (Yes|No)/ }).first();
       if (await yes.count()) { await yes.click(); await wait(900); why += ' → answered the partner'; }
     }
@@ -289,7 +289,7 @@ await step('coursework: a way of playing it chosen and rehearsed in', async () =
   await choose.click(); await wait(1000);
   // Said, as the engine took it (from 2026-10-13: until then the step returned the toast and checked nothing).
   const said = await toast();
-  must(/Chosen: rehearsed in to \d+%\./.test(said), `no choice taken: ${said || 'no toast'}`);
+  must(/Chosen\. You’ve rehearsed this way of playing it to \d+% so far\./.test(said), `no choice taken: ${said || 'no toast'}`);
   return said;
 });
 await step('coursework: table work answered from its select', async () => {
@@ -305,7 +305,7 @@ await step('coursework: table work answered from its select', async () => {
   if (!sel) {
     const card = () => selects().first().locator('xpath=ancestor::section[contains(@class,"card")][1]');
     const why = await card().locator('.why-not').first().innerText().catch(() => '');
-    must(/Read it first/.test(why), `the table work select is grayed with no reason on the screen: ${why || 'none'}`);
+    must(/Read the text first/.test(why), `the table work select is grayed with no reason on the screen: ${why || 'none'}`);
     const read = () => card().getByRole('button', { name: /^(Read The Scene|Read The Play)/ }).first();
     must(await read().count(), 'grayed till the text is read, and no way to read it on its card');
     for (let n = 0; n < 4 && await selects().first().isDisabled(); n += 1) {
@@ -325,7 +325,7 @@ await step('coursework: table work answered from its select', async () => {
   // The answer taken, and kept by the select (from 2026-10-13: until then the step returned the toast and checked
   // nothing, and passed with no toast, a refusal’s, or the select gone back).
   const said = await toast();
-  must(/Decided at the table\./.test(said), `no answer taken: ${said || 'no toast'}`);
+  must(/Answer chosen\./.test(said), `no answer taken: ${said || 'no toast'}`);
   must((await sel.inputValue()) === chosen, `the select went back to “${await sel.inputValue()}”`);
   return `${first}${values.length} options, “${chosen}” taken; ${said}`;
 });
@@ -611,7 +611,7 @@ await step('casting: with no part yet, the tab says when casting comes; with one
     must(await page.getByText(/^Not Cast Yet$/).count(), 'no part, and nothing saying so');
     const panel = page.getByText(/^Not Cast Yet$/).first().locator('xpath=ancestor::section[1]');
     const said = (await panel.innerText()).replace(/\s+/g, ' ');
-    must(/casts every student each term from the first spring|A good evaluation puts you back/.test(said), `doesn’t say when casting comes: ${said.slice(0, 200)}`);
+    must(/casts every student each term from the first spring|A term review that finds you in good standing puts you back/.test(said), `doesn’t say when casting comes: ${said.slice(0, 200)}`);
     return said.slice(0, 200);
   }
   await learn.click(); await wait(1200);
@@ -867,8 +867,8 @@ if (DIR && existsSync(`${DIR}/leave.json`)) {
     const productions = await played.locator('li').allInnerTexts();
     must(productions.length > 0 && productions.every((p) => /, [A-Z][a-z]+ \d{1,2}, \d{4}: \d+ of them/.test(p)), `the first class’s productions: ${productions.join(' | ').slice(0, 200) || 'none'}`);
     // Back from a leave, a term has been evaluated: the panel lists it, each row with its standing.
-    const evaluations = page.locator('section.card').filter({ has: page.getByRole('heading', { name: /^Evaluations$/ }) }).first();
-    must(await evaluations.count(), 'no Evaluations panel');
+    const evaluations = page.locator('section.card').filter({ has: page.getByRole('heading', { name: /^Term Reviews$/ }) }).first();
+    must(await evaluations.count(), 'no Term Reviews panel');
     const rows = await evaluations.locator('tbody tr').allInnerTexts();
     must(rows.length > 0, `no term evaluated on a save back from a leave: ${(await evaluations.innerText()).slice(0, 160)}`);
     must(rows.every((r) => /Good Standing|Academic Concern|Academic Warning/.test(r)), `a row with no standing: ${rows.join(' | ').slice(0, 200)}`);
@@ -911,7 +911,7 @@ if (DIR && existsSync(`${DIR}/rehearsal.json`)) {
     const work = page.getByRole('button', { name: /^Work On The Note/ }).first();
     must(await work.count() && !(await work.isDisabled()), 'Work On The Note not available');
     // A note on the craft (from 2026-10-12) offers its ways; the second, where there is one, is chosen.
-    const ways = page.getByRole('combobox', { name: 'A Way At The Note' }).first();
+    const ways = page.getByRole('combobox', { name: 'A Way To Work On The Note' }).first();
     const offered = (await ways.count()) ? await ways.locator('option').allInnerTexts() : [];
     if (offered.length > 1) { await ways.selectOption({ index: 1 }); await wait(300); }
     await work.click(); await wait(1200);
@@ -933,8 +933,8 @@ if (DIR && existsSync(`${DIR}/rehearsal.json`)) {
     must(!(await choose.isDisabled()), 'Play It This Way still grayed after a choice');
     await choose.click(); await wait(1200);
     const said = await toast();
-    must(/Chosen: rehearsed in to \d+%/.test(said), `no confirmation: ${said}`);
-    const prepAt = async () => pctIn(((await page.getByText(/Your choice now is rehearsed in to \d+%/).first().innerText().catch(() => '')).match(/rehearsed in to \d+%/) ?? [''])[0]);
+    must(/Chosen\. You’ve rehearsed this way of playing it to \d+% so far/.test(said), `no confirmation: ${said}`);
+    const prepAt = async () => pctIn(((await page.getByText(/You’ve rehearsed your current choice to \d+%/).first().innerText().catch(() => '')).match(/current choice to \d+%/) ?? [''])[0]);
     const before = await prepAt();
     // On to the next call, gone to as a player does: Advance, and Go at the commitment. The save is a Saturday and its
     // next call the Tuesday afternoon, so up to five mornings: three stopped short of it (run of 2026-10-11).
@@ -984,7 +984,7 @@ if (DIR) {
 // directory of saves, a missing direction save is a failure too.
 if (DIR) {
   const noteLine = () => page.getByText(/^The director’s last note,/).first();
-  const ways = () => page.getByRole('combobox', { name: 'A Way At The Note' }).first();
+  const ways = () => page.getByRole('combobox', { name: 'A Way To Work On The Note' }).first();
   const workNote = () => page.getByRole('button', { name: /^Work On The Note/ }).first();
   const partBook = () => page.locator('[data-workbook^="part:"]').first();
   const history = () => page.locator('details[data-notes]').first();
@@ -1047,8 +1047,8 @@ if (DIR) {
     const keep = partBook().getByRole('button', { name: /^Keep It$/ }).first();
     must(await keep.count(), 'no Keep It for the change tried');
     await keep.click(); await wait(800);
-    must(/Kept: everything after reads it\./.test(await toast()), 'keeping it said nothing');
-    const found = (await partBook().innerText()).match(/(\d+)% rehearsed in/);
+    must(/Kept\. Everything from now on includes it\./.test(await toast()), 'keeping it said nothing');
+    const found = (await partBook().innerText()).match(/rehearsed to (\d+)%/);
     rehearsedIn = Number(found?.[1] ?? NaN);
     return `"${tried}" of ${options.length}; ${t0} → ${await clock()}: ${said.slice(0, 120)}; kept${Number.isNaN(rehearsedIn) ? '' : `, ${rehearsedIn}% rehearsed in`}`;
   });
@@ -1082,7 +1082,7 @@ if (DIR) {
       outcome = items.find((x) => /Worked /.test(x) && OUTCOME.test(x)) ?? '';
     }
     must(/at the next call/.test(outcome) && /· (Resolved|Taken: Better|Tried: Learned From, Not Moved|Not Taken|Taken)/.test(outcome), `the worked note’s outcome isn’t said: ${outcome || last}`);
-    const after = Number(((await partBook().innerText()).match(/(\d+)% rehearsed in/) ?? [])[1] ?? NaN);
+    const after = Number(((await partBook().innerText()).match(/rehearsed to (\d+)%/) ?? [])[1] ?? NaN);
     if (!Number.isNaN(rehearsedIn)) must(after > rehearsedIn, `the kept change wasn’t rehearsed in at the call: ${rehearsedIn}% → ${after}%`);
     const nowNight = await nightNow();
     must(!Number.isNaN(nowNight), 'no A Night Now');
@@ -1221,8 +1221,8 @@ if (DIR) {
     // The words as the sweep of 2026-10-16 left them: the count as the review counts it ("due … Unready or not shown"
     // where a piece was missed), and the part most often short "on N of the M shown". Until then this matched the
     // warning's earlier words, and the sweep's first run here failed on them.
-    must(/\d+ of the \d+ pieces (shown this term so far were Unready|due this term so far were Unready or not shown)\. Most often short on them: [^.]+, on \d+ of the \d+ shown\. .+ answers it\./.test(words), `not its count, cause and remedy: ${words.slice(0, 300)}`);
-    must(/The faculty reviews the term on [^:]+: half the term’s pieces Unready or not shown by then/.test(words), `no review day: ${words.slice(0, 300)}`);
+    must(/So far this term, \d+ of the \d+ pieces (you’ve shown were Unready|due were Unready or not shown)\. What held most of them back was [^,]+, unfinished on (\d+ of the \d+|the one) you showed\. To work on it, use .+\./.test(words), `not its count, cause and remedy: ${words.slice(0, 300)}`);
+    must(/This is a warning, not the term review\. The faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then/.test(words), `no review day: ${words.slice(0, 300)}`);
     await item.getByRole('button', { name: /^Go There$/ }).click(); await wait(1200);
     must(new URL(page.url()).hash.startsWith('#/workspace/school'), `Go There opened ${new URL(page.url()).hash}`);
     return words.slice(0, 220);
@@ -1230,12 +1230,12 @@ if (DIR) {
   await step('[save: workload scenario] coursework: Due Soonest first, then a scene’s Shown Today, its figure, what holds it back and the part short with its remedy', async () => {
     await tab('Coursework');
     const soonest = (await page.locator('[data-due-soonest] li').first().innerText().catch(() => '')).replace(/\s+/g, ' ');
-    must(/^[^:]+: .+, due .+: about \d+\.\d \((Unready|Working|Strong|Exceptional)\) shown today\. Short of complete: /.test(soonest), `no Due Soonest with the piece, its day, its figure and what’s short: ${soonest || '(nothing)'}`);
+    must(/^[^:]+: .+, due .+\. Shown today, it would come to about \d+\.\d \((Unready|Working|Strong|Exceptional)\)\. Still to finish: /.test(soonest), `no Due Soonest with the piece, its day, its figure and what’s short: ${soonest || '(nothing)'}`);
     must(await forecast().count(), 'no Shown Today naming Run It With A Reader on an open scene');
     id = await forecast().getAttribute('data-shown-today');
     const words = (await forecast().innerText()).replace(/\s+/g, ' ');
-    must(/^Shown Today: on a good day it would come to about \d+\.\d \((Unready|Working|Strong|Exceptional)\)\./.test(words), `not its figure and band: ${words}`);
-    must(/Short of complete: .*Run It With A Reader/.test(words), `not the part short with its remedy: ${words}`);
+    must(/^Shown Today: if you showed it today on a good day, it would come to about \d+\.\d \((Unready|Working|Strong|Exceptional)\)\./.test(words), `not its figure and band: ${words}`);
+    must(/Still to finish: .*Run It With A Reader/.test(words), `not the part short with its remedy: ${words}`);
     shown = await figure(id);
     return `${soonest.slice(0, 140)} | ${words.slice(0, 200)}`;
   });
@@ -1315,7 +1315,7 @@ if (DIR && existsSync(`${DIR}/roundups.json`)) {
     await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await rail('School'); await tab('Coursework');
-    must(/rehearsed in to \d+% \(complete at \d+%\)/.test((await page.locator('body').innerText()).replace(/\s+/g, ' ')), 'the choice wasn’t kept through the reload');
+    must(/rehearsed your current choice to \d+% so far \(it’s complete at \d+%\)/.test((await page.locator('body').innerText()).replace(/\s+/g, ' ')), 'the choice wasn’t kept through the reload');
     return picked;
   });
   await overflow('school coursework (roundups save)');
@@ -1375,7 +1375,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     await openSave('brief.json');
     await openBrief('Drama');
     const text = await briefPane().innerText();
-    for (const want of ['The Scene', 'What You Want', 'What’s In The Way', 'Where It Turns', 'What The Take Weighs', 'Preparation', 'Your Reading', 'an original scene written for SLATE']) must(text.toLowerCase().includes(want.toLowerCase()), `no “${want}”`);
+    for (const want of ['The Scene', 'What You Want', 'What’s In The Way', 'Where It Turns', 'What The Tape Is Judged On', 'Preparation', 'Your Reading', 'an original scene written for SLATE']) must(text.toLowerCase().includes(want.toLowerCase()), `no “${want}”`);
     must(/Choose a reading first/.test(text), 'the take isn’t held until a reading is chosen');
     const tape = briefPane().getByRole('button', { name: /^Tape It/ }).first();
     must(await tape.isDisabled(), 'Tape It offered before a reading is chosen');
@@ -1406,7 +1406,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     // Headings render in capitals; their words are what count.
     must(/The Last Take/i.test(text), 'no last take');
     must(/A first take of it\./.test(text), 'its purpose isn’t said');
-    must(/held back the|wasn’t complete|didn’t fit/.test(text), 'what held it back isn’t said');
+    must(/held back [A-Z]|wasn’t complete|didn’t fit|didn’t suit/.test(text), 'what held it back isn’t said');
     must(/What To Work On/i.test(text), 'no weakness named');
     must(await briefPane().locator('table[data-takes] tbody tr').count() === 1, 'the take isn’t in the takes table');
     return `${said} / ${text.match(/What To Work On\n[^\n]+/i)?.[0]?.slice(0, 160)}`;
@@ -1513,7 +1513,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
       must(!Number.isNaN(first), `no result said: ${said}`);
       const text = await briefPane().innerText();
       must(/The Last Take/i.test(text), 'no last take');
-      must(/held back the|wasn’t complete|didn’t fit|asked more than/.test(text), 'what held it back isn’t said');
+      must(/held back [A-Z]|wasn’t complete|didn’t fit|didn’t suit|asked more than/.test(text), 'what held it back isn’t said');
       const note = text.match(/[^\n.]*asks for it/)?.[0] ?? '(no concern behind the limit)';
       await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
       await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
@@ -1541,7 +1541,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     must(ex && re, 'no The Scene column');
     must(ex === 'suits' && re !== 'suits', `Melodrama’s scene: expansive ${ex}, restrained ${re}`);
     await briefPane().locator('input[type=radio][name="axis-scale"]').nth(1).check(); await wait(300);
-    const mark = (await briefPane().innerText()).match(/This one is complete at (\d+)% rehearsed in: ([^.]+)/);
+    const mark = (await briefPane().innerText()).match(/This choice is complete once it’s rehearsed to (\d+)%: ([^.]+)/);
     must(mark && Number(mark[1]) < 90 && /with the grain/.test(mark[2]), `the mark isn’t said lower with the grain: ${mark?.[0]}`);
     await briefButton(/^Play It This Way$/);
     await briefButton(/^Rehearse It On Your Feet/);

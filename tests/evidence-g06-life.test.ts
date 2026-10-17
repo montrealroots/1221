@@ -414,7 +414,7 @@ describe('energy', () => {
 // condition
 // ---------------------------------------------------------------------------
 
-const WELL_ENOUGH = 'You’re well enough to go: staying away would be an unexcused absence.';
+const WELL_ENOUGH = 'You’re well enough to go. Staying away would count as an unexcused absence.';
 let nights: { short: string; full: string } | undefined;
 /**
  * PLAYER JOURNEY: twins of a new life, to bed at eleven every night through Sleep from Monday 24 August, one for five

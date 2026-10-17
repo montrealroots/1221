@@ -662,8 +662,8 @@ describe('bank.set_round_ups', () => {
     expect(moves(sim)).toEqual([{ at: at(2026, 8, 25), amount: 2_00, from: primary(sim).id, to: savings.id }]);
     const text = words(shown(sim, createElement(BankAccountLife, { bankId: 'us-wells-fargo' })));
     expect(text).toContain('Last moved to savings: $2.00, on August 25, 2026.');
-    expect(text).toContain('Not in the game: Online Bill Pay payments count at Wells Fargo too; SLATE’s bills aren’t paid through Bill Pay.');
-    expect(text).toContain('A day Overdraft Protection was used, Wells Fargo makes no transfer: SLATE doesn’t look for it, and moves it if the account covers it.');
+    expect(text).toContain('Not in the game: Online Bill Pay payments count at Wells Fargo too; bills in the game aren’t paid through Bill Pay.');
+    expect(text).toContain('A day Overdraft Protection was used, Wells Fargo makes no transfer: the game doesn’t look for it, and moves it if the account covers it.');
     // Tuesday's groceries, bought at its first moment, are Tuesday's: $1 moved at Wednesday's start, and Monday's not again.
     sim.advanceTo(at(2026, 8, 26, 0, 1));
     expect(moves(sim).map((m) => [m.at, m.amount])).toEqual([[at(2026, 8, 25), 2_00], [at(2026, 8, 26), 1_00]]);

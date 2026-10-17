@@ -3985,9 +3985,9 @@
  },
  "src/ui/looks/money.tsx#tailFor": {
   "status": "Rewritten And Verified",
-  "hash": "9f1d4d2b4cd2",
+  "hash": "ad8218f591ec",
   "on": "2026-10-17",
-  "evidence": "tests/language-money.test.ts (savings and the primary account's sentences, exact); tests/defects-g13-1.test.ts (savings pays off anything left unpaid)"
+  "evidence": "tests/language-money.test.ts (savings and the primary account's sentences, exact); tests/defects-g13-1.test.ts (savings pays off anything left unpaid). The escrow line said by the coordinator at the school merge, positively, as the tics budget asks: an escrow account is held for one purpose; no test asserted its old words."
  },
  "src/ui/looks/money.tsx#top": {
   "status": "Rewritten And Verified",

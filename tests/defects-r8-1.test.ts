@@ -103,13 +103,13 @@ describe('a brief suggested for a weakness', () => {
       const recent = suggestions(p, { target: t, label, level: 5, full: MASTERED });
       const life = suggestions(p, undefined, { ...identityOf(p), recurring: { target: t, label, pieces: 9, whole: 31.5, last: 0, evidence: [] } });
       for (const s of [...recent, ...life]) {
-        expect(s.why, t).not.toMatch(/% of the work\)/);
+        expect(s.why, t).not.toMatch(/% of what its tape is judged on\)/);
         expect(s.why, t).not.toContain(label.toLowerCase());
       }
     }
     // The falsifiability test: a technique a brief reads is still suggested the brief that leans on it most.
     expect(briefsRead(p, 'screen')).toBe(true);
-    expect(suggestions(p, { target: 'screen', label: TECHNIQUE_LABEL.screen, level: 5, full: MASTERED }).some((s) => /on camera more than any other brief \([1-9]\d*% of the work\)/.test(s.why))).toBe(true);
+    expect(suggestions(p, { target: 'screen', label: TECHNIQUE_LABEL.screen, level: 5, full: MASTERED }).some((s) => /on camera more than any other brief \([1-9]\d*% of what its tape is judged on\)/.test(s.why))).toBe(true);
   });
 
   it('PLAYER JOURNEY: once every brief that reads it is taped, is the one leaning most, never an untaped one at 0%', () => {
@@ -120,12 +120,12 @@ describe('a brief suggested for a weakness', () => {
     expect(readers.length).toBeLessThan(5);
     for (const b of readers) taped(sim, b.id);
     const s = suggestions(sim.player, { target: 'accents', label: TECHNIQUE_LABEL.accents, level: 5, full: MASTERED });
-    for (const x of s) expect(x.why).not.toMatch(/\(0% of the work\)/);
+    for (const x of s) expect(x.why).not.toMatch(/\(0% of what its tape is judged on\)/);
     const weak = s.find((x) => x.why.includes('accents and dialects'));
     // Suggested again, a brief that reads it, unless every one of them is already suggested as a callback.
     if (weak) {
       expect(readers.map((b) => b.id)).toContain(weak.brief);
-      expect(weak.why).toMatch(/more than any other brief \([1-9]\d*% of the work\)/);
+      expect(weak.why).toMatch(/more than any other brief \([1-9]\d*% of what its tape is judged on\)/);
     } else for (const b of readers) expect(s.some((x) => x.brief === b.id && x.why.startsWith('A callback'))).toBe(true);
   });
 
@@ -145,14 +145,14 @@ describe('a brief suggested for a weakness', () => {
     const html = pane(sim, 'drama', 'brief-drama');
     expect(html).toContain('>What To Work On<');
     expect(html).toContain('data-practice="script"');
-    expect(html).not.toMatch(/% of the work\)/);
-    expect(html).toContain('No practice brief reads script analysis, so a take won’t show it and none is suggested for it.');
+    expect(html).not.toMatch(/% of what its tape is judged on\)/);
+    expect(html).toContain('No practice brief calls on script analysis, so a tape won’t show it and none is suggested for it.');
     // The falsifiability test: with the take held back by something a brief reads, a brief is suggested for it, and
     // the pane doesn't say none reads it.
     w.limits = w.limits.filter((l) => l.what !== 'script');
     w.inputs.techniques = Object.fromEntries(Object.entries(w.inputs.techniques).filter(([k]) => k !== 'script'));
     const read = pane(sim, 'drama', 'brief-drama');
-    expect(read).not.toContain('No practice brief reads');
+    expect(read).not.toContain('No practice brief calls on');
   });
 });
 

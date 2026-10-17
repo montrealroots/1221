@@ -214,7 +214,7 @@ describe('played: Nordic noir’s brief, taped, reloaded and taped again', () =>
     press(sim, 'practice.self_tape', { genre: 'nordic_noir', brief: noir.id });
     const first = recordOf(sim.player, noir.id).takes.at(-1)!;
     expect(first.concern).toBe('restraint');
-    expect(first.chief).toMatch(/^Composure held back/);
+    expect(first.chief).toMatch(/^Your Composure held back/);
     const again = loadSave(deserialise(serialise(sim.universe)) as never);
     const kept = recordOf(again.player, noir.id).takes.at(-1)!;
     expect(kept).toEqual(first);

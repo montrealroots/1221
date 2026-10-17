@@ -38,7 +38,7 @@ vi.mock('@/ui/kept', async (orig) => {
 });
 const { CourseworkPane } = await import('@/ui/components/CourseworkPane');
 
-const UNREAD = 'Read it first: table work is done on a text you know.';
+const UNREAD = 'Read the text first. You can only do table work on a text you know.';
 const life = (seed: string) => createSave(1, seed, { ...newLifeConfig(), tutorial: false, homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 const rest = (sim: Simulation) => {
   for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.requiresPlayer) sim.timeline.cancel(item.id, sim.now);

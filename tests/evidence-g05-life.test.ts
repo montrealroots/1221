@@ -931,7 +931,7 @@ describe('health.week', () => {
     const tally = (sim: Simulation) => ({ ...sim.player.school!.tally });
     const [ti, tw] = [tally(ill.sim), tally(well.sim)];
     expect(ill.sim.execute({ kind: 'school.call_in_sick', payload: {} }).ok).toBe(true);
-    expect(well.sim.execute({ kind: 'school.call_in_sick', payload: {} }).error).toBe('You’re well enough to go: staying away would be an unexcused absence.');
+    expect(well.sim.execute({ kind: 'school.call_in_sick', payload: {} }).error).toBe('You’re well enough to go. Staying away would count as an unexcused absence.');
     for (const { sim } of [ill, well]) sim.advanceTo(at(2026, 12, 4, 18));
     expect([ill.sim.player.school!.tally.excused - ti.excused, well.sim.player.school!.tally.excused - tw.excused]).toEqual([1, 0]);
     // The week's work shown while it lasts is shown ill; the twin's isn't.
@@ -941,7 +941,7 @@ describe('health.week', () => {
     expect(shown(well.sim).some((w) => (w.inputs.condition as { ill?: boolean }).ill === true)).toBe(false);
     // Past it, the sick day is refused again.
     ill.sim.advanceTo(at(2026, 12, 7, 7));
-    expect(ill.sim.execute({ kind: 'school.call_in_sick', payload: {} }).error).toBe('You’re well enough to go: staying away would be an unexcused absence.');
+    expect(ill.sim.execute({ kind: 'school.call_in_sick', payload: {} }).error).toBe('You’re well enough to go. Staying away would count as an unexcused absence.');
   });
 
   it('PLAYER JOURNEY: a stay is three days in hospital, 40 of condition and of energy, $200, and the two days of classes it holds excused', () => {

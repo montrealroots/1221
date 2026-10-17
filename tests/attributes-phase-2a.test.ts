@@ -179,7 +179,7 @@ describe('a mastered player whose partner never comes', () => {
       const r = step(sim, a, READER.id);
       expect(r.ok, r.error).toBe(true);
       // Once a day, as the step says.
-      expect(step(sim, a, READER.id).error).toMatch(/Done today already/);
+      expect(step(sim, a, READER.id).error).toMatch(/You’ve done this today\./);
       evenings += 1;
       sim.advanceTo(sim.now + MS_DAY);
     }

@@ -65,7 +65,7 @@ export function SchoolWorkspace() {
   const [tab, setTab] = useKept<SchoolTab>(tabKey('/workspace/school'), 'standing');
   const school = person.school;
   if (!school || !person.craft) return <Empty title="No School" body="This life didn’t begin at drama school." />;
-  const where = school.standing === 'graduated' ? 'Graduated.' : schoolEnded(school.standing) ? 'Left the school.' : school.termsBegun === 0 ? 'Arriving for the fall term.' : school.leave?.status === 'on' ? `On leave until ${termLabel(school.leave.returnTerm)}.` : `Year ${yearOfStudy(person)} of three, ${STANDING_LABEL[school.standing].toLowerCase()}.`;
+  const where = school.standing === 'graduated' ? 'Graduated.' : schoolEnded(school.standing) ? 'Left the School.' : school.termsBegun === 0 ? 'Arriving for the fall term.' : school.leave?.status === 'on' ? `On leave until ${termLabel(school.leave.returnTerm)}.` : `Year ${yearOfStudy(person)} of three, ${STANDING_LABEL[school.standing].toLowerCase()}.`;
 
   const panes: Record<SchoolTab, JSX.Element> = {
     standing: <StandingPane />,
@@ -79,7 +79,7 @@ export function SchoolWorkspace() {
   return (
     <>
       <LookRegion className="page-head">
-        <div className="eyebrow">Your School</div>
+        <div className="eyebrow">School</div>
         <h1><Open subject={at('school', YALE_DRAMA.id)}>{YALE_DRAMA.name}</Open></h1>
         <p className="muted"><Open subject={at('school', YALE_DRAMA.id)}>{YALE_DRAMA.degree} in {YALE_DRAMA.program}</Open>, class of {school.classOf}. {where}</p>
       </LookRegion>
@@ -99,7 +99,7 @@ function SchoolTabs({ tab, onTab }: { tab: SchoolTab; onTab: (tab: SchoolTab) =>
     document.getElementById(`school-tab-${next.id}`)?.focus();
   };
   return (
-    <div className="tabs" role="tablist" aria-label="Your School">
+    <div className="tabs" role="tablist" aria-label="School">
       {SCHOOL_TABS.map((one, i) => (
         <button
           key={one.id}
@@ -155,25 +155,25 @@ function StandingPane() {
 
   return (
     <div className="col gap-5">
-        <Panel title="Your Standing" subtitle={evaluation ? `Evaluation On ${formatDate(evaluation.at, zone())}` : undefined} help="school.standing">
+        <Panel title="Your Standing" subtitle={evaluation ? `Term Review On ${formatDate(evaluation.at, zone())}` : undefined} help="school.standing">
           <div className="col gap-3">
             <div className="grid grid-4">
               <Stat label="Standing" value={STANDING_LABEL[school.standing]} tone={school.standing === 'good' || school.standing === 'graduated' ? undefined : 'warning'} />
-              <Stat label={ended ? 'Attendance Last Term' : 'Attendance This Term'} value={attendance === undefined ? (ended ? 'None' : 'None Yet') : pct(attendance)} note={`${pct(ESTIMATE.attendanceFloor)} ${ended ? 'was' : 'is'} the floor`} tone={attendance !== undefined && attendance < ESTIMATE.attendanceFloor ? 'warning' : undefined} />
-              <Stat label={ended ? 'Growth Last Term' : 'Growth This Term'} value={growth.toFixed(1)} note={`The class’s ${classGrowth.toFixed(1)}: for the room each ${ended ? 'had' : 'has'}, ${pace} it, and half its pace ${ended ? 'was' : 'is'} the floor`} tone={grewTooLittle ? 'warning' : undefined} />
-              <Stat label={ended ? 'Coursework Last Term' : 'Coursework This Term'} value={work.shown ? `${work.unready} of ${work.shown}` : ended ? 'None' : 'None Yet'} note={`Unready or not shown, of the pieces due; half of ${ESTIMATE.coursework.shown} or more ${ended ? 'was' : 'is'} short`} tone={workShort ? 'warning' : undefined} />
+              <Stat label={ended ? 'Attendance Last Term' : 'Attendance This Term'} value={attendance === undefined ? (ended ? 'None' : 'None Yet') : pct(attendance)} note={ended ? `${pct(ESTIMATE.attendanceFloor)} was the minimum` : `You need ${pct(ESTIMATE.attendanceFloor)} or more`} tone={attendance !== undefined && attendance < ESTIMATE.attendanceFloor ? 'warning' : undefined} />
+              <Stat label={ended ? 'Growth Last Term' : 'Growth This Term'} value={growth.toFixed(1)} note={`The class’s middle: ${classGrowth.toFixed(1)}. Allowing for room to grow, ${ended ? 'you were' : 'you’re'} ${pace} the class, and ${ended ? 'half its pace was the minimum' : 'you need at least half its pace'}`} tone={grewTooLittle ? 'warning' : undefined} />
+              <Stat label={ended ? 'Coursework Last Term' : 'Coursework This Term'} value={work.shown ? `${work.unready} of ${work.shown}` : ended ? 'None' : 'None Yet'} note={`Unready or not shown, of the pieces due. Once ${ESTIMATE.coursework.shown} or more are due, half or more ${ended ? 'was' : 'is'} short of what’s asked`} tone={workShort ? 'warning' : undefined} />
             </div>
             <p className="small" style={{ margin: 0 }}>
-              Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. Short of either floor at the evaluation, or with a run on stage gone mostly off, or half or more of three or more pieces of coursework due unready or not shown, standing falls a step, from good to concern, to warning, to dismissal; meeting them all restores it. A missed performance or understudy call goes straight to warning, or from warning to dismissal{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After the last term, Commencement confers the degree in good standing or with a concern; the last term ending on academic warning, the faculty don’t recommend it.
+              Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. At the term review, a term falls short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course, or if half or more of your coursework due was Unready or not shown (once {ESTIMATE.coursework.shown} or more pieces are due). A term that falls short moves your standing one step: from good standing to academic concern, then to academic warning, then to dismissal. A term that meets them all puts you back in good standing. Missing a performance or an understudy call is a grave breach: it puts you straight on academic warning, or dismisses you if you’re already on warning{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After your last term, Commencement confers the degree if you’re in good standing or have a concern; if your last term ends on academic warning, the faculty don’t recommend it.
             </p>
-            {!ended && <p className="small" style={{ margin: 0 }}>{school.castable ? 'In the casting pool.' : 'Out of the casting pool after missed calls, until a good evaluation.'}</p>}
+            {!ended && <p className="small" style={{ margin: 0 }}>{school.castable ? 'You’re in the casting pool.' : 'You’re out of the casting pool after missed calls, until a term review finds you in good standing.'}</p>}
             <WithdrawControl />
             <LeavePanel />
             <CoursesPanel />
             <RepeatPanel />
             <ClassesPanel />
             <PoliciesPanel />
-            <Fine>The four standings, no readmission after dismissal, and the faculty’s vote on the degree are the Yale Bulletin’s. One evaluation a term, a step at a time, the floors, and what withholds the degree are SLATE’s reading: the Bulletin says the faculty evaluate regularly and may act at any time.</Fine>
+            <Fine>Source: the Yale Bulletin, for the four standings, no return after dismissal and the faculty’s vote on the degree. One review a term, one step at a time, the minimums and what withholds the degree are estimated: the Bulletin says only that the faculty evaluate regularly and may act at any time.</Fine>
           </div>
         </Panel>
 
@@ -187,7 +187,7 @@ function StandingPane() {
                 {last.notes.map((n) => (
                   <div key={n.course} className="small"><strong>{n.teacher}</strong>, {n.course}: {n.note}</div>
                 ))}
-                <div className="xs dim">Simulated notes: the game’s words under the course’s teachers, not theirs.</div>
+                <div className="xs dim">These notes are simulated. The words are the game’s, not the teachers’.</div>
               </div>
             </Panel>
           ) : null;
@@ -222,12 +222,12 @@ function StandingPane() {
             </table>
           </LookRegion>
           <Fine>
-            You began among the class’s strongest from this year’s auditions, not ahead of everyone, and each classmate grows at their own pace. Classes, rehearsals, performances and later the work grow craft, more when you come rested and less the nearer you are to what you can reach: each skill where it began and {CEILING.headroom} points more. Experience gives most in the first years and little past twelve (McDaniel, Schmidt and Hunter, 1988), and practice is a fifth of what an actor becomes in the performing arts (Macnamara, Hambrick and Oswald, 2014); the ceiling is fitted to both. The scale and the rates of a session are SLATE’s.
+            You began among the class’s strongest from this year’s auditions, not ahead of everyone, and each classmate grows at their own pace. Classes, rehearsals, performances and later the work grow your craft: more when you come rested, and less the nearer you are to what you can reach, which is each skill’s starting level plus {CEILING.headroom} points. Experience gives most in the first years and little past twelve (McDaniel, Schmidt and Hunter, 1988), and practice is a fifth of what an actor becomes in the performing arts (Macnamara, Hambrick and Oswald, 2014); the ceiling is fitted to both. The scale and the rate of a session are estimated.
           </Fine>
         </div>
       </Panel>
 
-      <Panel title="Evaluations">
+      <Panel title="Term Reviews">
         {school.history.length ? (
           <div className="table-scroll">
             <table>
@@ -244,7 +244,7 @@ function StandingPane() {
                     <td className="num mono">{r.classGrowth.toFixed(1)}</td>
                     {/* The review's own count of the term's coursework (`TermReview.coursework`), from 2026-10-16: until then it
                         was kept at every evaluation and shown nowhere, and its words named it only where the mark was reached. */}
-                    <td className="small">{r.coursework ? `${r.coursework.unready} of ${r.coursework.shown} unready or not shown` : 'None counted'}</td>
+                    <td className="small">{r.coursework ? `${r.coursework.unready} of ${r.coursework.shown} Unready or not shown` : 'None counted'}</td>
                     <td className="small">{r.reason}</td>
                   </tr>
                 ))}
@@ -252,7 +252,7 @@ function StandingPane() {
             </table>
           </div>
         ) : (
-          <p className="small muted" style={{ margin: 0 }}>None yet. The faculty evaluate every student at the end of each term’s classes.</p>
+          <p className="small muted" style={{ margin: 0 }}>None yet. The faculty review every student at the end of each term’s classes.</p>
         )}
       </Panel>
     </div>
@@ -300,7 +300,7 @@ function ClassesPane() {
         title={`Your Week, ${termLabel(term)}`}
         subtitle={`${extra ? 'Your additional term' : `Year ${year}`}: nine to three on class days`}
         actions={offerSick ? (
-          <Gated feature="school.call_in_sick" disabled={Boolean(sick)} title={sick ?? 'Today’s classes, calls and shift excused'} onClick={() => { if (run('school.call_in_sick').ok) toast('You called in sick: today’s absence is excused.', 'positive'); }}>Call In Sick</Gated>
+          <Gated feature="school.call_in_sick" disabled={Boolean(sick)} title={sick ?? 'Excuses today’s classes, calls and shift'} onClick={() => { if (run('school.call_in_sick').ok) toast('You called in sick. Today’s absence is excused.', 'positive'); }}>Call In Sick</Gated>
         ) : undefined}
         help="school.sick"
       >
@@ -322,10 +322,10 @@ function ClassesPane() {
             </table>
           </div>
           <p className="small" style={{ margin: 0 }}>
-            {next ? <>Next classes: <Open subject={at('day', dateKey(next, sim.homeZone))}>{formatDateTime(next, zone())}</Open>.</> : 'No classes ahead.'} This term’s classes run {dayOf(period.from)} to {dayOf(period.to)}, less {off} breaks for holidays, Community Days, work periods and recesses. Asleep or away from New Haven at nine is an absence; calling in sick excuses it when you’re unwell (condition under {ESTIMATE.sickBelow}) or down with the flu, and not otherwise; a day in hospital is excused of itself.
+            {next ? <>Next classes: <Open subject={at('day', dateKey(next, sim.homeZone))}>{formatDateTime(next, zone())}</Open>.</> : 'No classes ahead.'} This term’s classes run from {dayOf(period.from)} to {dayOf(period.to)}, with {off === 1 ? 'one break' : `${off} breaks`} for holidays, Community Days, work periods and recesses. If you’re asleep or away from New Haven at nine, it counts as an absence. Calling in sick excuses it only when you’re unwell (condition under {ESTIMATE.sickBelow}) or down with the flu. A day in hospital is excused automatically.
           </p>
           <Fine>
-            {period.estimate ? 'This term’s dates are SLATE’s estimate by the 2026–2027 pattern. ' : 'The class days are the Yale Bulletin’s. '}The courses are the Bulletin’s; how often each meets isn’t published, and the week is SLATE’s estimate.
+            {period.estimate ? 'This term’s dates are estimated from the 2026–2027 pattern. ' : 'Source: the Yale Bulletin, for the class days. '}The courses are the Bulletin’s. How often each meets isn’t published, so the week is estimated.
           </Fine>
         </LookRegion>
       </Panel>
@@ -387,8 +387,8 @@ function CastReadPanel() {
   return (
     <Panel title="Why This Cast" subtitle={`${read.play}, ${termLabel(read.term)}`} help="productions.casting">
       <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>The play asks for {asks}{read.kinds.length ? `, as its kinds of play do (${read.kinds.map((k) => GENRE_BY_ID[k]?.label ?? k).join(', ')})` : ''}. The chair reads each student’s fit for it the same way, then a fifth of it by how much of themselves they delivered in their runs since the last casting, and balances who had the big parts in the School’s last productions; the best read takes the biggest part written for them.</p>
-        {you?.from && you.from.length > 0 && <p className="small" style={{ margin: 0 }}>Your {Math.round(you.delivery * 100)}% delivered is read from {you.from.map((f) => `${f.what}${f.source === 'before' ? '' : `, ${SOURCE_WORD[f.source]}, ${f.nights} night${f.nights === 1 ? '' : 's'}`} (${Math.round(f.delivery * 100)}%, weighted ${f.weight})`).join('; ')}. A Cabaret or Summer run weighs half a School production’s, each run up to eight nights; a night missed out of hospital is delivered at nothing. How the nights were judged isn’t read here: it’s in your work.</p>}
+        <p className="small" style={{ margin: 0 }}>The play asks for {asks}{read.kinds.length ? `, as its kinds of play do (${read.kinds.map((k) => GENRE_BY_ID[k]?.label ?? k).join(', ')})` : ''}. The chair judges every student’s fit for it the same way, weighs a fifth of it by how much of themselves they delivered in their runs since the last casting, and balances who had the big parts in the School’s last productions. The best read gets the biggest part written for them.</p>
+        {you?.from && you.from.length > 0 && <p className="small" style={{ margin: 0 }}>Your {Math.round(you.delivery * 100)}% delivered comes from {you.from.map((f) => `${f.what}${f.source === 'before' ? '' : `, ${SOURCE_WORD[f.source]}, ${f.nights} night${f.nights === 1 ? '' : 's'}`} (${Math.round(f.delivery * 100)}%, counted ×${f.weight})`).join('; ')}. A Cabaret or Summer run counts half as much as a School production, each run up to eight nights, and a night missed when you weren’t in hospital counts as nothing delivered. How the nights were judged doesn’t count here: that’s in your work.</p>}
         <LookRegion className="table-scroll">
           <table>
             <thead><tr><th scope="col">Student</th><th scope="col" className="num">Fit</th><th scope="col" className="num">Delivered</th><th scope="col" className="num">Balance</th><th scope="col" className="num">Read</th><th scope="col">Part</th></tr></thead>
@@ -406,7 +406,7 @@ function CastReadPanel() {
             </tbody>
           </table>
         </LookRegion>
-        <Fine>Fit is the evaluation’s night for the play, with preparation complete and a sufficient day; stamina and discipline count as full for everyone, since the class’s bodies and habits aren’t simulated. A classmate’s delivery is the share of calls they keep. Who somebody is plays no part.</Fine>
+        <Fine>Fit is how a night of the play would go, fully prepared and on a good day. Stamina and discipline count as full for everyone, since the game doesn’t simulate your classmates’ bodies and habits. A classmate’s delivery is the share of calls they keep. Who someone is plays no part.</Fine>
       </div>
     </Panel>
   );
@@ -443,7 +443,7 @@ function CastingPane() {
             {casting.nights && (
               <p className="small" style={{ margin: 0 }}>
                 Your nights: {(['remarkable', 'strong', 'solid', 'off'] as const).filter((b) => casting.nights![b]).map((b) => `${NIGHT_WORD[b]} ${casting.nights![b]}`).join(', ')}.
-                {casting.note ? ` The director’s note: ${casting.note}` : ' How much of yourself you bring to its nights is read by the chair when casting you next.'}
+                {casting.note ? ` The director’s note: ${casting.note}` : ' How much of yourself you bring to its nights counts when the chair casts you next.'}
               </p>
             )}
             {/* A run that went on without them has no nights, and its note was until 2026-10-13 only a notification's; found by the evidence pass of that day. */}
@@ -459,7 +459,7 @@ function CastingPane() {
             )}
             {casting.kind === 'understudy' && casting.production === SEAGULL_2027.name && (
               <p className="small" style={{ margin: 0 }}>
-                {SEAGULL_2027.name}, {SEAGULL_2027.by}, directed by {SEAGULL_2027.director}: rehearsals from {dayOf(parseDay(SEAGULL_2027.rehearsals.from))}, performances {dayOf(parseDay(SEAGULL_2027.run.from))} to {dayOf(parseDay(SEAGULL_2027.run.to))}. {onCallLeft > 0 ? `On call on ${onCallLeft} performance days still ahead: the Rep calls at five, so be in New Haven then. Not needed, the evening is yours; needed, you’re told and the curtain goes on your calendar. Away when called is a grave breach. Your understudy run-through is on the calendar too.` : 'The run is over.'}
+                {SEAGULL_2027.name}, {SEAGULL_2027.by}, directed by {SEAGULL_2027.director}: rehearsals from {dayOf(parseDay(SEAGULL_2027.rehearsals.from))}, performances {dayOf(parseDay(SEAGULL_2027.run.from))} to {dayOf(parseDay(SEAGULL_2027.run.to))}. {onCallLeft > 0 ? `You’re on call for ${onCallLeft} performance ${onCallLeft === 1 ? 'day' : 'days'} still ahead. The Rep calls at five, so be in New Haven then. If you’re not needed, the evening is yours; if you are, you’re told and the performance goes on your calendar. Being away when called is a grave breach. Your understudy run-through is on your calendar too.` : 'The run is over.'}
               </p>
             )}
           </div>
@@ -471,7 +471,7 @@ function CastingPane() {
           Profile (`keepCredit`), as the end's notice says. */}
       {castings.length === 0 && !enrolled && (
         <Panel title="No Casting Ahead" help="productions.casting">
-          <p className="small" style={{ margin: 0 }}>The chair casts students at the School, and {school.standing === 'graduated' ? 'your degree is conferred' : 'you’ve left it'}: no casting comes now. The productions you played stay on your Profile.</p>
+          <p className="small" style={{ margin: 0 }}>The chair casts students at the School, and {school.standing === 'graduated' ? 'your degree is conferred' : 'you’ve left it'}, so there’s no casting now. The productions you played stay on your Profile.</p>
         </Panel>
       )}
       {castings.length === 0 && enrolled && (
@@ -479,7 +479,7 @@ function CastingPane() {
           <p className="small" style={{ margin: 0 }}>
             {school.castable
               ? 'The chair casts every student each term from the first spring: the Carlotta Festival then; a thesis or the Hughes Festival in a second-year’s and a third-year’s fall; a thesis or the Carlotta Festival in the second spring; a Shakespeare Repertory Project in the last spring; and once a year, for a student in good standing, Yale Rep.'
-              : 'Out of the casting pool after missed calls. A good evaluation puts you back.'}
+              : 'You’re out of the casting pool after missed calls. A term review that finds you in good standing puts you back.'}
           </p>
         </Panel>
       )}
@@ -494,7 +494,7 @@ function CastingPane() {
         </Panel>
       )}
       <Fine>
-        Casting is the Bulletin’s: the chair assigns every role, balancing each student’s needs, a student cast fulfills it, missed calls take an actor out of the pool, and a missed performance is a grave breach. The chair reads each student for the play: the skills it asks, a lead last time counting against the next and a featured part for it, and how you delivered in the last run (not how its nights were banded). The best read takes the biggest part written for them. Which play each thesis and Shakespeare project is, the festivals’ and later years’ dates, the rehearsal weeks and the reading are SLATE’s estimate, as the seasons you’re cast in aren’t announced; the characters are the plays’ own. Source: {SCHOOL_SEASON.source}.
+        Casting is the Bulletin’s: the chair assigns every role, balancing each student’s needs, a student cast fulfills it, missed calls take an actor out of the pool, and a missed performance is a grave breach. The chair reads each student for the play: the skills it asks, a lead last time counting against the next and a featured part for it, and how you delivered in the last run (not how its nights were banded). The best read gets the biggest part written for them. Which play each thesis and Shakespeare project is, the festivals’ and later years’ dates, the rehearsal weeks and the chair’s reading are estimated, since the seasons you’re cast in aren’t announced. The characters are the plays’ own. Source: {SCHOOL_SEASON.source}.
       </Fine>
 
       <CabaretPanel />
@@ -540,12 +540,12 @@ function CabaretPanel() {
             <Stat label="Performed" value={`${mine.performed} of ${YALE_CABARET.shows.length}`} note={`${calls.length} calls ahead`} />
           </div>
         )}
-        {mine?.withdrawn && <p className="small" style={{ margin: 0 }}>Out of the show on {mine.withdrawn.why}, {formatDate(mine.withdrawn.at, sim.zone)}: the calls after it were called off, and not held against you.</p>}
+        {mine?.withdrawn && <p className="small" style={{ margin: 0 }}>Out of the show on {mine.withdrawn.why}, {formatDate(mine.withdrawn.at, sim.zone)}. The calls after it were called off, and they aren’t held against you.</p>}
         {why && <p className="small muted" style={{ margin: 0 }}>{why}</p>}
         {mine?.nights && <p className="small" style={{ margin: 0 }}>{nightsLine(mine)}</p>}
         {mine && <RehearsalProcess casting={mine} which="cabaret" />}
         <Fine>
-          The students’ own theater at 217 Park Street: a new show each production week, Thursday to Saturday at eight and Friday and Saturday at eleven too, unpaid. The chair approves it, nobody on academic warning may take part (a warning during a show takes you out of what’s left of it), and it never wins a conflict with classes, casting or work-study, so SLATE finds you a week clear of all three. The rehearsals, {YALE_CABARET.rehearsalEvenings} weekday evenings before it, and one show a term are SLATE’s estimate. Source: {YALE_CABARET.source}.
+          The students’ own theater at 217 Park Street: a new show each production week, Thursday to Saturday at eight and Friday and Saturday at eleven too, unpaid. The chair approves it, and nobody on academic warning may take part (a warning during a show takes you out of what’s left of it). It never wins a conflict with classes, casting or work-study, so the game finds you a week clear of all three. The rehearsals, {YALE_CABARET.rehearsalEvenings} weekday evenings before it, and one show a term are estimated. Source: {YALE_CABARET.source}.
         </Fine>
       </div>
     </Panel>
@@ -592,15 +592,15 @@ function CoursesPanel() {
   const notPassed = unpassed.length ? `, with ${unpassed.join(', ')} not passed` : '';
   const endedWords = school.standing === 'graduated'
     ? `Every course the degree needs was passed, and it was conferred${school.endedAt !== undefined ? ` on ${formatDate(school.endedAt, zone())}` : ''}.`
-    : school.standing === 'withdrawn' ? `You withdrew${notPassed}. The Bulletin lets a student who withdrew apply to come back; SLATE doesn’t model a return.`
-      : school.standing === 'dismissed' ? `You were dismissed${notPassed}. Once dismissed, a student isn’t eligible to come back.`
+    : school.standing === 'withdrawn' ? `You withdrew${notPassed}. The Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.`
+      : school.standing === 'dismissed' ? `You were dismissed${notPassed}. A dismissed student can’t return to the School.`
         : `The degree wasn’t recommended${notPassed}, and nothing more can be asked for it.`;
   return (
     <div className="col gap-2">
       <div className="row-between"><div className="eyebrow">Courses And The Degree</div><HowItWorks help="school.repeat" /></div>
       <p className="small" style={{ margin: 0 }}>
         {passed} of {all.length} courses passed{ended ? '' : ' so far'}.{' '}
-        {ended ? endedWords : failed.length ? `The degree needs ${failed.map((r) => r.name).join(', ')}, not passed yet: a course left on a leave is taken on return, and a year with a course failed can be repeated, below.` : incomplete.length ? 'An Incomplete stands between you and the degree until it’s made up.' : 'Only the terms to come stand between you and the degree.'}
+        {ended ? endedWords : failed.length ? `The degree still needs ${failed.map((r) => r.name).join(', ')}. A course left on a leave is taken on your return, and a year with a failed course can be repeated, below.` : incomplete.length ? 'An Incomplete stands between you and the degree until it’s made up.' : 'Only the terms to come stand between you and the degree.'}
       </p>
       {incomplete.map((r) => {
         const key = `${r.term}:${r.code}`;
@@ -620,7 +620,7 @@ function CoursesPanel() {
       {failed.map((r) => <p key={`${r.term}:${r.code}`} className="small" style={{ margin: 0 }}><strong>{r.name}</strong>, {word(r)}: {r.why}.</p>)}
       {now.length > 0 && !ended && (
         <ul className="small" style={{ margin: 0 }}>
-          {now.map(([key, r]) => <li key={key}>{r.name}: at {r.attended} of {r.meetings} meetings{r.excused ? `, ${r.excused} excused` : ''}.</li>)}
+          {now.map(([key, r]) => <li key={key}>{r.name}: at {r.attended} of {r.meetings} classes{r.excused ? `, ${r.excused} excused` : ''}.</li>)}
         </ul>
       )}
       <details className="small"><summary>Every Course</summary>
@@ -628,7 +628,7 @@ function CoursesPanel() {
       </details>
       {/* Whose the Incomplete's giving is, said from 2026-10-16: the Bulletin (p.152) has a student ask the instructor for
           one, and the instructor grant it and any extension. */}
-      <Fine>The acting courses are Pass/Fail, the degree is recommended for a student who has completed every one, and an Incomplete is due within a month (Bulletin 2026–27 pp.151–152). SLATE’s estimates: the three quarters of a course’s meetings that pass it, two-hour make-up sessions each worth a week of the course, and one month’s extension. SLATE’s too: an Incomplete given for meetings missed ill, where the Bulletin has the student ask the instructor for one and petition for any extension. A year with a course failed can be repeated, once, on SLATE’s faculty model (below); each attempt stays on the record, and the degree reads the pass.</Fine>
+      <Fine>Source: the Yale Bulletin 2026–27, pp.151–152: the acting courses are Pass/Fail, the degree is recommended for a student who has completed every one, and an Incomplete is due within a month. Estimated: the three quarters of a course’s classes that pass it, two-hour make-up sessions each worth a week of the course, and one month’s extension. The game also gives an Incomplete for classes missed ill, where the Bulletin has the student ask the instructor for one and petition for any extension. A year with a failed course can be repeated once, by the game’s own rule (below); each attempt stays on the record, and the degree counts the pass.</Fine>
     </div>
   );
 }
@@ -646,7 +646,7 @@ function WithdrawControl() {
     <div className="col gap-2">
       {asking && (
         <p className="small" style={{ margin: 0 }}>
-          Withdrawing gives up your place today: classes, calls, shifts and coursework end, and hours you worked are still paid. By the fifteenth day of a term’s classes Yale Health’s cover ends the day you withdraw, or goes back to the start of its insurance term (1 August, for a fall term) where that came first, and its premium is refunded; after it, you’re covered thirty days more. On an F-1 you’d have fifteen days’ grace and no OPT. The Bulletin lets a student who withdrew apply to come back, which SLATE doesn’t model.
+          Withdrawing gives up your place today: classes, calls, shifts and coursework end, and hours you worked are still paid. By the fifteenth day of a term’s classes Yale Health’s cover ends the day you withdraw, or goes back to the start of its insurance term (1 August, for a fall term) where that came first, and its premium is refunded; after it, you’re covered thirty days more. On an F-1 you’d have fifteen days’ grace and no OPT. The Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.
         </p>
       )}
       <div className="row gap-2">
@@ -676,7 +676,7 @@ function SummerPanel() {
     <Panel
       title="The Yale Summer Cabaret"
       subtitle={summer ? (summer.out ? 'The company let you go' : `In the ${summer.year} company, to ${formatDate(summer.until, zone())}`) : 'Three shows a summer in New Haven'}
-      actions={summer || summerRefusal(sim, person) ? undefined : <Gated feature="school.summer_cabaret" onClick={() => { if (run('school.summer_cabaret').ok) toast('In this summer’s company.', 'positive'); }}>Join The Summer Company</Gated>}
+      actions={summer || summerRefusal(sim, person) ? undefined : <Gated feature="school.summer_cabaret" onClick={() => { if (run('school.summer_cabaret').ok) toast('You’re in this summer’s company.', 'positive'); }}>Join The Summer Company</Gated>}
       help="school.summer_cabaret"
     >
       {!summer && summerRefusal(sim, person) && <p className="small muted" style={{ margin: '0 0 var(--s2)' }}>{summerRefusal(sim, person)}</p>}
@@ -696,7 +696,7 @@ function SummerPanel() {
         </div>
       )}
       <Fine>
-        Three shows between late June and late August, evenings at eight and Saturdays at two, with afternoon rehearsals in the three weeks before each. It pays {formatMoney(inSaveMoney(sim, SUMMER_CABARET.stipendWeekly, 'USD'), cur)} a week, SLATE’s estimate, as are later summers’ dates and the company taking a student in good standing who asks by the end of April: neither how it’s chosen nor what it pays is published. A missed performance and the company goes on without you. The summer is yours: the Bulletin limits outside work only while classes are in session. Source: {SUMMER_CABARET.source}.
+        Three shows between late June and late August, evenings at eight and Saturdays at two, with afternoon rehearsals in the three weeks before each. It pays {formatMoney(inSaveMoney(sim, SUMMER_CABARET.stipendWeekly, 'USD'), cur)} a week. That, later summers’ dates, and the company taking a student in good standing who asks by the end of April are estimated: neither how it’s chosen nor what it pays is published. Miss a performance and the company goes on without you. The summer is yours: the Bulletin limits outside work only while classes are in session. Source: {SUMMER_CABARET.source}.
       </Fine>
     </Panel>
   );
@@ -747,7 +747,7 @@ function WorkPane() {
         <p className="small" style={{ margin: 0 }}>
           Every student works: six hours on class-week Saturdays, assigned, up to {WORK_STUDY.assignedHours} hours a year, and elective evenings of four hours front of house at Yale Rep when you ask for them. Hours are paid on Friday for the week, by direct deposit, so your bank counts them as wages. A shift you’re not there for isn’t paid, and a missed assigned one counts against your attendance.
         </p>
-        <Fine>The hours and the rate are the school’s. Which Saturdays and evenings are SLATE’s estimate. The protective equipment is the school’s requirement and its $150 the school’s figure; what the kit holds beyond steel-toed work shoes isn’t published. Without it, or the money for it at the shift, the supervisor sends you home. Source: {WORK_STUDY.source}; {REQUIRED_PPE.source}.</Fine>
+        <Fine>The hours and the rate are the school’s. Which Saturdays and evenings is estimated. The protective equipment is the school’s requirement and its $150 the school’s figure; what the kit holds beyond steel-toed work shoes isn’t published. Without it, or the money for it at the shift, the supervisor sends you home. Source: {WORK_STUDY.source}; {REQUIRED_PPE.source}.</Fine>
       </div>
     </Panel>
   );
@@ -794,12 +794,12 @@ function TermsPane() {
             <div key={t.i} className="row-between small">
               <span>{termLabel(t.i)}{t.i < school.termsBegun && !enrolled.includes(t.i) ? ', On Leave' : ''}{(school.leaves ?? []).concat(school.leave ? [school.leave] : []).some((l) => l.startedAt !== undefined && (t.i === l.firstTerm || t.i === l.firstTerm + 1)) && t.i >= school.termsBegun ? ', On Leave' : ''}</span>
               <span className={t.i < school.termsBegun ? 'dim' : ''}>
-                {t.i < school.termsBegun ? 'Began ' : 'Begins '}<Open subject={at('day', keyOf(t.date))}>{dayOf(t.date)}</Open>{t.estimate ? ', SLATE’s estimate' : ''}
+                {t.i < school.termsBegun ? 'Began ' : 'Begins '}<Open subject={at('day', keyOf(t.date))}>{dayOf(t.date)}</Open>{t.estimate ? ' (estimated)' : ''}
               </span>
             </div>
           ))}
           <Fine>
-            The 2026–2027 dates are the Yale Bulletin’s. Later years aren’t published yet, so they’re SLATE’s estimate by the same pattern.
+            Source: the Yale Bulletin, for the 2026–2027 dates. Later years aren’t published yet, so they’re estimated from the same pattern.
           </Fine>
         </LookRegion>
       </Panel>
@@ -831,7 +831,7 @@ function TermsPane() {
             {unsupported ? `This term is past the six the tuition scholarship supports, so its tuition${need ? ' is billed to your Yale account, and the living scholarship the aid office kept meets its health fee and pays what the account owes before any reaches your bank' : ' and health fee are billed to your Yale account'}. ` : waived ? 'This term is past the six the tuition scholarship supports, and the aid office granted an exception: it’s supported as the six were. ' : ''}Tuition is met in full for every student’s six terms, from the David Geffen gift. Aid for living costs, {money(aidLiving)} a year with the health plan and up to {money(aidBooks)} of books this year, goes by need, and the need assessment reads the family’s means. {found ? (need ? 'Yours found need, and the scholarship meets it.' : 'Yours found need, but a term past six has living aid only where the aid office’s review keeps it.') : 'Yours found none, so the health plan and living costs come from your bank.'}
           </p>
           <YaleAccountPanel />
-          <Fine>The {COST_2026_27.year} figures are the school’s; later years grow at the Bulletins’ own rise from 2022–23, SLATE’s estimate until they’re published. Source: {COST_2026_27.source}.</Fine>
+          <Fine>The {COST_2026_27.year} figures are the school’s; later years grow at the Bulletins’ own rise from 2022–23, estimated until they’re published. Source: {COST_2026_27.source}.</Fine>
         </div>
       </Panel>
     </div>

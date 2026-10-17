@@ -512,7 +512,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     // Played, not assumed: here reading the cold take as taped would say less.
     expect(taped).toBeLessThan(exact(first.forecast));
     expect(first.assumes).toContain(`What the forecast assumes of your last ${byRecords.pieces} pieces: `);
-    expect(first.assumes).toContain(`In ${cold.what}, the breakdown and your reading stood at 0%, the lines at 0% and rehearsal on your feet at 0% of the way to complete.`);
+    expect(first.assumes).toContain(`In ${cold.what}, breaking down the text for your reading stood at 0%, learning the lines at 0% and rehearsal on your feet at 0% of the way to complete.`);
     expect(first.assumes).toContain(`The forecast counts that piece as fully prepared, since its own preparation held it back most. Counted as taped, ${ADVICE.sessions} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} a piece, not ${exact(first.forecast).toFixed(2)}.`);
     expect(first.assumes).toContain(`Each genre is counted as you know it today: of the ${byRecords.genreCount} pieces’ genres, ${byRecords.genreShort} are short of complete and ${byRecords.genreBetter} known better than when taped.`);
     // F1: what completing that preparation would bring, the judge's replay worked from the records, said apart.

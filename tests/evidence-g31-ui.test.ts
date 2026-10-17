@@ -839,7 +839,7 @@ describe('p-genres', () => {
     expect(words).toContain('Drama: Its Brief');
     expect(words).toContain('The Spare Key');
     expect(control('Tape It (60 Min)').props.disabled).toBe(true);
-    expect(words).toContain('Choose a reading first: a take is of the scene played one way, and you should know which before the camera rolls.');
+    expect(words).toContain('Choose a reading first. A self-tape plays the scene one way, so decide which before the camera rolls.');
     press('Read It This Way');
     expect(h.toasts.at(-1)).toEqual({ message: `Reading it as ${b.readings[0]!.label}.`, tone: 'positive' });
     expect(sim.player.briefs!['brief-drama']!.reading).toBe(b.readings[0]!.id);

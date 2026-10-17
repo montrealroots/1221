@@ -234,7 +234,7 @@ describe('c-performerTitle', () => {
     // Trifles writes its leads for two actresses: the actor's part in it is a supporting one, the actress's a lead.
     expect(partOf(SUMMER_PLAYS, 'Trifles', 'Mrs Hale')).toMatchObject({ size: 'lead', for: 'actress' });
     // Joined once: asked again, refused in its words, the parts as they were, through a reload.
-    expect(her.execute({ kind: 'school.summer_cabaret', payload: {} }).error).toBe('You’re in this summer’s company.');
+    expect(her.execute({ kind: 'school.summer_cabaret', payload: {} }).error).toBe('You’re already in this summer’s company.');
     const kept = reload(her);
     expect(kept.player.performerTitle).toBe('actress');
     expect(shows(kept)).toEqual(shows(her));
@@ -304,7 +304,7 @@ describe('c-performerTitle', () => {
       const sim = ada('g27-read', { pronouns });
       // Before the tour (Thursday 27 August), refused in its words.
       sim.advanceTo(ET(2026, 8, 26, 18));
-      expect(sim.execute({ kind: 'plays.read', payload: { playId: 'fleabag' } }).error).toBe('The library isn’t known to you yet: the tour shows you it.');
+      expect(sim.execute({ kind: 'plays.read', payload: { playId: 'fleabag' } }).error).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
       sim.advanceTo(ET(2026, 8, 27, 18));
       return sim.must<{ minutes: number; note: string }>({ kind: 'plays.read', payload: { playId: 'fleabag' } }).note;
     };

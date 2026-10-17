@@ -357,7 +357,7 @@ describe('school.respond', () => {
     // Past seven on Tuesday 1 September, the hour it was to be answered by.
     sim.advanceTo(at(2026, 9, 1, 8));
     expect(momentIn(sim, m.id).status).toBe('lapsed');
-    expect(no(sim, 'school.respond', { momentId: m.id, choice: 'hold' })).toBe('It’s too late to answer: the moment passed.');
+    expect(no(sim, 'school.respond', { momentId: m.id, choice: 'hold' })).toBe('It’s too late to answer. The moment has passed.');
     const { text } = drawn(sim, 'moments');
     expect(buttons('school.respond', 'Keep Your Reading')).toEqual([]);
     expect(text).toContain('Priya Reyes: A Different Reading · Not Answered');

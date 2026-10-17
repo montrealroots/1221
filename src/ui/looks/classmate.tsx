@@ -75,14 +75,14 @@ defineLook<TheClassmate>('classmate', {
           )}
           <ul className="small" style={{ margin: 0, paddingLeft: 'var(--s4)' }}>
             {p.priority && <li>Cares most about {PRIORITY_WORDS[p.priority].toLowerCase()}.</li>}
-            {p.boundary && <li>Asks to be asked a day ahead: it lifts after {Math.max(0, boundaryLiftsAfter(p.boundary) - p.boundary.keptSince)} more rehearsals kept.</li>}
+            {p.boundary && <li>Wants a day’s notice: that lifts after {Math.max(0, boundaryLiftsAfter(p.boundary) - p.boundary.keptSince)} more rehearsals kept.</li>}
             {(r.missedByYou ?? 0) > 0 && <li>You missed {r.missedByYou} rehearsal{r.missedByYou === 1 ? '' : 's'} with them.</li>}
             {(r.log ?? []).slice(0, 5).map((x) => <li key={`${x.at}-${x.what}`}>{formatDate(x.at, zone())}: {x.what}</li>)}
           </ul>
         </div>
       ),
       ways,
-      provenance: `The scene together reads their preparation, timing and reliability; your own result never does. Trust starts at ${WORK.trust.start}: a rehearsal kept +${WORK.trust.kept}, missed −${-WORK.trust.missed}, called off late −${-WORK.trust.lateCancel}.`,
+      provenance: `How a scene goes together depends on their preparation, timing and reliability; your own result never does. Trust starts at ${WORK.trust.start}: a rehearsal kept +${WORK.trust.kept}, missed −${-WORK.trust.missed}, called off late −${-WORK.trust.lateCancel}.`,
     };
   },
 });

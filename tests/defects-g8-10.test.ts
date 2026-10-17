@@ -112,7 +112,7 @@ describe('a rehearsal kept with a partner', () => {
     for (const [k, on] of ['2026-08-01', '2026-08-08', '2026-08-15'].entries()) recordNote(notes, { kind: 'dim', dim: 'partner' }, on, `before-${k}`, 'Acting I', 0.2);
     expect(sim.must<{ dim: string }>({ kind: 'school.approach', payload: { assignmentId: a.id, kind: 'drill' } }).dim).toBe('partner');
     sim.must({ kind: 'school.choose_playing', payload: { assignmentId: a.id, pace: 'driven' } });
-    expect(sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: 'partner' } }).error).toMatch(/rehearsal you agree with them/);
+    expect(sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: 'partner' } }).error).toMatch(/rehearsal you both agree to/);
     const done = sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: 'drill' } });
     expect(done.ok, done.error).toBe(true);
     expect(a.prep.partner).toBeGreaterThan(0);

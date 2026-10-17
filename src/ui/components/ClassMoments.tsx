@@ -41,7 +41,7 @@ export function ClassMoments() {
             <div key={m.id} className="col gap-1">
               <div className="small"><strong>{mate.name}: {MOMENT_TITLE[m.kind]}.</strong> {m.text} <span className="xs dim">Answer by {formatTime(m.until, zone())}, {formatDate(m.until, zone())}.</span></div>
               {m.kind === 'study' && (shared.length === 0
-                ? <div className="xs dim">You share no open scene with {mate.name.split(' ')[0]}: you’d run their lines, which helps them and moves nothing of yours.</div>
+                ? <div className="xs dim">You share no open scene with {mate.name.split(' ')[0]}, so you’d run their lines. That helps them and moves nothing of yours.</div>
                 : shared.length === 1
                   ? <div className="xs dim">You’d run {play(shared[0]!.id)}, the scene you share.</div>
                   : (
@@ -71,7 +71,7 @@ export function ClassMoments() {
             {formatDate(m.at, zone())}, {person.school!.classmates[m.mate]!.name}: {MOMENT_TITLE[m.kind]}{m.status === 'answered' ? ` · ${answerOf(m.kind, m.choice)}` : m.status === 'lapsed' ? ' · Not Answered' : ''}
           </div>
         ))}
-        <Fine>Who brings what follows what each classmate cares about and what has happened between you; how often a moment comes, and what each answer does to their trust and your bond, are SLATE’s estimate.</Fine>
+        <Fine>Who brings what follows what each classmate cares about and what has happened between you; how often a moment comes, and what each answer does to their trust and your bond, are estimated.</Fine>
       </div>
     </Panel>
   );

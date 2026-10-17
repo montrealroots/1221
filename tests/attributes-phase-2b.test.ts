@@ -1267,7 +1267,7 @@ describe('O3: bands, grades and casting read the player’s own result, and prep
     for (const l of prepLimits) expect(l.label).toBe(TASK_PROFILES[cold.w.task]!.prepLabel![l.what]);
     expect(ready.all.limits.some((l) => l.kind === 'preparation')).toBe(false);
     expect(cold.look.summary).toContain(chiefLimit(cold.w)!);
-    expect(chiefLimit(cold.w)).toMatch(/wasn’t complete, which cost the /);
+    expect(chiefLimit(cold.w)).toMatch(/wasn’t complete, which cost /);
     // The flu: a condition limit, Down With The Flu, on the dimensions the task lists illness for, and none elsewhere.
     const fluLimits = ill.all.limits.filter((l) => l.kind === 'condition' && l.what === 'illness');
     expect(fluLimits.length).toBeGreaterThan(0);
@@ -1383,7 +1383,7 @@ describe('F1: every note names what the evaluation found (brief 11)', () => {
       // The take's chief limit is its evaluation's first, in words, on its look.
       expect(w.limits[0]!.what, a).toBe(a);
       const chief = chiefLimit(w)!;
-      expect(chief, a).toBe(`${label} held back the ${DIMENSION_LABEL[w.limits[0]!.dimension].toLowerCase()} by ${w.limits[0]!.by} points`);
+      expect(chief, a).toBe(`Your ${label} held back ${DIMENSION_LABEL[w.limits[0]!.dimension]} by ${w.limits[0]!.by} points`);
       h.sim = sim;
       expect((resolveLook(sim, subject('work', w.inputs.key)) as Looked).summary, a).toContain(chief);
       // What To Work On Next: the first training named is an input the take's evaluation found holding it back, this one.
@@ -1407,7 +1407,7 @@ describe('F1: every note names what the evaluation found (brief 11)', () => {
       const { a, record } = shown(skill);
       expect(skillHeld(record)?.skill, skill).toBe(skill);
       expect(a.feedback!.focus, skill).toEqual({ kind: 'skill', skill });
-      expect(a.feedback!.text, skill).toContain(`It asked more ${(skill === 'voice' ? 'Vocal Expression' : 'Emotional Depth').toLowerCase()} than you have yet`);
+      expect(a.feedback!.text, skill).toContain(`It asked for more ${(skill === 'voice' ? 'Vocal Expression' : 'Emotional Depth').toLowerCase()} than you have yet`);
     }
   }, 120_000);
 });

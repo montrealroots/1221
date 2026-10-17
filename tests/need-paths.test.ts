@@ -321,7 +321,7 @@ describe('the family a new life comes from (c-family, c-wealth)', () => {
 
   it('the guide says what each family means: the money on the first morning and whether need is found, in the figures the term pays', () => {
     const money = SCHOOL.find((e) => e.id === 'school.money')!;
-    expect(money.reads.find((r) => r.label === 'Need')!.value).toBe('Yale’s assessment of your family’s means, the family you chose at creation beside your background. Nothing, Scraping, Modest or Comfortable: need is found, and the living-expense scholarship, $15,200.50 a term in 2026–27, meets the term’s Yale Health plan, $1,882, and pays the rest, $13,318.50, into your bank each fall and spring; hours missed ill can be converted, and a leave begun mid-term returns part of the scholarship. Wealthy or Inherited: the means rule need out, so there’s no living aid, no hours to convert, and the plan comes from your bank');
+    expect(money.reads.find((r) => r.label === 'Need')!.value).toBe('Yale’s assessment of your family’s means: the family you chose when you created the life, beside your background. Nothing, Scraping, Modest or Comfortable: need is found, and the living-expense scholarship, $15,200.50 a term in 2026–27, pays the term’s Yale Health plan, $1,882, and the rest, $13,318.50, into your bank each fall and spring; hours missed ill can be converted, and a leave begun mid-term returns part of the scholarship. Wealthy or Inherited: the family’s means rule need out, so there’s no living aid and no hours to convert, and the plan comes from your bank');
     expect(money.reads.find((r) => r.label === 'Your Family’s Money')!.value).toBe('What each family puts in your name on the first morning: Nothing, $43 in checking and $0 in savings; Scraping, $1,348 in checking and $326 in savings; Modest, $5,217 in checking and $7,065 in savings; Comfortable, $19,565 in checking and $45,652 in savings; Wealthy, $92,391 in checking and $413,043 in savings; Inherited, $260,870 in checking and $2,608,696 in savings');
   });
 });
@@ -415,7 +415,7 @@ describe('school.request_conversion, for a life the screen made with need', () =
     // The Wealthy family's student, on the same screen: Not On Aid, the button grayed in the refusal's words.
     const rich = thaw(played().afterFall.rich);
     expect(stat(drawn(rich, WorkLimitsBlock).html, 'Convertible To Grant Aid')).toEqual({ value: 'Not On Aid', note: undefined });
-    expect(rich.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Conversion to grant aid is for students on financial aid, and no need was found for you.');
+    expect(rich.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Converting hours to grant aid is only for students on financial aid, and the aid office found no need for you.');
   }, 120_000);
 });
 

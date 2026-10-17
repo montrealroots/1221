@@ -66,7 +66,7 @@ export function copyAt(person: Person): { library: string } | { no: string } {
     // “A copy is at the Haas Arts Library, in New Haven.” went on 2026-10-13, reached by no play: a life is enrolled only
     // where it begins in New Haven (`populateWorld`, `engine/index.ts`), and nothing has moved a person since the scope
     // reset of 2026-10-09.
-    if (cw && !cw.orientation.done.tour && !cw.orientation.behind) return { no: 'The library isn’t known to you yet: the tour shows you it.' };
+    if (cw && !cw.orientation.done.tour && !cw.orientation.behind) return { no: 'You don’t know where the library is yet. The building tour in Orientation shows you.' };
     return { library: 'The Haas Arts Library' };
   }
   // After the school a town's library card lent one (`systems/reading.ts`), until the cards went in the scope reset of 2026-10-09.
@@ -105,8 +105,8 @@ export function researchRefusal(sim: Simulation, person: Person, playId: string)
   const no = readRefusal(sim, person, playId, PLAYREADING.minutes.research);
   if (no) return no;
   const s = studiesOf(person)[playId];
-  if (!s) return 'Read it first: research needs questions.';
-  if (s.researchedAt) return 'Its first production is researched: there’s nothing more on record to find.';
+  if (!s) return 'Read the play first. You need questions before you can research it.';
+  if (s.researchedAt) return 'You’ve already researched its first production, and there’s nothing more on record to find.';
   return undefined;
 }
 
@@ -141,11 +141,11 @@ export function registerPlayReading(sim: Simulation): void {
       words = [`${p.title}, by ${p.by}, read through.`, ...seen.map((x) => x.words)].join(' ');
       study.noticed = seen.map((x) => x.id);
     } else {
-      const when = `Read again; the last read was ${formatDate(before.lastAt, s.zone)}.`;
+      const when = `You read it again. Your last read was ${formatDate(before.lastAt, s.zone)}.`;
       // What's turned to this time: an aspect not noticed before, else the one noticed longest ago.
       const next = seen.find((x) => !before.noticed.includes(x.id)) ?? seen.find((x) => x.id === before.noticed[0]);
       if (next && fresh) study.noticed = [...before.noticed.filter((x) => x !== next.id), next.id];
-      words = !fresh ? `${when} Too soon after it to see it fresh.` : next ? `${when} This time: ${next.words}` : `${when} There’s nothing on record about it to turn to: what’s left is the page itself.`;
+      words = !fresh ? `${when} It’s too soon after that one to see it fresh.` : next ? `${when} This time: ${next.words}` : `${when} There’s nothing on record about it to turn to: what’s left is the page itself.`;
     }
     study.reads += 1;
     study.lastAt = s.now;
