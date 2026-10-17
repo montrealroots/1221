@@ -732,7 +732,7 @@ describe('banking.2: what a student keeping an account at home meets at the eigh
       expect(refusal(sim, 'bank.cancel_switch', {})).toBe('No switch is under way.');
       expect(refusal(sim, 'bank.stop_balance_transfer', {})).toBe('No switch is under way.');
       expect(refusal(sim, 'bank.take_overrun_loan', { accountId: home.id })).toBe('Your bank has offered no loan for an overrun.');
-      expect(refusal(sim, 'card.apply', { bankId })).toBe(`A card is applied for in the country you bank in; ${name} is elsewhere.`);
+      expect(refusal(sim, 'card.apply', { bankId })).toBe(`You can only apply for a card in the country you bank in, and ${name} is elsewhere.`);
       expect(refusal(sim, 'card.money_transfer', { amount: 100_00 })).toBe('The Chase Freedom Unlimited doesn’t offer money transfers.');
       expect(sim.universe.transactions.length).toBe(lines);
       expect(sim.universe.scheduled.filter((i) => i.kind === 'bank.switch_complete' && i.status === 'pending')).toEqual([]);

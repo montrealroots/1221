@@ -117,8 +117,8 @@ export const ASSUMED_MARGIN = 0.026;
 export const ASSUMED_DAYS = 3;
 /** What each assumption says beside the figure. */
 export const ASSUMED_WORDS = {
-  margin: 'SLATE’s assumption: the bank publishes no margin, so SLATE takes the FSB’s 2024 average cost of a payment abroad, 2.6%',
-  days: 'SLATE’s assumption: the bank publishes no time, so SLATE takes three business days',
+  margin: 'an estimate: the bank publishes no margin, so the game uses the FSB’s 2024 average cost of a payment abroad, 2.6%',
+  days: 'an estimate: the bank publishes no time, so the game uses three business days',
 } as const;
 
 /** A fee the bank charges a customer who lives abroad, in its currency's hundredths, every so many months. */
@@ -168,8 +168,8 @@ export interface HomeTerms {
 /** What each footing means, said on the screen beside the bank (the bank workspace's CONFIDENCE, for retention). */
 export const RETENTION_CONFIDENCE: Readonly<Record<HomeTerms['confidence'], string>> = {
   H: 'The bank says so in its own words.',
-  M: 'The bank publishes its price for a customer abroad but no rule on moving: SLATE’s reading of it.',
-  L: 'The bank publishes nothing on a customer who moves abroad: SLATE’s assumption.',
+  M: 'The bank publishes its price for a customer abroad but no rule on moving, so this is the game’s reading of it.',
+  L: 'The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.',
 };
 
 /** The opening age SLATE takes where the research read none. */
@@ -189,11 +189,11 @@ const READ: Readonly<Record<string, Partial<Omit<HomeTerms, 'bankId' | 'source' 
   'ie-ptsb': { openFromAge: 18, condition: 'PTSB keeps it once you’ve completed its non-resident form and the tax self-certification.' },
   'fr-bnp-paribas': {
     condition: 'BNP Paribas keeps it at its price for a customer living outside France.',
-    nonResidentFee: { amount: 15_00, months: 1, note: '€15 a month for a customer living in a country outside the tax-information exchange, which the United States is; whether its free account for under-25s waives it isn’t said, so SLATE charges it' },
+    nonResidentFee: { amount: 15_00, months: 1, note: '€15 a month for a customer living in a country outside the tax-information exchange, which the United States is; whether its free account for under-25s waives it isn’t said, so the game charges it' },
   },
   'fr-societe-generale': {
     condition: 'SG keeps it at its quarterly charge for a customer living abroad, which it doesn’t charge under 25.',
-    nonResidentFee: { amount: 75_00, months: 3, ageBelow: 25, note: '€75 a quarter for a customer living outside the tax-information exchange, SLATE’s reading of where SG puts the United States; none under 25' },
+    nonResidentFee: { amount: 75_00, months: 3, ageBelow: 25, note: '€75 a quarter for a customer living outside the tax-information exchange, the game’s reading of where SG puts the United States; none under 25' },
   },
   'fr-lcl': {
     condition: 'LCL keeps it at its quarterly charge for a customer living outside the European Union, which it doesn’t charge under 26.',
@@ -210,14 +210,14 @@ const READ: Readonly<Record<string, Partial<Omit<HomeTerms, 'bankId' | 'source' 
   },
   'es-bankinter': { condition: 'Bankinter keeps it as a non-resident account, once you’ve given it proof that you no longer live in Spain, renewed every two years.' },
   'jp-mufg': {
-    condition: 'MUFG keeps it through Global Direct, which a student going abroad to study applies for before leaving, as SLATE takes it you did.',
+    condition: 'MUFG keeps it through Global Direct, which a student going abroad to study applies for before leaving, as the game assumes you did.',
     nonResidentFee: {
-      amount: 300_00, months: 1, note: '¥300 a month for Global Direct; what it does when the fee can’t be taken isn’t published, so SLATE takes SMBC’s rule: a Japanese ordinary deposit has no overdraft',
-      unpaid: 'MUFG sends nothing abroad while its Global Direct fee is unpaid, SLATE’s assumption from SMBC’s rule.',
+      amount: 300_00, months: 1, note: '¥300 a month for Global Direct; what it does when the fee can’t be taken isn’t published, so the game uses SMBC’s rule: a Japanese ordinary deposit has no overdraft',
+      unpaid: 'MUFG sends nothing abroad while its Global Direct fee is unpaid, an assumption the game takes from SMBC’s rule.',
     },
   },
   'jp-smbc': {
-    condition: 'SMBC keeps it through its Global Service, which a student going abroad to study registers for before leaving, as SLATE takes it you did; a cash card then works only at Japanese ATMs.',
+    condition: 'SMBC keeps it through its Global Service, which a student going abroad to study registers for before leaving, as the game assumes you did; a cash card then works only at Japanese ATMs.',
     nonResidentFee: {
       amount: 220_00, months: 1, note: '¥220 a month for the Global Service',
       // "If the fee cannot be debited, transfers and some other services stop" (the research's `nonResidentFee`).
@@ -228,10 +228,10 @@ const READ: Readonly<Record<string, Partial<Omit<HomeTerms, 'bankId' | 'source' 
   'jp-resona': { condition: 'Resona keeps it once it’s converted to a non-resident yen deposit at a branch before leaving.' },
   // The research's own default is closing: "SLATE assumes the default for a Japan Post Bank customer leaving to study in
   // the US is closure (the bank's own published request)", kept only with a proxy in Japan, which SLATE has none of.
-  'jp-japan-post-bank': { unusable: 'Japan Post Bank asks a customer going abroad to close the account, and keeps one only with someone in Japan acting for them, which SLATE doesn’t have.' },
+  'jp-japan-post-bank': { unusable: 'Japan Post Bank asks a customer going abroad to close the account, and keeps one open only if someone in Japan acts for them, which the game doesn’t offer.' },
   'kr-kakaobank': { condition: 'KakaoBank keeps it while you keep your Korean phone number: it has no branch, and every check runs through the app and that phone.' },
   'au-nab': { condition: 'NAB keeps it once you’ve updated your tax residency, though its guidance for customers leaving Australia steers them to close.' },
-  'au-anz': { condition: 'ANZ keeps it only until it acts on its rule that a customer has an Australian address, which SLATE takes it hasn’t.' },
+  'au-anz': { condition: 'ANZ keeps it only until it acts on its rule that a customer has an Australian address, which the game assumes you don’t.' },
   'mx-bbva': { openFromAge: 18 },
   'nz-kiwibank': { openFromAge: 16 },
 };
@@ -417,12 +417,12 @@ export const NON_RESIDENT_TAX: Readonly<Record<string, { rate: number; note: str
   MX: { rate: 0.049, note: 'Mexico withholds 4.9% from a bank’s interest to a customer abroad (LISR art. 166).' },
   GB: { rate: 0, note: 'Britain’s banks have taken no tax from interest since April 2016.' },
   IE: { rate: 0, note: 'Ireland takes no DIRT from a customer abroad who has made the non-resident declaration.' },
-  IS: { rate: 0.12, note: 'Iceland withholds 12% from a customer abroad; the treaty’s exemption is claimed by form, which SLATE doesn’t take as made.' },
+  IS: { rate: 0.12, note: 'Iceland withholds 12% from a customer abroad; the treaty’s exemption is claimed by form, and the game assumes it wasn’t.' },
   FR: { rate: 0, note: 'France takes no tax on a customer abroad’s interest (CGI art. 125 A III).' },
   DE: { rate: 0, note: 'Germany takes no tax on a customer abroad’s interest once the bank has proof of the move.' },
   ES: { rate: 0, note: 'Spain takes no tax on a non-resident account’s interest (LIRNR art. 14.1.d).' },
-  JP: { rate: 0.15315, note: 'Japan withholds 15.315% from a customer abroad; the treaty’s exemption needs a notice through the bank, which SLATE doesn’t take as made.' },
-  KR: { rate: 0.22, note: 'Korea withholds 22% from a customer abroad; the treaty’s 12% needs an application, which SLATE doesn’t take as made.' },
+  JP: { rate: 0.15315, note: 'Japan withholds 15.315% from a customer abroad; the treaty’s exemption needs a notice through the bank, and the game assumes none was given.' },
+  KR: { rate: 0.22, note: 'Korea withholds 22% from a customer abroad; the treaty’s 12% needs an application, and the game assumes none was made.' },
   AU: { rate: 0.1, note: 'Australia withholds 10%, final, from a customer abroad.' },
   NZ: { rate: 0.1, note: 'New Zealand’s banks withhold 10% from a customer in a treaty country, America among them.' },
 };

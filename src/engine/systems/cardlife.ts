@@ -94,7 +94,7 @@ export function registerCardLife(sim: Simulation): void {
     const armed = s.universe.scheduled.some((one) => one.kind === STATEMENT_KIND && one.status === 'pending' && one.payload.personId === person.id
       && (one.payload.accountId === card.id || (one.payload.accountId === undefined && cardOf(s, person)?.id === card.id)));
     if (!armed) scheduleStatement(s, person, s.now, card);
-    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Your New Card Arrived', body: `The ${name}, with a ${formatMoney(applied.limit, saveCurrency(s.universe))} limit.`, importance: 50, route: '/workspace/bank' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Your New Card Arrived', body: `Your ${name} has arrived, with a ${formatMoney(applied.limit, saveCurrency(s.universe))} limit.`, importance: 50, route: '/workspace/bank' });
   });
 
   sim.onCommand<{ transfer?: boolean; bankId?: string; fromId?: string }, { approved: boolean; limit?: Money }>('card.apply', (p, { sim: s }) => {
@@ -105,8 +105,8 @@ export function registerCardLife(sim: Simulation): void {
     const home = bankOf(s, person);
     if (!home) throw new CommandError('You need a bank to apply to.');
     const bank = p?.bankId ? bankById(p.bankId) : home;
-    if (!bank) throw new CommandError('SLATE doesn’t know that bank.');
-    if (bank.iso !== home.iso) throw new CommandError(`A card is applied for in the country you bank in; ${bank.name} is elsewhere.`);
+    if (!bank) throw new CommandError('That bank isn’t in the game.');
+    if (bank.iso !== home.iso) throw new CommandError(`You can only apply for a card in the country you bank in, and ${bank.name} is elsewhere.`);
     // A bank in another country than the one they live in, where their primary account is kept at home (from 2026-10-16).
     const away = abroadRefusal(person, bank);
     if (away) throw new CommandError(away);
@@ -119,7 +119,7 @@ export function registerCardLife(sim: Simulation): void {
       const refused = transferRefusal(s, person, bank.id, limitFor(s, Math.max(300, credit.score - INQUIRY)), p?.fromId);
       if (refused) throw new CommandError(refused);
     }
-    if (cardsOf(s, person).some((a) => a.bankId === bank.id)) throw new CommandError(`You hold ${bank.name}’s card already.`);
+    if (cardsOf(s, person).some((a) => a.bankId === bank.id)) throw new CommandError(`You already have ${bank.name}’s card.`);
     // A hard inquiry, approved or not.
     credit.score = Math.max(300, credit.score - INQUIRY);
     const cur = saveCurrency(s.universe);
@@ -127,11 +127,11 @@ export function registerCardLife(sim: Simulation): void {
     const collections = Object.values(s.universe.accounts).some((a) => a.ownerId === person.id && !a.closedAt && a.category === 'collections' && a.balance < 0);
     const age = ageOn(s, person, s.now);
     let reason = '';
-    if (credit.score < APPROVE_FROM) reason = 'your record isn’t strong enough';
+    if (credit.score < APPROVE_FROM) reason = 'your credit record isn’t strong enough';
     else if (collections) reason = 'you have a debt in collections';
-    else if (means <= 0) reason = bank.iso === 'US' && age < 21 ? 'under 21 you need income or money of your own' : 'you have nothing to repay it from';
+    else if (means <= 0) reason = bank.iso === 'US' && age < 21 ? 'under 21, you need income or money of your own' : 'you have no money to repay it from';
     if (reason) {
-      s.notify({ category: 'bank', title: 'Card Application Declined', body: `${bank.name} said no: ${reason}.`, importance: 50 });
+      s.notify({ category: 'bank', title: 'Card Application Declined', body: `${bank.name} turned down your application: ${reason}.`, importance: 50 });
       return { approved: false };
     }
     const limit = limitFor(s, credit.score);
@@ -182,7 +182,7 @@ export function registerCardLife(sim: Simulation): void {
     if (!card || !credit) throw new CommandError('You don’t have a card.');
     const want = Math.round(Number(p.limit));
     const now = card.creditLimit ?? 0;
-    if (!(want > 0) || want === now) throw new CommandError('Say the limit you want.');
+    if (!(want > 0) || want === now) throw new CommandError('Enter the limit you want.');
     const cur = saveCurrency(s.universe);
     if (want < now) {
       // A lower limit is always granted, never under what's owed.
@@ -192,7 +192,7 @@ export function registerCardLife(sim: Simulation): void {
     }
     const clean = !credit.late.some((when) => s.now - when < 365 * 86_400_000);
     if (credit.score < 700 || !clean || stateOf(person, card).suspended || heldInBanks(s, person) <= 0) {
-      s.notify({ category: 'bank', title: 'Limit Increase Declined', body: `The bank kept the limit at ${formatMoney(now, cur)}: it raises one for a record of 700 or more, nothing late in a year, and means to repay.`, importance: 40 });
+      s.notify({ category: 'bank', title: 'Limit Increase Declined', body: `The bank kept your limit at ${formatMoney(now, cur)}. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.`, importance: 40 });
       return { limit: now, granted: false };
     }
     card.creditLimit = Math.min(want, Math.round(now * RAISE_SHARE / 100) * 100);
@@ -210,7 +210,7 @@ export function registerCardLife(sim: Simulation): void {
     const person = s.player;
     const card = cardFor(s, person, p.accountId);
     if (!card || !person.credit) throw new CommandError('You don’t have a card.');
-    if (bankById(card.bankId ?? '')?.iso !== 'US') throw new CommandError('Opting in to going over the limit is a US card’s choice.');
+    if (bankById(card.bankId ?? '')?.iso !== 'US') throw new CommandError('Only a US card lets you opt in to going over the limit.');
     const state = stateOf(person, card);
     state.overLimitOptIn = Boolean(p.on);
     return { on: Boolean(p.on) };
@@ -221,13 +221,13 @@ export function registerCardLife(sim: Simulation): void {
     const card = cardFor(s, person, p?.accountId);
     if (!card || !person.credit) throw new CommandError('You don’t have a card.');
     const credit = stateOf(person, card);
-    if (credit.hardship) throw new CommandError('You’re on a plan already.');
+    if (credit.hardship) throw new CommandError('You’re already on a payment plan.');
     const owed = Math.max(0, -card.balance);
-    if (owed === 0) throw new CommandError('The card owes nothing.');
+    if (owed === 0) throw new CommandError('You don’t owe anything on the card.');
     // For a holder who can't pay (from 2026-10-10): a bank's hardship plan asks after the hardship, and one whose
     // checking and savings could clear the card today isn't in it, SLATE's reading. Until then anyone with a balance
     // was given interest frozen for four years for the asking.
-    if (heldInBanks(s, person) >= owed) throw new CommandError('You could pay it off today: a hardship plan is for when you can’t.');
+    if (heldInBanks(s, person) >= owed) throw new CommandError('You could pay it off today. A hardship plan is for when you can’t.');
     credit.hardship = { payment: Math.ceil(owed / 48 / 100) * 100, since: s.now };
     credit.suspended = 'hardship';
     // A statement whose due date is still to come is judged by the plan’s payment there (`autopayAsk`), so its record asks

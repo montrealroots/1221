@@ -245,7 +245,7 @@ describe('card.report rushes only what the bank’s own words make a rush', () =
     const sim = quickSave({ startLocationId: 'kr-11-seoul', homeRegionId: 'kr-11-seoul', livesWhereBorn: true, wealth: 'comfortable', bankId: 'kr-shinhan' }, 'd3-shinhan');
     const checking = primary(sim);
     expect(checking.bankId).toBe('kr-shinhan');
-    expect(refused(sim, 'card.report', { which: 'debit', why: 'lost', rush: true })).toBe(`${checking.institution} has no rush replacement SLATE knows of.`);
+    expect(refused(sim, 'card.report', { which: 'debit', why: 'lost', rush: true })).toBe(`No rushed replacement was found for ${checking.institution}.`);
     expect(checking.plastic?.stopped).toBeUndefined();
     expect(onScreen(sim, createElement(BankSecurity, { bankId: 'kr-shinhan' }))).not.toContain('Rush The New One');
   });

@@ -207,9 +207,9 @@ describe('bank.borrow', () => {
     const start = checking.balance;
     const shown = lending(before, 'us-citi', ['borrowing'], checking, { borrow: '2000', months: '60' });
     expect(shown.text).toContain('10.24% to 18.49% a year, set by your credit record.');
-    expect(shown.text).toContain('The bank lends against wages paid in, and none has been paid in this month.');
+    expect(shown.text).toContain('The bank lends against wages paid in over the last 30 days, and none has been paid in.');
     expect(shown.button('Borrow It').disabled).toBe(true);
-    expect(refused(before, 'bank.borrow', ASK)).toBe('The bank lends against wages paid in, and none has been paid in this month.');
+    expect(refused(before, 'bank.borrow', ASK)).toBe('The bank lends against wages paid in over the last 30 days, and none has been paid in.');
     expect(loansOf(before, before.player)).toEqual([]);
     expect(checking.balance).toBe(start);
 
@@ -262,10 +262,10 @@ describe('bank.borrow', () => {
     sim.advanceTo(at(2026, 9, 12));
     // 35% of the $138 the clock paid is $48.30. Over 12 months the payment is $176.06 (the same annuity), past it.
     expect(refused(sim, 'bank.borrow', { ...ASK, months: 12 })).toBe('A payment of $176 a month is more than the bank lets a loan take of $138 of wages.');
-    expect(refused(sim, 'bank.borrow', { ...ASK, amount: 1_999_99 })).toBe('The bank lends $2,000 or more.');
+    expect(refused(sim, 'bank.borrow', { ...ASK, amount: 1_999_99 })).toBe('The bank lends at least $2,000.');
     // TEST SETUP: the record set at a figure, each in turn.
     sim.player.credit!.score = 579;
-    expect(refused(sim, 'bank.borrow', ASK)).toBe('The bank turns down a credit record this poor.');
+    expect(refused(sim, 'bank.borrow', ASK)).toBe('Your credit record isn’t strong enough for the bank.');
     // At 580, the top of the range: 18.49% makes the payment $51.33, past the $48.30.
     sim.player.credit!.score = 580;
     expect(refused(sim, 'bank.borrow', ASK)).toBe('A payment of $51 a month is more than the bank lets a loan take of $138 of wages.');
@@ -492,7 +492,7 @@ describe('bank.debit_overdraft', () => {
   it('is refused where the bank doesn’t ask, at Citi and Capital One, and at Bank of America, which never pays a debit purchase into an overdraft, in their words and on its screen', () => {
     for (const bankId of ['us-citi', 'us-capital-one']) {
       const sim = student(`g10-optin-${bankId}`, bankId);
-      expect(refused(sim, 'bank.debit_overdraft', { on: true }), bankId).toBe('Your bank doesn’t ask you this.');
+      expect(refused(sim, 'bank.debit_overdraft', { on: true }), bankId).toBe('Your bank doesn’t offer this choice.');
       expect(primary(sim).debitOverdraft).toBeUndefined();
     }
     const boa = student('g10-optin-boa', 'us-bank-of-america');
@@ -514,8 +514,8 @@ describe('bank.open_term', () => {
     const checking = primary(sim);
     const start = checking.balance;
     expect(start).toBe(92_391_00);
-    expect(refused(sim, 'bank.open_term', { amount: 100_000_00 })).toBe('Chase Total Checking holds $92,391.');
-    expect(refused(sim, 'bank.open_term', { amount: 1_000_00, bankId: 'us-wells-fargo' })).toBe('A term deposit at Wells Fargo is funded from your current account there: open one first.');
+    expect(refused(sim, 'bank.open_term', { amount: 100_000_00 })).toBe('Chase Total Checking only has $92,391 in it.');
+    expect(refused(sim, 'bank.open_term', { amount: 1_000_00, bankId: 'us-wells-fargo' })).toBe('A term deposit at Wells Fargo is paid for from your current account there. Open a current account at Wells Fargo first.');
     expect(refused(sim, 'bank.open_term', { amount: 0 })).toBe('Enter how much to put away.');
     expect(termsOf(sim, sim.player)).toEqual([]);
     expect(checking.balance).toBe(start);
@@ -671,7 +671,7 @@ describe('bank.pay_collections', () => {
     // Owed and unpaid: nothing to pay it with yet, every reader holds it.
     expect(refused(sim, 'bank.pay_collections', { amount: 100_00 })).toBe('There’s nothing in the account to pay it with.');
     expect(troubles(sim, sim.player).filter((t) => t.kind === 'collections')).toEqual([{ kind: 'collections', amount: owed }]);
-    expect(applied(sim)).toMatchObject({ approved: false, said: expect.stringMatching(/ said no: you have a debt in collections\.$/) });
+    expect(applied(sim)).toMatchObject({ approved: false, said: expect.stringMatching(/ turned down your application: you have a debt in collections\.$/) });
     expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for you while you owe it a debt it has charged off.');
     expect(refused(sim, 'bank.switch', { bankId: 'us-chase' })).toBe('Chase won’t open an account for you while you owe it a debt it has charged off.');
 

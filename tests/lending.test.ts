@@ -268,7 +268,7 @@ describe('a term deposit', () => {
     // Until 2026-10-13 this asked only that €50,000 was refused, for any reason, and never what it said.
     const sim = lifeIn('de-be-berlin', { bankId: 'de-ing', wealth: 'wealthy' });
     set(sim, current(sim), 150_000_00);
-    expect(sim.execute({ kind: 'bank.open_term', payload: { amount: 99_999_99 } })).toMatchObject({ ok: false, error: 'It takes €100,000 or more.' });
+    expect(sim.execute({ kind: 'bank.open_term', payload: { amount: 99_999_99 } })).toMatchObject({ ok: false, error: 'A term deposit there needs at least €100,000.' });
     expect(termsOf(sim, sim.player)).toEqual([]);
     expect(current(sim).balance).toBe(150_000_00);
     expect(sim.execute({ kind: 'bank.open_term', payload: { amount: 100_000_00 } }).ok).toBe(true);

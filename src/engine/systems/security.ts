@@ -248,7 +248,7 @@ export function registerSecurity(sim: Simulation): void {
     // they had it (`card.update_billers`), until 2026-10-09: nothing has charged a card as a bill since the home and
     // its bills went, so the connected world that day let the stale billers and their command go (schema 91 sheds them).
     if (account.ownerId === s.universe.playerId) {
-      s.notify({ category: 'bank', title: 'Your New Card Arrived', body: first ? `${account.name}’s debit card, ending ${p.last4}.` : `Ending ${p.last4}.`, importance: 50, route: '/workspace/bank' });
+      s.notify({ category: 'bank', title: 'Your New Card Arrived', body: first ? `The debit card for ${account.name} ends in ${p.last4}, and you can use it now.` : `The new card ends in ${p.last4}, and you can use it now.`, importance: 50, route: '/workspace/bank' });
     }
   });
 
@@ -268,7 +268,7 @@ export function registerSecurity(sim: Simulation): void {
       ?? open(person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined)
       ?? account;
     if (back > 0) s.post({ memo: 'Refund: a payment you didn’t make', category: 'refund', postings: [{ accountId: into.id, amount: back }, { accountId: s.nominalAccount('expense', 'Unauthorized Use').id, amount: -back }] });
-    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Refunded', body: `${formatMoney(back, saveCurrency(s.universe))} back for the payment you didn’t make${into.id !== account.id ? `, into your ${into.name}, since the ${account.name} is closed` : ''}.${one.carried ? ` The law leaves you ${formatMoney(one.carried, saveCurrency(s.universe))} of it.` : ''}`, importance: 50, route: '/workspace/bank' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Refunded', body: `${formatMoney(back, saveCurrency(s.universe))} back for the payment you didn’t make${into.id !== account.id ? `, into your ${into.name}, since the ${account.name} is closed` : ''}.${one.carried ? ` The law leaves you to pay ${formatMoney(one.carried, saveCurrency(s.universe))} of it.` : ''}`, importance: 50, route: '/workspace/bank' });
   });
 
   sim.onEvent('world.day_rollover', 'bank.security', (_event, { sim: s }) => {
@@ -296,7 +296,7 @@ export function registerSecurity(sim: Simulation): void {
     // Until 2026-10-13 a bank whose terms locked a card only by phone was refused here; no researched bank is one, and the
     // refusal and the field it read went that day (`BankSecurity`, `content/security.ts`).
     const plastic = plasticOf(s, account, p.which);
-    if (plastic.stopped) throw new CommandError('That card is stopped; a new one is on its way.');
+    if (plastic.stopped) throw new CommandError('That card is stopped, and a new one is on its way.');
     plastic.locked = Boolean(p.locked);
     return { locked: plastic.locked };
   });
@@ -305,15 +305,15 @@ export function registerSecurity(sim: Simulation): void {
     const person = s.player;
     const account = cardAccount(s, person, p.which, p.accountId);
     if (!account) throw new CommandError(p.which === 'debit' ? 'You have no current account.' : 'You don’t have a card.');
-    if (!['lost', 'stolen', 'damaged'].includes(p.why)) throw new CommandError('Lost, stolen or damaged.');
+    if (!['lost', 'stolen', 'damaged'].includes(p.why)) throw new CommandError('Choose why: lost, stolen or damaged.');
     const plastic = plasticOf(s, account, p.which);
-    if (plastic.stopped) throw new CommandError('That card is stopped already; a new one is on its way.');
+    if (plastic.stopped) throw new CommandError('That card is already stopped, and a new one is on its way.');
     const rules = account.bankId ? SECURITY[account.bankId] : undefined;
     const bank = account.bankId ? bankById(account.bankId) : undefined;
     // A rush where the bank lists its fee or its days; one that lists days and no fee is taken to charge none for it, as
     // one that lists no replacement fee is. One the bank charges for without publishing what isn’t sent (`rushUnpublished`).
-    if (p.rush && rules?.rushUnpublished) throw new CommandError(`${account.institution ?? 'The bank'} doesn’t publish what it charges for a rush, so SLATE can’t send one.`);
-    if (p.rush && rules?.rushFee === undefined && rules?.rushDays === undefined) throw new CommandError(`${account.institution ?? 'The bank'} has no rush replacement SLATE knows of.`);
+    if (p.rush && rules?.rushUnpublished) throw new CommandError(`${account.institution ?? 'The bank'} doesn’t publish what it charges to rush a card, so the game can’t send a rushed one.`);
+    if (p.rush && rules?.rushFee === undefined && rules?.rushDays === undefined) throw new CommandError(`No rushed replacement was found for ${account.institution ?? 'the bank'}.`);
     // The bank's fee, where it lists one, unless it replaces a card free for this reason.
     const listed = p.which === 'debit' ? rules?.replaceFeeDebit : rules?.replaceFeeCredit;
     const free = rules?.freeFor?.includes(p.why) ?? false;
@@ -331,7 +331,7 @@ export function registerSecurity(sim: Simulation): void {
     const current = currentOf(s, person);
     const bank = current?.bankId ? bankById(current.bankId) : undefined;
     if (!current || !bank) throw new CommandError('You have no current account.');
-    if (!SECURITY[bank.id]?.newNumberOnFraud) throw new CommandError(`${bank.name} doesn’t say it moves an account to a new number; closing it and opening another does.`);
+    if (!SECURITY[bank.id]?.newNumberOnFraud) throw new CommandError(`${bank.name} doesn’t offer to move an account to a new number. Closing it and opening another account does the same.`);
     // The number moves at once; the exposure stays on the old one, whose attempts are declined from now on.
     current.number = accountNumber(s, person, bank, 'checking', (current.plastic?.issued ?? 1) + 1);
     current.last4 = current.number.replace(/\D/g, '').slice(-4);
@@ -396,7 +396,7 @@ export function somebodyElse(sim: Simulation, person: Person, given?: ReturnType
   if (hit.stopped) {
     // Stopped: the bank declines it, asks, and on the answer that it wasn't them, blocks the card and sends another free (A148, C96).
     replace(sim, account, which, 'fraud', false);
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Your Bank Stopped A Payment', body: `Somebody tried to spend ${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. ${bank.name} declined it and asked; it wasn’t you, so the card is blocked and a new one is on its way, free.`, importance: 70, route: '/workspace/bank' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Your Bank Stopped A Payment', body: `Somebody tried to spend ${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. ${bank.name} declined it and asked you about it. It wasn’t you, so the card is blocked, and a free replacement is on its way.`, importance: 70, route: '/workspace/bank' });
     return;
   }
   sim.post({ memo: 'Card purchase', category: 'card-fraud', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('expense', 'Unauthorized Use').id, amount }] });
@@ -406,7 +406,7 @@ export function somebodyElse(sim: Simulation, person: Person, given?: ReturnType
   const learnedAt = alert !== undefined && amount >= alert ? sim.now : statedAt;
   person.fraud = [...(person.fraud ?? []), { accountId: account.id, which, amount, at: sim.now, learnedAt, statedAt }];
   if (alert !== undefined && amount >= alert && person.id === sim.universe.playerId) {
-    sim.notify({ category: 'bank', title: 'A Large Payment', body: `${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. If it wasn’t you, report it.`, importance: 70, route: '/workspace/bank' });
+    sim.notify({ category: 'bank', title: 'A Large Payment', body: `${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. If it wasn’t you, report it on Money, under Cards.`, importance: 70, route: '/workspace/bank' });
   }
   // A debit card used: the account it draws on is known with it, where the bank treats that as compromised (`EXPOSURE`).
   if (which === 'debit' && SECURITY[bank.id]?.newNumberOnFraud && account.number) account.exposed = { number: account.number, at: sim.now, until: sim.now + EXPOSURE.days * MS_DAY };
@@ -436,5 +436,5 @@ export function attemptOnNumber(sim: Simulation, person: Person, given?: { size:
   const alert = alertsOf(person).largePayment;
   const learnedAt = alert !== undefined && amount >= alert ? sim.now : statedAt;
   person.fraud = [...(person.fraud ?? []), { accountId: account.id, which: 'debit', via: 'number', amount, at: sim.now, learnedAt, statedAt }];
-  if (mine && learnedAt === sim.now) sim.notify({ category: 'bank', title: 'An Electronic Debit You Didn’t Make', body: `${formatMoney(amount, cur)} taken from ${account.name} with its account number. If it wasn’t you, report it; and ${bank.name} can move the account to a new number.`, importance: 70, route: '/workspace/bank' });
+  if (mine && learnedAt === sim.now) sim.notify({ category: 'bank', title: 'An Electronic Debit You Didn’t Make', body: `${formatMoney(amount, cur)} was taken from ${account.name} with its account number. If it wasn’t you, report it on Money, under Cards. ${bank.name} can also move the account to a new number.`, importance: 70, route: '/workspace/bank' });
 }

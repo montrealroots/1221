@@ -257,9 +257,9 @@ describe('card.report', () => {
     expect(account.plastic!.stopped).toBe('lost');
     const old = account.plastic!.last4;
     // Reported again: refused, and nothing sent twice. A reason that isn't one of the three: refused.
-    expect(run(sim, 'card.report', { which: 'debit', why: 'stolen' }).error).toBe('That card is stopped already; a new one is on its way.');
+    expect(run(sim, 'card.report', { which: 'debit', why: 'stolen' }).error).toBe('That card is already stopped, and a new one is on its way.');
     expect(arrivals(sim, account)).toHaveLength(1);
-    expect(run(sim, 'card.report', { which: 'credit', why: 'bent' }).error).toBe('Lost, stolen or damaged.');
+    expect(run(sim, 'card.report', { which: 'credit', why: 'bent' }).error).toBe('Choose why: lost, stolen or damaged.');
 
     // The credit card locked as well, and no cash: the meal isn't bought, and says why.
     must(sim, 'card.lock', { which: 'credit', locked: true });
@@ -288,7 +288,7 @@ describe('card.report', () => {
     expect(account.plastic!.stopped).toBeUndefined();
     expect(account.plastic!.last4).not.toBe(old);
     expect(account.plastic!.issued).toBe(2);
-    expect(notes(sim, 'Your New Card Arrived').map((n) => n.body)).toEqual([`Ending ${account.plastic!.last4}.`]);
+    expect(notes(sim, 'Your New Card Arrived').map((n) => n.body)).toEqual([`The new card ends in ${account.plastic!.last4}, and you can use it now.`]);
     // The next midnight's groceries draw on checking again, and the credit card takes nothing more.
     sim.advanceTo(edt(9, 3, 0, 1));
     expect(moved(sim, account, 'Groceries')).toEqual([-GROCERIES]);
@@ -305,7 +305,7 @@ describe('card.report', () => {
     expect(account.plastic).toMatchObject({ stopped: 'damaged', replacementAt: answer.arrivesAt, last4: old });
     expect(arrivals(loaded, account)).toHaveLength(1);
     expect(run(loaded, 'cash.withdraw', { amount: 20_00, from: 'atm' }).error).toBe('Your debit card is stopped. You can still take cash out at the counter.');
-    expect(run(loaded, 'card.report', { which: 'debit', why: 'lost' }).error).toBe('That card is stopped already; a new one is on its way.');
+    expect(run(loaded, 'card.report', { which: 'debit', why: 'lost' }).error).toBe('That card is already stopped, and a new one is on its way.');
     loaded.advanceTo(answer.arrivesAt + 60_000);
     expect(account.plastic!.stopped).toBeUndefined();
     expect(account.plastic!.issued).toBe(2);
@@ -344,7 +344,7 @@ describe('card.report', () => {
     // agreement naming a Rush Plastic Fee with no amount. Refused on a twin now, in words that say so, and nothing stopped.
     const twin = reload(sim);
     const twinWf = twin.universe.accounts[wf.id]!;
-    expect(twin.execute({ kind: 'card.report', payload: { which: 'debit', why: 'lost', rush: true, accountId: wf.id } }).error).toBe('Wells Fargo doesn’t publish what it charges for a rush, so SLATE can’t send one.');
+    expect(twin.execute({ kind: 'card.report', payload: { which: 'debit', why: 'lost', rush: true, accountId: wf.id } }).error).toBe('Wells Fargo doesn’t publish what it charges to rush a card, so the game can’t send a rushed one.');
     expect(twinWf.plastic!.stopped).toBeUndefined();
     expect(twinWf.balance).toBe(wf.balance);
     const plain = must<{ arrivesAt: number; fee: number }>(sim, 'card.report', { which: 'debit', why: 'lost', accountId: wf.id });
@@ -390,15 +390,15 @@ describe('card.request_hardship', () => {
   it('is refused a card owing nothing and a holder whose bank could clear it, then sets a forty-eighth of what’s owed, and the card takes nothing: the meal goes to checking, and behind a locked debit card isn’t bought', () => {
     const sim = settled('g12-plan');
     const card = chaseCard(sim);
-    expect(run(sim, 'card.request_hardship', {}).error).toBe('The card owes nothing.');
+    expect(run(sim, 'card.request_hardship', {}).error).toBe('You don’t owe anything on the card.');
     purchases(sim, card, 4_800_00); // TEST SETUP
-    expect(run(sim, 'card.request_hardship', {}).error).toBe('You could pay it off today: a hardship plan is for when you can’t.');
+    expect(run(sim, 'card.request_hardship', {}).error).toBe('You could pay it off today. A hardship plan is for when you can’t.');
     expect(stateOf(sim.player, card).hardship).toBeUndefined();
     setBalance(sim, checking(sim), 3_000_00); // TEST SETUP
     setBalance(sim, savings(sim), 0); // TEST SETUP
     // $4,800 over forty-eight months.
     expect(must(sim, 'card.request_hardship', {})).toEqual({ payment: 100_00 });
-    expect(run(sim, 'card.request_hardship', {}).error).toBe('You’re on a plan already.');
+    expect(run(sim, 'card.request_hardship', {}).error).toBe('You’re already on a payment plan.');
     expect(cardRoom(sim.player, card)).toBe(0);
     must(sim, 'bank.set_payments', { everyday: 'credit' });
     must(sim, 'card.lock', { which: 'debit', locked: true });
@@ -451,7 +451,7 @@ describe('card.request_hardship', () => {
 
   it('is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee', () => {
     const { sim, card } = shortOfThePlan('g12-plan-short');
-    expect(notes(sim, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['Autopay asked for $52.00 and the current account couldn’t cover it. It’s late now, and the late fee is the one fee for it.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
+    expect(notes(sim, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['Autopay asked for $52.00, and the current account couldn’t cover it. The payment is late now, and the late fee is the only fee charged for it.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     // A US card's first late fee, the $30 safe harbor, under the $100 due; no returned payment's fee beside it.
     expect(moved(sim, card, 'Late fee')).toEqual([-30_00]);
     expect(moved(sim, card, 'Returned payment fee')).toEqual([]);
@@ -468,7 +468,7 @@ describe('card.request_hardship', () => {
     // $48; fixed that day).
     expect(statement).toContain('$100.00');
     expect(statement).not.toContain('at least $48.00');
-    expect(late.body).toContain('was $100.00 and only $48.00 went in');
+    expect(late.body).toContain('was $100.00, and only $48.00 was paid');
   });
 
   it('ends at the due date once the card is paid off before it: the suspension lifts and the card takes the day again', () => {
@@ -569,10 +569,10 @@ describe('card.request_limit', () => {
     const sim = settled('g12-limit');
     const card = chaseCard(sim);
     purchases(sim, card, 500_00); // TEST SETUP
-    expect(run(sim, 'card.request_limit', { limit: 0 }).error).toBe('Say the limit you want.');
+    expect(run(sim, 'card.request_limit', { limit: 0 }).error).toBe('Enter the limit you want.');
     expect(must(sim, 'card.request_limit', { limit: 1_00 })).toEqual({ limit: 500_00, granted: true });
     expect(card.creditLimit).toBe(500_00);
-    expect(run(sim, 'card.request_limit', { limit: 500_00 }).error).toBe('Say the limit you want.');
+    expect(run(sim, 'card.request_limit', { limit: 500_00 }).error).toBe('Enter the limit you want.');
     expect(cardRoom(sim.player, card)).toBe(0);
     must(sim, 'card.lock', { which: 'debit', locked: true });
     expect(eat(sim).error).toBe('Your debit card is locked, and there isn’t enough on the credit card or in cash.');
@@ -598,7 +598,7 @@ describe('card.request_limit', () => {
       expect(must(sim, 'card.request_limit', { limit })).toEqual({ limit: card.creditLimit, granted: false });
       const notice = notes(sim, 'Limit Increase Declined').at(-1)!;
       expect(notice.at).toBe(sim.now);
-      expect(notice.body).toBe(`The bank kept the limit at ${kept}: it raises one for a record of 700 or more, nothing late in a year, and means to repay.`);
+      expect(notice.body).toBe(`The bank kept your limit at ${kept}. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.`);
     };
     expect(must(sim, 'card.request_limit', { limit: 5_000_00 })).toEqual({ limit: 5_000_00, granted: true });
 
@@ -662,7 +662,7 @@ describe('card.request_limit', () => {
     sim.player.credit!.late = [sim.now - 30 * MS_DAY]; // TEST SETUP: a payment late a month ago
     drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }), ['1000', h.keep]).press('Ask For This Limit');
     expect(card.creditLimit).toBe(500_00);
-    expect(notes(sim, 'Limit Increase Declined').map((n) => n.body)).toEqual(['The bank kept the limit at $500.00: it raises one for a record of 700 or more, nothing late in a year, and means to repay.']);
+    expect(notes(sim, 'Limit Increase Declined').map((n) => n.body)).toEqual(['The bank kept your limit at $500.00. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.']);
   });
 });
 
@@ -683,6 +683,7 @@ describe('card.set_everyday', () => {
     const { sim, chase, citi } = twoCards('g12-everyday');
     // Citi's arrived beside the everyday card, which stays Chase's.
     expect(cardsOf(sim, sim.player).map((c) => c.id)).toEqual([chase.id, citi.id]);
+    expect(notes(sim, 'Your New Card Arrived').map((n) => n.body)).toContain(`Your ${citi.name} has arrived, with a $5,000.00 limit.`);
     expect(run(sim, 'card.set_everyday', { accountId: 'account_none' }).error).toBe('You don’t hold that card.');
     expect(run(sim, 'card.set_everyday', {}).error).toBe('You don’t hold that card.');
     must(sim, 'bank.set_payments', { everyday: 'credit' });
@@ -739,7 +740,7 @@ describe('card.set_everyday', () => {
     expect(cardRoom(sim.player, citi)).toBe(0);
     const asked = run(sim, 'card.set_everyday', { accountId: citi.id });
     expect(asked.ok).toBe(false);
-    expect(asked.error).toMatch(/being closed/);
+    expect(asked.error).toBe('That card is being closed, so nothing new can go on it.');
     expect(cardsOf(sim, sim.player)[0]!.id).toBe(chase.id);
   });
 

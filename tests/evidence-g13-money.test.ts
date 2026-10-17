@@ -159,7 +159,7 @@ const payButton = (html: string) => {
 };
 const cardScreen = (sim: Simulation) => render(sim, createElement(BankCard, { bankId: 'us-chase' }));
 
-const REFUSED_MOVE = 'You moved the statement day since the last statement: it can move again once the next one comes.';
+const REFUSED_MOVE = 'You’ve moved the statement day since the last statement. You can move it again once the next statement comes.';
 
 // ---------------------------------------------------------------------------
 
@@ -200,10 +200,10 @@ describe('finance.pay_card', () => {
     // Unpaid: autopay asks $40 of an empty bank; the US safe harbor's first late fee, $30, under Chase's $40, is the
     // one fee for it (Reg Z §1026.52(b)(2)(ii)); a first miss isn't reported until it's thirty days past due. Until
     // 2026-10-16 (brief 09's banking follow-up) this asserted the engine's straight apostrophe in "couldn't" (\').
-    expect(notes(unpaid, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['Autopay asked for $40.00 and the current account couldn’t cover it. It’s late now, and the late fee is the one fee for it.']);
+    expect(notes(unpaid, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['Autopay asked for $40.00, and the current account couldn’t cover it. The payment is late now, and the late fee is the only fee charged for it.']);
     expect(txns(unpaid, 'Late fee').map((t) => on(t, card(unpaid)))).toEqual([-30_00]);
     expect(txns(unpaid, 'Returned payment fee')).toEqual([]);
-    expect(notes(unpaid, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum was $40.00 and only $0.00 went in. A $30.00 fee, and it goes on your record if it’s still short at the next due date, thirty days past due.']);
+    expect(notes(unpaid, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum payment was $40.00, and only $0.00 was paid. That costs a $30.00 late fee, and it goes on your credit record if it’s still short at the next due date, thirty days late.']);
     expect(stateOf(unpaid.player, card(unpaid)).missed).toBe(1);
     expect(unpaid.player.credit!.score).toBe(795);
   });
@@ -237,11 +237,11 @@ describe('finance.pay_card', () => {
     const plastic = card(sim);
     expect(refusal(sim, 'finance.pay_card', { amount: 'full' })).toBe('You don’t owe anything on it.');
     expect(refusal(sim, 'finance.pay_card', { amount: 'minimum' })).toBe('You don’t owe anything on it.');
-    expect(refusal(sim, 'finance.pay_card', { amount: 0 })).toBe('Pay something, or nothing.');
+    expect(refusal(sim, 'finance.pay_card', { amount: 0 })).toBe('Enter an amount to pay.');
     purchases(sim, plastic, 500_00); // TEST SETUP
-    expect(refusal(sim, 'finance.pay_card', { amount: -5_00 })).toBe('Pay something, or nothing.');
+    expect(refusal(sim, 'finance.pay_card', { amount: -5_00 })).toBe('Enter an amount to pay.');
     // Bought since the last statement, nothing is yet due: the minimum is the statement's, and it asks nothing.
-    expect(refusal(sim, 'finance.pay_card', { amount: 'minimum' })).toBe('Pay something, or nothing.');
+    expect(refusal(sim, 'finance.pay_card', { amount: 'minimum' })).toBe('Enter an amount to pay.');
     expect(refusal(sim, 'finance.pay_card', { amount: 'full', accountId: checking(sim).id })).toBe('You don’t have a card.');
     emptyTheBank(sim); // TEST SETUP
     expect(refusal(sim, 'finance.pay_card', { amount: 'full' })).toBe('There’s nothing in the bank to pay it with.');
@@ -360,7 +360,7 @@ describe('bank.fraud_refund', () => {
     const refunds = txns(again, 'Refund: a payment you didn’t make');
     expect(refunds.map((t) => [t.at, on(t, checking(again)), on(t, plastic)])).toEqual([[refundAt, 250_00, 0]]);
     expect(plastic.balance).toBe(0);
-    expect(notes(again, 'Refunded').map((n) => n.body)).toEqual(['$250.00 back for the payment you didn’t make, into your Chase Total Checking, since the Chase Freedom Unlimited is closed. The law leaves you $50.00 of it.']);
+    expect(notes(again, 'Refunded').map((n) => n.body)).toEqual(['$250.00 back for the payment you didn’t make, into your Chase Total Checking, since the Chase Freedom Unlimited is closed. The law leaves you to pay $50.00 of it.']);
     expect(refusal(again, 'card.refund_credit', { accountId: closed.id })).toBe('The card holds no credit to send back.');
   });
 
@@ -381,7 +381,7 @@ describe('bank.fraud_refund', () => {
     sim.advanceTo(refundAt + HOUR);
     expect(txns(sim, 'Refund: a payment you didn’t make').map((t) => [t.at, on(t, checking(sim)), on(t, capitalOne)])).toEqual([[refundAt, 250_00, 0]]);
     expect(capitalOne.balance).toBe(0);
-    expect(notes(sim, 'Refunded').map((n) => n.body)).toEqual(['$250.00 back for the payment you didn’t make, into your Chase Total Checking, since the 360 Checking is closed. The law leaves you $50.00 of it.']);
+    expect(notes(sim, 'Refunded').map((n) => n.body)).toEqual(['$250.00 back for the payment you didn’t make, into your Chase Total Checking, since the 360 Checking is closed. The law leaves you to pay $50.00 of it.']);
   });
 
   it('due to the open card it was used on, goes onto the card, which then owes the $50 the law leaves, and its statement asks that', () => {
@@ -390,7 +390,7 @@ describe('bank.fraud_refund', () => {
     sim.advanceTo(refundAt + HOUR);
     expect(txns(sim, 'Refund: a payment you didn’t make').map((t) => on(t, card(sim)))).toEqual([250_00]);
     expect(card(sim).balance).toBe(-50_00);
-    expect(notes(sim, 'Refunded').map((n) => n.body)).toEqual(['$250.00 back for the payment you didn’t make. The law leaves you $50.00 of it.']);
+    expect(notes(sim, 'Refunded').map((n) => n.body)).toEqual(['$250.00 back for the payment you didn’t make. The law leaves you to pay $50.00 of it.']);
     sim.advanceTo(edt(2026, 9, 20, 10));
     expect(stateOf(sim.player, card(sim)).statementBalance).toBe(50_00);
   });
@@ -487,7 +487,7 @@ describe('card.replaced', () => {
     const last4 = current.plastic!.last4;
     run(sim, 'bank.new_number', {});
     expect(sim.universe.scheduled.filter((i) => i.kind === REPLACED_KIND && i.status === 'pending' && i.payload.accountId === current.id)).toHaveLength(2);
-    expect(refusal(sim, 'card.report', { which: 'debit', why: 'lost' })).toBe('That card is stopped already; a new one is on its way.');
+    expect(refusal(sim, 'card.report', { which: 'debit', why: 'lost' })).toBe('That card is already stopped, and a new one is on its way.');
     const again = reload(sim);
     const arrives = Math.max(...again.universe.scheduled.filter((i) => i.kind === REPLACED_KIND && i.status === 'pending').map((i) => i.at));
     again.advanceTo(arrives + 2 * MS_DAY);
@@ -498,7 +498,7 @@ describe('card.replaced', () => {
     expect(plastic.stopped).toBeUndefined();
     expect(plastic.locked).toBeUndefined();
     expect(plastic.replacementAt).toBeUndefined();
-    expect(notes(again, 'Your New Card Arrived').map((n) => n.body)).toEqual([`Ending ${next}.`]);
+    expect(notes(again, 'Your New Card Arrived').map((n) => n.body)).toEqual([`The new card ends in ${next}, and you can use it now.`]);
     expect(run(again, 'card.lock', { which: 'debit', locked: true })).toEqual({ locked: true });
   });
 
@@ -536,7 +536,7 @@ describe('card.statement', () => {
     // $65,217 and a fifth, $78,260.40, to the dollar.
     expect(card(again).creditLimit).toBe(78_260_00);
     expect(cardRoom(again.player, card(again))).toBe(78_260_00);
-    expect(notes(again, 'Your Card Limit Went Up').map((n) => n.body)).toEqual(['It’s $78,260.00 now, for a clean record.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted 'It\'s …', with the notice's straight apostrophe.
+    expect(notes(again, 'Your Card Limit Went Up').map((n) => n.body)).toEqual(['It’s $78,260.00 now, because your record has been clean.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted 'It\'s …', with the notice's straight apostrophe.
     expect(card(never).creditLimit).toBe(65_217_00);
     expect(notes(never, 'Your Card Limit Went Up')).toEqual([]);
   });
@@ -615,7 +615,7 @@ describe('credit score', () => {
     expect(run(again, 'card.apply', { bankId: 'us-citi' })).toEqual({ approved: true, limit: 1_000_00 });
     expect(notes(again, 'Card Approved').map((n) => n.body)).toEqual(['Citi approved a card with a $1,000.00 limit. It arrives in a week.']);
     expect(run(staying, 'card.apply', { bankId: 'us-citi' })).toEqual({ approved: false });
-    expect(notes(staying, 'Card Application Declined').map((n) => n.body)).toEqual(['Citi said no: your record isn’t strong enough.']);
+    expect(notes(staying, 'Card Application Declined').map((n) => n.body)).toEqual(['Citi turned down your application: your credit record isn’t strong enough.']);
     // The waiting mark goes at the end of September: 595, +3 for September's statement owing nothing, +25.
     staying.advanceTo(edt(2026, 10, 1, 8));
     expect(staying.player.credit!.marks).toEqual([]);

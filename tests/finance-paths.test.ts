@@ -70,7 +70,7 @@ describe('a switch’s stages', () => {
     fund(sim, barclays.id, 500_00);
     const set = sim.must<{ at: number; cancellableUntil: number }>({ kind: 'bank.switch', payload: { bankId: 'gb-hsbc' } });
     sim.advanceTo(set.cancellableUntil + MS_HOUR);
-    expect(sim.execute({ kind: 'bank.cancel_switch', payload: { confirm: true } }).error).toMatch(/balance transfer alone/);
+    expect(sim.execute({ kind: 'bank.cancel_switch', payload: { confirm: true } }).error).toMatch(/You can still stop its balance transfer/);
     expect(sim.execute({ kind: 'bank.stop_balance_transfer', payload: {} }).error).toMatch(/Confirm/);
     sim.must({ kind: 'bank.stop_balance_transfer', payload: { confirm: true } });
     sim.advanceTo(set.at - MS_HOUR);

@@ -298,7 +298,7 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     expect(postedTo(sim, 'Charged off by Deutsche Bank', db.id)).toEqual([110_65]);
     expect(debt.balance).toBe(-110_65);
     expect([db.closedAt, db.balance, db.feesDue, Math.floor(db.odAccrued ?? 0)]).toEqual([berlin(2026, 3, 7, 0), 0, 0, 0]);
-    expect(titled(sim, 'Deutsche Bank Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. €110.65 it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at Commerzbank now.']);
+    expect(titled(sim, 'Deutsche Bank Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. €110.65 it couldn’t recover went to collections and onto your credit record. You can pay it on Money, under Borrowing. Your money is at Commerzbank now.']);
     // Nothing more on the closed account, its month's end or its quarter's.
     sim.advanceTo(berlin(2026, 4, 2, 12));
     expect(touched(sim, db.id, berlin(2026, 3, 7, 1))).toEqual([]);
@@ -524,7 +524,7 @@ describe('banking.1: an account a bank closed stops', () => {
     const citiNow = sim.universe.accounts[citi.id]!;
     expect(citiNow.closedAt).toBeDefined();
     expect(postedTo(sim, 'Charged off by Citi', citi.id)).toEqual([10_00]);
-    expect(titled(sim, 'Citi Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at Chase now. Its standing order of $20.00 into Chase Savings on the 20th ended with it. You can set one up again on How You Pay.']);
+    expect(titled(sim, 'Citi Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your credit record. You can pay it on Money, under Borrowing. Your money is at Chase now. Its standing order of $20.00 into Chase Savings on the 20th ended with it. You can set one up again on How You Pay.']);
     expect(paymentsOf(sim.player).standingOrders).toEqual([]);
     const quiet = Math.max(citiNow.closedAt!, sim.universe.accounts[capone.id]!.closedAt!) + 1;
     sim.advanceTo(at(2027, 4, 2, 12));

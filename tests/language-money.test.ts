@@ -375,3 +375,16 @@ describe('PLAYER JOURNEY: a refused banking action says why and what to do', () 
     expect(refused(sim, 'cash.withdraw', { amount: 20_00, from: 'mars' })).toBe('Choose where to take it from: your bank’s ATM, another bank’s, the counter, the Post Office or the card.');
   });
 });
+
+describe('the money guide answers the tutorial’s questions in the player’s words', () => {
+  it('gives every money entry a next step and a short overview, and names no SLATE, ledger or postings', async () => {
+    const { MONEY } = await import('@/engine/content/guide/money');
+    expect(MONEY.map((e) => e.id)).toEqual(['money.affairs', 'bank.accounts', 'bank.transfer', 'bank.term', 'bank.upkeep', 'bank.round-ups', 'bank.payments', 'bank.cash', 'bank.card', 'bank.card-offers', 'bank.card-security', 'bank.borrowing', 'bank.other-banks', 'bank.home-account']);
+    for (const entry of MONEY) {
+      expect(entry.next?.length ?? 0, entry.id).toBeGreaterThan(0);
+      expect(entry.short.split(/(?<=\.)\s/).length, entry.id).toBeLessThanOrEqual(5);
+      const words = JSON.stringify({ ...entry, connections: entry.connections.map((c) => c.why) });
+      expect(words, entry.id).not.toMatch(/SLATE|\bledger\b|\bpostings?\b|\bdraws? on\b|worked out from/);
+    }
+  });
+});

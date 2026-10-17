@@ -360,12 +360,12 @@ export const THIRTEEN: readonly CountryBanking[] = [
     banks: [
       {
         id: 'jp-mufg', dormant: { yearly: 1_320_00, afterYears: 2, source: 'bk.mufg.jp: ¥1,320 a year on an account unused for two years' }, name: 'MUFG Bank', iso: 'JP', currency: 'JPY', format: 'jp', code: '0005',
-        current: p('普通預金 (Ordinary Deposit)', 'bk.mufg.jp: 0.40% since 3 August 2026, 0.50% from 2 November 2026, paid in February and August; SLATE’s accounts use the paperless passbook, which carries no fee', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
+        current: p('普通預金 (Ordinary Deposit)', 'bk.mufg.jp: 0.40% since 3 August 2026, 0.50% from 2 November 2026, paid in February and August; the game’s accounts use the paperless passbook, which carries no fee', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
         savings: p('普通預金 (Ordinary Deposit)', 'bk.mufg.jp: as the everyday account', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
       },
       {
         id: 'jp-smbc', name: 'SMBC', iso: 'JP', currency: 'JPY', format: 'jp', code: '0009',
-        current: p('普通預金 (Ordinary Deposit)', 'smbc.co.jp: 0.40%, 0.50% from 2 November 2026; SMBC’s ¥1,100 yearly fee on an account unused for two years holding under ¥10,000 spares one with the Web passbook, which SLATE’s accounts use (smbc.co.jp digitalmiriyou, 8 April 2024)', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
+        current: p('普通預金 (Ordinary Deposit)', 'smbc.co.jp: 0.40%, 0.50% from 2 November 2026; SMBC’s ¥1,100 yearly fee on an account unused for two years holding under ¥10,000 spares one with the Web passbook, which the game’s accounts use (smbc.co.jp digitalmiriyou, 8 April 2024)', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
         savings: p('普通預金 (Ordinary Deposit)', 'smbc.co.jp: as the everyday account', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
       },
       {

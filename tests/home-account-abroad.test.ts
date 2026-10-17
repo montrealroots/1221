@@ -388,7 +388,7 @@ describe('Barclays’ closing of an account overdrawn on its day', () => {
     expect(current.closedAt).toBeDefined();
     expect(sim.player.credit!.late.length).toBe(late);
     const closed = titled(sim, 'Barclays Closed Your Account').map((n) => n.body).find((b) => b.includes('collections'))!;
-    expect(closed).toContain('went to collections; pay it from Your Bank.');
+    expect(closed).toContain('went to collections. You can pay it on Money, under Borrowing.');
   });
 });
 

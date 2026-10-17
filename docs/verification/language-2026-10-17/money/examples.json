@@ -790,5 +790,203 @@
   "why": "plain",
   "meaningSensitive": false,
   "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/credit.ts#registerCredit",
+  "kind": "notification",
+  "before": "The minimum was $40.00 and only $0.00 went in. A $30.00 fee, and it goes on your record if it’s still short at the next due date, thirty days past due.",
+  "after": "The minimum payment was $40.00, and only $0.00 was paid. That costs a $30.00 late fee, and it goes on your credit record if it’s still short at the next due date, thirty days late.",
+  "why": "complete sentences; what the $30 is",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/cardlife.ts#registerCardLife <card.request_limit>",
+  "kind": "notification",
+  "before": "The bank kept the limit at $500.00: it raises one for a record of 700 or more, nothing late in a year, and means to repay.",
+  "after": "The bank kept your limit at $500.00. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.",
+  "why": "'means to repay' named as what the code checks (money held in banks)",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/security.ts#somebodyElse",
+  "kind": "notification",
+  "before": "$120.00 on your debit card ending 0146. If it wasn’t you, report it.",
+  "after": "$120.00 on your debit card ending 0146. If it wasn’t you, report it on Money, under Cards.",
+  "why": "where to report it",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/security.ts#registerSecurity",
+  "kind": "notification",
+  "before": "Ending 3003.",
+  "after": "The new card ends in 3003, and you can use it now.",
+  "why": "a sentence that says what it means",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/cardoffers.ts#registerCardOffers <card.plan>",
+  "kind": "error",
+  "before": "The Chase Freedom Unlimited has no plan SLATE has terms for.",
+  "after": "No payment plan terms were found for the Chase Freedom Unlimited.",
+  "why": "'SLATE'",
+  "meaningSensitive": false,
+  "verified": "tests/cardoffers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/lending.ts#closeForOverdraft",
+  "kind": "notification",
+  "before": "It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your record; pay it from Your Bank.",
+  "after": "It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your credit record. You can pay it on Money, under Borrowing.",
+  "why": "the real place to pay it",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-banking.test.ts"
+ },
+ {
+  "source": "src/engine/systems/lending.ts#loanOffer",
+  "kind": "error",
+  "before": "Wells Fargo publishes only its lowest rate, and SLATE lends at it only to a good record.",
+  "after": "Wells Fargo publishes only its lowest rate, so in the game it lends only to a good credit record.",
+  "why": "'SLATE'",
+  "meaningSensitive": false,
+  "verified": "read in code"
+ },
+ {
+  "source": "src/engine/systems/lending.ts#registerLending <bank.cancel_switch>",
+  "kind": "error",
+  "before": "It could be called off until January 5, 2027, seven working days before its date; it’s under way now. Its balance transfer alone can still be stopped, until the working day before.",
+  "after": "You could call it off until January 5, 2027, seven working days before its date, and it’s under way now. You can still stop its balance transfer until the working day before.",
+  "why": "the player as the subject; decision 4: words only",
+  "meaningSensitive": false,
+  "verified": "tests/finance-paths.test.ts"
+ },
+ {
+  "source": "src/engine/systems/homeaccount.ts#homeAccountRefusal",
+  "kind": "error",
+  "before": "SLATE has no research on what Banca Intesa does when a customer moves to America.",
+  "after": "There’s no research on what Banca Intesa does when a customer moves to America, so the game can’t offer it.",
+  "why": "'SLATE'; says the consequence",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-creation.test.ts"
+ },
+ {
+  "source": "src/engine/systems/lending.ts#frenchOverrun",
+  "kind": "notification",
+  "before": "Overdrawn past the limit for 60 days, the account closes in two months, on December 29, 2026, unless it’s back within it.",
+  "after": "Your account has been past its overdraft limit for 60 days, so it closes in two months, on December 29, 2026, unless it’s back within the limit by then.",
+  "why": "a subject, and what 'it' is",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-setoff.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.accounts]",
+  "kind": "tutorial",
+  "before": "Your bank opens from the button named for it on Home’s Money line, or Money on the menu. It’s headed by the bank your primary account is at, in five tabs. Accounts shows each current and savings account under the bank’s own name for it, with its number written the country’s way, its balance, what it pays, what it costs and how this month’s fee stands. Open or close savings here, and choose which current account is primary.",
+  "after": "Money is your bank. The Accounts tab shows each of your current and savings accounts: its number, its balance, what it pays, what it costs and whether this month’s fee is waived so far. Open or close savings here, and choose which current account is your primary account.",
+  "why": "a short plain overview first",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-money.test.ts (the worked examples, played)"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.card]",
+  "kind": "tutorial",
+  "before": "Choose a Statement Day and press Move It; type A Different Limit and press Ask For It.",
+  "after": "To move your statement date, choose a Statement Day and press Change The Day. To change your limit, type a New Limit and press Ask For This Limit.",
+  "why": "the buttons' real labels since batch 2",
+  "meaningSensitive": false,
+  "verified": "text walk (walk-b3, Money, Cards)"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.payments]",
+  "kind": "tutorial",
+  "before": "'Pressing Make Primary to move your wages: Have Wages Paid Here moves them.' (no next step)",
+  "after": "next: Check Short For A Payment is On, on Statements under Alerts, so you’re warned before a standing order or autopay is due.",
+  "why": "the tutorial's seventh question, added to every money entry",
+  "meaningSensitive": false,
+  "verified": "read against the Statements tab in the text walk"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.transfer]",
+  "kind": "tutorial",
+  "before": "Where neither says, SLATE takes 3 business days.",
+  "after": "Where Neither The Bank Nor The Country Says: 3 business days (marked estimated), moved out of the overview into the figures",
+  "why": "the estimate said where the figures are, not mid-sentence",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-money.test.ts (the worked examples, played)"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [money.affairs]",
+  "kind": "tutorial",
+  "before": "Every figure is added up from the ledger as you look, so it can’t drift from the money behind it.",
+  "after": "Looking changes nothing. Each balance is added up from every payment into and out of the account, and your net worth is added up again each time you look.",
+  "why": "'the ledger'",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-money.test.ts (the worked examples, played)"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.borrowing]",
+  "kind": "tutorial",
+  "before": "“It covers up to about …, SLATE’s estimate” is how far the bank pays items before declining them.",
+  "after": "“It covers up to about …” is how far the bank pays payments before declining them. That figure is estimated, as the line at the foot of the panel says.",
+  "why": "the screen's words since batch 3; the estimate at the foot",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts (Borrowing)"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.upkeep]",
+  "kind": "tutorial",
+  "before": "“… is dormant, blocked until it’s used again.” Reactivate unblocks it.",
+  "after": "“… is dormant: the bank has blocked it until you reactivate it.” Press Reactivate to unblock it.",
+  "why": "quotes the panel's words; a dormant account can't be 'used again'",
+  "meaningSensitive": true,
+  "verified": "read against BankAccountLife.tsx"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.card-offers]",
+  "kind": "tutorial",
+  "before": "Purchases owe $600 on the Chase Freedom Unlimited, past its introductory months, at 22.99%.",
+  "after": "You owe $600 for purchases on the Chase Freedom Unlimited, after its introductory months, at 22.99%.",
+  "why": "the player as the subject",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-money.test.ts (the worked examples, played)"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.home-account]",
+  "kind": "tutorial",
+  "before": "SLATE has research on what 54 banks in 12 countries do when a customer moves to America, and offers only those: a bank anywhere else is refused, never guessed.",
+  "after": "The game offers only the 54 banks in 12 countries with research on what they do when a customer moves to America.",
+  "why": "'SLATE'",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-money.test.ts; the counts printed by a script (54 usable banks, 12 countries)"
+ },
+ {
+  "source": "src/engine/content/currency.ts#RATES_NOTE",
+  "kind": "official",
+  "before": "Exchange rates are SLATE's calibrated estimates, not a live market.",
+  "after": "Exchange rates are the game’s estimates, not a live market.",
+  "why": "'SLATE'",
+  "meaningSensitive": false,
+  "verified": "printed-data.txt"
+ },
+ {
+  "source": "src/engine/content/homeaccounts.ts#ASSUMED_WORDS",
+  "kind": "official",
+  "before": "SLATE’s assumption: the bank publishes no margin, so SLATE takes the FSB’s 2024 average cost of a payment abroad, 2.6%",
+  "after": "an estimate: the bank publishes no margin, so the game uses the FSB’s 2024 average cost of a payment abroad, 2.6%",
+  "why": "'SLATE'; read inside Move Money's line, so lower case",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-transfers.test.ts"
+ },
+ {
+  "source": "src/engine/content/banks-lending.ts#LENDING .us-citi",
+  "kind": "official",
+  "before": "citi.com personal loans: 10.24% to 18.49% APR; $2,000 to $30,000 for a new customer, to $50,000 for an existing one (research-tax-switch-lending.json, 2026-10-10)",
+  "after": "citi.com personal loans: 10.24% to 18.49% APR; $2,000 to $30,000 for a new customer, to $50,000 for an existing one (read 2026-10-10)",
+  "why": "a research file's name in a Source line",
+  "meaningSensitive": false,
+  "verified": "printed-data.txt"
  }
 ]

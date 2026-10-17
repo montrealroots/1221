@@ -179,13 +179,13 @@ const PLAYS: Record<string, () => void> = {
     const before = sim.player.roundUps!.pending;
     expect(spend(sim, sim.player, price, 'A purchase', 'food')).toBe(true);
     const counted = sim.player.roundUps!.pending - before;
-    expect(counted).toBe(pence(result, 'The purchase counts ', ', its change of'));
-    expect(counted).toBe(pence(result, 'its change of ', ' three times') * factor);
+    expect(counted).toBe(pence(result, 'The purchase counts ', ': its change of'));
+    expect(counted).toBe(pence(result, 'its change of ', ', three times') * factor);
     expect(steps[2]).toBe('The day ends.');
     const night = at(sim, 2026, 1, 6, 0);
     sim.advanceTo(night + 60_000);
     const moved = postings(sim, savings, /^Round-ups$/, night - HOUR);
-    expect(moved).toEqual([{ at: night, amount: pence(result, 'At the next day’s start ', ' moves from the current account') }]);
+    expect(moved).toEqual([{ at: night, amount: pence(result, 'At the start of the next day ', ' moves from the current account') }]);
     expect(postings(sim, current, /^Round-ups$/, night - HOUR)).toEqual([{ at: night, amount: -moved[0]!.amount }]);
     h.sim = sim;
     const shown = renderToStaticMarkup(createElement(BankAccountLife, { bankId: 'gb-natwest' })).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
@@ -224,7 +224,7 @@ const PLAYS: Record<string, () => void> = {
     // what the card owes once autopay has paid the statement. The rounding leaves 30% to 32.5% costing nothing, so a line
     // a point or two off would pass at the line and well past it: 1%, 2% and 3% past it are where it shows. Until a later
     // pass of 2026-10-12 nothing here read the line, and 50% passed.
-    const line = rate(result, 'under the ', ' your record');
+    const line = rate(result, 'under the ', ' where your score');
     const tenth = count(GUIDE_BY_ID['money.affairs']!.reads.find((r) => r.label === 'Credit Used')!.value, 'takes ', ' points');
     const reported = (used: number) => {
       const one = life('modest');
@@ -282,7 +282,7 @@ const PLAYS: Record<string, () => void> = {
     expect(savings.balance).toBe(moved);
 
     // The current account met none of its waivers, and its fee came off at 11 PM on the month's last day.
-    expect(postings(sim, checking, /Monthly fee/, since)).toEqual([{ at: end, amount: -sum(result, 'so its ', ' comes off') }]);
+    expect(postings(sim, checking, /Monthly fee/, since)).toEqual([{ at: end, amount: -sum(result, 'so its ', ' fee is charged') }]);
     const p = zonedParts(end, sim.homeZone);
     expect([p.hour, p.day]).toEqual([23, new Date(Date.UTC(p.year, p.month, 0)).getUTCDate()]);
   },
@@ -309,15 +309,15 @@ const PLAYS: Record<string, () => void> = {
     const since = sim.now;
     const end = monthEndAfter(sim, sim.now);
     sim.advanceTo(end + HOUR);
-    expect(postings(sim, savings, /Monthly fee/, since)).toEqual([{ at: end, amount: -sum(result, 'this month’s ', ' fee still') }]);
-    expect(savings.balance).toBe(sum(result, 'and leaves ', ';'));
-    expect(savings.balance).toBeGreaterThan(sum(result, 'that’s over ', ', so'));
+    expect(postings(sim, savings, /Monthly fee/, since)).toEqual([{ at: end, amount: -sum(result, 'this month’s ', ' fee is still') }]);
+    expect(savings.balance).toBe(sum(result, 'leaving ', '.'));
+    expect(savings.balance).toBeGreaterThan(sum(result, 'That’s over ', ', so'));
 
     // Left there, next month's is waived.
     const next = monthEndAfter(sim, sim.now);
     sim.advanceTo(next + HOUR);
     expect(postings(sim, savings, /Monthly fee/, end + HOUR)).toEqual([]);
-    expect(savings.balance).toBe(sum(result, 'and leaves ', ';'));
+    expect(savings.balance).toBe(sum(result, 'leaving ', '.'));
   },
 
   'bank.term': () => {
@@ -349,7 +349,7 @@ const PLAYS: Record<string, () => void> = {
     const whole = opened(kept).term;
     kept.advanceTo(at(kept, 2026, 7, 25));
     const days = count(result, 'penalty is ', ' days’ interest');
-    expect(breakQuote(kept, whole).penalty).toBe(sum(result, 'days’ interest, ', ', capped'));
+    expect(breakQuote(kept, whole).penalty).toBe(sum(result, 'days’ interest, ', ', but never'));
     expect(Math.round((whole.balance * whole.fixedRate! * days) / 365)).toBe(breakQuote(kept, whole).penalty);
 
     // Left to its end: about the interest said, and then it renews for the same term at the bank's rate.
@@ -480,7 +480,7 @@ const PLAYS: Record<string, () => void> = {
     const savings = sim.universe.accounts[accountId]!;
     expect(setup).toContain(savings.name);
     const amount = count(steps[0]!, 'type ', ' and') * 100;
-    expect(amount).toBe(sum(setup, 'sets a ', ' standing order'));
+    expect(amount).toBe(sum(setup, 'sets up a ', ' standing order'));
     const day = count(steps[0]!, ' and ', ', and press');
     must(sim, 'bank.add_standing_order', { toId: savings.id, amount, day });
     const p = zonedParts(sim.now, sim.zone);
@@ -534,14 +534,14 @@ const PLAYS: Record<string, () => void> = {
     must(sim, 'cash.withdraw', { amount, from: 'atm' });
     const wallet = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === 'cash')!;
     expect(start - checking.balance).toBe(sum(result, 'free: ', ' out'));
-    expect(wallet.balance).toBe(sum(result, 'out, ', ' in hand'));
+    expect(wallet.balance).toBe(sum(result, 'out, ', ' in your hand'));
   },
 
   'bank.card': () => {
     const { setup, steps, result } = example('bank.card');
     const sim = life('modest');
     const record = sim.player.credit!;
-    expect(record.score).toBe(count(setup, 'record of ', ','));
+    expect(record.score).toBe(count(setup, 'score of ', ','));
     expect(own(sim, 'credit_card')!.name).toBe(grab(setup, 'holding the ', '(.+?)', ', applies'));
 
     // Applying: the inquiry off the record at once, approved over the line. Until a later pass of 2026-10-12 the drop and
@@ -575,7 +575,7 @@ const PLAYS: Record<string, () => void> = {
     expect(card.creditLimit).toBe(sum(result, 'with a ', ' limit'));
     expect(card.apr).toBeCloseTo(rate(result, ' limit at ', ', '), 6);
     const terms = cardTerms(sim, card, record.score);
-    expect(terms.apr).toBeCloseTo(rate(result, ', ', ' on purchases'), 6);
+    expect(terms.apr).toBeCloseTo(rate(result, ', and ', ' on purchases'), 6);
     expect(terms.introUntil).toBe(addMonths(card.openedAt, count(result, 'its first ', ' months'), sim.homeZone));
     expect(stateOf(sim.player, card).autopay).toBe('full');
 
@@ -588,7 +588,7 @@ const PLAYS: Record<string, () => void> = {
     expect(state.statementInterest ?? 0).toBe(0);
     expect(Math.round(state.statementBalance * terms.minimumShare)).toBe(sum(result, `of ${formatMoney(state.statementBalance, 'USD', { cents: false })} is `, ','));
     expect(terms.minimumFloor).toBe(sum(result, 'floor is ', '.'));
-    expect(state.issued!.at(-1)!.minimum).toBe(sum(result, 'minimum is ', ':'));
+    expect(state.issued!.at(-1)!.minimum).toBe(sum(result, 'minimum payment is ', ':'));
     const due = sim.universe.scheduled.find((i) => i.kind === DUE_KIND && i.status === 'pending' && i.payload.accountId === card.id)!;
     expect(due.at).toBe(dueAt(sim.zone, statement.at, count(result, 'due ', ' days later')));
 
@@ -597,7 +597,7 @@ const PLAYS: Record<string, () => void> = {
     const score = record.score;
     const since = sim.now;
     sim.advanceTo(due.at + HOUR);
-    expect(postings(sim, card, /^Paid /, since).map((p) => p.amount)).toEqual([sum(result, 'takes the whole ', ' and the month')]);
+    expect(postings(sim, card, /^Paid /, since).map((p) => p.amount)).toEqual([sum(result, 'pays the whole ', ' and the month')]);
     expect(card.balance).toBe(0);
     expect(notes(sim, /Late|Bounced/, since)).toEqual([]);
     expect(stateOf(sim.player, card).missed ?? 0).toBe(0);
@@ -606,7 +606,7 @@ const PLAYS: Record<string, () => void> = {
 
   'bank.card-offers': () => {
     const { setup, steps, result } = example('bank.card-offers');
-    const owe = sum(setup, 'Purchases owe ', ' on the');
+    const owe = sum(setup, 'You owe ', ' for purchases');
     const months = count(steps[0]!, 'choose ', ' months');
     const pastIntro = (sim: Simulation) => {
       const card = own(sim, 'credit_card')!;
@@ -627,8 +627,8 @@ const PLAYS: Record<string, () => void> = {
     expect(setup).toContain('The Day’s Spending is On The Credit Card, and Autopay is on The Minimum.');
     must(sim, 'bank.set_payments', { everyday: 'credit' });
     must(sim, 'finance.set_autopay', { mode: 'minimum', accountId: card.id });
-    const { plan } = must<{ plan: { monthly: number; fee: number; monthsLeft: number } }>(sim, 'card.plan', { amount: count(steps[0]!, 'Type ', ' in Into') * 100, months });
-    expect(plan.monthly).toBe(sum(result, 'asks ', ' of the plan'));
+    const { plan } = must<{ plan: { monthly: number; fee: number; monthsLeft: number } }>(sim, 'card.plan', { amount: count(steps[0]!, 'Type ', ' in Amount') * 100, months });
+    expect(plan.monthly).toBe(sum(result, 'asks for ', ' of the plan'));
     expect(plan.fee).toBe(sum(result, 'and its ', ' fee'));
     const since = sim.now;
     const asked: number[] = [];
@@ -637,7 +637,7 @@ const PLAYS: Record<string, () => void> = {
       sim.advanceTo(next.at + HOUR);
       asked.push(stateOf(sim.player, card).statementPlanDue ?? 0);
     }
-    const each = sum(result, 'fee, ', ' beside');
+    const each = sum(result, 'fee, ', ' on top');
     expect(asked).toEqual([...Array<number>(count(result, 'for ', ' statements')).fill(each), 0]);
     const fees = postings(sim, card, /^Plan fee$/, since);
     expect(fees).toHaveLength(count(result, 'for ', ' statements'));
@@ -656,7 +656,7 @@ const PLAYS: Record<string, () => void> = {
     }
     expect(bare.balance).toBe(0);
     const interest = -postings(alone, bare, /^Interest$/, from).reduce((s, p) => s + p.amount, 0);
-    const said = sum(result, 'come to about ', '.');
+    const said = sum(result, 'would cost about ', ' in interest');
     expect(Math.abs(interest - said) / said).toBeLessThan(0.05);
   },
 
@@ -683,7 +683,7 @@ const PLAYS: Record<string, () => void> = {
     sim.advanceTo(at(sim, 2026, 1, 6, 8));
     const reported = sim.now;
     const answer = must<{ carried: number; refundAt: number }>(sim, 'card.dispute', { index: 0 });
-    expect(answer.carried).toBe(sum(result, 'leaves you at most ', ', and'));
+    expect(answer.carried).toBe(sum(result, 'leaves you to pay at most ', ', and'));
     expect(usDays(sim, reported, answer.refundAt)).toBe(count(result, 'within ', ' business days. The'));
     expect(plastic().stopped).toBe('fraud');
     expect(usDays(sim, reported, plastic().replacementAt!)).toBe(count(result, 'arrives in ', ' business days'));
@@ -711,8 +711,8 @@ const PLAYS: Record<string, () => void> = {
       expect(purchaseMayOverdraw(sim, sim.player)).toBe(false);
       // TEST SETUP: the bill, paid as the health system pays one (`payFromCurrent`): a bill may run into the overdraft.
       expect(payFromCurrent(sim, sim.player, bill, 'A medical bill', 'health')).toBe(true);
-      expect(checking.balance).toBe(-sum(steps[0]!, 'stands at −', '.'));
-      expect(od!.graceUpTo).toBe(sum(result, 'past the ', ' grace'));
+      expect(checking.balance).toBe(-sum(steps[0]!, 'account is at −', '.'));
+      expect(od!.graceUpTo).toBe(sum(result, 'past the ', ' Chase allows'));
       expect(checking.pendingItems).toEqual([{ day: '2026-01-05', count: 1 }]);
       return { sim, checking };
     };
@@ -720,7 +720,7 @@ const PLAYS: Record<string, () => void> = {
     // Brought back to the grace's line by the end of the next business day: the fee is let go.
     const back = billed('modest');
     back.sim.advanceTo(at(back.sim, 2026, 1, 6));
-    must(back.sim, 'bank.transfer', { fromId: own(back.sim, 'savings')!.id, toId: back.checking.id, amount: bill - holds - sum(result, 'past the ', ' grace') });
+    must(back.sim, 'bank.transfer', { fromId: own(back.sim, 'savings')!.id, toId: back.checking.id, amount: bill - holds - sum(result, 'past the ', ' Chase allows') });
     expect(back.checking.balance).toBe(-sum(steps[1]!, 'brings it back to −', ' or better'));
     back.sim.advanceTo(at(back.sim, 2026, 1, 9));
     expect(postings(back.sim, back.checking, /Overdraft fee/, 0)).toEqual([]);
@@ -729,7 +729,7 @@ const PLAYS: Record<string, () => void> = {
     // Left there: the fee comes off once the next business day is over.
     const left = billed('modest');
     left.sim.advanceTo(at(left.sim, 2026, 1, 9));
-    expect(postings(left.sim, left.checking, /Overdraft fee/, 0)).toEqual([{ at: at(left.sim, 2026, 1, 7, 0), amount: -sum(result, 'so a ', ' fee is held') }]);
+    expect(postings(left.sim, left.checking, /Overdraft fee/, 0)).toEqual([{ at: at(left.sim, 2026, 1, 7, 0), amount: -sum(result, 'so a ', ' fee is put on hold') }]);
 
     // And below zero for the days the bank lets it run, the account is closed.
     const closed = billed('nothing');
@@ -755,7 +755,7 @@ const PLAYS: Record<string, () => void> = {
     const answer = must<{ decidedAt: number; arrivesAt: number }>(sim, 'bank.open_current', { bankId: boaBank.id, fundFrom: chase.id, amount: sent });
     expect(before - chase.balance).toBe(sum(result, 'The ', ' leaves Chase now'));
     expect(usDays(sim, applied, answer.decidedAt)).toBe(count(result, 'decides in ', ','));
-    expect(usDays(sim, applied, answer.arrivesAt)).toBe(count(result, 'lands in Chase’s ', ' business days'));
+    expect(usDays(sim, applied, answer.arrivesAt)).toBe(count(result, 'arrives in Chase’s ', ' business days'));
     sim.advanceTo(answer.decidedAt + HOUR);
     const boa = own(sim, 'checking', boaBank.id)!;
     expect(boa.name).toBe(boaBank.current.name);
@@ -778,7 +778,7 @@ const PLAYS: Record<string, () => void> = {
     expect(boa.plastic).toEqual(plastic);
     must(sim, 'bank.redirect_deposits', { accountId: boa.id });
     const asked = sim.now;
-    const lead = count(result, 'pays there from ', ' days on') * MS_DAY;
+    const lead = count(result, 'pays into it after ', ' days') * MS_DAY;
     expect(depositAccount(sim, sim.player, asked + lead - HOUR, 'yale-payroll')?.id).toBe(chase.id);
     expect(depositAccount(sim, sim.player, asked + lead, 'yale-payroll')?.id).toBe(boa.id);
 

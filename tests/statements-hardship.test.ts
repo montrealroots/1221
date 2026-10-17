@@ -117,7 +117,7 @@ describe('the Statements tab on a hardship plan', () => {
     }
     planned.advanceTo(edt(2026, 10, 11, 12, 1));
     const late = planned.universe.notifications.filter((n) => n.title === 'A Late Card Payment');
-    expect(late.map((n) => n.body)).toEqual(['The plan’s payment was $100.00 and only $48.00 went in. A $30.00 fee, and it goes on your record if it’s still short at the next due date, thirty days past due.']);
+    expect(late.map((n) => n.body)).toEqual(['The plan’s payment was $100.00, and only $48.00 was paid. That costs a $30.00 late fee, and it goes on your credit record if it’s still short at the next due date, thirty days late.']);
     expect(stateOf(planned.player, card).hardship?.payment).toBe(100_00);
   });
 

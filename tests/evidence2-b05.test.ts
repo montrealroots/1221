@@ -377,7 +377,7 @@ describe('bank.open_current', () => {
     expect(acct(adult, hers).closedAt).toBe(at(2026, 10, 31, 0));
     expect(collectionsOf(adult, adult.player, 'Citi')!.balance).toBe(-10_00);
     expect(adult.player.chex).toEqual({ at: at(2026, 10, 31, 0), bank: 'Citi' });
-    expect(titled(adult, 'Citi Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at Chase now.']);
+    expect(titled(adult, 'Citi Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your credit record. You can pay it on Money, under Borrowing. Your money is at Chase now.']);
     expect(titled(adult, 'Citi Closed Citi Access Checking')).toEqual([]);
   });
 });

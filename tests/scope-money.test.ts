@@ -357,11 +357,11 @@ describe('bank.arrange_overdraft', () => {
     // LENDING (content/banks-lending.ts): Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One
     // have no overdraft terms.
     const said: Record<string, string> = {
-      'us-chase': 'Chase doesn’t arrange one: it runs overdrafts its own way, and the bank screen says how.',
-      'us-bank-of-america': 'Bank of America doesn’t arrange one: it runs overdrafts its own way, and the bank screen says how.',
-      'us-wells-fargo': 'Wells Fargo doesn’t arrange one: it runs overdrafts its own way, and the bank screen says how.',
-      'us-citi': 'Citi doesn’t offer an overdraft SLATE has terms for.',
-      'us-capital-one': 'Capital One doesn’t offer an overdraft SLATE has terms for.',
+      'us-chase': 'Chase doesn’t arrange overdrafts. It handles them its own way, as the Overdraft panel says.',
+      'us-bank-of-america': 'Bank of America doesn’t arrange overdrafts. It handles them its own way, as the Overdraft panel says.',
+      'us-wells-fargo': 'Wells Fargo doesn’t arrange overdrafts. It handles them its own way, as the Overdraft panel says.',
+      'us-citi': 'No overdraft terms were found for Citi.',
+      'us-capital-one': 'No overdraft terms were found for Capital One.',
     };
     for (const [bankId, words] of Object.entries(said)) {
       let sim = ada(`scope-od-${bankId}`, 'scraping', { bankId });
@@ -1060,7 +1060,7 @@ describe('bank.cancel_switch', () => {
     expect(savingsAt(sim, 'gb-barclays')!.balance - held).toBe(25_00);
     const partial = abroad('uk-eng-london', 'gb-barclays', 'scope-switch-partial');
     ok(partial, 'bank.switch', { bankId: 'gb-natwest', partial: true });
-    expect(refusal(partial, 'bank.cancel_switch', { confirm: true })).toBe('This country’s switching service publishes no right to call a switch off: it runs to its date.');
+    expect(refusal(partial, 'bank.cancel_switch', { confirm: true })).toBe('This country’s switching service doesn’t let you call a switch off. It goes ahead on its date.');
   });
 });
 
@@ -1079,7 +1079,7 @@ describe('bank.stop_balance_transfer', () => {
     press('Keep The Balance There');
     expect(h.answers.at(-1)).toEqual({ kind: 'bank.stop_balance_transfer', ok: true, error: undefined });
     expect(panel()).toContain('Its balance transfer is stopped: your payments move, and the balance stays in the old account, which stays open.');
-    expect(refusal(sim, 'bank.stop_balance_transfer', { confirm: true })).toBe('Its balance transfer is stopped already.');
+    expect(refusal(sim, 'bank.stop_balance_transfer', { confirm: true })).toBe('Its balance transfer is already stopped.');
     sim = reload(sim);
     sim.advanceTo(set.at - 60_000);
     const keeps = sim.universe.accounts[old.id]!.balance;
@@ -1094,7 +1094,7 @@ describe('bank.stop_balance_transfer', () => {
 
     const partial = abroad('uk-eng-london', 'gb-barclays', 'scope-switch-keep-partial');
     ok(partial, 'bank.switch', { bankId: 'gb-natwest', partial: true });
-    expect(refusal(partial, 'bank.stop_balance_transfer', { confirm: true })).toBe('This country’s switching service publishes no such step.');
+    expect(refusal(partial, 'bank.stop_balance_transfer', { confirm: true })).toBe('This country’s switching service has no such step.');
     const late = abroad('uk-eng-london', 'gb-barclays', 'scope-switch-keep-late');
     ok(late, 'bank.switch', { bankId: 'gb-hsbc' });
     late.advanceTo(inLondon(2026, 1, 13, 17, 1));
@@ -1254,10 +1254,10 @@ describe('card.money_transfer', () => {
     expect(current.balance - before.current).toBe(500_00);
     expect(card.balance - before.card).toBe(-515_00);
     expect(postedTo(sim, 'Money transfer fee', card.id)).toEqual([-15_00]);
-    expect(refusal(sim, 'card.money_transfer', { amount: 0, accountId: card.id })).toBe('Say how much.');
+    expect(refusal(sim, 'card.money_transfer', { amount: 0, accountId: card.id })).toBe('Enter an amount.');
     // The card's room is its limit less what it owes; all of it, with 3% on top, is more than the room.
     const room = card.creditLimit! + card.balance;
-    expect(refusal(sim, 'card.money_transfer', { amount: room, accountId: card.id })).toBe(`The card has £${(room / 100).toLocaleString('en-GB', { minimumFractionDigits: 2 })} free, and this takes £${((room + Math.round(room * 0.03)) / 100).toLocaleString('en-GB', { minimumFractionDigits: 2 })} with its fee.`);
+    expect(refusal(sim, 'card.money_transfer', { amount: room, accountId: card.id })).toBe(`The card has £${(room / 100).toLocaleString('en-GB', { minimumFractionDigits: 2 })} of its limit left, and this needs £${((room + Math.round(room * 0.03)) / 100).toLocaleString('en-GB', { minimumFractionDigits: 2 })} with its fee.`);
     sim = reload(sim);
     expect(stateOf(sim.player, sim.universe.accounts[card.id]!).transfers).toEqual([{ kind: 'money', owed: 515_00, accrued: 0, apr: 0.129 }]);
     // TEST SETUP: £200 of purchases put on the card. NatWest prices purchases 12.9% to 18.9% by the record, and this

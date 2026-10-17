@@ -26,19 +26,19 @@ export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: P
   },
   'BM|Clarien Bank': {
     monthlyFee: 15_00, waiver: { ageAtLeast: 65 },
-    source: 'clarienbank.com bank account fees: $12 monthly maintenance and $3 monthly compliance, seniors exempt; Clarien doesn’t publish the age, and 65, Bermuda’s pension age, is SLATE’s estimate',
+    source: 'clarienbank.com bank account fees: $12 monthly maintenance and $3 monthly compliance, seniors exempt; Clarien doesn’t publish the age, so the game estimates 65, Bermuda’s pension age',
   },
   'BQ|Maduro & Curiel\'s Bank (MCB) Bonaire': {
     monthlyFee: 1_50, waiver: { ageAtLeast: 65 },
-    source: 'Resident Pension accounts (65 and over) are exempt; student accounts are too, and SLATE has no students',
+    source: 'Resident Pension accounts (65 and over) are exempt; student accounts are too, but the game doesn’t open student accounts there',
   },
   'CW|Maduro & Curiel\'s Bank (MCB)': {
     monthlyFee: 5_30, waiver: { ageAtLeast: 65 },
-    source: '65-and-over pension accounts are exempt; student accounts are too, and SLATE has no students',
+    source: '65-and-over pension accounts are exempt; student accounts are too, but the game doesn’t open student accounts there',
   },
   'BA|UniCredit Bank': {
     monthlyFee: 5_99,
-    source: 'waived for students, and SLATE has no students, so it is charged in full',
+    source: 'waived for students, but the game doesn’t open student accounts there, so it is charged in full',
   },
   'BG|UniCredit Bulbank': {
     monthlyFee: 2_84, waiver: { depositsAtLeast: 1 },
@@ -46,7 +46,7 @@ export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: P
   },
   'BF|Coris Bank International': {
     monthlyFee: 1_500_00,
-    source: 'XOF 500 for state employees; SLATE’s work isn’t for the state, so the full fee',
+    source: 'XOF 500 for state employees; work in the game isn’t for the state, so the full fee',
   },
   'KY|Butterfield': {
     monthlyFee: 8_00, reduced: { to: 2_00, averageAtLeast: 5_000_00 },
@@ -58,7 +58,7 @@ export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: P
   },
   'GU|Bank of Guam': {
     deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 1, ageAtLeast: 55 },
-    source: 'waived with e-Statements and an electronic deposit in the month, or at 55 and over; SLATE’s bank is online, so e-Statements are taken as chosen',
+    source: 'waived with e-Statements and an electronic deposit in the month, or at 55 and over; the game’s accounts are online, so e-Statements are taken as chosen',
   },
   'MH|Bank of Guam': {
     deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
@@ -82,7 +82,7 @@ export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: P
   },
   'LV|Swedbank': {
     monthlyFee: 1_70, waiver: { ageBelow: 26 },
-    source: 'the Pamata package, EUR 1.70 a month, free from 6 to 25 (swedbank.lv price list, in force from 1 June 2026); the Seniors program’s half off is only for who joined before September 2022. Until 2026-09-28 SLATE charged EUR 2.00 to everyone',
+    source: 'the Pamata package, EUR 1.70 a month, free from 6 to 25 (swedbank.lv price list, in force from 1 June 2026); the Seniors program’s half off is only for those who joined before September 2022',
   },
   'LT|Swedbank': {
     monthlyFee: 1_70, waiver: { ageBelow: 26 }, reduced: { to: 1_10, depositsAtLeast: 1 },
@@ -102,7 +102,7 @@ export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: P
   },
   'SI|NLB': {
     monthlyFee: 6_99, reduced: { to: 3_50, ageBelow: 30 },
-    source: 'half price under 30: €3.495, which SLATE rounds to €3.50',
+    source: 'half price under 30: €3.495, which the game rounds to €3.50',
   },
   'TG|Orabank Togo': {
     monthlyFee: 1_100_00,

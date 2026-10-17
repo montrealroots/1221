@@ -276,7 +276,7 @@ describe('bank.repay_loan', () => {
     // TEST SETUP: Citi Access Checking down to $1,000; savings isn't linked to it, so the bank can't cover the payoff.
     setTo(sim, checking.id, 1_000_00);
     press('bank.repay_loan', 'Pay It Off');
-    expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.repay_loan', ok: false, error: 'Paying it off takes $3,017, and the bank can’t cover it all.' });
+    expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.repay_loan', ok: false, error: 'Paying it off takes $3,017, and the repayment account can’t cover it all.' });
     expect(account(sim, loanId).closedAt).toBeUndefined();
     expect(account(sim, loanId).balance).toBe(-3_000_00);
     expect(posted(sim, 'Interest: Citi Personal Loan')).toEqual([]);
@@ -370,7 +370,7 @@ describe('bank.set_alerts', () => {
     expect(b.learnedAt).toBe(at(2026, 9, 1));
     const last4 = primary(alerted).plastic!.last4;
     const ofIt = (sim: Simulation) => told(sim, 'A Large Payment').filter((n) => n.body.includes('debit card ending'));
-    expect(ofIt(alerted).map((n) => n.body)).toEqual([`$855.06 on your debit card ending ${last4}. If it wasn’t you, report it.`]);
+    expect(ofIt(alerted).map((n) => n.body)).toEqual([`$855.06 on your debit card ending ${last4}. If it wasn’t you, report it on Money, under Cards.`]);
     expect(told(quiet, 'A Large Payment')).toEqual([]);
 
     // Reported on Monday 31 August, four business days after Tuesday's use: past the two that keep it to $50 for the
@@ -535,7 +535,7 @@ describe('bank.set_payments', () => {
     expect(posted(unlinked.sim, 'Payment: Citi Personal Loan')).toEqual([]);
     expect(account(unlinked.sim, unlinked.loanId).balance).toBe(-(3_000_00 + 25_60));
     expect(lates(unlinked)).toBe(lateOff + 1);
-    expect(told(unlinked.sim, 'A Missed Loan Payment').map((n) => n.body)).toEqual(['$264.09 was due and $0.00 was there to pay it. It’s on your record, and what’s left is still owed.']);
+    expect(told(unlinked.sim, 'A Missed Loan Payment').map((n) => n.body)).toEqual(['$264.09 was due, and there was only $0.00 to pay it with. It’s on your credit record, and what’s left is still owed.']);
     expect(posted(unlinked.sim, 'Returned payment fee')).toEqual([]);
   });
 
@@ -924,7 +924,7 @@ describe('card.lock', () => {
   it('refuses to lock a debit card reported lost, in its words, draws no lock for it, and locks the new one once it comes', () => {
     const sim = student('g11-lock-lost', 'us-chase');
     const { arrivesAt } = ok<{ arrivesAt: number }>(sim, 'card.report', { which: 'debit', why: 'lost' });
-    expect(refusal(sim, 'card.lock', { which: 'debit', locked: true })).toBe('That card is stopped; a new one is on its way.');
+    expect(refusal(sim, 'card.lock', { which: 'debit', locked: true })).toBe('That card is stopped, and a new one is on its way.');
     const text = words(shown(sim, createElement(BankSecurity, { bankId: 'us-chase' })));
     expect(text).toContain('Lost: stopped. A new one arrives');
     // Only the credit card's lock is drawn.

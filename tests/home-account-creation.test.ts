@@ -83,20 +83,20 @@ describe('the rule, step by step, in its words', () => {
 
   it('2: born in London, raised in New York: none; and born in America, never abroad: none', () => {
     const ny = life({ priorResidence: { cityId: 'us-ny-newyork', fromYear: 2010, fromMonth: 1 } });
-    expect(homeAccountRefusal(ny, 'gb-hsbc')).toBe('You lived in America before Yale; your account is the one here.');
+    expect(homeAccountRefusal(ny, 'gb-hsbc')).toBe('You lived in America before Yale, so your account is the one here.');
     const american = life({ homeRegionId: 'us-ny-newyork' });
     expect(homeAccountRefusal(american, 'gb-hsbc')).toBe('You haven’t said where you lived before Yale.');
     expect(homeAccountRefusal({ ...american, priorResidence: { cityId: 'us-ny-newyork', fromYear: 2002, fromMonth: 6 } }, 'gb-hsbc'))
-      .toBe('You lived in America before Yale; your account is the one here.');
+      .toBe('You lived in America before Yale, so your account is the one here.');
   });
 
   it('3: a bank elsewhere, a bank with no research, and one whose research leaves nothing to keep it on', () => {
     expect(homeAccountRefusal(london('de-deutsche-bank'), 'de-deutsche-bank')).toBe('Deutsche Bank isn’t a bank in United Kingdom.');
     const rome = banksIn('IT')[0]!;
     expect(homeAccountRefusal(life({ priorResidence: { cityId: 'it-laz-rome', fromYear: 2010, fromMonth: 1 } }), rome.id))
-      .toBe(`SLATE has no research on what ${rome.name} does when a customer moves to America.`);
+      .toBe(`There’s no research on what ${rome.name} does when a customer moves to America, so the game can’t offer it.`);
     expect(homeAccountRefusal(life({ priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2010, fromMonth: 1 } }), 'jp-japan-post-bank'))
-      .toBe('Japan Post Bank asks a customer going abroad to close the account, and keeps one only with someone in Japan acting for them, which SLATE doesn’t have.');
+      .toBe('Japan Post Bank asks a customer going abroad to close the account, and keeps one open only if someone in Japan acts for them, which the game doesn’t offer.');
   });
 
   it('4: an account not open before Yale: moved there after, or too young for the bank', () => {
@@ -104,7 +104,7 @@ describe('the rule, step by step, in its words', () => {
       .toBe('You began living there after Yale began.');
     // TEST SETUP: a bank opening from 30, which no researched bank does; born 14 June 2002, 24 at the start.
     addHomeTerms({ ...homeTerms('gb-hsbc')!, openFromAge: 30 });
-    expect(homeAccountRefusal(london('gb-hsbc'), 'gb-hsbc')).toBe('HSBC UK opens an account from 30; you left at 24.');
+    expect(homeAccountRefusal(london('gb-hsbc'), 'gb-hsbc')).toBe('HSBC UK opens an account from age 30, and you left at 24.');
   });
 
   it('5: a bank that never opens a US citizen’s account refuses one born in America, and not one born in London', () => {
@@ -119,7 +119,7 @@ describe('the rule, step by step, in its words', () => {
     expect(whatFollows(london('gb-hsbc'), 'gb-hsbc')).toEqual([
       'HSBC UK keeps it for a customer who lives abroad.',
       'The bank says so in its own words.',
-      'SLATE takes it HSBC UK opened accounts from 16: the research read no age.',
+      'The research found no opening age for HSBC UK, so the game assumes 16.',
     ]);
     // Opened 14 June 2018, at 16, before 28 April 2026: two months, 60 days, from Monday 24 August 2026.
     expect(homeAccountRefusal(london('gb-barclays'), 'gb-barclays')).toBeUndefined();
@@ -131,12 +131,12 @@ describe('the rule, step by step, in its words', () => {
     expect(homeAccountRefusal(berlin, 'de-deutsche-bank')).toBeUndefined();
     expect(whatFollows(berlin, 'de-deutsche-bank').slice(0, 2)).toEqual([
       'Deutsche Bank keeps it, as an AktivKonto at €6.90 a month: its free account for students needs an address in the European Union, and the price list says it then carries on as an AktivKonto.',
-      'The bank publishes its price for a customer abroad but no rule on moving: SLATE’s reading of it.',
+      'The bank publishes its price for a customer abroad but no rule on moving, so this is the game’s reading of it.',
     ]);
     const paris = life({ homeRegionId: 'fr-idf-paris', priorResidence: { cityId: 'fr-idf-paris', fromYear: 2002, fromMonth: 6 } });
     expect(whatFollows(paris, 'fr-bnp-paribas')).toContain('It charges €15.00 a month for a customer abroad.');
     expect(whatFollows(paris, 'fr-societe-generale')).toContain('It charges €75.00 a quarter for a customer abroad, which it doesn’t charge under 25, as you are.');
-    expect(whatFollows(london('gb-lloyds'), 'gb-lloyds')[1]).toBe('The bank publishes nothing on a customer who moves abroad: SLATE’s assumption.');
+    expect(whatFollows(london('gb-lloyds'), 'gb-lloyds')[1]).toBe('The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.');
   });
 });
 
@@ -226,7 +226,7 @@ describe('the creation screen', () => {
 
   it('says America before Yale, and offers no bank, for one raised in New York', () => {
     const words = text(createElement(StartingPointStep, { config: life({ priorResidence: { cityId: 'us-ny-newyork', fromYear: 2010, fromMonth: 1 } }), set: noop as never, setConfig: noop as never }));
-    expect(words).toContain('You lived in America before Yale; your account is the one here.');
+    expect(words).toContain('You lived in America before Yale, so your account is the one here.');
     expect(words).not.toContain('I Kept An Account There');
   });
 
@@ -241,7 +241,7 @@ describe('the creation screen', () => {
     const STARTING_POINT = 3;
     expect(validate(london('gb-hsbc'), STARTING_POINT as never)).toEqual([]);
     expect(validate(life({ priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: 'jp-japan-post-bank' }), STARTING_POINT as never))
-      .toEqual(['Japan Post Bank asks a customer going abroad to close the account, and keeps one only with someone in Japan acting for them, which SLATE doesn’t have.']);
+      .toEqual(['Japan Post Bank asks a customer going abroad to close the account, and keeps one open only if someone in Japan acts for them, which the game doesn’t offer.']);
     expect(validate(london('gb-hsbc', { priorResidence: { cityId: 'uk-eng-london', fromYear: 1999, fromMonth: 1 } }), STARTING_POINT as never)).toContain('You can’t have lived there from before you were born.');
   });
 });

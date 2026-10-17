@@ -213,3 +213,109 @@ abroad cash refusal I'd missed in `cash.ts`, and three regexes on old words), th
 
 **Screens:** these are refusals and notices; the ones a screen shows (Move Money's notes, the What Needs You notices)
 are read in the after-walk with the guide batch.
+
+## Batch 4b: Cards, Card Security, Round-Ups, Borrowing, Switching And The Bank At Home (Engine)
+
+**Sources (82):** `src/engine/systems/credit.ts` (13), `cardlife.ts` (9), `cardoffers.ts` (6), `security.ts` (10),
+`roundups.ts` (5), `lending.ts` (32), `homeaccount.ts` (7). Rewritten And Verified 46, Reviewed And Retained 36.
+
+**What changed.**
+- Every "SLATE" in these refusals went, each said as what was or wasn't found: "The Chase Freedom Unlimited has no
+  plan SLATE has terms for." became "No payment plan terms were found for the Chase Freedom Unlimited."; "SLATE has no
+  research on what … does when a customer moves to America." became "There’s no research on what … does when a
+  customer moves to America, so the game can’t offer it."
+- Notices lead with what happened and point to the real place to act: "pay it from Your Bank" became "You can pay it on
+  Money, under Borrowing."; a stranger's charge says "report it on Money, under Cards."; the French overrun's notices
+  start "Your account has been past its overdraft limit for …"; a missed loan payment says "there was only … to pay it
+  with"; a declined switch no longer opens on "Nothing" ("Your accounts and payments haven’t changed.").
+- Card notices are sentences: "Ending 3003." became "The new card ends in 3003, and you can use it now."; "The minimum
+  was $40.00 and only $0.00 went in. A $30.00 fee, …" became "The minimum payment was $40.00, and only $0.00 was paid.
+  That costs a $30.00 late fee, …".
+- Decision 4's switch, cancel-switch, balance-transfer, overdraft and overrun-loan items: words only ("You could call
+  it off until …, and it’s under way now. You can still stop its balance transfer until the working day before.");
+  every check, date and status is as it was.
+- Spend & Save turned off now says the money it had counted stays in checking (it was never taken) and where to turn
+  it on again.
+
+**Kept, and why:** memos and nominal account keys (Card Interest, Card Fees, Overdraft Interest, Tax On Interest, Loan
+Interest, Bank Fees, the collections accounts' names), matched by name in code; the calendar labels of system events;
+FICO's band names; the refusals already plain ("You don’t have a card.", "That isn’t an open loan of yours.").
+
+**Meaning-sensitive changes:** the limit-increase refusal names what the code checks: "means to repay" became "money in
+the bank to repay it" (`heldInBanks(s, person) > 0`); "Wages and bills go through it" became "Your wages and payments"
+(the switch moves wages, standing orders, autopay, loan repayments and payments set for a date); "Paying it off takes
+…, and the bank can’t cover it all" became "the repayment account can’t cover it all" (`payFromBank` on the repayment
+account, its linked savings and its overdraft); the loan's income test says "the last 30 days’ wages" where it said
+"last month’s" (`wagesLastMonth` counts thirty days).
+
+**Tests updated:** banking-complete, bank-lifecycle, cardoffers, defects-g4-2, defects-g21-1, defects-r3b-1,
+evidence-g10/g11/g12/g13-money, evidence-g17-papers (the papers area's file: a Discover loan refusal it asserts),
+evidence2-b04, evidence2-b05, evidence2-b06, evidence2-b11, finance-paths, home-account-creation, home-account-setoff,
+journey-money, lending, money-fixes, remaining-banking, scope-money, security: old words to new, as narrow as they
+were (nine regexes moved to the new words; one, "being closed", narrowed to the full sentence); evidence-g12 gained the
+card's arrival notice in full.
+
+**Checks:** tsc 0; eslint 0; title-case 0; label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0;
+text-inventory --check 0; doc-refs 0; deciders 0. Vitest: 72 files with this batch, the guide's and batch 6's: 28
+failures at first (old words, and a ", and" my own test edit had doubled), then the 19 files rerun, 2 more old words,
+then those 2: all pass.
+
+## Batch 5: The Money Guide (How This Works)
+
+**Sources (26):** `src/engine/content/guide/money.ts`, its fourteen entries, the connection groups and six helpers,
+about 18,000 words: one file, rewritten entry by entry. Rewritten And Verified 20, Reviewed And Retained 6.
+
+**What changed.** Each entry now answers the brief's eight questions in order, by the screens' own labels:
+- `short` is a plain overview of what it's for, two or three sentences where it was a paragraph of every rule ("Money
+  is your bank. The Accounts tab shows each of your current and savings accounts: …").
+- `steps` give the real controls, checked against the code and the text walk: Change The Day, New Limit and Ask For
+  This Limit, Raise My Limit Automatically, Apply For This Card, Pay From This Account, Repay From This Account, Send
+  What It Holds To, Amount To Take Out, Amount For The Plan, Transfer It, Report It And Rush The New One, Save These
+  Choices: every one the guide named by an old label since batches 1 to 3.
+- every entry has `next`: what to do once it's done (two or three each).
+- `available` says when it opens ("Once you’ve read “…” in the guide.").
+- refusals are quoted in their new words (batches 1 to 4b); "SLATE’s estimate", "the ledger", "the sum of the
+  postings", "draws on" and "worked out from" are gone, the estimates marked as such among the figures and in the
+  Sources And Estimates line, not mid-sentence; three new figure lines carry what the prose used to estimate inline
+  (moving the statement day, going over the limit, the exchange between a home account and an American one).
+- Upkeep's one-paragraph "Cancel It" became five plain lines (what closes, interest, fees, an older save's term
+  interest, a card), every condition kept.
+
+**Kept:** ids, `covers`, `opens`, goals, questions, synonyms, `related`, connection targets and kinds, every figure read
+from the rules' constants, and the Before Yale labels (the start area's screen).
+
+**Meaning-sensitive changes:** none intended; two found and fixed in review: Berliner Sparkasse's account price
+doesn't include its card (my first draft said "comes with"), and "paying the card down before the due date" kept as
+the original said it.
+
+**Tests updated:** guide-examples-money: its parsers read the worked examples' new wording (27 fragments, each the
+same number in the new sentence); it plays every example and checks each figure against the simulation: 16 of 16.
+
+**Checks:** as batch 4b; tics 2 over at first ("Nothing" openers, ", which is" clauses), spelling 5 ("cancelled"),
+engine-speak 3 ("worked out from", a refusal with no reason), all fixed; money's engine-speak 45 to 11.
+
+## Batch 6: The Banks' Data
+
+**Sources (520):** `src/engine/content/cards.ts` (2), `security.ts` (2), `accountlife.ts` (2), `pending.ts` (1),
+`cash.ts` (1), `banks-world.ts` (2), `banks-world-sheets.ts` (208), `banks-thirteen.ts` (63), `banks-lending.ts` (52),
+`banks-world-iban.ts` (83), `homeaccounts.ts` (7), `bankopening.ts` (2), `banks-world-fees.ts` (1), `rents.ts` (1),
+`currency.ts` (2), `core/ledger.ts` (1), `core/money.ts` (1), `systems/earnings.ts` (2), `systems/banknumber.ts` (1),
+`systems/obligations.ts` (2). Rewritten And Verified 16, Reviewed And Retained 504.
+
+**What changed:** every "SLATE" in a string a screen shows: the Source lines of loans, account opening, transfers and
+MUFG's and SMBC's accounts, a home account's conditions and fee notes, the three withholding notes, the confidence
+lines, the margin and days estimates ("an estimate: the bank publishes no margin, so the game uses …"), and
+`RATES_NOTE` ("Exchange rates are the game’s estimates, not a live market."). Research file names went from seven
+Source lines ("(research-tax-switch-lending.json, 2026-10-10)" became "(read 2026-10-10)"). Printed as they render in
+`printed-data.txt`.
+
+**Kept, and why:** the banks' own terms (cards' rewards and plans, lost cards, dormancy, term ends, pending holds, the
+law on fraud) are shown as the bank's or the law's words ("The bank’s terms: …", "In the bank’s words: …") with
+their source and date; rewriting them would make them stop matching what they cite. Each was read by script for
+"SLATE" (none), engine-speak (only the citations' URLs flag) and very long sentences, and the US, NatWest and ING
+entries by eye. The world banks' sheets, fees and IBAN codes aren't shown in play: no life can hold an account at a
+world bank (every life begins at Yale with a US bank, and a home account is offered only at the thirteen countries'
+researched banks), so they're Reviewed And Retained with that reason.
+
+**Tests updated:** home-account-creation and home-account-transfers (the confidence line, Japan Post Bank, the margin
+and days estimates in Move Money's line).

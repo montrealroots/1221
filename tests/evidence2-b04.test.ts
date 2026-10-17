@@ -395,7 +395,7 @@ describe('card.report', () => {
     expect(wfScreen.text).toContain('Wells Fargo’s rush is for credit cards: “We may be able to replace your card in as little as 24 hours (additional fees may apply)” (wellsfargo.com/help/lost-wallet), and its Active Cash card agreement names a Rush Plastic Fee without an amount. With no fee published, the game doesn’t offer a rushed card.');
     for (const which of ['debit', 'credit'] as const) {
       const refused = wf.execute({ kind: 'card.report', payload: { which, why: 'lost', rush: true } });
-      expect(refused.error).toBe('Wells Fargo doesn’t publish what it charges for a rush, so SLATE can’t send one.');
+      expect(refused.error).toBe('Wells Fargo doesn’t publish what it charges to rush a card, so the game can’t send a rushed one.');
     }
     expect(wfChecking.plastic?.stopped).toBeUndefined();
     // Reported without a rush, it comes in Wells Fargo’s five business days: Monday 31 August.
@@ -427,7 +427,7 @@ describe('card.request_hardship', () => {
     setBalance(sim, mine(sim, 'savings'), 0); // TEST SETUP
     sim.advanceTo(edt(10, 11, 12, 5));
     expect(moved(sim, card, 'Late fee')).toEqual([-30_00]);
-    expect(notes(sim, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum was $48.00 and only $0.00 went in. A $30.00 fee, and it goes on your record if it’s still short at the next due date, thirty days past due.']);
+    expect(notes(sim, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum payment was $48.00, and only $0.00 was paid. That costs a $30.00 late fee, and it goes on your credit record if it’s still short at the next due date, thirty days late.']);
     expect(stateOf(sim.player, card).missed).toBe(1);
     expect(sim.player.credit!.late).toEqual([]);
     expect(sim.player.credit!.score).toBe(795);
@@ -464,7 +464,7 @@ describe('card.request_hardship', () => {
 
     // The twin: the plan's $101 bounced, a second miss, thirty days past due, on the record. A repeat within six cycles
     // may be the safe harbor's $41, and Chase's card agreement says "up to $40": $40.
-    expect(notes(short.sim, 'A Card Payment Bounced').at(-1)!.body).toBe('Autopay asked for $101.00 and the current account couldn’t cover it. It’s late now, and the late fee is the one fee for it.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
+    expect(notes(short.sim, 'A Card Payment Bounced').at(-1)!.body).toBe('Autopay asked for $101.00, and the current account couldn’t cover it. The payment is late now, and the late fee is the only fee charged for it.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     expect(stateOf(short.sim.player, short.card).missed).toBe(2);
     expect(moved(short.sim, short.card, 'Late fee')).toEqual([-30_00, -40_00]);
     // The record’s mark is that due date’s: 10 November, at its noon. Until the third round of 2026-10-13 this was held
@@ -473,7 +473,7 @@ describe('card.request_hardship', () => {
     const second = short.sim.universe.transactions.filter((t) => t.memo === 'Late fee').at(-1)!.at;
     expect(short.sim.player.credit!.late).toEqual([second]);
     expect(second).toBe(est(11, 10, 12, 0));
-    expect(notes(short.sim, 'A Late Card Payment').at(-1)!.body).toBe('The plan’s payment was $101.00 and only $0.00 went in. A $40.00 fee, and it’s on your record.');
+    expect(notes(short.sim, 'A Late Card Payment').at(-1)!.body).toBe('The plan’s payment was $101.00, and only $0.00 was paid. That costs a $40.00 late fee, and it’s on your credit record.');
   });
 
   it('is what the Statements page asks on a plan: the 20 October statement the plan’s $101, and the 20 September one, due before the plan began, the card’s $48', () => {
