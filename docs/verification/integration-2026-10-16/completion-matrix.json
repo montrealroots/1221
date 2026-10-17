@@ -7301,7 +7301,7 @@
    "kind": "look",
    "source": "audit",
    "goal": "sourceWords (looks/actor.tsx:60-75) gives a development-history entry whose source is 'interest:…' the label 'An interest, from before they were removed'. Such entries survive in saves from before schema 94. The header (actor.tsx:1-4) now says in the past tense that an interest was one of the things the profile opens.",
-   "entry": "looks/actor.tsx sourceWords ‘interest’ branch (actor.tsx:69). Until 2026-10-17 this said :66",
+   "entry": "looks/actor.tsx sourceWords ‘interest’ branch (actor.tsx:65). Until 2026-10-17 this said :66",
    "preconditions": "Not recorded",
    "reads": "development history source",
    "decisions": "Not recorded",
@@ -7312,7 +7312,7 @@
    "sees": "Labels history entries from before the removal: legitimate.",
    "saveLoad": "Not recorded",
    "failure": "Open: The 'interest' branch is reached only by saves from before schema 94, and no test reaches it. The test the row cites doesn't touch the actor look.",
-   "implementation": "looks/actor.tsx sourceWords ‘interest’ branch (actor.tsx:69). Until 2026-10-17 this said :66",
+   "implementation": "looks/actor.tsx sourceWords ‘interest’ branch (actor.tsx:65). Until 2026-10-17 this said :66",
    "evidence": "tests/evidence2-b13.test.ts ‘PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense…’ (a save as 93 wrote it, migrated through openSlot, the line twice on each and nowhere else, its twin without the hour saying none). Until 2026-10-17 this said none reached the branch, which was so when the row was read",
    "sourceStatus": "legacy",
    "status": "Implemented And Verified"
