@@ -308,5 +308,105 @@
   "why": "'Possession / exorcism films: the possessed role…' made to read inside 'belongs to …'.",
   "meaningSensitive": false,
   "verified": "json/b3-genre-looks.txt, the Occult look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#tragedy",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "classical verse tragedy, which a play’s own reads carry (Macbeth reads Classical Text at 3)",
+  "after": "classical verse tragedy, where a play asks for them itself (Macbeth calls for Classical Text most of all)",
+  "why": "'a play’s own reads carry (Macbeth reads Classical Text at 3)': the engine's verb and a weight copied into prose. Macbeth's play reads Classical Text at 3, more than anything else it reads (content/plays.ts), so 'most of all' is true without the figure.",
+  "meaningSensitive": true,
+  "verified": "json/b4-genre-looks.txt, the Tragedy look; content/plays.ts, Macbeth's reads"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#tragedy",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "Both tags hold for classical (Greek and verse) tragedy, not for modern prose or film tragedy. Almeida's page did not mention verse when read; that came from Wikipedia's account of Aristotle. Reviewed 2026-10-10: Both tags hold for classical Greek and verse tragedy, not for modern prose tragedy; applied to every tragedy they asked heightened language of Woyzeck, Miss Julie and Riders To The Sea. Not applied genre-wide.",
+  "after": "Both hold for classical tragedy, Greek and in verse, not for modern prose or film tragedy. Almeida’s page didn’t mention verse when read; that came from Wikipedia’s account of Aristotle. On review (2026-10-10), applying them to every tragedy would have asked Heightened Language of Woyzeck, Miss Julie and Riders To The Sea, so they aren’t requirements of the whole genre.",
+  "why": "A review note that repeated the first sentence, then 'Not applied genre-wide', as one sentence saying why.",
+  "meaningSensitive": true,
+  "verified": "json/b4-genre-looks.txt, the Tragedy look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#sports",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "The NPR page timed out on fetch; headline and snippet only. 'stunt' maps to Stage Combat, which fits combat sports (boxing films) better than rowing or baseball; the fit is partial. Reviewed 2026-10-10: The stunt tag (Stage Combat) fits combat sports, not rowing or baseball. Not applied genre-wide.",
+  "after": "The NPR page timed out; only its headline and a search summary were read. Fights And Stunts is trained as Stage Combat, which fits combat sports (boxing films) better than rowing or baseball, so the fit is partial. On review (2026-10-10), a fit with combat sports alone wasn’t enough to make it a requirement of the whole genre.",
+  "why": "''stunt' maps to Stage Combat' and 'The stunt tag (Stage Combat)': the requirement and its technique by the names the player sees.",
+  "meaningSensitive": true,
+  "verified": "json/b4-genre-looks.txt, the Sports look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#post_apocalyptic",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "stunt: action-led post-apocalyptic films (Mad Max lineage); transformation: individual starving-survivor lead roles",
+  "after": "action-led post-apocalyptic films (the Mad Max line) for Fights And Stunts, and to particular leads playing starving survivors for Physical Transformation",
+  "why": "Tag ids as labels ('stunt: …; transformation: …') inside the look's sentence.",
+  "meaningSensitive": true,
+  "verified": "json/b4-genre-looks.txt, the Post-Apocalyptic look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#science_fiction",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "One actor, read via snippet. It speaks to effects-driven production, not to science fiction as a genre (much science fiction has no green screen). The vocabulary has no tag for effects or green-screen work; 'camera' does not mean that, so no tag was given. Nothing found on technical exposition.",
+  "after": "This is one actor, read in a search summary. It speaks to effects-driven production, not to science fiction as a genre (much science fiction has no green screen). None of the requirements the game can ask for is work with effects or a green screen, and Naturalism On Camera doesn’t mean that, so the research named none. Nothing was found on technical exposition.",
+  "why": "'The vocabulary has no tag…; 'camera' does not mean that, so no tag was given.'",
+  "meaningSensitive": true,
+  "verified": "json/b4-genre-looks.txt, the Science Fiction look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#romance",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "No credible source read. Intimacy was considered: SAG-AFTRA's intimacy-coordinator standards (seen only via snippets; PDF returned 403) cover nudity and simulated sex in any genre, not romance as such, so intimacy is not tagged.",
+  "after": "No credible source was read. Staged Intimacy was considered: SAG-AFTRA’s standards for intimacy coordinators (seen only in search summaries; the PDF couldn’t be opened) cover nudity and simulated sex in any genre, not romance as such, so the research didn’t name it.",
+  "why": "'(seen only via snippets; PDF returned 403)' and 'intimacy is not tagged'.",
+  "meaningSensitive": false,
+  "verified": "json/b4-genre-looks.txt, the Romance look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#stoner_comedy",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "Definition rests on Wikipedia; the comedy-timing source is a Backstage snippet about comedy generally (page 403). Improvisation is documented for Cheech and Chong only and is not tagged. Genre-wide only by definition; no source states a technical convention, so it stays low.",
+  "after": "The definition rests on Wikipedia, and the source on comic timing is a search summary of Backstage about comedy generally (the page couldn’t be opened). Improvisation is documented for Cheech and Chong only, so the research didn’t name it. It holds for the whole genre only by definition, and no source states a technical convention, so it stays at low confidence.",
+  "why": "'(page 403)', 'is not tagged', 'Genre-wide only by definition' in sentences.",
+  "meaningSensitive": true,
+  "verified": "json/b4-genre-looks.txt, the Stoner Comedy look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#sword_and_sorcery",
+  "field": "why:stunt",
+  "kind": "other",
+  "before": "Months of sword training and falls for the genre's touchstone film; the definition itself centres on sword-wielding heroes in violent adventures.",
+  "after": "Its touchstone film took months of sword training and falls, and the genre’s definition itself centers on sword-wielding heroes in violent adventures.",
+  "why": "Shown for an applied genre: a fragment with a semicolon, made two clauses.",
+  "meaningSensitive": false,
+  "verified": "json/b4-genre-looks.txt, the Sword And Sorcery look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#true_crime",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "Dramatised true crime roles portraying real people whose speech differs from the actor's own",
+  "after": "roles in dramatized true crime that portray real people whose speech differs from the actor’s own",
+  "why": "Capitalized mid-sentence and British 'Dramatised' inside the look's sentence.",
+  "meaningSensitive": false,
+  "verified": "json/b4-genre-looks.txt, the True Crime look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#steampunk",
+  "field": "claim",
+  "kind": "other",
+  "before": "No source found on what steampunk asks of actors. Sources describe Victorian-styled costume only.",
+  "after": "No source was found on what steampunk asks of actors. The sources describe only Victorian-styled costume.",
+  "why": "'No source found on…' with no verb, the look's first line.",
+  "meaningSensitive": false,
+  "verified": "json/b4-genre-looks.txt, the Steampunk look"
  }
 ]

@@ -191,3 +191,42 @@ experimental's, folk horror's, giallo's, historical fiction's, horror's, militar
 plural-check 0, voice-check 0, tics 0, spelling 0, typos 0, text-inventory 0, doc-refs 0, deciders 0.
 
 **Screens verified:** `b3-genre-looks.txt`, all 38 rendered at this batch's commit and read whole.
+
+## Batch 4: Police Procedural To True Crime
+
+**Sources read (38):** `genre-demands.json#` police_procedural, political_drama, political_thriller, post_apocalyptic,
+prison_film, psychological_horror, psychological_thriller, queer_cinema, revenge, road_movie, rockumentary, romance,
+romantic_drama, satire, science_fantasy, science_fiction, slapstick, slasher, slice_of_life, space_opera,
+spaghetti_western, splatter, sports, spy, steampunk, stoner_comedy, superhero, supernatural, surrealist, survival,
+sword_and_sandal, sword_and_sorcery, techno_thriller, teen, thriller, time_travel, tragedy and true_crime.
+
+**Rewritten (all 38):** the same translations, and:
+- Tragedy's `belongsTo`, "classical verse tragedy, which a play’s own reads carry (Macbeth reads Classical Text at 3)":
+  the engine's verb and a weight copied into prose. It reads "where a play asks for them itself (Macbeth calls for
+  Classical Text most of all)". Macbeth's play reads Classical Text at 3 and nothing else above 1 (`content/plays.ts`),
+  so "most of all" is true, and no figure goes stale in the prose.
+- Sports' "'stunt' maps to Stage Combat", and "The stunt tag (Stage Combat)": "Fights And Stunts is trained as Stage
+  Combat", the requirement and its technique by the names the player sees.
+- Post-apocalyptic's and rockumentary's `belongsTo`, labelled by tag id inside the look's sentence, as each requirement
+  named where it belongs; satire's, time travel's and true crime's read inside the sentence.
+- Seven first lines with no verb ("No source found on …") made sentences; science fantasy's garbled "Lang says green
+  screen 'you really have to use your imagination'" made one.
+
+**Meaning-sensitive, and how each was held:**
+- *Tragedy*: above. Its two requirements (Heightened Language, Physical Transformation) stay as the research names them;
+  "them" where it said "it".
+- *Police procedural*: "so stunt is not applied" as "so Fights And Stunts doesn’t apply". Its research's tags are empty and
+  its confidence medium, so the genre applies nothing; true.
+- *Political drama*: "Heightened was considered … so it is not applied" as "Heightened Language was considered …, so it
+  isn’t applied": its tags are empty.
+- *Slapstick's three reasons*, shown, are untouched but for the rules: each is Britannica's statement.
+- `json-diff-check.mjs`: 0 problems. Tragedy's "3" left the words on purpose (above); the HTTP code 403 left five more
+  fields; four more source lines' prose changed, all of it read marks, every URL kept.
+
+**Tests and tool matchers updated:** none. `docs/GENRE-COVERAGE.md` regenerated (post-apocalyptic's, rockumentary's,
+satire's, time travel's, tragedy's and true crime's `belongsTo` changed there).
+
+**Checks** (the same script): tsc 0; eslint 0; vitest on the same 14 files, 656 of 656, 0; title-case 0, label-sweep 0,
+plural-check 0, voice-check 0, tics 0, spelling 0, typos 0, text-inventory 0, doc-refs 0, deciders 0.
+
+**Screens verified:** `b4-genre-looks.txt`, all 38 rendered at this batch's commit and read whole.
