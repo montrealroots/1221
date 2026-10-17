@@ -314,7 +314,7 @@ describe('energy', () => {
     const evening = howYouAre(sim);
     expect(evening.bars.Energy).toEqual({ shows: 40, tone: 'positive' });
     expect(evening.text).toContain('Holding up, with nothing out of the ordinary to worry about.');
-    expect(dial(sim, 'energy')).toEqual({ name: 'Energy', says: '40. You’re running down, and it shows in everything else.' });
+    expect(dial(sim, 'energy')).toEqual({ name: 'Energy', says: '40. You’re running low, and it pulls readiness down. Under 15, stress starts to climb.' });
 
     // On to 8:30 the next morning, kept up an hour at a time: the tank passes fifteen at 82 − 15 = 67 / 3 = 22⅓ hours.
     byTheHour(sim, START + 25 * MS_HOUR);
@@ -327,7 +327,7 @@ describe('energy', () => {
     expect(morning.text).toContain('Running on empty. You need sleep before anything else.');
     expect(morning.bars.Energy).toEqual({ shows: 7, tone: 'negative' });
     expect(morning.bars.Stress).toEqual({ shows: Math.round(stress), tone: 'positive' });
-    expect(dial(sim, 'energy').says).toBe('7. You’re running down, and it shows in everything else.');
+    expect(dial(sim, 'energy').says).toBe('7. You’re running low, and it pulls readiness down. Under 15, stress starts to climb.');
     // And the same after a reload.
     expect(howYouAre(reload(sim)).bars.Energy).toEqual({ shows: 7, tone: 'negative' });
   });
@@ -456,7 +456,7 @@ describe('condition', () => {
     expect(reload(short).execute({ kind: 'school.call_in_sick', payload: {} }).ok).toBe(true);
     // The look says what the dial decides; until 2026-10-13 it read the figure rounded to show it (wellbeing.tsx 288),
     // and said nothing; fixed that day.
-    expect(dial(short, 'condition').says).toContain(' Under 55, a day off classes called in sick is excused. ');
+    expect(dial(short, 'condition').says).toContain(' Under 55, a sick day from classes is excused. ');
   });
 
   it('PLAYER JOURNEY: five-hour nights chosen through Sleep take a new life under 55 by Monday 14 September, where a sick day is excused and counted; a twin on eight-hour nights is refused “You’re well enough to go”', () => {
@@ -483,7 +483,7 @@ describe('condition', () => {
     for (const sim of [sound, worn]) sim.player.wellbeing.fitness = 40; // TEST SETUP: rest mends this body to 70 + 0.6 × 40 = 94
     sound.player.wellbeing.condition = 94; // TEST SETUP
     worn.player.wellbeing.condition = 47; // TEST SETUP
-    expect(dial(worn, 'condition').says).toBe('47, under the 94 your fitness lets rest mend you to. A night puts back 90% of the energy it would, and each midnight settles it a little toward 94. Under 55, a day off classes called in sick is excused. The lower it is, the likelier a year is to be your last.');
+    expect(dial(worn, 'condition').says).toBe('47. At your fitness, rest can mend it to 94. For now, a night gives back 90% of the energy it would at 94, and each midnight brings it a little closer. Under 55, a sick day from classes is excused. The lower it is, the likelier a year is to be your last.');
     const before = { sound: dials(sound), worn: dials(worn) };
     const a = sleep(sound, 5);
     const b = sleep(worn, 5);
@@ -544,8 +544,8 @@ describe('fitness', () => {
     const [low, high] = [student('g06-fit'), student('g06-fit')];
     low.player.wellbeing.fitness = 20; // TEST SETUP
     high.player.wellbeing.fitness = 80; // TEST SETUP
-    expect(dial(low, 'fitness').says).toBe('20. Rest can mend you to 82, and a workout costs 13 energy. This is what an everyday life keeps without training. At 24, the most a body can be trained to is 99. The body is at its best and stays there.');
-    expect(dial(high, 'fitness').says).toBe('80. Rest can mend you to 100, and a workout costs 7 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.');
+    expect(dial(low, 'fitness').says).toBe('20. At this fitness, rest can mend your condition to 82, and a workout costs 13 energy. This is where everyday life keeps it without training. At 24, the most a body can be trained to is 99. The body is near its best, and age takes very little from it.');
+    expect(dial(high, 'fitness').says).toBe('80. At this fitness, rest can mend your condition to 100, and a workout costs 7 energy. At 24, the most a body can be trained to is 99. The body is near its best, and age takes very little from it.');
     const a = lookAfter(low, 'exercise');
     const b = lookAfter(high, 'exercise');
     expect(a.value!.changed.energy).toBeCloseTo(-13, 9);
@@ -670,7 +670,7 @@ describe('nourishment', () => {
     expect(fed.player.wellbeing.condition - locked.player.wellbeing.condition).toBeCloseTo(0.5 * 3, 9);
     expect(fed.player.wellbeing.morale - locked.player.wellbeing.morale).toBeCloseTo(0.7 * 3, 9);
     expect(howYouAre(locked).text).toContain('Hungry, and it’s starting to show.');
-    expect(dial(locked, 'nourishment').says).toBe('14. Hungry, and it’s costing condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.');
+    expect(dial(locked, 'nourishment').says).toBe('14. Hungry, and it’s costing condition and mood every hour. Each morning the day’s groceries bring it up to at least 76, or to 40 on a day the food can’t be paid for.');
 
     expect(locked.execute({ kind: 'card.lock', payload: { which: 'debit', locked: false } }).ok).toBe(true);
     const meal = lookAfter(locked, 'eat');
@@ -737,8 +737,8 @@ describe('hygiene', () => {
     // Under fifty from (58.8 − 50) / 1.6 = 5.5 hours after nine: three and a half grimy hours by six.
     expect(grimy.player.wellbeing.hygiene).toBeCloseTo(58.8 - 1.6 * 9, 9);
     expect(clean.player.wellbeing.morale - grimy.player.wellbeing.morale).toBeCloseTo(0.4 * 3.5, 9);
-    expect(dial(grimy, 'hygiene').says).toBe('44. Under fifty it wears on your mood by the hour. A shower puts it back. The morning’s shower takes it to 82 at least.');
-    expect(dial(clean, 'hygiene').says).toBe('86. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.');
+    expect(dial(grimy, 'hygiene').says).toBe('44. Under 50, it wears on your mood every hour. A shower puts it back. The morning shower brings it up to at least 82.');
+    expect(dial(clean, 'hygiene').says).toBe('86. Clean enough not to bother you. The morning shower brings it up to at least 82.');
     const stressBefore = grimy.player.wellbeing.stress;
     const late = lookAfter(grimy, 'wash');
     expect(late.ok).toBe(true);
@@ -810,7 +810,7 @@ describe('stress', () => {
     expect(low.player.wellbeing.condition).toBe(88);
     expect(howYouAre(high).bars.Stress).toEqual({ shows: 87, tone: 'negative' });
     expect(howYouAre(low).bars.Stress).toEqual({ shows: 47, tone: 'positive' });
-    expect(dial(high, 'stress').says).toBe('87. High enough that sleep is going badly and it feeds itself.');
+    expect(dial(high, 'stress').says).toBe('87. High enough to spoil your sleep, and bad sleep adds more. Over 75, it’s wearing your condition down every hour.');
   });
 
   it('it makes the week’s flu 1.8 times likelier: a draw at 1.5 times a calm body’s chance is the flu at stress 100 and nothing at 0', () => {
@@ -890,8 +890,8 @@ describe('morale', () => {
     high.player.wellbeing.morale = 90; // TEST SETUP
     // The Morale look says it, before the night: where the nights bring it, 40 and 45 of condition over the age's 99.8.
     const settles = Math.round(40 + 45 * Math.min(1, low.player.wellbeing.condition / CEILING.condition));
-    expect(dial(low, 'morale')).toEqual({ name: 'Morale', says: `20. Flat, and the nights bring it back toward ${settles}. Down like this, a night clears less of the day’s stress than usual.` });
-    expect(dial(high, 'morale').says).toBe(`90. The day feels worth it, and the nights bring it back toward ${settles}. Up like this, a night clears more of the day’s stress than usual.`);
+    expect(dial(low, 'morale')).toEqual({ name: 'Morale', says: `20. Low, and each night brings it back toward ${settles}. Down like this, a night clears less of the day’s stress than usual.` });
+    expect(dial(high, 'morale').says).toBe(`90. In good spirits, and each night brings it back toward ${settles}. Up like this, a night clears more of the day’s stress than usual.`);
     const a = sleep(low, 8);
     const b = sleep(high, 8);
     const quality = 0.82 - 0.0024 * 60;

@@ -63,11 +63,11 @@ describe('PLAYER JOURNEY: Prepay Three Months and Prepay A Year, shut while a ce
     expect(prepayRefusal(sim, sim.player)).toBeUndefined();
     const before = shown(sim);
     expect(before.words).toContain('Prepay A Year, £114.50');
-    expect(before.words).not.toContain('Yours runs more than another month.');
+    expect(before.words).not.toContain('Yours has more than a month left to run.');
 
     sim.must({ kind: 'health.prepay', payload: { months: 12 } });
     const why = prepayRefusal(sim, sim.player);
-    expect(why).toBe('Yours runs more than another month.');
+    expect(why).toBe('Yours has more than a month left to run.');
     expect(sim.execute({ kind: 'health.prepay', payload: { months: 3 } }).error).toBe(why);
     const after = shown(sim);
     // Both buttons are shut for the one reason, so it's said once, unlabeled; and their titles are kept.

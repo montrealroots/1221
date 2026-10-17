@@ -961,8 +961,8 @@ describe('h-how: How You Are on Home', () => {
     const sim = ada('g32-how-looks');
     const before = serialise(sim.universe);
     const looks: [string, string][] = [
-      ['Readiness', 'How Well You Would Do Today Readiness Close 79, and'],
-      ['Energy', 'One Of Eight Energy Close 82,'],
+      ['Readiness', 'How Ready You Are Today Readiness Close 79.'],
+      ['Energy', 'Your Wellbeing Energy Close 82.'],
       ['Stress', 'Stress Close 18'],
     ];
     for (const [label, look] of looks) {

@@ -248,7 +248,7 @@ function bodyWords(heightCm: number, weightKg: number): string {
   const inches = Math.round(heightCm / 2.54);
   const bmi = weightKg / (heightCm / 100) ** 2;
   const word = bmi < 18.5 ? 'underweight' : bmi < 25 ? 'healthy weight' : bmi < 30 ? 'overweight' : 'obese';
-  return `${Math.floor(inches / 12)} ft ${inches % 12} in and ${Math.round(weightKg / 0.45359237)} lb, a body mass index of ${bmi.toFixed(1)}: ${word}`;
+  return `${Math.floor(inches / 12)} ft ${inches % 12} in and ${Math.round(weightKg / 0.45359237)} lb, with a body mass index of ${bmi.toFixed(1)}, in the ${word} range`;
 }
 /** The heat index, the NWS's Rothfusz regression with its adjustments (wpc.ncep.noaa.gov/html/heatindex_equation.shtml), in °C. */
 function nwsHeatIndexC(c: number, rh: number): number {
@@ -539,7 +539,7 @@ describe('seasons/flu', () => {
     expect(healthOf(sim.player).fluUntil).toBe(Date.UTC(2026, 10, 7, 14));
     const told = notices(sim, 'You Have The Flu', FLU_WEEK);
     expect(told).toHaveLength(1);
-    expect(told[0]!.body).toContain('It costs nothing.');
+    expect(told[0]!.body).toContain('You didn’t see a doctor, so there’s nothing to pay.');
   });
 
   it('Profile’s For Work reads Held Back in the flu, and its note says the flu holds back the body', () => {
@@ -642,12 +642,12 @@ describe('injuries', () => {
     const told = notices(hurt, 'A Pulled Muscle');
     expect(told).toHaveLength(1);
     // Yale Health pays a student's care in full: no bill, and the notice names no cost.
-    expect(told[0]!.body.trim()).toBe('21 days to mend.');
+    expect(told[0]!.body.trim()).toBe('It takes 21 days to mend, and you can’t work out until then.');
     expect(healthOf(hurt.player).bills).toHaveLength(0);
     const gap = () => ({ stress: hurt.player.wellbeing.stress - well.player.wellbeing.stress, morale: hurt.player.wellbeing.morale - well.player.wellbeing.morale });
     expect(gap().stress).toBeCloseTo(6, 9);
     expect(gap().morale).toBeCloseTo(-4, 9);
-    expect(personLook(hurt)).toContain('Mending. A Pulled Muscle, till September 14, 2026.');
+    expect(personLook(hurt)).toContain('Mending. A Pulled Muscle, until September 14, 2026.');
     expect(personLook(well)).not.toContain('Mending.');
     // Across the midnight that ends Monday 24 August, the day hurt weighs 1 on each (`INJURY.weighs`).
     for (const s of [hurt, well]) s.advanceTo(Date.UTC(2026, 7, 25, 4) - 1000);
@@ -697,7 +697,7 @@ describe('injuries', () => {
     // $180 and $100, × 1.75 uninsured, grown to 2026).
     // Named in sentence case, as every other bill is, from 2026-10-13: until then “A Sprained Ankle: its care”.
     expect(bills[0]).toMatchObject({ what: 'A sprained ankle: its care', at: midnight, amount: 699_13, dueAt: Date.UTC(2026, 1, 5, 5) });
-    expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('10 days to mend. Its care comes to $699.13, due in 30 days.');
+    expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('It takes 10 days to mend, and you can’t work out until then. Your share of its care is $699.13, due on February 5, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.');
     sim.advanceTo(Date.UTC(2026, 0, 6, 15)); // 10:00 AM
     clearCalendar(sim); // TEST SETUP
     sim.player.wellbeing.energy = 90; // TEST SETUP
@@ -726,8 +726,8 @@ describe('injuries', () => {
     expect(sim.player.school!.tally.worked).toBe(1);
     // Six hours at the Bulletin's $23.00 an hour is the week's wage the compensation would read.
     expect(healthOf(sim.player).injury).toEqual({ kind: 'strain', at: shift, until: shift + 20 * MS_DAY, atWork: { stateId: 'us-ct', weeklyWage: 138_00, paidDays: 0, noFica: true } });
-    expect(notices(sim, 'A Pulled Muscle')[0]!.body).toBe('20 days to mend. It happened at work, so workers’ compensation pays the care.');
-    expect(personLook(sim)).toContain('Mending. A Pulled Muscle, till September 25, 2026, on workers’ compensation.');
+    expect(notices(sim, 'A Pulled Muscle')[0]!.body).toBe('It takes 20 days to mend, and you can’t work out until then. It happened at work, so workers’ compensation pays for the care.');
+    expect(personLook(sim)).toContain('Mending. A Pulled Muscle, until September 25, 2026, on workers’ compensation.');
     expect(healthOf(sim.player).bills).toHaveLength(0);
     // Not off work, so no week of compensation is scheduled.
     expect(sim.universe.scheduled.filter((i) => i.kind === 'injury.comp')).toHaveLength(0);
@@ -754,7 +754,7 @@ describe('chronic', () => {
     expect(healthOf(heavy.player).chronic!.diabetes).toMatchObject({ treated: true, since: month });
     const told = notices(heavy, 'Diagnosed: Diabetes');
     expect(told).toHaveLength(1);
-    expect(told[0]!.body).toBe('A doctor found it this month. Its care begins now, at what your plan leaves; Let It Go on Papers stops it.');
+    expect(told[0]!.body).toBe('A doctor found it this month. Its care starts now, and each month you pay what your plan doesn’t cover. You can see the cost, or stop the care with Let It Go, on Papers, under Health Cover.');
     expect(healthOf(lean.player).chronic?.diabetes).toBeUndefined();
     expect(notices(lean, 'Diagnosed: Diabetes')).toHaveLength(0);
     // The next health week fills its medicine, America's 30-day fill (CMS), kept across a reload.
@@ -808,7 +808,7 @@ describe('chronic', () => {
     expect(kept.player.wellbeing.condition).toBeCloseTo(before[0]!.condition, 6);
     const er = notices(letGo, 'The Emergency Room');
     expect(er).toHaveLength(1);
-    expect(er[0]!.body).toBe('The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department. Your share is $50.00, due in 30 days.');
+    expect(er[0]!.body).toBe('The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department. Classes you miss while you’re there are excused. Your share is $50.00, due on October 7, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.');
     // Connecticut's median 189 minutes in the department (CMS), and the emergency's toll of 20 on condition and energy.
     expect(healthOf(letGo.player).inHospitalUntil).toBe(week + 189 * 60_000);
     expect(letGo.player.wellbeing.condition).toBeCloseTo(before[1]!.condition - 20, 6);
@@ -852,7 +852,7 @@ describe('body', () => {
   it('PLAYER JOURNEY: five broke days leave her lighter than her fed twin by 5 × habit × 36/76 ÷ 12,585 kg, and the person look prints both bodies', () => {
     const fed = student('g07-body', { heightCm: 170, weightKg: 65 });
     const poor = student('g07-body', { heightCm: 170, weightKg: 65 });
-    expect(personLook(fed)).toContain('5 ft 7 in and 143 lb, a body mass index of 22.5: healthy weight');
+    expect(personLook(fed)).toContain('5 ft 7 in and 143 lb, with a body mass index of 22.5, in the healthy weight range');
     broke(poor); // TEST SETUP
     // Midnight 25 August buys the day ahead or doesn't; each midnight after weighs the day just gone. Midnight 30
     // August has weighed five broke days, 25 to 29 August.
@@ -890,7 +890,7 @@ describe('body', () => {
     const sim = student('g07-starve', { heightCm: 170, weightKg: 65 });
     sim.player.body!.weightKg = 35; // TEST SETUP: BMI 12.1, just over the survival limit
     broke(sim); // TEST SETUP
-    expect(personLook(sim)).toContain('5 ft 7 in and 77 lb, a body mass index of 12.1: underweight');
+    expect(personLook(sim)).toContain('5 ft 7 in and 77 lb, with a body mass index of 12.1, in the underweight range');
     const weights: number[] = [];
     let ended: number | undefined;
     for (let d = 1; d <= 30 && ended === undefined; d += 1) {

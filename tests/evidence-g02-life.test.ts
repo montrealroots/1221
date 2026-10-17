@@ -853,7 +853,7 @@ describe('health.appeal', () => {
     expect(paidFor(sim, bill).amount).toBe(full);
     expect(memos(sim, 'Appeal won')).toEqual([]);
     // The clinic named as it is written (from 2026-10-13: until then all of it was made small).
-    expect(titled(sim, 'Appeal Upheld').map((n) => n.body)).toEqual(['The plan kept its denial for a checkup, Fair Haven Community Health Care.']);
+    expect(titled(sim, 'Appeal Upheld').map((n) => n.body)).toEqual(['The plan kept its denial for a checkup, Fair Haven Community Health Care, so the full bill stands.']);
     expect(bill.what).toBe('A checkup, Fair Haven Community Health Care');
     expect(paperRow(sim, bill)).toContain('Denial Upheld');
   });
@@ -912,7 +912,7 @@ describe('health.appeal', () => {
     sim.advanceTo(bill.at + 181 * MS_DAY);
     const late = sim.execute({ kind: 'health.appeal', payload: { billId: bill.id } });
     expect(late.ok).toBe(false);
-    expect(late.error).toBe('An appeal is filed within 180 days of the denial.');
+    expect(late.error).toBe('An appeal has to be filed within 180 days of the denial, and that time has passed.');
     expect(bill.denied!.appealedAt).toBeUndefined();
     expect(sim.timeline.pending().filter((i) => i.kind === 'health.appeal_decided')).toEqual([]);
     const row = paperRow(sim, bill);
@@ -949,7 +949,7 @@ describe('health.apply_aid', () => {
     expect(row).toContain('Free Care');
     expect(row).toContain('Settled');
     expect(row).toContain('$0.00');
-    expect(apply(sim, bill.id).error).toBe('It’s settled or past due.');
+    expect(apply(sim, bill.id).error).toBe('It’s already settled or past its due date.');
 
     const again = reload(sim);
     again.advanceTo(bill.dueAt + MS_DAY);
@@ -964,7 +964,7 @@ describe('health.apply_aid', () => {
     expect(apply(sim, bill.id).value).toEqual({ aid: 'discount', amount: 16_50 });
     expect(bill).toMatchObject({ aid: 'discount', amount: 16_50 });
     expect(bill.paid).toBeUndefined();
-    expect(apply(sim, bill.id).error).toBe('It’s been put to the hospital’s charity.');
+    expect(apply(sim, bill.id).error).toBe('It’s already been put in for the hospital’s financial assistance.');
     expect(paperRow(sim, bill)).toContain('67% Off');
 
     const again = reload(sim);
@@ -985,7 +985,7 @@ describe('health.apply_aid', () => {
     expect(bill.paid).toBeFalsy();
     const late = apply(sim, bill.id);
     expect(late.ok).toBe(false);
-    expect(late.error).toBe('It’s settled or past due.');
+    expect(late.error).toBe('It’s already settled or past its due date.');
     expect(bill.aid).toBeUndefined();
     expect(bill.amount).toBe(50_00);
     const row = paperRow(sim, bill);

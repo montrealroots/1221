@@ -47,7 +47,7 @@ describe('a marketplace claim', () => {
     expect(['upheld', 'overturned']).toContain(bill.denied!.outcome);
     if (bill.denied!.outcome === 'overturned') expect(bill.amount).toBe(bill.denied!.share);
     const late = { ...bill, denied: { share: 0 } };
-    expect(appealRefusal(late, bill.at + 181 * MS_DAY)).toBe('An appeal is filed within 180 days of the denial.');
+    expect(appealRefusal(late, bill.at + 181 * MS_DAY)).toBe('An appeal has to be filed within 180 days of the denial, and that time has passed.');
     expect(appealRefusal({ ...bill, denied: undefined }, sim.now)).toBe('That claim wasn’t denied.');
   });
 });

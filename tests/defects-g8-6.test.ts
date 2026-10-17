@@ -212,8 +212,8 @@ describe('an uninsured hospital bill says what the charity did with it', () => {
     const { text } = drawn(sim, PapersWorkspace, healthTab);
     expect(text).toContain('Over The Limit');
     expect(text).not.toContain('Charity Taken Off');
-    expect(aidRefusal(bill, sim.now)).toBe('It’s been put to the hospital’s charity.');
-    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: bill.id } }).error).toBe('It’s been put to the hospital’s charity.');
+    expect(aidRefusal(bill, sim.now)).toBe('It’s already been put in for the hospital’s financial assistance.');
+    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: bill.id } }).error).toBe('It’s already been put in for the hospital’s financial assistance.');
   });
 
   it('within it, something came off: Charity Taken Off, and the application is refused for that', () => {
@@ -221,7 +221,7 @@ describe('an uninsured hospital bill says what the charity did with it', () => {
     expect(bill.aid).toBe('screened');
     const { text } = drawn(sim, PapersWorkspace, healthTab);
     expect(text).toContain('Charity Taken Off');
-    expect(aidRefusal(bill, sim.now)).toBe('The hospital’s charity is off it already.');
+    expect(aidRefusal(bill, sim.now)).toBe('The hospital’s financial assistance has already come off it.');
   });
 });
 
@@ -284,7 +284,7 @@ describe('Papers reads the charity’s, the appeal’s and the medical debt’s 
     healthMonth(sim, sim.player, sim.now);
     const notice = titled(sim, 'A Medical Debt Is On Your Record');
     expect(notice).toHaveLength(1);
-    expect(notice[0]!.body).toBe(`Unpaid a year and ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)} or more, it’s reported now.`);
+    expect(notice[0]!.body).toBe(`Your medical debt is ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)} or more and has gone unpaid for a year, so it’s now on your credit record. You can still clear it with Pay It Off, on Papers, under Health Cover.`);
     expect(notice[0]!.body).not.toMatch(/over \$500/);
   }, 120_000);
 });

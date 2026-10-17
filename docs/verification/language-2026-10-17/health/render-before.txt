@@ -1,0 +1,2084 @@
+
+===== save brief.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Holding up, and no dial is far enough out to be worth naming.
+  body: Your body. 5 ft 1 in and 182 lb, a body mass index of 34.1: obese. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 69/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 3 hours on the books, and what sleep pays back
+  way: Morale — 90/100, and how much of the day’s stress a night clears
+  way: Condition — 99/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 47/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 45/100, and how long since you ate properly
+  way: Hygiene — 68/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 69. Enough for what today asks, not much more.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: 3 hours, about what a day awake puts on the books. A night pays it back.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 90. The day feels worth it, and the nights bring it back toward 85. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 99, as sound as your fitness lets rest make you. Each midnight settles it back toward 98 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 47. Rest can mend you to 98, and a workout costs 10 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 45. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 68. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 76, and energy and nourishment are what’s costing you.
+  way: Energy — At 69, and pulling on the rest
+  way: Nourishment — At 45, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== save decision.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Holding up, and no dial is far enough out to be worth naming.
+  body: Your body. 5 ft 1 in and 178 lb, a body mass index of 33.4: obese. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 55/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 4 hours on the books, and what sleep pays back
+  way: Morale — 86/100, and how much of the day’s stress a night clears
+  way: Condition — 91/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 35/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 38/100, and how long since you ate properly
+  way: Hygiene — 61/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 55. Enough for what today asks, not much more.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: 4 hours, about what a day awake puts on the books. A night pays it back.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 86. The day feels worth it, and the nights bring it back toward 81. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 91, as sound as your fitness lets rest make you. Each midnight settles it back toward 91 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 35. Rest can mend you to 91, and a workout costs 11 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 38. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 61. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 63, and energy, nourishment and sleep debt are what’s costing you.
+  way: Energy — At 55, and pulling on the rest
+  way: Nourishment — At 38, and pulling on the rest
+  way: Sleep Debt — At 4, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== save dir1.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 6 ft 0 in and 154 lb, a body mass index of 20.8: healthy weight. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 100/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 89/100, and how much of the day’s stress a night clears
+  way: Condition — 97/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 40/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 63/100, and how long since you ate properly
+  way: Hygiene — 82/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 100, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 89. The day feels worth it, and the nights bring it back toward 84. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 97, as sound as your fitness lets rest make you. Each midnight settles it back toward 94 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 40. Rest can mend you to 94, and a workout costs 11 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 63. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 82. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 100, and nourishment is what’s costing you.
+  way: Nourishment — At 63, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== save dir2.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 6 ft 0 in and 153 lb, a body mass index of 20.6: healthy weight. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 100/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 87/100, and how much of the day’s stress a night clears
+  way: Condition — 93/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 35/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 63/100, and how long since you ate properly
+  way: Hygiene — 82/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 100, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 87. The day feels worth it, and the nights bring it back toward 82. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 93, as sound as your fitness lets rest make you. Each midnight settles it back toward 91 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 35. Rest can mend you to 91, and a workout costs 12 energy. This is what an everyday life keeps without training. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 63. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 82. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 100, and nourishment is what’s costing you.
+  way: Nourishment — At 63, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== save direction.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 6 ft 0 in and 151 lb, a body mass index of 20.3: healthy weight. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 94/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 1 hours on the books, and what sleep pays back
+  way: Morale — 88/100, and how much of the day’s stress a night clears
+  way: Condition — 91/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 36/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 59/100, and how long since you ate properly
+  way: Hygiene — 79/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 94, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 88. The day feels worth it, and the nights bring it back toward 81. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 91, as sound as your fitness lets rest make you. Each midnight settles it back toward 91 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 36. Rest can mend you to 91, and a workout costs 11 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 59. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 79. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 96, and nourishment is what’s costing you.
+  way: Nourishment — At 59, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== save leave.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Holding up, and no dial is far enough out to be worth naming.
+  body: Your body. 5 ft 1 in and 179 lb, a body mass index of 33.6: obese. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 58/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 4 hours on the books, and what sleep pays back
+  way: Morale — 86/100, and how much of the day’s stress a night clears
+  way: Condition — 91/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 36/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 40/100, and how long since you ate properly
+  way: Hygiene — 63/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 58. Enough for what today asks, not much more.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: 4 hours, about what a day awake puts on the books. A night pays it back.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 86. The day feels worth it, and the nights bring it back toward 81. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 91, as sound as your fitness lets rest make you. Each midnight settles it back toward 91 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 36. Rest can mend you to 91, and a workout costs 11 energy. At 25, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 40. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 63. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 65, and energy, nourishment and sleep debt are what’s costing you.
+  way: Energy — At 58, and pulling on the rest
+  way: Nourishment — At 40, and pulling on the rest
+  way: Sleep Debt — At 4, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== save lien.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 5 ft 1 in and 178 lb, a body mass index of 33.3: obese. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 94/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 1 hours on the books, and what sleep pays back
+  way: Morale — 82/100, and how much of the day’s stress a night clears
+  way: Condition — 91/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 35/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 59/100, and how long since you ate properly
+  way: Hygiene — 79/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 94, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 82. The day feels worth it, and the nights bring it back toward 81. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 91, as sound as your fitness lets rest make you. Each midnight settles it back toward 91 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 35. Rest can mend you to 91, and a workout costs 12 energy. This is what an everyday life keeps without training. At 25, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 59. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 79. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 94, and nourishment is what’s costing you.
+  way: Nourishment — At 59, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== save missed-plan.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 5 ft 1 in and 177 lb, a body mass index of 33.2: obese. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 88/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 1 hours on the books, and what sleep pays back
+  way: Morale — 82/100, and how much of the day’s stress a night clears
+  way: Condition — 91/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 36/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 60/100, and how long since you ate properly
+  way: Hygiene — 79/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 88, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 82. The day feels worth it, and the nights bring it back toward 81. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 91, as sound as your fitness lets rest make you. Each midnight settles it back toward 91 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 36. Rest can mend you to 91, and a workout costs 11 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 60. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 79. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 91, and nourishment and energy are what’s costing you.
+  way: Nourishment — At 60, and pulling on the rest
+  way: Energy — At 88, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== save nonfiler.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 5 ft 1 in and 177 lb, a body mass index of 33.2: obese. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 100/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 87/100, and how much of the day’s stress a night clears
+  way: Condition — 96/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 42/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 64/100, and how long since you ate properly
+  way: Hygiene — 82/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 100, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 87. The day feels worth it, and the nights bring it back toward 83. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 96, as sound as your fitness lets rest make you. Each midnight settles it back toward 95 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 42. Rest can mend you to 95, and a workout costs 11 energy. At 25, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 64. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 82. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 100, and nourishment is what’s costing you.
+  way: Nourishment — At 64, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== save rehearsal.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 5 ft 1 in and 177 lb, a body mass index of 33.2: obese. In feet, inches and pounds, the units of the United States, where you live.
+        Mending. A Back Strain, till May 4, 2027, on workers’ compensation.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 100/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 84/100, and how much of the day’s stress a night clears
+  way: Condition — 91/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 36/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 63/100, and how long since you ate properly
+  way: Hygiene — 82/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: An Injury — What it is, till when, and what it keeps you from
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 100, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 84. The day feels worth it, and the nights bring it back toward 81. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 91, as sound as your fitness lets rest make you. Each midnight settles it back toward 91 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 36. Rest can mend you to 91, and a workout costs 11 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 63. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 82. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 100, and nourishment is what’s costing you.
+  way: Nourishment — At 63, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  name: A Back Strain
+  kind: An Injury
+  summary: It mends by May 4, 2027.
+  way: Condition — What a body is fit for; an injury weighs on the mood and the stress each day, and holds back the work it limits
+  provenance: How long it takes is the injury’s own, longer for somebody an illness hits harder (`illnessToll`).
+
+===== save roundups.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Holding up, and no dial is far enough out to be worth naming.
+  body: Your body. 5 ft 1 in and 182 lb, a body mass index of 34.2: obese. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 72/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 3 hours on the books, and what sleep pays back
+  way: Morale — 82/100, and how much of the day’s stress a night clears
+  way: Condition — 94/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 49/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 45/100, and how long since you ate properly
+  way: Hygiene — 67/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 72. Enough for what today asks, not much more.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: 3 hours, about what a day awake puts on the books. A night pays it back.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 82. The day feels worth it, and the nights bring it back toward 83. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 94, under the 100 your fitness lets rest mend you to. A night puts back 99% of the energy it would, and each midnight settles it a little toward 100. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 49. Rest can mend you to 100, and a workout costs 10 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 45. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 67. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 75, and energy and nourishment are what’s costing you.
+  way: Energy — At 72, and pulling on the rest
+  way: Nourishment — At 45, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== save tax.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 5 ft 1 in and 177 lb, a body mass index of 33.3: obese. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 100/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 82/100, and how much of the day’s stress a night clears
+  way: Condition — 91/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 35/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 63/100, and how long since you ate properly
+  way: Hygiene — 82/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 100, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 82. The day feels worth it, and the nights bring it back toward 81. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 91, as sound as your fitness lets rest make you. Each midnight settles it back toward 91 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 35. Rest can mend you to 91, and a workout costs 12 energy. This is what an everyday life keeps without training. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 63. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 82. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 100, and nourishment is what’s costing you.
+  way: Nourishment — At 63, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== save withdraw.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 5 ft 1 in and 178 lb, a body mass index of 33.5: obese. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 97/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 86/100, and how much of the day’s stress a night clears
+  way: Condition — 91/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 35/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 61/100, and how long since you ate properly
+  way: Hygiene — 80/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 97, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 86. The day feels worth it, and the nights bring it back toward 81. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 91, as sound as your fitness lets rest make you. Each midnight settles it back toward 91 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 35. Rest can mend you to 91, and a workout costs 12 energy. This is what an everyday life keeps without training. At 25, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 61. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 80. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 98, and nourishment is what’s costing you.
+  way: Nourishment — At 61, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== save workload.json
+--- person (person:person_000001)
+  name: Ada Cole
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 5 ft 1 in and 179 lb, a body mass index of 33.5: obese. In feet, inches and pounds, the units of the United States, where you live.
+        On your papers. they/them, a citizen of United States.
+  way: Energy — 88/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 1 hours on the books, and what sleep pays back
+  way: Morale — 89/100, and how much of the day’s stress a night clears
+  way: Condition — 93/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 39/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 59/100, and how long since you ate properly
+  way: Hygiene — 79/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 88, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 89. The day feels worth it, and the nights bring it back toward 82. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 93, as sound as your fitness lets rest make you. Each midnight settles it back toward 93 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 39. Rest can mend you to 93, and a workout costs 11 energy. At 25, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 59. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 79. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 93, and nourishment and energy are what’s costing you.
+  way: Nourishment — At 59, and pulling on the rest
+  way: Energy — At 88, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== new life, first morning
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 82/100, and what the day has left in you
+  way: Stress — 18/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 62/100, and how much of the day’s stress a night clears
+  way: Condition — 88/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 50/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 75/100, and how long since you ate properly
+  way: Hygiene — 80/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Kept up, at what the plan leaves
+  way: Asthma — Kept up, at what the plan leaves
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 82, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 18, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 62. Level, and the nights bring it back toward 80. Down like this, a night clears less of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 88, under the 100 your fitness lets rest mend you to. A night puts back 98% of the energy it would, and each midnight settles it a little toward 100. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 50. Rest can mend you to 100, and a workout costs 10 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 75. Fed, and not thinking about it. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 80. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 79, and energy, morale and stress are what’s costing you.
+  way: Energy — At 82, and pulling on the rest
+  way: Morale — At 62, and pulling on the rest
+  way: Stress — At 18, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- condition depression (condition:depression)
+  name: Depression
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it takes 3 morale a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Morale — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition asthma (condition:asthma)
+  name: Asthma
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it makes an emergency 2 times likelier. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== new life, all high
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 90/100, and what the day has left in you
+  way: Stress — 10/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 80/100, and how much of the day’s stress a night clears
+  way: Condition — 99/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 80/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 90/100, and how long since you ate properly
+  way: Hygiene — 90/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Kept up, at what the plan leaves
+  way: Asthma — Kept up, at what the plan leaves
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 90, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 10, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 80. The day feels worth it, and the nights bring it back toward 85. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 99, under the 100 your fitness lets rest mend you to. A night puts back 100% of the energy it would, and each midnight settles it a little toward 100. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 80. Rest can mend you to 100, and a workout costs 7 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 90. Fed, and not thinking about it. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 90. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 99, and energy and morale are what’s costing you.
+  way: Energy — At 90, and pulling on the rest
+  way: Morale — At 80, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- condition depression (condition:depression)
+  name: Depression
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it takes 3 morale a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Morale — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition asthma (condition:asthma)
+  name: Asthma
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it makes an emergency 2 times likelier. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== new life, middling
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Holding up, and no dial is far enough out to be worth naming.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 55/100, and what the day has left in you
+  way: Stress — 40/100, and what it is doing to your sleep
+  way: Sleep Debt — 6 hours on the books, and what sleep pays back
+  way: Morale — 55/100, and how much of the day’s stress a night clears
+  way: Condition — 85/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 35/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 50/100, and how long since you ate properly
+  way: Hygiene — 60/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Kept up, at what the plan leaves
+  way: Asthma — Kept up, at what the plan leaves
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 55. Enough for what today asks, not much more.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 40. Present, manageable, and slower to clear than it was.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: 6 hours, about what a day awake puts on the books. A night pays it back.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 55. Level, and the nights bring it back toward 78. Down like this, a night clears less of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 85, under the 91 your fitness lets rest mend you to. A night puts back 99% of the energy it would, and each midnight settles it a little toward 91. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 35. Rest can mend you to 91, and a workout costs 12 energy. This is what an everyday life keeps without training. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 50. Getting hungry. Under twenty it costs condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 60. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 47, and energy, stress and nourishment are what’s costing you.
+  way: Energy — At 55, and pulling on the rest
+  way: Stress — At 40, and pulling on the rest
+  way: Nourishment — At 50, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- condition depression (condition:depression)
+  name: Depression
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it takes 3 morale a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Morale — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition asthma (condition:asthma)
+  name: Asthma
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it makes an emergency 2 times likelier. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== new life, low
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Hungry, and it’s starting to show.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 20/100, and what the day has left in you
+  way: Stress — 70/100, and what it is doing to your sleep
+  way: Sleep Debt — 15 hours on the books, and what sleep pays back
+  way: Morale — 30/100, and how much of the day’s stress a night clears
+  way: Condition — 50/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 30/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 10/100, and how long since you ate properly
+  way: Hygiene — 30/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Kept up, at what the plan leaves
+  way: Asthma — Kept up, at what the plan leaves
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 20. You’re running down, and it shows in everything else.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 70. High enough that sleep is going badly and it feeds itself.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: 15 hours owed. Everything is harder than it should be, and it will stay that way.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 30. Flat, and the nights bring it back toward 63. Down like this, a night clears less of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 50, under the 88 your fitness lets rest mend you to. A night puts back 91% of the energy it would, and each midnight settles it a little toward 88. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 30. Rest can mend you to 88, and a workout costs 12 energy. This is what an everyday life keeps without training. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 10. Hungry, and it’s costing condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 30. Under fifty it wears on your mood by the hour. A shower puts it back. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 17, and energy, stress and nourishment are what’s costing you.
+  way: Energy — At 20, and pulling on the rest
+  way: Stress — At 70, and pulling on the rest
+  way: Nourishment — At 10, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- condition depression (condition:depression)
+  name: Depression
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it takes 3 morale a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Morale — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition asthma (condition:asthma)
+  name: Asthma
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it makes an emergency 2 times likelier. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== new life, worn out
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Running on empty. You need sleep before anything else.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 8/100, and what the day has left in you
+  way: Stress — 90/100, and what it is doing to your sleep
+  way: Sleep Debt — 25 hours on the books, and what sleep pays back
+  way: Morale — 15/100, and how much of the day’s stress a night clears
+  way: Condition — 30/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 20/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 5/100, and how long since you ate properly
+  way: Hygiene — 10/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Kept up, at what the plan leaves
+  way: Asthma — Kept up, at what the plan leaves
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 8. You’re running down, and it shows in everything else.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 90. High enough that sleep is going badly and it feeds itself.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: 25 hours owed. Everything is harder than it should be, and it will stay that way.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 15. Flat, and the nights bring it back toward 54. Down like this, a night clears less of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 30, under the 82 your fitness lets rest mend you to. A night puts back 87% of the energy it would, and each midnight settles it a little toward 82. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 20. Rest can mend you to 82, and a workout costs 13 energy. This is what an everyday life keeps without training. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 5. Hungry, and it’s costing condition and mood by the hour. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 10. Under fifty it wears on your mood by the hour. A shower puts it back. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 9, and energy, stress and sleep debt are what’s costing you.
+  way: Energy — At 8, and pulling on the rest
+  way: Stress — At 90, and pulling on the rest
+  way: Sleep Debt — At 25, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- condition depression (condition:depression)
+  name: Depression
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it takes 3 morale a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Morale — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition asthma (condition:asthma)
+  name: Asthma
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it makes an emergency 2 times likelier. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== new life, sick, at school
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Holding up, and no dial is far enough out to be worth naming.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 60/100, and what the day has left in you
+  way: Stress — 18/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 62/100, and how much of the day’s stress a night clears
+  way: Condition — 40/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 50/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 75/100, and how long since you ate properly
+  way: Hygiene — 80/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Kept up, at what the plan leaves
+  way: Asthma — Kept up, at what the plan leaves
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 60. Enough for what today asks, not much more.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 18, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 62. Level, and the nights bring it back toward 58. Down like this, a night clears less of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 40, under the 100 your fitness lets rest mend you to. A night puts back 88% of the energy it would, and each midnight settles it a little toward 100. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 50. Rest can mend you to 100, and a workout costs 10 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 75. Fed, and not thinking about it. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 80. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 57, and energy, condition and morale are what’s costing you.
+  way: Energy — At 60, and pulling on the rest
+  way: Condition — At 40, and pulling on the rest
+  way: Morale — At 62, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- condition depression (condition:depression)
+  name: Depression
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it takes 3 morale a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Morale — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition asthma (condition:asthma)
+  name: Asthma
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it makes an emergency 2 times likelier. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== new life, a day awake
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 82/100, and what the day has left in you
+  way: Stress — 18/100, and what it is doing to your sleep
+  way: Sleep Debt — 4 hours on the books, and what sleep pays back
+  way: Morale — 62/100, and how much of the day’s stress a night clears
+  way: Condition — 88/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 50/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 75/100, and how long since you ate properly
+  way: Hygiene — 80/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Kept up, at what the plan leaves
+  way: Asthma — Kept up, at what the plan leaves
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 82, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 18, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: 4 hours, about what a day awake puts on the books. A night pays it back.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 62. Level, and the nights bring it back toward 80. Down like this, a night clears less of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 88, under the 100 your fitness lets rest mend you to. A night puts back 98% of the energy it would, and each midnight settles it a little toward 100. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 50. Rest can mend you to 100, and a workout costs 10 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 75. Fed, and not thinking about it. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 80. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 75, and energy, morale and stress are what’s costing you.
+  way: Energy — At 82, and pulling on the rest
+  way: Morale — At 62, and pulling on the rest
+  way: Stress — At 18, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- condition depression (condition:depression)
+  name: Depression
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it takes 3 morale a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Morale — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition asthma (condition:asthma)
+  name: Asthma
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it makes an emergency 2 times likelier. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== new life, a short night left
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 82/100, and what the day has left in you
+  way: Stress — 18/100, and what it is doing to your sleep
+  way: Sleep Debt — 5 hours on the books, and what sleep pays back
+  way: Morale — 62/100, and how much of the day’s stress a night clears
+  way: Condition — 88/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 50/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 75/100, and how long since you ate properly
+  way: Hygiene — 80/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Kept up, at what the plan leaves
+  way: Asthma — Kept up, at what the plan leaves
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 82, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 18, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: 5 hours owed. One long night would clear it.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 62. Level, and the nights bring it back toward 80. Down like this, a night clears less of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 88, under the 100 your fitness lets rest mend you to. A night puts back 98% of the energy it would, and each midnight settles it a little toward 100. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 50. Rest can mend you to 100, and a workout costs 10 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 75. Fed, and not thinking about it. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 80. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 74, and energy, morale and stress are what’s costing you.
+  way: Energy — At 82, and pulling on the rest
+  way: Morale — At 62, and pulling on the rest
+  way: Stress — At 18, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- condition depression (condition:depression)
+  name: Depression
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it takes 3 morale a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Morale — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition asthma (condition:asthma)
+  name: Asthma
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it makes an emergency 2 times likelier. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== new life, one drag
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Holding up, and no dial is far enough out to be worth naming.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 30/100, and what the day has left in you
+  way: Stress — 18/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 62/100, and how much of the day’s stress a night clears
+  way: Condition — 88/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 50/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 75/100, and how long since you ate properly
+  way: Hygiene — 80/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Kept up, at what the plan leaves
+  way: Asthma — Kept up, at what the plan leaves
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 30. You’re running down, and it shows in everything else.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 18, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 62. Level, and the nights bring it back toward 80. Down like this, a night clears less of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 88, under the 100 your fitness lets rest mend you to. A night puts back 98% of the energy it would, and each midnight settles it a little toward 100. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 50. Rest can mend you to 100, and a workout costs 10 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 75. Fed, and not thinking about it. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 80. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 51, and energy, morale and stress are what’s costing you.
+  way: Energy — At 30, and pulling on the rest
+  way: Morale — At 62, and pulling on the rest
+  way: Stress — At 18, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- condition depression (condition:depression)
+  name: Depression
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it takes 3 morale a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Morale — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition asthma (condition:asthma)
+  name: Asthma
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it makes an emergency 2 times likelier. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== new life, two drags
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Stretched very thin. Something is going to give.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 30/100, and what the day has left in you
+  way: Stress — 85/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 62/100, and how much of the day’s stress a night clears
+  way: Condition — 88/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 50/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 75/100, and how long since you ate properly
+  way: Hygiene — 80/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Kept up, at what the plan leaves
+  way: Asthma — Kept up, at what the plan leaves
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 30. You’re running down, and it shows in everything else.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 85. High enough that sleep is going badly and it feeds itself.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 62. Level, and the nights bring it back toward 80. Down like this, a night clears less of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 88, under the 100 your fitness lets rest mend you to. A night puts back 98% of the energy it would, and each midnight settles it a little toward 100. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 50. Rest can mend you to 100, and a workout costs 10 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 75. Fed, and not thinking about it. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 80. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 34, and energy, stress and morale are what’s costing you.
+  way: Energy — At 30, and pulling on the rest
+  way: Stress — At 85, and pulling on the rest
+  way: Morale — At 62, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- condition depression (condition:depression)
+  name: Depression
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it takes 3 morale a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Morale — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition asthma (condition:asthma)
+  name: Asthma
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it makes an emergency 2 times likelier. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== new life, peak
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 100/100, and what the day has left in you
+  way: Stress — 0/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 100/100, and how much of the day’s stress a night clears
+  way: Condition — 100/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 50/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 100/100, and how long since you ate properly
+  way: Hygiene — 100/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Kept up, at what the plan leaves
+  way: Asthma — Kept up, at what the plan leaves
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 100, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 0, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 100. The day feels worth it, and the nights bring it back toward 85. Up like this, a night clears more of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 100, as sound as your fitness lets rest make you. Each midnight settles it back toward 100 if it’s over. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 50. Rest can mend you to 100, and a workout costs 10 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 100. Fed, and not thinking about it. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 100. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 100, and nothing is holding you back much. This is as good as a day gets.
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- condition depression (condition:depression)
+  name: Depression
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it takes 3 morale a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Morale — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition asthma (condition:asthma)
+  name: Asthma
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it makes an emergency 2 times likelier. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- injury (condition:injury)
+  gone: That isn’t carried now.
+
+===== new life, conditions and a broken bone
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        Mending. A Broken Bone, till February 14, 2026, and off work till then.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 82/100, and what the day has left in you
+  way: Stress — 18/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 62/100, and how much of the day’s stress a night clears
+  way: Condition — 88/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 50/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 75/100, and how long since you ate properly
+  way: Hygiene — 80/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Left alone, and what that does
+  way: Asthma — Kept up, at what the plan leaves
+  way: Diabetes — Kept up, at what the plan leaves
+  way: Arthritis — Left alone, and what that does
+  way: High Blood Pressure — Left alone, and what that does
+  way: An Injury — What it is, till when, and what it keeps you from
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+--- energy (dial:person_000001/energy)
+  name: Energy
+  kind: One Of Eight
+  summary: 82, and you’ve a full day in you.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- stress (dial:person_000001/stress)
+  name: Stress
+  kind: One Of Eight
+  summary: 18, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- sleepDebt (dial:person_000001/sleepDebt)
+  name: Sleep Debt
+  kind: One Of Eight
+  summary: None to speak of. You’re square with the nights you’ve had.
+  provenance: Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.
+--- morale (dial:person_000001/morale)
+  name: Morale
+  kind: One Of Eight
+  summary: 62. Level, and the nights bring it back toward 80. Down like this, a night clears less of the day’s stress than usual.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- condition (dial:person_000001/condition)
+  name: Condition
+  kind: One Of Eight
+  summary: 88, under the 100 your fitness lets rest mend you to. A night puts back 98% of the energy it would, and each midnight settles it a little toward 100. The lower it is, the likelier a year is to be your last.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- fitness (dial:person_000001/fitness)
+  name: Fitness
+  kind: One Of Eight
+  summary: 50. Rest can mend you to 100, and a workout costs 10 energy. At 24, the most a body can be trained to is 99. The body is at its best and stays there.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- nourishment (dial:person_000001/nourishment)
+  name: Nourishment
+  kind: One Of Eight
+  summary: 75. Fed, and not thinking about it. Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- hygiene (dial:person_000001/hygiene)
+  name: Hygiene
+  kind: One Of Eight
+  summary: 80. Clean enough that it isn’t wearing on you. The morning’s shower takes it to 82 at least.
+  provenance: Nought to a hundred, moved every hour the clock runs.
+--- readiness (readiness:person_000001)
+  name: Readiness
+  kind: How Well You Would Do Today
+  summary: 79, and energy, morale and stress are what’s costing you.
+  way: Energy — At 82, and pulling on the rest
+  way: Morale — At 62, and pulling on the rest
+  way: Stress — At 18, and pulling on the rest
+  provenance: Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.
+--- condition depression (condition:depression)
+  name: Depression
+  kind: A Condition You Carry
+  summary: You leave it alone, which costs nothing and does what’s below.
+  body: Left alone, it takes 3 morale a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Morale — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition asthma (condition:asthma)
+  name: Asthma
+  kind: A Condition You Carry
+  summary: You keep it up: its care is paid each month at what your plan leaves.
+  body: Left alone, it makes an emergency 2 times likelier. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition diabetes (condition:diabetes)
+  name: Diabetes, Type 1
+  kind: A Condition You Carry
+  summary: You keep it up, but this month’s care went unpaid, so it’s been left alone till next month.
+  body: Left alone, type 1 makes an emergency 4 times likelier, and either type takes 2 condition a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Condition — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition arthritis (condition:arthritis)
+  name: Arthritis
+  kind: A Condition You Carry
+  summary: You leave it alone, which costs nothing and does what’s below.
+  body: Left alone, it takes 2 energy a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Energy — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- condition hypertension (condition:hypertension)
+  name: High Blood Pressure
+  kind: A Condition You Carry
+  summary: You leave it alone, which costs nothing and does what’s below.
+  body: Left alone, SLATE draws nothing more from it than the care it goes without. Kept up, it does none of that. Papers keeps it up or lets it go.
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+--- injury (condition:injury)
+  name: A Broken Bone
+  kind: An Injury
+  summary: It mends by February 14, 2026, and keeps you off work and training till then.
+  way: Condition — What a body is fit for; an injury weighs on the mood and the stress each day, and holds back the work it limits
+  provenance: How long it takes is the injury’s own, longer for somebody an illness hits harder (`illnessToll`).
+
+===== new life, a sprain
+--- injury (condition:injury)
+  name: A Sprained Ankle
+  kind: An Injury
+  summary: It mends by January 9, 2026.
+  way: Condition — What a body is fit for; an injury weighs on the mood and the stress each day, and holds back the work it limits
+  provenance: How long it takes is the injury’s own, longer for somebody an illness hits harder (`illnessToll`).
+--- person (person:person_000001)
+  name: Alex Rivera
+  kind: Yourself
+  summary: Rested, steady and ready for a real day.
+  body: Your body. 168 cm and 59.8 kg, a body mass index of 21.3: healthy weight. In centimeters and kilograms, the units of Iceland, where you live.
+        Mending. A Sprained Ankle, till January 9, 2026.
+        On your papers. they/them, a citizen of Iceland.
+  way: Energy — 82/100, and what the day has left in you
+  way: Stress — 18/100, and what it is doing to your sleep
+  way: Sleep Debt — 0 hours on the books, and what sleep pays back
+  way: Morale — 62/100, and how much of the day’s stress a night clears
+  way: Condition — 88/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last
+  way: Fitness — 50/100, and how far rest can mend you, and what a workout costs
+  way: Nourishment — 75/100, and how long since you ate properly
+  way: Hygiene — 80/100, and your mood once it’s low, and readiness a little
+  way: Readiness — What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in
+  way: Depression — Left alone, and what that does
+  way: Asthma — Kept up, at what the plan leaves
+  way: Diabetes — Kept up, at what the plan leaves
+  way: Arthritis — Left alone, and what that does
+  way: High Blood Pressure — Left alone, and what that does
+  way: An Injury — What it is, till when, and what it keeps you from
+  way: Your Own Plans — Everything you have put on the calendar yourself
+  provenance: Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.
+
+===== new life, type 2 diabetes left alone
+--- condition diabetes (condition:diabetes)
+  name: Diabetes, Type 2
+  kind: A Condition You Carry
+  summary: You leave it alone, which costs nothing and does what’s below.
+  body: Left alone, type 1 makes an emergency 4 times likelier, and either type takes 2 condition a week. Kept up, it does none of that. Papers keeps it up or lets it go.
+  way: Condition — The dial it takes from, left alone
+  provenance: Drawn once at the start of a life, at a young adult’s rates. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates.
+
+(no other person in a new life)
+
+===== guide
+--- body.how: How You Are
+  synonyms: [ "energy", "stress", "readiness", "dials", "wellbeing", "morale", "condition", "fitness", "nourishment", "hygiene", "traits", "my own page" ]
+  questions: [ "What is readiness?", "Why is my energy so low?", "What do the colors on the bars mean?", "What does stress do?", "Where are the other dials?", "What does a trait change?" ]
+  where: { "route": "/home", "label": "Home, The How You Are Panel" }
+  available: "From “How You Are”. The Player Profile, where your traits open too, comes with “You As An Actor”, and your own page, opened from your name, with “A Whole Life”."
+  short: "How You Are keeps three bars in front of you, Energy, Stress and Readiness, under a line that says how you are. Each bar opens into what moves it. The other six dials, sleep debt, morale, condition, fitness, nourishment and hygiene, are on your own page with the traits you hold and the conditions you carry. Readiness is the figure most of your work reads."
+  steps: [ "Read How You Are on Home: the line at the top, then Energy, Stress and Readiness, each out of a hundred.", "Press Energy, Stress or Readiness to open it under the panel: where it stands and what that level does, and for Readiness the dials costing you most.", "Press the line at the top, the panel’s name or your name in the greeting to open your own page: all eight dials, Readiness, the traits you hold, the conditions you carry and any injury, each one pressable.", "The Player Profile lists your traits under “Chosen at the start.”, and each opens there, under the line." ]
+  needs: [ "The panel and its three bars open with “How You Are”.", "Your own page opens with “A Whole Life”, the guide’s last chapter. Until then the other dials are reached through Readiness, which names the ones costing you, a trait opens only on the Player Profile, from “You As An Actor”, and a condition can’t be opened at all.", "A condition opens only while you carry it, and an injury only while it mends." ]
+  costs: [ { "label": "Time", "value": "None: the panel and what it opens move no clock" }, { "label": "Money", "value": "None" } ]
+  reads: [ { "label": "Energy", "value": "Falls 3 an hour awake, faster when you owe sleep. Under 15, stress starts to climb." }, { "label": "Stress", "value": "Eases while there’s energy left and climbs once it runs out. Each hour over 75 costs condition, and money owed adds to it every day." }, { "label": "Readiness", "value": "Seven of the eight multiplied, all but fitness, held between 5 and 100: how well you’d do something right now" }, { "label": "What Readiness Sets", "value": "How much a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in, with the hour’s fit for an early riser or a night owl" }, { "label": "Condition", "value": "How much energy a night puts back, and how likely a year is to be your last. Under 55, staying home sick is excused." }, { "label": "Fitness", "value": "How far rest can mend condition, and what a workout costs. Untrained, it falls toward 35, what an everyday life keeps." }, { "label": "Traits", "value": "Each multiplies what it names: how good a night is, how fast stress clears, how far the mood moves, what food costs" } ]
+  now: [ "Opening a bar, a dial, a trait or a condition changes nothing: it reads the figure as it stands." ]
+  later: [ "The dials move every second the clock runs, at what a waking hour charges. A night, a meal, a shower, a workout and an hour unwinding move them back.", "Each midnight the body settles: fitness falls 0.18 if you haven’t trained in 3 days, and condition drifts a little toward what your fitness lets rest mend it to.", "A condition left alone takes from its dial each week: depression 3 morale, arthritis 2 energy, diabetes 2 condition. Kept up on Papers, it takes none.", "An injury takes 1 from morale and adds 1 to stress each day until it mends." ]
+  interpret: [ "Energy turns red under 15 and amber within fifteen above it; Stress turns red over 75 and amber within fifteen under it. Those are the lines where the body starts to pay.", "Readiness turns red under 25 and amber under 50.", "The line at the top names the worst thing first: running on empty, then badly short on sleep, stretched thin, hungry. “Rested, steady and ready for a real day.” means energy over 75 and stress under 30.", "Readiness, opened, names up to three dials each costing you more than a twentieth of it, worst first.", "A trait’s table gives each thing it moves as a percentage; “with all you are” is every trait and disposition you hold, together." ]
+  unavailable: [ "Before “How You Are” is read the panel shows Locked, with Read About It.", "Your name, the panel’s name and the line at the top stay plain until “A Whole Life” is read.", "A condition you no longer carry, or an injury that has mended, says so and opens no further." ]
+  mistakes: [ "Reading a low Readiness as a verdict on your craft: it measures today alone, and a night and a meal move it most.", "Training to lift readiness on the day backfires: a workout costs energy now, and readiness doesn’t count fitness.", "Leaving stress over 75: each hour there costs condition, which takes nights to come back." ]
+  related: [ "body.sleep", "body.look-after", "papers.conditions", "craft.profile" ]
+  connections: [ { "to": "body.sleep", "kind": "immediate", "why": "A night is what moves energy, sleep debt and condition most." }, { "to": "body.look-after", "kind": "immediate", "why": "A meal, a shower, a workout and an hour unwinding each move named dials, and the menu says by how much." }, { "to": "coursework.class", "kind": "evaluation", "why": "Readiness sets how much a class or a lab builds that day." }, { "to": "productions.nights", "kind": "evaluation", "why": "A night on stage is judged with your readiness at its hour as the condition you came in." }, { "to": "school.sick", "kind": "optional", "why": "Under 55 condition, calling in sick is excused." }, { "to": "papers.conditions", "kind": "history", "why": "The conditions you carry are kept up or let go on Papers, and your page says which." } ]
+  example: { "setup": "A new life’s first morning: energy 82, stress 18, nourishment 75, morale 62.", "steps": [ "Press Readiness on How You Are.", "Open Look After Yourself and press Eat A Meal." ], "result": "Readiness reads 79. The meal fills you, and readiness rises by 5.7 on what the meal does alone, less what its 40 minutes cost." }
+--- body.sleep: Sleep
+  synonyms: [ "bed", "nap", "go to bed", "sleep debt", "wake up", "tired", "how long to sleep", "bedtime" ]
+  questions: [ "How long should I sleep?", "What happens if I sleep through a class?", "Why is the Sleep button gray?", "Does a short night hurt?", "What does sleep debt do?" ]
+  where: { "route": "/home", "label": "The Top Bar’s Sleep Button" }
+  available: "From “Sleep”."
+  short: "Sleep asks how many hours, from 0.5 to 14, suggests a number from when you’re next wanted and what you owe, and says when you’d wake. The clock then goes through the night at once. A night puts energy back, less the more sleep you owe, clears stress and sleep debt, and mends condition only with more than about five hours of real rest. Anything on the calendar in those hours happens without you."
+  steps: [ "Press Sleep in the top bar.", "Read the suggestion at the top: the hours it asks for, and why.", "Set Hours with the slider, by half hours; “You’d wake at” follows it.", "Read what it warns of: your next commitment, a sleep that would stand for tonight, and anything you’d sleep through.", "Press Sleep and the hours, or Not Yet." ]
+  needs: [ "Opens with “Sleep”.", "Not in the middle of a commitment you went to: Sleep is gray then, and says until when." ]
+  costs: [ { "label": "Time", "value": "The hours you choose: the clock moves straight to your wake" }, { "label": "Money", "value": "None" }, { "label": "Food", "value": "Nourishment runs down through the night, a little slower than awake" } ]
+  reads: [ { "label": "How Good The Night Is", "value": "Your stress at bedtime, how deeply you sleep, and the hour: a night begun between one and five in the morning is a worse one" }, { "label": "What You Owe", "value": "Sleep debt: a full debt holds back up to 62% of the energy a night puts back" }, { "label": "Your Age", "value": "A night puts back less at sixty than at twenty" }, { "label": "Condition And Fitness", "value": "A worn body gets up to a fifth less back, and rest mends condition only as far as your fitness allows" }, { "label": "The Suggestion", "value": "The hours a normal night’s rest takes for you, or what’s left before your next commitment, keeping an hour and a half to get up and get there" } ]
+  now: [ "The clock goes straight to your wake, and everything due in those hours runs on the way, without you.", "Energy comes back by the hours times how well you slept, less for sleep owed, for age and for a worn body.", "Stress eases with the night, more when your mood is up.", "Sleep debt clears with the whole night; a night under six hours adds to it.", "Condition mends with more than about five hours of real rest, up to what your fitness lets it reach; with less, it falls.", "The mood moves with the rest, and a night of eight hours or more brings it about a third of the way back to where your body has it settle." ]
+  later: [ "A commitment slept through is missed: an absence at classes, a missed call, an unpaid shift, a plan gone by. The morning’s notice names each one.", "A sleep counts as the night of the day it ends in, so no night of your character’s own follows it that day.", "A short sleep that ends in the small hours stands for the whole night: you’re up from its end, and the dialog warns you first." ]
+  interpret: [ "The suggestion says why: “A normal night.”, “Your calendar’s clear, so sleep as long as you need.”, or the one thing stretching tonight, such as debt, stress, a light sleeper or a late hour. A commitment too soon for a full night says how far off it is. For one the clock is standing at, it’s “It’s time for …, and you’re standing at it. Any sleep goes through it.”, and the dialog says “Your next commitment is now, and you’re standing at it.”", "“This would be tonight’s sleep” means the rest of the night won’t be slept; the clock won’t put you back to bed after it.", "With something less than two and a half hours off, or standing at it, the suggestion is the shortest sleep there is: the figure, the slider and the button say 0.5, and Sleep 0.5 Hours sleeps just that.", "The morning after, Energy and Readiness on How You Are show what the night gave back." ]
+  unavailable: [ "Sleep shows Locked until “Sleep” is read.", "Sleep is gray, with “You’re at … until …”, while you’re in the middle of a commitment you went to." ]
+  mistakes: [ "Taking the suggestion before an early call is a short night: it keeps an hour and a half to get there, and a sleep under six hours adds debt. Going to bed earlier is the fix.", "Sleeping through a class because the hours ran over it: the dialog lists what you’d sleep through, so shorten the hours until the list is empty.", "A nap under six hours that ends in the small hours, of a night not yet slept, stands for the whole night, and you’re up from its end." ]
+  related: [ "body.how", "day.advance", "day.calendar", "day.clock" ]
+  connections: [ { "to": "body.how", "kind": "immediate", "why": "A night moves energy, stress, sleep debt, condition and morale at the wake." }, { "to": "day.calendar", "kind": "immediate", "why": "Anything that wants you inside the night runs without you and is missed." }, { "to": "day.needs", "kind": "history", "why": "Commitments slept through are named in a notice the morning after." }, { "to": "school.standing", "kind": "evaluation", "why": "Classes and calls slept through are absences the faculty weigh at the term’s end." }, { "to": "day.advance", "kind": "optional", "why": "A jump through the night sleeps for you, a poorer night that stops at 74 energy." } ]
+  example: { "setup": "Measured on a new life’s first day at Yale, gone to Registration at ten and moved on to 11:00 PM: energy 35.5, stress 12, sleep debt 5.3 hours, condition 88, readiness 46, and Meeting Your Class at ten the next morning.", "steps": [ "Press Sleep. The suggestion is 8 hours, “A normal night.”", "Press Sleep 8 Hours." ], "result": "At 7:00 AM energy is 100, stress and sleep debt are 0, condition is 89.5, morale has risen from 62 to 69.6, and readiness is 96. The same evening slept 5 hours wakes at 4:00 AM with the night counted as slept: some sleep debt stays on the books, and condition falls where 8 hours mended it." }
+--- body.look-after: Looking After Yourself
+  synonyms: [ "eat a meal", "meal", "order in", "shower", "work out", "exercise", "unwind", "go for a run", "food", "hungry", "weight", "needed now" ]
+  questions: [ "How do I eat?", "Why is Work Out gray?", "What does a shower do?", "Does working out make me fitter?", "Why did my weight go up?", "What does Needed Now mean?" ]
+  where: { "route": "/home", "label": "The Top Bar’s Look After Yourself Menu" }
+  available: "From “Looking After Yourself”."
+  short: "Look After Yourself holds what a day needs besides sleep: Eat A Meal, Order In, Shower, Work Out and Unwind. Each line says how long it takes, what it costs, why it stands where it does and what it would do to your dials. Whatever is costing you every hour comes first, with Needed Now on the top line, then the rest by the readiness each gives back, and what can’t be done now last. It does what you choose, when you choose it, and the clock moves through its time."
+  steps: [ "Press Look After Yourself in the top bar.", "Read each line: its time, its price if it has one and why it’s there, and under that the dials it would move and the readiness it gives back.", "Press a line to do it. A note says when it’s done.", "A gray line says why it can’t be done now." ]
+  needs: [ "Opens with “Looking After Yourself”.", "Eat A Meal and Order In: nourishment under 90 and the money to pay. Shower: hygiene under 95. Work Out: energy at 25 or more, no injury beyond a cut or a knock, and no flu.", "No commitment may start inside the time it takes, and none of it can be done from a hospital bed.", "While you’re at a commitment, Eat A Meal is the one line that can be done." ]
+  costs: [ { "label": "Eat A Meal", "value": "40 minutes, and a meal at the town’s price before your traits: $5.00 in New Haven", "estimate": true }, { "label": "Order In", "value": "50 minutes, and about 6.9 times a meal at home: $34.65 in New Haven", "estimate": true }, { "label": "Shower", "value": "20 minutes, free" }, { "label": "Work Out", "value": "60 minutes, free, and 10 energy at fitness 50: more for a less fit body, less for a fitter one" }, { "label": "Unwind", "value": "60 minutes, free" } ]
+  reads: [ { "label": "Your Dials", "value": "Each line is worked out on a copy of you: what it would do, and the readiness that comes of it" }, { "label": "Hunger, Grime And Stress", "value": "Under 20 nourishment, under 50 hygiene or over 75 stress, the line that mends it moves to the top, and the top line wears Needed Now: each hour there costs condition or mood" }, { "label": "Readiness", "value": "A workout builds more the readier you are, from 0.4 to 1.2 times its base between readiness 0 and 100" }, { "label": "The Weather", "value": "A workout is a run when its hour ends dry, at 0°C or warmer and feeling no hotter than 32°C" }, { "label": "Your Traits", "value": "How much a meal lifts you, how fast stress clears, how far the mood moves and what food costs" } ]
+  now: [ "A meal is paid for as it’s ordered, before its time. Then the time is lived and charged as waking time, and the line’s figures come on top of it.", "Eat A Meal: nourishment up by as much as 50, to 100 at most, and the mood by as much as you needed it.", "Order In: the same, and a restaurant’s larger meal, 134 calories more toward your weight.", "Shower: hygiene to 100, and stress eased by a tenth of what it put back.", "Work Out: fitness up 0.6 at readiness 75, 10% more on a run, never past what your age allows; energy, nourishment and hygiene down, stress eased, the mood up.", "A second workout the same day builds 50% of the first, and a third 25%. A class that trains the body as hard as a workout counts as one of them, and builds what a workout indoors does: Acting Intimacy And Combat For The Stage in its spring, Movement Invention II, Advanced Principles Of Acting Stage Combat or Movement Invention III, attended.", "Unwind: stress down and the mood up." ]
+  later: [ "Fitness holds for 3 days after a workout or one of those classes, then falls 0.18 a day toward 35.", "Awake, nourishment falls 2 an hour. Each midnight the day’s groceries are bought at the town’s prices, and the day starts fed to at least 76 nourishment, or 40 if they can’t be paid for, and washed to at least 82 hygiene.", "A shower skipped costs nothing past its day: the morning washes you to 82 whatever the day before was. That’s the owner’s decision, of 2026-10-14.", "Your weight follows the day’s eating against what you burn, half the way to its new level in 365 days. Eat A Meal is part of the day’s eating and adds nothing to it; Order In adds its 134 calories. A run burns 9.3 METs against a workout indoors’ 3.5, and none of it is eaten back.", "An hour’s run risks an injury 0.77% of the time and a workout indoors 0.06%. A sprain or a pulled muscle keeps you from training till it mends; a broken bone or a concussion keeps you from classes too." ]
+  interpret: [ "Needed Now on the first line: hunger, grime or stress past its line is costing you every hour it’s left. Most Worth It: nothing is urgent, and this gives back the most readiness, half a point or more.", "The readiness figure on Work Out can be below zero: it costs energy today, and readiness doesn’t count fitness.", "The Fitness arrow on Work Out is what the workout builds, with the weather as its hour ends and the day’s earlier workouts both in it. The line says which it’ll be, “A run in fine weather” or “Indoors, the weather being no good for a run”, and on a second the same day, “It’s workout 2 today, so it builds 50% of a first.”", "The arrows read from now to after: Energy 82 → 72." ]
+  unavailable: [ "Look After Yourself shows Locked until “Looking After Yourself” is read.", "“Not from a hospital bed.”", "“You’re at … until ….” In the middle of a commitment, everything but Eat A Meal waits, Order In too.", "“You aren’t hungry.” Nourishment is at 90 or over.", "“Your debit card is locked, and there isn’t enough on the credit card or in cash.” Or stopped, while a replacement or a new account’s first card is on its way. The meal is left to the credit card and the cash in hand however the day is paid, and they’re short of it, though the bank could make up the rest. With the bank short too, it’s “You can’t afford it.”", "“You can’t afford it.” The current account and any savings linked to it, its overdraft where the bank lets a debit card purchase into it (at a US bank that asks, once you’ve opted in), the credit card and the cash in hand come to less than the meal.", "“The bank and the card can’t pay it. Cash in hand pays for the day where The Day’s Spending is In Cash, Then The Debit Card.” The debit card is neither locked nor stopped, the day is paid by card, the bank and the card are short of the meal, and the cash in hand would make up the difference.", "“Your debit card is past its payment ceiling, and there isn’t enough on the credit card.” A French debit card’s ceiling, for the month or for the last 30 days, has too little left for its part of the meal, and the credit card can’t take all of it.", "“You’re already clean.” Hygiene is at 95 or over.", "“You’re too tired to train. Sleep first.” Energy is under 25.", "“Not with a sprained ankle; it has 4 days yet to mend.” An injury beyond a cut or a knock, with the days it has yet to mend.", "“Not with the flu: rest until it passes.”", "“… is at …, and there isn’t time.” Something that wants you starts inside the time it takes." ]
+  mistakes: [ "Eating late in the evening when midnight is close: the day’s groceries lift nourishment to at least 76 at midnight anyway, so a meal then buys only what it puts over that. With money for one and not both, the meal is paid as it’s ordered and the groceries at midnight are what go unbought, with “No Money For Food Today”: the day starts on what the meal left, with no 76 under it.", "Working out just before a class or a performance: it costs energy, and readiness reads energy now.", "Ordering in every meal: it costs about 6.9 times as much as eating at home, and adds a restaurant’s calories each time." ]
+  related: [ "body.how", "body.sleep", "day.weather", "bank.payments" ]
+  connections: [ { "to": "body.how", "kind": "immediate", "why": "Each line moves the dials it names, and readiness with them." }, { "to": "day.weather", "kind": "evaluation", "why": "Work Out reads the weather as its hour ends to decide whether it was a run." }, { "to": "bank.payments", "kind": "immediate", "why": "A meal is paid the way How You Pay pays the day’s spending: the debit card, the credit card or cash." }, { "to": "craft.profile", "kind": "history", "why": "A workout’s fitness is your Stamina on the Player Profile." }, { "to": "papers.doctor", "kind": "scheduled", "why": "An injury from a run or a workout brings its care, and its bill." } ]
+  example: { "setup": "A new life’s first morning in New Haven: energy 82, stress 18, nourishment 75, hygiene 80.", "steps": [ "Open Look After Yourself.", "Eat A Meal is first, marked Most Worth It. Press it." ], "result": "It takes 40 minutes and $5.00: nourishment goes to 100, and readiness moves +5.7 on what the meal does alone. Unwind would have given about +4.7 and a Shower +2.5; Work Out, last, about -4.7, for the 10 energy it costs today." }

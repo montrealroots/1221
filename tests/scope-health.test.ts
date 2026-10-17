@@ -253,13 +253,13 @@ describe('health.choose_clinic, New Haven’s two practices', () => {
         said: titled(back, 'A Doctor’s Visit').map((n) => n.body),
       };
     });
-    expect(kept[0]).toEqual({ log: [[at(2026, 9, 1, 10), `A doctor’s visit, ${YALE_NAME}`, 0]], bills: [], said: [`A doctor’s visit, ${YALE_NAME}. Nothing to pay.`] });
+    expect(kept[0]).toEqual({ log: [[at(2026, 9, 1, 10), `A doctor’s visit, ${YALE_NAME}`, 0]], bills: [], said: [`A doctor’s visit, ${YALE_NAME}. There’s nothing to pay.`] });
     // Until 2026-10-15 the twin's visit was logged at $0 with no bill and 'Nothing to pay.': Yale Health paid it. That day
     // its rule was kept, and a member's visit at Fair Haven is billed as the uninsured's, the plan paying none of it.
     expect(kept[1]).toEqual({
       log: [[at(2026, 9, 24, 10), `A doctor’s visit, ${FAIR_HAVEN_NAME}`, 183_98]],
       bills: [[183_98, undefined]],
-      said: [`A doctor’s visit, ${FAIR_HAVEN_NAME}. Yale Health pays for a visit at its own Health Center, not here. Your share is $183.98, due in 30 days.`],
+      said: [`A doctor’s visit, ${FAIR_HAVEN_NAME}. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due on October 24, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.`],
     });
   }, 60_000);
 
@@ -296,7 +296,7 @@ describe('health.choose_clinic, New Haven’s two practices', () => {
     const item = back.universe.scheduled.find((i) => i.kind === APPOINTMENT_KIND && i.at === at(2026, 9, 1, 10))!;
     expect(item.status).toBe('missed');
     expect(healthOf(back.player).owedVisit).toBe('A doctor’s visit');
-    expect(titled(back, 'Not Seen At Your Practice').map((n) => n.body)).toEqual([`A doctor’s visit: Yale Health sees Yale students it covers, and it doesn’t cover you now. You weren’t seen at ${YALE_NAME}. Book again, and it’s at ${FAIR_HAVEN_NAME}.`]);
+    expect(titled(back, 'Not Seen At Your Practice').map((n) => n.body)).toEqual([`A doctor’s visit: Yale Health sees Yale students it covers, and it doesn’t cover you now. You weren’t seen at ${YALE_NAME}. If you book again, with Book An Appointment on Papers under Health Cover, it’s at ${FAIR_HAVEN_NAME}.`]);
     expect(titled(back, 'A Doctor’s Visit')).toEqual([]);
     expect(healthOf(back.player).careLog ?? []).toEqual([]);
     // Her choice stands, and is read as nothing while Yale Health doesn't see her.
@@ -379,7 +379,7 @@ describe('health.enroll and health.appointment: Access Health CT’s silver plan
       [at(2026, 11, 27, 10), COPAY, at(2026, 11, 27, 10) + 30 * MS_DAY, false, undefined, { price: PRICE, planPaid: PRICE - COPAY }],
     ]);
     expect(PRICE - COPAY).toBe(60_13);
-    expect(titled(sim, 'A Doctor’s Visit').map((n) => n.body)).toEqual([`${WHAT}. Your share is $45.00, due in 30 days.`]);
+    expect(titled(sim, 'A Doctor’s Visit').map((n) => n.body)).toEqual([`${WHAT}. Your share is $45.00, due on December 27, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.`]);
     expect((healthOf(sim.player).spent['2026'] ?? 0) - spentBefore).toBe(COPAY);
     expect((healthOf(sim.player).deductible['2026'] ?? 0) - deductibleBefore).toBe(0);
     expect((healthOf(sim.player).careLog ?? []).filter((c) => c.what === WHAT).map((c) => c.share)).toEqual([COPAY]);
@@ -517,7 +517,7 @@ describe('health.appointment: a New Haven prescription past its first year', () 
  * before. An emergency is paid as before: the emergency journey above, Yale Health leaving $50 of it, holds unchanged.
  */
 const OUTSIDE = 183_98;
-const SAID_OUTSIDE = `A doctor’s visit, ${FAIR_HAVEN_NAME}. Yale Health pays for a visit at its own Health Center, not here. Your share is $183.98, due in 30 days.`;
+const SAID_OUTSIDE = `A doctor’s visit, ${FAIR_HAVEN_NAME}. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due on October 24, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.`;
 
 describe('health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center', () => {
   it('PLAYER JOURNEY: a Yale Health member who picks nothing is booked at Yale Health the next weekday and seen there at $0, across a reload', () => {
@@ -536,7 +536,7 @@ describe('health.choose_clinic: Yale Health’s rule that a member’s care is h
     back.advanceTo(at(2026, 9, 1, 11));
     expect((healthOf(back.player).careLog ?? []).map((c) => [c.at, c.what, c.share])).toEqual([[at(2026, 9, 1, 10), `A doctor’s visit, ${YALE_NAME}`, 0]]);
     expect(healthOf(back.player).bills.filter((b) => b.what.startsWith('A doctor’s visit'))).toEqual([]);
-    expect(titled(back, 'A Doctor’s Visit').map((n) => n.body)).toEqual([`A doctor’s visit, ${YALE_NAME}. Nothing to pay.`]);
+    expect(titled(back, 'A Doctor’s Visit').map((n) => n.body)).toEqual([`A doctor’s visit, ${YALE_NAME}. There’s nothing to pay.`]);
   }, 60_000);
 
   it('PLAYER JOURNEY: a member who picks Fair Haven on Your Doctor is billed the uninsured’s $183.98 for the visit the clock keeps there, paid once on its due day across reloads; her twin who picks nothing is seen at Yale Health at $0', () => {
@@ -595,7 +595,7 @@ describe('health.choose_clinic: Yale Health’s rule that a member’s care is h
     expect(appointmentsOf(sim.player).map((a) => [a.at, a.clinicId])).toEqual([[at(2026, 9, 24, 10), FAIR_HAVEN]]);
     sim.advanceTo(at(2026, 9, 24, 11));
     // Uninsured, the same $183.98 Fair Haven bills a member who picks it; nothing is said of Yale Health.
-    expect(titled(sim, 'A Doctor’s Visit').map((n) => n.body)).toEqual([`A doctor’s visit, ${FAIR_HAVEN_NAME}. Your share is $183.98, due in 30 days.`]);
+    expect(titled(sim, 'A Doctor’s Visit').map((n) => n.body)).toEqual([`A doctor’s visit, ${FAIR_HAVEN_NAME}. Your share is $183.98, due on October 24, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.`]);
   }, 60_000);
 
   it('PLAYER JOURNEY: a save an older build wrote, its member booked at Fair Haven by default and her twin by a pick, is opened: the default’s appointment is had at Yale Health on its date at $0, once, the pick’s at Fair Haven at $183.98; the same appointment in a save this build wrote stays at Fair Haven', () => {
@@ -713,7 +713,7 @@ describe('health.choose_clinic: a booking with nothing picked is had where it wa
     again.advanceTo(at(2027, 2, 18, 11));
     for (const s of [sim, again]) {
       expect(careOf(s)).toEqual([[at(2027, 2, 18, 10), `A doctor’s visit, ${FAIR_HAVEN_NAME}`, OUTSIDE_2027]]);
-      expect(titled(s, 'A Doctor’s Visit').map((n) => n.body)).toEqual([`A doctor’s visit, ${FAIR_HAVEN_NAME}. Yale Health pays for a visit at its own Health Center, not here. Your share is $187.20, due in 30 days.`]);
+      expect(titled(s, 'A Doctor’s Visit').map((n) => n.body)).toEqual([`A doctor’s visit, ${FAIR_HAVEN_NAME}. Yale Health pays for a visit only at its own Health Center, not here. Your share is $187.20, due on March 20, 2027, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.`]);
     }
 
     // Change the input: the booking canceled and booked again once she's covered. Yale Health, the next weekday, at $0.

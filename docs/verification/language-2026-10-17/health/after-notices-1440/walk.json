@@ -1,0 +1,21 @@
+{
+ "base": "http://localhost:4207",
+ "width": 1440,
+ "visited": [
+  {
+   "save": "h-la-dropped.json",
+   "screens": 20,
+   "failed": []
+  },
+  {
+   "save": "h-nh-status.json",
+   "screens": 20,
+   "failed": []
+  },
+  {
+   "save": "h-van-rx.json",
+   "screens": 20,
+   "failed": []
+  }
+ ]
+}

@@ -1,0 +1,1574 @@
+
+ RUN  v2.1.9 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/l14-health
+
+ ❯ tests/evidence-g05-life.test.ts (26 tests | 10 failed) 69359ms
+   ✓ health.appeal_decided > PLAYER JOURNEY: paid, then overturned, gives back the $138.98 paid over the $45 share to the payee account, once, across a reload 3377ms
+   ✓ health.appeal_decided > PLAYER JOURNEY: upheld, leaves the bill at $183.98 with nothing back, says Appeal Upheld, and Papers Denial Upheld 1794ms
+   ✓ health.appeal_decided > PLAYER JOURNEY: gone to debt, then overturned, takes the debt down to the $45 share and puts nothing in the bank 1250ms
+   ✓ health.appeal_decided > partly paid off as debt, then overturned, gives back what was paid over the share, and the bill is settled 1286ms
+   ✓ health.appeal_decided > the denial’s and the decision’s notices name the clinic as it’s written 789ms
+   ✓ health.appointment > PLAYER JOURNEY: kept while a broken bone keeps them off work and out of class 442ms
+   ✓ health.appointment > PLAYER JOURNEY: booked again after Call It Off, missed in hospital, shown not yet seen, and kept when booked again, across a reload 1403ms
+   × health.bill > PLAYER JOURNEY: a stay’s $200 falls due and is paid from the checking account, Settled on Papers, once across a reload 485ms
+     → expected 'A stay in hospital, Yale New Haven Ho…' to be 'A stay in hospital, Yale New Haven Ho…' // Object.is equality
+   × health.bill > PLAYER JOURNEY: unpaid in a drained twin, is $200 of medical debt, a money trouble and Owed As Debt, until Pay It Off settles it, across a reload 215ms
+     → expected 'A stay in hospital, Yale New Haven Ho…' to be 'A stay in hospital, Yale New Haven Ho…' // Object.is equality
+   × health.bill > A Medical Bill Went Unpaid names the hospital as it’s written 129ms
+     → expected 'A stay in hospital, Yale New Haven Ho…' to be 'A stay in hospital, Yale New Haven Ho…' // Object.is equality
+   ✓ health.month > PLAYER JOURNEY: diagnoses high blood pressure on the 1st, and the next week fills its medicine at Walmart’s $4, once across a reload 1019ms
+   ✓ health.month > PLAYER JOURNEY: uninsured, a drained twin’s month of care for depression lapses, and the next week’s toll reads it: 3 of morale 1039ms
+   × health.month > PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where $600 of wages in July (TEST SETUP) renews it six months 3798ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   ✓ health.month > PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported on the first month a year past due, once, across a reload 16734ms
+   × health.therapy_session > PLAYER JOURNEY: a session the drained bank can’t pay is held, counted, and billed at $240 due in 30 days, then owed as debt 2630ms
+     → expected [ Array(1) ] to deeply equal [ StringMatching{…} ]
+   × health.therapy_session > PLAYER JOURNEY: a Yale course ends at the session after Withdraw ends Yale Health, after 2 of 8, and Adna Linden takes it on 1057ms
+     → expected [ [ 1789506000000, …(1) ] ] to deeply equal [ [ 1789506000000, …(1) ] ]
+   ✓ health.therapy_session > PLAYER JOURNEY: a session on a Monday in hospital is missed, unpaid, and held to the next Monday, which is kept and paid $240 759ms
+   ✓ health.therapy_session > PLAYER JOURNEY: a course that lifts the depression ends its medicine and its toll, against a twin’s that doesn’t 7630ms
+   ✓ health.therapy_session > PLAYER JOURNEY: uninsured, a course that lifts the depression ends its month of care on the next 1st, against a twin’s that doesn’t 2067ms
+   × health.week > PLAYER JOURNEY: the flu, seen at urgent care, is five days, 25 of condition and 30 of energy, a sick day called in and the work shown ill 6147ms
+     → expected [ Array(1) ] to deeply equal [ StringMatching{…} ]
+   × health.week > PLAYER JOURNEY: a stay is three days in hospital, 40 of condition and of energy, $200, and the two days of classes it holds excused 837ms
+     → expected 'A stay in hospital, Yale New Haven Ho…' to match /^A stay in hospital, .+, 3 days\. You…/
+   × health.week > PLAYER JOURNEY: an emergency keeps them Connecticut’s median 189 minutes, 20 of condition and of energy, and $50 866ms
+     → expected 'The emergency room, Yale New Haven Ho…' to match /^The emergency room, .+\. Your share …/
+   ✓ health.week > the week’s flu draw is 4.5 times likelier at ten hours’ sleep debt and full stress (2.5 × 1.8), as the clock draws it 11119ms
+   × injury.comp > PLAYER JOURNEY: a broken bone at an elective shift is paid a week at a time for all 42 days off, into the payee account, once across a reload 1149ms
+     → expected 'It takes 42 days to mend, and you’re …' to be '42 days to mend, and off work for the…' // Object.is equality
+   ✓ injury.comp > the week’s rate is 75% of the $92 paid with nothing deducted from it, $69.00, not less a FICA that was never withheld 1029ms
+   ✓ injury.comp > hurt at the second of two elective shifts in a week, the wage it records is the week’s $184, not the shift’s $92 307ms
+ ❯ tests/remaining-09-journeys.test.ts (22 tests | 4 failed) 138312ms
+   ✓ journeys.known-graduated-school-page: the School page once the School has ended > DEFECT: a life played to the degree reads it on its Standing, Casting and Coursework tabs, before and after a reload: the degree conferred at Commencement on Monday 21 May 2029, every course passed, the last term’s figures with their floors in the past, no casting and no work ahead (until 2026-10-16 “Only the terms to come stand between you and the degree.”, “so far”, “In the casting pool.”, each floor ahead, Not Cast Yet and Nothing set yet) 41401ms
+   ✓ journeys.known-graduated-school-page: the School page once the School has ended > PLAYER JOURNEY: a withdrawal in the first fall says how it ended, offers no repeat, no casting and no work, and keeps saying so through a reload; the course record stays as it was 4334ms
+   ✓ journeys.known-graduated-school-page: a dismissal > PLAYER JOURNEY: a student who never prepares her coursework (jd-1, the dials tended and no work done) is dismissed at Fall Term 2027’s evaluation, concern then warning before it; the page says so, with no way back, no casting and no work, through a reload 15788ms
+   ✓ journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps 11828ms
+   ✓ journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration) 6752ms
+   ✓ journeys.d-aid-past-balance: a term begun under a hold its aid clears > DEFECT: a student with need begins Spring Term 2027 under a hold (TEST SETUP: $1,000.00 owed on the Yale account and its due date come on 18 December, as tests/evidence-g25-school.test.ts sets them); the term’s scholarship pays the $1,125.00 first, the hold lifts at nine on 4 January, said once, registration isn’t asked, the first class day counts her, and $12,193.50 reaches Chase Total Checking (until 2026-10-16 the hold stayed, and the term asked her to register past it) 3178ms
+   × journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill) 5619ms
+     → expected 'A doctor’s visit, Fair Haven Communit…' to be 'A doctor’s visit, Fair Haven Communit…' // Object.is equality
+   × journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Health out on 17 March, the notice of 1 April names the marketplace’s last day, 16 May, 60 days from the loss; on 20 May Enroll refuses it, HUSKY D asking for March’s work; a twin enrolls on 10 May (until 2026-10-16 the 60 days ran from the look of 1 April, to 31 May, and the notice said “You have 60 days”) 4284ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   × journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls on 2 December, and is covered from 1 December, the month she applied in: the doctor’s visit of 3 December is HUSKY D’s, nothing to pay; the notice and the cover are the same in one jump as in six-hour steps (until 2026-10-16 HUSKY D began on 1 January and the visit was billed $183.98 uninsured) 2224ms
+     → expected [ [ 'December 1, 2026', …(1) ] ] to deeply equal [ [ 'December 1, 2026', …(1) ] ]
+   ✓ journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn on Tuesday 25 August 2026, in orientation’s week before classes begin on 31 August, Yale Health is canceled back to 1 August; the notice of 1 September counts the 60 days from the withdrawal, the day she learned of it, to 24 October, and Enroll is open on 22 October, the same in one jump 794ms
+   × journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump 2021ms
+     → expected [ [ 'October 20, 2026', …(2) ], …(1) ] to deeply equal [ [ 'October 20, 2026', …(2) ], …(1) ]
+   ✓ journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, comes by mail on 19 July, the bank refusing her until it does, and then the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out; until 2026-10-17 the card was in force at once) 17953ms
+   ✓ journeys.d-lapse-prescription: a prescription filled in a leave’s lapse, and Affiliate cover bought back to its start > DEFECT: a generic filled uninsured on 8 February 2027 is billed again as Yale Health pays it once Affiliate cover is bought on 18 February: Yale Health’s $10.00 copay, the rest paid back to the bank once, on a line of its own, through a reload (until 2026-10-16 the fill stayed at the pharmacy’s cash price) 3790ms
+   ✓ journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 October 2027, its renewal’s notice of 1 October waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 November as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed) 4462ms
+   ✓ journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > GUARD: a renewal’s notice waiting while its program has ended some other way, which no played life reaches (TEST SETUP: HUSKY D’s end set on the record by hand, the notice left), refuses the hardship in words that say so, and nothing is renewed or moved 2888ms
+   ✓ journeys.f-ended-life-loops: a loop waiting for the clock once a life has ended > GUARD: jl-17’s life, ended by mortality’s draw at 9:58 PM on 11 January 2027, tended by this file’s own six-hour loop to the 20th fails at once naming the death (tests/setup/ended-life.ts), where it hung before; a single move of the clock still returns where it stopped 4646ms
+   ✓ journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it) 371ms
+   ✓ journeys.d-medicaid-start: HUSKY D from the first of the month of application, and the months before it > DEFECT: withdrawn on Tuesday 25 August 2026, Yale Health canceled back to 1 August, her generic filled uninsured at $41.79 on 31 August, 14 September and 19 October; enrolled in HUSKY D on Papers on 22 October, it covers her from 1 August, the two months before October each with a fill and her income then under its line, and the three fills are priced again as its $0, $125.37 back to Chase Total Checking once, through a reload; a twin who waits to 2 December reaches back three months to 1 September, and the August fill stays hers (until 2026-10-16 HUSKY D began on 1 November and every fill stayed at $41.79) 1028ms
+   ✓ journeys.d-medicaid-start: HUSKY D from the first of the month of application, and the months before it > GUARD: an application made in January 2028 reaches one month back, where one made in 2026 reached three (FIXTURE: an income of $600 a month from October 2027, the work rules met by it and under HUSKY D’s line, and a doctor’s visit through the game’s own care on the 15th of October, November and December 2027, all uninsured); enrolled on 5 January 2028, HUSKY D covers her from 1 December 2027 and prices again December’s visit alone 4318ms
+   ✓ journeys.d-medicaid-start: HUSKY D from the first of the month of application, and the months before it > GUARD: the reach back stops at a month she wasn’t eligible in, or one another plan of hers covered, as SLATE keeps one stretch of cover (FIXTURE: her care one visit on 28 August 2026 with nothing covering her, an application on 5 November; then September’s income set over the line, then a Covered Connecticut plan set on September) 345ms
+ ❯ tests/guide-examples-papers.test.ts (15 tests | 2 failed) 85665ms
+   ✓ the guide’s worked examples for Papers, played on throwaway saves > papers.overview: the chapter read opens Papers, and reading Your Cover changes nothing 1066ms
+   × the guide’s worked examples for Papers, played on throwaway saves > papers.health-cover: a spring graduate’s cover ends on 1 August, HUSKY D asks the work July didn’t have, and the marketplace begins 1 September 18815ms
+     → expected 'Yale Health covers you until August 1…' to contain 'you can enroll from June 2, 2027'
+   × the guide’s worked examples for Papers, played on throwaway saves > papers.doctor: a visit slept through is booked again, kept at $0, and a referral waits its days 1375ms
+     → expected 'A doctor’s visit: booked at Yale Heal…' to be 'A doctor’s visit: booked at Yale Heal…' // Object.is equality
+   ✓ the guide’s worked examples for Papers, played on throwaway saves > papers.doctor: as every booking is, a wait ending on Thanksgiving is booked for the Friday, 25 days on 2040ms
+   ✓ the guide’s worked examples for Papers, played on throwaway saves > papers.conditions: Yale’s course of eight costs nothing, and ends lifted or done 2091ms
+   ✓ the guide’s worked examples for Papers, played on throwaway saves > papers.benefits: a claim on a summer’s stipend pays its week each Sunday, with no waiting week 7915ms
+   ✓ the guide’s worked examples for Papers, played on throwaway saves > taxes.return: on time costs the balance; late adds the penalties and interest the example gives 11681ms
+   ✓ the guide’s worked examples for Papers, played on throwaway saves > taxes.pay: a part to the IRS goes to the tax, and Connecticut’s to its penalty, its interest, then its tax 5850ms
+   ✓ the guide’s worked examples for Papers, played on throwaway saves > taxes.plan: $1,800 over two years, approved within the minute at its least monthly payment 10939ms
+   ✓ the guide’s worked examples for Papers, played on throwaway saves > taxes.lien: Connecticut’s lien is filed at its notice of intent, paid, and released when asked 12292ms
+   ✓ the guide’s worked examples for Papers, played on throwaway saves > documents.passport-id: a stolen ID card reported and replaced, and the photo ID that stands meanwhile 1201ms
+   ✓ the guide’s worked examples for Papers, played on throwaway saves > documents.work: OPT applied for, decided, begun, and ended by its days without work 10083ms
+ ✓ tests/evidence-g16-papers.test.ts (26 tests) 191693ms
+   ✓ tax.pay > PLAYER JOURNEY: half typed into Pay on the Returns tab leaves the current account as “Income tax owed, 2026, in part”, all of the tax first, then penalty; blank, it pays the rest the screen showed, the notices stop, and Pay goes 21269ms
+   ✓ tax.pay > refuses a payment the bank can’t cover in its words, charging nothing, and keeps the part paid across a reload 19299ms
+   ✓ tax.pay > paid in full, plays 200 days across a reload with no levy and no word from the IRS on 2026; a twin that never paid is levied 20684ms
+   ✓ tax.pay > the day after the assessment, Still Owed charges no month of paying late not yet begun: sixteen months from the due date to 13 August 2028, not a seventeenth counted afresh from the assessment 15577ms
+   ✓ documents.idcard_arrives > PLAYER JOURNEY: a New York license reported lost leaves no photo ID and Capital One refuses; replaced by mail for $17.50, it arrives 21 days on, is said to, reads In Force, and Capital One opens the account 2648ms
+   ✓ documents.idcard_arrives > PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes by mail twenty business days after SAVE’s ten, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport 3357ms
+   ✓ documents.permission > PLAYER JOURNEY: Apply For OPT on Papers, refused before its window in its words, applied on 5 March 2029 for $470, decided 90 days on, valid twelve calendar months, said with both dates; status held past the degree’s sixty days; ended by its ninety days without work 8746ms
+   ✓ documents.permission > with premium processing, $2,250 and thirty business days: decided 16 April, it runs twelve months from the program’s end, not the approval 6827ms
+   ✓ documents.permission > is refused in its words to a citizen, to a student who withdrew, to a life never on an F-1, and once its window has closed 8147ms
+   ✓ documents.us_status > PLAYER JOURNEY: withdrawn on 1 February 2027, an F-1 student keeps fifteen days’ status by the School’s own reschedule; on the sixteenth she is out of status, her F-1 canceled, told once, and refused the marketplace, an ID card and unemployment 3420ms
+   ✓ documents.us_status > PLAYER JOURNEY: a student who lets her classes go is dismissed, and is out of status the same hour, with no grace 7674ms
+   ✓ documents.us_status > the degree: the look armed when the life was made asks “Your US Status Is Ending” on the program’s end, due sixty days on with OPT both ways; out of status the day it falls due, where a twin that presses Apply For OPT keeps hers 4818ms
+   ✓ benefits.assistance_month > PLAYER JOURNEY: Apply on Papers on 20 March 2027; $306 a month by the clock, her work-study left out; the midnight groceries on the EBT card; “2 months paid” across a reload; closed on the summer’s first look, nothing paid after 3572ms
+   ✓ benefits.assistance_month > a graduate on unemployment: each month pays $306 less 30% of the month before’s benefit and interest over $217, rounded up to the dollar; on a claim she’s exempt from the time limit, so no month is counted and the fourth is paid too 4190ms
+   ✓ benefits.assistance_month > a month with a week’s pay in it takes a fifth of the pay off before the 30%: the graduate’s March payment, on February’s benefit, interest and $375 of wages 6536ms
+   ✓ benefits.assistance_month > reads the calendar month before the payment: claimed 20 January 2028, the month paid on the 27th is $306, December having brought nothing over $217, not January’s weeks so far 6963ms
+   ✓ benefits.assistance_month > Ontario Works, in Toronto, where a New Haven life never lives: CAD 343 a month by the clock into the account, six days after applying and every thirty after, refused over CAD 10,000 of assets 352ms
+   ✓ benefits.week > PLAYER JOURNEY: File A Claim on Papers for $93 a week; Sunday’s week posted to her account and year; nothing for a week in hospital; $31 for a week with four hours worked, $92; across a reload paid to its $2,418 and ended in its words, with Papers showing each 6276ms
+   ✓ benefits.week > while she is enrolled, a Connecticut claim is refused at filing in its words and Papers offers none; nothing in SLATE returns a claimant to school, so the week’s own student check is never reached 7178ms
+   ✓ benefits.week > an F-1 graduate on OPT: paid while it is in force, nothing once it has ended, the claim ended a year from filing; her 2029 1040-NR reports exactly what the clock paid 13410ms
+   ✓ tax.season > PLAYER JOURNEY: a student born in New York earns $1,670.59 in 2026, under any year’s standard deduction, and on 1 February 2027 is asked for no return; April passes with no late notice 6478ms
+   ✓ tax.season > Papers’ No Returns Yet doesn’t tell the student with $1,670.59 of income that a year with any income has its return ready 4318ms
+   ✓ tax.season > an F-1 student with work-study is asked for her 1040-NR at 10%, due 15 April 2027, Tax Return Due on the calendar at that minute and Tax Season again for 1 February 2028, once each across a reload 4990ms
+   ✓ tax.season > an F-1 student with no US income files Form 8843 alone: a return at $0, due 15 June 2027, as a 1040-NR without wages is 648ms
+   ✓ tax.season > tax.due: the Form 8843 alone left unfiled past 15 June 2027 is told there’s no penalty and it’s still hers to file, not that a refund waits 1794ms
+   ✓ tax.season > a life in London that earned nothing in the US, a place a New Haven life never lives, is asked for no US return, and the season is armed again 2507ms
+ ❯ tests/need-paths.test.ts (17 tests | 1 failed) 43444ms
+   ✓ the family a new life comes from (c-family, c-wealth) > Genres & Background offers the six families, Wealthy chosen as creation chose before; each, chosen on the select, is what Review says and what the save opens 1560ms
+   ✓ the family a new life comes from (c-family, c-wealth) > the Nothing family’s life begins with no card, and its Profile says Risk Tolerance set no autopay, where the Wealthy one’s card started on the whole statement 456ms
+   ✓ Yale’s living-expense scholarship, the term’s account (c-family) > PLAYER JOURNEY: a Scraping family’s student is paid $13,318.50 at the fall term’s start, the scholarship meeting the plan; the Wealthy one pays the $1,882 plan from the bank; each notice says which 10749ms
+   ✓ school.request_conversion, for a life the screen made with need > PLAYER JOURNEY: the Saturday called in sick, asked for on the drawn button, is paid at January’s processing, $138.00 into the bank, where the Wealthy family’s student is refused in the button’s words 5866ms
+   ✓ a leave taken with need: the aid returned, the balance, and paying it > PLAYER JOURNEY: a personal leave asked on the spring’s third day, begun on 21 January, returns half the spring’s scholarship, $7,600.25, to the Yale account; Pay From Your Bank, drawn and pressed, settles it from the bank to the cent 910ms
+   ✓ a leave taken with need: the aid returned, the balance, and paying it > the Wealthy family’s student, on the same leave on the same day, has no aid to return and owes nothing 799ms
+   ✓ the marketplace, offered on income the clock paid (health.enroll, health.appeal_decided) > PLAYER JOURNEY: an Inherited family’s savings at Capital One earn $6,436.10 in September, over Connecticut’s line, and Enroll on Papers gives the marketplace; a Comfortable family’s student at the same bank, with $112.63, is given HUSKY D 1486ms
+   ✓ the marketplace, offered on income the clock paid (health.enroll, health.appeal_decided) > PLAYER JOURNEY: that marketplace’s claim denied and appealed on Papers; paid when due, then overturned, gives back the $138.98 paid over the $45 share 1778ms
+   ✓ health.enroll: a program’s renewal, reached by the clock > PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026 and covered from 1 August, the month of the generic she filled uninsured, comes to its renewal on 1 October 2027: September’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload 4959ms
+   × health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock > PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with $600 of October’s wages posted by hand she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over, until 2026-10-16; since then $930.00 is itself $580 of income and she is renewed into HUSKY D without the work, and a twin with under $580 in each of May to October is sent a notice of noncompliance, not told her income was over 10633ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   ✓ health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock > PLAYER JOURNEY: on HUSKY D from 1 October 2026 on September’s $900.00, her September 2027 is $1,980.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 October 2027 with no gap, and no work is asked 3782ms
+ ❯ tests/evidence-g07-life.test.ts (29 tests | 5 failed) 41682ms
+   ✓ readiness > PLAYER JOURNEY: an hour of practice builds Memory 27/13 as much at readiness 90.8 as at 43.7, and the tired hour is told so; Profile shows each 1306ms
+   ✓ readiness > school.prepare: a step of the scene set by the clock moves the work by focus held to 0.5–1.1 and grows Focus by focus unheld 1316ms
+   ✓ readiness > plays.read and brief.prepare: Proof read and a brief broken down grow the script and Imagination 27/13 as much 1479ms
+   ✓ readiness > PLAYER JOURNEY: school.learn_part, the Carlotta part the clock casts her in by January, learned at the two readinesses 7118ms
+   ✓ weather/trainingAt > PLAYER JOURNEY: a dry hour under freezing is a Work Out indoors: Saturday 9 January 2027, −2 °C to 9:00 AM, against a mild dry hour’s run 2441ms
+   ✓ seasons/flu > PLAYER JOURNEY: the clock’s health week brings the flu on 2 November: five days of it, 25 condition, and the work judged that week meets it ill 2270ms
+   ✓ seasons/flu > with the flu, Work Out is refused in its words through the command, the save unchanged and across a reload; Profile holds the work back; once over, it’s taken 4233ms
+   ✓ seasons/flu > school.call_in_sick is taken on the flu’s Wednesday at condition 55 or more, the day’s classes excused; once it’s passed, refused 1838ms
+   ✓ seasons/flu > New Haven’s flu weeks are its cold ones: a draw that is a flu in any November week brings none on 7 September 346ms
+   × seasons/flu > an unseen flu is told, “You Have The Flu”, with nothing to pay 2458ms
+     → expected 'You have the flu until November 7, 20…' to contain 'It costs nothing.'
+   ✓ seasons/flu > Profile’s For Work reads Held Back in the flu, and its note says the flu holds back the body 2685ms
+   ✓ holidays > PLAYER JOURNEY: a meal paid by debit card the day before Thanksgiving posts on Monday 30 November, the holiday no bank day; the Calendar shows it 3168ms
+   ✓ holidays > a doctor’s visit booked from Wednesday 4 November, 24 days on, a Saturday, goes to the Monday 1666ms
+   ✓ holidays > a doctor’s visit booked from Monday 2 November, 24 days on, isn’t put on Thanksgiving Day: it’s Friday 27 November 1656ms
+   ✓ holidays > LIFE FIXTURE (London): England’s repeat ordered on 30 March 2026 is ready on 8 April, past Good Friday and Easter Monday, and collected at the 13 April week 817ms
+   × injuries > PLAYER JOURNEY: a workout that pulls a muscle adds 6 stress and takes 4 morale against the same workout unhurt, and the midnight 1 more of each 192ms
+     → expected 'It takes 21 days to mend, and you can…' to be '21 days to mend.' // Object.is equality
+   ✓ injuries > the next Work Out is refused in trainingRefusal’s words through the command, the save unchanged and across a reload; mended, it’s taken 1128ms
+   × injuries > LIFE FIXTURE (New Haven, uninsured): an everyday injury drawn at midnight by the clock bills its care, due in 30 days, and is paid then, once 85ms
+     → expected 'It takes 10 days to mend, and you can…' to be '10 days to mend. Your share of its ca…' // Object.is equality
+   × injuries > PLAYER JOURNEY: a work-study crew shift that pulls a muscle is work: workers’ compensation pays the care, nothing is billed, and training is refused 578ms
+     → expected 'It takes 20 days to mend, and you can…' to be '20 days to mend. It happened at work,…' // Object.is equality
+   ✓ chronic > PLAYER JOURNEY: a condition begins at the month’s turn by the clock for a body of BMI 32 at fifty: diabetes on 1 September, said, and filled; a healthy-weight twin of the same draws doesn’t begin it 703ms
+   ✓ chronic > LIFE FIXTURE (New Haven, uninsured): a month’s care unpaid on 1 February leaves depression lapsed, and the next health week takes 3 morale from her and not from her twin who paid 501ms
+   × chronic > PLAYER JOURNEY: asthma let go doubles the emergencies: on the health week of 7 September the student who let it go is taken to the emergency room, her twin who kept it up isn’t 938ms
+     → expected 'The emergency room, Yale New Haven Ho…' to be 'The emergency room, Yale New Haven Ho…' // Object.is equality
+   ✓ chronic > PLAYER JOURNEY: high blood pressure last reviewed 13 months ago is booked for its review at a New Haven practice at the first health week, and the clock keeps it 333ms
+   ✓ body > PLAYER JOURNEY: five broke days leave her lighter than her fed twin by 5 × habit × 36/76 ÷ 12,585 kg, and the person look prints both bodies 658ms
+   ✓ body > PLAYER JOURNEY: a 170 cm body starving loses weight each broke midnight, and the first under BMI 12 (34.68 kg) ends the life, starved 592ms
+   ✓ body > a 150 cm body starving isn’t held at 30 kg: from 27.3 kg (BMI 12.1) it stays under 27.4 kg overnight, and its starved end is set within thirty days, as a 170 cm body’s is 764ms
+ ❯ tests/evidence2-b03.test.ts (20 tests | 2 failed) 74806ms
+   ✓ holidays > PLAYER JOURNEY: New Haven’s Calendar in March 2027 has Connecticut’s Good Friday and no other state’s day, though she was born in New York, which doesn’t keep it 7133ms
+   × holidays > PLAYER JOURNEY: a doctor’s visit whose 24-day wait ends on Good Friday is booked for Monday 29 March, and kept; a meal paid by debit card the day before posts that Monday, the bank keeping the Federal Reserve’s days 7304ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   ✓ holidays > PLAYER JOURNEY: a debit card reported lost the day before Thanksgiving comes in Chase’s seven business days on Monday 7 December, rushed in two on Monday 30 November, and the card stopped meanwhile pays nothing 5405ms
+   ✓ holidays > PLAYER JOURNEY: Bank of America decides an application made the day before Thanksgiving in its two business days, on Monday 30 November, and the $100 sent from Chase arrives in Chase’s three, on Tuesday 1 December 2354ms
+   ✓ holidays > PLAYER JOURNEY: Chase’s Overdraft Assist waits for the end of Friday, the business day after Thanksgiving: Friday’s work-study wages spare the fee, and a deeper overdraft is charged Wednesday’s at Friday’s end, not Thursday’s, and Thanksgiving’s groceries, posted on the Friday, at Monday’s 6069ms
+   ✓ holidays > LIFE FIXTURE (London, a visa’s enrolment booked as a save from before 2026-10-09 has it): slept through on 26 March 2026, it’s booked again for Thursday 2 April, the last business day before the warning’s tenth, past Good Friday and Easter Monday 694ms
+   × injuries > LIFE FIXTURE (New Haven, uninsured): an everyday sprain’s care is $699.13, worked from CARE’s $180 and $100 grown by the BLS physicians’ services index and the 1.75 the uninsured are billed, and paid once at its due date 147ms
+     → expected 'It takes 10 days to mend, and you can…' to be '10 days to mend. Your share of its ca…' // Object.is equality
+   ✓ body > PLAYER JOURNEY: an 86th birthday draws the year from the weight the game moved: five broke days take a twin under BMI 18.5 to the Lancet’s 1.51, and a seed between the two chances ends only her year 2092ms
+   ✓ body > PLAYER JOURNEY: a condition’s onset reads the weight a month of broke days moved: diabetes begins on 1 October for a twin at BMI 30.5 and not for her twin at 29.4 2106ms
+   ✓ body > twenty days ordered in leave her heavier than her twin who ate in by Hall’s rule on 134 kcal a day (USDA ERS), 0.209 kg, his 23.9 a kilogram spent back on what she gained 1826ms
+   ✓ mortality > PLAYER JOURNEY: the midnight after she’s worn to nothing redraws the year at 2.93 times the table and half worn at 1.55, from the condition then: each seed’s end where its own draw puts it, and the half-worn seed a sound redraw would have spared ends 740ms
+   ✓ mortality > PLAYER JOURNEY: the end her 86th birthday drew is the one that comes, and A Life, Ended shows her name, the dates, Aged 86, New Haven, her one payslip’s six hours at $23.00, every account she held, and Back To The Slots 595ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: the hour’s fit turns at its edges: an early riser’s read at 11:59 AM is 1.0914 of her plain twin’s and at noon the same; a night owl’s at 4:59 PM the same and at five 1.0914 4081ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: the first class at nine on Monday 31 August grows each skill 1.0914 times as much for an early riser as for her plain twin, and 0.8909 for a night owl 714ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: the work judged at nine on 8 September meets an early riser at 1.0914 of her plain twin’s readiness, and the first Cabaret night at eight meets a night owl at 1.0914 4708ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: a co-lead at 15 (TEST SETUP) becomes a Friend at the cast list’s ten for a plain player and stays 23.545 for a detached twin: the list lifts only the plain one a friend’s half point, her look says Friend, and the first Carlotta night lifts her a point 21538ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: a classmate at −17.9 (TEST SETUP) whose lead she took is cut 2 by the cast list to −19.9 for a plain player and 2.196 to −20.096 for one who keeps accounts, a Rival on her look 6923ms
+ ❯ tests/evidence-g30-ui.test.ts (29 tests | 2 failed) 98988ms
+   ✓ trait-hygieneDrift > soils an orderly body 1.327 an hour on the clock, a plain one 1.6 and a chaotic one 1.976: from 95, six hours leave 87.04, 85.40 and 83.14, the same across a save and a load at the third hour 565ms
+   ✓ trait-hygieneDrift > PLAYER JOURNEY: six hours on, the Look After menu offers each a Shower from where its hygiene stands, readiness by the dials; pressed, it takes a tenth of what it washed off the stress, more for the chaotic 421ms
+   ✓ trait-hygieneDrift > PLAYER JOURNEY: three hours after a shower, an orderly or plain body is refused another in the command’s words, You’re already clean., grayed on the menu, where a chaotic one at 94.07 showers 514ms
+   ✓ trait-moraleSwing > takes 3.530 off a self-critical mood at the fall’s evaluation on the clock, a concern for each, 3 off a plain one and 2.398 off a self-assured one: TURNS.concern’s 3 by the swing 8211ms
+   ✓ trait-moraleSwing > lifts a self-critical mood 2.354 when the spring cast list goes up with a lead of her own, a plain one 2 and a self-assured one 1.598: CAST_LIST.ownLead’s 2 by the swing 10281ms
+   × trait-illnessToll > mends the ankle the same first-morning workout sprains in 4 days for a resilient body where a plain one takes 7, and refuses Work Out in trainingRefusal’s words till each mends, across a reload 71ms
+     → expected 'It takes 7 days to mend, and you can’…' to contain '7 days to mend.'
+   × trait-illnessToll > takes the flu’s 25 condition and 30 energy from a plain body at the clock’s weekly draw on Monday 14 December, 16.18 and 19.42 from a resilient one, once across a reload, the five days alike 1001ms
+     → expected [ Array(1) ] to deeply equal [ 'The flu. It costs nothing.' ]
+   ✓ trait-bondWarmth-bondWound > warms a detached player 8.545 to each lead sharing the spring cast where a plain twin warms 10, cuts one who holds grudges 2.581 where the plain twin is cut 2, and moves an open book both ways, 11.414 and 2.288; reloaded after, nothing moves again 12778ms
+   ✓ trait-bondWarmth-bondWound > warms a generous player 3.292 and an open book 3.424 for helping Julian with his lines through school.respond, where a plain twin and one who holds grudges warm 3; asked again, You’ve answered it. 1748ms
+   ✓ trait-bondWarmth-bondWound > warms each of the seven traits that declare a warmth by its own, helping Julian: 3 by Guarded’s 0.7705 up to An Open Book’s 1.1414 1685ms
+   ✓ trait-bondWarmth-bondWound > warms a generous player 2.195 for an evening of running lines kept, where a plain twin warms 2; slept through, it cuts one who holds grudges 3.872, a forgiving one 2.204 and the plain twin 3 1423ms
+   ✓ trait-bondWarmth-bondWound > cuts each of the seven traits that declare a wound by its own, the evening of running lines slept through: 3 by Forgiving’s 0.7348 up to Holds Grudges’ 1.2906 3003ms
+   ✓ trait-bondWarmth-bondWound > warms a generous player 2.195 for a rehearsal booked through school.ask_partner and kept, where a plain twin warms 2; slept through, it cuts a peacemaker 3.853 and one who holds grudges 6.453 for the plain twin’s 5 2068ms
+   ✓ trait-company > lifts a plain player 1 for a friend in the cast on the first Carlotta night, one who needs people 1.477, a guarded one 1.279, a restless one 1.193, a homebody 0.803 and an independent one 0.557, and four friends three times that; a cast without one costs who needs people 0.955, the guarded 0.558 and the restless 0.387, nobody else anything 36754ms
+   ✓ trait-appetite > moves the body sixty days on the clock to 80.589 kg disciplined, 80.9 plain and 81.404 indulgent, as Hall’s rule worked day by day here has it; a save and a load at day thirty ends on the same gram 10849ms
+   ✓ trait-appetite > takes the indulgent body past a body mass index of 25 in those sixty days, into the Collaboration’s 1.07 where the disciplined and plain bodies stay at 1.0, and the person look says so 6002ms
+ ✓ tests/evidence-g02-life.test.ts (23 tests) 42521ms
+   ✓ calendar.cancel > PLAYER JOURNEY: a Call at 7:40 refuses a shower at 7:30 in its words; Call It Off on the Calendar takes it off the month, and the shower is taken 605ms
+   ✓ world.dismiss_decision > PLAYER JOURNEY: Dismiss on Home’s card takes the return’s question off; refused again and for no id; across a reload File It is refused; the return still comes due 10320ms
+   ✓ world.dismiss_decision > forgets a dismissed row 180 days on, its date ahead or not 5270ms
+   ✓ world.take_decision_action > PLAYER JOURNEY: File It on Home’s card files the 2026 return and closes the row; pressed again, refused with nothing filed twice, across a reload; no late notice in April; forgotten 180 days on 10010ms
+   ✓ world.take_decision_action > closes a row whose command doesn’t close it itself, and forgets it 180 days on; an unknown id and an index with no action are refused, the row left open 3980ms
+   ✓ tutorial.read > PLAYER JOURNEY: read to its end, a guide missing chapters, as ones added later would be, stays open: their commands run, and no strip asks for them 565ms
+   ✓ tutorial.read > marks a guide read to its end before 2026-10-12 finished on opening, and leaves one a chapter short as it was 407ms
+   ✓ health.appeal > PLAYER JOURNEY: Appeal It on Papers; refused a second time; overturned 60 days on, what was paid over the plan’s share comes back once, across a reload 1369ms
+   ✓ health.appeal > upheld, leaves the bill at the full price it was paid at, and the bank as the bill left it 1380ms
+   ✓ health.appeal > overturned after going to debt, the debt comes down to the plan’s share exactly, and nothing goes to the bank 1106ms
+   ✓ health.appeal > overturned after a debt was paid down past the share, what was paid over the share comes back, and the bill is settled 846ms
+   ✓ health.appeal > refuses an appeal 181 days after the denial in its words, which Papers no longer offers; a claim never denied is refused too 1618ms
+   ✓ health.apply_aid > PLAYER JOURNEY: Apply For Assistance on Papers with no income makes it Free Care, settled; nothing is paid when it falls due, across a reload 438ms
+   ✓ health.apply_aid > at $60,000 a year takes 67% off, $16.50 left; refused a second time; $16.50 is what’s paid when it falls due, once, across a reload 1845ms
+   ✓ health.apply_aid > refuses a bill past its day, gone unpaid to debt, “It’s settled or past due.”, and Papers offers it none 1402ms
+ ❯ tests/evidence-g03-life.test.ts (25 tests | 3 failed) 66110ms
+   ✓ health.book > refuses with nothing owed, “There’s nothing to see a doctor about.”, books nothing, and Papers offers no Book An Appointment 439ms
+   × health.book > PLAYER JOURNEY: picking Fair Haven, a visit the week booked, called off and booked again on Papers 24 days on and off the Sunday, owedVisit cleared, a second booking refused, kept once and billed the uninsured’s $183.98 across two reloads 1938ms
+     → expected [ [ 1790604000000, …(1) ] ] to deeply equal [ [ 1790604000000, …(1) ] ]
+   ✓ health.book > LIFE FIXTURE (Vancouver, where a prescription runs out after two years): a renewal called off and booked again is kept and the medicine filled again; a twin who left it owed has it booked again by the next week’s fill, kept, and filled again too 849ms
+   × health.choose_clinic > LIFE FIXTURE (London, which lists more than one practice): the doctor picked on Your Doctor is where the week’s visit is booked and had; a twin who picked none is seen at Soho Square 464ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   ✓ health.choose_pharmacy > PLAYER JOURNEY: Walmart picked on Your Pharmacy, a drawn high blood pressure is filled at its $4 under Yale’s $10 copay, against $10 for a twin who picked none, and again after a reload 2139ms
+   ✓ health.dental > a filling the week brings is billed at Yale’s terms, the $50 deductible and then 20% of the rest, against the full price a twin with no plan is billed 1331ms
+   ✓ health.dental > to the plan’s $1,000 a year: with $990 of it paid, the next filling is paid $10 and the rest is theirs 4204ms
+   × health.dental > refused in its own words when the bank can’t cover the year, and nothing bought or posted 90ms
+     → expected { ok: false, …(1) } to match object { ok: false, …(1) }
+   ✓ health.dental > a January filling is in the plan year that began on 1 October, so its $50 deductible, paid in October, isn’t charged again 9660ms
+   ✓ health.enroll > PLAYER JOURNEY: withdrawn, Enroll pressed puts them in HUSKY D from 1 November; again that day “You’re enrolled from November 1, 2026.”, in November “You’re enrolled.”, and care is HUSKY D’s 1975ms
+   ✓ health.enroll > PLAYER JOURNEY: withdrawn with September’s wages over every program’s limit, Enroll puts them in the marketplace from 1 November; the clock charges Access Health CT’s $706 on 1 November and 1 December, once each across a reload, and a visit is the plan’s $45 1350ms
+   ✓ health.extra_supply > PLAYER JOURNEY: Fill A Longer Supply pressed fills a drawn high blood pressure for 90 days at three of Yale’s $10 fills, $30 in one posting; no refill for twelve weeks across a reload, where a twin paid $10 a month 6492ms
+   ✓ health.extra_supply > a supply in hand is read by the health week: on 5 October a twin whose medicine ran out on 30 September, its refill unpaid, loses 3 morale; the twin holding 90 days doesn’t 2893ms
+   ✓ health.pay_bill > PLAYER JOURNEY: Pay It Off pressed settles the bill on Papers and takes it off Home’s worries; a year and a month on the clock a twin who didn’t pay is reported once, across a reload, and the one who paid never is 28519ms
+   ✓ health.pay_bill > paid from a savings account named, which falls by it while the current account doesn’t; each refusal in its own words 1273ms
+   ✓ health.pay_bill > an account named that can’t pay a medical debt, their own credit card, is refused, not silently swapped for the current account 1365ms
+ ❯ tests/evidence-g04-life.test.ts (25 tests | 2 failed) 72348ms
+   ✓ health.therapy > PLAYER JOURNEY: Yale’s course of eight, across a reload, lifts the depression for one student and not for her twin, and the week’s morale toll goes with it 5140ms
+   ✓ health.therapy > PLAYER JOURNEY: in a course, the month’s care for depression isn’t charged on the 1st as well, where the twin without one pays it 750ms
+   ✓ health.therapy > PLAYER JOURNEY: a session the bank can’t pay is held and becomes a medical bill of $322.50, due in 30 days, owed as debt when it isn’t paid 523ms
+   × health.therapy > PLAYER JOURNEY: a withdrawal ends Yale Health’s cover, and with it the course at Yale, said once; Yale then refuses, and Adna Linden takes it on at $240 486ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   ✓ health.therapy > PLAYER JOURNEY: Begin A Course Of 8, pressed on Papers, books Yale’s first session and the row then counts the sessions held 486ms
+   ✓ health.treat > PLAYER JOURNEY: Keep It Up pressed with nothing to pay with leaves depression lapsed, says so on Papers and across a reload, weighs on morale; paid on the 1st, it’s kept up again 505ms
+   ✓ health.treat > PLAYER JOURNEY: on the student, Let It Go takes arthritis’s 2 energy and diabetes’s 2 condition at the health week against a twin who kept it up; Keep It Up fills the medicine at Yale’s $10 the next week and the toll stops 1611ms
+   ✓ health.treat > PLAYER JOURNEY: asthma let go has an emergency its kept-up twin doesn’t, and type 1 diabetes let go one too; every emergency the twin had, the one left alone had as well 6646ms
+   ✓ life.birthday > PLAYER JOURNEY: born 30 August 2002, the student’s birthday is on the calendar at 9 AM, comes once across a reload, says she’s 24, puts the next on for a year on, and draws the year’s band afresh 540ms
+   ✓ life.birthday > PLAYER JOURNEY: born 29 February 2004, the birthday is on the calendar on 28 February in 2027, fires there, and is put on 29 February in 2028 5236ms
+   ✓ life.birthday > born 29 February 2004, the birthday said on 28 February 2027 is her 23rd, the age she turns that day 5303ms
+   ✓ life.birthday > PLAYER JOURNEY: a student born in 1940, who turns 86 on the Sunday, has the coming year drawn at the birthday: its end, none before it 544ms
+   ✓ life.day_rollover > PLAYER JOURNEY: across a midnight the clock reaches after a reload, a sprain weighs 1 morale and 1 stress against an unhurt twin, once; mended, it weighs nothing 488ms
+   × life.day_rollover > PLAYER JOURNEY: everyday life’s injury is drawn by a midnight the clock reaches: on this student, a bad knock at midnight on 19 November, said once, five days to mend 3222ms
+     → expected [ [ 1795064400000, …(1) ] ] to deeply equal [ Array(1) ]
+   ✓ life.end > PLAYER JOURNEY: the student born in 1940 dies at 86 at the end her birthday drew, and the clock stops there 6954ms
+   ✓ life.end > PLAYER JOURNEY: a student made at BMI 11.8 dies at her first midnight; the life opens onto LifeEnded and nothing else, and its slot says “Died At 24” and offers how it ended 530ms
+   ✓ world.tick > PLAYER JOURNEY: a London-born student’s 2026 return, raised on 1 February, is on Home until its date; the tick after closes it, Home drops it, and it’s gone a season and a half on 19462ms
+   ✓ world.tick > PLAYER JOURNEY: a row dismissed with its date 300 days ahead is forgotten 180 days on; a day’s done items go after 400 days, across a reload 13136ms
+ ❯ tests/evidence-g01-life.test.ts (26 tests | 1 failed) 10766ms
+   ✓ life.sleep > PLAYER JOURNEY: the Sleep dialog over a plan shows it will be slept through; Sleep 8 Hours misses it quietly and says so once, across a reload 592ms
+   ✓ life.sleep > PLAYER JOURNEY: a night chosen through Sleep before the first classes is read by them, Acting I building the scene craft by the readiness it left 1448ms
+   ✓ life.look_after:eat > PLAYER JOURNEY: a meal before the first classes is read by them, Acting I building the scene craft by the readiness it gave 1623ms
+   ✓ life.look_after:wash > PLAYER JOURNEY: a shower before the first classes is read by them, Acting I building the scene craft by the readiness it gave 1017ms
+   × life.look_after:exercise > PLAYER JOURNEY: a workout that hurts puts the injury on record at its end, says so, and the next is refused till it mends, across a reload 145ms
+     → expected false to be true // Object.is equality
+   ✓ life.look_after:exercise > bills an injury’s care where the plan leaves a share, due in 30 days (LIFE FIXTURE: a New Haven life outside the school) 863ms
+   ✓ life.look_after:exercise > PLAYER JOURNEY: sixteen mornings’ workouts are read by the first scene shown in class, its second half drained less by Stamina, by the drain’s own rule 1466ms
+   ✓ life.look_after:unwind > PLAYER JOURNEY: an hour unwound before the first classes is read by them, Acting I building the scene craft by the readiness it gave 768ms
+   ✓ calendar.schedule > PLAYER JOURNEY: the Calendar’s form puts Gym on the day where the player is; after a reload the clock stops at it and its handler keeps it 598ms
+ ❯ tests/scope-health.test.ts (15 tests | 6 failed) 45305ms
+   × health.choose_clinic, New Haven’s two practices > PLAYER JOURNEY: the student who picks Yale Health on Your Doctor is booked the next weekday there, at $0; her twin who picks Fair Haven 24 days on there, billed the uninsured’s $183.98; each is seen where booked, across a reload 3567ms
+     → expected { …(3) } to deeply equal { …(3) }
+   ✓ health.choose_clinic, New Haven’s two practices > PLAYER JOURNEY: withdrawn by the fifteenth day of classes, Yale Health no longer covers her, so it refuses her in its words and Papers offers no Your Doctor, only Fair Haven; her twin still at the School picks it 475ms
+   ✓ health.choose_clinic, New Haven’s two practices > PLAYER JOURNEY: booked at Yale Health, then withdrawn the same Monday, she isn’t seen there on Tuesday: “Not Seen At Your Practice”, owed, unbilled; Papers names Fair Haven, and Book An Appointment books it there 24 days on, across a reload 738ms
+   ✓ health.choose_clinic, New Haven’s two practices > PLAYER JOURNEY: a visit booked at Yale Health is had there though Fair Haven is picked before the day; until 2026-10-15 it was had wherever was picked on the day 492ms
+   × health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock bills > PLAYER JOURNEY: a visit the 2 November week draws is booked for Thanksgiving’s Friday at Fair Haven and kept; the bill is the $45 copay, the plan pays $60.13 of $105.13, no deductible is touched; it’s paid once on its due day from checking to Medical Care, across two reloads, and Papers shows both 1306ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   ✓ health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock bills > PLAYER JOURNEY: the same visit denied (TEST SETUP) is billed $183.98 with nothing paid by the plan; appealed on Papers and overturned, it’s the $45 share and the plan’s $60.13, and what was paid over the share comes back once 2146ms
+   ✓ health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock bills > PLAYER JOURNEY: an emergency Yale Health paid on 31 August, the plan $3,273.84 of $3,323.84, paid nothing once a withdrawal that day cancels the cover back to 1 August 652ms
+   ✓ health.appointment: a New Haven prescription past its first year > PLAYER JOURNEY: high blood pressure diagnosed on 1 September 2026, its prescription taken at the first fill and renewed by nothing until the review of 30 September 2027, is filled past 7 September 2027 all the same, as Connecticut sets no date it runs out; no “A Prescription Ran Out”, and the review renews it 14508ms
+   ✓ health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center > PLAYER JOURNEY: a Yale Health member who picks nothing is booked at Yale Health the next weekday and seen there at $0, across a reload 813ms
+   × health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center > PLAYER JOURNEY: a member who picks Fair Haven on Your Doctor is billed the uninsured’s $183.98 for the visit the clock keeps there, paid once on its due day across reloads; her twin who picks nothing is seen at Yale Health at $0 1682ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   × health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center > PLAYER JOURNEY: somebody Yale Health doesn’t cover, withdrawn by the fifteenth day, is given Fair Haven with nothing picked, 24 days on, as before 610ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   × health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center > PLAYER JOURNEY: a save an older build wrote, its member booked at Fair Haven by default and her twin by a pick, is opened: the default’s appointment is had at Yale Health on its date at $0, once, the pick’s at Fair Haven at $183.98; the same appointment in a save this build wrote stays at Fair Haven 1623ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   × health.choose_clinic: a booking with nothing picked is had where it was booked, whatever the cover does before its day, reloaded or not > PLAYER JOURNEY: uncovered on her leave, she’s booked at Fair Haven 24 days on by the 25 January week; she buys Affiliate cover; the visit is had at Fair Haven and billed $187.20, played straight through and reloaded before its day alike; canceled and booked again, it’s Yale Health the next weekday at $0 5785ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   ✓ health.choose_clinic: a booking with nothing picked is had where it was booked, whatever the cover does before its day, reloaded or not > PLAYER JOURNEY: uncovered on her leave, she’s booked at Fair Haven 24 days on by the 20 December 2027 week; back at the School on 3 January 2028, Yale Health covers her again, and the visit is had at Fair Haven and billed alike, played straight through and reloaded 10776ms
+ ❯ tests/evidence2-b06.test.ts (15 tests | 1 failed) 162806ms
+   ✓ tax.pay > PLAYER JOURNEY: $200.00 typed into Pay goes to the tax, then the penalty; $100.00 more all to the penalty; blank pays the penalty’s $45.28 before any interest; the notices stop, Pay goes, and no levy follows where an unpaid twin is levied 24545ms
+   ✓ tax.pay > charges no interest on the paying-late addition paid within 21 days of the assessment, and from the assessment on one paid after (IRC 6601(e)(2)(A)) 1525ms
+   ✓ documents.permission > PLAYER JOURNEY: a student the clock graduates applies for OPT on Papers before Commencement; the degree moves the look at her status; decided 3 June, valid twelve calendar months, said with both dates; ended by ninety days without work 40070ms
+   ✓ documents.us_status > PLAYER JOURNEY: the degree the clock confers moves the look; on the program’s end she is asked “Your US Status Is Ending”, out of status sixty days on, and her marketplace plan ends with the month, where a twin who applies for OPT from the decision keeps hers 5823ms
+   × documents.us_status > DEFECT: the marketplace, taken in her fifteen days with Covered Connecticut not hers in 2027, never begins once she is out of status: the month’s look ends it before its 1 April and says so, the notice when her cover ends offers her no marketplace, and no premium is ever taken 8659ms
+     → expected [ [ 1806553800000, …(1) ] ] to deeply equal [ [ 1806553800000, …(1) ] ]
+   ✓ benefits.assistance_month > PLAYER JOURNEY: a graduate on unemployment is paid $306 less 30% of four Sundays’ $372 and the month’s interest over $217, rounded up to the dollar, in literal figures; her claim exempts her from the time limit, so the fourth month is paid where a twin with no claim is cut off; the card holds what was paid less what the groceries took 25656ms
+   ✓ benefits.assistance_month > DEFECT: a claim made at nine on the evening of 24 January is paid at nine on the 31st, still January in New Haven: it reads December, $306, not January’s weeks, which are the month before only in UTC 591ms
+   ✓ benefits.assistance_month > PLAYER JOURNEY: in the Summer Cabaret’s company her Friday stipends are the work that keeps a student’s claim open in the summer; a twin without the company is refused, and her claim isn’t closed through August 14216ms
+   ✓ benefits.assistance_month > DEFECT: the months the Cabaret’s wages are read pay a one-person household at least SNAP’s least, $25 in FY2027 (7 U.S.C. 2017(a); USDA’s cost-of-living adjustment of 21 August 2026), not nothing on July’s $1,875 or $11-odd on August’s $1,500 4715ms
+   ✓ benefits.assistance_month > BC Income Assistance, in Vancouver, where a New Haven life never lives: CAD 560 by the clock into the account, 21 days after applying and every 30 after, refused over CAD 5,000 of assets 806ms
+   ✓ tax.due > a return owed to New York and Connecticut, with the IRS’s part over $535, is told the $535 least and that both states charge their own, and each state’s letters and the IRS’s substitute are set (a New York quickSave life with work in New Haven) 6225ms
+   ✓ tax.due > the IRS owed exactly nothing is told so, with New York’s own; owed $1,000, told the $535 least and charged $550 filed seventy days late (New York quickSave lives) 13835ms
+   ✓ tax.due > PLAYER JOURNEY: a return due a refund left unfiled is told the refund waits, and in the year and a day after its due date nothing of the IRS’s or a state’s is ever put on the calendar for it, pending or done 13724ms
+   ✓ documents.apply_ssn > Discover reads the number: with it and a month’s wages past $25,000 a year it lends $2,500 over 36 months at $78.33; her twin without it is refused for want of it; no played life’s wages reach that line 2217ms
+ ❯ tests/remaining-health-eligibility.test.ts (11 tests | 3 failed) 23621ms
+   × health.apply: HUSKY D applied for on its notice, the month before read, decided after thirty days > PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027: a notice, thirty days from its receipt, uncovered meanwhile, denied on 8 February; one notice each across a reload, the same in one jump as day by day; and she may apply again 3181ms
+     → expected ' Monday, January 4, 2027 · Actress Go…' to contain 'A Notice Of Noncompliance HUSKY D cou…'
+   ✓ health.apply: HUSKY D applied for on its notice, the month before read, decided after thirty days > PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $182,500, $465.00, she’s shown the work rules short 3004ms
+   ✓ HUSKY D’s work rules: the exceptions SLATE reads, applied before a denial > PLAYER JOURNEY: a student born in 1960, 66, withdrawn, is given HUSKY D on 4 January 2027 with no work, as the rules ask nothing of somebody 65 or over; her twin born in 2001 is shown them short 2424ms
+   ✓ HUSKY D’s work rules: the exceptions SLATE reads, applied before a denial > PLAYER JOURNEY: withdrawn, she applies for SNAP on Papers on 20 November 2026 and it pays in December, while she’s under its work rules: on 4 January 2027 HUSKY D is hers with no work; her twin without SNAP is shown the work rules short 2292ms
+   × HUSKY D’s work rules: the exceptions SLATE reads, applied before a denial > PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the marketplace, applies for HUSKY D and asks for the hardship: approved from 1 December, reaching back to the stay, which HUSKY D now pays where the hospital’s charity had, the marketplace ending as it begins, its premium never taken, and the decision of 8 February passes it by, across a reload 962ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   ✓ HUSKY D’s renewal: the six months before read, then a notice and thirty days, then the end said ten days ahead > PLAYER JOURNEY: $600 of wages in June 2027 (TEST SETUP) renew her on 1 October to 1 April 2028, said once; the same wages in March, outside April to September, bring a notice of noncompliance 4932ms
+   × HUSKY D’s renewal: the six months before read, then a notice and thirty days, then the end said ten days ahead > PLAYER JOURNEY: with no work and under $580 of income in April to September 2027, the renewal of 1 October sends a notice; covered to 30 November, decided on 5 November, ended with November, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days 2450ms
+     → expected [ [ 1827639000000, …(1) ] ] to deeply equal [ [ 1827639000000, …(1) ] ]
+   ✓ Covered Connecticut is for an income HUSKY D’s line doesn’t take, and the premium tax credit reaches a 1040-NR in 2026 > FIXTURE: an F-1 student on a month’s $1,500.00, between the credit’s $1,304.17 and HUSKY D’s $1,835.40, barred from HUSKY D by her status, is given the marketplace, not Covered Connecticut; at $2,052.00, Covered Connecticut; a citizen at $1,500.00, HUSKY D 4125ms
+ ❯ tests/evidence2-b02.test.ts (14 tests | 5 failed) 51002ms
+   ✓ health.appeal_decided > PLAYER JOURNEY: an appeal is taken once and within 180 days, and decided 60 days on; the 180th day is the last 5107ms
+   ✓ health.appeal_decided > PLAYER JOURNEY: paid, then overturned, gives the $138.98 paid over the share back to the account it was paid from, and nothing to any other 1774ms
+   ✓ health.appeal_decided > PLAYER JOURNEY: gone to debt, the decision is what Pay It Off pays: upheld, all $183.98; overturned, the $45 share 3994ms
+   ✓ health.appointment > PLAYER JOURNEY: a visit the week books, kept, ends in a referral, a specialist booked 31 days on, seen, and referring no further 2336ms
+   ✓ health.appointment > PLAYER JOURNEY: in New Haven a prescription a year old is filled all the same; a visit kept renews it, and a review kept moves the next one to a year after it 16592ms
+   ✓ health.appointment > a visit owed and never booked again doesn’t swallow the next one the week draws: that week books a doctor 713ms
+   × health.bill > PLAYER JOURNEY: a sprain’s $699.13 of care, uninsured, falls due 30 days on and is paid from the checking account, Settled on Papers 329ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   × health.bill > PLAYER JOURNEY: unpaid in a drained twin, the sprain’s care is $699.13 of medical debt and Owed As Debt, and the midnight’s worry costs 4 of stress and 2 of morale against the paid twin 332ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   × health.bill > A Medical Bill Went Unpaid says what the injury was in the sentence’s own case 211ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   × injury.comp > PLAYER JOURNEY: off six days, the first three are Connecticut’s waiting days and three are paid, $29.57; off seven, all seven are, $69.00 1970ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   × injury.comp > PLAYER JOURNEY: concussed at the Summer Cabaret’s first call, paid a week and three days’ compensation, and the stipend only for the days not off 6909ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   ✓ injury.comp > the Summer Cabaret’s $375 week is paid Connecticut’s minimum, 75% of it, $281.25, to a resident and to an F-1 student alike 9779ms
+   ✓ hygiene > PLAYER JOURNEY: on stage, at the Summer Cabaret’s first night, it falls 1.6 an hour as it does anywhere awake, not twice that 829ms
+ ✓ tests/evidence2-b01.test.ts (10 tests) 8686ms
+   ✓ life.look_after:order > PLAYER JOURNEY: Order In pressed at 6′7″ and 222 lb, a BMI of 24.9997, carries her past 25 at midnight; on 1 September the month’s onset finds high blood pressure, at the overweight’s 1.465 of the risk, where her twin who ate a meal isn’t found with it 1877ms
+   ✓ life.look_after:order > PLAYER JOURNEY: born 26 August 1940 at 5′8″ and 263 lb, a BMI of 39.9996, she orders in on her first morning; her birthday draws the year at 2.76 for 40 and over, not the twin’s 1.94, and the year ends her life on 1 September; the twin lives on 1137ms
+   ✓ world.dismiss_decision > PLAYER JOURNEY: the rail’s count on GameShell is the status notice alone once the notices are read, and Dismiss on Home takes it to none; the row is refused after, and the status still ends on its date 1500ms
+   ✓ world.set_preferences > PLAYER JOURNEY: on a page holding the real provider, Pause pressed on the top bar stops the live clock, five seconds and nothing moves; Play starts it again, a second a second; the provider is mounted once throughout 363ms
+   ✓ world.set_preferences > a paused save opens paused: the provider over it, reloaded, moves nothing in a minute; Play pressed, it runs 366ms
+   ✓ health.choose_clinic > for the New Haven student Papers offers Fair Haven and Yale Health’s Student Health on Your Doctor, each with what a visit costs her and how soon, and with nothing picked the week books her at Yale Health the next weekday at $0 738ms
+   ✓ world.tick > PLAYER JOURNEY: the status notice a withdrawal raises, dated fifteen days on, is on Home until its date; the tick after closes it, Home drops it, and it’s gone 180 days after; its date was inside a season of its raising, as every raiser’s is 2192ms
+ ❯ tests/evidence3-lifepapers.test.ts (16 tests | 1 failed) 33865ms
+   ✓ health.enroll, on income the clock paid (round three) > PLAYER JOURNEY: the Inherited student’s marketplace, Enrolled from 1 November on Papers, is charged $706 on 1 November and 1 December and $786 on 1 January 2027, each once across a reload; it’s refused again in its own words before and after it begins 2121ms
+   ✓ health.enroll, on income the clock paid (round three) > PLAYER JOURNEY: withdrawn after the fifteenth day, on 9 October, Yale Health covers thirty days more, to 8 November, and Enroll gives the marketplace from 1 December, the first of the month after Yale’s end, not 1 November; no premium is taken on 1 November 2618ms
+   ✓ health.enroll, on income the clock paid (round three) > PLAYER JOURNEY: a CD’s interest, $57,928.16 at its maturity on 24 March 2027, is income the year’s record and March’s income test read, so Enroll on 1 April gives the marketplace, not HUSKY D 6005ms
+   ✓ health.enroll, on income the clock paid (round three) > PLAYER JOURNEY: the same CD set to be paid out at its end is paid $57,928.16 of interest on 24 March 2027, and the year’s record and March’s income hold it once 4452ms
+   ✓ health.enroll, on income the clock paid (round three) > PLAYER JOURNEY: the same CD broken on 10 March 2027, 198 days’ interest less Chase’s 180 days’, keeps $4,918.42, and records it as the year’s interest and March’s income, once 4838ms
+   ✓ health.appeal_decided, on the marketplace a family’s savings reach (round three) > PLAYER JOURNEY: paid when due and upheld, the bill stays $183.98, nothing comes back, the notice says the plan kept its denial, and Papers says Denial Upheld 964ms
+   × health.appeal_decided, on the marketplace a family’s savings reach (round three) > PLAYER JOURNEY: savings unlinked and checking moved to savings before the bill falls due, it goes to debt, $183.98; overturned, the debt is the $45 share, and Pay It Off on Papers pays $45.00 and settles it 1555ms
+     → expected 'The plan reversed its denial for a do…' to contain 'you owe its share, $45.00.'
+   ✓ documents.us_status, a marketplace plan bought in the grace (round three) > PLAYER JOURNEY: the F-1 takes $10,110.10 of September’s interest, over Connecticut’s line, and is given the marketplace in her grace from 1 December; asked “Your US Status Is Ending” for 17 October, out of status that day, her plan ends on the 1 November look without a premium taken, where the citizen who did the same keeps hers and pays $706 on 1 December 4499ms
+   ✓ documents.us_status, a marketplace plan bought in the grace (round three) > PLAYER JOURNEY: the plan she lost out of status never began, and the 1 November notice says it won’t, as Covered Connecticut’s does, not that it has ended; with Yale Health still covering her that morning, her cover isn’t counted lost 380ms
+   ✓ world.tick, with the undated rule gone (round three) > PLAYER JOURNEY: the F-1’s “Your US Status Is Ending”, dated 17 October, is closed by the first tick after it, leaves the open list, and is kept 180 days from closing, gone by the 183rd, across a reload 1841ms
+   ✓ world.tick, with the undated rule gone (round three) > a save an older build left with undated rows (TEST SETUP) loads with the open one dated ninety days from its raising, closed by the tick after that date, and the closed one let go 736ms
+   ✓ documents.apply_ssn, from a hospital bed the week drew (round three) > PLAYER JOURNEY: the F-1 admitted by her first health week (TEST SETUP: the draw forced to a stay) is refused “Not from a hospital bed.” where her twin, that evening, is sent to the office; discharged, she applies 659ms
+   ✓ health.choose_clinic, for a family-made life (round three) > PLAYER JOURNEY: the Scraping family’s student who picks Fair Haven on Your Doctor is booked 24 days on there and billed the uninsured’s $183.98; her twin who picks nothing is booked the next weekday at Yale Health, at $0 1961ms
+   ✓ health.appointment, a visit called off on a family-made life (round three) > PLAYER JOURNEY: a visit called off is owed on Papers, and the next week the draw sends to the doctor books it; kept, it’s owed no more; a specialist it referred to, called off, is booked by the next such week as the specialist, 31 days on, not as the week’s own visit 1103ms
+ ❯ tests/scope-cover.test.ts (9 tests | 2 failed) 47013ms
+   × health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 > PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027 is given HUSKY D on 1 February for January at the School, refused it on 1 March for a February wholly on the leave, in The Marketplace’s words, and Enroll buys the marketplace; with $600 of wages in February (TEST SETUP) she’s given HUSKY D; past the 60 days Enroll isn’t drawn 11145ms
+     → expected ' Your Affairs Papers Your returns, yo…' to contain 'From January 1, 2027, HUSKY D asks fo…'
+   ✓ health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 > PLAYER JOURNEY: at the School all of January 2027 and withdrawn on 1 February, she’s given HUSKY D on 2 February for January enrolled; on 1 April, March after the School, she’s refused 3094ms
+   ✓ health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 > PLAYER JOURNEY: HUSKY D enrolled on 1 October 2026, from 1 August, the month of a generic filled uninsured, comes to renewal on 1 October 2027 with no work; its notice ends it with November, and pressing Enroll on 2 December 2027, November the month before, doesn’t give it back, the line says why, and Enroll buys the marketplace in open enrollment 4970ms
+   ✓ Covered Connecticut is had with the premium tax credit: none under the poverty line, and from 2027 none for an F-1 student > PLAYER JOURNEY: an F-1 student with need, withdrawn on 21 September 2026 and in her grace on 1 October, on September’s income under the credit’s $1,304.17, is given the marketplace, not Covered Connecticut 1476ms
+   ✓ Covered Connecticut is had with the premium tax credit: none under the poverty line, and from 2027 none for an F-1 student > TEST SETUP: an F-1 student on a month’s $2,052.00 (set by hand) is given Covered Connecticut from 1 November 2026, and the marketplace from 1 January 2027; a citizen who earns it, Covered Connecticut from 1 January 5771ms
+   × Covered Connecticut is had with the premium tax credit: none under the poverty line, and from 2027 none for an F-1 student > TEST SETUP: Covered Connecticut held from 1 November 2026 by an F-1 student kept in status past her grace ends on 1 January 2027, said, and the marketplace is open to her; a citizen’s runs on 1384ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   ✓ a program taken on a personal leave without Affiliate cover, and Yale Health back on the return > PLAYER JOURNEY: an Inherited family’s student enrolls in Covered Connecticut on her leave, on January’s interest; back at the School on 3 January 2028, Yale Health covers her and Covered Connecticut ends at the 1 February look, said 6410ms
+   ✓ a program taken on a personal leave without Affiliate cover, and Yale Health back on the return > PLAYER JOURNEY: a student with need takes HUSKY D on her leave (TEST SETUP: the work it asks); back at the School it stays beside Yale Health, and its renewal on 1 February 2028 is met by her being at the School 7684ms
+   ✓ health.enroll: a renewal kept by a month at the School, played > PLAYER JOURNEY: on a personal leave from 20 January 2027, she enrolls in HUSKY D on Papers on 21 January, from 1 January; its renewal on 1 July is kept, Home saying January 2027 met its work rules at the School, said once across a reload; her twin who enrolls on 1 February is renewed on 1 August with no month at the School, and Home draws the notice of noncompliance 5064ms
+ ✓ tests/remaining-health-billing.test.ts (7 tests) 27839ms
+   ✓ repriceCare: a bill as issued stands, and a change of cover is a line of its own > PLAYER JOURNEY: an emergency and a $0 visit Yale Health paid in the fall’s first week; withdrawn on 8 September, the cover canceled back to 1 August: the emergency’s $50 bill stands, a line credits it and takes the plan’s $3,273.84 back; the visit gets a line of $183.98, the plan’s $105.13 back; paid once on its due day, the same in one jump as day by day 2806ms
+   ✓ repriceCare: a bill as issued stands, and a change of cover is a line of its own > PLAYER JOURNEY: on a personal leave without Affiliate cover, the flu at urgent care in the 25 January week (TEST SETUP) is billed $336.96 uninsured; Affiliate cover bought the next day credits all of it off the open bill, and the plan’s $192.55 is written on its line: $0 + $192.55, its price; nothing paid or refunded, across a reload 5379ms
+   ✓ repriceCare: a bill as issued stands, and a change of cover is a line of its own > GUARD: a credit on care whose bill went to medical debt comes off the debt, and none goes back to the bank (FIXTURE: the bank emptied, and the cover moved back by hand after the bill fell due, which no played journey does: both windows close before a bill is due) 1531ms
+   ✓ HUSKY D kept at its renewal through work, read over Connecticut’s six months > FIXTURE: $600 of wages in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with the same wages in August, outside the six months, the same notice 6157ms
+   ✓ the insured paths, from cover to a bill paid once, the same in one jump as day by day > PLAYER JOURNEY: Yale Health at its Health Center, the next weekday at $0, the plan’s $105.13 kept; her twin who picks Fair Haven is booked 24 days on and billed $183.98, the plan paying none, paid once on its due day; each the same in one jump as day by day 4440ms
+   ✓ the insured paths, from cover to a bill paid once, the same in one jump as day by day > PLAYER JOURNEY: Access Health CT’s silver plan for an Inherited family’s student: $706.00 taken on 1 November and 1 December once each; a visit booked 24 days on, Thanksgiving skipped to Friday 27 November, billed the $45 copay, the plan paying $60.13 of $105.13; paid once on 27 December; the same in one jump as day by day 2740ms
+   ✓ the insured paths, from cover to a bill paid once, the same in one jump as day by day > PLAYER JOURNEY: HUSKY D for the Comfortable family’s student, and Covered Connecticut for the Inherited family’s on September’s $2,052.00 of interest: the 27 November visit leaves her $0 with no bill, the plan’s $105.13 on the care log, “Nothing to pay.”; no premium taken; the same in one jump as day by day 4785ms
+ ❯ tests/evidence-g09-life.test.ts (20 tests | 1 failed) 62234ms
+   ✓ knob:spending > prices a frugal life’s meal at $4.29 and the midnight’s groceries at $8.59, a plain one’s at $5.00 and $10.00, a spender’s at $6.08 and $12.16 673ms
+   × knob:illnessToll > mends the same broken bone in 28 days for a resilient body where a plain one takes 43, and refuses Work Out in trainingRefusal’s words till each mends, across a reload 210ms
+     → expected 'It takes 43 days to mend, and you’re …' to contain '43 days to mend, and off work for the…'
+   ✓ knob:illnessToll > lays a resilient body up 28 days, not 43: back in class on Monday 21 September, where the plain twin is excused and sent on a medical leave by the dean 3021ms
+   ✓ knob:illnessToll > takes an emergency’s 20 condition and 20 energy from a plain body at the clock’s Labor Day health draw, and 12.95 of each from a resilient one 690ms
+   ✓ knob:appetite > drifts thirty days as Hall’s rule has it, the indulgent heavier and the disciplined lighter, the plain held; a reload at day fifteen ends on the same gram 8631ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > moves an early riser’s 9 AM read of a scene 1.0914 times a plain twin’s, and a night owl’s 0.8909 times 1237ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > moves a night owl’s 7 PM read 1.0914 times a plain twin’s, and an early riser’s 0.8909 times 902ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > moves the three alike at 4 PM, nobody’s hour, and a plain twin alike at nine, four and seven 1830ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > moves each part 1.1364 times a plain twin’s for the trait that prepares it that way, read, learned, transcribed or revised through school.prepare, and the other three parts as the plain twin’s 3769ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > warms a detached player 8.545 to each lead sharing the spring cast where a plain twin warms 10, and cuts one who keeps accounts 2.196 where the plain twin is cut 2 11274ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > warms a detached player 2.563 for helping Maya with her lines where a plain twin warms 3, answered through school.respond 1483ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > cuts one who keeps accounts 3.294 for an evening of running lines slept through, where a plain twin is cut 3 2425ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > warms a detached player 1.709 for a rehearsal kept with the scene partner where a plain twin warms 2, booked through school.ask_partner 1092ms
+   ✓ knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > lifts a restless player 1.193 for a friend in the cast on the first Carlotta night, a homebody 0.803 and a plain one 1; a friendless cast costs the restless 0.387 and the others nothing 23985ms
+ ❯ tests/safetynet.test.ts (18 tests | 2 failed) 10298ms
+   ✓ Connecticut > pays unemployment on 40 times the benefit, the two best quarters over 26, from its floor to $721, with no waiting week 508ms
+   × Connecticut > covers a low month by HUSKY D, to 175% of last year’s poverty line by Covered Connecticut, and above it by Access Health CT 76ms
+     → expected 'It’s outside open enrollment, October…' to match /23 October to 15 January/
+   ✓ unemployment > is claimed where they live when the wages’ state isn’t kept, on the base period, with an unpaid waiting week, and paid as income 336ms
+   × the tax return > takes it off an insured Connecticut patient’s hospital bill on an application before it’s due, and not twice 33ms
+     → expected 'The hospital’s financial assistance h…' to match /charity is off it already/
+   ✓ the tax return > is ready in February, filed for a refund 21 days on, or a balance from the bank, or owed 8451ms
+ ✓ tests/commands-kept.test.ts (15 tests) 7396ms
+   ✓ orientation > catches up a session missed by hand, once its time has come, as long as the session 378ms
+   ✓ a partner, and making it right > calls off a rehearsal late, which costs the partner’s trust and leaves something to make right, and amends repair it 3238ms
+   ✓ papers > issues an ID card where SLATE issues one, charges its fee, and refuses a second 595ms
+   ✓ papers > replaces a lost license where it was issued, at the issuer’s fee, free in New York stolen with the police’s report 333ms
+   ✓ a life in Mexico > pays the Pensión para el Bienestar every two months to a Mexican of 65 living there, and nobody younger 937ms
+   ✓ a French bank > offers a loan for an overrun three months past the overdraft, and taking it clears the overrun into a loan 638ms
+   ✓ what papers open, in the kept world (from 2026-10-09) > lets a new bank take somebody only with a photo ID in force, which a passport gives 381ms
+ ❯ tests/defects-g8-4.test.ts (13 tests | 2 failed) 8642ms
+   ✓ a withdrawal by the fifteenth day of classes says when Yale Health’s cover ends > PLAYER JOURNEY: in a fall it goes back to 1 August, the insurance term’s start, three weeks before the term began 1285ms
+   ✓ a withdrawal by the fifteenth day of classes says when Yale Health’s cover ends > PLAYER JOURNEY: in a spring it ends that day, and care since 4 January stays covered by the fall’s insurance term 4763ms
+   × HUSKY D’s work test reads last month’s work: its hours and its pay until 2026-10-17, and since then its pay as income > until 2026-10-16 it read: ends at renewal for somebody whose June was an unemployment benefit and interest and no work, however much; since then $720 of them renews her, and $520 brings a notice of noncompliance 44ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   × HUSKY D’s work test reads last month’s work: its hours and its pay until 2026-10-17, and since then its pay as income > until 2026-10-17 it read: until 2026-10-16 it read: renews on 80 hours, whatever the pay, and not on 79; work paid in May or July isn’t June’s; since then any of the six months before the renewal counts, May among them, and July, its own month, still doesn’t; since then the hours aren’t read: 80 hours paid $400 in June bring a notice of noncompliance, and May’s 80 paid $1,840 renew her by their income 14ms
+     → expected 'HUSKY D is renewed until its next ren…' to match /May 2027 met its work rules by its in…/
+   ✓ a program is called by its own name > on Your Cover, on the bills’ subtitle and on Home’s Papers line 831ms
+   ✓ Yale’s dental plan runs Yale’s plan year > bought in October or in July, it runs to the next 30 September 1367ms
+ ✓ tests/carried.test.ts (19 tests) 10911ms
+   ✓ working abroad > credits the foreign tax against the US’s on that income, and has Canada’s back under CAD 15,000 311ms
+   ✓ the UK’s tax year, and Canada’s tax on residuals > settles the UK years at tax season 517ms
+   ✓ catching the flu > is likelier short of sleep and under stress, by the tempered studies 4045ms
+   ✓ interest > reaches the return and the month’s income, as it was paid 551ms
+   ✓ the pharmacy, the dentist and the optician > bring the dentist to about three in five a year, and an eye exam only to those with lenses 1893ms
+   ✓ conditions carried > are drawn once, at a young adult’s rates 1739ms
+   ✓ conditions carried > let asthma left alone double the emergencies 1500ms
+ ❯ tests/defects3-50-70.test.ts (7 tests | 1 failed) 17852ms
+   × documents.us_status > PLAYER JOURNEY: an F-1 student who withdraws by the fifteenth day of the spring’s classes takes the marketplace from 1 February, Covered Connecticut not being hers in 2027; out of status on the 4th, it ends at the month’s look, and the notice when her cover ends offers her no marketplace 5553ms
+     → expected [ [ 1803879000000, …(1) ] ] to deeply equal [ [ 1803879000000, …(1) ] ]
+   ✓ documents.apply_idcard > PLAYER JOURNEY: an F-1 student’s limited-term card applied for at noon on Thursday 5 November 2026 is approved by SAVE ten federal workdays on, Friday the 20th, Veterans Day not among them, and comes by mail twenty business days later, Monday 21 December, Thanksgiving not among them 2885ms
+   ✓ documents.apply_idcard > PLAYER JOURNEY: the card applied for at 9 PM on Wednesday 4 November, 2 AM on the Thursday in UTC, is approved by SAVE at 9 PM on Thursday the 19th and comes at 9 PM on Friday 18 December, its days counted as New Haven has them 3350ms
+   ✓ documents.replace_license > PLAYER JOURNEY: a license reported lost in force is refused a replacement once a new card would come after its date, and once the date has passed, in words on Papers and through the command, with nothing charged; a twin who asks in time is sent one in force 3277ms
+   ✓ documents.replace_idcard > LIFE FIXTURE (Dublin): a passport card reported lost is refused a replacement once Ireland’s fourteen days would bring it after its date, and once the date has passed, with nothing charged; a twin who asks in time is sent one 1010ms
+   ✓ What Needs You > PLAYER JOURNEY: each question an F-1 student is asked carries its date, a withdrawal’s and a tax season’s, and the guide gives no rule for a question without one 1775ms
+ ❯ tests/remaining-09-hardship.test.ts (2 tests | 1 failed) 5614ms
+   × health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 October sends its notice, Request A Hardship Exception pressed on Papers on 10 October renews HUSKY D to 1 April 2028, said once; the decision of 5 November passes it by and she’s covered into December; once each across a reload, the same in one jump as day by day; the twin who doesn’t ask is ended with November 5194ms
+     → expected [ [ 1822365000000, …(1) ] ] to deeply equal [ [ 1822365000000, …(1) ] ]
+   ✓ health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: with no stay in hospital from April to September 2027, the renewal’s notice offers no hardship: Papers says why in the engine’s words and draws no button, and the command is refused in them with nothing changed 419ms
+ ❯ tests/defects-g8-6.test.ts (13 tests | 1 failed) 2965ms
+   ✓ SNAP’s At Most is the maximum of the fiscal year in force, in the save’s money > a student’s first weeks, from 24 August 2026, show the $298 SNAP pays then, not next year’s $306 394ms
+   ✓ care for their own health no longer asks what town they’re in > nothing in the game moves a person once a life is made, which is why a town check could never fail 439ms
+   × Papers reads the charity’s, the appeal’s and the medical debt’s figures from their rules > PLAYER JOURNEY: a medical debt of exactly the reporting figure is reported, and the notice says “or more” 1403ms
+     → expected 'Your medical debt is $500.00 or more …' to be 'Unpaid a year and $500.00 or more, it…' // Object.is equality
+ ✓ tests/defects-g8-5.test.ts (12 tests) 3226ms
+   ✓ a graduate can enroll before Yale Health ends, and the cover starts as it ends > PLAYER JOURNEY: withdrawn after the fifteenth day of classes, enrolling starts cover the day Yale Health ends, with no gap 1219ms
+   ✓ a graduate can enroll before Yale Health ends, and the cover starts as it ends > PLAYER JOURNEY: withdrawn on 20 September, Yale Health runs to 20 October, and a plan waits for 1 November, never beside it 413ms
+   ✓ SNAP’s time limit leaves an enrolled student’s months alone > PLAYER JOURNEY: a student in term with three months counted is still paid, and the month isn’t counted 663ms
+ ✓ tests/costs.test.ts (10 tests) 5627ms
+   ✓ diabetes and arthritis > are drawn at a young adult’s rates, diabetes about a quarter type 1 2511ms
+   ✓ diabetes and arthritis > left alone: type 1 quadruples the emergencies, diabetes wears the body down, and arthritis tires it 2665ms
+ ✓ tests/defects4.test.ts (3 tests) 8288ms
+   ✓ statement periods across a new year > PLAYER JOURNEY: on 15 January 2027 the checking account’s December period ends at midnight on 1 January, where January’s begins, and the card’s rebuilt January 20, 2026 statement begins at nine on 20 December 2025 4657ms
+   ✓ Chase’s Overdraft Assist, the end of the item’s own business day > PLAYER JOURNEY: Wednesday’s item, the day put back inside $50 by a transfer from savings, is let go though Thursday ends past $50, and nothing is charged at Thursday’s end; Thursday’s is held for Friday’s 1770ms
+   ✓ HUSKY D held from before 1 October 2026 > PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month, from 1 September, is told at its renewal on 1 September 2027 that it’s now for a citizen or a green card of five years, not that her income was over 1850ms
+ ✓ tests/whynot-papers.test.ts (3 tests) 398ms
+ ❯ tests/defects-g8-13.test.ts (7 tests | 1 failed) 29971ms
+   ✓ a night’s delivery > PLAYER JOURNEY: reads a night fully prepared on a sufficient day as fully delivered, whatever the stamina 8161ms
+   × PLAYER JOURNEY: the Summer Cabaret of 2027, laid up by an injury on its stage > pays workers’ compensation for the days off and the stipend for the rest, and names Connecticut’s share 5844ms
+     → expected 'It takes 12 days to mend, and you’re …' to contain 'workers’ compensation pays for the ca…'
+   ✓ PLAYER JOURNEY: the Summer Cabaret of 2027, laid up by an injury on its stage > goes on paying the stipend to a member laid up by an injury at other work, which compensation pays for that wage 6298ms
+   ✓ PLAYER JOURNEY: a way at a note put back > shows The Ways At It again, the way put back gone from it, so the next is chosen 4658ms
+   ✓ PLAYER JOURNEY: a blocking note given for a missed call > closes the gap once worked, as going back through the book does 4901ms
+ ✓ tests/coverage-gaps-life.test.ts (6 tests) 5542ms
+   ✓ a plan skipped (the New Haven student’s own calendar) > frees its time for Look After Yourself, once, across a reload 404ms
+   ✓ medical debt paid off (the student’s own care bill) > weighs as a money trouble until paid, and paid, neither weighs nor is reported a year on 2284ms
+   ✓ medical debt paid off (the student’s own care bill) > unpaid a year, is reported once; paid after, the report stays on the record 1588ms
+   ✓ England’s prescription prepayment certificate (LOCATION FIXTURE: a life in London, not the New Haven student) > makes prescriptions free while it runs, and charged again after; a second is refused while it runs 985ms
+ ✓ tests/therapy.test.ts (3 tests) 6278ms
+   ✓ a course of therapy > is for depression, at a practice where you live, at its price 1751ms
+   ✓ a course of therapy > is free on the NHS in London after its six weeks, and lifts at its rate 1470ms
+   ✓ at school > is Yale Mental Health & Counseling’s for a student Yale Health covers, free, eight sessions to the end 3040ms
+ ✓ tests/claims.test.ts (4 tests) 716ms
+   ✓ a marketplace claim > appealed within 180 days, is decided 60 days on: upheld, or overturned to the plan’s share 476ms
+ ✓ tests/clinics.test.ts (4 tests) 55ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 59 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/defects-g8-13.test.ts > PLAYER JOURNEY: the Summer Cabaret of 2027, laid up by an injury on its stage > pays workers’ compensation for the days off and the stipend for the rest, and names Connecticut’s share
+AssertionError: expected 'It takes 12 days to mend, and you’re …' to contain 'workers’ compensation pays for the ca…'
+
+Expected: "workers’ compensation pays for the care and 75% of your week’s wage while you’re off."
+Received: "It takes 12 days to mend, and you’re laid up until then, kept from classes, work and training. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off."
+
+ ❯ tests/defects-g8-13.test.ts:171:25
+    169|     // The $375 week is paid 75% of the whole, Connecticut’s least for…
+    170|     // week’s wage after tax”, which it wasn’t, and this test held tha…
+    171|     expect(notice.body).toContain('workers’ compensation pays for the …
+       |                         ^
+    172|     expect(notice.body).not.toContain('two-thirds');
+    173| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/59]⎯
+
+ FAIL  tests/defects-g8-4.test.ts > HUSKY D’s work test reads last month’s work: its hours and its pay until 2026-10-17, and since then its pay as income > until 2026-10-16 it read: ends at renewal for somebody whose June was an unemployment benefit and interest and no work, however much; since then $720 of them renews her, and $520 brings a notice of noncompliance
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from January to June 2027. You stay covered while you answer, until August 4, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, HUSKY D ends on August 31, 2027, said on August 5, 2027, and you won’t get the premium tax credit while HUSKY D would take you if not for its work rules, and you can apply again in any month after one that meets them.",
++   "HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from January to June 2027. You stay covered while you answer, until August 4, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, HUSKY D ends on August 31, 2027, and you’ll be told on August 5, 2027. After that, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.",
+  ]
+
+ ❯ tests/defects-g8-4.test.ts:156:75
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/59]⎯
+
+ FAIL  tests/defects-g8-4.test.ts > HUSKY D’s work test reads last month’s work: its hours and its pay until 2026-10-17, and since then its pay as income > until 2026-10-17 it read: until 2026-10-16 it read: renews on 80 hours, whatever the pay, and not on 79; work paid in May or July isn’t June’s; since then any of the six months before the renewal counts, May among them, and July, its own month, still doesn’t; since then the hours aren’t read: 80 hours paid $400 in June bring a notice of noncompliance, and May’s 80 paid $1,840 renew her by their income
+AssertionError: expected 'HUSKY D is renewed until its next ren…' to match /May 2027 met its work rules by its in…/
+
+- Expected: 
+/May 2027 met its work rules by its income, \$580\.00 or more\.$/
+
++ Received: 
+"HUSKY D is renewed until its next renewal, on January 1, 2028. Last month’s income is within its limit, and May 2027 met its work rules with $580.00 or more of income."
+
+ ❯ tests/defects-g8-4.test.ts:187:66
+    185|     expect(may.player.health!.program!.until).toBeUndefined();
+    186|     expect(may.player.health!.pending).toBeUndefined();
+    187|     expect(titled(may, 'Your Public Cover Is Renewed')[0]!.body).toMat…
+       |                                                                  ^
+    188|     const short = huskyD('g84-work-hours-short');
+    189|     worked(short, at(2027, 6, 12), 79, 400_00);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/59]⎯
+
+ FAIL  tests/defects-g8-6.test.ts > Papers reads the charity’s, the appeal’s and the medical debt’s figures from their rules > PLAYER JOURNEY: a medical debt of exactly the reporting figure is reported, and the notice says “or more”
+AssertionError: expected 'Your medical debt is $500.00 or more …' to be 'Unpaid a year and $500.00 or more, it…' // Object.is equality
+
+Expected: "Unpaid a year and $500.00 or more, it’s reported now."
+Received: "Your medical debt is $500.00 or more and has gone unpaid for a year, so it’s now on your credit record. You can still clear it with Pay It Off, on Papers, under Health Cover."
+
+ ❯ tests/defects-g8-6.test.ts:287:29
+    285|     const notice = titled(sim, 'A Medical Debt Is On Your Record');
+    286|     expect(notice).toHaveLength(1);
+    287|     expect(notice[0]!.body).toBe(`Unpaid a year and ${formatMoney(inSa…
+       |                             ^
+    288|     expect(notice[0]!.body).not.toMatch(/over \$500/);
+    289|   }, 120_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/59]⎯
+
+ FAIL  tests/defects3-50-70.test.ts > documents.us_status > PLAYER JOURNEY: an F-1 student who withdraws by the fifteenth day of the spring’s classes takes the marketplace from 1 February, Covered Connecticut not being hers in 2027; out of status on the 4th, it ends at the month’s look, and the notice when her cover ends offers her no marketplace
+AssertionError: expected [ [ 1803879000000, …(1) ] ] to deeply equal [ [ 1803879000000, …(1) ] ]
+
+- Expected
++ Received
+
+  Array [
+    Array [
+      1803879000000,
+-     "You have no health cover from March 1, 2027. You’re out of status, so neither the marketplace nor Covered Connecticut will take you.",
++     "You have no health cover from March 1, 2027. You’re out of status, so neither the marketplace nor Covered Connecticut can take you.",
+    ],
+  ]
+
+ ❯ tests/defects3-50-70.test.ts:135:79
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/59]⎯
+
+ FAIL  tests/evidence-g01-life.test.ts > life.look_after:exercise > PLAYER JOURNEY: a workout that hurts puts the injury on record at its end, says so, and the next is refused till it mends, across a reload
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/evidence-g01-life.test.ts:595:82
+    593|     expect(days).toBeLessThanOrEqual(hurt.days[1]);
+    594|     expect(notices(sim, hurt.label)).toHaveLength(1);
+    595|     expect(notices(sim, hurt.label)[0]!.body.startsWith(`${days} days …
+       |                                                                                  ^
+    596|     // Yale Health pays a student's care in full: no bill, and the not…
+    597|     expect(healthOf(sim.player).bills).toHaveLength(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/59]⎯
+
+ FAIL  tests/evidence-g03-life.test.ts > health.book > PLAYER JOURNEY: picking Fair Haven, a visit the week booked, called off and booked again on Papers 24 days on and off the Sunday, owedVisit cleared, a second booking refused, kept once and billed the uninsured’s $183.98 across two reloads
+AssertionError: expected [ [ 1790604000000, …(1) ] ] to deeply equal [ [ 1790604000000, …(1) ] ]
+
+- Expected
++ Received
+
+  Array [
+    Array [
+      1790604000000,
+-     "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due in 30 days.",
++     "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due on October 28, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt.",
+    ],
+  ]
+
+ ❯ tests/evidence-g03-life.test.ts:252:45
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/59]⎯
+
+ FAIL  tests/evidence-g03-life.test.ts > health.choose_clinic > LIFE FIXTURE (London, which lists more than one practice): the doctor picked on Your Doctor is where the week’s visit is booked and had; a twin who picked none is seen at Soho Square
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "A doctor’s visit, Bupa Private GP (pay-as-you-go). Your share is £79.00, due in 30 days.",
++   "A doctor’s visit, Bupa Private GP (pay-as-you-go). Your share is £79.00, due on February 25, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt.",
+  ]
+
+ ❯ tests/evidence-g03-life.test.ts:394:24
+    392|     // Bupa's pay-as-you-go GP is private, and the NHS doesn't pay it:…
+    393|     // 2026-10-13 this held "There’s nothing to pay." for it, as at So…
+    394|     expect(chose.kept).toEqual(['A doctor’s visit, Bupa Private GP (pa…
+       |                        ^
+    395|     expect(didnt.kept).toEqual(['A doctor’s visit, Soho Square General…
+    396|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/59]⎯
+
+ FAIL  tests/evidence-g03-life.test.ts > health.dental > refused in its own words when the bank can’t cover the year, and nothing bought or posted
+AssertionError: expected { ok: false, …(1) } to match object { ok: false, …(1) }
+
+- Expected
++ Received
+
+  Object {
+-   "error": "The year is $312.72, more than your bank can cover.",
++   "error": "The year costs $312.72, more than your bank can cover.",
+    "ok": false,
+  }
+
+ ❯ tests/evidence-g03-life.test.ts:527:75
+    525|     broke(sim);
+    526|     const before = sim.universe.transactions.length;
+    527|     expect(sim.execute({ kind: 'health.dental', payload: { on: true } …
+       |                                                                           ^
+    528|     expect(healthOf(sim.player).dental).toBeUndefined();
+    529|     expect(sim.universe.transactions.length).toBe(before);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/59]⎯
+
+ FAIL  tests/evidence-g04-life.test.ts > health.therapy > PLAYER JOURNEY: a withdrawal ends Yale Health’s cover, and with it the course at Yale, said once; Yale then refuses, and Adna Linden takes it on at $240
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, after 1 of 8 sessions. A therapist outside Yale can take it on: choose one on Papers, under Health Cover.",
++   "Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended after 1 of 8 sessions. A therapist outside Yale can take it on: choose one on Papers, under Health Cover.",
+  ]
+
+ ❯ tests/evidence-g04-life.test.ts:286:77
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/59]⎯
+
+ FAIL  tests/evidence-g04-life.test.ts > life.day_rollover > PLAYER JOURNEY: everyday life’s injury is drawn by a midnight the clock reaches: on this student, a bad knock at midnight on 19 November, said once, five days to mend
+AssertionError: expected [ [ 1795064400000, …(1) ] ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+    Array [
+      1795064400000,
+-     "5 days to mend.",
++     "It takes 5 days to mend.",
+    ],
+  ]
+
+ ❯ tests/evidence-g04-life.test.ts:597:67
+    595|     // Yale Health leaves nothing to pay for it, so the notice names n…
+    596|     // the space the empty second sentence left behind it, which the n…
+    597|     expect(titled(sim, 'A Bad Knock').map((n) => [n.at, n.body])).toEq…
+       |                                                                   ^
+    598|     sim.advanceTo(EST(2026, 11, 25, 12));
+    599|     expect(titled(sim, 'A Bad Knock')).toHaveLength(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/59]⎯
+
+ FAIL  tests/evidence-g05-life.test.ts > health.bill > PLAYER JOURNEY: a stay’s $200 falls due and is paid from the checking account, Settled on Papers, once across a reload
+AssertionError: expected 'A stay in hospital, Yale New Haven Ho…' to be 'A stay in hospital, Yale New Haven Ho…' // Object.is equality
+
+Expected: "A stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department, 3 days. Your share is $200.00, due in 30 days."
+Received: "A stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department, for 3 days. Classes you miss while you’re there are excused. Your share is $200.00, due on October 7, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt."
+
+ ❯ stayBilled tests/evidence-g05-life.test.ts:522:47
+    520|   expect(bill).toMatchObject({ amount: STAY_COPAY, dueAt: at(2026, 10,…
+    521|   expect(bill.what).toMatch(/^A stay in hospital, Yale New Haven Hospi…
+    522|   expect(titled(sim, 'In Hospital')[0]!.body).toBe(`${bill.what}, 3 da…
+       |                                               ^
+    523|   return { sim, bill };
+    524| }
+ ❯ tests/evidence-g05-life.test.ts:529:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/59]⎯
+
+ FAIL  tests/evidence-g05-life.test.ts > health.bill > PLAYER JOURNEY: unpaid in a drained twin, is $200 of medical debt, a money trouble and Owed As Debt, until Pay It Off settles it, across a reload
+AssertionError: expected 'A stay in hospital, Yale New Haven Ho…' to be 'A stay in hospital, Yale New Haven Ho…' // Object.is equality
+
+Expected: "A stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department, 3 days. Your share is $200.00, due in 30 days."
+Received: "A stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department, for 3 days. Classes you miss while you’re there are excused. Your share is $200.00, due on October 7, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt."
+
+ ❯ stayBilled tests/evidence-g05-life.test.ts:522:47
+    520|   expect(bill).toMatchObject({ amount: STAY_COPAY, dueAt: at(2026, 10,…
+    521|   expect(bill.what).toMatch(/^A stay in hospital, Yale New Haven Hospi…
+    522|   expect(titled(sim, 'In Hospital')[0]!.body).toBe(`${bill.what}, 3 da…
+       |                                               ^
+    523|   return { sim, bill };
+    524| }
+ ❯ tests/evidence-g05-life.test.ts:550:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/59]⎯
+
+ FAIL  tests/evidence-g05-life.test.ts > health.bill > A Medical Bill Went Unpaid names the hospital as it’s written
+AssertionError: expected 'A stay in hospital, Yale New Haven Ho…' to be 'A stay in hospital, Yale New Haven Ho…' // Object.is equality
+
+Expected: "A stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department, 3 days. Your share is $200.00, due in 30 days."
+Received: "A stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department, for 3 days. Classes you miss while you’re there are excused. Your share is $200.00, due on October 7, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt."
+
+ ❯ stayBilled tests/evidence-g05-life.test.ts:522:47
+    520|   expect(bill).toMatchObject({ amount: STAY_COPAY, dueAt: at(2026, 10,…
+    521|   expect(bill.what).toMatch(/^A stay in hospital, Yale New Haven Hospi…
+    522|   expect(titled(sim, 'In Hospital')[0]!.body).toBe(`${bill.what}, 3 da…
+       |                                               ^
+    523|   return { sim, bill };
+    524| }
+ ❯ tests/evidence-g05-life.test.ts:585:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/59]⎯
+
+ FAIL  tests/evidence-g05-life.test.ts > health.month > PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where $600 of wages in July (TEST SETUP) renews it six months
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "You have no health cover from October 1, 2027. You have 60 days to enroll in the marketplace.",
++   "You have no health cover from October 1, 2027. You have 60 days to enroll in the marketplace. Enroll on Papers, under Health Cover.",
+  ]
+
+ ❯ tests/evidence-g05-life.test.ts:699:91
+    697|     expect(coverOn(idle.player, idle.now)).toBeUndefined();
+    698|     expect(healthOf(idle.player).program!.until).toBe(at(2027, 10, 1, …
+    699|     expect(titled(idle, 'Your Health Cover Ended', at(2027, 8, 1, 0)).…
+       |                                                                                           ^
+    700|     expect(healthOf(idle.player).covered).toBe(false);
+    701|     const idleScreen = drawn(idle).text;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/59]⎯
+
+ FAIL  tests/evidence-g05-life.test.ts > health.therapy_session > PLAYER JOURNEY: a session the drained bank can’t pay is held, counted, and billed at $240 due in 30 days, then owed as debt
+AssertionError: expected [ Array(1) ] to deeply equal [ StringMatching{…} ]
+
+- Expected
++ Received
+
+  Array [
+-   StringMatching /^\$240\.00 for .+, a session is a medical debt now\.$/,
++   "$240.00 for Adna Linden Psychotherapy, a session couldn’t be paid from your current account on its due date, so it’s medical debt now. Pay It Off, on Papers under Health Cover, clears it.",
+  ]
+
+ ❯ tests/evidence-g05-life.test.ts:790:74
+    788|     // Only the first bill has fallen due: the debt is its $240.
+    789|     expect(medicalDebtOf(sim, sim.player)!.balance).toBe(-ADNA_FEE);
+    790|     expect(titled(sim, 'A Medical Bill Went Unpaid').map((n) => n.body…
+       |                                                                          ^
+    791|     expect(billRow(sim, 'Adna', first)).toContain('$240.00 Owed As Deb…
+    792|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/59]⎯
+
+ FAIL  tests/evidence-g05-life.test.ts > health.therapy_session > PLAYER JOURNEY: a Yale course ends at the session after Withdraw ends Yale Health, after 2 of 8, and Adna Linden takes it on
+AssertionError: expected [ [ 1789506000000, …(1) ] ] to deeply equal [ [ 1789506000000, …(1) ] ]
+
+- Expected
++ Received
+
+  Array [
+    Array [
+      1789506000000,
+-     "Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, after 2 of 8 sessions. A therapist outside Yale can take it on: choose one on Papers, under Health Cover.",
++     "Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended after 2 of 8 sessions. A therapist outside Yale can take it on: choose one on Papers, under Health Cover.",
+    ],
+  ]
+
+ ❯ tests/evidence-g05-life.test.ts:805:85
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/59]⎯
+
+ FAIL  tests/evidence-g05-life.test.ts > health.week > PLAYER JOURNEY: the flu, seen at urgent care, is five days, 25 of condition and 30 of energy, a sick day called in and the work shown ill
+AssertionError: expected [ Array(1) ] to deeply equal [ StringMatching{…} ]
+
+- Expected
++ Received
+
+  Array [
+-   StringMatching /^The flu, at urgent care, .+\. Nothing to pay\.$/,
++   "The flu, at urgent care, PhysicianOne Urgent Care (Yale New Haven Health Urgent Care), New Haven. Work Out waits until it passes, and Call In Sick, on School, excuses a day of classes. There’s nothing to pay.",
+  ]
+
+ ❯ tests/evidence-g05-life.test.ts:927:68
+    925|     expect(well.sim.player.wellbeing.condition - ill.sim.player.wellbe…
+    926|     expect(well.sim.player.wellbeing.energy - ill.sim.player.wellbeing…
+    927|     expect(titled(ill.sim, 'You Have The Flu').map((n) => n.body)).toE…
+       |                                                                    ^
+    928|     expect(titled(well.sim, 'You Have The Flu')).toEqual([]);
+    929|     // Tuesday before classes: called in sick and excused, where the t…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/59]⎯
+
+ FAIL  tests/evidence-g05-life.test.ts > health.week > PLAYER JOURNEY: a stay is three days in hospital, 40 of condition and of energy, $200, and the two days of classes it holds excused
+AssertionError: expected 'A stay in hospital, Yale New Haven Ho…' to match /^A stay in hospital, .+, 3 days\. You…/
+
+- Expected: 
+/^A stay in hospital, .+, 3 days\. Your share is \$200\.00, due in 30 days\.$/
+
++ Received: 
+"A stay in hospital, Yale New Haven Hospital, York Street Campus Emergency Department, for 3 days. Classes you miss while you’re there are excused. Your share is $200.00, due on October 7, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt."
+
+ ❯ tests/evidence-g05-life.test.ts:954:53
+    952|     expect(well.sim.player.wellbeing.condition - ill.sim.player.wellbe…
+    953|     expect(well.sim.player.wellbeing.energy - ill.sim.player.wellbeing…
+    954|     expect(titled(ill.sim, 'In Hospital')[0]!.body).toMatch(/^A stay i…
+       |                                                     ^
+    955|     expect(healthOf(ill.sim.player).bills.filter((b) => b.at === ill.w…
+    956|     const tally = (sim: Simulation) => ({ ...sim.player.school!.tally …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/59]⎯
+
+ FAIL  tests/evidence-g05-life.test.ts > health.week > PLAYER JOURNEY: an emergency keeps them Connecticut’s median 189 minutes, 20 of condition and of energy, and $50
+AssertionError: expected 'The emergency room, Yale New Haven Ho…' to match /^The emergency room, .+\. Your share …/
+
+- Expected: 
+/^The emergency room, .+\. Your share is \$50\.00, due in 30 days\.$/
+
++ Received: 
+"The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department. Classes you miss while you’re there are excused. Your share is $50.00, due on October 7, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt."
+
+ ❯ tests/evidence-g05-life.test.ts:975:60
+    973|     expect(well.sim.player.wellbeing.condition - ill.sim.player.wellbe…
+    974|     expect(well.sim.player.wellbeing.energy - ill.sim.player.wellbeing…
+    975|     expect(titled(ill.sim, 'The Emergency Room')[0]!.body).toMatch(/^T…
+       |                                                            ^
+    976|     expect(healthOf(ill.sim.player).bills.filter((b) => b.at === ill.w…
+    977|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/59]⎯
+
+ FAIL  tests/evidence-g05-life.test.ts > injury.comp > PLAYER JOURNEY: a broken bone at an elective shift is paid a week at a time for all 42 days off, into the payee account, once across a reload
+AssertionError: expected 'It takes 42 days to mend, and you’re …' to be '42 days to mend, and off work for the…' // Object.is equality
+
+Expected: "42 days to mend, and off work for them. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off."
+Received: "It takes 42 days to mend, and you’re laid up until then, kept from classes, work and training. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off."
+
+ ❯ tests/evidence-g05-life.test.ts:1031:51
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/59]⎯
+
+ FAIL  tests/evidence-g07-life.test.ts > seasons/flu > an unseen flu is told, “You Have The Flu”, with nothing to pay
+AssertionError: expected 'You have the flu until November 7, 20…' to contain 'It costs nothing.'
+
+Expected: "It costs nothing."
+Received: "You have the flu until November 7, 2026. It takes from your condition and energy. You didn’t see a doctor, so it costs nothing. Work Out waits until it passes, and Call In Sick, on School, excuses a day of classes."
+
+ ❯ tests/evidence-g07-life.test.ts:542:27
+    540|     const told = notices(sim, 'You Have The Flu', FLU_WEEK);
+    541|     expect(told).toHaveLength(1);
+    542|     expect(told[0]!.body).toContain('It costs nothing.');
+       |                           ^
+    543|   });
+    544| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/59]⎯
+
+ FAIL  tests/evidence-g07-life.test.ts > injuries > PLAYER JOURNEY: a workout that pulls a muscle adds 6 stress and takes 4 morale against the same workout unhurt, and the midnight 1 more of each
+AssertionError: expected 'It takes 21 days to mend, and you can…' to be '21 days to mend.' // Object.is equality
+
+Expected: "21 days to mend."
+Received: "It takes 21 days to mend, and you can’t work out until then."
+
+ ❯ tests/evidence-g07-life.test.ts:645:34
+    643|     expect(told).toHaveLength(1);
+    644|     // Yale Health pays a student's care in full: no bill, and the not…
+    645|     expect(told[0]!.body.trim()).toBe('21 days to mend.');
+       |                                  ^
+    646|     expect(healthOf(hurt.player).bills).toHaveLength(0);
+    647|     const gap = () => ({ stress: hurt.player.wellbeing.stress - well.p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/59]⎯
+
+ FAIL  tests/evidence-g07-life.test.ts > injuries > LIFE FIXTURE (New Haven, uninsured): an everyday injury drawn at midnight by the clock bills its care, due in 30 days, and is paid then, once
+AssertionError: expected 'It takes 10 days to mend, and you can…' to be '10 days to mend. Your share of its ca…' // Object.is equality
+
+Expected: "10 days to mend. Your share of its care is $699.13, due in 30 days."
+Received: "It takes 10 days to mend, and you can’t work out until then. Your share of its care is $699.13, due in 30 days."
+
+ ❯ tests/evidence-g07-life.test.ts:700:55
+    698|     // Named in sentence case, as every other bill is, from 2026-10-13…
+    699|     expect(bills[0]).toMatchObject({ what: 'A sprained ankle: its care…
+    700|     expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('10 days to…
+       |                                                       ^
+    701|     sim.advanceTo(Date.UTC(2026, 0, 6, 15)); // 10:00 AM
+    702|     clearCalendar(sim); // TEST SETUP
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/59]⎯
+
+ FAIL  tests/evidence-g07-life.test.ts > injuries > PLAYER JOURNEY: a work-study crew shift that pulls a muscle is work: workers’ compensation pays the care, nothing is billed, and training is refused
+AssertionError: expected 'It takes 20 days to mend, and you can…' to be '20 days to mend. It happened at work,…' // Object.is equality
+
+Expected: "20 days to mend. It happened at work, so workers’ compensation pays for the care."
+Received: "It takes 20 days to mend, and you can’t work out until then. It happened at work, so workers’ compensation pays for the care."
+
+ ❯ tests/evidence-g07-life.test.ts:729:54
+    727|     // Six hours at the Bulletin's $23.00 an hour is the week's wage t…
+    728|     expect(healthOf(sim.player).injury).toEqual({ kind: 'strain', at: …
+    729|     expect(notices(sim, 'A Pulled Muscle')[0]!.body).toBe('20 days to …
+       |                                                      ^
+    730|     expect(personLook(sim)).toContain('Mending. A Pulled Muscle, until…
+    731|     expect(healthOf(sim.player).bills).toHaveLength(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/59]⎯
+
+ FAIL  tests/evidence-g07-life.test.ts > chronic > PLAYER JOURNEY: asthma let go doubles the emergencies: on the health week of 7 September the student who let it go is taken to the emergency room, her twin who kept it up isn’t
+AssertionError: expected 'The emergency room, Yale New Haven Ho…' to be 'The emergency room, Yale New Haven Ho…' // Object.is equality
+
+Expected: "The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department. Your share is $50.00, due in 30 days."
+Received: "The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department. Classes you miss while you’re there are excused. Your share is $50.00, due on October 7, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt."
+
+ ❯ tests/evidence-g07-life.test.ts:811:25
+    809|     const er = notices(letGo, 'The Emergency Room');
+    810|     expect(er).toHaveLength(1);
+    811|     expect(er[0]!.body).toBe('The emergency room, Yale New Haven Hospi…
+       |                         ^
+    812|     // Connecticut's median 189 minutes in the department (CMS), and t…
+    813|     expect(healthOf(letGo.player).inHospitalUntil).toBe(week + 189 * 6…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/59]⎯
+
+ FAIL  tests/evidence-g09-life.test.ts > knob:illnessToll > mends the same broken bone in 28 days for a resilient body where a plain one takes 43, and refuses Work Out in trainingRefusal’s words till each mends, across a reload
+AssertionError: expected 'It takes 43 days to mend, and you’re …' to contain '43 days to mend, and off work for the…'
+
+Expected: "43 days to mend, and off work for them."
+Received: "It takes 43 days to mend, and you’re laid up until then, kept from classes, work and training. Your share of its care is $50.00, due in 30 days."
+
+ ❯ tests/evidence-g09-life.test.ts:256:67
+    254|     expect(injury(plain).offWorkUntil).toBe(injury(plain).until);
+    255|     expect(injury(resilient).offWorkUntil).toBe(injury(resilient).unti…
+    256|     expect(notices(plain, 'A Broken Bone').map((n) => n.body)[0]).toCo…
+       |                                                                   ^
+    257|     expect(notices(resilient, 'A Broken Bone').map((n) => n.body)[0]).…
+    258|     expect(lookAfter(plain, 'exercise').error).toBe('Not with a broken…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/59]⎯
+
+ FAIL  tests/evidence-g30-ui.test.ts > trait-illnessToll > mends the ankle the same first-morning workout sprains in 4 days for a resilient body where a plain one takes 7, and refuses Work Out in trainingRefusal’s words till each mends, across a reload
+AssertionError: expected 'It takes 7 days to mend, and you can’…' to contain '7 days to mend.'
+
+Expected: "7 days to mend."
+Received: "It takes 7 days to mend, and you can’t work out until then."
+
+ ❯ tests/evidence-g30-ui.test.ts:663:70
+    661|     expect((injury(plain).until - RAN_AT) / MS_DAY).toBe(7);
+    662|     expect((injury(resilient).until - RAN_AT) / MS_DAY).toBe(4);
+    663|     expect(notices(plain, 'A Sprained Ankle').map((n) => n.body)[0]).t…
+       |                                                                      ^
+    664|     expect(notices(resilient, 'A Sprained Ankle').map((n) => n.body)[0…
+    665|     expect(lookAfter(plain, 'exercise').error).toBe('Not with a sprain…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/59]⎯
+
+ FAIL  tests/evidence-g30-ui.test.ts > trait-illnessToll > takes the flu’s 25 condition and 30 energy from a plain body at the clock’s weekly draw on Monday 14 December, 16.18 and 19.42 from a resilient one, once across a reload, the five days alike
+AssertionError: expected [ Array(1) ] to deeply equal [ 'The flu. It costs nothing.' ]
+
+- Expected
++ Received
+
+  Array [
+-   "The flu. It costs nothing.",
++   "You have the flu until December 19, 2026. It takes from your condition and energy. You didn’t see a doctor, so it costs nothing. Work Out waits until it passes, and Call In Sick, on School, excuses a day of classes.",
+  ]
+
+ ❯ draw tests/evidence-g30-ui.test.ts:692:67
+    690|       const before = { ...sim.player.wellbeing };
+    691|       sim.advanceTo(AT + 1);
+    692|       expect(notices(sim, 'You Have The Flu').map((n) => n.body)).toEq…
+       |                                                                   ^
+    693|       return { sim, condition: before.condition - sim.player.wellbeing…
+    694|     };
+ ❯ tests/evidence-g30-ui.test.ts:695:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/59]⎯
+
+ FAIL  tests/evidence2-b02.test.ts > health.bill > PLAYER JOURNEY: a sprain’s $699.13 of care, uninsured, falls due 30 days on and is paid from the checking account, Settled on Papers
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "5 days to mend. Your share of its care is $699.13, due in 30 days.",
++   "It takes 5 days to mend, and you can’t work out until then. Your share of its care is $699.13, due in 30 days.",
+  ]
+
+ ❯ sprainBilled tests/evidence2-b02.test.ts:511:64
+    509|     expect(bill.what).toMatch(SPRAIN_BILL);
+    510|     expect(bill.dueAt).toBe(ends + 30 * MS_DAY);
+    511|     expect(titled(sim, 'A Sprained Ankle').map((n) => n.body)).toEqual…
+       |                                                                ^
+    512|     sim.advanceTo(bill.dueAt - 2 * MS_HOUR);
+    513|     expect(bill.paid).toBeFalsy();
+ ❯ tests/evidence2-b02.test.ts:522:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/59]⎯
+
+ FAIL  tests/evidence2-b02.test.ts > health.bill > PLAYER JOURNEY: unpaid in a drained twin, the sprain’s care is $699.13 of medical debt and Owed As Debt, and the midnight’s worry costs 4 of stress and 2 of morale against the paid twin
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "5 days to mend. Your share of its care is $699.13, due in 30 days.",
++   "It takes 5 days to mend, and you can’t work out until then. Your share of its care is $699.13, due in 30 days.",
+  ]
+
+ ❯ sprainBilled tests/evidence2-b02.test.ts:511:64
+    509|     expect(bill.what).toMatch(SPRAIN_BILL);
+    510|     expect(bill.dueAt).toBe(ends + 30 * MS_DAY);
+    511|     expect(titled(sim, 'A Sprained Ankle').map((n) => n.body)).toEqual…
+       |                                                                ^
+    512|     sim.advanceTo(bill.dueAt - 2 * MS_HOUR);
+    513|     expect(bill.paid).toBeFalsy();
+ ❯ tests/evidence2-b02.test.ts:537:30
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/59]⎯
+
+ FAIL  tests/evidence2-b02.test.ts > health.bill > A Medical Bill Went Unpaid says what the injury was in the sentence’s own case
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "5 days to mend. Your share of its care is $699.13, due in 30 days.",
++   "It takes 5 days to mend, and you can’t work out until then. Your share of its care is $699.13, due in 30 days.",
+  ]
+
+ ❯ sprainBilled tests/evidence2-b02.test.ts:511:64
+    509|     expect(bill.what).toMatch(SPRAIN_BILL);
+    510|     expect(bill.dueAt).toBe(ends + 30 * MS_DAY);
+    511|     expect(titled(sim, 'A Sprained Ankle').map((n) => n.body)).toEqual…
+       |                                                                ^
+    512|     sim.advanceTo(bill.dueAt - 2 * MS_HOUR);
+    513|     expect(bill.paid).toBeFalsy();
+ ❯ tests/evidence2-b02.test.ts:561:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/59]⎯
+
+ FAIL  tests/evidence2-b02.test.ts > injury.comp > PLAYER JOURNEY: off six days, the first three are Connecticut’s waiting days and three are paid, $29.57; off seven, all seven are, $69.00
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "6 days to mend, and off work for them. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off.",
++   "It takes 6 days to mend, and you’re laid up until then, kept from classes, work and training. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off.",
+  ]
+
+ ❯ tests/evidence2-b02.test.ts:632:64
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/59]⎯
+
+ FAIL  tests/evidence2-b02.test.ts > injury.comp > PLAYER JOURNEY: concussed at the Summer Cabaret’s first call, paid a week and three days’ compensation, and the stipend only for the days not off
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "10 days to mend, and off work for them. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off.",
++   "It takes 10 days to mend, and you’re laid up until then, kept from classes, work and training. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off.",
+  ]
+
+ ❯ tests/evidence2-b02.test.ts:647:60
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/59]⎯
+
+ FAIL  tests/evidence2-b03.test.ts > holidays > PLAYER JOURNEY: a doctor’s visit whose 24-day wait ends on Good Friday is booked for Monday 29 March, and kept; a meal paid by debit card the day before posts that Monday, the bank keeping the Federal Reserve’s days
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $187.20, due in 30 days.",
++   "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $187.20, due on April 28, 2027. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt.",
+  ]
+
+ ❯ tests/evidence2-b03.test.ts:257:117
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/59]⎯
+
+ FAIL  tests/evidence2-b03.test.ts > injuries > LIFE FIXTURE (New Haven, uninsured): an everyday sprain’s care is $699.13, worked from CARE’s $180 and $100 grown by the BLS physicians’ services index and the 1.75 the uninsured are billed, and paid once at its due date
+AssertionError: expected 'It takes 10 days to mend, and you can…' to be '10 days to mend. Your share of its ca…' // Object.is equality
+
+Expected: "10 days to mend. Your share of its care is $699.13, due in 30 days."
+Received: "It takes 10 days to mend, and you can’t work out until then. Your share of its care is $699.13, due in 30 days."
+
+ ❯ tests/evidence2-b03.test.ts:435:55
+    433|     // Named in sentence case, as every other bill is, from 2026-10-13…
+    434|     expect(healthOf(sim.player).bills.map((b) => ({ what: b.what, amou…
+    435|     expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('10 days to…
+       |                                                       ^
+    436|     const again = reload(sim);
+    437|     setBalance(again, again.player.primaryAccountId!, 2_000_00); // TE…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/59]⎯
+
+ FAIL  tests/evidence2-b06.test.ts > documents.us_status > DEFECT: the marketplace, taken in her fifteen days with Covered Connecticut not hers in 2027, never begins once she is out of status: the month’s look ends it before its 1 April and says so, the notice when her cover ends offers her no marketplace, and no premium is ever taken
+AssertionError: expected [ [ 1806553800000, …(1) ] ] to deeply equal [ [ 1806553800000, …(1) ] ]
+
+- Expected
++ Received
+
+  Array [
+    Array [
+      1806553800000,
+-     "You have no health cover from March 3, 2027. You’re out of status, so neither the marketplace nor Covered Connecticut will take you.",
++     "You have no health cover from March 3, 2027. You’re out of status, so neither the marketplace nor Covered Connecticut can take you.",
+    ],
+  ]
+
+ ❯ tests/evidence2-b06.test.ts:542:79
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/59]⎯
+
+ FAIL  tests/evidence3-lifepapers.test.ts > health.appeal_decided, on the marketplace a family’s savings reach (round three) > PLAYER JOURNEY: savings unlinked and checking moved to savings before the bill falls due, it goes to debt, $183.98; overturned, the debt is the $45 share, and Pay It Off on Papers pays $45.00 and settles it
+AssertionError: expected 'The plan reversed its denial for a do…' to contain 'you owe its share, $45.00.'
+
+Expected: "you owe its share, $45.00."
+Received: "The plan reversed its denial for a doctor’s visit, Fair Haven Community Health Care. You owe only your share, $45.00."
+
+ ❯ tests/evidence3-lifepapers.test.ts:398:48
+    396|     // What was over the share came off the debt, $138.98; nothing was…
+    397|     expect(memos(sim, /^Appeal won: /).map((t) => [into(t, debtOf(sim)…
+    398|     expect(titled(sim, 'Appeal Won')[0]!.body).toContain('you owe its …
+       |                                                ^
+    399|     const text = papers(sim).text;
+    400|     expect(text).toContain('$45.00 Owed As Debt Denial Overturned');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/59]⎯
+
+ FAIL  tests/guide-examples-papers.test.ts > the guide’s worked examples for Papers, played on throwaway saves > papers.health-cover: a spring graduate’s cover ends on 1 August, HUSKY D asks the work July didn’t have, and the marketplace begins 1 September
+AssertionError: expected 'Yale Health covers you until August 1…' to contain 'you can enroll from June 2, 2027'
+
+Expected: "you can enroll from June 2, 2027"
+Received: "Yale Health covers you until August 1, 2027. You can enroll from June 2, 2027, 60 days before that cover ends."
+
+ ❯ Object.PLAYS.papers.health-cover tests/guide-examples-papers.test.ts:388:50
+    386|   expect(ex.result).toContain(`Enrolled ahead, from ${o.day} ${MONTHS[…
+    387|   tended(ahead, opens - 12 * MS_HOUR);
+    388|   expect(mayEnroll(ahead.player, ahead.now).why).toContain(`you can en…
+       |                                                  ^
+    389|   tended(ahead, opens + 12 * MS_HOUR);
+    390|   const early = ahead.must<{ from: number }>({ kind: 'health.enroll', …
+ ❯ play tests/guide-examples-papers.test.ts:280:56
+ ❯ tests/guide-examples-papers.test.ts:930:159
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/59]⎯
+
+ FAIL  tests/guide-examples-papers.test.ts > the guide’s worked examples for Papers, played on throwaway saves > papers.doctor: a visit slept through is booked again, kept at $0, and a referral waits its days
+AssertionError: expected 'A doctor’s visit: booked at Yale Heal…' to be 'A doctor’s visit: booked at Yale Heal…' // Object.is equality
+
+Expected: "A doctor’s visit: booked at Yale Health Center, Student Health for …, the wait where you live."
+Received: "A doctor’s visit: booked at Yale Health Center, Student Health for …, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover."
+
+ ❯ Object.PLAYS.papers.doctor tests/guide-examples-papers.test.ts:407:52
+    405|   // The notice as the example quotes it, its date the "…", on the Mon…
+    406|   // on as the step says: no weekend moved it.
+    407|   expect(notice.body.replace(day(booked.at), '…')).toBe(grab(ex.steps[…
+       |                                                    ^
+    408|   expect(ex.setup).toContain('whose Monday brought a doctor’s visit');
+    409|   expect(zonedParts(notice.at, NY).weekday).toBe(1);
+ ❯ play tests/guide-examples-papers.test.ts:280:56
+ ❯ tests/guide-examples-papers.test.ts:931:111
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/59]⎯
+
+ FAIL  tests/need-paths.test.ts > health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock > PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with $600 of October’s wages posted by hand she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over, until 2026-10-16; since then $930.00 is itself $580 of income and she is renewed into HUSKY D without the work, and a twin with under $580 in each of May to October is sent a notice of noncompliance, not told her income was over
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from May to October 2027, and last month’s income places you in it in place of Covered Connecticut. You stay covered while you answer, until December 5, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, Covered Connecticut ends on December 31, 2027, said on December 6, 2027, and you won’t get the premium tax credit while HUSKY D would take you if not for its work rules, and you can apply again in any month after one that meets them.",
++   "HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from May to October 2027, and last month’s income moves you from Covered Connecticut to HUSKY D. You stay covered while you answer, until December 5, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, Covered Connecticut ends on December 31, 2027, and you’ll be told on December 6, 2027. After that, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.",
+  ]
+
+ ❯ tests/need-paths.test.ts:748:73
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/59]⎯
+
+ FAIL  tests/remaining-09-hardship.test.ts > health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 October sends its notice, Request A Hardship Exception pressed on Papers on 10 October renews HUSKY D to 1 April 2028, said once; the decision of 5 November passes it by and she’s covered into December; once each across a reload, the same in one jump as day by day; the twin who doesn’t ask is ended with November
+AssertionError: expected [ [ 1822365000000, …(1) ] ] to deeply equal [ [ 1822365000000, …(1) ] ]
+
+- Expected
++ Received
+
+  Array [
+    Array [
+      1822365000000,
+-     "HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from April to September 2027. You stay covered while you answer, until November 4, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, HUSKY D ends on November 30, 2027, said on November 5, 2027, and you won’t get the premium tax credit while HUSKY D would take you if not for its work rules, and you can apply again in any month after one that meets them.",
++     "HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from April to September 2027. You stay covered while you answer, until November 4, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, HUSKY D ends on November 30, 2027, and you’ll be told on November 5, 2027. After that, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.",
+    ],
+  ]
+
+ ❯ tests/remaining-09-hardship.test.ts:193:82
+    191|     jump.must({ kind: 'world.mark_read', payload: {} });
+    192|     jump.advanceTo(at(2027, 10, 1, 9));
+    193|     expect(titled(jump, 'A Notice Of Noncompliance').map((n) => [n.at,…
+       |                                                                                  ^
+    194|     // Home draws it in the words she can act on (brief 12, 2026-10-17…
+    195|     expect(home(jump)).toContain(`A Notice Of Noncompliance ${NOTICE}`…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/59]⎯
+
+ FAIL  tests/remaining-09-journeys.test.ts > journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill)
+AssertionError: expected 'A doctor’s visit, Fair Haven Communit…' to be 'A doctor’s visit, Fair Haven Communit…' // Object.is equality
+
+Expected: "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $187.20, due in 30 days."
+Received: "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $187.20, due on April 3, 2027. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt."
+
+ ❯ tests/remaining-09-journeys.test.ts:441:59
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/59]⎯
+
+ FAIL  tests/remaining-09-journeys.test.ts > journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Health out on 17 March, the notice of 1 April names the marketplace’s last day, 16 May, 60 days from the loss; on 20 May Enroll refuses it, HUSKY D asking for March’s work; a twin enrolls on 10 May (until 2026-10-16 the 60 days ran from the look of 1 April, to 31 May, and the notice said “You have 60 days”)
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "You have no health cover from March 17, 2027. You can enroll in the marketplace until May 16, 2027, 60 days after you lost cover.",
++   "You have no health cover from March 17, 2027. You can enroll in the marketplace until May 16, 2027, 60 days after you lost cover. Enroll on Papers, under Health Cover.",
+  ]
+
+ ❯ tests/remaining-09-journeys.test.ts:474:71
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/59]⎯
+
+ FAIL  tests/remaining-09-journeys.test.ts > journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls on 2 December, and is covered from 1 December, the month she applied in: the doctor’s visit of 3 December is HUSKY D’s, nothing to pay; the notice and the cover are the same in one jump as in six-hour steps (until 2026-10-16 HUSKY D began on 1 January and the visit was billed $183.98 uninsured)
+AssertionError: expected [ [ 'December 1, 2026', …(1) ] ] to deeply equal [ [ 'December 1, 2026', …(1) ] ]
+
+- Expected
++ Received
+
+  Array [
+    Array [
+      "December 1, 2026",
+-     "You have no health cover from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days after you lost cover. HUSKY D can take you at any time on last month’s income, with no premium.",
++     "You have no health cover from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days after you lost cover. HUSKY D can take you at any time on last month’s income, with no premium. Enroll on Papers, under Health Cover.",
+    ],
+  ]
+
+ ❯ tests/remaining-09-journeys.test.ts:509:86
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/59]⎯
+
+ FAIL  tests/remaining-09-journeys.test.ts > journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump
+AssertionError: expected [ [ 'October 20, 2026', …(2) ], …(1) ] to deeply equal [ [ 'October 20, 2026', …(2) ], …(1) ]
+
+- Expected
++ Received
+
+  Array [
+    Array [
+      "October 20, 2026",
+      "Out Of Status",
+      "You stayed in the United States past your status. Your US visa is void, and the Visa Waiver Program is closed to you for good.",
+    ],
+    Array [
+      "December 1, 2026",
+      "Your Health Cover Ended",
+-     "You have no health cover from November 4, 2026. You’re out of status, so neither the marketplace nor Covered Connecticut will take you.",
++     "You have no health cover from November 4, 2026. You’re out of status, so neither the marketplace nor Covered Connecticut can take you.",
+    ],
+  ]
+
+ ❯ tests/remaining-09-journeys.test.ts:550:23
+    548|     jump.advanceTo(at(2026, 12, 2, 12));
+    549|     const said = (s: Simulation) => s.universe.notifications.filter((n…
+    550|     expect(said(sim)).toEqual([
+       |                       ^
+    551|       ['October 20, 2026', 'Out Of Status', 'You stayed in the United …
+    552|       ['December 1, 2026', 'Your Health Cover Ended', 'You have no hea…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/59]⎯
+
+ FAIL  tests/remaining-health-eligibility.test.ts > health.apply: HUSKY D applied for on its notice, the month before read, decided after thirty days > PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027: a notice, thirty days from its receipt, uncovered meanwhile, denied on 8 February; one notice each across a reload, the same in one jump as day by day; and she may apply again
+AssertionError: expected ' Monday, January 4, 2027 · Actress Go…' to contain 'A Notice Of Noncompliance HUSKY D cou…'
+
+Expected: "A Notice Of Noncompliance HUSKY D couldn’t find $580.00 of income, time at the School or an exception in December 2026, before the month you applied. Answer by February 7, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in that month counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, the application is denied on February 8, 2027; the marketplace sells to you meanwhile in its own windows, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules, and you can apply again in any month after one that meets them."
+Received: " Monday, January 4, 2027 · Actress Good Morning, Ada . 9:00 AM in New Haven · EST · Winter · ⛅ 46°F Partly Cloudy Calendar Open Calendar How This Works No plans or commitments ahead. The day is yours. Card Statement in 2 weeks Your Birthday in 5 months How Your Own Plans Work What Needs You No decision is waiting on you. Mark 1 Read How This Works A Notice Of Noncompliance HUSKY D couldn’t find $580.00 of income, time at the School or an exception in December 2026, before the month you applied. Answer by February 7, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in that month counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, the application is denied on February 8, 2027. Meanwhile you can buy a marketplace plan in its enrollment windows, but you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them. now Go There How You Are How This Works Holding up, and no dial is far enough out to be worth naming. Energy 70 Stress 14 Readiness 79 Where You Are How This Works New Haven , Connecticut · United States Home. 130K people. Local Time 9:00 AM EST Daylight 7:17 AM – 4:34 PM 9h 17m of light Its money, costs, taxes and languages Weather How This Works ⛅ 46°F Partly Cloudy · High 55°F · Low 37°F Humidity 57% · Wind 7 mph · Continental Tue ⛅ Cloudy 51° / 33° Wed ⛅ Cloudy 51° / 33° Thu ⛅ Cloudy 44° / 26° Fri ⛅ Cloudy 45° / 27° Sat ⛅ Cloudy 49° / 31° Your Affairs How This Works Money 360 Checking: $29,534.40. Worth $75,672. Capital One How This Works School Left the school, withdrawn, 2 of 16 in the class. Yale How This Works Papers Cover: none. You have no health cover. Papers How This Works "
+
+ ❯ tests/remaining-health-eligibility.test.ts:218:18
+    216|     expect(press('health.apply', 'Apply For HUSKY D')).toEqual(['Appli…
+    217|     const told = home(sim);
+    218|     expect(told).toContain(`A Notice Of Noncompliance ${APPLIED_NOTICE…
+       |                  ^
+    219|     expect(told).not.toMatch(NO_HOURS);
+    220|     // Approved, it would begin on the first of the month of applicati…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/59]⎯
+
+ FAIL  tests/remaining-health-eligibility.test.ts > HUSKY D’s work rules: the exceptions SLATE reads, applied before a denial > PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the marketplace, applies for HUSKY D and asks for the hardship: approved from 1 December, reaching back to the stay, which HUSKY D now pays where the hospital’s charity had, the marketplace ending as it begins, its premium never taken, and the decision of 8 February passes it by, across a reload
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "HUSKY D covers you from December 1, 2026, with no premium: December 2026 met its work rules through a stay in hospital you asked to count. Your marketplace plan ends as it begins.",
++   "HUSKY D covers you from December 1, 2026, with no premium. December 2026 met its work rules through a stay in hospital you asked to count. Your marketplace plan ends as it begins.",
+  ]
+
+ ❯ tests/remaining-health-eligibility.test.ts:363:69
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/59]⎯
+
+ FAIL  tests/remaining-health-eligibility.test.ts > HUSKY D’s renewal: the six months before read, then a notice and thirty days, then the end said ten days ahead > PLAYER JOURNEY: with no work and under $580 of income in April to September 2027, the renewal of 1 October sends a notice; covered to 30 November, decided on 5 November, ended with November, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days
+AssertionError: expected [ [ 1827639000000, …(1) ] ] to deeply equal [ [ 1827639000000, …(1) ] ]
+
+- Expected
++ Received
+
+  Array [
+    Array [
+      1827639000000,
+-     "You have no health cover from December 1, 2027. You have 60 days to enroll in the marketplace.",
++     "You have no health cover from December 1, 2027. You have 60 days to enroll in the marketplace. Enroll on Papers, under Health Cover.",
+    ],
+  ]
+
+ ❯ tests/remaining-health-eligibility.test.ts:468:122
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/59]⎯
+
+ FAIL  tests/safetynet.test.ts > Connecticut > covers a low month by HUSKY D, to 175% of last year’s poverty line by Covered Connecticut, and above it by Access Health CT
+AssertionError: expected 'It’s outside open enrollment, October…' to match /23 October to 15 January/
+
+- Expected: 
+/23 October to 15 January/
+
++ Received: 
+"It’s outside open enrollment, October 23 to January 15, and you haven’t lost cover in the last 60 days."
+
+ ❯ tests/safetynet.test.ts:96:48
+     94|     earningsOf(p).months['2026-09'] = 5_000_00;
+     95|     expect(mayEnroll(p, at(2026, 10, 25)).ok).toBe(true);
+     96|     expect(mayEnroll(p, at(2026, 10, 20)).why).toMatch(/23 October to …
+       |                                                ^
+     97|     expect(benchmarkFor('ct', 2026, 'USD')).toBe(706_00);
+     98|     expect(benchmarkFor('ct', 2027, 'USD')).toBe(786_00);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/59]⎯
+
+ FAIL  tests/safetynet.test.ts > the tax return > takes it off an insured Connecticut patient’s hospital bill on an application before it’s due, and not twice
+AssertionError: expected 'The hospital’s financial assistance h…' to match /charity is off it already/
+
+- Expected: 
+/charity is off it already/
+
++ Received: 
+"The hospital’s financial assistance has already come off it."
+
+ ❯ tests/safetynet.test.ts:262:89
+    260|     healthOf(sim.player).bills.push({ ...bill, id: 'mx2', cityId: 'us-…
+    261|     expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: …
+    262|     expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: …
+       |                                                                                         ^
+    263|   });
+    264| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[51/59]⎯
+
+ FAIL  tests/scope-cover.test.ts > health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 > PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027 is given HUSKY D on 1 February for January at the School, refused it on 1 March for a February wholly on the leave, in The Marketplace’s words, and Enroll buys the marketplace; with $600 of wages in February (TEST SETUP) she’s given HUSKY D; past the 60 days Enroll isn’t drawn
+AssertionError: expected ' Your Affairs Papers Your returns, yo…' to contain 'From January 1, 2027, HUSKY D asks fo…'
+
+Expected: "From January 1, 2027, HUSKY D asks for $580.00 of income, time at the School or an exception in the month before you apply, and last month had none of them. It’s outside open enrollment, 23 October to 15 January, and not within 60 days of losing cover."
+Received: " Your Affairs Papers Your returns, your health cover, unemployment, your pensions, your passport and your ID. Tax Returns Health Cover Unemployment Passport And ID Permission To Work Your Doctor Where a doctor’s visit, urgent care and an emergency are had where you live How This Works Your Pharmacy Any Pharmacy, At The Median Walmart Pharmacy, A Generic $4.00 Uninsured Costco Pharmacy, A Generic $4.10 Uninsured Kroger Pharmacy, A Generic $5.00 Uninsured CVS Pharmacy, A Generic $12.50 Uninsured A doctor’s visit: Fair Haven Community Health Care · Urgent care: PhysicianOne Urgent Care (Yale New Haven Health Urgent Care), New Haven · An emergency: Yale New Haven Hospital, York Street Campus Emergency Department What it would cost you here now: a doctor’s visit $187.20, urgent care $336.96, an emergency $0.00 Sources And Estimates The practices, clinics and hospitals are real. A practice that publishes how soon it sees people books for that: Yale Health’s Student Health, for Yale students it covers, offers the same day or the next, and SLATE books the next; elsewhere the town’s published wait stands. Uninsured, an urgent visit at one that publishes its self-pay price is that price: CityMD’s, which two sources put at $225 and $250, taken at the middle, and Exer’s $215. An emergency keeps you the department’s median time, missing what that time held. In America, a generic is filled at your pharmacy’s own cash price, a plan’s copay never more. Your Cover How This Works This Month None The Marketplace $786.00 a month for the benchmark silver plan How This Works From January 1, 2027, HUSKY D asks for $580.00 of income, time at the School or an exception in the month before you apply, and last month had none of them. It’s outside open enrollment, October 23 to January 15, and you haven’t lost cover in the last 60 days. On a low month’s income, Medicaid (Medi-Cal in California, HUSKY D in Connecticut) takes you at 138% of the poverty line, in New York the Essential Plan to 200%, and in Connecticut Covered Connecticut to 175% of the year before’s, at any time and with no premium; Covered Connecticut is for an income over HUSKY D’s line, whatever your status, and comes with the premium tax credit, from 100% of the poverty line; from 2027 a student in F-1 status or a graduate on OPT has none. From 2027 Medicaid’s work rules are met by a month you spend any of at the School, or one with $580.00 of income (pay, interest, a benefit or a pension): in Connecticut the month before you apply, and any one of the 6 months before a renewal. Being 65 or over, SNAP received under its work rules, or a stay in hospital you ask for counts as meeting them. Short of it, a notice gives 30 days from its receipt to answer before an application is denied or cover ends, and an ending is said 10 days or more ahead, at a month’s end. You pay the whole premium each month, and the return gives back what’s over your share of income, a nonresident’s 1040-NR too: none over 400% of the poverty line, since the enhanced credits ended with 2025. Applying for HUSKY D anyway, you’re sent a notice of noncompliance and 30 days from its receipt to show the work rules met in March 2027, or an exception, a stay in hospital that month among them; it’s decided after, and the marketplace sells to you meanwhile. Apply For HUSKY D Sources And Estimates The benchmark premiums are SLATE’s estimate from published rates. Source: https://www.kff.org/affordable-care-act/state-indicator/marketplace-average-benchmark-premiums/; https://ctmirror.org/2026/09/14/ct-insurance-rate-hikes-2027-approved/; https://hbex.coveredca.com/toolkit/downloads/CCA_26_Regional_Bronze_and_Silver_Rates.pdf; https://www.dfs.ny.gov/reports_and_publications/press_releases/pr20260904; https://hbex.coveredca.com/financial-reports/PDFs/2026/Final%20Release%20-%20Individual%20Shared%20Responsibility%20Penalty%202026_20250825.pdf. Your Conditions You wear prescription lenses How This Works Depression: Kept Up · Medicine until April 28, 2027 Let It Go Therapist Yale Mental Health & Counseling, Free With Yale Health Adna Linden Psychotherapy, $240 A Session Begin A Course Of 8 Fill A Longer Supply, 90 Days How This Works Sources And Estimates Medicine is filled as a supply at the pharmacy where you live, with a week left: 28 days in England, 30 in America, a month elsewhere. A longer supply pays for up to 90 days at once, so a month the bank runs low doesn’t leave you without; one the bank can’t cover isn’t filled at all. Drawn at the rates of adults 18 to 34: depression 25%, asthma 10.1%, high blood pressure 11.5%, diabetes 2.0%, arthritis 5.0%. Kept up, each month’s care and each fill is paid then, at what your plan leaves: therapy twice and a generic for depression, a brand inhaler for asthma, a generic for blood pressure, insulin and a glucose monitor (or a generic for type 2) and a visit a quarter for diabetes, a generic for arthritis. Insulin is never more than the makers’ $35.00 a month, and nothing on a plan New York regulates; the monitor never more than Abbott’s $75.00. Left alone, depression weighs on your morale each week, asthma doubles your emergencies, type 1 diabetes quadruples them, diabetes wears your body down and arthritis tires it, which is SLATE’s estimate. Source: CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates; https://www.dfs.ny.gov/apps_and_licensing/health_insurers/insulin_cost_sharing_qa_guidance; https://leginfo.legislature.ca.gov (SB 40, 2025); Lilly, Novo Nordisk and Sanofi $35 programs; https://cga.ct.gov/2020/SUM/pdf/2020SUM00004-R02HB-06003-SUM.pdf; https://www.goodrx.com/freestyle-libre-3-plus; https://pmc.ncbi.nlm.nih.gov/articles/PMC10121264/; https://meps.ahrq.gov/data_files/publications/st245/stat245.pdf; Covered California 2026 standard benefit designs; SAG-AFTRA and Equity-League plan summaries; https://www.cdc.gov/nchs/fastats/dental.htm; SAG-AFTRA Health Plan dental and vision; https://equityleague.org/health/dental-plans/; NY Medicaid and Medi-Cal dental. Care And Its Bills Uninsured: you pay the price, less a hospital’s charity How This Works Care When Your Share Due Assistance Plan Paid A Doctor’s Visit, Fair Haven Community Health Care March 18, 2027 $187.20 April 17, 2027 A Prescription, A Generic January 4, 2027 $10.00 Settled The Dentist, A Cleaning December 28, 2026 $222.58 Settled A Prescription, A Generic December 7, 2026 $10.00 Settled A Prescription, A Generic November 23, 2026 $10.00 Settled Sources And Estimates Illness comes at the rates of an adult your age: about 2 doctor’s visits a year, 0.45 emergency visits, a stay in hospital one year in 25, and the flu one season in eleven. Care costs what it costs your plan: $106.97 a visit, $3,461.12 an emergency visit and $16,711.74 a stay at this year’s commercial prices, grown from their year by the medical price index, and the uninsured are billed more. A bill is due in 30 days. Source: CDC NAMCS and NHAMCS; CDC flu burden estimates; HCCI; FAIR Health; KFF–Peterson; http://agency.accesshealthct.com/wp-content/uploads/2025/03/2026-Standard-Silver-Plan-70.pdf; https://www.coveredca.com/support/before-you-buy/standard-benefit-designs/; NY State of Health 2026 standard silver; https://www.sagaftraplans.org/health; https://equityleague.org/health/. "
+
+ ❯ tests/scope-cover.test.ts:254:22
+    252|     late.advanceTo(at(2027, 4, 5, 9));
+    253|     const lateText = papers(late);
+    254|     expect(lateText).toContain(`${REFUSED} It’s outside open enrollmen…
+       |                      ^
+    255|     expect(enrollDrawn()).toEqual([]);
+    256|     expect(late.execute({ kind: 'health.enroll', payload: {} }).error)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[52/59]⎯
+
+ FAIL  tests/scope-cover.test.ts > Covered Connecticut is had with the premium tax credit: none under the poverty line, and from 2027 none for an F-1 student > TEST SETUP: Covered Connecticut held from 1 November 2026 by an F-1 student kept in status past her grace ends on 1 January 2027, said, and the marketplace is open to her; a citizen’s runs on
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "You have no health cover from January 1, 2027. You have 60 days to enroll in the marketplace.",
++   "You have no health cover from January 1, 2027. You have 60 days to enroll in the marketplace. Enroll on Papers, under Health Cover.",
+  ]
+
+ ❯ tests/scope-cover.test.ts:408:70
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[53/59]⎯
+
+ FAIL  tests/scope-health.test.ts > health.choose_clinic, New Haven’s two practices > PLAYER JOURNEY: the student who picks Yale Health on Your Doctor is booked the next weekday there, at $0; her twin who picks Fair Haven 24 days on there, billed the uninsured’s $183.98; each is seen where booked, across a reload
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  Object {
+    "bills": Array [
+      Array [
+        18398,
+        undefined,
+      ],
+    ],
+    "log": Array [
+      Array [
+        1790258400000,
+        "A doctor’s visit, Fair Haven Community Health Care",
+        18398,
+      ],
+    ],
+    "said": Array [
+-     "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due in 30 days.",
++     "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due on October 24, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt.",
+    ],
+  }
+
+ ❯ tests/scope-health.test.ts:259:21
+    257|     // Until 2026-10-15 the twin's visit was logged at $0 with no bill…
+    258|     // its rule was kept, and a member's visit at Fair Haven is billed…
+    259|     expect(kept[1]).toEqual({
+       |                     ^
+    260|       log: [[at(2026, 9, 24, 10), `A doctor’s visit, ${FAIR_HAVEN_NAME…
+    261|       bills: [[183_98, undefined]],
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[54/59]⎯
+
+ FAIL  tests/scope-health.test.ts > health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock bills > PLAYER JOURNEY: a visit the 2 November week draws is booked for Thanksgiving’s Friday at Fair Haven and kept; the bill is the $45 copay, the plan pays $60.13 of $105.13, no deductible is touched; it’s paid once on its due day from checking to Medical Care, across two reloads, and Papers shows both
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "A doctor’s visit, Fair Haven Community Health Care. Your share is $45.00, due in 30 days.",
++   "A doctor’s visit, Fair Haven Community Health Care. Your share is $45.00, due on December 27, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt.",
+  ]
+
+ ❯ tests/scope-health.test.ts:382:64
+    380|     ]);
+    381|     expect(PRICE - COPAY).toBe(60_13);
+    382|     expect(titled(sim, 'A Doctor’s Visit').map((n) => n.body)).toEqual…
+       |                                                                ^
+    383|     expect((healthOf(sim.player).spent['2026'] ?? 0) - spentBefore).to…
+    384|     expect((healthOf(sim.player).deductible['2026'] ?? 0) - deductible…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[55/59]⎯
+
+ FAIL  tests/scope-health.test.ts > health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center > PLAYER JOURNEY: a member who picks Fair Haven on Your Doctor is billed the uninsured’s $183.98 for the visit the clock keeps there, paid once on its due day across reloads; her twin who picks nothing is seen at Yale Health at $0
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due in 30 days.",
++   "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due on October 24, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt.",
+  ]
+
+ ❯ tests/scope-health.test.ts:565:65
+    563|     const bills = () => healthOf(back.player).bills.filter((b) => b.wh…
+    564|     expect(bills().map((b) => [b.at, b.amount, b.dueAt, b.paid ?? fals…
+    565|     expect(titled(back, 'A Doctor’s Visit').map((n) => n.body)).toEqua…
+       |                                                                 ^
+    566|     expect((healthOf(back.player).careLog ?? []).map((c) => [c.what, c…
+    567|     // Yale Health paid none of it, so none of it goes toward Yale Hea…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[56/59]⎯
+
+ FAIL  tests/scope-health.test.ts > health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center > PLAYER JOURNEY: somebody Yale Health doesn’t cover, withdrawn by the fifteenth day, is given Fair Haven with nothing picked, 24 days on, as before
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "A doctor’s visit, Fair Haven Community Health Care. Your share is $183.98, due in 30 days.",
++   "A doctor’s visit, Fair Haven Community Health Care. Your share is $183.98, due on October 24, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt.",
+  ]
+
+ ❯ tests/scope-health.test.ts:598:64
+    596|     sim.advanceTo(at(2026, 9, 24, 11));
+    597|     // Uninsured, the same $183.98 Fair Haven bills a member who picks…
+    598|     expect(titled(sim, 'A Doctor’s Visit').map((n) => n.body)).toEqual…
+       |                                                                ^
+    599|   }, 60_000);
+    600| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[57/59]⎯
+
+ FAIL  tests/scope-health.test.ts > health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center > PLAYER JOURNEY: a save an older build wrote, its member booked at Fair Haven by default and her twin by a pick, is opened: the default’s appointment is had at Yale Health on its date at $0, once, the pick’s at Fair Haven at $183.98; the same appointment in a save this build wrote stays at Fair Haven
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due in 30 days.",
++   "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due on October 24, 2026. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt.",
+  ]
+
+ ❯ tests/scope-health.test.ts:646:67
+    644|     expect(appointmentsOf(picked.player).map((a) => [a.at, a.clinicId]…
+    645|     picked.advanceTo(at(2026, 9, 24, 11));
+    646|     expect(titled(picked, 'A Doctor’s Visit').map((n) => n.body)).toEq…
+       |                                                                   ^
+    647|   }, 120_000);
+    648| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[58/59]⎯
+
+ FAIL  tests/scope-health.test.ts > health.choose_clinic: a booking with nothing picked is had where it was booked, whatever the cover does before its day, reloaded or not > PLAYER JOURNEY: uncovered on her leave, she’s booked at Fair Haven 24 days on by the 25 January week; she buys Affiliate cover; the visit is had at Fair Haven and billed $187.20, played straight through and reloaded before its day alike; canceled and booked again, it’s Yale Health the next weekday at $0
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  Array [
+-   "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $187.20, due in 30 days.",
++   "A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $187.20, due on March 20, 2027. It’s paid from your current account then, and if there isn’t enough, it becomes medical debt.",
+  ]
+
+ ❯ tests/scope-health.test.ts:716:64
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[59/59]⎯
+
+ Test Files  23 failed | 14 passed (37)
+      Tests  59 failed | 480 passed (539)
+   Start at  17:38:25
+   Duration  644.04s (transform 33.37s, setup 8.14s, collect 296.45s, tests 1521.84s, environment 95ms, prepare 25.82s)
+
+exit=1

@@ -249,7 +249,7 @@ describe('health.book', () => {
     // 10,513 cents, times 1.75 = 18,397.75, $183.98, due in 30 days, the plan paying none (no `covered`).
     tended(sim, at(2026, 9, 28, 12));
     const kept = titled(sim, 'A Doctor’s Visit', at(2026, 9, 28, 10));
-    expect(kept.map((n) => [n.at, n.body])).toEqual([[at(2026, 9, 28, 10), 'A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit at its own Health Center, not here. Your share is $183.98, due in 30 days.']]);
+    expect(kept.map((n) => [n.at, n.body])).toEqual([[at(2026, 9, 28, 10), 'A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due on October 28, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.']]);
     expect(healthOf(sim.player).bills.filter((b) => b.at === at(2026, 9, 28, 10)).map((b) => [b.what, b.amount, b.dueAt, b.covered])).toEqual([['A doctor’s visit, Fair Haven Community Health Care', 18_398, at(2026, 10, 28, 10), undefined]]);
     expect(appointmentsOf(sim.player).filter((a) => a.what === 'A doctor’s visit')).toEqual([]);
     expect(healthOf(sim.player).chronic!.hypertension!.prescribedAt).toBe(at(2026, 9, 28, 10));
@@ -278,7 +278,7 @@ describe('health.book', () => {
     const sim = lifeIn('ie-lei-dublin', 'g03-dublin');
     // TEST SETUP: a visit owed, which a Dublin life never books to miss or call off.
     healthOf(sim.player).owedVisit = 'A doctor’s visit';
-    expect(sim.execute({ kind: 'health.book', payload: {} })).toMatchObject({ ok: false, error: 'No wait is published where you live; you’re seen when it comes up.' });
+    expect(sim.execute({ kind: 'health.book', payload: {} })).toMatchObject({ ok: false, error: 'No waiting time is published where you live, so there’s nothing to book: you’re seen when you need care.' });
     expect(healthOf(sim.player).owedVisit).toBe('A doctor’s visit');
     expect(appointmentsOf(sim.player)).toEqual([]);
     expect(titled(sim, 'A Doctor’s Appointment')).toEqual([]);
@@ -350,7 +350,7 @@ describe('health.choose_clinic', () => {
       ['', 'No such practice.'],
       ['us-ct-nowhere', 'No such practice.'],
       // One Medical's Flatiron practice is New York's, not New Haven's.
-      ['us-ny-onemedical-flatiron', 'Your doctor is in the town you live in.'],
+      ['us-ny-onemedical-flatiron', 'Your doctor has to be in the town you live in.'],
       // New Haven's urgent care, its hospital's emergency department and its CVS see no one as their doctor.
       ['us-ct-physicianone-newhaven', 'That isn’t a doctor’s practice.'],
       ['us-ct-ynhh-ed', 'That isn’t a doctor’s practice.'],
@@ -391,8 +391,8 @@ describe('health.choose_clinic', () => {
     expect(didnt.notice).toEqual(['A doctor’s visit: booked at Soho Square General Practice for January 26, 2026, the wait where you live.']);
     // Bupa's pay-as-you-go GP is private, and the NHS doesn't pay it: its 15-minute visit's £79 (`SELF_PAY`). Until
     // 2026-10-13 this held "Nothing to pay." for it, as at Soho Square, the choice moving only the name.
-    expect(chose.kept).toEqual(['A doctor’s visit, Bupa Private GP (pay-as-you-go). Your share is £79.00, due in 30 days.']);
-    expect(didnt.kept).toEqual(['A doctor’s visit, Soho Square General Practice. Nothing to pay.']);
+    expect(chose.kept).toEqual(['A doctor’s visit, Bupa Private GP (pay-as-you-go). Your share is £79.00, due on February 25, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.']);
+    expect(didnt.kept).toEqual(['A doctor’s visit, Soho Square General Practice. There’s nothing to pay.']);
   });
 
   it('LIFE FIXTURE (Mexico City, a US citizen IMSS doesn’t cover): the doctor chosen bills an uninsured visit at its own published MX$60, named on the bill; a twin is billed at IMSS’s practice', () => {
@@ -475,7 +475,7 @@ describe('health.dental', () => {
     expect(taken(sim, paid[0]!)).toBe(312_72);
     sim = reload(sim);
     expect(healthOf(sim.player).dental).toMatchObject({ plan: 'yale', from: at(2026, 8, 24, 7, 30), until: at(2027, 10, 1, 0) });
-    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'You have a dental plan.' });
+    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'You already have a dental plan.' });
     expect(sim.execute({ kind: 'health.dental', payload: { on: false } })).toMatchObject({ ok: false, error: 'Yale’s dental plan can’t be canceled once paid.' });
     const after = shown(sim);
     expect(after.buttons.map((b) => b.text)).not.toContain('Buy Dental');
@@ -524,7 +524,7 @@ describe('health.dental', () => {
     const sim = student('g03-dental-broke');
     broke(sim);
     const before = sim.universe.transactions.length;
-    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'The year is $312.72, which the bank can’t cover.' });
+    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'The year costs $312.72, more than your bank can cover.' });
     expect(healthOf(sim.player).dental).toBeUndefined();
     expect(sim.universe.transactions.length).toBe(before);
   });
@@ -577,12 +577,12 @@ describe('health.enroll', () => {
     press(before, 'Enroll');
     expect(h.toasts).toEqual(['Enrolled in HUSKY D, from November 1, 2026.']);
     expect(healthOf(sim.player).program).toMatchObject({ kind: 'medicaid', state: 'ct', from: at(2026, 11, 1, 0) });
-    expect(sim.execute({ kind: 'health.enroll', payload: {} })).toMatchObject({ ok: false, error: 'You’re enrolled from November 1, 2026.' });
+    expect(sim.execute({ kind: 'health.enroll', payload: {} })).toMatchObject({ ok: false, error: 'You’re already enrolled, from November 1, 2026.' });
     expect(shown(sim).buttons.map((b) => b.text)).toContain('Drop The Plan');
     sim = reload(sim);
-    expect(sim.execute({ kind: 'health.enroll', payload: {} })).toMatchObject({ ok: false, error: 'You’re enrolled from November 1, 2026.' });
+    expect(sim.execute({ kind: 'health.enroll', payload: {} })).toMatchObject({ ok: false, error: 'You’re already enrolled, from November 1, 2026.' });
     tended(sim, at(2026, 11, 2, 12));
-    expect(sim.execute({ kind: 'health.enroll', payload: {} })).toMatchObject({ ok: false, error: 'You’re enrolled.' });
+    expect(sim.execute({ kind: 'health.enroll', payload: {} })).toMatchObject({ ok: false, error: 'You’re already enrolled.' });
     const after = shown(sim).text;
     expect(after).toContain('This Month HUSKY D');
     // HUSKY D asks no copays: Yale Health's $50 emergency is $0.
@@ -598,7 +598,7 @@ describe('health.enroll', () => {
     press(shown(sim), 'Enroll');
     expect(h.toasts).toEqual(['Enrolled in the marketplace, from November 1, 2026.']);
     expect(healthOf(sim.player).marketplace).toMatchObject({ from: at(2026, 11, 1, 0), state: 'ct' });
-    expect(sim.execute({ kind: 'health.enroll', payload: {} })).toMatchObject({ ok: false, error: 'You’re enrolled from November 1, 2026.' });
+    expect(sim.execute({ kind: 'health.enroll', payload: {} })).toMatchObject({ ok: false, error: 'You’re already enrolled, from November 1, 2026.' });
     const premiums = () => memos(sim, 'Marketplace health plan premium').map((t) => [t.at, taken(sim, t)]);
     expect(premiums()).toEqual([]);
     tended(sim, at(2026, 11, 2, 12));
@@ -651,7 +651,7 @@ describe('health.extra_supply', () => {
     // first condition's $30 and not the second's.
     broke(sim, 45_00);
     const before = { txns: sim.universe.transactions.length, balance: current(sim).balance };
-    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 90 } })).toMatchObject({ ok: false, error: 'It comes to more than the bank can cover.' });
+    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 90 } })).toMatchObject({ ok: false, error: 'It costs more than your bank can cover.' });
     expect(healthOf(sim.player).chronic!.depression!.supplyUntil).toBeUndefined();
     expect(healthOf(sim.player).chronic!.hypertension!.supplyUntil).toBeUndefined();
     expect(sim.universe.transactions.length).toBe(before.txns);
@@ -666,9 +666,9 @@ describe('health.extra_supply', () => {
   it('refused in its own words with no medicine taken, and past the longest supply here', () => {
     const none = student('g03-3');
     expect(healthOf(none.player).chronic).toEqual({});
-    expect(none.execute({ kind: 'health.extra_supply', payload: { days: 90 } })).toMatchObject({ ok: false, error: 'You take no medicine for a condition.' });
+    expect(none.execute({ kind: 'health.extra_supply', payload: { days: 90 } })).toMatchObject({ ok: false, error: 'You don’t take medicine for a long-term condition.' });
     const sim = student('g03-27');
-    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 91 } })).toMatchObject({ ok: false, error: 'At most 90 days at once here.' });
+    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 91 } })).toMatchObject({ ok: false, error: 'You can fill at most 90 days at once here.' });
     expect(healthOf(sim.player).chronic!.hypertension!.supplyUntil).toBeUndefined();
   });
 
@@ -709,7 +709,7 @@ describe('health.pay_bill', () => {
     broke(sim);
     const bill = billCare(sim, sim.player, 'A care bill', 900_00, sim.now);
     tended(sim, at(2026, 9, 24, 12));
-    expect(titled(sim, 'A Medical Bill Went Unpaid').map((n) => n.body)).toEqual(['$900.00 for a care bill is a medical debt now.']);
+    expect(titled(sim, 'A Medical Bill Went Unpaid').map((n) => n.body)).toEqual(['$900.00 for a care bill couldn’t be paid from your current account on its due date, so it’s medical debt now. Pay It Off, on Papers under Health Cover, clears it.']);
     expect(-medicalDebtOf(sim, sim.player)!.balance).toBe(900_00);
     return { sim, bill };
   };
@@ -749,7 +749,7 @@ describe('health.pay_bill', () => {
       return { first, all: reports(sim).length, marks: (sim.player.credit?.marks ?? []).filter((m) => m.at === at(2027, 10, 1, 0, 30)).length };
     };
     const owed = play(false);
-    expect(owed.first).toEqual([[at(2027, 10, 1, 0, 30), 'Unpaid a year and $500.00 or more, it’s reported now.']]);
+    expect(owed.first).toEqual([[at(2027, 10, 1, 0, 30), 'Your medical debt is $500.00 or more and has gone unpaid for a year, so it’s now on your credit record. You can still clear it with Pay It Off, on Papers, under Health Cover.']]);
     expect(owed.all).toBe(1);
     expect(owed.marks).toBe(1);
     const paid = play(true);

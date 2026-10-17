@@ -41,15 +41,20 @@ interface AgingBand {
   about: string;
 }
 
+/**
+ * Each band's `about` says what its figures do (from 2026-10-17, brief 14). Until then some said what no figure here
+ * does: "Recovery takes a day longer than it used to", "A week off costs a month back", and "What you don't use, you
+ * lose faster than you gain it", where fitness is lost at the same rate at every age (`FITNESS.perDay`, `systems/life.ts`).
+ */
 const AGING: readonly AgingBand[] = [
-  { from: 0, fitness: 0, condition: 0, recovery: 0, about: 'Growing, and none of it costs anything yet.' },
-  { from: 20, fitness: 0.12, condition: 0.05, recovery: 0.001, about: 'The body is at its best and stays there.' },
-  { from: 30, fitness: 0.35, condition: 0.18, recovery: 0.003, about: 'Recovery takes a day longer than it used to.' },
-  { from: 40, fitness: 0.62, condition: 0.34, recovery: 0.005, about: 'You feel a bad night the next morning now.' },
-  { from: 50, fitness: 0.95, condition: 0.55, recovery: 0.008, about: 'Keeping the ceiling up is work now, and the work doesn’t stop.' },
-  { from: 60, fitness: 1.35, condition: 0.85, recovery: 0.012, about: 'What you don’t use, you lose faster than you gain it.' },
-  { from: 70, fitness: 1.80, condition: 1.25, recovery: 0.016, about: 'A week off costs a month back.' },
-  { from: 80, fitness: 2.30, condition: 1.75, recovery: 0.021, about: 'Every year is a year now, and it shows.' },
+  { from: 0, fitness: 0, condition: 0, recovery: 0, about: 'Still growing. Age takes nothing yet.' },
+  { from: 20, fitness: 0.12, condition: 0.05, recovery: 0.001, about: 'The body is near its best, and age takes very little from it.' },
+  { from: 30, fitness: 0.35, condition: 0.18, recovery: 0.003, about: 'Age starts to lower what training can reach, a little each year, and a night puts back slightly less.' },
+  { from: 40, fitness: 0.62, condition: 0.34, recovery: 0.005, about: 'What training can reach falls faster than in the thirties, and nights mend less than they did.' },
+  { from: 50, fitness: 0.95, condition: 0.55, recovery: 0.008, about: 'Staying fit takes steady work now, as each year lowers what training can reach a little more.' },
+  { from: 60, fitness: 1.35, condition: 0.85, recovery: 0.012, about: 'A night’s rest puts back noticeably less, and what training can reach falls faster than in the fifties.' },
+  { from: 70, fitness: 1.80, condition: 1.25, recovery: 0.016, about: 'A year now takes more from the body than a whole decade did in the twenties.' },
+  { from: 80, fitness: 2.30, condition: 1.75, recovery: 0.021, about: 'Each year takes the most it ever has, from fitness, condition and rest alike.' },
 ];
 
 /** The band a given age falls in. */

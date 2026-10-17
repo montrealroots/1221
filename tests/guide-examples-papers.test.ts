@@ -347,7 +347,7 @@ PLAYS['papers.health-cover'] = () => {
   expect(ex.steps[0]).toContain('On 1 August a notice says “Your Health Cover Ended”.');
   const ended = titled(sim, 'Your Health Cover Ended', at(2027, 8, 1, 0));
   expect(ended).toHaveLength(1);
-  expect(ended[0]!.body).toContain(`You’re uncovered from ${day(ends)}.`);
+  expect(ended[0]!.body).toContain(`You have no health cover from ${day(ends)}.`);
   // Under The Marketplace, the line the example quotes: July's income is under HUSKY D's line, but from 2027 HUSKY D asks
   // an applicant for the month before's work (from 2026-10-15; until then this said HUSKY D took her), and July had
   // none, so the marketplace is what's open, in the 60 days from 1 August.
@@ -358,7 +358,7 @@ PLAYS['papers.health-cover'] = () => {
   // from 2026-10-17 income, time at the School or an exception, without the 80 hours' work it began with until then
   // (brief 12): July's income of any kind counts toward the $580 since 2026-10-16 (42 CFR 435.552(f)(2)).
   expect((earningsOf(sim.player).months['2027-07'] ?? 0)).toBeLessThan(580_00);
-  expect(may.why).toBe('From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them. The marketplace is open to you: within 60 days of losing cover.');
+  expect(may.why).toBe('From January 1, 2027, HUSKY D asks for $580.00 of income, time at the School or an exception in the month before you apply, and last month had none of them. The marketplace is open to you, because you’re within 60 days of losing cover.');
   expect(ex.steps[1]).toContain(`Under The Marketplace: “${may.why}”`);
   // Care in August, uncovered: the uninsured price for a visit, the hospital's charity off an emergency.
   expect(coverOn(sim.player, sim.now)).toBeUndefined();
@@ -385,7 +385,7 @@ PLAYS['papers.health-cover'] = () => {
   const o = zonedParts(opens, NY);
   expect(ex.result).toContain(`Enrolled ahead, from ${o.day} ${MONTHS[o.month - 1]} while Yale Health still covered them, their cover would have begun 1 August.`);
   tended(ahead, opens - 12 * MS_HOUR);
-  expect(mayEnroll(ahead.player, ahead.now).why).toContain(`you can enroll from ${day(opens)}`);
+  expect(mayEnroll(ahead.player, ahead.now).why).toContain(`You can enroll from ${day(opens)}`);
   tended(ahead, opens + 12 * MS_HOUR);
   const early = ahead.must<{ from: number }>({ kind: 'health.enroll', payload: {} });
   expect(early.from).toBe(yaleUntil(ahead.player));
@@ -431,7 +431,7 @@ PLAYS['papers.doctor'] = () => {
   tended(sim, again.at + 2 * MS_HOUR);
   const kept = titled(sim, 'A Doctor’s Visit', again.at);
   expect(kept).toHaveLength(1);
-  expect(kept[0]!.body).toMatch(/Nothing to pay\.$/);
+  expect(kept[0]!.body).toMatch(/There’s nothing to pay\.$/);
   // Had at the practice the result names (from 2026-10-15).
   expect(practice).toBe('Yale Health Center, Student Health');
   expect(kept[0]!.body.startsWith(`A doctor’s visit, ${practice}.`)).toBe(true);

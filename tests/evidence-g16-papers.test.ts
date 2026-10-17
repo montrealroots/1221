@@ -660,7 +660,7 @@ describe('documents.us_status', () => {
     expect(titled(again, 'Out Of Status').map((n) => [n.at, n.body])).toEqual([[ends, 'You stayed in the United States past the end of your status, so you’re now out of status. In the game, your US visa is canceled and the Visa Waiver Program is closed to you from now on.']]);
     expect(pendingOf(again, 'documents.us_status')).toEqual([]);
     // What reads it, each through its own command.
-    expect(run(again, 'health.enroll')).toMatchObject({ ok: false, error: 'The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.' });
+    expect(run(again, 'health.enroll')).toMatchObject({ ok: false, error: 'The marketplace is only for citizens and people lawfully present, and you’re out of status.' });
     expect(run(again, 'documents.apply_idcard')).toMatchObject({ ok: false, error: 'The DMV checks lawful presence through SAVE, and you stayed past the end of your status.' });
     expect(run(again, 'benefits.claim')).toMatchObject({ ok: false, error: 'Unemployment pays a noncitizen only with permission to work in the US, such as OPT (FUTA 3304(a)(14)).' });
     const out = drawn(again, WorkPane);

@@ -28,7 +28,7 @@ describe('where care is had', () => {
   it('their own doctor, chosen in the town they live in, sees them', () => {
     const sim = life('uk-eng-london', 'cl-own');
     expect(clinicRefusal(sim.player, 'uk-ldn-boots-piccadilly')).toBe('That isn’t a doctor’s practice.');
-    expect(clinicRefusal(sim.player, 'us-ny-onemedical-flatiron')).toBe('Your doctor is in the town you live in.');
+    expect(clinicRefusal(sim.player, 'us-ny-onemedical-flatiron')).toBe('Your doctor has to be in the town you live in.');
     sim.must({ kind: 'health.choose_clinic', payload: { clinicId: 'uk-ldn-bupa-gp' } });
     expect(clinicFor(sim.player, 'visit')!.id).toBe('uk-ldn-bupa-gp');
     expect(healthOf(sim.player).clinicId).toBe('uk-ldn-bupa-gp');

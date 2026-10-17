@@ -81,6 +81,7 @@ import { documentsOf } from '@/engine/systems/documents';
 import { f1Of } from '@/engine/systems/permission';
 import { setStanding } from '@/engine/systems/school';
 import { healthOf } from '@/engine/systems/health';
+import { plural } from '@/engine/core/text';
 import { at as subject } from '@/ui/looks/subject';
 
 const h = vi.hoisted(() => ({
@@ -473,26 +474,26 @@ describe('l-person', () => {
     expect(lines).toEqual([
       ['Who you are. ', 'Curious.'],
       // The units' why after the figures, from 2026-10-14 (`bodyUnits`): until then the line ended at the weight's word.
-      ['Your body. ', '5 ft 7 in and 143 lb, a body mass index of 22.5: healthy weight. In feet, inches and pounds, the units of the United States, where you live.'],
-      ['On your papers. ', 'she/her, a citizen of United Kingdom.'],
+      ['Your body. ', '5 ft 7 in and 143 lb, with a body mass index of 22.5, in the healthy weight range. In feet, inches and pounds, the units of the United States, where you live.'],
+      ['On your papers. ', 'Pronouns she/her. A citizen of the United Kingdom.'],
       ['In your own terms. ', 'Black Or African, British Caribbean.'],
       ['Where you come from. ', 'Grew up over a chip shop in Peckham.'],
       ['The films you love. ', 'Western.'],
     ]);
     const w = sim.player.wellbeing;
     expect(ways).toEqual([
-      ['Energy', `${Math.round(w.energy)}/100, and what the day has left in you`],
-      ['Stress', `${Math.round(w.stress)}/100, and what it is doing to your sleep`],
-      ['Sleep Debt', `${Math.round(w.sleepDebt)} hours on the books, and what sleep pays back`],
-      ['Morale', `${Math.round(w.morale)}/100, and how much of the day’s stress a night clears`],
-      ['Condition', `${Math.round(w.condition)}/100, and how much a night puts back, your mood, a sick day, and how likely a year is to be your last`],
-      ['Fitness', `${Math.round(w.fitness)}/100, and how far rest can mend you, and what a workout costs`],
-      ['Nourishment', `${Math.round(w.nourishment)}/100, and how long since you ate properly`],
-      ['Hygiene', `${Math.round(w.hygiene!)}/100, and your mood once it’s low, and readiness a little`],
-      ['Readiness', 'What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in'],
+      ['Energy', `${Math.round(w.energy)}/100. What’s left in you for today. Sleep brings it back.`],
+      ['Stress', `${Math.round(w.stress)}/100. How wound up you are. High stress spoils your sleep.`],
+      ['Sleep Debt', `${plural(Math.round(w.sleepDebt), 'hour')}. Sleep you owe, which a night pays back.`],
+      ['Morale', `${Math.round(w.morale)}/100. Your mood. When it’s up, a night clears more of the day’s stress.`],
+      ['Condition', `${Math.round(w.condition)}/100. How sound your body is. It sets how much a night gives back, your mood, sick days, and how likely each year is to be your last.`],
+      ['Fitness', `${Math.round(w.fitness)}/100. How trained your body is, the Stamina on your Player Profile. It sets how far rest can mend you and what a workout costs.`],
+      ['Nourishment', `${Math.round(w.nourishment)}/100. How well fed you are. A meal puts it back.`],
+      ['Hygiene', `${Math.round(w.hygiene!)}/100. How clean you are. When it’s low, it drags on your mood, and on readiness a little.`],
+      ['Readiness', 'How ready you are today, from all of these but fitness. It sets what a class, a lab, a rehearsal, an hour of practice or a workout builds, and how judged work goes.'],
       ['Curious', 'The thing nobody asked you to read gets read: your reading of a scene goes deeper.'],
-      ['Depression', 'Kept up, at what the plan leaves'],
-      ['Your Own Plans', 'Everything you have put on the calendar yourself'],
+      ['Depression', 'Kept up, at what your plan doesn’t cover.'],
+      ['Your Own Plans', 'Everything you’ve put on the calendar yourself.'],
     ]);
     // Each way opens what it names.
     h.opened = [];
@@ -506,9 +507,9 @@ describe('l-person', () => {
     const sim = ada();
     sim.must({ kind: 'health.treat', payload: { condition: 'depression', on: false } });
     const kept = reload(sim);
-    expect(openedFromHome(kept).ways.find(([label]) => label === 'Depression')).toEqual(['Depression', 'Left alone, and what that does']);
+    expect(openedFromHome(kept).ways.find(([label]) => label === 'Depression')).toEqual(['Depression', 'Left untreated, and what that does.']);
     kept.must({ kind: 'health.treat', payload: { condition: 'depression', on: true } });
-    expect(openedFromHome(kept).ways.find(([label]) => label === 'Depression')).toEqual(['Depression', 'Kept up, at what the plan leaves']);
+    expect(openedFromHome(kept).ways.find(([label]) => label === 'Depression')).toEqual(['Depression', 'Kept up, at what your plan doesn’t cover.']);
   });
 
   it('the units are where she lives: the same 170 cm and 65 kg read “170 cm and 65.0 kg” for a life in London', () => {
@@ -516,7 +517,7 @@ describe('l-person', () => {
     const sim = quickSave({ homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', livesWhereBorn: true, heightCm: 170, weightKg: 65 }, 'g33-person-london');
     const { lines } = personLook(drawn(sim, [subject('person', sim.player.id)]).html);
     // The units' why after the figures, from 2026-10-14 (`bodyUnits`).
-    expect(lines.find(([label]) => label === 'Your body. ')).toEqual(['Your body. ', '170 cm and 65.0 kg, a body mass index of 22.5: healthy weight. In centimeters and kilograms, the units of the United Kingdom, where you live.']);
+    expect(lines.find(([label]) => label === 'Your body. ')).toEqual(['Your body. ', '170 cm and 65.0 kg, with a body mass index of 22.5, in the healthy weight range. In centimeters and kilograms, the units of the United Kingdom, where you live.']);
   });
 
   it('PLAYER JOURNEY: the first morning’s run breaks a bone: “Mending. A Broken Bone, till October 6, 2026, and off work till then.” and An Injury, both gone once it has mended', () => {
@@ -524,10 +525,10 @@ describe('l-person', () => {
     sim.must({ kind: 'life.look_after', payload: { action: 'exercise' } });
     // The draw's 43 days from 8:30 AM on Monday 24 August.
     const hurt = openedFromHome(sim);
-    expect(hurt.lines).toContainEqual(['Mending. ', 'A Broken Bone, till October 6, 2026, and off work till then.']);
-    expect(hurt.ways).toContainEqual(['An Injury', 'What it is, till when, and what it keeps you from']);
+    expect(hurt.lines).toContainEqual(['Mending. ', 'A Broken Bone, until October 6, 2026, and laid up until then.']);
+    expect(hurt.ways).toContainEqual(['An Injury', 'What it is, when it mends, and what it keeps you from.']);
     const kept = reload(sim);
-    expect(openedFromHome(kept).lines).toContainEqual(['Mending. ', 'A Broken Bone, till October 6, 2026, and off work till then.']);
+    expect(openedFromHome(kept).lines).toContainEqual(['Mending. ', 'A Broken Bone, until October 6, 2026, and laid up until then.']);
     kept.advanceTo(at(2026, 10, 6, 12));
     const mended = openedFromHome(kept);
     expect(mended.lines.map(([label]) => label)).not.toContain('Mending. ');
@@ -556,15 +557,15 @@ function stressDial(sim: Simulation): string {
   return found![1]!.replace(/&#x27;/g, '\'');
 }
 /** The row's three bands, by the figure the dial shows. */
-const band = (n: number) => (n < 25 ? `${n}, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.`
-  : n < 60 ? `${n}. Present, manageable, and slower to clear than it was.` : `${n}. High enough that sleep is going badly and it feeds itself.`);
+const band = (n: number) => (n < 25 ? `${n}. Not much is adding to it. Running out of energy would, and so would money trouble or bad nights.`
+  : n < 60 ? `${n}. Noticeable, but manageable. The higher it is, the longer it takes to clear.` : `${n}. High enough to spoil your sleep, and bad sleep adds more.${n > 75 ? ' Over 75, it’s wearing your condition down every hour.' : ''}`);
 
 describe('l-dial-stress', () => {
   it('PLAYER JOURNEY: a new life’s 18, opened from Home through her name and Stress: “18, and not much is adding to it…”, with no sofa in it', () => {
     const sim = life('g33-probe-night', { personality: MIDDLE });
     expect(sim.player.wellbeing.stress).toBe(18);
     const said = stressDial(sim);
-    expect(said).toBe('18, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.');
+    expect(said).toBe('18. Not much is adding to it. Running out of energy would, and so would money trouble or bad nights.');
     expect(said).not.toMatch(/sofa/);
   });
 
@@ -588,8 +589,8 @@ describe('l-dial-stress', () => {
     // Every hour's sentence is its figure's band, and each turn comes as the figure shown passes from 24 to 25 and from
     // 59 to 60.
     for (const { n, said } of read) expect(said).toBe(band(n));
-    const present = read.findIndex(({ said }) => said.includes('Present, manageable'));
-    const high = read.findIndex(({ said }) => said.includes('High enough that sleep is going badly'));
+    const present = read.findIndex(({ said }) => said.includes('Noticeable, but manageable'));
+    const high = read.findIndex(({ said }) => said.includes('High enough to spoil your sleep'));
     expect([read[present - 1]!.n, read[present]!.n]).toEqual([24, 25]);
     expect([read[high - 1]!.n, read[high]!.n]).toEqual([59, 60]);
     expect(stressDial(reload(sim))).toBe(read[read.length - 1]!.said);

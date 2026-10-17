@@ -129,10 +129,10 @@ describe('cover and care', () => {
     const sim = lifeIn('us-ny-newyork', 'supply');
     const h = healthOf(sim.player);
     h.chronic = {};
-    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 30 } }).error).toBe('You take no medicine for a condition.');
+    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 30 } }).error).toBe('You don’t take medicine for a long-term condition.');
     // Test setup: high blood pressure, kept up.
     h.chronic = { hypertension: { treated: true } };
-    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 9_999 } }).error).toMatch(/^At most \d+ days at once here\.$/);
+    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 9_999 } }).error).toMatch(/^You can fill at most \d+ days at once here\.$/);
     const before = sim.universe.transactions.length;
     const r = sim.must<{ paid: number }>({ kind: 'health.extra_supply', payload: { days: 60 } });
     expect(r.paid).toBeGreaterThanOrEqual(0);
@@ -141,13 +141,13 @@ describe('cover and care', () => {
   });
 
   it('sells England’s prescription prepayment certificate to somebody under 60 the NHS treats, and only there', () => {
-    expect(lifeIn('us-ny-newyork', 'prepay-ny').execute({ kind: 'health.prepay', payload: { months: 12 } }).error).toBe('It’s England’s, for its prescription charge.');
+    expect(lifeIn('us-ny-newyork', 'prepay-ny').execute({ kind: 'health.prepay', payload: { months: 12 } }).error).toBe('The prepayment certificate is only for England’s prescription charge.');
     const sim = lifeIn('uk-eng-london', 'prepay-london');
     const r = sim.execute<{ paid: number; until: number }>({ kind: 'health.prepay', payload: { months: 3 } });
     expect(r.ok, r.error).toBe(true);
     expect(r.value!.paid).toBeGreaterThan(0);
     expect(healthOf(sim.player).prepaidUntil).toBe(r.value!.until);
-    expect(sim.execute({ kind: 'health.prepay', payload: { months: 3 } }).error).toBe('Yours runs more than another month.');
+    expect(sim.execute({ kind: 'health.prepay', payload: { months: 3 } }).error).toBe('Yours has more than a month left to run.');
   });
 });
 
@@ -286,7 +286,7 @@ describe('what papers open, in the kept world (from 2026-10-09)', () => {
     expect(sim.universe.notifications.some((n) => n.title === 'Your Marketplace Plan Has Ended')).toBe(true);
     delete h.marketplace;
     // From 1 October 2026 Medicaid asks satisfactory status of a non-citizen (`medicaidStatus`), so it's the marketplace or nothing.
-    expect(mayEnroll(sim.player, Date.UTC(2026, 10, 20))).toEqual({ ok: false, why: 'The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.' });
+    expect(mayEnroll(sim.player, Date.UTC(2026, 10, 20))).toEqual({ ok: false, why: 'The marketplace is only for citizens and people lawfully present, and you’re out of status.' });
     delete sim.player.usOutOfStatus;
     expect(mayEnroll(sim.player, Date.UTC(2026, 10, 20)).ok).toBe(true);
   }, 120_000);
