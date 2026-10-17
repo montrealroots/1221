@@ -1,12 +1,212 @@
 [
- { "source": "src/engine/content/genre-demands.json#blaxploitation", "kind": "other", "before": "(Reviewed 2026-10-10: 3 of 3 sources read directly, the rest as search snippets; low confidence)", "after": "(all three of its sources read directly, reviewed 2026-10-10; low confidence)", "why": "How the research was read, said from its own counts: \"the rest\" of none, and the review's date as a note, not a label.", "meaningSensitive": true, "verified": "json/b1-genre-looks.txt, the Blaxploitation look rendered by resolveLook; json-diff-check.mjs parses the count and the date back" },
- { "source": "src/engine/content/genre-demands.json#adventure", "kind": "other", "before": "(Reviewed 2026-10-10: 2 of 3 sources read directly, the rest as search snippets; medium confidence)", "after": "(two of its three sources read directly and the remaining one from a search summary, reviewed 2026-10-10; medium confidence)", "why": "Some read directly, the rest from summaries: the variant with one left over.", "meaningSensitive": true, "verified": "json/b1-genre-looks.txt, the Adventure look" },
- { "source": "src/engine/content/genre-demands.json#whodunit", "kind": "other", "before": "(Reviewed 2026-10-10: 1 of 1 sources read directly, the rest as search snippets; low confidence)", "after": "(its one source read directly, reviewed 2026-10-10; low confidence)", "why": "The one-source variant: \"1 of 1 sources\" was a malformed plural.", "meaningSensitive": true, "verified": "json/b1-genre-looks.txt, the Whodunit look" },
- { "source": "src/engine/content/genre-demands.json#magical_realism", "kind": "other", "before": "(Reviewed 2026-10-10: 0 of 2 sources read directly, the rest as search snippets; low confidence)", "after": "(neither of its sources read directly, both from search summaries, reviewed 2026-10-10; low confidence)", "why": "The none-read variant.", "meaningSensitive": true, "verified": "json/b1-genre-looks.txt, the Magical Realism look" },
- { "source": "src/engine/content/genre-demands.json#absurdist", "kind": "other", "before": "(search snippet; low confidence)", "after": "(from a search summary; low confidence)", "why": "The look's own words for a search's summary (its provenance line says \"taken from a search summary\").", "meaningSensitive": false, "verified": "json/b1-genre-looks.txt, the Absurdist look" },
- { "source": "src/engine/content/genre-demands.json#docudrama", "kind": "other", "before": "(abstract only; medium confidence)", "after": "(only the abstract read; medium confidence)", "why": "A clause that says what was read.", "meaningSensitive": false, "verified": "json/b1-genre-looks.txt, the Docudrama look" },
- { "source": "src/engine/content/genre-demands.json#alternate_history", "kind": "other", "before": "Source for what it asks: None found. A search for actors' approach on The Man in the High Castle returned only cast lists and low-quality pages..", "after": "Source for what it asks: None found. A search for actors' approach on The Man in the High Castle returned only cast lists and low-quality pages.", "why": "A doubled stop: the source's own full stop and the look's.", "meaningSensitive": false, "verified": "json/genre-looks-before.txt and json/b1-genre-looks.txt, the Alternate History look" },
- { "source": "src/engine/content/genre-demands.json#adventure", "kind": "other", "before": "…/action-and-adventure-films [fetched] ; Wisconsin Center for Film and Theater Research…", "after": "…/action-and-adventure-films [read directly]; Wisconsin Center for Film and Theater Research…", "why": "The research's mark of how a source was read, in the look's words, and no space before the semicolon. The citation itself is as the research wrote it.", "meaningSensitive": false, "verified": "json/b1-genre-looks.txt; json-diff-check.mjs finds every URL kept" },
- { "source": "src/engine/content/genre-demands.json#absurdist", "kind": "other", "before": "Ionesco, Pinter and absurdist film are not covered.", "after": "Ionesco, Pinter and absurdist film aren’t covered.", "why": "Contracted, as the house's prose is; only in the research's own sentences, never in a quotation.", "meaningSensitive": false, "verified": "json/b1-genre-looks.txt, the Absurdist look" },
- { "source": "src/engine/content/genre-demands.json#blaxploitation", "kind": "other", "before": "Scholarship characterises the blaxploitation movement by, among other things, excessive violence", "after": "Scholarship characterizes the blaxploitation movement by, among other things, excessive violence", "why": "American spelling in the research's sentence; the quotations keep their sources' spelling.", "meaningSensitive": false, "verified": "json/b1-genre-looks.txt, the Blaxploitation look" }
+ {
+  "source": "src/engine/content/genre-demands.json#blaxploitation",
+  "kind": "other",
+  "before": "(Reviewed 2026-10-10: 3 of 3 sources read directly, the rest as search snippets; low confidence)",
+  "after": "(all three of its sources read directly, reviewed 2026-10-10; low confidence)",
+  "why": "How the research was read, said from its own counts: \"the rest\" of none, and the review's date as a note, not a label.",
+  "meaningSensitive": true,
+  "verified": "json/b1-genre-looks.txt, the Blaxploitation look rendered by resolveLook; json-diff-check.mjs parses the count and the date back"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#adventure",
+  "kind": "other",
+  "before": "(Reviewed 2026-10-10: 2 of 3 sources read directly, the rest as search snippets; medium confidence)",
+  "after": "(two of its three sources read directly and the remaining one from a search summary, reviewed 2026-10-10; medium confidence)",
+  "why": "Some read directly, the rest from summaries: the variant with one left over.",
+  "meaningSensitive": true,
+  "verified": "json/b1-genre-looks.txt, the Adventure look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#whodunit",
+  "kind": "other",
+  "before": "(Reviewed 2026-10-10: 1 of 1 sources read directly, the rest as search snippets; low confidence)",
+  "after": "(its one source read directly, reviewed 2026-10-10; low confidence)",
+  "why": "The one-source variant: \"1 of 1 sources\" was a malformed plural.",
+  "meaningSensitive": true,
+  "verified": "json/b1-genre-looks.txt, the Whodunit look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#magical_realism",
+  "kind": "other",
+  "before": "(Reviewed 2026-10-10: 0 of 2 sources read directly, the rest as search snippets; low confidence)",
+  "after": "(neither of its sources read directly, both from search summaries, reviewed 2026-10-10; low confidence)",
+  "why": "The none-read variant.",
+  "meaningSensitive": true,
+  "verified": "json/b1-genre-looks.txt, the Magical Realism look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#absurdist",
+  "kind": "other",
+  "before": "(search snippet; low confidence)",
+  "after": "(from a search summary; low confidence)",
+  "why": "The look's own words for a search's summary (its provenance line says \"taken from a search summary\").",
+  "meaningSensitive": false,
+  "verified": "json/b1-genre-looks.txt, the Absurdist look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#docudrama",
+  "kind": "other",
+  "before": "(abstract only; medium confidence)",
+  "after": "(only the abstract read; medium confidence)",
+  "why": "A clause that says what was read.",
+  "meaningSensitive": false,
+  "verified": "json/b1-genre-looks.txt, the Docudrama look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#alternate_history",
+  "kind": "other",
+  "before": "Source for what it asks: None found. A search for actors' approach on The Man in the High Castle returned only cast lists and low-quality pages..",
+  "after": "Source for what it asks: None found. A search for actors' approach on The Man in the High Castle returned only cast lists and low-quality pages.",
+  "why": "A doubled stop: the source's own full stop and the look's.",
+  "meaningSensitive": false,
+  "verified": "json/genre-looks-before.txt and json/b1-genre-looks.txt, the Alternate History look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#adventure",
+  "kind": "other",
+  "before": "…/action-and-adventure-films [fetched] ; Wisconsin Center for Film and Theater Research…",
+  "after": "…/action-and-adventure-films [read directly]; Wisconsin Center for Film and Theater Research…",
+  "why": "The research's mark of how a source was read, in the look's words, and no space before the semicolon. The citation itself is as the research wrote it.",
+  "meaningSensitive": false,
+  "verified": "json/b1-genre-looks.txt; json-diff-check.mjs finds every URL kept"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#absurdist",
+  "kind": "other",
+  "before": "Ionesco, Pinter and absurdist film are not covered.",
+  "after": "Ionesco, Pinter and absurdist film aren’t covered.",
+  "why": "Contracted, as the house's prose is; only in the research's own sentences, never in a quotation.",
+  "meaningSensitive": false,
+  "verified": "json/b1-genre-looks.txt, the Absurdist look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#blaxploitation",
+  "kind": "other",
+  "before": "Scholarship characterises the blaxploitation movement by, among other things, excessive violence",
+  "after": "Scholarship characterizes the blaxploitation movement by, among other things, excessive violence",
+  "why": "American spelling in the research's sentence; the quotations keep their sources' spelling.",
+  "meaningSensitive": false,
+  "verified": "json/b1-genre-looks.txt, the Blaxploitation look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#biker",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "This is one film's casting rule, not a documented convention of the whole cycle. Riding skill fits 'stunt' only loosely, since the vocabulary has no driving or riding tag. Reviewed 2026-10-10: One film’s casting rule (The Wild Angels). Not applied genre-wide.",
+  "after": "This is one film’s casting rule, not a documented convention of the whole cycle. Riding fits Fights And Stunts only loosely, since none of the requirements the game can ask for is driving or riding. On review (2026-10-10), one film’s casting rule wasn’t enough to make it a requirement of the whole genre.",
+  "why": "The research's working words (a tag id, 'the vocabulary', an appended review note) said as the look says them: the requirement's name, the game's list of requirements, and what the review decided.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Biker look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#alternate_history",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "The genre is defined by its premise, not its performance, and the definition entails no tag. Any period demand would come from the period the story imitates, which costume_drama covers, not from the genre.",
+  "after": "The genre is defined by its premise, not its performance, and its definition calls for none of the requirements the game can ask for. Anything a period asks would come from the period the story imitates, which the Costume Drama genre covers, not from this one.",
+  "why": "'The definition entails no tag' and a raw genre id ('costume_drama') in the player's words: the genre named by its label.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Alternate History look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#art_house",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "Modernist / auteur art cinema (Bresson, Antonioni) and the slow-cinema strand; director-specific methods",
+  "after": "the methods of particular modernist and auteur directors (Bresson, Antonioni) and of slow cinema",
+  "why": "Read inside 'belongs to …, not to the genre as a whole': a capitalized slash list with a semicolon broke the sentence.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Art House look's 'Why it adds no requirement.'"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#cyberpunk",
+  "field": "belongsTo",
+  "kind": "other",
+  "before": "Action-led cyberpunk in the mould of The Matrix (martial-arts and wirework set pieces), not the genre as a whole",
+  "after": "action-led cyberpunk in the mold of The Matrix, with its martial-arts and wirework set pieces",
+  "why": "Inside the look's sentence it ended 'not the genre as a whole, not to the genre as a whole'.",
+  "meaningSensitive": false,
+  "verified": "json/b2-genre-looks.txt, the Cyberpunk look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#adventure",
+  "field": "why:stunt",
+  "kind": "other",
+  "before": "genre-wide: Tasker's encyclopedia entry states at the level of the whole form that action and adventure cinema foregrounds the body in motion and in combat, which is a genre-level convention of on-screen combat. One credible source, so medium, not high. Doing one's own stunts (Fairbanks, Flynn) remains a swashbuckler-star matter and is not what the tag is applied for.",
+  "after": "Tasker’s encyclopedia entry says of the whole form that action and adventure cinema foregrounds the body in motion and in combat, which makes on-screen combat a convention of the genre. It’s one credible source, so the research holds it at medium confidence, not high. Stars doing their own stunts (Fairbanks, Flynn) is a matter for swashbuckler stars, and isn’t what the requirement rests on.",
+  "why": "Shown for an applied genre: the review's label ('genre-wide:'), 'the tag' and 'medium, not high' said in full.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Adventure look's small print"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#absurdist",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "All of the evidence is Beckett, mostly Godot. Ionesco, Pinter and absurdist film are not covered. The PDF could not be text-extracted, so the quotations come from the search engine's summary of it, not from my own reading. Nothing found covers 'holding comedy and despair together' as an acting demand in so many words. Reviewed 2026-10-10: All of the evidence is Beckett, mostly Godot. Not applied genre-wide.",
+  "after": "All of the evidence is Beckett, mostly Godot. Ionesco, Pinter and absurdist film aren’t covered. The study guide’s PDF couldn’t be read as text, so the quotations come from a search engine’s summary of it, not from a direct reading. Nothing found covers 'holding comedy and despair together' as an acting demand in so many words. On review (2026-10-10), evidence that’s all Beckett wasn’t enough to make it a requirement of the whole genre.",
+  "why": "First person ('my own reading'), an engine-sounding 'text-extracted', and a review note that repeated the first sentence word for word.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Absurdist look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#concert_film",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "No scholarly reference work defining the genre was read; the IDA article is a trade/professional source. The vocabulary has no instrument or live-music tag, so 'song' is a stretch. Whether an actor-character belongs in a concert film at all is a design question.",
+  "after": "No scholarly reference work defining the genre was read: the IDA article is a trade source. None of the requirements the game can ask for is playing an instrument or live music, so Singing is a stretch. Whether an acted character belongs in a concert film at all is a question for the game, not the research.",
+  "why": "'A design question' said as what it is: the game's choice, not the research's.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Concert Film look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#chase",
+  "field": "sourceSupports",
+  "kind": "other",
+  "before": "Early Cinema: In chase films \"large groups of people run from one locale to the next, the cut introducing a new setting while sustaining the sense of frantic movement\"; the effect rests on \"the accelerated sensation of displacement and mobility editing helps to promote.\" Chase film (entry in A Dictionary of Film Studies): Snippet (page returned 403): chase films are films of the early and silent eras in which a chase is the primary element, with precedent in music-hall and vaudeville comedy chase skits 'punctuated with pratfalls and physical comedy'. Slapstick Comedy: Sennett realised \"the comic potential of the chase\"; his films ended with Kops and others who \"careen across the screen, fall over, collide, and generally create mayhem.\"",
+  "after": "Early Cinema: In chase films \"large groups of people run from one locale to the next, the cut introducing a new setting while sustaining the sense of frantic movement\"; the effect rests on \"the accelerated sensation of displacement and mobility editing helps to promote.\" Chase film (entry in A Dictionary of Film Studies): From a search summary, as the page couldn’t be opened: chase films are films of the early and silent eras in which a chase is the primary element, with precedent in music-hall and vaudeville comedy chase skits 'punctuated with pratfalls and physical comedy'. Slapstick Comedy: Sennett realized \"the comic potential of the chase\"; his films ended with Kops and others who \"careen across the screen, fall over, collide, and generally create mayhem.\"",
+  "why": "'Snippet (page returned 403)': an HTTP status and the research's jargon for how it read the page.",
+  "meaningSensitive": false,
+  "verified": "json/b2-genre-looks.txt, the Chase look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#anthology",
+  "field": "claim",
+  "kind": "other",
+  "before": "Some anthology films cast one actor in several roles across segments, but no source treats this as a convention of the form.",
+  "after": "Some anthology films cast one actor in several roles across their stories, but no source treats this as a convention of the form.",
+  "why": "'Segments' is the game's own word for a part of a scene; the genre's own definition calls an anthology's parts stories.",
+  "meaningSensitive": false,
+  "verified": "json/b2-genre-looks.txt, the Anthology look's first line"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#costume_drama",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "RADA's course is evidence that period movement is a taught skill. It does not say every costume drama demands it. Period dance appears in RADA's syllabus, but no dance tag was given because no source says costume dramas require dancing. The fit between 'heightened' and movement, rather than language, is loose. Reviewed 2026-10-10: the heightened tag was removed. Heightened is verse and rhetoric; the research is about period movement and deportment, which no tag in the vocabulary covers.",
+  "after": "RADA’s course is evidence that period movement is a taught skill. It doesn’t say every costume drama demands it. Period dance appears in RADA’s syllabus, but the research didn’t name Dancing, because no source says costume dramas require it. Heightened Language, which is about language, fit this movement only loosely, and the review of 2026-10-10 took it away: it’s verse and rhetoric, and the research is about period movement and deportment, which none of the requirements the game can ask for covers.",
+  "why": "Two tag ids and 'the vocabulary', and a removal said as what the review did.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Costume Drama look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#docudrama",
+  "field": "uncertainty",
+  "kind": "other",
+  "before": "The scholarly chapter was read only as an abstract. Whether 'transformation' (mapped to Character Work) is the right skill for impersonation is a judgement; no source mentions prosthetics or makeup for docudrama.",
+  "after": "The scholarly chapter was read only as an abstract. Whether Physical Transformation, which the game trains as Character Work, is the right skill for impersonation is a judgment call; no source mentions prosthetics or makeup for docudrama.",
+  "why": "'transformation (mapped to Character Work)': the requirement and the technique it's trained as, both by the names the player sees.",
+  "meaningSensitive": true,
+  "verified": "json/b2-genre-looks.txt, the Docudrama look"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#black_comedy",
+  "field": "sourceSupports",
+  "kind": "other",
+  "before": "Black humour: Black humour is writing that juxtaposes morbid or ghastly elements with comical ones; it 'often uses farce and low comedy'. (Fetch returned 403; seen via search snippet.) Defines the genre as comic; says nothing about acting. Black comedy: Treats black comedy as a form of comedy with film examples (Dr. Strangelove, Harold and Maude, Fargo, The Death of Stalin). Contains no discussion of performance, deadpan or timing. Deadpan: Advises sincere commitment to absurd situations ('The more absurd the situation becomes, the more useful sincere commitment can be'). Does not mention black or dark comedy.",
+  "after": "Black humor: Black humor is writing that juxtaposes morbid or ghastly elements with comical ones; it 'often uses farce and low comedy'. (The page couldn’t be opened, so this is from a search summary.) It defines the genre as comic and says nothing about acting. Black comedy: It treats black comedy as a form of comedy with film examples (Dr. Strangelove, Harold and Maude, Fargo, The Death of Stalin). It doesn’t discuss performance, deadpan or timing. Deadpan: It advises sincere commitment to absurd situations ('The more absurd the situation becomes, the more useful sincere commitment can be'). It doesn’t mention black or dark comedy.",
+  "why": "Subjectless fragments ('Defines the genre as comic; says nothing…') and '(Fetch returned 403; seen via search snippet.)'.",
+  "meaningSensitive": false,
+  "verified": "json/b2-genre-looks.txt, the Black Comedy look"
+ }
 ]

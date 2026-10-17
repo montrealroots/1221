@@ -92,3 +92,58 @@ reworded, and spelling and the builder's lint ran again, 0 and 0. `json-diff-che
 
 **Screens verified:** `b1-genre-looks.txt`, eight genres' looks rendered at this batch's state, one of each kind of how
 the research was read; `home-accounts-shown.txt`.
+
+## Batch 2: Absurdist To Drama
+
+**Sources read (38):** `genre-demands.json#` absurdist, adventure, alternate_history, animated, anime, anthology,
+apocalyptic, art_house, avant_garde, biker, biographical, black_comedy, blaxploitation, body_horror, buddy_comedy,
+buddy_cop, caper, chanbara, chase, childrens, christmas, coming_of_age, concert_film, conspiracy_thriller, cosmic_horror,
+costume_drama, courtroom_drama, creature_feature, crime, cyberpunk, dance, dark_fantasy, detective, disaster, docudrama,
+documentary, domestic_drama and drama: every field the look shows, read in the research, then read again rendered.
+
+**Rewritten (94 edits, in `genre-demands-words.txt`'s batch 2):**
+- The research's working words, which a player can't read, in the look's own: a tag and its id ("the 'camera' tag", "no
+  transformation tag was given") as the requirement by its name ("Naturalism On Camera", "the research doesn’t name
+  Physical Transformation"); "the vocabulary" and "the fixed vocabulary" as "the requirements the game can ask for";
+  "snippet", "fetched", "returned 403", "blocked", "pointer" as "from a search summary", "read directly", "couldn’t be
+  opened", "used only as a lead"; "my own reading" as "a direct reading"; "the input defines" as "the game defines"; a
+  genre's id ("costume_drama", "creature_feature") as the genre by its label.
+- The review's notes, stuck on the end of what's uncertain and often repeating its first sentence ("Reviewed 2026-10-10:
+  One film’s casting rule (The Wild Angels). Not applied genre-wide."), as one sentence saying what the review decided:
+  "On review (2026-10-10), one film’s casting rule wasn’t enough to make it a requirement of the whole genre." Where the
+  review took a requirement away, it says so: "The review of 2026-10-10 took Accents away: …".
+- What a demand belongs to, read inside the look's own sentence: art house's "Modernist / auteur art cinema (…) and the
+  slow-cinema strand; director-specific methods" and cyberpunk's, which ended "not the genre as a whole, not to the genre
+  as a whole".
+- Fragments with no subject ("Defines the genre as comic; says nothing about acting."), a claim that rendered as one
+  breathless sentence (adventure's), and anthology's "segments" (the game's word for part of a scene) as "stories", the
+  genre's own definition's word.
+
+**Kept:** every quotation, name, figure, date and citation; documentary's words (only the rules touched them); the
+reasons the look doesn't show (a low genre's), in the research's words with the house's spelling.
+
+**Meaning-sensitive, and how each was held:**
+- *A requirement named where the research named a tag.* Each name is the look's (`DEMAND_LABEL`); docudrama's "mapped to
+  Character Work" is the technique the game trains it as (`DEMAND_TECHNIQUE.transformation` is `character`, Character
+  Work), checked by printing both tables.
+- *"Not applied genre-wide" as "wasn’t enough to make it a requirement of the whole genre."* True of each: each is low
+  confidence, so `applied` is false and `genreTags` empty (`tests/engagement.test.ts` holds that for every genre).
+- *Costume drama's "The fit between 'heightened' and movement … is loose. Reviewed 2026-10-10: the heightened tag was
+  removed."* Its tags are empty in the research and in the game; the words say it was taken away, as the research did.
+- *Concert film's "a design question"* is said as "a question for the game, not the research": no more than the
+  research said.
+- *Cosmic horror's pointer to creature_feature's evidence on reacting to nothing* still points there; that genre's look
+  says the claim was general effects practice and isn't used, as its research does.
+- `json-diff-check.mjs`: 0 problems; the only figure gone is the HTTP code 403, in ten fields, said as "couldn’t be
+  opened"; three source lines' prose changed (caper's, detective's and domestic drama's read marks), every URL kept.
+
+**Tests and tool matchers updated:** none assert these words. `docs/GENRE-COVERAGE.md` was regenerated
+(`npx vite-node tools/genre-coverage.ts`), since it quotes `belongsTo`: art house's, concert film's and cyberpunk's
+changed there, and `tests/genre-coverage.test.ts` holds it to the tables.
+
+**Checks** (the same script as batch 1): tsc 0; eslint 0; vitest on the same 14 files, 656 of 656, 0; title-case 0,
+label-sweep 0, plural-check 0, voice-check 0, tics 0, spelling 0, typos 0, text-inventory 0, doc-refs 0, deciders 0.
+
+**Screens verified:** `b2-genre-looks.txt`, all 38 looks rendered at this batch's commit, read whole; `sweep-words.mjs`
+finds none of the research's working words in them outside quotations, and every ".." in the file is an ellipsis inside
+a quotation.

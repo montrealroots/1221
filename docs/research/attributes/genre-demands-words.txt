@@ -15,3 +15,309 @@
 #
 # Fields: claim, sourceSupports, uncertainty, belongsTo (read inside "belongs to …, not to the genre as a whole"),
 # why:<tag> (shown only for a genre whose requirements apply), and source (only where it's prose, never a citation).
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Batch 2 (brief 14, json area): absurdist to drama, in the research's order.
+
+@ absurdist sourceSupports
+- The study guide (as summarised by search): Beckett
++ The study guide, from a search summary: Beckett
+- Wikipedia (as summarised by search) says Godot draws on
++ Wikipedia, from a search summary, says Godot borrows from
+@ absurdist uncertainty
+- The PDF could not be text-extracted, so the quotations come from the search engine's summary of it, not from my own reading.
++ The study guide’s PDF couldn’t be read as text, so the quotations come from a search engine’s summary of it, not from a direct reading.
+-  Reviewed 2026-10-10: All of the evidence is Beckett, mostly Godot. Not applied genre-wide.
++  On review (2026-10-10), evidence that’s all Beckett wasn’t enough to make it a requirement of the whole genre.
+
+@ adventure claim
+- in combat, with a hero who must show physical endurance; in its swashbuckler strand
++ in combat, with a hero who must show physical endurance. In its swashbuckler strand
+@ adventure sourceSupports
+- Makes no claim about swashbuckler stars in general.
++ It makes no claim about swashbuckler stars in general.
+- the quote itself was not seen on a fetched page.
++ the quote itself wasn’t seen on a page read directly.
+@ adventure why:stunt
+- genre-wide: Tasker's encyclopedia entry states at the level of the whole form that action and adventure cinema foregrounds the body in motion and in combat, which is a genre-level convention of on-screen combat. One credible source, so medium, not high. Doing one's own stunts (Fairbanks, Flynn) remains a swashbuckler-star matter and is not what the tag is applied for.
++ Tasker’s encyclopedia entry says of the whole form that action and adventure cinema foregrounds the body in motion and in combat, which makes on-screen combat a convention of the genre. It’s one credible source, so the research holds it at medium confidence, not high. Stars doing their own stunts (Fairbanks, Flynn) is a matter for swashbuckler stars, and isn’t what the requirement rests on.
+@ adventure uncertainty
+- Only one source states the genre-level point directly. The Richards quote was not read at source.
++ Only one source says it of the whole genre directly. The Richards quote wasn’t read in the book itself.
+
+@ alternate_history sourceSupports
+- One returned page (explore.st-aug.edu) was generic, unsourced text and was not used.
++ One page the search found (explore.st-aug.edu) was generic, unsourced text, and wasn’t used.
+@ alternate_history uncertainty
+- and the definition entails no tag. Any period demand would come from the period the story imitates, which costume_drama covers, not from the genre.
++ and its definition calls for none of the requirements the game can ask for. Anything a period asks would come from the period the story imitates, which the Costume Drama genre covers, not from this one.
+
+@ animated sourceSupports
+- From the search summary:
++ From a search summary:
+
+@ anime sourceSupports
+- Mix (search snippet):
++ Mix (from a search summary):
+
+@ anthology claim
+- cast one actor in several roles across segments,
++ cast one actor in several roles across their stories,
+@ anthology sourceSupports
+- From the search summary, examples only:
++ From a search summary, examples only:
+@ anthology uncertainty
+- These are examples, not a convention, and nothing found covers 'establishing a character quickly in a short segment'. Cloud Atlas also shows heavy makeup transformation, but that is one film, so no tag was given.
++ These are examples, not a convention, and nothing found supports 'establishing a character quickly in a short segment'. Cloud Atlas also shows heavy makeup transformation, but that’s one film, so the research doesn’t name Physical Transformation for the genre.
+
+@ apocalyptic sourceSupports
+- From the search summary:
++ From a search summary:
+@ apocalyptic uncertainty
+- so no transformation tag was given.
++ so the research doesn’t name Physical Transformation.
+
+@ art_house sourceSupports
+- Art Cinema: Says nothing about
++ Art Cinema: It says nothing about
+- This is evidence against a genre-wide acting convention.
++ This is evidence against an acting convention for the whole genre.
+@ art_house uncertainty
+- The 'camera' tag is an approximation:
++ Naturalism On Camera is only an approximation:
+@ art_house belongsTo
+- Modernist / auteur art cinema (Bresson, Antonioni) and the slow-cinema strand; director-specific methods
++ the methods of particular modernist and auteur directors (Bresson, Antonioni) and of slow cinema
+
+@ avant_garde sourceSupports
+- From the search summary:
++ From a search summary:
+@ avant_garde uncertainty
+- The input defines the genre as film, and the sources are about experimental theatre. Avant-garde film often has no actors at all, so no tag is supported for the film genre. Movement-based work is plausible but is supported here only for one theatre practitioner.
++ The game defines the genre as film, and the sources are about experimental theater. Avant-garde film often has no actors at all, so nothing supports a requirement for the film genre. Movement-based work is plausible, but here it’s supported only for one theater practitioner.
+
+@ biker sourceSupports
+- From the search summary:
++ From a search summary:
+- The TCM page returned 403 when fetched.
++ The TCM page couldn’t be opened.
+@ biker uncertainty
+- Riding skill fits 'stunt' only loosely, since the vocabulary has no driving or riding tag. Reviewed 2026-10-10: One film’s casting rule (The Wild Angels). Not applied genre-wide.
++ Riding fits Fights And Stunts only loosely, since none of the requirements the game can ask for is driving or riding. On review (2026-10-10), one film’s casting rule wasn’t enough to make it a requirement of the whole genre.
+
+@ biographical sourceSupports
+- Casting Networks (snippet):
++ Casting Networks (from a search summary):
+@ biographical uncertainty
+- Reviewed 2026-10-10: the accent tag was removed. An accent is asked only
++ The review of 2026-10-10 took Accents away: an accent is asked only
+
+@ black_comedy sourceSupports
+- (Fetch returned 403; seen via search snippet.) Defines the genre as comic; says nothing about acting. Black comedy: Treats black comedy
++ (The page couldn’t be opened, so this is from a search summary.) It defines the genre as comic and says nothing about acting. Black comedy: It treats black comedy
+- Contains no discussion of performance, deadpan or timing. Deadpan: Advises
++ It doesn’t discuss performance, deadpan or timing. Deadpan: It advises
+- Does not mention black or dark comedy.
++ It doesn’t mention black or dark comedy.
+@ black_comedy uncertainty
+- Britannica could not be fetched (snippet only). No acting or training source ties a particular comic technique to black comedy; the deadpan/play-it-straight idea appears only in general comedy advice and non-credible blogs. Genre-wide only by definition; no source states a technical convention, so it stays low.
++ Britannica couldn’t be opened, so it was read only as a search summary. No acting or training source ties a particular comic technique to black comedy: the idea of deadpan, of playing it straight, appears only in general comedy advice and in blogs that aren’t credible. It holds for the whole genre only by definition, and no source states a technical convention, so it stays at low confidence.
+
+@ blaxploitation sourceSupports
+- Does not say how common fights were across the cycle or whether stars did their own.
++ It doesn’t say how common fights were across the cycle, or whether stars did their own.
+@ blaxploitation uncertainty
+- The stunt demand is inferred from the cycle’s violence; no source states fight work for the genre as a whole, so it stays low.
++ Fights And Stunts is inferred from the cycle’s violence, and no source states fight work for the genre as a whole, so it stays at low confidence.
+
+@ body_horror sourceSupports
+- From the search summary:
++ From a search summary:
+@ body_horror uncertainty
+- There is one film, plus a reference to The Fly. Body horror done with digital effects would not ask this, so the tag rests on practical-effects practice.
++ There’s one film, plus a reference to The Fly. Body horror done with digital effects wouldn’t ask this, so Physical Transformation rests on practical-effects practice.
+-  Reviewed 2026-10-10: One film’s practical-effects prosthetics. Not applied genre-wide.
++  On review (2026-10-10), one film’s practical-effects prosthetics weren’t enough to make it a requirement of the whole genre.
+
+@ buddy_comedy sourceSupports
+- comedic timing'. Page returned 403; snippet only. Film Genres: An Introduction to Basic Movie Categories: Lists the 'buddy' picture
++ comedic timing'. The page couldn’t be opened, so this is from a search summary. Film Genres: An Introduction to Basic Movie Categories: It lists the 'buddy' picture
+- farce, parody. Page returned 403; snippet only. Comedy: Discusses comedy teams, e.g. Laurel
++ farce, parody. The page couldn’t be opened, so this is from a search summary. Comedy: It discusses comedy teams, such as Laurel
+@ buddy_comedy uncertainty
+- Both Backstage pages refused fetching (403), so the wording rests on search snippets, and the timing sentence comes from a buddy-cop list. Only one publisher states it. Chemistry is not a tag in the vocabulary. The buddy film outside comedy (buddy action, buddy drama) carries no comic demand. The one direct statement (Backstage) was read only as a search snippet, so it stays low; a buddy comedy is a comedy, but that is a definition, not evidence of a technical convention.
++ Neither Backstage page could be opened, so the wording rests on search summaries, and the timing sentence comes from a list of buddy-cop films. Only one publisher states it. Chemistry isn’t one of the requirements the game can ask for. The buddy film outside comedy (buddy action, buddy drama) asks for no comedy. The one direct statement (Backstage) was read only as a search summary, so it stays at low confidence: a buddy comedy is a comedy, but that’s a definition, not evidence of a technical convention.
+
+@ buddy_cop uncertainty
+- Comedy-led entries (e.g. Ride Along) may lean less on combat. Both sources are student works (an MA thesis and an undergraduate research paper); they do not establish a convention, so it stays low.
++ Comedy-led entries such as Ride Along may lean less on combat. Student works don’t establish a convention, so it stays at low confidence.
+
+@ caper source
+- which were not used.
++ which weren’t used.
+@ caper uncertainty
+- but no cited source states that, so no comic tag was given.
++ but no cited source states it, so the research didn’t name Comic Timing for it.
+
+@ chanbara sourceSupports
+- From the search summary:
++ From a search summary:
+@ chanbara uncertainty
+- Pages were not read directly, but the genre's own name entails the demand. Period movement, stillness and period speech are not supported by these sources, so no heightened tag was given.
++ The pages weren’t read directly, but the genre’s own name calls for it. Period movement, stillness and period speech aren’t supported by these sources, so the research didn’t name Heightened Language.
+
+@ chase sourceSupports
+- Chase film (entry in A Dictionary of Film Studies): Snippet (page returned 403): chase films are
++ Chase film (entry in A Dictionary of Film Studies): From a search summary, as the page couldn’t be opened: chase films are
+@ chase uncertainty
+- The Oxford entry was only seen as a snippet.
++ The Oxford entry was seen only as a search summary.
+
+@ childrens sourceSupports
+- From the search summary:
++ From a search summary:
+@ childrens uncertainty
+- The definition entails no tag.
++ The genre’s definition calls for none of the requirements the game can ask for.
+
+@ christmas sourceSupports
+- From the search summary:
++ From a search summary:
+@ christmas uncertainty
+- This covers TV-movie Hallmark Christmas films only. The input defines Christmas film as combinable with any genre, and its demands would follow the host genre. No tag in the vocabulary fits 'sincere warmth'.
++ This covers Hallmark’s Christmas TV movies only. The game defines a Christmas film as combinable with any genre, so what it asks would follow the genre it’s combined with. None of the requirements the game can ask for fits 'sincere warmth'.
+
+@ coming_of_age sourceSupports
+- From the search summary:
++ From a search summary:
+@ coming_of_age uncertainty
+- Improvisation and camera tags were considered and withheld because the sources do not tie them to the genre.
++ Improvisation and Naturalism On Camera were considered and left out, because the sources don’t tie them to the genre.
+
+@ concert_film sourceSupports
+- Concert film: Pointer: defines the subject
++ Concert film: Used only as a lead, it defines the subject
+@ concert_film uncertainty
+- No scholarly reference work defining the genre was read; the IDA article is a trade/professional source. The vocabulary has no instrument or live-music tag, so 'song' is a stretch. Whether an actor-character belongs in a concert film at all is a design question.
++ No scholarly reference work defining the genre was read: the IDA article is a trade source. None of the requirements the game can ask for is playing an instrument or live music, so Singing is a stretch. Whether an acted character belongs in a concert film at all is a question for the game, not the research.
+@ concert_film belongsTo
+- Concert films of singers and vocal acts (the singing performers themselves)
++ concert films of singers and vocal acts, where the performers sing as themselves
+
+@ conspiracy_thriller sourceSupports
+- From the search summary:
++ From a search summary:
+@ conspiracy_thriller uncertainty
+- This is one film's reviews. Restrained paranoia is not documented as a genre demand. No tag fits.
++ These are one film’s reviews. Restrained paranoia isn’t documented as something the genre asks. None of the requirements the game can ask for fits it.
+
+@ cosmic_horror sourceSupports
+- From the search summary, Backstage:
++ From a search summary, Backstage:
+- The Backstage page returned 403 when fetched.
++ The Backstage page couldn’t be opened.
+@ cosmic_horror uncertainty
+- No tag in the vocabulary fits a portrayal of a mind unravelling. Reacting to what cannot be shown is not supported by these sources; see creature_feature for the reaction-to-nothing evidence.
++ None of the requirements the game can ask for fits a portrayal of a mind unraveling. Reacting to what can’t be shown isn’t supported by these sources: see the Creature Feature genre for the evidence on reacting to nothing.
+
+@ costume_drama sourceSupports
+- Search summary of the other results:
++ A search summary of the other results:
+@ costume_drama uncertainty
+- Period dance appears in RADA's syllabus, but no dance tag was given because no source says costume dramas require dancing. The fit between 'heightened' and movement, rather than language, is loose. Reviewed 2026-10-10: the heightened tag was removed. Heightened is verse and rhetoric; the research is about period movement and deportment, which no tag in the vocabulary covers.
++ Period dance appears in RADA’s syllabus, but the research didn’t name Dancing, because no source says costume dramas require it. Heightened Language, which is about language, fit this movement only loosely, and the review of 2026-10-10 took it away: it’s verse and rhetoric, and the research is about period movement and deportment, which none of the requirements the game can ask for covers.
+
+@ courtroom_drama sourceSupports
+- From the search summary:
++ From a search summary:
+@ courtroom_drama uncertainty
+- No tag fits.
++ None of the requirements the game can ask for fits.
+
+@ creature_feature sourceSupports
+- Title only (fetch timed out): names 'creature actor' as a role and transformation into monsters.
++ Only its title was read, as the page timed out. It names 'creature actor' as a role, and transformation into monsters.
+@ creature_feature uncertainty
+- Sources centre on one performer
++ The sources center on one performer
+- The reacting-to-nothing claim was general VFX practice and is dropped here.
++ The claim about reacting to nothing was general visual-effects practice, and isn’t used here.
+
+@ crime uncertainty
+- The definition entails no tag.
++ The genre’s definition calls for none of the requirements the game can ask for.
+
+@ cyberpunk sourceSupports
+- Examples: Defines cyberpunk as
++ Examples: It defines cyberpunk as
+- Mentions no fights, martial arts or acting demands. (Industry education site, used only for the definition.)
++ It mentions no fights, martial arts or acting demands. It’s an industry education site, used only for the definition.
+@ cyberpunk uncertainty
+- The SCMP page from the earlier pass returned 403 and was not re-read.
++ The SCMP page from the earlier research couldn’t be opened, and wasn’t read again.
+@ cyberpunk belongsTo
+- Action-led cyberpunk in the mould of The Matrix (martial-arts and wirework set pieces), not the genre as a whole
++ action-led cyberpunk in the mold of The Matrix, with its martial-arts and wirework set pieces
+
+@ dance uncertainty
+- A search-snippet (edukatesg.com, not used) says
++ A search summary (edukatesg.com, not used) says
+
+@ dark_fantasy sourceSupports
+- (used only as pointers)
++ (used only as leads)
+@ dark_fantasy uncertainty
+-  Reviewed 2026-10-10: One actor in one creature role. Not applied genre-wide.
++  On review (2026-10-10), one actor in one creature role wasn’t enough to make it a requirement of the whole genre.
+
+@ detective source
+- ; search snippets on Benedict Cumberbatch's Sherlock (Collider interview, https://collider.com/benedict-cumberbatch-interview-sherlock-war-horse-spielberg/, not fetched)
++ ; search summaries on Benedict Cumberbatch's Sherlock (Collider interview, https://collider.com/benedict-cumberbatch-interview-sherlock-war-horse-spielberg/, not read directly)
+@ detective sourceSupports
+- Search snippets (secondhand) say
++ Search summaries, secondhand, say
+@ detective uncertainty
+- Both sources are single, famous characters, not the genre. Poirot's accent belongs to the character, not to detective fiction, so no accent tag.
++ Both sources are about single famous characters, not the genre. Poirot’s accent belongs to the character, not to detective fiction, so the research didn’t name Accents.
+- rests on a search snippet about one series.
++ rests on a search summary about one series.
+
+@ disaster sourceSupports
+- Search snippets (NPR, not fetched; Wikipedia) add
++ Search summaries of NPR (not read directly) and Wikipedia add
+@ disaster uncertainty
+- One film. A search snippet (a blog, secondhand) reports Ernest Borgnine calling The Poseidon Adventure his most physically demanding film; that is not verified. Nothing found on large-ensemble panic work as a convention. Reviewed 2026-10-10: One film’s water-tank work. Not applied genre-wide.
++ It’s one film. A search summary of a blog, secondhand, reports Ernest Borgnine calling The Poseidon Adventure his most physically demanding film; that isn’t verified. Nothing was found on large-ensemble panic work as a convention. On review (2026-10-10), one film’s water-tank work wasn’t enough to make it a requirement of the whole genre.
+
+@ docudrama sourceSupports
+- Bignell (abstract via search; the PDF was blocked):
++ Bignell (only the abstract, through a search, as the PDF couldn’t be opened):
+- A Backstage snippet ('The Actor as Interviewer', not fetched) says
++ A search summary of Backstage ('The Actor as Interviewer', not read directly) says
+@ docudrama why:transformation
+- the Backstage snippet has actors taking down the voice and mannerisms of the people they will play. This is impersonation-led character work, not prosthetics.
++ the Backstage summary has actors noting the voice and mannerisms of the people they’ll play. This is character work led by impersonation, not prosthetics.
+@ docudrama uncertainty
+- Whether 'transformation' (mapped to Character Work) is the right skill for impersonation is a judgement;
++ Whether Physical Transformation, which the game trains as Character Work, is the right skill for impersonation is a judgment call;
+
+@ domestic_drama source
+- Search snippets: Britannica, 'Stanislavsky system' — https://www.britannica.com/art/Stanislavsky-system (blocked to fetch); fiveable,
++ From search summaries: Britannica, 'Stanislavsky system' — https://www.britannica.com/art/Stanislavsky-system (couldn’t be opened); fiveable,
+@ domestic_drama sourceSupports
+- Britannica (snippet):
++ Britannica (from a search summary):
+- Fiveable (snippet, study guide):
++ Fiveable (a study guide, from a search summary):
+@ domestic_drama uncertainty
+- The sources concern realist/naturalist drama
++ The sources concern realist and naturalist drama
+- They describe stage acting, so they do not support the 'camera' tag. Britannica was not read directly (403).
++ They describe stage acting, so they don’t support Naturalism On Camera. Britannica couldn’t be opened, so it wasn’t read directly.
+
+@ drama sourceSupports
+- Search snippets (pages returned 403):
++ From search summaries, as the pages couldn’t be opened:
+@ drama uncertainty
+- Britannica could not be fetched, so the wording is from snippets. 'Drama' is too broad for any fixed-vocabulary tag; emotional truth has no tag of its own. Nothing ties the 'camera' tag to drama as such.
++ Britannica couldn’t be opened, so the wording is from search summaries. 'Drama' is too broad for any one of the requirements the game can ask for, and emotional truth isn’t one of them. Nothing ties Naturalism On Camera to drama as such.
