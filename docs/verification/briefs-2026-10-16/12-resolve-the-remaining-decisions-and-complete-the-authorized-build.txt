@@ -1,0 +1,172 @@
+SLATE: Resolve The Remaining Decisions And Complete The Authorized Build
+
+Continue from the current verified main branch. At the last review, PR #38 was merged at 9302b29c. Verify the latest remote state and read the repository instructions, handoff, frozen checklist, completion receipt, and relevant reports.
+
+This is a final close-out of the existing authorized scope. Do not expand the game, restore removed systems, or restart completed work.
+
+Preserve the frozen 608-row baseline. Previously, 567 rows were verified and 37 of 46 actionable requirements had been closed. Verify the current figures and account for any intervening changes.
+
+Decision #4 remains completely unchanged, including its twelve underlying audit items and all related protected checklist rows.
+
+1. Resolve The Four Remaining Restrained-Acting Clauses
+
+I approve judging restrained acting by meaningful, explainable gameplay benefits rather than requiring a specialist to beat a balanced actor a fixed percentage of the time.
+
+Revise ST6-R (a), (c), (e), and (g) individually around these requirements:
+
+* A valid restrained interpretation must have a measurable contribution from its relevant abilities.
+* Improving those relevant abilities must improve otherwise identical applicable work, except where a documented cap or another legitimate limiting factor prevents an increase.
+* Preparation and scene circumstances must matter in the intended direction.
+* Restrained interpretations must have useful opportunities across varied suitable material.
+* Expansive interpretations must retain their own advantages where appropriate.
+* A specialist’s strength must not erase unrelated weaknesses.
+* Tests must fail if restraint’s intended ability contributions or circumstance effects are removed.
+* Maximum relevant mastery, full preparation, valid interpretation, and suitable conditions must retain the established maximum-quality guarantee.
+
+Use controlled comparisons and representative existing material. Do not pick only convenient examples or add a special bonus to obtain a passing score.
+
+Define and justify replacement criteria before tuning or final validation. Compare the existing proposed replacement against this authorization; adopt it only where it fully satisfies these requirements.
+
+Keep the original definitions and results as historical evidence. Mark them superseded with this authorization, not retroactively passed. Close each replacement clause only when its own evidence supports it.
+
+2. Resolve The Two Remaining Advice Clauses
+
+I approve advice that accurately reflects the actual progression model.
+
+A predicted benefit does not have to fall after every training period if discipline, preparation, or another relevant factor legitimately increases it. A recommendation may remain the same when its cause remains unresolved.
+
+For F2-A10 (f):
+
+* Separate ability-training benefits from preparation benefits.
+* State what preparation and genre knowledge the forecast assumes.
+* Compare forecasts with actual training results under the same assumptions and budget.
+* Never present an unprepared take as fully prepared without explaining that counterfactual.
+* Show the player whether preparation, ability development, or both deserve attention.
+
+For F2-A10 (h):
+
+* Require the recommendation and its forecast to update correctly after training.
+* Permit an unchanged recommendation when it remains the best justified option.
+* Permit a benefit increase when the engine can attribute it to a legitimate changed input.
+* Require an explanation of that increase.
+* Detect stale recommendations and unexplained forecast changes.
+* Do not rotate to inferior advice merely for variety.
+
+Preserve the original results. Write the clarified criteria before final validation.
+
+Because previous held-out cases have now informed these clarifications, use additional fresh validation cases. Keep the earlier set as regression coverage rather than describing it as unseen validation.
+
+Test players who follow advice, ignore it, partially follow it, change their work, and reach mastery.
+
+3. Resolve The Unreachable Health Work-Path
+
+Jobs remain removed. Do not restore employment to satisfy health.enroll’s work-hours branch.
+
+I authorize retaining that branch as a tested internal safeguard where it is necessary for existing data, compatibility, or defensible engine behavior.
+
+* Do not advertise it as an available player action.
+* Ensure notices describe the player’s actual applicable route.
+* Verify the reachable student, eligibility, enrollment, renewal, and hardship paths.
+* Test the retained internal branch separately and identify its purpose.
+* Distinguish “internally tested safeguard” from “verified playable journey.”
+* If the branch serves no necessary purpose, document that finding before removing only that unreachable branch.
+
+Record this as an explicit scope resolution for health.enroll. Do not apply it to decision #4 or alter that decision’s protected rows.
+
+4. Finish The Two Document Research Blockers
+
+Make a focused attempt to resolve:
+
+* The applicable Connecticut non-citizen ID-card validity period.
+* The unresolved Japan/New York and New Zealand passport-office fees identified in the checklist.
+
+Use authoritative sources and record the jurisdiction, service, currency, effective date, and retrieval date. Separate unavailable information from blocked access.
+
+Do not send messages or contact institutions on my behalf without separate authorization.
+
+If reliable information remains unavailable, I authorize a clearly labeled, configurable simulation assumption for the unresolved value:
+
+* Choose a reasonable default and document its basis.
+* Label it as SLATE’s assumption, not verified official policy.
+* Keep confirmed facts separate.
+* Make future correction possible without corrupting existing documents, charges, or histories.
+* Explain what happens when a rule changes.
+* Test issuance, validity or expiration, renewal, charging, duplicate attempts, and save/load as applicable.
+
+A simulated behavior may be implemented and verified against its specification while its real-world source remains unverified. Preserve both facts in the record.
+
+5. Close The Existing Actionable Checklist
+
+After implementing these decisions, revisit every remaining authorized actionable row.
+
+Do not treat approval alone as completed implementation. Supply the necessary code, player-facing explanations, tests, and evidence.
+
+Do not add optional features or new scope. Add work only for a concrete defect or a necessary dependency, recording it separately.
+
+Fix stale handoff statements about main, PRs, merges, and deployment using the actual repository state.
+
+Maintain separate counts for:
+
+* Requirements closed through implementation or verification.
+* Criteria superseded by this authorization.
+* Scope resolutions.
+* Research assumptions.
+* Decision #4’s unchanged exclusions.
+* Genuine remaining defects or external limitations.
+
+Do not count administrative changes as new gameplay.
+
+6. Verify The Final Integrated Build
+
+Run focused checks during development, then the required final gate, production build, regenerated scenarios, and desktop/mobile acceptance checks.
+
+Verify affected full journeys through normal commands and interfaces:
+
+* Acting preparation, interpretation, training, and performance.
+* Advice followed and ignored.
+* Health enrollment and renewal.
+* Document issuance, fees, expiration, and renewal.
+* School, money, and papers interactions affected by these changes.
+* Saving, exiting, continuing, migration, repeated actions, and time advancement.
+
+Preserve mastery, ledger balance, event consistency, and historical results.
+
+Record the exact tested source commit, commands, exit codes, relevant seeds, failures, and final results. If gameplay code changes afterward, rerun affected verification and the required final gate.
+
+7. Prepare A Player Walkthrough
+
+Provide a concise manual playtest route for me on the built app:
+
+* Create or load a character.
+* Navigate school, money, papers, and health.
+* Prepare and perform work.
+* Compare acting choices and read their explanations.
+* Follow training advice and inspect the change.
+* Observe stamina and recovery.
+* Complete an applicable financial or document action.
+* Save, exit, and continue.
+
+State expected outcomes and what I should report if something feels confusing or fails.
+
+Use an existing authorized preview or local build. Do not deploy without the established authorization.
+
+8. Deliver The Final Receipt
+
+Report:
+
+* Original frozen-baseline status versus final status.
+* Every authorized actionable requirement’s final disposition.
+* Evidence for each replacement acting and advice criterion.
+* Health’s playable routes versus internal safeguards.
+* Verified document facts versus explicit assumptions.
+* Final test results and tested commits.
+* Any unresolved defect, limitation, or external dependency.
+* Decision #4’s protected rows, unchanged.
+* The manual playtest instructions.
+* Accurate merge and deployment status.
+
+Commit and push the work and prepare the appropriate PR. Follow established merge and deployment authorization rules.
+
+Continue until the authorized work is implemented and verified, or a concrete blocker remains after all independent work is finished. Do not stop at another list of decisions already settled by this command.
+
+The completion target is all authorized current gameplay implemented and verified under these explicit rules—not a claim that every possible feature exists or that software can never contain a future bug.
