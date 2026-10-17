@@ -5,8 +5,9 @@
  *
  *   node tools/text-inventory.mjs                     prints the totals by subsystem
  *   node tools/text-inventory.mjs --write             writes them, and every source, to docs/text/inventory.json and INVENTORY.md
- *   node tools/text-inventory.mjs --check             exits 1 on a source no status names, one claimed twice, a status
- *                                                     for a source that's gone, or engine-speak over its ratchet
+ *   node tools/text-inventory.mjs --check             exits 1 on a source no status names, one Pending (its words changed
+ *                                                     since it was read), one claimed twice, a status for a source that's
+ *                                                     gone, or engine-speak over its ratchet
  *   node tools/text-inventory.mjs --show <pattern>    prints the strings of the sources whose id matches (a * is any run)
  *   node tools/text-inventory.mjs --mark <pattern> <status> --by <area> [--reason <text>] [--evidence <text>]
  *                                                     records a status for the matching sources, at their text as it is,
@@ -367,6 +368,11 @@ if (args[0] === '--show') {
     const problems = [];
     const unknown = srcs.filter((s) => !statuses[s.id]);
     if (unknown.length) problems.push(`${unknown.length} sources no status names (a new source of player-facing text: review it and mark it): ${unknown.slice(0, 5).map((s) => s.id).join(', ')}${unknown.length > 5 ? ', …' : ''}`);
+    // Nothing a player reads is left unread (from the end of brief 14, 2026-10-17, once every source had been read): a
+    // source whose words changed since its status, or one marked Pending, fails until it's read again and marked. Until
+    // then Pending was counted and allowed, while the areas worked through 4,147 sources.
+    const pending = srcs.filter((s) => statuses[s.id] && statusOf(s, statuses).status === 'Pending');
+    if (pending.length) problems.push(`${pending.length} sources Pending, their words changed since they were read (read each against docs/STYLE.md, then --mark it): ${pending.slice(0, 5).map((s) => s.id).join(', ')}${pending.length > 5 ? ', …' : ''}`);
     const ratchet = load(RATCHET, null);
     if (ratchet) {
       const by = {};

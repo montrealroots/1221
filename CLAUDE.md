@@ -108,7 +108,7 @@ npm run gate
 ```
 
 It runs `npm run validate` (typecheck, lint, the full vitest suite) followed by
-nineteen checks: title-case, label-sweep, plural-check, voice-check, tics,
+twenty checks: title-case, label-sweep, plural-check, voice-check, tics,
 doc-refs, wired, deciders, spelling, typos, geo-check, inventory, devmap,
 traceability, capabilities (added 2026-10-08), coverage (added 2026-10-13,
 which fails an audit row whose cited test or line doesn't hold, and
@@ -123,7 +123,11 @@ completion-matrix: it fails a source of player-facing text that no status in
 `docs/text/statuses/` names, a source two areas both claim, a status for a
 source that's gone, and a rise in the engine-speak `docs/text/engine-speak.json`
 counts, which may fall and may not rise; `docs/STYLE.md` and `docs/GLOSSARY.md`
-are the standard it serves). This said eighteen until 2026-10-17, seventeen until 2026-10-16, sixteen until 2026-10-13, fifteen until 2026-10-10, and fourteen until
+are the standard it serves; from the end of brief 14 it also fails a source
+that's Pending, its words changed since they were read) and guide-quotes (added
+2026-10-17 at the end of brief 14, after text-inventory: it fails a sentence the
+guide quotes that the game no longer says). This said nineteen until the end of
+brief 14 on 2026-10-17, eighteen until 2026-10-17, seventeen until 2026-10-16, sixteen until 2026-10-13, fifteen until 2026-10-10, and fourteen until
 2026-10-08, leaving out traceability, which the gate already ran, and sixteen
 until 2026-10-09, when catalog-coverage (added 2026-10-03) left the gate with
 the catalogs it counted in the owner's scope reset. Read its exit
@@ -235,9 +239,10 @@ review holds the line.
 follows `docs/STYLE.md` ("Talking to the player") and uses `docs/GLOSSARY.md`'s words. A new feature's text is
 plain, specific and true, and it never shows the player the engine: inputs, weights, dimensions, segments, a
 "take" for anything but a tape, a command's id or a file name. A new source of text is read, then given a status
-with `node tools/text-inventory.mjs --mark <source> "<status>" --by <area> --reason|--evidence …`. The gate's
-text-inventory check fails a source with none, and a rise in engine-speak. Comments keep this project's voice;
-player text keeps the player's.
+with `node tools/text-inventory.mjs --mark <source> "<status>" --by <area> --reason|--evidence …`, and a changed
+one is read again and marked again in the same commit. The gate's text-inventory check fails a source with no status,
+one whose words changed since they were read, and a rise in engine-speak; its guide-quotes check fails a quote of
+words the game no longer says. Comments keep this project's voice; player text keeps the player's.
 
 **Mutation-test every claim a test protects.** A surviving mutation usually means a
 redundant guard that an earlier clamp already settles.

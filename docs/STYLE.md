@@ -266,7 +266,27 @@ screen.
   (`docs/text/INVENTORY.md`). It also counts engine-speak, the internal words
   this guide keeps out of the player's sight, against `docs/text/engine-speak.json`,
   whose counts may fall and may not rise. `--check` in the gate fails a new
-  source no status names, and a rise in engine-speak (from 2026-10-17).
+  source no status names, and a rise in engine-speak (from 2026-10-17). From
+  the end of brief 14 the same day, once every source had been read, it also
+  fails a source that's Pending: one whose words changed since it was read.
+  Until then Pending was counted and allowed while the areas worked. So a
+  change to anything a player reads is read again and marked in the same
+  commit: `--mark <source> "<status>" --by <area> --reason|--evidence …`.
+- `tools/guide-quotes.mjs` — every sentence the guide quotes in curly quotes,
+  five words or more, found in what the game says outside the guide; a quote
+  built from parts counts where each stretch between the parts is said whole.
+  `--check` fails the gate on a quote the game no longer says (from
+  2026-10-17, brief 14, when 74 of 595 had gone stale as the areas rewrote
+  their words).
+- `tools/tutorial-routes.mjs` — every label a tutorial names, found on a
+  screen of the built app or in the game's code. It reads a walk of the built
+  app (`tools/text-walk.mjs`), so it isn't in the gate. Run it after a walk,
+  whenever a tutorial's route or a screen's labels change.
+- `tools/text-render-check.mjs` — what a walk or a played journey shows,
+  read for the faults a sentence built from parts can have: a leaked value,
+  doubled punctuation, a raw id, a plural that disagrees with its number, a
+  fragment. `tests/language-dynamic.test.ts` reads the game's generators with
+  the same rules, across each of brief 14's dynamic cases, in the gate.
 - `tools/doc-refs.mjs` — every file path a doc names, checked. This section is
   a promise about what is enforced, and it had gone partly false: it named a
   fuzzer and two test files that had been deleted. `--check` fails the gate.
