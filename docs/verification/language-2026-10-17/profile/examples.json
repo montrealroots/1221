@@ -1,0 +1,164 @@
+[
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [emotionalDepth]",
+  "kind": "other",
+  "before": "Believability in every piece of performed work (a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition, a night on stage), most where the piece is played grave; and connection in a fight or an intimacy scene shown with a partner.",
+  "after": "Your believability in everything you perform (a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition, a night on stage), most of all when the material is grave; and your connection with a partner in a fight or an intimacy scene.",
+  "why": "What it does, said to the player about their own work; every task and dimension kept.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts A4: the GUARD and 'every effect each ability’s affects sentence names, it has, clause by clause' hold each new clause; b1-looks.txt"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [presence]",
+  "kind": "other",
+  "before": "What a house or a camera sees beyond technique: the pull of somebody fully there.",
+  "after": "The pull of being fully there, which an audience or a camera sees beyond your technique.",
+  "why": "The definition is read after 'You’re at 69.8 of 100.0:', so the old one printed two colons; 'house' is theater shorthand; one fewer 'somebody'.",
+  "meaningSensitive": false,
+  "verified": "b1-looks.txt, Presence's summary"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [listening]",
+  "kind": "other",
+  "before": "For a life from before it: the mean of its Scene Study and Improvisation.",
+  "after": "It started at the average of your Scene Study and Improvisation.",
+  "why": "Where it started, for the player. The old line spoke only of saves from before the ability; derivedAbilities gives a new life the same mean, so the new line is true for both.",
+  "meaningSensitive": true,
+  "verified": "src/engine/systems/attributes.ts derivedAbilities read (kin mean for any life without the value); b1-looks.txt"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [focus]",
+  "kind": "other",
+  "before": "The day’s focus is another thing: how ready you come to the hour.",
+  "after": "Focus on the day is something else: it’s your readiness at that hour, and this ability doesn’t change it.",
+  "why": "Keeps the ability apart from the day's readiness in the glossary's word, and says the thing a player needs: training focus doesn't change it.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts A4 clause holds it: focusAt is the same at focus 10 and 95 and falls with energy"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [memory]",
+  "kind": "other",
+  "before": "How far a step learning lines goes (a scene’s, a brief’s, a part’s)",
+  "after": "How much a session learning lines gets done (for a scene, a brief or a part)",
+  "why": "'How far a step goes' is the engine's step speed; the player sees sessions of preparation getting more or less done.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts A4 clause: stepRatio of memory 20 against 80 is the speed ratio, coursework, brief and part"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [discipline]",
+  "kind": "other",
+  "before": "How much what classes, nights, steps and practice grow counts for, a tenth more at 100 and a tenth less at 0 (a workout’s fitness aside)",
+  "after": "How much you gain from classes, nights on stage, preparation and practice, a tenth more with discipline at 100 and a tenth less at 0 (but not the fitness a workout builds)",
+  "why": "Says whose 100 it is, and what 'aside' meant.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts A4 clauses: the lift is 1.1/0.9 for class, night, step and exercise, and a workout's fitness is the same at 0 and 100"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [stamina]",
+  "kind": "other",
+  "before": "Workouts, and more on a run in fine weather, held three days after each; lost past that, as fitness is.",
+  "after": "Workouts, and more on a run when the weather’s fine; it holds for three days after each one; then it slowly falls, as fitness does.",
+  "why": "'Lost past that' read as gone at once; fitness falls by a set amount a day.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts A4 develops journey: fitness held FITNESS.heldDays days, then fell FITNESS.perDay a day"
+ },
+ {
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [composure]",
+  "kind": "other",
+  "before": "Kept since 2026-09-27 (`systems/attributes.ts`)",
+  "after": "How it starts and how it grows are estimated. That performance anxiety falls with exposure is from Reeves et al. (2022).",
+  "why": "The look's foot line showed a date and a code file; it now says what's estimated and what has a source.",
+  "meaningSensitive": false,
+  "verified": "b1-looks.txt, Composure's provenance"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "heading",
+  "before": "Which work reads it.",
+  "after": "Where it counts.",
+  "why": "The brief's own example of engine-speak ('Which Work Reads It'); the list after it names the work and what the teacher looks for in it.",
+  "meaningSensitive": false,
+  "verified": "tests/attributes-phase-2b.test.ts asserts `Where it counts. ${readers…}` on all twelve; b1-looks.txt"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "heading",
+  "before": "What develops it.",
+  "after": "How it grows.",
+  "why": "Plainer; the sentence after it names the activities.",
+  "meaningSensitive": false,
+  "verified": "tests/attributes-phase-2b.test.ts and tests/guide-examples-craft.test.ts; tools/playthroughs-ui.mjs matcher changed to /How it grows\\./"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "Judged under evaluation-10 (2026-10-16), rules since changed, so it isn’t worked out again under today’s: what it was is kept as it was.",
+  "after": "The rules have changed since it was judged, so it isn’t worked out again. Its result stands as it was.",
+  "why": "A raw ruleset id shown to the player; the sentence is two thoughts.",
+  "meaningSensitive": false,
+  "verified": "tests/decisions-stamina.test.ts asserts the new provenance exactly on a night kept under evaluation-10"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "Judged under evaluation-11 (2026-10-16); worked out again from its own inputs, 50.2.",
+  "after": "Worked out again from what it was judged on, it comes to 50.2.",
+  "why": "'Its own inputs' is the brief's named engine-speak; the ruleset id is internal.",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-craft.test.ts 'A Piece Of Work, Explained' asserts the figure is the record's overall; b1-looks.txt, the Spare Key take played through brief.choose, brief.prepare and practice.self_tape"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "preparation: the lines at 90% of 80%, the blocking at 80% of 70%; leaning to science fiction, animation.",
+  "after": "preparation: the lines at 90% (complete at 80%), the blocking at 80% (complete at 70%); its genres: science fiction, animation.",
+  "why": "'90% of 80%' read as a product; 'leaning to' is the judge's word for the families' lean.",
+  "meaningSensitive": true,
+  "verified": "tests/defects-g30-1.test.ts asserts both, on a night record copied from a played take"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "Applied as requirements. A self-tape in it reads Stage Combat (you: 56.5 of 90): genre-wide: Tasker's encyclopedia entry states at the level of the whole form …",
+  "after": "What a self-tape in it asks. A self-tape in it calls for Stage Combat (yours: 56.5 of 90). … (the research's reasons move to the small print: 'Why it’s applied, in the research’s words: …')",
+  "why": "The research's own notes were run into the requirement sentence; the requirement now reads on its own and the notes stay, labelled as the research's.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b08.test.ts on the farce's look; b1-looks.txt, Adventure and Chanbara"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "Familiarity 0.0 and practice 0.0: a part in a play of its kind is learned 0% faster, and a brief in it reads knowing it as part of its preparation.",
+  "after": "Familiarity 0.0, work in it 0.0. The better of the two is how well you know it: a part in a play of its kind is learned 0% faster, and it counts as Knowing The Genre when you prepare a brief in it.",
+  "why": "'Practice' is the glossary's word for exercises and self-tapes set by the player; the genre's other score is work done in it. Says the better of the two counts, as genreSpeed and genreKnown take the max.",
+  "meaningSensitive": true,
+  "verified": "systems/engagement.ts genreSpeed and practiceGenres read; tests/guide-examples-craft.test.ts 'Genres' finds 'a part in a play of its kind is learned N% faster'"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#sourceWords",
+  "kind": "label",
+  "before": "Class: DRAM 153a / Coursework: interpretation",
+  "after": "Class: Play (DRAM 153a) / Coursework: the choices",
+  "why": "A course code alone and a raw preparation key on the Profile's Development History and Last Change.",
+  "meaningSensitive": false,
+  "verified": "b1-looks.txt, the development sources list, read off sourceWords"
+ },
+ {
+  "source": "src/engine/systems/attributes.ts#alreadyApplied",
+  "kind": "error",
+  "before": "That was already done.",
+  "after": "That’s already done, so nothing was charged or changed again.",
+  "why": "A refusal says whether anything was charged or changed; it guards a meal, a workout, an hour of practice, a study and a brief's step pressed twice.",
+  "meaningSensitive": false,
+  "verified": "tests/fitness.test.ts, tests/evidence-g20-school.test.ts and tests/evidence-g06-life.test.ts assert it exactly, across a reload"
+ },
+ {
+  "source": "src/ui/components/AttributesPanel.tsx#AttributesPanel",
+  "kind": "other",
+  "before": "Performance anxiety falls with exposure (Reeves et al., 2022); how fast it moves here is SLATE’s estimate.",
+  "after": "Source: Reeves et al. (2022), on performance anxiety falling with exposure. How fast it moves here is estimated.",
+  "why": "STYLE's source line: the source named once, the estimate said plainly.",
+  "meaningSensitive": false,
+  "verified": "pending the School screen in the built app's walk"
+ }
+]

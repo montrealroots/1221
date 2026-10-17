@@ -1,0 +1,158 @@
+{
+ "src/engine/content/abilities.ts#ABILITY_DEFS [adaptability]": {
+  "status": "Rewritten And Verified",
+  "hash": "f363046e8932",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [composure]": {
+  "status": "Rewritten And Verified",
+  "hash": "9368e988a09f",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [discipline]": {
+  "status": "Rewritten And Verified",
+  "hash": "2558ceca859e",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [emotionalDepth]": {
+  "status": "Rewritten And Verified",
+  "hash": "65777856f089",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [focus]": {
+  "status": "Rewritten And Verified",
+  "hash": "4aecbd64b819",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [imagination]": {
+  "status": "Rewritten And Verified",
+  "hash": "031b7724f885",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [listening]": {
+  "status": "Rewritten And Verified",
+  "hash": "04aade071a5a",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [memory]": {
+  "status": "Rewritten And Verified",
+  "hash": "08c7adee0e0a",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [physical]": {
+  "status": "Rewritten And Verified",
+  "hash": "4d31656706ae",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [presence]": {
+  "status": "Rewritten And Verified",
+  "hash": "66e87bfec74b",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [stamina]": {
+  "status": "Rewritten And Verified",
+  "hash": "acc36980329f",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [vocal]": {
+  "status": "Rewritten And Verified",
+  "hash": "482346e4b027",
+  "on": "2026-10-17",
+  "evidence": "tests/attributes-phase-2b.test.ts, A4 'the ability’s look says what develops it, what it does and which work reads it…' (How it grows, What it does and Where it counts rendered for all twelve), its GUARD and both clause checks holding every new clause; every field rendered on a played first-year in docs/verification/language-2026-10-17/profile/b1-looks.txt"
+ },
+ "src/engine/content/attributes-matrix.ts#attributesMatrix": {
+  "status": "Reviewed And Retained",
+  "hash": "d1542e93680a",
+  "on": "2026-10-17",
+  "reason": "A developer document, not player text: attributesMatrix() writes docs/ATTRIBUTES-MATRIX.md (tools/attributes-matrix.ts), held byte for byte by tests/attributes-matrix.test.ts; nothing under src/ui or the engine's player paths imports it (grep -rn attributesMatrix src). Its code names and file paths are the matrix's columns, for the coordinator and the owner, so they stay."
+ },
+ "src/engine/content/attributes-matrix.ts#attributesMatrix carry()": {
+  "status": "Reviewed And Retained",
+  "hash": "96845f38e57b",
+  "on": "2026-10-17",
+  "reason": "A developer document, not player text: attributesMatrix() writes docs/ATTRIBUTES-MATRIX.md (tools/attributes-matrix.ts), held byte for byte by tests/attributes-matrix.test.ts; nothing under src/ui or the engine's player paths imports it (grep -rn attributesMatrix src). Its code names and file paths are the matrix's columns, for the coordinator and the owner, so they stay."
+ },
+ "src/engine/content/attributes-matrix.ts#attributesMatrix effect()": {
+  "status": "Reviewed And Retained",
+  "hash": "375f74211635",
+  "on": "2026-10-17",
+  "reason": "A developer document, not player text: attributesMatrix() writes docs/ATTRIBUTES-MATRIX.md (tools/attributes-matrix.ts), held byte for byte by tests/attributes-matrix.test.ts; nothing under src/ui or the engine's player paths imports it (grep -rn attributesMatrix src). Its code names and file paths are the matrix's columns, for the coordinator and the owner, so they stay."
+ },
+ "src/engine/content/attributes-matrix.ts#HEAD": {
+  "status": "Reviewed And Retained",
+  "hash": "3f7ddbc3b7cb",
+  "on": "2026-10-17",
+  "reason": "A developer document, not player text: attributesMatrix() writes docs/ATTRIBUTES-MATRIX.md (tools/attributes-matrix.ts), held byte for byte by tests/attributes-matrix.test.ts; nothing under src/ui or the engine's player paths imports it (grep -rn attributesMatrix src). Its code names and file paths are the matrix's columns, for the coordinator and the owner, so they stay."
+ },
+ "src/engine/content/attributes-matrix.ts#ORDINARY": {
+  "status": "Reviewed And Retained",
+  "hash": "379dfacc129d",
+  "on": "2026-10-17",
+  "reason": "A developer document, not player text: attributesMatrix() writes docs/ATTRIBUTES-MATRIX.md (tools/attributes-matrix.ts), held byte for byte by tests/attributes-matrix.test.ts; nothing under src/ui or the engine's player paths imports it (grep -rn attributesMatrix src). Its code names and file paths are the matrix's columns, for the coordinator and the owner, so they stay."
+ },
+ "src/engine/content/attributes-matrix.ts#SAVED": {
+  "status": "Reviewed And Retained",
+  "hash": "aa813f3bc854",
+  "on": "2026-10-17",
+  "reason": "A developer document, not player text: attributesMatrix() writes docs/ATTRIBUTES-MATRIX.md (tools/attributes-matrix.ts), held byte for byte by tests/attributes-matrix.test.ts; nothing under src/ui or the engine's player paths imports it (grep -rn attributesMatrix src). Its code names and file paths are the matrix's columns, for the coordinator and the owner, so they stay."
+ },
+ "src/engine/content/demands.ts#DEMAND_LABEL": {
+  "status": "Reviewed And Retained",
+  "hash": "568f11a49444",
+  "on": "2026-10-17",
+  "reason": "Twelve Title Case names of what a genre asks for (Fights And Stunts, Singing, Comic Timing, Naturalism On Camera and the rest), shown in the Genres table's It Asks For column and the genre's look: already plain, short and in the player's words, each naming the skill a player would name."
+ },
+ "src/engine/content/genre-coverage.ts#genreCoverage": {
+  "status": "Reviewed And Retained",
+  "hash": "d919edbb67ef",
+  "on": "2026-10-17",
+  "reason": "A developer document, not player text: genreCoverage() and NO_TECHNIQUE write docs/GENRE-COVERAGE.md (tools/genre-coverage.ts), held byte for byte by tests/genre-coverage.test.ts; neither is imported anywhere under src/ but this file (grep -rn 'genreCoverage\\|NO_TECHNIQUE' src)."
+ },
+ "src/engine/content/genre-coverage.ts#NO_TECHNIQUE": {
+  "status": "Reviewed And Retained",
+  "hash": "82fd9a7986ba",
+  "on": "2026-10-17",
+  "reason": "A developer document, not player text: genreCoverage() and NO_TECHNIQUE write docs/GENRE-COVERAGE.md (tools/genre-coverage.ts), held byte for byte by tests/genre-coverage.test.ts; neither is imported anywhere under src/ but this file (grep -rn 'genreCoverage\\|NO_TECHNIQUE' src)."
+ },
+ "src/engine/content/reference.ts#Registry": {
+  "status": "Reviewed And Retained",
+  "hash": "ea85ee40e620",
+  "on": "2026-10-17",
+  "reason": "Two internal Error messages (a registry built with a duplicate id, or asked for a record it lacks): programming faults thrown while the content tables load or are looked up by id, never a CommandError, so no player action reaches them and the screen never shows them."
+ },
+ "src/engine/systems/attributes.ts#alreadyApplied": {
+  "status": "Rewritten And Verified",
+  "hash": "ecc9306fb2d3",
+  "on": "2026-10-17",
+  "evidence": "tests/fitness.test.ts, tests/evidence-g20-school.test.ts and tests/evidence-g06-life.test.ts assert the new refusal exactly for a workout, an hour of practice, a meal and an order sent twice with one actionId, across a reload; tests/briefs.test.ts and tests/engagement.test.ts match /already done/"
+ },
+ "src/ui/looks/actor.tsx#BAND_WORD": {
+  "status": "Reviewed And Retained",
+  "hash": "3c7dcf0bad01",
+  "on": "2026-10-17",
+  "reason": "The school's own bands, one plain Title Case word or two each (Unready, Working, Strong, Exceptional, An Off Night, Solid, Remarkable), the same names coursework and nights are given everywhere else."
+ },
+ "src/ui/looks/actor.tsx#sourceWords": {
+  "status": "Rewritten And Verified",
+  "hash": "3122e8b6b711",
+  "on": "2026-10-17",
+  "evidence": "Every kind of development source printed through sourceWords in docs/verification/language-2026-10-17/profile/b1-looks.txt (Class: Play (DRAM 153a), Coursework: the choices and the rest); tests/evidence-g23-school.test.ts 'development ledger' journeys pass on the new words"
+ },
+ "src/ui/looks/actor.tsx#top": {
+  "status": "Rewritten And Verified",
+  "hash": "b976563de028",
+  "on": "2026-10-17",
+  "evidence": "tests/defects-g30-1.test.ts (the genre's Preparation note; a piece's small print, its parts and its genres), tests/evidence2-b08.test.ts (the farce's What a self-tape in it asks), tests/guide-examples-craft.test.ts (the look's parts, the work's provenance and Moment By Moment), tests/decisions-stamina.test.ts (an old ruleset's provenance), tests/attributes-phase-2b.test.ts (the ability look); all three looks rendered in docs/verification/language-2026-10-17/profile/b1-looks.txt, the genre look for five kinds of demand and after study and a take"
+ }
+}

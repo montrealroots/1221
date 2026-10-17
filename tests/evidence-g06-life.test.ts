@@ -687,17 +687,17 @@ describe('nourishment', () => {
     // Forty minutes at two an hour, then the meal's fifty.
     expect(sim.player.wellbeing.nourishment).toBeCloseTo(30 - 2 * (40 / 60) + 50, 9);
     const was = { now: sim.now, w: dials(sim), paid: memos(sim, 'A meal').length };
-    expect(lookAfter(sim, 'eat', 'meal-1').error).toBe('That was already done.');
+    expect(lookAfter(sim, 'eat', 'meal-1').error).toBe('That’s already done, so nothing was charged or changed again.');
     expect({ now: sim.now, w: dials(sim), paid: memos(sim, 'A meal').length }).toEqual({ ...was, paid: 1 });
     const again = reload(sim);
-    expect(lookAfter(again, 'eat', 'meal-1').error).toBe('That was already done.');
+    expect(lookAfter(again, 'eat', 'meal-1').error).toBe('That’s already done, so nothing was charged or changed again.');
     expect(memos(again, 'A meal')).toHaveLength(1);
 
     again.player.wellbeing.nourishment = 30; // TEST SETUP
     expect(lookAfter(again, 'order', 'order-1').ok).toBe(true);
     const ordered = { now: again.now, n: again.player.wellbeing.nourishment };
-    expect(lookAfter(again, 'order', 'order-1').error).toBe('That was already done.');
-    expect(lookAfter(reload(again), 'order', 'order-1').error).toBe('That was already done.');
+    expect(lookAfter(again, 'order', 'order-1').error).toBe('That’s already done, so nothing was charged or changed again.');
+    expect(lookAfter(reload(again), 'order', 'order-1').error).toBe('That’s already done, so nothing was charged or changed again.');
     expect({ now: again.now, n: again.player.wellbeing.nourishment }).toEqual(ordered);
     expect(memos(again, 'A meal delivered')).toHaveLength(1);
   });

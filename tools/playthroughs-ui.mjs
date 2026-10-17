@@ -817,7 +817,7 @@ async function specialist() {
     const look = await openLook(abilityRow('Composure').getByRole('button', { name: /^Composure$/ }));
     must(look.name === 'Composure' && /^You’re at 90\.0 of 100/.test(look.summary), `Composure’s look: ${look.summary}`);
     const body = clean(await look.look.locator(':scope > .look-inner').innerText());
-    must(/What develops it\./.test(body) && /To practice it\./.test(body), `the look doesn’t say what develops it or how to practice it: ${body.slice(0, 200)}`);
+    must(/How it grows\./.test(body) && /To practice it\./.test(body), `the look doesn’t say what develops it or how to practice it: ${body.slice(0, 200)}`);
     await wayIn(look);
     await closeLook('Composure');
     must(!(await page.locator('.look').count()), 'a look still open after Composure’s Close');

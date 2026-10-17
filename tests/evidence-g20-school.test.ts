@@ -570,10 +570,10 @@ describe('practice.exercise', () => {
     tended(sim, at(2026, 9, 6, 10));
     expect(hourOf(sim, 'sense-memory', { actionId: 'hour-1' }).ok).toBe(true);
     const was = [sim.now, levelOf(sim, sim.player, 'emotionalDepth'), historyOf(sim).length];
-    expect(hourOf(sim, 'sense-memory', { actionId: 'hour-1' }).error).toBe('That was already done.');
+    expect(hourOf(sim, 'sense-memory', { actionId: 'hour-1' }).error).toBe('That’s already done, so nothing was charged or changed again.');
     expect([sim.now, levelOf(sim, sim.player, 'emotionalDepth'), historyOf(sim).length]).toEqual(was);
     const back = reload(sim);
-    expect(hourOf(back, 'sense-memory', { actionId: 'hour-1' }).error).toBe('That was already done.');
+    expect(hourOf(back, 'sense-memory', { actionId: 'hour-1' }).error).toBe('That’s already done, so nothing was charged or changed again.');
     expect([back.now, levelOf(back, back.player, 'emotionalDepth'), historyOf(back).length]).toEqual(was);
   });
 

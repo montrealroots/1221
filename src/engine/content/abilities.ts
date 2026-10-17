@@ -27,7 +27,7 @@ export interface AbilityDef {
   affects: string;
   /** For a life from before it, and a new life's start: how its first value is drawn from what's already true. */
   derivedFrom: string;
-  /** Acting's own grounding for it: the pedagogy or the research. */
+  /** The line at the foot of its look, a sentence: its source in acting's pedagogy or the research, or that it's estimated. */
   source: string;
   /** Whether it's one of the general capacities beside the acting ones. */
   general?: boolean;
@@ -36,38 +36,38 @@ export interface AbilityDef {
 export const ABILITY_DEFS: readonly AbilityDef[] = [
   {
     id: 'emotionalDepth', label: 'Emotional Depth',
-    definition: 'Reaching real feeling under imaginary circumstances, and letting it show truthfully.',
-    develops: 'Scene study and its classes, performing, and the sense-memory exercise.',
+    definition: 'Finding real feeling in imaginary circumstances, and letting it show truthfully.',
+    develops: 'Acting I and the other classes that train it, nights on stage, and the Sense Memory exercise.',
     // Until 2026-10-16 this said believability in a scene, a song, a self-tape, an audition and a night on stage, and left out
     // the improvisation, the clown turn and the partnered physical work that read it too (attributes-matrix.md).
     // From 2026-10-16 more where a piece is played grave (`DEMAND_EFFECT`); until then the same share of every piece.
-    affects: 'Believability in every piece of performed work (a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition, a night on stage), most where the piece is played grave; and connection in a fight or an intimacy scene shown with a partner.',
-    derivedFrom: 'The craft’s Emotional Access, which it is.',
-    source: 'Stanislavski, An Actor Prepares (1936), emotion memory and the given circumstances; kept in the craft as Emotional Access until 2026-10-09',
+    affects: 'Your believability in everything you perform (a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition, a night on stage), most of all when the material is grave; and your connection with a partner in a fight or an intimacy scene.',
+    derivedFrom: 'It started with the rest of your training, as your techniques did. Older saves called it Emotional Access.',
+    source: 'Source: Stanislavski, An Actor Prepares (1936), on emotion memory and the given circumstances.',
   },
   {
     id: 'presence', label: 'Presence',
-    definition: 'What a house or a camera sees beyond technique: the pull of somebody fully there.',
-    develops: 'Nights in front of a house, a little at a time, and more on a remarkable night; a showing for classmates, and what graded exposure and a clown practice carry over.',
+    definition: 'The pull of being fully there, which an audience or a camera sees beyond your technique.',
+    develops: 'Every night in front of an audience, a little at a time, and more on a remarkable night; the exercise A Showing For Classmates; and part of what Graded Exposure and Clown Practice build carries over to it.',
     // Until 2026-10-16 this left out a scene and a taped brief, which read it too; from then more the less a piece has a
     // partner to play off, and more in front of a house (`DEMAND_EFFECT`, the night's profile). Until 2026-10-17 it said
     // "most in front of a house": a clown turn's +10 moves its whole 1.6 on the mean and an improvisation's 1.0, against a
     // night's 0.65, a scene's 0.47, an audition's 0.38 and a taped brief's 0.29 (brief 11, A4,
     // tests/attributes-phase-2b.test.ts).
-    affects: 'Connection in performance, an audition, a clown turn, a scene and a taped brief: more the less of a partner the piece has to play off, and more on a night in front of a house than in a scene, an audition or a taped brief.',
-    derivedFrom: 'Drawn once at the start, 55 to 80 for a student the faculty chose.',
-    source: 'Kept since 2026-09-27 (`systems/attributes.ts`)',
+    affects: 'Your connection on stage and in an audition, a clown turn, a scene and a taped brief: more the less of a partner you have to play off, and more on a night in front of an audience than in a scene, an audition or a taped brief.',
+    derivedFrom: 'It was set once, at the start: from 55 to 80 for a student the faculty chose.',
+    source: 'How it starts and how it grows are estimated.',
   },
   {
     id: 'listening', label: 'Listening And Responsiveness',
-    definition: 'Taking in a partner and answering what they actually do, not a plan.',
+    definition: 'Taking in your partner and answering what they actually do, not what you planned.',
     // Until 2026-10-16 this left out a night in front of a house, which grows it every night (`systems/school.ts`).
-    develops: 'Partner rehearsals, scene study and improvisation classes, every night in front of a house, the improvisation game, and the repetition exercise.',
+    develops: 'Rehearsing with a partner, classes that train Scene Study or Improvisation, every night in front of an audience, improvisation games in class and in An Improv Session, and The Repetition Exercise.',
     // From 2026-10-16 it also speeds an evening with a partner or a reader and a brief rehearsed against its reader
     // (`stepSpeed`); until then this said partnered work read it, and only the judged work did.
-    affects: 'Responsiveness and connection in partnered work and performance, more the more the piece is built on a partner and on timing; and how far an evening rehearsing with a partner or a reader goes, and a brief rehearsed on its feet against its reader.',
-    derivedFrom: 'For a life from before it: the mean of its Scene Study and Improvisation.',
-    source: 'Meisner & Longwell, Sanford Meisner on Acting (1987), the repetition exercise',
+    affects: 'Your responsiveness and connection in partnered physical work and on stage, more the more the piece depends on a partner and on timing; how much an evening rehearsing with a partner or a reader gets done; and how much rehearsing a brief on its feet with its reader gets done.',
+    derivedFrom: 'It started at the average of your Scene Study and Improvisation.',
+    source: 'Source: Meisner & Longwell, Sanford Meisner on Acting (1987), on the repetition exercise.',
   },
   {
     id: 'imagination', label: 'Imagination',
@@ -75,107 +75,107 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     // Until 2026-10-16 this said a revision of coursework grew it, which grows adaptability (`PREP_ABILITY`), and that it
     // made a part's interpretation faster to prepare, which nothing read. From 2026-10-16 it speeds the table work and a
     // brief's breakdown (`STEP_SPEED`).
-    develops: 'The table work of coursework, breaking a brief down, character and script analysis classes, reading plays, and the given-circumstances exercise.',
+    develops: 'Table work on your coursework, breaking down a brief, classes that train Character Work or Script Analysis, reading plays, and The Given Circumstances exercise.',
     // From 2026-10-16 believability reads a little of it too (the magic if), and interpretation more where the language,
     // a beat held two ways or a lyric or grotesque tone asks invention (`DEMAND_EFFECT`).
-    affects: 'Interpretation in every task that asks one, more where the language is heightened or verse, a beat is held two ways, or the piece is lyric or grotesque; a little of believability; and how far a step of table work or a brief’s breakdown goes.',
-    derivedFrom: 'For a life from before it: the mean of its Character Work and Script Analysis.',
-    source: 'Stanislavski, An Actor Prepares (1936), imagination and the magic if; Chekhov, To the Actor (1953)',
+    affects: 'Your interpretation in every kind of work that asks for one, more where the language is heightened or verse, a beat plays two tones at once, or the piece is lyric or grotesque; a little of your believability; and how much a session of table work or of breaking down a brief gets done.',
+    derivedFrom: 'It started at the average of your Character Work and Script Analysis.',
+    source: 'Sources: Stanislavski, An Actor Prepares (1936), on imagination and the magic if; Chekhov, To the Actor (1953).',
   },
   {
     id: 'focus', label: 'Focus',
-    definition: 'Holding attention where the work needs it, against distraction.',
-    develops: 'Attentive preparation done well-rested, and the concentration exercise.',
+    definition: 'Keeping your attention where the work needs it, whatever’s distracting you.',
+    develops: 'Getting to know your coursework’s material, more when you’re well rested, and the Circles Of Attention exercise.',
     // Until 2026-10-16 this said how far a step of preparation goes, which read the day's focus (readiness at the hour,
     // `focusAt`) and never this ability. From 2026-10-16 it speeds getting to know coursework's material (`STEP_SPEED`).
     // From 2026-10-16 execution reads it more in comedy and in heightened or verse language (`DEMAND_EFFECT`); and from the
     // integration pass of that day consistency reads it in any piece played Restrained, the inner line held (`APPROACH_EFFECT`).
-    affects: 'How far a step getting to know coursework’s material goes; interpretation and execution in written work; execution in voice work, a self-tape and a taped brief, more where the material is built on timing, played comic, or in heightened or verse language; consistency in any piece played Restrained, the inner line held through it; and holding movement and partnered physical work steady. The day’s focus is another thing: how ready you come to the hour.',
-    derivedFrom: 'For a life from before it: the mean of its Script Analysis and Cold Reading.',
-    source: 'Stanislavski, An Actor Prepares (1936), concentration of attention and the circles of attention',
+    affects: 'How much a session getting to know your coursework’s material gets done; your interpretation and execution in written work; your execution in voice work, a self-tape and a taped brief, more where the material depends on timing, is comic, or is in heightened or verse language; your consistency in any piece you play Restrained, holding the inner line through it; and your consistency in movement work and partnered physical work. Focus on the day is something else: it’s your readiness at that hour, and this ability doesn’t change it.',
+    derivedFrom: 'It started at the average of your Script Analysis and Cold Reading.',
+    source: 'Source: Stanislavski, An Actor Prepares (1936), on concentration of attention and its circles.',
   },
   {
     id: 'memory', label: 'Memory',
-    definition: 'Learning lines and blocking and keeping them under pressure.',
-    develops: 'Learning lines, the recall drill, and learning a part.',
+    definition: 'Learning lines and blocking, and keeping them under pressure.',
+    develops: 'Learning lines, practicing A Recall Drill, and learning a part for a production.',
     // From 2026-10-16 it speeds every step that learns lines (`STEP_SPEED`); until then this said so, and nothing read it.
     // From 2026-10-16 execution reads it more the more text there is: a longer brief, verse, a night's whole part (`DEMAND_EFFECT`).
     // From later that day (brief 10) a night's part more the longer it's on stage (`PART_TEXT`); until then every part alike.
     // Until 2026-10-17 it said execution "wherever lines are spoken": a voice sequence's text and a speech drill's are
     // spoken, learned as lines are, and voice work's execution reads no memory (brief 11, A4).
-    affects: 'How far a step learning lines goes (a scene’s, a brief’s, a part’s), and execution wherever a part’s lines are spoken (a scene, a self-tape, a taped brief, an audition, a night), more the longer the text: a medium or long brief, verse, and a whole part on a night, more the longer the part is on stage.',
-    derivedFrom: 'The craft’s Memorization, which it is.',
-    source: 'Noice & Noice (2006) on actors’ elaborative learning; Roediger & Karpicke (2006) on retrieval practice; kept in the craft as Memorization until 2026-10-09',
+    affects: 'How much a session learning lines gets done (for a scene, a brief or a part); and your execution wherever you speak a part’s lines (a scene, a self-tape, a taped brief, an audition, a night on stage), more the longer the text: a medium or long brief, verse, and a whole part on a night, more the longer your part is on stage.',
+    derivedFrom: 'It started with the rest of your training, as your techniques did. Older saves called it Memorization.',
+    source: 'Sources: Noice & Noice (2006) on how actors learn a role by its meaning; Roediger & Karpicke (2006) on learning by recalling.',
   },
   {
     id: 'adaptability', label: 'Adaptability',
     definition: 'Taking direction and changing a choice quickly without losing the work.',
-    develops: 'Revising after a note, working a director’s note, and the improvisation game.',
+    develops: 'Revising your work after a teacher’s note, working on a director’s note, and improvisation, in its classes and in An Improv Session.',
     // Until 2026-10-16 this said how fully a note is taken in a revision, which read no ability. From 2026-10-16 it speeds
     // a step of revision (`STEP_SPEED`), and a revision worked far enough takes the note (`noteTaken`).
     // From 2026-10-16 a director's note on the blocking worked into a part reads it too (`stepSpeed`, `school.work_note`).
-    affects: 'Responsiveness; holding a change of tone; recovering from a slip and covering a partner’s; how far a step of revision after a note goes, so a note is taken sooner; and how far a director’s note on the blocking goes when it’s worked into a part.',
-    derivedFrom: 'For a life from before it: its Improvisation.',
-    source: 'Johnstone, Impro (1979), accepting offers',
+    affects: 'Your responsiveness in every kind of work judged on it; staying believable through a change of tone; recovering from a slip and covering a partner’s; how much a session revising after a note gets done, so you take the note sooner; and how much working a director’s note on the blocking into your part gets done.',
+    derivedFrom: 'It started at your Improvisation level.',
+    source: 'Source: Johnstone, Impro (1979), on accepting offers.',
   },
   {
     id: 'composure', label: 'Composure',
-    definition: 'Holding nerves under the pressure of a house, an audition or a camera.',
-    develops: 'Every night in front of a house and a solo showing, a little, as performance anxiety falls with exposure; the graded-exposure exercise, and what concentration and a showing for classmates carry over.',
+    definition: 'Keeping your nerves steady under the pressure of an audience, an audition or a camera.',
+    develops: 'A little with every night in front of an audience and every solo showing, as performance anxiety falls with exposure; the Graded Exposure exercise; and part of what Circles Of Attention and A Showing For Classmates build carries over to it.',
     // From 2026-10-16 more the more rides on a piece, and believability a little where it does (`DEMAND_EFFECT`); and from
     // the integration pass of that day believability in any piece played Restrained, the calm that lets a held feeling read
     // (`APPROACH_EFFECT`). From later that day (brief 10) a night before a house rides on more than a class scene
     // (`NIGHT_STAKES`); until then a night read the same stakes as a scene, and only its own profile's composure.
     // Until 2026-10-17 it said "on a night in front of a house, more than in class": a self-tape and an audition shown in
     // class move with +10 of it 0.95 and 0.93 on the mean, a night 0.69 and a scene shown in class 0.53 (brief 11, A4).
-    affects: 'Consistency under pressure, more the more rides on the piece (a brief’s stakes) and on a night in front of a house, more than in a scene shown in class, and a little of believability where the stakes are high; believability in any piece played Restrained, the calm that lets a held feeling read; recovering from a slip; and the stress nerves add before a performance.',
-    derivedFrom: 'At the start, by emotional stability: 25 to 60.',
-    source: 'Kept since 2026-09-27 (`systems/attributes.ts`)',
+    affects: 'Your consistency under pressure, more the more is riding on the piece (a brief’s stakes), and more on a night in front of an audience than in a scene shown in class; a little of your believability when the stakes are high; your believability in any piece you play Restrained, where calm lets a held-back feeling come through; recovering from a slip; and how much stress your nerves add before a performance.',
+    derivedFrom: 'It started from your Emotional Stability: from 25 to 60, higher the steadier you are.',
+    source: 'How it starts and how it grows are estimated. That performance anxiety falls with exposure is from Reeves et al. (2022).',
   },
   {
     id: 'vocal', label: 'Vocal Expression',
     definition: 'A free, supported voice that carries the thought and the feeling of the text.',
-    develops: 'The voice classes and sequences, songs, and the vocal exercise.',
-    affects: 'Execution in voice work, songs, classical text and performance.',
-    derivedFrom: 'The craft’s Voice, which it is.',
-    source: 'Linklater, Freeing the Natural Voice (1976); Berry, Voice and the Actor (1973); kept in the craft as Voice until 2026-10-09',
+    develops: 'Classes that train the voice, practicing voice sequences, songs, and the Voice Work exercise.',
+    affects: 'Your execution in voice work, songs, classical text and on stage.',
+    derivedFrom: 'It started with the rest of your training, as your techniques did. Older saves called it Voice.',
+    source: 'Sources: Linklater, Freeing the Natural Voice (1976); Berry, Voice and the Actor (1973).',
   },
   {
     id: 'physical', label: 'Physical Expression',
     definition: 'A body that’s free, specific and readable on stage.',
-    develops: 'The movement and Alexander classes, movement scores, fights, and the movement exercise.',
-    affects: 'Execution in movement, fights, intimacy work and performance.',
-    derivedFrom: 'The craft’s Movement, which it is.',
-    source: 'Laban, The Mastery of Movement on the Stage (1950); Lecoq, The Moving Body (2000); kept in the craft as Movement until 2026-10-09',
+    develops: 'Classes that train movement, such as The Body As Source and Alexander Technique, rehearsing movement scores, fights, and the Movement Work exercise.',
+    affects: 'Your execution in movement work, fights, intimacy work and on stage.',
+    derivedFrom: 'It started with the rest of your training, as your techniques did. Older saves called it Movement.',
+    source: 'Sources: Laban, The Mastery of Movement on the Stage (1950); Lecoq, The Moving Body (2000).',
   },
   {
     id: 'discipline', label: 'Discipline', general: true,
-    definition: 'Keeping up the daily work: practice done when it’s due, not when it’s easy.',
+    definition: 'Keeping up the daily work, and practicing when it’s due, not only when it’s easy.',
     // Until 2026-10-16 this said work prepared before it's due grew it, which grew nothing, and consistency in every task,
     // which the audition, the improvisation, the clown turn and written work don't read it for (attributes-matrix.md).
     // From 2026-10-16 every growth reads it, not deliberate practice alone (`grown` in `systems/attributes.ts`).
-    develops: 'Practice on days running, and attending every call.',
+    develops: 'Practice kept up day after day, and turning up to every call.',
     // From 2026-10-16 consistency reads it more the more beats a piece holds and across a night's run, and execution in
     // physical work set to a score (`DEMAND_EFFECT`, `FEATURE_EFFECT`).
     // Until 2026-10-17 it said consistency in every task "but the audition, where nerves are what's held": an audition is
     // shown on a scene, and from evaluation-10 a scene of more than three units reads discipline as a brief's beats do, so
     // an audition on The Seagull's fourth act read it and one on A Doll's House's third didn't (brief 11, A4).
-    affects: 'How much what classes, nights, steps and practice grow counts for, a tenth more at 100 and a tenth less at 0 (a workout’s fitness aside); consistency in every task that asks it, more the more beats a piece holds and on a night of a run, an audition’s only by its beats, where nerves are what’s held; execution in physical work set to a score; and execution in written work.',
-    derivedFrom: 'For a new life and one from before it: the Conscientiousness slider, of which self-discipline is a facet.',
-    source: 'Costa & McCrae, NEO PI-R Professional Manual (1992), self-discipline as a facet of conscientiousness',
+    affects: 'How much you gain from classes, nights on stage, preparation and practice, a tenth more with discipline at 100 and a tenth less at 0 (but not the fitness a workout builds); your consistency in every kind of work judged on it, more the more beats a piece has and on a night of a run, and in an audition only when its scene has many beats, since there your nerves are what’s tested; your execution in physical work set to a score; and your execution in written work.',
+    derivedFrom: 'It started from the Conscientiousness you set when you made your character: self-discipline is part of it.',
+    source: 'Source: Costa & McCrae, NEO PI-R Professional Manual (1992), where self-discipline is a facet of conscientiousness.',
   },
   {
     id: 'stamina', label: 'Stamina', general: true,
-    definition: 'Lasting through long days, runs of nights and physical work without the work falling off.',
-    develops: 'Workouts, and more on a run in fine weather, held three days after each; lost past that, as fitness is.',
+    definition: 'Lasting through long days, a run of nights and physical work without your work falling off.',
+    develops: 'Workouts, and more on a run when the weather’s fine; it holds for three days after each one; then it slowly falls, as fitness does.',
     // Until 2026-10-16 this said consistency in movement, fights, songs and every night on stage; a night reads it as the
     // drain through the piece, never as consistency (`systems/piece.ts`). From 2026-10-16 a night's and a long brief's load
     // rose to their length (`PIECE.load`). Later that day (brief 10) a night's is its workload, the running time, the part's
     // share of it and the body's and the voice's work (`systems/workload.ts`), and it spares the energy a night costs after,
     // which until then was 10 whatever the stamina; this said a whole night, any part, was the heaviest until then.
-    affects: 'In a piece played through in parts (a scene, a brief, a night on stage), how much of the later parts it holds, more the longer the piece and the more of the body’s and the voice’s work it asks: a night by its workload, the production’s running time, your part’s share of it and its intensity, less after an interval; the energy a night costs afterward, up to half of it spared at full; in work shown whole without a scene (voice work, a song, movement, a fight), consistency.',
-    derivedFrom: 'It’s the body’s fitness, kept in one place: full at the most a body that age can be brought to.',
-    source: 'Hickson et al. (1981): half of the aerobic fitness gain was made in 10.3 to 10.8 days, and it levelled off by three weeks at a constant load; Hickson & Rosenkoetter (1981): two hard sessions a week kept it for 15 weeks; Mujika & Padilla (2000) on detraining',
+    affects: 'In a piece judged moment by moment (a scene, a brief, a night on stage), how well you hold up in its later moments, more the longer the piece and the more physical and vocal work it asks; on a night, how much its workload asks (the production’s running time, your part’s share of it and how intense it is), with less strain just after an interval; the energy a night costs you afterward, up to half of it spared at full stamina; and in work shown whole, without a scene (voice work, a song, movement, a fight), your consistency.',
+    derivedFrom: 'It’s your fitness, so it started where your fitness was. Full is the fittest a body your age can be.',
+    source: 'Sources: Hickson et al. (1981), where half the gain in aerobic fitness came in 10.3 to 10.8 days and it leveled off by three weeks at a steady load; Hickson & Rosenkoetter (1981), where two hard sessions a week kept it for 15 weeks; Mujika & Padilla (2000) on losing it.',
   },
 ];
 

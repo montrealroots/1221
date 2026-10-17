@@ -381,7 +381,7 @@ describe('the craft guide’s worked examples, played', () => {
     expect(r.opened).toBe(true);
     // The look the example opens, named as it names it, with every part the example lists.
     expect(ex.all).toContain(`press ${r.look.name}`);
-    for (const part of ['Now', 'Classes Reach', 'Last Change', 'What develops it.', 'Where it began.', 'What it does.', 'To practice it.']) expect(r.lookText, part).toContain(part);
+    for (const part of ['Now', 'Classes Reach', 'Last Change', 'How it grows.', 'Where it started.', 'What it does.', 'To practice it.']) expect(r.lookText, part).toContain(part);
     const exercise = exerciseFor('emotionalDepth')!;
     expect(r.lookText).toContain(`To practice it. ${exercise.label}:`);
     expect(ex.result).toContain(`its exercise, ${exercise.label}`);
@@ -525,7 +525,7 @@ describe('the craft guide’s worked examples, played', () => {
     expect(r.look.summary).toContain(`Judged ${one(r.w.overall)} of 100, ${band(r.w.overall)}`);
     expect(r.look.summary).toContain(`${chiefLimit(r.w)}.`);
     expect(r.again.overall).toBe(r.w.overall);
-    expect(r.look.provenance).toContain(`worked out again from its own inputs, ${one(r.w.overall)}`);
+    expect(r.look.provenance).toContain(`Worked out again from what it was judged on, it comes to ${one(r.w.overall)}`);
     // Part By Part, as the look draws it, is the take as played, with its draw: each part’s row and the continuity.
     for (const s of r.again.piece!.segments) expect(r.body).toMatch(new RegExp(`${s.label} [A-Z][A-Za-z ]* ${one(s.overall)} ${pct(s.part)} of ${pct(s.required)} `));
     expect(r.body).toContain(`from part to part: ${one(r.again.piece!.continuity)}.`);
@@ -537,7 +537,7 @@ describe('the craft guide’s worked examples, played', () => {
     expect(ex.result).toContain(`Part By Part gives ${andList(segs.map((s) => `${s.label} ${one(s.overall)}`))}`);
     expect(ex.result).toContain(`${segs.at(-1)!.label} is Tiring, ${pct(1 - segs.at(-1)!.drain)} off, and continuity is ${one(r.u.piece!.continuity)}`);
     // Part By Part, as the look draws it: stamina draws nothing, so the last beat’s Tiring is the same drawn or not.
-    expect(r.body).toContain('Part By Part');
+    expect(r.body).toContain('Moment By Moment');
     expect(r.body).toContain(`Tiring: ${pct(1 - r.again.piece!.segments.at(-1)!.drain)} off`);
     expect(r.again.piece!.segments.at(-1)!.drain).toBe(segs.at(-1)!.drain);
   });

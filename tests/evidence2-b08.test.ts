@@ -474,15 +474,15 @@ describe('genre demands', () => {
     expect(look.name).toBe('Farce');
     const body = textOf(renderToStaticMarkup(createElement('div', null, look.body)));
     // The demand is shown, with the player's level beside it, as the research applies it.
-    expect(body).toContain('Applied as requirements.');
-    expect(body).toContain(`${TECHNIQUE_LABEL.clown} (you: ${s.player.craft!.clown.toFixed(1)} of 90)`);
+    expect(body).toContain('What a self-tape in it asks.');
+    expect(body).toContain(`${TECHNIQUE_LABEL.clown} (yours: ${s.player.craft!.clown.toFixed(1)} of 90)`);
     // What it says the demands are read by: a self-tape in a farce, Comedy and Clown And Mask, each with the player’s
     // level; and a farce’s night or class scene, its own material’s techniques. Until later on 2026-10-13 this looked
     // for “Work in it reads”, which the look no longer says, so it found nothing and passed whatever the look said.
     const said = body.replace(/ ([,:.)])/g, '$1').replace(/\( /g, '(');
-    const level = (t: Skill) => `${TECHNIQUE_LABEL[t]} (you: ${(s.player.craft![t] ?? 0).toFixed(1)} of 90)`;
-    expect(said).toContain(`A self-tape in it reads ${level(DEMAND_TECHNIQUE.comic)}, ${level(DEMAND_TECHNIQUE.physicalComedy)}:`);
-    expect(said).toContain('A night of a play of its kind, or a class scene from one, reads its own material’s techniques instead.');
+    const level = (t: Skill) => `${TECHNIQUE_LABEL[t]} (yours: ${(s.player.craft![t] ?? 0).toFixed(1)} of 90)`;
+    expect(said).toContain(`A self-tape in it calls for ${level(DEMAND_TECHNIQUE.comic)}, ${level(DEMAND_TECHNIQUE.physicalComedy)}.`);
+    expect(said).toContain('A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.');
     expect(said).not.toContain('Work in it reads');
   }, 60_000);
 });
