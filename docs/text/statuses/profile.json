@@ -2107,33 +2107,33 @@
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.brief-choose]": {
   "status": "Rewritten And Verified",
-  "hash": "73f81480c58a",
+  "hash": "d9ad629cae65",
   "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md) (Abilities It Uses, the chooser’s column); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-craft.test.ts (every worked example played). Its take is a taped brief’s, the industry’s word Core keeps"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.brief-prepare]": {
   "status": "Rewritten And Verified",
-  "hash": "8a4695f3ba7e",
+  "hash": "2d11a7b2a455",
   "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md) (Abilities It Uses, the chooser’s column); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-craft.test.ts (every worked example played). Its take is a taped brief’s, the industry’s word Core keeps"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.brief-reader]": {
   "status": "Rewritten And Verified",
-  "hash": "d2edf0ab005a",
+  "hash": "c34d9e8acc8b",
   "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md) (Abilities It Uses, the chooser’s column); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-craft.test.ts (every worked example played). Its take is a taped brief’s, the industry’s word Core keeps"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.brief-tape]": {
   "status": "Rewritten And Verified",
-  "hash": "16e731b470d3",
+  "hash": "4ad5351e639f",
   "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md) (Abilities It Uses, the chooser’s column); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-craft.test.ts (every worked example played). Its take is a taped brief’s, the industry’s word Core keeps"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.genre]": {
   "status": "Rewritten And Verified",
-  "hash": "6dec583d5c68",
+  "hash": "554114d400f2",
   "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md) (Abilities It Uses, the chooser’s column); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-craft.test.ts (every worked example played). Its take is a taped brief’s, the industry’s word Core keeps"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.identity]": {
   "status": "Rewritten And Verified",
@@ -2143,9 +2143,9 @@
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.practice]": {
   "status": "Rewritten And Verified",
-  "hash": "e06ca706790a",
+  "hash": "3904e8c59295",
   "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/profile/b5-guide.txt (every entry printed field by field from the rules, in the eight questions' order); tests/guide-examples-craft.test.ts plays each worked example through the commands and checks its words; tests/guide.test.ts and tests/help-mechanics.test.ts. Its 'take' is a taped brief's, the industry's word the glossary keeps"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md) (Abilities It Uses, the chooser’s column); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-craft.test.ts (every worked example played). Its take is a taped brief’s, the industry’s word Core keeps"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.profile]": {
   "status": "Rewritten And Verified",
@@ -2491,9 +2491,9 @@
  },
  "src/engine/systems/experience.ts#recommendations": {
   "status": "Rewritten And Verified",
-  "hash": "f4f0b5a61798",
+  "hash": "96325842e1a6",
   "on": "2026-10-17",
-  "evidence": "tests/decisions-advice.test.ts, tests/advice.test.ts, tests/defects-r8-1.test.ts and tests/attributes-phase-2b.test.ts (each kind of line: a forecast, the preparation, a condition, a misfit, stamina, the recurring weakness, the tie, preparation apart); docs/verification/language-2026-10-17/profile/b2-advice.txt (the advice printed on tuning cases adv-t-0, adv-t-5 and adv-t-10 as built and after twenty sessions)"
+  "evidence": "tests/decisions-advice.test.ts, ‘says one piece read as “your last piece”, and agrees the verb with the pieces that call on it’ (adv-t-0, fails on the old line) and ‘says why: …’; tools/advice.ts check (g) matches the new form"
  },
  "src/engine/systems/experience.ts#SPACED_NOW": {
   "status": "Rewritten And Verified",
@@ -2707,9 +2707,9 @@
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#DISPOSITIONS": {
   "status": "Rewritten And Verified",
-  "hash": "f6642e7056b4",
+  "hash": "ecb216f33f03",
   "on": "2026-10-17",
-  "evidence": "Each disposition in creation's own words (the frame area's src/ui/creation/CharacterCreation.tsx PersonalityStep, at the coordinator's note), each claim read against the engine: axisModifier (stressGain, stressRecovery, sleepQuality, energyRecovery) and the Composure and Discipline starts in systems/attributes.ts; DISPOSED room, novel work (the Hughes and Carlotta festival casts, the Cabaret) and rehearsal in systems/enjoyment.ts. tests/evidence-g31-ui.test.ts (all seven exactly, 21 of 21), tests/evidence-g27-ui.test.ts, tests/evidence-g28-ui.test.ts, tests/evidence-g34-ui.test.ts, tests/need-paths.test.ts (96 of 97, then the one partial assertion brought over, 21 of 21)."
+  "evidence": "tests/evidence-g28-ui.test.ts, tests/evidence-g31-ui.test.ts and tests/evidence-g34-ui.test.ts (the dispositions on the Profile as drawn), word for word as creation’s"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#GenresPanel": {
   "status": "Rewritten And Verified",
@@ -2731,9 +2731,9 @@
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#JourneyPanel": {
   "status": "Rewritten And Verified",
-  "hash": "f9eaf982aca1",
+  "hash": "f60141086b2e",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g32-ui.test.ts and tests/evidence2-b11.test.ts (the panel whole); its two changed lines are its empty state and its small print, read in tests/evidence-g24-school.test.ts's journey"
+  "evidence": "tests/evidence-g32-ui.test.ts (School pressed goes to /workspace/school), tests/evidence2-b11.test.ts and tests/evidence3-home.test.ts (the School Journey panel read to its School button); the Player Profile in the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves)"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#ListControls": {
   "status": "Reviewed And Retained",

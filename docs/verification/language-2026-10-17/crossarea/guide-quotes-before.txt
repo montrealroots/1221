@@ -1,0 +1,149 @@
+GONE src/engine/content/guide/coursework.ts:306 “There’s no note to work on until it’s been shown.”
+       not said: “There’s no note to work on until it’s been shown.”
+GONE src/engine/content/guide/coursework.ts:308 “… asked to rehearse: answer first.”
+       not said: “asked to rehearse: answer first.”
+GONE src/engine/content/guide/coursework.ts:308 “… reads the scene another way: answer first.”
+       not said: “reads the scene another way: answer first.”
+GONE src/engine/content/guide/coursework.ts:310 “Not with …; it has … days yet to mend.”
+       not said: “days yet to mend.”
+GONE src/engine/content/guide/coursework.ts:455 “Chosen. You’ve rehearsed this way of playing it to …% so far.”
+       not said: “% so far.”
+GONE src/engine/content/guide/coursework.ts:701 “Trust … of 100 · Came to … of … agreed”
+       not said: “· Came to”
+GONE src/engine/content/guide/coursework.ts:712 “Not with …; it has … days yet to mend. Rehearsing on your feet with your partner has to wait for that too.”
+       not said: “days yet to mend. Rehearsing on your feet with your partner has to wait for that”
+GONE src/engine/content/guide/craft.ts:445 “Not with …; it has … days yet to mend.”
+       not said: “days yet to mend.”
+GONE src/engine/content/guide/craft.ts:527 “Composure held back the consistency by 4.2 points: Nordic Noir’s Feeling Held In asks for it”
+       not said: “Composure held back the consistency by”, “points: Nordic Noir’s Feeling Held In asks for it”
+GONE src/engine/content/guide/craft.ts:612 “There’s nothing more to gain from it now.”
+       not said: “There’s nothing more to gain from it now.”
+GONE src/engine/content/guide/craft.ts:773 “There’s nothing more to gain from it now.”
+       not said: “There’s nothing more to gain from it now.”
+GONE src/engine/content/guide/craft.ts:853 “No practice brief reads …, so a take won’t show it and none is suggested for it.”
+       not said: “No practice brief reads”, “so a take won’t show it and none is suggested for it.”
+GONE src/engine/content/guide/craft.ts:856 “Choose a reading first: a take is of the scene played one way, and you should know which before the camera rolls.”
+       not said: “Choose a reading first: a take is of the scene played one way, and you should kn”
+GONE src/engine/content/guide/day.ts:426 “The calendar takes plans up to five years ahead. Pick an earlier day.”
+       not said: “The calendar takes plans up to five years ahead. Pick an earlier day.”
+GONE src/engine/content/guide/day.ts:510 “A run in fine weather.”
+       not said: “A run in fine weather.”
+GONE src/engine/content/guide/money.ts:243 “${CHECKING.name}: ${formatMoney(MODEST.checking, 'USD')}. Worth ${formatMoney(WORTH, 'USD', { cents: false })}, ${formatMoney(OWED, 'USD', {”
+       not said: “)} of it owed.”
+GONE src/engine/content/guide/money.ts:392 “Citi lets you send ${usd(CITI_OPEN.limits?.outDay ?? 0)} a day to other banks, and you’ve sent … today.”
+       not said: “Citi lets you send”
+GONE src/engine/content/guide/money.ts:392 “Citi lets you send ${usd(CITI_OPEN.limits?.outMonth ?? 0)} a month to other banks, and you’ve sent … this month.”
+       not said: “Citi lets you send”
+GONE src/engine/content/guide/money.ts:582 “Its fees, …, are more than it holds. Pay in … first.”
+       not said: “are more than it holds. Pay in”
+GONE src/engine/content/guide/money.ts:583 “The interest it was paid, …, goes back, and is more than it holds. Pay in … first.”
+       not said: “goes back, and is more than it holds. Pay in”
+GONE src/engine/content/guide/money.ts:583 “Its fees, …, and the interest it was paid, …, are more than it holds. Pay in … first.”
+       not said: “are more than it holds. Pay in”
+GONE src/engine/content/guide/money.ts:587 “Enter the low balance alert as an amount, or leave it blank to turn it off.”
+       not said: “Enter the low balance alert as an amount, or leave it blank to turn it off.”
+GONE src/engine/content/guide/money.ts:664 “… purchases since the last transfer were already a multiple of …, so they added nothing.”
+       not said: “purchases since the last transfer were already a multiple of”, “so they added nothing.”
+GONE src/engine/content/guide/money.ts:756 “There’s no savings account at … to cover the current account.”
+       not said: “to cover the current account.”
+GONE src/engine/content/guide/money.ts:756 “… to cover the current accounts your payments come from.”
+       not said: “to cover the current accounts your payments come from.”
+GONE src/engine/content/guide/money.ts:761 “It pays into that account.”
+       not said: “It pays into that account.”
+GONE src/engine/content/guide/money.ts:1037 “A payment plan: … left, paid at … a month for … more months, with a … monthly fee instead of interest.”
+       not said: “more months, with a”, “monthly fee instead of interest.”
+GONE src/engine/content/guide/money.ts:1132 “Lost: stopped. A new one arrives …”
+       not said: “Lost: stopped. A new one arrives”
+GONE src/engine/content/guide/money.ts:1133 “This is a new account’s first card. It arrives …”
+       not said: “This is a new account’s first card. It arrives”
+GONE src/engine/content/guide/money.ts:1224 “… overdraft fee is on hold, …. It’s charged after the end of … unless the account is back to …”
+       not said: “overdraft fee is on hold”, “It’s charged after the end of”
+GONE src/engine/content/guide/money.ts:1329 “It’s waiting for its first deposit”
+       not said: “It’s waiting for its first deposit”
+GONE src/engine/content/guide/money.ts:1332 “Closing it now charges its fees to the day, …”
+       not said: “Closing it now charges its fees to the day”
+GONE src/engine/content/guide/money.ts:1346 “Its fees, …, are more than it holds. Pay in … first.”
+       not said: “are more than it holds. Pay in”
+GONE src/engine/content/guide/money.ts:1442 “You lived in America before Yale, so your account is the one here.”
+       not said: “You lived in America before Yale, so your account is the one here.”
+GONE src/engine/content/guide/money.ts:1444 “You began living there after Yale began.”
+       not said: “You began living there after Yale began.”
+GONE src/engine/content/guide/papers.ts:299 “Your Public Cover Ended At Renewal”
+       not said: “Your Public Cover Ended At Renewal”
+GONE src/engine/content/guide/papers.ts:337 “Yale Health covers you until …; you can enroll from …, ${SPECIAL} days before that cover ends.”
+       not said: “you can enroll from”
+GONE src/engine/content/guide/papers.ts:338 “Outside open enrollment, ${OPEN_FROM} to ${OPEN_UNTIL}, and not within ${SPECIAL} days of losing cover.”
+       not said: “Outside open enrollment”
+GONE src/engine/content/guide/papers.ts:343 “From January 1, 2027, HUSKY D asks an applicant for ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of income, time at the School or an exc”
+       not said: “HUSKY D asks an applicant for”, “of income, time at the School or an exception in the month before, and last mont”
+GONE src/engine/content/guide/papers.ts:344 “Last month meets its work rules: Enroll gives it.”
+       not said: “Last month meets its work rules: Enroll gives it.”
+GONE src/engine/content/guide/papers.ts:345 “No notice of noncompliance waits on an answer.”
+       not said: “No notice of noncompliance waits on an answer.”
+GONE src/engine/content/guide/papers.ts:345 “The thirty days to answer ended on …”
+       not said: “The thirty days to answer ended on”
+GONE src/engine/content/guide/papers.ts:345 “No month it assessed, …, had a stay in hospital, the hardship SLATE keeps.”
+       not said: “No month it assessed”, “had a stay in hospital, the hardship SLATE keeps.”
+GONE src/engine/content/guide/papers.ts:346 “It’s dropped: it ends on …”
+       not said: “It’s dropped: it ends on”
+GONE src/engine/content/guide/papers.ts:347 “… has ended, so there’s no renewal left to answer.”
+       not said: “has ended, so there’s no renewal left to answer.”
+GONE src/engine/content/guide/papers.ts:348 “An appeal is filed within ${DENIALS.appealDays} days of the denial.”
+       not said: “An appeal is filed within”, “days of the denial.”
+GONE src/engine/content/guide/papers.ts:349 “Only a Connecticut hospital’s bill.”
+       not said: “Only a Connecticut hospital’s bill.”
+GONE src/engine/content/guide/papers.ts:349 “It’s settled or past due.”
+       not said: “It’s settled or past due.”
+GONE src/engine/content/guide/papers.ts:349 “The hospital’s charity is off it already.”
+       not said: “The hospital’s charity is off it already.”
+GONE src/engine/content/guide/papers.ts:349 “It’s been put to the hospital’s charity.”
+       not said: “It’s been put to the hospital’s charity.”
+GONE src/engine/content/guide/papers.ts:352 “The year is …, which the bank can’t cover.”
+       not said: “which the bank can’t cover.”
+GONE src/engine/content/guide/papers.ts:353 “It’s England’s, for its prescription charge.”
+       not said: “It’s England’s, for its prescription charge.”
+GONE src/engine/content/guide/papers.ts:384 “From January 1, 2027, HUSKY D asks for ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of income, time at the School or an exception in the”
+       not said: “HUSKY D asks for”, “of income, time at the School or an exception in the month before you apply, and”
+GONE src/engine/content/guide/papers.ts:387 “Enrolled in the marketplace, from September 1, …”
+       not said: “Enrolled in the marketplace, from”
+GONE src/engine/content/guide/papers.ts:435 “It comes to more than the bank can cover.”
+       not said: “It comes to more than the bank can cover.”
+GONE src/engine/content/guide/papers.ts:462 “No wait is published where you live; you’re seen when it comes up.”
+       not said: “No wait is published where you live; you’re seen when it comes up.”
+GONE src/engine/content/guide/papers.ts:463 “Your doctor is in the town you live in.”
+       not said: “Your doctor is in the town you live in.”
+GONE src/engine/content/guide/papers.ts:465 “A pharmacy’s own cash price is kept only in America.”
+       not said: “A pharmacy’s own cash price is kept only in America.”
+GONE src/engine/content/guide/papers.ts:466 “It comes to more than the bank can cover.”
+       not said: “It comes to more than the bank can cover.”
+GONE src/engine/content/guide/papers.ts:492 “A doctor’s visit: booked at ${YALE_PRACTICE} for …, the wait where you live.”
+       not said: “A doctor’s visit: booked at”
+GONE src/engine/content/guide/papers.ts:494 “A doctor’s visit: not yet seen”
+       not said: “A doctor’s visit: not yet seen”
+GONE src/engine/content/guide/productions.ts:473 “Not with …; it has … days yet to mend.”
+       not said: “days yet to mend.”
+GONE src/engine/content/guide/productions.ts:498 “You’re spent by the second half: find where the play lets you breathe.”
+       not said: “You’re spent by the second half: find where the play lets you breathe.”
+GONE src/engine/content/guide/school.ts:534 “You’ve had N terms of leave; the Bulletin allows ${LEAVE_RULES.maxTerms} in all.”
+       not said: “terms of leave; the Bulletin allows”
+GONE src/engine/content/guide/school.ts:540 “Your current account and the savings beside it can pay … of it now: it’s paid in full, so move money into your current account first.”
+       not said: “of it now: it’s paid in full, so move money into your current account first.”
+GONE src/engine/content/guide/school.ts:542 “The dean imposed this leave, so it isn’t yours to call off: appeal it in writing to the dean by …”
+       not said: “The dean imposed this leave, so it isn’t yours to call off: appeal it in writing”
+GONE src/engine/content/guide/school.ts:598 “A course failed that year”
+       not said: “A course failed that year”
+GONE src/engine/content/guide/school.ts:639 “only where that can still be asked”
+       not said: “only where that can still be asked”
+GONE src/engine/content/guide/school.ts:754 “Your current account and the savings beside it can pay … of it now: pay that or less, or move money into your current account first.”
+       not said: “of it now: pay that or less, or move money into your current account first.”
+GONE src/engine/content/guide/taxes.ts:413 “Connecticut DRS needs every return filed first”
+       not said: “Connecticut DRS needs every return filed first”
+GONE src/engine/content/guide/taxes.ts:413 “Connecticut DRS sets up a plan over 2 to 12 months.”
+       not said: “Connecticut DRS sets up a plan over”
+GONE src/engine/content/guide/taxes.ts:413 “You already have a plan with Connecticut DRS.”
+       not said: “You already have a plan with Connecticut DRS.”
+GONE src/engine/content/guide/taxes.ts:486 “Filed when collection reached that step”
+       not said: “Filed when collection reached that step”
+GONE src/engine/content/guide/taxes.ts:486 “Filed because its payment plan requires one”
+       not said: “Filed because its payment plan requires one”
+595 quoted sentences in the guide; 521 the game says, 74 it no longer says.

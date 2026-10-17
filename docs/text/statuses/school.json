@@ -445,33 +445,33 @@
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.partners]": {
   "status": "Rewritten And Verified",
-  "hash": "9e063e7f3287",
+  "hash": "fb780a563052",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (the registry), tests/guide-examples-school/coursework/productions.test.ts (every worked example played), tests/remaining-school.test.ts (school.s6.policy), tests/need-paths.test.ts; every quoted refusal set against its code, every label against the UI and the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), productions.notes’ example quote held exactly by tests/guide-examples-productions.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts and tests/guide-examples-school.test.ts (every worked example played)"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.playing]": {
   "status": "Rewritten And Verified",
-  "hash": "adab7a60ebd1",
+  "hash": "18d0fa78d543",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (the registry), tests/guide-examples-school/coursework/productions.test.ts (every worked example played), tests/remaining-school.test.ts (school.s6.policy), tests/need-paths.test.ts; every quoted refusal set against its code, every label against the UI and the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), productions.notes’ example quote held exactly by tests/guide-examples-productions.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts and tests/guide-examples-school.test.ts (every worked example played)"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.prepare]": {
   "status": "Rewritten And Verified",
-  "hash": "05b33a32a1b9",
+  "hash": "61152c9b9293",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (the registry), tests/guide-examples-school/coursework/productions.test.ts (every worked example played), tests/remaining-school.test.ts (school.s6.policy), tests/need-paths.test.ts; every quoted refusal set against its code, every label against the UI and the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), productions.notes’ example quote held exactly by tests/guide-examples-productions.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts and tests/guide-examples-school.test.ts (every worked example played)"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.table]": {
   "status": "Rewritten And Verified",
-  "hash": "4f1362710a68",
+  "hash": "0dd1918e7ea0",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (the registry), tests/guide-examples-school/coursework/productions.test.ts (every worked example played), tests/remaining-school.test.ts (school.s6.policy), tests/need-paths.test.ts; every quoted refusal set against its code, every label against the UI and the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), productions.notes’ example quote held exactly by tests/guide-examples-productions.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts and tests/guide-examples-school.test.ts (every worked example played)"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.workbook]": {
   "status": "Rewritten And Verified",
-  "hash": "fc639f5eb304",
+  "hash": "ba6ac5809c9a",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (the registry), tests/guide-examples-school/coursework/productions.test.ts (every worked example played), tests/remaining-school.test.ts (school.s6.policy), tests/need-paths.test.ts; every quoted refusal set against its code, every label against the UI and the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), productions.notes’ example quote held exactly by tests/guide-examples-productions.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts and tests/guide-examples-school.test.ts (every worked example played)"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [evaluation]": {
   "status": "Rewritten And Verified",
@@ -637,9 +637,9 @@
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.notes]": {
   "status": "Rewritten And Verified",
-  "hash": "319e5bbbe15c",
+  "hash": "324bc2a7e455",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (the registry), tests/guide-examples-school/coursework/productions.test.ts (every worked example played), tests/remaining-school.test.ts (school.s6.policy), tests/need-paths.test.ts; every quoted refusal set against its code, every label against the UI and the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), productions.notes’ example quote held exactly by tests/guide-examples-productions.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts and tests/guide-examples-school.test.ts (every worked example played)"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.part]": {
   "status": "Rewritten And Verified",
@@ -769,15 +769,15 @@
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.leave]": {
   "status": "Rewritten And Verified",
-  "hash": "3319ace1c862",
+  "hash": "73b5d1ce5614",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (the registry), tests/guide-examples-school/coursework/productions.test.ts (every worked example played), tests/remaining-school.test.ts (school.s6.policy), tests/need-paths.test.ts; every quoted refusal set against its code, every label against the UI and the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), productions.notes’ example quote held exactly by tests/guide-examples-productions.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts and tests/guide-examples-school.test.ts (every worked example played)"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.money]": {
   "status": "Rewritten And Verified",
-  "hash": "b118151d8d3e",
+  "hash": "deeec2f6de5a",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (the registry), tests/guide-examples-school/coursework/productions.test.ts (every worked example played), tests/remaining-school.test.ts (school.s6.policy), tests/need-paths.test.ts; every quoted refusal set against its code, every label against the UI and the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), productions.notes’ example quote held exactly by tests/guide-examples-productions.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts and tests/guide-examples-school.test.ts (every worked example played)"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.orientation]": {
   "status": "Rewritten And Verified",
@@ -1411,9 +1411,9 @@
  },
  "src/engine/content/material.ts#SELF_TAPE_MATERIAL [self-tape]": {
   "status": "Rewritten And Verified",
-  "hash": "9ddb3650d08a",
+  "hash": "42670f3949fb",
   "on": "2026-10-17",
-  "evidence": "Read against the chooser that shows it (PlayingChooser’s “Doesn’t fit:”), tests/material.test.ts"
+  "evidence": "Printed from the module in docs/verification/language-2026-10-17/crossarea/printed.txt: the note that a close shot magnifies, said without “a house” and “reads”; shown under It Only Takes on a self-tape’s What … Asks (src/ui/components/PlayingChooser.tsx:48)"
  },
  "src/engine/content/plays.ts#PLAY_ALIASES": {
   "status": "Reviewed And Retained",
@@ -1788,10 +1788,10 @@
   "reason": "The tasks’ descriptions and the qualities’ meanings: plain, and what the screens show beside each figure."
  },
  "src/engine/content/tasks.ts#DIMENSION_MEANS": {
-  "status": "Reviewed And Retained",
-  "hash": "2a1fa3330df9",
+  "status": "Rewritten And Verified",
+  "hash": "22b129f19fa2",
   "on": "2026-10-17",
-  "reason": "The tasks’ descriptions and the qualities’ meanings: plain, and what the screens show beside each figure."
+  "evidence": "Printed from the module in docs/verification/language-2026-10-17/crossarea/printed.txt: Connection’s description now says “a partner, an audience or a camera”, audience the profile area’s word (docs/GLOSSARY.md, Core); the other five unchanged and plain. Drawn beside each quality on a piece of work’s look (src/ui/looks/actor.tsx:263)"
  },
  "src/engine/content/tasks.ts#TASK_PROFILES [audition]": {
   "status": "Reviewed And Retained",
@@ -1831,9 +1831,9 @@
  },
  "src/engine/content/tasks.ts#TASK_PROFILES [performance]": {
   "status": "Rewritten And Verified",
-  "hash": "147c0b8ecce5",
+  "hash": "002dcd4bcdc2",
   "on": "2026-10-17",
-  "evidence": "tests/decisions-advice.test.ts, tests/defects-g30-1.test.ts, tests/workload.test.ts (the preparation labels as subjects)"
+  "evidence": "Printed from the module in docs/verification/language-2026-10-17/crossarea/printed.txt: “A performance of a production in front of an audience.”, audience the profile area’s word (docs/GLOSSARY.md, Core)"
  },
  "src/engine/content/tasks.ts#TASK_PROFILES [scene]": {
   "status": "Reviewed And Retained",

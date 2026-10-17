@@ -205,9 +205,9 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
   "status": "Rewritten And Verified",
-  "hash": "51e4310d84d6",
+  "hash": "a92fceb5d653",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (every entry's routes, covers, links and figures); tests/guide-examples-start-day-body.test.ts (each example played as written); tests/help-mechanics.test.ts; the labels each names, found on the built app (docs/verification/language-2026-10-17/frame/after-1440, frame-walk-1440.json)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-start-day-body.test.ts (each example played as written, day.weather’s quote of the Work Out line read from the game)"
  },
  "src/engine/content/guide/day.ts#DAY [day.clock]": {
   "status": "Rewritten And Verified",
@@ -223,15 +223,15 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.plans]": {
   "status": "Rewritten And Verified",
-  "hash": "3066618a058c",
+  "hash": "55ba363c268f",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (every entry's routes, covers, links and figures); tests/guide-examples-start-day-body.test.ts (each example played as written); tests/help-mechanics.test.ts; the labels each names, found on the built app (docs/verification/language-2026-10-17/frame/after-1440, frame-walk-1440.json)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-start-day-body.test.ts (each example played as written, day.weather’s quote of the Work Out line read from the game)"
  },
  "src/engine/content/guide/day.ts#DAY [day.weather]": {
   "status": "Rewritten And Verified",
-  "hash": "c40a0c4e1c82",
+  "hash": "7d9f0f7707a9",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (every entry's routes, covers, links and figures); tests/guide-examples-start-day-body.test.ts (each example played as written); tests/help-mechanics.test.ts; the labels each names, found on the built app (docs/verification/language-2026-10-17/frame/after-1440, frame-walk-1440.json)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-start-day-body.test.ts (each example played as written, day.weather’s quote of the Work Out line read from the game)"
  },
  "src/engine/content/guide/day.ts#DAY [evaluation]": {
   "status": "Rewritten And Verified",
@@ -307,15 +307,15 @@
  },
  "src/engine/content/guide/start.ts#START [start.find]": {
   "status": "Rewritten And Verified",
-  "hash": "c29ce3018482",
+  "hash": "af41727a2db1",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (every entry's routes, covers, links and figures); tests/guide-examples-start-day-body.test.ts (each example played as written); tests/help-mechanics.test.ts; the labels each names, found on the built app (docs/verification/language-2026-10-17/frame/after-1440, frame-walk-1440.json)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-start-day-body.test.ts (each example played as written, day.weather’s quote of the Work Out line read from the game)"
  },
  "src/engine/content/guide/start.ts#START [start.guide]": {
   "status": "Rewritten And Verified",
-  "hash": "04569c45f90e",
+  "hash": "3b09996a60fe",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (every entry's routes, covers, links and figures); tests/guide-examples-start-day-body.test.ts (each example played as written); tests/help-mechanics.test.ts; the labels each names, found on the built app (docs/verification/language-2026-10-17/frame/after-1440, frame-walk-1440.json)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-start-day-body.test.ts (each example played as written, day.weather’s quote of the Work Out line read from the game)"
  },
  "src/engine/content/guide/start.ts#START [start.home]": {
   "status": "Rewritten And Verified",
@@ -1266,10 +1266,10 @@
   "reason": "Language names in English, from the ISO 639 list."
  },
  "src/engine/content/personality-traits.ts#KNOB_READS": {
-  "status": "Reviewed And Retained",
-  "hash": "f6fc77e43a7f",
+  "status": "Rewritten And Verified",
+  "hash": "6aaa7c777db3",
   "on": "2026-10-17",
-  "reason": "What each of a trait's effects moves, as the trait's look lists it ('How good a night’s sleep is', 'How sharp you are before noon, at classes, calls and preparation'): plain."
+  "evidence": "tests/evidence3-person.test.ts (“How much a meal lifts your morale +15% +14% all told” on a spender’s look); the three lines printed from the module in docs/verification/language-2026-10-17/crossarea/printed.txt; morale, the measure the trait moves, as How You Are names it"
  },
  "src/engine/content/personality-traits.ts#PERSONALITY_GROUPS": {
   "status": "Reviewed And Retained",
@@ -1326,10 +1326,10 @@
   "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
  },
  "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [frugal]": {
-  "status": "Reviewed And Retained",
-  "hash": "38d0bcea1e66",
+  "status": "Rewritten And Verified",
+  "hash": "1993c774391b",
   "on": "2026-10-17",
-  "reason": "Each trait's description and cost, written for a whole life in the character's terms (the file's header: the game charges the part its knobs reach): plain and specific. Two costs were trimmed on 2026-10-17 (Resilient, Sleeps Anywhere: 'None that SLATE draws' said no cost is modeled), and are marked for their new words."
+  "evidence": "tests/evidence3-person.test.ts (“How much a meal lifts your morale +15% +14% all told” on a spender’s look); the three lines printed from the module in docs/verification/language-2026-10-17/crossarea/printed.txt; morale, the measure the trait moves, as How You Are names it"
  },
  "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [generous]": {
   "status": "Reviewed And Retained",
@@ -1920,10 +1920,10 @@
   "reason": "Weather condition names compared to decide a run is indoors: keys, as the weather names them."
  },
  "src/engine/systems/life.ts#whyNow": {
-  "status": "Reviewed And Retained",
-  "hash": "f99ef29487a9",
+  "status": "Rewritten And Verified",
+  "hash": "a60fc6df745e",
   "on": "2026-10-17",
-  "reason": "Look After Yourself's details: the wellbeing figure that makes an item worth doing, and what a workout builds and costs, each with its figure. Compact and accurate for a menu line; held in tests/evidence-g01-life.test.ts and tests/look-after.test.ts."
+  "evidence": "tests/evidence-g30-ui.test.ts (the shower’s line for three bodies: “Hygiene at 48: every hour under 50 wears on your morale.”), tests/evidence-g01-life.test.ts; the Look After Yourself menu in the capture"
  },
  "src/engine/systems/life.ts#WORKOUTS_TODAY": {
   "status": "Reviewed And Retained",
@@ -1981,9 +1981,9 @@
  },
  "src/engine/world/calendar.ts#CALENDAR_LEGEND": {
   "status": "Rewritten And Verified",
-  "hash": "f3af75c94d8a",
+  "hash": "cfc941a4f6e4",
   "on": "2026-10-17",
-  "evidence": "tests/language-frame-ui.test.ts 'the Calendar screen' (the legend's Personal on hover, and no World row). School's 'each term’s evaluation' names the entries the school titles Fall Term Evaluation; Money's is the money area's words; World is never shown."
+  "evidence": "Printed from the module in docs/verification/language-2026-10-17/crossarea/printed.txt: School’s row says “each term’s review”, as the school’s Term Review entries are titled; the Calendar screen in the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar)"
  },
  "src/engine/world/calendar.ts#skipTargets": {
   "status": "Reviewed And Retained",
@@ -2221,15 +2221,15 @@
  },
  "src/ui/creation/CharacterCreation.tsx#PersonalityStep": {
   "status": "Rewritten And Verified",
-  "hash": "73063186c932",
+  "hash": "cd5d6aea747d",
   "on": "2026-10-17",
-  "evidence": "tests/language-frame-ui.test.ts 'creation, step by step' (the Dispositions list, CARRIES_A_BALANCE, the traits' paragraphs)"
+  "evidence": "tests/evidence-g28-ui.test.ts (creation’s Openness and Agreeableness lines, and the films’ sentence, on the page as drawn), the same words as the Profile’s dispositions; morale, the measure How You Are names (docs/GLOSSARY.md, Core)"
  },
  "src/ui/creation/CharacterCreation.tsx#PersonalStep": {
   "status": "Rewritten And Verified",
-  "hash": "87ab7912ae10",
+  "hash": "b86227bd1064",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g28-ui.test.ts (the Genres paragraph, a genre marked · and its title)"
+  "evidence": "tests/evidence-g28-ui.test.ts (creation’s Openness and Agreeableness lines, and the films’ sentence, on the page as drawn), the same words as the Profile’s dispositions; morale, the measure How You Are names (docs/GLOSSARY.md, Core)"
  },
  "src/ui/creation/CharacterCreation.tsx#ReviewStep": {
   "status": "Rewritten And Verified",
@@ -2239,9 +2239,9 @@
  },
  "src/ui/creation/CharacterCreation.tsx#StartingPointStep": {
   "status": "Rewritten And Verified",
-  "hash": "adb12bbc941d",
+  "hash": "c61caf2874b8",
   "on": "2026-10-17",
-  "evidence": "tests/language-frame-ui.test.ts 'creation, step by step' (Where It Begins, the money's currency line); tests/home-account-creation.test.ts (a home bank's stats)"
+  "evidence": "tests/home-account-creation.test.ts, ‘draws Before Yale with the banks there…’: “¥10,200 About $68 at an estimated exchange rate” and “¥1,049,550 About $6,997 at an estimated exchange rate” on What Is Yours, Money’s note word for word (src/ui/workspaces/BankWorkspace.tsx:142)"
  },
  "src/ui/creation/CharacterCreation.tsx#STEPS": {
   "status": "Reviewed And Retained",
@@ -2641,9 +2641,9 @@
  },
  "src/ui/screens/Home.tsx#Home": {
   "status": "Rewritten And Verified",
-  "hash": "3e533bc6c130",
+  "hash": "4a5211415de4",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g32-ui.test.ts (the head at every part of the day, the Calendar, What Needs You with seven questions, Show All and Show The Six Most Important pressed, each weighing sentence, How You Are, Where You Are and its Daylight's of daylight, the weather), tests/evidence2-b11.test.ts, tests/evidence3-home.test.ts, tests/evidence-g33-ui.test.ts, tests/evidence-g03-life.test.ts, tests/evidence-g34-ui.test.ts"
+  "evidence": "tests/evidence-g33-ui.test.ts, ‘a worth below nothing is written with the minus sign, as Money writes an overdrawn balance’ (fails on the old line) and the overdrawn line; tests/guide-examples-money.test.ts (money.affairs reads Home’s line); Home in docs/verification/language-2026-10-17/crossarea/after-notices-1440 and after-notices-390 (the health area’s three notice saves, written on this code), h-nh-status.json: “Worth −$227, $943 of it owed.”"
  },
  "src/ui/screens/Home.tsx#PapersLine": {
   "status": "Reviewed And Retained",

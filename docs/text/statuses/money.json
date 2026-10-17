@@ -2551,21 +2551,21 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.borrowing]": {
   "status": "Rewritten And Verified",
-  "hash": "bf1f1a3a9059",
+  "hash": "93113b217b20",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-money.test.ts (the money entries’ worked examples, played; money.affairs’ quote of Home’s line read from Home); each quote set against the code that writes it (crossarea/examples.json)"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card-offers]": {
   "status": "Rewritten And Verified",
-  "hash": "c5aeec16e98d",
+  "hash": "058a93a10770",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-money.test.ts (the money entries’ worked examples, played; money.affairs’ quote of Home’s line read from Home); each quote set against the code that writes it (crossarea/examples.json)"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card-security]": {
   "status": "Rewritten And Verified",
-  "hash": "e52f225cbe39",
+  "hash": "47d554807696",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-money.test.ts (the money entries’ worked examples, played; money.affairs’ quote of Home’s line read from Home); each quote set against the code that writes it (crossarea/examples.json)"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card]": {
   "status": "Rewritten And Verified",
@@ -2581,21 +2581,21 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.home-account]": {
   "status": "Rewritten And Verified",
-  "hash": "95e689cd8949",
+  "hash": "b10db1b7e7df",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-money.test.ts (the money entries’ worked examples, played; money.affairs’ quote of Home’s line read from Home); each quote set against the code that writes it (crossarea/examples.json)"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.other-banks]": {
   "status": "Rewritten And Verified",
-  "hash": "3744a9a2adaa",
+  "hash": "4b7bc7f80265",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-money.test.ts (the money entries’ worked examples, played; money.affairs’ quote of Home’s line read from Home); each quote set against the code that writes it (crossarea/examples.json)"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.payments]": {
   "status": "Rewritten And Verified",
-  "hash": "b55a53c56278",
+  "hash": "188363446a4b",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-money.test.ts (the money entries’ worked examples, played; money.affairs’ quote of Home’s line read from Home); each quote set against the code that writes it (crossarea/examples.json)"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.round-ups]": {
   "status": "Rewritten And Verified",
@@ -2611,15 +2611,15 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.transfer]": {
   "status": "Rewritten And Verified",
-  "hash": "04de5248e747",
+  "hash": "41936c20d2c0",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-money.test.ts (the money entries’ worked examples, played; money.affairs’ quote of Home’s line read from Home); each quote set against the code that writes it (crossarea/examples.json)"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.upkeep]": {
   "status": "Rewritten And Verified",
-  "hash": "411ae2f2ccc2",
+  "hash": "3447672007b0",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
+  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-money.test.ts (the money entries’ worked examples, played; money.affairs’ quote of Home’s line read from Home); each quote set against the code that writes it (crossarea/examples.json)"
  },
  "src/engine/content/guide/money.ts#MONEY [evaluation]": {
   "status": "Rewritten And Verified",
@@ -3901,9 +3901,9 @@
  },
  "src/ui/bank/RoundUps.tsx#RoundUps": {
   "status": "Rewritten And Verified",
-  "hash": "7c8270764bc7",
+  "hash": "7483dce649cc",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts (not counting, a multiple of $1.00, ×1 just the change, counted but not moved yet, last moved to savings, the source line, another bank's primary); tests/evidence-g11-money.test.ts (Not in the game); tests/guide-examples-money.test.ts 'bank.round-ups: Round-Ups'"
+  "evidence": "tests/roundups.test.ts (‘2 purchases since the last transfer were already a multiple of $1.00, so they added nothing.’); the sentence is written whole for one purchase and for several, the same words as before; the round-ups save in the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves)"
  },
  "src/ui/looks/bank.tsx#movedWords": {
   "status": "Reviewed And Retained",
