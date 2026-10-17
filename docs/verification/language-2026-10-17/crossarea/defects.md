@@ -208,3 +208,17 @@ the compiler refuses, and `tsc -b --noEmit` reported a pass on it in this clone;
 an export of that commit (`d182e81b`) fails. The test was corrected in `4f56e99f`, and the plain `tsc -p` runs were
 added to every check after it. Build mode caught the same error when it was put back by hand afterwards, so what made it
 miss it once isn't known.
+
+## The Generated Maps
+
+`docs/DEVMAP.md` and `docs/TRACEABILITY.md` were behind the code after these fixes and were written again with their
+tools (`node tools/devmap.mjs --write`, `node tools/traceability.mjs --write`). Their diffs are the new test files
+counted against the commands they run (`card.request_limit`, `tax.apply_plan`, `tax.file`, `tax.pay`,
+`world.set_preferences`), and one more: TRACEABILITY's Changes column for `tax.plan_decide` went from "status" to "—".
+The tool reads the assignments in a handler's own body, and the only one there was the status flip that the second fix
+took out, which put the status back before the handler went on. The decision still changes the plan's status, through
+`refusePlan` and `startPlan`, which the tool doesn't follow.
+
+`node tools/coverage.mjs --check` fails on "life energy: simulation.test.ts:189-256: line 189 isn’t inside a test",
+and did so on the merge this pass began from (`1c3157d4`, checked on an export of it): not this pass's, and left to the
+coordinator.
