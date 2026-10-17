@@ -24,6 +24,10 @@
  * builds or reads a held-out case.
  */
 import { describe, expect, it, vi } from 'vitest';
+import { spawnSync } from 'node:child_process';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { MASTERED, TECHNIQUES, type AbilityId } from '@/engine/content/abilities';
@@ -490,6 +494,40 @@ describe('The F2-A10 harness (brief 11)', () => {
     expect(heldOutRefusal(casesOf('tuning'), false)).toBeUndefined();
     expect(heldOutRefusal(casesOf('adv-h-0..2'), true)).toBeUndefined();
   });
+
+  it('GUARD: the measure works out every clause on a tuning case and says what it ran on, the commit and whether the tree was clean; a held-out seed without --held-out is refused before anything is built', () => {
+    // tools/advice.ts itself, as the measure is run (a child process), on adv-t-0: a beginner a take in.
+    const dir = mkdtempSync(join(tmpdir(), 'advice-measure-'));
+    try {
+      const out = join(dir, 'adv-t-0.json');
+      const r = spawnSync(process.execPath, [resolve('node_modules/vite-node/vite-node.mjs'), 'tools/advice.ts', '--', '--cases', 'adv-t-0', '--out', out], { encoding: 'utf8' });
+      expect(r.status, r.stderr).toBe(0);
+      const run = JSON.parse(readFileSync(out, 'utf8')) as { commit: string; clean: boolean; command: string; cases: Record<string, unknown>[]; summary: Record<string, unknown> };
+      expect(run.commit).toMatch(/^[0-9a-f]{40}$/);
+      expect(typeof run.clean).toBe('boolean');
+      expect(run.command).toBe('npx vite-node tools/advice.ts -- --cases adv-t-0 --out ' + out);
+      const c = run.cases[0]!;
+      expect(c).toMatchObject({ seed: 'adv-t-0', set: 'tuning', design: 'F2-A10', band: 'beginner', stage: 'firstWeek' });
+      // F2-A's pass, and every clause the criteria name, worked out on the case.
+      expect(typeof c.pass).toBe('boolean');
+      expect(Object.keys(c.c as object)).toEqual(expect.arrayContaining(['medianOthers', 'atOrAboveMedian', 'randomMean', 'firstGain']));
+      expect(Object.keys(c.d as object)).toEqual(expect.arrayContaining(['violations', 'allFull']));
+      expect(Object.keys(c.e as object)).toEqual(expect.arrayContaining(['predicted', 'realized', 'within']));
+      expect(Object.keys(c.f as object)).toEqual(expect.arrayContaining(['ladder', 'falls', 'prep']));
+      expect(Object.keys(c.g as object)).toEqual(expect.arrayContaining(['recs', 'ok', 'missing']));
+      expect(Object.keys(c.h as object)).toEqual(expect.arrayContaining(['before', 'after', 'fell', 'leads', 'ok']));
+      expect(Object.keys(c.i as object)).toEqual(['same']);
+      expect(Object.keys(run.summary)).toEqual(expect.arrayContaining(['tuning', 'tuning F2-A10', 'tuning F2-A10 beginner', 'tuning F2-A10 firstWeek']));
+      // A held-out seed without --held-out: refused, and nothing written.
+      const held = join(dir, 'held.json');
+      const no = spawnSync(process.execPath, [resolve('node_modules/vite-node/vite-node.mjs'), 'tools/advice.ts', '--', '--cases', 'adv-h-0', '--out', held], { encoding: 'utf8' });
+      expect(no.status).not.toBe(0);
+      expect(no.stderr + no.stdout).toContain('A held-out seed is run only with --held-out, once, on the code to be reported.');
+      expect(existsSync(held)).toBe(false);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  }, 240_000);
 
   it('PLAYER JOURNEY: a case is built through the game’s commands: every input drawn within its band, near mastery at least two at full, the stage’s takes taped as its work in its days, each in one of the 149 genres', () => {
     expect(GENRES.length).toBe(149);
