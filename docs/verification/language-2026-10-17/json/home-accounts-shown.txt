@@ -1,0 +1,345 @@
+# Starting Point, Before Yale: each researched bank, raised in its country from birth, born 14 June 2002
+
+## RBC Royal Bank (ca-rbc), raised in Vancouver
+  RBC Royal Bank keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its RBC Signature No Limit Banking opens with what its fees come to until you graduate in May 2029, C$577.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for RBC Royal Bank, so the game assumes 16.
+
+## TD Canada Trust (ca-td), raised in Vancouver
+  TD Canada Trust keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its TD Unlimited Chequing opens with what its fees come to until you graduate in May 2029, C$611.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for TD Canada Trust, so the game assumes 16.
+
+## Scotiabank (ca-scotiabank), raised in Vancouver
+  Scotiabank keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Preferred Package opens with what its fees come to until you graduate in May 2029, C$577.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Scotiabank, so the game assumes 16.
+
+## BMO (ca-bmo), raised in Vancouver
+  BMO keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Performance Chequing Plan opens with what its fees come to until you graduate in May 2029, C$611.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for BMO, so the game assumes 16.
+
+## CIBC (ca-cibc), raised in Vancouver
+  CIBC keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its CIBC Smart Account opens with what its fees come to until you graduate in May 2029, C$577.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for CIBC, so the game assumes 16.
+
+## BBVA México (mx-bbva), raised in Mexico City
+  BBVA México keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+
+## Banorte (mx-banorte), raised in Mexico City
+  Banorte keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for Banorte, so the game assumes 16.
+
+## Santander México (mx-santander), raised in Mexico City
+  Santander México keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Débito LikeU opens with what its fees come to until you graduate in May 2029, MX$391.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Santander México, so the game assumes 16.
+
+## Banamex (mx-banamex), raised in Mexico City
+  Banamex keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for Banamex, so the game assumes 16.
+
+## Barclays (gb-barclays), raised in London
+  Barclays closes an account whose holder lives outside its country: it gives 60 days’ notice, so it closes on October 23, 2026.
+  The bank says so in its own words.
+  The research found no opening age for Barclays, so the game assumes 16.
+
+## Lloyds Bank (gb-lloyds), raised in London
+  Lloyds keeps it once you’ve told it your American address, though its terms say it “may not be able to keep your account open” for a customer who moves abroad.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for Lloyds Bank, so the game assumes 16.
+
+## NatWest (gb-natwest), raised in London
+  NatWest keeps it once you’ve registered your American address: it says that “in most cases” nothing changes when a customer moves abroad.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for NatWest, so the game assumes 16.
+
+## HSBC UK (gb-hsbc), raised in London
+  HSBC UK keeps it for a customer who lives abroad.
+  The bank says so in its own words.
+  The research found no opening age for HSBC UK, so the game assumes 16.
+
+## Santander UK (gb-santander), raised in London
+  Santander UK keeps it once you’ve told it you moved (“we can currently service existing products”), though its terms ask that a customer be a UK resident.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for Santander UK, so the game assumes 16.
+
+## Nationwide Building Society (gb-nationwide), raised in London
+  Nationwide keeps it once you’ve registered your American address; its guidance on moving abroad is written for Europe and says nothing about America.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for Nationwide Building Society, so the game assumes 16.
+
+## AIB (ie-aib), raised in Dublin
+  AIB keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Personal Current Account opens with what its fees come to until you graduate in May 2029, €204.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for AIB, so the game assumes 16.
+
+## Bank of Ireland (ie-bank-of-ireland), raised in Dublin
+  Bank of Ireland keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Personal Current Account opens with what its fees come to until you graduate in May 2029, €204.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Bank of Ireland, so the game assumes 16.
+
+## PTSB (ie-ptsb), raised in Dublin
+  PTSB keeps it once you’ve completed its non-resident form and the tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Explore Account opens with what its fees come to until you graduate in May 2029, €272.00, from your savings, as far as that goes: move more in before it runs low.
+
+## Landsbankinn (is-landsbankinn), raised in Reykjavík
+  Landsbankinn keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for Landsbankinn, so the game assumes 16.
+
+## Arion banki (is-arion), raised in Reykjavík
+  Arion banki keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Veltureikningur opens with what its fees come to until you graduate in May 2029, 2,850 kr, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Arion banki, so the game assumes 16.
+
+## Íslandsbanki (is-islandsbanki), raised in Reykjavík
+  Íslandsbanki keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for Íslandsbanki, so the game assumes 16.
+
+## BNP Paribas (fr-bnp-paribas), raised in Paris
+  BNP Paribas keeps it at its price for a customer living outside France.
+  The bank publishes its price for a customer abroad but no rule on moving, so this is the game’s reading of it.
+  It charges €15.00 a month for a customer abroad.
+  Its Compte de dépôt opens with what its fees come to until you graduate in May 2029, €599.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for BNP Paribas, so the game assumes 16.
+
+## SG (fr-societe-generale), raised in Paris
+  SG keeps it at its quarterly charge for a customer living abroad, which it doesn’t charge under 25.
+  The bank publishes its price for a customer abroad but no rule on moving, so this is the game’s reading of it.
+  It charges €75.00 a quarter for a customer abroad, which it doesn’t charge under 25, as you are.
+  Its Compte bancaire opens with what its fees come to until you graduate in May 2029, €687.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for SG, so the game assumes 16.
+
+## LCL (fr-lcl), raised in Paris
+  LCL keeps it at its quarterly charge for a customer living outside the European Union, which it doesn’t charge under 26.
+  The bank publishes its price for a customer abroad but no rule on moving, so this is the game’s reading of it.
+  It charges €40.00 a quarter for a customer abroad, which it doesn’t charge under 26, as you are.
+  Its Compte de dépôt opens with what its fees come to until you graduate in May 2029, €274.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for LCL, so the game assumes 16.
+
+## Crédit Agricole Paris Île-de-France (fr-credit-agricole), raised in Paris
+  Crédit Agricole Paris Île-de-France keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Compte de dépôt opens with what its fees come to until you graduate in May 2029, €51.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Crédit Agricole Paris Île-de-France, so the game assumes 16.
+
+## La Banque Postale (fr-la-banque-postale), raised in Paris
+  La Banque Postale keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its CCP opens with what its fees come to until you graduate in May 2029, €72.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for La Banque Postale, so the game assumes 16.
+
+## Deutsche Bank (de-deutsche-bank), raised in Berlin
+  Deutsche Bank keeps it, as an AktivKonto at €6.90 a month: its free account for students needs an address in the European Union, and the price list says it then carries on as an AktivKonto.
+  The bank publishes its price for a customer abroad but no rule on moving, so this is the game’s reading of it.
+  Its AktivKonto opens with what its fees come to until you graduate in May 2029, €235.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Deutsche Bank, so the game assumes 16.
+
+## Commerzbank (de-commerzbank), raised in Berlin
+  Commerzbank keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its GiroKonto opens with what its fees come to until you graduate in May 2029, €167.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Commerzbank, so the game assumes 16.
+
+## Postbank (de-postbank), raised in Berlin
+  Postbank keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Giro plus opens with what its fees come to until you graduate in May 2029, €235.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Postbank, so the game assumes 16.
+
+## ING Deutschland (de-ing), raised in Berlin
+  ING keeps it, though its terms ask for a home and work in Germany to open one, and customers who moved abroad report it ending theirs on two months’ notice.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Girokonto opens with what its fees come to until you graduate in May 2029, €167.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for ING Deutschland, so the game assumes 16.
+
+## Berliner Sparkasse (de-berliner-sparkasse), raised in Berlin
+  Berliner Sparkasse keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Giro Digital opens with what its fees come to until you graduate in May 2029, €205.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Berliner Sparkasse, so the game assumes 16.
+
+## Banco Santander (es-santander), raised in Madrid
+  Banco Santander keeps it as a non-resident account, once you’ve given it proof that you no longer live in Spain, renewed every two years.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Cuenta Santander opens with what its fees come to until you graduate in May 2029, €680.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Banco Santander, so the game assumes 16.
+
+## BBVA (es-bbva), raised in Madrid
+  BBVA keeps it as a non-resident account, once you’ve given it proof that you no longer live in Spain, renewed every two years.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for BBVA, so the game assumes 16.
+
+## CaixaBank (es-caixabank), raised in Madrid
+  CaixaBank keeps it as a non-resident account, once you’ve given it proof that you no longer live in Spain, renewed every two years.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Programa Día a Día opens with what its fees come to until you graduate in May 2029, €680.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for CaixaBank, so the game assumes 16.
+
+## Banco Sabadell (es-sabadell), raised in Madrid
+  Banco Sabadell keeps it as a non-resident account, and charges for asking the police for your certificate of non-residence every two years.
+  The bank publishes its price for a customer abroad but no rule on moving, so this is the game’s reading of it.
+  It charges €30.00 every two years for a customer abroad.
+  Its Cuenta Online Sabadell opens with what its fees come to until you graduate in May 2029, €60.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Banco Sabadell, so the game assumes 16.
+
+## Bankinter (es-bankinter), raised in Madrid
+  Bankinter keeps it as a non-resident account, once you’ve given it proof that you no longer live in Spain, renewed every two years.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  Its Cuenta Nómina opens with what its fees come to until you graduate in May 2029, €128.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Bankinter, so the game assumes 16.
+
+## MUFG Bank (jp-mufg), raised in Tokyo
+  MUFG keeps it through Global Direct, which a student going abroad to study applies for before leaving, as the game assumes you did.
+  The bank publishes its price for a customer abroad but no rule on moving, so this is the game’s reading of it.
+  It charges ¥300 a month for a customer abroad.
+  Its 普通預金 (Ordinary Deposit) opens with what its fees come to until you graduate in May 2029, ¥10,200, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for MUFG Bank, so the game assumes 16.
+
+## SMBC (jp-smbc), raised in Tokyo
+  SMBC keeps it through its Global Service, which a student going abroad to study registers for before leaving, as the game assumes you did; a cash card then works only at Japanese ATMs.
+  The bank publishes its price for a customer abroad but no rule on moving, so this is the game’s reading of it.
+  It charges ¥220 a month for a customer abroad.
+  Its 普通預金 (Ordinary Deposit) opens with what its fees come to until you graduate in May 2029, ¥7,480, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for SMBC, so the game assumes 16.
+
+## Mizuho Bank (jp-mizuho), raised in Tokyo
+  Mizuho keeps it once it’s changed to non-resident status at a branch, but then with no cash card and no internet banking.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for Mizuho Bank, so the game assumes 16.
+
+## Resona Bank (jp-resona), raised in Tokyo
+  Resona keeps it once it’s converted to a non-resident yen deposit at a branch before leaving.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for Resona Bank, so the game assumes 16.
+
+## Japan Post Bank (jp-japan-post-bank), raised in Tokyo
+  Refused: Japan Post Bank asks a customer going abroad to close the account, and keeps one open only if someone in Japan acts for them, which the game doesn’t offer.
+
+## KB Kookmin Bank (kr-kb-kookmin), raised in Seoul
+  KB Kookmin Bank keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for KB Kookmin Bank, so the game assumes 16.
+
+## Shinhan Bank (kr-shinhan), raised in Seoul
+  Shinhan Bank keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for Shinhan Bank, so the game assumes 16.
+
+## Hana Bank (kr-hana), raised in Seoul
+  Hana Bank keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for Hana Bank, so the game assumes 16.
+
+## NH NongHyup Bank (kr-nh), raised in Seoul
+  NH NongHyup Bank keeps it once you’ve told it your American address and given it a tax self-certification.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for NH NongHyup Bank, so the game assumes 16.
+
+## KakaoBank (kr-kakaobank), raised in Seoul
+  KakaoBank keeps it while you keep your Korean phone number: it has no branch, and every check runs through the app and that phone.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for KakaoBank, so the game assumes 16.
+
+## Commonwealth Bank (au-commbank), raised in Sydney
+  Commonwealth Bank keeps it for a customer who lives abroad.
+  The bank says so in its own words.
+  Its Everyday Account Smart Access opens with what its fees come to until you graduate in May 2029, A$136.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Commonwealth Bank, so the game assumes 16.
+
+## Westpac (au-westpac), raised in Sydney
+  Westpac keeps it for a customer who lives abroad.
+  The bank says so in its own words.
+  Its Westpac Choice opens with what its fees come to until you graduate in May 2029, A$170.00, from your savings, as far as that goes: move more in before it runs low.
+  The research found no opening age for Westpac, so the game assumes 16.
+
+## NAB (au-nab), raised in Sydney
+  NAB keeps it once you’ve updated your tax residency, though its guidance for customers leaving Australia steers them to close.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for NAB, so the game assumes 16.
+
+## ANZ (au-anz), raised in Sydney
+  ANZ keeps it only until it acts on its rule that a customer has an Australian address, which the game assumes you don’t.
+  The bank publishes nothing on a customer who moves abroad, so this is the game’s assumption.
+  The research found no opening age for ANZ, so the game assumes 16.
+
+## ANZ (nz-anz), raised in Wellington
+  ANZ keeps it for a customer who lives abroad.
+  The bank says so in its own words.
+  The research found no opening age for ANZ, so the game assumes 16.
+
+## ASB (nz-asb), raised in Wellington
+  ASB keeps it for a customer who lives abroad.
+  The bank says so in its own words.
+  The research found no opening age for ASB, so the game assumes 16.
+
+## BNZ (nz-bnz), raised in Wellington
+  BNZ keeps it for a customer who lives abroad.
+  The bank says so in its own words.
+  The research found no opening age for BNZ, so the game assumes 16.
+
+## Westpac NZ (nz-westpac), raised in Wellington
+  Westpac NZ keeps it for a customer who lives abroad.
+  The bank says so in its own words.
+  The research found no opening age for Westpac NZ, so the game assumes 16.
+
+## Kiwibank (nz-kiwibank), raised in Wellington
+  Kiwibank keeps it for a customer who lives abroad.
+  The bank says so in its own words.
+
+# A life made with the account kept: what Money shows under it, and opening something new there
+
+## Barclays
+  Barclays Bank Account (checking):
+    Its debit card costs 2.99% of each purchase in dollars, and 2.99% of the cash at another bank’s machine here, with the machine’s own fee.
+    Barclays closes it on October 23, 2026, and sends what it holds then to Chase Total Checking by its own payment abroad.
+  Everyday Saver (savings):
+    Barclays closes it on October 23, 2026, and sends what it holds then to Chase Total Checking by its own payment abroad.
+  Opening something new there: Barclays keeps accounts only for customers who live in the UK, and opens none for one who doesn’t.
+
+## Deutsche Bank
+  AktivKonto (checking):
+    Its debit card costs 1% (at least €1.50) and 0.5% of each purchase in dollars, and 1% (at least €5.99) and 0.5% of the cash at another bank’s machine here, with the machine’s own fee.
+  Flexgeld (savings):
+  Opening something new there: No way to open anything new at Deutsche Bank from America was found, so the game assumes there’s none.
+
+## SG
+  Compte bancaire (checking):
+    For a customer abroad SG charges €75.00 a quarter, not yet: it doesn’t charge one under 25.
+    Its debit card costs €1.00 and 2.7% of each purchase in dollars, less on smaller sums, and €3.00 and 2.7% of the cash at another bank’s machine here, with the machine’s own fee.
+  Livret A (savings):
+  Opening something new there: No way to open anything new at SG from America was found, so the game assumes there’s none.
+
+## SMBC
+  普通預金 (Ordinary Deposit) (checking):
+    For a customer abroad SMBC charges ¥220 a month.
+    It takes it from this account, or from your savings at SMBC when this one doesn’t hold it.
+    SMBC’s Global Service has its customers cancel the debit card before they leave Japan.
+  普通預金 (Ordinary Deposit) (savings):
+  Opening something new there: SMBC’s Global Service can’t be applied for after leaving Japan, and it publishes nothing that opens an account for a customer already living abroad.
+
+## KakaoBank
+  입출금통장 (everyday account) (checking):
+    Its debit card costs 1.25% of each purchase in dollars, and $3.00 and 1% of the cash at another bank’s machine here, with the machine’s own fee.
+  세이프박스 (savings box) (savings):
+  Opening something new there: No way to open anything new at KakaoBank from America was found, so the game assumes there’s none.
+
+# home-accounts.json's words on these screens
+  2410 sentences of eight words or more in home-accounts.json; 0 of them among the 209 lines shown above.

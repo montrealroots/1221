@@ -1,0 +1,17 @@
+# The game's words for what each genre asks of an actor (from 2026-10-17, the owner's brief 14).
+#
+# research-genre-demands.json keeps the research as it came back. tools/build-attribute-content.mjs copies it into
+# src/engine/content/genre-demands.json, which the genre look shows, and applies these edits on the way in. Each block
+# names a genre and a field; each "- " line is text the research says now, exactly, found once in that field; the "+ "
+# line under it is what the player reads instead. The build stops on an old text it can't find, so a change to the
+# research is never covered by words written for what it said before.
+#
+# What the edits keep: every quotation, every name, figure, date and citation, what a source supports and what it
+# doesn't, and how sure the research is. What they change: the research's working words, which the player has no way to
+# read ("tag", "the vocabulary", "genre-wide:", "fetched", "returned 403", "my own reading", a genre's id), into the
+# look's own: a requirement and its name as the look shows it (Fights And Stunts, Comic Timing), "read directly", "from
+# a search summary", "couldn't be opened". The builder itself says how each was read, and puts the house's spelling and
+# contractions in the research's own sentences, outside its quotations.
+#
+# Fields: claim, sourceSupports, uncertainty, belongsTo (read inside "belongs to …, not to the genre as a whole"),
+# why:<tag> (shown only for a genre whose requirements apply), and source (only where it's prose, never a citation).

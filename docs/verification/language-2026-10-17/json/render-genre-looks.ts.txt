@@ -1,0 +1,40 @@
+/**
+ * Prints what every genre's look says of what the genre asks of an actor, drawn as the game draws it (`resolveLook`,
+ * `ui/looks/actor.tsx`), on a new first-year in New York, for brief 14's json area: the words that come from
+ * `src/engine/content/genre-demands.json`. For each genre: its confidence and whether it's applied, then the body from
+ * "What it asks of an actor." to the paragraph after the research's small print, and the source line's second half.
+ * Kept as .txt so the lint and the typecheck leave it be: copy it to probe/render-genre-looks.ts in the clone, then from
+ * the clone run npx vite-node probe/render-genre-looks.ts -- <out.txt> [genre ...]
+ */
+import { writeFileSync } from 'node:fs';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { createSave } from '@/engine';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { GENRE_DEMANDS, applied } from '@/engine/content/demands';
+import { FILM_GENRES } from '@/engine/content/film-genres';
+import '@/ui/looks/all';
+import { resolveLook, type Looked } from '@/ui/looks/registry';
+import { at } from '@/ui/looks/subject';
+
+const onScreen = (html: string) => html.replace(/\stitle="[^"]*"/g, '').replace(/<!-- -->/g, '').replace(/<\/p>/g, ' ¶ ').replace(/<[^>]+>/g, '')
+  .replace(/&quot;/g, '"').replace(/&#x27;/g, '\'').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/[ \t]+/g, ' ').trim();
+
+const [outFile, ...only] = process.argv.slice(2);
+const sim = createSave(1, 'json14-genres', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+const out: string[] = [];
+const ids = only.length ? only : FILM_GENRES.map((g) => g.id);
+for (const id of ids) {
+  const l = resolveLook(sim, at('genre', id)) as Looked | { gone: string } | undefined;
+  if (!l || 'gone' in l) { out.push(`## ${id}\n  gone`); continue; }
+  const d = GENRE_DEMANDS[id];
+  const body = onScreen(renderToStaticMarkup(createElement('div', null, l.body)));
+  const from = body.indexOf('What it asks of an actor.');
+  const to = [body.indexOf('How its scenes are played.'), body.indexOf('To study it.')].filter((i) => i > from).sort((a, b) => a - b)[0] ?? body.length;
+  const asks = from >= 0 ? body.slice(from, to).split(' ¶ ').map((p) => p.trim()).filter(Boolean) : ['(no demand shown)'];
+  const src = body.match(/Source for what it asks: (.*?) ¶/)?.[1];
+  out.push([`## ${l.name} (${id}; ${d?.confidence ?? 'none'} confidence; ${applied(id) ? 'applied' : 'not applied'}${d?.belongsTo ? '; belongs elsewhere' : ''}${d?.basis ? `; basis ${d.basis}` : ''})`,
+    ...asks.map((p) => `  ${p}`), `  Source for what it asks: ${src ?? '(none)'}`, `  provenance: ${l.provenance}`].join('\n'));
+}
+writeFileSync(outFile ?? 'genre-looks.txt', `${out.join('\n\n')}\n`);
+console.log(`${out.length} genre looks written`);
