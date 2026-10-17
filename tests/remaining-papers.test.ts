@@ -17,7 +17,9 @@
  *   Authorization Document; and issues anyone but a citizen or a permanent resident a non-verified card, “Not for Federal
  *   Identification” (DMV checklist DI-3 Rev. 6-2026, and its Non-US Citizen Requirements, read 2026-10-16). Until
  *   2026-10-16 no document was asked, so a student whose passport was reported lost was issued a card, and every card
- *   was marked REAL ID.
+ *   was marked REAL ID. From 2026-10-17 (brief 11's KS-ct-idcard) the card comes by mail twenty business days on, after
+ *   SAVE's ten for somebody not a citizen, and a citizen's runs to her first birthday at least seven years on; until
+ *   then a citizen's was in force at the counter, and a non-citizen's came on SAVE's tenth day.
  *
  * - From 2026-10-17 (brief 11's tax.s8.f1_status): a passport run out under an F-1 ends nothing, the status reading the
  *   program and its grace alone, played on a London-born student who keeps up to her passport's end in June 2028 (seed
@@ -47,7 +49,9 @@ import { documentsOf, inForce, passportOf, photoIdOf, type PersonDocument } from
 import { US_STATUS_KIND, f1Of, usStatusEnds } from '@/engine/systems/permission';
 import { PREP_DIMS } from '@/engine/content/coursework';
 import { courseworkOf } from '@/engine/systems/coursework';
-import { idCardRefusal } from '@/engine/systems/identity';
+import { NONCITIZEN_ID, idCardExpires, idCardRefusal } from '@/engine/systems/identity';
+import { ID_CARDS } from '@/engine/content/identity';
+import { PASSPORTS_ABROAD } from '@/engine/content/passportsabroad';
 import { ssnRefusal } from '@/engine/systems/taxid';
 import '@/ui/looks/all';
 import { resolveLook, type Looked } from '@/ui/looks/registry';
@@ -176,10 +180,19 @@ describe('tax.s8.inventory', () => {
     expect(screen).toContain('Run Out');
     expect(drew('documents.apply_idcard').map((c) => [c.label, c.disabled])).toEqual([['Get Non-Driver Identification Card', false]]);
     const before = held(sim);
-    expect(press('documents.apply_idcard')).toEqual([expect.stringMatching(/^Non-Driver Identification Card, for \$28\.00; good until /)]);
+    // Asked for an hour after the license ran out, on her birthday, Wednesday 14 June 2028: mailed within twenty business
+    // days, Juneteenth and the Fourth not among them, Friday 14 July; to her birthday seven years on, 14 June 2035.
+    expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card, for $28.00; the card comes July 14, 2028; good until June 14, 2035.']);
     expect(before - held(sim)).toBe(28_00);
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
+    // On its way, it isn't a photo ID yet, and Wells Fargo still turns her away (from 2026-10-17: until then it was in
+    // force at once).
+    expect(card.status).toBe('pending');
+    expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
+    expect(refusal(sim, 'bank.open_current', { bankId: 'us-wells-fargo' })).toBe('Wells Fargo asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
+    sim.advanceTo(card.readyAt! + MS_HOUR);
     // A citizen's card is REAL ID, and its page says so.
+    expect(card.status).toBe('valid');
     expect(card.realId).toBe(true);
     expect(page(sim, card.id)).toContain('It meets REAL ID.');
     expect(photoIdOf(sim.player, sim.now)?.id).toBe(card.id);
@@ -238,6 +251,100 @@ describe('tax.s8.passport', () => {
     expect(press('documents.apply_passport', 'Apply For One')).toEqual([expect.stringMatching(/^Applied, for \$165\.00\. /)]);
     expect(taken(sim, 'U.S. Passport Book')).toEqual([165_00]);
   });
+
+  // Brief 11's KS-passport-fees (2026-10-17, docs/research/world/research-passports-abroad.json): the fees from abroad
+  // read on the offices' own pages that day. Until then Iceland's and Brazil's were their fees at home, said to be
+  // assumed, and Latvia's the embassy in Ireland's.
+  it('FIXTURE: the offices’ terms from abroad read on 2026-10-17: Iceland’s 19,000 ISK and express 39,200 ISK in all, Brazil’s US$60, Latvia’s €140 (€115 under 20) in about eight weeks with no urgent service; Japan’s and New Zealand’s still said to be SLATE’s', () => {
+    expect(PASSPORTS_ABROAD['IS']).toMatchObject({ fee: 19000, currency: 'ISK', days: 6, daysEstimated: true, expedite: { extra: 20200, days: 2 } });
+    expect(PASSPORTS_ABROAD['BR']).toMatchObject({ fee: 60, currency: 'USD', expedite: null });
+    expect(PASSPORTS_ABROAD['LV']).toMatchObject({ fee: 140, youngFee: 115, currency: 'EUR', days: 56, daysEstimated: false, expedite: null });
+    // What no page settled stays said on the screen as SLATE's.
+    expect(PASSPORTS_ABROAD['JP']!.assumed.join(' ')).toMatch(/dollar fee wasn’t read/);
+    expect(PASSPORTS_ABROAD['NZ']!.assumed.join(' ')).toMatch(/GST/);
+    for (const iso of ['IS', 'BR', 'LV']) expect(PASSPORTS_ABROAD[iso]!.assumed.join(' ')).not.toMatch(/fees? (charged|wasn’t|weren’t)/);
+  });
+
+  it('PLAYER JOURNEY: a São Paulo-born student renews her Brazilian passport on Papers from New Haven: US$60, the consular fee of sixty reais-ouro from 1 June 2026; no faster service, the command refused; issued on its day, the old one canceled then, once across a reload; until 2026-10-17 the Polícia Federal’s R$257.25 at home', () => {
+    const sim = life('rp-br-a', 'br-27-saopaulo');
+    const old = passportOf(sim.player, sim.now)!;
+    expect(old.issuer).toBe('BR');
+    expect(usdOf(257_25, 'BRL')).not.toBe(60_00);
+    const issuer = 'Polícia Federal (Departamento de Polícia Federal), Ministério da Justiça e Segurança Pública';
+    const screen = drawn(sim, PassportPane);
+    expect(screen).toContain('A New One $60.00 About 8 days; good for 10 years; from abroad');
+    expect(screen).toContain(`Faster Not Offered ${issuer} sells no faster service to an applicant abroad`);
+    expect(screen).toContain('at the consular fee from 1 June 2026: 60 reais-ouro, a real-ouro being a dollar, so US$60.');
+    expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It']);
+    const before = held(sim);
+    expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe(`${issuer} sells no faster service to an applicant abroad.`);
+    expect(held(sim)).toBe(before);
+    const applied = sim.now;
+    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied, for \$60\.00\. It comes by /)]);
+    expect(taken(sim, 'Passaporte comum')).toEqual([60_00]);
+    const again = reload(sim);
+    again.advanceTo(applied + 8 * MS_DAY - MS_HOUR);
+    expect(passportOf(again.player, again.now)?.id).toBe(old.id);
+    again.advanceTo(applied + 8 * MS_DAY + MS_HOUR);
+    const renewed = passportOf(again.player, again.now)!;
+    expect(renewed.id).not.toBe(old.id);
+    expect(documentsOf(again.player).find((d) => d.id === old.id)!.status).toBe('cancelled');
+    expect(titled(again, 'Passaporte comum Issued')).toHaveLength(1);
+    expect(taken(again, 'Passaporte comum')).toEqual([60_00]);
+  });
+
+  it('PLAYER JOURNEY: a Reykjavík-born student renews her Icelandic passport faster on Papers from New Haven: express at the embassy, 39,200 ISK in all in dollars, charged once and issued in two days, the old one canceled then, across a reload; Renew It at 19,000 ISK; until 2026-10-17 no faster service was offered from abroad', () => {
+    const sim = life('rp-is-a', 'is-39-reykjavik');
+    const old = passportOf(sim.player, sim.now)!;
+    expect(old.issuer).toBe('IS');
+    const fee = usdOf(19_000_00, 'ISK');
+    const faster = usdOf(39_200_00, 'ISK');
+    const screen = drawn(sim, PassportPane);
+    expect(screen).toContain(`A New One ${'$' + (fee / 100).toFixed(2)} About 6 days; good for 10 years; from abroad`);
+    expect(screen).toContain(`Faster ${'$' + (faster / 100).toFixed(2)} 2 days`);
+    expect(screen).toContain('At the Embassy of Iceland in Washington, the only post in the US that takes it, at the fee in Iceland: 19,000 ISK, or 39,200 ISK for express');
+    expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It', 'Renew It Faster']);
+    const applied = sim.now;
+    expect(press('documents.apply_passport', 'Renew It Faster')).toEqual([expect.stringMatching(/^Applied, for \$[\d,]+\.\d\d\. It comes by /)]);
+    expect(taken(sim, 'Íslenskt vegabréf (Icelandic passport), expedited')).toEqual([faster]);
+    expect(refusal(sim, 'documents.apply_passport')).toBe('An application is in already.');
+    const again = reload(sim);
+    again.advanceTo(applied + 2 * MS_DAY - MS_HOUR);
+    expect(passportOf(again.player, again.now)?.id).toBe(old.id);
+    again.advanceTo(applied + 2 * MS_DAY + MS_HOUR);
+    const renewed = passportOf(again.player, again.now)!;
+    expect(renewed.id).not.toBe(old.id);
+    expect(documentsOf(again.player).find((d) => d.id === old.id)!.status).toBe('cancelled');
+    expect(titled(again, 'Íslenskt vegabréf (Icelandic passport) Issued')).toHaveLength(1);
+    expect(taken(again, 'Íslenskt vegabréf (Icelandic passport), expedited')).toEqual([faster]);
+  });
+
+  it('PLAYER JOURNEY: a Riga-born student renews her Latvian passport on Papers from New Haven: €140 at the embassy in Washington, in dollars, in up to 56 days; no urgent service there, the command refused; issued on its day across a reload; until 2026-10-17 the embassy in Ireland’s five weeks and its €165 urgent service', () => {
+    const sim = life('rp-lv-a', 'lv-25-riga');
+    const old = passportOf(sim.player, sim.now)!;
+    expect(old.issuer).toBe('LV');
+    const fee = usdOf(140_00, 'EUR');
+    const issuer = 'Pilsonības un migrācijas lietu pārvalde (Office of Citizenship and Migration Affairs, PMLP/OCMA), under the Ministry of the Interior';
+    const screen = drawn(sim, PassportPane);
+    expect(screen).toContain(`A New One ${'$' + (fee / 100).toFixed(2)} Up to 56 days; good for 10 years; from abroad`);
+    expect(screen).toContain(`Faster Not Offered ${issuer} sells no faster service to an applicant abroad`);
+    expect(screen).toContain('In person at the Embassy of Latvia in Washington, at its own fees from 1 May 2026: €140 (€115 under 20), in about eight weeks on average; no urgent service.');
+    expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It']);
+    const before = held(sim);
+    expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe(`${issuer} sells no faster service to an applicant abroad.`);
+    expect(held(sim)).toBe(before);
+    const applied = sim.now;
+    expect(press('documents.apply_passport', 'Renew It')).toEqual([expect.stringMatching(/^Applied, for \$[\d,]+\.\d\d\. It comes by /)]);
+    expect(taken(sim, 'Latvijas Republikas pilsoņa pase (Latvian citizen\'s passport)')).toEqual([fee]);
+    const again = reload(sim);
+    again.advanceTo(applied + 56 * MS_DAY - MS_HOUR);
+    expect(passportOf(again.player, again.now)?.id).toBe(old.id);
+    again.advanceTo(applied + 56 * MS_DAY + MS_HOUR);
+    const renewed = passportOf(again.player, again.now)!;
+    expect(renewed.id).not.toBe(old.id);
+    expect(documentsOf(again.player).find((d) => d.id === old.id)!.status).toBe('cancelled');
+    expect(titled(again, 'Latvijas Republikas pilsoņa pase (Latvian citizen\'s passport) Issued')).toHaveLength(1);
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -245,7 +352,12 @@ describe('tax.s8.passport', () => {
 // ---------------------------------------------------------------------------
 
 describe('tax.s8.idcard', () => {
-  it('PLAYER JOURNEY: her number come and her passport reported lost, Get Non-Driver Identification Card is shut with the DMV’s reason and the command refused, nothing taken; her passport renewed from abroad, the card is asked for, comes after SAVE’s ten federal workdays, and is Not For Federal Identification, across a reload; until 2026-10-16 it was issued with no identity document, marked REAL ID', () => {
+  // Renamed on 2026-10-17 (brief 11's KS-ct-idcard, inputs/renames.json): until then 'PLAYER JOURNEY: her number come and
+  // her passport reported lost, Get Non-Driver Identification Card is shut with the DMV’s reason and the command refused,
+  // nothing taken; her passport renewed from abroad, the card is asked for, comes after SAVE’s ten federal workdays, and
+  // is Not For Federal Identification, across a reload; until 2026-10-16 it was issued with no identity document, marked
+  // REAL ID', when it came on SAVE's day, unmailed.
+  it('PLAYER JOURNEY: her number come and her passport reported lost, Get Non-Driver Identification Card is shut with the DMV’s reason and the command refused, nothing taken; her passport renewed from abroad, the card is asked for, comes by mail twenty business days after SAVE’s ten federal workdays, and is Not For Federal Identification, across a reload; until 2026-10-16 it was issued with no identity document, marked REAL ID, and until 2026-10-17 it came on SAVE’s tenth day', () => {
     const sim = life('rp-uk-a', 'uk-eng-london');
     const passport = passportOf(sim.player, sim.now)!;
     sim.advanceTo(at(2026, 8, 30, 12));
@@ -265,9 +377,12 @@ describe('tax.s8.idcard', () => {
     expect(passportOf(sim.player, sim.now)).toBeDefined();
     drawn(sim, PassportPane);
     expect(drew('documents.apply_idcard').map((c) => c.disabled)).toEqual([false]);
-    expect(press('documents.apply_idcard')).toEqual([expect.stringMatching(/^Non-Driver Identification Card, for \$28\.00; good until May 31, 2029\.$/)]);
+    // Asked for on Sunday 11 October 2026, 3 PM: SAVE's ten federal workdays, Columbus Day not among them, to Monday 26
+    // October, then the mail's twenty, Veterans Day not among them, to Tuesday 24 November.
+    expect(sim.now).toBe(Date.UTC(2026, 9, 11, 19));
+    expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card, for $28.00; the card comes November 24, 2026; good until May 31, 2029.']);
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
-    expect([card.name, card.status, card.realId]).toEqual(['Non-Driver Identification Card, Limited Term', 'pending', false]);
+    expect([card.name, card.status, card.realId, card.readyAt]).toEqual(['Non-Driver Identification Card, Limited Term', 'pending', false, Date.UTC(2026, 10, 24, 19)]);
     const again = reload(sim);
     again.advanceTo(card.readyAt! + MS_HOUR);
     const come = documentsOf(again.player).find((d) => d.kind === 'idcard')!;
@@ -276,6 +391,29 @@ describe('tax.s8.idcard', () => {
     expect(words).toContain('It’s marked Not For Federal Identification: it isn’t REAL ID.');
     expect(words).not.toContain('It meets REAL ID.');
     expect(titled(again, 'Non-Driver Identification Card, Limited Term Arrived')).toHaveLength(1);
+  });
+
+  // Brief 11's KS-ct-idcard (2026-10-17, docs/research/world/research-ct-idcard.json): the card's term and its mailing
+  // as the state publishes them. Until then six years from the day, SLATE's figure, and a citizen's in force at once.
+  it('FIXTURE: Connecticut’s card is the DMV’s: $28, seven years to a birthday, mailed within twenty business days, SAVE’s ten first for somebody not a citizen (CGS 1-1h(b)(2); portal.ct.gov, read 2026-10-16)', () => {
+    expect(ID_CARDS['us-ct']).toEqual({ name: 'Non-Driver Identification Card', fee: 28, years: 7, toBirthday: true, mailedBusinessDays: 20 });
+    expect(NONCITIZEN_ID.saveBusinessDays).toBe(10);
+  });
+
+  it('GUARD: the card runs to the first birthday at least seven years on, by New Haven’s calendar: asked for the day before her birthday, seven years and a day; on it, seven years to the day; the day after, to the birthday eight years on', () => {
+    // A New Haven life born 14 June 2002 at 7 AM UTC, 3 AM in New Haven; the days asked are TEST SETUP, the rule's own read.
+    const person = life('rp-ny-a', 'us-ny-newyork').player;
+    expect(new Date(person.birthInstant).toISOString()).toBe('2002-06-14T07:00:00.000Z');
+    const card = ID_CARDS['us-ct']!;
+    const on = (y: number, m: number, d: number, h = 12) => instantFromZoned({ year: y, month: m, day: d, hour: h, minute: 0 }, 'America/New_York');
+    const ends = (at: Instant) => new Date(idCardExpires(card, person, at)!).toISOString().slice(0, 10);
+    expect(ends(on(2026, 6, 13))).toBe('2033-06-14');
+    expect(ends(on(2026, 6, 14))).toBe('2033-06-14');
+    expect(ends(on(2026, 6, 14, 23))).toBe('2033-06-14');
+    expect(ends(on(2026, 6, 15))).toBe('2034-06-14');
+    expect(ends(on(2026, 8, 24))).toBe('2034-06-14');
+    // A card with no birthday runs its years from the day (New York's eight).
+    expect(new Date(idCardExpires(ID_CARDS['us-ny']!, person, on(2026, 8, 24))!).toISOString().slice(0, 10)).toBe('2034-08-24');
   });
 
   it('GUARD: an Employment Authorization Document in force stands as the primary document without a passport (FIXTURE: an OPT permit put on by hand: no play brings OPT and a lost passport together before 2029)', () => {

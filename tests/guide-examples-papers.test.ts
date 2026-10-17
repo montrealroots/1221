@@ -814,10 +814,12 @@ PLAYS['documents.passport-id'] = () => {
   const ex = example('documents.passport-id');
   // A life that began with a passport and a New York license.
   const sim = student('guide-papers-id-0');
-  // Connecticut's card, got through Get Non-Driver Identification Card.
+  // Connecticut's card, got through Get Non-Driver Identification Card and come by mail (from 2026-10-17: until then in
+  // force at the counter).
   const name = ID_CARDS['us-ct']!.name;
   expect(ex.setup).toContain(`holding a Connecticut ${name}`);
-  sim.must({ kind: 'documents.apply_idcard', payload: {} });
+  const got = sim.must<{ readyAt: number }>({ kind: 'documents.apply_idcard', payload: {} });
+  tended(sim, got.readyAt + MS_HOUR);
   const card = documentsOf(sim.player).find((d) => d.kind === 'idcard' && d.issuer === 'us-ct' && d.status === 'valid')!;
   // Reported stolen, reported to the police online, and replaced.
   sim.must({ kind: 'documents.report_lost', payload: { documentId: card.id, stolen: true } });

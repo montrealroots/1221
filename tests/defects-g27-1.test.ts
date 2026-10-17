@@ -16,7 +16,7 @@
 import { describe, expect, it } from 'vitest';
 import { createSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { documentsOf, type DocumentKind, type PersonDocument } from '@/engine/systems/documents';
 import { CHAPTER_BY_ID } from '@/engine/content/tutorial';
@@ -59,10 +59,13 @@ function whatIsLost(): { taken: Set<DocumentKind>; refused: Set<DocumentKind> } 
   tally(f1, reportLost(briton, f1));
   tally(passport, reportLost(briton, passport));
 
-  // JOURNEY: a New Yorker at Yale holds New York's license, and gets Connecticut's ID card over the counter.
+  // JOURNEY: a New Yorker at Yale holds New York's license, and gets Connecticut's ID card by mail, twenty business days
+  // on (from 2026-10-17: until then over the counter).
   const { sim: newYorker, license } = withLicense('g27-lost', 'us-ny-newyork');
   tally(license, reportLost(newYorker, license));
-  expect(newYorker.execute({ kind: 'documents.apply_idcard', payload: {} }).ok).toBe(true);
+  const applied = newYorker.execute<{ readyAt: number }>({ kind: 'documents.apply_idcard', payload: {} });
+  expect(applied.ok).toBe(true);
+  newYorker.advanceTo(applied.value!.readyAt + MS_HOUR);
   const card = documentsOf(newYorker.player).find((d) => d.kind === 'idcard' && d.status === 'valid')!;
   tally(card, reportLost(newYorker, card));
 

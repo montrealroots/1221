@@ -4,13 +4,17 @@
  * own handler where the screen is drawn) or through the clock; each consequence is read where the row says it is read,
  * against figures set down here from the rule's own numbers, never asked of the helper the engine computes them with.
  *
- * - `documents.apply_idcard`: Connecticut's $28 (its DMV's fee) leaves the bank; a citizen's card is in force at once
- *   for SLATE's six years, to 24 August 2032; with every other photo ID reported lost Citi turns the student away and,
- *   card in hand, opens her account (`photoIdOf` through `bank.open_current`); a second is refused ("You hold one in
- *   force."), a Connecticut license holder is refused ("You hold a license here. It serves as your ID."), a student out
- *   of status is refused in SAVE's words, and a bank that can't cover $28 charges nothing. A British student's Limited
- *   Term card waits on SAVE's ten business days, Monday 19 October to Monday 2 November 2026 (a window with no federal
- *   holiday in it), pending an hour before and in force an hour after, and runs to the program's end, 31 May 2029.
+ * - `documents.apply_idcard`: Connecticut's $28 (its DMV's fee) leaves the bank; a citizen's card comes by mail twenty
+ *   business days on, Tuesday 22 September 2026, Labor Day not among them, and runs to her first birthday at least seven
+ *   years on, 14 June 2034 (the DMV's, from 2026-10-17: until then it was in force at once, for SLATE's six years, to 24
+ *   August 2032); with every other photo ID reported lost Citi turns the student away, still while the card is on its
+ *   way, and, card in hand, opens her account (`photoIdOf` through `bank.open_current`); a second is refused while one is
+ *   on its way ("One is on its way.") and once it has come ("You hold one in force."), a Connecticut license holder is
+ *   refused ("You hold a license here. It serves as your ID."), a student out of status is refused in SAVE's words, and
+ *   a bank that can't cover $28 charges nothing. A British student's Limited Term card waits on SAVE's ten business days,
+ *   Monday 19 October to Monday 2 November 2026 (a window with no federal holiday in it), then on the mail's twenty,
+ *   Veterans Day and Thanksgiving not among them, to Wednesday 2 December, pending an hour before and in force an hour
+ *   after, and runs to the program's end, 31 May 2029.
  * - `documents.apply_opt`: applied for 40 days into the grace, $470 leaves the bank, and the pending application holds
  *   status past the grace's end (permission.ts:151) until OPT is approved 90 days on, for twelve months from the
  *   approval, and then ended by its 91st day without work, with the status. The status's ending, raised by the clock on
@@ -18,7 +22,7 @@
  *   $2,250 and is decided on the thirtieth business day, Tuesday 30 March 2027, counted here on the calendar. Refused in
  *   their own words: a citizen, a first-year before the window, a student who withdrew, a window closed, a second
  *   application, and a bank short of $470.
- * - `documents.replace_idcard`: a stolen card replaced for $30 in 30 days with a new number; Citi turns the student
+ * - `documents.replace_idcard`: a card come by mail, then stolen, replaced for $30 in 30 days with a new number; Citi turns the student
  *   away while it's pending and takes it once it has come; a second replacement of the old card, a card applied for
  *   meanwhile, a lost New York card in New Haven and a bank short of $30 are each refused in their words.
  * - `documents.replace_license`: a Connecticut-born student's license replaced for $30 in 30 days, its term and REAL ID
@@ -223,7 +227,19 @@ const count = (text: string, words: string) => text.split(words).length - 1;
 // ---------------------------------------------------------------------------
 
 describe('documents.apply_idcard', () => {
-  it('PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card in force at once to 24 August 2032, and Citi then opens her account', () => {
+  /**
+   * Connecticut's card applied for at START, Monday 24 August 2026, 7:30 AM: mailed within twenty business days of the
+   * appointment (the DMV's Central Issuance), counted here, Labor Day (Monday 7 September) not among them: 25 to 28
+   * August, 31 August to 4 September, 8 to 11, 14 to 18 and 21 and 22 September. It runs to her first birthday at least
+   * seven years on (CGS 1-1h(b)(2), "valid for 7 years"): born 14 June 2002, 14 June 2034.
+   */
+  const COMES = Date.UTC(2026, 8, 22, 11, 30);
+  const ENDS = Date.UTC(2034, 5, 14, 7);
+
+  // Renamed on 2026-10-17 (brief 11's KS-ct-idcard, inputs/renames.json): until then 'PLAYER JOURNEY: every other photo
+  // ID lost, Citi turns her away; $28 leaves the bank for a card in force at once to 24 August 2032, and Citi then opens
+  // her account', when a citizen's card was in force at the counter for SLATE's six years.
+  it('PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card that comes by mail twenty business days on, Tuesday 22 September 2026, good to her birthday on 14 June 2034; Citi turns her away until it comes and then opens her account, across a save and a load', () => {
     const sim = life('g15-idcard');
     expect(sim.now).toBe(START);
     const lost = documentsOf(sim.player).filter((d) => d.status === 'valid');
@@ -231,29 +247,44 @@ describe('documents.apply_idcard', () => {
     for (const d of lost) sim.must({ kind: 'documents.report_lost', payload: { documentId: d.id } });
     expect(openAtCiti(sim).error).toBe(CITI_REFUSES);
     const before = checking(sim).balance;
-    const r = sim.must<{ expiresAt: number; fee: number }>(APPLY_ID);
-    // Connecticut DMV's fee for a non-driver photo ID, $28, from the bank; SLATE's term, six years from the day.
+    const r = sim.must<{ expiresAt: number; fee: number; readyAt: number }>(APPLY_ID);
+    // Connecticut DMV's fee for a non-driver photo ID, $28, from the bank on the day.
     expect(before - checking(sim).balance).toBe(28_00);
     expect(memos(sim, 'Non-Driver Identification Card', START).map((t) => taken(sim, t))).toEqual([28_00]);
-    expect(r).toEqual({ fee: 28_00, expiresAt: Date.UTC(2032, 7, 24, 11, 30) });
-    expect(held(sim, 'idcard')).toEqual([expect.objectContaining({ issuer: 'us-ct', name: 'Non-Driver Identification Card', status: 'valid', issuedAt: START, expiresAt: Date.UTC(2032, 7, 24, 11, 30), realId: true })]);
+    expect(r).toEqual({ fee: 28_00, readyAt: COMES, expiresAt: ENDS });
+    expect(held(sim, 'idcard')).toEqual([expect.objectContaining({ issuer: 'us-ct', name: 'Non-Driver Identification Card', status: 'pending', appliedAt: START, readyAt: COMES, expiresAt: ENDS, realId: true })]);
+    // Meanwhile she holds the temporary paper credential, which a bank doesn't take alone: Citi turns her away still.
+    expect(openAtCiti(sim).error).toBe(CITI_REFUSES);
+    const back = reload(sim);
+    tended(back, COMES - MS_HOUR);
+    expect(openAtCiti(back).error).toBe(CITI_REFUSES);
+    tended(back, COMES + MS_HOUR);
+    expect(held(back, 'idcard')).toEqual([expect.objectContaining({ status: 'valid', issuedAt: COMES, expiresAt: ENDS, realId: true })]);
+    expect(titled(back, 'Non-Driver Identification Card Arrived').map((n) => n.at)).toEqual([COMES]);
+    expect(memos(back, 'Non-Driver Identification Card').map((t) => taken(back, t))).toEqual([28_00]);
     // What the card is for: a new bank takes it as the photo ID it asks.
-    const opened = openAtCiti(sim);
+    const opened = openAtCiti(back);
     expect(opened.ok, opened.error).toBe(true);
-    expect(sim.universe.accounts[opened.value!.accountId]).toMatchObject({ bankId: 'us-citi', kind: 'checking', ownerId: sim.player.id });
+    expect(back.universe.accounts[opened.value!.accountId]).toMatchObject({ bankId: 'us-citi', kind: 'checking', ownerId: back.player.id });
   });
 
-  it('refuses a second card while one is in force, in its words, charges once, and holds it across a save and a load', () => {
+  // Renamed on 2026-10-17 (brief 11's KS-ct-idcard, inputs/renames.json): until then 'refuses a second card while one is
+  // in force, in its words, charges once, and holds it across a save and a load', when the card was in force at once.
+  it('refuses a second card while one is on its way and once it has come, in its words, charges once, and holds it across a save and a load', () => {
     const sim = life('g15-idcard-twice');
     sim.must(APPLY_ID);
-    expect(sim.execute(APPLY_ID).error).toBe('You hold one in force.');
+    expect(sim.execute(APPLY_ID).error).toBe('One is on its way.');
     const back = reload(sim);
+    expect(back.execute(APPLY_ID).error).toBe('One is on its way.');
+    tended(back, COMES + MS_HOUR);
     expect(back.execute(APPLY_ID).error).toBe('You hold one in force.');
-    expect(held(back, 'idcard')).toEqual([expect.objectContaining({ status: 'valid', expiresAt: Date.UTC(2032, 7, 24, 11, 30) })]);
-    expect(memos(back, 'Non-Driver Identification Card').map((t) => taken(back, t))).toEqual([28_00]);
+    const again = reload(back);
+    expect(again.execute(APPLY_ID).error).toBe('You hold one in force.');
+    expect(held(again, 'idcard')).toEqual([expect.objectContaining({ status: 'valid', expiresAt: ENDS })]);
+    expect(memos(again, 'Non-Driver Identification Card').map((t) => taken(again, t))).toEqual([28_00]);
     // Loaded, it's still the photo ID a new bank takes.
-    for (const d of documentsOf(back.player).filter((x) => x.kind !== 'idcard' && x.status === 'valid')) back.must({ kind: 'documents.report_lost', payload: { documentId: d.id } });
-    expect(openAtCiti(back).ok).toBe(true);
+    for (const d of documentsOf(again.player).filter((x) => x.kind !== 'idcard' && x.status === 'valid')) again.must({ kind: 'documents.report_lost', payload: { documentId: d.id } });
+    expect(openAtCiti(again).ok).toBe(true);
   });
 
   it('refuses a Connecticut-born student holding a Connecticut license: “You hold a license here. It serves as your ID.”', () => {
@@ -285,7 +316,10 @@ describe('documents.apply_idcard', () => {
     expect(held(sim, 'idcard')).toEqual([]);
   });
 
-  it('PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days from Monday 19 October to Monday 2 November 2026, and runs to the program’s end, 31 May 2029', () => {
+  // Renamed on 2026-10-17 (brief 11's KS-ct-idcard, inputs/renames.json): until then 'PLAYER JOURNEY: a British
+  // student’s Limited Term card, $28, waits on SAVE’s ten business days from Monday 19 October to Monday 2 November 2026,
+  // and runs to the program’s end, 31 May 2029', when it came on SAVE's day, unmailed.
+  it('PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days from Monday 19 October to Monday 2 November 2026, then comes by mail twenty business days on, Wednesday 2 December, and runs to the program’s end, 31 May 2029', () => {
     const sim = life('g15-save', 'uk-eng-london');
     tended(sim, at(2026, 9, 8, 19));
     sim.must({ kind: 'documents.apply_ssn', payload: {} });
@@ -295,38 +329,50 @@ describe('documents.apply_idcard', () => {
     tended(sim, applied);
     expect(sim.player.ssn?.status).toBe('issued');
     const before = checking(sim).balance;
-    const r = sim.must<{ expiresAt: number; fee: number }>(APPLY_ID);
+    const r = sim.must<{ expiresAt: number; fee: number; readyAt: number }>(APPLY_ID);
     expect(before - checking(sim).balance).toBe(28_00);
-    // The program's end: the class of 2029's last day at the School, 31 May 2029, its F-1 running 60 days past it.
-    expect(r).toEqual({ fee: 28_00, expiresAt: Date.UTC(2029, 4, 31, 12) });
-    // Ten weekdays on, counted here: 20, 21, 22, 23, 26, 27, 28, 29, 30 October and 2 November.
+    // Ten weekdays on, counted here: 20, 21, 22, 23, 26, 27, 28, 29, 30 October and 2 November, SAVE's approval; then the
+    // mail's twenty business days (from 2026-10-17: until then the card came that Monday): 3 to 6, 9, 10, 12, 13, 16 to
+    // 20, 23 to 25, 27 and 30 November, 1 and 2 December, Veterans Day and Thanksgiving not among them.
     const decided = Date.UTC(2026, 10, 2, 14);
-    expect(held(sim, 'idcard')).toEqual([expect.objectContaining({ name: 'Non-Driver Identification Card, Limited Term', status: 'pending', appliedAt: applied, readyAt: decided, expiresAt: Date.UTC(2029, 4, 31, 12) })]);
+    const comes = Date.UTC(2026, 11, 2, 14);
+    // The program's end: the class of 2029's last day at the School, 31 May 2029, its F-1 running 60 days past it.
+    expect(r).toEqual({ fee: 28_00, readyAt: comes, expiresAt: Date.UTC(2029, 4, 31, 12) });
+    expect(held(sim, 'idcard')).toEqual([expect.objectContaining({ name: 'Non-Driver Identification Card, Limited Term', status: 'pending', appliedAt: applied, readyAt: comes, expiresAt: Date.UTC(2029, 4, 31, 12) })]);
     expect(sim.execute(APPLY_ID).error).toBe('One is on its way.');
-    // Saved and loaded while SAVE decides: it comes once, on its day.
+    // Saved and loaded while SAVE decides: past its approval it's still in the mail, and it comes once, on its day.
     tended(sim, Date.UTC(2026, 9, 26, 14));
     const back = reload(sim);
-    tended(back, decided - MS_HOUR);
-    expect(held(back, 'idcard')[0]!.status).toBe('pending');
     tended(back, decided + MS_HOUR);
-    expect(held(back, 'idcard')).toEqual([expect.objectContaining({ status: 'valid', issuedAt: decided, expiresAt: Date.UTC(2029, 4, 31, 12) })]);
+    expect(held(back, 'idcard')[0]!.status).toBe('pending');
+    tended(back, comes - MS_HOUR);
+    expect(held(back, 'idcard')[0]!.status).toBe('pending');
+    tended(back, comes + MS_HOUR);
+    expect(held(back, 'idcard')).toEqual([expect.objectContaining({ status: 'valid', issuedAt: comes, expiresAt: Date.UTC(2029, 4, 31, 12) })]);
     expect(titled(back, 'Non-Driver Identification Card, Limited Term Arrived')).toHaveLength(1);
     expect(memos(back, 'Non-Driver Identification Card').map((t) => taken(back, t))).toEqual([28_00]);
     expect(back.execute(APPLY_ID).error).toBe('You hold one in force.');
   });
 
-  it('on Passport And ID, Get Non-Driver Identification Card pressed says “$28.00; good until August 24, 2032”, lists the card, and is then shut with the reason; a Connecticut license holder sees why it is shut', () => {
+  // Renamed on 2026-10-17 (brief 11's KS-ct-idcard, inputs/renames.json): until then 'on Passport And ID, Get Non-Driver
+  // Identification Card pressed says “$28.00; good until August 24, 2032”, lists the card, and is then shut with the
+  // reason; a Connecticut license holder sees why it is shut', when the card was in force at once for six years.
+  it('on Passport And ID, Get Non-Driver Identification Card pressed says “$28.00; the card comes September 22, 2026; good until June 14, 2034”, lists the card Being Decided and then In Force, and is shut with the reason each time; a Connecticut license holder sees why it is shut', () => {
     const sim = life('g15-idcard-ui');
     const first = papers(sim, 'passport');
     expect(first.text).toContain('Your ID Non-Driver Identification Card');
     const get = button(first, 'Get Non-Driver Identification Card');
     expect(get).toMatchObject({ feature: 'documents.apply_idcard', disabled: false });
     const before = checking(sim).balance;
-    expect(press(get)).toEqual(['Non-Driver Identification Card, for $28.00; good until August 24, 2032.']);
+    expect(press(get)).toEqual(['Non-Driver Identification Card, for $28.00; the card comes September 22, 2026; good until June 14, 2034.']);
     expect(before - checking(sim).balance).toBe(28_00);
     const after = papers(sim, 'passport');
-    expect(button(after, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'You hold one in force.' });
-    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} August 24, 2026 August 24, 2032 In Force/);
+    expect(button(after, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'One is on its way.' });
+    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} — June 14, 2034 Being Decided/);
+    tended(sim, COMES + MS_HOUR);
+    const come = papers(sim, 'passport');
+    expect(button(come, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'You hold one in force.' });
+    expect(come.text).toMatch(/Non-Driver Identification Card ID\d{8} September 22, 2026 June 14, 2034 In Force/);
     const ct = papers(life('g15-ct', 'us-ct-newhaven'), 'passport');
     expect(button(ct, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'You hold a license here. It serves as your ID.' });
   });
@@ -456,7 +502,10 @@ describe('documents.apply_opt', () => {
 describe('documents.replace_idcard', () => {
   it('PLAYER JOURNEY: a stolen card replaced for $30 with a new number; Citi turns her away while it’s on its way, 30 days, and takes it once it has come, across a save and a load', () => {
     const sim = life('g15-replace-id');
-    sim.must(APPLY_ID);
+    // Her card comes by mail on Tuesday 22 September (from 2026-10-17: until then it was in force at once, on START).
+    const got = sim.must<{ readyAt: number }>(APPLY_ID).readyAt;
+    tended(sim, got + MS_HOUR);
+    const NOW = got + MS_HOUR;
     const card = held(sim, 'idcard')[0]!;
     sim.must({ kind: 'documents.report_lost', payload: { documentId: card.id, stolen: true } });
     sim.must({ kind: 'documents.police_report', payload: { documentId: card.id } });
@@ -466,10 +515,10 @@ describe('documents.replace_idcard', () => {
     // Connecticut's duplicate non-driver ID, $30, within 30 days (portal.ct.gov).
     expect(before - checking(sim).balance).toBe(30_00);
     expect(memos(sim, 'Non-Driver Identification Card, replaced').map((t) => taken(sim, t))).toEqual([30_00]);
-    expect(r).toEqual({ fee: 30_00, readyAt: START + 30 * MS_DAY });
-    expect(card).toMatchObject({ status: 'cancelled', stolen: true, policeReport: START });
+    expect(r).toEqual({ fee: 30_00, readyAt: NOW + 30 * MS_DAY });
+    expect(card).toMatchObject({ status: 'cancelled', stolen: true, policeReport: NOW });
     const copy = held(sim, 'idcard').find((d) => d.id !== card.id)!;
-    expect(copy).toMatchObject({ status: 'pending', issuer: 'us-ct', readyAt: START + 30 * MS_DAY, expiresAt: card.expiresAt });
+    expect(copy).toMatchObject({ status: 'pending', issuer: 'us-ct', readyAt: NOW + 30 * MS_DAY, expiresAt: card.expiresAt });
     expect(copy.number).not.toBe(card.number);
     expect([copy.stolen, copy.policeReport]).toEqual([undefined, undefined]);
     expect(openAtCiti(sim).error).toBe(CITI_REFUSES);
@@ -477,10 +526,10 @@ describe('documents.replace_idcard', () => {
     expect(sim.execute({ kind: 'documents.replace_idcard', payload: { documentId: card.id } }).error).toBe('It isn’t lost: report it lost first.');
     expect(sim.execute(APPLY_ID).error).toBe('One is on its way.');
     const back = reload(sim);
-    tended(back, START + 30 * MS_DAY - MS_HOUR);
+    tended(back, NOW + 30 * MS_DAY - MS_HOUR);
     expect(openAtCiti(back).error).toBe(CITI_REFUSES);
-    tended(back, START + 30 * MS_DAY + MS_HOUR);
-    expect(held(back, 'idcard').map((d) => [d.status, d.issuedAt])).toEqual([['cancelled', START], ['valid', START + 30 * MS_DAY]]);
+    tended(back, NOW + 30 * MS_DAY + MS_HOUR);
+    expect(held(back, 'idcard').map((d) => [d.status, d.issuedAt])).toEqual([['cancelled', got], ['valid', NOW + 30 * MS_DAY]]);
     expect(titled(back, 'Non-Driver Identification Card Arrived')).toHaveLength(1);
     expect(memos(back, /, replaced$/).map((t) => taken(back, t))).toEqual([30_00]);
     const opened = openAtCiti(back);
@@ -499,7 +548,7 @@ describe('documents.replace_idcard', () => {
 
   it('refuses when the bank can’t cover $30, charging nothing and leaving the card lost', () => {
     const sim = life('g15-replace-broke');
-    sim.must(APPLY_ID);
+    tended(sim, sim.must<{ readyAt: number }>(APPLY_ID).readyAt + MS_HOUR);
     const card = held(sim, 'idcard')[0]!;
     sim.must({ kind: 'documents.report_lost', payload: { documentId: card.id } });
     broke(sim);
@@ -510,18 +559,19 @@ describe('documents.replace_idcard', () => {
 
   it('on Passport And ID, a lost card’s row offers File A Police Report and Replace It, $30; pressed, it says the day it comes, and the row then reads Being Decided', () => {
     const sim = life('g15-replace-ui');
-    sim.must(APPLY_ID);
+    // Come by mail on Tuesday 22 September, to 14 June 2034 (from 2026-10-17: until then in force at once, to 24 August 2032).
+    tended(sim, sim.must<{ readyAt: number }>(APPLY_ID).readyAt + MS_HOUR);
     const card = held(sim, 'idcard')[0]!;
     sim.must({ kind: 'documents.report_lost', payload: { documentId: card.id, stolen: true } });
     const first = papers(sim, 'passport');
-    expect(first.text).toMatch(/Non-Driver Identification Card ID\d{8} August 24, 2026 August 24, 2032 Reported Lost/);
+    expect(first.text).toMatch(/Non-Driver Identification Card ID\d{8} September 22, 2026 June 14, 2034 Reported Lost/);
     expect(button(first, 'File A Police Report')).toMatchObject({ feature: 'documents.police_report', disabled: false, title: 'Online, free, and at once' });
     const replace = button(first, 'Replace It, $30');
     expect(replace).toMatchObject({ feature: 'documents.replace_idcard', disabled: false });
-    expect(press(replace)).toEqual(['Replaced; the card comes September 23, 2026.']);
+    expect(press(replace)).toEqual(['Replaced; the card comes October 22, 2026.']);
     const after = papers(sim, 'passport');
-    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} August 24, 2026 August 24, 2032 Being Decided/);
-    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} August 24, 2026 August 24, 2032 Canceled/);
+    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} September 22, 2026 June 14, 2034 Being Decided/);
+    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} September 22, 2026 June 14, 2034 Canceled/);
     expect(after.buttons.filter((b) => b.feature === 'documents.replace_idcard')).toEqual([]);
     expect(button(after, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'One is on its way.' });
   });

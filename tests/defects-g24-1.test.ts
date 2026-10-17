@@ -59,10 +59,12 @@ describe('PLAYER JOURNEY: Connecticut’s ID card for a graduate on OPT', () => 
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
     expect(card.name).toMatch(/Limited Term/);
     // SAVE’s ten days are federal workdays from 2026-10-13: applied on the evening of Thursday 12 November, they are 13,
-    // 16 to 20, 23 to 25 and 27 November, Thanksgiving passed, and the card comes on the evening of Friday the 27th,
+    // 16 to 20, 23 to 25 and 27 November, Thanksgiving passed, and SAVE approves it on the evening of Friday the 27th,
     // fifteen days on. Until later that day this held seventeen: the days were counted as UTC has them, a day after New
-    // Haven’s in the evening, so Sunday the 29th counted as a Monday (found by that day’s loose ends).
-    expect(card.readyAt! - sim.now).toBe(15 * MS_DAY);
+    // Haven’s in the evening, so Sunday the 29th counted as a Monday (found by that day’s loose ends). Then the DMV mails
+    // the card within twenty business days (from 2026-10-17: until then it came on SAVE's day, and this held fifteen):
+    // 30 November, 1 to 4, 7 to 11, 14 to 18 and 21 to 24 and 28 December, Christmas passed, forty-six days on.
+    expect(card.readyAt! - sim.now).toBe(46 * MS_DAY);
     tended(sim, card.readyAt! + MS_HOUR);
     expect(card.status).toBe('valid');
     expect(inForce(card, sim.now)).toBe(true);

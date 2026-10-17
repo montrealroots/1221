@@ -577,7 +577,12 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
 // ---------------------------------------------------------------------------
 
 describe('journeys.x4: a document running out under a payment', () => {
-  it('DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, is in force at once, and the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out)', () => {
+  // Renamed on 2026-10-17 (brief 11's KS-ct-idcard, inputs/renames.json): until then 'DEFECT: a New Yorker whose one
+  // photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new
+  // bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, is in force at once, and the
+  // bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run
+  // Out)', when a citizen's card was in force at the counter for six years.
+  it('DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, comes by mail on 19 July, the bank refusing her until it does, and then the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out; until 2026-10-17 the card was in force at once)', () => {
     // je-5, Modest: searched (je-1 to je-6) for a New Yorker holding a license and no passport. A New York license is
     // issued on the 18th birthday and renewed each eight years: 14 June 2020 to 14 June 2028.
     let sim = life('je-5', 'modest');
@@ -597,15 +602,22 @@ describe('journeys.x4: a document running out under a payment', () => {
     const before = still(sim);
     expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase.id, amount: 100_00 })).toBe('Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
     expect(still(sim)).toBe(before);
-    // Connecticut's non-driver ID, where she lives: $28.00, six years (Connecticut DMV), in force at once for a citizen.
+    // Connecticut's non-driver ID, where she lives: $28.00, mailed within twenty business days of Tuesday 20 June, the
+    // Fourth not among them, Wednesday 19 July; to her first birthday at least seven years on, 14 June 2036 (Connecticut
+    // DMV and CGS 1-1h; from 2026-10-17: until then six years, in force at once for a citizen).
     const held = chase.balance;
-    expect(ok<{ fee: number; expiresAt: Instant }>(sim, 'documents.apply_idcard')).toMatchObject({ fee: 28_00 });
+    const got = ok<{ fee: number; expiresAt: Instant; readyAt: Instant }>(sim, 'documents.apply_idcard');
+    expect(got).toMatchObject({ fee: 28_00 });
+    expect(dated(got.readyAt)).toBe('July 19, 2028');
     expect(held - chase.balance).toBe(28_00);
-    expect(refused(sim, 'documents.apply_idcard')).toBe('You hold one in force.');
+    expect(refused(sim, 'documents.apply_idcard')).toBe('One is on its way.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase.id, amount: 100_00 })).toBe('Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
     sim = reload(sim);
+    tend(sim, got.readyAt + MS_HOUR);
+    expect(refused(sim, 'documents.apply_idcard')).toBe('You hold one in force.');
     const card = photoIdOf(sim.player, sim.now)!;
     expect(card).toMatchObject({ kind: 'idcard', issuer: 'us-ct' });
-    expect(dated(card.expiresAt!)).toBe('June 20, 2034');
+    expect(dated(card.expiresAt!)).toBe('June 14, 2036');
     expect(drawn(sim, PapersWorkspace, 'passport')).toContain('Non-Driver Identification Card');
     const opened = ok<{ accountId: string; arrivesAt: Instant }>(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: account(sim, 'Chase Total Checking').id, amount: 100_00 });
     expect(sim.universe.accounts[opened.accountId]!.balance).toBe(0);
