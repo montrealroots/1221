@@ -1,0 +1,750 @@
+{
+ "area": "research",
+ "commits": [
+  "ca435c6f",
+  "5b696edf",
+  "caec7df8"
+ ],
+ "rows": [
+  {
+   "id": "KS-ct-idcard",
+   "group": "Known Shortfalls And Missing Tests",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "startStatus": "Blocked Externally (brief 11)",
+   "disposition": "research assumption",
+   "status": "Implemented And Verified",
+   "criterion": "docs/verification/resolution-2026-10-17/research-criteria.md, 'Each Value' § 4 and 'Changed Safely': the term of a non-verified card for somebody not a citizen stays unavailable, so it's SLATE's assumption, one value (NONCITIZEN_ID.toLawfulPresence), labelled SLATE's on Your ID, in the guide and the tutorial, its basis documented; a card already issued or on its way keeps its date, a fee charged stands, and a new card takes the new term; issuance, validity and expiry, charging, a duplicate attempt and a save and a load tested through the commands and the drawn Papers screen. Brief 11's verified figures ($28, seven years to a birthday, mailed in twenty business days, SAVE's ten first) stand.",
+   "exercised": "The focused attempt of 2026-10-17 (docs/research/world/research-ct-idcard.json, its brief12): the statutes' chapters 1 and 246 searched again for lawful presence, limited duration and limited term (none); § 1-1h as 2025's SB 1150 reprints it (seven years after the next birthday, no exception); 2005's Substitute SB 189, which would have limited a non-citizen's card to lawful presence, read with its bill history (failed in committee, 25 April 2005); the DMV's get, renew and license pages; § 14-137-64a; eRegulations' § 1-1h pages (still 404). Then played on Papers (renderToStaticMarkup, Gated buttons pressed) and through documents.apply_idcard, documents.report_lost and documents.idcard_arrives: a British student's card applied for, the value turned while it's in the mail, the card come across a save and a load keeping 31 May 2029, a second refused, the next card after a loss taking seven years to her birthday; a student who keeps up played to the card's last day, 31 May 2029, and past it.",
+   "verifiedFacts": [
+    "CT-1",
+    "CT-2",
+    "CT-3",
+    "CT-4"
+   ],
+   "assumptions": [
+    "A3"
+   ],
+   "evidence": [
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard, its term > PLAYER JOURNEY: Your ID on Papers tells a British student that her card’s term, to the end of her lawful presence, is SLATE’s assumption, not the state’s published policy, and that a card already issued keeps its date if that’s corrected; a New York-born citizen is told nothing of it",
+     "kind": "player journey",
+     "proves": "Your ID on Papers says the non-citizen's term is SLATE's assumption, not the state's published policy, and that a card already issued keeps its date if corrected; a citizen sees none of it"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard, its term > PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so",
+     "kind": "player journey",
+     "proves": "the value turned while the card is in the mail (TEST SETUP): it comes on its day keeping 31 May 2029 across a save and a load, the transactions JSON identical, its notice once, 'You hold one in force.'; reported lost, the next card is 'Non-Driver Identification Card' (not Limited Term), non-verified, to 14 June 2034, after SAVE to 17 November and the mail to 16 December, $28 again; Your ID's sentence follows the value"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard, its term > PLAYER JOURNEY: a British student who keeps up holds her card to its last day, the program’s end on 31 May 2029, and then it has run out: her row says so, the passport her photo ID, and with school over and no OPT the DMV turns her away for a new one with its reason; SLATE renews no state ID card, so a card run out is applied for anew",
+     "kind": "player journey",
+     "proves": "played with the work done and the student tended to 31 May 2029: in force an hour before, out of force an hour after, 'Run Out' on its row, the passport the photo ID, and 'On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.' on the drawn button and by the command; $28 charged once"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard > FIXTURE: Connecticut’s card is the DMV’s: $28, seven years to a birthday, mailed within twenty business days, SAVE’s ten first for somebody not a citizen (CGS 1-1h(b)(2); portal.ct.gov, read 2026-10-16)",
+     "kind": "fixture",
+     "proves": "brief 11's verified figures, unchanged"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard > GUARD: the card runs to the first birthday at least seven years on, by New Haven’s calendar: asked for the day before her birthday, seven years and a day; on it, seven years to the day; the day after, to the birthday eight years on",
+     "kind": "guard",
+     "proves": "the published term the value's off position gives"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.idcard > PLAYER JOURNEY: her number come and her passport reported lost, Get Non-Driver Identification Card is shut with the DMV’s reason and the command refused, nothing taken; her passport renewed from abroad, the card is asked for, comes by mail twenty business days after SAVE’s ten federal workdays, and is Not For Federal Identification, across a reload; until 2026-10-16 it was issued with no identity document, marked REAL ID, and until 2026-10-17 it came on SAVE’s tenth day",
+     "kind": "player journey",
+     "proves": "brief 11's: the non-citizen's card with the default term to the program's end, May 31, 2029"
+    },
+    {
+     "file": "tests/evidence-g15-papers.test.ts",
+     "title": "documents.apply_idcard > refuses a second card while one is on its way and once it has come, in its words, charges once, and holds it across a save and a load",
+     "kind": "player journey",
+     "proves": "brief 11's duplicate refusal, re-run green"
+    },
+    {
+     "file": "tests/defects-g24-1.test.ts",
+     "title": "PLAYER JOURNEY: Connecticut’s ID card for a graduate on OPT > is issued on OPT in force, and runs to OPT’s end, not the program’s",
+     "kind": "player journey",
+     "proves": "the default term on OPT, re-run green"
+    }
+   ],
+   "fixes": [],
+   "changes": [
+    {
+     "summary": "The term for somebody not a citizen became one value, NONCITIZEN_ID.toLawfulPresence (true), read when the card is applied for and written on it. Off, only the term changes: the card takes the seven years to a birthday, keeps SAVE's wait and the mail, and stays non-verified; it isn't named Limited Term.",
+     "where": "src/engine/systems/identity.ts NONCITIZEN_ID, documents.apply_idcard",
+     "failingTest": "tests/remaining-papers.test.ts 'tax.s8.idcard, its term > PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so' (failed on the code before: the value had no effect and Your ID said nothing)"
+    },
+    {
+     "summary": "Your ID on Papers says, to somebody not a US citizen at a US state's counter, that the card's term is SLATE's assumption and that a card already issued keeps its date if that's corrected; nothing to a citizen.",
+     "where": "src/engine/systems/identity.ts noncitizenTermNote; src/ui/papers/Documents.tsx IdPanel",
+     "failingTest": "tests/remaining-papers.test.ts 'tax.s8.idcard, its term > PLAYER JOURNEY: Your ID on Papers tells a British student that her card’s term, to the end of her lawful presence, is SLATE’s assumption, not the state’s published policy, and that a card already issued keeps its date if that’s corrected; a New York-born citizen is told nothing of it' (failed on the code before)"
+    },
+    {
+     "summary": "The guide's Connecticut line ('SLATE’s reading where the state publishes none' until 2026-10-17) and the tutorial's ID sentence say it's SLATE's assumption and what a correction does; docs/WORLD.md says so with the failed 2005 bill.",
+     "where": "src/engine/content/guide/documents.ts, src/engine/content/tutorial.ts, docs/WORLD.md",
+     "failingTest": "none: prose; tests/guide.test.ts, tests/tutorial.test.ts and tests/guide-examples-papers.test.ts ran green on it"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "C1: the value ignored, the card always to the end of lawful presence",
+     "caughtBy": "tests/remaining-papers.test.ts 'tax.s8.idcard, its term > PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so' (the next card's 14 June 2034)"
+    },
+    {
+     "what": "C2: the term read again when the card arrives (idcard_arrives recomputing expiresAt from the value)",
+     "caughtBy": "tests/remaining-papers.test.ts 'tax.s8.idcard, its term > PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so' (the card on its way kept 31 May 2029)"
+    },
+    {
+     "what": "C3: the value off also dropping SAVE's wait",
+     "caughtBy": "tests/remaining-papers.test.ts 'tax.s8.idcard, its term > PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so' (readyAt 16 December)"
+    },
+    {
+     "what": "C4: the value off marking the card REAL ID",
+     "caughtBy": "tests/remaining-papers.test.ts 'tax.s8.idcard, its term > PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so' (realId false)"
+    },
+    {
+     "what": "C5: Your ID's sentence gone",
+     "caughtBy": "tests/remaining-papers.test.ts 'tax.s8.idcard, its term > PLAYER JOURNEY: Your ID on Papers tells a British student that her card’s term, to the end of her lawful presence, is SLATE’s assumption, not the state’s published policy, and that a card already issued keeps its date if that’s corrected; a New York-born citizen is told nothing of it' and 'tax.s8.idcard, its term > PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so'"
+    },
+    {
+     "what": "C6: Your ID's sentence shown to a citizen too",
+     "caughtBy": "tests/remaining-papers.test.ts 'tax.s8.idcard, its term > PLAYER JOURNEY: Your ID on Papers tells a British student that her card’s term, to the end of her lawful presence, is SLATE’s assumption, not the state’s published policy, and that a card already issued keeps its date if that’s corrected; a New York-born citizen is told nothing of it'"
+    },
+    {
+     "what": "C7: Your ID's sentence not following the value",
+     "caughtBy": "tests/remaining-papers.test.ts 'tax.s8.idcard, its term > PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so'"
+    }
+   ],
+   "readingsCarried": "Brief 11's two readings of the DMV's words stand, unchanged and outside the value the owner named: a non-citizen's twenty days counted from the return after SAVE, and the business days skipping federal holidays (research-ct-idcard.json, notSettled).",
+   "remaining": "The term itself: the DMV's answer in writing (its Contact Center, 860-263-5700) or a published policy would settle it. Contacting it is the owner's to authorize; nothing was sent."
+  },
+  {
+   "id": "KS-passport-fees",
+   "group": "Known Shortfalls And Missing Tests",
+   "baselineStatus": "Implemented, Verification Incomplete",
+   "startStatus": "Blocked Externally (brief 11)",
+   "disposition": "research assumption",
+   "status": "Implemented And Verified",
+   "criterion": "docs/verification/resolution-2026-10-17/research-criteria.md, 'Each Value' §§ 1 to 3 and 'Changed Safely': Japan's fee from the US verified and charged (US$62); New Zealand's GST and urgent fee from abroad SLATE's assumptions, each one value (NZ_FROM_ABROAD.gstCharged, NZ_FROM_ABROAD.urgentBeforeGst), labelled SLATE's on the Papers fine print, in the guide and the tutorial, their basis documented; a fee charged stands and a passport on its way comes as applied for, the new value applying to what's applied for after; issuance, charging, renewal, a duplicate attempt and a save and a load tested through documents.apply_passport and the drawn screen.",
+   "exercised": "The focused attempt of 2026-10-17 (docs/research/world/research-passports-abroad.json, its brief12). Japan: every *.us.emb-japan.go.jp (New York, Washington, Seattle, Nashville) and mofa.go.jp page 403; the fee read instead in its own law on e-Gov (laws.e-gov.go.jp): the Passport Act art. 20-2, its Enforcement Order art. 5 (fee set per country of the consular post, in its currency), and MOFA Ordinance 4 of 2006 as amended by MOFA Ordinance 19 of 2026, whose United States row is US$62 on paper and US$60 online from 1 July 2026. New Zealand: passports.govt.nz behind Cloudflare, legislation.govt.nz and its demo host behind an AWS WAF challenge, web.archive.org cut by the proxy's tunnel; read instead DIA's 2022 and 2024-review Cabinet papers (proactive releases on dia.govt.nz), DIA's 2025 release, govt.nz and IRD. Played on Papers and through the command: a Tokyo-born student's renewal at US$62, an Auckland-born student's faster renewal at NZ$494, and the GST value turned after an application, the pending passport issued with its charge untouched and the next charged NZ$214.78 and NZ$429.56 faster.",
+   "verifiedFacts": [
+    "JP-1",
+    "JP-2",
+    "JP-3",
+    "NZ-1",
+    "NZ-2",
+    "NZ-3",
+    "NZ-4"
+   ],
+   "assumptions": [
+    "A1",
+    "A2"
+   ],
+   "evidence": [
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > FIXTURE: the offices’ terms from abroad: Iceland’s 19,000 ISK and express 39,200 ISK in all, Brazil’s US$60, Latvia’s €140 (€115 under 20) in about eight weeks with no urgent service, read on 2026-10-17; Japan’s US$62 from 1 July 2026, its ordinance read on e-Gov later that day; New Zealand’s GST and urgent fee SLATE’s assumptions, one value each, said so",
+     "kind": "fixture",
+     "proves": "PASSPORTS_ABROAD.JP is 62 USD with no assumption; NZ_FROM_ABROAD is {214.78, 214.78, 0.15, true}; New Zealand's terms NZ$247 and NZ$247 more; its two assumption lines begin 'SLATE’s assumption'; IS, BR, LV and JP carry none"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a Tokyo-born student renews her Japanese passport on Papers from New Haven: US$62, the fee MOFA’s ordinance sets for the United States from 1 July 2026; no faster service, the command refused; a second application refused while hers is decided; charged once and issued on its day across a reload, the old one canceled then; until later on 2026-10-17 the window fee in Japan, 9,300 yen, at SLATE’s rate, the same $62.00 said to be SLATE’s",
+     "kind": "player journey",
+     "proves": "'A New One $62.00 About 30 days; good for 10 years; from abroad' and the ordinance's basis drawn, no 'yen fee'; Faster Not Offered and the expedited command refused with nothing taken; $62.00 charged once under '一般旅券 (Japanese passport)'; 'An application is in already.'; issued 30 days on across a reload, the old one canceled, its notice once"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: an Auckland-born student renews her New Zealand passport faster on Papers from New Haven: NZ$247 and NZ$247 more, in dollars, GST charged and the urgent fee taken as the standard one, each said on the screen to be SLATE’s assumption; charged once, a second application refused, issued in five days across a reload",
+     "kind": "player journey",
+     "proves": "NZ$247 and NZ$494 in dollars drawn, the basis 'NZ$214.78 before GST, NZ$247.00 with it' and both assumption lines in Not Confirmed; Renew It Faster charged NZ$494 once; 'An application is in already.'; issued five days on across a reload"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: New Zealand’s GST turned off after she has applied (TEST SETUP: `NZ_FROM_ABROAD.gstCharged`, as a correction would change it): her application, charged NZ$247 with GST, is issued on its day across a save and a load with nothing charged or refunded and its transaction as it was; reported lost, the next is NZ$214.78, faster NZ$429.56, the screen saying no GST is charged, and the faster one is charged that",
+     "kind": "player journey",
+     "proves": "GST turned off after the application (TEST SETUP): the reloaded ledger's transactions JSON identical, the passport issued 28 days on with its NZ$247 charge as it was and nothing added; reported lost, the screen draws NZ$214.78 and NZ$429.56 and 'no GST is charged', and Apply Faster charges NZ$429.56"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a London-born student renews her British passport on Papers from New Haven: £116.50, the overseas fee, in dollars; no Renew It Faster, the Fast Track not sold abroad, and the command refused; issued in 21 days, the old one canceled on the new one’s day, once across a reload; until 2026-10-16 £102 and Fast Track offered",
+     "kind": "player journey",
+     "proves": "the other offices' fees from abroad, re-run green"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a São Paulo-born student renews her Brazilian passport on Papers from New Haven: US$60, the consular fee of sixty reais-ouro from 1 June 2026; no faster service, the command refused; issued on its day, the old one canceled then, once across a reload; until 2026-10-17 the Polícia Federal’s R$257.25 at home",
+     "kind": "player journey",
+     "proves": "brief 11's, re-run green"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a Reykjavík-born student renews her Icelandic passport faster on Papers from New Haven: express at the embassy, 39,200 ISK in all in dollars, charged once and issued in two days, the old one canceled then, across a reload; Renew It at 19,000 ISK; until 2026-10-17 no faster service was offered from abroad",
+     "kind": "player journey",
+     "proves": "brief 11's, re-run green"
+    },
+    {
+     "file": "tests/remaining-papers.test.ts",
+     "title": "tax.s8.passport > PLAYER JOURNEY: a Riga-born student renews her Latvian passport on Papers from New Haven: €140 at the embassy in Washington, in dollars, in up to 56 days; no urgent service there, the command refused; issued on its day across a reload; until 2026-10-17 the embassy in Ireland’s five weeks and its €165 urgent service",
+     "kind": "player journey",
+     "proves": "brief 11's, re-run green"
+    }
+   ],
+   "fixes": [],
+   "changes": [
+    {
+     "summary": "Japan from the United States: US$62, the ordinance's figure for the country, its source in the comment and the screen's basis, its assumption gone. SLATE's rate already put 9,300 yen at $62.00, so no charge in dollars moved: what changed is that the figure is the issuer's, and the fine print stopped calling it SLATE's.",
+     "where": "src/engine/content/passportsabroad.ts JP",
+     "failingTest": "tests/remaining-papers.test.ts 'tax.s8.passport > PLAYER JOURNEY: a Tokyo-born student renews her Japanese passport on Papers from New Haven: US$62, the fee MOFA’s ordinance sets for the United States from 1 July 2026; no faster service, the command refused; a second application refused while hers is decided; charged once and issued on its day across a reload, the old one canceled then; until later on 2026-10-17 the window fee in Japan, 9,300 yen, at SLATE’s rate, the same $62.00 said to be SLATE’s' and the FIXTURE (each failed on the code before)"
+    },
+    {
+     "summary": "New Zealand's terms read when asked for from NZ_FROM_ABROAD: the fee before GST (NZ$214.78), GST charged (SLATE's assumption), the urgent fee the standard one (SLATE's assumption), the screen's two assumption lines following the values. The defaults charge what SLATE charged from 2026-10-16, NZ$247 and NZ$247 more.",
+     "where": "src/engine/content/passportsabroad.ts NZ_FROM_ABROAD, nzTerms, PASSPORTS_ABROAD.NZ (a getter)",
+     "failingTest": "tests/remaining-papers.test.ts 'tax.s8.passport > PLAYER JOURNEY: New Zealand’s GST turned off after she has applied (TEST SETUP: `NZ_FROM_ABROAD.gstCharged`, as a correction would change it): her application, charged NZ$247 with GST, is issued on its day across a save and a load with nothing charged or refunded and its transaction as it was; reported lost, the next is NZ$214.78, faster NZ$429.56, the screen saying no GST is charged, and the faster one is charged that' and 'tax.s8.passport > PLAYER JOURNEY: an Auckland-born student renews her New Zealand passport faster on Papers from New Haven: NZ$247 and NZ$247 more, in dollars, GST charged and the urgent fee taken as the standard one, each said on the screen to be SLATE’s assumption; charged once, a second application refused, issued in five days across a reload' (each failed on the code before)"
+    },
+    {
+     "summary": "The guide's line on another country's passport names Japan's $62 and says where a fee from abroad is SLATE's assumption and that a fee paid stands if it's corrected; the tutorial says the fine print marks it; docs/WORLD.md records both.",
+     "where": "src/engine/content/guide/documents.ts, src/engine/content/tutorial.ts, docs/WORLD.md",
+     "failingTest": "none: prose; tests/guide.test.ts, tests/tutorial.test.ts ran green on it"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "J1: Japan's fee back to 9,300 JPY at SLATE's rate, the new basis kept",
+     "caughtBy": "tests/remaining-papers.test.ts FIXTURE only: SLATE's rate makes 9,300 yen $62.00, so no played charge can tell them apart, and the FIXTURE holds the figure's currency. Not a redundant guard: the two are the same in dollars by the rate table"
+    },
+    {
+     "what": "J2: Japan's fee at the online US$60",
+     "caughtBy": "tests/remaining-papers.test.ts FIXTURE and 'tax.s8.passport > PLAYER JOURNEY: a Tokyo-born student renews her Japanese passport on Papers from New Haven: US$62, the fee MOFA’s ordinance sets for the United States from 1 July 2026; no faster service, the command refused; a second application refused while hers is decided; charged once and issued on its day across a reload, the old one canceled then; until later on 2026-10-17 the window fee in Japan, 9,300 yen, at SLATE’s rate, the same $62.00 said to be SLATE’s'"
+    },
+    {
+     "what": "J3: Japan's old assumption line back",
+     "caughtBy": "tests/remaining-papers.test.ts FIXTURE and 'tax.s8.passport > PLAYER JOURNEY: a Tokyo-born student renews her Japanese passport on Papers from New Haven: US$62, the fee MOFA’s ordinance sets for the United States from 1 July 2026; no faster service, the command refused; a second application refused while hers is decided; charged once and issued on its day across a reload, the old one canceled then; until later on 2026-10-17 the window fee in Japan, 9,300 yen, at SLATE’s rate, the same $62.00 said to be SLATE’s'"
+    },
+    {
+     "what": "N1: New Zealand's GST off by default",
+     "caughtBy": "tests/remaining-papers.test.ts FIXTURE, 'tax.s8.passport > PLAYER JOURNEY: an Auckland-born student renews her New Zealand passport faster on Papers from New Haven: NZ$247 and NZ$247 more, in dollars, GST charged and the urgent fee taken as the standard one, each said on the screen to be SLATE’s assumption; charged once, a second application refused, issued in five days across a reload' and 'tax.s8.passport > PLAYER JOURNEY: New Zealand’s GST turned off after she has applied (TEST SETUP: `NZ_FROM_ABROAD.gstCharged`, as a correction would change it): her application, charged NZ$247 with GST, is issued on its day across a save and a load with nothing charged or refunded and its transaction as it was; reported lost, the next is NZ$214.78, faster NZ$429.56, the screen saying no GST is charged, and the faster one is charged that'"
+    },
+    {
+     "what": "N2: New Zealand's terms read once and kept, the value not read at the command",
+     "caughtBy": "tests/remaining-papers.test.ts 'tax.s8.passport > PLAYER JOURNEY: New Zealand’s GST turned off after she has applied (TEST SETUP: `NZ_FROM_ABROAD.gstCharged`, as a correction would change it): her application, charged NZ$247 with GST, is issued on its day across a save and a load with nothing charged or refunded and its transaction as it was; reported lost, the next is NZ$214.78, faster NZ$429.56, the screen saying no GST is charged, and the faster one is charged that'"
+    },
+    {
+     "what": "N3: the urgent fee always with GST, not following the value",
+     "caughtBy": "tests/remaining-papers.test.ts 'tax.s8.passport > PLAYER JOURNEY: New Zealand’s GST turned off after she has applied (TEST SETUP: `NZ_FROM_ABROAD.gstCharged`, as a correction would change it): her application, charged NZ$247 with GST, is issued on its day across a save and a load with nothing charged or refunded and its transaction as it was; reported lost, the next is NZ$214.78, faster NZ$429.56, the screen saying no GST is charged, and the faster one is charged that'"
+    },
+    {
+     "what": "N4: the GST line not said to be SLATE's assumption",
+     "caughtBy": "tests/remaining-papers.test.ts FIXTURE and 'tax.s8.passport > PLAYER JOURNEY: an Auckland-born student renews her New Zealand passport faster on Papers from New Haven: NZ$247 and NZ$247 more, in dollars, GST charged and the urgent fee taken as the standard one, each said on the screen to be SLATE’s assumption; charged once, a second application refused, issued in five days across a reload'"
+    },
+    {
+     "what": "N5: the fee charged when the passport is issued, at the value then, not when applied for",
+     "caughtBy": "8 tests in tests/remaining-papers.test.ts: every passport journey in tax.s8.passport, 'tax.s8.passport > PLAYER JOURNEY: New Zealand’s GST turned off after she has applied (TEST SETUP: `NZ_FROM_ABROAD.gstCharged`, as a correction would change it): her application, charged NZ$247 with GST, is issued on its day across a save and a load with nothing charged or refunded and its transaction as it was; reported lost, the next is NZ$214.78, faster NZ$429.56, the screen saying no GST is charged, and the faster one is charged that' among them"
+    }
+   ],
+   "readingsCarried": "Outside the row's fees and left as labelled by brief 11: the offices' turnaround estimates (Japan's 30 days and New Zealand's five urgent among them), New Zealand's courier not charged, and SLATE's student taken to apply to Japan on paper at the consulate (US$60 online named beside it).",
+   "remaining": "New Zealand's two values: DIA's costs page and the 2025 regulations, both behind bot challenges, would settle the urgent fee; the GST turns on the student's own tax residence, which no source can publish for SLATE's student. Asking DIA is the owner's to authorize; nothing was sent."
+  }
+ ],
+ "verifiedFacts": [
+  {
+   "id": "JP-1",
+   "jurisdiction": "Japan (Ministry of Foreign Affairs)",
+   "service": "a ten-year general passport (一般旅券) applied for on paper at a Japanese embassy or consulate in the United States; US$60 applied for online",
+   "currency": "USD",
+   "amount": 62,
+   "effective": "applications from 2026-07-01; earlier applications keep the fees then in force",
+   "retrieved": "2026-10-17",
+   "source": "国外における旅券手数料の額を定める省令 (MOFA Ordinance 4 of 2006), as amended by MOFA Ordinance 19 of 2026, promulgated 2026-06-24: its table's row アメリカ合衆国, ドル, 62 / 123 / 60 / 120 / 32 / 62 / 30 / 60",
+   "url": "https://laws.e-gov.go.jp/api/2/law_data/418M60000020004?response_format=xml",
+   "in": "PASSPORTS_ABROAD.JP"
+  },
+  {
+   "id": "JP-2",
+   "jurisdiction": "Japan",
+   "service": "how a fee abroad is set: for each country where the consular officer is posted, in its currency, by MOFA ordinance, within 9,200 to 9,400 yen at the Finance Minister's rate for a ten-year passport on paper",
+   "currency": "the country's (USD in the United States)",
+   "effective": "2026-07-01",
+   "retrieved": "2026-10-17",
+   "source": "旅券法施行令 (Cabinet Order 122 of 1989) art. 5, as amended by Cabinet Order 177 of 2026; 旅券法 art. 20-2",
+   "url": "https://laws.e-gov.go.jp/api/2/law_data/401CO0000000122?response_format=xml",
+   "in": "the reason Connecticut's consulate charges the country's fee"
+  },
+  {
+   "id": "JP-3",
+   "jurisdiction": "Japan",
+   "service": "the ten-year passport in Japan: 9,300 yen at the window, 8,900 online (16,300 and 15,900 until 2026-06-30)",
+   "currency": "JPY",
+   "amount": 9300,
+   "effective": "applications from 2026-07-01",
+   "retrieved": "2026-10-17",
+   "source": "政府広報オンライン (Cabinet Office), dated 2026-05-28",
+   "url": "https://www.gov-online.go.jp/article/202301/entry-7458.html",
+   "in": "content/passports.ts JP (unchanged)"
+  },
+  {
+   "id": "NZ-1",
+   "jurisdiction": "New Zealand (Department of Internal Affairs)",
+   "service": "a standard adult passport",
+   "currency": "NZD",
+   "amount": 247,
+   "note": "with GST; NZ$214.78 before it at 15%",
+   "effective": "2025-05-02",
+   "retrieved": "2026-10-17",
+   "source": "DIA media release of 1 May 2025; govt.nz, Get or renew a New Zealand passport (last updated 2025-11-26)",
+   "url": "https://www.dia.govt.nz/press.nsf/d77da9b523f12931cc256ac5000d19b6/81b8eaa9c51a898acc258c7d0003b229!OpenDocument",
+   "in": "NZ_FROM_ABROAD.feeBeforeGst"
+  },
+  {
+   "id": "NZ-2",
+   "jurisdiction": "New Zealand (DIA)",
+   "service": "the fee schedule's shape: fees set in the Regulations before GST; 'online applications from outside New Zealand do not attract GST'; the priority fee for an application 'New Zealand or on line' equal to the standard fee each year",
+   "currency": "NZD",
+   "effective": "the 2022 fee review's schedule, from 2022-05-25 (2022 to 2024 figures)",
+   "retrieved": "2026-10-17",
+   "source": "DIA, proactive release of the 2022 Passport and Travel Document Fee Review's Cabinet papers, Appendix C (PDF pages 28 and 29) and para. 34 (page 20)",
+   "url": "https://www.dia.govt.nz/diawebsite.nsf/Files/Proactive-releases/$file/Cabinet-papers-related-to-the-2022-Passport-and-Travel-Document-Fee-Review.pdf",
+   "in": "the basis of A1 and A2"
+  },
+  {
+   "id": "NZ-3",
+   "jurisdiction": "New Zealand (Cabinet, DIA)",
+   "service": "the 2025 increase, about 14.9%, to passport and travel document fees alike (CAB-25-MIN-0055, 10 March 2025); urgent passports aimed at 3 working days",
+   "currency": "NZD",
+   "effective": "2025-05-02",
+   "retrieved": "2026-10-17",
+   "source": "DIA, proactive release of the 2024 Passport Cost Recovery Fee Review (PDF pages 17, 19 and 10)",
+   "url": "https://www.dia.govt.nz/diawebsite.nsf/Files/Proactive-Releases-2024-25/$file/For-Proactive-release-of-Cabinet-Paper-and-associated-material-relating-to-the-2024-Passport-Cost-Recovery-Fee-Review.pdf",
+   "in": "the basis of A2"
+  },
+  {
+   "id": "NZ-4",
+   "jurisdiction": "New Zealand (Inland Revenue)",
+   "service": "the test for a non-resident taxpayer: no permanent place of abode in New Zealand and away more than 325 days in any 12-month period, backdated to the first of them",
+   "currency": "none",
+   "effective": "the page last updated 2026-06-25",
+   "retrieved": "2026-10-17",
+   "source": "IRD, Tax residency status for individuals",
+   "url": "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+   "in": "the basis of A1"
+  },
+  {
+   "id": "CT-1",
+   "jurisdiction": "Connecticut (General Assembly)",
+   "service": "an original identity card expires within seven years following the applicant's next birthday, with no term for somebody not a citizen",
+   "currency": "USD",
+   "amount": 28,
+   "effective": "the statute in force (P.A. 19-165, from 2020-01-01, per brief 11)",
+   "retrieved": "2026-10-17",
+   "source": "CGS § 1-1h(b)(2)(A), as SB 1150 (2025, File No. 252) reprints it; chapters 1 and 246 searched",
+   "url": "https://www.cga.ct.gov/2025/FC/PDF/2025SB-01150-R000252-FC.PDF",
+   "in": "ID_CARDS['us-ct'] (brief 11, unchanged)"
+  },
+  {
+   "id": "CT-2",
+   "jurisdiction": "Connecticut (General Assembly)",
+   "service": "Substitute SB 189 of 2005, which would have limited a non-citizen's identity card 'to a term limited to coincide with the period of such person's lawful presence', failed in committee",
+   "currency": "none",
+   "effective": "4/25/2005 (GAE) Motion Failed",
+   "retrieved": "2026-10-17",
+   "source": "the bill's file copy and its status page",
+   "url": "https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB00189&which_year=2005",
+   "in": "the record that A3 isn't the state's law"
+  },
+  {
+   "id": "CT-3",
+   "jurisdiction": "Connecticut (DMV)",
+   "service": "the non-driver ID 'valid for 7 years', $28, with no exception; a non-citizen renews in person",
+   "currency": "USD",
+   "amount": 28,
+   "effective": "the pages as read",
+   "retrieved": "2026-10-17",
+   "source": "Get a non-driver ID; Renew your non-driver ID",
+   "url": "https://portal.ct.gov/dmv/licenses-permits-ids/renew-non-driver-id",
+   "in": "A3's off position"
+  },
+  {
+   "id": "CT-4",
+   "jurisdiction": "Connecticut (DMV regulations)",
+   "service": "the commissioner may revoke a non-citizen's card once they're 'no longer entitled to be present', with no term",
+   "currency": "none",
+   "effective": "§ 14-137-64a as amended 2008",
+   "retrieved": "2026-10-17",
+   "source": "Regs. Conn. State Agencies § 14-137-64a(c), in the DMV's compilation",
+   "url": "https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf",
+   "in": "A3's basis"
+  }
+ ],
+ "assumptions": [
+  {
+   "id": "A1",
+   "label": "SLATE's assumption, not DIA's published policy",
+   "value": "New Zealand charges GST on an online application from New Haven",
+   "constant": "NZ_FROM_ABROAD.gstCharged",
+   "where": "src/engine/content/passportsabroad.ts",
+   "default": true,
+   "basis": "The price DIA publishes is NZ$247 with GST (NZ-1). DIA's current costs page (blocked; search extracts) spares a non-resident for New Zealand tax applying online, and IRD makes that turn on a permanent place of abode in New Zealand (NZ-4), which SLATE doesn't keep for its student; DIA's 2022 papers said online applications from outside New Zealand don't attract GST (NZ-2), a wording its current page narrows. SLATE charged it from 2026-10-16. Off, every New Zealander applying from New Haven pays NZ$214.78.",
+   "unavailableOrBlocked": "unavailable for SLATE's student (the applicant's own facts); the page stating the current condition blocked",
+   "shown": "Papers' passport fine print, Not Confirmed; the guide's Another Country's Passport line; the tutorial"
+  },
+  {
+   "id": "A2",
+   "label": "SLATE's assumption",
+   "value": "New Zealand's urgent fee for an online application from overseas is the standard fee, NZ$214.78 before GST (NZ$247 with it)",
+   "constant": "NZ_FROM_ABROAD.urgentBeforeGst",
+   "where": "src/engine/content/passportsabroad.ts",
+   "default": 214.78,
+   "basis": "DIA's 2022 schedule set the priority fee for New Zealand or online equal to the standard fee (NZ-2); Cabinet's 2025 increase applied to every passport fee alike (NZ-3); the 2025 regulations themselves (SL 2025/75) were behind an AWS WAF challenge, their figure seen only in a search extract (NZ$214.78). GST on it follows A1.",
+   "unavailableOrBlocked": "blocked",
+   "shown": "Papers' passport fine print, Not Confirmed; the guide; the urgent price drawn on Faster"
+  },
+  {
+   "id": "A3",
+   "label": "SLATE's assumption, not the state's published policy",
+   "value": "a Connecticut ID card issued to somebody not a citizen runs to the end of their lawful presence (the program's end at school, OPT's end on OPT), never past the seven years to a birthday",
+   "constant": "NONCITIZEN_ID.toLawfulPresence",
+   "where": "src/engine/systems/identity.ts",
+   "default": true,
+   "basis": "No statute, regulation or DMV page gives a term for the card the DMV doesn't verify (CT-1, CT-3, CT-4), and the 2005 bill that would have set this one failed (CT-2), so it isn't the law; the DMV's own limited-term REAL ID 'must align with the expiration date on the individual's legal status document(s)' (read 2026-10-16, brief 11); § 14-137-64a(c) lets the commissioner revoke the card once its holder is no longer entitled to be present; SLATE has run it so from 2026-10-10. Off, the card takes the published seven years to a birthday, still after SAVE and the mail, still non-verified.",
+   "unavailableOrBlocked": "unavailable",
+   "shown": "Your ID on Papers; the guide's Connecticut's ID Card line; the tutorial"
+  }
+ ],
+ "whenARuleChanges": "A value is read when an application is made and what it sets is stored then: a card's expiry on the card, a fee in the ledger. Changed later, a card already issued or on its way keeps its date, a fee charged stands, a passport on its way comes as applied for, and the new value applies to what's applied for after; nothing recomputes on arrival, replacement or load. Correcting documents already held would take a dated migration in ONCE_ON_OPENING (src/engine/index.ts), which this pass doesn't make because no value was found wrong. Each is held by a test that turns the value (TEST SETUP) mid-play.",
+ "pagesTried": {
+  "read": [
+   "https://laws.e-gov.go.jp/api/2/law_data/418M60000020004?response_format=xml (MOFA Ordinance 4 of 2006, in force 2026-07-01)",
+   "https://laws.e-gov.go.jp/api/2/law_data/401CO0000000122?response_format=xml (旅券法施行令)",
+   "https://laws.e-gov.go.jp/api/1/lawdata/326AC0000000267 (旅券法)",
+   "https://laws.e-gov.go.jp/api/2/law_data/504M60000020010?response_format=xml (旅券法施行規則: no per-country fees, which led to the ordinance)",
+   "https://laws.e-gov.go.jp/api/2/laws?law_title=手数料&law_type=MinisterialOrdinance (the search that named the ordinance)",
+   "https://www.gov-online.go.jp/article/202301/entry-7458.html",
+   "https://public-comment.e-gov.go.jp/pcm/download?seqNo=0000316541 (MOFA's March 2026 outline of the consular fee order: visa fees, not passports)",
+   "https://www.dia.govt.nz/diawebsite.nsf/Files/Proactive-releases/$file/Cabinet-papers-related-to-the-2022-Passport-and-Travel-Document-Fee-Review.pdf",
+   "https://www.dia.govt.nz/diawebsite.nsf/Files/Proactive-Releases-2024-25/$file/For-Proactive-release-of-Cabinet-Paper-and-associated-material-relating-to-the-2024-Passport-Cost-Recovery-Fee-Review.pdf",
+   "https://www.dia.govt.nz/diawebsite.nsf/Files/Regulatory-Impact-2022/$file/Regulatory-Impact-Statement-2022-Passport-Fee-Review.pdf",
+   "https://www.dia.govt.nz/diawebsite.nsf/Files/Proactive-Release-Passports-Fees/$file/CAB-Proposed-changes-to-passport-and-travel-document-fees.pdf",
+   "https://www.dia.govt.nz/diawebsite.nsf/Files/Proactive-Release-Passports-Fees/$file/CAB-Passport-(Fees)-Amendment-Regulations-2019.pdf",
+   "https://www.dia.govt.nz/press.nsf/d77da9b523f12931cc256ac5000d19b6/81b8eaa9c51a898acc258c7d0003b229!OpenDocument",
+   "https://www.dia.govt.nz/Proactive-Releases",
+   "https://www.govt.nz/browse/passports-citizenship-and-identity/get-or-renew-a-new-zealand-passport/get-or-renew-a-new-zealand-passport/",
+   "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+   "https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?selBillType=Bill&bill_num=SB00189&which_year=2005",
+   "https://cga.ct.gov/2005/fc/2005SB-00189-R000189-FC.htm",
+   "https://www.cga.ct.gov/2025/FC/PDF/2025SB-01150-R000252-FC.PDF",
+   "https://cga.ct.gov/2025/lcoamd/pdf/2025LCO10336-R00-AMD.pdf (LCO 10336, a proposed amendment to 2025's HB 7287, the budget, rewriting § 1-1h(a) and (b) for fee waivers; whether it was adopted wasn't checked, and it gives no term for somebody not a citizen either way)",
+   "https://www.cga.ct.gov/current/pub/chap_001.htm and chap_246.htm",
+   "https://portal.ct.gov/dmv/licenses-permits-ids/get-non-driver-id",
+   "https://portal.ct.gov/dmv/licenses-permits-ids/renew-non-driver-id",
+   "https://portal.ct.gov/dmv/licenses-permits-ids/get-a-drivers-license-ct",
+   "https://portal.ct.gov/-/media/DMV/20/29/mvregspdf.pdf"
+  ],
+  "unavailable": [
+   "Connecticut: the term of a non-verified card for somebody not a citizen. No statute (chapters 1 and 246), regulation (§§ 1-1h-4 to 1-1h-7, § 14-137-64a) or DMV page gives one; the bill that would have set it failed in 2005.",
+   "New Zealand: whether SLATE's student is a non-resident for New Zealand tax. It turns on the applicant's own permanent place of abode and days away (IRD), which no source can publish for a simulated student.",
+   "New Zealand: a 2025 schedule of the priority fee outside the regulations. DIA's regulatory impact statements index (https://www.dia.govt.nz/Resource-material-Regulatory-Impact-Statements-Index, read) lists none for 2025, and the 2024-review release gives no priority-fee schedule. gazette.govt.nz answered (200), but a Gazette notice of regulations names them without their schedule, and the search URL tried for one (https://gazette.govt.nz/notice/search?keyword=Passport+%28Fees%29+Amendment+Regulations+2025) answered 404, so it settles nothing either way."
+  ],
+  "blocked": [
+   "https://www.us.emb-japan.go.jp/itpr_en/japanese-passport.html (403, Akamai, to curl and WebFetch)",
+   "https://www.us.emb-japan.go.jp/itpr_ja/passport.html (403)",
+   "https://www.seattle.us.emb-japan.go.jp/itpr_en/VISA_fee.html (403 to curl and WebFetch)",
+   "https://www.nashville.us.emb-japan.go.jp/itpr_ja/ryoji_tesuryo.html (403)",
+   "https://www.ny.us.emb-japan.go.jp/itpr_ja/060826.html (403 to curl and WebFetch)",
+   "https://www.ny.us.emb-japan.go.jp/itpr_ja/news.html (403)",
+   "https://www.ny.us.emb-japan.go.jp/itpr_ja/passport02.html (403)",
+   "https://www.ny.us.emb-japan.go.jp/itpr_en/ (403)",
+   "https://www.mofa.go.jp/ , https://www.mofa.go.jp/mofaj/toko/passport/index.html , https://www.mofa.go.jp/mofaj/files/100976346.pdf (403)",
+   "https://www.passports.govt.nz/passport-costs (Cloudflare challenge, 403, to curl and WebFetch)",
+   "https://passports.govt.nz/ , https://www.passports.govt.nz/robots.txt , https://www.passports.govt.nz/sitemap.xml (Cloudflare challenge, 403)",
+   "https://www.dia.govt.nz/diawebsite.nsf/wpg_URL/Services-Passports-Index (301 to passports.govt.nz)",
+   "https://www.legislation.govt.nz/regulation/public/2025/0075/latest/whole.html , /regulation/public/2015/0264/latest/whole.html , /regulation/public/2015/0264/latest/DLM6553218.html , https://www.legislation.govt.nz/ (202, empty, x-amzn-waf-action: challenge)",
+   "https://demo.legislation.govt.nz/Regulations/2025/75/096be8ed81f36d4a/LMS697516 , https://demo.legislation.govt.nz/Regulations/2015/264/096be8ed81f385c0/LMS1033331 (202, empty)",
+   "https://web.archive.org/web/2026/https://www.passports.govt.nz/passport-costs and its CDX API (connection reset: the proxy's relay log names web.archive.org:443, tunnel closed; archive.org's availability API answered with a capture of 2026-10-01 that couldn't be read)",
+   "https://eregulations.ct.gov/eRegsPortal/Browse/RCSA/Title_01Subtitle_01-1h/ and Title_01Subtitle_01-1hSection_01-1h-4/ ('Unable to Access Resource (HTTP: 404)'; the sections read in the DMV's compilation instead)"
+  ],
+  "leads": [
+   "Search extracts of the Washington embassy's and the Seattle consulate's pages ($62, $60 online, from 1 July 2026), agreeing with the ordinance, which is the source",
+   "Search extracts of SL 2025/75 (fees exclusive of GST; priority fee $214.78 for New Zealand or online, $314 in London or Sydney) and of passports.govt.nz/passport-costs (GST not charged to a non-resident for New Zealand tax applying online)",
+   "Secondary guides on Connecticut's card (stateslaws.com, americajosh.com), read as leads only"
+  ]
+ },
+ "replacements": [],
+ "added": [
+  {
+   "id": "test.renames-brief12",
+   "reason": "tests/remaining-papers.test.ts's passport FIXTURE said Japan's fee was still SLATE's, false once it was read; renamed, and the Connecticut test's title from commit 5b696edf renamed when it was made to turn the value while the card is in the mail (caec7df8). Both old titles are in docs/verification/pipeline/inputs/renames.json.",
+   "impact": "two test titles; no game behavior"
+  }
+ ],
+ "defectsFound": [],
+ "observations": [
+  "Japan's dollar charge didn't move: SLATE's rate table already put 9,300 yen at $62.00. What changed is whose figure it is.",
+  "SLATE has no renewal of a state ID card (none before this pass, none added: new scope). A card run out is applied for anew at $28, where Connecticut's statute prices a renewal at $32 for eight years, prorated; for somebody not a citizen that only arises on OPT. Recorded, not changed: no row asks it.",
+  "`npm run typecheck` (tsc -b) reads a build-info file in the node_modules every clone links, so it can report another clone's state; `npx tsc --noEmit -p tsconfig.app.json` is the check that ran on this clone's code (exit 0), as brief 11 found."
+ ],
+ "forTheCoordinator": {
+  "measurements": [
+   {
+    "cmd": "the brief's final gate, build and long runs on the tested commit, as brief 11's runs/ README has them (npm run gate; npm run build; tools/acceptance-ui.mjs at 1440 and 390; tools/lives.ts, mastery.ts, advice.ts, variety.ts, freshness.ts)",
+    "seeds": "brief 11's",
+    "out": "the coordinator's runs folder",
+    "reads": "Eight measured rows go Implemented, Verification Incomplete when the matrix is made again over this branch, because code they read changed (src/engine/content/guide/documents.ts, src/engine/content/passportsabroad.ts, src/engine/content/tutorial.ts, src/engine/systems/identity.ts, src/ui/papers/Documents.tsx): F2-A, MA5, INT-gate, INT-long-runs, INT-navigation, INT-skipped, advice.F2A10-c, advice.heldout. Found by node tools/completion-matrix.mjs in a copy (559 of 599); any engine change of this pass does the same."
+   }
+  ],
+  "records": "criteria.py: KS-ct-idcard and KS-passport-fees each disposition research assumption, status Implemented And Verified, with this result's evidence, verified facts and assumptions, kept apart; brief 11's blockers stay as their history. The receipt: Japan's fee verified (JP-1), New Zealand's GST and urgent fee and Connecticut's term SLATE's assumptions (A1 to A3), with the pages tried, unavailable apart from blocked. renames.json carries two new entries (above); docs/verification/integration-2026-10-16/criteria.json and docs/verification/completion-2026-10-16/research-result.json cite the passport FIXTURE's old title as brief 11's evidence, which the rename maps. The audit (docs/verification/audit) cites none of the renamed titles: node tools/coverage.mjs --check exits 0. Nothing the game judges moved: RULESET stays evaluation-11, and the save schema stays 94 in both places (no field added or changed in meaning). The handoff: SLATE_CURRENT_MASTER_HANDOFF.md's section 4 'Blocked externally' entries for both rows are stale once these land."
+ },
+ "checks": [
+  {
+   "cmd": "npx tsc --noEmit -p tsconfig.app.json",
+   "exit": 0
+  },
+  {
+   "cmd": "npx tsc --noEmit -p tsconfig.node.json",
+   "exit": 0
+  },
+  {
+   "cmd": "npm run typecheck",
+   "exit": 0,
+   "note": "tsc -b, reading a build-info file in the shared node_modules; npx tsc --noEmit -p tsconfig.app.json is the one that ran on this clone"
+  },
+  {
+   "cmd": "npm run lint",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/doc-refs.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/tics.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/voice-check.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/spelling.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/typos.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/title-case.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/label-sweep.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/plural-check.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/wired.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/deciders.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/inventory.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/capabilities.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/devmap.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/traceability.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/coverage.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/student-matrix.mjs --check",
+   "exit": 0
+  },
+  {
+   "cmd": "node tools/completion-matrix.mjs --check",
+   "exit": 1,
+   "why": "the coordinator's: the handoff's completion line and the committed matrix are behind their sources, eight measured rows now reading code this pass changed (forTheCoordinator.measurements); 559 of 599 when made again in a copy"
+  },
+  {
+   "cmd": "npx vite-node tools/geo-check.mjs",
+   "exit": 0
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-papers.test.ts",
+   "exit": 0,
+   "tests": "20 passed (20)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/documents.test.ts",
+   "exit": 0,
+   "tests": "9 passed (9)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g15-papers.test.ts",
+   "exit": 0,
+   "tests": "32 passed (32)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g16-papers.test.ts",
+   "exit": 0,
+   "tests": "26 passed (26)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g24-1.test.ts",
+   "exit": 0,
+   "tests": "2 passed (2)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects3-50-70.test.ts",
+   "exit": 0,
+   "tests": "7 passed (7)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/papers-transitions.test.ts",
+   "exit": 0,
+   "tests": "3 passed (3)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide.test.ts",
+   "exit": 0,
+   "tests": "12 passed (12)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/guide-examples-papers.test.ts",
+   "exit": 0,
+   "tests": "15 passed (15)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/tutorial.test.ts",
+   "exit": 0,
+   "tests": "16 passed (16)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects-g27-1.test.ts",
+   "exit": 0,
+   "tests": "4 passed (4)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/commands-kept.test.ts",
+   "exit": 0,
+   "tests": "15 passed (15)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/scope-taxpapers.test.ts",
+   "exit": 0,
+   "tests": "17 passed (17)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/idreplace.test.ts",
+   "exit": 0,
+   "tests": "1 passed (1)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-09-journeys.test.ts",
+   "exit": 0,
+   "tests": "22 passed (22)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g17-papers.test.ts",
+   "exit": 0,
+   "tests": "22 passed (22)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g29-ui.test.ts",
+   "exit": 0,
+   "tests": "27 passed (27)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g31-ui.test.ts",
+   "exit": 0,
+   "tests": "21 passed (21)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g33-ui.test.ts",
+   "exit": 0,
+   "tests": "35 passed (35)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g34-ui.test.ts",
+   "exit": 0,
+   "tests": "15 passed (15)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/help-mechanics.test.ts",
+   "exit": 0,
+   "tests": "8 passed (8)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/trace-commands.test.ts",
+   "exit": 0,
+   "tests": "3 passed (3)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/defects3-unread.test.ts",
+   "exit": 0,
+   "tests": "6 passed (6)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/need-paths.test.ts",
+   "exit": 0,
+   "tests": "17 passed (17)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/audit-pipeline.test.ts",
+   "exit": 0,
+   "tests": "4 passed (4)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/scope-money.test.ts",
+   "exit": 0,
+   "tests": "31 passed (31)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g05-life.test.ts",
+   "exit": 0,
+   "tests": "26 passed (26)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/residence.test.ts",
+   "exit": 0,
+   "tests": "2 passed (2)"
+  },
+  {
+   "cmd": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/scope-cover.test.ts",
+   "exit": 0,
+   "tests": "8 passed (8)"
+  },
+  {
+   "cmd": "mutations J1-J3, N1-N5, C1-C7 in a copy of the clone (scratchpad/mut12r), tests/remaining-papers.test.ts run alone for each",
+   "exit": 0,
+   "tests": "15 of 15 killed"
+  },
+  {
+   "cmd": "the new tests against the code before this pass (20b6d777's five source files in the copy)",
+   "exit": 1,
+   "tests": "6 of the 7 new tests failed, each on its claim; the run-out journey held, as it holds behavior that didn't change"
+  }
+ ]
+}
