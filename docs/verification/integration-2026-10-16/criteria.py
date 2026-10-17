@@ -50,7 +50,6 @@ for i, (g, th, b, a) in enumerate([
     ('The even actor follows suitability where the sides are a band apart', '75%', '100%', '100% on every sample'),
     ('Two or more ways within a point of the best', '80%', '≥ 98.7%', '99.3%, 98.0%, 97.8%')], start=1):
     row(f'I{i}', 'Criteria: Interpretation', g, 'npx vite-node tools/interpretation.ts -- --fresh --stage', th, b, a, 'Met', [ST, 'docs/verification/interpretation-2026-10-16/criteria.md'], [cite(ST), cite('docs/verification/interpretation-2026-10-16/criteria.md')])
-json.dump({'rows': rows}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))
 # ---- appended: the attributes, mastery through play, long-term, the genres, integration ----
 rows_head = rows
@@ -97,7 +96,6 @@ for id, goal, f, t in MA:
     row(id, 'Criteria: Mastery Through Play', goal, 'Played through the commands (practice.exercise, brief.choose, brief.prepare, practice.self_tape)', 'as README.md writes it', 'not measured before', 'holds', 'Met', [f], [cite(f, t)] if t else [cite(f)], implementation='systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts', sees='The brief’s forecast and How You’ll Play It; the take’s note')
 row('MA5', 'Criteria: Mastery Through Play', 'A played mastery plan reaches 100 on every payoff tape', 'npx vite-node tools/mastery.ts -- --mode plan --genre <id> --seed <s> --years 8', 'every payoff tape 100', 'all six plans (journeys-2026-10-16)', 'all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0', 'Met', [f'{D}/runs/plan-nordic_noir-m-0.json', f'{D}/runs/plan-musical-m-0.json', f'{D}/runs/plan-slapstick-m-0.json'], [cite(f'{D}/runs/plan-nordic_noir-m-0.json'), cite(f'{D}/runs/plan-nordic_noir-m-1.json'), cite(f'{D}/runs/plan-social_realism-m-0.json'), cite(f'{D}/runs/plan-social_realism-m-1.json'), cite(f'{D}/runs/plan-musical-m-0.json'), cite(f'{D}/runs/plan-slapstick-m-0.json')])
 row('MA8', 'Criteria: Mastery Through Play', 'Mastery in the work doesn’t stand in for the work the school asks: a mastered student who misses pieces is Unready on them and the review counts them', 'tests/integration-mastery.test.ts', 'as README.md writes it', 'not measured before', 'two pieces slept through, both Unready, the review counting exactly two; the twin missing nothing, none', 'Met', ['tests/integration-mastery.test.ts'], [cite('tests/integration-mastery.test.ts', 'PLAYER JOURNEY: a mastered student asleep through two pieces is Unready on both and the review counts exactly those two; the same student missing nothing is counted Unready on none')], changes='None to the engine: a played test, killed by the tally leaving pieces not shown out of its Unready')
-json.dump({'rows': rows}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))
 # ---- appended: the genres ----
 SIG = f'{D}/closeout/signature.json'; SIGF = f'{D}/closeout/signature-fresh.json'; G1R = 'docs/verification/genres-2026-10-16/g1-replacement.md'
@@ -108,7 +106,6 @@ for id, goal, th, b, a in [
   ('S4', 'No two briefs of different genres identical in every number a take reads (G2)', '0 pairs', '0', '0')]:
     row(id, 'Criteria: The Genres', goal, 'npx vite-node tools/genre-signature.ts -- [--fresh] --out <file>; tools/genre-identity.ts', th, b, a, 'Met', [SIG, SIGF, f'{D}/closeout/genre-identity.json', G1R], [cite(SIG), cite(SIGF), cite(G1R)], systems='Every take of a brief, a class scene and a play, read in its genre’s register', sees='The Genre Asks on a brief; the take’s note; the genre’s look')
 row('Genre Audit', 'Criteria: The Genres', 'Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits', 'npx vite-node tools/genre-audit.ts -- --out <file>', 'helps its own in every genre; leaks into none', '149 of 149; 0; 56 to weigh', '149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)', 'Met', [f'{D}/closeout/genre-audit.md', 'tests/genre-identity.test.ts'], [cite(f'{D}/closeout/genre-audit.md'), cite('tests/genre-identity.test.ts')], failure='The 55 genres whose two briefs suited the same sides on every axis were weighed, not faults (their registers agree; I2 holds across the catalog); 54 until brief 09 counted them again, 46 after it replaced fourteen genres’ second briefs (genres-09.md)')
-json.dump({'rows': rows}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))
 # ---- appended: integration rows (the brief's sections 6, 9 to 13) ----
 def integ(id, goal, entry, threshold, status, evidence, citations, failure='', changes='Nothing in this pass', sees='', systems='', implementation=''):
@@ -126,7 +123,6 @@ integ('INT-skipped', 'Every skipped check accounted for: the suite skips none; t
 integ('INT-navigation', 'Home readable; Money, School and Papers usable and aligned at 1440 and 390', 'node tools/acceptance-ui.mjs <out> 1440|390 <saves>', '0 failed, 0 overflows', 'Met', ['tools/acceptance-ui.mjs', f'{D}/runs/acceptance/1440.log', f'{D}/runs/acceptance/390.log'], [cite(f'{D}/runs/acceptance/1440.log'), cite(f'{D}/runs/acceptance/390.log')])
 integ('INT-long-runs', 'Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code', 'tools/lives.ts, tools/workload.ts, tools/mastery.ts, tools/advice.ts, tools/variety.ts, tools/freshness.ts', 'breaches 0, unbalanced 0, no errors; the figures each account set', 'Met', [f'{D}/runs/README.md', f'{D}/runs/lives.jsonl', f'{D}/runs/variety-v-0.json', f'{D}/runs/freshness.json'], [cite(f'{D}/runs/README.md'), cite(f'{D}/runs/lives.jsonl'), cite(f'{D}/runs/variety-v-0.json'), cite(f'{D}/runs/freshness.json')])
 integ('INT-gate', 'The gate and the build on the final revision', 'npm run gate (exit from a file); npm run build', 'exit 0', 'Met', [f'{D}/runs/gate.txt', f'{D}/runs/README.md'], [cite(f'{D}/runs/gate.txt')], failure='Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again')
-json.dump({'rows': rows}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))
 # ---- appended: the seven statuses (brief 09, section 1) ----
 # Until brief 09 each row carried the word its source gave it (Met, Not Met, Superseded), and the matrix read "none
@@ -328,9 +324,16 @@ for f in sorted(x for x in os.listdir(B11) if x.endswith('-result.json')):
         cites = [cite(e['file'], e.get('title')) for e in r.get('evidence', []) if e.get('file')]
         status = r['status']
         why = f"Brief 11, the {area} area ({B11}/{f}): {r.get('exercised') or r.get('notProved') or ''}".strip()
-        extra = {k: r[k] for k in ('missing', 'gap', 'blocker', 'decision', 'deferredBy', 'measured') if r.get(k)}
+        # What the status asks, from whichever of the fields the area wrote it in (common.md: "missing | gap | blocker |
+        # decision"); a verified row carries none.
         need = NEEDS11.get(status)
-        assert need is None or need in extra, f"{f}: {r['id']} is {status} without its {need}"
+        said = next((r[k] for k in ((need, 'missing', 'gap', 'blocker') if need in ('missing', 'gap') else (need,)) if need and r.get(k)), None)
+        assert need is None or said, f"{f}: {r['id']} is {status} without its {need}"
+        # A decision whose evidence is its area's result (ST6-R's (c), (e) and (g) rest on (a)'s measurements there) names
+        # the result, as the matrix does for brief 09's areas.
+        if need == 'decision' and isinstance(said, dict) and not said.get('evidence'):
+            said = {**said, 'evidence': f'{B11}/{f}'}
+        extra = {**({need: said} if need else {}), **({'measured': r['measured']} if r.get('measured') else {})}
         crit = [x for x in rows if x['id'] == r['id'] and x['group'] == r['group']]
         if crit:
             x = crit[0]

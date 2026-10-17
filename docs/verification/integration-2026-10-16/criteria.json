@@ -2855,6 +2855,411 @@
    ]
   },
   {
+   "id": "ST6-R.a",
+   "status": "Decision Required",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): Measured through the committed tool (tools/acting-criteria.ts measureST6R, its sorting block added for this): the specialist against its twin with restraint’s abilities at the even actor’s, restraint’s share of a take, (a) as the grain strengthens from nothing and as the budget rises, and the restrained choice in the specialist’s own frame; each of (g)’s mutations in a copy (tools/judge-mutations.mjs). The behaviors the owner asked for are held by gate tests; (a) itself is asserted by none.",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/measured/st6.json",
+     "title": "npx vite-node tools/interpretation.ts -- --fresh --stage --st3 <file> --st6 <file> (measure.sh <out> stage), from 44cd15c2 (ST6R.verdict.a, ST6R.sorting)"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > a restrained take can carry a scene that leans the other way, where the lean is slight: the specialist playing Earnest’s garden scene restrained is ahead of the even actor playing it expansive, and isn’t once the choice is only half rehearsed in"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/mutations-st6.json",
+     "title": "node tools/judge-mutations.mjs --list docs/verification/completion-2026-10-16/acting/mutations-st6.list.json (st6-no-grain, st6-least)"
+    }
+   ],
+   "decision": {
+    "question": "ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the nine others 40.56, 600 in all) to be ahead of the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of the 44 materials. Measured, it isn’t (2 of 44), and the sorting brief 11 asked for says why: nothing in the game is missing, and the clause, with (c), (e) and (g)’s second and third items, asks what the approved design rules out at this budget. Which comparison and which floor should hold the owner’s “meaningful opportunities to make a valid restrained interpretation work, even where a scene favors larger expression”, given one strength that mustn’t erase unrelated weaknesses, fair budgets, no restraint bonus and no rebalancing of the judge?",
+    "evidence": [
+     "Not missing gameplay: restraint’s own abilities are read and decide it. With emotional depth, composure and focus at the even actor’s 50 and nothing else changed (its twin, 515), the specialist’s restrained take falls 3.33 to 8.15 on all 96 materials both sides fit, by more than its expansive take on 94 (Hedda’s second act and Riders to the Sea are the two not: restraint suits them most, and the grain eases the take); each of the three alone 0.53 or more on all 96, by more than expansive on 91, 94 and 96. Against the grain the grain costs the specialist less than its twin on 40 of 44. Restraint’s draws are 0.33 to 0.90 of its lift (mean 0.62), on all 96. Restraint is the specialist’s better choice against the grain on 10 of 44, its twin’s on 2, the even actor’s on none. (st6.json, ST6R.sorting and diagnostics; tests/decisions-judge.test.ts, the two tests added.)",
+     "(a)’s floor is what the specialist reaches where the scene decides nothing: with the grain at nothing, 11 of 44 (25%). As the grain strengthens to its 0.3, 11, 5, 4 and 2 (at 0, 0.1, 0.2, 0.3), falling on every one of the 44. With the grain at nothing its wins include Antigone 441 and Oedipus 300 (gap 2), the scenes the gate test names as built on size. So (a) at 25% and (c)’s circumstances clause can’t both hold at this budget: the grain only takes wins away. (ST6R.sorting.grain.)",
+     "Under (g)’s own mutations the clauses move toward met, not away: the grain removed makes (a) met (11 of 44) and (e) met; restrained suitability forced to its least makes (c) met (abilities 0 against 12.9%, circumstances 45.8% against 0%) and (e) met, (a) 22 of 96. (mutations-st6.json.)",
+     "Reached otherwise only by what the approved design rules out: a budget of 631 or more (5.2% over the even actor’s; there the specialist is ahead of the even actor on 43 of the 50 materials restraint suits, both restrained, where restraint’s three carry 30% of a take on average, 19% to 41%: three strengths over nine weaknesses); the whole’s weakest-dimension term removed (brief 10: 11 of 42; H4, and brief 11’s “Do not reopen the entire balance model”); or a restraint bonus without a source (brief 10: “Do not … add an unexplained restraint bonus”). The budget sweep: 600 2, 604 5, 613 6, 622 8, 631 11, 640 19, 645.6 25.",
+     "Where the 25% came from: ST6 as written’s floor, for the specialist’s own restrained take against its own expansive one, carried to a comparison with the even actor and set beside ST6′’s 26 of 42, which compared 645.6 with 600 (the tool defect brief 10 found).",
+     "(c) and (e) rest on (a): (c)’s abilities part needs (a) at 10% or more (the even actor is at 0 of 44) and its circumstances part 5 wins in the slighter half; its preparation (0 half rehearsed against 2) and interpretation parts hold. (e) needs 6 wins from 6 works. (g)’s second item can’t be caught by any clause read on the materials against the grain, which the mutation makes all 96; (f) catches it (0 of 0), as do the stage criteria’s tests."
+    ],
+    "options": [
+     {
+      "option": "1. Keep ST6-R (a), (c) and (e) as written, counted not met, with this cause recorded.",
+      "measured": "(a) 2 of 44; (c) abilities 0 against −5.45%, preparation 0 against 2 (met), circumstances 9.1% against 0%, interpretation met; (e) 2 works, 1 family; (g) item 1 caught by (b′), items 2 and 3 by no clause that holds. ST6-R stays not met for good: the approved design leaves no change that meets it."
+     },
+     {
+      "option": "2. Restate (a) in the frame its 25% was set for: against the grain, restraint the restrained specialist’s better choice (its restrained take ahead of its own expansive one by more than 0.05), with (b′), its twin and the even actor as the controls that keep a useless restraint from passing; (c) and (e) asked in the same frame; (d) and (f) unchanged.",
+      "measured": "10 of 44 (22.7%; 11 of 44 as shown, ST6 as written’s figure), so at 25% still one material short; the twin 2, the even actor 0. In that frame (c): abilities 22.7% against 0% (met), half rehearsed 0 against 10 (met), the slighter half 45.5% against 0% (met), every win allowed; (e): 9 works, 4 families (comedy, drama, tragedy, romantic comedy), at most 2 from one work (met). Under (g): restraint’s draws out, 10 to 7, and (b′) 96 to 0 (caught); the grain removed, 44 of 44 with both halves at 100% (caught by circumstances); restraint’s suitability forced to its least, 46 of 96 (caught by (f), 0 of 0, and the stage criteria’s tests, not by this frame)."
+     },
+     {
+      "option": "3. Record (a), (c), (e) and (g)’s second and third items as superseded criteria, their figures kept (as ST3, ST6, H4 and L3 as written were), on the evidence that they contradict the approved design, with the owner’s ST6 behaviors held by the gate tests: restraint’s own abilities, restraint’s draws (b′), circumstances (the grain), preparation (half rehearsed), the limits, the slight-grain wins, and the materials restraint suits.",
+      "measured": "Every one of those tests passes on 75b5994b and fails under its mutation in a copy (test-mutations.json). No numbered floor for “viable” would remain."
+     },
+     {
+      "option": "4. Change the judge so (a) as written is met.",
+      "measured": "A budget of 631 or more, the weakest-dimension term removed, or a restraint bonus: each ruled out by the approved design (above)."
+     }
+    ],
+    "recommendation": "Option 2, with the floor the owner’s to set. Its frame is the one brief 11 names (“Preserve meaningful restrained choices”), the one the owner’s 25% came from, and the one a player faces: whether to play this scene restrained. It holds every other clause, and with (b′) and the twin it catches a restraint that draws nothing or whose abilities stop mattering. Kept at 25% it’s one material short (10 of 44), and ST6-R stays not met with that cause. Read against the even actor, as (c)’s abilities clause already reads it (at least 10 points more of these materials than the even actor), it’s 22.7% against 0% and met. That second floor is a proposal: it passes, and that isn’t a reason to adopt it; it’s the owner’s."
+   }
+  },
+  {
+   "id": "ST6-R.c",
+   "status": "Decision Required",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): Measured with (a) (st6.json, ST6R.verdict.c); each part in the specialist’s own frame (ST6R.sorting.ownChoice); (g)’s mutations in copies.",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/measured/st6.json",
+     "title": "npx vite-node tools/interpretation.ts -- --fresh --stage --st3 <file> --st6 <file> (measure.sh <out> stage), from 44cd15c2 (ST6R.verdict.c)"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > a restrained take can carry a scene that leans the other way, where the lean is slight: the specialist playing Earnest’s garden scene restrained is ahead of the even actor playing it expansive, and isn’t once the choice is only half rehearsed in"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > success depends on the scene: every win against the grain is on a material where the grain is slighter than on any of the limits"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer"
+    }
+   ],
+   "decision": {
+    "question": "Rests on ST6-R (a): see its decision. Abilities and circumstances fail only for want of (a)’s wins; preparation and interpretation hold.",
+    "recommendation": "Decided with (a). Under option 2 every part is met in the restrained choice’s frame.",
+    "evidence": "docs/verification/completion-2026-10-16/acting-result.json"
+   }
+  },
+  {
+   "id": "ST6-R.e",
+   "status": "Decision Required",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): Measured with (a) (st6.json, ST6R.verdict.e) and in the restrained choice’s frame (ST6R.sorting.ownChoice).",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/measured/st6.json",
+     "title": "npx vite-node tools/interpretation.ts -- --fresh --stage --st3 <file> --st6 <file> (measure.sh <out> stage), from 44cd15c2 (ST6R.verdict.e, ST6R.sorting.ownChoice)"
+    }
+   ],
+   "decision": {
+    "question": "Rests on ST6-R (a): see its decision.",
+    "recommendation": "Decided with (a). Under option 2 it’s met.",
+    "evidence": "docs/verification/completion-2026-10-16/acting-result.json"
+   }
+  },
+  {
+   "id": "ST6-R.g",
+   "status": "Decision Required",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): Each mutation in a copy against the criterion (tools/judge-mutations.mjs, mutations-st6.json) and against the gate tests (test-mutations.json). Clarification A1 reads the first item against (b′); A2 reads “it fails” against a clause that holds without the mutation.",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/mutations-st6.json",
+     "title": "node tools/judge-mutations.mjs --list docs/verification/completion-2026-10-16/acting/mutations-st6.list.json"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own craft pays: the restrained specialist’s lift over the even actor is larger playing restrained than expansive wherever both fit, and restraint’s draws are part of it on every one"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > the other half is kept: the expansive specialist playing expansive is ahead of its own restrained take on at least a quarter of the materials restraint suits better"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer"
+    }
+   ],
+   "decision": {
+    "question": "With A1, (g)’s first item is met. Its second and third aren’t caught by the clauses (g) names, and the third by none of ST6-R’s: they rest on what replaces (a) and (c). See ST6-R (a)’s decision.",
+    "recommendation": "Under option 2 all three are caught: the draws by (b′), the suitability by (f), the grain by the choice frame’s circumstances clause. The gate tests catch all three now.",
+    "evidence": "docs/verification/completion-2026-10-16/acting-result.json"
+   }
+  },
+  {
+   "id": "ST6-R.bPrime",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): Clarification A1 (docs/verification/completion-2026-10-16/clarifications.md, committed in 5c5078a2 before any test changed): (b) stays as written and measured; (g)’s first item is read against (b′), because the owner’s ST6 asks a revised test to catch a useless restraint and (b) measurably can’t, not because (b′) passes. Measured on the engine and with the draws removed in a copy; held by the gate test, which a copy with the draws removed fails.",
+   "citations": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own craft pays: the restrained specialist’s lift over the even actor is larger playing restrained than expansive wherever both fit, and restraint’s draws are part of it on every one"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/measured/st6.json",
+     "title": "npx vite-node tools/interpretation.ts -- --fresh --stage --st3 <file> --st6 <file> (measure.sh <out> stage), from 44cd15c2 (ST6R.proposedB)"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/mutations-st6.json",
+     "title": "node tools/judge-mutations.mjs --list docs/verification/completion-2026-10-16/acting/mutations-st6.list.json (st6-no-draws-bprime)"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/clarifications.md",
+     "title": "A1. ST6-R (g)’s first item is read against (b′), with (b) kept as written"
+    }
+   ]
+  },
+  {
+   "id": "ST3-R.e",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): A gate test that changes the leans, the drain and the grain in its own process and shows ST3-R’s (a) and (b) checks then fail; the six mutations (e) names made in copies against the gate’s ST3-R tests; ST3-R measured again from 44cd15c2.",
+   "citations": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > ST3-R (e), it catches what it should: with the stage’s and the close frame’s leans at 1 the voice-and-body specialist isn’t better on stage on every case, with no drain a stamina of 55 costs nothing on any, and with the grain let into the comparison the undrained even actor comes apart"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > every shown figure is its own exact value rounded once, and each whole is worked by hand from its parts’ exact values"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: identical effective inputs give identical results (brief 10) > an actor even in everything the formula reads, undrained, is 100 × n^(1 + difficulty) on stage and at a close frame, at full precision and as shown"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the voice-and-body specialist is better on stage than at a close frame on every case, and a stamina at 55 costs on both, at a budget of 600"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/test-mutations.json",
+     "title": "node <mutation runner> (st3-floor, st3-twice, st3-segments-twice, st3-leans, st3-drain, st3-grain-leak) against tests/decisions-judge.test.ts"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/st3.json",
+     "title": "npx vite-node tools/interpretation.ts -- --fresh --stage --st3 <file> --st6 <file> (measure.sh <out> stage), from 44cd15c2 (ST3R): the --st3 output came out byte for byte as this file"
+    }
+   ]
+  },
+  {
+   "id": "H4-R.e",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): Both mutations made in copies against the gate’s H4-R test: listening’s every input weight cut to a tenth in the evaluation (h4-tenth), and the test’s specialist built over twelve abilities (h4-budget, its printed budgets).",
+   "citations": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "H4-R: every ability’s contribution on its own work (brief 10) > each specialist is on the even actor’s budget, and its own work (the pieces where its ability’s +10 effect is the largest of the twelve) is five pieces or more in two kinds or more, where all twelve are ahead on at least 60% by a median of 0.3 or more"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/test-mutations.json",
+     "title": "node <mutation runner> (h4-tenth, h4-budget) against tests/decisions-judge.test.ts"
+    }
+   ]
+  },
+  {
+   "id": "L3-R.a",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): A gate test of the fixed set as the checklist named it and of each piece judged fully prepared, with no way chosen, a sufficient day and no draw; a played month for a specialist and a generalist, the fixed set and each journey’s own work replayed at the month’s start and end; the eight 120-day journeys measured from c3e05866.",
+   "citations": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "L3-R: real progress, controlled (brief 10) > L3-R (a), a fixed set, controlled: the 24 named before measurement, eight briefs at their first reading in eight registers, eight class scenes, four nights and four casting reads, each judged fully prepared, with no way chosen, on a sufficient day and with no draw"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: a specialist and a generalist, each played through a month of the first term, judge L3-R’s fixed set higher at the month’s end than at its start, and no piece falls but where stamina, which they never trained, fell"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: L3-R (a), beside the fixed set: each journey’s own work, replayed as it was taped at the month’s start and at its end, is no lower at the end but where stamina, which they never trained, fell"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/measured-l3r/l3r.json",
+     "title": "docs/verification/decisions-2026-10-16/measure.sh <out> journeys-a; journeys-b; l3r, from c3e05866: tools/brief-journeys.ts -- --profile <beginner|developing|specialist|generalist> --seed <bj-0|bj-1> --days 120 --trace <file>, then node tools/l3r.mjs <out>"
+    }
+   ]
+  },
+  {
+   "id": "L3-R.b",
+   "status": "Implemented, Verification Incomplete",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The eight journeys measured from c3e05866 through tools/brief-journeys.ts (the attentive policy and the brief policy, public commands only), each exit 0, and read by tools/l3r.mjs.",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/measured-l3r/l3r.json",
+     "title": "docs/verification/decisions-2026-10-16/measure.sh <out> journeys-a; journeys-b; l3r, from c3e05866: tools/brief-journeys.ts -- --profile <beginner|developing|specialist|generalist> --seed <bj-0|bj-1> --days 120 --trace <file>, then node tools/l3r.mjs <out>"
+    }
+   ],
+   "missing": "Eight 120-day journeys (2 minutes 23 seconds here) aren’t a cost the gate carries, and the gate test of (e) plays one profile for two months. Measured on c3e05866, met; it closes when the coordinator makes the same run on the tested commit: docs/verification/decisions-2026-10-16/measure.sh <out> journeys-a, journeys-b, l3r (seeds bj-0, bj-1)."
+  },
+  {
+   "id": "L3-R.e",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): A gate test that has the journeys’ tool play two months of a beginner through the commands (bj-0) and reads the report tools/l3r.mjs writes, month by month against the trace’s own takes; the eight journeys measured from c3e05866.",
+   "citations": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: L3-R (e), the journey kept in view: two months played by the journeys’ tool, and its report gives each month’s takes, their purposes, their difficulty’s mean and range, their stakes and genres, with L3 as written beside the controlled measure"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/measured-l3r/l3r.json",
+     "title": "docs/verification/decisions-2026-10-16/measure.sh <out> journeys-a; journeys-b; l3r, from c3e05866: tools/brief-journeys.ts -- --profile <beginner|developing|specialist|generalist> --seed <bj-0|bj-1> --days 120 --trace <file>, then node tools/l3r.mjs <out>"
+    }
+   ]
+  },
+  {
+   "id": "judge.together",
+   "status": "Implemented, Verification Incomplete",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The parts this area’s rows read were measured from this clone: stage (ST3-R, ST6-R, the stage criteria) from 44cd15c2, and the eight journeys with l3r from c3e05866. Each came out byte for byte as brief 10’s integrated/after, but for st6.json’s new sorting block. No engine file changed in this area.",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/measured/exits.txt",
+     "title": "docs/verification/decisions-2026-10-16/measure.sh <out> stage"
+    },
+    {
+     "file": "docs/verification/completion-2026-10-16/acting/measured-l3r/exits.txt",
+     "title": "docs/verification/decisions-2026-10-16/measure.sh <out> journeys-a; journeys-b; l3r"
+    }
+   ],
+   "missing": "measure.sh’s other parts (ag, indirect, mono-0 to mono-3, mono-merge, mutations, test-mutations, genres-a, genres-b) and the whole again on the tested commit, which integrates the other areas: the coordinator’s, as common.md says. Every criterion that held must hold; ST6-R (a), (c), (e) and (g), F2 as written and the four originals fail as they did."
+  },
+  {
+   "id": "judge.tests",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The file run alone from 75b5994b (29 passed, exit 0); each part of the list cited by the exact titles that hold it below.",
+   "citations": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: identical effective inputs give identical results (brief 10) > the same scene judged twice, replayed from its own record, replayed with its draw, and replayed after a save and a load comes to the same exact result on every case"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: identical effective inputs give identical results (brief 10) > an actor even in everything the formula reads, undrained, is 100 × n^(1 + difficulty) on stage and at a close frame, at full precision and as shown"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the voice-and-body specialist is better on stage than at a close frame on every case, and a stamina at 55 costs on both, at a budget of 600"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the criterion’s even actor’s difference is its techniques’ part and its stamina’s part, and what’s left is floating point"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > every shown figure is its own exact value rounded once, and each whole is worked by hand from its parts’ exact values"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > ST3-R (e), it catches what it should: with the stage’s and the close frame’s leans at 1 the voice-and-body specialist isn’t better on stage on every case, with no drain a stamina of 55 costs nothing on any, and with the grain let into the comparison the undrained even actor comes apart"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > the profiles are on one budget: 600 each, the nine abilities left at 40.56, where until brief 10 the tool gave each specialist 645.6"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > a restrained take can carry a scene that leans the other way, where the lean is slight: the specialist playing Earnest’s garden scene restrained is ahead of the even actor playing it expansive, and isn’t once the choice is only half rehearsed in"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > where size is what the scene is built on, restraint has its limits: before Thebes, at Antigone’s defiance and in the two meetings the restrained take is behind the even actor’s expansive one, and the expansive specialist is ahead of it"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own craft pays: the restrained specialist’s lift over the even actor is larger playing restrained than expansive wherever both fit, and restraint’s draws are part of it on every one"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > success depends on the scene: every win against the grain is on a material where the grain is slighter than on any of the limits"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > the other half is kept: the expansive specialist playing expansive is ahead of its own restrained take on at least a quarter of the materials restraint suits better"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > circumstances decide where it works: the scene’s grain only takes from a restrained take against it, so as the grain strengthens from nothing to its own the specialist’s restrained take falls against the even actor’s expansive one on every material, and wins on fewer"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "H4-R: every ability’s contribution on its own work (brief 10) > each specialist is on the even actor’s budget, and its own work (the pieces where its ability’s +10 effect is the largest of the twelve) is five pieces or more in two kinds or more, where all twelve are ahead on at least 60% by a median of 0.3 or more"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "H4-R: every ability’s contribution on its own work (brief 10) > the two public meetings are presence’s own work: its +10 effect the largest of the twelve on each, played to the meeting with the partner barely there, and its specialist ahead of the even actor"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "H4-R: every ability’s contribution on its own work (brief 10) > a student meets them in play: Scene Study in Acting I sets Strife’s meeting, a play from 1909, once the prose scenes before it are studied, and Acting III’s sets the Enemy’s, from 1882, which Acting I’s never does"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "H4-R: every ability’s contribution on its own work (brief 10) > no strength erases an unrelated weakness: where an ability carries under a tenth of what a piece’s abilities move, its specialist is never ahead of the even actor"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "H4-R: every ability’s contribution on its own work (brief 10) > PLAYER JOURNEY: what an ability does outside the piece shows in twin lives through the commands: nerves before a performance add less stress with more composure, by the rule, and an hour of practice grows more with more discipline"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "The judge area’s second phase: stamina’s, memory’s and composure’s second kind of work (brief 10) > the full drain is 0.4, and a night reaches it at 4/3 of the anchor’s work: the anchor’s lead still drains 0.3 at its curtain, and the heaviest lead the catalog holds more than that"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "The judge area’s second phase: stamina’s, memory’s and composure’s second kind of work (brief 10) > a night reads memory by its part’s time on stage: half a unit of text for each hour past the first, so a lead in Major Barbara holds more than a supporting part, and a featured part or a one-act’s lead none"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "The judge area’s second phase: stamina’s, memory’s and composure’s second kind of work (brief 10) > a night before a house rides on 1.5 where a class scene rides on 1, from performance-anxiety research, and reads composure half a step more"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "The judge area’s second phase: stamina’s, memory’s and composure’s second kind of work (brief 10) > PLAYER JOURNEY: twins at the first Carlotta’s first curtain, a lead and a featured part in Major Barbara, each night’s record reading the text its part holds and the same stakes"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: a specialist and a generalist, each played through a month of the first term, judge L3-R’s fixed set higher at the month’s end than at its start, and no piece falls but where stamina, which they never trained, fell"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "L3-R: real progress, controlled (brief 10) > L3-R (a), a fixed set, controlled: the 24 named before measurement, eight briefs at their first reading in eight registers, eight class scenes, four nights and four casting reads, each judged fully prepared, with no way chosen, on a sufficient day and with no draw"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: L3-R (a), beside the fixed set: each journey’s own work, replayed as it was taped at the month’s start and at its end, is no lower at the end but where stamina, which they never trained, fell"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: L3-R (e), the journey kept in view: two months played by the journeys’ tool, and its report gives each month’s takes, their purposes, their difficulty’s mean and range, their stakes and genres, with L3 as written beside the controlled measure"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "L3-R: real progress, controlled (brief 10) > more never makes it worse: raising any one ability, by ten or to full, never lowers a result, on every fourth piece for the even actor, a specialist, a beginner and a near-master"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "M1: mastery at 100 (brief 10) > every judged piece and reading comes to 100 for a mastered actor, prepared, on a sufficient day, with no draw and with a draw; and every class scene and play on every way of playing that fits"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts"
+    }
+   ]
+  },
+  {
+   "id": "judge.coverage-row",
+   "status": "Implemented And Verified",
+   "why": "Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): Read against the code: the row says 67 scenes, 30 plays, 27 exercises, and SCENES, PLAY_MATERIAL and EXERCISES hold 67, 30 and 27, so the document needed no correction; a gate test holds the three counts.",
+   "citations": [
+    {
+     "file": "tests/scenes.test.ts",
+     "title": "the scene bank > GUARD: the coverage matrix’s scene bank row states the bank as the code holds it, its scenes, its plays and its exercises, so a scene added or taken away fails here until the row says so"
+    }
+   ]
+  },
+  {
    "id": "coverage09.4-fold",
    "status": "Implemented And Verified",
    "why": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The pipeline’s five writing steps run in the README’s order in a temporary copy of the folders they read, their output compared with the committed files",

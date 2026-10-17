@@ -56,3 +56,23 @@ and the 9 administrative rows are outside it.
 - **Tests:** the journeys area's 14 changed or cited files rerun on its last commit, and 26 more cited files, each
   exit 0; typecheck, lint and the document checks 0 (the area's report, `journeys-result.json`). After the fold:
   `tests/audit-pipeline.test.ts` 0, `tools/coverage.mjs --check` 0, `tools/capabilities.mjs --check` 0.
+
+## Batch 3: The Acting Area (`e5de5982` to `9ef67042`, as cherry-picked)
+
+- **Rows addressed:** ST6-R.a, ST6-R.c, ST6-R.e, ST6-R.g, ST6-R.bPrime, ST3-R.e, H4-R.e, L3-R.a, L3-R.b, L3-R.e,
+  judge.together, judge.tests, judge.coverage-row.
+- **Actionable incomplete:** 36 before, 29 after.
+- **Implemented and verified:** ST6-R.bPrime, ST3-R.e, H4-R.e, L3-R.a, L3-R.e, judge.tests and judge.coverage-row, each
+  by gate tests cited by title (`acting-result.json`), each new test broken in a copy and caught (18 of 18). The (f)
+  test passed vacuously on 0 of 0 under one mutation; that test defect is fixed.
+- **Clarifications, written before any test changed** (`clarifications.md`):
+  - **A1:** (g)'s first check is read against (b′), with (b) as written kept. It's mapped to the owner's brief 10 words,
+    not adopted because it passes.
+  - **A2:** "it fails" means a clause that holds must fail under the mutation.
+- **Decision Required, for the owner:** ST6-R.a, .c, .e and .g. Each option is measured, and the recommendation is in
+  `acting-result.json`.
+- **Left to the final measurement:** L3-R.b and judge.together. Both were met here, but the gate can't carry them.
+- **The judge:** unchanged. No file under `src` moved, and RULESET stays evaluation-11.
+- **New defects:** none in the game.
+- **Tests:** `tests/decisions-judge.test.ts` 29 passed, `tests/scenes.test.ts` 5, `tests/stage-interpretation.test.ts`
+  12, each exit 0; typecheck, lint and the 18 checks each exit 0 on the area's clone.

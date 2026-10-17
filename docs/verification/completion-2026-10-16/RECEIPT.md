@@ -2,24 +2,24 @@
 
 Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0e7ff7c2`) and the matrix as it stands. Nothing here is typed.
 
-- **Against the original full baseline:** 534 of 608 (87.8%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
-- **Of the actionable portion:** 10 of 46 (21.7%) closed by implementation or verification.
-- **The matrix’s own count:** 534 of 599 rows in scope Implemented And Verified (89.1%); 54 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
+- **Against the original full baseline:** 541 of 608 (88.9%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
+- **Of the actionable portion:** 17 of 46 (36.9%) closed by implementation or verification.
+- **The matrix’s own count:** 541 of 599 rows in scope Implemented And Verified (90.3%); 48 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
 - **Not complete:** decision 4’s rows stay as authorized, and every remaining row is listed below with what it lacks.
 
 ## Status Now, Of The Baseline’s Rows
 
 | Status | At The Baseline | Now |
 |---|---|---|
-| Implemented And Verified | 530 | 534 |
-| Implemented, Verification Incomplete | 63 | 54 |
+| Implemented And Verified | 530 | 541 |
+| Implemented, Verification Incomplete | 63 | 48 |
 | Partially Implemented | 0 | 0 |
 | Not Implemented | 4 | 0 |
 | Blocked Externally | 0 | 0 |
-| Decision Required | 11 | 11 |
+| Decision Required | 11 | 10 |
 | Explicitly Deferred | 27 | 36 |
 
-## Closed By Implementation Or Verification (10)
+## Closed By Implementation Or Verification (17)
 
 | Row | Group | At The Baseline |
 |---|---|---|
@@ -33,6 +33,13 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 | `coverage09.6-journeys-followup-fold` | Brief 09 Area: coverage | Implemented, Verification Incomplete |
 | `genres.4-kept` | Brief 09 Area: genres | Implemented, Verification Incomplete |
 | `genres.6-table` | Brief 09 Area: genres | Implemented, Verification Incomplete |
+| `judge.coverage-row` | Brief 09 Area: judge | Implemented, Verification Incomplete |
+| `ST3-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete |
+| `H4-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete |
+| `L3-R.a` | Brief 10 Area: judge | Implemented, Verification Incomplete |
+| `L3-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete |
+| `judge.tests` | Brief 10 Area: judge | Implemented, Verification Incomplete |
+| `ST6-R.bPrime` | Brief 10 Area: judge | Decision Required |
 
 ## Administrative Corrections (9), Not Progress
 
@@ -48,14 +55,13 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 | `L3.asWritten` | Brief 10 Area: judge | superseded | Not Implemented | Explicitly Deferred |
 | `stamina.measure` | Brief 10 Area: stamina | historical-record | Implemented, Verification Incomplete | Explicitly Deferred |
 
-## Remaining In The Actionable Portion (36)
+## Remaining In The Actionable Portion (29)
 
 | Row | Group | Now | What It Lacks |
 |---|---|---|---|
 | `health.enroll` | Life, Health And Time | Implemented, Verification Incomplete | Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). / The duplicate-enrollment refusal 'You’re enrolled from …'  |
 | `l-actor` | Creation, Profile, Home And The Looks | Implemented, Verification Incomplete | None. The header (actor.tsx:1-4) said 'an interest' was among what it opens until the interests went on 2026-10-10; it now says so in the past tense. / None reaches the branch: only a save from before schema 94 carries an 'interest' source. tests/migration-94.test.ts migrates such a save but doesn’t open the actor look. / no test reaches it |
 | `genres.7-measured` | Brief 09 Area: genres | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it / The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sid |
-| `judge.coverage-row` | Brief 09 Area: judge | Implemented, Verification Incomplete | the area called it corrected to 65, read from SCENES, with what 2026-10-16 added and cites no gate test that holds it |
 | `advice.harness` | Brief 10 Area: advice | Implemented, Verification Incomplete | the area called it implemented and cites no gate test that holds it / TEST SETUP: abilities, techniques and stamina’s fitness drawn within the band and set where each is kept; every calendar hour cleared and the student rested before every command, as F2-A’s set-up does; F2-A’s own adv-N set-up kept exactly as it was, including that it never set the four abilities kept in the craft (it wrote them  |
 | `advice.F2` | Brief 10 Area: advice | Implemented, Verification Incomplete | the area called it verified as it stands and cites no gate test that holds it |
 | `advice.F2A10-a` | Brief 10 Area: advice | Implemented, Verification Incomplete | the area called it implemented and cites no gate test that holds it |
@@ -65,18 +71,12 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 | `advice.tests` | Brief 10 Area: advice | Implemented, Verification Incomplete | the area called it implemented and cites no gate test that holds it |
 | `advice.heldout` | Brief 10 Area: advice | Implemented, Verification Incomplete | the area called it implemented and cites no gate test that holds it |
 | `advice.harness-hospital` | Brief 10 Area: advice | Implemented, Verification Incomplete | the area called it fixed and cites no gate test that holds it |
-| `ST3-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete | Measured on the integrated code by the committed tools (integrated/after/); no gate test holds this clause itself / verified as it stands |
-| `ST6-R.a` | Brief 10 Area: judge | Decision Required | ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of |
-| `ST6-R.c` | Brief 10 Area: judge | Decision Required | ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of |
-| `ST6-R.e` | Brief 10 Area: judge | Decision Required | ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of |
-| `ST6-R.g` | Brief 10 Area: judge | Decision Required | ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of |
-| `H4-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete | The mutations ran in copies by tools/judge-mutations.mjs, recorded in integrated/after/mutations.json; no gate test runs them / verified as it stands |
-| `L3-R.a` | Brief 10 Area: judge | Implemented, Verification Incomplete | Measured on the integrated code by the committed tools (integrated/after/); no gate test holds this clause itself / verified as it stands |
-| `L3-R.b` | Brief 10 Area: judge | Implemented, Verification Incomplete | Measured on the integrated code by the committed tools (integrated/after/); no gate test holds this clause itself / verified as it stands |
-| `L3-R.e` | Brief 10 Area: judge | Implemented, Verification Incomplete | Measured on the integrated code by the committed tools (integrated/after/); no gate test holds this clause itself / verified as it stands |
-| `judge.together` | Brief 10 Area: judge | Implemented, Verification Incomplete | Measured on the integrated code by the committed tools (integrated/after/README.md); the criteria that fail, ST6-R (a), (c), (e), (g), F2 as written and the four originals, fail as they did / verified as it stands |
-| `judge.tests` | Brief 10 Area: judge | Implemented, Verification Incomplete | the area called it implemented and cites no gate test that holds it |
-| `ST6-R.bPrime` | Brief 10 Area: judge | Decision Required | Whether ST6-R (b′), the restrained specialist’s lift over the even actor, both restrained, more than 0.05 larger with restraint’s draws than with them taken out, on at least 90% of the materials where both sides fit, replaces (b) as written. ST6-R’s other clauses and its threshold are unchanged, as the owner asked. |
+| `ST6-R.a` | Brief 10 Area: judge | Decision Required | ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the nine others 40.56, 600 in all) to be ahead of the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of the 44 materials. Measured, it isn’t (2 of 44), and the sorting brief 11 asked for says why: nothing in the game is missing, and the clause, with (c), (e) and (g)’ |
+| `ST6-R.c` | Brief 10 Area: judge | Decision Required | Rests on ST6-R (a): see its decision. Abilities and circumstances fail only for want of (a)’s wins; preparation and interpretation hold. |
+| `ST6-R.e` | Brief 10 Area: judge | Decision Required | Rests on ST6-R (a): see its decision. |
+| `ST6-R.g` | Brief 10 Area: judge | Decision Required | With A1, (g)’s first item is met. Its second and third aren’t caught by the clauses (g) names, and the third by none of ST6-R’s: they rest on what replaces (a) and (c). See ST6-R (a)’s decision. |
+| `L3-R.b` | Brief 10 Area: judge | Implemented, Verification Incomplete | Measured on the integrated code by the committed tools (integrated/after/); no gate test holds this clause itself / Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The eight journeys measured from c3e05866 through tools/brief-journeys.ts (the attentive policy and the brief policy, public commands only), each exit 0, and read by tools/l3r.mjs. / verified as i |
+| `judge.together` | Brief 10 Area: judge | Implemented, Verification Incomplete | Measured on the integrated code by the committed tools (integrated/after/README.md); the criteria that fail, ST6-R (a), (c), (e), (g), F2 as written and the four originals, fail as they did / Brief 11, the acting area (docs/verification/completion-2026-10-16/acting-result.json): The parts this area’s rows read were measured from this clone: stage (ST3-R, ST6-R, the stage criteria) from 44cd15c2, a |
 | `A1` | Brief 10 Area: judge | Implemented, Verification Incomplete | Measured by tools/ag-baseline.ts and tools/ag-criteria.mjs on the integrated code; no gate test holds A1’s figure. A night drains as it did by WORKLOAD.full’s design, so A1 is met by briefs and scenes, and read at a lead a night would be 0.487, short of 0.5 / verified as it stands |
 | `stamina.A1` | Brief 10 Area: stamina | Implemented, Verification Incomplete | Met on brief 10’s integrated code by the judge area’s second phase (remaining-10/judge-result.json, A1): stamina’s briefs 0.53 and scenes 0.54, its nights 0.334 at a supporting part as the tool reads them (0.487 at a lead, 0.138 featured), measured by tools/ag-baseline.ts and tools/ag-criteria.mjs (decisions-2026-10-16/integrated/after/criteria.txt, a1-nights.json); no gate test holds A1’s figure. |
 | `A4` | Criteria: The Attributes | Implemented, Verification Incomplete | Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding |
@@ -621,7 +621,7 @@ None: the baseline wasn’t changed.
 | `judge.length` | Brief 09 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `judge.stamina-load` | Brief 09 Area: judge | duplicate | Not Implemented | Explicitly Deferred |
 | `judge.classes-fitness` | Brief 09 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `judge.coverage-row` | Brief 09 Area: judge | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `judge.coverage-row` | Brief 09 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `advice.harness` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
 | `advice.F2` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
 | `advice.F2A10-a` | Brief 10 Area: advice | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
@@ -653,7 +653,7 @@ None: the baseline wasn’t changed.
 | `ST3-R.b` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `ST3-R.c` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `ST3-R.d` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `ST3-R.e` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `ST3-R.e` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `ST3.asWritten` | Brief 10 Area: judge | superseded | Not Implemented | Explicitly Deferred |
 | `ST6-R.a` | Brief 10 Area: judge | design-or-gameplay | Decision Required | Decision Required |
 | `ST6-R.b` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
@@ -667,21 +667,21 @@ None: the baseline wasn’t changed.
 | `H4-R.b` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `H4-R.c` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `H4-R.d` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `H4-R.e` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `H4-R.e` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `H4.asWritten` | Brief 10 Area: judge | superseded | Not Implemented | Explicitly Deferred |
-| `L3-R.a` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `L3-R.a` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `L3-R.b` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
 | `L3-R.c` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `L3-R.d` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `L3-R.e` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `L3-R.e` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `L3.asWritten` | Brief 10 Area: judge | superseded | Not Implemented | Explicitly Deferred |
 | `M1` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `judge.together` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
-| `judge.tests` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
+| `judge.tests` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `judge.stamina` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `judge.memory` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `judge.composure` | Brief 10 Area: judge | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `ST6-R.bPrime` | Brief 10 Area: judge | design-or-gameplay | Decision Required | Decision Required |
+| `ST6-R.bPrime` | Brief 10 Area: judge | design-or-gameplay | Decision Required | Implemented And Verified |
 | `A1` | Brief 10 Area: judge | verification | Implemented, Verification Incomplete | Implemented, Verification Incomplete |
 | `stamina.W1` | Brief 10 Area: stamina | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `stamina.W2` | Brief 10 Area: stamina | verified at the baseline | Implemented And Verified | Implemented And Verified |

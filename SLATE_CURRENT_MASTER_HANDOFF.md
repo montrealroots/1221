@@ -31,11 +31,19 @@ kept verbatim) is being worked on `claude/peaceful-hamilton-59zdbb`, restarted f
 - **The matrix** may now carry an area item's measurement through an override (`measured`), held current as a
   criterion's is.
 
-**Completion, by the matrix:** 534 of 599 rows in scope Implemented And Verified (89.1%); 54 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 541 of 599 rows in scope Implemented And Verified (90.3%); 48 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 10 Decision Required, 36 Explicitly Deferred.
 
-Against the frozen baseline's 608, the figure is 534 (87.8%), and 10 of the 46 actionable rows are closed by this pass's work:
+Against the frozen baseline's 608, the figure is 541 (88.9%), and 17 of the 46 actionable rows are closed by this pass's work:
 - coverage09.4 to 09.6, genres.4 and genres.6 (`integration-result.json`);
-- the five tax.s8 items (`journeys-result.json`).
+- the five tax.s8 items (`journeys-result.json`);
+- ST6-R.bPrime, ST3-R.e, H4-R.e, L3-R.a, L3-R.e, judge.tests and judge.coverage-row (`acting-result.json`).
+
+**ST6-R (a), (c), (e) and (g) are the owner's decision** (`acting-result.json`, ST6-R.a's decision). No gameplay is
+missing: restraint's own abilities decide its take. The criterion's 25%, though, is reachable only by what the approved
+design rules out: a budget 5.2% over, the weakest-dimension term removed, or a restraint bonus. The recommendation is to
+restate (a) in the restrained choice's own frame, at a floor the owner sets: 10 of 44 there, one short of 25%. (b′)
+replaced (b) under clarification A1 (`clarifications.md`), mapped to the owner's brief 10 words: "a revised test must
+still catch a system where restraint is effectively useless". L3-R.b and judge.together wait on the final measurement.
 
 The engine change behind the Yale fix left six measured rows stale: F2-A, MA5, INT-skipped, INT-navigation, INT-long-runs
 and INT-gate. They're measured again on the final commit. health.enroll and l-actor wait on a second reader's check
