@@ -121,7 +121,7 @@ Three areas, each in its own clone, worked from instructions written before thei
   - **Financially restricted families end with money to spare.** The living-expense scholarship covers more than SLATE
     charges.
   - **The journeys' players file no tax returns.**
-  - **F2's player never moves money from savings,** which is a banking question for decision 4.
+  - **F2's player never moves money from savings,** a banking question; decision 4's rows weren't touched.
   - **The setback's term review falls in December,** after the interface playthrough ended.
 - **What only a person can judge:** how the game feels to play: clarity, pacing, reward, tedium. That is what
   `PLAYTEST.md` is for, and no automated run approves it.
