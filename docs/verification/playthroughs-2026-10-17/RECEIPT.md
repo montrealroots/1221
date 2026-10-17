@@ -195,7 +195,7 @@ Each playthrough of the built app as the interface area ran it (`interface-resul
 - **INT-gate:** npm run gate on 0cf3a9bc: 376 of 376 files, 4587 of 4587 tests passed, none skipped, exit=0, the last check, the completion matrix, holding
 - **Brief 12’s walkthrough’s own steps at 1440** (`../resolution-2026-10-17/PLAYTEST.md`): passed: health: Health Cover names the student’s cover and says the School meets the work rules, o; passed: stamina and recovery: Work Out spends Energy and builds Stamina on the Profile; a night’s ; passed: papers: a Connecticut ID card got from Passport And ID, its fee, its mailing and its term ; passed: [save: brief scenario] advice: What To Work On says what its forecast assumes of the work 
 - **Brief 12’s walkthrough’s own steps at 390** (`../resolution-2026-10-17/PLAYTEST.md`): passed: health: Health Cover names the student’s cover and says the School meets the work rules, o; passed: stamina and recovery: Work Out spends Energy and builds Stamina on the Profile; a night’s ; passed: papers: a Connecticut ID card got from Passport And ID, its fee, its mailing and its term ; passed: [save: brief scenario] advice: What To Work On says what its forecast assumes of the work 
-- **Merged:** not into main, which is the owner’s word to give (git merge-base, as this was written). **Deployed:** nothing; Base44 deployment is the owner’s word after the gate (rule 14).
+- **Merged:** main holds this branch’s head (git merge-base, as this was written). **Deployed:** nothing; Base44 deployment is the owner’s word after the gate (rule 14).
 
 ## What The Receipt Found (0)
 
