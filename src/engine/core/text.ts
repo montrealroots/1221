@@ -57,6 +57,16 @@ export function plural(count: number, one: string, many = `${one}s`): string {
 }
 
 /**
+ * A place in an order, "1st", "2nd", "11th", "23rd" (from 2026-10-17, brief 14's editorial review, for Home's place in
+ * the class, which read "1 of 16 in the class" where the School's look said "1st of 16").
+ */
+export function ordinal(n: number): string {
+  const tens = n % 100;
+  if (tens >= 11 && tens <= 13) return `${n}th`;
+  return `${n}${n % 10 === 1 ? 'st' : n % 10 === 2 ? 'nd' : n % 10 === 3 ? 'rd' : 'th'}`;
+}
+
+/**
  * "a", "a and b", "a, b and c". No Oxford comma; the house does not use one. Moved here from `ui/looks/words.ts` on
  * 2026-10-17 (brief 14), so the engine's sentences join a list as the screens' do; the looks import it from there still.
  */

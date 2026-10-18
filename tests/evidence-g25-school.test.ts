@@ -398,7 +398,7 @@ describe('school.request_leave', () => {
     // TEST SETUP: Personal, Family, Two Terms chosen and Ask For A Leave… pressed (the panel's kind, reason, length and step).
     shown = drawn(sim, LeavePanel, ['personal', 'family', 2, 'request']);
     expect(shown.text).toContain('Asking puts it to the chair and the dean, who decide in five working days.');
-    expect(shown.text).toContain('Granted, it would run from Spring Term 2027 to Spring Term 2028');
+    expect(shown.text).toContain('If it’s granted, it runs from Spring Term 2027 to Spring Term 2028.');
     const ask = pressed('school.request_leave');
     expect(ask).toHaveLength(1);
     ask[0]!.onClick!();

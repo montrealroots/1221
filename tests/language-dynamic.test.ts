@@ -244,7 +244,7 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const standing = drawn(sim, SchoolWorkspace);
     // The first class day: one class day, and one meeting of each course that met.
     expect(standing).toMatch(/Attendance counts 1 of 1 class day\b/);
-    expect(standing).toMatch(/: at 1 of 1 class\./);
+    expect(standing).toMatch(/: 1 of 1 class attended\./);
     agrees(standing, ['class', 'class day', 'call', 'assigned shift']);
     sound(standing);
     // TEST SETUP: Acting I settled Incomplete as `settleCourses` leaves one at the term's end, one session owed or three.
@@ -608,8 +608,8 @@ describe('each academic standing: good standing, academic concern, academic warn
     const school = sim.player.school!;
     const head = () => drawn(sim, SchoolWorkspace).split('\n').find((l) => l.startsWith('MFA in Acting, class of 2029.'))!;
     const affairs = () => drawn(sim, Home).split('\n').find((l) => l.startsWith('School '))!;
-    expect(head()).toBe('MFA in Acting, class of 2029. Year 1 of three, good standing.');
-    expect(affairs()).toMatch(new RegExp(`^School Year 1, good standing, \\d+ of 16 in the class\\. Next: .+, ${MONTH} \\d{1,2}, \\d{4} at \\d{1,2}:\\d{2} [AP]M\\.`));
+    expect(head()).toBe('MFA in Acting, class of 2029. Year 1 of 3, good standing.');
+    expect(affairs()).toMatch(new RegExp(`^School Year 1, good standing, \\d+(?:st|nd|rd|th) of 16 in the class\\. Next: .+, ${MONTH} \\d{1,2}, \\d{4} at \\d{1,2}:\\d{2} [AP]M\\.`));
     // TEST SETUP: each term's attendance short of the floor (90%), the term's tally as staying away leaves it, then the
     // faculty's review as the term's end runs it (`evaluate`). The next term begun by hand where the clock would begin it.
     const shortTerm = (term: number) => {
@@ -637,9 +637,9 @@ describe('each academic standing: good standing, academic concern, academic warn
       expect(tab).toContain(`${termLabel(term)}\n${label}\n50%`);
       if (e.standing === 'dismissed') {
         expect(head()).toBe('MFA in Acting, class of 2029. Left the School.');
-        expect(affairs()).toMatch(/^School Left the School, dismissed, \d+ of 16 in the class\. Your standing is dismissed\. The School screen says why\./);
+        expect(affairs()).toMatch(/^School Left the School, dismissed, \d+(?:st|nd|rd|th) of 16 in the class\. Your standing is dismissed\. The School screen says why\./);
       } else {
-        expect(head()).toBe(`MFA in Acting, class of 2029. Year ${term < 2 ? 1 : 2} of three, ${label.toLowerCase()}.`);
+        expect(head()).toBe(`MFA in Acting, class of 2029. Year ${term < 2 ? 1 : 2} of 3, ${label.toLowerCase()}.`);
         expect(affairs()).toContain(`, ${label.toLowerCase()}, `);
         expect(affairs()).toContain(`Your standing is ${label.toLowerCase()}. The School screen says why.`);
       }
@@ -666,7 +666,7 @@ describe('each academic standing: good standing, academic concern, academic warn
     const head = drawn(sim, SchoolWorkspace).split('\n').find((l) => l.startsWith('MFA in Acting, class of'))!;
     expect(head).toBe(`MFA in Acting, class of ${school.classOf}. On leave until Fall Term 2027.`);
     const affairs = drawn(sim, Home).split('\n').find((l) => l.startsWith('School '))!;
-    expect(affairs).toMatch(/^School On Leave, good standing, \d+ of 16 in the class\./);
+    expect(affairs).toMatch(/^School On Leave, good standing, \d+(?:st|nd|rd|th) of 16 in the class\./);
     for (const s of [refused.error!, pending.error!, head, affairs]) { sound(s); whole(s); dated(s); }
   });
 });
@@ -1013,7 +1013,7 @@ describe('a new player, an advanced one and a finished school journey: the Profi
       const head = lines(screens.school).find((l) => l.startsWith('MFA in Acting, class of 2029.'))!;
       const profileSchool = lines(screens.profile).slice(lines(screens.profile).indexOf('School'), lines(screens.profile).indexOf('School') + 3);
       if (stage === 'new') {
-        expect(affairs).toMatch(/^School Arriving, good standing, \d+ of 16 in the class\. Next: Registration And Your Account, August 24, 2026 at 10:00 AM\.$/);
+        expect(affairs).toMatch(/^School Arriving, good standing, \d+(?:st|nd|rd|th) of 16 in the class\. Next: Registration And Your Account, August 24, 2026 at 10:00 AM\.$/);
         expect(profileSchool).toEqual(['School', 'Year 1', 'Class of 2029, good standing']);
         expect(screens.profile).toContain('None of your work has been judged yet. What to work on comes from what holds judged work back, so it starts after your first showing, night on stage or self-tape.');
         expect(head).toBe('MFA in Acting, class of 2029. Arriving for the fall term.');
@@ -1021,17 +1021,17 @@ describe('a new player, an advanced one and a finished school journey: the Profi
         expect(screens.school).toContain('Coursework This Term\nNone Yet');
         expect(screens.coursework).toContain('Nothing is set yet. Each course sets its work in class, and in your first week the orientation session The Courses And What They Ask sets the first pieces.');
       } else if (stage === 'a year played') {
-        expect(affairs).toMatch(/^School Year 1, good standing, \d+ of 16 in the class\. Next: Classes, August 30, 2027 at 9:00 AM\.$/);
+        expect(affairs).toMatch(/^School Year 1, good standing, \d+(?:st|nd|rd|th) of 16 in the class\. Next: Classes, August 30, 2027 at 9:00 AM\.$/);
         expect(profileSchool).toEqual(['School', 'Year 1', 'Class of 2029, good standing']);
         expect(screens.profile).toContain('What To Work On Next');
-        expect(head).toBe('MFA in Acting, class of 2029. Year 1 of three, good standing.');
+        expect(head).toBe('MFA in Acting, class of 2029. Year 1 of 3, good standing.');
         // Both of the year's reviews, in good standing, and the spring's teachers' notes.
         expect(screens.school).toMatch(/\nFall Term 2026\nGood Standing\n\d+%/);
         expect(screens.school).toMatch(/\nSpring Term 2027\nGood Standing\n\d+%/);
         expect(screens.school).toContain('From Your Teachers\nOn Spring Term 2027');
         expect(screens.school).toContain('Attendance This Term');
       } else {
-        expect(affairs).toMatch(/^School Graduated, \d+ of 16 in the class\.$/);
+        expect(affairs).toMatch(/^School Graduated, \d+(?:st|nd|rd|th) of 16 in the class\.$/);
         expect(profileSchool).toEqual(['School', 'Graduated', 'Class of 2029, graduated']);
         expect(head).toBe('MFA in Acting, class of 2029. Graduated.');
         expect(screens.school).toContain('Attendance Last Term');

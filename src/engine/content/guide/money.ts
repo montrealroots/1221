@@ -241,7 +241,7 @@ export const MONEY: readonly GuideEntry[] = [
     example: {
       setup: `A life begun in New Haven with Modest means, at Chase: ${usd(MODEST.checking)} in ${CHECKING.name}, ${usd(MODEST.savings)} in ${SAVINGS.name}, and ${usd(OWED)} owed on the ${CHASE_CARD.name} against a ${usd(MODEST.cardLimit)} limit.`,
       steps: ['Read the Money line on Home.', 'Press Your Affairs, then Owed.'],
-      result: `The line reads “${CHECKING.name}: ${formatMoney(MODEST.checking, 'USD')}. Worth ${formatMoney(WORTH, 'USD', { cents: false })}, ${formatMoney(OWED, 'USD', { cents: false })} of it owed.” The card is still in its introductory months, so Owed says it’s charged no interest today, and that the card is at ${pct(CHASE_CARD.introApr ?? 0)} until the day they end, then ${pct(CHASE_RATE)}: about ${usd(Math.round((OWED * CHASE_RATE) / 100) * 100)} a year from then if none of it were paid. Credit Used is ${Math.round((OWED / MODEST.cardLimit) * 100)}%, under the 30% where your score starts to suffer.`,
+      result: `The line reads “${CHECKING.name}: ${formatMoney(MODEST.checking, 'USD')}. Worth ${formatMoney(WORTH, 'USD', { cents: false })}, after ${formatMoney(OWED, 'USD', { cents: false })} owed.” The card is still in its introductory months, so Owed says it’s charged no interest today, and that the card is at ${pct(CHASE_CARD.introApr ?? 0)} until the day they end, then ${pct(CHASE_RATE)}: about ${usd(Math.round((OWED * CHASE_RATE) / 100) * 100)} a year from then if none of it were paid. Credit Used is ${Math.round((OWED / MODEST.cardLimit) * 100)}%, under the 30% where your score starts to suffer.`,
     },
   },
   {

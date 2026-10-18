@@ -3061,9 +3061,9 @@
  },
  "src/engine/systems/school.ts#registerSchool": {
   "status": "Rewritten And Verified",
-  "hash": "09d5d03adada",
-  "on": "2026-10-17",
-  "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts; the calendar entry Term Review, Fall Term 2026 is display only (EVALUATION_KIND is the key, read by SchoolWorkspace and onSchedule)"
+  "hash": "2ae94bc4caaf",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: tests/evidence3-person.test.ts \"PLAYER JOURNEY: Inherited chosen, then Nothing: …\", tests/need-paths.test.ts \"PLAYER JOURNEY: a Scraping family’s student is paid …\" and tests/evidence2-b10.test.ts \"PLAYER JOURNEY: the plan the bank couldn’t take is said to be owed, …\" assert “Yale’s aid for living costs goes by need, and your family’s means rule it out, so …” exactly, paid and owed"
  },
  "src/engine/systems/school.ts#registerSchool [summer]": {
   "status": "Reviewed And Retained",
@@ -3505,9 +3505,9 @@
  },
  "src/ui/components/StudyPlanPanels.tsx#LeavePanel": {
   "status": "Rewritten And Verified",
-  "hash": "027575250a41",
-  "on": "2026-10-17",
-  "evidence": "tests/whynot-studyplan.test.ts, tests/evidence-g26-school.test.ts, tests/leave.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "68ac7ef16b0c",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: tests/evidence-g25-school.test.ts \"PLAYER JOURNEY: Ask For A Leave… opens the form’s Ask, …\" asserts “If it’s granted, it runs from Spring Term 2027 to Spring Term 2028.”; the rest of the paragraph read on the Standing tab of the built app (editorial/walk-1440, the dir2 and leave saves)"
  },
  "src/ui/components/StudyPlanPanels.tsx#RepeatPanel": {
   "status": "Rewritten And Verified",
@@ -3649,9 +3649,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#SchoolWorkspace": {
   "status": "Rewritten And Verified",
-  "hash": "672e645cc2d9",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g24-school.test.ts and tests/evidence2-b08.test.ts (Term Reviews), tests/remaining-school-term.test.ts, tests/remaining-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, after-new-1440, after-new-390)"
+  "hash": "ad8f07c76ecc",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: tests/language-dynamic.test.ts \"the term review’s notice and the screens at good standing, then a concern, a warning and a dismissal\" asserts “MFA in Acting, class of 2029. Year 1 of 3, good standing.” exactly"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#SLOTS": {
   "status": "Reviewed And Retained",
@@ -3679,9 +3679,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#TermsPane": {
   "status": "Rewritten And Verified",
-  "hash": "22e6d8e02f5d",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g26-school.test.ts, tests/remaining-school.test.ts, tests/evidence-g19/g20-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "758ab339d76f",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: tests/need-paths.test.ts \"PLAYER JOURNEY: a Scraping family’s student is paid …\" asserts “Yours show need, and the scholarship meets it.” and “Yours rule it out, so the health plan and living costs come from your bank.” on the Terms And Award tab"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#WEEKDAYS": {
   "status": "Reviewed And Retained",

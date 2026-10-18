@@ -2455,9 +2455,9 @@
  },
  "src/engine/systems/artistry.ts#identityOf": {
   "status": "Rewritten And Verified",
-  "hash": "543919707d01",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence2-b11.test.ts (the panel whole, built line by line from the record), tests/evidence-g23-school.test.ts (a strength, Taking Direction), tests/evidence-g32-ui.test.ts; Your Work So Far on a played case printed in docs/verification/language-2026-10-17/profile/b3-practice.txt"
+  "hash": "a819c61987af",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: tests/evidence2-b11.test.ts (the Profile’s Your Work So Far drawn and set beside the line built from the record, Playing With Others with “of the 1 slip … you covered it”, “all of them” and “none”), 540 of 540 in the batch’s files"
  },
  "src/engine/systems/attributes.ts#alreadyApplied": {
   "status": "Rewritten And Verified",
@@ -2731,9 +2731,9 @@
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#JourneyPanel": {
   "status": "Rewritten And Verified",
-  "hash": "af451a96b0f5",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence2-b11.test.ts (School Journey: Left the School, dismissed and withdrawn), one form with the School screen and the notices"
+  "hash": "190e85d5c165",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: tests/evidence-g32-ui.test.ts \"PLAYER JOURNEY: a first year played to 10 May 2027, the Carlotta Festival on: …\" and tests/evidence2-b11.test.ts assert “School Journey Year 1 of 3, academic warning …” exactly"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#ListControls": {
   "status": "Reviewed And Retained",

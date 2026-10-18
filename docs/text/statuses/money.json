@@ -2641,9 +2641,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [money.affairs]": {
   "status": "Rewritten And Verified",
-  "hash": "7614a7a85f79",
-  "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
+  "hash": "9737e24819a2",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: its quote of Home’s Money line brought to the game’s words, “Worth …, after … owed.”; tools/guide-quotes.mjs --check 581 of 581, and tests/guide-examples-money.test.ts plays the example"
  },
  "src/engine/content/guide/money.ts#MONEY [optional]": {
   "status": "Rewritten And Verified",

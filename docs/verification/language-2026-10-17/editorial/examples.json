@@ -340,5 +340,104 @@
   "why": "All of them, said as all.",
   "meaningSensitive": false,
   "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "label",
+  "before": "Chase Total Checking: $5,000.00. Worth $4,851, $149 of it owed.",
+  "after": "Chase Total Checking: $5,000.00. Worth $4,851, after $149 owed.",
+  "why": "Worth is assets less what's owed, so “of it owed” said part of the worth was a debt.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence2-b12.test.ts, tests/evidence-g33-ui.test.ts, tests/scope-money.test.ts"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "label",
+  "before": "Year 1, good standing, 1 of 16 in the class.",
+  "after": "Year 1, good standing, 1st of 16 in the class.",
+  "why": "A place, not a count; the School's look already said “1st of 16”.",
+  "meaningSensitive": true,
+  "verified": "tests/language-dynamic.test.ts, tests/evidence2-b12.test.ts, tests/evidence3-home.test.ts, tests/evidence-g33-ui.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/SchoolWorkspace.tsx#SchoolWorkspace",
+  "kind": "heading",
+  "before": "MFA in Acting, class of 2029. Year 1 of three, good standing.",
+  "after": "MFA in Acting, class of 2029. Year 1 of 3, good standing.",
+  "why": "A figure and a word for the same kind of number in one phrase.",
+  "meaningSensitive": false,
+  "verified": "tests/language-dynamic.test.ts \"the term review’s notice and the screens at good standing, …\""
+ },
+ {
+  "source": "src/ui/workspaces/SchoolWorkspace.tsx#StandingPane",
+  "kind": "label",
+  "before": "Attendance counts 0 of 0 class days, 0 of 0 calls and 0 of 0 assigned shifts.",
+  "after": "There’s been no class day, call or shift to count toward attendance this term yet.",
+  "why": "Zero said as none.",
+  "meaningSensitive": false,
+  "verified": "the Standing tab on the final walk (editorial/walk-1440)"
+ },
+ {
+  "source": "src/ui/workspaces/SchoolWorkspace.tsx#StandingPane",
+  "kind": "label",
+  "before": "Acting I: at 5 of 5 classes.",
+  "after": "Acting I: 5 of 5 classes attended.",
+  "why": "“at 5 of 5 classes” left the verb out.",
+  "meaningSensitive": false,
+  "verified": "tests/language-dynamic.test.ts \"a course’s meetings and the term’s class days on the first day of classes, …\""
+ },
+ {
+  "source": "src/ui/components/StudyPlanPanels.tsx#LeavePanel",
+  "kind": "label",
+  "before": "Granted, it would run from Fall Term 2027 to Fall Term 2028: no aid, classes, calls or shifts while on leave; Yale Health goes on as Affiliate cover the School pays for, and you need a physician’s clearance to come back; notice of return eight weeks before, or dismissal.",
+  "after": "If it’s granted, it runs from Fall Term 2027 to Fall Term 2028. While you’re on leave there’s no aid, and no classes, calls or shifts. Yale Health goes on as Affiliate cover the School pays for, and you need a physician’s clearance to come back. Give notice of your return eight weeks before, or the leave ends in dismissal.",
+  "why": "One sentence with a colon and three semicolons, made four; the last says what the leave's notice says.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g25-school.test.ts \"PLAYER JOURNEY: Ask For A Leave… …\""
+ },
+ {
+  "source": "src/engine/systems/school.ts#registerSchool",
+  "kind": "official",
+  "before": "Yale’s aid for living costs goes by need, and none was found, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.",
+  "after": "Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.",
+  "why": "“none was found” hid who found what; the guide's chapter already said it this way.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence3-person.test.ts, tests/need-paths.test.ts, tests/evidence2-b10.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/SchoolWorkspace.tsx#TermsPane",
+  "kind": "label",
+  "before": "…, goes by need, and the need assessment reads the family’s means. Yours found none, so the health plan and living costs come from your bank.",
+  "after": "…, goes by need, judged from your family’s means. Yours rule it out, so the health plan and living costs come from your bank.",
+  "why": "“the need assessment reads” is the engine describing itself.",
+  "meaningSensitive": false,
+  "verified": "tests/need-paths.test.ts"
+ },
+ {
+  "source": "src/engine/systems/artistry.ts#identityOf",
+  "kind": "label",
+  "before": "6 pieces played with a partner, a reader or a company came to 61.8 together on average; of 1 slips by the others, you covered 1.",
+  "after": "6 pieces played with a partner, a reader or a company came to 61.8 together on average; of the 1 slip by the others, you covered it.",
+  "why": "A plural that disagreed.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b11.test.ts"
+ },
+ {
+  "source": "src/ui/looks/actor.tsx#sourceWords",
+  "kind": "label",
+  "before": "+0.01, Coursework: reader",
+  "after": "+0.01, Coursework: running it with a reader",
+  "why": "A key shown as a word.",
+  "meaningSensitive": false,
+  "verified": "the Player Profile's Development History on the final walk (editorial/walk-1440)"
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#ORIENTATION [faculty]",
+  "kind": "narration",
+  "before": "First-year courses are taught by Gregory Wallace, …, Michael Rossmy, Paul Walsh.",
+  "after": "First-year courses are taught by Gregory Wallace, …, Michael Rossmy and Paul Walsh.",
+  "why": "A list with no “and”.",
+  "meaningSensitive": false,
+  "verified": "journey J01 part 1 replayed on this code: the Meeting The Acting Faculty notice ends “…, Kelsey Rainwater, Michael Rossmy and Paul Walsh.”"
  }
 ]

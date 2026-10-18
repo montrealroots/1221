@@ -63,7 +63,9 @@ export function sourceWords(source: string): string {
   // A class by its name and a coursework step by its part’s words (from 2026-10-17, brief 14): until then the course’s
   // code alone and the part’s key, "Class: DRAM 153a", "Coursework: interpretation".
   if (kind === 'class') { const c = COURSES.find((x) => x.code === rest); return c ? `Class: ${c.name} (${c.code})` : `Class: ${rest}`; }
-  if (kind === 'prepare') return `Coursework: ${(TASK_PROFILES.scene?.prepLabel?.[rest ?? ''] ?? rest ?? 'preparation').toLowerCase()}`;
+  // A step with no part of its own said as what it is (from 2026-10-17, brief 14's editorial review): until then the
+  // reader's evenings showed as their key, "Coursework: reader".
+  if (kind === 'prepare') return `Coursework: ${(TASK_PROFILES.scene?.prepLabel?.[rest ?? ''] ?? ({ reader: 'running it with a reader', approach: 'rehearsing how you play it', genre: 'knowing the genre' } as Record<string, string>)[rest ?? ''] ?? rest ?? 'preparation').toLowerCase()}`;
   if (kind === 'interest') return 'An interest, from before they were removed';
   if (kind === 'workout') return rest === 'run' ? 'A run' : 'A workout';
   if (kind === 'read' || kind === 'research') return 'Reading a play';

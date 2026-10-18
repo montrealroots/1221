@@ -10,7 +10,7 @@
 
 import { useState } from 'react';
 import { formatDaylight } from '@/engine/core/sun';
-import { titleCaseLabel } from '@/engine/core/text';
+import { ordinal, titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { MS_DAY, WEEKDAY_NAMES, formatDateTime } from '@/engine/core/time';
@@ -483,7 +483,7 @@ export function Home() {
           {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
             <AffairLine
               title="Money"
-              line={`${primary?.name ?? 'No account'}: ${primary ? signed(balanceText(sim, primary)) : formatMoney(0, cur)}${keptWords}. Worth ${signed(formatMoney(worth.total, cur, { cents: false }))}${worth.liabilities > 0 ? `, ${formatMoney(worth.liabilities, cur, { cents: false })} of it owed.` : '.'}`}
+              line={`${primary?.name ?? 'No account'}: ${primary ? signed(balanceText(sim, primary)) : formatMoney(0, cur)}${keptWords}. Worth ${signed(formatMoney(worth.total, cur, { cents: false }))}${worth.liabilities > 0 ? `, after ${formatMoney(worth.liabilities, cur, { cents: false })} owed.` : '.'}`}
               alert={(primary?.balance ?? 0) < 0 ? 'Your account is overdrawn.' : undefined}
               action={<Gated feature="ui.bank" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{primary?.institution ?? 'Your Bank'}</Gated>}
               help="bank.accounts"
@@ -537,7 +537,7 @@ function SchoolLine() {
   return (
     <AffairLine
       title="School"
-      line={`${where}${standing}, ${rankIn(person)} of ${YALE_DRAMA.classSize} in the class.${next ? ` Next: ${next.label}, ${formatDateTime(next.at, zone)}.` : ''}`}
+      line={`${where}${standing}, ${ordinal(rankIn(person))} of ${YALE_DRAMA.classSize} in the class.${next ? ` Next: ${next.label}, ${formatDateTime(next.at, zone)}.` : ''}`}
       alert={troubled ? `Your standing is ${STANDING_LABEL[school.standing].toLowerCase()}. The School screen says why.` : undefined}
       action={<Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'School')}>{YALE_DRAMA.short}</Gated>}
       help="school.standing"

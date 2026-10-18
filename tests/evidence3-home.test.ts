@@ -475,7 +475,7 @@ describe('the graduate, played', () => {
     const mean = (c: object) => SKILLS.reduce((a, s) => a + (c as Record<string, number>)[s.id]!, 0) / SKILLS.length;
     const mine = mean(sim.player.craft!);
     const place = 1 + sim.player.school!.classmates.filter((x) => mean(x.craft) > mine).length;
-    const line = `School Graduated, ${place} of 16 in the class. Yale How This Works`;
+    const line = `School Graduated, ${place}${[11, 12, 13].includes(place % 100) || place % 10 > 3 ? 'th' : ['th', 'st', 'nd', 'rd'][place % 10]} of 16 in the class. Yale How This Works`;
     for (const one of [sim, reload(sim)]) {
       const affairs = between(drawn(one, Home).text, 'Your Affairs');
       expect(affairs).toContain(line);

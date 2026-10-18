@@ -466,7 +466,7 @@ describe('p-journey-history', () => {
     const kept = (p.school!.classmates as unknown as { kept?: number }[]).reduce((a, m) => a + (m.kept ?? 0), 0);
     section('Reliability', [{ line: `${answered} of ${calls} calls answered; ${kept} rehearsals with a partner kept.`, evidence: ['The school’s record of calls; your partners’ records'] }]);
     const tog = j.together!;
-    section('Playing With Others', [{ line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average; of ${tog.slips} slips by the others, you covered ${tog.covered}.`, evidence: [`Scenes, takes and nights together: ${tog.n}`] }]);
+    section('Playing With Others', [{ line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average; of ${tog.slips === 1 ? 'the 1 slip' : `${tog.slips} slips`} by the others, you covered ${tog.covered === 0 ? 'none' : tog.covered === tog.slips ? (tog.slips === 1 ? 'it' : 'all of them') : tog.covered}.`, evidence: [`Scenes, takes and nights together: ${tog.n}`] }]);
     return words(out.join(' '));
   }
 
@@ -585,7 +585,7 @@ describe('p-journey-history', () => {
     sim.advanceTo(at(2027, 6, 5, 12));
     // TEST SETUP: an understudy's Rep run, The Seagull's, sent on once and closed on its last night.
     (sim.player.school as unknown as { rep: unknown }).rep = { production: 'The Seagull', role: 'Nina', kind: 'understudy', term: 1, performed: 1, closed: at(2027, 3, 27, 22) };
-    expect(journey(sim)).toBe('School Journey Year 1 of three, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');
+    expect(journey(sim)).toBe('School Journey Year 1 of 3, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');
     expect(sim.execute({ kind: 'school.withdraw', payload: { confirm: true } }).ok).toBe(true);
     expect(sim.player.school!.credits!.map((c) => c.role)).toEqual(['A Leading Part In A New Play', 'Nina']);
     expect(journey(sim)).toBe('School Journey Left the School, withdrawn How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');

@@ -2647,9 +2647,9 @@
  },
  "src/ui/screens/Home.tsx#Home": {
   "status": "Rewritten And Verified",
-  "hash": "4a5211415de4",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g33-ui.test.ts, ‘a worth below nothing is written with the minus sign, as Money writes an overdrawn balance’ (fails on the old line) and the overdrawn line; tests/guide-examples-money.test.ts (money.affairs reads Home’s line); Home in docs/verification/language-2026-10-17/crossarea/after-notices-1440 and after-notices-390 (the health area’s three notice saves, written on this code), h-nh-status.json: “Worth −$227, $943 of it owed.”"
+  "hash": "cd6a21bdb4ac",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: Worth is assets less what’s owed (`netWorth`), so “Worth $503,542, $10 of it owed.” said part of the worth was owed; now “Worth $503,542, after $10 owed.” tests/evidence2-b12.test.ts “the twin never opted in: …”, tests/evidence-g33-ui.test.ts “with the day’s spending put on the card, …” and tests/scope-money.test.ts assert it exactly; the School line’s place, “1st of 16 in the class”, is asserted by tests/language-dynamic.test.ts, tests/evidence2-b12.test.ts, tests/evidence3-home.test.ts and tests/evidence-g33-ui.test.ts"
  },
  "src/ui/screens/Home.tsx#PapersLine": {
   "status": "Reviewed And Retained",

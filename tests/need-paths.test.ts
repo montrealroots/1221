@@ -370,13 +370,13 @@ describe('Yale’s living-expense scholarship, the term’s account (c-family)',
     expect(memos(rich, /^Living-expense scholarship/)).toHaveLength(0);
     expect(checking(rich).balance - fall.rich.before).toBe(-1_882_00);
     expect(earningsOf(rich.player).years[2026]?.scholarship ?? 0).toBe(0);
-    expect(titled(rich, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and none was found, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.']);
+    expect(titled(rich, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.']);
     // Terms And Award, as each has it.
     const terms = { 'tab:/workspace/school': 'terms' };
     expect(drawn(need, SchoolWorkspace, terms).text).toContain('Each Term Billed Credited Tuition $20,375.00 Tuition Scholarship $20,375.00 Yale Health Plan $1,882.00 Living-Expense Scholarship $15,200.50 Paid To Your Bank $13,318.50');
-    expect(drawn(need, SchoolWorkspace, terms).text).toContain('Yours found need, and the scholarship meets it.');
+    expect(drawn(need, SchoolWorkspace, terms).text).toContain('Yours show need, and the scholarship meets it.');
     expect(drawn(rich, SchoolWorkspace, terms).text).toContain('Each Term Billed Credited Tuition $20,375.00 Tuition Scholarship $20,375.00 Yale Health Plan $1,882.00 Paid From Your Bank $1,882.00');
-    expect(drawn(rich, SchoolWorkspace, terms).text).toContain('Yours found none, so the health plan and living costs come from your bank.');
+    expect(drawn(rich, SchoolWorkspace, terms).text).toContain('Yours rule it out, so the health plan and living costs come from your bank.');
   }, 120_000);
 
   it('PLAYER JOURNEY: the spring term pays the Scraping student $13,318.50 again on 4 January 2027, and the year’s taxable scholarship is $14,014.00 each year', () => {

@@ -188,3 +188,48 @@ Looking Back and Director's Note in `b3-rendered.txt`, the ten checks passing.
 **Checks:** `tsc` 0, `eslint` 0, the eleven language checks 0, `guide-quotes` 0, `traceability` 0, `devmap --check` 0;
 six test files (language-dynamic, evidence-g19, -g21, remaining-school, credits-dated, casting) 130 of 130, and
 `editorial-school-words` 5 of 5. **Statuses:** 4 sources Rewritten And Verified `--by school`.
+
+## Batch 4: Home, The Player Profile, Standing And Terms
+
+Read on the walk's Home, Player Profile and School screens, fourteen saves at 1440 and 390:
+
+- **Home's Money line said the wrong thing (Wrong).** “Worth $4,851, $149 of it owed.” Worth is what you have less
+  what you owe (`netWorth`: cash, held and pensions, less liabilities), so the $149 isn't part of the $4,851: it's
+  already been taken off. Now “Worth $4,851, after $149 owed.” The money guide's worked example quotes it, and says so.
+- **Home and the School's look disagreed (Wrong).** Home's School line read “Year 1, good standing, 1 of 16 in the
+  class.”, which reads as one of the sixteen; the School's look says “1st of 16 in the class overall”, the place by mean
+  craft (`rankIn`). Home now says “1st of 16 in the class.” `ordinal` joins `plural` and `spokenList` in `core/text.ts`.
+- **“Year 1 of three”** on the School screen's header and the Profile's School Journey, a figure and a word in one
+  phrase: “Year 1 of 3”. The look's “your first year of three”, all words, stays.
+- **Standing.** “Attendance counts 0 of 0 class days, 0 of 0 calls and 0 of 0 assigned shifts.” before a term's first
+  class says “There’s been no class day, call or shift to count toward attendance this term yet.” (and last term's, in
+  the past). A course's line “Acting I: at 5 of 5 classes.” reads “Acting I: 5 of 5 classes attended.” The leave form's
+  “Granted, it would run from … to …: no aid, classes, calls or shifts while on leave; …; notice of return eight weeks
+  before, or dismissal.”, one sentence of colons and semicolons, is five: “If it’s granted, it runs from … to …. While
+  you’re on leave there’s no aid, and no classes, calls or shifts. … Give notice of your return eight weeks before, or
+  the leave ends in dismissal.”, the last in the words the leave's own notice uses.
+- **Aid (engine-speak).** The Terms tab's “goes by need, and the need assessment reads the family’s means. Yours found
+  none, …” and the term's notice “Yale’s aid for living costs goes by need, and none was found, so …” say it as the
+  guide's chapter does: “… goes by need, and your family’s means rule it out, so …”; on the tab, “judged from your
+  family’s means. Yours rule it out, …” (“Yours show need, …” where they do).
+- **The Profile.** Playing With Others read “of 1 slips by the others, you covered 1”: now “of the 1 slip by the others,
+  you covered it” (“all of them”, “none”). Development History named the reader's evenings by their key, “Coursework:
+  reader”: now “Coursework: running it with a reader”.
+- **Orientation.** “First-year courses are taught by …, Michael Rossmy, Paul Walsh.” joins its list with `spokenList`:
+  “…, Michael Rossmy and Paul Walsh.”
+
+**Meaning-sensitive:** the worth line (checked against `netWorth` and the three tests that build it from balances); the
+place (the same `rankIn`, said as the look says it). The rest change no figure.
+
+**Tests updated:** the place in `tests/language-dynamic.test.ts` (six patterns, now `\d+(?:st|nd|rd|th) of 16`),
+`evidence2-b12.test.ts` (and “6th”, “7th”), `evidence3-home.test.ts` (the suffix worked out inline, so no line moved),
+`evidence-g33-ui.test.ts` (`ordinal` added to its `core/text` import line); “Year 1 of 3” in `language-dynamic`,
+`evidence2-b11`, `evidence-g32-ui`; the course's line in `language-dynamic`; the leave in `evidence-g25-school`; the aid
+in `evidence3-person`, `need-paths`, `evidence2-b10`; the slips in `evidence2-b11` (built from the record, as before); the
+worth in `scope-money`, `evidence2-b12`, `evidence-g33-ui` (its `not.toMatch` as narrow, for the new words).
+
+**Checks:** `tsc` 0, `eslint` 0, the eleven language checks 0 (`tics` failed once, on “Nothing counts toward
+attendance …”, a sentence opening on Nothing over a budget of none; turned round as above, then 0), `guide-quotes` 0;
+`traceability`, `devmap`, `coverage` 0; 30 test files, 540 of 540 after four assertions were brought to the new words,
+then 79 of 79 and 142 of 142. **Statuses:** 9 sources Rewritten And Verified (school 4, profile 2, frame 1, money 1, and
+`registerSchool`); `StandingPane` and `sourceWords` are verified on the final walk (batch 6).
