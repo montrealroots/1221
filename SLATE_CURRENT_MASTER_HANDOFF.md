@@ -4,7 +4,8 @@
 "Complete Player-Facing Language And Tutorial Overhaul"
 (`docs/verification/briefs-2026-10-16/14-complete-player-facing-language-and-tutorial-overhaul.txt`, kept verbatim). The
 work was done on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `0368d46b` (#41's merge). Brief 13's section
-below was the status until brief 14 began. **Nothing of brief 14 is merged or deployed.**
+below was the status until brief 14 began. It is pushed and in pull request #42
+(https://github.com/yvcbcjhsy7-prog/1221/pull/42). **Nothing of brief 14 is merged or deployed.**
 
 ## 1. The Repository
 
