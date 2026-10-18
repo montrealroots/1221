@@ -17,15 +17,20 @@ below was the status until brief 14 began. **Nothing of brief 14 is merged or de
   - **Lanes A and UI** ran on `edd7be91`, which adds only records to `ebdb5577`.
   - **The other lanes and the final walk** ran on `6d83601a`. Between `6d83601a` and `ebdb5577`, `src/` differs only in
     Work On The Note's toast (`CourseworkPane.tsx`). No engine run reads that toast, and the walk never presses for it.
-  - **The gate** ran last; its figures are folded in after it (`docs/verification/language-2026-10-17/runs/gate.txt`).
+  - **The gate** ran last, on `a51b0e15`: exit 0, 391 of 391 test files and 4,713 of 4,713 tests passed, none
+    skipped, every one of the twenty checks holding; the build exit 0
+    (`docs/verification/language-2026-10-17/runs/gate.txt`). Only documents changed after it: the gate's figures
+    folded in.
   - Each run's commit, command and exit is in `runs/exits-*.txt`, under `docs/verification/language-2026-10-17/`.
 - **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
   worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
 
 ## 2. Where It Stands
 
-**Completion, by the matrix:** 611 of 636 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
+- **Against brief 13's close:** the same 612 rows Implemented And Verified, each measured again on brief 14's commits
+  where what it reads changed: 78 on `6d83601a`, 6 on the built app on `edd7be91`, and the gate's on `a51b0e15`.
 - **Every source of player text has a status, and none is Pending** (`docs/text/INVENTORY.md`, by
   `tools/text-inventory.mjs`).
   - **The inventory now:** 4,151 sources, 34,202 strings, 550,968 words. 1,285 are Rewritten And Verified, 2,866
@@ -41,7 +46,7 @@ below was the status until brief 14 began. **Nothing of brief 14 is merged or de
   (`numbers-same.py`). The judge's 36 figures are brief 13's exactly, so RULESET stays evaluation-11.
   - **The judge's outputs** (`final/`): 35 of 35 the same in every number.
   - **The runs** (`runs/`): 16 of 17. The other is freshness's count of suggestions found by their phrases.
-  - **The advice** (`advice/`): only the commit differs.
+  - **The advice** (`advice/`): only each run's own record differs (its commit, the files it read, its seconds).
   - **The journeys** (`journeys-final/`): brief 13's 25 played to the end, all ten checks passed on each, and each
     ending as brief 13's ended. Their differences are notices that no longer merge, because a repeated notice now says
     what changed; the events they tell of are the same. The rest are counts of words and the runs' own records.
@@ -123,7 +128,8 @@ is section 10's receipt, written by `receipt.py` from the records.
 - **The matrix:**
   - `criteria.py` reads brief 14's results after brief 13's.
   - Where watched files changed, brief 14's final runs move the measurements brief 13 made.
-  - `verify.py` restates brief 13's clauses on brief 14's tested commit.
+  - `verify.py` restates brief 13's clauses on brief 14's commits, and `advice/close.py` the advice's four rows, each
+    into a `*-result.json` that `criteria.py` reads.
 
 # Earlier: Brief 13, The Final Acting Clauses And The Playthroughs, 2026-10-17
 

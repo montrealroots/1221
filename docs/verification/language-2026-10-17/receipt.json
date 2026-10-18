@@ -1,5 +1,5 @@
 {
- "commit": "15421228",
+ "commit": "a51b0e15",
  "standard": {
   "parts": [
    "Each kind of text has its own job",
@@ -167,10 +167,16 @@
   "changedFiles": 216
  },
  "final": {
-  "gate": null,
-  "suite": null,
-  "files": null,
-  "build": null,
+  "gate": 0,
+  "suite": [
+   "4713",
+   "4713"
+  ],
+  "files": [
+   "391",
+   "391"
+  ],
+  "build": 0,
   "lanes": {
    "runs/exits-A.txt": {
     "steps": 5,
@@ -469,8 +475,5 @@
   "Dead content.",
   "On The Way before Sunday evening"
  ],
- "problems": [
-  "the gate: not run",
-  "the build: not run"
- ]
+ "problems": []
 }

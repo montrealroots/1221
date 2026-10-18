@@ -1,6 +1,6 @@
 # Brief 14's Receipt: The Player's Language
 
-Written by `receipt.py` from the pass's records on `15421228`, nothing typed: the brief's section 10, in its order. The brief itself is `../briefs-2026-10-16/14-complete-player-facing-language-and-tutorial-overhaul.txt`; how the pass was worked is `README.md`; what crossed areas is `coordinator.md`.
+Written by `receipt.py` from the pass's records on `a51b0e15`, nothing typed: the brief's section 10, in its order. The brief itself is `../briefs-2026-10-16/14-complete-player-facing-language-and-tutorial-overhaul.txt`; how the pass was worked is `README.md`; what crossed areas is `coordinator.md`.
 
 **What this is and isn’t.** Every number here is a count a tool made or a test checked. The interface journeys pressed the controls a player presses at 1440 and 390 wide and read what came back. None of it is a judgment of how the game reads to a person, and nothing here is human usability approval: that’s what `PLAYTEST.md` is for, and only the owner can give it.
 
@@ -35,7 +35,7 @@ Written by `receipt.py` from the pass's records on `15421228`, nothing typed: th
 |  | Sources | Strings | Words | Rewritten And Verified | Reviewed And Retained | Pending | Blocked | Engine-Speak Hits |
 |---|---|---|---|---|---|---|---|---|
 | At the start (`d82d38d0`) | 3894 | 31397 | 463488 | 0 | 0 | 3894 | 0 | 758 |
-| Now (`15421228`) | 4151 | 34202 | 550968 | 1285 | 2866 | 0 | 0 | 332 |
+| Now (`a51b0e15`) | 4151 | 34202 | 550968 | 1285 | 2866 | 0 | 0 | 332 |
 
 The start counted TypeScript alone; the JSON the game shows joined the inventory during the pass (224 sources). The engine-speak ratchet (`docs/text/engine-speak.json`) stands at 332; it may fall and may not rise.
 
@@ -55,12 +55,12 @@ Engine-speak by kind, at the start and now. The pattern counts a word; each hit 
 | a weight | 26 | 19 |
 | a signal | 18 | 18 |
 | refused, with no reason or next step | 17 | 6 |
-| worked out from | 14 | 0 |
 | a segment | 14 | 8 |
+| worked out from | 14 | 0 |
 | what something reads | 10 | 0 |
 | a command | 4 | 1 |
-| the engine | 3 | 3 |
 | the part most often short | 3 | 0 |
+| the engine | 3 | 3 |
 | the standing falls a step | 2 | 0 |
 | as SLATE reads it | 1 | 0 |
 | reads it as | 1 | 0 |
@@ -302,8 +302,8 @@ Every defect the pass found, one entry each, from every record, and checked agai
 
 ## 9. Tests, Commands, Commits And Results
 
-- **`npm run gate`** on `15421228`: not run (`final-checks/gate.txt`).
-- **`npm run build`**: not run (`final-checks/build.txt`).
+- **`npm run gate`** on `a51b0e15`: exit 0, 391 of 391 files and 4713 of 4713 tests (`final-checks/gate.txt`).
+- **`npm run build`**: exit 0 (`final-checks/build.txt`).
 - **The final runs**, each step’s exit recorded (`runs/exits-*.txt`, `final-walk/exits.txt`):
 
 | Record | Steps | Not exit 0 |
@@ -391,6 +391,7 @@ The pass's commits on the branch, in order (merges carry each area's own):
 - `ebdb5577` Work On The Note's toast says what it moved in words, not by the part's internal name
 - `edd7be91` Brief 14's first built-app runs kept under runs/first/, and the lanes guarded against what spoiled their rerun
 - `15421228` The toast's defect recorded, the refusal's shape settled, and the receipt reading the routes and the first runs apart
+- `a51b0e15` Brief 14's built-app runs on edd7be91, the advice folded in, and the handoff and records written before the gate
 
 ## 10. What Remains Unreviewed Or Blocked
 
@@ -403,8 +404,3 @@ The pass's commits on the branch, in order (merges carry each area's own):
 ## 11. The Manual Walkthrough
 
 `PLAYTEST.md`: a route for the owner to play by hand on a local build, every step with what to expect and what to report.
-
-## Not Yet Finished
-
-- the gate: not run
-- the build: not run

@@ -77,5 +77,6 @@ code is `ebdb5577`'s.
   (`runs/README.md`, `interface-final/`, `journeys14-final/`).
 - **Defects:** 101, 90 fixed and 11 left, each left one with its reason (`DEFECTS.md`).
 - **Left open:** dead content (the owner's) and On The Way before Sunday evening (`journeys-3`), in `coordinator.md`.
-- **The gate:** its figures are folded in after it runs (`runs/gate.txt`).
+- **The gate:** on `a51b0e15`, exit 0, 391 of 391 test files and 4,713 of 4,713 tests passed, none skipped, every one of the twenty checks holding; the build exit 0 (`runs/gate.txt`, `final-checks/`).
+- **The matrix:** 612 of 636 rows in scope Implemented And Verified, the same rows as at brief 13's close.
 - **Not claimed:** human usability approval. `PLAYTEST.md` is the owner's route, and only the owner can give it.
