@@ -139,15 +139,15 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]": {
   "status": "Rewritten And Verified",
-  "hash": "db704bfd6bb7",
-  "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), four of the health-cover and doctor examples’ quotes held exactly by tests/guide-examples-papers.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-papers.test.ts (every papers example played, the health cover example with financial assistance)"
+  "hash": "0f9af6540f67",
+  "on": "2026-10-18",
+  "evidence": "Its days month first: the built ones (dayMonth, fullDay, the day Enroll opens) and the written ones: tests/language-data-dates.test.ts 'every entry of the guide and every chapter of the tutorial, the papers guide’s built days among them'; tests/guide-examples-papers.test.ts (On August 1 a notice says…, From September 1…, Enrolled ahead, from <month day>…); tests/evidence2-b13.test.ts (Health Cover's reference drawn: \"From January 1, 2027, …\"). As the papers area verified the rest: tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), four of the health-cover and doctor examples’ quotes held exactly by tests/guide-examples-papers.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-papers.test.ts (every papers example played, the health cover example with financial assistance)"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
   "status": "Rewritten And Verified",
-  "hash": "6415728e1ded",
-  "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words, two of this entry’s example quotes held exactly by tests/guide-examples-papers.test.ts (crossarea/batches.md, batch 1); tests/evidence2-b13.test.ts, ‘PLAYER JOURNEY: Health Cover’s reference, opened by its own address…’, draws the entry and reads its work-rules lines whole; tests/guide-examples-papers.test.ts (its worked example played, financial assistance in its words); tools/tutorial-routes.mjs --check exit 0 on the crossarea walk and capture of 9246c074 (crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts"
+  "hash": "638039627fec",
+  "on": "2026-10-18",
+  "evidence": "Its days month first: the built ones (dayMonth, fullDay, the day Enroll opens) and the written ones: tests/language-data-dates.test.ts 'every entry of the guide and every chapter of the tutorial, the papers guide’s built days among them'; tests/guide-examples-papers.test.ts (On August 1 a notice says…, From September 1…, Enrolled ahead, from <month day>…); tests/evidence2-b13.test.ts (Health Cover's reference drawn: \"From January 1, 2027, …\"). As the papers area verified the rest: tools/guide-quotes.mjs --check exit 0, every quote the game’s live words, two of this entry’s example quotes held exactly by tests/guide-examples-papers.test.ts (crossarea/batches.md, batch 1); tests/evidence2-b13.test.ts, ‘PLAYER JOURNEY: Health Cover’s reference, opened by its own address…’, draws the entry and reads its work-rules lines whole; tests/guide-examples-papers.test.ts (its worked example played, financial assistance in its words); tools/tutorial-routes.mjs --check exit 0 on the crossarea walk and capture of 9246c074 (crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.overview]": {
   "status": "Rewritten And Verified",
@@ -157,9 +157,9 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.pensions]": {
   "status": "Rewritten And Verified",
-  "hash": "b7189ca9d124",
-  "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
+  "hash": "854fdfeca5db",
+  "on": "2026-10-18",
+  "evidence": "Its days month first: the built ones (dayMonth, fullDay, the day Enroll opens) and the written ones: tests/language-data-dates.test.ts 'every entry of the guide and every chapter of the tutorial, the papers guide’s built days among them'; tests/guide-examples-papers.test.ts (On August 1 a notice says…, From September 1…, Enrolled ahead, from <month day>…); tests/evidence2-b13.test.ts (Health Cover's reference drawn: \"From January 1, 2027, …\"). As the papers area verified the rest: tests/guide.test.ts, tests/guide-examples-papers.test.ts (the papers entries’ worked examples, played)"
  },
  "src/engine/content/guide/papers.ts#PAPERS [prerequisite]": {
   "status": "Reviewed And Retained",
@@ -720,10 +720,10 @@
   "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
  },
  "src/engine/content/licenses.ts#LICENSES .gb": {
-  "status": "Reviewed And Retained",
-  "hash": "31f2f0d062e7",
-  "on": "2026-10-17",
-  "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
+  "status": "Rewritten And Verified",
+  "hash": "15e64331fc6b",
+  "on": "2026-10-18",
+  "evidence": "Its permit issuer's date as the game writes it, by tools/build-licenses.mjs's words step; the builder now gives the committed file (it had dropped New York's MCTD district and Mexico City's name, both set by hand on 2026-10-06), its diff the one issuer (build-licenses.txt): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number). As the papers area kept the rest: Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
  },
  "src/engine/content/licenses.ts#LICENSES .gb-nir": {
   "status": "Reviewed And Retained",
@@ -792,10 +792,10 @@
   "reason": "Generated by tools/build-licenses.mjs from the research and not edited by hand; of it only a license’s authority, name and permit issuer reach a player, as the authority itself names them."
  },
  "src/engine/content/passports.ts#PASSPORTS .AU": {
-  "status": "Reviewed And Retained",
-  "hash": "63385db83726",
-  "on": "2026-10-17",
-  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+  "status": "Rewritten And Verified",
+  "hash": "c233ce7f835d",
+  "on": "2026-10-18",
+  "evidence": "Its fee's basis and its note from abroad with their dates as the game writes them, by tools/build-passports.mjs's words step (the research keeps its own): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); the builder run (build-passports.txt), its diff those two fields alone; tests/remaining-papers.test.ts (Your Passport drawn). As the papers area kept the rest: Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
  },
  "src/engine/content/passports.ts#PASSPORTS .BR": {
   "status": "Reviewed And Retained",
@@ -804,10 +804,10 @@
   "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
  },
  "src/engine/content/passports.ts#PASSPORTS .CA": {
-  "status": "Reviewed And Retained",
-  "hash": "b719d2a81e16",
-  "on": "2026-10-17",
-  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+  "status": "Rewritten And Verified",
+  "hash": "3e25cc958178",
+  "on": "2026-10-18",
+  "evidence": "Its fee's basis and its note from abroad with their dates as the game writes them, by tools/build-passports.mjs's words step (the research keeps its own): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); the builder run (build-passports.txt), its diff those two fields alone; tests/remaining-papers.test.ts (Your Passport drawn). As the papers area kept the rest: Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
  },
  "src/engine/content/passports.ts#PASSPORTS .DE": {
   "status": "Reviewed And Retained",
@@ -828,10 +828,10 @@
   "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
  },
  "src/engine/content/passports.ts#PASSPORTS .GB": {
-  "status": "Reviewed And Retained",
-  "hash": "38f82ab167af",
-  "on": "2026-10-17",
-  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+  "status": "Rewritten And Verified",
+  "hash": "d138344962ff",
+  "on": "2026-10-18",
+  "evidence": "Its fee's basis and its note from abroad with their dates as the game writes them, by tools/build-passports.mjs's words step (the research keeps its own): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); the builder run (build-passports.txt), its diff those two fields alone; tests/remaining-papers.test.ts (Your Passport drawn). As the papers area kept the rest: Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
  },
  "src/engine/content/passports.ts#PASSPORTS .IE": {
   "status": "Reviewed And Retained",
@@ -846,34 +846,34 @@
   "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
  },
  "src/engine/content/passports.ts#PASSPORTS .JP": {
-  "status": "Reviewed And Retained",
-  "hash": "04dc5e22f642",
-  "on": "2026-10-17",
-  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+  "status": "Rewritten And Verified",
+  "hash": "aaf161a9223d",
+  "on": "2026-10-18",
+  "evidence": "Its fee's basis and its note from abroad with their dates as the game writes them, by tools/build-passports.mjs's words step (the research keeps its own): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); the builder run (build-passports.txt), its diff those two fields alone; tests/remaining-papers.test.ts (Your Passport drawn). As the papers area kept the rest: Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
  },
  "src/engine/content/passports.ts#PASSPORTS .KR": {
-  "status": "Reviewed And Retained",
-  "hash": "e3e0d9a0acf3",
-  "on": "2026-10-17",
-  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+  "status": "Rewritten And Verified",
+  "hash": "9fd9bb04a198",
+  "on": "2026-10-18",
+  "evidence": "Its fee's basis and its note from abroad with their dates as the game writes them, by tools/build-passports.mjs's words step (the research keeps its own): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); the builder run (build-passports.txt), its diff those two fields alone; tests/remaining-papers.test.ts (Your Passport drawn). As the papers area kept the rest: Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
  },
  "src/engine/content/passports.ts#PASSPORTS .LV": {
-  "status": "Reviewed And Retained",
-  "hash": "6d860cd2a17f",
-  "on": "2026-10-17",
-  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+  "status": "Rewritten And Verified",
+  "hash": "16ce5089b0d9",
+  "on": "2026-10-18",
+  "evidence": "Its fee's basis and its note from abroad with their dates as the game writes them, by tools/build-passports.mjs's words step (the research keeps its own): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); the builder run (build-passports.txt), its diff those two fields alone; tests/remaining-papers.test.ts (Your Passport drawn). As the papers area kept the rest: Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
  },
  "src/engine/content/passports.ts#PASSPORTS .MX": {
-  "status": "Reviewed And Retained",
-  "hash": "55f1cee25cc4",
-  "on": "2026-10-17",
-  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+  "status": "Rewritten And Verified",
+  "hash": "0e42d446bbbe",
+  "on": "2026-10-18",
+  "evidence": "Its fee's basis and its note from abroad with their dates as the game writes them, by tools/build-passports.mjs's words step (the research keeps its own): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); the builder run (build-passports.txt), its diff those two fields alone; tests/remaining-papers.test.ts (Your Passport drawn). As the papers area kept the rest: Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
  },
  "src/engine/content/passports.ts#PASSPORTS .NZ": {
-  "status": "Reviewed And Retained",
-  "hash": "940b672a80f7",
-  "on": "2026-10-17",
-  "reason": "Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
+  "status": "Rewritten And Verified",
+  "hash": "8ceebda83a02",
+  "on": "2026-10-18",
+  "evidence": "Its fee's basis and its note from abroad with their dates as the game writes them, by tools/build-passports.mjs's words step (the research keeps its own): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); the builder run (build-passports.txt), its diff those two fields alone; tests/remaining-papers.test.ts (Your Passport drawn). As the papers area kept the rest: Generated by tools/build-passports.mjs from the research and not edited by hand. Its fee basis and sources are the office’s own words; its research notes no longer reach the screen verbatim (Documents.tsx summarizes them; defects.md, 9)."
  },
  "src/engine/content/passports.ts#PASSPORTS .US": {
   "status": "Reviewed And Retained",
@@ -883,15 +883,15 @@
  },
  "src/engine/content/passportsabroad.ts#nzTerms": {
   "status": "Rewritten And Verified",
-  "hash": "8a01468aabf4",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-papers.test.ts (tax.s8.passport); text walk after-1440 and after-390, Papers, Passport And ID"
+  "hash": "fdb8056d6967",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); tests/remaining-papers.test.ts, each office abroad drawn on Your Passport with its date (\"£116.50 from April 8, 2026\", \"US$62 from July 1, 2026\", \"from May 2, 2025\", \"from June 1, 2026\", \"from May 1, 2026\"). As the papers area verified the rest: tests/remaining-papers.test.ts (tax.s8.passport); text walk after-1440 and after-390, Papers, Passport And ID"
  },
  "src/engine/content/passportsabroad.ts#PASSPORTS_ABROAD": {
   "status": "Rewritten And Verified",
-  "hash": "3eacfcd55522",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-papers.test.ts (tax.s8.passport); text walk after-1440 and after-390, Papers, Passport And ID"
+  "hash": "b355ba637fe7",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); tests/remaining-papers.test.ts, each office abroad drawn on Your Passport with its date (\"£116.50 from April 8, 2026\", \"US$62 from July 1, 2026\", \"from May 2, 2025\", \"from June 1, 2026\", \"from May 1, 2026\"). As the papers area verified the rest: tests/remaining-papers.test.ts (tax.s8.passport); text walk after-1440 and after-390, Papers, Passport And ID"
  },
  "src/engine/content/safetynet.ts#CARE": {
   "status": "Reviewed And Retained",
@@ -1507,9 +1507,9 @@
  },
  "src/engine/content/visas.ts#AU_600": {
   "status": "Rewritten And Verified",
-  "hash": "167ce7fd4629",
-  "on": "2026-10-17",
-  "evidence": "tests/documents.test.ts, tests/evidence-g15-papers.test.ts (a visa’s name in mayEnter’s words)"
+  "hash": "973c812a8003",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); tests/remaining-papers.test.ts, each office abroad drawn on Your Passport with its date (\"£116.50 from April 8, 2026\", \"US$62 from July 1, 2026\", \"from May 2, 2025\", \"from June 1, 2026\", \"from May 1, 2026\"). As the papers area verified the rest: tests/documents.test.ts, tests/evidence-g15-papers.test.ts (a visa’s name in mayEnter’s words)"
  },
  "src/engine/content/visas.ts#BR_EVISA": {
   "status": "Rewritten And Verified",
@@ -1525,15 +1525,15 @@
  },
  "src/engine/content/visas.ts#US_B1B2": {
   "status": "Rewritten And Verified",
-  "hash": "8cde6e50db6a",
-  "on": "2026-10-17",
-  "evidence": "tests/documents.test.ts, tests/evidence-g15-papers.test.ts (a visa’s name in mayEnter’s words)"
+  "hash": "9ee9241a3325",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); tests/remaining-papers.test.ts, each office abroad drawn on Your Passport with its date (\"£116.50 from April 8, 2026\", \"US$62 from July 1, 2026\", \"from May 2, 2025\", \"from June 1, 2026\", \"from May 1, 2026\"). As the papers area verified the rest: tests/documents.test.ts, tests/evidence-g15-papers.test.ts (a visa’s name in mayEnter’s words)"
  },
  "src/engine/content/visas.ts#VISAS": {
   "status": "Rewritten And Verified",
-  "hash": "cf1618445ca0",
-  "on": "2026-10-17",
-  "evidence": "tests/documents.test.ts, tests/evidence-g15-papers.test.ts (a visa’s name in mayEnter’s words)"
+  "hash": "c2401a0a7b3f",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa…' (no date left for the step, none slashed or dotted outside a number); tests/remaining-papers.test.ts, each office abroad drawn on Your Passport with its date (\"£116.50 from April 8, 2026\", \"US$62 from July 1, 2026\", \"from May 2, 2025\", \"from June 1, 2026\", \"from May 1, 2026\"). As the papers area verified the rest: tests/documents.test.ts, tests/evidence-g15-papers.test.ts (a visa’s name in mayEnter’s words)"
  },
  "src/engine/content/workrules.ts#WORK_RULES": {
   "status": "Reviewed And Retained",
@@ -2695,9 +2695,9 @@
  },
  "src/ui/workspaces/PapersWorkspace.tsx#DentalPanel": {
   "status": "Rewritten And Verified",
-  "hash": "ba804a9bc77b",
-  "on": "2026-10-17",
-  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+  "hash": "2eff7f3cfbc1",
+  "on": "2026-10-18",
+  "evidence": "Its day month first: tests/language-data-dates.test.ts 'PLAYER JOURNEY: a student reads Health Cover’s dental plan and, with a UK pension claimed, the State Pension’s fine print' (drawn). As the papers area verified the rest: tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#EiPanel": {
   "status": "Rewritten And Verified",
@@ -2731,9 +2731,9 @@
  },
  "src/ui/workspaces/PapersWorkspace.tsx#PensionsPanel": {
   "status": "Rewritten And Verified",
-  "hash": "d03fe9b86fd7",
-  "on": "2026-10-17",
-  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
+  "hash": "01cf72af5398",
+  "on": "2026-10-18",
+  "evidence": "Its day month first: tests/language-data-dates.test.ts 'PLAYER JOURNEY: a student reads Health Cover’s dental plan and, with a UK pension claimed, the State Pension’s fine print' (drawn). As the papers area verified the rest: tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves)"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#PLAN_STATUS": {
   "status": "Rewritten And Verified",
@@ -2749,9 +2749,9 @@
  },
  "src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane": {
   "status": "Rewritten And Verified",
-  "hash": "ae51ab1aa696",
-  "on": "2026-10-17",
-  "evidence": "tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves); tests/language-dynamic.test.ts 'a tax return’s balance: a refund due, and nothing owed or due back…' (Your Refund, the withholding with a minus sign, Nothing Owed Or Due Back) and 'a tax return: its date ahead, its last day, and passed unfiled…'"
+  "hash": "afb86a4c7bcd",
+  "on": "2026-10-18",
+  "evidence": "Its days month first (\"A return is due April 15 … June 15\", \"by April 30\", \"each January 31\"): tests/defects-g8-8.test.ts 'the fine print gives the 1040-NR’s June date…' (drawn); tests/language-data-dates.test.ts 'every entry of the guide and every chapter of the tutorial, the papers guide’s built days among them'. As the papers area verified the rest: tests/scope-taxpapers.test.ts, tests/evidence-g16-papers.test.ts, tests/remaining-health-eligibility.test.ts, tests/evidence2-b06.test.ts; text walk after-1440 and after-390, Papers, every tab (tax, lien, missed-plan, nonfiler, withdraw and brief saves); tests/language-dynamic.test.ts 'a tax return’s balance: a refund due, and nothing owed or due back…' (Your Refund, the withholding with a minus sign, Nothing Owed Or Due Back) and 'a tax return: its date ahead, its last day, and passed unfiled…'"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#STATE_NAMES": {
   "status": "Reviewed And Retained",

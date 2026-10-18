@@ -1,0 +1,25 @@
+// Run with vite-node from the clone, after copying the four files at c74a02e1 beside them as *-at-base.ts (removed after).
+// Batch 2's before-and-after pairs, verbatim: the data and the guide at c74a02e1 (copied beside the files for this run
+// only) and now.
+import { writeFileSync } from 'node:fs';
+const R = '/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/l14-data/src/engine/content/';
+const now = { guide: (await import(R + 'guide/papers')).PAPERS, entry: (await import(R + 'entry')).ENTRY, passports: (await import(R + 'passports')).PASSPORTS, licenses: (await import(R + 'licenses')).LICENSES };
+const was = { guide: (await import(R + 'guide/papers-at-base')).PAPERS, entry: (await import(R + 'entry-at-base')).ENTRY, passports: (await import(R + 'passports-at-base')).PASSPORTS, licenses: (await import(R + 'licenses-at-base')).LICENSES };
+const strings = (v: unknown, out: string[] = []): string[] => { if (typeof v === 'string') out.push(v); else if (Array.isArray(v)) v.forEach((x) => strings(x, out)); else if (v && typeof v === 'object') Object.values(v).forEach((x) => strings(x, out)); return out; };
+/** The one string of a guide entry, then and now, that holds `needle` now. */
+const guide = (id: string, needle: string): [string, string] => {
+  const a = strings(now.guide.find((e: { id: string }) => e.id === id)); const b = strings(was.guide.find((e: { id: string }) => e.id === id));
+  const i = a.findIndex((s) => s.includes(needle)); if (i < 0) throw new Error(needle); return [b[i]!, a[i]!];
+};
+const out: object[] = [];
+const T = 'tests/language-data-dates.test.ts';
+const add = (source: string, kind: string, [before, after]: [string, string], why: string, meaningSensitive: boolean, verified: string) => out.push({ source, kind, before, after, why, meaningSensitive, verified });
+add('src/engine/content/entry.ts#ENTRY .GB', 'official', [was.entry.GB.citizens.US.note, now.entry.GB.citizens.US.note], 'An entry rule’s note under Going Abroad, its days the game’s way by build-entry.mjs’s words step; the research file keeps "8 Jan 2025".', false, `${T} 'each passport’s fee and its note from abroad, each entry rule’s note…'`);
+add('src/engine/content/passports.ts#PASSPORTS .GB', 'official', [was.passports.GB.abroad, now.passports.GB.abroad], 'The note on applying from abroad, under Your Passport, by build-passports.mjs’s words step.', false, `${T}; tests/remaining-papers.test.ts (drawn)`);
+add('src/engine/content/passports.ts#PASSPORTS .NZ', 'official', [was.passports.NZ.feeBasis, now.passports.NZ.feeBasis], 'A fee’s basis, under Your Passport.', false, `${T}`);
+add('src/engine/content/licenses.ts#LICENSES .gb', 'error', [was.licenses.gb.idp.issuer, now.licenses.gb.idp.issuer], 'Who issues the permit, said in the refusal to drive without one; build-licenses.mjs, which now gives the committed file and this.', false, `${T}`);
+add('src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]', 'tutorial', guide('papers.health-cover', 'Connecticut’s open enrollment, '), 'Days built from parts (dayMonth): month first now, as formatDate writes them.', false, `${T} 'every entry of the guide…'`);
+add('src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]', 'tutorial', guide('papers.health-cover', 'some of the month before you enroll'), 'A day kept as a key, built by fullDay: "January 1, 2027", the form the notice the guide quotes already used.', false, "tests/evidence2-b13.test.ts (Health Cover’s reference drawn)");
+add('src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]', 'tutorial', guide('papers.health-cover', 'Enrolled ahead, from '), 'The day Enroll opens, built from a date, and the day cover begins, written: both month first.', false, "tests/guide-examples-papers.test.ts");
+add('src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]', 'tutorial', guide('papers.health-cover', 'Yale Delta Dental Basic runs to its'), 'A day without a year, month first.', false, `${T}`);
+writeFileSync(process.argv[2] ?? '/dev/stdout', JSON.stringify(out, null, 1) + '\n');

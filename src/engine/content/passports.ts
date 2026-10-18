@@ -80,7 +80,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
     "name": "British Passport (Standard 34-Page)",
     "fee": 102,
     "currency": "GBP",
-    "feeBasis": "Standard adult (16+) 34-page passport, online application from the UK; first adult passport, renewal and replacement all cost the same. Paper form via the Post Office: 115.50. 54-page frequent traveler: 116 online / 129.50 paper. Fees effective 8 April 2026.",
+    "feeBasis": "Standard adult (16+) 34-page passport, online application from the UK; first adult passport, renewal and replacement all cost the same. Paper form via the Post Office: 115.50. 54-page frequent traveler: 116 online / 129.50 paper. Fees effective April 8, 2026.",
     "days": 21,
     "daysEstimated": false,
     "expedite": {
@@ -90,7 +90,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
     },
     "validityYears": 10,
     "lost": "{\"fee\":102,\"oldCancelled\":true,\"note\":\"A lost or stolen passport must be canceled before applying for a replacement; replacement costs the same as renewal (102 online / 115.50 paper). GOV.UK doesn’t state on these pages whether a passport found after cancellation can be used, but cancellation is the precondition for replacement.\"}",
-    "abroad": "British nationals overseas apply online to HM Passport Office at higher fees: 116.50 adult online / 130 paper; child 75.50 online / 89 paper (from 8 April 2026). Different turnaround times apply overseas (not stated on the pages read). Passports are free for people born on or before 2 September 1929.",
+    "abroad": "British nationals overseas apply online to HM Passport Office at higher fees: 116.50 adult online / 130 paper; child 75.50 online / 89 paper (from April 8, 2026). Different turnaround times apply overseas (not stated on the pages read). Passports are free for people born on or before September 2, 1929.",
     "sources": [
       {
         "url": "https://www.gov.uk/passport-fees",
@@ -136,7 +136,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
     "name": "Canadian Passport (Regular, 10-Year)",
     "fee": 163.5,
     "currency": "CAD",
-    "feeBasis": "10-year regular adult (16+) passport applied for in Canada; same for first passport and renewal. 5-year adult: 122.50. Fees effective 31 March 2026.",
+    "feeBasis": "10-year regular adult (16+) passport applied for in Canada; same for first passport and renewal. 5-year adult: 122.50. Fees effective March 31, 2026.",
     "days": 28,
     "daysEstimated": false,
     "expedite": {
@@ -461,13 +461,13 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
     "name": "一般旅券 (Japanese passport)",
     "fee": 9300,
     "currency": "JPY",
-    "feeBasis": "10-year passport, applicant 18 or over, window (paper) application in Japan, new or renewal (切替) alike. Made of 7,000 national fee (収入印紙 revenue stamp) + 2,300 prefectural fee (Tokyo). Online application via Mynaportal: 8,900 (7,000 stamp + 1,900 prefectural; the prefectural fee is 400 lower online). Applies to applications from 2026-07-01. Before 2026-07-01 the 10-year fee was 16,300 window (14,000 stamp + 2,300 prefectural) / 15,900 online, and a 5-year passport for 12+ was 11,300 (9,000 + 2,300). From 2026-07-01 the 5-year passport is only for under-18s (4,800 window: 2,500 + 2,300; 4,400 online); adults can only get 10-year. A same-remaining-validity replacement (残存有効期間同一旅券, 18+) is 5,800 window (3,500 + 2,300). If a previously issued passport lapsed uncollected (未交付失効) within the last 5 years, the 10-year fee is 15,300 (11,000 + 4,300). The 2025 changes: from 2025-03-24 all passport applications (not only renewals) can be made online via Mynaportal, with the 400-yen-lower prefectural fee online.",
+    "feeBasis": "10-year passport, applicant 18 or over, window (paper) application in Japan, new or renewal (切替) alike. Made of 7,000 national fee (収入印紙 revenue stamp) + 2,300 prefectural fee (Tokyo). Online application via Mynaportal: 8,900 (7,000 stamp + 1,900 prefectural; the prefectural fee is 400 lower online). Applies to applications from July 1, 2026. Before July 1, 2026 the 10-year fee was 16,300 window (14,000 stamp + 2,300 prefectural) / 15,900 online, and a 5-year passport for 12+ was 11,300 (9,000 + 2,300). From July 1, 2026 the 5-year passport is only for under-18s (4,800 window: 2,500 + 2,300; 4,400 online); adults can only get 10-year. A same-remaining-validity replacement (残存有効期間同一旅券, 18+) is 5,800 window (3,500 + 2,300). If a previously issued passport lapsed uncollected (未交付失効) within the last 5 years, the 10-year fee is 15,300 (11,000 + 4,300). The 2025 changes: from March 24, 2025 all passport applications (not only renewals) can be made online via Mynaportal, with the 400-yen-lower prefectural fee online.",
     "days": 12,
     "daysEstimated": false,
     "expedite": null,
     "validityYears": 10,
     "lost": "{\"fee\":9300,\"oldCancelled\":true,\"note\":\"No separate lost-passport fee: the holder files a 紛失一般旅券等届出書 (loss report, in person or online since 2025-03-24) and applies for a new passport at the ordinary fee (9,300 window / 8,900 online for 18+). Filing the report invalidates the lost passport; MOFA publishes its number in the official gazette (官報) and notifies foreign authorities, and it can’t be used even if found. A police report reference (or fire/municipal disaster certificate) is required. Alternative: a same-remaining-validity passport (5,800 window) is available for 18+.\"}",
-    "abroad": "Residents abroad apply at a Japanese embassy or consulate. The fee is charged in local currency at a rate each mission publishes (set by fiscal-year exchange rates), and the 2026-07-01 reduction applies from 00:00 Japan time (or the same clock time locally for missions behind Japan). Processing is about 1 month because passports are produced in Japan and shipped. Local-currency amounts are on each mission's site and weren’t collected here.",
+    "abroad": "Residents abroad apply at a Japanese embassy or consulate. The fee is charged in local currency at a rate each mission publishes (set by fiscal-year exchange rates), and the July 1, 2026 reduction applies from 00:00 Japan time (or the same clock time locally for missions behind Japan). Processing is about 1 month because passports are produced in Japan and shipped. Local-currency amounts are on each mission's site and weren’t collected here.",
     "sources": [
       {
         "url": "https://www.seikatubunka.metro.tokyo.lg.jp/passport/documents/0000000432",
@@ -516,7 +516,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
     "name": "대한민국 여권 (복수여권, electronic passport)",
     "fee": 52000,
     "currency": "KRW",
-    "feeBasis": "10-year multiple-entry electronic passport (복수여권), 58 pages, applicant 18 or over; first issue and reissue alike. Made of 40,000 passport issuance fee (여권발급수수료) + 12,000 international exchange contribution (국제교류기여금). 26-page version: 49,000 (37,000 + 12,000). Issuance fee rose by 2,000 won from 2026-03-01. At overseas missions: USD 52 (58p) / USD 49 (26p).",
+    "feeBasis": "10-year multiple-entry electronic passport (복수여권), 58 pages, applicant 18 or over; first issue and reissue alike. Made of 40,000 passport issuance fee (여권발급수수료) + 12,000 international exchange contribution (국제교류기여금). 26-page version: 49,000 (37,000 + 12,000). Issuance fee rose by 2,000 won from March 1, 2026. At overseas missions: USD 52 (58p) / USD 49 (26p).",
     "days": 15,
     "daysEstimated": false,
     "expedite": null,
@@ -576,7 +576,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
     "name": "Pasaporte ordinario mexicano (tipo \"N\")",
     "fee": 4280,
     "currency": "MXN",
-    "feeBasis": "10-year ordinary passport, adult (18+), first issue or renewal alike, applied for in Mexico; derechos under Ley Federal de Derechos art. 20 fr. IV for 2026 (statutory amount 4,277.69, charged as 4,280). Other adult validities: 3 years 1,795 (art. 20 fr. II, 1,795.29); 6 years 2,440 (fr. III, 2,438.63). 1 year 920 (fr. I, 920.75) is only for children under 3. People over 60 and people with a certified disability pay 50% (3y 900, 6y 1,220, 10y 2,140); agricultural workers under the Mexico-Canada program pay 50% on 1-6-year passports only. Effective 2026-01-01.",
+    "feeBasis": "10-year ordinary passport, adult (18+), first issue or renewal alike, applied for in Mexico; derechos under Ley Federal de Derechos art. 20 fr. IV for 2026 (statutory amount 4,277.69, charged as 4,280). Other adult validities: 3 years 1,795 (art. 20 fr. II, 1,795.29); 6 years 2,440 (fr. III, 2,438.63). 1 year 920 (fr. I, 920.75) is only for children under 3. People over 60 and people with a certified disability pay 50% (3y 900, 6y 1,220, 10y 2,140); agricultural workers under the Mexico-Canada program pay 50% on 1-6-year passports only. Effective January 1, 2026.",
     "days": 0,
     "daysEstimated": false,
     "expedite": null,
@@ -613,7 +613,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
     "name": "Australian passport",
     "fee": 422,
     "currency": "AUD",
-    "feeBasis": "Standard adult passport (aged 16 and over, 10-year validity); the same fee applies to a first passport and to a renewal. Figure from the fee table headed 'as of 1 January 2026' - no 1 July 2026 indexation is published; the current schedule is dated 1 January 2026.",
+    "feeBasis": "Standard adult passport (aged 16 and over, 10-year validity); the same fee applies to a first passport and to a renewal. Figure from the fee table headed 'as of 1 January 2026' - no July 1, 2026 indexation is published; the current schedule is dated January 1, 2026.",
     "days": 42,
     "daysEstimated": false,
     "expedite": {
@@ -712,7 +712,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
     "name": "New Zealand passport",
     "fee": 247,
     "currency": "NZD",
-    "feeBasis": "Standard adult passport (GST inclusive), fee in force from 2 May 2025; the same fee applies to first passports and renewals. Courier delivery is charged on top (NZD 7 to 78 for online applications, by destination).",
+    "feeBasis": "Standard adult passport (GST inclusive), fee in force from May 2, 2025; the same fee applies to first passports and renewals. Courier delivery is charged on top (NZD 7 to 78 for online applications, by destination).",
     "days": 28,
     "daysEstimated": false,
     "expedite": {
@@ -766,7 +766,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
     "name": "Latvijas Republikas pilsoņa pase (Latvian citizen's passport)",
     "fee": 50,
     "currency": "EUR",
-    "feeBasis": "State fee for issuing a passport within 10 working days, from 1 January 2026 (Cabinet Regulation No. 133 of 21.02.2012, as amended). The same fee applies to a first passport and a replacement. Apply in person at any PMLP division; there’s no online channel. Reduced fee of €25 for people under 20, pension-age or pensioner holders, and group I/II disability. The passport is optional in Latvia; the eID card (€30) is the mandatory identity document from age 15. Expedite: €75 is the full state fee for issue within 2 working days (not a surcharge); the reduced category pays €45. 2 working days x7/5 = 2.8, rounded to 3 calendar days. Express is charged at the 10-day rate for: a surname change within 30 days of marriage; within 30 days of naturalisation; medical treatment abroad; travel for a relative's illness or death; and under-20s or students under 24 on an organized school or youth trip.",
+    "feeBasis": "State fee for issuing a passport within 10 working days, from January 1, 2026 (Cabinet Regulation No. 133 of February 21, 2012, as amended). The same fee applies to a first passport and a replacement. Apply in person at any PMLP division; there’s no online channel. Reduced fee of €25 for people under 20, pension-age or pensioner holders, and group I/II disability. The passport is optional in Latvia; the eID card (€30) is the mandatory identity document from age 15. Expedite: €75 is the full state fee for issue within 2 working days (not a surcharge); the reduced category pays €45. 2 working days x7/5 = 2.8, rounded to 3 calendar days. Express is charged at the 10-day rate for: a surname change within 30 days of marriage; within 30 days of naturalisation; medical treatment abroad; travel for a relative's illness or death; and under-20s or students under 24 on an organized school or youth trip.",
     "days": 14,
     "daysEstimated": false,
     "expedite": {
@@ -781,7 +781,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
       "fee": 25
     },
     "lost": "{\"fee\":50,\"oldCancelled\":true,\"note\":\"The loss must be reported at once to PMLP, the State Police, the State Border Guard or, abroad, a Latvian mission. A document reported lost in writing becomes invalid even if found. Without another valid ID, the new application is due within 30 days. The fee schedule has no loss-specific fee, so the ordinary state fee applies. Losing a personal identification document can bring a warning or a fine of up to 14 fine units (€70) under Section 17(4) of the Personal Identification Documents Law.\"}",
-    "abroad": "Abroad, apply in person at a Latvian embassy or consulate, which charges its own consular fees. Example, the Embassy of Latvia in Ireland (page updated 15.07.2026): adult passport €140 on the normal track (about 5 weeks on average) or €165 urgent (about 3 weeks); under-20s, pensioners and group I/II disability pay €115 or €135; forwarding documents within the consular district costs €15. A mission can issue a temporary travel document to return to Latvia if the passport is lost abroad.",
+    "abroad": "Abroad, apply in person at a Latvian embassy or consulate, which charges its own consular fees. Example, the Embassy of Latvia in Ireland (page updated July 15, 2026): adult passport €140 on the normal track (about 5 weeks on average) or €165 urgent (about 3 weeks); under-20s, pensioners and group I/II disability pay €115 or €135; forwarding documents within the consular district costs €15. A mission can issue a temporary travel document to return to Latvia if the passport is lost abroad.",
     "sources": [
       {
         "url": "https://www.pmlp.gov.lv/lv/valsts-nodeva-par-personu-apliecinosa-dokumenta-izsniegsanu",

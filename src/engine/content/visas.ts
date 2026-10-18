@@ -29,7 +29,7 @@ const US_B1B2 = (who: string): VisaRule => ({
   fee: 185, currency: 'USD',
   days: 150 + 7,
   years: 10,
-  basis: `The $185 application fee; the interview about five months out at the Mexico City consulate (29 September 2026, read secondhand)${who === 'BR' ? ', taken for Brazil’s posts too, since theirs weren’t read' : ''}, and a week to issue it (estimated); good for ten years, multiple entry, by reciprocity.`,
+  basis: `The $185 application fee; the interview about five months out at the Mexico City consulate (September 29, 2026, read secondhand)${who === 'BR' ? ', taken for Brazil’s posts too, since theirs weren’t read' : ''}, and a week to issue it (estimated); good for ten years, multiple entry, by reciprocity.`,
   source: 'https://travel.state.gov (fees); waitvisa.com (the wait, citing the State Department)',
 });
 const CA_TRV = (who: string): VisaRule => ({
@@ -45,7 +45,7 @@ const AU_600: VisaRule = {
   fee: 250, currency: 'AUD',
   days: 30,
   years: 1,
-  basis: 'AUD 250 from 1 July 2026 (read secondhand, Home Affairs refusing automated reading); 30 days to decide and a one-year grant, the longest of the three, six and twelve months it gives (both estimated).',
+  basis: 'AUD 250 from July 1, 2026 (read secondhand, Home Affairs refusing automated reading); 30 days to decide and a one-year grant, the longest of the three, six and twelve months it gives (both estimated).',
   source: 'austmss.com.au, July 2026',
 };
 const BR_EVISA: VisaRule = {
@@ -69,7 +69,7 @@ export const VISAS: Readonly<Record<string, VisaRule>> = {
     fee: 10, currency: 'USD',
     days: 3,
     validDays: 180,
-    basis: 'US$10 from 5 February 2026, for a stay under 180 days, flying in (Deloitte and the press, read secondhand); three days to decide (estimated).',
+    basis: 'US$10 from February 5, 2026, for a stay under 180 days, flying in (Deloitte and the press, read secondhand); three days to decide (estimated).',
     source: 'https://www.deloitte.com/latam/es/services/legal/perspectives/restablecimiento-de-la-visa-electronica-de-visitante-de-visa-para-nacionales-de-brasil.html',
   },
   'BR<US': BR_EVISA,

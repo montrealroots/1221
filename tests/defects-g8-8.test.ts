@@ -285,7 +285,7 @@ describe('taxes-returns-fine-print-stale: the returns’ fine print and No Retur
 
   it('the fine print gives the 1040-NR’s June date, the ITIN’s wait, and what the IRS’s substitute comes to after its 120 days', () => {
     const text = drawn(lifeIn('us-ny-newyork', 'g88-fine'));
-    expect(text).toContain('A return is due 15 April, or the next business day. A 1040-NR with no wages on it is due 15 June.');
+    expect(text).toContain('A return is due April 15, or the next business day. A 1040-NR with no wages on it is due June 15.');
     expect(text).toContain(`A refund comes ${RETURN.refundDays} days after filing, or ${RETURN.refundDays + SSN.itinWeeks * 7} days for a 1040-NR filed without a Social Security number.`);
     expect(text).not.toContain('yours to replace for 120 days');
     expect(text).toContain(`Nothing of it is assessed if your own return arrives within ${SUBSTITUTE.answerDays} days of its notice, and your return replaces it if it comes later`);

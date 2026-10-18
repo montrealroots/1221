@@ -1908,16 +1908,16 @@
   "evidence": "tests/guide-examples-coursework.test.ts (Working A Problem Through); the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
  },
  "src/engine/content/workload.ts#RUNNING_TIMES": {
-  "status": "Reviewed And Retained",
-  "hash": "55654d59a065",
-  "on": "2026-10-17",
-  "reason": "Published running times with their productions, as sources."
+  "status": "Rewritten And Verified",
+  "hash": "e1fcc562880d",
+  "on": "2026-10-18",
+  "evidence": "Its running times' dates as the game writes them (apply-hand.mjs, each read by hand), as Source for the running time shows them: tests/language-data-dates.test.ts 'each production’s running time, as Source for the running time says it'. As the school area kept the rest: Published running times with their productions, as sources."
  },
  "src/engine/content/workload.ts#UNNAMED_RUNNING": {
   "status": "Rewritten And Verified",
-  "hash": "b0507fa54937",
-  "on": "2026-10-17",
-  "evidence": "tests/decisions-stamina.test.ts (The running time: Estimated); the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "d21ab9660fb1",
+  "on": "2026-10-18",
+  "evidence": "Its running times' dates as the game writes them (apply-hand.mjs, each read by hand), as Source for the running time shows them: tests/language-data-dates.test.ts 'each production’s running time, as Source for the running time says it'. As the school area verified the rest: tests/decisions-stamina.test.ts (The running time: Estimated); the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
  },
  "src/engine/systems/briefs.ts#BRIEF": {
   "status": "Reviewed And Retained",
@@ -3679,9 +3679,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#WithdrawControl": {
   "status": "Rewritten And Verified",
-  "hash": "913ee30f03de",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g26-school.test.ts, tests/remaining-school.test.ts, tests/evidence-g19/g20-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "d19163603bc8",
+  "on": "2026-10-18",
+  "evidence": "Its day month first, \"(August 1, for a fall term)\": tests/defects-g8-4.test.ts (Withdraw drawn). As the school area verified the rest: tests/remaining-09-journeys.test.ts, tests/evidence-g26-school.test.ts, tests/remaining-school.test.ts, tests/evidence-g19/g20-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#WorkPane": {
   "status": "Rewritten And Verified",

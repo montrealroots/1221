@@ -30,12 +30,24 @@ import { WORLD_FEES } from '@/engine/content/banks-world-fees';
 import { ROUND_UPS } from '@/engine/content/roundups';
 import { OPENING, TRANSFERS } from '@/engine/content/bankopening';
 import { unclaimedLaw } from '@/engine/systems/accountlife';
+import { PASSPORTS } from '@/engine/content/passports';
+import { ENTRY } from '@/engine/content/entry';
+import { LICENSES } from '@/engine/content/licenses';
+import { PASSPORTS_ABROAD } from '@/engine/content/passportsabroad';
+import { VISAS } from '@/engine/content/visas';
+import { RUNNING_TIMES, UNNAMED_RUNNING } from '@/engine/content/workload';
+import { GUIDE } from '@/engine/content/guide';
+import { CHAPTERS } from '@/engine/content/tutorial';
 import { gameDates, GENERATED } from '../tools/research-dates.mjs';
 
-const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation }));
+const h = vi.hoisted(() => ({
+  sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
+  /** FIXTURE: the tab a workspace opens on, as pressing it sets it. */
+  tab: undefined as string | undefined,
+}));
 vi.mock('@/ui/kept', async (orig) => {
   const real = await orig<typeof import('@/ui/kept')>();
-  return { ...real, useKept: <T,>(_key: string, initial: T) => [initial, () => undefined] as const };
+  return { ...real, useKept: <T,>(key: string, initial: T) => [(key.startsWith('tab:') && h.tab !== undefined ? h.tab : initial) as T, () => undefined] as const };
 });
 vi.mock('@/app/game-context', () => {
   const noop = () => undefined;
@@ -57,6 +69,7 @@ const { BankSecurity } = await import('@/ui/bank/BankSecurity');
 const { BankAccountLife } = await import('@/ui/bank/BankAccountLife');
 const { BankLending } = await import('@/ui/bank/BankLending');
 const { BankStatements } = await import('@/ui/bank/BankStatements');
+const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
 
 /** What a screen says, as the player reads it. */
 const onScreen = (html: string) => html.replace(/\stitle="[^"]*"/g, '').replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ')
@@ -128,6 +141,62 @@ describe('the research data writes its dates the game’s way wherever a screen 
       ...Object.entries(SHEETS).flatMap(([iso, s]) => fieldsOf([s.interestTax], ['note', 'source']).map(([k, v]) => [`${iso}.interestTax.${k}`, v] as [string, string])),
       ['US unclaimed', unclaimedLaw('US')!.source],
     ]);
+  });
+});
+
+describe('the papers research and the running times write their dates the game’s way wherever a screen shows them', () => {
+  it('each passport’s fee and its note from abroad, each entry rule’s note, the permit’s issuer, each office abroad and each visa: the builders’ words step and the hand-kept files', () => {
+    holdsTheGamesDates([
+      ...fieldsOf(PASSPORTS, ['feeBasis', 'abroad']),
+      ...Object.entries(ENTRY).flatMap(([iso, d]) => fieldsOf(d.citizens, ['note']).map(([k, v]) => [`${iso}.${k}`, v] as [string, string])),
+      ...Object.entries(LICENSES).flatMap(([id, l]) => (l.idp ? [[`${id}.idp.issuer`, l.idp.issuer] as [string, string]] : [])),
+      ...fieldsOf(PASSPORTS_ABROAD, ['basis']),
+      ...fieldsOf(VISAS, ['basis', 'name']),
+    ]);
+    // The builders' words step: the research keeps "8 April 2026", the game says "April 8, 2026".
+    expect(PASSPORTS['GB']!.abroad).toContain('(from April 8, 2026)');
+    expect(LICENSES['gb']!.idp!.issuer).toBe('PayPoint shops (in person; Post Office no longer issues since April 1, 2024)');
+  });
+
+  it('each production’s running time, as Source for the running time says it', () => {
+    holdsTheGamesDates([...fieldsOf(RUNNING_TIMES, ['from']), ...fieldsOf(UNNAMED_RUNNING, ['from'])]);
+    expect(RUNNING_TIMES['Ghosts']!.from).toContain('from August 31, 2017: 2 h 20');
+  });
+});
+
+describe('the guide, the tutorial and Papers say a day month first, as the game writes a date', () => {
+  /** Every string an entry or a chapter holds. */
+  const strings = (v: unknown, out: string[] = []): string[] => {
+    if (typeof v === 'string') out.push(v);
+    else if (Array.isArray(v)) v.forEach((x) => strings(x, out));
+    else if (v && typeof v === 'object') Object.values(v).forEach((x) => strings(x, out));
+    return out;
+  };
+  it('every entry of the guide and every chapter of the tutorial, the papers guide’s built days among them', () => {
+    const all = [...GUIDE, ...CHAPTERS].flatMap((e) => strings(e).map((t) => [e.id, t] as const));
+    expect(all.length).toBeGreaterThan(1000);
+    for (const [id, text] of all) expect(notTheGames(text), `${id}: ${text}`).toBeUndefined();
+    const said = (id: string) => strings(GUIDE.find((e) => e.id === id)).join(' ');
+    // Until 2026-10-17: "read on 15 October 2026", "born after 5 April 1978", "to 30 September", "by the next 31 January".
+    expect(said('papers.doctor')).toContain('its pharmacy statutes, read on October 15, 2026');
+    expect(said('papers.pensions')).toContain('68 for anyone born after April 5, 1978');
+    expect(said('papers.health-cover')).toContain('Yale Delta Dental Basic runs to its September 30 whatever happens to Yale Health');
+    expect(strings(CHAPTERS.find((c) => c.id === 'papers')).join(' ')).toContain('A UK tax year’s is settled on its own, by the next January 31.');
+  });
+
+  it('PLAYER JOURNEY: a student reads Health Cover’s dental plan and, with a UK pension claimed, the State Pension’s fine print', () => {
+    const sim = nyStudent('data-dates-papers');
+    h.tab = 'health';
+    const health = drawn(sim, () => createElement(PapersWorkspace));
+    expect(health).toContain('It’s paid for the year to September 30, and can’t be canceled once paid.');
+    expect(notTheGames(health)).toBeUndefined();
+    // TEST SETUP: a State Pension claimed, which a life reaches at 68; the panel shows for it.
+    sim.player.statePensionFrom = sim.now;
+    h.tab = 'benefits';
+    const benefits = drawn(sim, () => createElement(PapersWorkspace));
+    expect(benefits).toContain('State Pension age is 68 for anyone born after April 5, 1978, under the Pensions Act 2007.');
+    expect(notTheGames(benefits)).toBeUndefined();
+    h.tab = undefined;
   });
 });
 

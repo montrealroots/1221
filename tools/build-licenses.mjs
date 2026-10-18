@@ -3,6 +3,7 @@
 // Run: node tools/build-licenses.mjs docs/research/world/research-licences.json
 import { readFileSync, writeFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
+import { gameDates } from './research-dates.mjs';
 
 const j = JSON.parse(readFileSync(process.argv[2], 'utf8'));
 /**
@@ -37,19 +38,38 @@ const VISITOR = {
   nz: { days: 548, languages: ['en'], confirmed: true },
   lv: { days: 365, languages: 'latin', confirmed: true },
 };
+/**
+ * A district's own surcharge, by the half-years a license runs, for someone living in its towns: New York's MCTD, "$1 per
+ * 6 months of validity" in the DMV's words, on a first license, an exchange and a renewal. Written into licenses.ts by
+ * hand on 2026-10-06 (`363e8812`), and set down here from 2026-10-17 (brief 14): until then a rebuild dropped it, and
+ * with it the MCTD's part of a New York City license's fee.
+ */
+const DISTRICT = { 'us-ny': { cityIds: ['us-ny-newyork'], perHalfYear: 1 } };
+/**
+ * A license named as its authority names it where the research's name carries a description: Mexico City's was
+ * "Licencia para conducir Tipo A (vehículos particulares); also Licencia Tipo A Permanente", which surfaced in a refusal
+ * (renamed by hand on 2026-10-06, `f9cf1fe1`; the permanent license is in its own step and renewal note). Set down here
+ * from 2026-10-17, as the district is.
+ */
+const NAME = { 'mx-cmx': 'Licencia para conducir Tipo A' };
+/** The district, written on one line as it was by hand, so a rebuild gives the file as it stands. */
+const oneLine = (v) => JSON.stringify(v).replace(/":/g, '": ').replace(/,"/g, ', "').replace(/^\{/, '{ ').replace(/\}$/, ' }');
 const out = {};
 for (const x of j) {
   if (!VISITOR[x.id]) throw new Error('no visitor rule for ' + x.id);
   out[x.id] = {
     // The research file's keys keep its own spelling. A license's name is the
     // authority's: "license" where its English spells it so, "license" elsewhere.
-    authority: x.authority, name: /^(gb|ie|ca|au|nz)/.test(x.id) ? x.licenceName : x.licenceName.replace(/licence/g, 'license').replace(/Licence/g, 'License'),
+    authority: x.authority, name: NAME[x.id] ?? (/^(gb|ie|ca|au|nz)/.test(x.id) ? x.licenceName : x.licenceName.replace(/licence/g, 'license').replace(/Licence/g, 'License')),
     minAge: { full: x.minAge.full, learner: x.minAge.learner, note: x.minAge.note ?? '' },
     steps: x.steps.map((s) => ({ step: s.step, fee: s.fee, currency: s.currency, note: s.note ?? '' })),
-    validityYears: x.validityYears, renewalFee: x.renewalFee, renewalNote: x.renewalNote ?? '',
+    validityYears: x.validityYears, renewalFee: x.renewalFee,
+    ...(DISTRICT[x.id] ? { district: `@district:${x.id}` } : {}),
+    renewalNote: x.renewalNote ?? '',
     graduated: x.graduated, visitor: VISITOR[x.id],
     foreign: { visitor: x.foreignLicence?.visitor ?? null, newResident: x.foreignLicence?.newResident ?? null },
-    idp: x.idp ?? null,
+    // Who issues the permit is said in a refusal (`mayDrive`), so its dates are the game's (from 2026-10-17, brief 14).
+    idp: x.idp ? { ...x.idp, issuer: gameDates(x.idp.issuer) } : null,
     sources: x.sources, uncertain: x.uncertain ?? [],
   };
 }
@@ -86,6 +106,11 @@ export interface LicenseRule {
   steps: LicenseStep[];
   validityYears: number | null;
   renewalFee: number | null;
+  /**
+   * A district's own surcharge on a license, by the half-years it runs, for someone living in its towns (New York's
+   * MCTD, from 2026-10-06: "$1 per 6 months of validity", on a first license, an exchange and a renewal).
+   */
+  district?: { cityIds: readonly string[]; perHalfYear: number };
   renewalNote: string;
   graduated: unknown;
   visitor: VisitorRule;
@@ -95,7 +120,7 @@ export interface LicenseRule {
   uncertain: string[];
 }
 
-export const LICENSES: Readonly<Record<string, LicenseRule>> = ${JSON.stringify(out, null, 2)};
+export const LICENSES: Readonly<Record<string, LicenseRule>> = ${JSON.stringify(out, null, 2).replace(/"@district:([\w-]+)"/g, (m, id) => oneLine(DISTRICT[id]))};
 `;
 writeFileSync('src/engine/content/licenses.ts', text);
 // The research quotes authorities, who don't contract; the game's voice does (tools/voice-check.mjs).

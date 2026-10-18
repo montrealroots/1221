@@ -139,3 +139,95 @@ Card"). `core/invariants.ts`'s `b.law` is an invariant's law, not a card's.
 133 sources re-marked Rewritten And Verified, each by the area whose file held it (115 money, 18 school: the round-ups),
 after its last edit, by `mark.mjs` through `tools/text-inventory.mjs --mark`, the evidence naming the test and keeping the
 area's own review of the rest of the source after it. `text-inventory --check`: Pending 0.
+
+## Batch 2: The Papers Research, The Papers Guide And The Running Times
+
+### What changed, and how a rebuild keeps it
+
+**Three builders with their research in the repository.** Each now applies `gameDates` on the way in to the fields a
+screen shows, the research file keeping its own words, as `build-attribute-content.mjs` applies its words file:
+
+- `tools/build-entry.mjs`: each entry rule's `note`, shown under Going Abroad (`Documents.tsx`, `answer.rule.note`). 74
+  notes changed in `content/entry.ts`.
+- `tools/build-passports.mjs`: each passport's `feeBasis` and `abroad`, shown under Your Passport. 8 and 3 changed.
+- `tools/build-licenses.mjs`: the permit's `idp.issuer`, said in `mayDrive`'s refusal. 1 changed (Britain's).
+
+**The license builder had drifted from its output.** Run on `c74a02e1` before any change, it gave a `licenses.ts` that
+dropped New York's MCTD `district` (and with it the district's part of a New York City license's fee) and put back
+Mexico City's descriptive name, both set by hand in `licenses.ts` on 2026-10-06 (`363e8812`, `f9cf1fe1`). A rebuild for
+the dates would have lost them, so the builder now holds both (`DISTRICT`, `NAME`, and the interface's `district`, written
+on one line as it was by hand) and gives the committed file: the run after the change differs from `c74a02e1` by the one
+issuer's date and nothing else (`git diff`, below). `defects.md` has it.
+
+Each builder was run (`build-entry.txt`, `build-passports.txt`, `build-licenses.txt`, exit 0), and `git diff` of its
+output touches only the shown fields: 74 `note`, 8 `feeBasis`, 3 `abroad` and 1 `issuer` lines on each side, nothing else.
+The passport and entry builders gave their committed files byte for byte before the change (run on `c74a02e1`: no diff).
+Each builder also runs `voice-check --fix` and `spelling --write` after it writes, as before; both changed nothing.
+
+**Hand-kept, by `apply-hand.mjs` (each change read before it was written):** `content/passportsabroad.ts` (5, an office's
+basis abroad), `visas.ts` (3, a visa's basis), `workload.ts` (4, a production's running time, shown as "Source for the
+running time"), `tutorial.ts` (1), `guide/papers.ts` (19 literals with written days), `PapersWorkspace.tsx` (7: the returns' fine
+print and its tooltip, the dental plan, the State Pension) and `SchoolWorkspace.tsx` (1, Withdraw's warning). The
+applier reads JSX text from this batch on.
+
+**Days built from parts.** The papers guide built three day-first: `dayMonth` ("23 October to 15 January", Connecticut's
+open enrollment), `fullDay` ("From 1 January 2027, …", HUSKY D's work rules and the renewals) and the day Enroll opens
+("from 2 June"). Each is month first now, as `formatDate` writes it; the notice the guide quotes beside the first already
+said "From January 1, 2027". No other day-first date is built from parts in `src/` (`grep` for a day before a month
+name in a template, and for `toLocaleDateString` and `en-GB`: none that prints).
+
+### What was kept, and why
+
+- `ENTRY`'s `authorizations[].processing` and `statedDate`, `ENTRY_UNCERTAIN` and `ENTRY_AS_OF`: no screen reads the first
+  three; `ENTRY_AS_OF` is data, formatted where it's shown ("Researched September 29, 2026", the dynamic cases').
+- `PASSPORTS`' `sources[].statedDate`, `uncertain` and `lost`: the screen prints each source's address and only says
+  that some details couldn't be confirmed; `lost` is read by nothing (`documents.ts`'s `rule.lost` is the police's rule).
+- `LICENSES`' notes, renewal notes, foreign-license rules and `idp.convention`: read by nothing but the authority, the name
+  and the permit's issuer.
+- `content/licensepaths.ts` (9 strings): the license-earning path was removed in the scope reset of 2026-10-09; only its
+  `LicenseStage` type is imported (`documents.ts`). `content/workrules.ts`'s `feeBasis` ("USCIS G-1055, 09/09/26", a
+  form's edition): read by nothing. `systems/homebenefits.ts`'s `CDMX_DESEMPLEO.source` ("8 June 2026"): the screen reads
+  its payments and amount only.
+- `decided.ts` ("(from 2026-10-10)" in a decider's description): read by `tests/deciders.test.ts` and `tools/deciders.mjs`
+  only ("Nothing in the engine imports this"). `content/attributes-matrix.ts` (4): it writes `docs/` Markdown and nothing
+  in `src/` imports it.
+- `RUNNING_TIMES[].read`: data, and no screen shows it.
+
+### Meaning-sensitive changes
+
+None changed a value. The built days come from the same numbers (`CONNECTICUT_ENROLLMENT.openFrom`, the enrollment's
+special days, `PUBLIC_COVER.workFrom`), only their order changed; `guide-examples-papers.test.ts` checks the day Enroll
+opens against the game's own `yaleUntil` less 60 days, as before.
+
+### Nothing reads them back
+
+`readers-papers.txt`: each changed field's readers outside its own file. Every one interpolates it into words (Your
+Passport's fine print, Going Abroad's, a visa's line, the refusal to drive, Source for the running time). The only
+comparisons on fields of these names are on other objects (a document's `issuer` code, a running time's `basis` enum, a
+register's `basis`).
+
+### Tests and tool matchers
+
+- Updated, as exactly: `tests/remaining-papers.test.ts` (six `toContain`s of an office's basis abroad: "£116.50 from
+  April 8, 2026", "US$62 from July 1, 2026" twice, "from May 2, 2025", "from June 1, 2026", "from May 1, 2026"),
+  `tests/guide-examples-papers.test.ts` ("On August 1 a notice says …", "From September 1 its premium …", and "Enrolled
+  ahead, from ${MONTHS[o.month - 1]} ${o.day} … begun August 1."), `tests/defects-g8-8.test.ts` ("A return is due April
+  15, … due June 15."), `tests/defects-g8-4.test.ts` (its regex, `\(August 1, for a fall term\)`) and
+  `tests/evidence2-b13.test.ts` ("From January 1, 2027, some of the month …"). No title changed: two of
+  `defects-g8-4.test.ts`'s titles still say "30 September", as titles are cited.
+- Added to `tests/language-data-dates.test.ts`: every shown field of the papers research and the running times; the whole
+  guide and tutorial (1,000 strings and more) with no date the game doesn't write, and four of the changed sentences
+  held whole; and a student's Health Cover and, with a State Pension claimed (TEST SETUP), Benefits, drawn. Mutation-
+  tested: an entry note's date put back, `fullDay` put back day first, and the dental line's day put back each failed.
+- No built-app tool matched these words.
+
+### Checks
+
+`batch2-tests.txt`: the 83 test files that import a changed file of this batch, and the new one, 1,234 of 1,234 (exit 0).
+`npx tsc -b --noEmit` 0; `npx eslint` on every changed `.ts` and `.tsx` 0 (`batch2-eslint.txt`); the eleven language and
+inventory checks and `geo-check` 0 each.
+
+### Statuses
+
+35 sources re-marked Rewritten And Verified by their areas (20 papers, 11 frame for the entry rules Going Abroad shows,
+3 school, 1 tutorial; the papers guide’s three entries are among the papers’), by `mark.mjs`, after the last edit.

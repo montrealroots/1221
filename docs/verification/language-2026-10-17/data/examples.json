@@ -115,5 +115,158 @@
   "why": "A month and year with a slash, by hand.",
   "meaningSensitive": true,
   "verified": "tests/language-data-dates.test.ts 'the bank research kept by hand…'"
+ },
+ {
+  "source": "src/engine/content/entry.ts#ENTRY .GB",
+  "kind": "official",
+  "before": "Visitor (up to 6 months per visit); ETA required for travel on or after 8 Jan 2025 (Appendix ETA National List section (c)); enforced with carrier checks from 25 Feb 2026.",
+  "after": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
+  "why": "An entry rule’s note under Going Abroad, its days the game’s way by build-entry.mjs’s words step; the research file keeps \"8 Jan 2025\".",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note…'"
+ },
+ {
+  "source": "src/engine/content/passports.ts#PASSPORTS .GB",
+  "kind": "official",
+  "before": "British nationals overseas apply online to HM Passport Office at higher fees: 116.50 adult online / 130 paper; child 75.50 online / 89 paper (from 8 April 2026). Different turnaround times apply overseas (not stated on the pages read). Passports are free for people born on or before 2 September 1929.",
+  "after": "British nationals overseas apply online to HM Passport Office at higher fees: 116.50 adult online / 130 paper; child 75.50 online / 89 paper (from April 8, 2026). Different turnaround times apply overseas (not stated on the pages read). Passports are free for people born on or before September 2, 1929.",
+  "why": "The note on applying from abroad, under Your Passport, by build-passports.mjs’s words step.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts; tests/remaining-papers.test.ts (drawn)"
+ },
+ {
+  "source": "src/engine/content/passports.ts#PASSPORTS .NZ",
+  "kind": "official",
+  "before": "Standard adult passport (GST inclusive), fee in force from 2 May 2025; the same fee applies to first passports and renewals. Courier delivery is charged on top (NZD 7 to 78 for online applications, by destination).",
+  "after": "Standard adult passport (GST inclusive), fee in force from May 2, 2025; the same fee applies to first passports and renewals. Courier delivery is charged on top (NZD 7 to 78 for online applications, by destination).",
+  "why": "A fee’s basis, under Your Passport.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/engine/content/licenses.ts#LICENSES .gb",
+  "kind": "error",
+  "before": "PayPoint shops (in person; Post Office no longer issues since 1 April 2024)",
+  "after": "PayPoint shops (in person; Post Office no longer issues since April 1, 2024)",
+  "why": "Who issues the permit, said in the refusal to drive without one; build-licenses.mjs, which now gives the committed file and this.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "The marketplace: Connecticut’s open enrollment, 23 October to 15 January; the 60 days before Yale Health’s cover ends, once its end is set by the degree, a withdrawal or a dismissal; or within 60 days of losing cover, which a plan you dropped or left unpaid isn’t. And not having stayed past your US status.",
+  "after": "The marketplace: Connecticut’s open enrollment, October 23 to January 15; the 60 days before Yale Health’s cover ends, once its end is set by the degree, a withdrawal or a dismissal; or within 60 days of losing cover, which a plan you dropped or left unpaid isn’t. And not having stayed past your US status.",
+  "why": "Days built from parts (dayMonth): month first now, as formatDate writes them.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'every entry of the guide…'"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "HUSKY D: last month’s income at or under 138% of the poverty line, $1,835 a month in 2026, and from 1 October 2026 US citizenship or a green card held five years. From 1 January 2027, some of the month before you enroll spent at the School, or $580 of income of any kind in it, or an exception: 65 or over, SNAP received under its work rules, or a stay in hospital you ask for.",
+  "after": "HUSKY D: last month’s income at or under 138% of the poverty line, $1,835 a month in 2026, and from October 1, 2026 US citizenship or a green card held five years. From January 1, 2027, some of the month before you enroll spent at the School, or $580 of income of any kind in it, or an exception: 65 or over, SNAP received under its work rules, or a stay in hospital you ask for.",
+  "why": "A day kept as a key, built by fullDay: \"January 1, 2027\", the form the notice the guide quotes already used.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b13.test.ts (Health Cover’s reference drawn)"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "The toast says “Enrolled in the marketplace, from September 1, …”. From 1 September its premium is taken on each month’s first, and a visit costs $45. Care in August, uncovered, is billed at the uninsured price, less the hospital’s financial assistance on an emergency or a stay. Enrolled ahead, from 2 June while Yale Health still covered them, their cover would have begun 1 August.",
+  "after": "The toast says “Enrolled in the marketplace, from September 1, …”. From September 1 its premium is taken on each month’s first, and a visit costs $45. Care in August, uncovered, is billed at the uninsured price, less the hospital’s financial assistance on an emergency or a stay. Enrolled ahead, from June 2 while Yale Health still covered them, their cover would have begun August 1.",
+  "why": "The day Enroll opens, built from a date, and the day cover begins, written: both month first.",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-papers.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "Yale Delta Dental Basic runs to its 30 September whatever happens to Yale Health, through August and September after the degree too. Paid for the year, it can’t be dropped.",
+  "after": "Yale Delta Dental Basic runs to its September 30 whatever happens to Yale Health, through August and September after the degree too. Paid for the year, it can’t be dropped.",
+  "why": "A day without a year, month first.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane",
+  "kind": "official",
+  "before": "A return is due 15 April, or the next business day. A 1040-NR with no wages on it is due 15 June. Filed late with tax owed, the penalty is",
+  "after": "A return is due April 15, or the next business day. A 1040-NR with no wages on it is due June 15. Filed late with tax owed, the penalty is",
+  "why": "The returns’ fine print, its deadlines month first, as the No Returns Yet line above it already said them (formatDate).",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g8-8.test.ts 'the fine print gives the 1040-NR’s June date…' (drawn)"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane",
+  "kind": "label",
+  "before": "April to April, each settled on the 31 January after it ends",
+  "after": "April to April, each settled on the January 31 after it ends",
+  "why": "A tooltip on the UK tax year’s row.",
+  "meaningSensitive": false,
+  "verified": "read in the diff; the same day in the tutorial is held by tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#DentalPanel",
+  "kind": "official",
+  "before": "It’s paid for the year to 30 September, and can’t be canceled once paid.",
+  "after": "It’s paid for the year to September 30, and can’t be canceled once paid.",
+  "why": "The dental plan’s year end.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'PLAYER JOURNEY: a student reads Health Cover’s dental plan…' (drawn)"
+ },
+ {
+  "source": "src/ui/workspaces/SchoolWorkspace.tsx#WithdrawControl",
+  "kind": "confirmation",
+  "before": "Withdrawing gives up your place today: classes, calls, shifts and coursework end, and hours you worked are still paid. By the fifteenth day of a term’s classes Yale Health’s cover ends the day you withdraw, or goes back to the start of its insurance term (1 August, for a fall term) where that came first, and its premium is refunded; after it, you’re covered thirty days more. On an F-1 you’d have fifteen days’ grace and no OPT. The Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.",
+  "after": "Withdrawing gives up your place today: classes, calls, shifts and coursework end, and hours you worked are still paid. By the fifteenth day of a term’s classes Yale Health’s cover ends the day you withdraw, or goes back to the start of its insurance term (August 1, for a fall term) where that came first, and its premium is refunded; after it, you’re covered thirty days more. On an F-1 you’d have fifteen days’ grace and no OPT. The Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.",
+  "why": "The day Yale Health’s cover goes back to, in Withdraw’s warning.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g8-4.test.ts (drawn)"
+ },
+ {
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "On a 1040-NR with no wages, the return is due by June 15, though Connecticut’s return on it is still due in mid-April. A UK tax year’s is settled on its own, by the next 31 January. The IRS’s refund comes",
+  "after": "On a 1040-NR with no wages, the return is due by June 15, though Connecticut’s return on it is still due in mid-April. A UK tax year’s is settled on its own, by the next January 31. The IRS’s refund comes",
+  "why": "A UK tax year’s deadline in the tutorial, month first.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'every entry of the guide and every chapter of the tutorial…'"
+ },
+ {
+  "source": "src/engine/content/visas.ts#US_B1B2",
+  "kind": "official",
+  "before": "The $185 application fee; the interview about five months out at the Mexico City consulate (29 September 2026, read secondhand)",
+  "after": "The $185 application fee; the interview about five months out at the Mexico City consulate (September 29, 2026, read secondhand)",
+  "why": "A visa’s basis, shown under Going Abroad with the visa’s name.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'each passport’s fee…, each visa'"
+ },
+ {
+  "source": "src/engine/content/passportsabroad.ts#PASSPORTS_ABROAD",
+  "kind": "official",
+  "before": "An adult passport applied for online from outside the UK: £116.50 from 8 April 2026 (£130 on paper). Fast Track and the other urgent services are for applicants in the UK.",
+  "after": "An adult passport applied for online from outside the UK: £116.50 from April 8, 2026 (£130 on paper). Fast Track and the other urgent services are for applicants in the UK.",
+  "why": "The UK passport office’s fee from abroad, under Your Passport.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-papers.test.ts (drawn, a London-born student in New Haven)"
+ },
+ {
+  "source": "src/engine/content/workload.ts#RUNNING_TIMES",
+  "kind": "official",
+  "before": "Riksteatret, the Norwegian Touring Theatre (Bentein Baardson), from 31 August 2017: 2 h 20 with an interval",
+  "after": "Riksteatret, the Norwegian Touring Theatre (Bentein Baardson), from August 31, 2017: 2 h 20 with an interval",
+  "why": "A production’s running time, shown as Source for the running time on a piece and in Rehearsal.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'each production’s running time…'"
+ },
+ {
+  "source": "src/engine/content/workload.ts#UNNAMED_RUNNING",
+  "kind": "official",
+  "before": "Estimated, since no Carlotta or Langston Hughes festival play’s running time is published (searched 2026-10-16): a new play of an hour and forty minutes, run straight through",
+  "after": "Estimated, since no Carlotta or Langston Hughes festival play’s running time is published (searched October 16, 2026): a new play of an hour and forty minutes, run straight through",
+  "why": "A searched day, as the brief asks a reading day to read.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'each production’s running time…'"
  }
 ]

@@ -81,8 +81,9 @@ const usd = (cents: number): string => formatMoney(cents, 'USD', { cents: cents 
 const gbp = (pounds: number): string => formatMoney(Math.round(pounds * 100), 'GBP');
 const pct = (share: number): string => `${Math.round(share * 1000) / 10}%`;
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const dayMonth = ([month, day]: readonly [number, number]): string => `${day} ${MONTHS[month - 1]}`;
-const fullDay = (key: string): string => `${Number(key.slice(8, 10))} ${MONTHS[Number(key.slice(5, 7)) - 1]} ${key.slice(0, 4)}`;
+/** A day and its month, and a day kept as a key, as the game writes a date (until 2026-10-17, brief 14: "1 November", "1 October 2026"). */
+const dayMonth = ([month, day]: readonly [number, number]): string => `${MONTHS[month - 1]} ${day}`;
+const fullDay = (key: string): string => `${MONTHS[Number(key.slice(5, 7)) - 1]} ${Number(key.slice(8, 10))}, ${key.slice(0, 4)}`;
 /** An hour on the clock, 17 as 5:00 PM (from 2026-10-12: until then the appointment's and the session's read 10:00 and 17:00). */
 const clock = (hour: number): string => `${hour % 12 === 0 ? 12 : hour % 12}:00 ${hour < 12 ? 'AM' : 'PM'}`;
 /**
@@ -123,7 +124,7 @@ const SPECIAL = ENROLLMENT.specialDays;
 // After the degree Yale Health covers to 31 July (`yaleUntil`), and Enroll shows from the special days before its end
 // (`mayEnroll`, from 2026-10-12): 2 June in any year.
 const ENROLL_OPENS = new Date(Date.UTC(2029, 7, 1, 12) - SPECIAL * MS_DAY);
-const ENROLL_OPENS_ON = `${ENROLL_OPENS.getUTCDate()} ${MONTHS[ENROLL_OPENS.getUTCMonth()]}`;
+const ENROLL_OPENS_ON = `${MONTHS[ENROLL_OPENS.getUTCMonth()]} ${ENROLL_OPENS.getUTCDate()}`;
 const MARKUP = CARE.uninsuredMarkup;
 
 const HERE = clinicsIn(NEW_HAVEN);
@@ -242,7 +243,7 @@ export const PAPERS: readonly GuideEntry[] = [
       'Once you’re enrolled, Drop The Plan, in the same place, ends a plan of your own at the end of the month.',
       'In Care And Its Bills, each row has its care, its date, Your Share and Due. In the Assistance column, Appeal It answers a denied claim, and Apply For Assistance asks a Connecticut hospital to apply its financial assistance to a bill.',
       'When a bill has gone to medical debt, Pay It Off beside the panel’s title pays all of it.',
-      'While Yale Health covers you, A Dental Plan offers Buy Dental: Yale Delta Dental Basic, paid once for Yale’s plan year, to 30 September.',
+      'While Yale Health covers you, A Dental Plan offers Buy Dental: Yale Delta Dental Basic, paid once for Yale’s plan year, to September 30.',
     ],
     needs: [
       `Enroll: no plan of your own already, and Yale Health ended, in its last ${SPECIAL} days once its end is set, or lapsed on a personal leave without Affiliate cover.`,
@@ -250,8 +251,8 @@ export const PAPERS: readonly GuideEntry[] = [
       // poverty line: income of any kind meets the work rules, a renewal reads six months, and an income HUSKY D's line
       // takes isn't Covered Connecticut's. Until 2026-10-17 it named 80 hours' work first, which nobody off the School can
       // do in SLATE and SLATE stopped reading that day (brief 12), and "school at least half-time" for the School.
-      `HUSKY D: last month’s income at or under ${pct(PUBLIC_COVER.medicaidShare)} of the poverty line, ${usd(HUSKY_TO)} a month in ${LINE_YEAR}, and from 1 October 2026 US citizenship or a green card held five years. From ${fullDay(PUBLIC_COVER.workFrom)}, some of the month before you enroll spent at the School, or ${usd(PUBLIC_COVER.workEarnings)} of income of any kind in it, or an exception: 65 or over, SNAP received under its work rules, or a stay in hospital you ask for.`,
-      `Covered Connecticut: last month’s income over HUSKY D’s line and at or under ${pct(PUBLIC_COVER.coveredCtShare)} of the year before’s poverty line, ${usd(COVERED_CT_TO)} a month in ${LINE_YEAR}, and at least 100% of it, since it comes with the premium tax credit; an income HUSKY D’s line takes isn’t Covered Connecticut’s, whatever your status. For a citizen or anyone lawfully present, and from 1 January 2027 for a citizen or a green card holder, not a student in F-1 status or a graduate on OPT.`,
+      `HUSKY D: last month’s income at or under ${pct(PUBLIC_COVER.medicaidShare)} of the poverty line, ${usd(HUSKY_TO)} a month in ${LINE_YEAR}, and from October 1, 2026 US citizenship or a green card held five years. From ${fullDay(PUBLIC_COVER.workFrom)}, some of the month before you enroll spent at the School, or ${usd(PUBLIC_COVER.workEarnings)} of income of any kind in it, or an exception: 65 or over, SNAP received under its work rules, or a stay in hospital you ask for.`,
+      `Covered Connecticut: last month’s income over HUSKY D’s line and at or under ${pct(PUBLIC_COVER.coveredCtShare)} of the year before’s poverty line, ${usd(COVERED_CT_TO)} a month in ${LINE_YEAR}, and at least 100% of it, since it comes with the premium tax credit; an income HUSKY D’s line takes isn’t Covered Connecticut’s, whatever your status. For a citizen or anyone lawfully present, and from January 1, 2027 for a citizen or a green card holder, not a student in F-1 status or a graduate on OPT.`,
       `Apply For HUSKY D: HUSKY D’s income and status met, and its work rules not shown in the month before, with no application of yours waiting. Request A Hardship Exception: a notice of noncompliance waiting on its answer, and a stay in hospital in a month it assessed.`,
       `The marketplace: Connecticut’s open enrollment, ${OPEN_FROM} to ${OPEN_UNTIL}; the ${SPECIAL} days before Yale Health’s cover ends, once its end is set by the degree, a withdrawal or a dismissal; or within ${SPECIAL} days of losing cover, which a plan you dropped or left unpaid isn’t. And not having stayed past your US status.`,
       `Appeal It: a denied claim, within ${DENIALS.appealDays} days of the care. Apply For Assistance: a Connecticut hospital’s bill for an emergency or a stay, before it’s due.`,
@@ -262,7 +263,7 @@ export const PAPERS: readonly GuideEntry[] = [
       { label: 'The Marketplace Premium', value: `The benchmark silver plan, ${BENCH_WORDS}, taken in full on the first of each month`, estimate: true },
       { label: 'Access Health CT Standard Silver', value: `${usd(SILVER.visit)} a visit, ${usd(SILVER.urgent)} urgent care, ${usd(SILVER.emergency)} the emergency room, a stay ${usd(SILVER.stayCopay ?? 0)} after a ${usd(SILVER.deductible)} deductible, ${usd(SILVER.outOfPocket)} a year at most` },
       { label: 'Uninsured', value: `The commercial price times ${MARKUP}: a visit ${usd(CARE.price.visit * MARKUP)} at ${MEDICAL_CPI.base.visit[0]}’s prices and an emergency ${usd(CARE.price.emergency * MARKUP)} at ${MEDICAL_CPI.base.emergency[0]}’s, each grown since by its price index. An emergency or a stay at a Connecticut hospital has its financial assistance taken off as it’s billed: free to ${pct(CT_CHARITY.freeTo)} of the poverty line, ${pct(CT_CHARITY.discount)} off to ${pct(CT_CHARITY.discountTo)}`, estimate: true },
-      { label: 'Yale Delta Dental Basic', value: `${usd(YALE_DENTAL.premium)} for Yale’s plan year, paid at once and covering from that day: bought in August or September, to 30 September a year on; bought from October to July, to the next 30 September. Cleanings in full, and ${pct(YALE_DENTAL.basic)} of a filling paid by the plan after a ${usd(YALE_DENTAL.deductible)} deductible, to ${usd(YALE_DENTAL.max)}, both kept by Yale’s plan year, 1 October to 30 September: bought in August or September, the weeks before 1 October are the plan year then ending, with a deductible and a maximum of their own` },
+      { label: 'Yale Delta Dental Basic', value: `${usd(YALE_DENTAL.premium)} for Yale’s plan year, paid at once and covering from that day: bought in August or September, to September 30 a year on; bought from October to July, to the next September 30. Cleanings in full, and ${pct(YALE_DENTAL.basic)} of a filling paid by the plan after a ${usd(YALE_DENTAL.deductible)} deductible, to ${usd(YALE_DENTAL.max)}, both kept by Yale’s plan year, October 1 to September 30: bought in August or September, the weeks before October 1 are the plan year then ending, with a deductible and a maximum of their own` },
       { label: 'Time', value: 'None: enrolling, appealing, applying and paying move no clock' },
     ],
     reads: [
@@ -275,14 +276,14 @@ export const PAPERS: readonly GuideEntry[] = [
       // in SLATE, and the hours were read no more from that day (brief 12). Later that day its label, Last Month’s Work,
       // went too: it headed a rule that reads no work (the second reader’s check, brief12-health.json).
       { label: 'The Work Rules’ Months', value: `For HUSKY D’s work rules: the calendar month before you enroll, and at renewal any one of the ${PUBLIC_COVER.workLookBack.ct.renew} calendar months before the renewal’s. A month meets them with any of it spent at the School (the month you leave it, on a leave, by withdrawing or with the degree, counts whole, and so does the month you come back), ${usd(PUBLIC_COVER.workEarnings)} of income of any kind (pay, an unemployment benefit, interest or a pension), being 65 or over for any of it, SNAP received in it while you were under SNAP’s work rules (out of school, no unemployment claim, 18 to 64), or a stay in hospital in it, if you ask` },
-      { label: 'Your Status', value: 'US citizenship or five years with a green card for HUSKY D from 1 October 2026; lawful presence for the marketplace, and for Covered Connecticut until 2027, when it’s a citizen’s or a green card holder’s', estimate: false },
+      { label: 'Your Status', value: 'US citizenship or five years with a green card for HUSKY D from October 1, 2026; lawful presence for the marketplace, and for Covered Connecticut until 2027, when it’s a citizen’s or a green card holder’s', estimate: false },
       { label: 'A Denied Claim', value: `${pct(DENIALS.rate)} of a marketplace plan’s claims, billed as if you were uninsured; insurers uphold ${pct(DENIALS.upheld)} of appeals`, estimate: true },
       { label: 'The Hospital’s Financial Assistance', value: `Your last twelve months’ income against the poverty line: free to ${pct(CT_CHARITY.freeTo)}, ${pct(CT_CHARITY.discount)} off to ${pct(CT_CHARITY.discountTo)}` },
       { label: 'Medical Debt On Your Record', value: `${usd(MEDICAL_DEBT.reportAt)} or more, unpaid ${MEDICAL_DEBT.reportAfterDays} days, and you living outside New York and California` },
     ],
     now: [
       // From 2026-10-16 (brief 09's journeys): until then HUSKY D, too, started on the first of next month.
-      'Enroll: HUSKY D starts on the first of the month you enroll, and reaches back to the first of an earlier month in which you had care with nothing covering you and HUSKY D would have taken you, three months back for an application in 2026 and one from 2027, the care since priced again as HUSKY D’s; another program or a plan starts on the first of next month. Enrolled before Yale Health’s cover ends, each starts on the first of the month on or after its end, so a graduate’s starts 1 August with no gap. The toast names it and its day.',
+      'Enroll: HUSKY D starts on the first of the month you enroll, and reaches back to the first of an earlier month in which you had care with nothing covering you and HUSKY D would have taken you, three months back for an application in 2026 and one from 2027, the care since priced again as HUSKY D’s; another program or a plan starts on the first of next month. Enrolled before Yale Health’s cover ends, each starts on the first of the month on or after its end, so a graduate’s starts August 1 with no gap. The toast names it and its day.',
       // From 2026-10-16 (brief 09's journeys): until then a renewal's notice stayed after a drop, and its hardship was said
       // granted while nothing was renewed; and Drop The Plan stayed for a second press.
       'Drop The Plan: it ends on the first of next month, and no later premium is taken. The toast says “Your plan ends at the end of the month. Dropping it doesn’t open a special enrollment period.”, and the panel says “Dropped: it ends on …” instead of the button. A renewal’s notice of noncompliance waiting on an answer goes with the program it would renew, and so does its decision.',
@@ -303,7 +304,7 @@ export const PAPERS: readonly GuideEntry[] = [
       // failing either test ended it.
       // Until 2026-10-15 Covered Connecticut ran on into 2027 for a student in F-1 status, and beside Yale Health once a
       // student was back from a leave (`healthMonth`).
-      'Covered Connecticut held by a student in F-1 status or a graduate on OPT ends on 1 January 2027, with the notice “Your Public Cover Has Ended”: from then the premium tax credit it comes with is a citizen’s or a green card holder’s. The marketplace still sells to you, with no credit.',
+      'Covered Connecticut held by a student in F-1 status or a graduate on OPT ends on January 1, 2027, with the notice “Your Public Cover Has Ended”: from then the premium tax credit it comes with is a citizen’s or a green card holder’s. The marketplace still sells to you, with no credit.',
       'Back at the School from a leave, with Yale Health’s student cover again, Covered Connecticut ends at the next month’s start, with the notice “Your Public Cover Has Ended”: it’s for a person with no other cover that counts. HUSKY D stays beside Yale Health, which pays first.',
       // Until 2026-10-13 Covered Connecticut ran to its renewal out of status, and this said it ended there with a notice
       // naming the status; from that day it ends with the month, as a marketplace plan does (`healthMonth`). Until
@@ -316,8 +317,8 @@ export const PAPERS: readonly GuideEntry[] = [
       // Until 2026-10-16 this said the 60 days ran from that first of the month for Yale Health's end too, weeks after a
       // withdrawal's: the window ran from the month's look, not the loss (45 CFR 155.420(c)(1)), and the notice said “You have
       // 60 days” whenever it came. Found playing a withdrawal, brief 09's journeys.
-      `On the first of a month that finds you without cover, a notice says “Your Health Cover Ended”, beginning “You’re uncovered from …” and the day your last cover ended. Your ${SPECIAL} days to enroll run from that day: Yale Health’s own end, after the degree 1 August, after a withdrawal thirty days from it, which can be weeks before the notice; a program’s at its renewal, at a month’s end; and Yale Health canceled back in time, by a withdrawal by the fifteenth day of classes or a leave begun before them, from the day it was canceled. Told on the day, the notice says “You have ${SPECIAL} days to enroll in the marketplace”; told later, it names the last day, “You can enroll in the marketplace until …”; and where last month’s income qualifies you for HUSKY D or Covered Connecticut, that it takes you at any time, with no premium. A plan you dropped or left unpaid opens no such days, and the notice says the way back is open enrollment, or a month’s income that qualifies you for HUSKY D or Covered Connecticut. Out of status, it says neither the marketplace nor Covered Connecticut will take you.`,
-      'Yale Delta Dental Basic runs to its 30 September whatever happens to Yale Health, through August and September after the degree too. Paid for the year, it can’t be dropped.',
+      `On the first of a month that finds you without cover, a notice says “Your Health Cover Ended”, beginning “You’re uncovered from …” and the day your last cover ended. Your ${SPECIAL} days to enroll run from that day: Yale Health’s own end, after the degree August 1, after a withdrawal thirty days from it, which can be weeks before the notice; a program’s at its renewal, at a month’s end; and Yale Health canceled back in time, by a withdrawal by the fifteenth day of classes or a leave begun before them, from the day it was canceled. Told on the day, the notice says “You have ${SPECIAL} days to enroll in the marketplace”; told later, it names the last day, “You can enroll in the marketplace until …”; and where last month’s income qualifies you for HUSKY D or Covered Connecticut, that it takes you at any time, with no premium. A plan you dropped or left unpaid opens no such days, and the notice says the way back is open enrollment, or a month’s income that qualifies you for HUSKY D or Covered Connecticut. Out of status, it says neither the marketplace nor Covered Connecticut will take you.`,
+      'Yale Delta Dental Basic runs to its September 30 whatever happens to Yale Health, through August and September after the degree too. Paid for the year, it can’t be dropped.',
     ],
     interpret: [
       'Your Cover, This Month, reads None, in amber, when nothing covers you.',
@@ -358,12 +359,12 @@ export const PAPERS: readonly GuideEntry[] = [
       'If a claim is denied or a hospital bill comes, use Appeal It or Apply For Assistance before its due date.',
     ],
     mistakes: [
-      `Waiting for Yale’s cover to end before enrolling: after the degree Yale Health runs to 31 July, and Enroll shows from ${ENROLL_OPENS_ON}. Enrolled by 31 July, cover begins 1 August with no gap; enrolled on 1 August or later, a plan begins the first of the next month, and August goes uncovered, where HUSKY D, if last month’s income and its work rules take you, begins on 1 August all the same.`,
+      `Waiting for Yale’s cover to end before enrolling: after the degree Yale Health runs to July 31, and Enroll shows from ${ENROLL_OPENS_ON}. Enrolled by July 31, cover begins August 1 with no gap; enrolled on August 1 or later, a plan begins the first of the next month, and August goes uncovered, where HUSKY D, if last month’s income and its work rules take you, begins on August 1 all the same.`,
       `Letting the current account run dry before the first: the premium isn’t taken, the plan ends, and a plan left unpaid opens no special enrollment. Unless a month’s income qualifies you for HUSKY D or Covered Connecticut, you wait for open enrollment, ${OPEN_FROM} to ${OPEN_UNTIL}.`,
       'Leaving a bill to its due date with too little in the bank: it goes to medical debt. Pay It Off takes the whole debt from your current account at once, so wait until it holds all of it.',
       `Missing a denial: “A Claim Denied” comes as a notice, and an appeal is filed within ${DENIALS.appealDays} days of the care.`,
       `Dropping cover to save the premium: care uninsured is billed at ${MARKUP} times the commercial price, less a Connecticut hospital’s financial assistance for an emergency or a stay, and a marketplace plan dropped can’t be bought again until open enrollment.`,
-      'Buying Yale’s dental plan late in its year: bought from October to July, it runs only to the next 30 September, so bought in June or July the full year’s premium buys a summer. Bought in August or September, it runs from that day to 30 September a year on.',
+      'Buying Yale’s dental plan late in its year: bought from October to July, it runs only to the next September 30, so bought in June or July the full year’s premium buys a summer. Bought in August or September, it runs from that day to September 30 a year on.',
     ],
     related: ['papers.doctor', 'papers.conditions', 'school.leave', 'school.money', 'taxes.return', 'money.affairs'],
     connections: [
@@ -380,11 +381,11 @@ export const PAPERS: readonly GuideEntry[] = [
     example: {
       setup: 'A US citizen in New Haven who graduated in the spring of 2027, with no pay in July.',
       steps: [
-        'On 1 August a notice says “Your Health Cover Ended”.',
+        'On August 1 a notice says “Your Health Cover Ended”.',
         `Open Papers, Health Cover. Under The Marketplace: “From January 1, 2027, HUSKY D asks for ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of income, time at the School or an exception in the month before you apply, and last month had none of them. The marketplace is open to you, because you’re within ${SPECIAL} days of losing cover.”`,
         'Press Enroll.',
       ],
-      result: `The toast says “Enrolled in the marketplace, from September 1, …”. From 1 September its premium is taken on each month’s first, and a visit costs ${usd(SILVER.visit)}. Care in August, uncovered, is billed at the uninsured price, less the hospital’s financial assistance on an emergency or a stay. Enrolled ahead, from ${ENROLL_OPENS_ON} while Yale Health still covered them, their cover would have begun 1 August.`,
+      result: `The toast says “Enrolled in the marketplace, from September 1, …”. From September 1 its premium is taken on each month’s first, and a visit costs ${usd(SILVER.visit)}. Care in August, uncovered, is billed at the uninsured price, less the hospital’s financial assistance on an emergency or a stay. Enrolled ahead, from ${ENROLL_OPENS_ON} while Yale Health still covered them, their cover would have begun August 1.`,
     },
   },
   {
@@ -410,7 +411,7 @@ export const PAPERS: readonly GuideEntry[] = [
       `Fill A Longer Supply, ${LONGEST} Days, under Your Conditions, fills the medicine of every condition you keep up for that long at once, paid ahead. Where the bank can’t cover every condition’s fill, none is filled.`,
     ],
     needs: [
-      `Your Doctor: a practice in the town you live in that would see you, two or more of them. In New Haven the game has ${PRACTICES.join(' and ')}; ${YALE_PRACTICE} sees only Yale students Yale Health covers: while you’re at the School, thirty days after a withdrawal past the fifteenth day of classes, not after one by it, and to 31 July after the degree.`,
+      `Your Doctor: a practice in the town you live in that would see you, two or more of them. In New Haven the game has ${PRACTICES.join(' and ')}; ${YALE_PRACTICE} sees only Yale students Yale Health covers: while you’re at the School, thirty days after a withdrawal past the fifteenth day of classes, not after one by it, and to July 31 after the degree.`,
       'Book An Appointment: a visit owed, missed or called off, and no appointment booked.',
       'Your Pharmacy: living in America.',
       'Fill A Longer Supply: a condition you keep up, its row showing Let It Go, and the bank able to pay every condition’s fill.',
@@ -448,7 +449,7 @@ export const PAPERS: readonly GuideEntry[] = [
       '“What it would cost you here now” is your share under today’s cover, for a visit, urgent care and an emergency.',
       // From 2026-10-13 (`shareOf`): until then the NHS paid a visit at Bupa's pay-as-you-go GP, picked as one's doctor.
       'Elsewhere, a practice picked that publishes its own price, as Bupa’s pay-as-you-go GP in London does, bills a visit at that price: a public system pays its own practices, not a private GP. A life in New Haven never meets one.',
-      'A visit you keep doesn’t change your wellbeing by itself. It renews prescriptions, records a review and may bring a referral. Connecticut sets no date after which a prescription for a medicine that isn’t controlled can no longer be filled (its pharmacy statutes, read on 15 October 2026), so in New Haven a renewal changes no fill, and the visit is mostly its bill.',
+      'A visit you keep doesn’t change your wellbeing by itself. It renews prescriptions, records a review and may bring a referral. Connecticut sets no date after which a prescription for a medicine that isn’t controlled can no longer be filled (its pharmacy statutes, read on October 15, 2026), so in New Haven a renewal changes no fill, and the visit is mostly its bill.',
       // From 2026-10-15, when Yale Health's rule that a member's care is had at its Health Center was kept: until then this
       // said picking Yale Health changed how soon a student was seen, not what a visit cost, both being $0 on Yale Health.
       `In New Haven the game has ${PRACTICES.length} practices. On Yale Health, picking ${PRACTICE} changes both how soon you’re seen and what a visit costs: ${WAIT} days on and ${usd(UNINSURED_VISIT)} in 2026, against ${YALE_SOON} and $0 at ${YALE_PRACTICE}, since Yale Health pays for a member’s care at its own Health Center. Fair Haven keeps a sliding fee for the uninsured, but publishes none of its amounts, so the game bills the uninsured price there. An emergency is paid wherever it’s had.`,
@@ -687,7 +688,7 @@ export const PAPERS: readonly GuideEntry[] = [
     ],
     needs: [
       `Social Security: ${SS.earliestAge} or older, ${SS.creditsNeeded} credits, and not drawing it.`,
-      `State Pension, the UK’s: State Pension age, 68 for anyone born after 5 April 1978, and ${STATE_PENSION.yearsForAny} qualifying years on your National Insurance record.`,
+      `State Pension, the UK’s: State Pension age, 68 for anyone born after April 5, 1978, and ${STATE_PENSION.yearsForAny} qualifying years on your National Insurance record.`,
       `State Pension (Ireland): ${IRISH_PENSION.age}, and ${IRISH_PENSION.paidNeeded} paid contributions, or living in Ireland with means under the non-contributory pension’s.`,
       `IMSS Pension: ${IMSS.age}, and the year’s weeks of IMSS contributions, ${IMSS.weeks2026} in 2026 and ${IMSS.weeksStep} more each year to ${IMSS.weeksMax.toLocaleString('en-US')}.`,
       `Pensión Para El Bienestar: a Mexican citizen of ${BIENESTAR.age} or over, living in Mexico.`,

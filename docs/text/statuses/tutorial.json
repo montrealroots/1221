@@ -121,9 +121,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [papers]": {
   "status": "Rewritten And Verified",
-  "hash": "8a6acb5573f6",
-  "on": "2026-10-17",
-  "evidence": "tests/help-mechanics.test.ts, ‘PLAYER JOURNEY: a new life’s guide opens at its first chapter…’, draws every paragraph, detail and name of the chapter on its page; the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar), each chapter’s page holding its words; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/tutorial.test.ts"
+  "hash": "b93d52ec804f",
+  "on": "2026-10-18",
+  "evidence": "Its day month first, \"by the next January 31\": tests/language-data-dates.test.ts 'every entry of the guide and every chapter of the tutorial, the papers guide’s built days among them'. As the tutorial area verified the rest: tests/help-mechanics.test.ts, ‘PLAYER JOURNEY: a new life’s guide opens at its first chapter…’, draws every paragraph, detail and name of the chapter on its page; the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar), each chapter’s page holding its words; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/tutorial.test.ts"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [plans]": {
   "status": "Rewritten And Verified",

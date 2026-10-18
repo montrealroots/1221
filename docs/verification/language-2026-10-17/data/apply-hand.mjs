@@ -21,6 +21,7 @@ for (const file of files) {
     else if (ts.isTemplateHead(node)) parts = [[node.getStart() + 1, node.getEnd() - 2]];
     else if (ts.isTemplateMiddle(node)) parts = [[node.getStart() + 1, node.getEnd() - 2]];
     else if (ts.isTemplateTail(node)) parts = [[node.getStart() + 1, node.getEnd() - 1]];
+    else if (ts.isJsxText(node)) parts = [[node.getStart(), node.getEnd()]];
     if (parts) {
       const p = node.parent;
       const isKey = p && (ts.isPropertyAssignment(p) || ts.isPropertySignature(p)) && p.name === node;

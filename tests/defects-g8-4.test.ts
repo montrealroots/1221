@@ -119,7 +119,7 @@ describe('a withdrawal by the fifteenth day of classes says when Yale Health’s
     const { text } = drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'standing' }, true);
     expect(text).toMatch(/Withdrawing gives up your place today/);
     expect(text).not.toMatch(/back to the term’s start/);
-    expect(text).toMatch(/ends the day you withdraw, or goes back to the start of its insurance term \(1 August, for a fall term\) where that came first/);
+    expect(text).toMatch(/ends the day you withdraw, or goes back to the start of its insurance term \(August 1, for a fall term\) where that came first/);
   });
 });
 
