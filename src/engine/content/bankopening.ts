@@ -49,7 +49,7 @@ export const OPENING: Readonly<Record<string, Opening>> = {
     sendDays: 3,
     minimumAge: 18,
     withoutSsn: 'branch',
-    source: 'Chase: "International students ... must open account at a Chase branch", with a passport, a US address and a second ID such as the I-20, no SSN needed. Chase Total Checking page and Deposit Account Agreement of 14 June 2026: 18 or older; the debit card "typically arrives in about a week"; a transfer to or from a non-Chase account "typically takes 2-3 business days"',
+    source: 'Chase: "International students ... must open account at a Chase branch", with a passport, a US address and a second ID such as the I-20, no SSN needed. Chase Total Checking page and Deposit Account Agreement of June 14, 2026: 18 or older; the debit card "typically arrives in about a week"; a transfer to or from a non-Chase account "typically takes 2-3 business days"',
   },
   'us-bank-of-america': {
     reviewDays: 2,
@@ -82,7 +82,7 @@ export const OPENING: Readonly<Record<string, Opening>> = {
     usPersonsOnly: true,
     card: { days: 7, business: true },
     sendDays: 3,
-    source: 'Capital One 360 Checking: for "United States citizens or lawful permanent residents" (disclosure of 20 May 2026); "There is no minimum deposit required"; it "won\'t be considered \'opened\' until it\'s funded ... at least a penny"; it "must be funded within 60 days of account opening, otherwise it will automatically close"; the debit card "within 5-7 business days"; transfers to your own account elsewhere "typically take 2-3 business days". Its minimum age isn\'t stated',
+    source: 'Capital One 360 Checking: for "United States citizens or lawful permanent residents" (disclosure of May 20, 2026); "There is no minimum deposit required"; it "won\'t be considered \'opened\' until it\'s funded ... at least a penny"; it "must be funded within 60 days of account opening, otherwise it will automatically close"; the debit card "within 5-7 business days"; transfers to your own account elsewhere "typically take 2-3 business days". Its minimum age isn\'t stated',
   },
 };
 
@@ -97,7 +97,7 @@ export const ESTIMATE_CARD_DAYS = 7;
  */
 export const TRANSFERS: Readonly<Record<string, { instant?: boolean; days?: number; sameDayBefore?: number; scheme: string; source: string }>> = {
   GB: { instant: true, scheme: 'Faster Payments', source: 'Pay.UK: in seconds; the Payment Services Regulations 2017, reg. 86, allow until the next business day. A fraud hold of up to four business days (2024) isn\'t kept' },
-  IE: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886: every euro bank sends instant transfers from 9 October 2025, within ten seconds' },
+  IE: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886: every euro bank sends instant transfers from October 9, 2025, within ten seconds' },
   DE: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886, as for Ireland' },
   FR: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886, as for Ireland' },
   ES: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886, as for Ireland' },

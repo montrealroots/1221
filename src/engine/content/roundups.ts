@@ -95,7 +95,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: 'If the account can’t cover the day’s transfer, that day’s round-ups are canceled, not carried, and it never overdraws.',
     open: ['A purchase of whole dollars: the terms say “the amount in excess of the purchase price”, so the game moves nothing.', 'An account overdrawn during the day and back in credit by its end: the terms cancel the day; the game looks at the balance at the day’s end.', OFF],
     notHere: ['A purchase refunded leaves its round-up in savings, as the terms say; purchases in the game aren’t refunded.'],
-    source: 'bankofamerica.com, Personal Schedule of Fees, effective 7 August 2026; Keep the Change page and FAQ',
+    source: 'bankofamerica.com, Personal Schedule of Fees, effective August 7, 2026; Keep the Change page and FAQ',
     checked: CHECKED,
   },
   'us-wells-fargo': {
@@ -106,7 +106,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: 'If the account doesn’t have the funds or is overdrawn, the transfer doesn’t happen. The game drops it: the terms don’t say it’s tried again.',
     open: ['Which day’s balance decides: the game looks when the transfer is made.', 'A day Overdraft Protection was used, Wells Fargo makes no transfer: the game doesn’t look for it, and moves it if the account covers it.', OFF],
     notHere: ['Online Bill Pay payments count at Wells Fargo too; bills in the game aren’t paid through Bill Pay.', 'Wells Fargo names Way2Save Savings as the account it goes into; the game has one savings account at a bank.'],
-    source: 'wellsfargo.com, Consumer Account Fee and Information Schedule, effective 28 July 2026',
+    source: 'wellsfargo.com, Consumer Account Fee and Information Schedule, effective July 28, 2026',
     checked: CHECKED,
   },
   'us-citi': {
@@ -121,7 +121,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: 'You set a minimum balance, at least $50. Below it on the day a transfer is due, Citi tries the next two days, and after three days below it turns Spend & Save off.',
     open: ['What happens to the tally when it’s turned off, by you or by Citi: the game drops it.', 'A purchase of whole dollars: the game moves nothing.', 'Daily on calendar days or business days: the game moves it every day; weekly from the day you turn it on, the game’s reading of “the next occurrence of the chosen weekday”.'],
     notHere: [],
-    source: 'citi.com/online-services/ways-to-save, Spend & Save terms (undated, read 2026-10-13)',
+    source: 'citi.com/online-services/ways-to-save, Spend & Save terms (undated, read October 13, 2026)',
     checked: CHECKED,
   },
   'fr-lcl': {
@@ -132,7 +132,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: 'If the period’s transfer would leave the account in debit, it’s canceled in full for that period, not carried.',
     open: ['The day of the twice-monthly transfer: the terms say each “quinzaine”, so the game moves it on the 1st and the 16th.', 'A payment already at a whole euro (or a multiple of 5 €): the game moves nothing.', 'Turned off, the round-ups counted before aren’t credited, as the terms say; switching your primary account to another bank drops them too.'],
     notHere: ['A deferred-debit card’s round-ups move at the month’s end; the game’s card is an immediate-debit one.', 'A child’s account or an LCL-chosen charity can receive them; the game moves them to your savings.'],
-    source: 'LCL, Carte Visa Cléo Dispositions Générales, Option System’Épargne, in force from 1 January 2026',
+    source: 'LCL, Carte Visa Cléo Dispositions Générales, Option System’Épargne, in force from January 1, 2026',
     checked: CHECKED,
   },
   'gb-lloyds': {
@@ -143,7 +143,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: 'It moves only as long as it doesn’t take the account overdrawn, or more overdrawn. The game drops what couldn’t move: the conditions don’t say whether it’s carried.',
     open: ['What happens to change not yet moved when an account closes: the game drops it.', OFF],
     notHere: ['A refunded purchase’s change stays in savings, as the conditions say; purchases in the game aren’t refunded.'],
-    source: 'Lloyds Save the Change conditions M57299 (04/26), read from the Wayback Machine’s capture of 22 September 2026',
+    source: 'Lloyds Save the Change conditions M57299 (04/26), read from the Wayback Machine’s capture of September 22, 2026',
     checked: CHECKED,
   },
   'gb-natwest': {
@@ -155,7 +155,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: 'Round Ups never take you into an overdraft, and don’t move while you’re already in one. The game drops what couldn’t move: NatWest doesn’t say whether it’s tried again.',
     open: ['The multiplier is optional, so ×1 is the plain change and the game’s starting choice; NatWest doesn’t call it a default in so many words.', 'NatWest moves them when the payments clear, which can take up to 4 days; the game moves them at the day’s end.', 'Closing the current or savings account stops Round Ups, and what hasn’t moved doesn’t, as NatWest says.'],
     notHere: [],
-    source: 'natwest.com/savings/tools-for-savings/round-ups.html and the support FAQ, read live 2026-10-13',
+    source: 'natwest.com/savings/tools-for-savings/round-ups.html and the support FAQ, read live October 13, 2026',
     checked: CHECKED,
   },
   'de-ing': {
@@ -167,7 +167,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: 'It pauses while the current account holds less than 20 €, so it doesn’t go into the red, and starts again above it.',
     open: ['Round-ups from payments made while it’s paused: the game counts none.', 'Whether a refunded payment takes its round-up back: purchases in the game aren’t refunded.', OFF],
     notHere: ['With Girokonto Future, the change can go to a charity instead of savings.'],
-    source: 'ing.de, Kleingeld Plus product page and FAQ; Bedingungen Girokonto Future, 19 June 2026',
+    source: 'ing.de, Kleingeld Plus product page and FAQ; Bedingungen Girokonto Future, June 19, 2026',
     checked: CHECKED,
   },
   'ca-scotiabank': {
@@ -190,7 +190,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: 'TD won’t make the transfer if checking doesn’t have enough to cover it. The game drops it: TD doesn’t say whether it’s carried to the next.',
     open: ['The steps between $0.50 and $5.00: the game takes any amount in cents.', 'Which weekday a weekly transfer falls on: the game counts from the day you turn it on.', OFF],
     notHere: ['TD can count ATM withdrawals as well as, or instead of, purchases; the game counts purchases.'],
-    source: 'td.com, automated savings and TD Ask Us (Simply Save), undated, read 2026-10-13',
+    source: 'td.com, automated savings and TD Ask Us (Simply Save), undated, read October 13, 2026',
     checked: CHECKED,
   },
   'mx-bbva': {
@@ -202,7 +202,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: DROPPED_UNSAID,
     open: ['When each amount posts: BBVA says “with each purchase”, and the game moves the day’s together at its end.', 'BBVA may cap it at amounts it doesn’t publish: the game sets none.', OFF],
     notHere: ['The Porcentaje rule, a share of each purchase.', 'The Plan account pays no interest; the game moves it to your savings.'],
-    source: 'BBVA México, Contrato de Productos y Servicios Múltiples, chapter I.IV (Plan), RECA 0305-999-037855/09-01904-0826; ficha Plan, 5 January 2023',
+    source: 'BBVA México, Contrato de Productos y Servicios Múltiples, chapter I.IV (Plan), RECA 0305-999-037855/09-01904-0826; ficha Plan, January 5, 2023',
     checked: CHECKED,
   },
   'mx-santander': {
@@ -214,7 +214,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: DROPPED_UNSAID,
     open: ['A purchase already at a multiple of $10: the game moves nothing.', 'When it posts: Santander says with each purchase, and the game moves the day’s together at its end.', 'That credit card round-ups come from the current account is inferred, not stated.', OFF],
     notHere: ['Disfruta y guarda, a set amount at participating merchants, whose list isn’t published.', 'A meta is a goal kept inside the current account, not a savings product, and Santander’s pages disagree on whether it earns interest; the game moves it to your savings.'],
-    source: 'Santander México, Mis Metas page and FAQ (read live 2026-10-13); contract clause V.28',
+    source: 'Santander México, Mis Metas page and FAQ (read live October 13, 2026); contract clause V.28',
     checked: CHECKED,
   },
   'kr-kakaobank': {
@@ -225,7 +225,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: 'Skipped when the balance is 1,000원 or less, never partial and never overdrawn.',
     open: ['A sweep that would take the 저금통 past its 100,000원 cap: the game skips it. Your KakaoBank savings stand in for the 저금통, and the cap counts what the sweeps have put in, never more than the savings hold.', 'Stopping it stops saving from that moment, as KakaoBank says.'],
     notHere: ['자동 모으기, an amount KakaoBank works out each Saturday.', '캐시백 모으기, cashback from brand coupons.'],
-    source: 'kakaobank.com/products/coinbox; 저금통 특약 (부칙 2026-09-23)',
+    source: 'kakaobank.com/products/coinbox; 저금통 특약 (부칙 September 23, 2026)',
     checked: CHECKED,
   },
   'es-santander': {
@@ -236,7 +236,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: DROPPED_UNSAID,
     open: ['Santander also offers “two units up” and “another figure”, without saying how either is worked out: the game offers the next euro only.', 'A purchase of whole euros: the game moves nothing.', 'When it moves: the game moves the day’s at its end.', OFF],
     notHere: [],
-    source: 'bancosantander.es, Cuenta Hucha Digital page and precontract (read live 2026-10-13)',
+    source: 'bancosantander.es, Cuenta Hucha Digital page and precontract (read live October 13, 2026)',
     checked: CHECKED,
   },
   'es-bbva': {
@@ -247,7 +247,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: 'If the account doesn’t have what the rule needs, it doesn’t run. The game drops that day’s: BBVA doesn’t say whether it’s tried again.',
     open: ['A multiplier from x2 to x4, in BBVA’s 2019 and 2020 news and on none of its pages now: not offered.', OFF],
     notHere: ['A purchase refunded leaves its round-up where it went, as BBVA says; purchases in the game aren’t refunded.', 'A pension plan or a fund can receive them.'],
-    source: 'bbva.es, reglas de Programa tu Cuenta (updated 28 July 2025) and app-redondeo-ahorro (updated 13 October 2025)',
+    source: 'bbva.es, reglas de Programa tu Cuenta (updated July 28, 2025) and app-redondeo-ahorro (updated October 13, 2025)',
     checked: CHECKED,
   },
   'es-sabadell': {
@@ -258,7 +258,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: DROPPED_UNSAID,
     open: ['The next euro is only in Sabadell’s 2020 brochure; its pages now give no unit.', 'Whether a “compra” is a card purchase only or, as in 2020, any payment from the account: the game counts card purchases.', 'A multiplier is reported only outside Sabadell: not offered.', OFF],
     notHere: [],
-    source: 'bancsabadell.com, Ahorro Sabadell page and help center (when the saving moves, 2024-05-01)',
+    source: 'bancsabadell.com, Ahorro Sabadell page and help center (when the saving moves, May 1, 2024)',
     checked: CHECKED,
   },
   'es-bankinter': {
@@ -269,7 +269,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: DROPPED_UNSAID,
     open: ['Bankinter also lets you pick any other amount, with no limits stated: the game offers the two it names.', 'A purchase of whole euros: the game moves the amount past the first euro, nothing at €1.', OFF],
     notHere: ['A round-up set on several goals moves once for each; the game has one.'],
-    source: 'bankinter.com, Cuenta Modo Ahorro (read live 2026-10-13)',
+    source: 'bankinter.com, Cuenta Modo Ahorro (read live October 13, 2026)',
     checked: CHECKED,
   },
   'is-landsbankinn': {
@@ -280,7 +280,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: 'If the account has no funds at the banking day’s end, that day’s saving is canceled, and it’s never made on an overdraft.',
     open: ['The detailed rules are from 2019 and 2020; the bank’s page still offers the next hundred or thousand and a set amount.', 'A purchase already at a multiple of the unit: the game moves nothing.', OFF],
     notHere: ['On a Visa credit card it’s worked out at the statement’s end and moved on the due date.', 'Spara í appi’s set amount a purchase, whose choices the bank doesn’t give.', 'Another customer’s account or a charity can receive it.'],
-    source: 'landsbankinn.is/einstaklingar/sparnadur (read live 2026-10-13); terms, Wayback capture of 8 December 2019',
+    source: 'landsbankinn.is/einstaklingar/sparnadur (read live October 13, 2026); terms, Wayback capture of December 8, 2019',
     checked: CHECKED,
   },
   'is-islandsbanki': {
@@ -291,7 +291,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: 'If the balance goes below the withdrawal limit, 0 kr, that day’s saving is canceled; the overdraft is never used for it.',
     open: ['The detailed rules are from the bank’s pages of 2009 and 2018; its page now still offers 100, 500 or 1,000 kr.', 'A purchase already at a multiple of the unit: the game moves nothing.', OFF],
     notHere: ['ATM withdrawals counted too, in the 2009 rules.', 'Someone else’s account, or a charity’s, can receive it.'],
-    source: 'islandsbanki.is, Eigðu afganginn (read live 2026-10-13); rules, archived 25 August 2018',
+    source: 'islandsbanki.is, Eigðu afganginn (read live October 13, 2026); rules, archived August 25, 2018',
     checked: CHECKED,
   },
   'au-anz': {
@@ -302,7 +302,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     short: DROPPED_UNSAID,
     open: ['ANZ Plus accounts only: the game takes your ANZ account as one.', 'A $2 default appears only in ANZ’s 2023 launch release, and its pages now state none: you choose.', 'Each purchase’s round-up moves on its own; the game moves the day’s together at its end.', OFF],
     notHere: ['ANZ won’t reverse a Round Up when the purchase changes, as its terms say; purchases in the game aren’t refunded.'],
-    source: 'anz.com.au, ANZ Plus terms and conditions, 24 November 2025; Round Ups support page, 27 October 2025',
+    source: 'anz.com.au, ANZ Plus terms and conditions, November 24, 2025; Round Ups support page, October 27, 2025',
     checked: CHECKED,
   },
   'nz-asb': {

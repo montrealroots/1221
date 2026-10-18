@@ -50,7 +50,7 @@ export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: P
   },
   'KY|Butterfield': {
     monthlyFee: 8_00, reduced: { to: 2_00, averageAtLeast: 5_000_00 },
-    source: 'Butterfield Cayman Retail Schedule of Charges, updated 1 December 2025: CI$6 monthly maintenance, waived with an average daily balance of CI$5,000, and CI$2 monthly compliance, always',
+    source: 'Butterfield Cayman Retail Schedule of Charges, updated December 1, 2025: CI$6 monthly maintenance, waived with an average daily balance of CI$5,000, and CI$2 monthly compliance, always',
   },
   'CZ|Česká spořitelna': {
     monthlyFee: 100_00, waiver: { purchasesAtLeast: 4 },
@@ -82,7 +82,7 @@ export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: P
   },
   'LV|Swedbank': {
     monthlyFee: 1_70, waiver: { ageBelow: 26 },
-    source: 'the Pamata package, EUR 1.70 a month, free from 6 to 25 (swedbank.lv price list, in force from 1 June 2026); the Seniors program’s half off is only for those who joined before September 2022',
+    source: 'the Pamata package, EUR 1.70 a month, free from 6 to 25 (swedbank.lv price list, in force from June 1, 2026); the Seniors program’s half off is only for those who joined before September 2022',
   },
   'LT|Swedbank': {
     monthlyFee: 1_70, waiver: { ageBelow: 26 }, reduced: { to: 1_10, depositsAtLeast: 1 },

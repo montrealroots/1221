@@ -1,0 +1,119 @@
+[
+ {
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61498.html ; minimum-payment formula from https://www.chase.com/content/feed/public/creditcards/cma/Chase/COL00095.pdf; returned payment fee, penalty rate, cash advance fee, cash rate, introductory rate, balance transfer, plan fee, rewards: https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61498.html, 2026-09-26",
+  "after": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61498.html; minimum-payment formula from https://www.chase.com/content/feed/public/creditcards/cma/Chase/COL00095.pdf; returned payment fee, penalty rate, cash advance fee, cash rate, introductory rate, balance transfer, plan fee, rewards: https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61498.html, September 26, 2026",
+  "why": "The read day as the game writes a date, and no space before the semicolon after the first address (the defect the dynamic cases recorded). Shown on Money, Cards, as \"Source: ….\"",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'says the day a product, a card…' (drawn, Chase)"
+ },
+ {
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "official",
+  "before": "Source: https://creditcards.wellsfargo.com/active-cash-credit-card/ ; terms from https://files.consumerfinance.gov/a/assets/credit-card-agreements/pdf/WELLS_FARGO_BANK_NATIONAL_ASSOCIATION/Wells_Fargo_Active_Cash_Card.pdf; cash advance fee, cash rate, introductory rate, balance transfer, rewards: https://www.wellsfargo.com/credit-cards/active-cash/terms/, 2026-09-26, 2026-09-26.",
+  "after": "Source: https://creditcards.wellsfargo.com/active-cash-credit-card/; terms from https://files.consumerfinance.gov/a/assets/credit-card-agreements/pdf/WELLS_FARGO_BANK_NATIONAL_ASSOCIATION/Wells_Fargo_Active_Cash_Card.pdf; cash advance fee, cash rate, introductory rate, balance transfer, rewards: https://www.wellsfargo.com/credit-cards/active-cash/terms/, September 26, 2026.",
+  "why": "The card fine print added the terms’ day (asOf) after a source that already ended on the same day: 45 cards said it twice. Now said once, the game’s way; where the two days differ, both stay.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts (Chase’s, drawn: the day once); the 45 counted from CARDS"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "official",
+  "before": "Source: chase.com Total Checking: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, or a $5,000 average across it and linked Chase accounts, 2026-09-25.",
+  "after": "Source: chase.com Total Checking: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, or a $5,000 average across it and linked Chase accounts, September 25, 2026.",
+  "why": "A product’s day (asOf) is data the code keeps as a key, and was printed raw. It’s formatted where it’s shown (formatDateKey), and stays ISO in the data.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'says the day a product…' (Accounts drawn)"
+ },
+ {
+  "source": "src/ui/bank/RoundUps.tsx#RoundUps",
+  "kind": "official",
+  "before": "Source: natwest.com/savings/tools-for-savings/round-ups.html and the support FAQ, read live 2026-10-13, checked 2026-10-13.",
+  "after": "Source: natwest.com/savings/tools-for-savings/round-ups.html and the support FAQ, read live October 13, 2026, checked October 13, 2026.",
+  "why": "The rule’s source and the day it was checked (data, formatted where shown). The two days are the same here; they say different things (read, checked), so both stay.",
+  "meaningSensitive": false,
+  "verified": "tests/roundups.test.ts 'the panel' (drawn)"
+ },
+ {
+  "source": "src/engine/content/accountlife.ts#UNCLAIMED",
+  "kind": "official",
+  "before": "the Dormant Accounts Fund (account becomes dormant on 30 September after 15 years with no transaction; funds move after 31 March following)",
+  "after": "the Dormant Accounts Fund (account becomes dormant on September 30 after 15 years with no transaction; funds move after March 31 following)",
+  "why": "Days without a year in the game’s order. Shown in the question that warns of it, the ledger line and Your Accounts Over Time.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'the bank research made by scripts outside the repository…'"
+ },
+ {
+  "source": "src/engine/content/pending.ts#PENDING",
+  "kind": "official",
+  "before": "Capital One 360 Checking Key account terms, revised 2/2024 (ecm.capitalone.com/WCM/bank/pdfs/360-checking-pew.pdf); capitalone.com/bank/disclosures/checking-accounts/online-checking-account/ (5/20/2026); capitalone.com/help-center/checking-savings/pending-transactions/; capitalone.com/help-center/credit-cards/card-pending-transactions/; capitalone.com/help-center/credit-cards/understanding-payment-holds/, 2026-09-26",
+  "after": "Capital One 360 Checking Key account terms, revised February 2024 (ecm.capitalone.com/WCM/bank/pdfs/360-checking-pew.pdf); capitalone.com/bank/disclosures/checking-accounts/online-checking-account/ (May 20, 2026); capitalone.com/help-center/checking-savings/pending-transactions/; capitalone.com/help-center/credit-cards/card-pending-transactions/; capitalone.com/help-center/credit-cards/understanding-payment-holds/, September 26, 2026",
+  "why": "Slashed dates in the research’s own sentence, written by hand: 5/20/2026 can only be May 20 (20 is no month), and 2/2024 a month and year. Shown on Statements as the Source line.",
+  "meaningSensitive": true,
+  "verified": "tests/language-data-dates.test.ts 'the bank research made by scripts…'; BY_HAND in tools/research-dates.mjs"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY",
+  "kind": "official",
+  "before": "deutsche-bank.de Preis- und Leistungsverzeichnis der Deutsche Bank AG (PDF); FAQ 'Wie sperre ich meine Karten?'; FAQ 'Wie bestelle ich eine Ersatzkarte für meine Debitkarte/SparCard?'; 3D Secure / Sicherheitspaket page; Bedingungen für die Debitkarten (Stand 01/2025); Bedingungen für die Kreditkarten (Stand 06/2021), PLV Stand 23.09.2026",
+  "after": "deutsche-bank.de Preis- und Leistungsverzeichnis der Deutsche Bank AG (PDF); FAQ 'Wie sperre ich meine Karten?'; FAQ 'Wie bestelle ich eine Ersatzkarte für meine Debitkarte/SparCard?'; 3D Secure / Sicherheitspaket page; Bedingungen für die Debitkarten (Stand January 2025); Bedingungen für die Kreditkarten (Stand June 2021), PLV Stand September 23, 2026",
+  "why": "A German document’s \"Stand\" day with dots, day first as Europe writes it, and its month-and-year editions; the German titles and quotations stay as written.",
+  "meaningSensitive": true,
+  "verified": "tests/language-data-dates.test.ts 'the bank research made by scripts…'"
+ },
+ {
+  "source": "src/engine/content/banks-world-sheets.ts#SHEETS",
+  "kind": "label",
+  "before": "Savings Account (instant access, adults; minors 0.20%; table dated 17/04/2025)",
+  "after": "Savings Account (instant access, adults; minors 0.20%; table dated April 17, 2025)",
+  "why": "Bank of Cyprus’s product name, which becomes the account’s name: 17 can only be the day.",
+  "meaningSensitive": true,
+  "verified": "tests/language-data-dates.test.ts 'the bank research kept by hand…'"
+ },
+ {
+  "source": "src/engine/content/banks-world-sheets.ts#SHEETS",
+  "kind": "official",
+  "before": "Exempt from the Rs 50/month low-balance service charge (SOBC Jan-Jun 2026); other accounts such as HBL Freedom pay Rs 50/month if monthly average balance < Rs 40,000",
+  "after": "Exempt from the Rs 50/month low-balance service charge (SOBC January to June 2026); other accounts such as HBL Freedom pay Rs 50/month if monthly average balance < Rs 40,000",
+  "why": "A span of short months as two months in words.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'the bank research kept by hand…'"
+ },
+ {
+  "source": "src/engine/content/banks-lending.ts#LENDING .us-wells-fargo",
+  "kind": "official",
+  "before": "wellsfargo.com personal loans: 6.74% to 26.74% APR, $3,000 to $100,000, 12 to 84 months, for customers of 12 months or more (read 2026-10-10)",
+  "after": "wellsfargo.com personal loans: 6.74% to 26.74% APR, $3,000 to $100,000, 12 to 84 months, for customers of 12 months or more (read October 10, 2026)",
+  "why": "A reading day as the brief asks: \"read October 10, 2026\".",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'the bank research kept by hand…'"
+ },
+ {
+  "source": "src/engine/content/banks-thirteen.ts#THIRTEEN [is-arion]",
+  "kind": "official",
+  "before": "Arion’s price list and payment-account fee sheet, from 7 May 2026 (read 16 October 2026): a debit card at 950 kr a year and 19 kr a purchase, free for 23 and under",
+  "after": "Arion’s price list and payment-account fee sheet, from May 7, 2026 (read October 16, 2026): a debit card at 950 kr a year and 19 kr a purchase, free for 23 and under",
+  "why": "A day the price list runs from and the day it was read, both the game’s way.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'the bank research kept by hand…'; tests/language-money.test.ts 'says the debit card’s yearly fee and age…' (drawn, holds \"Source: Arion’s price list\")"
+ },
+ {
+  "source": "src/engine/content/cards.ts#CARD_LAW",
+  "kind": "official",
+  "before": "Bangladesh Bank circular of 1 December 2024 on credit card interest (effective 1 January 2025)",
+  "after": "Bangladesh Bank circular of December 1, 2024 on credit card interest (effective January 1, 2025)",
+  "why": "A law named with its day, shown when it caps a card: \"<law> caps …\".",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'the bank research made by scripts…'"
+ },
+ {
+  "source": "src/engine/content/banks-lending.ts#LENDING [per_item]",
+  "kind": "official",
+  "before": "NerdWallet review of Bank of America; bankofamerica.com: everyday debit card purchases and ATM withdrawals aren’t authorized into an overdraft; Clarity Statement 08/2026: $10 an item, two a day at most, none overdrawn by $1 or less or on an item of $1 or less, electronic items posted highest first",
+  "after": "NerdWallet review of Bank of America; bankofamerica.com: everyday debit card purchases and ATM withdrawals aren’t authorized into an overdraft; Clarity Statement, August 2026: $10 an item, two a day at most, none overdrawn by $1 or less or on an item of $1 or less, electronic items posted highest first",
+  "why": "A month and year with a slash, by hand.",
+  "meaningSensitive": true,
+  "verified": "tests/language-data-dates.test.ts 'the bank research kept by hand…'"
+ }
+]

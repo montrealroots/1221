@@ -1471,9 +1471,9 @@
  },
  "src/engine/content/roundups.ts#ROUND_UPS .au-anz": {
   "status": "Rewritten And Verified",
-  "hash": "c7c0e9ba7bfc",
+  "hash": "c8eae46c000f",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .ca-scotiabank": {
   "status": "Rewritten And Verified",
@@ -1483,87 +1483,87 @@
  },
  "src/engine/content/roundups.ts#ROUND_UPS .ca-td": {
   "status": "Rewritten And Verified",
-  "hash": "662a87fc5b86",
+  "hash": "0925bad73fb0",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .de-ing": {
   "status": "Rewritten And Verified",
-  "hash": "5675f4cf708d",
+  "hash": "6ded31247d69",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .es-bankinter": {
   "status": "Rewritten And Verified",
-  "hash": "0dd662fdcb8c",
+  "hash": "01d9c0fafe76",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .es-bbva": {
   "status": "Rewritten And Verified",
-  "hash": "e0e370dad40a",
+  "hash": "b912c1d594a1",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .es-sabadell": {
   "status": "Rewritten And Verified",
-  "hash": "2118429d06b2",
+  "hash": "6caf02cd8f6a",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .es-santander": {
   "status": "Rewritten And Verified",
-  "hash": "2f2dfd79bac8",
+  "hash": "00955e1ef194",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .fr-lcl": {
   "status": "Rewritten And Verified",
-  "hash": "161c3cfa12c1",
+  "hash": "fa682e419874",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .gb-lloyds": {
   "status": "Rewritten And Verified",
-  "hash": "a2f27bf88d32",
+  "hash": "88fc458fb44c",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .gb-natwest": {
   "status": "Rewritten And Verified",
-  "hash": "a9fe5ee1365d",
+  "hash": "a3e3bc58a5a8",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .is-islandsbanki": {
   "status": "Rewritten And Verified",
-  "hash": "6514fe4cc451",
+  "hash": "caeea60b0a7a",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .is-landsbankinn": {
   "status": "Rewritten And Verified",
-  "hash": "6f739c0c15cf",
+  "hash": "e07fda38ea1d",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .kr-kakaobank": {
   "status": "Rewritten And Verified",
-  "hash": "3638b2c030f3",
+  "hash": "b4decf7205de",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .mx-bbva": {
   "status": "Rewritten And Verified",
-  "hash": "ea61a23c2e40",
+  "hash": "26b5ce4b26db",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .mx-santander": {
   "status": "Rewritten And Verified",
-  "hash": "e6092531a8b4",
+  "hash": "180fd973f487",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .nz-asb": {
   "status": "Rewritten And Verified",
@@ -1573,21 +1573,21 @@
  },
  "src/engine/content/roundups.ts#ROUND_UPS .us-bank-of-america": {
   "status": "Rewritten And Verified",
-  "hash": "9b155627e501",
+  "hash": "236c3ddae5fb",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .us-citi": {
   "status": "Rewritten And Verified",
-  "hash": "155c52f420d4",
+  "hash": "3ae516bead80",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .us-wells-fargo": {
   "status": "Rewritten And Verified",
-  "hash": "eecb86263a17",
+  "hash": "c4a355ee51f5",
   "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
+  "evidence": "Its dates as the game writes them (docs/verification/language-2026-10-17/data/apply-hand.mjs, each read by hand): tests/language-data-dates.test.ts 'the bank research kept by hand…' and 'says the day the bank’s terms and its round-up rule were read…' (drawn); tests/roundups.test.ts 'the panel' (its Source line and the day it was checked, drawn). As the school area verified the rest: tests/roundups.test.ts; read against systems/roundups.ts, which drops, moves and skips as each sentence says"
  },
  "src/engine/content/school.ts#COST_2026_27": {
   "status": "Reviewed And Retained",
