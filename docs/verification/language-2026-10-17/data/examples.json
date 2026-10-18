@@ -268,5 +268,86 @@
   "why": "A searched day, as the brief asks a reading day to read.",
   "meaningSensitive": false,
   "verified": "tests/language-data-dates.test.ts 'each production’s running time…'"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#adventure",
+  "kind": "official",
+  "before": "two of its three sources read directly and the remaining one from a search summary, reviewed 2026-10-10",
+  "after": "two of its three sources read directly and the remaining one from a search summary, reviewed October 10, 2026",
+  "why": "How a demand was read, as the look’s parenthesis says it: the review’s day the game’s way, written by howWords.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts (Adventure drawn: \", reviewed October 10, 2026; \")"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#blaxploitation",
+  "kind": "official",
+  "before": "all three of its sources read directly, reviewed 2026-10-10",
+  "after": "all three of its sources read directly, reviewed October 10, 2026",
+  "why": "The same, all its sources read directly.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts (every genre’s field)"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#absurdist",
+  "kind": "official",
+  "before": "All of the evidence is Beckett, mostly Godot. Ionesco, Pinter and absurdist film aren’t covered. The study guide’s PDF couldn’t be read as text, so the quotations come from a search engine’s summary of it, not from a direct reading. Nothing found covers 'holding comedy and despair together' as an acting demand in so many words. On review (2026-10-10), evidence that’s all Beckett wasn’t enough to make it a requirement of the whole genre.",
+  "after": "All of the evidence is Beckett, mostly Godot. Ionesco, Pinter and absurdist film aren’t covered. The study guide’s PDF couldn’t be read as text, so the quotations come from a search engine’s summary of it, not from a direct reading. Nothing found covers 'holding comedy and despair together' as an acting demand in so many words. On review (October 10, 2026), evidence that’s all Beckett wasn’t enough to make it a requirement of the whole genre.",
+  "why": "Still uncertain: the review’s day in the research’s own sentence.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts (Absurdist drawn)"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#biographical",
+  "kind": "official",
+  "before": "Film Inquiry is an independent film-criticism site, not a primary source. The examples are celebrated star performances, and not every biopic asks this much. The review of 2026-10-10 took Accents away: an accent is asked only where the subject spoke differently from the actor, which belongs to the role, not the genre.",
+  "after": "Film Inquiry is an independent film-criticism site, not a primary source. The examples are celebrated star performances, and not every biopic asks this much. The review of October 10, 2026 took Accents away: an accent is asked only where the subject spoke differently from the actor, which belongs to the role, not the genre.",
+  "why": "\"The review of …\" with its day the game’s way.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts (every genre’s field)"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#horror",
+  "kind": "official",
+  "before": "Frazer Shepherdson, 'A Comprehensive Guide to Acting in Horror Movies', StageMilk (16 July 2024), https://www.stagemilk.com/a-comprehensive-guide-to-acting-in-horror-movies/",
+  "after": "Frazer Shepherdson, 'A Comprehensive Guide to Acting in Horror Movies', StageMilk (July 16, 2024), https://www.stagemilk.com/a-comprehensive-guide-to-acting-in-horror-movies/",
+  "why": "A citation’s publication day, outside the title’s quotation marks; the title and the address as written.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts (Horror drawn: \"StageMilk (July 16, 2024), https://\")"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#horror_comedy",
+  "kind": "official",
+  "before": "'Shaun of the Dead: An Interview with Simon Pegg', BlackFilm.com (17 Sept 2004), http://www.blackfilm.com/20040917/features/simonpegg.shtml",
+  "after": "'Shaun of the Dead: An Interview with Simon Pegg', BlackFilm.com (September 17, 2004), http://www.blackfilm.com/20040917/features/simonpegg.shtml",
+  "why": "\"Sept\" is September.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#psychological_thriller",
+  "kind": "official",
+  "before": "Deadline, ''Gone Girl's Rosamund Pike: Portraying The Complicated Amazing Amy' (Dec 2014), https://deadline.com/2014/12/rosamund-pike-interview-gone-girl-oscars-1201332014/ (behind a paywall; seen in a search summary)",
+  "after": "Deadline, ''Gone Girl's Rosamund Pike: Portraying The Complicated Amazing Amy' (December 2014), https://deadline.com/2014/12/rosamund-pike-interview-gone-girl-oscars-1201332014/ (behind a paywall; seen in a search summary)",
+  "why": "A month and year with a short month; the title in its quotation marks (an apostrophe inside it) kept.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#queer_cinema",
+  "kind": "official",
+  "before": "PinkNews, 'Intimacy co-ordinator behind major queer sex scenes reveals what their job is really like' (30 Oct 2024), https://www.thepinknews.com/2024/10/30/queer-intimacy-coordinator-robbie-taylor-hunt-mr-loverman-reverberation/",
+  "after": "PinkNews, 'Intimacy co-ordinator behind major queer sex scenes reveals what their job is really like' (October 30, 2024), https://www.thepinknews.com/2024/10/30/queer-intimacy-coordinator-robbie-taylor-hunt-mr-loverman-reverberation/",
+  "why": "A citation’s day after the quoted headline.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#isekai",
+  "kind": "official",
+  "before": "'Interview: Miho Okasaki', Anime News Network (11 Sept 2019), https://www.animenewsnetwork.com/feature/2019-09-11/interview-miho-okasaki/.150880",
+  "after": "'Interview: Miho Okasaki', Anime News Network (September 11, 2019), https://www.animenewsnetwork.com/feature/2019-09-11/interview-miho-okasaki/.150880",
+  "why": "The day in the citation changed; the same day in the address (/2019-09-11/) kept.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
  }
 ]

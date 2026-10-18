@@ -153,8 +153,9 @@ screen shows, the research file keeping its own words, as `build-attribute-conte
 - `tools/build-licenses.mjs`: the permit's `idp.issuer`, said in `mayDrive`'s refusal. 1 changed (Britain's).
 
 **The license builder had drifted from its output.** Run on `c74a02e1` before any change, it gave a `licenses.ts` that
-dropped New York's MCTD `district` (and with it the district's part of a New York City license's fee) and put back
-Mexico City's descriptive name, both set by hand in `licenses.ts` on 2026-10-06 (`363e8812`, `f9cf1fe1`). A rebuild for
+dropped New York's MCTD `district` (read by nothing since the licensing system went on 2026-10-09) and put back Mexico
+City's descriptive name (said in `mayDrive`'s refusal), both set by hand in `licenses.ts` on 2026-10-06 (`363e8812`,
+`f9cf1fe1`). A rebuild for
 the dates would have lost them, so the builder now holds both (`DISTRICT`, `NAME`, and the interface's `district`, written
 on one line as it was by hand) and gives the committed file: the run after the change differs from `c74a02e1` by the one
 issuer's date and nothing else (`git diff`, below). `defects.md` has it.
@@ -231,3 +232,43 @@ inventory checks and `geo-check` 0 each.
 
 35 sources re-marked Rewritten And Verified by their areas (20 papers, 11 frame for the entry rules Going Abroad shows,
 3 school, 1 tutorial; the papers guide’s three entries are among the papers’), by `mark.mjs`, after the last edit.
+
+## Batch 3: The Genres' Research
+
+### What changed, and how a rebuild keeps it
+
+`tools/build-attribute-content.mjs` builds `content/genre-demands.json` from `docs/research/attributes/research-genre-demands.json`
+and the profile area's words file. Its words step now writes dates the game's way (`gameDates`) in the research's own
+sentences (`house`, after the words file's edits and the house's spelling), in its citations (`cited`) and in how each
+demand was read (`howWords`, which wrote "reviewed 2026-10-10" itself), never inside a quotation or a web address. The
+builder was run (`build-attribute-content.txt`, exit 0, "149 genres, 377 edits", every edit still found once), and the
+diff of its output is 30 `how`, 27 `uncertainty` and 7 `source` lines on each side, nothing else. The genre look shows
+all three (`ui/looks/actor.tsx`: "What the research says: … (how; confidence)", "Still uncertain: …", "Source for what it
+asks: …").
+
+### What was kept, and why
+
+- In the citations, a title in quotation marks and a web address stay as written, the same day in an address among them
+  (`/2019-09-11/` beside "(September 11, 2019)").
+- `content/home-accounts.json` (113 strings, the most of any file): no screen shows its prose (`readers-genres.txt`, its
+  last part). `homeaccounts.ts` reads a bank's `kept`, `closesWithNoticeDays` and its official source's title and address
+  into `HomeTerms.source`, and the research's day into `HomeTerms.asOf`, and nothing reads either of those two; what the
+  screens say of a bank abroad is written by hand in `homeaccounts.ts`. Its builder (`build-home-accounts.mjs`) was left
+  as it is, and gives its committed file.
+- The research files under `docs/research/` keep their own dates: the game's words are put on the way in.
+
+### Tests
+
+Added to `tests/language-data-dates.test.ts`: every genre's claim, reasons, what the research says, how it was read,
+what's uncertain, what it belongs to and its source; and a first-year opening Horror, Adventure and Absurdist (the genre
+look drawn, `resolveLook`). Mutation-tested: one "reviewed October 10, 2026" put back as "2026-10-10" failed both.
+No other test held these words (`grep` for each old date's context in `tests/` and `tools/`: one comment).
+
+### Checks
+
+`batch3-tests.txt`: the 9 test files that import the genre research or the actor looks, `tests/engagement.test.ts` and
+the new one, 147 of 147 (exit 0). `npx tsc -b --noEmit` 0; `npx eslint` 0; the eleven checks and `geo-check` 0 each.
+
+### Statuses
+
+62 sources re-marked Rewritten And Verified by the json area, whose file held them, by `mark.mjs`, after the builder's run.

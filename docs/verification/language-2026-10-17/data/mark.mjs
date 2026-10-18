@@ -29,6 +29,8 @@ const GROUPS = [
   [/^src\/engine\/content\/workload\.ts#/, `its running times' dates as the game writes them (apply-hand.mjs, each read by hand), as Source for the running time shows them: ${T} 'each production’s running time, as Source for the running time says it'`],
   [/^src\/ui\/workspaces\/PapersWorkspace\.tsx#ReturnsPane$/, `its days month first ("A return is due April 15 … June 15", "by April 30", "each January 31"): tests/defects-g8-8.test.ts 'the fine print gives the 1040-NR’s June date…' (drawn); ${GUIDE_T}`],
   [/^src\/ui\/workspaces\/PapersWorkspace\.tsx#(DentalPanel|PensionsPanel)$/, `its day month first: ${T} 'PLAYER JOURNEY: a student reads Health Cover’s dental plan and, with a UK pension claimed, the State Pension’s fine print' (drawn)`],
+  // Batch 3: the genres' research.
+  [/^src\/engine\/content\/genre-demands\.json#/, `its dates as the game writes them (how it was read, "reviewed October 10, 2026"; what's uncertain, "On review (October 10, 2026)"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): ${T} 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone`],
   [/^src\/ui\/workspaces\/SchoolWorkspace\.tsx#WithdrawControl$/, `its day month first, "(August 1, for a fall term)": tests/defects-g8-4.test.ts (Withdraw drawn)`],
 ];
 

@@ -41,8 +41,9 @@ const VISITOR = {
 /**
  * A district's own surcharge, by the half-years a license runs, for someone living in its towns: New York's MCTD, "$1 per
  * 6 months of validity" in the DMV's words, on a first license, an exchange and a renewal. Written into licenses.ts by
- * hand on 2026-10-06 (`363e8812`), and set down here from 2026-10-17 (brief 14): until then a rebuild dropped it, and
- * with it the MCTD's part of a New York City license's fee.
+ * hand on 2026-10-06 (`363e8812`), and set down here from 2026-10-17 (brief 14): until then a rebuild dropped it. Nothing
+ * has read it since the licensing system went in the scope reset of 2026-10-09, so no fee hangs on it today; it's kept
+ * because the file a rebuild gives should be the file that's committed.
  */
 const DISTRICT = { 'us-ny': { cityIds: ['us-ny-newyork'], perHalfYear: 1 } };
 /**

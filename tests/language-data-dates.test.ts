@@ -38,6 +38,10 @@ import { VISAS } from '@/engine/content/visas';
 import { RUNNING_TIMES, UNNAMED_RUNNING } from '@/engine/content/workload';
 import { GUIDE } from '@/engine/content/guide';
 import { CHAPTERS } from '@/engine/content/tutorial';
+import { GENRE_DEMANDS } from '@/engine/content/demands';
+import '@/ui/looks/all';
+import { resolveLook, type Looked } from '@/ui/looks/registry';
+import { at as lookAt } from '@/ui/looks/subject';
 import { gameDates, GENERATED } from '../tools/research-dates.mjs';
 
 const h = vi.hoisted(() => ({
@@ -161,6 +165,25 @@ describe('the papers research and the running times write their dates the game�
   it('each production’s running time, as Source for the running time says it', () => {
     holdsTheGamesDates([...fieldsOf(RUNNING_TIMES, ['from']), ...fieldsOf(UNNAMED_RUNNING, ['from'])]);
     expect(RUNNING_TIMES['Ghosts']!.from).toContain('from August 31, 2017: 2 h 20');
+  });
+});
+
+describe('the genres’ research writes its dates the game’s way, and the genre look shows them so', () => {
+  it('each genre’s claim, reasons, what the research says, how it was read, what’s uncertain and its source: build-attribute-content’s words step', () => {
+    holdsTheGamesDates(Object.entries(GENRE_DEMANDS).flatMap(([id, d]) => [
+      ...fieldsOf([d], ['claim', 'sourceSupports', 'how', 'uncertainty', 'belongsTo', 'source']).map(([k, v]) => [`${id}.${k}`, v] as [string, string]),
+      ...d.tags.map((t) => [`${id}.why:${t.tag}`, t.why] as [string, string]),
+    ]));
+  });
+
+  it('PLAYER JOURNEY: a first-year opens Horror and Adventure: the source’s day, how it was read and the review’s day, as the game writes a date', () => {
+    const sim = nyStudent('data-dates-genres');
+    const words = (id: string) => onScreen(renderToStaticMarkup(createElement('div', null, (resolveLook(sim, lookAt('genre', id)) as Looked).body)));
+    // Until 2026-10-17: "StageMilk (16 July 2024)", "reviewed 2026-10-10", "On review (2026-10-10)".
+    expect(words('horror')).toContain('StageMilk (July 16, 2024), https://');
+    expect(words('adventure')).toContain(', reviewed October 10, 2026; ');
+    expect(words('absurdist')).toContain('On review (October 10, 2026)');
+    for (const id of ['horror', 'adventure', 'absurdist']) expect(notTheGames(words(id)), id).toBeUndefined();
   });
 });
 

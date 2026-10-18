@@ -1,0 +1,21 @@
+# Every builder whose research is in the repository, run on the branch's last commit plus batch 3, and git's view after
+$ node tools/build-entry.mjs docs/research/world/research-entry.json
+wrote 15 destinations
+exit=0
+$ node tools/build-passports.mjs docs/research/world/research-passports.json
+wrote 15
+exit=0
+$ node tools/build-licenses.mjs docs/research/world/research-licences.json
+wrote 19
+exit=0
+$ node tools/build-home-accounts.mjs
+wrote home-accounts.json (60 banks, 13 countries)
+exit=0
+$ node tools/build-attribute-content.mjs
+wrote genre-demands.json (149 genres, 377 edits)
+exit=0
+$ git status --short src  (genre-demands.json is batch 3, built by build-attribute-content.mjs above; nothing else)
+ M src/engine/content/genre-demands.json
+$ node tools/research-dates.mjs  (the probe-made files: nothing left for the step)
+exit=0
+0 fields would be rewritten
