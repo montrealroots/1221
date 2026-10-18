@@ -398,7 +398,7 @@ describe('school.request_leave', () => {
     // TEST SETUP: Personal, Family, Two Terms chosen and Ask For A Leave… pressed (the panel's kind, reason, length and step).
     shown = drawn(sim, LeavePanel, ['personal', 'family', 2, 'request']);
     expect(shown.text).toContain('Asking puts it to the chair and the dean, who decide in five working days.');
-    expect(shown.text).toContain('Granted, it would run from Spring Term 2027 to Spring Term 2028');
+    expect(shown.text).toContain('If it’s granted, it runs from Spring Term 2027 to Spring Term 2028.');
     const ask = pressed('school.request_leave');
     expect(ask).toHaveLength(1);
     ask[0]!.onClick!();
@@ -677,7 +677,7 @@ describe('school.buy_affiliate', () => {
     // TEST SETUP: the bank emptied, as spending would leave it.
     drain(sim);
     // In the bank's words from 2026-10-16, which say what to do; until then “Your bank can’t cover it.”
-    expect(sim.execute({ kind: 'school.buy_affiliate', payload: { confirm: true } }).error).toBe('Your current account and the savings beside it have nothing to pay it with: move money into your current account first.');
+    expect(sim.execute({ kind: 'school.buy_affiliate', payload: { confirm: true } }).error).toBe('Your current account and the savings beside it can’t cover any of it. Move money into your current account first.');
     expect(sim.player.school!.leave!.affiliate).toBeUndefined();
     expect(sim.player.school!.uncovered).toEqual([{ from: at(2027, 1, 20, 12) }]);
     expect(healthOf(sim.player).bills.find((b) => b.id === bill.id)!.amount).toBe(billed);

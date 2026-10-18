@@ -113,7 +113,7 @@ describe('residence held without a break (FIXTURE: Mexican residence documents)'
     expect(continuousSince(sim.player, 'MX', t)).toBe(t - 5 * YEAR);
     // Past the four years settling was allowed (undefined) until 2026-10-16, when Mexico's papers stopped being granted
     // (brief 09's journeys): from then the rule's step gives way to the reason, which a lapse still keeps back.
-    expect(settleRefusal(sim, sim.player, 'MX')).toBe('Mexico grants permanent residence after four years of temporary residence, for MXN 13,578.96. Moving abroad isn’t part of the game, so it grants none of Mexico’s papers.');
+    expect(settleRefusal(sim, sim.player, 'MX')).toBe('Mexico grants permanent residence after four years of temporary residence, for MXN 13,578.96. Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.');
   });
 });
 

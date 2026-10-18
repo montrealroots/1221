@@ -47,7 +47,7 @@ describe('a state lien’s lifecycle', () => {
     expect(sd().parts!.penalty - penaltyBefore).toBeGreaterThanOrEqual(10_00);
     expect(sim.universe.notifications.filter((n) => n.title === 'A Notice Of State Tax Lien Is Filed')).toHaveLength(1);
     // Released only once paid: asked before, refused with why.
-    expect(lienReleaseRefusal(sim, sim.player, r, 'us-ca')).toMatch(/once the balance it secures is paid in full/);
+    expect(lienReleaseRefusal(sim, sim.player, r, 'us-ca')).toMatch(/once what it was filed for is paid in full/);
     fund(sim, 5_000_00);
     sim.must({ kind: 'tax.pay_state', payload: { state: 'us-ca', year: 2001 } });
     expect(sd().lien!.status).toBe('paid');
@@ -112,7 +112,7 @@ describe('a state lien’s lifecycle', () => {
     sim.player.returns = { ...(sim.player.returns ?? {}), '2001': r };
     assessStateNonFiler(sim, sim.player, r, 'us-ca', 1_000_00);
     fileStateLien(sim, sim.player, r, 'us-ca', 'collection');
-    expect(lienDisputeRefusal(r, 'us-ca')).toMatch(/secured tax you owed when it was filed/);
+    expect(lienDisputeRefusal(r, 'us-ca')).toMatch(/was filed for tax you owed, so it wasn’t filed in error/);
     // Their own return: what was withheld covered it all.
     reconsiderState(sim, sim.player, r, 'us-ca', 0);
     expect(lienDisputeRefusal(r, 'us-ca')).toBeUndefined();
@@ -133,7 +133,7 @@ describe('a state lien’s lifecycle', () => {
     assessStateNonFiler(sim, sim.player, owedAfterAll, 'us-ca', 1_000_00);
     fileStateLien(sim, sim.player, owedAfterAll, 'us-ca', 'collection');
     reconsiderState(sim, sim.player, owedAfterAll, 'us-ca', 800_00);
-    expect(lienDisputeRefusal(owedAfterAll, 'us-ca')).toMatch(/secured tax you owed when it was filed/);
+    expect(lienDisputeRefusal(owedAfterAll, 'us-ca')).toMatch(/was filed for tax you owed, so it wasn’t filed in error/);
   });
 });
 

@@ -233,7 +233,7 @@ describe('holidays', () => {
     // AMN Healthcare's 23.5 days, to 24: Friday 26 March, Good Friday in Connecticut, then the weekend: 10:00 AM EDT
     // on Monday 29 March (clocks went forward on 14 March).
     expect(sim.must<{ at: number }>({ kind: 'health.book', payload: {} }).at).toBe(Date.UTC(2027, 2, 29, 14));
-    expect(notices(sim, 'A Doctor’s Appointment').at(-1)!.body).toContain('for March 29, 2027, the wait where you live.');
+    expect(notices(sim, 'A Doctor’s Appointment').at(-1)!.body).toContain('for March 29, 2027, the usual wait where you live.');
     // Thursday 25 March at 7 PM EDT: a meal by debit card. Chase's two business days: Good Friday is one of them, as the
     // Federal Reserve keeps it as one, then Monday. Were the state's holiday the bank's, it would post on Tuesday 30.
     sim.advanceTo(Date.UTC(2027, 2, 25, 23));

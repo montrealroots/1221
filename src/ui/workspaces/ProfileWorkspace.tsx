@@ -532,7 +532,7 @@ function JourneyPanel() {
   // until 2026-10-14 a graduate’s read “Graduated, graduated” (found by that day’s third round of evidence).
   const standing = school && school.standing !== 'graduated' ? `, ${STANDING_LABEL[school.standing].toLowerCase()}` : '';
   return (
-    <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left the School' : `Year ${yearOfStudy(person)} of three`}${standing}` : 'No school'} help="look.work">
+    <Panel title="School Journey" subtitle={school ? `${school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left the School' : `Year ${yearOfStudy(person)} of 3`}${standing}` : 'No school'} help="look.work">
       <div className="col gap-3">
         {school && <p className="small" style={{ margin: 0 }}>{credits.length ? `On stage: ${credits.map((c) => `${c.role} in ${c.production}, ${c.year}${c.yearAsKept ? ' (as first written down)' : ''}`).join('; ')}.` : school.casting?.performed ? `No production finished yet; ${school.casting.role} in ${school.casting.play ?? school.casting.production} is running.` : 'No production yet.'} <button type="button" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/school', 'School')}>School</button></p>}
         {terms.length > 0 && (

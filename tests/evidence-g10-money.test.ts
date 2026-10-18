@@ -404,7 +404,7 @@ describe('bank.claim_unclaimed', () => {
     expect(screen.text).not.toMatch(/New York|Comptroller|yes, from/);
     // The rules shown are Connecticut’s, by its statute, which gives the three years taken: until the third round of
     // 2026-10-13 they were New York’s research, a law firm’s note on its Comptroller (defect 58 of that round).
-    expect(screen.text).toContain('The country’s rules: each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, 2026-10-13); the game uses the three years for every state.');
+    expect(screen.text).toContain('The country’s rules: each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, October 13, 2026); the game uses the three years for every state.'); // the day as the game writes one from 2026-10-17 (brief 14's data pass)
     expect(screen.text).not.toContain('cullenllp');
     const b0 = bank.balance;
     screen.button('Claim It Back').onClick!();
@@ -514,7 +514,7 @@ describe('bank.open_term', () => {
     const checking = primary(sim);
     const start = checking.balance;
     expect(start).toBe(92_391_00);
-    expect(refused(sim, 'bank.open_term', { amount: 100_000_00 })).toBe('Chase Total Checking only has $92,391 in it.');
+    expect(refused(sim, 'bank.open_term', { amount: 100_000_00 })).toBe('Chase Total Checking has only $92,391.00, so no term deposit was opened.');
     expect(refused(sim, 'bank.open_term', { amount: 1_000_00, bankId: 'us-wells-fargo' })).toBe('A term deposit at Wells Fargo is paid for from your current account there. Open a current account at Wells Fargo first.');
     expect(refused(sim, 'bank.open_term', { amount: 0 })).toBe('Enter how much to put away.');
     expect(termsOf(sim, sim.player)).toEqual([]);

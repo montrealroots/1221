@@ -329,7 +329,7 @@ describe('bank.open_current', () => {
     expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', amount: -5_00 })).toBe('Enter how much to pay in.');
     const held = acct(sim, chase).balance;
     expect(held).toBe(92_391_00);
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase, amount: held + 1 })).toBe('Chase Total Checking only has $92,391 in it.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase, amount: held + 1 })).toBe('Chase Total Checking has only $92,391.00, so the account wasn’t opened.');
     expect(untouched(sim)).toEqual(before);
     expect(card.balance).toBe(0);
 

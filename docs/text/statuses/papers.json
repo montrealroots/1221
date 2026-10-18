@@ -139,15 +139,15 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]": {
   "status": "Rewritten And Verified",
-  "hash": "0f9af6540f67",
+  "hash": "14a984576a9c",
   "on": "2026-10-18",
-  "evidence": "Its days month first: the built ones (dayMonth, fullDay, the day Enroll opens) and the written ones: tests/language-data-dates.test.ts 'every entry of the guide and every chapter of the tutorial, the papers guide’s built days among them'; tests/guide-examples-papers.test.ts (On August 1 a notice says…, From September 1…, Enrolled ahead, from <month day>…); tests/evidence2-b13.test.ts (Health Cover's reference drawn: \"From January 1, 2027, …\"). As the papers area verified the rest: tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), four of the health-cover and doctor examples’ quotes held exactly by tests/guide-examples-papers.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-papers.test.ts (every papers example played, the health cover example with financial assistance)"
+  "evidence": "Merged: the data pass's days month first (tests/language-data-dates.test.ts, every entry of the guide) and the editorial review's quotes of the game's words (tools/guide-quotes.mjs --check, 580 of 580; tests/guide-examples-papers.test.ts); read again on the merged text"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
   "status": "Rewritten And Verified",
-  "hash": "638039627fec",
+  "hash": "8d598f59c883",
   "on": "2026-10-18",
-  "evidence": "Its days month first: the built ones (dayMonth, fullDay, the day Enroll opens) and the written ones: tests/language-data-dates.test.ts 'every entry of the guide and every chapter of the tutorial, the papers guide’s built days among them'; tests/guide-examples-papers.test.ts (On August 1 a notice says…, From September 1…, Enrolled ahead, from <month day>…); tests/evidence2-b13.test.ts (Health Cover's reference drawn: \"From January 1, 2027, …\"). As the papers area verified the rest: tools/guide-quotes.mjs --check exit 0, every quote the game’s live words, two of this entry’s example quotes held exactly by tests/guide-examples-papers.test.ts (crossarea/batches.md, batch 1); tests/evidence2-b13.test.ts, ‘PLAYER JOURNEY: Health Cover’s reference, opened by its own address…’, draws the entry and reads its work-rules lines whole; tests/guide-examples-papers.test.ts (its worked example played, financial assistance in its words); tools/tutorial-routes.mjs --check exit 0 on the crossarea walk and capture of 9246c074 (crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts"
+  "evidence": "Merged: the data pass's days month first (tests/language-data-dates.test.ts, every entry of the guide) and the editorial review's quotes of the game's words (tools/guide-quotes.mjs --check, 580 of 580; tests/guide-examples-papers.test.ts); read again on the merged text"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.overview]": {
   "status": "Rewritten And Verified",
@@ -229,9 +229,9 @@
  },
  "src/engine/content/guide/taxes.ts#TAXES [prerequisite]": {
   "status": "Rewritten And Verified",
-  "hash": "abb3057b92e4",
-  "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts, tests/guide-examples-papers.test.ts (the taxes entries’ worked examples, played)"
+  "hash": "19172408c6ac",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 5: a lien “filed for” what it secured, the glossary’s word (Papers, lien: Instead Of “It secured”); tools/guide-quotes.mjs --check 580 of 580, tests/guide.test.ts"
  },
  "src/engine/content/guide/taxes.ts#TAXES [scheduled]": {
   "status": "Rewritten And Verified",
@@ -241,9 +241,9 @@
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.lien]": {
   "status": "Rewritten And Verified",
-  "hash": "cb94cf58539a",
-  "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), four of the health-cover and doctor examples’ quotes held exactly by tests/guide-examples-papers.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-papers.test.ts (every papers example played, the health cover example with financial assistance)"
+  "hash": "72dba03a14e6",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 5: its quotes of the two lien refusals brought to the game’s words and the glossary’s, “It was filed for tax you owed, …” and “… once what it was filed for is paid in full.”; tools/guide-quotes.mjs --check 580 of 580"
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.pay]": {
   "status": "Rewritten And Verified",
@@ -1975,9 +1975,9 @@
  },
  "src/engine/systems/residence.ts#MEXICO_UNREAD": {
   "status": "Rewritten And Verified",
-  "hash": "27769c147d1f",
-  "on": "2026-10-17",
-  "evidence": "tests/residence.test.ts, tests/guide-examples-papers.test.ts, tests/remaining-09-journeys.test.ts, tests/commands-kept.test.ts"
+  "hash": "eda68e14d89b",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 5: tests/residence.test.ts \"refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, …\", tests/coverage-gaps-papers.test.ts, tests/commands-kept.test.ts, tests/remaining-09-journeys.test.ts and tests/guide-examples-papers.test.ts, exact"
  },
  "src/engine/systems/residence.ts#registerResidence <documents.settle>": {
   "status": "Rewritten And Verified",
@@ -2083,15 +2083,15 @@
  },
  "src/engine/systems/statetax.ts#lienDisputeRefusal": {
   "status": "Rewritten And Verified",
-  "hash": "794546281d98",
-  "on": "2026-10-17",
-  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+  "hash": "23dbf87ffddd",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 5: tests/scope-taxpapers.test.ts \"PLAYER JOURNEY: a part refused in March …\", tests/remaining-tax.test.ts and tests/liens-and-arrangements.test.ts assert “It was filed for tax you owed, so it wasn’t filed in error. …”"
  },
  "src/engine/systems/statetax.ts#lienReleaseRefusal": {
   "status": "Rewritten And Verified",
-  "hash": "3675c952ca84",
-  "on": "2026-10-17",
-  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+  "hash": "c18df9f9c844",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 5: tests/liens-and-arrangements.test.ts \"California: its notice of intent, …\", tests/scope-taxpapers.test.ts and tests/remaining-tax.test.ts assert “You can ask for its release once what it was filed for is paid in full.”"
  },
  "src/engine/systems/statetax.ts#lienReleaseWords": {
   "status": "Rewritten And Verified",
@@ -2149,9 +2149,9 @@
  },
  "src/engine/systems/statetax.ts#registerStateTax <tax.apply_state_plan>": {
   "status": "Rewritten And Verified",
-  "hash": "2df321606dd9",
+  "hash": "9ec81cf1e2fe",
   "on": "2026-10-17",
-  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+  "evidence": "Editorial review, batch 1: “the … down payment, so nothing was paid.” is reached only where the bank fails after statePlanRefusal passed, which reads the same bank first; the command’s refusal as a player meets it is held by tests/editorial-money-refusals.test.ts \"a state plan’s down payment, …\""
  },
  "src/engine/systems/statetax.ts#registerStateTax <tax.catch_up_state_plan>": {
   "status": "Rewritten And Verified",
@@ -2239,9 +2239,9 @@
  },
  "src/engine/systems/statetax.ts#statePlanRefusal": {
   "status": "Rewritten And Verified",
-  "hash": "09ee921f568e",
+  "hash": "48a82e314ecd",
   "on": "2026-10-17",
-  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+  "evidence": "Editorial review, batch 1: tests/editorial-money-refusals.test.ts \"a state plan’s down payment, said before it’s asked for: …\" asserts \"Your bank can’t cover the $500.00 down payment.\" from statePlanRefusal and from the command, exactly"
  },
  "src/engine/systems/statetax.ts#threeYearCheck": {
   "status": "Rewritten And Verified",

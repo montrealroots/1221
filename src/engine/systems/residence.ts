@@ -104,7 +104,7 @@ export const nhsByRoute = (person: Person, at: Instant): boolean => {
 
 const pesosOf = (units: number) => `MXN ${units.toLocaleString('en-US', { minimumFractionDigits: units % 1 ? 2 : 0, maximumFractionDigits: 2 })}`;
 /** Why SLATE grants none of Mexico's papers, said after each of its rules (from 2026-10-16). */
-export const MEXICO_UNREAD = 'Moving abroad isn’t part of the game, so it grants none of Mexico’s papers.';
+export const MEXICO_UNREAD = 'Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.';
 /** Mexico's rule for temporary residence by solvency, in its own figures. */
 export const MEXICO_RULE = `Mexico grants temporary residence on savings of ${pesosOf(Math.round(MEXICAN_RESIDENCE.savingsUma * MEXICAN_RESIDENCE.uma))} or an income of ${pesosOf(Math.round(MEXICAN_RESIDENCE.incomeUma * MEXICAN_RESIDENCE.uma))} a month over six months, with the card at ${pesosOf(MEXICAN_RESIDENCE.temporary)} a year and the consulate’s visa at US$${MEXICAN_RESIDENCE.consularVisaUsd}.`;
 /** Why a Mexican card isn't renewed (from 2026-10-16), its rule and the reason. */

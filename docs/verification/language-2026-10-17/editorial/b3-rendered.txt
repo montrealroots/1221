@@ -1,0 +1,16 @@
+The closing notices journey J01 (tools/journeys.ts, parts 1 to 4, seed j13-1) was given on the editorial review's batch 3 code: every Looking Back and Director's Note, as the player read them. Run 2026-10-18.
+
+Looking Back: A Doll’s House | A Doll’s House: you answered all 11 calls. The director gave you no notes. (Simulated: the game’s summary, not the director’s words.)
+Looking Back: An Enemy Of The People | An Enemy Of The People: you answered all 11 calls. The director gave you no notes. (Simulated: the game’s summary, not the director’s words.)
+Looking Back: Blood Wedding | Blood Wedding: you answered all 20 calls. The director gave you 10 notes. You took 3, all of them answered in the work. The dress rehearsal was solid. With the company, your nights averaged 56 out of 100. What’s still open goes with you into class. (Simulated: the game’s summary, not the director’s words.)
+Looking Back: Carlotta Festival Of New Plays | Carlotta Festival Of New Plays: you answered all 12 calls. The director gave you 5 notes. You took 4, 3 of them answered in the work, and worked on 1 that didn’t move. The dress rehearsal was an off night. With the company, your nights averaged 53 out of 100, with a slip by others, which you covered. What’s still open goes with you into class. (Simulated: the game’s summary, not the director’s words.)
+Looking Back: Major Barbara | Major Barbara: you answered all 12 calls. The director gave you 5 notes. You took 4, 3 of them answered in the work, and worked on 1 that didn’t move. The dress rehearsal was solid. With the company, your nights averaged 55 out of 100. What’s still open goes with you into class. (Simulated: the game’s summary, not the director’s words.)
+Looking Back: The Seagull | The Seagull: you answered all 11 calls. The director gave you no notes. (Simulated: the game’s summary, not the director’s words.)
+Looking Back: The Winter’s Tale | The Winter’s Tale: you answered all 15 calls. The director gave you 7 notes. You took 7, all of them answered in the work. The dress rehearsal was solid. With the company, your nights averaged 54 out of 100. (Simulated: the game’s summary, not the director’s words.)
+The Director’s Note: A Doll’s House | You covered Nora Helmer on call through the run and didn’t go on. The work you did in the room isn’t lost.
+The Director’s Note: An Enemy Of The People | You were on call to cover the company through the run, and didn’t go on. The work you did in the room isn’t lost.
+The Director’s Note: Blood Wedding | Solid, sound nights. The next step is to take more risks in them. Work on your composure: it held your nights back most.
+The Director’s Note: Carlotta Festival Of New Plays | Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does. Work on your presence: it held your nights back most.
+The Director’s Note: Major Barbara | Solid, sound nights. The next step is to take more risks in them. Work on your memory: it held your nights back most.
+The Director’s Note: The Seagull | You covered Nina on call through the run and didn’t go on. The work you did in the room isn’t lost.
+The Director’s Note: The Winter’s Tale | Solid, sound nights. The next step is to take more risks in them. Work on your discipline: it held your nights back most.

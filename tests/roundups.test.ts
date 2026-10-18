@@ -504,7 +504,8 @@ describe('the panel', () => {
     sim.advanceTo(after(sim, 6));
     expect(words()).toMatch(/Last moved to savings: £\d+\.\d\d, on /);
     for (const o of rule.open) expect(words()).toContain(o);
-    expect(words()).toContain(`Source: ${rule.source}, checked ${formatDateKey(rule.checked)}.`);
+    // Read and checked on one day, said once (from 2026-10-17): until then “read live October 13, 2026, checked October 13, 2026.”
+    expect(words()).toContain(`Source: ${rule.source.replace(`read live ${formatDateKey(rule.checked)}`, `read live and checked ${formatDateKey(rule.checked)}`)}.`);
     expect(words()).toContain(`When the account is short: ${rule.short}`);
     // A bank that isn't the primary one's: its words, and why it can't be turned on here.
     const other = renderToStaticMarkup(createElement(BankAccountLife, { bankId: 'gb-lloyds' })).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');

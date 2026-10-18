@@ -335,7 +335,7 @@ describe('HUSKY D kept at its renewal through work, read over Connecticut’s si
     }
     expect(healthOf(worked.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2026, 3, 1, 0), band: 'low', renewAt: at(2027, 9, 1, 0) });
     // Until 2026-10-17 “by 80 hours’ work”: since then the hours aren’t read, and the $600 they were paid is (brief 12, health-criteria.md).
-    expect(titled(worked, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 3, 1, 0, 30), 'HUSKY D is renewed until its next renewal, on September 1, 2027. Last month’s income is within its limit, and November 2026 met its work rules with $580.00 or more of income.']]);
+    expect(titled(worked, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 3, 1, 0, 30), 'HUSKY D is renewed. Its next renewal is on September 1, 2027. Last month’s income is within its limit, and November 2026 met its work rules with $580.00 or more of income.']]);
     expect(titled(worked, 'A Notice Of Noncompliance')).toEqual([]);
     expect(memoed(worked, /premium/i)).toEqual([]);
     const reloaded = loadSave(JSON.parse(snap) as never);

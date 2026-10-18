@@ -888,7 +888,7 @@ PLAYS['documents.residence'] = () => {
   expect(ex.setup).toContain(`with ${pesos(threshold)}, about ${usd(Math.round(exchange(threshold * 100, 'MXN', 'USD')! / 100) * 100)}, in the bank, which meets Mexico’s savings test.`);
   // The row's words by hand: 11,460 UMA and 680 at MXN 117.31, MXN 1,344,372.6 and 79,770.8, rounded to the peso; the
   // card's MXN 11,140.74 and the visa's US$56 as the guidelines and the Ley Federal de Derechos give them.
-  const words = 'Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, with the card at MXN 11,140.74 a year and the consulate’s visa at US$56. Moving abroad isn’t part of the game, so it grants none of Mexico’s papers.';
+  const words = 'Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, with the card at MXN 11,140.74 a year and the consulate’s visa at US$56. Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.';
   expect([pesos(threshold), pesos(income)]).toEqual(['MXN 1,344,373', 'MXN 79,771']);
   // TEST SETUP: the bank holding the savings test's figure, and a twin a hundred dollars short of it. Until 2026-10-16
   // the first was offered the card and the second refused; from then both read Mexico's rule and the same reason.

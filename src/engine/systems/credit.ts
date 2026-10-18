@@ -811,7 +811,9 @@ export function registerCredit(sim: Simulation): void {
       if (record.score >= RAISE_FROM && clean && (card.creditLimit ?? 0) > 0) {
         card.creditLimit = Math.round((card.creditLimit ?? 0) * 1.2 / 100) * 100;
         if (person.id === s.universe.playerId) {
-          s.notify({ category: 'bank', title: 'Your Card Limit Went Up', body: `It’s ${formatMoney(card.creditLimit, saveCurrency(s.universe))} now, because your record has been clean.`, importance: 40 });
+          // Its card and why, the review's own terms (from 2026-10-17, brief 14's editorial review): until then “It’s … now,
+          // because your record has been clean.”, of no card named.
+          s.notify({ category: 'bank', title: 'Your Card Limit Went Up', body: `The ${card.name}’s limit is ${formatMoney(card.creditLimit, saveCurrency(s.universe))} now, because your credit score is ${RAISE_FROM} or more and you haven’t paid late in the past year.`, importance: 40 });
         }
       }
     }
@@ -845,7 +847,9 @@ export function registerCredit(sim: Simulation): void {
     }
     statementReady(s, person, card, credit.statementBalance > 0
       // At least what the due date will judge: on a hardship plan its payment, not the card's minimum (from 2026-10-13).
-      ? `${formatMoney(credit.statementBalance, saveCurrency(s.universe))} to pay, at least ${formatMoney(autopayAsk(s, person, card).due, saveCurrency(s.universe))}.`
+      // With its due date (from 2026-10-17, brief 14's editorial review): until then “$270.00 to pay, at least $40.00.”, and
+      // by when only on the card's panel.
+      ? `The statement comes to ${formatMoney(credit.statementBalance, saveCurrency(s.universe))}, due ${formatDate(dueAt(zoneOf(s, person), item.at, terms.graceDays), zoneOf(s, person))}. At least ${formatMoney(autopayAsk(s, person, card).due, saveCurrency(s.universe))} has to be paid by then.`
       : 'The card owes nothing this month.', credit.statementBalance > 0);
     scheduleStatement(s, person, item.at, card);
   });

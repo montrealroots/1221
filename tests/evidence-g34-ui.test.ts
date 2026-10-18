@@ -573,7 +573,7 @@ describe('i-genres-dispositions-intact', () => {
     expect([away.player.credit!.autopay, start.player.credit!.autopay]).toEqual(['minimum', 'full']);
     // Sunday 20 September, 9 AM: twenty-seven midnights of New Haven's $10.00 of groceries, from Tuesday 25 August; Chase's
     // minimum is 1% and the month's interest, never under $40 (its published terms).
-    for (const sim of lives) expect(statements(sim)).toEqual([[EDT(2026, 9, 20, 9), '$270.00 to pay, at least $40.00.']]);
+    for (const sim of lives) expect(statements(sim)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.']]);
     // Sunday 11 October, 21 days on: the minimum, or the whole statement.
     expect(paid(away)).toEqual([40_00]);
     expect(paid(start)).toEqual([270_00]);

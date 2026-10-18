@@ -82,7 +82,7 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
       )}
       {p?.dress && <div className="small">The dress rehearsal: {DRESS_WORD[p.dress] ?? p.dress}.</div>}
       {p?.together && p.together.n > 0 && <div className="small"><strong>The Nights Together.</strong> With the company the nights have come to {Math.round(p.together.sum / p.together.n)} on average{p.together.slips ? `, ${p.together.slips} with a slip in the company${p.together.covered ? `, ${p.together.covered} of them covered by you` : ''}` : ''}. How the show went together shapes how a night leaves you feeling; your own night is your result.</div>}
-      {p?.reflection && <div className="small"><strong>Looking Back.</strong> {p.reflection.text} <span className="xs dim">Simulated: the game’s reading of the process.</span></div>}
+      {p?.reflection && <div className="small"><strong>Looking Back.</strong> {p.reflection.text} <span className="xs dim">Simulated: the game’s summary, not the director’s words.</span></div>}
       {last && (
         <div className="small col gap-1">
           <div className="row-between" style={{ alignItems: 'flex-start' }}>

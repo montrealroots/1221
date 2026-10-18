@@ -37,7 +37,7 @@ describe('the guide presses only what Look After Yourself holds', () => {
 
   it('the menu button the guide’s example presses is the one the top bar draws, Locked while its chapter is unread', () => {
     const bar = readFileSync(fileURLToPath(new URL('../src/ui/shell/TimeControls.tsx', import.meta.url)), 'utf8');
-    expect(bar).toContain(`${MENU} ▾{!gate.open && <span className="lock-word">Locked</span>}`);
+    expect(bar).toContain(`${MENU} <span aria-hidden="true">▾</span>{!gate.open && <span className="lock-word">Locked</span>}`);
   });
 
   it('names no item the menu lacks in any entry’s worked example, The Guide’s included', () => {

@@ -1271,7 +1271,8 @@ async function banking() {
     const { text, tone } = await newestToastWithTone();
     said(`refused (${tone}): ${text}`);
     must(tone === 'negative', `the press wasn’t refused: “${text}” (${tone || 'no toast'})`);
-    must(amountsIn(text).includes(held[from]), `the refusal doesn’t name the $${held[from].toLocaleString('en-US')} ${from} holds: ${text}`);
+    // The refusal names it to the cent, the From list in whole dollars (from 2026-10-17, brief 14's editorial review).
+    must(amountsIn(text).some((a) => Math.abs(a - held[from]) < 1), `the refusal doesn’t name the $${held[from].toLocaleString('en-US')} ${from} holds: ${text}`);
     await movePanel().scrollIntoViewIfNeeded().catch(() => {});
     await shot('transfer-refused');
     const now = await balances();

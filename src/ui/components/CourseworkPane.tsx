@@ -20,7 +20,7 @@ import { PREP_DIMS, sceneById, templateById, type PrepDim } from '@/engine/conte
 import {
   BAND_LABEL, ORIENTATION, WORK, answerRefusal, askRefusal, courseworkOf, minutesOf, orientationRefusal, prepareRefusal, preparedParts, questionsFor, readsLabel, trustOf, mateRecord,
   type Assignment,
-  READER, activitiesOf, approachRefusal, notesOf, persistentFor, readingDiffers, revisitWords, weightsOf, whereWords,
+  READER, activitiesOf, approachRefusal, notesOf, persistentFor, readingDiffers, revisitWords, weightsOf, whereWords, withPartLabels,
 } from '@/engine/systems/coursework';
 import { ClassMoments } from '@/ui/components/ClassMoments';
 import { WorkThrough } from '@/ui/components/WorkThrough';
@@ -58,7 +58,7 @@ export function CourseworkPane() {
           <ul className="small" data-due-soonest="" style={{ margin: 0, paddingLeft: '1.1rem' }}>
             {short.map(({ a, due, forecast, short: parts }) => {
               const t = templateById(a.template)!;
-              return <li key={a.id}><strong>{courseName(a.course)}: {t.title}</strong>, due {dayOfKey(due)}. Shown today, it would come to about {forecast.toFixed(1)} ({BAND_LABEL[bandFor(a, forecast)]}). Still to finish: {parts.map((d) => `${t.dims[d]!.label.toLowerCase()} (${remedyWords(a, d)})`).join('; ')}.</li>;
+              return <li key={a.id}><strong>{courseName(a.course)}: {t.title}</strong>, due {dayOfKey(due)}. Shown today, it would come to about {forecast.toFixed(1)} ({BAND_LABEL[bandFor(a, forecast)]}). Still to finish: {parts.map((d) => `${t.dims[d]!.label} (${remedyWords(a, d)})`).join('; ')}.</li>;
             })}
           </ul>
         </Panel>
@@ -146,8 +146,8 @@ function AssignmentCard({ a }: { a: Assignment }) {
           const short = shortParts(person, a);
           return (
             <div className="small" data-shown-today={a.id}>
-              <strong>Shown Today:</strong> if you showed it today on a good day, it would come to about {now.overall.toFixed(1)} ({BAND_LABEL[bandFor(a, now.overall)]}). {chiefLimit(now, 'now') ? `${chiefLimit(now, 'now')}.` : 'There’s nothing holding it back.'}
-              {short.length > 0 && <span> Still to finish: {short.map((d) => `${t.dims[d]!.label.toLowerCase()} (${remedyWords(a, d)})`).join('; ')}.</span>}
+              <strong>Shown Today:</strong> if you showed it today on a good day, it would come to about {now.overall.toFixed(1)} ({BAND_LABEL[bandFor(a, now.overall)]}). {chiefLimit(withPartLabels(now, a), 'now') ? `${chiefLimit(withPartLabels(now, a), 'now')}.` : 'There’s nothing holding it back.'}
+              {short.length > 0 && <span> Still to finish: {short.map((d) => `${t.dims[d]!.label} (${remedyWords(a, d)})`).join('; ')}.</span>}
             </div>
           );
         })()}

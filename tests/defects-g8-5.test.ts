@@ -18,7 +18,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { newLifeConfig, type StartingWealth } from '@/engine/world/bootstrap';
 import { recordInterest } from '@/engine/systems/earnings';
-import { coverOn, healthMonth, healthOf, mayEnroll, yaleUntil } from '@/engine/systems/health';
+import { coverOn, fillsCharged, healthMonth, healthOf, mayEnroll, medicineShareOf, yaleUntil } from '@/engine/systems/health';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { overdraftRoom } from '@/engine/systems/lending';
 import { THERAPISTS, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
@@ -86,7 +86,9 @@ describe('Fill A Longer Supply pays for what it fills, or fills nothing, and no 
     const before = sim.universe.transactions.length;
     const r = sim.execute({ kind: 'health.extra_supply', payload: { days: 90 } });
     expect(r.ok).toBe(false);
-    expect(r.error).toBe('It costs more than your bank can cover.');
+    expect(r.error).toBe('Your bank can’t cover $125.37 for every condition’s fill, so nothing was filled or charged.');
+    // The figure is the fill's own price: the condition's share for each usual fill the 90 days cover (from 2026-10-17).
+    expect(medicineShareOf(sim.player, 'hypertension', healthOf(sim.player).chronic!.hypertension!, sim.now, 'USD') * fillsCharged(sim.player, 90)).toBe(125_37);
     expect(healthOf(sim.player).chronic!.hypertension!.supplyUntil).toBeUndefined();
     expect(sim.universe.transactions.length).toBe(before);
   });

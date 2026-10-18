@@ -769,15 +769,15 @@
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.leave]": {
   "status": "Rewritten And Verified",
-  "hash": "73b5d1ce5614",
+  "hash": "2ca886097508",
   "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), productions.notes’ example quote held exactly by tests/guide-examples-productions.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts and tests/guide-examples-school.test.ts (every worked example played)"
+  "evidence": "Editorial review, batch 1: its quotes of the Affiliate cover refusals brought to the game’s words; tools/guide-quotes.mjs --check, 581 of 581 said"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.money]": {
   "status": "Rewritten And Verified",
-  "hash": "deeec2f6de5a",
+  "hash": "aef9159269b4",
   "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), productions.notes’ example quote held exactly by tests/guide-examples-productions.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts and tests/guide-examples-school.test.ts (every worked example played)"
+  "evidence": "Editorial review, batch 1: its quotes of the Yale account refusals brought to the game’s words; tools/guide-quotes.mjs --check, 581 of 581 said"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.orientation]": {
   "status": "Rewritten And Verified",
@@ -793,9 +793,9 @@
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.shifts]": {
   "status": "Rewritten And Verified",
-  "hash": "e0b5e8b78c59",
+  "hash": "9afcca6c3ec1",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (the registry), tests/guide-examples-school/coursework/productions.test.ts (every worked example played), tests/remaining-school.test.ts (school.s6.policy), tests/need-paths.test.ts; every quoted refusal set against its code, every label against the UI and the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "Editorial review, batch 1: its quote of the protective equipment refusal brought to the game’s words; tools/guide-quotes.mjs --check, 581 of 581 said"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.sick]": {
   "status": "Rewritten And Verified",
@@ -1637,6 +1637,12 @@
   "on": "2026-10-17",
   "reason": "Names, titles and sources as the Bulletin gives them (courses, faculty, skills, labs, the Seagull production)."
  },
+ "src/engine/content/school.ts#SKILL_WORDS": {
+  "status": "Rewritten And Verified",
+  "hash": "f3208321a20c",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2, new: tests/editorial-school-words.test.ts \"a Table Work question and a skill, as a sentence names them\"; rendered in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through its four parts on this code, its notices set beside the same journey before): \"Your speech and your accents and dialects carried it.\", \"It asked for more clowning than you have yet.\""
+ },
  "src/engine/content/school.ts#SKILLS [accents]": {
   "status": "Reviewed And Retained",
   "hash": "140715fdb03a",
@@ -2112,10 +2118,10 @@
   "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
  },
  "src/engine/systems/classmates.ts#MOMENT_TITLE": {
-  "status": "Reviewed And Retained",
-  "hash": "6aecae3aaa66",
-  "on": "2026-10-17",
-  "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
+  "status": "Rewritten And Verified",
+  "hash": "ead9f8eabb2c",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2: tests/editorial-school-words.test.ts \"a classmate’s request for help is titled as the other moments are\"; \"Maya: A Request For Help\" in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through its four parts on this code, its notices set beside the same journey before)"
  },
  "src/engine/systems/classmates.ts#PRIORITY_WORDS": {
   "status": "Reviewed And Retained",
@@ -2125,9 +2131,9 @@
  },
  "src/engine/systems/classmates.ts#registerClassmates": {
   "status": "Rewritten And Verified",
-  "hash": "7629e027dcd0",
-  "on": "2026-10-17",
-  "evidence": "tests/classmate-moments.test.ts, tests/evidence-g18-school.test.ts, tests/defects-g8-13.test.ts"
+  "hash": "72ea9830c01d",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2: tests/student-experience.test.ts \"with no scene shared, runs their lines: it helps them, moves nothing of yours, and says so\" (/it didn’t move your own work/); \"It helped them, but it didn’t move your own work.\" in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through its four parts on this code, its notices set beside the same journey before)"
  },
  "src/engine/systems/classmates.ts#registerClassmates <school.make_amends>": {
   "status": "Reviewed And Retained",
@@ -2148,10 +2154,10 @@
   "evidence": "tests/classmate-moments.test.ts, tests/evidence-g18-school.test.ts, tests/defects-g8-13.test.ts"
  },
  "src/engine/systems/classmates.ts#studyEvening": {
-  "status": "Reviewed And Retained",
-  "hash": "2a9ad5813c44",
-  "on": "2026-10-17",
-  "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
+  "status": "Rewritten And Verified",
+  "hash": "2718ce2626b2",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2: \"Noah asks if you’d run lines together for an hour on September 11, 2026 at 7:00 PM.\" in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through its four parts on this code, its notices set beside the same journey before)"
  },
  "src/engine/systems/courserecord.ts#extendRefusal": {
   "status": "Reviewed And Retained",
@@ -2407,9 +2413,9 @@
  },
  "src/engine/systems/coursework.ts#reshownWords": {
   "status": "Rewritten And Verified",
-  "hash": "7f8f23695db4",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g18-school.test.ts, tests/evidence-g24-school.test.ts, tests/remaining-school-term.test.ts, tests/workload.test.ts, tests/evidence2-b11.test.ts (159 unread, as distinct as before); rendered.txt; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "70a1bfa5814c",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2: tests/language-dynamic.test.ts \"a note worked and the piece shown again: taken, the part’s figure before and after, and not taken, still open\" (\"took the note on ${label}\" and \"isn’t taken yet\", exact); \"worked the note on Rehearsal into the revision\" and \"doesn’t show in it yet\" in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through on this code)"
  },
  "src/engine/systems/coursework.ts#revisitWords": {
   "status": "Rewritten And Verified",
@@ -2425,9 +2431,9 @@
  },
  "src/engine/systems/coursework.ts#show": {
   "status": "Rewritten And Verified",
-  "hash": "6b64eb0efa05",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g18-school.test.ts, tests/evidence-g24-school.test.ts, tests/remaining-school-term.test.ts, tests/workload.test.ts, tests/evidence2-b11.test.ts (159 unread, as distinct as before); rendered.txt; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "b97ff8d2014a",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2: tests/feedback.test.ts (\"You took the earlier note on Lines\"), tests/evidence-g18-school.test.ts and tests/evidence-g24-school.test.ts (a choice note, by questionWords); \"Your speech and your accents and dialects carried it.\", \"Drills wasn’t complete, which cost Execution 20.2 points.\", \"You took the earlier note on Built On.\" in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through its four parts on this code, its notices set beside the same journey before)"
  },
  "src/engine/systems/coursework.ts#sinceLast": {
   "status": "Rewritten And Verified",
@@ -2514,10 +2520,10 @@
   "evidence": "tests/leave.test.ts, tests/evidence-g26-school.test.ts, tests/remaining-school.test.ts, tests/scope-school.test.ts, tests/whynot-studyplan.test.ts"
  },
  "src/engine/systems/leave.ts#bankShortWords": {
-  "status": "Reviewed And Retained",
-  "hash": "d567c7fa18d4",
+  "status": "Rewritten And Verified",
+  "hash": "35de98ad2d13",
   "on": "2026-10-17",
-  "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
+  "evidence": "Editorial review, batch 1: tests/remaining-banking.test.ts \"PLAYER JOURNEY: a Comfortable student owing $20,000.00 on her Yale account …\" asserts both variants exactly; tests/evidence-g25-school.test.ts and tests/evidence-g26-school.test.ts the nothing variant"
  },
  "src/engine/systems/leave.ts#billUnsupportedTerm": {
   "status": "Reviewed And Retained",
@@ -2844,10 +2850,10 @@
   "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
  },
  "src/engine/systems/production.ts#reflect": {
-  "status": "Reviewed And Retained",
-  "hash": "4945e2ea6b66",
-  "on": "2026-10-17",
-  "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
+  "status": "Rewritten And Verified",
+  "hash": "a06816127208",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 3: tests/language-dynamic.test.ts \"nights with the company and the calls and notes of a run, as the run looks back on them: none, one and several\" (three variants, exact) and tests/evidence-g19-school.test.ts \"PLAYER JOURNEY: every note worked through the festival: …\"; seven Looking Backs in docs/verification/language-2026-10-17/editorial/b3-rendered.txt (journey J01 played through on this code)"
  },
  "src/engine/systems/production.ts#registerProduction <school.work_note>": {
   "status": "Reviewed And Retained",
@@ -3029,6 +3035,12 @@
   "on": "2026-10-17",
   "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
  },
+ "src/engine/systems/school.ts#partWords": {
+  "status": "Rewritten And Verified",
+  "hash": "6eb0e4bf2c9e",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 3, new: tests/editorial-school-words.test.ts \"a part the School casts by size reads in lower case in a sentence, …\""
+ },
  "src/engine/systems/school.ts#planWeek": {
   "status": "Reviewed And Retained",
   "hash": "be96b5486dbd",
@@ -3049,9 +3061,9 @@
  },
  "src/engine/systems/school.ts#registerSchool": {
   "status": "Rewritten And Verified",
-  "hash": "09d5d03adada",
-  "on": "2026-10-17",
-  "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts; the calendar entry Term Review, Fall Term 2026 is display only (EVALUATION_KIND is the key, read by SchoolWorkspace and onSchedule)"
+  "hash": "2ae94bc4caaf",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: tests/evidence3-person.test.ts \"PLAYER JOURNEY: Inherited chosen, then Nothing: …\", tests/need-paths.test.ts \"PLAYER JOURNEY: a Scraping family’s student is paid …\" and tests/evidence2-b10.test.ts \"PLAYER JOURNEY: the plan the bank couldn’t take is said to be owed, …\" assert “Yale’s aid for living costs goes by need, and your family’s means rule it out, so …” exactly, paid and owed"
  },
  "src/engine/systems/school.ts#registerSchool [summer]": {
   "status": "Reviewed And Retained",
@@ -3061,9 +3073,9 @@
  },
  "src/engine/systems/school.ts#registerSchool <school.buy_ppe>": {
   "status": "Rewritten And Verified",
-  "hash": "180502cf0c67",
+  "hash": "dcebd6e10732",
   "on": "2026-10-17",
-  "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts (the concern notice), tests/evidence-g22/g25/g26-school.test.ts, tests/remaining-school.test.ts, tests/school-journey-gaps.test.ts, tests/remaining-09-journeys.test.ts, tests/school-everyday.test.ts; rendered.txt"
+  "evidence": "Editorial review, batch 1: tests/school-everyday.test.ts \"not bought before, is bought at the first shift; the bank short of it, the supervisor sends you home\" asserts /^Your bank can’t cover \\$[\\d,]+\\.\\d\\d, so nothing was charged\\.$/"
  },
  "src/engine/systems/school.ts#registerSchool <school.cabaret>": {
   "status": "Reviewed And Retained",
@@ -3097,9 +3109,9 @@
  },
  "src/engine/systems/school.ts#registerSchool closeRun()": {
   "status": "Rewritten And Verified",
-  "hash": "9aae21200732",
-  "on": "2026-10-17",
-  "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts (the concern notice), tests/evidence-g22/g25/g26-school.test.ts, tests/remaining-school.test.ts, tests/school-journey-gaps.test.ts, tests/remaining-09-journeys.test.ts, tests/school-everyday.test.ts; rendered.txt"
+  "hash": "725ff89dd53c",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 3: \"You were on call to cover the company through the run, and didn’t go on.\" and the named role's \"You covered Nora Helmer on call …\" in docs/verification/language-2026-10-17/editorial/b3-rendered.txt (journey J01 played through on this code); tests/evidence-g21-school.test.ts holds the named role's words exactly"
  },
  "src/engine/systems/school.ts#repProduction": {
   "status": "Reviewed And Retained",
@@ -3343,9 +3355,9 @@
  },
  "src/ui/components/ClassMoments.tsx#ClassMoments": {
   "status": "Rewritten And Verified",
-  "hash": "a540b255ef9c",
-  "on": "2026-10-17",
-  "evidence": "tests/classmate-moments.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "1c1de9e46236",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2: the line under Run Lines Together? where you share no open scene says what the notice says, \"That helps them, but it doesn’t move your own work.\", and the invitation says \"for an hour on\" its date at 7:00 PM; tests/editorial-class-moments.test.ts renders the panel on a played student with such a request open and reads both. No walk save holds that request, so the walk doesn't show it"
  },
  "src/ui/components/CourseworkPane.tsx#AnotherWay": {
   "status": "Rewritten And Verified",
@@ -3469,9 +3481,9 @@
  },
  "src/ui/components/RehearsalProcess.tsx#RehearsalProcess": {
   "status": "Rewritten And Verified",
-  "hash": "97eb183812a8",
-  "on": "2026-10-17",
-  "evidence": "tests/decisions-stamina.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "a9cd9d94e48f",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 3: its Looking Back label says what the notice says, \"Simulated: the game’s summary, not the director’s words.\" (docs/verification/language-2026-10-17/editorial/b3-rendered.txt (journey J01 played through on this code))"
  },
  "src/ui/components/StudyPlanPanels.tsx#at9": {
   "status": "Reviewed And Retained",
@@ -3493,9 +3505,9 @@
  },
  "src/ui/components/StudyPlanPanels.tsx#LeavePanel": {
   "status": "Rewritten And Verified",
-  "hash": "027575250a41",
-  "on": "2026-10-17",
-  "evidence": "tests/whynot-studyplan.test.ts, tests/evidence-g26-school.test.ts, tests/leave.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "68ac7ef16b0c",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: tests/evidence-g25-school.test.ts \"PLAYER JOURNEY: Ask For A Leave… opens the form’s Ask, …\" asserts “If it’s granted, it runs from Spring Term 2027 to Spring Term 2028.”; the rest of the paragraph read on the Standing tab of the built app (editorial/walk-1440, the dir2 and leave saves)"
  },
  "src/ui/components/StudyPlanPanels.tsx#RepeatPanel": {
   "status": "Rewritten And Verified",
@@ -3596,8 +3608,8 @@
  "src/ui/workspaces/SchoolWorkspace.tsx#CoursesPanel": {
   "status": "Rewritten And Verified",
   "hash": "b4486a981257",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g26-school.test.ts, tests/remaining-school.test.ts, tests/evidence-g19/g20-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code); tests/language-dynamic.test.ts 'a course’s meetings and the term’s class days on the first day of classes, and make-up sessions owed, one or several' (at 1 of 1 class; 1 of 1 and 3 of 3 make-up sessions)"
+  "on": "2026-10-18",
+  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g26-school.test.ts, tests/remaining-school.test.ts, tests/evidence-g19/g20-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code). Editorial review, batch 4: a course's line “Acting I: at 5 of 5 classes.” lacked its verb, and reads “Acting I: 5 of 5 classes attended.”: tests/language-dynamic.test.ts 'a course’s meetings and the term’s class days on the first day of classes, and make-up sessions owed, one or several' (“: 1 of 1 class attended.”), and the final walk (docs/verification/language-2026-10-17/editorial/after-1440, after-390) on every student save's School, Standing"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#KIND_WORDS": {
   "status": "Reviewed And Retained",
@@ -3637,9 +3649,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#SchoolWorkspace": {
   "status": "Rewritten And Verified",
-  "hash": "672e645cc2d9",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g24-school.test.ts and tests/evidence2-b08.test.ts (Term Reviews), tests/remaining-school-term.test.ts, tests/remaining-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, after-new-1440, after-new-390)"
+  "hash": "ad8f07c76ecc",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: tests/language-dynamic.test.ts \"the term review’s notice and the screens at good standing, then a concern, a warning and a dismissal\" asserts “MFA in Acting, class of 2029. Year 1 of 3, good standing.” exactly"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#SLOTS": {
   "status": "Reviewed And Retained",
@@ -3655,9 +3667,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#StandingPane": {
   "status": "Rewritten And Verified",
-  "hash": "1ccdd0f007e9",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g24-school.test.ts and tests/evidence2-b08.test.ts (Term Reviews), tests/remaining-school-term.test.ts, tests/remaining-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, after-new-1440, after-new-390); tests/language-dynamic.test.ts 'a course’s meetings and the term’s class days on the first day of classes…' (1 of 1 class day) and 'the term review’s notice and the screens at good standing, then a concern, a warning and a dismissal'"
+  "hash": "dea5bc28d648",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: a term with nothing yet to count read “Attendance counts 0 of 0 class days, 0 of 0 calls and 0 of 0 assigned shifts.”; now “There’s been no class day, call or shift to count toward attendance this term yet.” (and last term's, in the past). The final walk of the built app (docs/verification/language-2026-10-17/editorial/after-1440, after-390): roundups.json's School, Standing; names.json reads the same line in the browser. A term with days to count keeps its counts, on every other student save's walk"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#SummerPanel": {
   "status": "Rewritten And Verified",
@@ -3667,9 +3679,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#TermsPane": {
   "status": "Rewritten And Verified",
-  "hash": "22e6d8e02f5d",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g26-school.test.ts, tests/remaining-school.test.ts, tests/evidence-g19/g20-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "758ab339d76f",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: tests/need-paths.test.ts \"PLAYER JOURNEY: a Scraping family’s student is paid …\" asserts “Yours show need, and the scholarship meets it.” and “Yours rule it out, so the health plan and living costs come from your bank.” on the Terms And Award tab"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#WEEKDAYS": {
   "status": "Reviewed And Retained",

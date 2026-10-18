@@ -435,7 +435,7 @@ describe('card.request_hardship', () => {
     setBalance(sim, checking, 1_000_00); // TEST SETUP: the means to pay the plan, come since
     // The statement of 20 October asks the plan's payment, and charges no interest on a plan.
     sim.advanceTo(edt(10, 20, 9, 1));
-    expect(notes(sim, 'Statement Ready: Chase Freedom Unlimited').at(-1)!.body).toContain('$4,830.00 to pay, at least $101.00.');
+    expect(notes(sim, 'Statement Ready: Chase Freedom Unlimited').at(-1)!.body).toContain('The statement comes to $4,830.00, due November 10, 2026. At least $101.00 has to be paid by then.');
     expect(moved(sim, card, 'Interest')).toEqual([]);
     return { sim, card, checking };
   }

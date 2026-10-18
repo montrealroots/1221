@@ -73,7 +73,7 @@ describe('the protective equipment work-study requires', () => {
     expect(twin.universe.scheduled.find((i) => i.id === s2.id)!.status).toBe('missed');
     expect(twin.player.school!.tally.worked).toBe(worked);
     expect(twin.universe.notifications.filter((n) => n.title === 'Sent Home From Work-Study')).toHaveLength(1);
-    expect(twin.execute({ kind: 'school.buy_ppe', payload: {} }).error).toMatch(/and your bank can’t cover it\. You haven’t been charged\.$/);
+    expect(twin.execute({ kind: 'school.buy_ppe', payload: {} }).error).toMatch(/^Your bank can’t cover \$[\d,]+\.\d\d, so nothing was charged\.$/);
     expect(breaches(twin.universe)).toEqual([]);
   });
 });

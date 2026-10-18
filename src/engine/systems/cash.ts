@@ -136,7 +136,7 @@ export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, 
     const here = OWNER_SURCHARGE[isoHere(person) ?? ''];
     const owner = here ? inSave(sim, here.fee, here.currency) : 0;
     // In its own money, the dollars beside (from 2026-10-16: until then in dollars alone).
-    if (current.balance < amount + abroad.fee + owner) return { fee: abroad.fee, refused: `${current.name} only has ${balanceText(sim, current, Math.max(0, current.balance), Math.max(0, current.held ?? 0))} in it.` };
+    if (current.balance < amount + abroad.fee + owner) return { fee: abroad.fee, refused: shortWords(sim, current, balanceText(sim, current, Math.max(0, current.balance), Math.max(0, current.held ?? 0)), amount, abroad.fee + owner) };
     return { fee: abroad.fee, feeNative: abroad.native, ...(owner ? { ownerCharge: owner } : { ownerFee: true }) };
   }
   if (from === 'post_office' && !rules?.postOffice) return { fee: 0, refused: `${bank.name}’s customers can’t use the Post Office for cash.` };
@@ -148,9 +148,22 @@ export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, 
   }
   const owner = from === 'other_atm' && rules?.surcharge ? OWNER_SURCHARGE[bank.iso] : undefined;
   const ownerCharge = owner ? inSave(sim, owner.fee, owner.currency) : 0;
-  if (current.balance < amount + fee + ownerCharge) return { fee, refused: `${current.name} only has ${formatMoney(Math.max(0, current.balance), cur)} in it.` };
+  if (current.balance < amount + fee + ownerCharge) return { fee, refused: shortWords(sim, current, formatMoney(Math.max(0, current.balance), cur), amount, fee + ownerCharge) };
   if (ownerCharge) return { fee, ownerCharge };
   return { fee, ...(from === 'other_atm' && rules?.surcharge ? { ownerFee: true } : {}) };
+}
+
+/**
+ * A withdrawal the account can't cover, said before it's tried: what the account has, and, where the fees push it over,
+ * what the cash and its fees come to (from 2026-10-17, brief 14's editorial review). Until then it said only “… only has
+ * $101.00 in it.” of a $100.00 withdrawal refused for its $3.00 fee.
+ */
+function shortWords(sim: Simulation, current: Account, has: string, amount: Money, fees: Money): string {
+  const cur = saveCurrency(sim.universe);
+  const holds = current.balance > 0 ? `has only ${has}` : 'has nothing in it';
+  return fees > 0 && current.balance > 0
+    ? `${current.name} ${holds}, and ${formatMoney(amount, cur)} in cash with its fees comes to ${formatMoney(amount + fees, cur)}.`
+    : `${current.name} ${holds}.`;
 }
 
 /** The part of what's owed on the card that's cash, cut down to what's owed at all. */
@@ -234,7 +247,8 @@ export function registerCash(sim: Simulation): void {
     const person = s.player;
     const amount = Math.round(Number(p.amount));
     const wallet = walletOf(s, person);
-    if (!wallet || !(amount > 0) || wallet.balance < amount) throw new CommandError(`You have ${formatMoney(Math.max(0, wallet?.balance ?? 0), saveCurrency(s.universe))} in cash.`);
+    if (!(amount > 0)) throw new CommandError('Enter how much cash to pay in.');
+    if (!wallet || wallet.balance < amount) throw new CommandError(`You have only ${formatMoney(Math.max(0, wallet?.balance ?? 0), saveCurrency(s.universe))} in cash, so nothing was paid in.`);
     const to = s.universe.accounts[p.toId];
     if (!to || to.ownerId !== person.id || to.closedAt || (to.kind !== 'checking' && to.kind !== 'savings') || to.category === 'term') throw new CommandError('Cash goes into your current account or savings.');
     const bank = to.bankId ? bankById(to.bankId) : undefined;

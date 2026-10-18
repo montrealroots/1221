@@ -241,7 +241,7 @@ export const MONEY: readonly GuideEntry[] = [
     example: {
       setup: `A life begun in New Haven with Modest means, at Chase: ${usd(MODEST.checking)} in ${CHECKING.name}, ${usd(MODEST.savings)} in ${SAVINGS.name}, and ${usd(OWED)} owed on the ${CHASE_CARD.name} against a ${usd(MODEST.cardLimit)} limit.`,
       steps: ['Read the Money line on Home.', 'Press Your Affairs, then Owed.'],
-      result: `The line reads “${CHECKING.name}: ${formatMoney(MODEST.checking, 'USD')}. Worth ${formatMoney(WORTH, 'USD', { cents: false })}, ${formatMoney(OWED, 'USD', { cents: false })} of it owed.” The card is still in its introductory months, so Owed says it’s charged no interest today, and that the card is at ${pct(CHASE_CARD.introApr ?? 0)} until the day they end, then ${pct(CHASE_RATE)}: about ${usd(Math.round((OWED * CHASE_RATE) / 100) * 100)} a year from then if none of it were paid. Credit Used is ${Math.round((OWED / MODEST.cardLimit) * 100)}%, under the 30% where your score starts to suffer.`,
+      result: `The line reads “${CHECKING.name}: ${formatMoney(MODEST.checking, 'USD')}. Worth ${formatMoney(WORTH, 'USD', { cents: false })}, after ${formatMoney(OWED, 'USD', { cents: false })} owed.” The card is still in its introductory months, so Owed says it’s charged no interest today, and that the card is at ${pct(CHASE_CARD.introApr ?? 0)} until the day they end, then ${pct(CHASE_RATE)}: about ${usd(Math.round((OWED * CHASE_RATE) / 100) * 100)} a year from then if none of it were paid. Credit Used is ${Math.round((OWED / MODEST.cardLimit) * 100)}%, under the 30% where your score starts to suffer.`,
     },
   },
   {
@@ -385,7 +385,7 @@ export const MONEY: readonly GuideEntry[] = [
     unavailable: [
       '“Move Money only moves money between your own current and savings accounts.”',
       '“From and To are the same account.” and “Enter how much to move.”',
-      '“… only has … in it.”: the From account has less than the amount.',
+      '“… has only …, so nothing was moved.”: the From account has less than the amount.',
       '“… is dormant. Reactivate it first, under Your Accounts Over Time.”',
       '“With the … withdrawal fee, you can move at most … out of ….”',
       '“You can take … more out of … this month without notice.” (a German savings account)',
@@ -473,7 +473,7 @@ export const MONEY: readonly GuideEntry[] = [
     unavailable: [
       '“No term deposit rate was found for ….” A bank without a rate can’t take a term deposit in the game.',
       '“A term deposit at … is paid for from your current account there. Open a current account at … first.”',
-      '“A term deposit there needs at least ….” and “… only has … in it.”',
+      '“A term deposit there needs at least ….” and “… has only …, so no term deposit was opened.”',
       '“… doesn’t let a term deposit end that way.” and “… needs … days’ notice before the end to change it.”',
       '“… doesn’t let a term deposit be broken before its end.” and “It already closes on …, on the notice you gave.”',
       '“… pays a term deposit’s interest at its end.” and “It hasn’t earned anything to take yet.”',
@@ -848,9 +848,9 @@ export const MONEY: readonly GuideEntry[] = [
       '“Your debit card hasn’t arrived yet. You can still take cash out at the counter.”, “Your debit card is stopped. You can still take cash out at the counter.” or “Your debit card is locked. Unlock it under Your Cards, or take cash out at the counter.”',
       '“…’s customers can’t use the Post Office for cash.”',
       '“… lets you take … a day out of machines, and you’ve taken … today.”',
-      '“… only has … in it.”: less than the amount and its fees.',
+      '“… has only ….”, or, where the fees push it over, “… has only …, and … in cash with its fees comes to ….”',
       'On the card: “The card has … of its limit left, and this needs … with its fee.” or “The card lets you take … out as cash, and … is out already.”',
-      'Paying in: “You have … in cash.”, “Cash goes into your current account or savings.”, “…’s customers can’t pay cash in at the Post Office.” or “… is dormant. Reactivate it first, under Your Accounts Over Time.” At an ATM: “Your debit card is locked.”, “Your debit card is stopped.” or “Your debit card hasn’t arrived yet.”, each with “You can still pay cash in at the counter.”',
+      'Paying in: “You have only … in cash, so nothing was paid in.”, “Cash goes into your current account or savings.”, “…’s customers can’t pay cash in at the Post Office.” or “… is dormant. Reactivate it first, under Your Accounts Over Time.” At an ATM: “Your debit card is locked.”, “Your debit card is stopped.” or “Your debit card hasn’t arrived yet.”, each with “You can still pay cash in at the counter.”',
     ],
     mistakes: [
       `Taking cash from another bank’s machine in the US. At Chase that’s ${fee(CHASE_CASH.other)} plus about ${usd(OWNER)} to the owner, ${usd((CHASE_CASH.other ?? 0) + OWNER)} for one withdrawal, where Chase’s own machine is ${fee(CHASE_CASH.own)}.`,
@@ -1237,7 +1237,7 @@ export const MONEY: readonly GuideEntry[] = [
       '“The bank lends for … to … months.”, “The bank lends at least ….” and “The bank lends up to ….”',
       '“The bank lends against wages paid in over the last 30 days, and none has been paid in.” and “A payment of … a month is more than the bank lets a loan take of … of wages.”',
       '“You already have a loan with ….”, “… doesn’t lend for a post-secondary education expense.” and “… asks for a Social Security number.”',
-      '“Paying it off takes …, and the repayment account can’t cover it all.”, “You don’t owe anything in collections.” and “There’s nothing in the account to pay it with.”',
+      '“… can’t cover the … it takes to pay it off, so nothing was paid.”, “You don’t owe anything in collections.” and “There’s nothing in the account to pay it with.”',
       '“Your bank has offered no loan for an overrun.”',
     ],
     mistakes: [

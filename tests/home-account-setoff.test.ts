@@ -93,7 +93,7 @@ describe('the set-off against an overdraft', () => {
     expect([current.balance, current.held, current.closedAt !== undefined]).toEqual([0, 0, true]);
     expect(livret.closedAt).toBeUndefined();
     expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Interest: Livret A,')).map((t) => t.memo)).toEqual(['Interest: Livret A, before the set-off']);
-    expect(titled(sim, 'BNP Paribas Closed An Account')).toEqual(['It had been below zero for 60 days, so the bank took what it was owed from your other money there. It closed Compte de dépôt. Livret A stays open.']);
+    expect(titled(sim, 'BNP Paribas Closed An Account')).toEqual(['BNP Paribas closed Compte de dépôt. It had been below zero for 60 days, so the bank took what it was owed from your other money there. Livret A stays open.']);
     expect(sim.player.primaryAccountId).toBe(at(sim, 'us-chase', 'checking').id);
     expect(breaches(sim.universe)).toEqual([]);
     expect(sim.ledger.audit()).toEqual([]);

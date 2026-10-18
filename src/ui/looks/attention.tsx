@@ -71,7 +71,7 @@ const SMALL = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eig
 const countWord = (n: number): string => SMALL[n] ?? String(n);
 
 /** "3 weeks ago", and "just now" where `formatRelative` says "now". */
-// In words, as a sentence says it (from 2026-10-17): until then “It came up 2d 3h ago”, the Calendar's form.
+// In words, as a sentence says it (from 2026-10-17): until then “It came up 2d 3h ago”, the Calendar’s form.
 const ago = (at: number, now: number): string => { const r = formatRelativeWords(at, now); return r === 'now' ? 'just now' : r; };
 
 /**

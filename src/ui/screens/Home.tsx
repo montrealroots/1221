@@ -10,7 +10,7 @@
 
 import { useState } from 'react';
 import { formatDaylight } from '@/engine/core/sun';
-import { titleCaseLabel } from '@/engine/core/text';
+import { ordinal, titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { MS_DAY, WEEKDAY_NAMES, formatDateTime } from '@/engine/core/time';
@@ -382,12 +382,12 @@ export function Home() {
                   <Open subject={at('country', place.city.countryId)}>{place.countryName}</Open>
                 </div>
                 {/* Until 2026-10-13 this line said the distance and the hours from home when away, and Local Time’s note
-                    the hours from home; nothing has put a player away from home since the home went in the scope of
-                    2026-10-09, as the city Home profiles is the one `homeCityOf` gives (found by that day’s evidence
-                    pass). The place look still says them for another city. */}
+                    the hours from home; none since the scope of 2026-10-09, as the city Home profiles is the one
+                    `homeCityOf` gives (found by that day’s evidence pass). The place look still says them for another
+                    city. Until 2026-10-17 it began “Home.”, the screen’s own name, where it means the player’s. */}
                 <div className="xs dim" style={{ marginBottom: 'var(--s3)' }}>
                   <Open subject={at('place', place.city.id)}>
-                    Home.
+                    Your home.
                     {placeLine(place) && ` ${placeLine(place)}.`}
                   </Open>
                 </div>
@@ -483,7 +483,7 @@ export function Home() {
           {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
             <AffairLine
               title="Money"
-              line={`${primary?.name ?? 'No account'}: ${primary ? signed(balanceText(sim, primary)) : formatMoney(0, cur)}${keptWords}. Worth ${signed(formatMoney(worth.total, cur, { cents: false }))}${worth.liabilities > 0 ? `, ${formatMoney(worth.liabilities, cur, { cents: false })} of it owed.` : '.'}`}
+              line={`${primary?.name ?? 'No account'}: ${primary ? signed(balanceText(sim, primary)) : formatMoney(0, cur)}${keptWords}. Worth ${signed(formatMoney(worth.total, cur, { cents: false }))}${worth.liabilities > 0 ? `, after ${formatMoney(worth.liabilities, cur, { cents: false })} owed.` : '.'}`}
               alert={(primary?.balance ?? 0) < 0 ? 'Your account is overdrawn.' : undefined}
               action={<Gated feature="ui.bank" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{primary?.institution ?? 'Your Bank'}</Gated>}
               help="bank.accounts"
@@ -537,7 +537,7 @@ function SchoolLine() {
   return (
     <AffairLine
       title="School"
-      line={`${where}${standing}, ${rankIn(person)} of ${YALE_DRAMA.classSize} in the class.${next ? ` Next: ${next.label}, ${formatDateTime(next.at, zone)}.` : ''}`}
+      line={`${where}${standing}, ${ordinal(rankIn(person))} of ${YALE_DRAMA.classSize} in the class.${next ? ` Next: ${next.label}, ${formatDateTime(next.at, zone)}.` : ''}`}
       alert={troubled ? `Your standing is ${STANDING_LABEL[school.standing].toLowerCase()}. The School screen says why.` : undefined}
       action={<Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'School')}>{YALE_DRAMA.short}</Gated>}
       help="school.standing"

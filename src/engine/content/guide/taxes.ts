@@ -443,7 +443,7 @@ export const TAXES: readonly GuideEntry[] = [
     synonyms: ['tax lien', 'Notice Of Federal Tax Lien', 'Connecticut Tax Lien', 'lien release', 'Form 12277', 'Letter 3172', 'lien filed in error', 'tax warrant', 'lien withdrawal'],
     questions: ['Why was a lien filed?', 'How do I get a tax lien released?', 'Does a tax lien hurt my credit?', 'What if a lien was filed in error?'],
     where: on('returns', 'Papers, Tax Returns, The Year’s Return, The IRS’s Lien Or Connecticut DRS’s Lien'),
-    available: `From the guide’s chapter “${CHAPTER}”. A lien shows under the year it secures once one is on record.`,
+    available: `From the guide’s chapter “${CHAPTER}”. A lien shows under the year it was filed for once one is on record.`,
     short: `A lien is a public claim an authority files when a balance stays unpaid deep into collection. Connecticut DRS files one with its notice of intent to levy. The IRS files one at its final notice if you owe ${usd(FEDERAL_LIEN.threshold)} or more on the year. Paying in full is what gets it released. The buttons under it ask for a release where the authority needs asking, or a withdrawal: the IRS’s once it has released its lien, or any lien filed in error. In the game a lien changes only its own record: no credit record or bank reads it.`,
     steps: [
       'Open the year’s panel on Tax Returns. A lien shows as The IRS’s Lien or Connecticut DRS’s Lien, with its status and The Lien’s History.',
@@ -454,7 +454,7 @@ export const TAXES: readonly GuideEntry[] = [
     ],
     needs: [
       'A lien on the year.',
-      'For a release, the balance it secures paid in full.',
+      'For a release, what it was filed for paid in full.',
       'For the IRS’s withdrawal, its lien released, and none of your returns for the three tax years before this one left unfiled past its due date with a balance.',
       'For an error, your own return having replaced an assessment, and showing no more owed than you’d paid before the lien was filed.',
     ],
@@ -466,7 +466,7 @@ export const TAXES: readonly GuideEntry[] = [
       { label: 'Connecticut’s Days', value: `Released ${CT_LIEN.releaseDays} days after you ask; withdrawn as filed in error ${CT_LIEN.error.days} days after you ask`, estimate: CT_LIEN.releaseAssumed || CT_LIEN.error.daysAssumed },
     ],
     reads: [
-      { label: 'The Balance When Filed', value: 'Everything owed on the year that day: the amount the lien secures' },
+      { label: 'The Balance When Filed', value: 'Everything owed on the year that day: the amount the lien was filed for' },
       { label: 'Payments Before It Was Filed', value: 'For an error: the tax you’d paid on the year before the lien went on record' },
       { label: 'Your Last Three Years’ Returns', value: 'For the IRS’s withdrawal after release: the three tax years before this one, whichever year the lien is on, each filed if it’s past due with a balance' },
     ],
@@ -486,7 +486,7 @@ export const TAXES: readonly GuideEntry[] = [
       '“when collection reached that stage” or “because the payment plan requires one” says why it went on record.',
       `The line about its effect is in the authority’s own words. Connecticut’s says “${CT_LIEN.effect}” The IRS’s says it may limit your ability to get credit.`,
       'In the game, no credit record or bank reads a lien, so its status is all that changes.',
-      'On a lien that secured tax you owed when it was filed, the panel says so instead of offering Ask For Its Withdrawal As Filed In Error: “It secured tax you owed when it was filed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.” Connecticut’s always does, because it takes a payment to its penalty and interest before its tax and files its lien only while something is owed. Your own return in place of its assessment leaves the tax as it was, since DRS assessed it from the same figures.',
+      'On a lien filed for tax you owed, the panel says so instead of offering Ask For Its Withdrawal As Filed In Error: “It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.” Connecticut’s always does, because it takes a payment to its penalty and interest before its tax and files its lien only while something is owed. Your own return in place of its assessment leaves the tax as it was, since DRS assessed it from the same figures.',
       `A student’s year never owes the IRS ${usd(FEDERAL_LIEN.threshold)}: a year of a living-cost scholarship and work-study owes it less than two thousand dollars. The IRS’s lien and its Form 12277 are for much bigger balances.`,
     ],
     next: [
@@ -497,21 +497,21 @@ export const TAXES: readonly GuideEntry[] = [
     unavailable: [
       'A lien’s buttons show only under a year that has one. Ask For Its Release, and the IRS’s withdrawal, are grayed out with the reason beside them until you can press them. Ask For Its Withdrawal As Filed In Error shows only on a lien that was filed in error.',
       '“The lien has already been released.” or “The lien has already been withdrawn.”, or that you’ve already asked, with the date a decision is due.',
-      '“You can ask for its release once the balance it secures is paid in full.”',
+      '“You can ask for its release once what it was filed for is paid in full.”',
       'For a state that releases without being asked: “There’s nothing to ask: it’s released on its own”, with its days.',
       `For the IRS: “You can ask for a withdrawal once the lien is released, which happens within ${FEDERAL_LIEN.releaseDays} days of paying in full. Only a lien filed in error can be withdrawn sooner, and this one wasn’t.”`,
       '“The IRS withdraws a lien after payment only if your last three years’ returns are filed”, naming the year that isn’t.',
-      'Filed in error: not offered where the lien secured tax you owed when it was filed, and the panel says so.',
+      'Filed in error: not offered where the lien was filed for tax you owed, and the panel says so.',
     ],
     mistakes: [
-      'Asking for a withdrawal on a lien that secured tax you owed: it’s refused. Pay it, and it’s released.',
+      'Asking for a withdrawal on a lien filed for tax you owed: it’s refused. Pay it, and it’s released.',
       'Paying Connecticut in full and stopping there: DRS releases its lien only when you ask, so press Ask For Its Release.',
       'Leaving one of the last three tax years unfiled with a balance: the IRS’s Form 12277 waits on those returns.',
     ],
     related: ['taxes.pay', 'taxes.plan', 'taxes.return'],
     connections: [
-      { to: 'taxes.pay', kind: 'prerequisite', why: 'A lien is released only once the balance it secures is paid in full.' },
-      { to: 'taxes.return', kind: 'prerequisite', why: 'A lien is withdrawn as filed in error only after your own return has replaced the assessment it secured.' },
+      { to: 'taxes.pay', kind: 'prerequisite', why: 'A lien is released only once what it was filed for is paid in full.' },
+      { to: 'taxes.return', kind: 'prerequisite', why: 'A lien is withdrawn as filed in error only after your own return has replaced the assessment it was filed on.' },
       { to: 'taxes.plan', kind: 'optional', why: 'While a state plan is in force, no lien is filed. Connecticut files its lien at its second notice.' },
     ],
     example: {

@@ -1139,6 +1139,15 @@ export function repDays(term: number): Set<string> {
 export const CABARET_RUN = { rehearsals: YALE_CABARET.rehearsalEvenings, performances: YALE_CABARET.shows.length, part: 'A Part In A Cabaret Show' } as const;
 
 /**
+ * A part as a sentence names it (from 2026-10-17, brief 14's editorial review): a named role as it is, a part the School
+ * casts by size (“A Leading Part In A New Play”, “An Understudy In The Company”) in lower case, the Cabaret keeping its
+ * capital. Until then a sentence read “Chloe Tanaka as A Leading Part In A New Play”. The labels themselves stay as they
+ * are: `redateCredits` finds a credit's part in its casting notice word for word, and `!part.startsWith('A ')` tells a
+ * size from a role.
+ */
+export const partWords = (part: string): string => (/^(A|An) /.test(part) ? part.toLowerCase().replace(/\bcabaret\b/g, 'Cabaret') : part);
+
+/**
  * A first class's classmate through a run (from 2026-10-11, out of `formerProductions`, for the Rep's company and the
  * Cabaret too): grown by its rehearsals and nights as a company is, judged as a classmate's run is, their composure
  * grown by the nights, and a School part (`size`) kept for the next casting's balance.
@@ -3177,7 +3186,7 @@ export function registerSchool(sim: Simulation): void {
           // What reached the account, less what was withheld for the IRS and what the Yale account took (from 2026-10-16:
           // until then the whole refund, so an F-1 student was told $13,318.50 was in her account where $11,356.54 was).
           ? `Your living-expense scholarship of ${formatMoney(account.livingScholarship, cur)} met this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${!applied ? `and ${formatMoney(account.refund - withheld, cur)} is` : account.refund - withheld - applied > 0 ? `and the ${formatMoney(applied, cur)} your Yale account owed; ${formatMoney(account.refund - withheld - applied, cur)} is` : `and ${formatMoney(applied, cur)} of what your Yale account owed${accountOwed(s, person) > 0 ? `, which still owes ${formatMoney(accountOwed(s, person), cur)}` : ''}; none of it is`} in your ${current?.name ?? 'account'}${withheld ? `, after ${formatMoney(withheld, cur)} withheld for the IRS` : ''}. Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship.`
-          : `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and none was found, so this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${planPaid ? 'was paid from your bank, and living costs are yours.' : 'and living costs are yours. Your bank couldn’t cover the plan: it’s owed, and comes out of your bank the first day there’s money for it.'}`,
+          : `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${planPaid ? 'was paid from your bank, and living costs are yours.' : 'and living costs are yours. Your bank couldn’t cover the plan: it’s owed, and comes out of your bank the first day there’s money for it.'}`,
         importance: 55, route: '/workspace/school',
       });
     }
@@ -3280,7 +3289,7 @@ export function registerSchool(sim: Simulation): void {
     const person = s.player;
     const no = ppeRefusal(person);
     if (no) throw new CommandError(no);
-    if (!buyPpe(s, person)) throw new CommandError(`It costs ${formatMoney(ppeCost(s), saveCurrency(s.universe))}, and your bank can’t cover it. You haven’t been charged.`);
+    if (!buyPpe(s, person)) throw new CommandError(`Your bank can’t cover ${formatMoney(ppeCost(s), saveCurrency(s.universe))}, so nothing was charged.`);
     return { cost: person.school!.ppe!.cost };
   });
 
@@ -3471,7 +3480,7 @@ export function registerSchool(sim: Simulation): void {
     const workOn = top && top.whole / Math.max(1, runNights.length) >= 0.5 ? ` Work on your ${top.label.toLowerCase()}: it held your nights back most.` : '';
     // An understudy who never went on missed no night, and the note says so.
     casting.note = runNights.length ? `${directorsNote(nightsMean(casting.nights ?? {}))}${workOn}`
-      : !wentOn ?`You covered ${casting.role} on call through the run and didn’t go on. The work you did in the room isn’t lost.`
+      : !wentOn ? `${/^(A|An) /.test(casting.role) ? 'You were on call to cover the company through the run, and didn’t go on.' : `You covered ${casting.role} on call through the run and didn’t go on.`} The work you did in the room isn’t lost.`
         : `The run went on without you: the nights you missed are in the record, and the work you did in the room isn’t lost.`;
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `The Director’s Note: ${casting.play ?? casting.production}`, body: casting.note, importance: 70, route: '/workspace/school' });
     // And the process looked back on, its open notes carried into class (`reflect`, from 2026-10-08).

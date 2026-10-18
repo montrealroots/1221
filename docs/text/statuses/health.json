@@ -534,10 +534,10 @@
   "reason": "Programming errors thrown when a random pick is asked of an empty list: internal, never caught for a screen, and the code never asks it (a player meets them only as a crash, not as words to read). Its one engine-speak hit, “weighted”, is the function’s own name (rng.weighted), right for a programmer’s error."
  },
  "src/engine/systems/appointments.ts#bookIn": {
-  "status": "Reviewed And Retained",
-  "hash": "ec7e3e245ba3",
-  "on": "2026-10-17",
-  "reason": "The booking notice keeps its words because the papers guide quotes them whole (guide/papers.ts, papers.doctor’s example) and tests/guide-examples-papers.test.ts holds the two equal. A rewrite that names the next step (“…, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.”) is with the coordinator, to land with that quote (batches.md, batch 2). Its labels (A Referral, A Doctor’s Appointment, The Doctor, …) are plain."
+  "status": "Rewritten And Verified",
+  "hash": "2a5c9b70b3d1",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 5: “… for September 1, 2026, the usual wait where you live.” asserted exactly by tests/scope-health.test.ts \"PLAYER JOURNEY: the student who picks Yale Health on Your Doctor …\", tests/defects-g8-6.test.ts (a referral, both variants), tests/evidence2-b02.test.ts, tests/evidence2-b03.test.ts, tests/evidence-g03-life.test.ts and tests/remaining-09-journeys.test.ts"
  },
  "src/engine/systems/appointments.ts#mayRefer": {
   "status": "Reviewed And Retained",
@@ -613,9 +613,9 @@
  },
  "src/engine/systems/health.ts#applyRenewal": {
   "status": "Rewritten And Verified",
-  "hash": "c59319186109",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g05-life.test.ts “PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026…”; tests/need-paths.test.ts “PLAYER JOURNEY: on Covered Connecticut from 1 November 2026…” and “…on HUSKY D from 1 October 2026…”; tests/scope-cover.test.ts"
+  "hash": "1e6b9080f6b2",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 5: “HUSKY D is renewed. Its next renewal is on January 1, 2028. …” asserted exactly by tests/scope-cover.test.ts \"PLAYER JOURNEY: a student with need takes HUSKY D on her leave …\", tests/evidence-g05-life.test.ts, tests/defects-g8-4.test.ts, tests/remaining-health-billing.test.ts, tests/remaining-health-eligibility.test.ts and tests/remaining-09-hardship.test.ts"
  },
  "src/engine/systems/health.ts#armHealth": {
   "status": "Reviewed And Retained",
@@ -805,9 +805,9 @@
  },
  "src/engine/systems/health.ts#registerHealth <health.dental>": {
   "status": "Rewritten And Verified",
-  "hash": "60abc61e8ebc",
+  "hash": "782604ff5e2c",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g03-life.test.ts “refused in its own words when the bank can’t cover the year…”; docs/verification/language-2026-10-17/health/render-after-2.txt (London; Los Angeles without Covered California)"
+  "evidence": "Editorial review, batch 1: tests/evidence-g03-life.test.ts \"refused in its own words when the bank can’t cover the year, and nothing bought or posted\" (the year, $312.72) and tests/editorial-money-refusals.test.ts \"England’s prescription prepayment and a monthly dental plan: …\" (the first month, $25.00), both exact"
  },
  "src/engine/systems/health.ts#registerHealth <health.drop>": {
   "status": "Rewritten And Verified",
@@ -817,21 +817,21 @@
  },
  "src/engine/systems/health.ts#registerHealth <health.extra_supply>": {
   "status": "Rewritten And Verified",
-  "hash": "5ea4813cf83e",
+  "hash": "50ce06883fc9",
   "on": "2026-10-17",
-  "evidence": "tests/defects-g8-5.test.ts “PLAYER JOURNEY: refused, and nothing filled, when the bank can’t cover the supply”; tests/evidence-g03-life.test.ts"
+  "evidence": "Editorial review, batch 1: tests/defects-g8-5.test.ts \"PLAYER JOURNEY: refused, and nothing filled, when the bank can’t cover the supply\" asserts \"Your bank can’t cover $125.37 for every condition’s fill, so nothing was filled or charged.\" and that $125.37 is the fill’s own price; tests/evidence-g03-life.test.ts \"two conditions, the second unpayable: …\" the $60.00 of two"
  },
  "src/engine/systems/health.ts#registerHealth <health.pay_bill>": {
-  "status": "Reviewed And Retained",
-  "hash": "789eddc92cb7",
+  "status": "Rewritten And Verified",
+  "hash": "73c701270d8e",
   "on": "2026-10-17",
-  "reason": "Pay It Off’s refusals, already plain and specific (how much there is, and Move Money as the next step); the papers guide quotes them word for word (guide/papers.ts), so they stay as they are."
+  "evidence": "Editorial review, batch 1: tests/evidence-g03-life.test.ts \"paid from a savings account named, …; each refusal in its own words\" (nothing in it), tests/commands-kept.test.ts \"pays toward a debt for care from the current account, only what it holds\" and tests/editorial-money-refusals.test.ts \"a medical debt part covered: …\" (\"… has only $50.00 of the $100.00, so nothing was paid. Move money into it first, on your bank’s Move Money.\"), each exact or as narrow as before"
  },
  "src/engine/systems/health.ts#registerHealth <health.prepay>": {
   "status": "Rewritten And Verified",
-  "hash": "59ef65023824",
+  "hash": "05b8b1555aaa",
   "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/health/render-after-2.txt (London, Prepay A Year with nothing in the bank)"
+  "evidence": "Editorial review, batch 1: tests/editorial-money-refusals.test.ts \"England’s prescription prepayment and a monthly dental plan: the bank, the price, and nothing charged\" asserts the words exactly with NHS.prepayment.months3 in pounds"
  },
  "src/engine/systems/health.ts#registerHealth <health.treat>": {
   "status": "Rewritten And Verified",

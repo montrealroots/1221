@@ -512,7 +512,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:165-176",
+    "where": "tests/defects-g8-5.test.ts:167-178",
     "asserts": "on the clock, February is uncovered; lostAt stays unset; the 'Your Health Cover Ended' notice says it opens no special enrollment; mayEnroll in February is false",
     "reachesAction": true,
     "checksConsequence": true,
@@ -551,7 +551,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:132-153",
+    "where": "tests/defects-g8-5.test.ts:134-155",
     "asserts": "the student, withdrawn through school.withdraw: cover from the day Yale Health ends (1 November), coverOn on both sides; withdrawn mid-month, from 1 November",
     "reachesAction": true,
     "checksConsequence": true,
@@ -589,7 +589,7 @@
    "No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).",
    "The refusal at school ('Yale Health covers you…') is checked only on mayEnroll, not through execute."
   ],
-  "todo": "On the student withdrawn as in defects-g8-5.test.ts:132, execute health.enroll, then execute it again the same day and expect /^You’re enrolled from /. Advance into the cover month and expect 'You’re enrolled.'. For the marketplace: a Connecticut life in open enrollment with last month's income over the program limits; execute health.enroll and expect kind 'marketplace'. Advance through the 1st of its first month on the clock and assert one 'Marketplace health plan premium' posting equal to benchmarkFor('ct', year, cur).",
+  "todo": "On the student withdrawn as in defects-g8-5.test.ts:134, execute health.enroll, then execute it again the same day and expect /^You’re enrolled from /. Advance into the cover month and expect 'You’re enrolled.'. For the marketplace: a Connecticut life in open enrollment with last month's income over the program limits; execute health.enroll and expect kind 'marketplace'. Advance through the 1st of its first month on the clock and assert one 'Marketplace health plan premium' posting equal to benchmarkFor('ct', year, cur).",
   "weakTests": [
    {
     "test": "tests/safetynet.test.ts > covers a low month by HUSKY D, to 175% of last year’s poverty line by Covered Connecticut, and above it by Access Health CT",
@@ -615,7 +615,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:81-92",
+    "where": "tests/defects-g8-5.test.ts:81-94",
     "asserts": "with an empty bank: refused 'It comes to more than the bank can cover.', supplyUntil undefined, no transactions",
     "reachesAction": true,
     "checksConsequence": true,
@@ -624,7 +624,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:94-100",
+    "where": "tests/defects-g8-5.test.ts:96-102",
     "asserts": "supplyUntil is exactly now+90d; paid >= 0",
     "reachesAction": true,
     "checksConsequence": false,
@@ -633,7 +633,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:102-111",
+    "where": "tests/defects-g8-5.test.ts:104-113",
     "asserts": "rendered: 'Fill A Longer Supply, 90 Days', and the title 'Pays for 90 days at once, at 3 fills’ share'",
     "reachesAction": false,
     "checksConsequence": false,
@@ -652,7 +652,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "defects-g8-5.test.ts:102-111 renders the button and its title; no press; no built-app step."
+   "have": "defects-g8-5.test.ts:104-113 renders the button and its title; no press; no built-app step."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -820,7 +820,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:218-226; tests/defects-g8-6.test.ts:184-194",
+    "where": "tests/defects-g8-5.test.ts:220-228; tests/defects-g8-6.test.ts:184-194",
     "asserts": "a New Haven private practice takes on somebody Yale doesn't cover (therapy set); a session is held with the location changed by hand",
     "reachesAction": true,
     "checksConsequence": false,
@@ -830,7 +830,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "defects-g8-5.test.ts:228-236 renders the Therapist select. Begin A Course is never pressed (guide-examples only matches the guide's words). No built-app step."
+   "have": "defects-g8-5.test.ts:230-238 renders the Therapist select. Begin A Course is never pressed (guide-examples only matches the guide's words). No built-app step."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -2266,7 +2266,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:201-214 'PLAYER JOURNEY: a student in term with three months counted is still paid, and the month isn’t counted'",
+    "where": "tests/defects-g8-5.test.ts:203-216 'PLAYER JOURNEY: a student in term with three months counted is still paid, and the month isn’t counted'",
     "asserts": "A New Haven student (createSave) applies in term through sim.must; FIXTURE counted months; one 'SNAP, the month' posting, no time-limit notice, counted unchanged",
     "reachesAction": true,
     "checksConsequence": true,
@@ -2320,7 +2320,7 @@
    "No command test checks a month's amount; they check > 0 or a posting count. Errors in the paid path (assistance.ts:246-255, snapIncome into snapMonth) survive.",
    "The summer student rule through the clock (case closed, 'Your SNAP Case Closed', assistance.ts:247-253) and the summer refusal through the command are untested. They are checked only as functions.",
    "The EBT-first draw is tested by calling buyTheDaysFood directly, not by the day's own purchase (life.ts:1008).",
-   "The row's text is stale. 'No test has the New Haven student apply' is false (defects-g8-5.test.ts:201-214). The issue's 'ABAWD hours hard-coded to 0' and 'all income passed as earned' were fixed (assistance.ts:232, :246). The line refs are stale: PapersWorkspace.tsx:419 is now 768; assistance.ts:276-308 is now 145-158 and 349-359 is now 207-217; spending.ts:300-305 is now 384-394.",
+   "The row's text is stale. 'No test has the New Haven student apply' is false (defects-g8-5.test.ts:203-216). The issue's 'ABAWD hours hard-coded to 0' and 'all income passed as earned' were fixed (assistance.ts:232, :248). The line refs are stale: PapersWorkspace.tsx:419 is now 768; assistance.ts:276-308 is now 145-158 and 349-359 is now 207-217; spending.ts:300-305 is now 384-394.",
    "Ontario Works and BC are unreachable (no Canadian life) and tested only as provincialMonth."
   ],
   "todo": "New Haven student (createSave, NY-born) in term, before 1 October 2026: run benefits.assistance through sim.must and tend to firstPaymentAt + 1h. Assert ebtBalance == 298_00, since any work-study pay is excluded; the test fails if work-study were counted. Tend one more day without calling buyTheDaysFood and assert a 'Groceries, on the EBT card' transaction and a lower EBT balance. Tend into the summer recess (June 2027) without Summer Cabaret hours and assert person.assistance.closedAt set and exactly one 'Your SNAP Case Closed' notice. Then assert benefits.assistance is refused with /7 CFR 273\\.5/.",
@@ -6386,7 +6386,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:80-108",
+    "where": "tests/defects-g8-5.test.ts:80-110",
     "asserts": "health.extra_supply refused broke, fills 90 days paid; the Papers health tab renders its button",
     "reachesAction": true,
     "checksConsequence": true,
@@ -13646,7 +13646,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:156-187",
+    "where": "tests/defects-g8-5.test.ts:158-189",
     "asserts": "CT marketplace (FIXTURE): health.drop then the month gives no cover and a notice with no special enrollment; an unpaid premium via the clock ends the plan",
     "reachesAction": true,
     "checksConsequence": true,
@@ -13754,7 +13754,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "tests/defects-g8-5.test.ts:226-235 renders Papers' Therapist select. The end notices are asserted in engine state (guide play). The session's own notices are not rendered."
+   "have": "tests/defects-g8-5.test.ts:228-237 renders Papers' Therapist select. The end notices are asserted in engine state (guide play). The session's own notices are not rendered."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -15499,7 +15499,7 @@
    },
    {
     "kind": "fixture",
-    "where": "tests/school-journey-gaps.test.ts:152; tests/student-experience.test.ts:130; tests/defects-g8-5.test.ts:117",
+    "where": "tests/school-journey-gaps.test.ts:152; tests/student-experience.test.ts:130; tests/defects-g8-5.test.ts:119",
     "asserts": "yaleUntil for standing 'graduated' set by hand: 1 August.",
     "reachesAction": false,
     "checksConsequence": true,
@@ -16766,7 +16766,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/journey-class-left-behind.test.ts:26, defects-r3-1.test.ts:146, defects-g8-3.test.ts:180, papers-transitions.test.ts:42, defects-g8-5.test.ts:136,149",
+    "where": "tests/journey-class-left-behind.test.ts:26, defects-r3-1.test.ts:146, defects-g8-3.test.ts:180, papers-transitions.test.ts:42, defects-g8-5.test.ts:138,151",
     "asserts": "What reads the withdrawal afterward: the class goes on, Terms Begun, Call In Sick hidden, the ID card refused, a marketplace plan's start",
     "reachesAction": true,
     "checksConsequence": true,
@@ -17224,7 +17224,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:202 'PLAYER JOURNEY: a student in term with three months counted is still paid, and the month isn’t counted'",
+    "where": "tests/defects-g8-5.test.ts:204 'PLAYER JOURNEY: a student in term with three months counted is still paid, and the month isn’t counted'",
     "asserts": "A New Haven student claims through the command in September 2026, with counted months typed in. Asserts no time-limit notice, exactly one payment, and counted left unchanged.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -21784,7 +21784,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:132-153, 165-176",
+    "where": "tests/defects-g8-5.test.ts:134-155, 167-178",
     "asserts": "withdrawn student enrolls with cover from the day Yale Health ends; health.drop through the clock leaves February uncovered and opens no special enrollment (New Haven life, plan put in by hand)",
     "reachesAction": true,
     "checksConsequence": true,
@@ -21980,7 +21980,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/commands-kept.test.ts:122-135; tests/defects-g8-5.test.ts:81-100",
+    "where": "tests/commands-kept.test.ts:122-135; tests/defects-g8-5.test.ts:81-102",
     "asserts": "extra_supply refused without a condition and past the longest; fills supplyUntil; refused and nothing filled when the bank can't pay",
     "reachesAction": true,
     "checksConsequence": false,
@@ -22017,7 +22017,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Partial: defects-g8-5.test.ts:102-110 renders Fill A Longer Supply's button words and :228-236 the Therapist choice; whynot-papers.test.ts:60-78 renders Prepay's refusal. No render press of Keep It Up, Let It Go or Begin A Course."
+   "have": "Partial: defects-g8-5.test.ts:104-112 renders Fill A Longer Supply's button words and :230-238 the Therapist choice; whynot-papers.test.ts:60-78 renders Prepay's refusal. No render press of Keep It Up, Let It Go or Begin A Course."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",

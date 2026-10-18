@@ -32,9 +32,10 @@
  *   worked here; a card payment missed through play, everyday spending put on the card and the current account emptied
  *   into savings before each due date: a payment behind owing $510, then suspended owing $850; and a return filed
  *   with nothing in the bank, You owe $166 of income tax, where its twin who could pay is All Clear.
- * - `h-where-weather`: a student from abroad, born in London, reads "Home." in New Haven as a New Yorker does: the away
- *   line ("… from home in …") was reached by no life since the scope of 2026-10-09 removed the home apart from where
- *   the player stands (`homeCityOf`); it was reported, and went later on 2026-10-13, with Local Time's hours from home.
+ * - `h-where-weather`: a student from abroad, born in London, reads "Your home." ("Home." until 2026-10-17) in New Haven
+ *   as a New Yorker does: the away line ("… from home in …") was reached by no life since the scope of 2026-10-09
+ *   removed the home apart from where the player stands (`homeCityOf`); it was reported, and went later on 2026-10-13,
+ *   with Local Time's hours from home.
  *
  * PLAYER JOURNEYS: new lives (`createSave` with `newLifeConfig`), Ada Cole, she/her, an actress at Yale in New Haven
  * from Monday 24 August 2026 at 7:30 AM, born in New York (the birthplace a player picks on Identity), or in London
@@ -466,7 +467,7 @@ describe('p-journey-history', () => {
     const kept = (p.school!.classmates as unknown as { kept?: number }[]).reduce((a, m) => a + (m.kept ?? 0), 0);
     section('Reliability', [{ line: `${answered} of ${calls} calls answered; ${kept} rehearsals with a partner kept.`, evidence: ['The school’s record of calls; your partners’ records'] }]);
     const tog = j.together!;
-    section('Playing With Others', [{ line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average; of ${tog.slips} slips by the others, you covered ${tog.covered}.`, evidence: [`Scenes, takes and nights together: ${tog.n}`] }]);
+    section('Playing With Others', [{ line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average; of ${tog.slips === 1 ? 'the 1 slip' : `${tog.slips} slips`} by the others, you covered ${tog.covered === 0 ? 'none' : tog.covered === tog.slips ? (tog.slips === 1 ? 'it' : 'all of them') : tog.covered}.`, evidence: [`Scenes, takes and nights together: ${tog.n}`] }]);
     return words(out.join(' '));
   }
 
@@ -585,7 +586,7 @@ describe('p-journey-history', () => {
     sim.advanceTo(at(2027, 6, 5, 12));
     // TEST SETUP: an understudy's Rep run, The Seagull's, sent on once and closed on its last night.
     (sim.player.school as unknown as { rep: unknown }).rep = { production: 'The Seagull', role: 'Nina', kind: 'understudy', term: 1, performed: 1, closed: at(2027, 3, 27, 22) };
-    expect(journey(sim)).toBe('School Journey Year 1 of three, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');
+    expect(journey(sim)).toBe('School Journey Year 1 of 3, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');
     expect(sim.execute({ kind: 'school.withdraw', payload: { confirm: true } }).ok).toBe(true);
     expect(sim.player.school!.credits!.map((c) => c.role)).toEqual(['A Leading Part In A New Play', 'Nina']);
     expect(journey(sim)).toBe('School Journey Left the School, withdrawn How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');
@@ -717,12 +718,12 @@ describe('h-where-weather', () => {
   it('PLAYER JOURNEY: a student from abroad, born in London, reads Home. in New Haven as a New Yorker does, with no distance or hours from home: Home is the city she lives in (`homeCityOf`), and London is where she’s from', () => {
     const london = fromAbroad('b11-where');
     const newYork = ada('b11-where');
-    const said = 'Where You Are How This Works New Haven, Connecticut · United States Home. 130K people. Local Time 7:30 AM EDT';
+    const said = 'Where You Are How This Works New Haven, Connecticut · United States Your home. 130K people. Local Time 7:30 AM EDT';
     expect(where(london)).toBe(said);
     expect(where(newYork)).toBe(said);
     // Where she's from is kept, and read on the Profile: not where Home measures from.
     expect(drawn(london, ProfileWorkspace).text).toContain('From London A citizen of the United Kingdom');
     london.advanceTo(at(2026, 9, 14, 12));
-    expect(where(london)).toBe('Where You Are How This Works New Haven, Connecticut · United States Home. 130K people. Local Time 12:00 PM EDT');
+    expect(where(london)).toBe('Where You Are How This Works New Haven, Connecticut · United States Your home. 130K people. Local Time 12:00 PM EDT');
   });
 });

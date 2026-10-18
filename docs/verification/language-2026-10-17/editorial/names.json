@@ -1,0 +1,43 @@
+{
+ "advance": {
+  "exact": 1,
+  "withArrow": 0
+ },
+ "lookAfter": {
+  "exact": 1,
+  "withArrow": 0
+ },
+ "home": [
+  "Your home. 130K people.",
+  "Chase Total Checking: $90,297.00. Worth $503,341.",
+  "Year 1, good standing, 1st of 16 in the class. Next: Drama 50: The Theatrical Event, September 14, 2026 at 3:00 PM."
+ ],
+ "standing": [
+  "MFA in Acting, class of 2029. Year 1 of 3, good standing.",
+  "Acting I: 5 of 5 classes attended.",
+  "Speech And Accents I: 3 of 3 classes attended.",
+  "Alexander Technique I: 3 of 3 classes attended.",
+  "Text And Context Across The Repertory: 4 of 4 classes attended.",
+  "The Body As Source I: 4 of 4 classes attended."
+ ],
+ "rehearsal.json School / Standing": [
+  "If it’s granted, it runs from Fall Term 2027 to Fall Term 2028. While you’re on leave there’s no aid, and no classes, calls or shifts. Yale Health goes on as Affiliate cover the School pays for, and you need a physician’s clearance to come back. Give notice of your return eight weeks before, or the leave ends in dismissal. You’d be back in year 2, with the class of 2030: your class goes on without"
+ ],
+ "roundups.json School / Standing": [
+  "There’s been no class day, call or shift to count toward attendance this term yet. At the term review, a term falls short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course, or if half or more of your coursework due was Unready or not shown (once 3 or more pieces are due). A term that falls short moves your standing one step: from good s"
+ ],
+ "decision.json School / Casting": [
+  "From the class with you: Chloe Tanaka, a leading part in a new play; Zoe Park, a leading part in a new play; Aaliyah Bennett, a supporting part in a new play; Jordan Castillo, a supporting part in a new play; Hannah Rivera, a supporting part in a new play; Marcus Alvarez, a supporting part in a new play; Julian Okafor, a supporting part in a new play; Caleb Abara, a supporting part in a new play; "
+ ],
+ "decision.json Player Profile": [
+  "Listening And Responsiveness\t55.4\t100.0\t74.0\tNot held back today\tConnection, Responsiveness\t+0.01, Coursework: running it with a reader\tThe Repetition Exercise…",
+  "Year 1 of 3, good standing",
+  "February 11, 2027: Listening And Responsiveness +0.013, Coursework: running it with a reader",
+  "February 10, 2027: Listening And Responsiveness +0.010, Coursework: running it with a reader"
+ ],
+ "lien.json Home": [
+  "Your home. 130K people.",
+  "Chase Total Checking: $5,000.00. Worth $4,851, after $149 owed.",
+  "Year 1, good standing, 1st of 16 in the class. Next: Classes, August 30, 2027 at 9:00 AM."
+ ]
+}

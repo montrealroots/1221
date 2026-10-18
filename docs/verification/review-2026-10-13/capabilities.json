@@ -895,7 +895,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:132-153, 165-176",
+    "where": "tests/defects-g8-5.test.ts:134-155, 167-178",
     "asserts": "withdrawn student enrolls with cover from the day Yale Health ends; health.drop through the clock leaves February uncovered and opens no special enrollment (New Haven life, plan put in by hand)",
     "reachesAction": true,
     "checksConsequence": true,
@@ -1093,7 +1093,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/commands-kept.test.ts:122-135; tests/defects-g8-5.test.ts:81-100",
+    "where": "tests/commands-kept.test.ts:122-135; tests/defects-g8-5.test.ts:81-102",
     "asserts": "extra_supply refused without a condition and past the longest; fills supplyUntil; refused and nothing filled when the bank can't pay",
     "reachesAction": true,
     "checksConsequence": false,
@@ -1130,7 +1130,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Partial: defects-g8-5.test.ts:102-110 renders Fill A Longer Supply's button words and :228-236 the Therapist choice; whynot-papers.test.ts:60-78 renders Prepay's refusal. No render press of Keep It Up, Let It Go or Begin A Course."
+   "have": "Partial: defects-g8-5.test.ts:104-112 renders Fill A Longer Supply's button words and :230-238 the Therapist choice; whynot-papers.test.ts:60-78 renders Prepay's refusal. No render press of Keep It Up, Let It Go or Begin A Course."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",

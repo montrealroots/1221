@@ -198,7 +198,7 @@ export function identityOf(person: Person): Identity {
   // Collaboration: work played with others.
   let collaboration: Line | undefined;
   const tog = j.together;
-  if (tog && tog.n >= 3) collaboration = { label: 'Playing With Others', line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average${tog.slips ? `; of ${tog.slips} slips by the others, you covered ${tog.covered}` : ''}.`, evidence: [`Scenes, takes and nights together: ${tog.n}`] };
+  if (tog && tog.n >= 3) collaboration = { label: 'Playing With Others', line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average${tog.slips ? `; of ${tog.slips === 1 ? 'the 1 slip' : `${tog.slips} slips`} by the others, you covered ${tog.covered === 0 ? 'none' : tog.covered === tog.slips ? (tog.slips === 1 ? 'it' : 'all of them') : tog.covered}` : ''}.`, evidence: [`Scenes, takes and nights together: ${tog.n}`] };
 
   return { pieces, early, strengths, weaknesses, familiar, unfamiliar, habits, versatility, ...(direction ? { direction } : {}), ...(reliability ? { reliability } : {}), ...(collaboration ? { collaboration } : {}), ...(recurring ? { recurring } : {}), ...(untried ? { untried } : {}), ...(habit ? { habit } : {}) };
 }

@@ -126,7 +126,7 @@ describe('PLAYER JOURNEY: a Citi loan repaid from Chase, with Citi made primary 
     // The Chase current account down to $100, the rest moved into Chase savings, as Move Money moves it.
     run(sim, 'bank.transfer', { fromId: chase.id, toId: chaseSavings.id, amount: chase.balance - 100_00 });
     // Off, paying the loan off is refused: the Chase current account can't, and savings isn't linked.
-    expect(sim.execute({ kind: 'bank.repay_loan', payload: { loanId: loan.id } }).error).toMatch(/the repayment account can’t cover it all/);
+    expect(sim.execute({ kind: 'bank.repay_loan', payload: { loanId: loan.id } }).error).toMatch(new RegExp(`^${chase.name} can’t cover the \\$[\\d,]+\\.\\d\\d it takes to pay it off, so nothing was paid\\.$`));
     // Until group r3b pressing it got “There’s no savings account at Citi to cover the current account.”
     expect(press(sim)).toBe(true);
     expect(paymentsOf(sim.player).linkSavings).toBe(true);

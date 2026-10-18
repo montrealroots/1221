@@ -382,7 +382,7 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
     expect(casting.closed).toBeUndefined();
     expect(school.standing).toBe('warning');
     let { html, text } = drawn(sim, ProfileWorkspace);
-    expect(`${between(text, 'School Journey', '. School')}.`).toBe('School Journey Year 1 of three, academic warning How This Works No production finished yet; A Leading Part In A New Play in Carlotta Festival Of New Plays is running.');
+    expect(`${between(text, 'School Journey', '. School')}.`).toBe('School Journey Year 1 of 3, academic warning How This Works No production finished yet; A Leading Part In A New Play in Carlotta Festival Of New Plays is running.');
     const [halves, work] = tables(journeyHtml(html));
     // Counted here, by task and by half-year, from every piece the save keeps (all of them: fewer than its 160).
     const kept = sim.player.work!;
@@ -439,7 +439,7 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
     sim.advanceTo(at(2027, 9, 15, 12));
     const { text } = drawn(sim, ProfileWorkspace);
     const journey = between(text, 'School Journey', 'Your Work So Far');
-    expect(`${between(journey, 'School Journey', '. School')}.`).toBe('School Journey Year 2 of three, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027.');
+    expect(`${between(journey, 'School Journey', '. School')}.`).toBe('School Journey Year 2 of 3, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027.');
     press(button('School'));
     expect(h.went).toEqual(['/workspace/school']);
     expect(between(drawn(reload(sim), ProfileWorkspace).text, 'School Journey', 'Your Work So Far')).toBe(journey);
@@ -1019,7 +1019,7 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
     const sim = ada('g32-where');
     const shown = where(drawn(sim, Home).text);
     // 130,322 people, to the thousand.
-    expect(shown.startsWith('Where You Are How This Works New Haven, Connecticut · United States Home. 130K people. Local Time 7:30 AM EDT Daylight ')).toBe(true);
+    expect(shown.startsWith('Where You Are How This Works New Haven, Connecticut · United States Your home. 130K people. Local Time 7:30 AM EDT Daylight ')).toBe(true);
     const [, rise, set, hours, minutes] = shown.match(/Daylight (\d+:\d+ AM) – (\d+:\d+ PM) (\d+)h (\d+)m of daylight$/)!;
     // New Haven at 41.3081° N, 72.9282° W.
     const sun = sunByHand(2026, 8, 24, 41.3081, -72.9282);
@@ -1067,7 +1067,7 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
     const shown = where(text);
     // Tags where SLATE keeps them, in place of the kind and the size New Haven reads; "Theater" as the player reads it
     // (until 2026-10-13 the tag was spelled the British way, and this read it so).
-    expect(shown.startsWith('Where You Are How This Works London, England · United Kingdom Home. Theater · Production Hub · International. Local Time 7:30 AM GMT Daylight ')).toBe(true);
+    expect(shown.startsWith('Where You Are How This Works London, England · United Kingdom Your home. Theater · Production Hub · International. Local Time 7:30 AM GMT Daylight ')).toBe(true);
     // London at 51.51° N, 0.13° W, its January clock on UTC.
     const [, rise, set] = shown.match(/Daylight (\d+:\d+ AM) – (\d+:\d+ PM) /)!;
     const sun = sunByHand(2026, 1, 5, 51.51, -0.13);

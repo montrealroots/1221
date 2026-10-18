@@ -850,8 +850,8 @@ function bankShortWords(sim: Simulation, person: Person, amount: Money, inFull: 
   const short = fromBankToYale(sim, person, amount).short;
   if (short <= 0) return undefined;
   const can = amount - short;
-  if (can <= 0) return 'Your current account and the savings beside it have nothing to pay it with: move money into your current account first.';
-  return `Your current account and the savings beside it can pay ${money(sim, can)} of it now: ${inFull ? 'it’s paid in full, so move money into your current account first' : 'pay that or less, or move money into your current account first'}.`;
+  if (can <= 0) return 'Your current account and the savings beside it can’t cover any of it. Move money into your current account first.';
+  return `Your current account and the savings beside it can cover only ${money(sim, can)} of it now. ${inFull ? 'It’s paid in full, so move money into your current account first.' : 'Pay that or less, or move money into your current account first.'}`;
 }
 
 /** Why a payment on the Yale account can't be made, or nothing. */

@@ -46,12 +46,13 @@
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
+import { spokenList } from '../core/text';
 import type { Person } from '../domain/model';
 import { formatDate, formatTime, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { formatMoney, saveCurrency } from '../core/money';
 import { CITIES } from '../content/geography';
-import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course, type SchoolDate, type Skill } from '../content/school';
-import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
+import { COURSES, ORIENTATION_2026, SKILLS, SKILL_WORDS, WORK_STUDY, YALE_DRAMA, type Course, type SchoolDate, type Skill } from '../content/school';
+import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, questionWords, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
 import { bondMove, classPeriod, classmatePerformer, conditionAt, ordinary, focusOf, focusAt, grewFrom, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
 import { bandOfQuality, chiefLimit, countTogether, evaluate, leanedWeights, performerOf, recordWork, type Evaluation } from './evaluation';
 import { evaluatePiece, judgePiece, loadOf, pieceWeights, rehearseWays, unitSegments, withBook, type PieceSpec, type Workbook } from './piece';
@@ -391,7 +392,7 @@ const andList = (xs: readonly string[]): string => (xs.length < 2 ? xs[0] ?? '' 
 /** An hour of the day in words that can end a sentence: 7 in the morning, noon, 10 at night. */
 const hourWords = (h: number): string => (h === 12 ? 'noon' : h === 0 || h === 24 ? 'midnight' : h < 12 ? `${h} in the morning` : h < 17 ? `${h - 12} in the afternoon` : h < 21 ? `${h - 12} in the evening` : `${h - 12} at night`);
 /** A scene's place, as it reads inside a sentence: “The one act, the Wright kitchen” as “the one act, the Wright kitchen”. */
-export const whereWords = (where: string): string => where.replace(/^The (?=[a-z])/, 'the ');
+export const whereWords = (where: string): string => where.replace(/^(The|A|An|Their|His|Her|Before|Outside|Inside|In|On|At|By) (?=[a-z])/, (w) => w.toLowerCase());
 /** How many times, in words: once, twice, 3 times. */
 const timesWords = (n: number): string => (n === 1 ? 'once' : n === 2 ? 'twice' : `${n} times`);
 
@@ -919,7 +920,7 @@ export function noteText(a: Assignment, focus: Focus, level?: number, partnerNam
     const picked = qo?.options.find((o) => o.id === a.answers[focus.question]);
     return `${qo?.q.label ?? 'A choice'}: ${picked?.why ?? 'the text doesn’t support that reading.'}${as}`;
   }
-  if (focus.kind === 'skill') return `It asked for more ${labelOf(focus.skill).toLowerCase()} than you have yet. That’s what to build in class over the next few weeks.`;
+  if (focus.kind === 'skill') return `It asked for more ${SKILL_WORDS[focus.skill] ?? labelOf(focus.skill).toLowerCase()} than you have yet. That’s what to build in class over the next few weeks.`;
   return ADVANCED[focus.challenge];
 }
 
@@ -1096,7 +1097,7 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   // One line for the parts well prepared (from 2026-10-17, brief 14): until then each was its own (“Lines was there”).
   const ready = (Object.entries(parts) as [PrepDim, number][]).filter(([, v]) => v >= 0.75).map(([dim]) => t.dims[dim]!.label);
   const strengths = ready.length ? [`Well prepared: ${andList(ready)}`] : [];
-  if (craft >= 0.65) strengths.push(`Your ${andList((Object.keys(t.reads) as Skill[]).map((k) => labelOf(k).toLowerCase()))} carried it`);
+  if (craft >= 0.65) strengths.push(`${carriedWords(Object.keys(t.reads) as Skill[])} carried it`);
   // Rested and ready only where nothing about the day held it back (from 2026-10-10).
   if (rested >= 0.75 && !judged.limits.some((l) => l.kind === 'condition')) strengths.push('You came rested and ready');
   const c = courseOf(a.course)!;
@@ -1118,7 +1119,7 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
       if (answered && answered.options.find((o) => o.id === a.answers[q as Question['id']])?.supported && resolveNote(notes, n.key, onDay, a.id, c.name)) taken.push(n.key);
     }
   }
-  for (const key of taken) strengths.push(key.startsWith('choice:') ? `You took the earlier note on ${(QUESTIONS.find((q) => q.id === key.slice('choice:'.length))?.label ?? 'a choice').toLowerCase()}` : `You took the earlier note on ${(t.dims[key.slice(4) as PrepDim]?.label ?? key.slice(4)).toLowerCase()}`);
+  for (const key of taken) strengths.push(key.startsWith('choice:') ? `You took the earlier note on ${questionWords(QUESTIONS.find((q) => q.id === key.slice('choice:'.length)) ?? { label: 'A Choice' })}` : `You took the earlier note on ${t.dims[key.slice(4) as PrepDim]?.label ?? key.slice(4)}`);
   if (taken.length) a.taken = taken;
   // A smaller piece shown is no better than Working (`approach`).
   const band = bandFor(a, judged.overall);
@@ -1145,7 +1146,7 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   const prior = before ? { on: before.last, course: before.history.at(-1)?.course ?? c.name, given: before.given, ...(before.level !== undefined ? { level: before.level } : {}), ...(before.status === 'resolved' && before.resolvedOn ? { taken: before.resolvedOn } : {}) } : undefined;
   // Prepared, and still Unready or Working: what the evaluation says held it back, the day or the craft, not "it held
   // together" (from 2026-10-10: until then the words came from the preparation alone, and contradicted the band).
-  const held = kind === 'advanced' && (band === 'unready' || band === 'working') ? chiefLimit(judged) : undefined;
+  const held = kind === 'advanced' && (band === 'unready' || band === 'working') ? chiefLimit(withPartLabels(judged, a)) : undefined;
   const text = held ? `It didn’t come together today. ${held}. Once it does, here’s a next step to try. ${body}` : feedbackWords(kind, body, prior, pick?.level);
   a.feedback = { course: c.name, teachers: c.teachers, text, focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}) };
   a.shown = showing;
@@ -1182,6 +1183,31 @@ export function shortAtShowing(person: Person, a: Assignment): PrepDim[] {
 }
 
 /** The parts of a piece short of what completes them, as the showing reads them (from 2026-10-16). */
+/**
+ * A forecast's or a showing's limits, each part of the piece's preparation named as its card names it (from 2026-10-17,
+ * brief 14's editorial review). The evaluation names a part by its task's word (`COURSEWORK_PREP`), so a presentation's
+ * card said “Still to finish: the presentation prepared” and, beside it, “The revision isn’t complete”: one part two ways,
+ * and a first showing seemed to ask for a revision it couldn't have had yet. Only the label changes.
+ */
+export function withPartLabels<E extends Pick<Evaluation, 'limits'>>(e: E, a: Assignment): E {
+  const t = templateById(a.template);
+  if (!t) return e;
+  return { ...e, limits: e.limits.map((l) => (l.kind === 'preparation' && t.dims[l.what as PrepDim] ? { ...l, label: t.dims[l.what as PrepDim]!.label } : l)) };
+}
+
+/**
+ * The skills a piece reads that carried it, as a sentence opens on them (from 2026-10-17, brief 14's editorial review):
+ * “Your speech and your accents and dialects”, each said once with “your” where one of them has an “and” in it. Until
+ * then “Your speech, and accents and dialects carried it.” and “Your on camera and scene study carried it.”
+ */
+function carriedWords(skills: readonly Skill[]): string {
+  const words = skills.map((k) => SKILL_WORDS[k] ?? labelOf(k).toLowerCase());
+  if (!words.some((w) => w.includes(' and ')) || words.length < 2) return `Your ${andList(words)}`;
+  const yours = words.map((w) => `your ${w}`);
+  const said = `${yours.slice(0, -1).join(', ')}${yours.length > 2 ? ',' : ''} and ${yours.at(-1)}`;
+  return `${said.charAt(0).toUpperCase()}${said.slice(1)}`;
+}
+
 export function shortParts(person: Person, a: Assignment): PrepDim[] {
   const w = weightsOf(a);
   const due = a.status === 'revising' ? a.revision!.dueOn : a.dueOn;
@@ -1469,17 +1495,20 @@ function sinceLast(cw: Coursework, a: Assignment, band: Band): string {
 function reshownWords(person: Person, a: Assignment, onDay: string, applied: boolean): string {
   const t = templateById(a.template)!;
   const f = a.feedback?.focus;
-  const about = !f ? 'the note' : f.kind === 'dim' ? `the note on ${(t.dims[f.dim]?.label ?? f.dim).toLowerCase()}` : f.kind === 'choice' ? `the note on ${(QUESTIONS.find((q) => q.id === f.question)?.label ?? 'a choice').toLowerCase()}` : f.kind === 'skill' ? `the note on ${labelOf(f.skill).toLowerCase()}` : undefined;
+  const about = !f ? 'the note' : f.kind === 'dim' ? `the note on ${t.dims[f.dim]?.label ?? f.dim}` : f.kind === 'choice' ? `the note on ${questionWords(QUESTIONS.find((q) => q.id === f.question) ?? { label: 'A Choice' })}` : f.kind === 'skill' ? `the note on your ${SKILL_WORDS[f.skill] ?? labelOf(f.skill).toLowerCase()}` : undefined;
   const from = f?.kind === 'dim' && a.revision ? Math.round(a.revision.before * 100) : undefined;
   const to = f?.kind === 'dim' ? Math.round((preparedParts(person, a, onDay)[f.dim] ?? 0) * 100) : undefined;
   const part = f?.kind === 'dim' ? t.dims[f.dim]?.label ?? f.dim : '';
   const moved = from === undefined || to === undefined ? '' : from === to ? ` ${part} stayed at ${to}%.` : ` ${part} went from ${from}% to ${to}%.`;
   const band = a.revision?.band ? ` Shown again: ${BAND_LABEL[a.revision.band]}.` : '';
   const shown = `You showed ${t.title} again on ${formatDate(at(parse(onDay), 12), zone())}`;
-  if (!about) return applied ? `${shown}, and worked in the next step you were given.${band}` : `${shown}, but the next step you were given didn’t show yet.${band}`;
+  if (!about) return applied ? `${shown}, and worked in the next step you were given.${band}` : `${shown}, but the next step you were given doesn’t show in it yet.${band}`;
+  // Taken by the revision's own work with the part itself no further on (`noteTaken`'s third way), it says so: until
+  // 2026-10-17 it read “and took the note on rehearsal. Rehearsal stayed at 0%.”
+  const byRevision = applied && from !== undefined && to !== undefined && to <= from;
   return applied
-    ? `${shown}, and took ${about}.${moved}${band}`
-    : `${shown}, but ${about} wasn’t taken yet.${moved}${band} It stays open under Your Notes.`;
+    ? `${shown}, and ${byRevision ? `worked ${about} into the revision` : `took ${about}`}.${moved}${band}`
+    : `${shown}, but ${about} isn’t taken yet.${moved}${band} It stays open under Your Notes.`;
 }
 
 /** The revised work's band: judged as a showing is, without a new note (the note given stands until the next work). */
@@ -1548,7 +1577,7 @@ function orient(sim: Simulation, person: Person, task: OrientationTask): string 
       return `You met the ${school.classmates.length} others in your class: you’ll partner them in scenes, rehearse with them and be cast beside them.`;
     }
     // The faculty set out what the School asks (`SCHOOL_POLICIES`, from 2026-10-10), which the Standing tab keeps.
-    case 'faculty': return `You met the acting faculty, with the chair, ${YALE_DRAMA.actingChair.name}. First-year courses are taught by ${[...new Set(COURSES.filter((c) => c.year === 1).map((c) => c.teachers))].join(', ')}. They set out what the School asks: attendance at every class, rehearsal and call; telling your teachers and the chair when you’re ill; Pass/Fail courses, and an Incomplete made up within a month; the casting pool, the Cabaret and work-study. It’s all kept on the Standing tab.`;
+    case 'faculty': return `You met the acting faculty, with the chair, ${YALE_DRAMA.actingChair.name}. First-year courses are taught by ${spokenList([...new Set(COURSES.filter((c) => c.year === 1).map((c) => c.teachers))])}. They set out what the School asks: attendance at every class, rehearsal and call; telling your teachers and the chair when you’re ill; Pass/Fail courses, and an Incomplete made up within a month; the casting pool, the Cabaret and work-study. It’s all kept on the Standing tab.`;
     case 'tour': return 'You were shown the studios you can book to rehearse in, the theaters, and the Haas Family Arts Library.';
     case 'expectations': {
       const first = ORIENTATION_2026.classesBegin;

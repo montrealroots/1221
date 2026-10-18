@@ -116,7 +116,7 @@ describe('cover and care', () => {
     expect(debt.balance).toBe(-30_000_00);
     expect(poor.execute({ kind: 'health.pay_bill', payload: { amount: 0 } }).error).toBe('Say how much.');
     // What the account holds and what to do, from 2026-10-16; until then “… can’t cover it.”
-    expect(poor.execute({ kind: 'health.pay_bill', payload: { amount: 29_000_00 } }).error).toMatch(/ holds \$[\d,]+\.\d\d of the \$29,000\.00: move money into it first, on your bank’s Move Money\.$/);
+    expect(poor.execute({ kind: 'health.pay_bill', payload: { amount: 29_000_00 } }).error).toMatch(/ has only \$[\d,]+\.\d\d of the \$29,000\.00, so nothing was paid\. Move money into it first, on your bank’s Move Money\.$/);
     const current = poor.universe.accounts[poor.player.primaryAccountId!]!;
     const part = 100_00;
     expect(current.balance).toBeGreaterThan(part);
@@ -205,7 +205,7 @@ describe('a life in Mexico', () => {
   it('is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid', () => {
     // TEST SETUP: a life begun in Mexico City by somebody born in New York, wealthy enough for the solvency test.
     const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'us-ny-newyork', livesWhereBorn: false, wealth: 'wealthy' }, 'mx-settle');
-    const why = 'Moving abroad isn’t part of the game, so it grants none of Mexico’s papers.';
+    const why = 'Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.';
     const balance = () => sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
     const held = balance();
     expect(sim.execute({ kind: 'documents.settle', payload: { country: 'MX' } }).error).toBe('You hold no residence there to settle from.');

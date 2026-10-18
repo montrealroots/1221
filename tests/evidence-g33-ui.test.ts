@@ -81,7 +81,7 @@ import { documentsOf } from '@/engine/systems/documents';
 import { f1Of } from '@/engine/systems/permission';
 import { setStanding } from '@/engine/systems/school';
 import { healthOf } from '@/engine/systems/health';
-import { plural } from '@/engine/core/text';
+import { ordinal, plural } from '@/engine/core/text';
 import { at as subject } from '@/ui/looks/subject';
 
 const h = vi.hoisted(() => ({
@@ -218,7 +218,7 @@ describe('h-money', () => {
     // The wealthy profile's 85,000 € and 380,000 € at SLATE's 0.92 € to the dollar, to the whole dollar: $92,391 and
     // $413,043, with nothing on the card, so a worth of $505,434 and no "of it owed".
     expect(affairs).toContain('Money Chase Total Checking: $92,391.00. Worth $505,434. Chase How This Works School');
-    expect(affairs).not.toMatch(/overdrawn|of it owed/);
+    expect(affairs).not.toMatch(/overdrawn|after \$[\d,]+ owed/);
     expect(button('Chase').props.className).toBe('btn btn-sm');
     press('Chase');
     expect(h.went).toEqual([['/workspace/bank', 'Money']]);
@@ -250,7 +250,7 @@ describe('h-money', () => {
     const checking = primary(sim).balance;
     const savings = own(sim, 'savings').balance;
     // The worth is what the accounts hold less what the card owes, to the whole dollar.
-    expect(drawn(sim).affairs).toContain(`Money Chase Total Checking: ${cents(checking)}. Worth ${dollars(checking + savings - owed)}, ${dollars(owed)} of it owed. Chase How This Works`);
+    expect(drawn(sim).affairs).toContain(`Money Chase Total Checking: ${cents(checking)}. Worth ${dollars(checking + savings - owed)}, after ${dollars(owed)} owed. Chase How This Works`);
   });
 
   it('PLAYER JOURNEY, guided: Money is its LockedPanel until “Money” is read; then Chase is Locked until “Your Bank” is, a press goes nowhere and the bank refuses a transfer in the guide’s words, across a reload; read, Chase opens the bank screen', () => {
@@ -296,7 +296,7 @@ describe('h-school', () => {
     expect(sim.player.school!.classmates).toHaveLength(15);
     expect(SKILLS).toHaveLength(21);
     const { affairs } = drawn(sim);
-    expect(affairs).toContain(`School Arriving, good standing, ${rankOf(sim)} of 16 in the class. Next: Registration And Your Account, August 24, 2026 at 10:00 AM. Yale How This Works`);
+    expect(affairs).toContain(`School Arriving, good standing, ${ordinal(rankOf(sim))} of 16 in the class. Next: Registration And Your Account, August 24, 2026 at 10:00 AM. Yale How This Works`);
     expect(affairs).not.toContain('Your standing is');
     press('Yale');
     expect(h.went).toEqual([['/workspace/school', 'School']]);
@@ -305,7 +305,7 @@ describe('h-school', () => {
   it('a day in, “Year 1, good standing”, and Next is the next thing booked: “Meeting The Acting Faculty, August 26, 2026 at 10:00 AM.”', () => {
     const sim = life('g33-school-year');
     sim.advanceTo(at(2026, 8, 25, 12));
-    expect(drawn(sim).affairs).toContain(`School Year 1, good standing, ${rankOf(sim)} of 16 in the class. Next: Meeting The Acting Faculty, August 26, 2026 at 10:00 AM. Yale How This Works`);
+    expect(drawn(sim).affairs).toContain(`School Year 1, good standing, ${ordinal(rankOf(sim))} of 16 in the class. Next: Meeting The Acting Faculty, August 26, 2026 at 10:00 AM. Yale How This Works`);
   });
 
   it('PLAYER JOURNEY: a fall played without going to class ends in the faculty’s concern, and the line says so with its alert; Next is the next class day at nine, Tuesday 2 February at noon on the Monday; a reload keeps it', () => {
@@ -313,7 +313,7 @@ describe('h-school', () => {
     expect(sim.player.school!.standing).toBe('concern');
     expect(titled(sim, 'A Notice Of Academic Concern')).toHaveLength(1);
     // Classes run nine to three on the class days: at noon on Monday 1 February, Monday's began at nine.
-    const line = `School Year 1, academic concern, ${rankOf(sim)} of 16 in the class. Next: Classes, February 2, 2027 at 9:00 AM. Your standing is academic concern. The School screen says why. Yale How This Works`;
+    const line = `School Year 1, academic concern, ${ordinal(rankOf(sim))} of 16 in the class. Next: Classes, February 2, 2027 at 9:00 AM. Your standing is academic concern. The School screen says why. Yale How This Works`;
     expect(drawn(sim).affairs).toContain(line);
     expect(drawn(reload(sim)).affairs).toContain(line);
   });
@@ -326,7 +326,7 @@ describe('h-school', () => {
     sim.advanceTo(asked.decideAt + MS_HOUR);
     expect(sim.player.school!.leave!.status).toBe('on');
     const { affairs } = drawn(sim);
-    expect(affairs).toMatch(new RegExp(`School On Leave, [a-z ]+, ${rankOf(sim)} of 16 in the class\\.( Your standing is [a-z ]+\\. The School screen says why\\.)? Yale How This Works`));
+    expect(affairs).toMatch(new RegExp(`School On Leave, [a-z ]+, ${ordinal(rankOf(sim))} of 16 in the class\\.( Your standing is [a-z ]+\\. The School screen says why\\.)? Yale How This Works`));
     expect(affairs).not.toContain('Next:');
   });
 
@@ -336,7 +336,7 @@ describe('h-school', () => {
     sim.must({ kind: 'school.withdraw', payload: { confirm: true } });
     for (const one of [sim, reload(sim)]) {
       const { affairs } = drawn(one);
-      expect(affairs).toContain(`School Left the School, withdrawn, ${rankOf(one)} of 16 in the class. Yale How This Works`);
+      expect(affairs).toContain(`School Left the School, withdrawn, ${ordinal(rankOf(one))} of 16 in the class. Yale How This Works`);
       expect(affairs).not.toMatch(/Next:|Your standing is/);
     }
   });
@@ -346,7 +346,7 @@ describe('h-school', () => {
     // TEST SETUP: the degree conferred by the School's own setStanding, three years early.
     setStanding(sim, sim.player, 'graduated', 'TEST SETUP: the degree conferred by hand.');
     const { affairs } = drawn(sim);
-    expect(affairs).toContain(`School Graduated, ${rankOf(sim)} of 16 in the class. Yale How This Works`);
+    expect(affairs).toContain(`School Graduated, ${ordinal(rankOf(sim))} of 16 in the class. Yale How This Works`);
     expect(affairs).not.toMatch(/Graduated, graduated|Next:|Your standing is/);
   });
 
@@ -357,7 +357,7 @@ describe('h-school', () => {
     expect(before).toContain('School Locked This opens when you read “Drama School” in the guide: where your life as an actor begins. Read About It');
     expect(before).not.toContain('Arriving');
     readTo(sim, 'school');
-    expect(drawn(sim).affairs).toContain(`School Arriving, good standing, ${rankOf(sim)} of 16 in the class. Next: Registration And Your Account`);
+    expect(drawn(sim).affairs).toContain(`School Arriving, good standing, ${ordinal(rankOf(sim))} of 16 in the class. Next: Registration And Your Account`);
   });
 });
 

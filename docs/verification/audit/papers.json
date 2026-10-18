@@ -1451,7 +1451,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:201-214 'PLAYER JOURNEY: a student in term with three months counted is still paid, and the month isn’t counted'",
+            "where": "tests/defects-g8-5.test.ts:203-216 'PLAYER JOURNEY: a student in term with three months counted is still paid, and the month isn’t counted'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -1500,7 +1500,7 @@
           "No command test checks a month's amount; they check > 0 or a posting count. Errors in the paid path (assistance.ts:246-255, snapIncome into snapMonth) survive.",
           "The summer student rule through the clock (case closed, 'Your SNAP Case Closed', assistance.ts:247-253) and the summer refusal through the command are untested. They are checked only as functions.",
           "The EBT-first draw is tested by calling buyTheDaysFood directly, not by the day's own purchase (life.ts:1008).",
-          "The row's text is stale. 'No test has the New Haven student apply' is false (defects-g8-5.test.ts:201-214). The issue's 'ABAWD hours hard-coded to 0' and 'all income passed as earned' were fixed (assistance.ts:232, :246). The line refs are stale: PapersWorkspace.tsx:419 is now 768; assistance.ts:276-308 is now 145-158 and 349-359 is now 207-217; spending.ts:300-305 is now 384-394.",
+          "The row's text is stale. 'No test has the New Haven student apply' is false (defects-g8-5.test.ts:203-216). The issue's 'ABAWD hours hard-coded to 0' and 'all income passed as earned' were fixed (assistance.ts:232, :248). The line refs are stale: PapersWorkspace.tsx:419 is now 768; assistance.ts:276-308 is now 145-158 and 349-359 is now 207-217; spending.ts:300-305 is now 384-394.",
           "Ontario Works and BC are unreachable (no Canadian life) and tested only as provincialMonth."
         ]
       },
@@ -1568,7 +1568,7 @@
         "claimCorrection": {
           "field": "tests",
           "said": "tests/assistance.test.ts ‘puts a New Yorker’s SNAP on an EBT card …’ (a life in New York, its balances emptied by hand; buyTheDaysFood called directly); checking less: tests/coverage-gaps-papers.test.ts … (snapStudentRefusal and snapIncome, functions); no test has the New Haven student apply",
-          "now": "tests/evidence-g15-papers.test.ts (benefits.assistance). A New Haven student applies on her first morning, and each month's amount is checked: $298, $298, then $306 on 30 October with September's work-study counted as nothing. The next midnight's groceries come off the EBT card. The summer recess closes the case with one notice, and a new application is refused under 7 CFR 273.5. Ontario Works and BC are paid on quick lives in Toronto and Vancouver. The Apply button is pressed. Also tests/defects-g8-5.test.ts:201-214 (a New Haven student applying in term) and tests/assistance.test.ts. Until 2026-10-13 this said no test had the New Haven student apply, which defects-g8-5 already did. The row's line references also moved: PapersWorkspace.tsx:419 is now 769, and assistance.ts:276-308 and 349-359 are now 145-167 and 216-226."
+          "now": "tests/evidence-g15-papers.test.ts (benefits.assistance). A New Haven student applies on her first morning, and each month's amount is checked: $298, $298, then $306 on 30 October with September's work-study counted as nothing. The next midnight's groceries come off the EBT card. The summer recess closes the case with one notice, and a new application is refused under 7 CFR 273.5. Ontario Works and BC are paid on quick lives in Toronto and Vancouver. The Apply button is pressed. Also tests/defects-g8-5.test.ts:203-216 (a New Haven student applying in term) and tests/assistance.test.ts. Until 2026-10-13 this said no test had the New Haven student apply, which defects-g8-5 already did. The row's line references also moved: PapersWorkspace.tsx:419 is now 769, and assistance.ts:276-308 and 349-359 are now 145-167 and 216-226."
         }
       },
       "verification": {
@@ -3195,7 +3195,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:202 'PLAYER JOURNEY: a student in term with three months counted is still paid, and the month isn’t counted'",
+            "where": "tests/defects-g8-5.test.ts:204 'PLAYER JOURNEY: a student in term with three months counted is still paid, and the month isn’t counted'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,

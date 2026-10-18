@@ -373,7 +373,7 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     // under the allowance, settled before it, as Germany pays at the quarter's end.
     expect(postedTo(sim, 'Interest: Flexgeld, before the set-off', flex.id)).toEqual([41]);
     expect([db.closedAt, db.balance, flex.closedAt, flex.balance]).toEqual([berlin(2026, 3, 7, 0), 0, undefined, 500_00 + 41 - 110_65]);
-    expect(titled(sim, 'Deutsche Bank Closed An Account').map((n) => n.body)).toEqual(['It had been below zero for 60 days, so the bank took what it was owed from your other money there. It closed AktivKonto. Flexgeld stays open. Its standing order of €10.00 into Flexgeld on the 20th ended with it. You can set one up again on How You Pay.']);
+    expect(titled(sim, 'Deutsche Bank Closed An Account').map((n) => n.body)).toEqual(['Deutsche Bank closed AktivKonto. It had been below zero for 60 days, so the bank took what it was owed from your other money there. Flexgeld stays open. Its standing order of €10.00 into Flexgeld on the 20th ended with it. You can set one up again on How You Pay.']);
     // It failed on 20 January and 20 February, said once and brought up to the later day; not on 20 March.
     expect(titled(sim, 'A Standing Order Didn’t Go').map((n) => n.at)).toEqual([berlin(2026, 2, 20, 9)]);
     expect(paymentsOf(sim.player).standingOrders).toEqual([]);
@@ -747,11 +747,11 @@ describe('banking.s7.school: a payment to Yale comes from the current account an
     expect(accountOwed(sim, sim.player)).toBe(0);
     // $45,217.00 left in savings and nothing in checking: $70,000.00 owed is more.
     charge(sim, 70_000_00);
-    expect(refusal(sim, 'school.pay_balance', {})).toBe('Your current account and the savings beside it can pay $45,217.00 of it now: pay that or less, or move money into your current account first.');
+    expect(refusal(sim, 'school.pay_balance', {})).toBe('Your current account and the savings beside it can cover only $45,217.00 of it now. Pay that or less, or move money into your current account first.');
     expect(accountOwed(sim, sim.player)).toBe(70_000_00);
     expect(ok<{ owed: number }>(sim, 'school.pay_balance', { amount: 45_217_00 })).toEqual({ owed: 24_783_00, held: false });
     expect(savings.balance).toBe(0);
-    expect(refusal(sim, 'school.pay_balance', { amount: 1_00 })).toBe('Your current account and the savings beside it have nothing to pay it with: move money into your current account first.');
+    expect(refusal(sim, 'school.pay_balance', { amount: 1_00 })).toBe('Your current account and the savings beside it can’t cover any of it. Move money into your current account first.');
     sim = reload(sim);
     expect(accountOwed(sim, sim.player)).toBe(24_783_00);
     expect(sim.universe.transactions.filter((t) => t.memo === 'Payment: Yale Student Account').map((t) => t.postings.find((q) => q.accountId === yaleAccount(sim, sim.player)!.id)!.amount)).toEqual([20_000_00, 45_217_00]);
@@ -805,7 +805,7 @@ describe('banking.s7: what a New Haven student meets opening and moving money', 
     const sent = ok<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase.id, toId: citi.id, amount: 100_00 });
     expect(sent.arrivesAt).toBe(at(2026, 10, 8, 14));
     expect([chase.balance - before, citi.balance, inTransitOf(sim, sim.player).balance]).toEqual([-100_00, 0, 100_00]);
-    expect(refusal(sim, 'bank.transfer', { fromId: citi.id, toId: chase.id, amount: 50_00 })).toBe('Citi Access Checking only has $0 in it.');
+    expect(refusal(sim, 'bank.transfer', { fromId: citi.id, toId: chase.id, amount: 50_00 })).toBe('Citi Access Checking has nothing in it, so nothing was moved.');
     sim = reload(sim);
     sim.advanceTo(sent.arrivesAt + MS_HOUR);
     expect([sim.universe.accounts[citi.id]!.balance, inTransitOf(sim, sim.player).balance]).toEqual([100_00, 0]);

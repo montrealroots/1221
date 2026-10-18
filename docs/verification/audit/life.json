@@ -3210,7 +3210,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:165-176",
+            "where": "tests/defects-g8-5.test.ts:167-178",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -3289,7 +3289,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:132-153",
+            "where": "tests/defects-g8-5.test.ts:134-155",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -4401,7 +4401,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:81-92",
+            "where": "tests/defects-g8-5.test.ts:81-94",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -4409,7 +4409,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:94-100",
+            "where": "tests/defects-g8-5.test.ts:96-102",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -4417,7 +4417,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:102-111",
+            "where": "tests/defects-g8-5.test.ts:104-113",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": true,
@@ -4434,7 +4434,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "defects-g8-5.test.ts:102-111 renders the button and its title; no press; no built-app step."
+          "have": "defects-g8-5.test.ts:104-113 renders the button and its title; no press; no built-app step."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -4495,7 +4495,7 @@
           "problems": [
             "All four gaps are closed on the student. Fill A Longer Supply, 90 Days is pressed on rendered Papers and takes $30 in one posting (three of Yale's $10 fills, a literal), with supplyUntil exact. The refills are spared until 16 November across a reload, against a twin filling monthly. With two conditions and the second unpayable, the whole fill is refused and rolled back (no posting, balance unchanged, neither supply set). keptUp's supplyUntil branch is read by the health week: a twin out of medicine loses 3 morale more (CHRONIC.untreated, a literal), and Papers shows Out Of Medicine against Kept Up.",
             "The claim's sparing of asthma emergencies while a supply lasts is not tested. The review didn't name it.",
-            "The review's weak tests are still in the gate: commands-kept.test.ts:137-139 (toBeGreaterThanOrEqual(0) and if (r.paid > 0)) and defects-g8-5.test.ts:99 (paid >= 0). They are superseded, not fixed."
+            "The review's weak tests are still in the gate: commands-kept.test.ts:137-139 (toBeGreaterThanOrEqual(0) and if (r.paid > 0)) and defects-g8-5.test.ts:101 (paid >= 0). They are superseded, not fixed."
           ],
           "weakTests": []
         },
@@ -4772,7 +4772,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:218-226; tests/defects-g8-6.test.ts:184-194",
+            "where": "tests/defects-g8-5.test.ts:220-228; tests/defects-g8-6.test.ts:184-194",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -4781,7 +4781,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "defects-g8-5.test.ts:228-236 renders the Therapist select. Begin A Course is never pressed (guide-examples only matches the guide's words). No built-app step."
+          "have": "defects-g8-5.test.ts:230-238 renders the Therapist select. Begin A Course is never pressed (guide-examples only matches the guide's words). No built-app step."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -6486,7 +6486,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:156-187",
+            "where": "tests/defects-g8-5.test.ts:158-189",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -6768,7 +6768,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "tests/defects-g8-5.test.ts:226-235 renders Papers' Therapist select. The end notices are asserted in engine state (guide play). The session's own notices are not rendered."
+          "have": "tests/defects-g8-5.test.ts:228-237 renders Papers' Therapist select. The end notices are asserted in engine state (guide play). The session's own notices are not rendered."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -9417,7 +9417,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:80-108",
+            "where": "tests/defects-g8-5.test.ts:80-110",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,

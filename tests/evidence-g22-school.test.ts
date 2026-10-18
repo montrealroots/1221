@@ -409,7 +409,7 @@ describe('school.cabaret (kind)', () => {
     expect(hasProcess(cab)).toBe(true);
     const proc = hasProcess(cab) ? cab.process : undefined;
     expect(proc!.reflection!.on).toBe(shows[4]!.at);
-    expect(proc!.reflection!.text).toMatch(new RegExp(`^Yale Cabaret, Season 59: ${proc!.calls} calls? answered of 9; .* What’s still open goes with you into class\\.$`));
+    expect(proc!.reflection!.text).toMatch(new RegExp(`^Yale Cabaret, Season 59: you answered ${proc!.calls === 9 ? 'all 9 calls' : `${proc!.calls || 'none'} of your 9 calls`}\\. .* What’s still open goes with you into class\\.$`));
     // The open notes carried into class: the coursework ledger has them from the closing's day.
     const ledger = notesOf(courseworkOf(sim, sim.player)!).filter((n) => n.history.some((x) => x.assignmentId === 'production:Yale Cabaret, Season 59'));
     expect(ledger.length).toBeGreaterThan(0);

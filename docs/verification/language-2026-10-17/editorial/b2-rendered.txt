@@ -1,0 +1,54 @@
+Notices journey J01 (tools/journeys.ts, parts 1 to 4, seed j13-1) was given on the editorial review's batch 2 code, set beside the same journey on c74a02e1: the 88 sentences that changed, by the pattern each batch-2 change writes, up to four of each. Run 2026-10-18; the saves were /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/ed-work/j01b-*.save.
+
+changed sentences: 88
+== /carried it/
+  notice | Your intimacy work and physical expression carried it.
+  notice | Your speech and your accents and dialects carried it.
+  notice | Your stage combat and intimacy work carried it.
+  notice | Your classical text work, scene study and vocal expression carried it.
+== /note on [A-Z]/
+  notice | You took the earlier note on Built On.
+  notice | You showed Scene Study again on September 22, 2026, but the note on With Your Partner isn’t taken yet.
+  notice | You took the earlier note on The Score Recalled.
+  notice | You took the earlier note on Practiced Together.
+== /into the revision/
+  notice | You showed Heightened Text Scene again on October 31, 2028, and worked the note on Rehearsal into the revision.
+== /doesn’t show in it yet/
+  notice | You showed Scene Study again on September 9, 2026, but the next step you were given doesn’t show in it yet.
+  notice | You showed Heightened Text Scene again on February 2, 2028, but the next step you were given doesn’t show in it yet.
+  notice | You showed A Scene From The Greeks again on March 31, 2028, but the next step you were given doesn’t show in it yet.
+  notice | You showed Heightened Text Scene again on April 11, 2028, but the next step you were given doesn’t show in it yet.
+== /isn’t taken yet/
+  notice | You showed Scene Study again on September 22, 2026, but the note on With Your Partner isn’t taken yet.
+  notice | You showed A Scene From The Greeks again on February 4, 2028, but the note on With Your Partner isn’t taken yet.
+  notice | You showed A Scene From The Greeks again on February 17, 2028, but the note on With Your Partner isn’t taken yet.
+  notice | You showed Scene Study again on November 3, 2028, but the note on Rehearsal isn’t taken yet.
+== /for an hour on/
+  notice | Noah asks if you’d run lines together for an hour on September 11, 2026 at 7:00 PM.
+  notice | Nadia asks if you’d run lines together for an hour on September 19, 2026 at 7:00 PM.
+  notice | Imani asks if you’d run lines together for an hour on October 7, 2026 at 7:00 PM.
+  notice | Marcus asks if you’d run lines together for an hour on October 16, 2026 at 7:00 PM.
+== /reads the /
+  notice | Marcus reads the choice to play in Riders to the Sea another way: “Compare the cloth with what Michael wore”, where you have “Hide it, and keep busy as if nothing has come”.
+  notice | Lucia reads the given circumstances in The Weavers another way: “The day the weavers break into Dreissiger’s house”, where you have “Noon on a sultry day at the end of May, in the room where the webs are weighed and paid for; the weavers wait their turn, shoulder to shoulder”.
+  notice | Theo reads the choice to play in A Midsummer Night’s Dream another way: “Hide behind the men”, where you have “Remind Hermia of their childhood together”.
+  notice | Caleb reads the choice to play in Twelfth Night another way: “Speak as if she were the lover herself: a willow cabin at Olivia’s gate”, where you have “Stand on the speech she has learned, and insist on being heard”.
+== /Request For Help/
+  notice-title | Maya: A Request For Help
+  notice-title | Zoe: A Request For Help
+  notice-title | Mateo: A Request For Help
+  notice-title | Theo: A Request For Help
+== /^[A-Z][^,]+, (before|their|a) /
+  notice | The Hundred Questions, a kitchen table on a weeknight, 2018, three days before the interview.
+  notice | Runway, a rented desk in a shared office, after everyone else has gone home, 2015.
+  notice | The Bacchae, before the castle of Pentheus at Thebes, the Stranger brought in bound.
+  notice | Oedipus Tyrannus, before the palace at Thebes, the suppliants at the altars.
+== /didn’t move your own work/
+  notice | It helped them, but it didn’t move your own work.
+== /more [a-z-]+ (work|timing)? ?than you have yet|clowning than/
+  notice | It asked for more clowning than you have yet.
+== /took the earlier note on/
+  notice | You took the earlier note on Built On.
+  notice | You took the earlier note on The Score Recalled.
+  notice | You took the earlier note on Practiced Together.
+  notice | You took the earlier note on Rehearsal.

@@ -1085,7 +1085,10 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
     if (person.id === sim.universe.playerId) {
       const kept = mine.filter((a) => a.closedAt === undefined);
       const which = `${closed.length > 0 ? ` It closed ${closed.map((a) => a.name).join(' and ')}.` : ''}${kept.length > 0 ? ` ${kept.map((a) => a.name).join(' and ')} ${kept.length > 1 ? 'stay' : 'stays'} open.` : ''}`;
-      sim.notify({ category: 'bank', title: closed.length > 0 ? `${bank.name} Closed An Account` : `${bank.name} Took What It Was Owed`, body: `It had been below zero for ${ESTIMATE.closeAfterDays} days, so the bank took what it was owed from your other money there.${which}${endedWords(sim, ended)}`, importance: 60 });
+      // What happened first (from 2026-10-17, brief 14's editorial review): until then the reason opened it, “It had been
+      // below zero …”, and the account closed came after.
+      const why = `had been below zero for ${ESTIMATE.closeAfterDays} days, so the bank took what it was owed from your other money there.`;
+      sim.notify({ category: 'bank', title: closed.length > 0 ? `${bank.name} Closed An Account` : `${bank.name} Took What It Was Owed`, body: closed.length > 0 ? `${bank.name} closed ${closed.map((a) => a.name).join(' and ')}. ${closed.length > 1 ? 'They' : 'It'} ${why}${kept.length > 0 ? ` ${kept.map((a) => a.name).join(' and ')} ${kept.length > 1 ? 'stay' : 'stays'} open.` : ''}${endedWords(sim, ended)}` : `It ${why}${which}${endedWords(sim, ended)}`, importance: 60 });
     }
     return;
   }
@@ -1527,7 +1530,7 @@ export function registerLending(sim: Simulation): void {
     const interest = Math.round(-loan.balance * (loan.apr ?? 0) * days / 365);
     const owed = -loan.balance + interest;
     const bank = payFromBank(s, person, owed, repaymentAccount(s, person, loan));
-    if (bank.short > 0) throw new CommandError(`Paying it off takes ${formatMoney(owed, saveCurrency(s.universe), { cents: false })}, and the repayment account can’t cover it all.`);
+    if (bank.short > 0) throw new CommandError(`${repaymentAccount(s, person, loan)?.name ?? 'The repayment account'} can’t cover the ${formatMoney(owed, saveCurrency(s.universe))} it takes to pay it off, so nothing was paid.`);
     if (interest > 0) {
       post(s, `Interest: ${loan.name}`, 'loan_interest', [
         { accountId: loan.id, amount: -interest }, { accountId: s.nominalAccount('expense', 'Loan Interest').id, amount: interest },
@@ -1555,7 +1558,7 @@ export function registerLending(sim: Simulation): void {
     if (term.minAmount !== undefined && amount < inSaveMoney(s, term.minAmount, bank.currency)) {
       throw new CommandError(`A term deposit there needs at least ${formatMoney(inSaveMoney(s, term.minAmount, bank.currency), cur, { cents: false })}.`);
     }
-    if (amount > current.balance) throw new CommandError(`${current.name} only has ${formatMoney(Math.max(0, current.balance), cur, { cents: false })} in it.`);
+    if (amount > current.balance) throw new CommandError(`${current.name} ${current.balance > 0 ? `has only ${formatMoney(current.balance, cur)}` : 'has nothing in it'}, so no term deposit was opened.`);
     const number = accountNumber(s, person, bank, 'savings');
     const maturesAt = addMonths(s.now, term.months, s.homeZone);
     const account = s.openAccount({

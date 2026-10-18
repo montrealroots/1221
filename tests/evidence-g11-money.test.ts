@@ -276,7 +276,7 @@ describe('bank.repay_loan', () => {
     // TEST SETUP: Citi Access Checking down to $1,000; savings isn't linked to it, so the bank can't cover the payoff.
     setTo(sim, checking.id, 1_000_00);
     press('bank.repay_loan', 'Pay It Off');
-    expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.repay_loan', ok: false, error: 'Paying it off takes $3,017, and the repayment account can’t cover it all.' });
+    expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.repay_loan', ok: false, error: 'Citi Access Checking can’t cover the $3,016.83 it takes to pay it off, so nothing was paid.' });
     expect(account(sim, loanId).closedAt).toBeUndefined();
     expect(account(sim, loanId).balance).toBe(-3_000_00);
     expect(posted(sim, 'Interest: Citi Personal Loan')).toEqual([]);
@@ -456,7 +456,7 @@ describe('bank.set_alerts', () => {
     // The card's statement on 20 September: owing nothing, told only where it's asked; owing, told anyway.
     for (const sim of [asked, quiet]) sim.advanceTo(at(2026, 9, 20, 9, 1));
     expect(told(asked, 'Statement Ready: Chase Freedom Unlimited').map((n) => n.body)).toEqual(['The card owes nothing this month.']);
-    expect(told(quiet, 'Statement Ready: Chase Freedom Unlimited').map((n) => n.body)).toEqual([expect.stringMatching(/^\$400\.00 to pay, at least \$\d+\.\d\d\.$/)]);
+    expect(told(quiet, 'Statement Ready: Chase Freedom Unlimited').map((n) => n.body)).toEqual([expect.stringMatching(/^The statement comes to \$400\.00, due October 11, 2026\. At least \$\d+\.\d\d has to be paid by then\.$/)]);
     expect(told(quiet, 'Statement Ready: Chase Total Checking')).toEqual([]);
 
     // TEST SETUP: the notices read, as the player reads them. Then Statement Ready pressed Off, and October's end and

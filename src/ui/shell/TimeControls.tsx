@@ -485,7 +485,9 @@ function AdvanceMenu({
         title={gate.reason}
         onClick={() => (gate.open ? setOpen((o) => !o) : gate.ask())}
       >
-        Advance ▾{!gate.open && <span className="lock-word">Locked</span>}
+        {/* The arrow is drawn, not said (from 2026-10-17, brief 14's editorial review): until then the button's accessible
+            name was “Advance ▾”, which a screen reader says with the arrow's name in it. Look After Yourself's likewise. */}
+        Advance <span aria-hidden="true">▾</span>{!gate.open && <span className="lock-word">Locked</span>}
       </button>
       {open && (
         <div className="menu" role="menu" aria-label="Advance Time">
@@ -586,7 +588,7 @@ function LookAfterMenu() {
         title={gate.reason}
         onClick={() => (gate.open ? setOpen((o) => !o) : gate.ask())}
       >
-        Look After Yourself ▾{!gate.open && <span className="lock-word">Locked</span>}
+        Look After Yourself <span aria-hidden="true">▾</span>{!gate.open && <span className="lock-word">Locked</span>}
       </button>
       {open && (
         <div className="menu" role="menu" aria-label="Look After Yourself">

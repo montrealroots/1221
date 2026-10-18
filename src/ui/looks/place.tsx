@@ -136,7 +136,7 @@ function lightLine(sun: SunTimes, zone: string): string {
   if (sun.polar === 'day') return 'The sun never sets today';
   if (sun.polar === 'night') return 'The sun doesn’t rise here today';
   if (sun.sunrise === undefined || sun.sunset === undefined) return 'No sunrise on file';
-  // In words in a sentence (from 2026-10-17): until then “12h 45m of daylight”, the Stat's form below.
+  // In words in a sentence (from 2026-10-17): until then “12h 45m of daylight”, the Stat’s form below.
   return `${formatTime(sun.sunrise, zone)} to ${formatTime(sun.sunset, zone)}, ${formatDurationWords(sun.daylightMinutes * MS_MINUTE)} of daylight`;
 }
 

@@ -262,7 +262,7 @@ describe('h-money', () => {
     expect(checking.balance).toBe(0);
     const { affairs } = drawn(sim);
     // The plan owed and paid back out of savings, as the opted-in twin’s was (until 2026-10-13, $505,424, the plan dropped).
-    expect(affairs).toContain('Money Chase Total Checking: $0.00. Worth $503,542, $10 of it owed. Chase How This Works');
+    expect(affairs).toContain('Money Chase Total Checking: $0.00. Worth $503,542, after $10 owed. Chase How This Works');
     expect(affairs).not.toContain('Your account is overdrawn.');
   });
 
@@ -331,7 +331,7 @@ describe('h-school', () => {
     sim.advanceTo(asked.decideAt + MS_HOUR);
     expect(sim.player.school!.leave!.status).toBe('on');
     const { affairs } = drawn(sim);
-    expect(affairs).toMatch(/School On Leave, academic concern, \d+ of 16 in the class\. Your standing is academic concern. The School screen says why\. Yale How This Works/);
+    expect(affairs).toMatch(/School On Leave, academic concern, \d+(?:st|nd|rd|th) of 16 in the class\. Your standing is academic concern. The School screen says why\. Yale How This Works/);
     expect(affairs).not.toContain('Next:');
   });
 
@@ -342,7 +342,7 @@ describe('h-school', () => {
     expect(titled(sim, 'Academic Warning')).toHaveLength(1);
     // The second fall's classes from the Monday a week after the fourth Monday of August, 30 August 2027; Wednesday
     // 1 September at noon, the next is Thursday's.
-    expect(drawn(sim).affairs).toMatch(/School Year 2, academic warning, \d+ of 16 in the class\. Next: Classes, September 2, 2027 at 9:00 AM\. Your standing is academic warning. The School screen says why\. Yale How This Works/);
+    expect(drawn(sim).affairs).toMatch(/School Year 2, academic warning, \d+(?:st|nd|rd|th) of 16 in the class\. Next: Classes, September 2, 2027 at 9:00 AM\. Your standing is academic warning. The School screen says why\. Yale How This Works/);
   });
 
   it('PLAYER JOURNEY: left to the clock, the warning unmet, the second fall’s evaluation dismisses her: “Left the school, dismissed”, with the dismissal’s alert and no Next, across a reload', () => {
@@ -352,7 +352,7 @@ describe('h-school', () => {
     expect(bookedFor(sim)).toEqual([]);
     for (const one of [sim, reload(sim)]) {
       const { affairs } = drawn(one);
-      expect(affairs).toMatch(/School Left the School, dismissed, \d+ of 16 in the class\. Your standing is dismissed. The School screen says why\. Yale How This Works/);
+      expect(affairs).toMatch(/School Left the School, dismissed, \d+(?:st|nd|rd|th) of 16 in the class\. Your standing is dismissed. The School screen says why\. Yale How This Works/);
       expect(affairs).not.toContain('Next:');
     }
   });
@@ -368,9 +368,9 @@ describe('h-school', () => {
     school.classmates.forEach((m, i) => even(m.craft, i < 4 ? 60 : i === 4 || i === 5 ? 50 : 40));
     // One skill 21 points up moves a mean over 21 skills by one: 51, above her 50. The tie, at 50, isn't above her.
     (school.classmates[4]!.craft as unknown as Record<string, number>)[SKILLS[0]!.id] = 71;
-    expect(drawn(sim).affairs).toContain('School Arriving, good standing, 6 of 16 in the class. Next: Registration And Your Account, August 24, 2026 at 10:00 AM. Yale How This Works');
+    expect(drawn(sim).affairs).toContain('School Arriving, good standing, 6th of 16 in the class. Next: Registration And Your Account, August 24, 2026 at 10:00 AM. Yale How This Works');
     (school.classmates[5]!.craft as unknown as Record<string, number>)[SKILLS[20]!.id] = 51;
-    expect(drawn(sim).affairs).toContain('School Arriving, good standing, 7 of 16 in the class.');
+    expect(drawn(sim).affairs).toContain('School Arriving, good standing, 7th of 16 in the class.');
   });
 });
 

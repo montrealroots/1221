@@ -232,7 +232,7 @@ describe('health.book', () => {
     expect(h.toasts).toEqual(['Booked for September 28, 2026.']);
     const booked = appointmentsOf(sim.player);
     expect(booked).toEqual([{ id: expect.any(String), at: at(2026, 9, 28, 10), what: 'A doctor’s visit', clinicId: 'us-ct-fhchc-grand' }]);
-    expect(titled(sim, 'A Doctor’s Appointment', sim.now).map((n) => n.body)).toEqual(['A doctor’s visit: booked at Fair Haven Community Health Care for September 28, 2026, the wait where you live.']);
+    expect(titled(sim, 'A Doctor’s Appointment', sim.now).map((n) => n.body)).toEqual(['A doctor’s visit: booked at Fair Haven Community Health Care for September 28, 2026, the usual wait where you live.']);
     // The visit is no longer owed: the button is gone, and booking again is refused as owing nothing.
     expect(healthOf(sim.player).owedVisit).toBeUndefined();
     expect(shown(sim).buttons.map((b) => b.text)).not.toContain('Book An Appointment');
@@ -387,8 +387,8 @@ describe('health.choose_clinic', () => {
     expect(didnt.booked).toEqual([{ id: expect.any(String), at: day, what: 'A doctor’s visit', clinicId: 'uk-ldn-sohosquare-gp' }]);
     expect(chose.label).toBe('The Doctor, Bupa Private GP (pay-as-you-go)');
     expect(didnt.label).toBe('The Doctor, Soho Square General Practice');
-    expect(chose.notice).toEqual(['A doctor’s visit: booked at Bupa Private GP (pay-as-you-go) for January 26, 2026, the wait where you live.']);
-    expect(didnt.notice).toEqual(['A doctor’s visit: booked at Soho Square General Practice for January 26, 2026, the wait where you live.']);
+    expect(chose.notice).toEqual(['A doctor’s visit: booked at Bupa Private GP (pay-as-you-go) for January 26, 2026, the usual wait where you live.']);
+    expect(didnt.notice).toEqual(['A doctor’s visit: booked at Soho Square General Practice for January 26, 2026, the usual wait where you live.']);
     // Bupa's pay-as-you-go GP is private, and the NHS doesn't pay it: its 15-minute visit's £79 (`SELF_PAY`). Until
     // 2026-10-13 this held "Nothing to pay." for it, as at Soho Square, the choice moving only the name.
     expect(chose.kept).toEqual(['A doctor’s visit, Bupa Private GP (pay-as-you-go). Your share is £79.00, due on February 25, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.']);
@@ -524,7 +524,7 @@ describe('health.dental', () => {
     const sim = student('g03-dental-broke');
     broke(sim);
     const before = sim.universe.transactions.length;
-    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'The year costs $312.72, more than your bank can cover.' });
+    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'Your bank can’t cover $312.72 for the year, so nothing was charged.' });
     expect(healthOf(sim.player).dental).toBeUndefined();
     expect(sim.universe.transactions.length).toBe(before);
   });
@@ -651,7 +651,7 @@ describe('health.extra_supply', () => {
     // first condition's $30 and not the second's.
     broke(sim, 45_00);
     const before = { txns: sim.universe.transactions.length, balance: current(sim).balance };
-    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 90 } })).toMatchObject({ ok: false, error: 'It costs more than your bank can cover.' });
+    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 90 } })).toMatchObject({ ok: false, error: 'Your bank can’t cover $60.00 for every condition’s fill, so nothing was filled or charged.' });
     expect(healthOf(sim.player).chronic!.depression!.supplyUntil).toBeUndefined();
     expect(healthOf(sim.player).chronic!.hypertension!.supplyUntil).toBeUndefined();
     expect(sim.universe.transactions.length).toBe(before.txns);
@@ -763,7 +763,7 @@ describe('health.pay_bill', () => {
     const was = { current: current(sim).balance, savings: savings(sim).balance };
     expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 0 } })).toMatchObject({ ok: false, error: 'Say how much.' });
     // In words that say what to do from 2026-10-16; until then “Chase Total Checking can’t cover it.”
-    expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 100_00 } })).toMatchObject({ ok: false, error: 'Chase Total Checking has nothing to pay it with: move money into it first, on your bank’s Move Money.' });
+    expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 100_00 } })).toMatchObject({ ok: false, error: 'Chase Total Checking has nothing to pay it with, so nothing was paid. Move money into it first, on your bank’s Move Money.' });
     expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 100_00, fromId: savings(sim).id } })).toMatchObject({ ok: true, value: { paid: 100_00 } });
     expect(-medicalDebtOf(sim, sim.player)!.balance).toBe(800_00);
     expect(healthOf(sim.player).debtSince).toBeDefined();

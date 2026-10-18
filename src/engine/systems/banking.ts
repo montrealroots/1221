@@ -957,12 +957,12 @@ export function registerBanking(sim: Simulation): void {
     const save = saveCurrency(s.universe);
     if (p.in !== undefined && p.in !== (from.currency ?? save)) throw new CommandError(`${from.name} is kept in ${from.currency ?? save}.`);
     const own = from.currency !== undefined && p.in === from.currency;
-    if (own && typed > (from.held ?? 0)) throw new CommandError(`${from.name} only has ${formatMoney(Math.max(0, from.held ?? 0), from.currency!, { cents: false })} in it.`);
+    if (own && typed > (from.held ?? 0)) throw new CommandError(`${from.name} ${(from.held ?? 0) > 0 ? `has only ${formatMoney(from.held!, from.currency!)}` : 'has nothing in it'}, so nothing was moved.`);
     const amount = own ? (typed === from.held ? from.balance : exchange(typed, from.currency!, save) ?? typed) : typed;
     // Left open by a switch while in debt: blocked to all but repayment (from 2026-10-10).
     if (from.switchDebt) throw new CommandError(`${from.name} has been blocked since the switch, except for paying off what it owes.`);
     if (amount > from.balance) {
-      throw new CommandError(`${from.name} only has ${formatMoney(Math.max(0, from.balance), saveCurrency(s.universe), { cents: false })} in it.`);
+      throw new CommandError(`${from.name} ${from.balance > 0 ? `has only ${formatMoney(from.balance, saveCurrency(s.universe))}` : 'has nothing in it'}, so nothing was moved.`);
     }
     if (from.dormant || to.dormant) throw new CommandError(`${(from.dormant ? from : to).name} is dormant. Reactivate it first, under Your Accounts Over Time.`);
     const { room, fee: withdrawalFee } = from.kind === 'savings' ? savingsDebit(s, from) : { room: from.balance, fee: 0 };
