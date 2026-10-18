@@ -399,10 +399,10 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const note = (taken: boolean) => ({ at: sim.now, text: 'Find the turn.', focus: { kind: 'lines' as const }, taken });
     const run = (calls: number, of: number, notes: ReturnType<typeof note>[], together?: { sum: number; n: number; slips: number; covered: number }) =>
       reflect(sim, sim.player, { process: { lines: 0, blocking: 0, calls, of, blockingMissed: 0, notes, trained: 0, ...(together ? { together } : {}) } }, 'The Seagull')!;
-    expect(run(1, 1, [note(true)])).toBe('The Seagull: 1 call answered of 1; 1 of 1 note taken.');
-    expect(run(0, 3, [])).toBe('The Seagull: 0 calls answered of 3; 0 of 0 notes taken.');
+    expect(run(1, 1, [note(true)])).toBe('The Seagull: you answered your one call. The director gave you 1 note, and you took it.');
+    expect(run(0, 3, [])).toBe('The Seagull: you answered none of your 3 calls. The director gave you no notes.');
     const many = run(5, 6, [note(true), note(false)], { sum: 312, n: 4, slips: 1, covered: 1 });
-    expect(many).toBe('The Seagull: 5 calls answered of 6; 1 of 2 notes taken. With the company the nights came to 78 on average, 1 with a slip in the company, 1 of them covered. What’s still open goes with you into class.');
+    expect(many).toBe('The Seagull: you answered 5 of your 6 calls. The director gave you 2 notes. You took 1. With the company, your nights averaged 78 out of 100, with a slip by others, which you covered. What’s still open goes with you into class.');
     for (const s of [many]) { sound(s); whole(s); }
   });
 });

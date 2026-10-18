@@ -2850,10 +2850,10 @@
   "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
  },
  "src/engine/systems/production.ts#reflect": {
-  "status": "Reviewed And Retained",
-  "hash": "4945e2ea6b66",
-  "on": "2026-10-17",
-  "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
+  "status": "Rewritten And Verified",
+  "hash": "a06816127208",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 3: tests/language-dynamic.test.ts \"nights with the company and the calls and notes of a run, as the run looks back on them: none, one and several\" (three variants, exact) and tests/evidence-g19-school.test.ts \"PLAYER JOURNEY: every note worked through the festival: …\"; seven Looking Backs in docs/verification/language-2026-10-17/editorial/b3-rendered.txt (journey J01 played through on this code)"
  },
  "src/engine/systems/production.ts#registerProduction <school.work_note>": {
   "status": "Reviewed And Retained",
@@ -3035,6 +3035,12 @@
   "on": "2026-10-17",
   "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
  },
+ "src/engine/systems/school.ts#partWords": {
+  "status": "Rewritten And Verified",
+  "hash": "6eb0e4bf2c9e",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 3, new: tests/editorial-school-words.test.ts \"a part the School casts by size reads in lower case in a sentence, …\""
+ },
  "src/engine/systems/school.ts#planWeek": {
   "status": "Reviewed And Retained",
   "hash": "be96b5486dbd",
@@ -3103,9 +3109,9 @@
  },
  "src/engine/systems/school.ts#registerSchool closeRun()": {
   "status": "Rewritten And Verified",
-  "hash": "9aae21200732",
-  "on": "2026-10-17",
-  "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts (the concern notice), tests/evidence-g22/g25/g26-school.test.ts, tests/remaining-school.test.ts, tests/school-journey-gaps.test.ts, tests/remaining-09-journeys.test.ts, tests/school-everyday.test.ts; rendered.txt"
+  "hash": "725ff89dd53c",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 3: \"You were on call to cover the company through the run, and didn’t go on.\" and the named role's \"You covered Nora Helmer on call …\" in docs/verification/language-2026-10-17/editorial/b3-rendered.txt (journey J01 played through on this code); tests/evidence-g21-school.test.ts holds the named role's words exactly"
  },
  "src/engine/systems/school.ts#repProduction": {
   "status": "Reviewed And Retained",
@@ -3475,9 +3481,9 @@
  },
  "src/ui/components/RehearsalProcess.tsx#RehearsalProcess": {
   "status": "Rewritten And Verified",
-  "hash": "97eb183812a8",
-  "on": "2026-10-17",
-  "evidence": "tests/decisions-stamina.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "a9cd9d94e48f",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 3: its Looking Back label says what the notice says, \"Simulated: the game’s summary, not the director’s words.\" (docs/verification/language-2026-10-17/editorial/b3-rendered.txt (journey J01 played through on this code))"
  },
  "src/ui/components/StudyPlanPanels.tsx#at9": {
   "status": "Reviewed And Retained",

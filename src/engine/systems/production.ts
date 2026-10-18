@@ -658,11 +658,20 @@ export function reflect(sim: Simulation, person: Person, holder: Holder, title: 
   const open = p.notes.filter((n) => n.taken === false || (n.taken === undefined && !n.worked));
   // How the nights went with the company (`together`, from 2026-10-12). Until then this said "you played at N% of what
   // every call kept makes", the readiness factor that from 2026-10-09 reached only a night's growth, not the night.
-  const company = p.together?.n ? ` With the company the nights came to ${Math.round(p.together.sum / p.together.n)} on average${p.together.slips ? `, ${p.together.slips} with a slip in the company${p.together.covered ? `, ${p.together.covered} of them covered` : ''}` : ''}.` : '';
+  // In sentences from 2026-10-17 (brief 14's editorial review): until then “11 calls answered of 11; 0 of 0 notes taken;
+  // the dress solid. With the company the nights came to 56 on average, 1 with a slip in the company, 1 of them covered.”
+  const slips = p.together?.slips ?? 0, covered = p.together?.covered ?? 0;
+  const company = p.together?.n ? ` With the company, your nights averaged ${Math.round(p.together.sum / p.together.n)} out of 100${slips ? `, with ${slips === 1 ? 'a slip' : `${slips} slips`} by others${covered ? `, ${covered === slips ? (slips === 1 ? 'which you covered' : 'all of which you covered') : `${covered} of which you covered`}` : ''}` : ''}.` : '';
   const answered = p.notes.filter((n) => n.focus.kind === 'craft' && n.taken).length;
   // Worked and learned from, without moving it (from 2026-10-16): said apart from the notes taken.
   const learned = p.notes.filter((n) => n.outcome === 'learned').length;
-  const text = `${title}: ${p.calls} ${p.calls === 1 ? 'call' : 'calls'} answered of ${p.of ?? p.calls}; ${taken} of ${given.length} ${given.length === 1 ? 'note' : 'notes'} taken${answered ? `, ${answered} answered in the work` : ''}${learned ? `, ${learned} worked and learned from without moving ${learned === 1 ? 'it' : 'them'}` : ''}${p.dress ? `; the dress ${p.dress}` : ''}.${company}${open.length ? ' What’s still open goes with you into class.' : ''}`;
+  const of = p.of ?? p.calls;
+  const calls = of === 0 ? 'there were no calls' : of === 1 ? (p.calls ? 'you answered your one call' : 'you missed your one call') : p.calls === of ? `you answered all ${of} calls` : `you answered ${p.calls || 'none'} of your ${of} calls`;
+  const notes = !given.length ? 'The director gave you no notes.'
+    : given.length === 1 ? `The director gave you 1 note${taken ? `, and you took it${answered ? ', answered in the work' : ''}.` : learned ? '. You worked on it, but it didn’t move.' : ', and you didn’t take it.'}`
+      : `The director gave you ${given.length} notes. You took ${taken || 'none'}${taken && answered ? `, ${answered === taken ? 'all' : answered} of them answered in the work` : ''}${learned ? `, and worked on ${learned} that didn’t move` : ''}.`;
+  const dress = p.dress ? ` The dress rehearsal was ${p.dress === 'off' ? 'an off night' : p.dress}.` : '';
+  const text = `${title}: ${calls}. ${notes}${dress}${company}${open.length ? ' What’s still open goes with you into class.' : ''}`;
   p.reflection = { on: sim.now, text };
   const cw = courseworkOf(sim, person);
   if (cw) {
@@ -683,6 +692,6 @@ export function reflect(sim: Simulation, person: Person, holder: Holder, title: 
       recordNote(notesOf(cw), f, on, `production:${title}`, title, f.kind === 'dim' ? (f.dim === 'memorization' ? p.lines : p.blocking) : undefined);
     }
   }
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `Looking Back: ${title}`, body: `${text} (Simulated: the game’s reading of the process.)`, importance: 50, route: '/workspace/school' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `Looking Back: ${title}`, body: `${text} (Simulated: the game’s summary, not the director’s words.)`, importance: 50, route: '/workspace/school' });
   return text;
 }

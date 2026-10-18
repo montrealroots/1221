@@ -33,7 +33,7 @@ import { courseworkOf, termTally } from '@/engine/systems/coursework';
 import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
-  academicTerm, cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, sickRefusal, summerRefusal, schoolEnded, termSupport, termWords } from '@/engine/systems/school';
+  academicTerm, cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, sickRefusal, summerRefusal, schoolEnded, termSupport, termWords, partWords } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -455,7 +455,7 @@ function CastingPane() {
               <p className="small" style={{ margin: 0 }}>
                 {casting === school.rep
                   ? `From the class in the company with you, each in a featured part: ${casting.cast.map((c) => c.name).join(', ')}. The rest of the company is the Rep’s own.`
-                  : `From the class with you: ${casting.cast.map((c) => `${c.name} as ${c.part}`).join('; ')}. The rest of the cast are from the other two classes.`}
+                  : `From the class with you: ${casting.cast.map((c) => (/^(A|An) /.test(c.part) ? `${c.name}, ${partWords(c.part)}` : `${c.name} as ${c.part}`)).join('; ')}. The rest of the cast are from the other two classes.`}
               </p>
             )}
             {casting.kind === 'understudy' && casting.production === SEAGULL_2027.name && (

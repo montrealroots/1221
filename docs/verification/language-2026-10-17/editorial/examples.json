@@ -268,5 +268,77 @@
   "why": "The glossary's word for the technique in a sentence.",
   "meaningSensitive": false,
   "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/production.ts#reflect",
+  "kind": "notification",
+  "before": "Major Barbara: 12 calls answered of 12; 4 of 5 notes taken, 3 answered in the work, 1 worked and learned from without moving it; the dress solid. With the company the nights came to 55 on average. What’s still open goes with you into class. (Simulated: the game’s reading of the process.)",
+  "after": "Major Barbara: you answered all 12 calls. The director gave you 5 notes. You took 4, 3 of them answered in the work, and worked on 1 that didn’t move. The dress rehearsal was solid. With the company, your nights averaged 55 out of 100. What’s still open goes with you into class. (Simulated: the game’s summary, not the director’s words.)",
+  "why": "A ledger in semicolons and fragments, read as sentences; the label says whose words they are without engine-speak.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/production.ts#reflect",
+  "kind": "notification",
+  "before": "The Seagull: 11 calls answered of 11; 0 of 0 notes taken. (Simulated: the game’s reading of the process.)",
+  "after": "The Seagull: you answered all 11 calls. The director gave you no notes. (Simulated: the game’s summary, not the director’s words.)",
+  "why": "Zero said as none.",
+  "meaningSensitive": false,
+  "verified": "tests/language-dynamic.test.ts \"nights with the company and the calls and notes of a run, …\"; docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/production.ts#reflect",
+  "kind": "notification",
+  "before": "Carlotta Festival Of New Plays: 12 calls answered of 12; 4 of 5 notes taken, 3 answered in the work, 1 worked and learned from without moving it; the dress off. With the company the nights came to 53 on average, 1 with a slip in the company, 1 of them covered.",
+  "after": "Carlotta Festival Of New Plays: you answered all 12 calls. The director gave you 5 notes. You took 4, 3 of them answered in the work, and worked on 1 that didn’t move. The dress rehearsal was an off night. With the company, your nights averaged 53 out of 100, with a slip by others, which you covered.",
+  "why": "“the dress off” and “1 with a slip in the company, 1 of them covered” in words a player reads once.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/production.ts#reflect",
+  "kind": "notification",
+  "before": "The Seagull: 1 call answered of 1; 1 of 1 note taken.",
+  "after": "The Seagull: you answered your one call. The director gave you 1 note, and you took it.",
+  "why": "One of one, said as one.",
+  "meaningSensitive": false,
+  "verified": "tests/language-dynamic.test.ts \"nights with the company and the calls and notes of a run, …\""
+ },
+ {
+  "source": "src/engine/systems/school.ts#registerSchool closeRun()",
+  "kind": "feedback",
+  "before": "You covered An Understudy In The Company on call through the run and didn’t go on. The work you did in the room isn’t lost.",
+  "after": "You were on call to cover the company through the run, and didn’t go on. The work you did in the room isn’t lost.",
+  "why": "A part cast by size isn't a role you cover; the label read as a name mid-sentence.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/ui/workspaces/SchoolWorkspace.tsx#CastingPane",
+  "kind": "label",
+  "before": "From the class with you: Chloe Tanaka as A Leading Part In A New Play; Zoe Park as A Leading Part In A New Play; …",
+  "after": "From the class with you: Chloe Tanaka, a leading part in a new play; Zoe Park, a leading part in a new play; …",
+  "why": "A part cast by size in a sentence, not as a Title Case name.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-school-words.test.ts (partWords); the Casting tab in editorial/walk-1440"
+ },
+ {
+  "source": "src/ui/components/RehearsalProcess.tsx#RehearsalProcess",
+  "kind": "label",
+  "before": "Simulated: the game’s reading of the process.",
+  "after": "Simulated: the game’s summary, not the director’s words.",
+  "why": "“the game’s reading of the process” is the engine describing itself; the label says whose words the summary isn't.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/production.ts#reflect",
+  "kind": "notification",
+  "before": "The Winter’s Tale: 15 calls answered of 15; 7 of 7 notes taken, 7 answered in the work; the dress solid.",
+  "after": "The Winter’s Tale: you answered all 15 calls. The director gave you 7 notes. You took 7, all of them answered in the work. The dress rehearsal was solid.",
+  "why": "All of them, said as all.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
  }
 ]

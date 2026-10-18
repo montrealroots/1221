@@ -149,3 +149,42 @@ line), `tests/student-experience.test.ts`. **New:** `tests/editorial-school-word
 **Checks:** `tsc` 0, `eslint` on the changed files 0, the eleven language checks 0 and `guide-quotes` 0 (581 of 581);
 35 school test files, 476 of 476; `editorial-school-words` 4 of 4; `traceability`, `devmap --check` and `coverage
 --check` 0. **Statuses:** 7 sources Rewritten And Verified `--by school` (`SKILL_WORDS` new).
+
+## Batch 3: Productions, Looking Back And The Parts The School Casts By Size
+
+**Looking Back** (`production.ts` `reflect`), the notice each run's closing sends and the line its panel keeps, was a
+ledger in semicolons: “Major Barbara: 12 calls answered of 12; 4 of 5 notes taken, 3 answered in the work, 1 worked and
+learned from without moving it; the dress solid. With the company the nights came to 55 on average. What’s still open
+goes with you into class. (Simulated: the game’s reading of the process.)” A run with no notes said “0 of 0 notes
+taken”, and “the dress solid” and “the dress off” were fragments. Now sentences, each count in its own variant:
+“Major Barbara: you answered all 12 calls. The director gave you 5 notes. You took 4, 3 of them answered in the work,
+and worked on 1 that didn’t move. The dress rehearsal was solid. With the company, your nights averaged 55 out of 100.
+What’s still open goes with you into class. (Simulated: the game’s summary, not the director’s words.)” Calls: all, some,
+none, one; notes: none (“The director gave you no notes.”), one (taken, not taken, worked without moving), several;
+the dress: an off night, solid, strong, remarkable; slips by others: one, several, covered all or some. The panel's
+label reads the same (`RehearsalProcess.tsx`).
+
+**Meaning-sensitive:** the counts are the same counts (`calls`, `of`, notes given with `taken` set, `taken`, craft notes
+taken as “answered in the work”, notes `learned`). Read in the code before writing: a learned note is never a taken one
+(`notesShare` counts a note taken whole or learned in part), so “worked on 1 that didn’t move” is one of the notes given
+and not taken, as “4 of 5 … 1 worked and learned from” meant. “out of 100” is the scale every night's result is on.
+
+**Parts cast by size.** The School casts a student into a part by its size where there's no named role: “A Leading Part
+In A New Play”, “An Understudy In The Company”, “A Part In A Cabaret Show”. In a sentence they read as names: “From the
+class with you: Chloe Tanaka as A Leading Part In A New Play; …”, and the director's note “You covered An Understudy In
+The Company on call through the run and didn’t go on.” `partWords` says such a part in lower case (the Cabaret keeping its
+capital), and the Casting tab now reads “Chloe Tanaka, a leading part in a new play”; the director's note “You were on
+call to cover the company through the run, and didn’t go on.”
+
+**Left, with why:** the casting notice itself still says “has cast you as A Leading Part In A New Play in the Carlotta
+Festival Of New Plays”. `redateCredits` (school.ts) dates an old save's credits by finding each credit's part in its
+casting notice word for word, so the notice's part is a key the code reads back; `defects.md` names it for the owner.
+
+**Tests updated:** `tests/language-dynamic.test.ts` (three Looking Backs, exact), `tests/evidence-g19-school.test.ts`
+(the festival's, built from the run's counts as before; one line became two, and `coverage --check` still holds every
+cited line). **New:** `partWords` in `tests/editorial-school-words.test.ts`. Played: J01's four parts on this code, every
+Looking Back and Director's Note in `b3-rendered.txt`, the ten checks passing.
+
+**Checks:** `tsc` 0, `eslint` 0, the eleven language checks 0, `guide-quotes` 0, `traceability` 0, `devmap --check` 0;
+six test files (language-dynamic, evidence-g19, -g21, remaining-school, credits-dated, casting) 130 of 130, and
+`editorial-school-words` 5 of 5. **Statuses:** 4 sources Rewritten And Verified `--by school`.

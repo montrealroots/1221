@@ -13,6 +13,7 @@ import { SKILLS, SKILL_WORDS } from '@/engine/content/school';
 import { whereWords, withPartLabels, type Assignment } from '@/engine/systems/coursework';
 import { chiefLimit, type Limit } from '@/engine/systems/evaluation';
 import { MOMENT_TITLE } from '@/engine/systems/classmates';
+import { CABARET_RUN, partWords } from '@/engine/systems/school';
 
 describe('the school’s words: one name for each thing, and each said as a sentence says it', () => {
   it('a part of a piece is named as its card names it, so a presentation’s forecast says its own part and not a revision', () => {
@@ -41,6 +42,14 @@ describe('the school’s words: one name for each thing, and each said as a sent
     expect(whereWords('The one act, the Wright kitchen')).toBe('the one act, the Wright kitchen');
     expect(whereWords('Act Two, the garden')).toBe('Act Two, the garden');
     expect(whereWords('Episode Two, At Home')).toBe('Episode Two, At Home');
+  });
+
+  it('a part the School casts by size reads in lower case in a sentence, the Cabaret keeping its capital; a role keeps its name', () => {
+    expect(partWords('A Leading Part In A New Play')).toBe('a leading part in a new play');
+    expect(partWords('An Understudy In The Company')).toBe('an understudy in the company');
+    expect(partWords(CABARET_RUN.part)).toBe('a part in a Cabaret show');
+    expect(partWords('Konstantin')).toBe('Konstantin');
+    expect(partWords('The Bride')).toBe('The Bride');
   });
 
   it('a classmate’s request for help is titled as the other moments are', () => {

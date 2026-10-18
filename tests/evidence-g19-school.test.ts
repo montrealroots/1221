@@ -635,7 +635,8 @@ describe('school.work_note', () => {
     expect(looking).toHaveLength(1);
     const answered = notes.filter((n) => n.focus.kind === 'craft' && n.taken).length;
     const learned = notes.filter((n) => n.outcome === 'learned').length;
-    expect(looking[0]!.body).toContain(`${TITLE}: ${calls.filter((c) => c.status === 'done').length} calls answered of ${calls.length}; ${given.filter((n) => n.taken).length} of ${given.length} notes taken${answered ? `, ${answered} answered in the work` : ''}${learned ? `, ${learned} worked and learned from without moving ${learned === 1 ? 'it' : 'them'}` : ''}; the dress ${proc(sim).dress}.`);
+    const [done, took, dress] = [calls.filter((c) => c.status === 'done').length, given.filter((n) => n.taken).length, proc(sim).dress];
+    expect(looking[0]!.body).toContain(`${TITLE}: ${done === calls.length ? `you answered all ${calls.length} calls` : `you answered ${done || 'none'} of your ${calls.length} calls`}. The director gave you ${given.length} notes. You took ${took || 'none'}${took && answered ? `, ${answered === took ? 'all' : answered} of them answered in the work` : ''}${learned ? `, and worked on ${learned} that didn’t move` : ''}. The dress rehearsal was ${dress === 'off' ? 'an off night' : dress}.`);
     expect(looking[0]!.body).toContain('What’s still open goes with you into class.');
     // Each craft note not taken, in the class's ledger as the part of a scene's preparation that answers it.
     const ledger = notesOf(courseworkOf(sim, sim.player)!);
