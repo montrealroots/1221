@@ -1310,7 +1310,7 @@ if (DIR && existsSync(`${DIR}/roundups.json`)) {
       // The table's own card. (A `has` filter reads its locator inside each card, where the nth table isn't there.)
       const panel = t.locator('xpath=ancestor::section[contains(concat(" ", normalize-space(@class), " "), " card ")][1]');
       const said = (await panel.innerText()).replace(/\s+/g, ' ');
-      must(/with the grain of the scene, it asks less/.test(said), `no rehearsed-in mark said for the side that suits it: ${said.slice(0, 300)}`);
+      must(/it suits the scene, so it asks less/.test(said), `no rehearsed-in mark said for the side that suits it: ${said.slice(0, 300)}`);
       await panel.getByRole('button', { name: /^(Play It This Way|Change How You Play It)$/ }).first().click(); await wait(1200); await settleDialogs();
       picked = rowText;
     }
@@ -1545,7 +1545,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     must(ex === 'suits' && re !== 'suits', `Melodrama’s scene: expansive ${ex}, restrained ${re}`);
     await briefPane().locator('input[type=radio][name="axis-scale"]').nth(1).check(); await wait(300);
     const mark = (await briefPane().innerText()).match(/This choice is complete once it’s rehearsed to (\d+)%: ([^.]+)/);
-    must(mark && Number(mark[1]) < 90 && /with the grain/.test(mark[2]), `the mark isn’t said lower with the grain: ${mark?.[0]}`);
+    must(mark && Number(mark[1]) < 90 && /it suits the scene, so it asks less/.test(mark[2]), `the mark isn’t said lower with the grain: ${mark?.[0]}`);
     await briefButton(/^Play It This Way$/);
     await briefButton(/^Rehearse It On Your Feet/);
     await briefButton(/^Rehearse It On Your Feet/);
@@ -1578,7 +1578,7 @@ if (DIR && existsSync(`${DIR}/lien.json`)) {
     must(/· Filed\./.test(said) && /recorded in the town clerk/.test(said), `lien said: ${said.slice(0, 200)}`);
     const ask = page.getByRole('button', { name: /^Ask For Its Release$/ }).first();
     must(await ask.isDisabled(), 'release offered before it’s paid');
-    const why = page.getByText(/once the balance it secures is paid in full/).first();
+    const why = page.getByText(/once what it was filed for is paid in full/).first();
     must(await why.count(), 'grayed with no reason on the screen');
     return `${said.slice(0, 120)} / ${(await why.innerText()).slice(0, 120)}`;
   });
