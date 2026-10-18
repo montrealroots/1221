@@ -839,7 +839,8 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
     const optWords = new Set((rec.monthly as { opt: string }[]).map((m) => m.opt.replace(/[A-Z][a-z]+ \d+, \d{4}/g, 'DATE')));
     if (citizen && [...optWords].some((w) => !w.includes('citizen'))) fails.push(`a citizen's OPT refusal: ${[...optWords].join(' | ')}`);
     const left = ['dismissed', 'withdrawn', 'withheld'].includes(String(e.standing));
-    if (!citizen && left && !(rec.monthly as { opt: string; standing?: string }[]).filter((m) => m.standing === e.standing).every((m) => m.opt.includes('left without it'))) fails.push('OPT not refused after leaving without the degree');
+    // The refusal's own words (`optRefusal`): "you left without one" from 2026-10-17 (brief 14), "you left without it" until then.
+    if (!citizen && left && !(rec.monthly as { opt: string; standing?: string }[]).filter((m) => m.standing === e.standing).every((m) => m.opt.includes('you left without one'))) fails.push('OPT not refused after leaving without the degree');
     const applied = rec.acts.filter((x) => x.includes('documents.apply_opt') && !x.includes('refused'));
     const issued = has(rec, 'OPT Approved');
     if (applied.length && !issued.length && e.on && String(e.on) > '2029-08-01') fails.push('OPT applied for and never decided');
