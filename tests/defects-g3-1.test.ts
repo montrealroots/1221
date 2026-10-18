@@ -104,7 +104,7 @@ describe('the traits on the Player Profile', () => {
 });
 
 describe('Study It and Study The Genre', () => {
-  const withOf = (g: string) => { const w = playOfGenre(g); return w ? `${w.title}${w.by ? `, by ${w.by}` : ''}` : 'a film of the kind'; };
+  const withOf = (g: string) => { const w = playOfGenre(g); return w ? `${w.title}${w.by ? `, by ${w.by}` : ''}` : 'a film of its kind'; };
   const familiarity = (sim: Simulation, g: string) => sim.player.engagement?.byGenre[g]?.familiarity ?? 0;
 
   it('on the Profile, say the work studied and the familiarity it came to', () => {
@@ -134,8 +134,8 @@ describe('Study It and Study The Genre', () => {
       said.push(h.toasts[0]!.message);
     }
     // The work studied is the genre's own: a play for one, a film of the kind for the other.
-    expect(said[0]).not.toContain('a film of the kind');
-    expect(said[1]).toContain('a film of the kind');
+    expect(said[0]).not.toContain('a film of its kind');
+    expect(said[1]).toContain('a film of its kind');
   });
 });
 
@@ -155,7 +155,7 @@ describe('a brief’s What To Work On', () => {
     const html = pane(sim, 'drama', 'brief-drama');
     expect(html).not.toContain('data-practice="condition:');
     expect(html).not.toContain('>What To Work On<');
-    expect(html).not.toContain('(0% of the work)');
+    expect(html).not.toContain('(0% of what its tape is judged on)');
   });
 
   it('still names an ability or technique that cost the work, with its practice', () => {

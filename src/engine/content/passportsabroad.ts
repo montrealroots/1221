@@ -52,18 +52,18 @@ export interface AbroadTerms {
 export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
   GB: {
     fee: 116.5, currency: 'GBP', days: 21, daysEstimated: true, expedite: null,
-    basis: 'An adult passport applied for online from outside the UK: £116.50 from 8 April 2026 (£130 on paper). Fast Track and the other urgent services are for applicants in the UK.',
-    assumed: ['HM Passport Office publishes no turnaround from overseas: SLATE takes its three weeks at home.'],
+    basis: 'An adult passport applied for online from outside the UK: £116.50 from April 8, 2026 (£130 on paper). Fast Track and the other urgent services are for applicants in the UK.',
+    assumed: ['HM Passport Office publishes no turnaround from overseas, so the game uses its three weeks at home.'],
   },
   CA: {
     fee: 163.5, currency: 'CAD', days: 28, daysEstimated: false, expedite: null,
     basis: 'From the United States, the fee in Canada (only outside Canada and the US is it higher), and a standard of 20 business days for an application mailed from the US, mailing aside.',
-    assumed: ['Canada’s urgent and express services are given at its passport offices in Canada: SLATE offers none from New Haven, the research not saying either way.', '20 business days taken as 28 days.'],
+    assumed: ['Canada’s urgent and express services are given at its passport offices in Canada. Whether they’re offered from abroad wasn’t found, so the game offers none from New Haven.', 'The 20 business days are taken as 28 days.'],
   },
   IE: {
     fee: 90, currency: 'EUR', days: 28, daysEstimated: false, expedite: null,
     basis: 'Passport Online from anywhere at the adult €75, with €15 postage for an applicant living outside Ireland, in the same turnaround.',
-    assumed: ['Same-day renewal is at a passport office in Ireland, and the urgent renewal found abroad is the London embassy’s: none from the US.', 'Postage from abroad takes longer: not counted.'],
+    assumed: ['Same-day renewal is at a passport office in Ireland, and the only urgent renewal found abroad is the London embassy’s, so none is offered from the US.', 'Postage from abroad takes longer, and that isn’t counted.'],
   },
   // The consular fee schedule (stjornarradid.is, Gjaldskrá fyrir verk borgaraþjónustu, read 2026-10-17): an adult of 18
   // to 66 pays the fee in Iceland, 19,000 ISK (USD 148 at December 2025's monthly rate), and express 39,200 ISK in all
@@ -72,22 +72,22 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
   IS: {
     fee: 19000, currency: 'ISK', days: 6, daysEstimated: true, expedite: { extra: 20200, days: 2, note: 'Express, 39,200 ISK in all' },
     basis: 'At the Embassy of Iceland in Washington, the only post in the US that takes it, at the fee in Iceland: 19,000 ISK, or 39,200 ISK for express, in dollars at the month’s rate; collected there or shipped.',
-    assumed: ['Registers Iceland’s four business days have the delivery added, which isn’t published: SLATE takes the days in Iceland, and express’s two.'],
+    assumed: ['Registers Iceland’s four business days don’t include delivery, and the time for delivery isn’t published, so the game uses the days in Iceland: four, or two for express.'],
   },
   DE: {
     fee: 106, youngFee: 73.5, currency: 'EUR', days: 42, daysEstimated: false, expedite: null,
     basis: 'In person at the competent German mission, 36 EUR over the fee at home (PassV § 27(3)): 106 EUR from 24, 73.50 EUR under it; four to six weeks, the passport traveling from Berlin to the mission.',
-    assumed: ['Express shortens only production abroad, not the journey to the mission: SLATE offers none.'],
+    assumed: ['Express shortens only production abroad, not the journey to the mission, so the game offers none.'],
   },
   FR: {
     fee: 96, currency: 'EUR', days: 21, daysEstimated: true, expedite: null,
     basis: 'At the embassy or a consulate, the adult passport 96 EUR.',
-    assumed: ['No processing time is published abroad: SLATE’s three weeks, as at home.'],
+    assumed: ['No processing time is published abroad, so the game uses three weeks, as at home.'],
   },
   ES: {
     fee: 30, currency: 'EUR', days: 21, daysEstimated: true, expedite: null,
     basis: 'At the consulate, for a Spaniard registered there (Registro de Matrícula Consular), the same 30 EUR; not issued on the spot, about three weeks on average.',
-    assumed: ['SLATE takes a student as registered with the consulate in New York.'],
+    assumed: ['You’re taken to be registered with the consulate in New York.'],
   },
   // MOFA Ordinance 4 of 2006 on passport fees abroad (国外における旅券手数料の額を定める省令), as amended by MOFA Ordinance
   // 19 of 2026, promulgated 24 June 2026, in force for applications from 1 July 2026, its table's row for the United
@@ -98,18 +98,18 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
   // own rate, which came to the same $62.00, and said the figure was its own.
   JP: {
     fee: 62, currency: 'USD', days: 30, daysEstimated: true, expedite: null,
-    basis: 'At a Japanese embassy or consulate in the US, on paper: US$62 from 1 July 2026, the fee MOFA’s ordinance on passport fees abroad sets for the United States (US$60 applied for online); about a month, the passport made in Japan.',
+    basis: 'At a Japanese embassy or consulate in the US, on paper: US$62 from July 1, 2026, the fee MOFA’s ordinance on passport fees abroad sets for the United States (US$60 applied for online); about a month, the passport made in Japan.',
     assumed: [],
   },
   KR: {
     fee: 52, currency: 'USD', days: 30, daysEstimated: true, expedite: null,
     basis: 'At a Korean embassy or consulate, USD 52 for a ten-year passport of 58 pages; made in Korea and shipped.',
-    assumed: ['The mission’s time wasn’t collected, only that it’s longer than at home: SLATE’s 30 days.'],
+    assumed: ['The mission’s time wasn’t collected. It’s longer than at home, so the game uses 30 days.'],
   },
   MX: {
     fee: 209, currency: 'USD', days: 0, daysEstimated: true, expedite: null,
     basis: 'By appointment at a consulate, paid in US dollars: USD 209 for ten years (the Consulate General in Atlanta’s figures for 2026).',
-    assumed: ['Whether a consulate hands it over at the appointment wasn’t found: SLATE does, as Mexico’s offices do at home.'],
+    assumed: ['Whether a consulate hands it over at the appointment wasn’t found. In the game it does, as Mexico’s offices do at home.'],
   },
   AU: {
     fee: 611, currency: 'AUD', days: 42, daysEstimated: false, expedite: null,
@@ -122,8 +122,8 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
   // 2026-10-17 SLATE charged the Polícia Federal's R$257.25 at home.
   BR: {
     fee: 60, currency: 'USD', days: 8, daysEstimated: true, expedite: null,
-    basis: 'Issued by Brazilian embassies and consulates through e-consular, at the consular fee from 1 June 2026: 60 reais-ouro, a real-ouro being a dollar, so US$60.',
-    assumed: ['The consulate’s time wasn’t found: SLATE takes the days at home.', 'The Polícia Federal’s urgent service isn’t consular: none offered.'],
+    basis: 'Issued by Brazilian embassies and consulates through e-consular, at the consular fee from June 1, 2026: 60 reais-ouro, a real-ouro being a dollar, so US$60.',
+    assumed: ['The consulate’s time wasn’t found, so the game uses the days at home.', 'The Polícia Federal’s urgent service isn’t given at consulates, so none is offered.'],
   },
   // Read when it's asked for, so a change to `NZ_FROM_ABROAD` reaches the screen and the command alike (from 2026-10-17:
   // until then its figures were written here, NZ$247 and NZ$247 more, GST in both, the same as `nzTerms` gives by
@@ -134,8 +134,8 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
   // service. Until 2026-10-17 SLATE took the embassy in Ireland's for it: €140 in about five weeks, and €165 urgent.
   LV: {
     fee: 140, youngFee: 115, currency: 'EUR', days: 56, daysEstimated: false, expedite: null,
-    basis: 'In person at the Embassy of Latvia in Washington, at its own fees from 1 May 2026: €140 (€115 under 20), in about eight weeks on average; no urgent service.',
-    assumed: ['Shipment by FedEx, €35, isn’t charged: SLATE takes the passport collected at the embassy, where it’s applied for in person.'],
+    basis: 'In person at the Embassy of Latvia in Washington, at its own fees from May 1, 2026: €140 (€115 under 20), in about eight weeks on average; no urgent service.',
+    assumed: ['Shipment by FedEx, €35, isn’t charged: you’re taken to collect the passport at the embassy, where you apply in person.'],
   },
 };
 
@@ -171,13 +171,13 @@ function nzTerms(): AbroadTerms {
   const gst = NZ_FROM_ABROAD.gstCharged;
   return {
     fee: nzFee(NZ_FROM_ABROAD.feeBeforeGst), currency: 'NZD', days: 28, daysEstimated: false,
-    expedite: { extra: nzFee(NZ_FROM_ABROAD.urgentBeforeGst), days: 5, note: 'Urgent service, its fee from overseas SLATE’s assumption' },
-    basis: `Online to DIA from overseas: NZ$${NZ_FROM_ABROAD.feeBeforeGst.toFixed(2)} before GST, NZ$${(NZ_FROM_ABROAD.feeBeforeGst * (1 + NZ_FROM_ABROAD.gstRate)).toFixed(2)} with it, from 2 May 2025.`,
+    expedite: { extra: nzFee(NZ_FROM_ABROAD.urgentBeforeGst), days: 5, note: 'Urgent service, its fee from overseas assumed' },
+    basis: `Online to DIA from overseas: NZ$${NZ_FROM_ABROAD.feeBeforeGst.toFixed(2)} before GST, NZ$${(NZ_FROM_ABROAD.feeBeforeGst * (1 + NZ_FROM_ABROAD.gstRate)).toFixed(2)} with it, from May 2, 2025.`,
     assumed: [
       gst
-        ? 'SLATE’s assumption, not DIA’s published policy: GST is charged. DIA charges none to a non-resident for New Zealand tax applying online, and whether you’re one turns on a home in New Zealand that SLATE doesn’t keep.'
-        : 'SLATE’s assumption, not DIA’s published policy: no GST is charged, taking you as a non-resident for New Zealand tax.',
-      'SLATE’s assumption: the urgent fee from overseas is the standard fee, as DIA’s 2022 schedule set it for an application online.',
+        ? 'GST is charged. DIA charges none to a non-resident for New Zealand tax applying online, and whether you’re one turns on a home in New Zealand, which the game doesn’t keep.'
+        : 'No GST is charged, as you’re taken to be a non-resident for New Zealand tax.',
+      'The urgent fee from overseas is the standard fee, as DIA’s 2022 schedule set it for an application online.',
       'Courier delivery, NZD 7 to 78, isn’t charged.',
     ],
   };

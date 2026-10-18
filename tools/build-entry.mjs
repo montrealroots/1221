@@ -3,9 +3,19 @@
 // the research's own uncertainties. Run: node tools/build-entry.mjs docs/research/world/research-entry.json
 import { readFileSync, writeFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
+import { gameDates } from './research-dates.mjs';
 
-/** A note without the "visa-exempt" it opens on: the status already says it, and eighty-odd notes opening on one word read as a form. */
-const noteOf = (note) => { const rest = String(note ?? '').replace(/^visa[- ](?:exempt|free)[;,.:]?\s*/i, ''); return rest ? rest[0].toUpperCase() + rest.slice(1) : 'No visa.'; };
+/**
+ * A note without the "visa-exempt" it opens on: the status already says it, and eighty-odd notes opening on one word read
+ * as a form. Until 2026-10-17 (brief 14) the word wasn't held to a word's end, so "Visa exemption for short-term stay"
+ * lost "Visa exempt" and showed as "Ion for short-term stay"; and the research's "Own nationals." is said to the player,
+ * who is one.
+ */
+const noteOf = (note) => {
+  const rest = String(note ?? '').replace(/^visa[- ](?:exempt|free)\b[;,.:]?\s*/i, '');
+  if (rest === 'Own nationals.') return 'You’re one of its citizens.';
+  return rest ? rest[0].toUpperCase() + rest.slice(1) : 'No visa.';
+};
 const j = JSON.parse(readFileSync(process.argv[2], 'utf8'));
 // The destination's passport validity rule, structured from the research's words (see its passportRule text).
 const PASSPORT = {
@@ -45,7 +55,9 @@ for (const [dest, d] of Object.entries(j.destinations)) {
       if (/eVisitor/.test(want) && auths.eVisitor) authorization = 'eVisitor';
       if (!authorization) throw new Error(`${dest} ${iso}: no authorization for "${want}"`);
     }
-    citizens[iso] = { status: c.status, ...(authorization ? { authorization } : {}), ...(c.status === 'visa' ? { visa: c.authorization } : {}), maxDays: c.maxDays, windowDays: c.windowDays, note: noteOf(c.note), source: c.source };
+    // The note is shown under Going Abroad, so its dates are the game's (from 2026-10-17, brief 14: until then "on or
+    // after 8 Jan 2025"); the research keeps its own.
+    citizens[iso] = { status: c.status, ...(authorization ? { authorization } : {}), ...(c.status === 'visa' ? { visa: c.authorization } : {}), maxDays: c.maxDays, windowDays: c.windowDays, note: gameDates(noteOf(c.note)), source: c.source };
   }
   out[dest] = { authority: d.authority, passport: { ...PASSPORT[dest], rule: d.passportRule }, authorizations: auths, citizens };
 }

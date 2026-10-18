@@ -5187,7 +5187,7 @@
           },
           {
             "kind": "fixture",
-            "where": "tests/school-journey-gaps.test.ts:152; tests/student-experience.test.ts:130; tests/defects-g8-5.test.ts:117",
+            "where": "tests/school-journey-gaps.test.ts:152; tests/student-experience.test.ts:130; tests/defects-g8-5.test.ts:119",
             "reachesAction": false,
             "checksConsequence": true,
             "independent": true,
@@ -9894,7 +9894,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/journey-class-left-behind.test.ts:26, defects-r3-1.test.ts:146, defects-g8-3.test.ts:180, papers-transitions.test.ts:42, defects-g8-5.test.ts:136,149",
+            "where": "tests/journey-class-left-behind.test.ts:26, defects-r3-1.test.ts:146, defects-g8-3.test.ts:180, papers-transitions.test.ts:42, defects-g8-5.test.ts:138,151",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,

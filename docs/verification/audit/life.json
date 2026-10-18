@@ -27,7 +27,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:121-143 'advances the world by exactly the hours slept', 'restores energy and pays down sleep debt', 'accrues debt when the night is short'",
+            "where": "tests/simulation.test.ts:122-144 'advances the world by exactly the hours slept', 'restores energy and pays down sleep debt', 'accrues debt when the night is short'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -35,7 +35,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:290-306 'charges the hours up to a night booked ahead, and reads the night at the hour it starts'",
+            "where": "tests/simulation.test.ts:291-307 'charges the hours up to a night booked ahead, and reads the night at the hour it starts'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -43,7 +43,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:318-335 'sleeps a chosen night once, whether it crosses midnight, ends on it, or neither'",
+            "where": "tests/simulation.test.ts:319-336 'sleeps a chosen night once, whether it crosses midnight, ends on it, or neither'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": false,
@@ -79,7 +79,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/life-fixes.test.ts:162-166 'asks for a number of hours, and a start within the day ahead'; tests/simulation.test.ts:1141-1158, 1166-1172",
+            "where": "tests/life-fixes.test.ts:162-166 'asks for a number of hours, and a start within the day ahead'; tests/simulation.test.ts:1142-1159, 1169-1175",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -1597,7 +1597,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/tutorial.test.ts:100-121, 150-164",
+            "where": "tests/tutorial.test.ts:100-122, 151-165",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true
@@ -1883,7 +1883,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/tutorial.test.ts:107-183",
+            "where": "tests/tutorial.test.ts:108-184",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -1913,7 +1913,7 @@
           },
           {
             "kind": "inspection",
-            "where": "tests/guide.test.ts:155-160 'runs no command and moves no clock'",
+            "where": "tests/guide.test.ts:175-180 'runs no command and moves no clock'",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": true,
@@ -1921,7 +1921,7 @@
           },
           {
             "kind": "fixture",
-            "where": "tests/guide.test.ts:165-178",
+            "where": "tests/guide.test.ts:185-198",
             "reachesAction": false,
             "checksConsequence": true,
             "independent": true
@@ -3210,7 +3210,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:165-176",
+            "where": "tests/defects-g8-5.test.ts:167-178",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -3289,7 +3289,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:132-153",
+            "where": "tests/defects-g8-5.test.ts:134-155",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -4401,7 +4401,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:81-92",
+            "where": "tests/defects-g8-5.test.ts:81-94",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -4409,7 +4409,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:94-100",
+            "where": "tests/defects-g8-5.test.ts:96-102",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -4417,7 +4417,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:102-111",
+            "where": "tests/defects-g8-5.test.ts:104-113",
             "reachesAction": false,
             "checksConsequence": false,
             "independent": true,
@@ -4434,7 +4434,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "defects-g8-5.test.ts:102-111 renders the button and its title; no press; no built-app step."
+          "have": "defects-g8-5.test.ts:104-113 renders the button and its title; no press; no built-app step."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -4495,7 +4495,7 @@
           "problems": [
             "All four gaps are closed on the student. Fill A Longer Supply, 90 Days is pressed on rendered Papers and takes $30 in one posting (three of Yale's $10 fills, a literal), with supplyUntil exact. The refills are spared until 16 November across a reload, against a twin filling monthly. With two conditions and the second unpayable, the whole fill is refused and rolled back (no posting, balance unchanged, neither supply set). keptUp's supplyUntil branch is read by the health week: a twin out of medicine loses 3 morale more (CHRONIC.untreated, a literal), and Papers shows Out Of Medicine against Kept Up.",
             "The claim's sparing of asthma emergencies while a supply lasts is not tested. The review didn't name it.",
-            "The review's weak tests are still in the gate: commands-kept.test.ts:137-139 (toBeGreaterThanOrEqual(0) and if (r.paid > 0)) and defects-g8-5.test.ts:99 (paid >= 0). They are superseded, not fixed."
+            "The review's weak tests are still in the gate: commands-kept.test.ts:137-139 (toBeGreaterThanOrEqual(0) and if (r.paid > 0)) and defects-g8-5.test.ts:101 (paid >= 0). They are superseded, not fixed."
           ],
           "weakTests": []
         },
@@ -4772,7 +4772,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:218-226; tests/defects-g8-6.test.ts:184-194",
+            "where": "tests/defects-g8-5.test.ts:220-228; tests/defects-g8-6.test.ts:184-194",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -4781,7 +4781,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "defects-g8-5.test.ts:228-236 renders the Therapist select. Begin A Course is never pressed (guide-examples only matches the guide's words). No built-app step."
+          "have": "defects-g8-5.test.ts:230-238 renders the Therapist select. Begin A Course is never pressed (guide-examples only matches the guide's words). No built-app step."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -5323,7 +5323,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:258-267 'charges nothing at midnight...'",
+            "where": "tests/simulation.test.ts:259-268 'charges nothing at midnight...'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": true,
@@ -5354,7 +5354,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:337-348, 805-847",
+            "where": "tests/simulation.test.ts:338-349, 806-848",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true
@@ -5438,7 +5438,7 @@
             "bodyDay beyond starvation: an order's 134 kcal goes onto the scale at 134/(23.9x365/ln2) kg, about 10.6 g, within 1 g, and not again the next night. The figures come from the cited sources.",
             "Fitness decays 0.18 a day (50, 49.82, 49.64, 49.46), and Groceries post at each midnight.",
             "Gap 1, the weak cited tests, closes only when the claimCorrection is applied. docs/verification/audit/life.json still cites simulation.test 'charges nothing at midnight' and the direct settleTheBody fixture. The replacement citations exist: defects-r3a-1, the simulation.test hygiene toBe(82), wellbeing-bites 'a year on autopilot', body.test, mortality.test.",
-            "Hygiene is checked only as >= 82 in this file. The exact floor is held by simulation.test.ts:343."
+            "Hygiene is checked only as >= 82 in this file. The exact floor is held by simulation.test.ts:344."
           ],
           "weakTests": [
             {
@@ -6486,7 +6486,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:156-187",
+            "where": "tests/defects-g8-5.test.ts:158-189",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -6768,7 +6768,7 @@
         ],
         "ui": {
           "needed": true,
-          "have": "tests/defects-g8-5.test.ts:226-235 renders Papers' Therapist select. The end notices are asserted in engine state (guide play). The session's own notices are not rendered."
+          "have": "tests/defects-g8-5.test.ts:228-237 renders Papers' Therapist select. The end notices are asserted in engine state (guide play). The session's own notices are not rendered."
         },
         "verdict": "partial",
         "disposition": "missing-evidence",
@@ -7243,7 +7243,7 @@
       "downstream": "readiness; workout SPENT gate; practice/coursework SPENT; applyElapsedWellbeing empty->stress",
       "persistent": "",
       "explanation": "wellbeing.tsx",
-      "tests": "tests/evidence-g06-life.test.ts energy ‘PLAYER JOURNEY: fourteen hours by the clock leave the 82 a new life wakes with at 40…’, ‘holds the workout’s gate at 25 as the clock reaches it…’, ‘a night chosen at 3:30 AM puts back 8 × quality × 13.5 × 0.995…’ (the debt paid down not read), ‘a stay and an emergency drawn by the health week take CARE’s 40 and 20 against a twin…’, ‘the flu drawn by the health week in its season takes CARE’s 30 against a twin…’, ‘readiness reads it…’; simulation.test.ts:189-256 (the drain by the minute and in one jump); looking-after.test.ts ‘refuses ${name}, and leaves the save as it was’; checking less: personality.test.ts ‘charges running on empty for the hours spent there…’ (applyElapsedWellbeing on a person built by hand), wellbeing-bites.test.ts",
+      "tests": "tests/evidence-g06-life.test.ts energy ‘PLAYER JOURNEY: fourteen hours by the clock leave the 82 a new life wakes with at 40…’, ‘holds the workout’s gate at 25 as the clock reaches it…’, ‘a night chosen at 3:30 AM puts back 8 × quality × 13.5 × 0.995…’ (the debt paid down not read), ‘a stay and an emergency drawn by the health week take CARE’s 40 and 20 against a twin…’, ‘the flu drawn by the health week in its season takes CARE’s 30 against a twin…’, ‘readiness reads it…’; simulation.test.ts:190-257 (the drain by the minute and in one jump); looking-after.test.ts ‘refuses ${name}, and leaves the save as it was’; checking less: personality.test.ts ‘charges running on empty for the hours spent there…’ (applyElapsedWellbeing on a person built by hand), wellbeing-bites.test.ts",
       "status": "verified",
       "issue": "",
       "review": {
@@ -7254,7 +7254,7 @@
         "evidence": [
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:189-256",
+            "where": "tests/simulation.test.ts:190-257",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -7262,7 +7262,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:129-136 'restores energy and pays down sleep debt'",
+            "where": "tests/simulation.test.ts:130-137 'restores energy and pays down sleep debt'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": false,
@@ -7419,14 +7419,14 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:202-245, 925-950",
+            "where": "tests/simulation.test.ts:203-246, 926-951",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:138-143 'accrues debt when the night is short'",
+            "where": "tests/simulation.test.ts:139-144 'accrues debt when the night is short'",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": false,
@@ -7523,7 +7523,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:351-372 'costs the same in one-second ticks...'",
+            "where": "tests/simulation.test.ts:352-373 'costs the same in one-second ticks...'",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": false,
@@ -7943,7 +7943,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:416",
+            "where": "tests/simulation.test.ts:417",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -8082,7 +8082,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:337-349",
+            "where": "tests/simulation.test.ts:338-350",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,
@@ -8260,7 +8260,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/simulation.test.ts:351-372",
+            "where": "tests/simulation.test.ts:352-373",
             "reachesAction": true,
             "checksConsequence": false,
             "independent": false,
@@ -9417,7 +9417,7 @@
           },
           {
             "kind": "command",
-            "where": "tests/defects-g8-5.test.ts:80-108",
+            "where": "tests/defects-g8-5.test.ts:80-110",
             "reachesAction": true,
             "checksConsequence": true,
             "independent": true,

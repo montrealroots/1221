@@ -31,7 +31,7 @@ describe('a route to residence', () => {
     expect(routeRefusal(sim, sim.player, 'CA')).toMatch(/Self-Employed Persons Program is paused/);
     expect(routeRefusal(sim, sim.player, 'IE')).toMatch(/employer’s offer/);
     expect(routeRefusal(sim, sim.player, 'US')).toMatch(/citizen/);
-    expect(residenceRefusal(sim.player, 'uk-eng-london', sim.now)).toMatch(/route to residence/);
+    expect(residenceRefusal(sim.player, 'uk-eng-london', sim.now)).toBe('Living in the United Kingdom needs permission to live there, which you don’t hold. Residence Abroad, on Papers under Permission To Work, shows any route there is.');
   });
 
   // Renamed on 2026-10-16 (inputs/renames.json): “gives Mexican temporary residence on the solvency test, and permanent
@@ -41,7 +41,7 @@ describe('a route to residence', () => {
     const sim = american('res-mx');
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0) a.balance = 0;
     // The words by hand: 11,460 UMA and 680 UMA at MXN 117.31, rounded to the peso.
-    const words = 'Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.';
+    const words = 'Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, with the card at MXN 11,140.74 a year and the consulate’s visa at US$56. Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.';
     expect(routeRefusal(sim, sim.player, 'MX')).toBe(words);
     // Six months' income past 680 UMA a month, which opened the route until 2026-10-16: the same refusal.
     const d = new Date(sim.now);
@@ -60,13 +60,13 @@ describe('a route to residence', () => {
     expect(residenceRefusal(sim.player, 'mx-cmx-mexicocity', sim.now)).toBeUndefined();
     const renew = sim.execute({ kind: 'documents.renew_residence', payload: { country: 'MX' } });
     expect(renew.error).toBe(MEXICO_RENEWAL);
-    expect(MEXICO_RENEWAL).toBe('Mexico renews temporary residence a year at a time, in the card’s last 30 days, for MXN 11,140.74. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.');
+    expect(MEXICO_RENEWAL).toBe('Mexico renews temporary residence a year at a time, in the card’s last 30 days, for MXN 11,140.74. Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.');
     expect(residenceIn(sim.player, 'MX', sim.now + 9 * MS_DAY)).toBeDefined();
     expect(residenceIn(sim.player, 'MX', sim.now + 11 * MS_DAY)).toBeUndefined();
     expect(settleRefusal(sim, sim.player, 'MX')).toMatch(/four years/);
     const card = residenceIn(sim.player, 'MX', sim.now)!;
     card.issuedAt! -= MEXICAN_RESIDENCE.permanentAfter * YEAR;
-    expect(settleRefusal(sim, sim.player, 'MX')).toBe('Mexico grants permanent residence after four years’ temporary, for MXN 13,578.96. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.');
+    expect(settleRefusal(sim, sim.player, 'MX')).toBe('Mexico grants permanent residence after four years of temporary residence, for MXN 13,578.96. Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.');
     expect(sim.execute({ kind: 'documents.settle', payload: { country: 'MX' } }).ok).toBe(false);
     expect(sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(inSave(sim, 50_000_00, 'MXN'));
   });

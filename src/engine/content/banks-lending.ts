@@ -134,49 +134,49 @@ const ES_TERM: Term = { rate: 0.0202, months: 12, called: 'Depósito a plazo fij
 export const LENDING: Readonly<Record<string, Lending>> = {
   // --- United States
   'us-chase': {
-    overdraft: { kind: 'per_item', fee: 34_00, maxPerDay: 3, graceUpTo: 50_00, nextDay: true, debitCard: 'opt_in', smallItemsFree: 5_00, ties: 'high', source: 'chase.com standard overdraft practice; Chase Debit Card Coverage, opted into or not; Chase Overdraft Assist, chase.com overdraft FAQs: no fee overdrawn by $50 or less at the end of the business day, or brought back to that by 11 PM ET the next business day; Chase Deposit Account Agreement eff. 2026-06-14: no fee on an item of $5 or less, debits posted by time, ties highest first' },
-    term: { rate: 0.035, months: 7, called: 'CD', source: 'Chase 7-month CD, via fortune.com, 24 September 2026' },
+    overdraft: { kind: 'per_item', fee: 34_00, maxPerDay: 3, graceUpTo: 50_00, nextDay: true, debitCard: 'opt_in', smallItemsFree: 5_00, ties: 'high', source: 'chase.com standard overdraft practice; Chase Debit Card Coverage, opted into or not; Chase Overdraft Assist, chase.com overdraft FAQs: no fee overdrawn by $50 or less at the end of the business day, or brought back to that by 11 PM ET the next business day; Chase Deposit Account Agreement eff. June 14, 2026: no fee on an item of $5 or less, debits posted by time, ties highest first' },
+    term: { rate: 0.035, months: 7, called: 'CD', source: 'Chase 7-month CD, via fortune.com, September 24, 2026' },
   },
   'us-bank-of-america': {
-    overdraft: { kind: 'per_item', fee: 10_00, maxPerDay: 2, graceUpTo: 1_00, debitCard: 'never', smallItemsFree: 1_00, ties: 'high', source: 'NerdWallet review of Bank of America; bankofamerica.com: everyday debit card purchases and ATM withdrawals aren’t authorized into an overdraft; Clarity Statement 08/2026: $10 an item, two a day at most, none overdrawn by $1 or less or on an item of $1 or less, electronic items posted highest first' },
-    term: { rate: 0.0375, months: 7, called: 'CD', source: 'Bank of America 7-month CD, via fortune.com, 24 September 2026' },
+    overdraft: { kind: 'per_item', fee: 10_00, maxPerDay: 2, graceUpTo: 1_00, debitCard: 'never', smallItemsFree: 1_00, ties: 'high', source: 'NerdWallet review of Bank of America; bankofamerica.com: everyday debit card purchases and ATM withdrawals aren’t authorized into an overdraft; Clarity Statement, August 2026: $10 an item, two a day at most, none overdrawn by $1 or less or on an item of $1 or less, electronic items posted highest first' },
+    term: { rate: 0.0375, months: 7, called: 'CD', source: 'Bank of America 7-month CD, via fortune.com, September 24, 2026' },
   },
   'us-wells-fargo': {
-    overdraft: { kind: 'per_item', fee: 35_00, maxPerDay: 3, graceUpTo: 10_00, nextDay: true, debitCard: 'opt_in', smallItemsFree: 10_00, ties: 'low', source: 'wellsfargo.com overdraft services; Debit Card Overdraft Service, opted into or not; Extra Day Grace Period: no fees if the balance is back by 11:59 PM ET the next business day; Wells Fargo Deposit Account Agreement eff. 2026-07-28: no fee on an item of $10 or less, items posted by time, ties lowest first' },
-    loan: { from: 0.0674, to: 0.2674, minAmount: 3_000_00, maxAmount: 100_000_00, minMonths: 12, maxMonths: 84, customerMonths: 12, source: 'wellsfargo.com personal loans: 6.74% to 26.74% APR, $3,000 to $100,000, 12 to 84 months, for customers of 12 months or more (research-tax-switch-lending.json, 2026-10-10)' },
-    term: { rate: 0.0389, months: 11, called: 'CD', source: 'Wells Fargo 11-month CD, via fortune.com, 24 September 2026' },
+    overdraft: { kind: 'per_item', fee: 35_00, maxPerDay: 3, graceUpTo: 10_00, nextDay: true, debitCard: 'opt_in', smallItemsFree: 10_00, ties: 'low', source: 'wellsfargo.com overdraft services; Debit Card Overdraft Service, opted into or not; Extra Day Grace Period: no fees if the balance is back by 11:59 PM ET the next business day; Wells Fargo Deposit Account Agreement eff. July 28, 2026: no fee on an item of $10 or less, items posted by time, ties lowest first' },
+    loan: { from: 0.0674, to: 0.2674, minAmount: 3_000_00, maxAmount: 100_000_00, minMonths: 12, maxMonths: 84, customerMonths: 12, source: 'wellsfargo.com personal loans: 6.74% to 26.74% APR, $3,000 to $100,000, 12 to 84 months, for customers of 12 months or more (read October 10, 2026)' },
+    term: { rate: 0.0389, months: 11, called: 'CD', source: 'Wells Fargo 11-month CD, via fortune.com, September 24, 2026' },
   },
   'us-citi': {
-    loan: { from: 0.1024, to: 0.1849, minAmount: 2_000_00, maxAmount: 50_000_00, newCustomerMax: 30_000_00, source: 'citi.com personal loans: 10.24% to 18.49% APR; $2,000 to $30,000 for a new customer, to $50,000 for an existing one (research-tax-switch-lending.json, 2026-10-10)' },
-    term: { rate: 0.0425, months: 12, called: 'CD', source: 'Citi 12-month CD, via fortune.com, 24 September 2026' },
+    loan: { from: 0.1024, to: 0.1849, minAmount: 2_000_00, maxAmount: 50_000_00, newCustomerMax: 30_000_00, source: 'citi.com personal loans: 10.24% to 18.49% APR; $2,000 to $30,000 for a new customer, to $50,000 for an existing one (read October 10, 2026)' },
+    term: { rate: 0.0425, months: 12, called: 'CD', source: 'Citi 12-month CD, via fortune.com, September 24, 2026' },
   },
   'us-capital-one': {
     // Capital One's own name sells no personal loan; since it bought Discover (May 2025) it lends through Discover
     // Personal Loans, "a division of Capital One, N.A.". Discover doesn't publish its APR on its pages; Credible's
     // July 2026 figure is used and said so. Not for a post-secondary education expense, by Discover's terms.
-    loan: { from: 0.0799, to: 0.2499, minAmount: 2_500_00, maxAmount: 40_000_00, minMonths: 36, maxMonths: 84, newCustomerMax: 40_000_00, lender: 'Discover Personal Loans', rateSource: 'third-party', minIncome: 25_000_00, ssn: true, notFor: ['education'], source: 'discover.com/personal-loans (a division of Capital One, N.A.): $2,500 to $40,000, 36 to 84 months, no fees, a Social Security number and $25,000 of income, not for education expenses; APR 7.99% to 24.99% per Credible, July 2026 (research-switch-loans-plans.json)' },
-    term: { rate: 0.043, months: 11, called: 'CD', source: 'Capital One 11-month CD, via fortune.com, 24 September 2026' },
+    loan: { from: 0.0799, to: 0.2499, minAmount: 2_500_00, maxAmount: 40_000_00, minMonths: 36, maxMonths: 84, newCustomerMax: 40_000_00, lender: 'Discover Personal Loans', rateSource: 'third-party', minIncome: 25_000_00, ssn: true, notFor: ['education'], source: 'discover.com/personal-loans (a division of Capital One, N.A.): $2,500 to $40,000, 36 to 84 months, no fees, a Social Security number and $25,000 of income, not for education expenses; APR 7.99% to 24.99% per Credible, July 2026' },
+    term: { rate: 0.043, months: 11, called: 'CD', source: 'Capital One 11-month CD, via fortune.com, September 24, 2026' },
   },
   // --- Canada
   'ca-rbc': {
-    overdraft: { kind: 'arranged', rate: 0.22, monthlyFee: 5_00, minLimit: 500_00, maxLimit: 5_000_00, source: 'RBC Personal Deposit Accounts Disclosures, 3 August 2026: overdraft protection $5 a month, 22%, and no pay-per-use; $500 to $5,000 via savvynewcanadians.com' },
-    term: { rate: 0.0245, months: 12, called: 'GIC', source: 'RBC 1-year non-redeemable GIC, via wowa.ca, 24 September 2026' },
+    overdraft: { kind: 'arranged', rate: 0.22, monthlyFee: 5_00, minLimit: 500_00, maxLimit: 5_000_00, source: 'RBC Personal Deposit Accounts Disclosures, August 3, 2026: overdraft protection $5 a month, 22%, and no pay-per-use; $500 to $5,000 via savvynewcanadians.com' },
+    term: { rate: 0.0245, months: 12, called: 'GIC', source: 'RBC 1-year non-redeemable GIC, via wowa.ca, September 24, 2026' },
   },
   'ca-td': {
-    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, perUse: { fee: 5_00, oncePerDay: true }, minLimit: 300_00, maxLimit: 5_000_00, source: 'TD List of Services & Fees, 5 March 2026: overdraft protection $5 a month, or Pay As You Go at $5 a transaction and $5 a day at most, 21%; $300 to $5,000 via td.com' },
-    term: { rate: 0.03, months: 12, called: 'GIC', source: 'TD 1-year non-redeemable GIC, via wowa.ca, 24 September 2026' },
+    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, perUse: { fee: 5_00, oncePerDay: true }, minLimit: 300_00, maxLimit: 5_000_00, source: 'TD List of Services & Fees, March 5, 2026: overdraft protection $5 a month, or Pay As You Go at $5 a transaction and $5 a day at most, 21%; $300 to $5,000 via td.com' },
+    term: { rate: 0.03, months: 12, called: 'GIC', source: 'TD 1-year non-redeemable GIC, via wowa.ca, September 24, 2026' },
   },
   'ca-scotiabank': {
     overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, perUse: { fee: 5_00 }, source: 'scotiabank.com fees: overdraft protection $5 a month, or $5 each time an overdraft is created or increased, 21%' },
-    term: { rate: 0.0245, months: 12, called: 'GIC', source: 'Scotiabank 1-year non-redeemable GIC, via wowa.ca, 24 September 2026' },
+    term: { rate: 0.0245, months: 12, called: 'GIC', source: 'Scotiabank 1-year non-redeemable GIC, via wowa.ca, September 24, 2026' },
   },
   'ca-bmo': {
-    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, perUse: { fee: 5_00 }, source: 'BMO Agreements, Bank Plans and Fees, 2 June 2026: Standard overdraft protection $5 a month, Occasional $5 a use; 21% the example rate, the current one at bmo.com/rates' },
-    term: { rate: 0.03, months: 12, called: 'GIC', source: 'BMO 1-year non-redeemable GIC, via wowa.ca, 24 September 2026' },
+    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, perUse: { fee: 5_00 }, source: 'BMO Agreements, Bank Plans and Fees, June 2, 2026: Standard overdraft protection $5 a month, Occasional $5 a use; 21% the example rate, the current one at bmo.com/rates' },
+    term: { rate: 0.03, months: 12, called: 'GIC', source: 'BMO 1-year non-redeemable GIC, via wowa.ca, September 24, 2026' },
   },
   'ca-cibc': {
-    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, perUse: { fee: 5_00, oncePerDay: true }, source: 'CIBC Personal Account Service Fees, 12 March 2026: overdraft protection $5 a month, or $5 a business day an overdraft is created or increased, 21%' },
-    term: { rate: 0.0245, months: 12, called: 'GIC', source: 'CIBC 1-year non-redeemable GIC, via wowa.ca, 24 September 2026' },
+    overdraft: { kind: 'arranged', rate: 0.21, monthlyFee: 5_00, perUse: { fee: 5_00, oncePerDay: true }, source: 'CIBC Personal Account Service Fees, March 12, 2026: overdraft protection $5 a month, or $5 a business day an overdraft is created or increased, 21%' },
+    term: { rate: 0.0245, months: 12, called: 'GIC', source: 'CIBC 1-year non-redeemable GIC, via wowa.ca, September 24, 2026' },
   },
   // --- United Kingdom
   'gb-barclays': {
@@ -188,12 +188,12 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   },
   'gb-natwest': {
     overdraft: { kind: 'arranged', rate: 0.3949, source: 'natwest.com: 39.49% EAR representative' },
-    loan: { from: 0.072, minAmount: 7_500_00, maxAmount: 50_000_00, newCustomerMax: 35_000_00, source: 'NatWest: 7.2% APR representative on £7,500 to £19,950; to £50,000, and £35,000 for a new customer; the rate under £7,500 wasn’t found, so SLATE lends from there (research-switch-loans-plans.json)' },
+    loan: { from: 0.072, minAmount: 7_500_00, maxAmount: 50_000_00, newCustomerMax: 35_000_00, source: 'NatWest: 7.2% APR representative on £7,500 to £19,950; to £50,000, and £35,000 for a new customer; the rate under £7,500 wasn’t found, so the game lends from there' },
     term: { rate: 0.0411, months: 12, called: 'Fixed-Term Savings', source: 'natwest.com: 4.11% AER' },
   },
   'gb-hsbc': {
     overdraft: { kind: 'arranged', rate: 0.399, buffer: 25_00, source: 'hsbc.co.uk: 39.9% EAR above a £25 buffer' },
-    loan: { from: 0.068, to: 0.229, minAmount: 1_000_00, maxAmount: 30_000_00, newCustomerMax: 30_000_00, minIncome: 10_000_00, source: 'HSBC UK: 6.8% APR representative on £7,500 to £20,000, up to 22.9%; £1,000 to £30,000; lends to non-customers living in the UK earning £10,000 or more (research-switch-loans-plans.json)' },
+    loan: { from: 0.068, to: 0.229, minAmount: 1_000_00, maxAmount: 30_000_00, newCustomerMax: 30_000_00, minIncome: 10_000_00, source: 'HSBC UK: 6.8% APR representative on £7,500 to £20,000, up to 22.9%; £1,000 to £30,000; lends to non-customers living in the UK earning £10,000 or more' },
   },
   'gb-santander': {
     overdraft: { kind: 'arranged', rate: 0.3994, source: 'santander.co.uk: 39.94% EAR representative' },
@@ -204,7 +204,7 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   // --- Ireland
   'ie-aib': {
     overdraft: { kind: 'arranged', rate: 0.1185, yearlyFee: 25_39, source: 'aib.ie: 11.85% variable, a €25.39 facility fee' },
-    loan: { from: 0.0895, source: 'aib.ie: 8.95% APR, 22 September 2026' },
+    loan: { from: 0.0895, source: 'aib.ie: 8.95% APR, September 22, 2026' },
     term: { rate: 0.02, months: 12, called: 'Fixed Term Deposit', source: 'AIB 12-month fixed: 2.00%' },
   },
   'ie-bank-of-ireland': {
@@ -219,7 +219,7 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   },
   // --- Iceland
   'is-landsbankinn': {
-    overdraft: { kind: 'arranged', rate: 0.1575, source: 'landsbankinn.is rate decision, 1 September 2026: 15.75%' },
+    overdraft: { kind: 'arranged', rate: 0.1575, source: 'landsbankinn.is rate decision, September 1, 2026: 15.75%' },
     loan: { from: 0.103, to: 0.156, source: 'landsbankinn.is: 10.30% to 15.60% nominal, non-indexed' },
     term: { rate: 0.078, months: 12, called: 'Term Deposit', source: 'Landsbankinn 12-month fixed: 7.80%' },
   },
@@ -243,11 +243,11 @@ export const LENDING: Readonly<Record<string, Lending>> = {
     loan: FR_LOAN, term: FR_TERM,
   },
   'fr-lcl': {
-    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, rate: 0.2102, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr; 21.02% on an unauthorized overdraft, the taux débiteur of LCL’s own example (Guide tarifaire Particuliers, 1 January 2026, and its amendment of 1 July 2026)' },
+    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, rate: 0.2102, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr; 21.02% on an unauthorized overdraft, the taux débiteur of LCL’s own example (Guide tarifaire Particuliers, January 1, 2026, and its amendment of July 1, 2026)' },
     loan: FR_LOAN, term: FR_TERM,
   },
   'fr-credit-agricole': {
-    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, rate: 0.2339, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr; on an unauthorized overdraft the usury ceiling itself (Code de la consommation L314-6; Charente-Périgord’s tariffs, 1 March 2026), 23.39% for an overdraft to €3,000, the Banque de France’s figure from 1 July 2025, the latest SLATE has' },
+    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, rate: 0.2339, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr; on an unauthorized overdraft the usury ceiling itself (Code de la consommation L314-6; Charente-Périgord’s tariffs, March 1, 2026), 23.39% for an overdraft to €3,000, the Banque de France’s figure from July 1, 2025, the latest found' },
     loan: FR_LOAN, term: FR_TERM,
   },
   'fr-la-banque-postale': {
@@ -284,34 +284,34 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   'jp-mufg': {
     overdraft: { kind: 'secured', share: 0.9, max: 2_000_000_00, over: 0.005, source: 'bk.mufg.jp: 90% of time deposits up to ¥2 million, at their rate plus 0.50%' },
     loan: { from: 0.014, to: 0.146, source: 'MUFG Banquic card loan: 1.4% to 14.6%' },
-    term: { rate: 0.005, months: 12, called: '定期預金 (Time Deposit)', source: 'bk.mufg.jp: 0.50% from 3 August 2026' },
+    term: { rate: 0.005, months: 12, called: '定期預金 (Time Deposit)', source: 'bk.mufg.jp: 0.50% from August 3, 2026' },
   },
   'jp-smbc': {
     loan: { from: 0.015, to: 0.145, source: 'SMBC card loan: 1.5% to 14.5%' },
-    term: { rate: 0.005, months: 12, called: '定期預金 (Time Deposit)', source: 'smbc.co.jp: 0.50% from 3 August 2026' },
+    term: { rate: 0.005, months: 12, called: '定期預金 (Time Deposit)', source: 'smbc.co.jp: 0.50% from August 3, 2026' },
   },
   'jp-mizuho': {
     loan: { from: 0.02, to: 0.14, source: 'Mizuho card loan: 2.0% to 14.0%' },
-    term: { rate: 0.005, months: 12, called: '定期預金 (Time Deposit)', source: 'mizuhobank.co.jp: 0.50% from 3 August 2026' },
+    term: { rate: 0.005, months: 12, called: '定期預金 (Time Deposit)', source: 'mizuhobank.co.jp: 0.50% from August 3, 2026' },
   },
   'jp-resona': { loan: { from: 0.017, to: 0.14, source: 'Resona card loan: 1.70% to 14.00%' } },
   'jp-japan-post-bank': { term: { rate: 0.005, months: 12, called: '定期貯金 (Time Savings)', source: 'jp-bank.japanpost.jp: 0.500%' } },
   // --- South Korea
   'kr-kb-kookmin': {
     overdraft: { kind: 'arranged', rate: 0.05, source: 'the big five banks’ average credit-line rate (마이너스통장), August 2026' },
-    term: { rate: 0.035, months: 12, called: '정기예금 (Time Deposit)', source: 'KB 1-year: 3.5%, via biz.newdaily.co.kr, 21 September 2026' },
+    term: { rate: 0.035, months: 12, called: '정기예금 (Time Deposit)', source: 'KB 1-year: 3.5%, via biz.newdaily.co.kr, September 21, 2026' },
   },
   'kr-shinhan': {
     overdraft: { kind: 'arranged', rate: 0.05, source: 'the big five banks’ average credit-line rate, August 2026' },
-    term: { rate: 0.034, months: 12, called: '정기예금 (Time Deposit)', source: 'Shinhan 1-year: 3.4%, 21 September 2026' },
+    term: { rate: 0.034, months: 12, called: '정기예금 (Time Deposit)', source: 'Shinhan 1-year: 3.4%, September 21, 2026' },
   },
   'kr-hana': {
     overdraft: { kind: 'arranged', rate: 0.05, source: 'the big five banks’ average credit-line rate, August 2026' },
-    term: { rate: 0.033, months: 12, called: '정기예금 (Time Deposit)', source: 'Hana 1-year: 3.3%, 21 September 2026' },
+    term: { rate: 0.033, months: 12, called: '정기예금 (Time Deposit)', source: 'Hana 1-year: 3.3%, September 21, 2026' },
   },
   'kr-nh': {
     overdraft: { kind: 'arranged', rate: 0.05, source: 'the big five banks’ average credit-line rate, August 2026' },
-    term: { rate: 0.0345, months: 12, called: '정기예금 (Time Deposit)', source: 'NH 1-year: 3.45%, 21 September 2026' },
+    term: { rate: 0.0345, months: 12, called: '정기예금 (Time Deposit)', source: 'NH 1-year: 3.45%, September 21, 2026' },
   },
   'kr-kakaobank': {
     overdraft: { kind: 'arranged', rate: 0.0605, rateTo: 0.098, source: 'kakaobank.com credit line: 6.05% to 9.80%' },
@@ -327,27 +327,27 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   'au-westpac': {
     overdraft: { kind: 'per_item', fee: 15_00, maxPerDay: 1, rate: 0.1501, atMidnight: true, source: 'westpac.com.au: a $15 overdrawn fee, 15.01% a year' },
     loan: { from: 0.0729, source: 'westpac.com.au: from 7.29%' },
-    term: { rate: 0.053, months: 12, called: 'Term Deposit', source: 'Westpac 12-month: 5.30%, via savings.com.au, 21 September 2026' },
+    term: { rate: 0.053, months: 12, called: 'Term Deposit', source: 'Westpac 12-month: 5.30%, via savings.com.au, September 21, 2026' },
   },
   'au-nab': {
     loan: { from: 0.075, to: 0.22, source: 'nab.com.au: 7.50% to 22.00%' },
-    term: { rate: 0.053, months: 12, called: 'Term Deposit', source: 'NAB 12-month: 5.30%, via savings.com.au, 21 September 2026' },
+    term: { rate: 0.053, months: 12, called: 'Term Deposit', source: 'NAB 12-month: 5.30%, via savings.com.au, September 21, 2026' },
   },
   'au-anz': {
-    term: { rate: 0.052, months: 12, called: 'Term Deposit', source: 'ANZ 12-month: 5.20%, via savings.com.au, 21 September 2026' },
+    term: { rate: 0.052, months: 12, called: 'Term Deposit', source: 'ANZ 12-month: 5.20%, via savings.com.au, September 21, 2026' },
   },
   // --- New Zealand
   'nz-anz': {
-    overdraft: { kind: 'arranged', rate: 0.189, monthlyFee: 3_00, beyond: { rate: 0.199, monthlyFee: 3_00, graceUpTo: 10_00, afterDays: 2 }, source: 'anz.co.nz fees, 1 September 2026: 18.90%, $3 a month; past the limit or unarranged, 19.90% (the Consumer Overdraft Base Rate of 12.90% plus 7%), and a $3 unarranged overdraft fee for a month it is more than $10 over for more than a day (help.anz.co.nz)' },
-    term: { rate: 0.04, months: 12, called: 'Term Deposit', source: 'interest.co.nz, 25 September 2026: 4.00%' },
+    overdraft: { kind: 'arranged', rate: 0.189, monthlyFee: 3_00, beyond: { rate: 0.199, monthlyFee: 3_00, graceUpTo: 10_00, afterDays: 2 }, source: 'anz.co.nz fees, September 1, 2026: 18.90%, $3 a month; past the limit or unarranged, 19.90% (the Consumer Overdraft Base Rate of 12.90% plus 7%), and a $3 unarranged overdraft fee for a month it is more than $10 over for more than a day (help.anz.co.nz)' },
+    term: { rate: 0.04, months: 12, called: 'Term Deposit', source: 'interest.co.nz, September 25, 2026: 4.00%' },
   },
-  'nz-asb': { term: { rate: 0.04, months: 12, called: 'Term Deposit', source: 'interest.co.nz, 25 September 2026: 4.00%' } },
+  'nz-asb': { term: { rate: 0.04, months: 12, called: 'Term Deposit', source: 'interest.co.nz, September 25, 2026: 4.00%' } },
   'nz-bnz': {
-    overdraft: { kind: 'unarranged', monthlyFee: 2_00, graceUpTo: 20_00, afterDays: 1, freeUnder: 19, source: 'BNZ Personal account, service, and facility fees, 31 March 2026: on YouMoney an unarranged overdraft fee of $2 a Bank Month when more than $20 in debit, none under 19; interest at the Personal Overdraft Base Rate plus 10%, a base rate BNZ doesn’t publish' },
-    term: { rate: 0.0405, months: 12, called: 'Term Deposit', source: 'interest.co.nz, 25 September 2026: 4.05%' },
+    overdraft: { kind: 'unarranged', monthlyFee: 2_00, graceUpTo: 20_00, afterDays: 1, freeUnder: 19, source: 'BNZ Personal account, service, and facility fees, March 31, 2026: on YouMoney an unarranged overdraft fee of $2 a Bank Month when more than $20 in debit, none under 19; interest at the Personal Overdraft Base Rate plus 10%, a base rate BNZ doesn’t publish' },
+    term: { rate: 0.0405, months: 12, called: 'Term Deposit', source: 'interest.co.nz, September 25, 2026: 4.05%' },
   },
-  'nz-westpac': { term: { rate: 0.04, months: 12, called: 'Term Deposit', source: 'interest.co.nz, 25 September 2026: 4.00%' } },
-  'nz-kiwibank': { term: { rate: 0.0405, months: 12, called: 'Term Deposit', source: 'interest.co.nz, 25 September 2026: 4.05%' } },
+  'nz-westpac': { term: { rate: 0.04, months: 12, called: 'Term Deposit', source: 'interest.co.nz, September 25, 2026: 4.00%' } },
+  'nz-kiwibank': { term: { rate: 0.0405, months: 12, called: 'Term Deposit', source: 'interest.co.nz, September 25, 2026: 4.05%' } },
 };
 
 /**

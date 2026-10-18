@@ -82,7 +82,7 @@ describe('a genre’s look, its Preparation figure', () => {
     expect(prep.value).toBe(`${Math.round((genreSpeed(sim.player, ['drama']) - 1) * 100)}% Faster`);
     // What it speeds, named, and a brief's steps said to read something else.
     expect(prep.note).toMatch(/a scene or a part from a play of its kind/i);
-    expect(prep.note).toMatch(/a brief’s steps read the material met before instead/);
+    expect(prep.note).toMatch(/A brief’s steps speed up with material you’ve met before instead/);
     expect(prep.note).not.toMatch(/never a cap on the work$/);
   });
 });
@@ -99,7 +99,7 @@ describe('a piece of work’s small print', () => {
     expect(Object.keys(w.inputs.prep).sort()).toEqual(['approach', 'genre', 'interpretation', 'memorization', 'rehearsal']);
     const small = smallPrint(look(sim, 'work', w.inputs.key).body);
     expect(small).toMatch(/^Judged with readiness/);
-    for (const words of ['the breakdown and your reading', 'the lines', 'rehearsal on your feet', 'knowing the genre', 'the way you chose to play it']) expect(small, words).toContain(`${words} at `);
+    for (const words of ['breaking down the text for your reading', 'learning the lines', 'rehearsal on your feet', 'knowing the genre', 'how you play it']) expect(small, words).toContain(`${words} at `);
     // No key in the sentence.
     for (const key of ['interpretation', 'memorization', 'approach']) expect(small, key).not.toMatch(new RegExp(`\\b${key}\\b`));
     expect(small).not.toMatch(/\bgenre \d/);
@@ -118,9 +118,9 @@ describe('a piece of work’s small print', () => {
     sim.player.work!.push(night);
     const small = smallPrint(look(sim, 'work', night.inputs.key).body);
     expect(small).toMatch(/^Judged with readiness/);
-    expect(small).toContain('leaning to science fiction, animation');
+    expect(small).toContain('its genres: science fiction, animation');
     expect(small).not.toContain('science_fiction');
-    expect(small).toContain('the lines at 90% of 80%');
-    expect(small).toContain('the blocking at 80% of 70%');
+    expect(small).toContain('learning the lines at 90% (complete at 80%)');
+    expect(small).toContain('the blocking at 80% (complete at 70%)');
   });
 });

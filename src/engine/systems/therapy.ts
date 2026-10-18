@@ -131,7 +131,7 @@ export function registerTherapy(sim: Simulation): void {
     // had stay had (from 2026-10-10: until then it ran on after the cover ended).
     if (t.yale && coverOn(person, item.at) !== 'yale') {
       delete person.therapy;
-      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Your Counseling At Yale Ended', body: `Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, after ${course.done} of ${THERAPY.sessions} sessions. A therapist outside Yale can take it on.`, importance: 60, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Your Counseling At Yale Ended', body: `Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, so your course there stopped after ${course.done} of ${THERAPY.sessions} sessions. A therapist outside Yale can start a new course with you: choose one on Papers, under Health Cover.`, importance: 60, route: '/workspace/papers' });
       return;
     }
     const price = sessionPrice(s, t);
@@ -144,6 +144,6 @@ export function registerTherapy(sim: Simulation): void {
     const lifted = therapyLifts(s, person, t.nhs === true, item.at);
     const chronic = healthOf(person).chronic;
     if (lifted && chronic?.depression) delete chronic.depression;
-    if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: lifted ? 'The Depression Has Lifted' : 'The Course Is Done', body: lifted ? `After ${THERAPY.sessions} sessions with ${t.name}, it no longer weighs on you.` : `${THERAPY.sessions} sessions with ${t.name}; it hasn’t lifted yet, and another course can be had.`, importance: 50, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: lifted ? 'The Depression Has Lifted' : 'The Course Is Done', body: lifted ? `After ${THERAPY.sessions} sessions with ${t.name}, your depression has lifted. It no longer needs care, and it no longer takes from your morale.` : `You’ve finished ${THERAPY.sessions} sessions with ${t.name}. The depression hasn’t lifted yet, and you can start another course on Papers, under Health Cover.`, importance: 50, route: '/workspace/papers' });
   });
 }

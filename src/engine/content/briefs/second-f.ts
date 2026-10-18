@@ -30,7 +30,7 @@ export const SECOND_F: readonly Brief[] = [
       physical: 'The brownies are played in his body, small and exact: the slow blink, a hand that forgets it’s holding a mug, a lean toward a screen that seems to lean back. All of it is seated and inside the frame.',
       partner: 'Every laugh starts from something the father says, and Callum has to take it in a moment late and visibly.',
       improvisation: 'The father’s small talk is left to the reader to vary from take to take, inside the brief’s four turns, so Callum answers questions he hasn’t heard before and keeps the scene’s shape.',
-      techniques: 'It’s played for laughs on timing held inside a real, rising panic (comic technique), and the small talk that changes each take asks him to answer in character, live (improvisation).',
+      techniques: 'It’s played for laughs, with comic timing held inside a real, rising panic. The small talk changes each take, and he has to improvise his answers in character, live.',
       beats: 'A rehearsed start, the brownies arriving in the middle of a sentence, an answer too honest to be funny and too long not to be, then the confession and the laugh that lets him off.',
     },
     readings: [
@@ -60,7 +60,7 @@ export const SECOND_F: readonly Brief[] = [
       timing: 'The jokes land between his questions and her answers, and the reenactment runs on his called cues.',
       physical: 'The fight is told again with her whole body, the duck, the grab and the throw, played at half speed and far too big for a meeting room.',
       partner: 'He’s patient and even, so every question he asks lands at full weight, and she has to take each one in before she answers it.',
-      techniques: 'The reenactment is three marked moves played solo at half speed against the reader’s called cues, with no one in front of her and nothing thrown, so it repeats safely on every take (stage combat). Her pride meeting his form is played for laughs, a job for comic timing.',
+      techniques: 'The reenactment is stage combat: three marked moves played solo at half speed against the reader’s called cues, with no one in front of her and nothing thrown, so it repeats safely on every take. Her pride meeting his form is played for laughs, a job for comic timing.',
       beats: 'A hero’s version, the reenactment, the moment it stops being funny, then a plain question from a woman who has stopped performing.',
     },
     readings: [
@@ -171,7 +171,7 @@ export const SECOND_F: readonly Brief[] = [
       timing: 'Her jokes and his bows are timed against the passes, and the watch changing at one sets the clock.',
       physical: 'Three passes in a narrow cellar between the racks, a disarm played on her own side, then a duelist’s stance held with no blade at all.',
       partner: 'He presses her harder with each pass and each courtesy, and she has to read him to find her next trick and, in the end, her offer.',
-      techniques: 'The fencing is three set passes marked solo with a replica rapier at reduced speed against the reader’s called cues, never pointed at the lens or the reader; the disarm is played by her own hand and the replica lowered to the floor at her side, so it repeats safely on every take (stage combat). Her charm and her bluffs are played for laughs against his patience, a job for comic timing.',
+      techniques: 'The fencing is stage combat: three set passes marked solo with a replica rapier at reduced speed against the reader’s called cues, never pointed at the lens or the reader. The disarm is played by her own hand and the replica lowered to the floor at her side, so it repeats safely on every take. Her charm and her bluffs are played for laughs against his patience, a job for comic timing.',
       beats: 'Tricks that fail, a fight she loses, a question that reaches him, then a recruitment where an arrest should be.',
     },
     readings: [
@@ -380,7 +380,7 @@ export const SECOND_F: readonly Brief[] = [
       timing: 'Every cry, breath and line is fitted to a suit performer’s movements already on the screen, so where each sound falls is fixed by the picture.',
       vocal: 'The call, the efforts of the fight and the quiet mercy are all the voice has, carried from a full-voiced cry to a near whisper inside one take.',
       techniques: 'Post-synced voice work recorded alone at a microphone to finished footage and a rival already on the track, with the body’s effort put into breath and voice.',
-      allows: 'The footage is finished and the suit’s moves are fixed: every sound must land where the body already moves, so the structure is set and can’t be found anew on the take.',
+      allows: 'The footage is finished and the suit’s moves are fixed, so every sound has to land where the body already moves. It can only be played set, the same way every time.',
       beats: 'A transformation called at full size, a fight in breath and effort, mercy spoken inside a heaving body, then a joke between two old cadets.',
     },
     readings: [
@@ -444,11 +444,11 @@ export const SECOND_F: readonly Brief[] = [
     why: {
       timing: 'A double act’s timing played by one voice: each switch between the neighbors has to land as fast as Lou would have answered.',
       vocal: 'Two neighbors from one mouth, her own voice and Lou’s character kept apart, live to tape, with no second take.',
-      techniques: 'Comedy for the bit’s timing, which has to be funny for the listeners as it always was; and character work for Lou’s neighbor, a voice and a rhythm that were his and are hers to keep tonight.',
+      techniques: 'Comedy carries the bit’s timing, and it has to be as funny for the listeners as it always was. Character work carries Lou’s neighbor, a voice and a rhythm that were his and are hers to keep tonight.',
       beats: 'The usual opening, a plain word about Lou, the bit at full speed, the line she can’t answer, then the sign-off.',
     },
     readings: [
-      { id: 'half', label: 'Doing His Half', reading: 'The show is the tribute: she gets Lou’s half exactly right, every rhythm of it, and the jokes land as they always did.', rests: 'Their oldest bit, in both voices, faster and faster.', lean: { execution: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'execution', ability: 'imagination', weight: 0.5 }, { dim: 'execution', ability: 'vocal', weight: 0.5 }] },
+      { id: 'half', label: 'Doing His Half', reading: 'The show is the tribute: she gets Lou’s half exactly right, every rhythm of it, and the jokes land as they always did.', rests: 'She plays their oldest bit, the fence bit, in both voices, faster and faster.', lean: { execution: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'execution', ability: 'imagination', weight: 0.5 }, { dim: 'execution', ability: 'vocal', weight: 0.5 }] },
       { id: 'listeners', label: 'For The Listeners', reading: 'She’s a professional with an audience to look after, and she holds herself together for them, line by line.', rests: 'She’s set on getting through it without the listeners hearing her cry.', lean: { consistency: 1.2, connection: 1.1 }, draws: [{ dim: 'consistency', ability: 'discipline', weight: 0.6 }, { dim: 'connection', ability: 'presence', weight: 0.4 }] },
       { id: 'line', label: 'The Line She Can’t Answer', reading: 'The whole episode is the road to one line, Lou’s, and the grief is in the silence where her answer should be.', rests: 'In Lou’s voice his neighbor says the line he always ended on, and she can’t answer it in her own.', lean: { believability: 1.25, interpretation: 1.05 }, draws: [{ dim: 'believability', ability: 'composure', weight: 0.5 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.4 }] },
     ],
@@ -622,7 +622,7 @@ export const SECOND_F: readonly Brief[] = [
       timing: 'A summation is a run of reveals, each placed for the listener at home, and her pauses have to hold six people on the track.',
       partner: 'Six recorded voices break in at set points, and she answers each in its own way without losing the thread.',
       vocal: 'Six people told apart by the voice alone, a storm described in sound, a phrase hummed back exactly: the case lives in what can be heard.',
-      techniques: 'An audio drama recorded alone at a microphone against six voices on the track, where every change of address and every clue has to reach a listener who can’t see.',
+      techniques: 'It’s an audio drama recorded alone at a microphone against six voices on the track, so every change of address and every clue has to reach a listener who can’t see.',
       beats: 'Order brought to the room, a voice for each suspect, the sound under the storm, a wrong answer dismantled, the name, then a tradeswoman going back to her work.',
     },
     readings: [
@@ -682,7 +682,7 @@ export const SECOND_F: readonly Brief[] = [
     ],
     language: 'heightened', timing: 2, physical: 2, partner: 2, vocal: 1, improvisation: 0,
     why: {
-      language: 'The ceremony is spoken in its set words, an old formal register the families keep for this alone, and he holds to it but once.',
+      language: 'The ceremony is spoken in its set words, an old formal register the families keep for this alone, and he steps outside it only once.',
       timing: 'Each pour, turn and bow comes in its set order, and the silences after Sugino’s provocations are held exactly as long as the room needs.',
       physical: 'Formal kneeling throughout, and the pouring, turning and setting of the cups done as a set sequence, every movement watched by both families.',
       partner: 'Every test Sugino makes is answered without breaking the form, and Kanemoto shapes his one step outside it to what Sugino has just refused.',

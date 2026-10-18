@@ -59,13 +59,13 @@ describe('making a plan', () => {
   it('refuses what it cannot take, and says why in words', () => {
     const sim = quickSave({}, 'plan-refuse');
     const cases: [Record<string, unknown>, RegExp][] = [
-      [{ title: '   ', at: sim.now + MS_DAY }, /needs a name/],
-      [{ title: 'Yesterday', at: sim.now - MS_HOUR }, /been and gone/],
-      [{ title: 'Distant', at: sim.now + (FURTHEST_AHEAD_DAYS + 10) * MS_DAY }, /further out than the calendar goes/],
+      [{ title: '   ', at: sim.now + MS_DAY }, /Give it a name/],
+      [{ title: 'Yesterday', at: sim.now - MS_HOUR }, /already passed/],
+      [{ title: 'Distant', at: sim.now + (FURTHEST_AHEAD_DAYS + 10) * MS_DAY }, /up to five years ahead/],
       [{ title: 'Blink', at: sim.now + MS_DAY, durationMinutes: 1 }, /five minutes/i],
       [{ title: 'Forever', at: sim.now + MS_DAY, durationMinutes: LONGEST_MINUTES + 1 }, /longer than a day/],
       [{ title: 'Elsewhere', at: sim.now + MS_DAY, locationId: 'atlantis' }, /nowhere by that name/],
-      [{ title: 'A Holiday', at: sim.now + MS_DAY, category: 'holiday' }, /can’t put that kind of day/],
+      [{ title: 'A Holiday', at: sim.now + MS_DAY, category: 'holiday' }, /only add personal plans/],
     ];
     for (const [payload, why] of cases) {
       const answer = put(sim, payload);
@@ -113,13 +113,13 @@ describe('calling one off', () => {
     const sim = quickSave({}, 'cancel-refuse');
     const made = put(sim, { title: 'Dinner', at: sim.now + MS_DAY });
     callOff(sim, made.id!);
-    expect(callOff(sim, made.id!).error).toMatch(/already settled/);
-    expect(callOff(sim, 'sched_nothing').error).toMatch(/nothing by that name/);
+    expect(callOff(sim, made.id!).error).toMatch(/already over/);
+    expect(callOff(sim, 'sched_nothing').error).toMatch(/isn’t on your calendar/);
 
     // The world's own work is not the player's to call off.
     const world = sim.universe.scheduled.find((i) => i.kind !== PLAN_KIND && i.status === 'pending');
     expect(world, 'the world schedules nothing at all').toBeDefined();
-    expect(callOff(sim, world!.id).error).toMatch(/isn’t yours to call off/);
+    expect(callOff(sim, world!.id).error).toMatch(/Only a plan you made yourself can be called off/);
     expect(sim.timeline.get(world!.id)!.status).toBe('pending');
   });
 });
@@ -294,7 +294,7 @@ describe('not going', () => {
 
   it('is refused before the thing has come round', () => {
     const { sim, id } = dinner('skip-too-early');
-    expect(skip(sim, id).error).toBe('It hasn’t come round yet. Call it off instead.');
+    expect(skip(sim, id).error).toBe('It hasn’t started yet. To drop it, open it on the Calendar and press Call It Off.');
   });
 
   it('marks it missed once you are standing at it', () => {
@@ -309,15 +309,15 @@ describe('not going', () => {
     expect(sim.timeline.get(id)!.status).toBe('missed');
     const said = unreadNotifications(sim).map((one) => `${one.title} ${one.body}`).join(' ');
     expect(said).toContain('You Didn’t Go To Dinner');
-    expect(said).toContain('Nobody was waiting on it but you');
+    expect(said).toContain('It was your own plan, so skipping it costs you nothing else.');
   });
 
   it('is refused twice over, and refused for something that is not yours', () => {
     const { sim, id } = dinner('skip-twice');
     sim.advanceTo(sim.now + MS_DAY, { stopOnPlayerRequired: true });
     expect(skip(sim, id).ok).toBe(true);
-    expect(skip(sim, id).error).toBe('That’s already settled one way or the other.');
-    expect(skip(sim, 'sched_nope').error).toBe('There’s nothing by that name on the calendar.');
+    expect(skip(sim, id).error).toBe('That’s already over: it was kept, missed or called off.');
+    expect(skip(sim, 'sched_nope').error).toBe('That isn’t on your calendar.');
   });
 });
 
@@ -326,6 +326,6 @@ describe('calling it off', () => {
     const sim = quickSave({}, 'calloff-started');
     const made = put(sim, { title: 'Dinner', at: sim.now + 2 * MS_HOUR, durationMinutes: 90 });
     sim.advanceTo(sim.now + MS_DAY, { stopOnPlayerRequired: true });
-    expect(callOff(sim, made.id!).error).toBe('It’s already started. You either went or you didn’t.');
+    expect(callOff(sim, made.id!).error).toBe('It’s already started, so it can’t be called off now.');
   });
 });

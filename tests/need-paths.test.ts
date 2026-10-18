@@ -276,7 +276,7 @@ const MONEY: Record<StartingWealth, { label: string; checking: string; savings: 
 describe('the family a new life comes from (c-family, c-wealth)', () => {
   it('Genres & Background offers the six families, Wealthy chosen as creation chose before; each, chosen on the select, is what Review says and what the save opens', () => {
     const step = creation(STEP.Background, answers());
-    expect(step.text).toContain('Your Family The family you come from: the money in your name on the first morning, and what Yale’s need assessment reads.');
+    expect(step.text).toContain('Your Family The family you come from decides the money in your name on the first morning, and whether Yale’s needs assessment finds you need aid.');
     const select = step.control('family');
     expect(select.props.value).toBe('wealthy');
     expect(step.html).toContain('<option value="nothing">Nothing</option><option value="scraping">Scraping</option><option value="modest">Modest</option><option value="comfortable">Comfortable</option><option value="wealthy" selected="">Wealthy</option><option value="inherited">Inherited</option>');
@@ -288,8 +288,8 @@ describe('the family a new life comes from (c-family, c-wealth)', () => {
       const callout = creation(STEP.Background, config).text;
       expect(callout).toContain(`${m.checking} in checking and ${m.savings} in savings`);
       expect(callout).toContain(m.need
-        ? 'Yale finds need: its living-expense scholarship, $15,200.50 a term, meets the term’s Yale Health plan, $1,882.00, and pays the rest, $13,318.50, into your bank each fall and spring.'
-        : 'Yale finds no need: the family’s means rule it out, so there’s no aid for living costs, and the term’s Yale Health plan, $1,882.00, comes from your bank each fall and spring.');
+        ? 'Yale finds that you need aid. Its living-expense scholarship, $15,200.50 a term, pays the term’s Yale Health plan, $1,882.00, and the rest, $13,318.50, goes into your bank each fall and spring.'
+        : 'Yale finds that you don’t need aid, because of your family’s means. There’s no aid for living costs, and the term’s Yale Health plan, $1,882.00, comes out of your bank each fall and spring.');
       const review = creation(STEP.Review, config).text;
       expect(review).toContain(`Family ${m.label}, ${m.need ? 'Need Found' : 'No Need Found'}`);
       expect(review).toContain(`Checking ${m.checking}`);
@@ -308,8 +308,8 @@ describe('the family a new life comes from (c-family, c-wealth)', () => {
   it('the Nothing family’s life begins with no card, and its Profile says Risk Tolerance set no autopay, where the Wealthy one’s card started on the whole statement', () => {
     const none = createSave(1, 'need-family-nothing', chosen('nothing'));
     expect(mine(none, 'credit_card')).toHaveLength(0);
-    expect(drawn(none, ProfileWorkspace).text).toContain('Risk Tolerance 50, 65 or under, which sets where a card’s autopay starts; you hold no card, so it set none ;');
-    expect(drawn(createSave(1, 'need-family-wealthy', chosen('wealthy')), ProfileWorkspace).text).toContain('Risk Tolerance 50, 65 or under, so the card’s autopay started on the whole statement ;');
+    expect(drawn(none, ProfileWorkspace).text).toContain('Risk Tolerance 50, 65 or under, which decides where a card’s autopay starts, but you hold no card ;');
+    expect(drawn(createSave(1, 'need-family-wealthy', chosen('wealthy')), ProfileWorkspace).text).toContain('Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement ;');
   });
 
   it('a draft carried back keeps the family it chose, and its means with it; a draft naming none the game knows comes back wealthy', () => {
@@ -321,7 +321,7 @@ describe('the family a new life comes from (c-family, c-wealth)', () => {
 
   it('the guide says what each family means: the money on the first morning and whether need is found, in the figures the term pays', () => {
     const money = SCHOOL.find((e) => e.id === 'school.money')!;
-    expect(money.reads.find((r) => r.label === 'Need')!.value).toBe('Yale’s assessment of your family’s means, the family you chose at creation beside your background. Nothing, Scraping, Modest or Comfortable: need is found, and the living-expense scholarship, $15,200.50 a term in 2026–27, meets the term’s Yale Health plan, $1,882, and pays the rest, $13,318.50, into your bank each fall and spring; hours missed ill can be converted, and a leave begun mid-term returns part of the scholarship. Wealthy or Inherited: the means rule need out, so there’s no living aid, no hours to convert, and the plan comes from your bank');
+    expect(money.reads.find((r) => r.label === 'Need')!.value).toBe('Yale’s assessment of your family’s means: the family you chose when you created the life, beside your background. Nothing, Scraping, Modest or Comfortable: need is found, and the living-expense scholarship, $15,200.50 a term in 2026–27, pays the term’s Yale Health plan, $1,882, and the rest, $13,318.50, into your bank each fall and spring; hours missed ill can be converted, and a leave begun mid-term returns part of the scholarship. Wealthy or Inherited: the family’s means rule need out, so there’s no living aid and no hours to convert, and the plan comes from your bank');
     expect(money.reads.find((r) => r.label === 'Your Family’s Money')!.value).toBe('What each family puts in your name on the first morning: Nothing, $43 in checking and $0 in savings; Scraping, $1,348 in checking and $326 in savings; Modest, $5,217 in checking and $7,065 in savings; Comfortable, $19,565 in checking and $45,652 in savings; Wealthy, $92,391 in checking and $413,043 in savings; Inherited, $260,870 in checking and $2,608,696 in savings');
   });
 });
@@ -370,13 +370,13 @@ describe('Yale’s living-expense scholarship, the term’s account (c-family)',
     expect(memos(rich, /^Living-expense scholarship/)).toHaveLength(0);
     expect(checking(rich).balance - fall.rich.before).toBe(-1_882_00);
     expect(earningsOf(rich.player).years[2026]?.scholarship ?? 0).toBe(0);
-    expect(titled(rich, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and none was found, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.']);
+    expect(titled(rich, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.']);
     // Terms And Award, as each has it.
     const terms = { 'tab:/workspace/school': 'terms' };
     expect(drawn(need, SchoolWorkspace, terms).text).toContain('Each Term Billed Credited Tuition $20,375.00 Tuition Scholarship $20,375.00 Yale Health Plan $1,882.00 Living-Expense Scholarship $15,200.50 Paid To Your Bank $13,318.50');
-    expect(drawn(need, SchoolWorkspace, terms).text).toContain('Yours found need, and the scholarship meets it.');
+    expect(drawn(need, SchoolWorkspace, terms).text).toContain('Yours show need, and the scholarship meets it.');
     expect(drawn(rich, SchoolWorkspace, terms).text).toContain('Each Term Billed Credited Tuition $20,375.00 Tuition Scholarship $20,375.00 Yale Health Plan $1,882.00 Paid From Your Bank $1,882.00');
-    expect(drawn(rich, SchoolWorkspace, terms).text).toContain('Yours found none, so the health plan and living costs come from your bank.');
+    expect(drawn(rich, SchoolWorkspace, terms).text).toContain('Yours rule it out, so the health plan and living costs come from your bank.');
   }, 120_000);
 
   it('PLAYER JOURNEY: the spring term pays the Scraping student $13,318.50 again on 4 January 2027, and the year’s taxable scholarship is $14,014.00 each year', () => {
@@ -415,7 +415,7 @@ describe('school.request_conversion, for a life the screen made with need', () =
     // The Wealthy family's student, on the same screen: Not On Aid, the button grayed in the refusal's words.
     const rich = thaw(played().afterFall.rich);
     expect(stat(drawn(rich, WorkLimitsBlock).html, 'Convertible To Grant Aid')).toEqual({ value: 'Not On Aid', note: undefined });
-    expect(rich.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Conversion to grant aid is for students on financial aid, and no need was found for you.');
+    expect(rich.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Converting hours to grant aid is only for students on financial aid, and the aid office found no need for you.');
   }, 120_000);
 });
 
@@ -527,7 +527,7 @@ describe('the marketplace, offered on income the clock paid (health.enroll, heal
     sim.advanceTo(visit.at + MS_HOUR);
     const bill = healthOf(sim.player).bills.find((b) => b.at === visit.at)!;
     expect(bill).toMatchObject({ amount: UNINSURED, denied: { share: SHARE } });
-    expect(titled(sim, 'A Claim Denied')[0]!.body).toContain(': $183.98 is yours to pay unless an appeal overturns it.');
+    expect(titled(sim, 'A Claim Denied')[0]!.body).toContain(', so the bill is $183.98 unless an appeal overturns it.');
     drawn(sim, PapersWorkspace, { 'tab:/workspace/papers': 'health' });
     expect(press('health.appeal')).toEqual(['Appealed: decided in 60 days.']);
     const decision = pendingOf(sim, APPEAL_KIND)[0]!;
@@ -623,7 +623,7 @@ describe('health.enroll: a program’s renewal, reached by the clock', () => {
     later.advanceTo(at(2027, 12, 1, 9));
     expect(healthOf(later.player).program!.until).toBe(at(2027, 12, 1, 0));
     expect(coverOn(later.player, later.now)).toBeUndefined();
-    expect(titled(later, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 11, 5, 0), 'No month from April to September 2027 showed $580.00 of income, time at the School or an exception, and none was shown by November 4, 2027: HUSKY D ends on November 30, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
+    expect(titled(later, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 11, 5, 0), 'No month from April to September 2027 showed $580.00 of income, time at the School or an exception, and none was shown by November 4, 2027, so HUSKY D ends on November 30, 2027. Losing it gives you 60 days to enroll in the marketplace, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.']]);
   }, 180_000);
 });
 
@@ -720,7 +720,7 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     expect(healthOf(moved.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2027, 11, 1, 0, 30), band: 'low', renewAt: at(2028, 5, 1, 0) });
     expect(coverOn(moved.player, moved.now)).toBe('medicaid');
     // Until 2026-10-17 “by 80 hours’ work”: since then the hours aren’t read, and the $600 they were paid is (brief 12, health-criteria.md).
-    expect(titled(moved, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is under what HUSKY D allows, which takes the place of Covered Connecticut: you’re renewed into HUSKY D from November 1, 2027, with no gap and no premium, and October 2027 met its work rules by its income, $580.00 or more.']);
+    expect(titled(moved, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and October 2027 met its work rules with $580.00 or more of income.']);
     expect(titled(moved, 'A Notice Of Noncompliance')).toEqual([]);
     expect(titled(moved, 'Your Public Cover Ends')).toEqual([]);
     expect(titled(moved, 'Your Health Cover Ended').filter((n) => n.at >= at(2026, 11, 1, 0))).toEqual([]);
@@ -730,11 +730,11 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     const idle = twin(false);
     expect(healthOf(idle.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2027, 11, 1, 0, 30), band: 'low', renewAt: at(2028, 5, 1, 0) });
     expect(coverOn(idle.player, idle.now)).toBe('medicaid');
-    expect(titled(idle, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is under what HUSKY D allows, which takes the place of Covered Connecticut: you’re renewed into HUSKY D from November 1, 2027, with no gap and no premium, and October 2027 met its work rules by its income, $580.00 or more.']);
+    expect(titled(idle, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and October 2027 met its work rules with $580.00 or more of income.']);
     expect(titled(idle, 'A Notice Of Noncompliance')).toEqual([]);
     // Home draws it as she met it, by the $930.00 her savings earned (brief 12, 2026-10-17): no hours of work, which she has none of.
     const idleHome = drawn(idle, Home).text;
-    expect(idleHome).toContain('Your Public Cover Changed At Renewal Last month’s income is under what HUSKY D allows, which takes the place of Covered Connecticut: you’re renewed into HUSKY D from November 1, 2027, with no gap and no premium, and October 2027 met its work rules by its income, $580.00 or more.');
+    expect(idleHome).toContain('Your Public Cover Changed At Renewal Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and October 2027 met its work rules with $580.00 or more of income.');
     expect(idleHome).not.toMatch(/hours’ work|half-time/);
 
     const low = twin('low');
@@ -745,11 +745,11 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     expect(healthOf(low.player).program).toMatchObject({ kind: 'essential', from: at(2026, 11, 1, 0) });
     expect(healthOf(low.player).program!.until).toBeUndefined();
     expect(titled(low, 'Your Public Cover Changed At Renewal')).toEqual([]);
-    expect(titled(low, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from May to October 2027, and last month’s income places you in it in place of Covered Connecticut. You’re covered while you answer, to December 5, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in those months counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, Covered Connecticut ends on December 31, 2027, said on December 6, 2027, and the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.']);
+    expect(titled(low, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from May to October 2027, and last month’s income moves you from Covered Connecticut to HUSKY D. You stay covered while you answer, until December 5, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, Covered Connecticut ends on December 31, 2027, and you’ll be told on December 6, 2027. After that, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.']);
     low.advanceTo(at(2027, 12, 6, 9));
     expect(coverOn(low.player, low.now)).toBe('essential');
     expect(healthOf(low.player).program!.until).toBe(at(2028, 1, 1, 0));
-    expect(titled(low, 'Your Public Cover Ends').map((n) => n.body)).toEqual(['No month from May to October 2027 showed $580.00 of income, time at the School or an exception, and none was shown by December 5, 2027: Covered Connecticut ends on December 31, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']);
+    expect(titled(low, 'Your Public Cover Ends').map((n) => n.body)).toEqual(['No month from May to October 2027 showed $580.00 of income, time at the School or an exception, and none was shown by December 5, 2027, so Covered Connecticut ends on December 31, 2027. Losing it gives you 60 days to enroll in the marketplace, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.']);
   }, 900_000);
 
   // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: on HUSKY D from 1 November 2026 on September’s $900.00, her October 2027 is $2,046.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 November 2027 with no gap, and no work is asked”): HUSKY D begins on the first
@@ -771,7 +771,7 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     expect(earningsOf(back.player).months['2027-09']).toBe(1_980_00);
     expect(healthOf(back.player).program).toEqual({ kind: 'essential', state: 'ct', from: at(2027, 10, 1, 0, 30), band: 'low', renewAt: at(2028, 4, 1, 0) });
     expect(coverOn(back.player, back.now)).toBe('essential');
-    expect(titled(back, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is over what HUSKY D allows and within what Covered Connecticut does: you’re renewed into Covered Connecticut from October 1, 2027, with no gap and no premium.']);
+    expect(titled(back, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is over HUSKY D’s limit and within Covered Connecticut’s, so you’re renewed into Covered Connecticut from October 1, 2027, with no gap in cover and no premium.']);
     expect(titled(back, 'Your Public Cover Ends')).toEqual([]);
     expect(titled(back, 'Your Health Cover Ended').filter((n) => n.at >= at(2026, 11, 1, 0))).toEqual([]);
   }, 300_000);
@@ -792,7 +792,7 @@ describe('a body’s units, by where the person lives', () => {
       expect(['height-ft', 'height-in', 'weight-lb'].map((id) => step.control(id).props.value)).toEqual([5, 10, 160]);
       expect(step.text).not.toContain('Centimeters');
       const sim = createSave(1, `need-units-${born}`, config);
-      expect(look(sim, 'person', sim.player.id)).toContain(`Your body. 5 ft 10 in and 160 lb, a body mass index of 23.0: healthy weight. ${US}`);
+      expect(look(sim, 'person', sim.player.id)).toContain(`Your body. 5 ft 10 in and 160 lb, with a body mass index of 23.0, in the healthy weight range. ${US}`);
     });
   }
 
@@ -802,6 +802,6 @@ describe('a body’s units, by where the person lives', () => {
     expect(step.text).toContain('Your height and weight on the first morning. In centimeters and kilograms, the units of the United Kingdom, where you live.');
     expect(['height-cm', 'weight-kg'].map((id) => step.control(id).props.value)).toEqual([177.8, 72.6]);
     const sim = createSave(1, 'need-units-londoner', config);
-    expect(look(sim, 'person', sim.player.id)).toContain('Your body. 178 cm and 72.6 kg, a body mass index of 23.0: healthy weight. In centimeters and kilograms, the units of the United Kingdom, where you live.');
+    expect(look(sim, 'person', sim.player.id)).toContain('Your body. 178 cm and 72.6 kg, with a body mass index of 23.0, in the healthy weight range. In centimeters and kilograms, the units of the United Kingdom, where you live.');
   });
 });

@@ -185,7 +185,7 @@ describe('school.summer_cabaret', () => {
     const school = sim.player.school!;
     // A passive first spring leaves her in concern, and the company says why in its own words.
     expect(school.standing).toBe('concern');
-    expect(say(sim, 'school.summer_cabaret').error).toBe('The Summer Cabaret’s company takes a student in good standing.');
+    expect(say(sim, 'school.summer_cabaret').error).toBe('The Summer Cabaret only takes students in good standing.');
     expect(school.summer).toBeUndefined();
     // TEST SETUP: good standing, which the company asks of a student; this is a test of the summer, not the year.
     school.standing = 'good';
@@ -193,7 +193,7 @@ describe('school.summer_cabaret', () => {
     // The first show opens Friday 25 June; its rehearsals begin three weeks before, at one: 4 June, 13:00 EDT (UTC−4).
     // The last closes Sunday 22 August, held to eleven that night.
     expect(joined).toEqual({ from: Date.UTC(2027, 5, 4, 17), until: Date.UTC(2027, 7, 23, 3) });
-    expect(say(sim, 'school.summer_cabaret').error).toBe('You’re in this summer’s company.');
+    expect(say(sim, 'school.summer_cabaret').error).toBe('You’re already in this summer’s company.');
     expect(shows(sim)).toEqual([['A Marriage Proposal', 'Natalya Stepanovna', 'lead'], ['Trifles', 'Mrs Hale', 'lead'], ['Riders To The Sea', 'Maurya', 'lead']]);
 
     // The first Friday, 4 June at five: the week's $375. Federal income tax on $375 a year is nothing (the standard
@@ -290,14 +290,14 @@ describe('school.summer_cabaret', () => {
     const sim = spring();
     const before = schoolScreen(sim, 'casting');
     expect(before.text).toContain('The Yale Summer Cabaret Three shows a summer in New Haven');
-    expect(before.text).toContain('The Summer Cabaret’s company takes a student in good standing.');
+    expect(before.text).toContain('The Summer Cabaret only takes students in good standing.');
     expect(before.buttons.filter((b) => b.text === 'Join The Summer Company')).toEqual([]);
     sim.player.school!.standing = 'good'; // TEST SETUP: good standing, as above.
     const offered = schoolScreen(sim, 'casting');
     const join = offered.buttons.filter((b) => b.text === 'Join The Summer Company');
     expect(join).toHaveLength(1);
     expect(join[0]!.disabled).toBeFalsy();
-    expect(press(join[0])).toEqual(['In this summer’s company.']);
+    expect(press(join[0])).toEqual(['You’re in this summer’s company.']);
     expect(sim.player.school!.summer?.year).toBe(2027);
     const after = schoolScreen(sim, 'casting');
     expect(after.buttons.filter((b) => b.text === 'Join The Summer Company')).toEqual([]);
@@ -435,7 +435,7 @@ describe('plays.research', () => {
     expect(youIn(both).fit).toBeGreaterThan(youIn(read).fit);
     expect(both.player.craft!.script).toBeGreaterThan(read.player.craft!.script + 0.5);
     // A second research is refused in researchRefusal's words.
-    expect(say(both, 'plays.research', { playId: 'sweat' }).error).toBe('Its first production is researched: there’s nothing more on record to find.');
+    expect(say(both, 'plays.research', { playId: 'sweat' }).error).toBe('You’ve already researched its first production, and there’s nothing more on record to find.');
   });
 
   it('on the Coursework tab, Research It pressed after a read says the first production, edition and licensor, and is gone from the row on the next render, which says Researched', () => {
@@ -478,7 +478,7 @@ describe('practice.exercise', () => {
         expect(r.ok, r.error).toBe(true);
         today.push({ gained: r.value!.gained, L, D });
       }
-      expect(hourOf(ada, 'sense-memory').error).toBe('You’ve practiced 4 hours today: past that, more stops helping. Tomorrow.');
+      expect(hourOf(ada, 'sense-memory').error).toBe('You’ve practiced 4 hours today, and more stops helping after that. Practice again tomorrow.');
       hours.push(today);
       level([ada, twin]);
     }
@@ -570,10 +570,10 @@ describe('practice.exercise', () => {
     tended(sim, at(2026, 9, 6, 10));
     expect(hourOf(sim, 'sense-memory', { actionId: 'hour-1' }).ok).toBe(true);
     const was = [sim.now, levelOf(sim, sim.player, 'emotionalDepth'), historyOf(sim).length];
-    expect(hourOf(sim, 'sense-memory', { actionId: 'hour-1' }).error).toBe('That was already done.');
+    expect(hourOf(sim, 'sense-memory', { actionId: 'hour-1' }).error).toBe('That’s already done, so nothing was charged or changed again.');
     expect([sim.now, levelOf(sim, sim.player, 'emotionalDepth'), historyOf(sim).length]).toEqual(was);
     const back = reload(sim);
-    expect(hourOf(back, 'sense-memory', { actionId: 'hour-1' }).error).toBe('That was already done.');
+    expect(hourOf(back, 'sense-memory', { actionId: 'hour-1' }).error).toBe('That’s already done, so nothing was charged or changed again.');
     expect([back.now, levelOf(back, back.player, 'emotionalDepth'), historyOf(back).length]).toEqual(was);
   });
 
@@ -609,7 +609,7 @@ describe('practice.exercise', () => {
     dials(sim); // TEST SETUP: rested again.
     expect(hourOf(sim, 'concentration').ok).toBe(true);
     for (const e of ['recall-drill', 'adjustments']) { dials(sim); /* TEST SETUP */ expect(hourOf(sim, e).ok).toBe(true); }
-    refused('voice-work', 'You’ve practiced 4 hours today: past that, more stops helping. Tomorrow.');
+    refused('voice-work', 'You’ve practiced 4 hours today, and more stops helping after that. Practice again tomorrow.');
   });
 
   it('PLAYER JOURNEY: a run on the first morning breaks a bone, and an exercise on the feet is refused in trainingRefusal’s words while one at a desk is not', () => {

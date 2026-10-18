@@ -145,6 +145,19 @@ export const SKILLS: readonly { id: Skill; label: string }[] = [
 ];
 
 /**
+ * Each skill as a sentence says it after “your” (from 2026-10-17, brief 14's editorial review): the label lowercased
+ * read “Your on camera and scene study carried it.” and “It asked for more clown and mask than you have yet.” The words
+ * are the glossary's (Material: Techniques It Asks).
+ */
+export const SKILL_WORDS: Readonly<Record<Skill, string>> = {
+  accents: 'accents and dialects', audition: 'audition technique', character: 'character work', classical: 'classical text work',
+  clown: 'clowning', coldReading: 'cold reading', comedy: 'comic timing', dance: 'dance', emotion: 'emotional depth',
+  improv: 'improvisation', intimacy: 'intimacy work', memorization: 'memory', screen: 'on-camera work', movement: 'physical expression',
+  scene: 'scene study', script: 'script analysis', singing: 'singing', speech: 'speech', combat: 'stage combat',
+  voice: 'vocal expression', voiceover: 'voice-over work',
+};
+
+/**
  * A save from before the 21 skills: each new one from the old area it grew
  * out of. Acting was scene study, character, emotional access, improvisation,
  * comedy, clown, the audition, cold reading and memorization at once; body,
@@ -376,14 +389,14 @@ export const SCHOOL_SEASON = {
  * nothing a student needed. Each line is the Bulletin's, with its page; what SLATE does with it is said beside.
  */
 export const SCHOOL_POLICIES: readonly { rule: string; page: string }[] = [
-  { rule: 'Attendance is required at every class, rehearsal and call. Running late for a call, tell the stage manager at least thirty minutes ahead.', page: 'p.149' },
-  { rule: 'Ill, email your teachers and copy the program chair; the work missed is made up on the schedule each teacher sets. SLATE: Call In Sick, and an Incomplete made up on the Standing tab.', page: 'p.149' },
+  { rule: 'Attendance is required at every class, rehearsal and call. If you’re running late for a call, tell the stage manager at least thirty minutes ahead.', page: 'p.149' },
+  { rule: 'If you’re ill, email your teachers and copy the program chair, and make up the work you missed on the schedule each teacher sets. In the game, press Call In Sick, and make up an Incomplete on the Standing tab.', page: 'p.149' },
   { rule: 'Every acting course is Pass/Fail. An Incomplete is due within a month of the term’s end, or it becomes a Permanent Incomplete with no credit.', page: 'pp.26, 152' },
-  { rule: 'Casting is the chair’s. Missed calls, or a want of collaboration, discipline or reliability in class or production, may take an actor out of the casting pool. SLATE counts two missed calls in a term, labs and rehearsals together.', page: 'p.146' },
+  { rule: 'Casting is the chair’s. Missed calls, or a want of collaboration, discipline or reliability in class or production, may take an actor out of the casting pool. The game counts two missed calls in a term, labs and rehearsals together.', page: 'p.146' },
   { rule: 'Failing to be available as an understudy is a grave breach of professionalism, and may be grounds for dismissal.', page: 'p.146' },
   { rule: 'No student on academic warning may take part in the Yale Cabaret, which also needs the chair’s approval and never wins a conflict.', page: 'pp.147–148' },
   { rule: 'Work-study is 200 hours a year, 150 assigned and 50 elective. Failing to do assigned work-study may lead to academic warning or dismissal.', page: 'p.147' },
-  { rule: 'Concern, then warning, then dismissal; the faculty may act at any time. A student dismissed may not return; one who withdraws may apply to.', page: 'pp.154, 157–160' },
+  { rule: 'The steps are a notice of concern, then academic warning, then dismissal, and the faculty may act at any time. A dismissed student may not return; one who withdraws may apply to.', page: 'pp.154, 157–160' },
   { rule: 'The degree is recommended by a majority vote of the faculty, for a student who has completed every course and requirement.', page: 'p.151' },
 ];
 
@@ -443,7 +456,7 @@ export const LEAVE_RULES = {
   medicalLookbackDays: 30,
   /** The tuition rebate schedule, which recalculates aid on a leave mid-term: share of the term passed, share rebated (p.183). */
   rebate: [[0.1, 1], [0.25, 0.5], [0.5, 0.25]],
-  source: 'Yale Bulletin 2026–2027, David Geffen School of Drama, pp.157–160, 175–176, 182–183; yalehealth.yale.edu Affiliate rates 2026–27; research-yale-leave.json',
+  source: 'Yale Bulletin 2026–2027, David Geffen School of Drama, pp.157–160, 175–176, 182–183; yalehealth.yale.edu Affiliate rates 2026–27',
 } as const;
 
 /**
@@ -485,7 +498,7 @@ export const MANDATORY_LEAVE = {
   appealDecideWorkingDays: 5,
   /** An appeal overturns a leave only while this share of the term's classes is still ahead. */
   resumeWithin: 0.5,
-  source: 'Yale Bulletin 2026–2027, David Geffen School of Drama, p.159; research-yale-leave-2.json',
+  source: 'Yale Bulletin 2026–2027, David Geffen School of Drama, p.159',
 } as const;
 
 export const EXTENDED_STUDY = {
@@ -497,7 +510,7 @@ export const EXTENDED_STUDY = {
   lateFee: 125_00,
   lateFeeTermCap: 375_00,
   disqualify: { inOneTerm: 2, byTerm: { 2: 3, 3: 4, 4: 5, 5: 6 } as Readonly<Record<number, number>>, total: 7 },
-  source: 'Yale Bulletin 2026–2027, David Geffen School of Drama, pp.148, 182, 184, 190, 194; research-yale-leave.json',
+  source: 'Yale Bulletin 2026–2027, David Geffen School of Drama, pp.148, 182, 184, 190, 194',
 } as const;
 
 /**

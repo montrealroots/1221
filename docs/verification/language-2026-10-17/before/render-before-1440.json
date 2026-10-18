@@ -1,0 +1,47 @@
+{
+ "read": 64513,
+ "found": {
+  "a plural that disagrees": {
+   "count": 9,
+   "distinct": 2,
+   "examples": [
+    {
+     "file": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/l14/walk-before-1440/direction.json",
+     "where": "Player Profile",
+     "text": "Sleep owed 1 hours"
+    },
+    {
+     "file": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/l14/walk-before-1440/workload.json",
+     "where": "School / Coursework",
+     "text": "Better than on April 13, 2027 (0% then, 34% now), not there yet. The two of you were still finding each other in it. You and Hannah had rehearsed together 1 times. Run It With A Reader works your side of it without them. (With Your Partner: 34%.) As Leah in Runway."
+    }
+   ]
+  },
+  "money written oddly": {
+   "count": 4,
+   "distinct": 4,
+   "examples": [
+    {
+     "file": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/l14/walk-before-1440/missed-plan.json",
+     "where": "Money",
+     "text": "-$3"
+    },
+    {
+     "file": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/l14/walk-before-1440/missed-plan.json",
+     "where": "Money",
+     "text": "Its -$3, moves to Chase Total Checking."
+    },
+    {
+     "file": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/l14/walk-before-1440/missed-plan.json",
+     "where": "Money",
+     "text": "Chase Savings ···3136, Chase (-$3)"
+    },
+    {
+     "file": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/l14/walk-before-1440/missed-plan.json",
+     "where": "Money (buttons)",
+     "text": "Balance-$3"
+    }
+   ]
+  }
+ }
+}

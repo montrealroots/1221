@@ -303,7 +303,7 @@ describe('written work: no way of playing to choose', () => {
       return { sim: thaw(found.snap), id: found.id };
     };
   })();
-  const words = 'It’s written work, presented at the table and never played: there’s no way of playing it to choose.';
+  const words = 'It’s written work: you present it at the table and don’t perform it, so there’s no way of playing it to choose.';
 
   it('PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked', () => {
     const { sim, id } = set();
@@ -431,7 +431,7 @@ describe('tax.federal_lien_withdraw: an Inherited family’s student who files n
     expect(titled(sim, 'The IRS Filed A Notice Of Federal Tax Lien').map((n) => n.at)).toEqual([LT11]);
     // Before payment Papers draws the withdrawal shut, and says why.
     drawn(sim, FederalLien, { year: 2027 });
-    expect(drew('tax.federal_lien_withdraw').map((c) => [c.label, c.disabled, c.title])).toEqual([['Ask For Its Withdrawal (Form 12277)', true, 'A withdrawal after payment comes once it’s released, within 30 days of payment in full; one filed in error can be withdrawn now.']]);
+    expect(drew('tax.federal_lien_withdraw').map((c) => [c.label, c.disabled, c.title])).toEqual([['Ask For Its Withdrawal (Form 12277)', true, 'You can ask for a withdrawal once the lien is released, which happens within 30 days of paying in full. Only a lien filed in error can be withdrawn sooner, and this one wasn’t.']]);
 
     // The levy pays it; released 30 days after payment, on its own.
     sim.advanceTo(LEVY + MS_HOUR);
@@ -442,7 +442,7 @@ describe('tax.federal_lien_withdraw: an Inherited family’s student who files n
     expect(titled(sim, 'Your Federal Tax Lien Is Released').map((n) => n.at)).toEqual([RELEASED]);
 
     // Released: the withdrawal asks the last three years' returns filed, and 2028's isn't.
-    const unfiled = 'The IRS withdraws one after payment only with the last three years’ returns filed: 2028’s isn’t.';
+    const unfiled = 'The IRS withdraws a lien after payment only if your last three years’ returns are filed, and your 2028 return isn’t. File it first.';
     drawn(sim, FederalLien, { year: 2027 });
     expect(drew('tax.federal_lien_withdraw').map((c) => [c.disabled, c.title])).toEqual([[true, unfiled]]);
     const was = freeze(sim);
@@ -454,17 +454,17 @@ describe('tax.federal_lien_withdraw: an Inherited family’s student who files n
     drawn(sim, FederalLien, { year: 2027 });
     expect(drew('tax.federal_lien_withdraw').map((c) => [c.label, c.disabled])).toEqual([['Ask For Its Withdrawal (Form 12277)', false]]);
     const asked = sim.now;
-    expect(press('tax.federal_lien_withdraw')).toEqual([`Form 12277 sent: decided by ${longDate(asked + 30 * MS_DAY)}.`]);
+    expect(press('tax.federal_lien_withdraw')).toEqual([`Form 12277 sent. The IRS decides by ${longDate(asked + 30 * MS_DAY)}.`]);
     expect(r().lien).toMatchObject({ status: 'disputed', decideAt: asked + 30 * MS_DAY });
-    expect(sim.execute({ kind: 'tax.federal_lien_withdraw', payload: { year: 2027 } }).error).toBe(`Asked: decided by ${longDate(asked + 30 * MS_DAY)}.`);
+    expect(sim.execute({ kind: 'tax.federal_lien_withdraw', payload: { year: 2027 } }).error).toBe(`You’ve already asked. The IRS decides by ${longDate(asked + 30 * MS_DAY)}.`);
 
     // Saved and loaded, then past its day: withdrawn, said once, and not asked again.
     const back = reload(sim);
     back.advanceTo(asked + 31 * MS_DAY);
     const after = returnsOf(back.player)['2027']!.lien!;
     expect([after.status, after.withdrawnAt]).toEqual(['withdrawn', asked + 30 * MS_DAY]);
-    expect(titled(back, 'Your Federal Tax Lien Is Withdrawn').map((n) => n.body)).toEqual(['The IRS withdrew the notice of federal tax lien on your 2027 return: it’s as if it had never been filed.']);
-    expect(back.execute({ kind: 'tax.federal_lien_withdraw', payload: { year: 2027 } }).error).toBe('It’s been withdrawn.');
+    expect(titled(back, 'Your Federal Tax Lien Is Withdrawn').map((n) => n.body)).toEqual(['The IRS withdrew the notice of federal tax lien on your 2027 return. A withdrawn notice is treated as if it had never been filed.']);
+    expect(back.execute({ kind: 'tax.federal_lien_withdraw', payload: { year: 2027 } }).error).toBe('The lien has already been withdrawn.');
 
     // The Wealthy family's twin: the same calendar, an LT11 on 2027 under $10,000, and no lien.
     const twin = life('wealthy');

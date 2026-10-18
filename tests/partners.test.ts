@@ -40,7 +40,7 @@ describe('a partner asks', () => {
     expect(sim.universe.notifications.filter((n) => n.title === `${firstOf(sim, a)} Asks To Rehearse`)).toHaveLength(1);
     expect(sim.universe.scheduled.some((i) => i.kind === ASK_KIND && i.status === 'pending' && i.payload.askId === k.id)).toBe(true);
     // The work waits for the answer, by hand and in a routine.
-    expect(sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: 'read' } }).error).toBe(`${firstOf(sim, a)} asked to rehearse: answer first.`);
+    expect(sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: 'read' } }).error).toBe(`${firstOf(sim, a)} has asked to rehearse. Answer them first.`);
     sim = reload(sim);
     const trust = trustOf(mateOf(sim, a));
     const yes = sim.must<{ booked: boolean; rehearsalId: string }>({ kind: 'school.answer_partner', payload: { assignmentId: a.id, askId: k.id, yes: true } });

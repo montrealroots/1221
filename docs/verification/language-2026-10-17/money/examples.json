@@ -1,0 +1,1001 @@
+[
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#closingWords",
+  "kind": "official",
+  "before": "Its -$3, moves to Chase Total Checking.",
+  "after": "It’s overdrawn by $3.30. Closing it takes $3.30 from Chase Total Checking to clear it.",
+  "why": "The before was found on the missed-plan save: a negative figure as a thing that moves, in whole dollars. Closing an overdrawn savings account posts the shortfall from the current account (`closeSavings`), so it says that, to the cent.",
+  "meaningSensitive": true,
+  "verified": "tests/language-money.test.ts: the sentence, then Close It pressed takes exactly $3.30 from checking"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#closingWords",
+  "kind": "official",
+  "before": "Its $1,235, moves to Chase Total Checking.",
+  "after": "Closing it moves its $1,234.56 to Chase Total Checking.",
+  "why": "Positive variant: the action first, and the exact figure, not the whole-dollar rounding",
+  "meaningSensitive": true,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#closingWords",
+  "kind": "official",
+  "before": "Its $0, moves to Chase Total Checking.",
+  "after": "It’s empty, so closing it moves nothing.",
+  "why": "Zero variant: nothing moves, so it doesn’t say something does",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#closingWords",
+  "kind": "notification",
+  "before": "Notice given: it closes December 1, 2026.",
+  "after": "Notice given. It closes December 1, 2026.",
+  "why": "Two sentences: what happened, then when",
+  "meaningSensitive": false,
+  "verified": "tests/integration-savings-notice.test.ts (Close It pressed)"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "official",
+  "before": "$15.00 a month, waived with $500 of electronic deposits (wages, benefits or a tax refund) paid in, or keeping $1,500 in it all month, or an average of $5,000 across your accounts at the bank. This month’s is due March 31, 2027 unless that changes.",
+  "after": "$15.00 a month, waived in any month you have $500 of electronic deposits (wages, benefits or a tax refund) paid in, or keep $1,500 in it all month, or keep an average of $5,000 across your accounts at the bank. It isn’t waived this month so far. Unless one of those conditions is met, it’s due March 31, 2027.",
+  "why": "Each condition is something you do in a month; 'unless that changes' named nothing",
+  "meaningSensitive": true,
+  "verified": "tests/language-money.test.ts; tests/remaining-09-banking.test.ts (the charged-on-the-1st and due-on-the-31st variants)"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "official",
+  "before": "This month is waived so far: $600 paid in.",
+  "after": "It’s waived this month so far, with $600 paid in.",
+  "why": "Plain order, the fee as the subject",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts (regex over both fee states)"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "accessible",
+  "before": "Balance-$3 (the balance tile's control, read by a screen reader and the text walk)",
+  "after": "Balance -$3",
+  "why": "The label and the figure ran together into one word",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts (the rendered markup has a space between the two spans)"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "label",
+  "before": "Chase, not opened",
+  "after": "At Chase, not open yet",
+  "why": "A panel subtitle that reads as a fact about the bank",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g14-1.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "label",
+  "before": "Between your own accounts: at once at one bank; to another bank, in the sending bank’s days; abroad, in both countries’ days, less the exchange and the fees.",
+  "after": "Between your own accounts. Within one bank it’s instant. To another bank it takes as long as the sending bank takes, and abroad it also costs the exchange and the fees.",
+  "why": "Three short sentences in place of a semicolon list",
+  "meaningSensitive": false,
+  "verified": "the built app's Accounts tab (after-1440)"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#interestWords",
+  "kind": "official",
+  "before": "Pays 0.01% a year (0.01% APY). It builds each day and is paid on the last day of the month.",
+  "after": "Pays 0.01% a year (0.01% APY). Interest builds up daily and is paid on the last day of the month.",
+  "why": "'It' was the interest, not the account the sentence before was about",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#interestWords",
+  "kind": "official",
+  "before": "Its rate wasn’t found, so SLATE pays none on it.",
+  "after": "No published rate was found for it, so it earns no interest in the game.",
+  "why": "The game, not 'SLATE', as the thing that pays",
+  "meaningSensitive": false,
+  "verified": "reviewed in code: the same condition (`no published rate` in the source and nothing else)"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#OtherCharges",
+  "kind": "official",
+  "before": "A payment the bank returns unpaid costs $10.00, none on a payment under $10.00, at most once every 2 business days.",
+  "after": "A payment the bank returns unpaid costs $10.00, or nothing when the account is less than $10.00 short, at most once every 2 business days.",
+  "why": "The engine waives the fee by the shortfall (`short < ifShortAtLeast`, systems/lending.ts), not the payment's size: the before said the wrong condition",
+  "meaningSensitive": true,
+  "verified": "tests/language-money.test.ts (RBC)"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#OtherCharges",
+  "kind": "official",
+  "before": "The debit card costs 950 kr a year and 19 kr a purchase, free under 24, paid for the year ahead, and what’s left of the year is refunded when the account closes. Its timing is SLATE’s simulation, unverified: Arion’s price list and terms don’t say when in the year it’s charged. Source: …",
+  "after": "The debit card costs 950 kr a year and 19 kr a purchase, or nothing at 23 and under. It’s paid for the year ahead, and what’s left of the year is refunded if the account closes. Source: … Estimated: Arion’s price list and terms don’t say when in the year it’s charged.",
+  "why": "'free under 24' read like a sum; the estimate goes after the source line, not mid-paragraph",
+  "meaningSensitive": true,
+  "verified": "tests/language-money.test.ts (Arion); tests/decisions-arion.test.ts (the same Estimated label on the panel and in Close It)"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#OtherCharges",
+  "kind": "official",
+  "before": "… It’s paid here on 1 June, which is SLATE’s estimate of the day.",
+  "after": "… It’s paid here on June 1. The day is estimated.",
+  "why": "The game's date order, and the estimate said as its own sentence",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts (Arion)"
+ },
+ {
+  "source": "src/ui/bank/BankMoves.tsx#BankMoves",
+  "kind": "official",
+  "before": "The debit card takes 7 business days, SLATE’s estimate: the bank doesn’t say.",
+  "after": "The debit card arrives in 7 business days. (At the foot: The debit card’s days are estimated: the bank doesn’t say.)",
+  "why": "An estimate is said in the sources line at the foot, not mid-sentence",
+  "meaningSensitive": false,
+  "verified": "tests/bank-moves-card-line.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankMoves.tsx#BankMoves",
+  "kind": "official",
+  "before": "Money between banks here arrives the same business day before 3:30 PM, the next after, by Zengin.",
+  "after": "Money between banks here goes by Zengin, and arrives the same business day if it’s sent before 3:30 PM, or the next business day if later.",
+  "why": "The condition said in full",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g20-1.test.ts; tests/defects-r5-1.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankMoves.tsx#BankMoves",
+  "kind": "official",
+  "before": "… and other payers in 14, SLATE’s estimate (employers say one to two pay cycles).",
+  "after": "… Other payers take 14 days, which is estimated: employers say one to two pay cycles.",
+  "why": "The estimate named once, plainly",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankMoves.tsx#BankMoves",
+  "kind": "label",
+  "before": "Standing Order, $50 On The 28, Into Chase Savings",
+  "after": "Standing Order Of $50 On The 28th, Into Chase Savings",
+  "why": "A day of the month is said as an ordinal",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g14-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankMoves.tsx#BankMoves",
+  "kind": "button",
+  "before": "Pay From There",
+  "after": "Pay From This Account",
+  "why": "Names what the button moves to",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g14-money.test.ts (pressed by its label)"
+ },
+ {
+  "source": "src/ui/bank/BankMoves.tsx#BankMoves",
+  "kind": "notification",
+  "before": "Applied: Bank of America decides by August 26, 2026.",
+  "after": "Application sent. Bank of America decides by August 26, 2026.",
+  "why": "What happened, then what comes next",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts (Apply pressed)"
+ },
+ {
+  "source": "src/engine/systems/bankmoves.ts#openRefusal",
+  "kind": "error",
+  "before": "Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.",
+  "after": "Citi needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.",
+  "why": "The obstacle, then the real next step and where it is",
+  "meaningSensitive": false,
+  "verified": "tests/scope-money.test.ts; tests/evidence2-b05.test.ts"
+ },
+ {
+  "source": "src/engine/systems/bankmoves.ts#openRefusal",
+  "kind": "error",
+  "before": "Citi turned you away on the ChexSystems report Chase made, which stands until October 30, 2031.",
+  "after": "Citi won’t open an account for you because of the ChexSystems report Chase filed, which stays on your record until October 30, 2031.",
+  "why": "Why, and until when, in plain words",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g14-money.test.ts; tests/evidence2-b05.test.ts (the tally of 240 draws)"
+ },
+ {
+  "source": "src/engine/systems/bankmoves.ts#closeRefusal",
+  "kind": "error",
+  "before": "It’s your only current account. Open another first: SLATE keeps every life a current account to be paid into.",
+  "after": "It’s your only current account. Open another one first: you always need a current account to be paid into.",
+  "why": "The reason in the player's terms",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts; tests/evidence-g14-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/bankmoves.ts#registerBankMoves <bank.set_primary>",
+  "kind": "error",
+  "before": "Citi Access Checking is closing.",
+  "after": "Citi Access Checking is closing, so it can’t be your primary account.",
+  "why": "The same three words refused four different things; each says what it refused",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g14-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/bankmoves.ts#registerBankMoves",
+  "kind": "notification",
+  "before": "What it held is on its way to Chase Total Checking. (said also when nothing was sent, and of a same-bank move made at once)",
+  "after": "What it held is on its way to Chase Total Checking and arrives October 1, 2026. / What it held is now in Chase Total Checking. / It held nothing.",
+  "why": "Read from what closing did (`closeNow`'s arrival): the before said 'on its way' of money moved at once, and of an empty account",
+  "meaningSensitive": true,
+  "verified": "tests/language-money.test.ts (Citi closed on its date, the on-its-way variant)"
+ },
+ {
+  "source": "src/engine/systems/bankmoves.ts#registerBankMoves <world.day_rollover>",
+  "kind": "notification",
+  "before": "It held nothing for 90 days, and the bank closes an account at zero that long.",
+  "after": "It sat at a zero balance for 90 days, so the bank closed it.",
+  "why": "What happened and why, in the past tense of the event",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-banking.test.ts; tests/evidence2-b05.test.ts"
+ },
+ {
+  "source": "src/engine/systems/bankmoves.ts#limitRefusal",
+  "kind": "error",
+  "before": "Citi lets $10,000 a day out to other banks, and $0 has gone today.",
+  "after": "Citi lets you send $10,000 a day to other banks, and you’ve sent $0 today.",
+  "why": "The player as the subject",
+  "meaningSensitive": false,
+  "verified": "tests/bank-moves.test.ts; tests/defects-g16-1.test.ts"
+ },
+ {
+  "source": "src/ui/looks/bank.tsx#top",
+  "kind": "label",
+  "before": "Where The Day Comes Out Of / A Bank You Hold Something With / A Line On A Statement",
+  "after": "Your Everyday Bank / Another Bank You Use / An Entry On A Statement",
+  "why": "Familiar names for the kind of thing opened",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/looks/bank.tsx#top",
+  "kind": "official",
+  "before": "It’s held against the balance now and posts on March 25, 2027.",
+  "after": "It’s pending. It already counts in your available balance, and it posts on March 25, 2027.",
+  "why": "Pending kept apart from posted, in the statement's own words (Available Now, Posted Balance)",
+  "meaningSensitive": true,
+  "verified": "reviewed against BankStatements' Available Now and Posted Balance on the built app (missed-plan save); the posted variant in tests/language-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/routing.ts#closeHold",
+  "kind": "error",
+  "before": "… Close it from October 8, 2026.",
+  "after": "… You can close it from October 8, 2026.",
+  "why": "Says what the player can do, and when",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-09-banking.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "official",
+  "before": "0% a year on a balance carried. Chase prices a card between 18.24% and 27.74% by the record when it opens; yours opened at this, and it’s held there. A record today would get 18.46%.",
+  "after": "0% a year on any balance you carry during the introductory months, then 18.46%. Chase sets a new card’s rate between 18.24% and 27.74% from your credit record when it opens. Yours was set at 18.46% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 18.46%.",
+  "why": "In the introductory months the before said the card 'opened at' 0%; it reads the rate set at opening (`card.apr`) and says when 0% ends",
+  "meaningSensitive": true,
+  "verified": "tests/language-money.test.ts 'says the card’s rate as set when it opened…'"
+ },
+ {
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "official",
+  "before": "Interest builds each day on what’s owed, the day’s interest included, once a statement isn’t paid in full; pay a statement in full and new spending draws none until the next is due.",
+  "after": "Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.",
+  "why": "The condition first, then what it costs; two sentences",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "official",
+  "before": "Sixty days late, and after 45 days’ notice the rate becomes 29.99%.",
+  "after": "If a payment is sixty days late, the rate goes up to 29.99% after 45 days’ notice.",
+  "why": "A complete sentence with its subject",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "official",
+  "before": "A statement on the 20th, and the payment due 21 days after it.",
+  "after": "Statements come on the 20th, and payment is due 21 days after each one.",
+  "why": "A fragment made a sentence",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "official",
+  "before": "The least a statement asks is 1% of it plus the month’s interest, or $40 if that’s more.",
+  "after": "The minimum payment is 1% of the statement plus the month’s interest, or $40 if that’s more.",
+  "why": "The name the player knows, 'the minimum payment'",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts; tests/hardship-plan-minimum.test.ts (once the plan ends)"
+ },
+ {
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "official",
+  "before": "A payment short of the minimum costs $30 the first time and $40 again within 6 billing periods, never more than the minimum. An autopay that bounces and leaves it short is charged that and no returned payment’s fee beside it. Still short at the next due date, thirty days past due, it goes on your record and the limit is cut.",
+  "after": "Paying less than the minimum by the due date costs $30 the first time, and $40 if it happens again within 6 billing periods, but never more than the minimum itself. If an autopay bounces and leaves the payment short, that fee is all you’re charged, with no returned payment fee on top. If it’s still short at the next due date, thirty days late, it goes on your credit record and the limit is cut.",
+  "why": "Each condition as a condition; every figure kept",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts; tests/hardship-plan-minimum.test.ts (the plan’s payment variant)"
+ },
+ {
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "official",
+  "before": "On a plan since October 11, 2026: no interest, and each statement asks the plan’s $101 in the minimum’s place: $101 on this one. The card can’t be used until the first statement or due date after it’s paid off, when the plan ends.",
+  "after": "It’s been on a payment plan since October 11, 2026. There’s no interest, and each statement asks for the plan’s $101 instead of the minimum, $101 on this one. You can’t use the card until the plan ends, at the first statement or due date after it’s paid off.",
+  "why": "Three sentences, the player as the subject",
+  "meaningSensitive": false,
+  "verified": "tests/hardship-plan-minimum.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "official",
+  "before": "Opted in to going over the limit: a purchase can take it up to a tenth over, SLATE’s estimate of what a bank allows, and this card charges nothing for it.",
+  "after": "You’ve opted in to going over the limit: a purchase can take it up to a tenth over, and this card charges nothing for it. (At the foot: How far over the limit a bank lets a purchase go is estimated.)",
+  "why": "The estimate moved to the sources line",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "button",
+  "before": "Move It (the statement day) / Ask For It / Raise My Limit Unasked: Never",
+  "after": "Change The Day / Ask For This Limit / Raise My Limit Automatically: Off",
+  "why": "Each button says what it changes; 'Move It' was also Move Money's button",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts (Ask For This Limit pressed); tests/language-money.test.ts (the rendered panel)"
+ },
+ {
+  "source": "src/ui/bank/BankCard.tsx#CardApplication",
+  "kind": "tutorial",
+  "before": "Any bank here takes an application, not only yours. It reads your record and what you have to repay from, and if it says yes, the card comes in about a week. Applying costs your record a few points, yes or no.",
+  "after": "You can apply to any bank here, not only yours. It looks at your credit record and whether you have income or money to repay from, and if it says yes, the card arrives a week later. Applying takes a few points off your credit record, whether or not you’re approved.",
+  "why": "'reads your record' was the engine's verb; 'about a week' was exactly `ARRIVES_IN`, seven days",
+  "meaningSensitive": true,
+  "verified": "tests/language-money.test.ts; systems/cardlife.ts ARRIVES_IN = 7 days"
+ },
+ {
+  "source": "src/ui/bank/BankCardOffers.tsx#CardOffers",
+  "kind": "official",
+  "before": "Rewards: 1.5% back on every purchase, counted at each statement. $0 to redeem. The bank’s words: … Its categories are ones a card doesn’t buy in SLATE, so the base rate is what it would earn.",
+  "after": "Rewards: 1.5% back on every purchase, added up at each statement. You have $0 to redeem. In the bank’s words: … Those categories are things a card doesn’t buy in the game, so you earn the base rate.",
+  "why": "The player as the subject, the game named plainly",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankCardOffers.tsx#CardOffers",
+  "kind": "official",
+  "before": "Groceries are what a card buys here: nothing pays a bill since 2026-10-09.",
+  "after": "In the game, groceries are the only thing a card buys: no bill is paid by card.",
+  "why": "The before showed a development date to the player",
+  "meaningSensitive": false,
+  "verified": "reviewed in code (shown with a bonus-category card, Japan's and Korea's); the rendered Chase variant in tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankCardOffers.tsx#CardOffers",
+  "kind": "official",
+  "before": "A plan pays part of what purchases owe off in equal months instead of interest. One made while the introductory rate runs, until October 20, 2026, is free to its last month; one made after costs 1.72% of it a month, the most the bank says it charges. $0 can go into one.",
+  "after": "A payment plan pays off part of what you owe for purchases in equal monthly amounts, instead of interest. A plan made while the introductory rate lasts, until October 20, 2026, is free for its whole life. One made after that costs 1.72% of the plan a month, the most the bank says it charges. There’s nothing on the card to put into one right now.",
+  "why": "The zero variant says so instead of '$0 can go into one'",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts; tests/defects-g15-1.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankCardOffers.tsx#CardOffers",
+  "kind": "official",
+  "before": "A plan: $600 left, $100 a month for 6 more months, and $0 a month in place of interest.",
+  "after": "A payment plan: $600 left, paid at $100 a month for 6 more months, with no fee and no interest.",
+  "why": "A $0 fee said as none",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g15-1.test.ts (the free plan, and $10.32 a month after the introduction)"
+ },
+ {
+  "source": "src/ui/bank/BankSecurity.tsx#BankSecurity",
+  "kind": "official",
+  "before": "A new card is free. Sent in a rush, $15.00 more. Cards last 4 years here, SLATE’s estimate; the bank doesn’t say.",
+  "after": "A new card is free. A rushed one costs $15.00 more. Cards last 4 years here. That’s estimated: the bank doesn’t say.",
+  "why": "Whole sentences, the estimate as its own",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts; tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankSecurity.tsx#BankSecurity",
+  "kind": "label",
+  "before": "Locking, loss and theft, and payments that weren’t yours",
+  "after": "Lock a card, report it lost or stolen, or report a payment that wasn’t yours",
+  "why": "The panel's subtitle as what you can do",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankSecurity.tsx#BankSecurity",
+  "kind": "notification",
+  "before": "Stopped. The new card arrives September 2, 2026, for $5.00.",
+  "after": "The card is stopped. The new one arrives September 2, 2026, for $5.00.",
+  "why": "Says what was stopped",
+  "meaningSensitive": false,
+  "verified": "reviewed in code (the toast of card.report); the command's arrival day asserted in tests/evidence2-b04.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankPayments.tsx#coverText",
+  "kind": "official",
+  "before": "On, a payment a current account can’t make comes from easy-access savings at the same bank, as far as savings lets it out.",
+  "after": "When this is on, a payment a current account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows.",
+  "why": "'On,' as a sentence opener named a button's state",
+  "meaningSensitive": false,
+  "verified": "tests/defects-r6-1.test.ts; tests/defects-r3b-1.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankCash.tsx#BankCash",
+  "kind": "official",
+  "before": "$15.00 for it. It draws 28.49% a year from today, with no grace period.",
+  "after": "It costs $15.00. A cash advance is charged 28.49% a year from today, with no interest-free period.",
+  "why": "'draws' was the engine's verb; 'grace period' said plainly",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankCash.tsx#BankCash",
+  "kind": "official",
+  "before": "…, and the machine’s owner may add a fee of its own, which the screen shows before you take it; SLATE doesn’t know it.",
+  "after": "… The machine’s owner may add a fee of its own, shown on the machine before you take the cash. That fee isn’t known, so the game doesn’t charge it.",
+  "why": "Says what's charged (nothing for it: `withdrawalQuote` posts only a known owner's charge)",
+  "meaningSensitive": true,
+  "verified": "systems/cash.ts: ownerFee posts nothing, ownerCharge posts 'The machine owner’s fee'"
+ },
+ {
+  "source": "src/ui/bank/BankCash.tsx#BankCash",
+  "kind": "label",
+  "before": "$0.00 in hand. / Take Out (USD) / Pay In (USD)",
+  "after": "You have $0.00 in cash. / Amount To Take Out (USD) / Amount To Pay In (USD)",
+  "why": "A subtitle as a sentence, and field labels that say what goes in them",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts; tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/RoundUps.tsx#RoundUps",
+  "kind": "official",
+  "before": "Counted, not yet moved: £0.71. / Last moved: £0.71 into savings, August 25, 2026. / 2 purchases since the last transfer were already a multiple of $1.00, so rounded up to nothing.",
+  "after": "Counted but not moved yet: £0.71. / Last moved to savings: £0.71, on August 25, 2026. / 2 purchases since the last transfer were already a multiple of $1.00, so they added nothing.",
+  "why": "Plain order; the plural agrees",
+  "meaningSensitive": false,
+  "verified": "tests/roundups.test.ts; tests/evidence-g11-money.test.ts; tools/acceptance-ui.mjs matchers"
+ },
+ {
+  "source": "src/ui/bank/RoundUps.tsx#RoundUps",
+  "kind": "label",
+  "before": "What The Bank Leaves Open, And What SLATE Leaves Out / Not in SLATE: … / Read from …; checked ….",
+  "after": "What The Bank Leaves Open, And What The Game Leaves Out / Not in the game: … / Source: …, checked ….",
+  "why": "The game named as the game; the source line in the house form",
+  "meaningSensitive": false,
+  "verified": "tests/roundups.test.ts; tests/evidence-g11-money.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "label",
+  "before": "BALANCE -$3",
+  "after": "BALANCE −$3.30 Overdrawn",
+  "why": "An overdrawn balance to the cent, with a minus sign and a word, where whole dollars and a hyphen read '-$3' (text-render-check's 'money written oddly')",
+  "meaningSensitive": true,
+  "verified": "tests/language-money.test.ts (the markup and the words)"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "… Payments at the same moment post largest first. It covers up to about $500, SLATE’s estimate: the bank publishes no limit.",
+  "after": "… Payments at the same moment post largest first. It covers up to about $500. (At the foot: How far the bank lets the account go below zero is estimated: it publishes no limit.)",
+  "why": "The estimate in the sources line, not the sentence",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "You haven’t opted in, so an everyday debit card purchase the account can’t cover goes on the card, or is declined, and costs no fee. Bills and checks go into the overdraft either way. The law has a US bank ask first.",
+  "after": "You haven’t opted in, so an everyday debit card purchase the account can’t cover goes on the card, or is declined, and costs no fee. Other payments, like autopay and standing orders, go into the overdraft either way. The law requires a US bank to ask you first.",
+  "why": "Bills and checks went with the home in the scope reset; the payments that do go into the overdraft are named",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g10-money.test.ts; tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "Chase has no overdraft terms SLATE found, so the account never goes below zero here: a payment it can’t cover comes from savings if you’ve linked it; the day’s shopping then goes on the card, and a bill or the rent comes back unpaid with its fee and is owed.",
+  "after": "No overdraft terms were found for Chase, so the account never goes below zero here. A payment it can’t cover comes from savings if you’ve linked them. Otherwise the day’s shopping goes on the card, and any other payment comes back unpaid, with its fee.",
+  "why": "'the rent' and 'a bill' were removed systems; three sentences",
+  "meaningSensitive": true,
+  "verified": "reviewed in code: this variant shows for a bank with no `overdraft` in `LENDING`; the same panel's other variants in tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "1 overdraft fee is held, $34.00: each comes off after the end of August 26, 2026 unless the account is back to −$50.00 or better.",
+  "after": "1 overdraft fee is on hold, $34.00. It’s charged after the end of August 26, 2026, unless the account is back to −$50.00 or better by then.",
+  "why": "One fee is 'it', not 'each'; the condition with its deadline",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "Chase closed your account after it was overdrawn for 60 days, SLATE’s estimate of how long a bank lets one run, and charged off what it couldn’t recover. It’s on your record until it’s paid.",
+  "after": "Chase closed your account after it was overdrawn for 60 days, and charged off what it couldn’t recover. How long a bank lets an overdraft run is estimated. It’s on your record until it’s paid.",
+  "why": "What happened first; the estimate as its own sentence",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "notification",
+  "before": "Paid.",
+  "after": "Paid $… toward the debt. (the amount typed)",
+  "why": "Says what was paid and to what",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts (a regex over the amount)"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "Savings past the month’s €2,000 isn’t moved: notice is given on it, and it follows in three months.",
+  "after": "Savings over the €2,000 you can take out in a month without notice isn’t moved: notice is given on it, and it follows three months later.",
+  "why": "The figure read from the bank's rule (`CASH[bank].savingsMonthly`), where it was typed for every German bank, two of which have no such rule",
+  "meaningSensitive": true,
+  "verified": "reviewed in code: the switch panel at Deutsche Bank, Postbank or Berliner Sparkasse; tests/scope-money.test.ts renders the switch panels"
+ },
+ {
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "Chase reported you to ChexSystems on October 30, 2026; it stands until October 30, 2031. A bank here turns a report away about 85% of the time, SLATE’s estimate, and the ones that have are left off the list.",
+  "after": "Chase reported you to ChexSystems on October 30, 2026, and the report stays on your record until October 30, 2031. A bank here turns down about 85% of applicants with a report, and the banks that turned you down are left off the list. Source: … That share is estimated.",
+  "why": "Who does what, and the estimate after the source",
+  "meaningSensitive": false,
+  "verified": "reviewed in code (the switch panel with a report); the refusals it explains in tests/evidence2-b05.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankStatements.tsx#AccountStatementView",
+  "kind": "label",
+  "before": "Completed items only; what’s pending is still to post",
+  "after": "Posted payments only: what’s pending hasn’t posted yet",
+  "why": "Pending kept apart from posted, in plain words",
+  "meaningSensitive": true,
+  "verified": "the built app's Statements tab, missed-plan save (walk-b3)"
+ },
+ {
+  "source": "src/ui/bank/BankStatements.tsx#PendingTerms",
+  "kind": "official",
+  "before": "The bank doesn’t say how long a card payment stays pending, so SLATE’s estimate holds it. Source: …",
+  "after": "Source: … How long a card payment stays pending is estimated: the bank doesn’t say.",
+  "why": "The estimate after the source",
+  "meaningSensitive": false,
+  "verified": "reviewed in code against `PENDING[bank].pendingDays`"
+ },
+ {
+  "source": "src/ui/bank/BankStatements.tsx#CardStatementView",
+  "kind": "official",
+  "before": "The least to pay is $40.00, by December 11, 2026. Pay the whole $2,000.00 and none of it draws interest.",
+  "after": "The least you can pay is $40.00, by December 11, 2026. Pay the whole $2,000.00 and none of it is charged interest.",
+  "why": "'draws' was the engine's verb",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g13-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankStatements.tsx#CardStatementView",
+  "kind": "official",
+  "before": "On the plan nothing draws interest and nothing new goes on the card: $101.00 a month clears the $4,830.00 in 4 years, $4,830.00 in all, so long as none is missed.",
+  "after": "On the plan there’s no interest, and nothing new goes on the card. Paying $101.00 a month clears the $4,830.00 in 4 years, $4,830.00 in all, as long as no payment is missed.",
+  "why": "Two sentences; the condition plainly",
+  "meaningSensitive": false,
+  "verified": "tests/hardship-plan-minimum.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankStatements.tsx#CardStatementView",
+  "kind": "empty",
+  "before": "The card went unused and unpaid in this period.",
+  "after": "The card wasn’t used or paid in this period.",
+  "why": "Plain words for an empty statement",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts 'says the card wasn’t used or paid'"
+ },
+ {
+  "source": "src/ui/bank/BankStatements.tsx#AlertsView",
+  "kind": "label",
+  "before": "… due from it in the next three days (SLATE’s design).",
+  "after": "… due from it in the next three days. That alert is the game’s own, not a feature of a real bank.",
+  "why": "What '(SLATE’s design)' meant, said; the days read from `LOOKAHEAD_DAYS`",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankAccountLife.tsx#BankAccountLife",
+  "kind": "official",
+  "before": "Broken now it costs $10.48. / Broken now it comes out whole. / …, the interest so far: SLATE’s estimate of the bank’s penalty.",
+  "after": "Breaking it now costs $10.48. / Breaking it now costs nothing. / … The penalty is estimated as the interest so far, because the bank words its penalty another way.",
+  "why": "A quote of the penalty as an action's cost; the estimate said with its reason",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts; tests/evidence-g11-money.test.ts"
+ },
+ {
+  "source": "src/ui/bank/BankAccountLife.tsx#BankAccountLife",
+  "kind": "official",
+  "before": "360 Checking is dormant, blocked until it’s used again.",
+  "after": "360 Checking is dormant: the bank has blocked it until you reactivate it.",
+  "why": "Names the next step, the Reactivate button beside it",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts"
+ },
+ {
+  "source": "src/ui/looks/money.tsx#accountSentence",
+  "kind": "narration",
+  "before": "You’re $3.30 under at Chase, and every day it stays under costs you.",
+  "after": "It’s $3.30 overdrawn at Chase, and every day it stays overdrawn can cost you.",
+  "why": "'under' named nothing; 'can' because an overdraft within its grace costs nothing",
+  "meaningSensitive": true,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/looks/money.tsx#tailFor",
+  "kind": "narration",
+  "before": "You have $250.00 in it at Chase, set aside, and drawn on to pay what the current account can’t where you’ve linked it, and for what went unpaid.",
+  "after": "You have $250.00 in it at Chase. It’s money set aside. Where you’ve linked it, it pays what the current account can’t, and it pays off anything left unpaid.",
+  "why": "One sentence of three thoughts made three",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts; tests/defects-g13-1.test.ts"
+ },
+ {
+  "source": "src/ui/looks/money.tsx#ACCOUNT_KIND",
+  "kind": "label",
+  "before": "What You Spend From / What You Put Aside / A Line Of Credit",
+  "after": "Current Account / Savings Account / Credit Card",
+  "why": "The plain name of each kind",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/looks/money.tsx#top",
+  "kind": "empty",
+  "before": "You don’t owe anybody anything, so there’s nothing standing against your name to look at.",
+  "after": "You don’t owe anyone anything, so there’s nothing to show here.",
+  "why": "Plain",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/ui/looks/money.tsx#debtBody",
+  "kind": "official",
+  "before": "Carried at the rates they charge now, that would come to about $… a year, or $… a month for standing still. A card paid in full each month is charged none.",
+  "after": "At today’s rates, carrying it would cost about $… a year, or $… a month, if the balances stay as they are. A card paid in full each month is charged none of it.",
+  "why": "'for standing still' said as the condition it is",
+  "meaningSensitive": false,
+  "verified": "tests/money-plan-interest.test.ts; tests/guide-examples-money.test.ts"
+ },
+ {
+  "source": "src/ui/looks/money.tsx#top",
+  "kind": "other",
+  "before": "The rates come off the accounts themselves, and a card’s is charged at each statement on a balance carried. None of it is run forward — it’s what the balances are at this minute.",
+  "after": "The rates are the accounts’ own, and a card’s is charged at each statement on a balance carried. These are the balances right now, not a projection.",
+  "why": "'run forward' and the dash",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "That’s the same account.",
+  "after": "From and To are the same account. Choose another account to move it to.",
+  "why": "said which fields, and the next step",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "Chase Total Checking holds $93,391.",
+  "after": "Chase Total Checking only has $93,391 in it.",
+  "why": "says it's not enough, not just a balance",
+  "meaningSensitive": false,
+  "verified": "tests/bank-moves.test.ts"
+ },
+ {
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "Flexgeld lets €2,000 more out this month without notice; more takes three months’ notice.",
+  "after": "You can take €2,000 more out of Flexgeld this month without notice. More than that takes three months’ notice.",
+  "why": "subject is the player; semicolon split",
+  "meaningSensitive": false,
+  "verified": "tests/integration-savings-notice.test.ts"
+ },
+ {
+  "source": "src/engine/systems/payments.ts#registerPayments",
+  "kind": "notification",
+  "before": "$50.00 to Chase Savings: It wasn’t in Chase Total Checking on the day, so the bank didn’t make it.",
+  "after": "Your $50.00 standing order to Chase Savings didn’t go. There wasn’t enough in Chase Total Checking on the day. Move money into it before the order’s next date.",
+  "why": "leads with what happened, then why, then the next step",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-banking.test.ts"
+ },
+ {
+  "source": "src/engine/systems/accountlife.ts#idleAccounts",
+  "kind": "notification",
+  "before": "Untouched for 24 months. Chase has blocked it until you use it again.",
+  "after": "It hasn’t been used for 24 months, so Chase has blocked it. Reactivate it on Money, under Your Accounts Over Time, to use it again.",
+  "why": "names the real next step: a dormant account refuses being used until it's reactivated",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g10-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/banking.ts#registerBanking",
+  "kind": "notification",
+  "before": "The notice ran out, and what it held is in Postbank Giro.",
+  "after": "Its notice period ended, and what it held is now in Postbank Giro.",
+  "why": "'the notice ran out'",
+  "meaningSensitive": false,
+  "verified": "tests/integration-savings-notice.test.ts"
+ },
+ {
+  "source": "src/engine/systems/banking.ts#endedWords",
+  "kind": "notification",
+  "before": "Its standing order of $50.00 into Chase Savings on the 28 ended with it.",
+  "after": "Its standing order of $50.00 into Chase Savings on the 28th ended with it. You can set one up again on How You Pay.",
+  "why": "the ordinal, and where to set it up again",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-banking.test.ts"
+ },
+ {
+  "source": "src/engine/systems/cash.ts#withdrawalQuote",
+  "kind": "error",
+  "before": "Your debit card is stopped; the counter can still pay out.",
+  "after": "Your debit card is stopped. You can still take cash out at the counter.",
+  "why": "says what the player can still do",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/cash.ts#withdrawalQuote",
+  "kind": "error",
+  "before": "Chase lets $1,000.00 out of machines in a day, and $1,000.00 has come out today.",
+  "after": "Chase lets you take $1,000.00 a day out of machines, and you’ve taken $1,000.00 today.",
+  "why": "the player as the subject",
+  "meaningSensitive": false,
+  "verified": "tests/cash.test.ts"
+ },
+ {
+  "source": "src/engine/systems/statements.ts#registerStatements <bank.set_alerts>",
+  "kind": "error",
+  "before": "Set the low balance as an amount, or turn it off.",
+  "after": "Enter the low balance alert as an amount, or leave it blank to turn it off.",
+  "why": "how the field turns it off",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/accountlife.ts#registerAccountLife",
+  "kind": "notification",
+  "before": "On the notice given: $1,004.00 to your current account, after $3.00 taken for closing early.",
+  "after": "Your notice period ended: $1,004.00 went to your current account, after a $3.00 penalty for closing early.",
+  "why": "a sentence with a subject; the penalty named",
+  "meaningSensitive": false,
+  "verified": "tests/accountlife.test.ts"
+ },
+ {
+  "source": "src/engine/systems/payments.ts#registerPayments <bank.schedule_payment>",
+  "kind": "error",
+  "before": "Pick a day ahead.",
+  "after": "Choose a date in the future.",
+  "why": "plain",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/credit.ts#registerCredit",
+  "kind": "notification",
+  "before": "The minimum was $40.00 and only $0.00 went in. A $30.00 fee, and it goes on your record if it’s still short at the next due date, thirty days past due.",
+  "after": "The minimum payment was $40.00, and only $0.00 was paid. That costs a $30.00 late fee, and it goes on your credit record if it’s still short at the next due date, thirty days late.",
+  "why": "complete sentences; what the $30 is",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/cardlife.ts#registerCardLife <card.request_limit>",
+  "kind": "notification",
+  "before": "The bank kept the limit at $500.00: it raises one for a record of 700 or more, nothing late in a year, and means to repay.",
+  "after": "The bank kept your limit at $500.00. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.",
+  "why": "'means to repay' named as what the code checks (money held in banks)",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/security.ts#somebodyElse",
+  "kind": "notification",
+  "before": "$120.00 on your debit card ending 0146. If it wasn’t you, report it.",
+  "after": "$120.00 on your debit card ending 0146. If it wasn’t you, report it on Money, under Cards.",
+  "why": "where to report it",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/security.ts#registerSecurity",
+  "kind": "notification",
+  "before": "Ending 3003.",
+  "after": "The new card ends in 3003, and you can use it now.",
+  "why": "a sentence that says what it means",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts"
+ },
+ {
+  "source": "src/engine/systems/cardoffers.ts#registerCardOffers <card.plan>",
+  "kind": "error",
+  "before": "The Chase Freedom Unlimited has no plan SLATE has terms for.",
+  "after": "No payment plan terms were found for the Chase Freedom Unlimited.",
+  "why": "'SLATE'",
+  "meaningSensitive": false,
+  "verified": "tests/cardoffers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/lending.ts#closeForOverdraft",
+  "kind": "notification",
+  "before": "It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your record; pay it from Your Bank.",
+  "after": "It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your credit record. You can pay it on Money, under Borrowing.",
+  "why": "the real place to pay it",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-banking.test.ts"
+ },
+ {
+  "source": "src/engine/systems/lending.ts#loanOffer",
+  "kind": "error",
+  "before": "Wells Fargo publishes only its lowest rate, and SLATE lends at it only to a good record.",
+  "after": "Wells Fargo publishes only its lowest rate, so in the game it lends only to a good credit record.",
+  "why": "'SLATE'",
+  "meaningSensitive": false,
+  "verified": "read in code"
+ },
+ {
+  "source": "src/engine/systems/lending.ts#registerLending <bank.cancel_switch>",
+  "kind": "error",
+  "before": "It could be called off until January 5, 2027, seven working days before its date; it’s under way now. Its balance transfer alone can still be stopped, until the working day before.",
+  "after": "You could call it off until January 5, 2027, seven working days before its date, and it’s under way now. You can still stop its balance transfer until the working day before.",
+  "why": "the player as the subject; decision 4: words only",
+  "meaningSensitive": false,
+  "verified": "tests/finance-paths.test.ts"
+ },
+ {
+  "source": "src/engine/systems/homeaccount.ts#homeAccountRefusal",
+  "kind": "error",
+  "before": "SLATE has no research on what Banca Intesa does when a customer moves to America.",
+  "after": "There’s no research on what Banca Intesa does when a customer moves to America, so the game can’t offer it.",
+  "why": "'SLATE'; says the consequence",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-creation.test.ts"
+ },
+ {
+  "source": "src/engine/systems/lending.ts#frenchOverrun",
+  "kind": "notification",
+  "before": "Overdrawn past the limit for 60 days, the account closes in two months, on December 29, 2026, unless it’s back within it.",
+  "after": "Your account has been past its overdraft limit for 60 days, so it closes in two months, on December 29, 2026, unless it’s back within the limit by then.",
+  "why": "a subject, and what 'it' is",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-setoff.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.accounts]",
+  "kind": "tutorial",
+  "before": "Your bank opens from the button named for it on Home’s Money line, or Money on the menu. It’s headed by the bank your primary account is at, in five tabs. Accounts shows each current and savings account under the bank’s own name for it, with its number written the country’s way, its balance, what it pays, what it costs and how this month’s fee stands. Open or close savings here, and choose which current account is primary.",
+  "after": "Money is your bank. The Accounts tab shows each of your current and savings accounts: its number, its balance, what it pays, what it costs and whether this month’s fee is waived so far. Open or close savings here, and choose which current account is your primary account.",
+  "why": "a short plain overview first",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-money.test.ts (the worked examples, played)"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.card]",
+  "kind": "tutorial",
+  "before": "Choose a Statement Day and press Move It; type A Different Limit and press Ask For It.",
+  "after": "To move your statement date, choose a Statement Day and press Change The Day. To change your limit, type a New Limit and press Ask For This Limit.",
+  "why": "the buttons' real labels since batch 2",
+  "meaningSensitive": false,
+  "verified": "text walk (walk-b3, Money, Cards)"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.payments]",
+  "kind": "tutorial",
+  "before": "'Pressing Make Primary to move your wages: Have Wages Paid Here moves them.' (no next step)",
+  "after": "next: Check Short For A Payment is On, on Statements under Alerts, so you’re warned before a standing order or autopay is due.",
+  "why": "the tutorial's seventh question, added to every money entry",
+  "meaningSensitive": false,
+  "verified": "read against the Statements tab in the text walk"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.transfer]",
+  "kind": "tutorial",
+  "before": "Where neither says, SLATE takes 3 business days.",
+  "after": "Where Neither The Bank Nor The Country Says: 3 business days (marked estimated), moved out of the overview into the figures",
+  "why": "the estimate said where the figures are, not mid-sentence",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-money.test.ts (the worked examples, played)"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [money.affairs]",
+  "kind": "tutorial",
+  "before": "Every figure is added up from the ledger as you look, so it can’t drift from the money behind it.",
+  "after": "Looking changes nothing. Each balance is added up from every payment into and out of the account, and your net worth is added up again each time you look.",
+  "why": "'the ledger'",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-money.test.ts (the worked examples, played)"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.borrowing]",
+  "kind": "tutorial",
+  "before": "“It covers up to about …, SLATE’s estimate” is how far the bank pays items before declining them.",
+  "after": "“It covers up to about …” is how far the bank pays payments before declining them. That figure is estimated, as the line at the foot of the panel says.",
+  "why": "the screen's words since batch 3; the estimate at the foot",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts (Borrowing)"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.upkeep]",
+  "kind": "tutorial",
+  "before": "“… is dormant, blocked until it’s used again.” Reactivate unblocks it.",
+  "after": "“… is dormant: the bank has blocked it until you reactivate it.” Press Reactivate to unblock it.",
+  "why": "quotes the panel's words; a dormant account can't be 'used again'",
+  "meaningSensitive": true,
+  "verified": "read against BankAccountLife.tsx"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.card-offers]",
+  "kind": "tutorial",
+  "before": "Purchases owe $600 on the Chase Freedom Unlimited, past its introductory months, at 22.99%.",
+  "after": "You owe $600 for purchases on the Chase Freedom Unlimited, after its introductory months, at 22.99%.",
+  "why": "the player as the subject",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-money.test.ts (the worked examples, played)"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.home-account]",
+  "kind": "tutorial",
+  "before": "SLATE has research on what 54 banks in 12 countries do when a customer moves to America, and offers only those: a bank anywhere else is refused, never guessed.",
+  "after": "The game offers only the 54 banks in 12 countries with research on what they do when a customer moves to America.",
+  "why": "'SLATE'",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-money.test.ts; the counts printed by a script (54 usable banks, 12 countries)"
+ },
+ {
+  "source": "src/engine/content/currency.ts#RATES_NOTE",
+  "kind": "official",
+  "before": "Exchange rates are SLATE's calibrated estimates, not a live market.",
+  "after": "Exchange rates are the game’s estimates, not a live market.",
+  "why": "'SLATE'",
+  "meaningSensitive": false,
+  "verified": "printed-data.txt"
+ },
+ {
+  "source": "src/engine/content/homeaccounts.ts#ASSUMED_WORDS",
+  "kind": "official",
+  "before": "SLATE’s assumption: the bank publishes no margin, so SLATE takes the FSB’s 2024 average cost of a payment abroad, 2.6%",
+  "after": "an estimate: the bank publishes no margin, so the game uses the FSB’s 2024 average cost of a payment abroad, 2.6%",
+  "why": "'SLATE'; read inside Move Money's line, so lower case",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-transfers.test.ts"
+ },
+ {
+  "source": "src/engine/content/banks-lending.ts#LENDING .us-citi",
+  "kind": "official",
+  "before": "citi.com personal loans: 10.24% to 18.49% APR; $2,000 to $30,000 for a new customer, to $50,000 for an existing one (research-tax-switch-lending.json, 2026-10-10)",
+  "after": "citi.com personal loans: 10.24% to 18.49% APR; $2,000 to $30,000 for a new customer, to $50,000 for an existing one (read 2026-10-10)",
+  "why": "a research file's name in a Source line",
+  "meaningSensitive": false,
+  "verified": "printed-data.txt"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "label",
+  "before": "$126.58 in dollars, at SLATE’s rate",
+  "after": "About $126.58 at an estimated exchange rate",
+  "why": "the coordinator's note: rates are said as estimated, as the frame area says them",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-screens.test.ts"
+ }
+]

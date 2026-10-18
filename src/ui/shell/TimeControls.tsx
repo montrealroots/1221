@@ -16,7 +16,7 @@ import {
 import { missedBy, skipTargets } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
 import {
-  addDays, formatDate, formatDateTime, formatDuration, formatTime, instantFromZoned, zonedParts, MS_HOUR,
+  addDays, formatDate, formatDateTime, formatDuration, formatDurationWords, formatTime, instantFromZoned, zonedParts, MS_HOUR,
   type Instant,
 } from '@/engine/core/time';
 import { PLAN_KIND } from '@/engine/world/plans';
@@ -25,6 +25,8 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
+import { said, toStart } from '@/ui/looks/words';
+import { plural } from '@/engine/core/text';
 
 /** The foot of a top-bar menu, where its How This Works sits: the bar itself has no room for one. */
 const MENU_FOOT = { padding: 'var(--s2) var(--s3) var(--s1)', marginTop: 'var(--s1)', borderTop: '1px solid var(--line)' } as const;
@@ -151,11 +153,13 @@ export function TimeControls() {
             </>
           }
         >
+          {/* What each stop offers is DueNow's: Go and Stand Here always, Skip It on a plan of your own, Call It Off on a
+              rehearsal with a partner, which at short notice costs their trust (`school.cancel_rehearsal`). */}
           <p className="small muted">
-            Advancing to <strong>{confirm.label}</strong> ({formatDateTime(confirm.at, sim.zone)}) comes to{' '}
-            {confirm.missed.length} commitment{confirm.missed.length === 1 ? '' : 's'} on the way. The clock stops at
-            each. A plan of your own you can skip; the school’s calls and classes you go to, or stand where you are and the
-            clock waits, and a rehearsal with a partner you go to or call off, which they’ll mind at short notice.
+            Moving the clock to <strong>{confirm.label}</strong> ({formatDateTime(confirm.at, sim.zone)}) passes{' '}
+            {said(confirm.missed.length, 'commitment')}, and the clock stops at each one. At each, you can go, or press
+            Stand Here and the clock waits. A plan of your own can also be skipped, and a rehearsal with a partner called
+            off, though at short notice that costs their trust.
           </p>
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {confirm.missed.slice(0, 8).map((entry) => (
@@ -195,7 +199,7 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
           <HowItWorks help="body.sleep" />
           <button className="btn" onClick={onClose}>Not Yet</button>
           <Gated feature="life.sleep" className="btn btn-primary" onClick={sleep}>
-            Sleep {hours} Hours
+            Sleep {plural(hours, 'Hour')}
           </Gated>
         </>
       }
@@ -221,7 +225,7 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
           <span className="small">{formatTime(sim.now, sim.zone)}</span>
         </div>
         <div className="stat">
-          <span className="stat-label">You’d wake at</span>
+          <span className="stat-label">You’d Wake At</span>
           <span className="small">{formatTime(wakeAt, sim.zone)}, {formatDate(wakeAt, sim.zone)}</span>
         </div>
       </div>
@@ -230,20 +234,20 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
           have said "in less than a minute". */}
       {untilNext !== undefined && (
         <div className="callout" style={{ marginTop: 'var(--s4)' }}>
-          {untilNext <= 0 ? 'Your next commitment is now, and you’re standing at it.' : `Your next commitment is in ${formatDuration(untilNext * MS_HOUR)}.`}
+          {untilNext <= 0 ? 'Your next commitment is now, and you’re standing at it.' : `Your next commitment is in ${formatDurationWords(untilNext * MS_HOUR)}.`}
         </div>
       )}
 
       {tonight && (
         <div className="callout callout-warning" style={{ marginTop: 'var(--s4)' }}>
-          This would be tonight’s sleep. You’d be up from {formatTime(wakeAt, sim.zone)}, and the rest of the
-          night wouldn’t be slept.
+          This would count as tonight’s sleep. You’d be up from {formatTime(wakeAt, sim.zone)}, and you wouldn’t
+          sleep the rest of the night.
         </div>
       )}
 
       {crossed.length > 0 && (
         <div className="callout callout-warning" style={{ marginTop: 'var(--s3)' }}>
-          <strong>You would sleep through {crossed.length} commitment{crossed.length === 1 ? '' : 's'}:</strong>
+          <strong>You’d sleep through {said(crossed.length, 'commitment')}:</strong>
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {crossed.slice(0, 5).map((item) => (
               <li key={item.id}>{item.label} — {formatTime(item.at, sim.zone)}</li>
@@ -284,7 +288,7 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
   // the player’s to walk away from, while Call It Off on the Coursework tab worked at this very moment.
   const callOff = () => {
     const r = run('school.cancel_rehearsal', { assignmentId: item.payload.assignmentId, rehearsalId: item.payload.rehearsalId });
-    if (r.ok) { toast('Called off, late: they’ll mind.', 'neutral'); onClose(); }
+    if (r.ok) { toast('Rehearsal called off. At this short notice, it costs your partner’s trust.', 'neutral'); onClose(); }
   };
 
   return (
@@ -306,19 +310,20 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
       )}
     >
       <p className="small">
-        It’s {formatTime(item.at, zone)} on {formatDate(item.at, zone)}, and this is what wanted you.
-        {' '}Going takes {formatDuration(runs * 60_000)} of the day
-        {`, and the clock goes on to ${formatDateTime(Math.max(wanted, item.at + runs * 60_000), zone)}.`}
+        It’s {formatTime(item.at, zone)} on {formatDate(item.at, zone)}, and this needs you now.
+        {' '}Going takes {formatDurationWords(runs * 60_000)}
+        {`, and the clock moves on to ${formatDateTime(Math.max(wanted, item.at + runs * 60_000), zone)}.`}
       </p>
       {!mine && !partner && (
         <p className="small muted">
-          The school’s, not yours to skip: go, or stand here and the clock waits. Whatever moves it next runs it, with you
-          there if you’re awake and in town.
+          Only a plan of your own can be skipped. Go, or press Stand Here and the clock waits. Whatever moves the clock next
+          runs this, with you there if you’re awake and in the right city.
         </p>
       )}
       {partner && (
         <p className="small muted">
-          Your partner is expecting you. Go, or call it off: this late it costs their trust, and they’ll remember it.{' '}
+          Your partner is expecting you. You can go or call it off, but at this short notice calling it off costs their
+          trust, and they’ll remember it.{' '}
           <HowItWorks help="coursework.partners" />
         </p>
       )}
@@ -352,7 +357,7 @@ export function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (
       }
     >
       {targets.length === 0 ? (
-        <p className="muted">You’ve got nothing scheduled ahead of you.</p>
+        <p className="muted">There’s nothing on your calendar ahead of you.</p>
       ) : (
         <>
           <div className="list card card-flush" style={{ maxHeight: 260, overflowY: 'auto' }}>
@@ -390,7 +395,7 @@ export function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (
 
           {target && (
             <div style={{ marginTop: 'var(--s4)' }}>
-              <div className="eyebrow" style={{ marginBottom: 'var(--s2) ' }}>What this jump costs</div>
+              <div className="eyebrow" style={{ marginBottom: 'var(--s2) ' }}>On The Way</div>
 
               {target.travelNote && (
                 <div className="callout callout-negative" style={{ marginBottom: 'var(--s3)' }}>
@@ -400,7 +405,7 @@ export function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (
 
               {target.missed.length > 0 ? (
                 <div className="callout callout-warning" style={{ marginBottom: 'var(--s3)' }}>
-                  <strong>The clock stops at {target.missed.length} commitment{target.missed.length === 1 ? '' : 's'} on the way, and asks:</strong>
+                  <strong>The clock will stop at {said(target.missed.length, 'commitment')} on the way and ask what you want to do:</strong>
                   <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
                     {target.missed.slice(0, 6).map((entry) => (
                       <li key={entry.id}>{entry.title} — {formatDate(entry.at, sim.zone)}</li>
@@ -408,12 +413,13 @@ export function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (
                   </ul>
                 </div>
               ) : (
-                <p className="small muted">You have no commitment before it.</p>
+                <p className="small muted">You have no commitments before it.</p>
               )}
 
               <p className="xs dim">
-                {target.crossed.length} scheduled thing{target.crossed.length === 1 ? '' : 's'} will be
-                processed in order on the way. Time only moves forwards.
+                {target.crossed.length === 0
+                  ? 'It’s the next thing on your calendar.'
+                  : `${toStart(said(target.crossed.length, 'thing'))} on your calendar ${target.crossed.length === 1 ? 'happens' : 'happen'} on the way, in order. The clock only moves forward.`}
               </p>
             </div>
           )}
@@ -479,7 +485,9 @@ function AdvanceMenu({
         title={gate.reason}
         onClick={() => (gate.open ? setOpen((o) => !o) : gate.ask())}
       >
-        Advance ▾{!gate.open && <span className="lock-word">Locked</span>}
+        {/* The arrow is drawn, not said (from 2026-10-17, brief 14's editorial review): until then the button's accessible
+            name was “Advance ▾”, which a screen reader says with the arrow's name in it. Look After Yourself's likewise. */}
+        Advance <span aria-hidden="true">▾</span>{!gate.open && <span className="lock-word">Locked</span>}
       </button>
       {open && (
         <div className="menu" role="menu" aria-label="Advance Time">
@@ -580,7 +588,7 @@ function LookAfterMenu() {
         title={gate.reason}
         onClick={() => (gate.open ? setOpen((o) => !o) : gate.ask())}
       >
-        Look After Yourself ▾{!gate.open && <span className="lock-word">Locked</span>}
+        Look After Yourself <span aria-hidden="true">▾</span>{!gate.open && <span className="lock-word">Locked</span>}
       </button>
       {open && (
         <div className="menu" role="menu" aria-label="Look After Yourself">

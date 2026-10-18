@@ -87,7 +87,7 @@ describe('a life with no training begun', () => {
     const sim = quickSave({}, 'cover-no-craft');
     expect(sim.player.craft).toBeUndefined();
     expect(sim.execute({ kind: 'practice.self_tape', payload: { genre: 'musical' } }).error).toMatch(/training hasn’t begun/);
-    expect(sim.execute({ kind: 'practice.exercise', payload: { exercise: 'dialect-drill' } }).error).toMatch(/training hasn’t begun/);
+    expect(sim.execute({ kind: 'practice.exercise', payload: { exercise: 'dialect-drill' } }).error).toMatch(/haven’t started training/);
   });
 });
 

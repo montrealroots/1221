@@ -210,9 +210,9 @@ describe('PLAYER JOURNEY: Take An Elective Shift on a leave', () => {
     tended(sim, asked.decideAt + MS_HOUR);
     const school = sim.player.school!;
     expect(school.leave?.status).toBe('on');
-    expect(shiftRefusal(sim.player)).toBe('You’re on leave: no shifts until you’re back.');
+    expect(shiftRefusal(sim.player)).toBe('You’re on leave, so there are no shifts until you’re back.');
     const owed = school.workStudy.owedHours;
-    expect(sim.execute({ kind: 'school.take_shift', payload: {} }).error).toBe('You’re on leave: no shifts until you’re back.');
+    expect(sim.execute({ kind: 'school.take_shift', payload: {} }).error).toBe('You’re on leave, so there are no shifts until you’re back.');
     expect(pendingOf(sim, SHIFT_KIND)).toHaveLength(0);
     tended(sim, sim.now + 3 * MS_DAY);
     expect(school.workStudy.owedHours).toBe(owed);

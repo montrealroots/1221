@@ -40,7 +40,7 @@ describe('orientation', () => {
     const tour = sim.universe.scheduled.find((i) => i.status === 'pending' && i.kind === 'school.orientation' && i.payload.task === 'tour')!;
     expect(tour).toBeDefined();
     sim.timeline.cancel(tour.id, sim.now);
-    expect(sim.execute({ kind: 'school.orientation', payload: { task: 'tour' } }).error).toBe('Its session is still ahead on the calendar.');
+    expect(sim.execute({ kind: 'school.orientation', payload: { task: 'tour' } }).error).toBe('This session is still to come. It’s on your calendar.');
     expect(sim.execute({ kind: 'school.orientation', payload: { task: 'nonsense' } }).error).toBe('There’s no such session.');
     sim.advanceTo(tour.at + 4 * MS_HOUR);
     expect(cw.orientation.done.tour).toBeUndefined();
@@ -116,7 +116,7 @@ describe('cover and care', () => {
     expect(debt.balance).toBe(-30_000_00);
     expect(poor.execute({ kind: 'health.pay_bill', payload: { amount: 0 } }).error).toBe('Say how much.');
     // What the account holds and what to do, from 2026-10-16; until then “… can’t cover it.”
-    expect(poor.execute({ kind: 'health.pay_bill', payload: { amount: 29_000_00 } }).error).toMatch(/ holds \$[\d,]+\.\d\d of the \$29,000\.00: move money into it first, on your bank’s Move Money\.$/);
+    expect(poor.execute({ kind: 'health.pay_bill', payload: { amount: 29_000_00 } }).error).toMatch(/ has only \$[\d,]+\.\d\d of the \$29,000\.00, so nothing was paid\. Move money into it first, on your bank’s Move Money\.$/);
     const current = poor.universe.accounts[poor.player.primaryAccountId!]!;
     const part = 100_00;
     expect(current.balance).toBeGreaterThan(part);
@@ -129,10 +129,10 @@ describe('cover and care', () => {
     const sim = lifeIn('us-ny-newyork', 'supply');
     const h = healthOf(sim.player);
     h.chronic = {};
-    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 30 } }).error).toBe('You take no medicine for a condition.');
+    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 30 } }).error).toBe('You don’t take medicine for a long-term condition.');
     // Test setup: high blood pressure, kept up.
     h.chronic = { hypertension: { treated: true } };
-    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 9_999 } }).error).toMatch(/^At most \d+ days at once here\.$/);
+    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 9_999 } }).error).toMatch(/^You can fill at most \d+ days at once here\.$/);
     const before = sim.universe.transactions.length;
     const r = sim.must<{ paid: number }>({ kind: 'health.extra_supply', payload: { days: 60 } });
     expect(r.paid).toBeGreaterThanOrEqual(0);
@@ -141,13 +141,13 @@ describe('cover and care', () => {
   });
 
   it('sells England’s prescription prepayment certificate to somebody under 60 the NHS treats, and only there', () => {
-    expect(lifeIn('us-ny-newyork', 'prepay-ny').execute({ kind: 'health.prepay', payload: { months: 12 } }).error).toBe('It’s England’s, for its prescription charge.');
+    expect(lifeIn('us-ny-newyork', 'prepay-ny').execute({ kind: 'health.prepay', payload: { months: 12 } }).error).toBe('The prepayment certificate is only for England’s prescription charge.');
     const sim = lifeIn('uk-eng-london', 'prepay-london');
     const r = sim.execute<{ paid: number; until: number }>({ kind: 'health.prepay', payload: { months: 3 } });
     expect(r.ok, r.error).toBe(true);
     expect(r.value!.paid).toBeGreaterThan(0);
     expect(healthOf(sim.player).prepaidUntil).toBe(r.value!.until);
-    expect(sim.execute({ kind: 'health.prepay', payload: { months: 3 } }).error).toBe('Yours runs more than another month.');
+    expect(sim.execute({ kind: 'health.prepay', payload: { months: 3 } }).error).toBe('Yours has more than a month left to run.');
   });
 });
 
@@ -161,7 +161,7 @@ describe('papers', () => {
     const r = sim.execute({ kind: 'documents.police_report', payload: { documentId: doc.id } });
     expect(r.ok, r.error).toBe(true);
     expect(doc.policeReport).toBe(sim.now);
-    expect(sim.execute({ kind: 'documents.police_report', payload: { documentId: doc.id } }).error).toBe('A report is filed.');
+    expect(sim.execute({ kind: 'documents.police_report', payload: { documentId: doc.id } }).error).toBe('A police report is already filed.');
   });
 
   it('issues an ID card where SLATE issues one, charges its fee, and refuses a second', () => {
@@ -171,14 +171,14 @@ describe('papers', () => {
     sim.advanceBy(60 * MS_DAY);
     expect(documentsOf(sim.player).some((d) => d.kind === 'idcard')).toBe(true);
     expect(sim.execute({ kind: 'documents.apply_idcard', payload: {} }).ok).toBe(false);
-    expect(lifeIn('is-39-reykjavik', 'idcard-is').execute({ kind: 'documents.apply_idcard', payload: {} }).error).toMatch(/^SLATE issues ID cards in /);
+    expect(lifeIn('is-39-reykjavik', 'idcard-is').execute({ kind: 'documents.apply_idcard', payload: {} }).error).toMatch(/^In the game, ID cards are issued only in /);
   });
 
   it('replaces a lost license where it was issued, at the issuer’s fee, free in New York stolen with the police’s report', () => {
     // REAL ID's upgrade (`documents.real_id`) was tested here until 2026-10-09, when nothing in SLATE flew any more.
     const ct = lifeIn('us-ct-newhaven', 'license-ct');
     const license = documentsOf(ct.player).find((d) => d.kind === 'license' && d.status === 'valid')!;
-    expect(ct.execute({ kind: 'documents.replace_license', payload: { documentId: license.id } }).error).toBe('It isn’t lost: report it lost first.');
+    expect(ct.execute({ kind: 'documents.replace_license', payload: { documentId: license.id } }).error).toBe('It isn’t lost. Report it lost first.');
     ct.must({ kind: 'documents.report_lost', payload: { documentId: license.id } });
     const r = ct.must<{ readyAt: number; fee: number }>({ kind: 'documents.replace_license', payload: { documentId: license.id } });
     expect(r.fee).toBe(30_00);
@@ -205,17 +205,17 @@ describe('a life in Mexico', () => {
   it('is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid', () => {
     // TEST SETUP: a life begun in Mexico City by somebody born in New York, wealthy enough for the solvency test.
     const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'us-ny-newyork', livesWhereBorn: false, wealth: 'wealthy' }, 'mx-settle');
-    const why = 'Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.';
+    const why = 'Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.';
     const balance = () => sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
     const held = balance();
     expect(sim.execute({ kind: 'documents.settle', payload: { country: 'MX' } }).error).toBe('You hold no residence there to settle from.');
-    expect(sim.execute({ kind: 'documents.residence', payload: { country: 'MX' } }).error).toBe(`Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. ${why}`);
-    expect(sim.execute({ kind: 'documents.naturalize', payload: { country: 'MX' } }).error).toBe('It asks residence there first.');
+    expect(sim.execute({ kind: 'documents.residence', payload: { country: 'MX' } }).error).toBe(`Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, with the card at MXN 11,140.74 a year and the consulate’s visa at US$56. ${why}`);
+    expect(sim.execute({ kind: 'documents.naturalize', payload: { country: 'MX' } }).error).toBe('It needs residence there first.');
     // FIXTURE: Residente Temporal held without a break for four years and a day, its card in force.
     const year = 365.2425 * MS_DAY;
     documentsOf(sim.player).push({ id: 'mx-card', kind: 'visa', issuer: 'MX', name: 'Residente Temporal', number: 'R1', status: 'valid', issuedAt: sim.now - 4 * year - MS_DAY, expiresAt: sim.now + 100 * MS_DAY, destination: 'MX', route: 'mx-temporary' });
-    expect(sim.execute({ kind: 'documents.settle', payload: { country: 'MX' } }).error).toBe(`Mexico grants permanent residence after four years’ temporary, for MXN 13,578.96. ${why}`);
-    expect(sim.execute({ kind: 'documents.naturalize', payload: { country: 'MX' } }).error).toBe('It asks five years’ residence in Mexico.');
+    expect(sim.execute({ kind: 'documents.settle', payload: { country: 'MX' } }).error).toBe(`Mexico grants permanent residence after four years of temporary residence, for MXN 13,578.96. ${why}`);
+    expect(sim.execute({ kind: 'documents.naturalize', payload: { country: 'MX' } }).error).toBe('It needs five years’ residence in Mexico.');
     // A year more held: five years and a day.
     documentsOf(sim.player).find((d) => d.id === 'mx-card')!.issuedAt! -= year;
     expect(sim.execute({ kind: 'documents.naturalize', payload: { country: 'MX' } }).error).toBe(`Mexico naturalizes after five years’ residence, for MXN 9,502.01. ${why}`);
@@ -225,12 +225,12 @@ describe('a life in Mexico', () => {
   });
 
   it('pays the Pensión para el Bienestar every two months to a Mexican of 65 living there, and nobody younger', () => {
-    expect(lifeIn('mx-cmx-mexicocity', 'bienestar-young').execute({ kind: 'pension.bienestar', payload: {} }).error).toBe('From 65.');
+    expect(lifeIn('mx-cmx-mexicocity', 'bienestar-young').execute({ kind: 'pension.bienestar', payload: {} }).error).toBe('You can claim it from 65.');
     // TEST SETUP: a life begun at sixty-six, which creation's school can't make.
     const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true, wealth: 'modest', birthYear: 1960 }, 'bienestar');
     const r = sim.must<{ bimonthly: number }>({ kind: 'pension.bienestar', payload: {} });
     expect(r.bimonthly).toBeGreaterThan(0);
-    expect(sim.execute({ kind: 'pension.bienestar', payload: {} }).error).toBe('You’re drawing it.');
+    expect(sim.execute({ kind: 'pension.bienestar', payload: {} }).error).toBe('You’ve already claimed it.');
     const before = sim.universe.transactions.length;
     sim.advanceBy(130 * MS_DAY);
     const paid = sim.universe.transactions.slice(before).filter((t) => t.category === 'pension' || /Bienestar/i.test(t.memo));
@@ -268,7 +268,7 @@ describe('what papers open, in the kept world (from 2026-10-09)', () => {
     for (const d of documentsOf(sim.player)) d.status = 'cancelled';
     // An account opened at a new bank (`bank.open_current`; a US switch, which asked the same, has no service to run since 2026-10-10).
     const r = sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } });
-    expect(r.error).toMatch(/asks a new customer for a photo ID in force/);
+    expect(r.error).toMatch(/needs a valid photo ID from a new customer/);
     const a = sim.must<{ readyAt: number }>({ kind: 'documents.apply_passport', payload: {} });
     sim.advanceTo(a.readyAt + MS_HOUR);
     expect(sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } }).ok).toBe(true);
@@ -286,7 +286,7 @@ describe('what papers open, in the kept world (from 2026-10-09)', () => {
     expect(sim.universe.notifications.some((n) => n.title === 'Your Marketplace Plan Has Ended')).toBe(true);
     delete h.marketplace;
     // From 1 October 2026 Medicaid asks satisfactory status of a non-citizen (`medicaidStatus`), so it's the marketplace or nothing.
-    expect(mayEnroll(sim.player, Date.UTC(2026, 10, 20))).toEqual({ ok: false, why: 'The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.' });
+    expect(mayEnroll(sim.player, Date.UTC(2026, 10, 20))).toEqual({ ok: false, why: 'The marketplace is only for citizens and people lawfully present, and you’re out of status.' });
     delete sim.player.usOutOfStatus;
     expect(mayEnroll(sim.player, Date.UTC(2026, 10, 20)).ok).toBe(true);
   }, 120_000);

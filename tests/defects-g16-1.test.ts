@@ -80,7 +80,7 @@ describe('PLAYER JOURNEY: a payment set for a date between two banks', () => {
     sim.advanceTo(at + 60_000);
     expect(citi.balance).toBe(before);
     expect(inTransitOf(sim, sim.player).balance).toBe(0);
-    expect(notices(sim, 'A Scheduled Payment Didn’t Go').join(' ')).toMatch(/a day out to other banks/);
+    expect(notices(sim, 'A Scheduled Payment Didn’t Go').join(' ')).toMatch(/a day to other banks/);
   });
 });
 

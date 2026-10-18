@@ -70,7 +70,7 @@ describe('a switch’s stages', () => {
     fund(sim, barclays.id, 500_00);
     const set = sim.must<{ at: number; cancellableUntil: number }>({ kind: 'bank.switch', payload: { bankId: 'gb-hsbc' } });
     sim.advanceTo(set.cancellableUntil + MS_HOUR);
-    expect(sim.execute({ kind: 'bank.cancel_switch', payload: { confirm: true } }).error).toMatch(/balance transfer alone/);
+    expect(sim.execute({ kind: 'bank.cancel_switch', payload: { confirm: true } }).error).toMatch(/You can still stop its balance transfer/);
     expect(sim.execute({ kind: 'bank.stop_balance_transfer', payload: {} }).error).toMatch(/Confirm/);
     sim.must({ kind: 'bank.stop_balance_transfer', payload: { confirm: true } });
     sim.advanceTo(set.at - MS_HOUR);
@@ -139,7 +139,7 @@ describe('an IRS payment plan', () => {
     let sim = owingOnTime('fp-plan');
     const r = () => returnsOf(sim.player)['2026']!;
     const owed = owedAll(sim.player, sim.now);
-    expect(sim.execute({ kind: 'tax.apply_plan', payload: { kind: 'long', monthly: leastMonthly(owed) - 1 } }).error).toMatch(/least a month/);
+    expect(sim.execute({ kind: 'tax.apply_plan', payload: { kind: 'long', monthly: leastMonthly(owed) - 1 } }).error).toMatch(/lowest monthly payment/);
     fund(sim, primary(sim).id, 100_00);
     const applied = sim.must<{ decideAt: number; fee: number }>({ kind: 'tax.apply_plan', payload: { kind: 'long', monthly: 1_000_00 } });
     sim.advanceTo(applied.decideAt + MS_HOUR);

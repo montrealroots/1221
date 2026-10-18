@@ -88,10 +88,10 @@ export const LEARNING = {
  */
 export type Approach = 'drill' | 'objective' | 'partner' | 'smaller';
 export const APPROACHES: Record<Approach, { label: string; words: string }> = {
-  drill: { label: 'A Targeted Drill', words: 'a drill of it, half an hour once a day' },
-  objective: { label: 'Put It First', words: 'it put first, weighing more when it’s shown' },
-  partner: { label: 'Work On It With Your Partner', words: 'the next rehearsal with your partner working on it too' },
-  smaller: { label: 'A Smaller Piece Of It', words: 'a smaller piece asked for, shown as no better than Working' },
+  drill: { label: 'A Targeted Drill', words: 'a half-hour drill of it, once a day' },
+  objective: { label: 'Put It First', words: 'it comes first, and counts for more when the work is shown' },
+  partner: { label: 'Work On It With Your Partner', words: 'your next rehearsal with your partner works on it too' },
+  smaller: { label: 'A Smaller Piece Of It', words: 'you show a smaller piece of it, which can be judged no better than Working' },
 };
 export const APPROACH = { drill: { minutes: 30, gain: 0.3 }, partner: 0.2, smaller: 0.6 } as const;
 

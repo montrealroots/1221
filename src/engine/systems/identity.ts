@@ -78,8 +78,8 @@ export function noncitizenTermNote(person: Person): string | undefined {
   const here = idCardHere(person);
   if (!here || !here.jurisdiction.startsWith('us-') || citizenOf(person, 'US')) return undefined;
   return NONCITIZEN_ID.toLawfulPresence
-    ? 'You’re not a US citizen, so your card runs to the end of your lawful presence: the program’s end at school, OPT’s end on OPT. That’s SLATE’s assumption, not the state’s published policy: the state publishes no term for a card it doesn’t verify. A card already issued keeps its date if that’s ever corrected.'
-    : 'You’re not a US citizen, and your card runs its years to a birthday as anyone’s does. That’s SLATE’s assumption, not the state’s published policy: the state publishes no term for a card it doesn’t verify. A card already issued keeps its date if that’s ever corrected.';
+    ? 'You’re not a US citizen, so your card runs to the end of your lawful presence: your program’s end while you’re at school, or your OPT’s end while you’re on OPT. The state publishes no term for a card it doesn’t verify, so this term is assumed. A card already issued keeps its date if the assumption is ever corrected.'
+    : 'You’re not a US citizen, and your card runs its full term to a birthday, as anyone’s does. The state publishes no term for a card it doesn’t verify, so this term is assumed. A card already issued keeps its date if the assumption is ever corrected.';
 }
 
 /**
@@ -132,29 +132,42 @@ export function idCardHere(person: Person): { jurisdiction: string; card: (typeo
   return j && card ? { jurisdiction: j, card } : undefined;
 }
 
+/**
+ * Whether an ID card applied for waits on nothing but its making and the mail (from 2026-10-17, brief 14's document
+ * journey): a card no check stands before (a citizen's or a permanent resident's, `realId`, and one outside the US),
+ * or a non-citizen's once SAVE's days since the application have run. Until then its row and its look said "Being
+ * Decided" while the toast and the refusal said it was on its way, and for a citizen nothing was being decided. A
+ * non-citizen's replacement copies the lost card, so it reads as checked for SAVE's days although no check is made on
+ * one: the words it had before, for those days only.
+ */
+export function idCardOnItsWay(doc: PersonDocument, at: Instant): boolean {
+  if (doc.kind !== 'idcard' || doc.status !== 'pending' || doc.appliedAt === undefined || doc.readyAt === undefined) return false;
+  return doc.realId !== false || at >= businessDaysOn(doc.appliedAt, NONCITIZEN_ID.saveBusinessDays, true);
+}
+
 export function idCardRefusal(person: Person, at: Instant): string | undefined {
   const here = idCardHere(person);
-  if (!here) return 'SLATE issues ID cards in New York, Connecticut, California, Ontario, British Columbia, Mexico City and Ireland.';
+  if (!here) return 'In the game, ID cards are issued only in New York, Connecticut, California, Ontario, British Columbia, Mexico City and Ireland.';
   const card = here.card;
-  if (card.citizens && !citizenOf(person, card.citizens)) return `The ${card.name} is for a citizen.`;
-  if (card.age && (at - person.birthInstant) / (365.25 * MS_DAY) < card.age) return `The ${card.name} is issued from ${card.age}.`;
-  if (card.passportBook && !documentsOf(person).some((d) => d.kind === 'passport' && d.issuer === 'IE' && inForce(d, at))) return 'The passport card is issued to a holder of an Irish passport book in force.';
-  if (!card.citizens && documentsOf(person).some((d) => d.kind === 'license' && d.issuer === here.jurisdiction && inForce(d, at))) return 'You hold a license here. It serves as your ID.';
+  if (card.citizens && !citizenOf(person, card.citizens)) return `The ${card.name} is issued only to citizens.`;
+  if (card.age && (at - person.birthInstant) / (365.25 * MS_DAY) < card.age) return `The ${card.name} is issued from age ${card.age}.`;
+  if (card.passportBook && !documentsOf(person).some((d) => d.kind === 'passport' && d.issuer === 'IE' && inForce(d, at))) return 'The passport card is issued only to someone holding an Irish passport book in force.';
+  if (!card.citizens && documentsOf(person).some((d) => d.kind === 'license' && d.issuer === here.jurisdiction && inForce(d, at))) return 'You hold a driving license from here, and it already serves as your ID.';
   // Not a citizen, at a US state's counter: status, enrollment and a number first.
   if (here.jurisdiction.startsWith('us-') && !citizenOf(person, 'US')) {
-    if (person.usOutOfStatus !== undefined) return 'The DMV checks lawful presence through SAVE, and you stayed past your status.';
+    if (person.usOutOfStatus !== undefined) return 'The DMV checks lawful presence through SAVE, and you stayed past the end of your status.';
     // An F-1 student at school shows enrollment; anyone else a US permit in force, OPT (from 2026-10-12: until then an
     // F-1 holder out of school was refused here, OPT or not, and the permit was read only for somebody with no F-1).
     const f1 = f1Of(person);
     if (!(f1 && atSchool(person)) && !usPermitInForce(person, at)) {
-      return f1 ? 'On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.' : 'The DMV asks for proof of lawful presence in the US, which you don’t hold.';
+      return f1 ? 'On an F-1, the DMV asks for your I-20 and proof that you’re enrolled, and you’re not at school.' : 'The DMV asks for proof of lawful presence in the US, which you don’t have.';
     }
     // A primary identity document in force: for somebody born abroad, a foreign passport with its supporting documents
     // (an F-1 student's I-20 and I-94), or an Employment Authorization Document, OPT's; documents “valid/unexpired”
     // (Connecticut DMV, DI-3 Rev. 6-2026, “REAL ID Document Identity Verification Checklist”, read 2026-10-16). From
     // 2026-10-16: until then none was asked, and a student who had reported her passport lost was issued a card with no
     // identity document at all (tests/remaining-papers.test.ts).
-    if (!passportOf(person, at) && !usPermitInForce(person, at)) return 'The DMV asks for a primary identity document in force: your passport, with your I-94 and I-20. Apply for or renew it on Papers first.';
+    if (!passportOf(person, at) && !usPermitInForce(person, at)) return 'The DMV asks for a primary identity document in force: your passport, with your I-94 and I-20. Apply for a passport or renew it under Your Passport first.';
     // Only an F-1 student at school can apply for the number, through work-study (`ssnRefusal`), and SLATE issues no
     // letter; one applied for there still comes once the program has ended. From 2026-10-12: until then everyone
     // without a number was told to apply for it on Papers, which a graduate on OPT, let through above that day, can't,
@@ -164,14 +177,14 @@ export function idCardRefusal(person: Person, at: Instant): string | undefined {
     if (!hasSsn(person)) {
       const asked = 'The DMV asks for your Social Security number, or the SSA’s letter that you can’t have one.';
       if (person.ssn?.status === 'applied') return `${asked} Yours is on its way.`;
-      if (!(f1 && atSchool(person))) return `${asked} SLATE issues the number only to an F-1 student at school, through work-study, and never the letter.`;
-      return `${asked} You can, through work-study: apply for it on the Papers screen first.`;
+      if (!(f1 && atSchool(person))) return `${asked} In the game, the number goes only to an F-1 student at school, through work-study, and the letter is never issued.`;
+      return `${asked} You can get one through work-study: apply for it first, under Social Security Number on Papers.`;
     }
   }
-  if (documentsOf(person).some((d) => d.kind === 'idcard' && d.issuer === here.jurisdiction && inForce(d, at))) return 'You hold one in force.';
+  if (documentsOf(person).some((d) => d.kind === 'idcard' && d.issuer === here.jurisdiction && inForce(d, at))) return 'You already hold one in force.';
   // One on its way, applied for or replacing a lost one (from 2026-10-06; until then a second was issued and charged for,
   // and they held two when the first came).
-  if (documentsOf(person).some((d) => d.kind === 'idcard' && d.issuer === here.jurisdiction && d.status === 'pending')) return 'One is on its way.';
+  if (documentsOf(person).some((d) => d.kind === 'idcard' && d.issuer === here.jurisdiction && d.status === 'pending')) return 'One is already on its way.';
   return undefined;
 }
 
@@ -197,12 +210,12 @@ export function idCardRefusal(person: Person, at: Instant): string | undefined {
 export function licenseReplaceRefusal(person: Person, documentId: string, at: Instant): string | undefined {
   const doc = documentsOf(person).find((d) => d.id === documentId);
   if (!doc || doc.kind !== 'license') return 'That isn’t a license of yours.';
-  if (doc.status !== 'lost') return 'It isn’t lost: report it lost first.';
+  if (doc.status !== 'lost') return 'It isn’t lost. Report it lost first.';
   const rule = LICENSE_REPLACEMENT[doc.issuer];
-  if (!rule) return 'SLATE doesn’t have what its issuer charges to replace it.';
-  if (licensingOf(person.currentLocationId) !== doc.issuer && !rule.byMail) return 'Its issuer replaces it for somebody living there, and SLATE found no way it sends one out of state.';
+  if (!rule) return 'What its issuer charges to replace it isn’t in the game.';
+  if (licensingOf(person.currentLocationId) !== doc.issuer && !rule.byMail) return 'Its issuer replaces it only for someone living there, and no way to send one out of state was found.';
   const past = pastItsDate(person, doc, at, rule.days);
-  if (past) return `${past}, and a replacement keeps its date: a license past it is renewed, and SLATE renews none since the cars went.`;
+  if (past) return `${past}, and a replacement keeps the same date. A license past its date has to be renewed instead, and driving licenses can’t be renewed in the game.`;
   return undefined;
 }
 
@@ -236,12 +249,12 @@ export const ID_CARD_KIND = 'documents.idcard_arrives';
 export function idReplaceRefusal(person: Person, documentId: string, at: Instant): string | undefined {
   const doc = documentsOf(person).find((d) => d.id === documentId);
   if (!doc || doc.kind !== 'idcard') return 'That isn’t an ID card of yours.';
-  if (doc.status !== 'lost') return 'It isn’t lost: report it lost first.';
+  if (doc.status !== 'lost') return 'It isn’t lost. Report it lost first.';
   const rule = ID_CARD_REPLACEMENT[doc.issuer];
-  if (!rule) return 'SLATE doesn’t have what its issuer charges to replace it.';
-  if (idCardHere(person)?.jurisdiction !== doc.issuer) return 'It’s replaced where it was issued, for someone living there.';
+  if (!rule) return 'What its issuer charges to replace it isn’t in the game.';
+  if (idCardHere(person)?.jurisdiction !== doc.issuer) return 'It’s replaced only where it was issued, for someone living there.';
   const past = pastItsDate(person, doc, at, rule.days);
-  if (past) return `${past}, and a replacement keeps its date, so it isn’t replaced.`;
+  if (past) return `${past}, and a replacement keeps the same date, so it can’t be replaced. Apply for a new card instead, if you can.`;
   return undefined;
 }
 
@@ -271,7 +284,7 @@ export function registerIdentity(sim: Simulation): void {
     const lost = documentsOf(person).find((d) => d.id === p.documentId)!;
     const rule = ID_CARD_REPLACEMENT[lost.issuer]!;
     const fee = idReplaceFee(s, person, lost.issuer);
-    if (fee > 0 && !payFromBank(s, person, fee, `${lost.name}, replaced`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (fee > 0 && !payFromBank(s, person, fee, `${lost.name}, replaced`, 'documents')) throw new CommandError(`Your bank can’t cover ${formatMoney(fee, saveCurrency(s.universe))}, so nothing was charged.`);
     lost.status = 'cancelled';
     const id = s.nextId('document');
     const readyAt = s.now + rule.days * MS_DAY;
@@ -288,7 +301,7 @@ export function registerIdentity(sim: Simulation): void {
     doc.status = 'valid';
     doc.issuedAt = item.at;
     // Said, as a passport's arrival is (from 2026-10-10: until then it came in silence).
-    if (person!.id === s.universe.playerId) s.notify({ category: 'papers', title: `${doc.name} Arrived`, body: 'It’s in force from today.', importance: 40, route: '/workspace/papers' });
+    if (person!.id === s.universe.playerId) s.notify({ category: 'papers', title: `${doc.name} Arrived`, body: 'It’s in your hands and in force from today.', importance: 40, route: '/workspace/papers' });
   });
 
   sim.onCommand<Record<string, never>, { expiresAt?: Instant; fee: Money; readyAt?: Instant }>('documents.apply_idcard', (_p, { sim: s }) => {
@@ -297,7 +310,7 @@ export function registerIdentity(sim: Simulation): void {
     if (no) throw new CommandError(no);
     const { jurisdiction, card } = idCardHere(person)!;
     const fee = card.currency ? inMoney(s, card.fee, card.currency) : usd(s, card.fee);
-    if (fee > 0 && !payFromBank(s, person, fee, card.name, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (fee > 0 && !payFromBank(s, person, fee, card.name, 'documents')) throw new CommandError(`Your bank can’t cover ${formatMoney(fee, saveCurrency(s.universe))}, so nothing was charged.`);
     const id = s.nextId('document');
     // Ireland's passport card runs five years or to the book's expiry; the Ontario, BC and INE cards' terms weren't read.
     const book = card.passportBook ? documentsOf(person).find((d) => d.kind === 'passport' && d.issuer === 'IE' && inForce(d, s.now)) : undefined;
@@ -332,7 +345,7 @@ export function registerIdentity(sim: Simulation): void {
     const lost = documentsOf(person).find((d) => d.id === p.documentId)!;
     const rule = LICENSE_REPLACEMENT[lost.issuer]!;
     const fee = licenseReplaceFee(s, lost);
-    if (fee > 0 && !payFromBank(s, person, fee, `${lost.name}, replaced`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (fee > 0 && !payFromBank(s, person, fee, `${lost.name}, replaced`, 'documents')) throw new CommandError(`Your bank can’t cover ${formatMoney(fee, saveCurrency(s.universe))}, so nothing was charged.`);
     lost.status = 'cancelled';
     const id = s.nextId('document');
     const readyAt = s.now + rule.days * MS_DAY;

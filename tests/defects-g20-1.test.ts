@@ -54,7 +54,7 @@ const screen = (sim: Simulation): string => {
 };
 /** The cut-off a screen gives, read back off its 12-hour clock: "3:30 PM" as 15.5. */
 const cutOffIn = (text: string): number => {
-  const [, hh, mm, half] = /arrives the same business day before (\d+):(\d\d) (AM|PM)/.exec(text)!;
+  const [, hh, mm, half] = /arrives the same business day if it’s sent before (\d+):(\d\d) (AM|PM)/.exec(text)!;
   return (Number(hh) % 12) + (half === 'PM' ? 12 : 0) + Number(mm) / 60;
 };
 const keyOf = (sim: Simulation, at: number) => { const p = zonedParts(at, sim.homeZone); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; };
@@ -74,7 +74,7 @@ describe('PLAYER JOURNEY: a Tokyo life at MUFG, opening an account at SMBC', () 
     expect(text).toContain('SMBC');
     // The scheme’s rule, not SLATE’s three-day estimate for a bank that publishes nothing.
     expect(text).not.toMatch(/Money it sends to another bank takes 3 business days/);
-    expect(text).toContain('Money between banks here arrives the same business day before 3:30 PM, the next after, by Zengin.');
+    expect(text).toContain('Money between banks here goes by Zengin, and arrives the same business day if it’s sent before 3:30 PM, or the next business day if later.');
     // No time on a 24-hour clock: not the cut-off, and not the source quoted under Sources And Estimates (`TRANSFERS`
     // in `content/bankopening.ts`, which gave Zengin’s hours as "8:30 to 15:30" until later on 2026-10-12).
     expect(text).not.toMatch(/\b(1[3-9]|2[0-3]):\d\d\b/);
@@ -102,13 +102,13 @@ describe('PLAYER JOURNEY: a New York life at Chase, with Wells Fargo and then Ci
     const chase = primary(sim).id;
     // Bank of America is first on the list, and publishes no time for a transfer to another bank, so the line is
     // SLATE’s estimate. Until 2026-10-12 this comment called the days the bank’s own, which they never were.
-    expect(screen(sim)).toMatch(/Bank of America.*Money it sends to another bank takes 3 business days, SLATE’s estimate: the bank doesn’t say\./);
+    expect(screen(sim)).toMatch(/Bank of America.*Money it sends to another bank takes 3 business days\..*How long money takes to another bank is estimated: the bank doesn’t say\./);
     // Applied at Bank of America, Wells Fargo is the bank the panel shows, with the 2 business days it publishes. Until
     // 2026-10-12 no assertion here rendered a bank’s own days.
     run(sim, 'bank.open_current', { bankId: 'us-bank-of-america', fundFrom: chase, amount: 100_00 });
     const wellsText = screen(sim);
     expect(wellsText).toMatch(/Wells Fargo.*Money it sends to another bank takes 2 business days\./);
-    expect(wellsText).not.toMatch(/Money it sends to another bank takes \d+ business days, SLATE’s estimate/);
+    expect(wellsText).not.toMatch(/How long money takes to another bank is estimated/);
     const days = Number(/Money it sends to another bank takes (\d+) business days\./.exec(wellsText)![1]);
     // Once the opening deposit is there, money sent from Wells Fargo takes the days the screen gave.
     const wells = run<{ accountId: string; arrivesAt: number }>(sim, 'bank.open_current', { bankId: 'us-wells-fargo', fundFrom: chase, amount: 25_00 });
@@ -120,7 +120,7 @@ describe('PLAYER JOURNEY: a New York life at Chase, with Wells Fargo and then Ci
     expect(businessDaysBetween(sim.now, sent.arrivesAt, kept.countryId, sim.homeZone, kept.regionId)).toBe(days);
     // Opened at Wells Fargo, Citi is the bank the panel shows, with its own cut-off.
     const text = screen(sim);
-    expect(text).toContain('Money it sends to another bank arrives the same business day before 12:30 PM, the next after.');
+    expect(text).toContain('Money it sends to another bank arrives the same business day if it’s sent before 12:30 PM, or the next business day if later.');
     expect(cutOffIn(text)).toBe(12.5);
     expect(text).not.toContain('by Zengin');
   }, 120_000);

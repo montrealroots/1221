@@ -1,0 +1,47 @@
+{
+ "final": {
+  "files": 35,
+  "same": 35,
+  "explained": {},
+  "unexplained": {},
+  "missing": [],
+  "skipped": [
+   "figures.json"
+  ]
+ },
+ "runs": {
+  "files": 17,
+  "same": 16,
+  "explained": {
+   "a measure of words: freshness finds a suggestion by its phrases": 2
+  },
+  "unexplained": {},
+  "missing": [],
+  "skipped": [
+   "figures.json"
+  ]
+ },
+ "advice": {
+  "files": 31,
+  "same": 0,
+  "explained": {
+   "the run’s own record: its commit, the files it read, its seconds": 61
+  },
+  "unexplained": {},
+  "missing": [],
+  "skipped": []
+ },
+ "journeys-final": {
+  "files": 102,
+  "same": 1,
+  "explained": {
+   "a count of notices: fewer merge, since a repeated one says what changed (section 8); the events are compared apart": 12378,
+   "the run’s own record: its commit, the files it read, its seconds": 198,
+   "a measure of words: the journeys’ continuity counts text": 870,
+   "the OPT check before its fix read the refusal’s old words; J16’s final part, checked again, passes": 4
+  },
+  "unexplained": {},
+  "missing": [],
+  "skipped": []
+ }
+}

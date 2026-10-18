@@ -45,15 +45,15 @@ describe('another way at it', () => {
     const sim = life('ap-offer');
     tended(sim, sim.now + MS_HOUR);
     const a = work(sim, 0.2);
-    expect(approachRefusal(sim, sim.player, a, 'drill')).toBe('No note keeps coming back that this work can help with.');
+    expect(approachRefusal(sim, sim.player, a, 'drill')).toBe('None of your recurring notes is one this piece can help with.');
     // Given twice, not yet: three times makes it one that keeps coming back.
     const notes = notesOf(courseworkOf(sim, sim.player)!);
     for (let i = 0; i < LEARNING.persistent - 1; i += 1) recordNote(notes, { kind: 'dim', dim: 'memorization' }, `2026-08-2${i}`, `y${i}`, 'Acting I', 0.2);
-    expect(approachRefusal(sim, sim.player, a, 'drill')).toBe('No note keeps coming back that this work can help with.');
+    expect(approachRefusal(sim, sim.player, a, 'drill')).toBe('None of your recurring notes is one this piece can help with.');
     persistent(sim);
     expect(approachRefusal(sim, sim.player, a, 'drill')).toBeUndefined();
     expect(sim.must<{ dim: string }>({ kind: 'school.approach', payload: { assignmentId: a.id, kind: 'drill' } }).dim).toBe('memorization');
-    expect(sim.execute({ kind: 'school.approach', payload: { assignmentId: a.id, kind: 'smaller' } }).error).toMatch(/^You chose a targeted drill for this work already\./);
+    expect(sim.execute({ kind: 'school.approach', payload: { assignmentId: a.id, kind: 'smaller' } }).error).toMatch(/^You’ve already chosen a targeted drill for this piece\./);
     expect(sim.execute({ kind: 'school.approach', payload: { assignmentId: a.id, kind: 'nonsense' } }).error).toBe('That isn’t a way to work on it.');
   });
 
@@ -72,7 +72,7 @@ describe('another way at it', () => {
     expect(sim.now - t0).toBe(APPROACH.drill.minutes * 60_000);
     expect(b.prep.memorization).toBeGreaterThan(before);
     expect(b.prep.memorization).toBeLessThan(before + APPROACH.drill.gain);
-    expect(prepareRefusal(sim, sim.player, b, 'drill')).toBe('Done today already: it takes days, not one long session.');
+    expect(prepareRefusal(sim, sim.player, b, 'drill')).toBe('You’ve done this today. It builds over several days, not in one long session.');
     expect(notesOf(courseworkOf(sim, sim.player)!).find((x) => x.key === 'dim:memorization')!.status).toBe('open');
   });
 

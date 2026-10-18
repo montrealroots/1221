@@ -85,7 +85,7 @@ export const BRIEFS_A: readonly Brief[] = [
     },
     readings: [
       { id: 'cake', label: 'The Cake Comes First', reading: 'She cares more about the tier than about the thief, and every move protects it first. That’s where the laughs come from.', rests: 'She has worked on this cake for three days, and the scuffle keeps it out of harm.', lean: { execution: 1.2, interpretation: 1.1 }, draws: [{ dim: 'execution', ability: 'physical', weight: 0.6 }, { dim: 'interpretation', ability: 'imagination', weight: 0.4 }] },
-      { id: 'whisper', label: 'Not A Sound', reading: 'The silence is the comic engine: she fights the whole scene at a whisper, and the strain of staying quiet is the joke.', rests: 'The speeches have started on the other side of a thin door.', lean: { consistency: 1.2, execution: 1.05 }, draws: [{ dim: 'consistency', ability: 'focus', weight: 0.6 }, { dim: 'execution', ability: 'discipline', weight: 0.4 }] },
+      { id: 'whisper', label: 'Not A Sound', reading: 'The silence is where the comedy comes from: she fights the whole scene at a whisper, and the strain of staying quiet is the joke.', rests: 'The speeches have started on the other side of a thin door.', lean: { consistency: 1.2, execution: 1.05 }, draws: [{ dim: 'consistency', ability: 'focus', weight: 0.6 }, { dim: 'execution', ability: 'discipline', weight: 0.4 }] },
     ],
   },
   {
@@ -131,7 +131,7 @@ export const BRIEFS_A: readonly Brief[] = [
     ],
     language: 'everyday', timing: 1, physical: 0, partner: 2, vocal: 0, improvisation: 0,
     why: {
-      partner: 'She reads him the whole scene, and what she decides at the end is what she learned about him across the desk.',
+      partner: 'She studies him the whole scene, and what she decides at the end is what she learned about him across the desk.',
       beats: 'A routine interview, a moment of music she hasn’t heard in thirty years, then a decision made quietly on paper.',
     },
     readings: [
@@ -186,7 +186,7 @@ export const BRIEFS_A: readonly Brief[] = [
       timing: 'Every line fits mouth movements that already exist, so where each word falls is fixed by the picture.',
       vocal: 'The laugh that turns to tears is carried by the voice alone, and the volume rises with the wind on the track.',
       techniques: 'A dub recorded alone at a microphone, synced to finished animation and his recorded lines.',
-      allows: 'The animation is finished: the lines must land where the lips already move, so the structure is set and can’t be found anew on the take.',
+      allows: 'The animation is finished, so every line has to land where the drawn lips already move. It can only be played set, the same way every time.',
       beats: 'Bravado, a crack she has to fit back into the picture, then the plain admission.',
     },
     readings: [
@@ -261,7 +261,7 @@ export const BRIEFS_A: readonly Brief[] = [
     why: {
       timing: 'Three lines in one long take: the scene lives in where the silences fall and how long she lets them run.',
       partner: 'She hears everything he says and answers almost none of it aloud, so the listening is the performance.',
-      allows: 'The scene is one unbroken take with silences written in and three lines to fill it, so it can’t be driven.',
+      allows: 'The scene is one unbroken take, with the silences written in and three lines to fill them, so it can only be played measured, never driven.',
       beats: 'A long quiet, a small gift that answers him without words, and a sentence that tells him what she has lost.',
     },
     readings: [
@@ -286,7 +286,7 @@ export const BRIEFS_A: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 2, partner: 1, vocal: 0, improvisation: 2,
     why: {
       timing: 'Each instruction is answered as it comes, and the rhythm of the reader’s even voice against the body’s answer is the piece.',
-      physical: 'The work is all physical tasks, the same twelve three times, so how the body does them is everything there is to see.',
+      physical: 'The piece is all physical tasks, the same twelve three times, so how the body does them is everything there is to see.',
       improvisation: 'The text gives the tasks and not the meaning: how each repetition is played is found on the take.',
       beats: 'Plain, then strange, then tender: the same actions turning through three tones without a word changing.',
     },
@@ -321,7 +321,7 @@ export const BRIEFS_A: readonly Brief[] = [
     },
     readings: [
       { id: 'nerve', label: 'Finding Her Nerve', reading: 'The scene is a young woman deciding she can do it, and the last line is the decision made.', rests: 'He has always believed in her more than she has, and the cue light goes green.', lean: { believability: 1.2, connection: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'connection', ability: 'listening', weight: 0.5 }] },
-      { id: 'number', label: 'Nail The Number', reading: 'Played as a show-business sprint, the fun is in the precision of the bars and steps she gets right against the clock.', rests: 'The band is already playing the intro, and she has eight bars and a time step to get right.', lean: { execution: 1.25, consistency: 1.05 }, draws: [{ dim: 'execution', ability: 'vocal', weight: 0.6 }, { dim: 'execution', ability: 'physical', weight: 0.5 }, { dim: 'consistency', ability: 'memory', weight: 0.4 }] },
+      { id: 'number', label: 'Nail The Number', reading: 'She plays it as a show-business sprint, and the fun is in the precision of the bars and steps she gets right against the clock.', rests: 'The band is already playing the intro, and she has eight bars and a time step to get right.', lean: { execution: 1.25, consistency: 1.05 }, draws: [{ dim: 'execution', ability: 'vocal', weight: 0.6 }, { dim: 'execution', ability: 'physical', weight: 0.5 }, { dim: 'consistency', ability: 'memory', weight: 0.4 }] },
     ],
   },
   {
@@ -579,7 +579,7 @@ export const BRIEFS_A: readonly Brief[] = [
       timing: 'The man is half a block behind, and every line is spoken against the seconds before he reaches the window.',
       physical: 'She arrives out of breath from a three-block run, and hides behind a dryer mid-scene.',
       partner: 'She has to win over a stranger in seconds, and his suspicion is the obstacle.',
-      allows: 'The pursuer is seconds away for the whole scene, so it can’t be played at a measured pace.',
+      allows: 'The pursuer is seconds away for the whole scene, so it can only be played driven, never at a measured pace.',
       beats: 'Urgency, a near miss that’s tense and absurd at once, then trust given to a stranger.',
     },
     readings: [
@@ -632,7 +632,7 @@ export const BRIEFS_A: readonly Brief[] = [
       beats: 'Brisk comedy, the grief they share, then the season’s warmth given plainly.',
     },
     readings: [
-      { id: 'sincere', label: 'With Her Whole Heart', reading: 'Played with complete sincerity, the warmth is big and open, and the invitation is the heart of it.', rests: 'It’s Christmas Eve, and the loaf has been a tradition for decades.', lean: { believability: 1.2, connection: 1.15 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'connection', ability: 'presence', weight: 0.4 }] },
+      { id: 'sincere', label: 'With Her Whole Heart', reading: 'She plays it with complete sincerity: the warmth is big and open, and the invitation is the heart of it.', rests: 'It’s Christmas Eve, and the loaf has been a tradition for decades.', lean: { believability: 1.2, connection: 1.15 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'connection', ability: 'presence', weight: 0.4 }] },
       { id: 'brisk', label: 'Trying To Leave', reading: 'She fights the feeling all the way, and the invitation surprises her as much as him.', rests: 'She wants to get back on the road before she feels anything.', lean: { consistency: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.6 }, { dim: 'responsiveness', ability: 'listening', weight: 0.4 }] },
     ],
   },

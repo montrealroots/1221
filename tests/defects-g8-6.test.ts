@@ -149,12 +149,12 @@ describe('a specialist booked again after it was called off is told so in plain 
     const zone = CITIES.require(sim.player.currentLocationId).timeZone;
     // The referral, as a kept visit draws one (odds 1 stands in for the draw).
     const a = mayRefer(sim, sim.player, { id: 'v1', at: sim.now, what: 'A checkup' }, 1)!;
-    expect(titled(sim, 'A Referral').at(-1)!.body).toBe(`Referred after a checkup: a specialist, booked for ${formatDate(a.at, zone)}, the wait where you live.`);
+    expect(titled(sim, 'A Referral').at(-1)!.body).toBe(`Referred after a checkup: a specialist, booked for ${formatDate(a.at, zone)}, the usual wait where you live.`);
     sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: a.id } });
     expect(healthOf(sim.player).owedVisit).toBe(SPECIALIST);
     const again = sim.must<{ at: number }>({ kind: 'health.book', payload: {} });
     const body = titled(sim, 'A Referral').at(-1)!.body;
-    expect(body).toBe(`A specialist, referred: booked for ${formatDate(again.at, zone)}, the wait where you live.`);
+    expect(body).toBe(`A specialist, referred: booked for ${formatDate(again.at, zone)}, the usual wait where you live.`);
     expect(body).not.toMatch(/booked specialist/);
     expect(appointmentsOf(sim.player)).toHaveLength(1);
   });
@@ -211,17 +211,17 @@ describe('an uninsured hospital bill says what the charity did with it', () => {
     expect(bill.aid).toBe('refused');
     const { text } = drawn(sim, PapersWorkspace, healthTab);
     expect(text).toContain('Over The Limit');
-    expect(text).not.toContain('Charity Taken Off');
-    expect(aidRefusal(bill, sim.now)).toBe('It’s been put to the hospital’s charity.');
-    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: bill.id } }).error).toBe('It’s been put to the hospital’s charity.');
+    expect(text).not.toContain('Assistance Taken Off');
+    expect(aidRefusal(bill, sim.now)).toBe('It’s already been put in for the hospital’s financial assistance.');
+    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: bill.id } }).error).toBe('It’s already been put in for the hospital’s financial assistance.');
   });
 
   it('within it, something came off: Charity Taken Off, and the application is refused for that', () => {
     const { sim, bill } = emergency('g86-charity-under', (CHARITY.connecticut.freeTo + CHARITY.connecticut.discountTo) / 2);
     expect(bill.aid).toBe('screened');
     const { text } = drawn(sim, PapersWorkspace, healthTab);
-    expect(text).toContain('Charity Taken Off');
-    expect(aidRefusal(bill, sim.now)).toBe('The hospital’s charity is off it already.');
+    expect(text).toContain('Assistance Taken Off');
+    expect(aidRefusal(bill, sim.now)).toBe('The hospital’s financial assistance has already come off it.');
   });
 });
 
@@ -249,13 +249,13 @@ describe('Papers reads the charity’s, the appeal’s and the medical debt’s 
   it('PLAYER JOURNEY: Apply For Assistance over the limit is told the rule’s limit, whatever it is', () => {
     const { sim, bill } = insuredWith('g86-aid-toast', {}, 7);
     drawn(sim, PapersWorkspace, healthTab);
-    expect(press('health.apply_aid')).toEqual([`Your income is over the policy’s ${Math.round(CHARITY.connecticut.discountTo * 100)}%.`]);
+    expect(press('health.apply_aid')).toEqual([`Your income is over the hospital policy’s limit of ${Math.round(CHARITY.connecticut.discountTo * 100)}% of the poverty line.`]);
     expect(bill.aid).toBe('refused');
     // The rule's limit raised to 650% and the bill put back: still over it at seven times the line, and told so.
     delete bill.aid;
     swapped(CHARITY.connecticut as { discountTo: number }, { discountTo: 6.5 }, () => {
       drawn(sim, PapersWorkspace, healthTab);
-      expect(press('health.apply_aid')).toEqual(['Your income is over the policy’s 650%.']);
+      expect(press('health.apply_aid')).toEqual(['Your income is over the hospital policy’s limit of 650% of the poverty line.']);
     });
   });
 
@@ -284,7 +284,7 @@ describe('Papers reads the charity’s, the appeal’s and the medical debt’s 
     healthMonth(sim, sim.player, sim.now);
     const notice = titled(sim, 'A Medical Debt Is On Your Record');
     expect(notice).toHaveLength(1);
-    expect(notice[0]!.body).toBe(`Unpaid a year and ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)} or more, it’s reported now.`);
+    expect(notice[0]!.body).toBe(`Your medical debt is ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)} or more and has gone unpaid for a year, so it’s now on your credit record. You can still clear it with Pay It Off, on Papers, under Health Cover.`);
     expect(notice[0]!.body).not.toMatch(/over \$500/);
   }, 120_000);
 });

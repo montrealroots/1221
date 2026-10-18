@@ -16,6 +16,10 @@ import { CITIES } from '../content/geography';
 /** How long answered or expired decisions stay in the save. */
 const DECISION_RETENTION_DAYS = 180;
 
+/** A decision the save doesn't hold: one never raised, or one gone 180 days after it closed (`prune`). Until 2026-10-17
+ * it was "No such decision." (brief 14): the player knows a decision as a question in What Needs You. */
+const NOT_THERE = 'That question isn’t in What Needs You any more.';
+
 export function registerWorld(sim: Simulation): void {
   sim.onSchedule('world.tick', () => {
     runWorldTick(sim);
@@ -34,9 +38,9 @@ export function registerWorld(sim: Simulation): void {
     'world.dismiss_decision',
     (p, { sim: s }) => {
       const decision = s.universe.decisions[p.decisionId];
-      if (!decision) throw new CommandError('No such decision.');
+      if (!decision) throw new CommandError(NOT_THERE);
       // Once: a second press moved the day its keeping is counted from (until 2026-10-06).
-      if (decision.dismissedAt !== undefined) throw new CommandError('It’s dismissed already.');
+      if (decision.dismissedAt !== undefined) throw new CommandError('You’ve already dismissed that question.');
       decision.dismissedAt = s.now;
       return { dismissed: true };
     },
@@ -46,12 +50,13 @@ export function registerWorld(sim: Simulation): void {
     'world.take_decision_action',
     (p, { sim: s }) => {
       const decision = s.universe.decisions[p.decisionId];
-      if (!decision) throw new CommandError('No such decision.');
-      // Once: a decision already acted on or dismissed isn't acted on again (from 2026-10-10; until then it was).
-      if (decision.resolvedAt !== undefined) throw new CommandError('That’s been done already.');
-      if (decision.dismissedAt !== undefined) throw new CommandError('It’s dismissed.');
+      if (!decision) throw new CommandError(NOT_THERE);
+      // Once: a decision already acted on or dismissed isn't acted on again (from 2026-10-10; until then it was). A
+      // decision is resolved by an answer or, past its date, by the world tick (`expireDecisions`).
+      if (decision.resolvedAt !== undefined) throw new CommandError('That question is already settled: it was answered, or its date passed.');
+      if (decision.dismissedAt !== undefined) throw new CommandError('You dismissed that question, so it can’t be answered from What Needs You.');
       const action = decision.actions[p.actionIndex];
-      if (!action) throw new CommandError('That action isn’t available on this item.');
+      if (!action) throw new CommandError('That isn’t one of this question’s answers.');
       // The command it runs is the player's, so the guide's chapters hold it as they would given directly.
       const held = s.guardedBecause({ kind: action.commandKind, payload: action.payload });
       if (held) throw new CommandError(held);
@@ -69,7 +74,7 @@ export function registerWorld(sim: Simulation): void {
       // Home and left the player believing it had worked. The row stays open
       // now and the reason comes back with it.
       const said = result.value;
-      if (said?.ok === false) throw new CommandError(said.error ?? 'That couldn’t be done.');
+      if (said?.ok === false) throw new CommandError(said.error ?? 'That didn’t go through, and nothing was changed.');
       decision.resolvedAt = s.now;
       return { ok: true };
     },
@@ -84,8 +89,9 @@ export function registerWorld(sim: Simulation): void {
       // were taken until 2026-10-12, though no control sent either (`Preferences.timeSpeed`).
       const speeds = ['paused', 'live'] as const;
       const keys = Object.keys(p ?? {});
-      if (keys.some((k) => k !== 'timeSpeed')) throw new CommandError(`${keys.find((k) => k !== 'timeSpeed')} isn’t a preference.`);
-      if (p?.timeSpeed !== undefined && !speeds.includes(p.timeSpeed)) throw new CommandError('The clock runs paused or live.');
+      // Said without the key's name from 2026-10-17 (brief 14): until then "theme isn’t a preference."
+      if (keys.some((k) => k !== 'timeSpeed')) throw new CommandError('That isn’t a setting the game has.');
+      if (p?.timeSpeed !== undefined && !speeds.includes(p.timeSpeed)) throw new CommandError('The clock can only be set to Play or Pause.');
       Object.assign(s.universe.preferences, p);
       return { ok: true };
     },

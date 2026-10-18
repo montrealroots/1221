@@ -279,12 +279,12 @@ describe('c-disp-riskTolerance', () => {
     // The Profile says what the figure did: until 2026-10-13 it said the rule, “over 65, the card’s autopay starts on
     // the minimum”, at 65 as at 66, and this held that same line for both.
     for (const [risk, autopay, button, said] of [
-      [66, 'minimum', 'Autopay: The Minimum', 'over 65, so the card’s autopay started on the minimum'],
-      [65, 'full', 'Autopay: The Whole Statement', '65 or under, so the card’s autopay started on the whole statement'],
+      [66, 'minimum', 'Autopay: The Minimum', 'over 65, so your card’s autopay began on the minimum payment'],
+      [65, 'full', 'Autopay: The Whole Statement', '65 or under, so your card’s autopay began on the whole statement'],
     ] as const) {
       const { sim, page } = slidTo(`g28-risk-page-${risk}`, 'riskTolerance', risk);
       // With a curly apostrophe from 2026-10-13, as the page’s other words have it; until then this held the straight one.
-      expect(page).toContain('Risk Tolerance over 65 starts your card’s autopay on the minimum, so a balance is carried.');
+      expect(page).toContain('Risk Tolerance: over 65, your card’s autopay starts on the minimum payment, so you carry a balance.');
       expect(sim.player.credit!.autopay, String(risk)).toBe(autopay);
       expect(profile(sim)).toContain(`Risk Tolerance ${risk}, ${said};`);
       const shown = bankCard(sim);
@@ -303,7 +303,7 @@ describe('c-disp-riskTolerance', () => {
     for (const sim of Object.values(lives)) sim.advanceTo(EDT(2026, 10, 11, 13));
     // Sunday 20 September, 9 AM: twenty-seven midnights of New Haven's $10.00 of groceries, and Chase's minimum, 1% and
     // the month's interest, never under $40 (its published terms): $40.00.
-    for (const sim of Object.values(lives)) expect(statements(sim)).toEqual([[EDT(2026, 9, 20, 9), '$270.00 to pay, at least $40.00.']]);
+    for (const sim of Object.values(lives)) expect(statements(sim)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.']]);
     // Noon on Sunday 11 October, 21 days on: autopay pays the minimum, or the whole statement.
     expect(onCard(lives[66], 'Paid Chase Freedom Unlimited')).toEqual([40_00]);
     expect(onCard(lives[65], 'Paid Chase Freedom Unlimited')).toEqual([270_00]);
@@ -314,9 +314,9 @@ describe('c-disp-riskTolerance', () => {
     // Tuesday 20 October: $270 − $40 + thirty more days of groceries, with no interest yet (the card's introductory 0%,
     // Chase's fifteen months, from an account opened before the first morning, ran to that day); the life at 65, the
     // thirty days alone. Friday 20 November: the life at 65, thirty-one days of groceries.
-    expect(statements(lives[66]).slice(0, 2)).toEqual([[EDT(2026, 9, 20, 9), '$270.00 to pay, at least $40.00.'], [EDT(2026, 10, 20, 9), '$530.00 to pay, at least $40.00.']]);
+    expect(statements(lives[66]).slice(0, 2)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.'], [EDT(2026, 10, 20, 9), 'The statement comes to $530.00, due November 10, 2026. At least $40.00 has to be paid by then.']]);
     expect(statements(lives[65])).toEqual([
-      [EDT(2026, 9, 20, 9), '$270.00 to pay, at least $40.00.'], [EDT(2026, 10, 20, 9), '$300.00 to pay, at least $40.00.'], [EST(2026, 11, 20, 9), '$310.00 to pay, at least $40.00.'],
+      [EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.'], [EDT(2026, 10, 20, 9), 'The statement comes to $300.00, due November 10, 2026. At least $40.00 has to be paid by then.'], [EST(2026, 11, 20, 9), 'The statement comes to $310.00, due December 11, 2026. At least $40.00 has to be paid by then.'],
     ]);
     expect(onCard(lives[66], 'Paid Chase Freedom Unlimited')).toEqual([40_00, 40_00]);
     expect(onCard(lives[65], 'Paid Chase Freedom Unlimited')).toEqual([270_00, 300_00]);
@@ -334,7 +334,7 @@ describe('c-disp-riskTolerance', () => {
     const charged = -interest[0]![1];
     expect(charged).toBeGreaterThan(Math.floor(530_00 * 0.1824 * 30 / 365));
     expect(charged).toBeLessThan(Math.ceil(800_00 * ((1 + 0.2774 / 365) ** 31 - 1)));
-    expect(statements(lives[66])[2]).toEqual([EST(2026, 11, 20, 9), `$${((530_00 - 40_00 + 310_00 + charged) / 100).toFixed(2)} to pay, at least $40.00.`]);
+    expect(statements(lives[66])[2]).toEqual([EST(2026, 11, 20, 9), `The statement comes to $${((530_00 - 40_00 + 310_00 + charged) / 100).toFixed(2)}, due December 11, 2026. At least $40.00 has to be paid by then.`]);
     expect(lives[66].player.credit!.carrying).toBe(true);
     expect(interestOn(lives[65])).toEqual([]);
     expect(lives[65].player.credit!.carrying).toBe(false);
@@ -391,8 +391,8 @@ describe('c-disp-extraversion', () => {
 
   it('PLAYER JOURNEY: says on Dispositions & Traits and on the Profile what Extraversion sets, how a house watching sits with you', () => {
     const { sim, page } = slidTo('g28-house-page', 'extraversion', 5);
-    expect(page).toContain('Extraversion sets how a house watching you sits with you');
-    expect(profile(sim)).toContain('Extraversion 5, how a house watching sits with you;');
+    expect(page).toContain('Extraversion: how being watched as you perform, by an audience or a class, affects your stress.');
+    expect(profile(sim)).toContain('Extraversion 5, how being watched as you perform, by an audience or a class, affects your stress;');
   });
 });
 
@@ -441,9 +441,9 @@ describe('c-disp-openness', () => {
 
   it('PLAYER JOURNEY: Openness slid to 90 reads 90/100 on Review, and the page and the Profile say it’s how rehearsing new work does', () => {
     const { sim, page, review } = slidTo('g28-new-work-page', 'openness', 90);
-    expect(page).toContain('Openness how rehearsing new work does, a festival’s new play or a Cabaret piece');
+    expect(page).toContain('Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale.');
     expect(review).toContain('Openness 90/100');
-    expect(profile(sim)).toContain('Openness 90, how rehearsing new work does;');
+    expect(profile(sim)).toContain('Openness 90, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale;');
   });
 });
 
@@ -477,9 +477,9 @@ describe('c-disp-agreeableness', () => {
 
   it('PLAYER JOURNEY: Agreeableness slid to 10 reads 10/100 on Review, and the page and the Profile say it’s how a rehearsal does', () => {
     const { sim, page, review } = slidTo('g28-company-page', 'agreeableness', 10);
-    expect(page).toContain('and Agreeableness how a rehearsal does.');
+    expect(page).toContain('Agreeableness: how a day of rehearsal affects your morale.');
     expect(review).toContain('Agreeableness 10/100');
-    expect(profile(sim)).toContain('Agreeableness 10, how a rehearsal does.');
+    expect(profile(sim)).toContain('Agreeableness 10, how a day of rehearsal affects your morale.');
   });
 });
 
@@ -544,13 +544,13 @@ describe('c-traits', () => {
     expect(review).toContain('Early Riser Up before anybody wants you, and the best hours of your day are over by ten.');
     expect(review).toContain('Frugal You know what everything costs, and the day’s food costs you less.');
     expect(sim.player.personalityTraits).toEqual(['early_riser', 'frugal', 'resilient', 'even_tempered']);
-    expect(profile(sim)).toContain('Chosen at the start. Early Riser, Frugal, Resilient, Even Tempered.');
+    expect(profile(sim)).toContain('Traits you chose. Early Riser, Frugal, Resilient, Even Tempered.');
     expect(look(sim, 'person', sim.player.id).body).toContain('Who you are. Early Riser, Frugal, Resilient and Even Tempered.');
     // Frugal's own 0.85 on what food costs, −15%; with all she is, 0.85 bent inside [0.7, 1.4], exp(L·tanh(ln 0.85 / L))
     // with L = −ln 0.7: 0.8589, −14%.
     const frugal = look(sim, 'trait', 'frugal');
-    expect([frugal.name, frugal.kind]).toEqual(['Frugal', 'A Trait You Hold']);
-    expect(frugal.body).toContain('What the day’s food costs you −15% −14% with all you are');
+    expect([frugal.name, frugal.kind]).toEqual(['Frugal', 'Your Trait']);
+    expect(frugal.body).toContain('What the day’s food costs you −15% −14% all told');
   });
 
   it('refuses in the engine what the page refuses: a clash, a repeat, an unknown trait and a fifth given to createSave are dropped, the first said kept', () => {
@@ -632,11 +632,11 @@ describe('c-genres', () => {
   it('PLAYER JOURNEY: Genres & Background marks every chip no play’s kind names with ·, a chip pressed is chosen, Select All takes all 149 and Clear These puts them back; Review, the Profile and Yourself say the one loved back', () => {
     let config = ada();
     let page = creation(STEP.genres, config);
-    expect(page.text).toContain('A rehearsal or a show of a play of that kind, a comedy or a tragedy, lifts your mood and eases your stress; it doesn’t make you any better in it. One marked · has no play of its kind here, and is said back only.');
+    expect(page.text).toContain('Rehearsing or performing a play of a genre you love, a comedy or a tragedy, lifts your morale and eases your stress. It doesn’t make you any better at it. A genre marked · has no plays of its kind here, so it’s only shown on your page.');
     expect(chips(page)).toHaveLength(149);
     expect(chips(page).filter((c) => !c.text.endsWith(' ·')).map((c) => c.first)).toEqual(READ);
     const western = chips(page).find((c) => c.first === 'Western')!;
-    expect([western.text, western.props.title]).toEqual(['Western ·', 'Said back on your page; nothing in a student’s life reads it now']);
+    expect([western.text, western.props.title]).toEqual(['Western ·', 'Shown on your page, but nothing in a student’s life uses it']);
     expect(chips(page).find((c) => c.first === 'Drama')!.props.title).toBeUndefined();
     expect(page.text).toContain('0 Chosen');
 
@@ -663,7 +663,7 @@ describe('c-genres', () => {
     expect(sim.player.genres).toEqual(['drama']);
     const shown = profile(sim);
     expect(shown).toContain('1 loved;');
-    expect(shown).toContain('You love: Drama. Drama is the one you love and know least; no part asks for a kind yet.');
+    expect(shown).toContain('You love: Drama. Drama is the one you love and know least, and no part asks for a kind yet.');
     expect(look(sim, 'person', sim.player.id).body).toContain('The films you love. Drama.');
   });
 
@@ -794,7 +794,7 @@ describe('c-body', () => {
     config = typeInto(config, page, 'height-ft', '7');
     expect(config.heightCm).toBe(213.4);
     page = creation(STEP.starting, config);
-    expect(page.text).toContain('Give both, or neither: with one of them, the body is drawn from where you were born.');
+    expect(page.text).toContain('Give both, or neither. With only one, your body is drawn from the averages where you were born.');
     config = typeInto(config, page, 'height-in', '11');
     expect(config.heightCm).toBe(241.3);
     page = creation(STEP.starting, config);
@@ -802,12 +802,12 @@ describe('c-body', () => {
     expect(config.weightKg).toBe(89.8);
     page = creation(STEP.starting, config);
     // 120 cm is 47.2 inches, so 4′0″ the least whole; 230 cm, 90.6, so 7′6″ the most; 35 kg 77.2 pounds and 250 kg 551.2.
-    expect(page.text).toContain('Out of range, so the body will be drawn instead: a height from 4′0″ to 7′6″, and a weight from 78 to 551 pounds.');
+    expect(page.text).toContain('That’s out of range, so your body will be drawn instead. Use a height from 4′0″ to 7′6″ and a weight from 78 to 551 pounds.');
     expect(begun('g28-body-page', config).sim.player.body).toEqual(drawnTwin);
     config = typeInto(config, page, 'weight-lb', '');
     expect(config.weightKg).toBeUndefined();
     page = creation(STEP.starting, config);
-    expect(page.text).toContain('Give both, or neither: with one of them, the body is drawn from where you were born.');
+    expect(page.text).toContain('Give both, or neither. With only one, your body is drawn from the averages where you were born.');
     expect(begun('g28-body-page', config).sim.player.body).toEqual(drawnTwin);
 
     // 5 feet 7, 67 inches, 170.2 cm; 145 pounds, 65.8 kg; 65.8 / 1.702² = 22.7.
@@ -825,7 +825,7 @@ describe('c-body', () => {
     expect(page.text).toContain('A body mass index of 22.7.');
     const { sim } = begun('g28-body-page', config);
     expect(sim.player.body).toMatchObject({ heightCm: 170.2, weightKg: 65.8, startKg: 65.8 });
-    expect(look(sim, 'person', sim.player.id).body).toContain('Your body. 5 ft 7 in and 145 lb, a body mass index of 22.7: healthy weight.');
+    expect(look(sim, 'person', sim.player.id).body).toContain('Your body. 5 ft 7 in and 145 lb, with a body mass index of 22.7, in the healthy weight range.');
   });
 
   // Until 2026-10-14 the Londoner was a London-born student at Yale, asked in the units of where she was born. Since the
@@ -842,13 +842,13 @@ describe('c-body', () => {
     page = creation(STEP.starting, config);
     config = typeInto(config, page, 'weight-kg', '90');
     page = creation(STEP.starting, config);
-    expect(page.text).toContain('Out of range, so the body will be drawn instead: a height from 120 to 230 centimeters, and a weight from 35 to 250 kilograms.');
+    expect(page.text).toContain('That’s out of range, so your body will be drawn instead. Use a height from 120 to 230 centimeters and a weight from 35 to 250 kilograms.');
     // 90 / 2.41² = 15.5.
     expect(inputOf(page, 'bmi').props.value).toBe('15.5');
     expect(begun('g28-body-london', config).sim.player.body).toEqual(drawnTwin);
     config = typeInto(config, page, 'weight-kg', '');
     page = creation(STEP.starting, config);
-    expect(page.text).toContain('Give both, or neither: with one of them, the body is drawn from where you were born.');
+    expect(page.text).toContain('Give both, or neither. With only one, your body is drawn from the averages where you were born.');
     expect(inputOf(page, 'bmi').props.value).toBe('');
   });
 });

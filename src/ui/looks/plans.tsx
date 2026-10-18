@@ -13,7 +13,7 @@
  */
 
 import { CITIES, type City } from '@/engine/content/geography';
-import { MS_MINUTE, dateKey, formatDate, formatRelative, formatTime, startOfDay, startOfNextDay } from '@/engine/core/time';
+import { MS_MINUTE, dateKey, formatDate, formatRelativeWords, formatTime, startOfDay, startOfNextDay } from '@/engine/core/time';
 import { entriesBetween, upcoming, type CalendarEntry } from '@/engine/world/calendar';
 import { PLAN_KIND } from '@/engine/world/plans';
 import { hoursOn, type HourWeather } from '@/engine/systems/weather';
@@ -102,13 +102,13 @@ defineLook<Stretch>('stretch', {
 
     return {
       name: `${formatTime(entry.at, zone)} To ${formatTime(endOf(entry), zone)}`,
-      kind: 'The Hours It Takes',
+      kind: 'Its Hours',
       parent: at('entry', entry.id),
-      summary: `It has you from ${formatTime(entry.at, zone)} to ${formatTime(endOf(entry), zone)} — `
-        + `${said(Math.round(minutes / 60), 'hour')} of ${formatDate(entry.at, zone)}, `
-        + `and ${cold.temperature === warm.temperature
+      summary: `It runs from ${formatTime(entry.at, zone)} to ${formatTime(endOf(entry), zone)}, `
+        + `${said(Math.round(minutes / 60), 'hour')} on ${formatDate(entry.at, zone)}, `
+        + `at ${cold.temperature === warm.temperature
           ? `${cold.temperature}${unit} throughout`
-          : `${cold.temperature}${unit} to ${warm.temperature}${unit} across it`}.`,
+          : `${cold.temperature}${unit} to ${warm.temperature}${unit}`}.`,
       body: (
         <>
           <p className="small">
@@ -120,14 +120,14 @@ defineLook<Stretch>('stretch', {
             {' '}
             {wet.length === 0
               ? 'It stays dry the whole way through.'
-              : `It is ${spokenList([...new Set(wet.map((h) => h.condition.toLowerCase()))])} for `
+              : `There’s ${spokenList([...new Set(wet.map((h) => h.condition.toLowerCase()))])} for `
                 + `${said(wet.length, 'hour')} of it.`}
           </p>
           <div className="grid grid-3">
             <Stat label="Starts" value={formatTime(entry.at, zone)} note={formatDate(entry.at, zone)} />
             <Stat label="Ends" value={formatTime(endOf(entry), zone)} note={said(hours.length, 'hour')} />
             <Stat
-              label="Coldest Of Them"
+              label="Coldest Hour"
               value={`${cold.temperature}${unit}`}
               note={clockWord(cold.hour)}
             />
@@ -141,8 +141,7 @@ defineLook<Stretch>('stretch', {
         detail: `${hour.temperature}${unit}, ${hour.condition.toLowerCase()}${hour.daylight ? '' : ', after dark'}`,
         glance: { icon: undefined, lines: [`${hour.temperature}°`, hour.daylight ? 'Light' : 'Dark'] },
       })),
-      provenance: `${first.hour === last.hour ? 'The hour' : 'Every hour'} it touches, read off the day’s own curve. `
-        + 'None of it is stored anywhere.',
+      provenance: `${first.hour === last.hour ? 'The hour is' : 'Each hour is'} estimated from the day’s forecast.`,
     };
   },
 });
@@ -168,21 +167,21 @@ defineLook<Plans>('plans', {
       kind: 'What You Put On The Calendar',
       parent: at('person', sim.universe.playerId),
       summary: pending.length === 0
-        ? 'You haven’t put anything on the calendar yourself. Everything on it is somebody else’s doing.'
-        : `You have put ${said(pending.length, 'thing')} on the calendar yourself, `
-          + `and the next of them is ${formatRelative(next!.at, sim.now)}.`,
+        ? 'You haven’t put anything on the calendar yourself, so everything on it was put there for you.'
+        : `You’ve put ${said(pending.length, 'thing')} on the calendar yourself. `
+          + `The next is ${formatRelativeWords(next!.at, sim.now)}.`,
       body: (
         <>
           <p className="small">
             {pending.length === 0
-              ? 'The calendar takes what you give it: a name, a time, how long it runs and where it wants you. None of it has to be there.'
+              ? 'A plan of your own needs a name, a start time and a length, and it’s in the city you’re in when you make it.'
               : `${asName(next!.title)} is the next one, ${formatDate(next!.at, zone)} at ${formatTime(next!.at, zone)}.`}
             {missed.length > 0 && ` ${toStart(said(missed.length, 'plan'))} ${missed.length === 1 ? 'has' : 'have'} gone by without you.`}
             {called.length > 0 && ` ${toStart(said(called.length, 'plan'))} ${called.length === 1 ? 'was' : 'were'} called off.`}
           </p>
           <div className="grid grid-3">
             <Stat label="Waiting" value={pending.length} note="Still ahead of you" />
-            <Stat label="Called Off" value={called.length} note="You changed your mind" />
+            <Stat label="Called Off" value={called.length} note="You called them off" />
             <Stat label="Gone By" value={missed.length} note="You weren’t there" />
           </div>
         </>
@@ -190,9 +189,9 @@ defineLook<Plans>('plans', {
       ways: pending.slice(0, 10).map((entry) => ({
         to: at('entry', entry.id),
         label: asName(entry.title),
-        detail: `${formatRelative(entry.at, sim.now)}, ${formatDate(entry.at, zone)} at ${formatTime(entry.at, zone)}`,
+        detail: `${formatRelativeWords(entry.at, sim.now)}, ${formatDate(entry.at, zone)} at ${formatTime(entry.at, zone)}`,
       })),
-      provenance: 'Ordinary items on the world’s own timeline, which is why the clock stops at them and why two at once are flagged.',
+      provenance: 'Your plans are ordinary items on the calendar, so the clock stops at them and a clash is flagged.',
     };
   },
 });

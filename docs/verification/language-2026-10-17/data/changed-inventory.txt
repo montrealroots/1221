@@ -1,0 +1,26 @@
+{"changedStrings":344,"sources":230}
+  74 src/engine/content/entry.ts
+  64 src/engine/content/genre-demands.json
+  46 src/engine/content/banks-thirteen.ts
+  40 src/engine/content/banks-lending.ts
+  38 src/engine/content/banks-world-sheets.ts
+  18 src/engine/content/roundups.ts
+  16 src/engine/content/guide/papers.ts
+  11 src/engine/content/passports.ts
+   7 src/ui/workspaces/PapersWorkspace.tsx
+   5 src/engine/content/passportsabroad.ts
+   4 src/engine/content/workload.ts
+   3 src/engine/content/bankopening.ts
+   3 src/engine/content/visas.ts
+   2 src/engine/content/accountlife.ts
+   2 src/engine/content/banks-world-fees.ts
+   2 src/engine/content/cards.ts
+   2 src/engine/content/security.ts
+   1 src/engine/content/cash.ts
+   1 src/engine/content/licenses.ts
+   1 src/engine/content/pending.ts
+   1 src/engine/content/tutorial.ts
+   1 src/engine/systems/accountlife.ts
+   1 src/ui/bank/BankCard.tsx
+   1 src/ui/workspaces/SchoolWorkspace.tsx
+exit=0

@@ -238,7 +238,7 @@ export const ACTIONS_KEPT = 200;
 /** Why an action can't be applied again, or nothing; and once it's applied (`markApplied`), it never is again. */
 export function alreadyApplied(person: Person, actionId: unknown): string | undefined {
   if (typeof actionId !== 'string' || !actionId) return undefined;
-  return developmentOf(person).applied?.includes(actionId) ? 'That was already done.' : undefined;
+  return developmentOf(person).applied?.includes(actionId) ? 'That’s already done, so nothing was charged or changed again.' : undefined;
 }
 export function markApplied(person: Person, actionId: unknown): void {
   if (typeof actionId !== 'string' || !actionId) return;

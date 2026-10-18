@@ -164,7 +164,7 @@ describe('school.study_session', () => {
     // The least secure scene shared with them, which is what runs when none is named.
     const scene = sharedWork(sim, sim.player, m.mate)[0]!;
     const play = sceneById(scene.sceneId!)!.play;
-    expect(sim.must<{ done: string }>({ kind: 'school.respond', payload: { momentId: m.id, choice: 'yes' } }).done).toBe(`On your calendar: ${play}, with ${first}.`);
+    expect(sim.must<{ done: string }>({ kind: 'school.respond', payload: { momentId: m.id, choice: 'yes' } }).done).toBe(`It’s on your calendar: ${play}, with ${first}.`);
     expect(sim.execute({ kind: 'school.respond', payload: { momentId: m.id, choice: 'no' } }).error).toBe('You’ve answered it.');
     sim = reload(sim);
     tended(sim, m.when! - 60_000);
@@ -219,7 +219,7 @@ describe('school.study_session', () => {
     expect(mateOf().bond).toBe(bond - 3);
     expect(personOf(mateOf()).incidents).toEqual([{ at: m.when, kind: 'missed' }]);
     expect(personOf(mateOf()).log![0]!.what).toBe('You didn’t come to run lines');
-    expect(notices(sim, `${first} Waited For You`).map((n) => n.body)).toEqual(['You didn’t come to run lines. They’ll remember it.']);
+    expect(notices(sim, `${first} Waited For You`).map((n) => n.body)).toEqual([`You didn’t come to run lines, and ${first} waited for you. It cost some of their trust, and they’ll remember it. You can make amends under Your Partners.`]);
     // Kept through a reload, and one incident is not a boundary: none comes before the second evening missed.
     sim = reload(sim);
     expect(personOf(mateOf()).incidents).toHaveLength(1);
@@ -499,7 +499,7 @@ describe('development ledger', () => {
     expect(now.slice(0, 400 - came)).toEqual(was.slice(came));
     expect(now.slice(0, 400 - came).every((x, k) => x === was[came + k])).toBe(true);
     expect(now.at(-1)!.at).toBeGreaterThanOrEqual(was.at(-1)!.at);
-    expect(shown(sim, ProfileWorkspace)).toContain('Development History The latest 400 changes, newest first');
+    expect(shown(sim, ProfileWorkspace)).toContain('Development History Your last 400 changes, newest first');
     const back = reload(sim);
     expect(developmentOf(back.player).history).toEqual(now);
   });
@@ -511,7 +511,7 @@ const CABARET_SHOW = 'Yale Cabaret, Season 59';
 /** A night's band as a number, for a run's mean (`NIGHT_VALUE`: off -1, solid 0, strong 1, remarkable 2). */
 const NIGHT = { off: -1, solid: 0, strong: 1, remarkable: 2 } as const;
 /** The director's note's first sentence for a run's mean, by its edges: 1.25, 0.5 and -0.25. */
-const noteFor = (mean: number) => (mean >= 1.25 ? 'Remarkable work: you held the house night after night, and it’s been noticed.' : mean >= 0.5 ? 'Strong, reliable work. The part was yours by the second night.' : mean >= -0.25 ? 'Solid, sound nights. The next step is to risk more in them.' : 'Uneven. Some nights got away from you: come in rested, and have the part in your body before the house does.');
+const noteFor = (mean: number) => (mean >= 1.25 ? 'Remarkable work, night after night.' : mean >= 0.5 ? 'Strong, reliable work across the run.' : mean >= -0.25 ? 'Solid, sound nights. The next step is to take more risks in them.' : 'Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does.');
 
 describe('work records + journey', () => {
   it('PLAYER JOURNEY: a Cabaret run played through keeps its nights, and at the last a run milestone averaged from them and a note naming what cost them most, once through a reload, on the Profile', () => {
@@ -530,7 +530,7 @@ describe('work records + journey', () => {
     const held = new Map<string, { label: string; whole: number }>();
     for (const w of nights) for (const l of w.limits) if (l.kind === 'ability' || l.kind === 'technique') { const x = held.get(l.what) ?? { label: l.label, whole: 0 }; x.whole += l.whole ?? l.by / 4; held.set(l.what, x); }
     const top = [...held.values()].sort((a, b) => b.whole - a.whole)[0];
-    const workOn = top && top.whole / nights.length >= 0.5 ? ` Work on your ${top.label.toLowerCase()}: it held the nights back most.` : '';
+    const workOn = top && top.whole / nights.length >= 0.5 ? ` Work on your ${top.label.toLowerCase()}: it held your nights back most.` : '';
     const nightsMean = nights.reduce((s, w) => s + NIGHT[w.band as keyof typeof NIGHT], 0) / nights.length;
     expect(cab.note).toBe(`${noteFor(nightsMean)}${workOn}`);
     expect(workOn, 'something held this run back').not.toBe('');
@@ -558,7 +558,7 @@ describe('work records + journey', () => {
     expect(strong.length, 'the played fall has a strength to name').toBeGreaterThan(0);
     for (const [d, xs] of strong) {
       const best = [...xs].sort((a, b) => b.q - a.q).slice(0, 3).map((b) => `${b.what}: ${r1(b.q)}`).join('; ');
-      expect(text).toContain(`Your ${DIMENSION_LABEL[d].toLowerCase()} runs ahead of the rest: ${r1(avg(xs))} on average across ${xs.length} pieces, against ${r1(mean)} for the whole. From: ${best}.`);
+      expect(text).toContain(`Your ${DIMENSION_LABEL[d].toLowerCase()} runs ahead of the rest: ${r1(avg(xs))} on average across ${xs.length} pieces, against ${r1(mean)} overall. From: ${best}.`);
     }
     for (const [d] of not) expect(text).not.toContain(`Your ${DIMENSION_LABEL[d].toLowerCase()} runs ahead of the rest`);
   });
@@ -596,7 +596,7 @@ describe('work records + journey', () => {
     const exercise = EXERCISES.find((e) => e.trains === what)!;
     const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const each = r1(top.points);
-    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*, ${esc(exercise.label)} at the \\w+ tier\\. ${top.hours} hours of its exercise would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}, worth about ${esc(String(each))} points? a piece on your recent work`));
+    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*, ${esc(exercise.label)} at the \\w+ tier\\. ${top.hours} hours of its exercise(?:, a session a day,)? would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}\\. On your recent work, replayed with you as you are now, that’s forecast to be worth about ${esc(String(each))} points? a piece`));
   });
 
   it('PLAYER JOURNEY: Taking Direction reads, for life, the notes on the craft a run gave and those the work answered', () => {
@@ -624,7 +624,7 @@ describe('work records + journey', () => {
     const answered = onCraft.filter((n) => n.taken === true).length;
     expect(onCraft.length).toBeGreaterThanOrEqual(3);
     expect(journeyOf(sim.player).direction).toMatchObject({ given: onCraft.length, answered });
-    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on the craft, ${answered} answered`);
+    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you answered ${answered}`);
   });
 
   it('names a strength at 4 over the mean and not at 3.9', () => {
@@ -810,7 +810,8 @@ describe('genre demands', () => {
     const combat = `${TECHNIQUE_LABEL.combat} ${sim.player.craft!.combat.toFixed(1)} of 90`;
     expect(text).toContain(`Action Fights And Stunts (${combat})`);
     expect(text).toContain(`Action Comedy Fights And Stunts (${combat}); Comic Timing (${TECHNIQUE_LABEL.comedy} ${sim.player.craft!.comedy.toFixed(1)} of 90)`);
-    expect(text).toContain('Absurdist Not established: the research rests on one example');
+    // Until 2026-10-17 this said “the research rests on one example”, false of many low genres (brief 14's json area, D1).
+    expect(text).toContain('Absurdist Not established: the research holds it with low confidence');
   });
 });
 

@@ -69,7 +69,7 @@ describe('PLAYER JOURNEY: a second bank, opened and funded', () => {
     expect((opened.cardAt - sim.now) / MS_DAY).toBeGreaterThanOrEqual(7);
     expect(primary(sim).id).toBe(chase.id);
     // The same bank again is refused, and so is a second click.
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-capital-one' })).toMatch(/already keep/);
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-capital-one' })).toMatch(/already have a current account/);
     sim = reload(sim);
     const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase.id, toId: cap.id, amount: 500_00 });
     // Out of Chase now, in neither in between, worth the same throughout.
@@ -165,7 +165,7 @@ describe('PLAYER JOURNEY: moving the relationship, with school money arriving du
       run(sim, 'card.set_autopay_from', { cardId: card.id, accountId: cap.id });
     }
     // Savings beside it closes first, into Chase's current account, and its order into it goes with it.
-    expect(refused(sim, 'bank.close_current', { accountId: chase.id, remainderTo: cap.id })).toMatch(/open beside it/);
+    expect(refused(sim, 'bank.close_current', { accountId: chase.id, remainderTo: cap.id })).toMatch(/still open at the same bank/);
     run(sim, 'bank.close_savings', { accountId: savings.id });
     expect(paymentsOf(sim.player).standingOrders).toHaveLength(0);
     sim = reload(sim);
@@ -220,7 +220,7 @@ describe('the exploits the old switch allowed', () => {
     const chase = primary(sim);
     fund(sim, chase.id, 1_000_00);
     const cap = sim.universe.accounts[run<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'us-capital-one' }).accountId]!;
-    expect(refused(sim, 'bank.transfer', { fromId: chase.id, toId: cap.id, amount: chase.balance + 1 })).toMatch(/holds/);
+    expect(refused(sim, 'bank.transfer', { fromId: chase.id, toId: cap.id, amount: chase.balance + 1 })).toMatch(/has only/);
     const before = worth(sim);
     const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase.id, toId: cap.id, amount: 200_00 });
     expect(worth(sim)).toBe(before);
@@ -248,7 +248,7 @@ describe('the exploits the old switch allowed', () => {
     const citi = sim.universe.accounts[run<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'us-citi' }).accountId]!;
     fund(sim, citi.id, 30_000_00);
     run(sim, 'bank.transfer', { fromId: citi.id, toId: chase.id, amount: 9_000_00 });
-    expect(refused(sim, 'bank.transfer', { fromId: citi.id, toId: chase.id, amount: 2_000_00 })).toMatch(/Citi lets \$10,000 a day out/);
+    expect(refused(sim, 'bank.transfer', { fromId: citi.id, toId: chase.id, amount: 2_000_00 })).toMatch(/Citi lets you send \$10,000 a day to other banks/);
     // Chase publishes no limit, so sending into Citi isn't held to one.
     fund(sim, chase.id, 30_000_00);
     run(sim, 'bank.transfer', { fromId: chase.id, toId: citi.id, amount: 20_000_00 });

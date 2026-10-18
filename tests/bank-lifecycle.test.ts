@@ -27,7 +27,7 @@ describe('PLAYER JOURNEY: a loan at the second bank', () => {
     const citi = sim.must<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } }).accountId;
     wages(sim, chase, 5_000_00);
     // Chase publishes no personal loan; Citi does.
-    expect(sim.execute({ kind: 'bank.borrow', payload: { amount: 3_000_00, months: 24 } }).error).toMatch(/Chase publishes no personal loan/);
+    expect(sim.execute({ kind: 'bank.borrow', payload: { amount: 3_000_00, months: 24 } }).error).toMatch(/No personal loan rate was found for Chase/);
     const before = sim.universe.accounts[chase]!.balance;
     const loan = sim.must<{ loanId: string; payment: number }>({ kind: 'bank.borrow', payload: { amount: 3_000_00, months: 24, bankId: 'us-citi', intoId: chase, repayFromId: citi } });
     expect(sim.universe.accounts[chase]!.balance - before).toBe(3_000_00);
@@ -138,6 +138,6 @@ describe('instructions on a closing account', () => {
       ?? sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: { bankId: 'us-chase' } }).accountId]!;
     const order = sim.must<{ id: string }>({ kind: 'bank.add_standing_order', payload: { toId: saver.id, amount: 100_00, day: 15 } }).id;
     const capName = sim.universe.accounts[cap]!.name;
-    expect(sim.execute({ kind: 'bank.set_order_source', payload: { orderId: order, accountId: cap } }).error).toBe(`${capName} is closing.`);
+    expect(sim.execute({ kind: 'bank.set_order_source', payload: { orderId: order, accountId: cap } }).error).toBe(`${capName} is closing, so a standing order can’t pay from it.`);
   });
 });

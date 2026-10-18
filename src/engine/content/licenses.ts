@@ -428,7 +428,7 @@ export const LICENSES: Readonly<Record<string, LicenseRule>> = {
       "newResident": "EU/EEA licenses: may drive until the license expires (age 70) and may exchange at any time; no test. Licenses from designated countries may be used for 12 months from becoming resident and exchanged without a test within 5 years of becoming resident: Andorra, Australia, Barbados, British Virgin Islands, Canada, Cayman Islands, Falkland Islands, Faroe Islands, Hong Kong, Japan, Monaco, New Zealand, North Macedonia, Republic of Korea, Singapore, South Africa, Switzerland, Taiwan, Ukraine, United Arab Emirates, Zimbabwe (plus Gibraltar, Jersey, Guernsey, Isle of Man). Only licenses where the test was passed in a designated country/EU-EEA qualify. Everyone else: drive up to 12 months on the foreign license, then must get a GB provisional license and pass theory and practical tests."
     },
     "idp": {
-      "issuer": "PayPoint shops (in person; Post Office no longer issues since 1 April 2024)",
+      "issuer": "PayPoint shops (in person; Post Office no longer issues since April 1, 2024)",
       "fee": 5.5,
       "currency": "GBP",
       "validity": "1926 or 1949 permit: 12 months; 1968 permit: 3 years or until the UK license expires, whichever is first",

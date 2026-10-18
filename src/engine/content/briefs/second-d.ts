@@ -82,7 +82,7 @@ export const SECOND_D: readonly Brief[] = [
     language: 'everyday', timing: 1, physical: 1, partner: 3, vocal: 1, improvisation: 0,
     why: {
       partner: 'Every step depends on how close he’ll come, and his questions are what she has to get past without brushing them off.',
-      physical: 'The hand wash is mimed, with no water, and the cupped hands are shown on her own side of the frame; the incubator sits below the shot, and she never reaches toward him.',
+      physical: 'The hand wash is mimed, with no water, and the cupped hands are shown on her own side of the frame. The incubator sits below the shot, and she never reaches toward him.',
       beats: 'Gentle teasing at the sink, a fright handled plainly, the lesson in her hands, then the moment she’s been working toward, said quietly.',
     },
     readings: [
@@ -108,8 +108,8 @@ export const SECOND_D: readonly Brief[] = [
     ],
     language: 'heightened', timing: 1, physical: 2, partner: 2, vocal: 3, improvisation: 0,
     why: {
-      language: 'The lines are the form’s declarations: accusation, contempt and revelation, each named aloud at full size.',
-      physical: 'The keys flung down at her own feet, the drop into the chair and the kneel to gather them are the form’s big gestures, all made on her side of the frame.',
+      language: 'The lines are melodrama’s declarations: accusation, contempt and revelation, each named aloud at full size.',
+      physical: 'The keys flung down at her own feet, the drop into the chair and the kneel to gather them are melodrama’s big gestures, all made on her side of the frame.',
       vocal: 'The scene climbs from a cold reading of the will to open fury, then falls almost to a whisper, and the voice has to carry the whole range.',
       partner: 'The housekeeper’s silence is what she’s fighting, and each outburst is aimed at getting any answer at all.',
       beats: 'A cold reading, contempt that turns ugly, a gesture of rage, the revelation that takes her legs from under her, then the one question left.',
@@ -169,7 +169,7 @@ export const SECOND_D: readonly Brief[] = [
       timing: 'The comedy is in how long she keeps trying the lock before she explains it away, and in the silences the producer leaves.',
       partner: 'The producer’s questions steer her toward the subject she’s avoiding, and every answer swerves around it.',
       physical: 'The bookshelf, the door and the padlock are props on her own side of the frame, light or mimed.',
-      techniques: 'Its answers are improvised in character between written stretches, so the scene needs the improviser’s habit of saying yes to a question she’d sooner refuse.',
+      techniques: 'Her answers are improvised in character between written stretches, so the scene needs the improviser’s habit of saying yes to a question she’d sooner refuse.',
       beats: 'A proud tour, a lock that won’t open, a story that gets away from her, then a confession to the lens.',
     },
     readings: [
@@ -195,7 +195,7 @@ export const SECOND_D: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 2, partner: 2, vocal: 1, improvisation: 0,
     why: {
       timing: 'The crossing stops and starts with what she hears from the far end, and her last instructions are timed to its silences.',
-      physical: 'A few crouched steps within the frame stand for the crossing, and she freezes mid-stride at the end of the aisle, all on her own side of the frame; she reaches back toward his eyeline and never touches him.',
+      physical: 'A few crouched steps within the frame stand for the crossing, and she freezes mid-stride at the end of the aisle, all on her own side of the frame. She reaches back toward his eyeline and never touches him.',
       partner: 'He changes his mind from one moment to the next, and she has to read whether he’s about to bolt or freeze.',
       beats: 'A whispered plan, a joke at his expense that gets him moving, then a crossing she leads without looking back.',
     },
@@ -223,7 +223,7 @@ export const SECOND_D: readonly Brief[] = [
       partner: 'He gives her almost nothing, and the scene is in what she makes of a shrug, a joke and a pause.',
       improvisation: 'The talk between the fixed points is invented live with the reader, so no two takes circle the subject the same way.',
       physical: 'The bookcase is built on the floor on her side of the frame, with light real parts or mimed ones.',
-      techniques: 'Its dialogue is improvised to fixed points, so she builds each take from the reader’s offers and still lands the question and the laugh.',
+      techniques: 'The dialogue is improvised to fixed points, so she builds each take from the reader’s offers and still lands the question and the laugh.',
       beats: 'A long sideways approach under cover of the furniture, then the question, a non-answer and a laugh that covers it.',
     },
     readings: [
@@ -252,10 +252,10 @@ export const SECOND_D: readonly Brief[] = [
     why: {
       language: 'The song is a list in rhymed couplets, a stain to each verse, written for the character.',
       timing: 'A list song lives on its rhythm: each stain lands on the beat, and the dance with the coat is cued to the turn of the music.',
-      physical: 'He dances with an empty coat on a hanger along a rail on his side of the counter; it’s a light prop, and the reader never joins in.',
+      physical: 'He dances with an empty coat on a hanger along a rail on his side of the counter. It’s a light prop, and the reader never joins in.',
       vocal: 'The song runs from quick patter to a slow last verse, and the voice carries both.',
       partner: 'He sings to her, and the song shifts as he watches her realize what he’s saying.',
-      techniques: 'He sings the whole song, written for the character, and dances a short routine with the coat on its hanger, taped solo and sung toward her eyeline; both the song and the dance carry the story.',
+      techniques: 'He sings the whole song, written for the character, and dances a short routine with the coat on its hanger, taped solo and sung toward her eyeline. Both the song and the dance carry the story.',
       beats: 'Stalling, a comic list, a dance that gives him away, a quiet verse about her worst winter, then the plain business of the price.',
     },
     readings: [
@@ -287,7 +287,7 @@ export const SECOND_D: readonly Brief[] = [
       beats: 'An alibi given under pressure, an admiration that slips out, a suspicion turned back with a joke, the clue on the back of the canvas, then a name said and a favor asked.',
     },
     readings: [
-      { id: 'reasoner', label: 'Working It Out Aloud', reading: 'A mind at work: she solves it in front of the director one detail at a time.', rests: 'She studies the paint under the loupe and reads the folded corners on the back of the canvas.', lean: { interpretation: 1.2, execution: 1.1 }, draws: [{ dim: 'interpretation', ability: 'focus', weight: 0.6 }, { dim: 'execution', ability: 'memory', weight: 0.4 }] },
+      { id: 'reasoner', label: 'Working It Out Aloud', reading: 'Her mind is at work in front of the director, and she solves it one detail at a time.', rests: 'She studies the paint under the loupe and reads the folded corners on the back of the canvas.', lean: { interpretation: 1.2, execution: 1.1 }, draws: [{ dim: 'interpretation', ability: 'focus', weight: 0.6 }, { dim: 'execution', ability: 'memory', weight: 0.4 }] },
       { id: 'student', label: 'The Teacher’s Student', reading: 'She knows whose hand made the copy from the first look, and the scene is her trying not to say so.', rests: 'She admires the copy aloud before she catches herself, and the only proof names the man who taught her.', lean: { believability: 1.2, connection: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'connection', ability: 'listening', weight: 0.4 }] },
       { id: 'cornered', label: 'Under Suspicion', reading: 'She’s fighting for her job and her name against a director who has already decided, and the answer she finds is her only way out.', rests: 'Police are due at nine, and the alarm log points at her.', lean: { responsiveness: 1.2, consistency: 0.95 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.6 }, { dim: 'consistency', ability: 'composure', weight: 0.4 }] },
     ],
@@ -313,7 +313,7 @@ export const SECOND_D: readonly Brief[] = [
     why: {
       timing: 'The dash sequence is cut fast, and each line has to land inside a shot a second or two long, with the pauses left for the pictures.',
       vocal: 'The narration moves from hush to comic outrage to a whisper under the hawk, at a pitch that keeps a young audience with it.',
-      techniques: 'A long narration to locked picture is voiceover work at full stretch: timed to every cut, warm for a young audience, and steady across five changes of mood.',
+      techniques: 'A long narration to locked picture is voice-over work at full stretch: timed to every cut, warm for a young audience, and steady across five changes of mood.',
       beats: 'Quiet wonder, comic speed, comic outrage, a held breath, then a small triumph in the snow.',
     },
     readings: [
@@ -339,10 +339,10 @@ export const SECOND_D: readonly Brief[] = [
     language: 'heightened', timing: 2, physical: 0, partner: 0, vocal: 2, improvisation: 0,
     techniques: { voiceover: 2 },
     why: {
-      language: 'The narration is written in the clipped, figurative style of the form’s voice-overs, every sentence turned a little harder than speech.',
+      language: 'The narration is written in the clipped, figurative style of noir’s voice-overs, every sentence turned a little harder than speech.',
       timing: 'Each line is fitted to a shot, and the silence across the bridge is as long as the picture holds it.',
       vocal: 'The voice stays low and close to the microphone throughout, and the shifts are in color, not volume.',
-      techniques: 'A narration to picture, recorded alone, is voiceover work: timed to the cut, intimate with the microphone, and steady through what the character won’t say.',
+      techniques: 'A narration to picture, recorded alone, is voice-over work: timed to the cut, intimate with the microphone, and steady through what the character won’t say.',
       beats: 'Dry scene-setting, a wry confession of the favor, a silence where the worst of it happens, then an admission she almost enjoys.',
     },
     readings: [
@@ -404,7 +404,7 @@ export const SECOND_D: readonly Brief[] = [
       partner: 'He answers in single words and won’t ask, so everything she tries is built on how little he gives.',
       vocal: 'Two voices: the improvised one on the quay, and the narration at a microphone, close and cool and knowing how it ends.',
       improvisation: 'The talk between the fixed points is invented live, and she has to steer it toward the translation without a script.',
-      techniques: 'The walking talk is improvised to fixed points; the narration is voiceover, her own written prose, literary and exact, recorded in the same session and laid over the opening and the close of the take, so it’s played to a microphone with no face to show it.',
+      techniques: 'The walking talk is improvised to fixed points. The narration is voice-over, her own written prose, literary and exact, recorded in the same session and laid over the opening and the close of the take, so it’s played to a microphone with no face to show it.',
       beats: 'A remembered morning, idle talk, a story of her own, a silence, then the narration that says what she did.',
     },
     readings: [
@@ -488,7 +488,7 @@ export const SECOND_D: readonly Brief[] = [
       language: 'The script parodies the epic trailer’s rhetoric: short, swollen sentences, each one promising the end of the world.',
       timing: 'Every line is cut to a shot, and the jokes are in the pauses: the hush before the can, the beat before the title.',
       vocal: 'The voice is pitched low and huge throughout, and the hush in the third beat has to be as big as the booming.',
-      techniques: 'The comedy is played dead straight, so it depends on comic timing and on the voiceover craft of fitting each line to its shot without a wink.',
+      techniques: 'The comedy is played dead straight, so it depends on comic timing and on the voice-over craft of fitting each line to its shot without a wink.',
       beats: 'A grand opening, a roll call, a tender hush for a can, then the title and a last line about glass.',
     },
     readings: [

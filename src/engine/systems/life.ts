@@ -17,7 +17,8 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
+import { formatDurationWords, formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
+import { spokenList } from '../core/text';
 import type { ScheduledItem } from '../core/scheduler';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
@@ -320,7 +321,7 @@ export function wellbeingSummary(person: Person, own = true): string {
   if (w.nourishment < 25) return 'Hungry, and it’s starting to show.';
   if (w.energy > 75 && w.stress < 30) return 'Rested, steady and ready for a real day.';
   if (w.morale < 30) return 'Flat. The work is fine, the feeling isn’t.';
-  return 'Holding up, and no dial is far enough out to be worth naming.';
+  return 'Holding up, with nothing out of the ordinary to worry about.';
 }
 
 // ---------------------------------------------------------------------------
@@ -419,11 +420,13 @@ export function registerLife(sim: Simulation): void {
 
       s.emit('life.woke', { personId: person.id, hours, quality, recovered });
 
+      // Asleep at an item that wants them, they're not there for it: each one's handler finds them asleep (`present`,
+      // `presentForCare`, the plan's own check), and it's missed.
       if (crossed.length > 0) {
         s.notify({
           category: 'schedule',
           title: `You Slept Through ${crossed.length} Commitment${crossed.length === 1 ? '' : 's'}`,
-          body: crossed.map((c) => c.label).join(', '),
+          body: `You were asleep for ${spokenList(crossed.map((c) => c.label))}, so you missed ${crossed.length === 1 ? 'it' : 'them'}.`,
           importance: 70,
           route: '/workspace/calendar',
         });
@@ -795,11 +798,11 @@ function whyNow(person: Person, action: LookAfter, gain: number, urgent: boolean
   const w = person.wellbeing;
   const r = (x: number) => Math.round(x);
   if (action === 'eat' || action === 'order') {
-    if (urgent) return `Hungry at ${r(w.nourishment)}: every hour under ${HUNGRY} costs condition and mood.`;
+    if (urgent) return `Hungry at ${r(w.nourishment)}: every hour under ${HUNGRY} costs condition and morale.`;
     return gain >= 0.5 ? `Nourishment at ${r(w.nourishment)} is costing readiness.` : `Nourishment at ${r(w.nourishment)}: there’s little to gain from a meal yet.`;
   }
   if (action === 'wash') {
-    if (urgent) return `Hygiene at ${r(w.hygiene ?? 80)}: every hour under ${GRIMY} wears on the mood.`;
+    if (urgent) return `Hygiene at ${r(w.hygiene ?? 80)}: every hour under ${GRIMY} wears on your morale.`;
     return gain >= 0.5 ? `Hygiene at ${r(w.hygiene ?? 80)}, and stress at ${r(w.stress)} it would ease.` : `Hygiene at ${r(w.hygiene ?? 80)}: little to gain yet.`;
   }
   if (action === 'unwind') {
@@ -1449,12 +1452,15 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
     return {
       hours: Math.max(SHORTEST_SLEEP, Math.floor(available * 2) / 2),
       reason: next.at <= sim.now
-        ? `It’s time for "${next.label}", and you’re standing at it. Any sleep goes through it.`
-        : `"${next.label}" is in ${away.toFixed(1)} hours, and getting up and there takes an hour and a half, so a full night isn’t available.`,
+        ? `It’s time for “${next.label}”, and you’re standing at it, so any sleep would go through it.`
+        : `“${next.label}” is in ${formatDurationWords(away * MS_HOUR)}. Getting up and there takes an hour and a half, so there isn’t time for a full night.`,
     };
   }
   return { hours, reason: why };
 }
+
+/** The longest night as a word, read from LONGEST_NIGHT: numbers under twenty are words in this prose. */
+const HOURS_WORD: Partial<Record<number, string>> = { 10: 'ten', 11: 'eleven', 12: 'twelve', 13: 'thirteen', 14: 'fourteen', 15: 'fifteen', 16: 'sixteen' };
 
 /**
  * Why tonight wants the hours it does: the thing that stretched the night
@@ -1467,8 +1473,8 @@ function sleepReason(tonight: {
   const { night, restores, age, owed, hours, needed } = tonight;
   if (needed > LONGEST_NIGHT) {
     return night.late > 0
-      ? 'Going to bed this late, not even fourteen hours makes up a whole day. An earlier night would.'
-      : 'Not even fourteen hours makes up a whole day for you tonight.';
+      ? `Going to bed this late, not even ${HOURS_WORD[LONGEST_NIGHT] ?? LONGEST_NIGHT} hours of sleep would make up for a whole day. An earlier night would.`
+      : `Not even ${HOURS_WORD[LONGEST_NIGHT] ?? LONGEST_NIGHT} hours of sleep would make up for a whole day tonight.`;
   }
   if (owed > 8) return 'You’re carrying real sleep debt.';
   if (hours <= 8) return 'A normal night.';

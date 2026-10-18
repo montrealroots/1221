@@ -60,14 +60,17 @@ export function chapterFor(feature: string): Chapter | undefined {
 }
 
 /**
- * What a locked part of the game says: the chapter that opens it, and, when
- * that isn't the next one, the one to read first.
+ * What a locked part of the game says: the chapter that opens it, where the guide is, and, when that chapter isn't the
+ * next one, the one to read first. Until 2026-10-17 (brief 14) it didn't say where the guide was, or why another
+ * chapter came first.
  */
 export function lockedBecause(sim: Simulation, feature: string): string | undefined {
   if (isOpen(sim, feature)) return undefined;
   const chapter = CHAPTER_FOR[feature]!;
   const next = nextChapter(sim);
-  const order = next && next.id !== chapter.id ? ` The next chapter is “${next.title}”.` : '';
+  const order = next && next.id !== chapter.id
+    ? ` The chapters open in order, and “${next.title}” is next: press Guide, at the top of the screen.`
+    : ' Press Guide, at the top of the screen, to read it.';
   return `Read “${chapter.title}” in the guide first.${order}`;
 }
 
@@ -83,12 +86,12 @@ function featureOf(kind: string, payload: Record<string, unknown>): string {
 export function registerTutorial(sim: Simulation): void {
   sim.onCommand<{ chapterId: string }, { read: string; next?: string }>(READ_KIND, (p, { sim: s }) => {
     const state = s.universe.tutorial;
-    if (!state) throw new CommandError('This life has no guide to read through; everything is open.');
+    if (!state) throw new CommandError('This life was begun without the guide, so everything is already open.');
     const chapter = CHAPTER_BY_ID[p.chapterId];
     if (!chapter) throw new CommandError('There’s no such chapter.');
     if (state.read.includes(chapter.id)) throw new CommandError(`You’ve already read “${chapter.title}”.`);
     const next = nextChapter(s);
-    if (next && next.id !== chapter.id) throw new CommandError(`Read “${next.title}” first; the chapters go in order.`);
+    if (next && next.id !== chapter.id) throw new CommandError(`Read “${next.title}” first. The chapters open in order.`);
     state.read.push(chapter.id);
     if (!nextChapter(s)) state.finished = true;
     return { read: chapter.id, next: nextChapter(s)?.id };

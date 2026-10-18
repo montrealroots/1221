@@ -27,7 +27,7 @@ import { genreSpeed, playOfGenre } from '@/engine/systems/engagement';
 import { chiefLimit, replay, type WorkRecord } from '@/engine/systems/evaluation';
 import { workloadWords } from '@/engine/systems/workload';
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied } from '@/engine/content/demands';
-import type { Skill } from '@/engine/content/school';
+import { COURSES, type Skill } from '@/engine/content/school';
 import { Stat } from '@/ui/components/primitives';
 import { Segments } from '@/ui/components/WorkThrough';
 import { briefKinds } from '@/engine/content/briefs';
@@ -60,8 +60,12 @@ export const BAND_WORD: Readonly<Record<string, string>> = { unready: 'Unready',
 export function sourceWords(source: string): string {
   const [kind, rest] = source.split(':') as [string, string | undefined];
   if (kind === 'practice') return EXERCISES.find((e) => e.id === rest)?.label ?? 'Practice';
-  if (kind === 'class') return `Class: ${rest}`;
-  if (kind === 'prepare') return `Coursework: ${rest}`;
+  // A class by its name and a coursework step by its part’s words (from 2026-10-17, brief 14): until then the course’s
+  // code alone and the part’s key, "Class: DRAM 153a", "Coursework: interpretation".
+  if (kind === 'class') { const c = COURSES.find((x) => x.code === rest); return c ? `Class: ${c.name} (${c.code})` : `Class: ${rest}`; }
+  // A step with no part of its own said as what it is (from 2026-10-17, brief 14's editorial review): until then the
+  // reader’s evenings showed as their key, "Coursework: reader".
+  if (kind === 'prepare') return `Coursework: ${(TASK_PROFILES.scene?.prepLabel?.[rest ?? ''] ?? ({ reader: 'running it with a reader', approach: 'rehearsing how you play it', genre: 'knowing the genre' } as Record<string, string>)[rest ?? ''] ?? rest ?? 'preparation').toLowerCase()}`;
   if (kind === 'interest') return 'An interest, from before they were removed';
   if (kind === 'workout') return rest === 'run' ? 'A run' : 'A workout';
   if (kind === 'read' || kind === 'research') return 'Reading a play';
@@ -100,9 +104,9 @@ defineLook<TheAbility>('ability', {
       return {
         name: def.label,
         kind: def.general ? 'A General Ability' : 'An Acting Ability',
-        summary: `Nobody has measured you in it, since you never trained as an actor. ${def.definition}`,
-        body: <p className="small"><strong>What develops it.</strong> {def.develops}</p>,
-        provenance: def.source.length < 200 ? `${def.source}.` : 'Its sources are in docs/research/attributes/research-acting-engine.json.',
+        summary: `You haven’t trained as an actor, so it’s never been measured. ${def.definition}`,
+        body: <p className="small"><strong>How it grows.</strong> {def.develops}</p>,
+        provenance: def.source,
       };
     }
     const level = abilityOf(sim, person, id);
@@ -113,8 +117,8 @@ defineLook<TheAbility>('ability', {
     const recent = recentOf(person, id);
     const kin = ABILITY_KIN[id] ?? [];
     const ways: Way[] = [
-      ...kin.map((k) => ({ to: at('skill', k), label: TECHNIQUE_LABEL[k], detail: 'Its kin in the craft: the classes that grow one grow both' })),
-      ...(person.work ?? []).filter((w) => w.inputs.abilities[id] !== undefined).slice(-3).reverse().map((w) => ({ to: at('work', w.inputs.key), label: w.what, detail: `${w.taskLabel}, ${one(w.overall)}: read ${one(w.inputs.abilities[id]!)} of it` })),
+      ...kin.map((k) => ({ to: at('skill', k), label: TECHNIQUE_LABEL[k], detail: 'A related technique: the classes that grow one grow both' })),
+      ...(person.work ?? []).filter((w) => w.inputs.abilities[id] !== undefined).slice(-3).reverse().map((w) => ({ to: at('work', w.inputs.key), label: w.what, detail: `${w.taskLabel}, ${one(w.overall)}: judged with yours at ${one(w.inputs.abilities[id]!)}` })),
     ];
     return {
       name: def.label,
@@ -123,19 +127,19 @@ defineLook<TheAbility>('ability', {
       body: (
         <>
           <div className="grid grid-3">
-            <Stat label="Now" value={one(level)} note={level >= full ? 'Full: work that reads it asks nothing more' : `${one(full - level)} to full`} />
-            <Stat label="Classes Reach" value={classesGrow(id) ? one(reach) : '—'} note={classesGrow(id) ? 'Where ordinary work levels off; practice goes past it' : id === 'stamina' ? 'No reach: workouts build it, and the classes that train the body as hard' : id === 'discipline' ? 'Classes don’t build it; practice kept up does' : 'Classes don’t build it; work in front of people does'} />
-            <Stat label="Last Change" value={recent[0] ? `+${recent[0].delta.toFixed(2)}` : 'None Yet'} note={recent[0] ? `${sourceWords(recent[0].source)}, ${formatDate(recent[0].at, zoneOf(sim))}` : `None in the latest ${DEVELOPMENT.historyKept} changes kept`} />
+            <Stat label="Now" value={one(level)} note={level >= full ? 'Full: no work asks more of it' : `${one(full - level)} to full`} />
+            <Stat label="Classes Reach" value={classesGrow(id) ? one(reach) : '—'} note={classesGrow(id) ? 'Classes and coursework level off here; practice takes you past it' : id === 'stamina' ? 'No limit from classes: workouts build it, and so do classes that work the body as hard' : id === 'discipline' ? 'Classes don’t build it; practice kept up does' : 'Classes don’t build it; performing in front of people does'} />
+            <Stat label="Last Change" value={recent[0] ? `+${recent[0].delta.toFixed(2)}` : 'None Yet'} note={recent[0] ? `${sourceWords(recent[0].source)}, ${formatDate(recent[0].at, zoneOf(sim))}` : `None in your last ${DEVELOPMENT.historyKept} changes`} />
           </div>
-          <p className="small"><strong>What develops it.</strong> {def.develops}</p>
-          <p className="small"><strong>Where it began.</strong> {def.derivedFrom}</p>
+          <p className="small"><strong>How it grows.</strong> {def.develops}</p>
+          <p className="small"><strong>Where it started.</strong> {def.derivedFrom}</p>
           {/* What it does, in its own sentence, and which work reads it (from 2026-10-17, brief 11, A4): until then What It Does
               was the readers alone, and the ability’s own sentence, corrected against the code in the attributes brief’s
               phase 2, was shown nowhere: every ability has a reader, so the line that fell back to it never did. */}
           <p className="small"><strong>What it does.</strong> {def.affects}</p>
-          <p className="small"><strong>Which work reads it.</strong> {readers.map((r) => `${r.label}: ${r.dims.map((d) => DIMENSION_LABEL[d].toLowerCase()).join(', ')}`).join('; ')}.</p>
-          {exercise && <p className="small"><strong>To practice it.</strong> {exercise.label}: {exercise.how} {exercise.kind === 'slate' ? '(SLATE’s own exercise.)' : exercise.kind === 'named' ? '(A named exercise of real pedagogy.)' : '(A composite of real practice.)'}</p>}
-          {id === 'stamina' && <p className="small"><strong>Its scale.</strong> Stamina is your fitness, full at the most a body your age can be brought to ({one(full)} now): at full fitness it counts as full. A workout builds it and holds it for {FITNESS.heldDays} days, and so does a class that trains the body as hard (from 2026-10-16: Movement Invention, stage combat); past that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, as an untrained body’s does. A second workout the same day builds half.</p>}
+          <p className="small"><strong>Where it counts.</strong> {readers.map((r) => `${r.label}: ${r.dims.map((d) => DIMENSION_LABEL[d].toLowerCase()).join(', ')}`).join('; ')}.</p>
+          {exercise && <p className="small"><strong>To practice it.</strong> {exercise.label}: {exercise.how} {exercise.kind === 'slate' ? '(An exercise made for the game.)' : exercise.kind === 'named' ? '(A named exercise from real acting teaching.)' : '(Put together from real practice.)'}</p>}
+          {id === 'stamina' && <p className="small"><strong>Its scale.</strong> Stamina is your fitness. Full is the fittest a body your age can be ({one(full)} now). A workout builds it and holds it for {FITNESS.heldDays} days, and so does a class that works the body as hard (Movement Invention, stage combat). After that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, as an untrained body’s does. A second workout on the same day builds half as much.</p>}
           {recent.length > 0 && (
             <ul className="small">
               {recent.map((h, i) => <li key={i}>{formatDate(h.at, zoneOf(sim))}: +{h.delta.toFixed(3)}, {sourceWords(h.source)}</li>)}
@@ -144,7 +148,7 @@ defineLook<TheAbility>('ability', {
         </>
       ),
       ways,
-      provenance: def.source.length < 200 ? `${def.source}.` : 'Its sources are in docs/research/attributes/research-acting-engine.json.',
+      provenance: def.source,
     };
   },
 });
@@ -175,31 +179,39 @@ defineLook<TheGenre>('genre', {
     return {
       name: GENRE_BY_ID[id]!.label,
       kind: loved ? 'A Genre You Love' : 'A Genre',
-      summary: g ? `Familiarity ${one(g.familiarity)} and practice ${one(g.practice)}: a part in a play of its kind is learned ${Math.round((speed - 1) * 100)}% faster, and a brief in it reads knowing it as part of its preparation.` : `You haven’t studied it or worked in it yet. ${def.conventions}`,
+      summary: g ? `Familiarity ${one(g.familiarity)}, work in it ${one(g.practice)}. The better of the two is how well you know it: a part in a play of its kind is learned ${Math.round((speed - 1) * 100)}% faster, and it counts as Knowing The Genre when you prepare a brief in it.` : `You haven’t studied it or worked in it yet. ${def.conventions}`,
       body: (
         <>
           <div className="grid grid-3">
-            <Stat label="Familiarity" value={one(g?.familiarity ?? 0)} note="Watched, read and studied" />
-            <Stat label="Practice" value={one(g?.practice ?? 0)} note="Work done in it: nights, self-tapes" />
+            <Stat label="Familiarity" value={one(g?.familiarity ?? 0)} note="Films watched and plays read" />
+            <Stat label="Work In It" value={one(g?.practice ?? 0)} note="Nights on stage and self-tapes in it" />
             {/* What it speeds, said (from 2026-10-12: until then "The best of the two, never a cap on the work", beside a
                 summary saying a brief in it reads knowing it, so it read as speeding the brief; a brief’s steps read the
                 material met before, `prepSpeed`, and never this). */}
-            <Stat label="Preparation" value={`${Math.round((speed - 1) * 100)}% Faster`} note="The better of the two, for a scene or a part from a play of its kind; a brief’s steps read the material met before instead" />
+            <Stat label="Preparation" value={`${Math.round((speed - 1) * 100)}% Faster`} note="For a scene or a part from a play of its kind, by the better of the two. A brief’s steps speed up with material you’ve met before instead." />
           </div>
           <p className="small"><strong>Its conventions.</strong> {def.conventions}</p>
           {demand && (
             <>
               <p className="small"><strong>What it asks of an actor.</strong> {demand.claim}</p>
-              <p className="small"><strong>{applied(id) && demand.tags.length ? 'Applied as requirements.' : 'Not applied.'}</strong>{' '}
-                {/* A self-tape’s, which every brief in the genre stages (tests/briefs-content.test.ts). Until 2026-10-13 this
+              <p className="small"><strong>{applied(id) && demand.tags.length ? 'What a self-tape in it asks.' : 'Why it adds no requirement.'}</strong>{' '}
+                {/* A self-tape’s, which every brief in the genre stages (tests/briefs-content.test.ts); the research’s reasons for
+                    each go in the small print below (from 2026-10-17, brief 14). Until 2026-10-13 this
                     said “Work in it reads”, and a night of a play of the kind or a class scene from one reads its own
                     material’s techniques instead (`playReads`, `workContext`): a farce’s night read no clown. */}
                 {applied(id) && demand.tags.length
-                  ? <>A self-tape in it reads {demand.tags.map((t, i) => <span key={t.tag}>{i ? ', ' : ''}{TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]]} (you: {one(person.craft?.[DEMAND_TECHNIQUE[t.tag]] ?? 0)} of {MASTERED})</span>)}: {demand.tags.map((t) => t.why).join(' ')}{demand.basis === 'definition' ? ' The genre is defined by it: that’s SLATE’s reading, not a source’s statement.' : ''} A night of a play of its kind, or a class scene from one, reads its own material’s techniques instead.</>
-                  : demand.belongsTo ? `What the research found (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ') || 'no technique'}) belongs to ${demand.belongsTo}, not to the genre as a whole, so work in it asks nothing past what the work itself reads.`
-                  : demand.tags.length ? `The research found it only in single examples (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ')}), at low confidence, so it isn’t treated as the genre’s convention.` : 'The research found nothing it asks past what the work itself reads.'}
+                  ? <>A self-tape in it calls for {demand.tags.map((t, i) => <span key={t.tag}>{i ? ', ' : ''}{TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]]} (yours: {one(person.craft?.[DEMAND_TECHNIQUE[t.tag]] ?? 0)} of {MASTERED})</span>)}.{demand.basis === 'definition' ? ' This follows from how the genre is defined, not from a source that says so.' : ''} A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.</>
+                  : demand.belongsTo ? `What the research found (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ') || 'no technique'}) belongs to ${demand.belongsTo}, not to the genre as a whole, so the genre adds no requirement of its own.`
+                  : demand.tags.length ? `The research holds this (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ')}) with low confidence, so the game doesn’t treat it as a requirement of the genre. The small print below says why.` : 'The research found no requirement of its own.'}
               </p>
-              <p className="xs dim">The research, in its own words: {demand.sourceSupports} ({demand.how}; {demand.confidence} confidence). Uncertain: {demand.uncertainty}</p>
+              {/* The small print in three paragraphs, each under the words it opens with (from 2026-10-17, brief 14's json
+                  area, D1 to D3): until then one paragraph, about 2,000 characters for adventure, some forty lines at 390
+                  wide; its first heading said "in the research’s words" over the game’s wording of the research; and the
+                  sentence above said "only in single examples" of ten genres whose research is low for other reasons,
+                  which this small print gives. Every genre it reaches is low, by `applied`. */}
+              {applied(id) && demand.tags.length ? <p className="xs dim">Why it’s applied: {demand.tags.map((t) => t.why).join(' ')}</p> : null}
+              <p className="xs dim">What the research says: {demand.sourceSupports} ({demand.how}; {demand.confidence} confidence).</p>
+              <p className="xs dim">Still uncertain: {demand.uncertainty}</p>
             </>
           )}
           {/* Its register (from 2026-10-16, `GENRE_REGISTER`): what every take of a brief written for it reads. */}
@@ -209,17 +221,17 @@ defineLook<TheGenre>('genre', {
               <ul className="small">{concernsOf(id).map((c) => <li key={c}>{concernWords(c)}</li>)}</ul>
             </>
           )}
-          <p className="small"><strong>To study it.</strong> {play ? `Read ${play.title}${play.by ? `, by ${play.by}` : ''}, a play of the kind the game has, or watch a film of the kind.` : 'Watch a film of the kind.'} A brief in it is finished work: taped, and judged beat by beat as a taped brief, its own material leaning it.</p>
-          <p className="xs dim">Its definition’s source: {def.source}.{demand ? ` Its demands’ source: ${demand.source}.` : ''}</p>
-          <p className="small">{loved ? 'You love it: a day of work in it is a better day. Loving it doesn’t speed the work or cap it.' : 'Loving a genre makes a day of work in it better; it doesn’t make you better at it.'}</p>
+          <p className="small"><strong>To study it.</strong> Press Study It beside it under Genres on your Player Profile. {play ? `You’ll read ${play.title}${play.by ? `, by ${play.by}` : ''}, a play of its kind.` : 'You’ll watch a film of its kind.'} Its brief is finished work: you tape it, and it’s judged beat by beat like any taped brief, on what its own material asks.</p>
+          <p className="xs dim">Source for its definition: {def.source}.{demand ? ` Source for what it asks: ${demand.source}.` : ''}</p>
+          <p className="small">{loved ? 'You love it, so a day of work in it is a better day. Loving it doesn’t make the work faster or limit it.' : 'Loving a genre makes a day of work in it better. It doesn’t make you better at it.'}</p>
         </>
       ),
       ways: [
         ...(applied(id) ? (demand?.tags ?? []).map((t) => ({ to: at('skill', DEMAND_TECHNIQUE[t.tag]), label: TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]], detail: `What it asks for: ${DEMAND_LABEL[t.tag]}` })) : []),
-        ...[...new Set(concernsOf(id).flatMap(concernDraws))].map((a) => ({ to: at('ability', a), label: ABILITY_DEFS.find((d) => d.id === a)?.label ?? a, detail: `Its scenes draw on it: ${concernsOf(id).filter((c) => concernDraws(c).includes(a)).map((c) => CONCERNS[c].label).join(', ')}` })),
+        ...[...new Set(concernsOf(id).flatMap(concernDraws))].map((a) => ({ to: at('ability', a), label: ABILITY_DEFS.find((d) => d.id === a)?.label ?? a, detail: `Its scenes call on it: ${concernsOf(id).filter((c) => concernDraws(c).includes(a)).map((c) => CONCERNS[c].label).join(', ')}` })),
         ...tapes.map((w) => ({ to: at('work', w.inputs.key), label: w.what, detail: `${one(w.overall)}, ${formatDate(w.at, zoneOf(sim))}` })),
       ],
-      provenance: `From docs/research/attributes/: its definition ${def.how === 'read directly' ? 'read at the source' : 'from a search’s summary'}, its demands at ${demand?.confidence ?? 'low'} confidence.`,
+      provenance: `Its definition was ${def.how === 'read directly' ? 'read at the source' : 'taken from a search summary'}, and what it asks is held with ${demand?.confidence ?? 'low'} confidence.`,
     };
   },
 });
@@ -231,7 +243,7 @@ defineLook<TheGenre>('genre', {
 interface TheWorkDone { w: WorkRecord; person: Person }
 
 defineLook<TheWorkDone>('work', {
-  gone: 'That work isn’t on your record any more: the record keeps the latest 160.',
+  gone: 'That piece isn’t on your record anymore. The record keeps your latest 160 pieces.',
   resolve: (sim, id) => {
     const p = player(sim);
     const w = p?.work?.find((x) => x.inputs.key === id);
@@ -247,13 +259,13 @@ defineLook<TheWorkDone>('work', {
     // Each part of preparation by the task’s own words, the way of playing it as the limits name it, and each family by
     // its genre’s (from 2026-10-12: until then by their keys, "interpretation 66% of 80%, … approach 49% of 90%;
     // leaning to science_fiction").
-    const partWords = (k: string) => (profile?.prepLabel?.[k] ?? (k === 'approach' ? 'The way you chose to play it' : k.replace(/_/g, ' '))).toLowerCase();
+    const partWords = (k: string) => (profile?.prepLabel?.[k] ?? (k === 'approach' ? 'How you play it' : k.replace(/_/g, ' '))).toLowerCase();
     const familyWords = (f: string) => (GENRE_BY_ID[f]?.label ?? f.replace(/_/g, ' ')).toLowerCase();
-    const prepared = Object.entries(w.inputs.prep).map(([k, v]) => `${partWords(k)} at ${Math.round(v * 100)}% of ${Math.round((w.inputs.required[k] ?? 1) * 100)}%`);
+    const prepared = Object.entries(w.inputs.prep).map(([k, v]) => `${partWords(k)} at ${Math.round(v * 100)}% (complete at ${Math.round((w.inputs.required[k] ?? 1) * 100)}%)`);
     return {
       name: w.what,
       kind: w.taskLabel,
-      summary: `Judged ${one(w.overall)} of 100${w.band ? `, ${BAND_WORD[w.band] ?? w.band}` : ''}, on ${formatDate(w.at, zoneOf(sim))}.${chief ? ` ${chief}.` : w.mastery ? ' Everything it asked was met: the most it can be.' : ''}`,
+      summary: `Judged ${one(w.overall)} of 100${w.band ? `, ${BAND_WORD[w.band] ?? w.band}` : ''}, on ${formatDate(w.at, zoneOf(sim))}.${chief ? ` ${chief}.` : w.mastery ? ' You met everything it asked, so it couldn’t have scored higher.' : ''}`,
       body: (
         <>
           <div className="grid grid-3">
@@ -261,18 +273,18 @@ defineLook<TheWorkDone>('work', {
           </div>
           {w.limits.length > 0 && (
             <ul className="small">
-              {w.limits.map((l, i) => <li key={i}>{l.label}: {l.by} points off the {DIMENSION_LABEL[l.dimension].toLowerCase()}{l.whole !== undefined ? `, ${l.whole} of the whole` : ''}</li>)}
+              {w.limits.map((l, i) => <li key={i}>{l.label}: {l.by} points off {DIMENSION_LABEL[l.dimension].toLowerCase()}{l.whole !== undefined ? `, ${l.whole} off the whole` : ''}</li>)}
             </ul>
           )}
-          {again?.piece && <Segments e={again} caption="Part By Part" />}
+          {again?.piece && <Segments e={again} caption="Moment By Moment" />}
           {/* A night’s workload, from its own record (from 2026-10-16, brief 10, `workloadWords`): what it asked of stamina
               and what it cost. A night kept under evaluation-10 kept none, and shows none. */}
-          {workloadWords(w) && <p className="small" data-workload="">{workloadWords(w)} <span className="xs dim">The running time: {w.inputs.piece!.night!.from}.</span></p>}
-          <p className="xs dim">Judged with readiness {Math.round(w.inputs.condition.readiness)}{w.inputs.condition.ill ? ', the flu' : ''}{w.inputs.condition.injured ? ', an injury' : ''}{w.inputs.condition.concussed ? ', a concussion mending' : ''}; difficulty {w.inputs.difficulty.toFixed(2)}; {prepared.length ? `preparation: ${prepared.join(', ')}` : 'preparation not read'}{w.inputs.families.length ? `; leaning to ${w.inputs.families.map(familyWords).join(', ')}` : ''}.</p>
+          {workloadWords(w) && <p className="small" data-workload="">{workloadWords(w)} <span className="xs dim">Source for the running time: {w.inputs.piece!.night!.from}.</span></p>}
+          <p className="xs dim">Judged with readiness at {Math.round(w.inputs.condition.readiness)}{w.inputs.condition.ill ? ', with the flu' : ''}{w.inputs.condition.injured ? ', with an injury' : ''}{w.inputs.condition.concussed ? ', with a concussion mending' : ''}; difficulty {w.inputs.difficulty.toFixed(2)}; {prepared.length ? `preparation: ${prepared.join(', ')}` : 'preparation not counted'}{w.inputs.families.length ? `; its genres: ${w.inputs.families.map(familyWords).join(', ')}` : ''}.</p>
         </>
       ),
-      ways: abilities.map((a) => ({ to: at('ability', a), label: abilityDef(a).label, detail: `Read at ${one(w.inputs.abilities[a]!)}` })),
-      provenance: again ? `Judged under ${w.ruleset}; worked out again from its own inputs, ${one(again.overall)}.` : w.inputs.levels ? `Judged under ${w.ruleset}, rules since changed, so it isn’t worked out again under today’s: what it was is kept as it was.` : `Judged under ${w.ruleset}, before results kept their levels (2026-10-10), so it isn’t worked out again.`,
+      ways: abilities.map((a) => ({ to: at('ability', a), label: abilityDef(a).label, detail: `Yours was ${one(w.inputs.abilities[a]!)}` })),
+      provenance: again ? `Worked out again from what it was judged on, it comes to ${one(again.overall)}.` : w.inputs.levels ? 'The rules have changed since it was judged, so it isn’t worked out again. Its result stands as it was.' : 'It was judged before results kept their details, so it can’t be worked out again.',
     };
   },
 });

@@ -15,7 +15,7 @@
  *   a save and a load. A piece due at a meeting is shown there, and the meeting grows its course's skill by the band's
  *   weight (0.85 unready, 1 working, 1.1 strong, 1.2 exceptional), worked out here against an unprepared twin.
  * - `school.shift`: registration slept through, the first assigned Saturday is counted and not worked, said once in
- *   its words, nothing owed or bought, and the Standing tab counts 0 of 1 assigned shifts; registered on the School
+ *   its words, nothing owed or bought, and the Standing tab counts 0 of 1 assigned shift; registered on the School
  *   screen, the next Saturday is worked. A worked Saturday takes 4 energy beyond the clock's against a twin away. The
  *   crew's injury roll comes up at a shift (a seed found for it): a sprain at work, its weekly wage the week's hours at
  *   $23, $138 for the Saturday alone and $230 after a Thursday evening, with no FICA. A Saturday over the week's cap is
@@ -152,10 +152,10 @@ const meanOf = (...runs: Partial<Record<string, number>>[]) => {
   return n ? sum / n : 0;
 };
 /** The director's note's opening, by the run's mean: 1.25 and up, 0.5, −0.25, and under. */
-const opening = (mean: number) => mean >= 1.25 ? 'Remarkable work: you held the house night after night, and it’s been noticed.'
-  : mean >= 0.5 ? 'Strong, reliable work. The part was yours by the second night.'
-    : mean >= -0.25 ? 'Solid, sound nights. The next step is to risk more in them.'
-      : 'Uneven. Some nights got away from you: come in rested, and have the part in your body before the house does.';
+const opening = (mean: number) => mean >= 1.25 ? 'Remarkable work, night after night.'
+  : mean >= 0.5 ? 'Strong, reliable work across the run.'
+    : mean >= -0.25 ? 'Solid, sound nights. The next step is to take more risks in them.'
+      : 'Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does.';
 /** What a run's work is weighted by at the next casting: its nights to eight, a School or Rep run whole, a Cabaret or Summer play half. */
 const RUN_WEIGHT: Record<string, number> = { school: 1, rep: 1, cabaret: 0.5, summer: 0.5 };
 /** A run as closeRun leaves it: the moment it closed, and the process looked back on. */
@@ -334,7 +334,7 @@ describe('school.shift', () => {
     expect(sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(bank);
     expect(itemsOf(sim, PAYDAY_KIND).filter((i) => i.status === 'pending')).toEqual([]);
     // The evaluation's attendance reads it: an assigned shift asked of them and not worked.
-    expect(drawn(sim, 'standing')).toContain(' and 0 of 1 assigned shifts.');
+    expect(drawn(sim, 'standing')).toContain(' and 0 of 1 assigned shift.');
 
     // Registered on the School screen, late; the next Saturday is worked, and its equipment bought there.
     sim.must({ kind: 'school.orientation', payload: { task: 'register' } });
@@ -407,7 +407,7 @@ describe('school.shift', () => {
     expect(sim.player.school!.workStudy.owedHours).toBe(0);
     expect(sim.universe.scheduled.find((i) => i.id === sat!.id)!.status).toBe('missed');
     expect(titled(sim, 'A Shift Over The Weekly Cap')).toHaveLength(1);
-    expect(titled(sim, 'A Shift Over The Weekly Cap')[0]!.body).toBe('Yale caps a student’s hours at 19 a week across its jobs, and the week’s are worked. The shift is off, and not held against you.');
+    expect(titled(sim, 'A Shift Over The Weekly Cap')[0]!.body).toBe('Yale caps a student’s hours at 19 a week across all its jobs, and you’ve worked this week’s. The shift is off, and it isn’t held against you.');
     expect(titled(sim, 'You Missed A Work-Study Shift')).toEqual([]);
     expect(sim.player.school!.tally.shifts).toBe(tally.shifts);
     expect(sim.player.school!.tally.worked).toBe(tally.worked);
@@ -496,7 +496,7 @@ function noteFrom(sim: Simulation, lastAt: number): { note: string; overall: num
   const held = new Map<string, { label: string; whole: number }>();
   for (const r of records) for (const l of r.limits) if (l.kind === 'ability' || l.kind === 'technique') { const e = held.get(l.what) ?? { label: l.label, whole: 0 }; e.whole += l.whole ?? l.by / 4; held.set(l.what, e); }
   const top = [...held.values()].sort((a, b) => b.whole - a.whole)[0];
-  const workOn = top && top.whole / records.length >= 0.5 ? ` Work on your ${top.label.toLowerCase()}: it held the nights back most.` : '';
+  const workOn = top && top.whole / records.length >= 0.5 ? ` Work on your ${top.label.toLowerCase()}: it held your nights back most.` : '';
   return { note: `${opening(meanOf(bands))}${workOn}`, overall: Math.round(records.reduce((a, r) => a + r.overall, 0) / records.length * 10) / 10, nights: records.length };
 }
 
@@ -517,7 +517,7 @@ describe('school.call', () => {
     expect(want.nights).toBe(3);
     expect(c.note).toBe(want.note);
     // On this seed, three solid nights held back most by the emotional depth the part asked.
-    expect(c.note).toBe('Solid, sound nights. The next step is to risk more in them. Work on your emotional depth: it held the nights back most.');
+    expect(c.note).toBe('Solid, sound nights. The next step is to take more risks in them. Work on your emotional depth: it held your nights back most.');
     const runs = journeyOf(sim.player).milestones.filter((m) => m.kind === 'run');
     // A supporting part from 2026-10-16, a leading one until then: the spring casting reads each night's abilities as the
     // play demands since that day (`BASE_INPUTS`).
@@ -637,24 +637,24 @@ describe('school.evaluation', () => {
     const spring = (s: Simulation) => s.player.school!.history.find((r) => r.term === 1)!;
     expect(spring(reach).growth).toBe(0);
     expect(spring(reach).standing).toBe('good');
-    expect(spring(reach).reason).toContain('your craft grew 0.0 against the class’s');
-    expect(spring(reach).reason).toContain('for the room each of you had to grow, in line with the class.');
+    expect(spring(reach).reason).toContain('Your craft grew 0.0 points, and the class’s middle student’s grew');
+    expect(spring(reach).reason).toContain('Allowing for how much room each of you had to grow, that’s in line with the class.');
     expect(reach.player.school!.standing).toBe('good');
     expect(spring(held).standing).toBe('concern');
-    expect(spring(held).reason).toContain('for the room each of you had to grow, behind the class.');
+    expect(spring(held).reason).toContain('Allowing for how much room each of you had to grow, that’s behind the class.');
     expect(held.player.school!.standing).toBe('concern');
-    expect(titled(held, 'A Notice Of Academic Concern')[0]!.body).toContain('Remedy it by the end of next term, or it becomes an academic warning.');
+    expect(titled(held, 'A Notice Of Academic Concern')[0]!.body).toContain('If your next term review finds you short again, the faculty would put you on academic warning.');
     // The standing read: the Summer Cabaret's company takes a student in good standing, by 30 April.
-    expect(held.execute({ kind: 'school.summer_cabaret', payload: {} }).error).toBe('The Summer Cabaret’s company takes a student in good standing.');
+    expect(held.execute({ kind: 'school.summer_cabaret', payload: {} }).error).toBe('The Summer Cabaret only takes students in good standing.');
     expect(reach.execute({ kind: 'school.summer_cabaret', payload: {} }).ok).toBe(true);
     // The Evaluations table on the Standing tab.
     // The held twin's growth as the table rounds it: 0.0 until 2026-10-16, when the last afternoon's rehearsal call, after
     // its last reset, read discipline as every growth does (`grown`) and came to 0.05 of the mean craft, which rounds up.
     // The Evaluations table’s Coursework column, the review’s own count, from 2026-10-16 (tests/remaining-school-term.test.ts).
-    expect(drawn(held, 'standing')).toContain(`Spring Term 2027 Academic Concern 100% ${spring(held).growth.toFixed(1)} ${spring(held).classGrowth.toFixed(1)} ${spring(held).coursework ? `${spring(held).coursework?.unready} of ${spring(held).coursework?.shown} unready or not shown` : 'None counted'} ${spring(held).reason}`);
+    expect(drawn(held, 'standing')).toContain(`Spring Term 2027 Academic Concern 100% ${spring(held).growth.toFixed(1)} ${spring(held).classGrowth.toFixed(1)} ${spring(held).coursework ? `${spring(held).coursework?.unready} of ${spring(held).coursework?.shown} Unready or not shown` : 'None counted'} ${spring(held).reason}`);
     expect(spring(held).growth).toBeLessThan(0.1);
     // The Evaluations table’s Coursework column, the review’s own count, from 2026-10-16 (tests/remaining-school-term.test.ts).
-    expect(drawn(reach, 'standing')).toContain(`Spring Term 2027 Good Standing 100% 0.0 ${spring(reach).classGrowth.toFixed(1)} ${spring(reach).coursework ? `${spring(reach).coursework?.unready} of ${spring(reach).coursework?.shown} unready or not shown` : 'None counted'} ${spring(reach).reason}`);
+    expect(drawn(reach, 'standing')).toContain(`Spring Term 2027 Good Standing 100% 0.0 ${spring(reach).classGrowth.toFixed(1)} ${spring(reach).coursework ? `${spring(reach).coursework?.unready} of ${spring(reach).coursework?.shown} Unready or not shown` : 'None counted'} ${spring(reach).reason}`);
   }, 60_000);
 
   it('reads a first-year Carlotta played weak at the second fall’s evaluation: its work the mean of both runs’ nights, falling short; a twin at their own craft doesn’t', () => {
@@ -738,11 +738,11 @@ describe('school.evaluation', () => {
     expect(l.shown).toBeGreaterThanOrEqual(3);
     expect(l.unready * 2).toBeGreaterThanOrEqual(l.shown);
     expect(fall(lazy).coursework).toMatchObject({ shown: l.shown, unready: l.unready });
-    expect(fall(lazy).reason).toContain(`${l.unready} of the ${l.shown} pieces due in class were unready or not shown, short of what the program asks.`);
+    expect(fall(lazy).reason).toContain(`${l.unready} of the ${l.shown} pieces due in class were Unready or not shown. That’s short of what the program asks.`);
     expect(fall(lazy).standing).toBe('concern');
     expect(k.unready * 2).toBeLessThan(k.shown);
     expect(fall(keen).coursework).toMatchObject({ shown: k.shown, unready: k.unready });
-    expect(fall(keen).reason).not.toContain('unready or not shown');
+    expect(fall(keen).reason).not.toContain('Unready or not shown');
     expect(fall(keen).standing).toBe('good');
   });
 
@@ -788,7 +788,7 @@ describe('school.evaluation', () => {
     expect(review.attendance).toBeLessThan(0.9);
     expect(school.standing).toBe('dismissed');
     expect(school.endedAt).toBe(at(2026, 12, 11, 17));
-    expect(titled(sim, 'Dismissed From The School')[0]!.body).toMatch(/^The warning wasn’t met\. You were at \d+% of what was asked of you/);
+    expect(titled(sim, 'Dismissed From The School')[0]!.body).toMatch(/^You didn’t meet the terms of your academic warning\. You came to \d+% of the classes, calls and shifts asked of you/);
     // Nothing of the School's left for them on the calendar but the class going on without them, and the moment a
     // classmate brought in that day's class, which lapses at its hour as one does at the School. Until 2026-10-13 this
     // held the class alone: the moment was called off with the rest and stayed open for good (tests/evidence2-b07.test.ts,
@@ -804,7 +804,7 @@ describe('school.evaluation', () => {
     expect(coverOn(sim.player, at(2027, 1, 10, 16))).toBe('yale');
     expect(coverOn(sim.player, at(2027, 1, 10, 18))).not.toBe('yale');
     const tab = drawn(sim, 'standing');
-    expect(tab).toContain('Left the school.');
+    expect(tab).toContain('Left the School.');
     expect(tab).toContain(`Fall Term 2026 Dismissed ${Math.round(review.attendance * 100)}%`);
   });
 });

@@ -270,14 +270,14 @@ describe('c-traits and trait-receipts: the receipts knob gone', () => {
     const sim = begun('e3-receipts', pressed(ada(), 'Keeps Accounts', 'Chaotic'));
     expect(sim.player.personalityTraits).toEqual(['keeps_accounts', 'chaotic']);
     const accounts = look(sim, 'trait', 'keeps_accounts');
-    expect(accounts.kind).toBe('A Trait You Hold');
-    expect(accounts.words).toContain('How hard a slight from a classmate cuts +10% +10% with all you are');
+    expect(accounts.kind).toBe('Your Trait');
+    expect(accounts.words).toContain('How hard a slight from a classmate cuts +10% +10% all told');
     const chaotic = look(sim, 'trait', 'chaotic');
-    expect(chaotic.words).toContain('How fast you stop being clean +30% +24% with all you are');
-    expect(chaotic.words).toContain('How much stress a hard hour, a performance’s nerves or an injury adds −8% −8% with all you are');
+    expect(chaotic.words).toContain('How fast you stop being clean +30% +24% all told');
+    expect(chaotic.words).toContain('How much stress a hard hour, a performance’s nerves or an injury adds −8% −8% all told');
     // Two rows for Chaotic and one for Keeps Accounts, and nothing about a receipt or a deduction in either.
     for (const [seen, rows] of [[accounts, 1], [chaotic, 2]] as const) {
-      expect(seen.words.match(/ with all you are/g)).toHaveLength(rows);
+      expect(seen.words.match(/ all told/g)).toHaveLength(rows);
       expect(seen.words).not.toMatch(/receipt|deduct|return/i);
     }
     // No trait the page offers says a receipt in its look, held or not.
@@ -349,10 +349,10 @@ describe('l-trait: the look’s figures are what play charges', () => {
     const spender = look(held, 'trait', 'spender');
     const generous = look(held, 'trait', 'generous');
     // spending 1.25 × 1.1 = 1.375, bent in [0.7, 1.4]: 1.2819393926, +28%; mealMood 1.15 in [0.7, 1.3]: 1.1364255057.
-    expect(spender.words).toContain('What the day’s food costs you +25% +28% with all you are');
-    expect(spender.words).toContain('How much a meal lifts the mood +15% +14% with all you are');
-    expect(generous.words).toContain('What the day’s food costs you +10% +28% with all you are');
-    expect(generous.words).toContain('How fast you warm to a classmate +10% +10% with all you are');
+    expect(spender.words).toContain('What the day’s food costs you +25% +28% all told');
+    expect(spender.words).toContain('How much a meal lifts your morale +15% +14% all told');
+    expect(generous.words).toContain('What the day’s food costs you +10% +28% all told');
+    expect(generous.words).toContain('How fast you warm to a classmate +10% +10% all told');
     const plain = meal(begun('e3-meal', ada()));
     const both = meal(held);
     // New Haven's $4 meal at its 127 cost of living, $5.00; at 1.2819394, 640.97 cents, $6.41: 1.282 times, the +28%.
@@ -369,11 +369,11 @@ describe('l-trait: the look’s figures are what play charges', () => {
     const frugal = look(sim, 'trait', 'frugal');
     expect(frugal.kind).toBe('A Trait');
     expect(frugal.words).toContain('What the day’s food costs you −15%');
-    expect(frugal.words).not.toContain('with all you are');
+    expect(frugal.words).not.toContain('all told');
     const spender = look(sim, 'trait', 'spender');
-    expect(spender.kind).toBe('A Trait You Hold');
+    expect(spender.kind).toBe('Your Trait');
     // Spender alone: 1.25 bent in [0.7, 1.4], 1.2156941679, +22%.
-    expect(spender.words).toContain('What the day’s food costs you +25% +22% with all you are');
+    expect(spender.words).toContain('What the day’s food costs you +25% +22% all told');
     expect(look(sim, 'person', sim.player.id).ways!.map((w) => w.label)).toContain('Spender');
   });
 });
@@ -440,7 +440,7 @@ describe('c-family: the means go with the family the select last chose', () => {
     expect(primary(need).balance).toBe(1_336_150);
     expect(primary(without).balance).toBe(25_898_800);
     expect(notices(need, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Your living-expense scholarship of $15,200.50 met this term’s Yale Health plan, $1,882.00, and $13,318.50 is in your Chase Total Checking. Tuition, $20,375.00 a term, is covered by the tuition scholarship.']);
-    expect(notices(without, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and none was found, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.']);
+    expect(notices(without, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.']);
   });
 });
 
@@ -473,26 +473,26 @@ describe('l-person: the look reads the person it is of', () => {
     const bea = withBea(sim);
     const them = look(sim, 'person', bea.id);
     expect([them.name, them.kind]).toEqual(['Bea Lane', 'Somebody']);
-    expect(them.provenance).toBe('The same eight dials you have, moved by the same days.');
+    expect(them.provenance).toBe('The same eight measures you have, moved by the same kinds of day.');
     // 55 ÷ 1.6² = 21.48.
     expect(them.words).toContain('Who they are. Curious.');
-    expect(them.words).toContain('Their body. 160 cm and 55.0 kg, a body mass index of 21.5: healthy weight. In centimeters and kilograms, the units of the United Kingdom, where they live.');
-    expect(them.words).toContain('On their papers. they/them, a citizen of United Kingdom.');
+    expect(them.words).toContain('Their body. 160 cm and 55.0 kg, with a body mass index of 21.5, in the healthy weight range. In centimeters and kilograms, the units of the United Kingdom, where they live.');
+    expect(them.words).toContain('On their papers. Pronouns they/them. A citizen of the United Kingdom.');
     expect(them.words).toContain('Where they come from. Grew up over a shop in Hackney.');
     expect(them.words).not.toMatch(/Your body|On your papers|Who you are/);
     const labels = them.ways!.map((w) => w.label);
     expect(labels).not.toContain('Your Own Plans');
     expect(labels).toContain('Curious');
-    expect(them.ways!.find((w) => w.label === 'Morale')?.detail).toMatch(/^31\/100, /);
+    expect(them.ways!.find((w) => w.label === 'Morale')?.detail).toMatch(/^31\/100\. /);
     // Hers, in the same world, unchanged: her name, her units, her plans.
     const her = look(sim, 'person', sim.player.id);
     expect(her.kind).toBe('Yourself');
     expect(her.ways!.map((w) => w.label)).toContain('Your Own Plans');
-    expect(her.ways!.find((w) => w.label === 'Morale')?.detail).not.toMatch(/^31\/100, /);
+    expect(her.ways!.find((w) => w.label === 'Morale')?.detail).not.toMatch(/^31\/100\. /);
     expect(her.words).toContain('Your body. 5 ft 7 in and 143 lb');
     // Moved to New Haven: 160 cm is 63 inches, 5 ft 3; 55 kg is 121 lb at 0.45359237 kg the pound.
     sim.universe.people[bea.id]!.currentLocationId = 'us-ct-newhaven'; // TEST SETUP: where they live, changed
-    expect(look(sim, 'person', bea.id).words).toContain('Their body. 5 ft 3 in and 121 lb, a body mass index of 21.5: healthy weight. In feet, inches and pounds, the units of the United States, where they live.');
+    expect(look(sim, 'person', bea.id).words).toContain('Their body. 5 ft 3 in and 121 lb, with a body mass index of 21.5, in the healthy weight range. In feet, inches and pounds, the units of the United States, where they live.');
     // And the world still played on with them in it, across a save and a load.
     const again = reload(sim);
     expect(Object.keys(again.universe.people).sort()).toEqual([sim.player.id, bea.id].sort());
@@ -510,9 +510,9 @@ describe('l-person: the look reads the person it is of', () => {
     const found = resolveLook(sim, way.to as never);
     if (!found || 'gone' in found) throw new Error('Bea’s Curious didn’t resolve');
     const theirs = found as { kind: string; parent?: unknown; provenance?: string };
-    expect(theirs.kind).toBe('A Trait They Hold');
+    expect(theirs.kind).toBe('Their Trait');
     expect(theirs.parent).toEqual(lookAt('person', bea.id));
-    expect(theirs.provenance).toMatch(/^Each figure is the trait’s own; “with all they are” is every trait and disposition they hold/);
+    expect(theirs.provenance).toMatch(/^Each figure is the trait’s own\. “All told” is their traits and dispositions taken together/);
     const mine = look(sim, 'trait', 'curious');
     expect(mine.kind).toBe('A Trait');
     expect((mine as { parent?: unknown }).parent).toEqual(lookAt('person', sim.player.id));
@@ -527,20 +527,20 @@ describe('l-person: the look reads the person it is of', () => {
     bea.health = { ...bea.health, chronic: { depression: { treated: false } } } as typeof bea.health;
     expect(Object.keys(sim.player.health?.chronic ?? {})).toEqual(['hypertension']);
     const way = look(sim, 'person', bea.id).ways!.find((w) => w.label === 'Depression')!;
-    expect(way.detail).toBe('Left alone, and what that does');
+    expect(way.detail).toBe('Left untreated, and what that does.');
     h.sim = sim;
     const found = resolveLook(sim, way.to as never);
     if (!found || 'gone' in found) throw new Error('Bea’s Depression didn’t resolve');
     const theirs = found as { name: string; kind: string; summary?: string; parent?: unknown; ways?: { to: unknown }[] };
-    expect([theirs.name, theirs.kind]).toEqual(['Depression', 'A Condition They Carry']);
-    expect(theirs.summary).toBe('They leave it alone, which costs nothing and does what’s below.');
+    expect([theirs.name, theirs.kind]).toEqual(['Depression', 'A Long-Term Condition']);
+    expect(theirs.summary).toBe('They’re leaving it untreated. That costs nothing, but it has the effects below.');
     expect(theirs.parent).toEqual(lookAt('person', bea.id));
     expect(theirs.ways!.map((w) => w.to)).toEqual([lookAt('dial', `${bea.id}/morale`)]);
     // The player’s own, by the bare id, still reads the player: no depression, and her own high blood pressure.
     const none = resolveLook(sim, lookAt('condition', 'depression'));
     expect(!none || 'gone' in none).toBe(true);
     const mine = look(sim, 'condition', 'hypertension');
-    expect([mine.name, mine.kind]).toEqual(['High Blood Pressure', 'A Condition You Carry']);
+    expect([mine.name, mine.kind]).toEqual(['High Blood Pressure', 'A Long-Term Condition']);
     expect((mine as { parent?: unknown }).parent).toEqual(lookAt('person', sim.player.id));
     expect(look(sim, 'person', sim.player.id).ways!.find((w) => w.label === 'High Blood Pressure')!.to).toEqual(lookAt('condition', 'hypertension'));
   });

@@ -138,8 +138,8 @@ async function noticeGiven(seed: string) {
   expect(orders(sim).filter((o) => o.toId === flex.id)).toHaveLength(1);
   const before = bank(sim);
   expect(before).toContain('It holds more than the');
-  expect(before).toContain('the month lets out without notice: closing it gives the law’s three months’ notice, and it moves to AktivKonto then.');
-  expect(press('bank.close_savings', 'Close It')).toEqual(['Notice given: it closes December 1, 2026.']);
+  expect(before).toContain('you can take out this month without notice, so closing it gives three months’ notice, as the law requires. The money moves to AktivKonto then.');
+  expect(press('bank.close_savings', 'Close It')).toEqual(['Notice given. It closes December 1, 2026.']);
   return { sim, flex: flex.id, konto: konto.id };
 }
 
@@ -149,8 +149,8 @@ describe('bank.savings_notice: a Berlin-raised student’s savings kept at Deuts
     const pending = sim.universe.scheduled.filter((i) => i.kind === SAVINGS_NOTICE_KIND && i.status === 'pending');
     expect(pending.map((i) => [i.at, i.payload.accountId])).toEqual([[at(2026, 12, 1, 9), flex]]);
     // Pressed again, refused in its words; the screen says the notice and its day, and draws no Close It.
-    expect(sim.execute({ kind: 'bank.close_savings', payload: { accountId: flex } }).error).toBe('Notice is given: Flexgeld closes on December 1, 2026.');
-    expect(bank(sim)).toContain('Notice is given: it closes December 1, 2026, and what it holds moves to AktivKonto.');
+    expect(sim.execute({ kind: 'bank.close_savings', payload: { accountId: flex } }).error).toBe('You’ve already given notice: Flexgeld closes on December 1, 2026.');
+    expect(bank(sim)).toContain('You’ve given notice. It closes December 1, 2026, and what it holds moves to AktivKonto then.');
     expect(h.clicks.filter((c) => c.feature === 'bank.close_savings')).toEqual([]);
 
     // Reloaded in October; the minute before its day it's open, with what it holds.
@@ -176,7 +176,7 @@ describe('bank.savings_notice: a Berlin-raised student’s savings kept at Deuts
     // Nothing else of hers moved at the close.
     expect(back.universe.transactions.slice(transactions).map((t) => t.memo)).toEqual(['Interest: Flexgeld, on closing', 'Closed Flexgeld']);
     expect(mine(back).filter((a) => a.id !== flex && a.id !== konto).map((a) => [a.id, a.balance])).toEqual(held.others);
-    expect(titled(back, 'Flexgeld Closed').map((n) => [n.at, n.body])).toEqual([[at(2026, 12, 1, 9), 'The notice ran out, and what it held is in your AktivKonto at Deutsche Bank.']]);
+    expect(titled(back, 'Flexgeld Closed').map((n) => [n.at, n.body])).toEqual([[at(2026, 12, 1, 9), 'Its notice period ended, and what it held is now in your AktivKonto at Deutsche Bank.']]);
     // The order into it ended with it: 15 December pays nothing into a closed account, and says nothing failed.
     expect(orders(back).filter((o) => o.toId === flex)).toEqual([]);
     back.advanceTo(at(2026, 12, 20, 9));

@@ -1,0 +1,266 @@
+SLATE: Complete Player-Facing Language And Tutorial Overhaul
+
+Overhaul the writing throughout the entire current game so it reads naturally, clearly, and professionally.
+
+The current language often sounds like internal engine documentation. It makes ordinary actions difficult to understand and breaks immersion. I want the clarity of a polished commercial game: understandable controls, natural feedback, useful notifications, and tutorials that actually teach me how to play.
+
+This is a complete sweep of the retained game, not a sample rewrite or a few wording fixes.
+
+1. Start From The Current Verified Build
+
+Read the repository instructions and latest handoff. Confirm the actual branch, merge status, and local changes.
+
+If the previous verification gate is still running, let it finish without modifying its checkout. Record that result before beginning this pass, or use an appropriately isolated checkout.
+
+Preserve gameplay rules, calculations, saves, and existing work. Do not restore removed systems or change decision #4’s protected functionality or statuses.
+
+This instruction authorizes replacing existing editorial conventions that cause unnatural player-facing language. Record those changes in the writing guidelines. Preserve my Title Case requirements for headings, navigation labels, and buttons; use natural sentence capitalization for paragraphs, explanations, and dialogue.
+
+2. Inventory Every Source Of Player-Facing Text
+
+Create a coverage checklist from the actual repository.
+
+Include:
+
+* Startup, save selection, character creation, and onboarding.
+* Home and its retained actions.
+* Player Profile, attributes, genres, mastery, and progression.
+* School, classes, coursework, rehearsals, productions, assessments, and school completion.
+* Money, banking, payments, fees, holds, statements, and transaction explanations.
+* Papers, documents, applications, taxes, and status notices.
+* Health, treatment, coverage, stamina, energy, and recovery.
+* Calendar, schedules, time advancement, and reminders.
+* Tutorials, guides, help panels, tooltips, and connected-system explanations.
+* Notifications, invitations, feedback, and generated messages.
+* Buttons, menus, tabs, filters, placeholders, empty states, loading states, and confirmations.
+* Validation errors, unavailable-action reasons, failures, recovery instructions, and save/load messages.
+* Accessibility labels and text used by assistive technology.
+
+Search both interface components and engine-generated strings. Include shared templates, dynamically assembled sentences, pluralization, dates, amounts, and conditional variants.
+
+Track every discovered source as:
+
+* Rewritten And Verified.
+* Reviewed And Retained, with a reason.
+* Pending.
+* Blocked, with a specific explanation.
+
+Do not mark an entire feature complete because its landing page was rewritten. Verify its deeper interactions and alternate states.
+
+3. Establish One Natural Writing Standard
+
+Use this voice throughout SLATE:
+
+* Direct, familiar English.
+* Short, complete sentences where practical.
+* Clear subjects and actions.
+* Natural contractions where appropriate.
+* Specific explanations grounded in the current situation.
+* Consistent names for the same concepts.
+* Professional language without forced slang.
+* No unnecessary technical terminology or elaborate phrasing.
+
+Avoid exposing internal concepts such as:
+
+* “What the engine reads.”
+* “The work’s inputs.”
+* “The part most often short.”
+* “The standing falls a step.”
+* “A choice rehearsed in.”
+
+Translate the meaning into language a player understands.
+
+Examples of direction, not mandatory replacements:
+
+* “Which Work Reads It” → “Where This Skill Matters.”
+* “The standing falls a step” → name the actual academic consequence.
+* “A choice rehearsed in” → explain how prepared the actor is to perform that interpretation.
+* “An action was refused” → explain why the player cannot do it and what they can do next.
+
+Do not blindly replace terms. Read the underlying mechanic and preserve its exact meaning.
+
+Keep internal code identifiers stable unless changing them is genuinely necessary. Player-facing labels can improve without renaming saved fields or commands.
+
+4. Give Different Types Of Text Appropriate Voices
+
+Navigation And Buttons:
+
+* Use familiar, concise labels.
+* Make the action clear.
+* Avoid ambiguous verbs or clever wording that obscures the destination.
+
+Notifications:
+
+* Lead with what happened.
+* Explain the practical consequence.
+* Give a relevant next action when one exists.
+
+Faculty Feedback:
+
+* Sound like a teacher responding to this specific work.
+* Identify the observed problem or strength.
+* Explain a useful next step.
+* Do not invent dialogue, observations, or personal knowledge the simulation does not support.
+* Preserve appropriate labeling of simulated institutional feedback.
+
+Banking And Official Notices:
+
+* Use clear professional language.
+* Preserve exact amounts, dates, deadlines, conditions, and uncertainty.
+* Separate verified facts from simulation assumptions.
+* Do not make legal or financial consequences sound more certain than the implementation supports.
+
+Narration:
+
+* Describe the actual event naturally.
+* Reflect relevant history and current state.
+* Avoid melodrama, repetitive filler, or invented events.
+
+Errors And Unavailable Actions:
+
+* Explain the specific obstacle.
+* State whether anything was charged, changed, or saved when relevant.
+* Provide the next legitimate step.
+* Never promise recovery or eligibility the game does not offer.
+
+5. Rebuild Tutorials Around Actual Player Tasks
+
+Every feature’s tutorial should answer:
+
+1. What is this for?
+2. Where do I go?
+3. What do I select?
+4. What do I need first?
+5. What happens when I do it?
+6. How does it affect other parts of my game?
+7. What should I do next?
+8. What if I cannot do it?
+
+Use progressive detail:
+
+* A short plain-language overview.
+* Concrete steps using the real interface labels.
+* Expected results and consequences.
+* Optional deeper explanations and calculations.
+
+Verify every navigation path and instruction against the built application. Do not write instructions based on guessed controls or an idealized future interface.
+
+Explain distinctions that can otherwise confuse players, including:
+
+* Health, stamina, and current energy.
+* Attributes, techniques, genre knowledge, and practice.
+* Current readiness versus a fully prepared forecast.
+* Choosing an interpretation versus rehearsing it.
+* Available funds versus pending funds.
+* Applying for a document versus receiving it.
+* A warning versus the later formal evaluation.
+
+Keep tutorials contextual. Show the relevant explanation for the player’s actual stage and state.
+
+Link to connected features where helpful. Following a tutorial link and returning should preserve context and must not accidentally perform an action or advance time.
+
+6. Preserve Mechanical Accuracy And Depth
+
+Do not simplify text by removing important conditions.
+
+For every consequential message, verify:
+
+* The reason matches the actual calculation or validation.
+* The amount, date, duration, and status are correct.
+* The next action is available or its prerequisites are stated.
+* The explanation distinguishes estimates from recorded outcomes.
+* The wording does not promise guaranteed success where none exists.
+* The text agrees with connected screens and tutorials.
+
+Keep precise details available through drill-downs. The initial explanation should be readable without requiring the player to understand formulas.
+
+Use shared engine values and existing explanation helpers where appropriate. Avoid copying numerical rules into prose that will become stale.
+
+Do not alter gameplay to make a sentence easier to write. If the sweep reveals a real functional defect, record it separately, fix it where authorized and necessary, and test the behavior.
+
+7. Make Dynamic Text Read Correctly
+
+Exercise generated messages across their meaningful variants:
+
+* Singular and plural.
+* Zero, one, and many items.
+* Different names and pronouns.
+* Missing optional information.
+* Different academic standings.
+* Success, partial progress, failure, and recovery.
+* Deadlines that are upcoming, due, or missed.
+* Positive, zero, and negative balances where applicable.
+* New players, advanced players, and completed school journeys.
+
+Prevent sentence fragments, repeated punctuation, awkward concatenation, raw identifiers, malformed dates, and inconsistent terminology.
+
+Do not sacrifice important information simply to shorten text.
+
+8. Handle Repetition Through Context
+
+Rewrite repetitive message patterns so they acknowledge:
+
+* What has changed.
+* What remains unresolved.
+* What the player has already done.
+* Why the recommendation or restriction still applies.
+* The next useful action.
+
+Use variation where it remains accurate, but do not randomly paraphrase identical messages to pretend the simulation changed.
+
+Preserve continuity. A teacher should not describe an unchanged weakness as a brand-new discovery every time.
+
+9. Verify The Whole Sweep In The Built Game
+
+Work through the inventory in batches. Continue without stopping after the first subsystem.
+
+For each batch:
+
+* Report the text sources reviewed.
+* Show representative before-and-after examples.
+* Identify any meaning-sensitive changes.
+* Verify the affected screens and tutorial steps.
+* Update the coverage checklist.
+
+Run multi-step interface journeys covering:
+
+* A new player learning the game.
+* Coursework preparation, feedback, and improvement.
+* Attributes, genres, interpretation, and training advice.
+* A school setback and recovery.
+* A banking action with a restriction or pending state.
+* A document application or renewal path actually supported by the game.
+* A health-related interruption and its consequences.
+* Save, exit, and continue.
+
+Check desktop and mobile for wrapping, clipping, overflowing buttons, excessive text walls, and inaccessible explanations.
+
+Use stable selectors where possible. Update tests that intentionally asserted old wording, while preserving their behavioral assertions. Do not weaken tests to accommodate inaccurate new copy.
+
+Run the required gate and production build after integration. Verify that the writing changes have not broken tutorials, routes, command matching, accessibility, saves, or gameplay.
+
+Automated checks cannot prove that writing feels natural. Perform an editorial review as well, and provide a manual review route for me.
+
+10. Finish With A Complete Editorial Receipt
+
+Deliver:
+
+* The writing style guide and terminology glossary.
+* The complete text-source inventory and final statuses.
+* Coverage totals by subsystem.
+* Representative before-and-after examples from every major area.
+* Tutorial routes verified against the actual interface.
+* Dynamic-text cases exercised.
+* Desktop/mobile findings and fixes.
+* Any separately identified gameplay defects.
+* Test commands, tested commits, and results.
+* Any remaining unreviewed or blocked text, explicitly listed.
+* A concise manual walkthrough for me to judge the new voice.
+
+Update the handoff and repository guidance so future agency and career features follow this writing standard automatically.
+
+Commit and push the completed work and prepare the appropriate PR. Follow the established merge and deployment authorization rules.
+
+Do not call the sweep complete while identified player-facing text remains unreviewed. Do not claim human usability approval from automated tests.
+
+The intended result is SLATE speaking naturally to the player: clear controls, understandable consequences, believable feedback, and tutorials that make the game easy to learn without losing its depth.

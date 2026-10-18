@@ -94,17 +94,17 @@ export function transfersOf(sim: Simulation, person: Person): { fromId: string; 
  */
 export function openRefusal(sim: Simulation, person: Person, bankId: string, at: Instant = sim.now): string | undefined {
   const bank = banksFor(homeOf(person)).find((b) => b.id === bankId);
-  if (!bank) return 'That isn’t a bank where you live.';
-  if (checkingAt(sim, person, bank.id)) return `You already keep a current account at ${bank.name}.`;
+  if (!bank) return 'You can only open an account at a bank where you live.';
+  if (checkingAt(sim, person, bank.id)) return `You already have a current account at ${bank.name}.`;
   if (applicationsOf(sim, person).some((a) => a.bankId === bank.id)) return `${bank.name} is still reviewing your application.`;
-  if (collectionsOf(sim, person, bank.name)) return `${bank.name} won’t open an account for somebody who owes it a charged-off debt.`;
-  if (declines(sim, person, bank)) return `${bank.name} turned you away on the ChexSystems report ${person.chex!.bank} made, which stands until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, sim.zone)}.`;
-  if (!photoIdOf(person, at)) return `${bank.name} asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.`;
+  if (collectionsOf(sim, person, bank.name)) return `${bank.name} won’t open an account for you while you owe it a debt it has charged off.`;
+  if (declines(sim, person, bank)) return `${bank.name} won’t open an account for you because of the ChexSystems report ${person.chex!.bank} filed, which stays on your record until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, sim.zone)}.`;
+  if (!photoIdOf(person, at)) return `${bank.name} needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.`;
   const rules = openingOf(bank);
-  if (rules?.minimumAge !== undefined && ageOn(sim, person, at) < rules.minimumAge) return `${bank.name} opens an account on your own from ${rules.minimumAge}.`;
+  if (rules?.minimumAge !== undefined && ageOn(sim, person, at) < rules.minimumAge) return `${bank.name} only opens an account in your own name from age ${rules.minimumAge}.`;
   // US persons only: a citizen, or a green-card holder (`usPerson`); Capital One's disclosure says so, and Citi's
   // branch route for a nonresident isn't published.
-  if (rules?.usPersonsOnly && !usPerson(person, at)) return `${bank.name} opens this account for US citizens and permanent residents; on an F-1 you’re neither.`;
+  if (rules?.usPersonsOnly && !usPerson(person, at)) return `${bank.name} only opens this account for US citizens and permanent residents, and on an F-1 visa you’re neither.`;
   // Without a Social Security number, a bank that opens for international students does it in a branch: out of
   // hospital, and an hour there (SLATE’s estimate). Until 2026-10-13 it also asked to be in town, “in a branch where you
   // live”, which travel could leave until it went in the scope reset of 2026-10-09; since then nothing moves a person
@@ -212,8 +212,8 @@ function limitRefusal(sim: Simulation, person: Person, bank: Bank | undefined, a
   const cur = saveCurrency(sim.universe);
   const today = sentSince(sim, person, bank.id, dayStart);
   const thisMonth = sentSince(sim, person, bank.id, monthStart);
-  if (today + amount > day) return `${bank.name} lets ${formatMoney(day, cur, { cents: false })} a day out to other banks, and ${formatMoney(today, cur, { cents: false })} has gone today.`;
-  if (thisMonth + amount > month) return `${bank.name} lets ${formatMoney(month, cur, { cents: false })} a month out to other banks, and ${formatMoney(thisMonth, cur, { cents: false })} has gone this month.`;
+  if (today + amount > day) return `${bank.name} lets you send ${formatMoney(day, cur, { cents: false })} a day to other banks, and you’ve sent ${formatMoney(today, cur, { cents: false })} today.`;
+  if (thisMonth + amount > month) return `${bank.name} lets you send ${formatMoney(month, cur, { cents: false })} a month to other banks, and you’ve sent ${formatMoney(thisMonth, cur, { cents: false })} this month.`;
   return undefined;
 }
 
@@ -281,20 +281,20 @@ export const PRIMARY_DOES = [
 /** Why a current account can't close now, or nothing. */
 export function closeRefusal(sim: Simulation, person: Person, account: Account): string | undefined {
   if (account.ownerId !== person.id || account.closedAt || account.kind !== 'checking') return 'Only a current account of yours can be closed here.';
-  if (checkingsOf(sim, person).length < 2) return 'It’s your only current account. Open another first: SLATE keeps every life a current account to be paid into.';
-  if (account.id === person.primaryAccountId) return 'It’s your primary account. Make another primary first.';
-  if (account.balance < 0) return `It’s overdrawn by ${formatMoney(-account.balance, saveCurrency(sim.universe))}. The bank closes it only once that’s paid.`;
+  if (checkingsOf(sim, person).length < 2) return 'It’s your only current account. Open another one first: you always need a current account to be paid into.';
+  if (account.id === person.primaryAccountId) return 'It’s your primary account. Make another account primary first.';
+  if (account.balance < 0) return `It’s overdrawn by ${formatMoney(-account.balance, saveCurrency(sim.universe))}. The bank only closes it once that’s paid off.`;
   // A fee for a customer abroad owed where the account can't go below zero is the same debt (from 2026-10-16).
-  if (account.feeOwedHeld) return `Its fee for a customer abroad, ${formatMoney(account.feeOwedHeld, bankById(account.bankId!)!.currency)}, is owed. The bank closes it only once that’s paid.`;
+  if (account.feeOwedHeld) return `You owe its fee for customers abroad, ${formatMoney(account.feeOwedHeld, bankById(account.bankId!)!.currency)}. The bank only closes it once that’s paid.`;
   if (transfersOf(sim, person).some((t) => t.fromId === account.id || t.toId === account.id)) return 'Money is on its way into or out of it. Wait until it arrives.';
   const held = closeHold(sim, person, account.id);
   if (held) return held;
   const savings = bankAccountsOf(sim, person).find((a) => a.kind === 'savings' && a.bankId === account.bankId);
-  if (savings) return `${savings.name} is open beside it. Close it first.`;
+  if (savings) return `${savings.name} is still open at the same bank. Close that first.`;
   const bank = account.bankId ? bankById(account.bankId) : undefined;
   // A pending card payment is a debit, negative in the ledger's sense (`pendingOn`): until 2026-10-10 this asked for
   // more than nothing, and neither this refusal nor Citi's restricted close ever happened.
-  if (pendingOn(sim, account) !== 0 && openingOf(bank)?.closeWithPendingDays === undefined) return `Card payments are still pending on it. ${bank?.name ?? 'The bank'} closes it once they’ve posted.`;
+  if (pendingOn(sim, account) !== 0 && openingOf(bank)?.closeWithPendingDays === undefined) return 'Card payments are still pending on it. You can close it once they’ve posted.';
   // The fees closing charges (`settleFees`, Germany's quarter so far and, from later on 2026-10-16, this month's only to
   // the day, `closingFeesDue`, where until then the whole month) past what it holds with its interest would leave it
   // overdrawn, and the bank closes an overdrawn account only once that's paid, as above. Until 2026-10-15 Close It closed a
@@ -361,7 +361,7 @@ function closedByBank(sim: Simulation, person: Person, account: Account, why: st
   const ended = endOrdersOf(sim, person, account);
   const into = sim.universe.accounts[person.primaryAccountId ?? other.id] ?? other;
   const arrives = closeNow(sim, person, account, into);
-  const sent = left > 0 ? ` Its ${formatMoney(left, saveCurrency(sim.universe))} of interest ${arrives !== undefined && arrives > sim.now ? `is on its way to ${into.name}, arriving ${formatDate(arrives, sim.zone)}` : `went to ${into.name}`}.` : '';
+  const sent = left > 0 ? ` Its ${formatMoney(left, saveCurrency(sim.universe))} of interest ${arrives !== undefined && arrives > sim.now ? `is on its way to ${into.name} and arrives ${formatDate(arrives, sim.zone)}` : `went to ${into.name}`}.` : '';
   if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `${account.institution ?? 'The Bank'} Closed ${account.name}`, body: `${why}${sent}${endedWords(sim, ended)}`, importance: 60, route: '/workspace/bank' });
 }
 
@@ -377,11 +377,11 @@ export function registerBankMoves(sim: Simulation): void {
     const min = openingDeposit(s, bank);
     const amount = Math.round(Number(p.amount ?? 0));
     const from = p.fundFrom ? bankAccountsOf(s, person).find((a) => a.id === p.fundFrom) : undefined;
-    if (p.fundFrom && !from) throw new CommandError('Fund it from one of your own current or savings accounts.');
-    if (from && from.bankId === bank.id) throw new CommandError(`That account is at ${bank.name} already.`);
+    if (p.fundFrom && !from) throw new CommandError('Pay the opening deposit from one of your own current or savings accounts.');
+    if (from && from.bankId === bank.id) throw new CommandError(`That account is already at ${bank.name}. Pay the deposit from an account at another bank.`);
     if (min > 0 && (!from || amount < min)) throw new CommandError(`${bank.name} asks for an opening deposit of ${formatMoney(min, saveCurrency(s.universe), { cents: false })}, sent from another of your accounts.`);
-    if (amount < 0 || (from && !(amount > 0))) throw new CommandError('Say how much to put in.');
-    if (from && amount > from.balance) throw new CommandError(`${from.name} holds ${formatMoney(Math.max(0, from.balance), saveCurrency(s.universe), { cents: false })}.`);
+    if (amount < 0 || (from && !(amount > 0))) throw new CommandError('Enter how much to pay in.');
+    if (from && amount > from.balance) throw new CommandError(`${from.name} ${from.balance > 0 ? `has only ${formatMoney(from.balance, saveCurrency(s.universe))}` : 'has nothing in it'}, so the account wasn’t opened.`);
     // Under review, the deposit goes now and waits for the decision; decided at once, the account opens now.
     if (rules?.reviewDays) {
       const kept = daysOfAccount({ bankId: bank.id }, person);
@@ -408,7 +408,7 @@ export function registerBankMoves(sim: Simulation): void {
       return;
     }
     const account = openApproved(s, person, bank);
-    if (mine) s.notify({ category: 'bank', title: `${bank.name} Opened Your Account`, body: `Your ${account.name} is open${account.awaitingFunds ? ', waiting for its opening deposit' : ''}.${account.plastic?.replacementAt ? ` The debit card arrives ${formatDate(account.plastic.replacementAt, s.zone)}.` : ''}`, importance: 55, route: '/workspace/bank' });
+    if (mine) s.notify({ category: 'bank', title: `${bank.name} Opened Your Account`, body: `Your ${account.name} is open${account.awaitingFunds ? '. It’s waiting for its opening deposit' : ''}.${account.plastic?.replacementAt ? ` The debit card arrives ${formatDate(account.plastic.replacementAt, s.zone)}.` : ''}`, importance: 55, route: '/workspace/bank' });
   });
 
   sim.onSchedule(ARRIVES_KIND, (item, s) => {
@@ -440,7 +440,7 @@ export function registerBankMoves(sim: Simulation): void {
     const back = source && !source.closedAt ? source : depositAccount(s, person) ?? checkingsOf(s, person)[0];
     if (!back) return;
     s.post({ memo: 'Returned: the account it was sent to isn’t open', category: 'transfer', postings: [{ accountId: transit.id, amount: -amount }, { accountId: back.id, amount }] });
-    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Transfer Came Back', body: `${formatMoney(amount, saveCurrency(s.universe))} came back to ${back.name}: the account it was sent to isn’t open.`, importance: 50, route: '/workspace/bank' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Transfer Came Back', body: `${formatMoney(amount, saveCurrency(s.universe))} came back to ${back.name} because the account it was sent to isn’t open.`, importance: 50, route: '/workspace/bank' });
   });
 
   // Each day: an account funded since, one the bank closes unfunded, and one idle at zero past the bank's days.
@@ -451,13 +451,13 @@ export function registerBankMoves(sim: Simulation): void {
         const bank = account.bankId ? bankById(account.bankId) : undefined;
         const rules = openingOf(bank);
         if (account.fundBy !== undefined && account.awaitingFunds !== undefined && s.now >= account.fundBy) {
-          closedByBank(s, person, account, `It wasn’t funded within ${rules?.fundWithinDays ?? 60} days of opening, and the bank closes an account that isn’t.`);
+          closedByBank(s, person, account, `The bank closed it because no money was paid into it within ${rules?.fundWithinDays ?? 60} days of opening.`);
           continue;
         }
         if (rules?.closesAtZeroAfterDays !== undefined) {
           if (account.balance !== 0) { delete account.zeroSince; continue; }
           account.zeroSince ??= s.now;
-          if (s.now - account.zeroSince >= rules.closesAtZeroAfterDays * MS_DAY) closedByBank(s, person, account, `It held nothing for ${rules.closesAtZeroAfterDays} days, and the bank closes an account at zero that long.`);
+          if (s.now - account.zeroSince >= rules.closesAtZeroAfterDays * MS_DAY) closedByBank(s, person, account, `It sat at a zero balance for ${rules.closesAtZeroAfterDays} days, so the bank closed it.`);
         }
       }
     }
@@ -467,8 +467,8 @@ export function registerBankMoves(sim: Simulation): void {
     const person = s.player;
     const account = checkingsOf(s, person).find((a) => a.id === p.accountId);
     if (!account) throw new CommandError('Only an open current account of yours can be primary.');
-    if (account.id === person.primaryAccountId) throw new CommandError(`${account.name} is primary already.`);
-    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing.`);
+    if (account.id === person.primaryAccountId) throw new CommandError(`${account.name} is already your primary account.`);
+    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing, so it can’t be your primary account.`);
     // A home account's card pays here only where its bank says it works abroad and the research has its fee (from
     // 2026-10-16): SMBC's Global Service has the card canceled before leaving.
     const abroadBank = heldFromAbroad(s, account) ? bankById(account.bankId!) : undefined;
@@ -486,19 +486,19 @@ export function registerBankMoves(sim: Simulation): void {
     const person = s.player;
     const account = bankAccountsOf(s, person).find((a) => a.id === p.accountId);
     if (!account) throw new CommandError('Wages are paid into an open current or savings account of yours.');
-    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing.`);
+    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing, so wages can’t be paid into it.`);
     // From 2026-10-16: an account kept at home, at a bank in another country, takes no wages from here.
-    if (heldFromAbroad(s, account)) throw new CommandError('Yale pays into an account in America.');
+    if (heldFromAbroad(s, account)) throw new CommandError('Yale only pays wages into an account in America.');
     return { at: changeDeposits(s, person, account.id) };
   });
 
   sim.onCommand<{ orderId: string; accountId: string }, { fromId: string }>('bank.set_order_source', (p, { sim: s }) => {
     const person = s.player;
     const order = paymentsOf(person).standingOrders.find((o) => o.id === p.orderId);
-    if (!order) throw new CommandError('No such standing order.');
+    if (!order) throw new CommandError('That standing order no longer exists.');
     const account = checkingsOf(s, person).find((a) => a.id === p.accountId);
     if (!account) throw new CommandError('A standing order pays from an open current account of yours.');
-    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing.`);
+    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing, so a standing order can’t pay from it.`);
     // Until 2026-10-13 a current account the order paid into was refused here. A standing order goes only into savings
     // (`bank.add_standing_order`), and only a current account pays one, so nothing reached it, and it went.
     order.fromId = account.id;
@@ -511,7 +511,7 @@ export function registerBankMoves(sim: Simulation): void {
     if (!card) throw new CommandError('That isn’t one of your cards.');
     const account = checkingsOf(s, person).find((a) => a.id === p.accountId);
     if (!account) throw new CommandError('Autopay pays from an open current account of yours.');
-    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing.`);
+    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing, so autopay can’t pay from it.`);
     autopaySource(s, person, card);
     const credit = person.credit!;
     const state = !credit.primaryId || credit.primaryId === card.id ? credit : (credit.cards ??= {})[card.id];
@@ -524,11 +524,11 @@ export function registerBankMoves(sim: Simulation): void {
     const person = s.player;
     const account = s.universe.accounts[String(p.accountId)];
     if (!account) throw new CommandError('Only a current account of yours can be closed here.');
-    if (account.closingAt !== undefined) throw new CommandError(`${account.name} closes ${formatDate(account.closingAt, s.zone)} already.`);
+    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is already closing on ${formatDate(account.closingAt, s.zone)}.`);
     const no = closeRefusal(s, person, account);
     if (no) throw new CommandError(no);
     const to = p.remainderTo ? bankAccountsOf(s, person).find((a) => a.id === p.remainderTo && a.id !== account.id) : undefined;
-    if (account.balance + Math.floor(account.accrued ?? 0) > 0 && !to) throw new CommandError(`Say which account of yours ${formatMoney(Math.max(0, account.balance), saveCurrency(s.universe))} goes to.`);
+    if (account.balance + Math.floor(account.accrued ?? 0) > 0 && !to) throw new CommandError(`Choose which of your accounts the ${formatMoney(Math.max(0, account.balance), saveCurrency(s.universe))} goes to.`);
     // Citi keeps it open, restricted, while items are pending, up to its 21 days.
     const bank = account.bankId ? bankById(account.bankId) : undefined;
     const wait = openingOf(bank)?.closeWithPendingDays;
@@ -551,11 +551,14 @@ export function registerBankMoves(sim: Simulation): void {
     const into = to && !to.closedAt ? to : depositAccount(s, person) ?? checkingsOf(s, person).find((a) => a.id !== account.id);
     // Overdrawn by what posted since, it stays open until that's paid, as the bank says it does.
     if (account.balance < 0) {
-      if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${account.name} Didn’t Close`, body: 'What posted left it overdrawn. Pay it in, and ask again.', importance: 60, route: '/workspace/bank' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${account.name} Didn’t Close`, body: 'Payments that posted in the meantime left it overdrawn, so it’s still open. Pay in what’s owed, then close it again.', importance: 60, route: '/workspace/bank' });
       return;
     }
-    closeNow(s, person, account, into);
-    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${account.name} Closed`, body: into ? `What it held is on its way to ${into.name}.` : 'It held nothing.', importance: 50, route: '/workspace/bank' });
+    // What it held, said as it went (from 2026-10-17): into the next account at once at its own bank, or on its way to
+    // another bank, where until then both were said to be "on its way", and an empty account was said to send something.
+    const held = account.balance > 0;
+    const arrives = closeNow(s, person, account, into);
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${account.name} Closed`, body: into && held ? (arrives !== undefined && arrives > s.now ? `What it held is on its way to ${into.name} and arrives ${formatDate(arrives, s.zone)}.` : `What it held is now in ${into.name}.`) : 'It held nothing.', importance: 50, route: '/workspace/bank' });
   });
 }
 

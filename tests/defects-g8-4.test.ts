@@ -119,7 +119,7 @@ describe('a withdrawal by the fifteenth day of classes says when Yale Health’s
     const { text } = drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'standing' }, true);
     expect(text).toMatch(/Withdrawing gives up your place today/);
     expect(text).not.toMatch(/back to the term’s start/);
-    expect(text).toMatch(/ends the day you withdraw, or goes back to the start of its insurance term \(1 August, for a fall term\) where that came first/);
+    expect(text).toMatch(/ends the day you withdraw, or goes back to the start of its insurance term \(August 1, for a fall term\) where that came first/);
   });
 });
 
@@ -145,7 +145,7 @@ describe('HUSKY D’s work test reads last month’s work: its hours and its pay
     healthMonth(sim, sim.player, renewal);
     expect(healthOf(sim.player).program!.until).toBeUndefined();
     expect(healthOf(sim.player).program!.renewAt).toBe(at(2028, 1, 1, 0));
-    expect(titled(sim, 'Your Public Cover Is Renewed').map((n) => n.body)).toEqual(['HUSKY D is renewed to its next renewal, January 1, 2028: last month’s income is within what it allows, and June 2027 met its work rules by its income, $580.00 or more.']);
+    expect(titled(sim, 'Your Public Cover Is Renewed').map((n) => n.body)).toEqual(['HUSKY D is renewed. Its next renewal is on January 1, 2028. Last month’s income is within its limit, and June 2027 met its work rules with $580.00 or more of income.']);
     const short = huskyD('g84-work-benefit-short');
     recordBenefit(short.player, at(2027, 6, 10), NY, 500_00);
     recordInterest(short.player, at(2027, 6, 30), NY, 20_00);
@@ -153,7 +153,7 @@ describe('HUSKY D’s work test reads last month’s work: its hours and its pay
     expect(short.player.health!.program!.until).toBeUndefined();
     expect(coverOn(short.player, renewal + MS_DAY)).toBe('medicaid');
     expect(short.player.health!.pending).toMatchObject({ kind: 'renewal', noticeAt: renewal, decideAt: at(2027, 8, 5, 0), months: ['2027-06', '2027-05', '2027-04', '2027-03', '2027-02', '2027-01'] });
-    expect(titled(short, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from January to June 2027. You’re covered while you answer, to August 4, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in those months counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, HUSKY D ends on August 31, 2027, said on August 5, 2027, and the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.']);
+    expect(titled(short, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from January to June 2027. You stay covered while you answer, until August 4, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, HUSKY D ends on August 31, 2027, and you’ll be told on August 5, 2027. After that, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.']);
     expect(titled(short, 'Your Public Cover Ends')).toEqual([]);
   });
 
@@ -184,7 +184,7 @@ describe('HUSKY D’s work test reads last month’s work: its hours and its pay
     healthMonth(may, may.player, renewal);
     expect(may.player.health!.program!.until).toBeUndefined();
     expect(may.player.health!.pending).toBeUndefined();
-    expect(titled(may, 'Your Public Cover Is Renewed')[0]!.body).toMatch(/May 2027 met its work rules by its income, \$580\.00 or more\.$/);
+    expect(titled(may, 'Your Public Cover Is Renewed')[0]!.body).toMatch(/May 2027 met its work rules with \$580\.00 or more of income\.$/);
     const short = huskyD('g84-work-hours-short');
     worked(short, at(2027, 6, 12), 79, 400_00);
     worked(short, at(2027, 7, 1, 0) + 30 * 60_000, 80, 1_840_00);
@@ -226,7 +226,7 @@ describe('a program is called by its own name', () => {
     const husky = holding(graduate('g84-label-husky'), 'ct', 'medicaid');
     const papers = drawn(husky, PapersWorkspace, healthTab).text;
     expect(papers).toMatch(/This Month HUSKY D/);
-    expect(papers).toMatch(/Care And Its Bills HUSKY D: \$0\.00 of/);
+    expect(papers).toMatch(/Care And Its Bills HUSKY D: \$0\.00 paid this year /); expect(papers).not.toMatch(/of \$0\.00 paid this year/); // no most a year, said as none from 2026-10-17 (it read “HUSKY D: $20.00 of $0.00 paid this year”)
     expect(papers).not.toMatch(/Essential Plan:|This Month Medicaid/);
     expect(drawn(husky, Home).text).toMatch(/Cover: HUSKY D\./);
     const covered = holding(graduate('g84-label-covered'), 'ct', 'essential');
@@ -277,7 +277,7 @@ describe('Your Doctor and Your Pharmacy offer only what can be chosen', () => {
     // New Haven keeps one practice, so it has no Your Doctor box (from 2026-10-13); until then this test chose the
     // practice here, beside The Town’s First Practice, the same place. The doctor’s half is London’s, below.
     expect(optionsOf(html, 'own-doctor')).toEqual([]);
-    expect(optionsOf(html, 'own-pharmacy')[0]).toEqual({ value: '', words: 'Any Pharmacy, At The Median' });
+    expect(optionsOf(html, 'own-pharmacy')[0]).toEqual({ value: '', words: 'Any Pharmacy, At The Typical Price' });
     expect(optionsOf(html, 'own-pharmacy').map((o) => o.words)).toContain('Walmart Pharmacy, A Generic $4.00 Uninsured');
     sim.must({ kind: 'health.choose_pharmacy', payload: { chain: US_PHARMACIES[0]!.id } });
     ({ html } = drawn(sim, PapersWorkspace, healthTab));
@@ -289,7 +289,7 @@ describe('Your Doctor and Your Pharmacy offer only what can be chosen', () => {
     const practices = clinicsIn(london.player.currentLocationId).filter((c) => DOCTOR_KINDS.includes(c.kind));
     expect(practices.length).toBe(3);
     ({ html } = drawn(london, PapersWorkspace, healthTab));
-    expect(optionsOf(html, 'own-doctor')[0]).toEqual({ value: '', words: 'The Town’s First Practice' });
+    expect(optionsOf(html, 'own-doctor')[0]).toEqual({ value: '', words: 'The First Practice In Town' });
     london.must({ kind: 'health.choose_clinic', payload: { clinicId: practices.at(-1)!.id } });
     ({ html } = drawn(london, PapersWorkspace, healthTab));
     expect(optionsOf(html, 'own-doctor').map((o) => o.value)).not.toContain('');

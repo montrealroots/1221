@@ -1,0 +1,353 @@
+[
+ {
+  "source": "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.prepare]",
+  "kind": "tutorial",
+  "before": "“There’s no note to work on until it’s been shown.”",
+  "after": "“You can revise once it’s been shown and you have a note to work on.”",
+  "why": "The refusal for Work On The Note before a showing was rewritten by the school area (`prepareRefusal`); the guide quoted the old words.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); src/engine/systems/coursework.ts prepareRefusal"
+ },
+ {
+  "source": "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.prepare]",
+  "kind": "tutorial",
+  "before": "“… asked to rehearse: answer first.” and “… reads the scene another way: answer first.”",
+  "after": "“… has asked to rehearse. Answer them first.” and “… reads the scene differently from you. Answer them first.”",
+  "why": "The two refusals that wait on a partner's question, as `prepareRefusal` now says them.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); tests/guide-examples-coursework.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.partners]",
+  "kind": "tutorial",
+  "before": "an injury’s “Not with …; it has … days yet to mend.”",
+  "after": "an injury’s “Not with …; it has … yet to mend.”",
+  "why": "The health area made the injury's refusal plural-safe (`injuryRefusal` prints “1 day” or “3 days”), so the quote leaves the number and its noun to the ellipsis. Same change in craft, productions and the partner refusal.",
+  "meaningSensitive": false,
+  "verified": "src/engine/systems/injury.ts:78; tests/guide-examples-coursework.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.partners]",
+  "kind": "tutorial",
+  "before": "“Trust … of 100 · Came to … of … agreed” is how they stand with you, and how often they’ve come.",
+  "after": "“Trust … of 100” is how they stand with you, and “Came to … of … rehearsals agreed” how often they’ve come (“No rehearsals agreed yet” before any).",
+  "why": "The partner line on the Coursework card says “rehearsals agreed”, and “No rehearsals agreed yet” before the first. Two quotes, each of a piece the card writes whole.",
+  "meaningSensitive": false,
+  "verified": "src/ui/components/CourseworkPane.tsx:231; the Coursework tab in crossarea/after-1440 (workload.json)"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.brief-tape]",
+  "kind": "tutorial",
+  "before": "“Choose a reading first: a take is of the scene played one way, and you should know which before the camera rolls.”",
+  "after": "“Choose a reading first. A self-tape plays the scene one way, so decide which before the camera rolls.”",
+  "why": "The profile area's `tapeRefusal`, quoted as it reads.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); tests/guide-examples-craft.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.brief-tape]",
+  "kind": "tutorial",
+  "before": "A weakness no practice brief reads is suggested no brief, and What To Work On says so: “No practice brief reads …, so a take won’t show it and none is suggested for it.”",
+  "after": "A weakness no practice brief calls on gets no brief suggested for it, and What To Work On says so: “No practice brief calls on …, so a tape won’t show it and none is suggested for it.”",
+  "why": "BriefPane's line now says “calls on” and “a tape”; the guide's own sentence around it lost “reads” (engine-speak) with it.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); src/ui/components/BriefPane.tsx:277"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.genre]",
+  "kind": "tutorial",
+  "before": "A take held back most by an ability a concern asks for says so: “Composure held back the consistency by 4.2 points: Nordic Noir’s Feeling Held In asks for it”.",
+  "after": "A tape held back most by an ability one of those concerns asks for says so: “Your … held back … by … points: …’s … asks for it.”, as when your Composure held back Consistency by 4.2 points and Nordic Noir’s Feeling Held In asks for it.",
+  "why": "`chiefLimit` now says “Your Composure held back Consistency by 4.2 points”; the quote keeps what the code writes whole, and the example is said in prose.",
+  "meaningSensitive": true,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); src/engine/systems/evaluation.ts chiefLimit and src/engine/systems/register.ts concernNote"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.brief-prepare]",
+  "kind": "tutorial",
+  "before": "“There’s nothing more to gain from it now.”: the part is at 97% or more.",
+  "after": "“You’ve done all this step can do.”: the part is at 97% or more.",
+  "why": "The brief's step refusal at 97% (`prepareRefusal` in systems/briefs.ts) reads so.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); src/engine/systems/briefs.ts:466"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "“No notice of noncompliance waits on an answer.”, “The thirty days to answer ended on …” or “No month it assessed, …, had a stay in hospital, the hardship SLATE keeps.”",
+  "after": "“There’s no notice of noncompliance waiting for an answer.”, “The … days to answer ended on ….” or “None of the months it checked, …, had a stay in hospital, the one hardship the game counts.”",
+  "why": "The health area's `hardshipRefusal`, quoted as it reads; the old quote still said SLATE.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); tests/guide-examples-papers.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "“Only a Connecticut hospital’s bill.”, “It’s settled or past due.”, “The hospital’s charity is off it already.” or “It’s been put to the hospital’s charity.”",
+  "after": "“Only a Connecticut hospital’s bill can be put in for its financial assistance.”, “It’s already settled or past its due date.”, “The hospital’s financial assistance has already come off it.” or “It’s already been put in for the hospital’s financial assistance.”",
+  "why": "The four `aidRefusal` sentences, in the health area's words, with financial assistance, the button's word.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); src/engine/systems/health.ts aidRefusal"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]",
+  "kind": "tutorial",
+  "before": "“No wait is published where you live; you’re seen when it comes up.”",
+  "after": "“No waiting time is published where you live, so there’s nothing to book: you’re seen when you need care.”",
+  "why": "Book An Appointment's refusal in Ireland, as `health.book` now says it.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); src/engine/systems/appointments.ts:240"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.payments]",
+  "kind": "tutorial",
+  "before": "“There’s no savings account at … to cover the current account.”, or with more than one paying account, “… to cover the current accounts your payments come from.”",
+  "after": "“There’s no savings account at … to cover …”, ending “the current account”, or, with more than one paying account, “the current accounts your payments come from”.",
+  "why": "The sentence was right, but the code builds its end from a choice, so the quote stops at the join and quotes each ending on its own.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); src/engine/systems/payments.ts:259"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.card-security]",
+  "kind": "tutorial",
+  "before": "“Locked: nothing new can go on it until you unlock it.” is a locked card. “Lost: stopped. A new one arrives …” is a reported one.",
+  "after": "“Locked: nothing new can go on it until you unlock it.” is a locked card. A card you reported says why it was stopped, as in “Lost: stopped.”, and the day a new one arrives.",
+  "why": "The reported card's line is built from the reason (Lost, Stolen, Damaged, Used by somebody else) and the day: a paraphrase, with the one piece quoted.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); src/ui/bank/BankSecurity.tsx:59"
+ },
+ {
+  "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.plan]",
+  "kind": "tutorial",
+  "before": "For a state: “Connecticut DRS needs every return filed first”, …, (“You already have a plan with Connecticut DRS.”)",
+  "after": "For a state, each refusal names its agency, such as Connecticut DRS: “… needs every return filed first, and your … return isn’t. File it first.”, … (“You already have a plan with ….”)",
+  "why": "`statePlanRefusal` names the agency from its rules; the quote follows its words.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); src/engine/systems/statetax.ts:441-464"
+ },
+ {
+  "source": "src/engine/content/guide/school.ts#SCHOOL [school.leave]",
+  "kind": "tutorial",
+  "before": "“The dean imposed this leave, so it isn’t yours to call off: appeal it in writing to the dean by …”.",
+  "after": "“The dean imposed this leave, so it isn’t yours to call off”, and while it can still be appealed, “appeal it in writing to the dean by …”.",
+  "why": "The refusal adds its second half only while the appeal is open; the guide now says so.",
+  "meaningSensitive": true,
+  "verified": "tools/guide-quotes.mjs --check, exit 0 (the quote is the game's words); src/engine/systems/leave.ts:1208"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.calendar]",
+  "kind": "tutorial",
+  "before": "Where To Find It: Home, The Calendar Panel, And The Dialog When The Clock Stops",
+  "after": "Where To Find It: Home, The Calendar Panel, Open Calendar",
+  "why": "No screen is named “The Dialog When The Clock Stops” (each stop's dialog is named for its commitment); the steps describe it.",
+  "meaningSensitive": false,
+  "verified": "tools/tutorial-routes.mjs --check on the crossarea walk and capture of 9246c074, 0 nowhere; Open Calendar on Home in crossarea/after-1440"
+ },
+ {
+  "source": "src/engine/content/guide/start.ts#START [start.find]",
+  "kind": "tutorial",
+  "before": "Where To Find It: The Menu Down The Left, The Breadcrumbs, The Browser’s Address",
+  "after": "Where To Find It: The Menu And The Breadcrumb",
+  "why": "The button is Menu and the trail's name is Breadcrumb; the browser's address stays in the entry's overview, where it was already said.",
+  "meaningSensitive": false,
+  "verified": "tools/tutorial-routes.mjs --check on the crossarea walk and capture of 9246c074, 0 nowhere; src/ui/shell/GameShell.tsx (Menu, Breadcrumb)"
+ },
+ {
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.brief-choose]",
+  "kind": "tutorial",
+  "before": "Under How You’ll Play It, pick a side of any axis; each shows What It Draws On and what the take would come to Fully Prepared.",
+  "after": "Under How You’ll Play It, make a choice on any aspect; each row shows The Scene, Abilities It Uses and what the tape would come to Fully Prepared.",
+  "why": "The chooser's columns are Aspect, Choice, The Scene, Abilities It Uses and Fully Prepared; “a side”, “axis” and “the take” were the words the glossary replaces.",
+  "meaningSensitive": false,
+  "verified": "tools/tutorial-routes.mjs --check on the crossarea walk and capture of 9246c074, 0 nowhere; src/ui/components/PlayingChooser.tsx:92"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.how]",
+  "kind": "tutorial",
+  "before": "On the Player Profile, your traits are listed under “Chosen at the start.”, and each opens there.",
+  "after": "On the Player Profile, your traits are listed after “Traits you chose.”, and each opens there.",
+  "why": "The Profile's identity panel says “Traits you chose.”",
+  "meaningSensitive": false,
+  "verified": "tools/tutorial-routes.mjs --check on the crossarea walk and capture of 9246c074, 0 nowhere; src/ui/workspaces/ProfileWorkspace.tsx:199"
+ },
+ {
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [clock]",
+  "kind": "tutorial",
+  "before": "The clock stops by itself at anything that wants you, and waits for your answer, as “What’s Coming” described.",
+  "after": "The clock stops by itself at every commitment, and waits for your answer, as “What’s Coming” described.",
+  "why": "Commitment is the frame area's word (Core).",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts (every chapter paragraph drawn); the capture of the chapter page, xw/capture"
+ },
+ {
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [plans]",
+  "kind": "tutorial",
+  "before": "A plan wants you in the town where you make it, … Two things that want you at the same time are both allowed, and the calendar marks them as a clash.",
+  "after": "A plan is in the town where you make it, … Two commitments at the same time are both allowed, and the calendar marks them as a clash.",
+  "why": "The same word for the same thing; a clash is two commitments (the frame area's glossary).",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts; tests/guide-examples-start-day-body.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.sleep]",
+  "kind": "tutorial",
+  "before": "Set Hours with the slider, in half hours. “You’d wake at” changes with it. … Press Sleep and the hours, such as Sleep 8 Hours, or Not Yet to close it.",
+  "after": "Set Hours with the slider, in half hours. You’d Wake At, beside Now, changes with it. … Press Sleep and the hours, such as Sleep 8 Hours, or Sleep 1 Hour at one hour, or Not Yet to close it.",
+  "why": "The Sleep dialog's labels as the frame area left them (frame batches.md, For The Coordinator).",
+  "meaningSensitive": false,
+  "verified": "src/ui/shell/TimeControls.tsx SleepDialog; tests/guide-examples-start-day-body.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/ProfileWorkspace.tsx#JourneyPanel",
+  "kind": "button",
+  "before": "Your School",
+  "after": "School",
+  "why": "The rail, the breadcrumb and the School screen's own eyebrow say School; the button names the destination.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts (the button pressed goes to /workspace/school)"
+ },
+ {
+  "source": "src/engine/world/calendar.ts#CALENDAR_LEGEND",
+  "kind": "label",
+  "before": "Classes, labs, …, work-study shifts and paydays, each term’s evaluation, the showcase and Commencement.",
+  "after": "Classes, labs, …, work-study shifts and paydays, each term’s review, the showcase and Commencement.",
+  "why": "The school's entries are titled “Term Review, Fall Term 2026” since the school area's merge.",
+  "meaningSensitive": false,
+  "verified": "the Calendar screen's legend in xw/capture (Calendar)"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#StartingPointStep",
+  "kind": "label",
+  "before": "$126.58 at the estimated rate",
+  "after": "About $126.58 at an estimated exchange rate",
+  "why": "Money writes a home account's dollar value so; one phrase for one thing.",
+  "meaningSensitive": false,
+  "verified": "src/ui/workspaces/BankWorkspace.tsx:142 (Money's same note); tests/home-account-creation.test.ts"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+  "kind": "other",
+  "before": "Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your mood.",
+  "after": "Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale.",
+  "why": "Morale is the measure the disposition moves, as How You Are names it; the Profile's disposition line says the same.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g28-ui.test.ts (creation's page and the Profile's line)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "other",
+  "before": "44. Under 50, it wears on your mood every hour. A shower puts it back.",
+  "after": "44. Under 50, it wears on your morale every hour. A shower puts it back.",
+  "why": "The measure by its name; “Morale is your mood.” stays as its definition on the look.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-people.test.ts, tests/evidence-g06-life.test.ts"
+ },
+ {
+  "source": "src/engine/systems/life.ts#whyNow",
+  "kind": "label",
+  "before": "Hygiene at 48: every hour under 50 wears on the mood.",
+  "after": "Hygiene at 48: every hour under 50 wears on your morale.",
+  "why": "Look After Yourself's line for the shower, in the measure's name.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g30-ui.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#HealthPane",
+  "kind": "confirmation",
+  "before": "The hospital applied its charity care to this bill.",
+  "after": "The hospital applied its financial assistance to this bill.",
+  "why": "The toast after Apply For Assistance, in the button's word and the health area's refusals'.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g02-life.test.ts (Apply For Assistance pressed)"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#aidWord",
+  "kind": "label",
+  "before": "Charity Taken Off",
+  "after": "Assistance Taken Off",
+  "why": "The Assistance column's word for a bill the hospital screened at billing and took something off.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g8-6.test.ts (both cases)"
+ },
+ {
+  "source": "src/engine/systems/experience.ts#recommendations",
+  "kind": "feedback",
+  "before": "(1 of your last 1 piece calls on it; Letters From The Lock (Under The Picture), Taped would gain most, about +0.7)",
+  "after": "(your last piece calls on it; Letters From The Lock (Under The Picture), Taped would gain most, about +0.7)",
+  "why": "One piece read is your last piece; tools/advice.ts check (g) matches that form, so it still checks the count is said.",
+  "meaningSensitive": false,
+  "verified": "tests/decisions-advice.test.ts, 'says one piece read as “your last piece”, and agrees the verb with the pieces that call on it' (adv-t-0), which fails on the old line"
+ },
+ {
+  "source": "src/engine/systems/experience.ts#recommendations",
+  "kind": "feedback",
+  "before": "(1 of your last 5 pieces call on it; …)",
+  "after": "(1 of your last 5 pieces calls on it; …)",
+  "why": "The verb agrees with the pieces that call on it, not with the pieces read.",
+  "meaningSensitive": false,
+  "verified": "tests/decisions-advice.test.ts, 'says why: …' and the new test"
+ },
+ {
+  "source": "src/engine/content/tasks.ts#DIMENSION_MEANS",
+  "kind": "other",
+  "before": "What passes between you and a partner, a house or a camera.",
+  "after": "What passes between you and a partner, an audience or a camera.",
+  "why": "The profile area says audience; the school's own prose now does too.",
+  "meaningSensitive": false,
+  "verified": "printed from the module, crossarea/printed.txt; drawn beside the quality on a piece of work's look (src/ui/looks/actor.tsx:263)"
+ },
+ {
+  "source": "src/ui/papers/Documents.tsx#PassportPane",
+  "kind": "label",
+  "before": "Faster C$289.25 1 days",
+  "after": "Faster C$289.25 1 day",
+  "why": "The wait and the years through `plural`; Canada's faster service in Canada takes a day.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-papers.test.ts, 'a passport office’s days and years are said in the right number…' (fails on the old line); crossarea/after-notices-1440 h-van-rx.json"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#HealthPane",
+  "kind": "label",
+  "before": "HUSKY D: $20.00 of $0.00 paid this year",
+  "after": "HUSKY D: $20.00 paid this year",
+  "why": "HUSKY D and Covered Connecticut have no most a year (their plan's outOfPocket is 0: care costs nothing, a prescription its copay), so there is no “of”. A plan with a most still says it: “Yale Health: $0.00 of $9,100.00 paid this year”.",
+  "meaningSensitive": true,
+  "verified": "tests/defects-g8-4.test.ts, 'on Your Cover, on the bills’ subtitle and on Home’s Papers line'; Papers, Health Cover on withdraw.json in crossarea/after-1440 and after-390 (the before walk read “of $0.00”)"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "label",
+  "before": "Money Chase Total Checking: -$25.00. Worth $413,018. Your account is overdrawn.",
+  "after": "Money Chase Total Checking: −$25.00. Worth $413,018. Your account is overdrawn.",
+  "why": "Money writes a negative with the minus sign (−$3.30); Home's line now does, for the balance, an account kept at home and the worth.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g33-ui.test.ts, 'a worth below nothing is written with the minus sign…' (fails on the old line)"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "label",
+  "before": "Worth -$227, $943 of it owed.",
+  "after": "Worth −$227, $943 of it owed.",
+  "why": "The case the health area found, on a New Haven life out of status.",
+  "meaningSensitive": false,
+  "verified": "crossarea/after-notices-1440 and after-notices-390, h-nh-status.json, Home: “Worth −$227, $943 of it owed.”"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#HealthPane",
+  "kind": "tutorial",
+  "before": "[one paragraph, 246 to 309 words] … The marketplace is open to you, because you’re within 60 days of losing cover. Public cover depends on your income in a month. Medicaid (Medi-Cal in California, HUSKY D in Connecticut) covers you up to 138% of the poverty line. … since the enhanced credits ended with 2025.",
+  "after": "[where you stand] … The marketplace is open to you, because you’re within 60 days of losing cover. [overview] Public cover depends on your income in a month, and costs no premium. On a marketplace plan you pay a premium each month, and your tax return can give some of it back. [drill-downs] Who Public Cover Takes · Medicaid’s Work Rules From 2027 · Paying For A Marketplace Plan",
+  "why": "Progressive detail, not a wall: the rules are word for word behind three drill-downs. tools/acceptance-ui.mjs opens them before it reads the work rules.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-health-eligibility.test.ts (RULES_LINE whole), tests/guide-examples-papers.test.ts; Papers, Health Cover on all fourteen saves in crossarea/after-390"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#HealthPane",
+  "kind": "label",
+  "before": "Uninsured: you pay the full price, less any hospital charity care",
+  "after": "Uninsured: you pay the full price, less any financial assistance from the hospital",
+  "why": "Care And Its Bills' subtitle without cover, in the button's word.",
+  "meaningSensitive": false,
+  "verified": "Papers, Health Cover in crossarea/after-notices-1440 and after-notices-390 (h-la-dropped.json, h-nh-status.json)"
+ }
+]

@@ -72,7 +72,7 @@ describe('a card reported lost, stolen or damaged', () => {
     expect(rush.fee).toBe(15_00);
     expect(rush.arrivesAt - us.now).toBe(2 * MS_DAY);
     const gb = lifeIn('uk-eng-london', 'gb-lloyds', 'sec-rush-gb');
-    expect(run(gb, 'card.report', { which: 'debit', why: 'lost', rush: true }).error).toMatch(/no rush/);
+    expect(run(gb, 'card.report', { which: 'debit', why: 'lost', rush: true }).error).toMatch(/No rushed replacement was found/);
     const es = lifeIn('es-md-madrid', 'es-santander', 'sec-stolen');
     expect(es.must<{ fee: number }>({ kind: 'card.report', payload: { which: 'debit', why: 'stolen' } }).fee).toBe(0);
     const es2 = lifeIn('es-md-madrid', 'es-santander', 'sec-lost-es');

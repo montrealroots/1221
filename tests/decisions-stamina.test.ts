@@ -153,7 +153,7 @@ describe('W1: every play has a running time, with its basis', () => {
     expect(UNNAMED_RUNNING.seagull.from).toMatch(/hasn’t published/);
     for (const k of ['newPlay', 'cabaret', 'solo'] as const) {
       expect(UNNAMED_RUNNING[k].basis, k).toBe('estimate');
-      expect(UNNAMED_RUNNING[k].from, k).toMatch(/^SLATE’s estimate/);
+      expect(UNNAMED_RUNNING[k].from, k).toMatch(/^Estimated/);
     }
     // A listing's interval with no length given is SLATE's 20 minutes, and said so.
     for (const [title, rt] of Object.entries(RUNNING_TIMES)) if (rt.assumedBreak) expect(rt.breaks, title).toContain(20);
@@ -496,20 +496,20 @@ describe('W9: bounded, and said', () => {
     const html = () => renderToStaticMarkup(createElement(RehearsalProcess, { casting: casting(), which: 'school' } as never)).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
     const before = html();
     expect(before).toContain('The Evening’s Workload.');
-    expect(before).toContain('The evening runs 1 h 40 straight through, an estimate.');
+    expect(before).toContain('The evening runs 1 h 40 straight through (estimated).');
     const size = casting().size!;
     const W = workloadOf(100, size, 0, 0);
-    expect(before).toContain(`you’re on for about ${Math.round(SHARE[size] * 100)}% of its 1 h 40 of playing`);
-    expect(before).toContain(`a workload of ${W.toFixed(2)}, of at most 8.`);
-    expect(before).toContain('The running time: SLATE’s estimate');
+    expect(before).toContain(`you’re on stage for about ${Math.round(SHARE[size] * 100)}% of its 1 h 40 of playing`);
+    expect(before).toContain(`so its workload is ${W.toFixed(2)} of a possible 8.`);
+    expect(before).toContain('The running time: Estimated');
     // After the curtain, the night's record says it, as its look shows it.
     const { record } = playNight(sim, nights[0]!);
     const said = workloadWords(record)!;
     const st = staminaOf(record), r = record.inputs.condition.readiness;
-    expect(said).toContain(`a workload of ${W.toFixed(2)}`);
-    expect(said).toContain(`the evening costs ${Math.round(energyOf(W, st, r))} energy`);
+    expect(said).toContain(`so its workload is ${W.toFixed(2)}`);
+    expect(said).toContain(`The evening costs ${Math.round(energyOf(W, st, r))} energy`);
     const share = (W / FULL);
-    expect(said).toContain(`At the curtain’s fall tiring takes ${Math.round(drainOf(share, st, r) * 100)}% off what it reaches`);
+    expect(said).toContain(`By the final curtain, tiring takes ${Math.round(drainOf(share, st, r) * 100)}% off the parts of your performance it affects`);
     const look = resolveLook(sim, { kind: 'work', id: record.inputs.key });
     const body = renderToStaticMarkup(createElement('div', null, (look as unknown as { body: never }).body)).replace(/<!-- -->/g, '');
     expect(body).toContain(said);
@@ -538,7 +538,7 @@ describe('W10: a night kept under the ruleset before is shown as it was', () => 
     expect(replay(was, TASK_PROFILES.performance!)).toBeUndefined();
     expect(workloadWords(was)).toBeUndefined();
     const look = resolveLook(opened, { kind: 'work', id: was.inputs.key }) as { provenance: string };
-    expect(look.provenance).toBe('Judged under evaluation-10 (2026-10-16), rules since changed, so it isn’t worked out again under today’s: what it was is kept as it was.');
+    expect(look.provenance).toBe('The rules have changed since it was judged, so it isn’t worked out again. Its result stands as it was.');
     // The next night: today's ruleset, with its workload.
     tended(opened, nights[1]!.at - MS_HOUR);
     const { record } = playNight(opened, nights[1]!);

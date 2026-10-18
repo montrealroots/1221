@@ -35,8 +35,8 @@ const cadOf = (cents: Money, from: string) => (from === 'CAD' ? cents : exchange
 
 export function eiRefusal(person: Person): string | undefined {
   if (!livesInCanada(person)) return 'EI is for someone living in Canada.';
-  if (!citizenOf(person, 'CA')) return 'SLATE keeps EI for a Canadian citizen.';
-  if (person.ei) return 'You’re registered.';
+  if (!citizenOf(person, 'CA')) return 'In the game, EI is only for Canadian citizens.';
+  if (person.ei) return 'You’re already registered.';
   return undefined;
 }
 

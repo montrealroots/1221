@@ -337,8 +337,8 @@ const PLAY: Record<string, () => void> = {
     // The road not taken: kept on Driven, and nothing more done than coming to every call.
     const kept = twin(sim);
     expect(sim.execute({ kind: 'school.choose_part_playing', payload: { pace: 'measured' } }).ok).toBe(true);
-    expect(ex.steps[1]).toContain(`the ${pct(was)} rehearsed in keeps ${pct(PLAYING.keptOnChange)}, ${pct(prep())}`);
-    expect(ex.steps[2]).toContain(`The ${word(calls.length - switchAt)} calls left rehearse it in`);
+    expect(ex.steps[1]).toContain(`the ${pct(was)} already rehearsed keeps ${pct(PLAYING.keptOnChange)}, ${pct(prep())}`);
+    expect(ex.steps[2]).toContain(`The ${word(calls.length - switchAt)} calls left rehearse it`);
     tended(sim, calls.at(-1)!.at + 7 * MS_HOUR);
     expect(proc().calls).toBe(calls.length);
     expect(proc().playing?.pace).toBe('measured');
@@ -354,7 +354,7 @@ const PLAY: Record<string, () => void> = {
     // So every night of the run reads what Measured leans on short of preparation: the choice short of complete, read
     // as a part of preparation in each dimension it leans on (`materialContext`), and a limit on each. Until the
     // verifier's pass of 2026-10-12 no night was played here, and the sentence was neither checked nor listed as not run.
-    expect(ex.result).toContain('so every night reads what it leans on short of preparation');
+    expect(ex.result).toContain('so every night counts what it favors as short of preparation');
     tended(sim, nights.at(-1)!.at + 7 * MS_HOUR);
     const played = (sim.player.work ?? []).filter((w) => nights.some((n) => n.at === w.at));
     expect(played).toHaveLength(nights.length);
@@ -554,7 +554,7 @@ const PLAY: Record<string, () => void> = {
     dayAfter.player.school!.standing = 'good';
     const refused = dayAfter.execute({ kind: 'school.summer_cabaret', payload: {} });
     expect(refused.ok).toBe(false);
-    expect(refused.error).toMatch(/has formed/);
+    expect(refused.error).toMatch(/has already formed/);
     expect(GUIDE_BY_ID['productions.cabaret']!.unavailable).toContain(`“${refused.error}”`);
   },
 
@@ -595,7 +595,7 @@ const PLAY: Record<string, () => void> = {
     const again = sim.execute<{ minutes: number; note: string }>({ kind: 'plays.read', payload: { playId: play.id } });
     expect(again.ok, again.error).toBe(true);
     expect(again.value!.minutes).toBe(Math.round(PLAYREADING.minutes.full * PLAYREADING.again));
-    expect(again.value!.note).toContain('Too soon after it to see it fresh.');
+    expect(again.value!.note).toContain('It’s too soon after that one to see it fresh.');
     expect(trained()).toEqual(before);
     expect(ex.result).toContain(`Read again the next week, it takes ${again.value!.minutes} minutes and trains nothing`);
   },

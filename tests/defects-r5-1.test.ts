@@ -49,12 +49,12 @@ describe('a cut-off, as the screen gives it', () => {
   it('writes Zengin’s on the 12-hour clock, and moves it when the number moves', () => {
     const sim = lifeIn('jp-13-tokyo', 'jp-mufg', 'r5-zengin');
     const said = screen(sim);
-    expect(said).toContain('arrives the same business day before 3:30 PM, the next after, by Zengin.');
+    expect(said).toContain('goes by Zengin, and arrives the same business day if it’s sent before 3:30 PM, or the next business day if later.');
     expect(said).not.toContain('before 15:30');
     expect(withCutOff(TRANSFERS.JP as { sameDayBefore?: number }, 14.25, () => screen(sim)))
-      .toContain('arrives the same business day before 2:15 PM, the next after, by Zengin.');
+      .toContain('goes by Zengin, and arrives the same business day if it’s sent before 2:15 PM, or the next business day if later.');
     expect(withCutOff(TRANSFERS.JP as { sameDayBefore?: number }, 9.5, () => screen(sim)))
-      .toContain('arrives the same business day before 9:30 AM, the next after, by Zengin.');
+      .toContain('goes by Zengin, and arrives the same business day if it’s sent before 9:30 AM, or the next business day if later.');
   }, 120_000);
 
   it('writes a bank’s own on the 12-hour clock, and moves it when the number moves', () => {
@@ -63,10 +63,10 @@ describe('a cut-off, as the screen gives it', () => {
     // Applied at Bank of America and opened at Wells Fargo, Citi is the bank the panel shows.
     expect(sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-bank-of-america', fundFrom: chase, amount: 100_00 } }).ok).toBe(true);
     expect(sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-wells-fargo', fundFrom: chase, amount: 25_00 } }).ok).toBe(true);
-    expect(screen(sim)).toContain('Money it sends to another bank arrives the same business day before 12:30 PM, the next after.');
+    expect(screen(sim)).toContain('Money it sends to another bank arrives the same business day if it’s sent before 12:30 PM, or the next business day if later.');
     const citi = OPENING['us-citi'] as { sameDayBefore?: number };
-    expect(withCutOff(citi, 9.75, () => screen(sim))).toContain('Money it sends to another bank arrives the same business day before 9:45 AM, the next after.');
-    expect(withCutOff(citi, 16, () => screen(sim))).toContain('Money it sends to another bank arrives the same business day before 4:00 PM, the next after.');
+    expect(withCutOff(citi, 9.75, () => screen(sim))).toContain('Money it sends to another bank arrives the same business day if it’s sent before 9:45 AM, or the next business day if later.');
+    expect(withCutOff(citi, 16, () => screen(sim))).toContain('Money it sends to another bank arrives the same business day if it’s sent before 4:00 PM, or the next business day if later.');
     expect(citi.sameDayBefore).toBe(12.5);
   }, 120_000);
 });

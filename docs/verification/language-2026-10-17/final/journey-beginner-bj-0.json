@@ -1,0 +1,203 @@
+{
+ "profile": "beginner",
+ "seed": "bj-0",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 74.4,
+  "training": 83,
+  "study": 42
+ },
+ "takes": 19,
+ "briefs": 13,
+ "readings": 19,
+ "genres": 13,
+ "purposes": {
+  "first": 13,
+  "another-reading": 6
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 1,
+   "mean": 53.7,
+   "min": 53.7,
+   "max": 53.7
+  },
+  "m2": {
+   "n": 2,
+   "mean": 56.4,
+   "min": 54.8,
+   "max": 58
+  },
+  "m3": {
+   "n": 16,
+   "mean": 55.2,
+   "min": 51.8,
+   "max": 60.4
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 13,
+  "mean": 0.31,
+  "max": 0.6,
+  "over1": 0
+ },
+ "notes": {
+  "takes": 19,
+  "distinct": 4,
+  "longestSame": 3,
+  "sameAgainInAnotherGenre": 6,
+  "withConcern": 11,
+  "concerns": [
+   "sincerity",
+   "rhythm",
+   "restraint",
+   "partnership",
+   "extremity"
+  ],
+  "asShown": {
+   "distinct": 10,
+   "longestSame": 1,
+   "sameAgainInAnotherGenre": 0
+  },
+  "sequence": [
+   "d2 absurdist first 53.7: Your Emotional Depth held back Believability",
+   "d61 coming_of_age first 58: Your Emotional Depth held back Believability: coming_of_age’s sincerity",
+   "d62 absurdist another-reading 54.8: Your Focus held back Execution: absurdist’s rhythm",
+   "d91 concert_film first 58.5: Your Emotional Depth held back Believability",
+   "d97 espionage first 52.3: Your Composure held back Consistency: espionage’s restraint",
+   "d97 coming_of_age another-reading 59.6: Your Emotional Depth held back Believability: coming_of_age’s sincerity",
+   "d102 gangster first 52.2: Your Emotional Depth held back Believability",
+   "d104 prison_film first 59.4: Your Emotional Depth held back Believability: prison_film’s partnership",
+   "d104 concert_film another-reading 57.8: Your Composure held back Consistency",
+   "d107 sea_adventure first 51.9: Your Emotional Depth held back Believability: sea_adventure’s extremity",
+   "d109 drama first 55.3: Your Emotional Depth held back Believability: drama’s sincerity",
+   "d110 espionage another-reading 52.1: Your Composure held back Consistency: espionage’s restraint",
+   "d111 dystopian first 54.3: Your Composure held back Consistency: dystopian’s restraint",
+   "d113 spy first 57.1: Your Emotional Depth held back Believability",
+   "d113 gangster another-reading 51.8: Your Composure held back Consistency",
+   "d115 war first 54.1: Your Physical Expression held back Execution: war’s extremity",
+   "d117 apocalyptic first 54: Your Composure held back Consistency",
+   "d117 prison_film another-reading 60.4: Your Emotional Depth held back Believability: prison_film’s partnership",
+   "d118 kitchen_sink first 52.8: Your Emotional Depth held back Believability"
+  ]
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 4,
+  "longestSameTarget": 6,
+  "longestSameMessage": 1,
+  "longestSameState": 1,
+  "longRuns": [
+   {
+    "from": 56,
+    "to": 91,
+    "target": "focus",
+    "weeks": 6,
+    "rose": 1,
+    "newMessages": 5,
+    "newStates": 5
+   }
+  ],
+  "sequence": [
+   "7:imagination@57",
+   "14:imagination@57",
+   "21:focus@54",
+   "28:focus@54",
+   "35:vocal@52",
+   "42:focus@54",
+   "49:vocal@52",
+   "56:focus@55",
+   "63:focus@55",
+   "70:focus@55",
+   "77:focus@55",
+   "84:focus@56",
+   "91:focus@56",
+   "98:composure@46",
+   "105:composure@47",
+   "112:composure@49",
+   "119:composure@52"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 58,
+  "presence": 68,
+  "listening": 59,
+  "imagination": 61,
+  "focus": 58,
+  "memory": 57,
+  "adaptability": 55,
+  "composure": 52,
+  "vocal": 54,
+  "physical": 58,
+  "discipline": 63,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 113,
+   "brief": "brief-spy",
+   "genre": "spy",
+   "reading": "marriage",
+   "sides": "",
+   "purpose": "first",
+   "overall": 57.1,
+   "chief": "Your Emotional Depth held back Believability by 18.3 points"
+  },
+  {
+   "day": 113,
+   "brief": "brief-gangster-2",
+   "genre": "gangster",
+   "reading": "business",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 51.8,
+   "chief": "Your Composure held back Consistency by 37.8 points"
+  },
+  {
+   "day": 115,
+   "brief": "brief-war",
+   "genre": "war",
+   "reading": "medic",
+   "sides": "",
+   "purpose": "first",
+   "overall": 54.1,
+   "chief": "Your Physical Expression held back Execution by 15.2 points",
+   "concern": "extremity"
+  },
+  {
+   "day": 117,
+   "brief": "brief-apocalyptic-2",
+   "genre": "apocalyptic",
+   "reading": "ordinary",
+   "sides": "",
+   "purpose": "first",
+   "overall": 54,
+   "chief": "Your Composure held back Consistency by 40.3 points"
+  },
+  {
+   "day": 117,
+   "brief": "brief-prison_film",
+   "genre": "prison_film",
+   "reading": "dignity",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 60.4,
+   "chief": "Your Emotional Depth held back Believability by 18.6 points",
+   "concern": "partnership"
+  },
+  {
+   "day": 118,
+   "brief": "brief-kitchen_sink-2",
+   "genre": "kitchen_sink",
+   "reading": "sister",
+   "sides": "",
+   "purpose": "first",
+   "overall": 52.8,
+   "chief": "Your Emotional Depth held back Believability by 19.8 points"
+  }
+ ]
+}

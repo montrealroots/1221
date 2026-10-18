@@ -895,7 +895,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g8-5.test.ts:132-153, 165-176",
+    "where": "tests/defects-g8-5.test.ts:134-155, 167-178",
     "asserts": "withdrawn student enrolls with cover from the day Yale Health ends; health.drop through the clock leaves February uncovered and opens no special enrollment (New Haven life, plan put in by hand)",
     "reachesAction": true,
     "checksConsequence": true,
@@ -1093,7 +1093,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/commands-kept.test.ts:122-135; tests/defects-g8-5.test.ts:81-100",
+    "where": "tests/commands-kept.test.ts:122-135; tests/defects-g8-5.test.ts:81-102",
     "asserts": "extra_supply refused without a condition and past the longest; fills supplyUntil; refused and nothing filled when the bank can't pay",
     "reachesAction": true,
     "checksConsequence": false,
@@ -1130,7 +1130,7 @@
   ],
   "uiEvidence": {
    "needed": true,
-   "have": "Partial: defects-g8-5.test.ts:102-110 renders Fill A Longer Supply's button words and :228-236 the Therapist choice; whynot-papers.test.ts:60-78 renders Prepay's refusal. No render press of Keep It Up, Let It Go or Begin A Course."
+   "have": "Partial: defects-g8-5.test.ts:104-112 renders Fill A Longer Supply's button words and :230-238 the Therapist choice; whynot-papers.test.ts:60-78 renders Prepay's refusal. No render press of Keep It Up, Let It Go or Begin A Course."
   },
   "verdict": "partial",
   "partialClass": "missing-evidence",
@@ -2681,7 +2681,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/simulation.test.ts:120-170 (describe 'sleep')",
+    "where": "tests/simulation.test.ts:121-171 (describe 'sleep')",
     "asserts": "Through the command: the clock moves exactly the hours asked, across DST too; energy and debt recover, and debt grows on a short night; a scheduled item still fires during the night.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -2726,7 +2726,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/tutorial.test.ts:107-115,152-164; tests/simulation.test.ts:1149,1169; tests/life-fixes.test.ts:164-165",
+    "where": "tests/tutorial.test.ts:108-116,153-165; tests/simulation.test.ts:1150,1172; tests/life-fixes.test.ts:164-165",
     "asserts": "Refused while the guide holds it, for a start in the past, for NaN hours and for a bedtime more than a day ahead.",
     "reachesAction": true,
     "checksConsequence": true,
@@ -2948,7 +2948,7 @@
    },
    {
     "kind": "command",
-    "where": "tests/defects-g6-1.test.ts:20-36; tests/tutorial.test.ts:107-115,121-124",
+    "where": "tests/defects-g6-1.test.ts:20-36; tests/tutorial.test.ts:108-116,122-125",
     "asserts": "fast and faster refused with 'The clock runs paused or live.'; paused and live set; the guide holds live and always allows paused.",
     "reachesAction": true,
     "checksConsequence": false,
@@ -3131,7 +3131,7 @@
   "evidence": [
    {
     "kind": "command",
-    "where": "tests/tutorial.test.ts:107-194",
+    "where": "tests/tutorial.test.ts:108-195",
     "asserts": "Commands are refused naming the chapter; reads in order only, each once; each read opens exactly its chapter's features (against CHAPTERS content) and nothing later; the clock runs once 'clock' is read and sleep once 'sleep' is; read survives a reload; unguided lives are wholly open.",
     "reachesAction": true,
     "checksConsequence": true,

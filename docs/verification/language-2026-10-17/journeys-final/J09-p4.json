@@ -1,0 +1,10201 @@
+{
+ "id": "J09",
+ "seed": "j13-5",
+ "profile": "TEST SETUP balanced generalist: the eleven at 703/11",
+ "player": "follows",
+ "expect": {
+  "standing": "graduated",
+  "on": "2029-05-21",
+  "note": "the generalist J11 is compared with"
+ },
+ "done": true,
+ "parts": [
+  {
+   "part": 1,
+   "from": "2026-08-24",
+   "to": "2027-06-01",
+   "secs": 110,
+   "reloads": 9
+  },
+  {
+   "part": 2,
+   "from": "2027-06-01",
+   "to": "2028-06-01",
+   "secs": 193,
+   "reloads": 12
+  },
+  {
+   "part": 3,
+   "from": "2028-06-01",
+   "to": "2029-06-01",
+   "secs": 194,
+   "reloads": 11
+  },
+  {
+   "part": 4,
+   "from": "2029-06-01",
+   "to": "2029-08-04",
+   "secs": 38,
+   "reloads": 3
+  }
+ ],
+ "creation": {
+  "family": "none",
+  "need": true,
+  "citizenship": "jp",
+  "title": "actress",
+  "genres": [],
+  "traits": [],
+  "discipline": 57.5,
+  "composure": 44.3,
+  "conscientiousness": 55,
+  "stability": 55,
+  "f1": true,
+  "documents": [
+   "passport JP valid to 2035-01-07",
+   "visa US valid to 2029-07-30"
+  ],
+  "accounts": [
+   "checking Chase Total Checking 1956500",
+   "savings Chase Savings 4565200",
+   "credit_card Chase Freedom Unlimited 0"
+  ],
+  "bank": 6521700,
+  "abilities": {
+   "emotionalDepth": 55.6,
+   "presence": 69.3,
+   "listening": 55.5,
+   "imagination": 55.5,
+   "focus": 54.4,
+   "memory": 53.8,
+   "adaptability": 55.5,
+   "composure": 44.3,
+   "vocal": 57.2,
+   "physical": 56,
+   "discipline": 57.5,
+   "stamina": 50
+  }
+ },
+ "counterfactual": {
+  "family": {
+   "to": "wealthy",
+   "need": [
+    true,
+    false
+   ],
+   "bank": [
+    6521700,
+    50543400
+   ],
+   "moved": true
+  },
+  "conscientiousness": {
+   "to": 75,
+   "discipline": [
+    57.5,
+    67.5
+   ],
+   "moved": true
+  },
+  "home": {
+   "to": "us-ny-newyork",
+   "f1": [
+    true,
+    false
+   ],
+   "moved": true
+  },
+  "pronouns": {
+   "to": "he/him",
+   "title": [
+    "actress",
+    "actor"
+   ],
+   "moved": true
+  }
+ },
+ "setup": {
+  "setup": "generalist",
+  "abilities": {
+   "emotionalDepth": 63.9,
+   "presence": 63.9,
+   "listening": 63.9,
+   "imagination": 63.9,
+   "focus": 63.9,
+   "memory": 63.9,
+   "adaptability": 63.9,
+   "composure": 63.9,
+   "vocal": 63.9,
+   "physical": 63.9,
+   "discipline": 63.9,
+   "stamina": 50
+  },
+  "techniques": {
+   "accents": 52.4,
+   "audition": 54.8,
+   "character": 54.7,
+   "classical": 55.2,
+   "clown": 54.7,
+   "coldReading": 52.5,
+   "comedy": 54,
+   "dance": 54.2,
+   "emotion": 63.90909090909091,
+   "improv": 55.5,
+   "intimacy": 53.2,
+   "memorization": 63.90909090909091,
+   "screen": 48.5,
+   "movement": 63.90909090909091,
+   "scene": 55.5,
+   "script": 56.3,
+   "singing": 56.6,
+   "speech": 56.4,
+   "combat": 53.4,
+   "voice": 63.90909090909091,
+   "voiceover": 51.8
+  }
+ },
+ "end": {
+  "on": "2029-08-04",
+  "standing": "graduated",
+  "endedAt": "2029-05-21T14:00",
+  "classOf": 2029,
+  "history": [
+   "0:good",
+   "1:good",
+   "2:good",
+   "3:good",
+   "4:good",
+   "5:good"
+  ],
+  "termsBegun": 6,
+  "enrolled": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "courses": {},
+  "credits": [
+   "2027 carlotta lead",
+   "2027 understudy",
+   "2027 thesis lead",
+   "2028 thesis lead",
+   "2028 thesis lead",
+   "2029 shakespeare lead"
+  ],
+  "parts": {
+   "lead": 5,
+   "unsized": 1
+  },
+  "abilities": {
+   "emotionalDepth": 80.2,
+   "presence": 67,
+   "listening": 85,
+   "imagination": 97.3,
+   "focus": 98,
+   "memory": 70.6,
+   "adaptability": 71.8,
+   "composure": 70.7,
+   "vocal": 98.7,
+   "physical": 77.4,
+   "discipline": 100,
+   "stamina": 35
+  },
+  "startAbilities": {
+   "emotionalDepth": 63.9,
+   "presence": 63.9,
+   "listening": 63.9,
+   "imagination": 63.9,
+   "focus": 63.9,
+   "memory": 63.9,
+   "adaptability": 63.9,
+   "composure": 63.9,
+   "vocal": 63.9,
+   "physical": 63.9,
+   "discipline": 63.9,
+   "stamina": 50
+  },
+  "replays": [
+   {
+    "what": "Two Contrasting Monologues",
+    "own": 72.51,
+    "atStart": 61.11,
+    "rose": [
+     "emotionalDepth",
+     "adaptability",
+     "composure",
+     "imagination",
+     "memory",
+     "vocal",
+     "physical",
+     "focus",
+     "discipline",
+     "presence",
+     "listening"
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 73.31
+   },
+   {
+    "what": "Your Showcase Scene",
+    "own": 74.85,
+    "atStart": 59.29,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "adaptability",
+     "composure",
+     "listening",
+     "presence",
+     "memory",
+     "vocal",
+     "physical",
+     "focus",
+     "discipline"
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 75.93
+   },
+   {
+    "what": "Your Showcase Scene, revised",
+    "own": 74.88,
+    "atStart": 59.29,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "adaptability",
+     "composure",
+     "listening",
+     "presence",
+     "memory",
+     "vocal",
+     "physical",
+     "focus",
+     "discipline"
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 75.95
+   },
+   {
+    "what": "Directions In Daily Life",
+    "own": 78.43,
+    "atStart": 66.3,
+    "rose": [
+     "physical",
+     "discipline",
+     "focus",
+     "imagination"
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 81.86
+   },
+   {
+    "what": "Sound Changes And A Text",
+    "own": 87.18,
+    "atStart": 68.68,
+    "rose": [
+     "vocal",
+     "focus",
+     "discipline",
+     "imagination"
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 89.12
+   },
+   {
+    "what": "A Song Worked Through",
+    "own": 83.48,
+    "atStart": 69.96,
+    "rose": [
+     "vocal",
+     "emotionalDepth",
+     "imagination",
+     "composure",
+     "discipline"
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 84.95
+   },
+   {
+    "what": "A Movement Score",
+    "own": 76.39,
+    "atStart": 66.42,
+    "rose": [
+     "physical",
+     "discipline",
+     "focus",
+     "imagination"
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 79.48
+   },
+   {
+    "what": "A Self-Tape",
+    "own": 78.4,
+    "atStart": 66.08,
+    "rose": [
+     "emotionalDepth",
+     "adaptability",
+     "composure",
+     "imagination",
+     "memory",
+     "focus",
+     "discipline"
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 78.71
+   },
+   {
+    "what": "A Self-Tape",
+    "own": 77.78,
+    "atStart": 65.07,
+    "rose": [
+     "emotionalDepth",
+     "adaptability",
+     "composure",
+     "imagination",
+     "memory",
+     "focus",
+     "vocal",
+     "discipline"
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 78.47
+   },
+   {
+    "what": "A Voice Sequence",
+    "own": 89.9,
+    "atStart": 69.06,
+    "rose": [
+     "vocal",
+     "focus",
+     "discipline",
+     "imagination"
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 91.84
+   },
+   {
+    "what": "Two Contrasting Monologues",
+    "own": 72.72,
+    "atStart": 60.83,
+    "rose": [
+     "emotionalDepth",
+     "adaptability",
+     "composure",
+     "imagination",
+     "memory",
+     "vocal",
+     "physical",
+     "focus",
+     "discipline",
+     "presence",
+     "listening"
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 73.66
+   },
+   {
+    "what": "Your Showcase Scene",
+    "own": 74.21,
+    "atStart": 60.84,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "adaptability",
+     "composure",
+     "listening",
+     "presence",
+     "memory",
+     "vocal",
+     "physical",
+     "focus",
+     "discipline"
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 74.6
+   }
+  ],
+  "keptReplayed": 160,
+  "keptMismatched": 0,
+  "genres": [
+   {
+    "g": "drama",
+    "f": 0,
+    "practice": 52.8
+   },
+   {
+    "g": "coming_of_age",
+    "f": 0,
+    "practice": 33.7
+   },
+   {
+    "g": "domestic_drama",
+    "f": 0,
+    "practice": 25.1
+   },
+   {
+    "g": "comedy",
+    "f": 0,
+    "practice": 21.1
+   },
+   {
+    "g": "satire",
+    "f": 0,
+    "practice": 21.1
+   },
+   {
+    "g": "political_drama",
+    "f": 0,
+    "practice": 21.1
+   },
+   {
+    "g": "tragicomedy",
+    "f": 0,
+    "practice": 21.1
+   },
+   {
+    "g": "tragedy",
+    "f": 0,
+    "practice": 6.6
+   }
+  ],
+  "genreSpeed": {
+   "known": "drama",
+   "speed": 1.09,
+   "unknown": "absurdist",
+   "speedUnknown": 1
+  },
+  "firstLimits": {
+   "ability": 287,
+   "preparation": 50,
+   "technique": 14,
+   "condition": 13
+  },
+  "afterEnd": [],
+  "memos": {
+   "Living-expense scholarship, the fall term of 2026: David Geffen School of Drama at Yale University": 1,
+   "Living-expense scholarship, the spring term of 2027: David Geffen School of Drama at Yale University": 1,
+   "Living-expense scholarship, the fall term of 2027: David Geffen School of Drama at Yale University": 1,
+   "Living-expense scholarship, the spring term of 2028: David Geffen School of Drama at Yale University": 1,
+   "Living-expense scholarship, the fall term of 2028: David Geffen School of Drama at Yale University": 1,
+   "Living-expense scholarship, the spring term of 2029: David Geffen School of Drama at Yale University": 1
+  },
+  "yaleOwed": 0,
+  "hold": false,
+  "bank": 132641,
+  "audit": 0,
+  "breaches": 0,
+  "cover": "none",
+  "documents": [
+   "passport 一般旅券 (Japanese passport) valid to 2035-01-07",
+   "visa F-1 Student Visa valid to 2029-07-30",
+   "permit Employment Authorization, OPT valid to 2030-05-31"
+  ],
+  "standingLabel": "Graduated"
+ },
+ "checks": {
+  "1 creation": {
+   "pass": true,
+   "evidence": [
+    "family none, need true, citizenship jp, F-1 true, title actress, discipline 57.5 (conscientiousness 55), bank 65217",
+    "counterfactual: family moved, conscientiousness moved, home moved, pronouns moved",
+    "scholarship memos 6, plan memos 0"
+   ],
+   "fails": []
+  },
+  "2 classes to showings": {
+   "pass": true,
+   "evidence": [
+    "275 showings, each with its record; 79 with table work answered; 0 with a way of playing",
+    "6 terms' last pieces judged again: 24.3 < 68.7 ≤ 68.7; 25.7 < 73.5 ≤ 73.5; 25.3 < 66.8 ≤ 71.5; 28.6 < 78.3 ≤ 81.8; 27.6 < 78.5 ≤ 78.5; 26.5 < 74.2 ≤ 75.2",
+    "class days attended over the reviews 396; calls on the calendar kept 50, missed 6"
+   ],
+   "fails": []
+  },
+  "3 development": {
+   "pass": true,
+   "evidence": [
+    "abilities emotionalDepth 63.9→80.2, presence 63.9→67, listening 63.9→85, imagination 63.9→97.3, focus 63.9→98, memory 63.9→70.6, adaptability 63.9→71.8, composure 63.9→70.7, vocal 63.9→98.7, physical 63.9→77.4, discipline 63.9→100, stamina 50→35",
+    "last pieces at their own levels, then with what rose put back: 72.51/61.11 74.85/59.29 74.88/59.29 78.43/66.3 87.18/68.68 83.48/69.96 76.39/66.42 78.4/66.08 77.78/65.07 89.9/69.06 72.72/60.83 74.21/60.84",
+    "with what fell put back up: 72.51→73.31 (stamina) 74.85→75.93 (stamina) 74.88→75.95 (stamina) 78.43→81.86 (stamina) 87.18→89.12 (stamina) 83.48→84.95 (stamina) 76.39→79.48 (stamina) 78.4→78.71 (stamina) 77.78→78.47 (stamina) 89.9→91.84 (stamina) 72.72→73.66 (stamina) 74.21→74.6 (stamina)",
+    "first limits short of mastery: {\"ability\":287,\"preparation\":50,\"technique\":14,\"condition\":13}",
+    "genres known 8; drama speed 1.09, unmet absurdist 1",
+    "fell: stamina 50→35 (stamina falls unworked: `settleTheBody`)"
+   ],
+   "fails": []
+  },
+  "4 advice": {
+   "pass": true,
+   "evidence": [
+    "153 weekly reads, 10 first targets: vocal, imagination, focus, script, presence, physical, listening, adaptability, emotionalDepth, composure",
+    "all full said in 0 weeks",
+    "1 weeks the same words over a move under what's shown",
+    "standing said in 146 weeks (noted where the player practices or tapes)",
+    "circumstances: a condition named among the five in 35 weeks (condition:stamina), a preparation in 81"
+   ],
+   "fails": []
+  },
+  "5 health, stamina, energy": {
+   "pass": true,
+   "evidence": [
+    "daily changes of energy and stamina correlate at 0.07 over 1077 mornings",
+    "health events 5: 2026-09-29 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-05-04 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-09-13 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2027-09-13 | 2028-04-03 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2028-04-03 | 2029-01-09 injury concussion 14 days",
+    "called in sick 0 days; work ill or hurt 0 at undefined, well 364 at 70; excused class days by term 0,0,1,1,0,6"
+   ],
+   "fails": []
+  },
+  "6 money": {
+   "pass": true,
+   "evidence": [
+    "35 reloads with the ledger balanced and no breach; at the end audit 0, breaches 0",
+    "memos: Living-expense scholarship, the fall term of 2026: David Gef ×1; Living-expense scholarship, the spring term of 2027: David G ×1; Living-expense scholarship, the fall term of 2027: David Gef ×1; Living-expense scholarship, the spring term of 2028: David G ×1; Living-expense scholarship, the fall term of 2028: David Gef ×1; Living-expense scholarship, the spring term of 2029: David G ×1",
+    "holds 0, lifted 0; owed at the end 0; bank 132641"
+   ],
+   "fails": []
+  },
+  "7 papers": {
+   "pass": true,
+   "evidence": [
+    "photo ID in force 37 of 37 months; the bank's asks: Chase: You already have a current account at Chase.",
+    "OPT: You can apply from DATE, 90 days before your program ends. | You’ve already applied for OPT. | The time to apply closed on DATE, 60 days after your program ended.; applied 1, approved 1; out of status never",
+    "passports applied 0, issued 0, pending 0; documents at the end: passport 一般旅券 (Japanese passport) valid to 2035-01-07; visa F-1 Student Visa valid to 2029-07-30; permit Employment Authorization, OPT valid to 2030-05-31"
+   ],
+   "fails": []
+  },
+  "8 warnings": {
+   "pass": true,
+   "evidence": [
+    "coursework warnings none",
+    "reviews 0 2026-12-11 good (5/47 unready); 1 2027-04-23 good (0/45 unready); 2 2027-12-10 good (4/46 unready); 3 2028-04-28 good (2/46 unready); 4 2028-12-08 good (9/45 unready); 5 2029-04-27 good (1/46 unready)",
+    "missed classes notices 0, not registered 0, not passed 0"
+   ],
+   "fails": []
+  },
+  "9 terms and the end": {
+   "pass": true,
+   "evidence": [
+    "terms begun 6: Fall Term 2026 Begins, Spring Term 2027 Begins, Fall Term 2027 Begins, Spring Term 2028 Begins, Fall Term 2028 Begins, Spring Term 2029 Begins",
+    "reviews 0,1,2,3,4,5",
+    "standings 2026-08-24 good, 2029-05-21 graduated"
+   ],
+   "fails": []
+  },
+  "10 save and reload": {
+   "pass": true,
+   "evidence": [
+    "38 reloads (every thirty days and at each part), every one the same to the byte: true",
+    "160 kept results replayed from their inputs, 0 different"
+   ],
+   "fails": []
+  }
+ },
+ "continuity": {
+  "undone": [],
+  "saidAgain": {
+   "Ethan Didn’t Come": 1,
+   "Theo Didn’t Come": 2,
+   "Julian Didn’t Come": 2,
+   "Grace Didn’t Come": 3,
+   "Daniel: A Request For Help": 5,
+   "Theo: A Request For Help": 5,
+   "Julian: A Request For Help": 5,
+   "Elena: A Request For Help": 4,
+   "Ethan: An Apology": 2,
+   "A Doctor’s Visit": 5,
+   "Julian: An Apology": 2,
+   "Noah: An Apology": 1,
+   "Imani Didn’t Come": 1,
+   "Theo: An Apology": 2,
+   "Grace: An Apology": 1,
+   "Imani: An Apology": 1,
+   "Hannah Didn’t Come": 2,
+   "Ran Lines With Caleb": 1,
+   "Marcus Didn’t Come": 1,
+   "Caleb: An Apology": 1,
+   "The Summer Is Yours": 1,
+   "Marcus: An Apology": 1,
+   "Daniel: An Apology": 1
+  },
+  "sameWordsTwice": [
+   "Ran Lines With Julian | You share no open scene with Julian, so you ran their lines. It helped them, but it didn’t move your own work. ×2",
+   "Ran Lines With Ethan | You share no open scene with Ethan, so you ran their lines. It helped them, but it didn’t move your own work. ×2"
+  ],
+  "onceATerm": {
+   "Fall Term 2026 Begins": 1,
+   "Spring Term 2027 Begins": 1,
+   "Cast: Carlotta Festival Of New Plays": 1,
+   "Fall Term 2027 Begins": 1,
+   "Cast: Directors’ Thesis Production I": 1,
+   "Spring Term 2028 Begins": 1,
+   "Cast: Directors’ Thesis Production III": 1,
+   "Fall Term 2028 Begins": 1,
+   "Cast: Directors’ Thesis Production II": 1,
+   "Spring Term 2029 Begins": 1,
+   "Cast: Shakespeare Repertory Project I": 1
+  },
+  "twiceInATerm": [],
+  "advice": {
+   "weeks": 153,
+   "targets": {
+    "none": 2,
+    "vocal": 38,
+    "imagination": 22,
+    "focus": 33,
+    "script": 3,
+    "presence": 6,
+    "physical": 10,
+    "listening": 17,
+    "adaptability": 12,
+    "emotionalDepth": 9,
+    "composure": 1
+   },
+   "longRuns": [
+    {
+     "from": "2026-11-29",
+     "to": "2027-01-10",
+     "target": "focus",
+     "weeks": 7,
+     "newWords": 6,
+     "moved": 6,
+     "stripped": 3
+    },
+    {
+     "from": "2027-05-09",
+     "to": "2027-08-29",
+     "target": "imagination",
+     "weeks": 17,
+     "newWords": 16,
+     "moved": 16,
+     "stripped": 15
+    },
+    {
+     "from": "2027-12-19",
+     "to": "2028-01-16",
+     "target": "physical",
+     "weeks": 5,
+     "newWords": 4,
+     "moved": 4,
+     "stripped": 1
+    },
+    {
+     "from": "2028-04-30",
+     "to": "2028-08-06",
+     "target": "vocal",
+     "weeks": 15,
+     "newWords": 14,
+     "moved": 14,
+     "stripped": 7
+    },
+    {
+     "from": "2028-08-13",
+     "to": "2028-09-17",
+     "target": "listening",
+     "weeks": 6,
+     "newWords": 5,
+     "moved": 5,
+     "stripped": 3
+    },
+    {
+     "from": "2029-04-08",
+     "to": "2029-07-15",
+     "target": "focus",
+     "weeks": 15,
+     "newWords": 14,
+     "moved": 13,
+     "stripped": 9
+    }
+   ],
+   "runs": 65,
+   "staleRuns": 0,
+   "wordsOnlyChanges": 49
+  },
+  "feedback": {
+   "notes": 275,
+   "recurring": 28,
+   "recurringOnAPartNotShort": [],
+   "kinds": {
+    "advanced": 238,
+    "new": 4,
+    "recurring": 28,
+    "partial": 5
+   },
+   "longestSameNote": {
+    "run": 31,
+    "best": 48,
+    "what": "advanced"
+   }
+  },
+  "variety": {
+   "templates": 18,
+   "pieces": 275,
+   "longestSameTemplate": {
+    "run": 1,
+    "best": 2,
+    "what": "movement-score"
+   },
+   "scenes": 64,
+   "sceneShowings": 81,
+   "scenesAgain": 17,
+   "exercises": {
+    "sense-memory": 105,
+    "showing-for-classmates": 13,
+    "repetition": 211,
+    "given-circumstances": 522,
+    "concentration": 524,
+    "recall-drill": 2,
+    "adjustments": 55,
+    "graded-exposure": 9,
+    "voice-work": 503,
+    "movement-work": 89,
+    "script-analysis": 30
+   },
+   "longestSameExercise": 432
+  },
+  "interpretations": 56
+ },
+ "standings": [
+  {
+   "at": "2026-08-24T11:30",
+   "standing": "good"
+  },
+  {
+   "at": "2029-05-21T14:30",
+   "standing": "graduated"
+  }
+ ],
+ "reviews": [
+  {
+   "term": 0,
+   "at": "2026-12-11",
+   "standing": "good",
+   "attendance": 1,
+   "growth": 1.44,
+   "classGrowth": 1.31,
+   "coursework": {
+    "shown": 47,
+    "unready": 5,
+    "strong": 42
+   },
+   "reason": "You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.4 points, and the class’s middle student’s grew 1.3. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 42 of 47 pieces were Strong or better.",
+   "tally": {
+    "classDays": 65,
+    "attended": 65,
+    "excused": 0
+   },
+   "prepReplay": {
+    "piece": "assignment_00001b",
+    "kept": 68.7,
+    "again": 68.7,
+    "none": 24.27120564041167,
+    "full": 68.73690692875945,
+    "exact": 68.72265869805358
+   }
+  },
+  {
+   "term": 1,
+   "at": "2027-04-23",
+   "standing": "good",
+   "attendance": 1,
+   "growth": 1.4,
+   "classGrowth": 1.03,
+   "coursework": {
+    "shown": 45,
+    "unready": 0,
+    "strong": 43
+   },
+   "reason": "You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.4 points, and the class’s middle student’s grew 1.0. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 43 of 45 pieces were Strong or better.",
+   "tally": {
+    "classDays": 65,
+    "attended": 65,
+    "excused": 0
+   },
+   "prepReplay": {
+    "piece": "assignment_00002d",
+    "kept": 73.5,
+    "again": 73.5,
+    "none": 25.71359519809202,
+    "full": 73.46741485169149,
+    "exact": 73.46741485169149
+   }
+  },
+  {
+   "term": 2,
+   "at": "2027-12-10",
+   "standing": "good",
+   "attendance": 1,
+   "growth": 1.54,
+   "classGrowth": 1.53,
+   "coursework": {
+    "shown": 46,
+    "unready": 4,
+    "strong": 38
+   },
+   "reason": "You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.5 points, and the class’s middle student’s grew 1.5. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 38 of 46 pieces were Strong or better.",
+   "tally": {
+    "classDays": 69,
+    "attended": 68,
+    "excused": 1
+   },
+   "prepReplay": {
+    "piece": "assignment_00003u",
+    "kept": 66.8,
+    "again": 66.8,
+    "none": 25.33205476933003,
+    "full": 71.51762055397208,
+    "exact": 66.7573356933535
+   }
+  },
+  {
+   "term": 3,
+   "at": "2028-04-28",
+   "standing": "good",
+   "attendance": 1,
+   "growth": 1.33,
+   "classGrowth": 1.33,
+   "coursework": {
+    "shown": 46,
+    "unready": 2,
+    "strong": 37
+   },
+   "reason": "You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.3 points, and the class’s middle student’s grew 1.3. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your strong work in Major Barbara. The faculty noted your coursework: 37 of 46 pieces were Strong or better.",
+   "tally": {
+    "classDays": 73,
+    "attended": 72,
+    "excused": 1
+   },
+   "prepReplay": {
+    "piece": "assignment_000054",
+    "kept": 78.3,
+    "again": 78.3,
+    "none": 28.63623354360564,
+    "full": 81.81781012458754,
+    "exact": 78.34448849420254
+   }
+  },
+  {
+   "term": 4,
+   "at": "2028-12-08",
+   "standing": "good",
+   "attendance": 1,
+   "growth": 1.04,
+   "classGrowth": 1.08,
+   "coursework": {
+    "shown": 45,
+    "unready": 9,
+    "strong": 31
+   },
+   "reason": "You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.0 points, and the class’s middle student’s grew 1.1. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your strong work in The Wild Duck. The faculty noted your coursework: 31 of 45 pieces were Strong or better.",
+   "tally": {
+    "classDays": 64,
+    "attended": 64,
+    "excused": 0
+   },
+   "prepReplay": {
+    "piece": "assignment_000069",
+    "kept": 78.5,
+    "again": 78.5,
+    "none": 27.57180180506688,
+    "full": 78.45534671079905,
+    "exact": 78.45534671079905
+   }
+  },
+  {
+   "term": 5,
+   "at": "2029-04-27",
+   "standing": "good",
+   "attendance": 1,
+   "growth": 0.95,
+   "classGrowth": 0.95,
+   "coursework": {
+    "shown": 46,
+    "unready": 1,
+    "strong": 44
+   },
+   "reason": "You came to 100% of the classes, calls and shifts asked of you. Your craft grew 0.9 points, and the class’s middle student’s grew 0.9. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: 44 of 46 pieces were Strong or better.",
+   "tally": {
+    "classDays": 68,
+    "attended": 62,
+    "excused": 6
+   },
+   "prepReplay": {
+    "piece": "assignment_00007n",
+    "kept": 74.2,
+    "again": 74.2,
+    "none": 26.522741705653104,
+    "full": 75.15913112765716,
+    "exact": 74.1825426724501
+   }
+  }
+ ],
+ "acts": [
+  "2029-03-02 documents.apply_opt",
+  "2029-08-01 health.enroll"
+ ],
+ "health": [
+  {
+   "at": "2026-09-29T14:25",
+   "events": [
+    "care visit: A doctor’s visit, Yale Health Center, Student Health"
+   ],
+   "before": {
+    "condition": 98.5,
+    "fitness": 43.52,
+    "energy": 88
+   },
+   "after": {
+    "condition": 98.5,
+    "fitness": 43.52,
+    "energy": 85
+   }
+  },
+  {
+   "at": "2027-05-04T14:05",
+   "events": [
+    "care visit: A doctor’s visit, Yale Health Center, Student Health"
+   ],
+   "before": {
+    "condition": 91.4,
+    "fitness": 35,
+    "energy": 94
+   },
+   "after": {
+    "condition": 91.4,
+    "fitness": 35,
+    "energy": 91
+   }
+  },
+  {
+   "at": "2027-09-13T13:20",
+   "events": [
+    "care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department",
+    "in hospital to 2027-09-13"
+   ],
+   "before": {
+    "condition": 92.5,
+    "fitness": 37.26,
+    "energy": 97
+   },
+   "after": {
+    "condition": 72.5,
+    "fitness": 37.26,
+    "energy": 74
+   }
+  },
+  {
+   "at": "2028-04-03T13:15",
+   "events": [
+    "care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department",
+    "in hospital to 2028-04-03"
+   ],
+   "before": {
+    "condition": 96.9,
+    "fitness": 43.39,
+    "energy": 97
+   },
+   "after": {
+    "condition": 76.9,
+    "fitness": 43.39,
+    "energy": 74
+   }
+  },
+  {
+   "at": "2029-01-09T20:15",
+   "events": [
+    "injury concussion 14 days"
+   ],
+   "before": {
+    "condition": 91.2,
+    "fitness": 35,
+    "energy": 79
+   },
+   "after": {
+    "condition": 91.2,
+    "fitness": 35,
+    "energy": 68
+   }
+  }
+ ],
+ "interpretations": [
+  {
+   "at": "2026-09-10",
+   "assignment": "assignment_00000a",
+   "template": "scene-study",
+   "scene": "trifles",
+   "previews": {
+    "open": 69.66,
+    "scale:restrained": {
+     "v": 71.64,
+     "fit": [],
+     "grain": [
+      "Restrained, Suits The Scene -0.21",
+      "Restrained, Suits The Scene -0.04"
+     ]
+    },
+    "scale:expansive": {
+     "v": 67.11,
+     "fit": [],
+     "grain": [
+      "Expansive, Works Against The Scene 0.22",
+      "Expansive, Works Against The Scene 0.05"
+     ]
+    },
+    "pace:measured": {
+     "v": 70.69,
+     "fit": [],
+     "grain": [
+      "Measured, Suits The Scene -0.13",
+      "Measured, Suits The Scene -0.07"
+     ]
+    },
+    "pace:driven": {
+     "v": 69.88,
+     "fit": [],
+     "grain": [
+      "Driven, Either Way -0.04",
+      "Driven, Either Way -0.02"
+     ]
+    },
+    "structure:set": {
+     "v": 70.07,
+     "fit": [],
+     "grain": [
+      "Set, Suits The Scene -0.11",
+      "Set, Suits The Scene -0.02"
+     ]
+    },
+    "structure:open": {
+     "v": 69.66,
+     "fit": [],
+     "grain": []
+    }
+   },
+   "chosen": "not a chooser"
+  },
+  {
+   "at": "2026-09-23",
+   "assignment": "assignment_00000h",
+   "template": "scene-study",
+   "scene": "cherry-orchard-4",
+   "previews": {
+    "open": 70.61,
+    "scale:restrained": {
+     "v": 72.43,
+     "fit": [],
+     "grain": [
+      "Restrained, Suits The Scene -0.21",
+      "Restrained, Suits The Scene -0.04"
+     ]
+    },
+    "scale:expansive": {
+     "v": 68.24,
+     "fit": [],
+     "grain": [
+      "Expansive, Works Against The Scene 0.2",
+      "Expansive, Works Against The Scene 0.04"
+     ]
+    },
+    "pace:measured": {
+     "v": 71.3,
+     "fit": [],
+     "grain": [
+      "Measured, Suits The Scene -0.08",
+      "Measured, Suits The Scene -0.04"
+     ]
+    },
+    "pace:driven": {
+     "v": 71.33,
+     "fit": [],
+     "grain": [
+      "Driven, Suits The Scene -0.13",
+      "Driven, Suits The Scene -0.07"
+     ]
+    },
+    "structure:set": {
+     "v": 70.9,
+     "fit": [],
+     "grain": [
+      "Set, Suits The Scene -0.07",
+      "Set, Suits The Scene -0.02"
+     ]
+    },
+    "structure:open": {
+     "v": 70.61,
+     "fit": [],
+     "grain": []
+    }
+   },
+   "chosen": "not a chooser"
+  },
+  {
+   "at": "2026-10-07",
+   "assignment": "assignment_00000o",
+   "template": "scene-study",
+   "scene": "orig-night-desk",
+   "previews": {
+    "open": 72.18,
+    "scale:restrained": {
+     "v": 72.44,
+     "fit": [],
+     "grain": [
+      "Restrained, Either Way -0.04",
+      "Restrained, Either Way -0.01"
+     ]
+    },
+    "scale:expansive": {
+     "v": 72,
+     "fit": [],
+     "grain": [
+      "Expansive, Either Way 0.02",
+      "Expansive, Either Way 0"
+     ]
+    },
+    "pace:measured": {
+     "v": 72.22,
+     "fit": [],
+     "grain": [
+      "Measured, Either Way -0.01",
+      "Measured, Either Way 0"
+     ]
+    },
+    "pace:driven": {
+     "v": 73.81,
+     "fit": [],
+     "grain": [
+      "Driven, Suits The Scene -0.21",
+      "Driven, Suits The Scene -0.1"
+     ]
+    },
+    "structure:set": {
+     "v": 72.43,
+     "fit": [],
+     "grain": [
+      "Set, Either Way -0.04",
+      "Set, Either Way -0.01"
+     ]
+    },
+    "structure:open": {
+     "v": 73.89,
+     "fit": [],
+     "grain": [
+      "Open, Suits The Scene -0.3",
+      "Open, Suits The Scene -0.06"
+     ]
+    }
+   },
+   "chosen": "not a chooser"
+  },
+  {
+   "at": "2026-11-10",
+   "assignment": "assignment_000013",
+   "template": "scene-study",
+   "scene": "rising-moon",
+   "previews": {
+    "open": 67.79,
+    "scale:restrained": {
+     "v": 68.96,
+     "fit": [],
+     "grain": [
+      "Restrained, Suits The Scene -0.21",
+      "Restrained, Suits The Scene -0.04"
+     ]
+    },
+    "scale:expansive": {
+     "v": 66.18,
+     "fit": [],
+     "grain": [
+      "Expansive, Works Against The Scene 0.14",
+      "Expansive, Works Against The Scene 0.03"
+     ]
+    },
+    "pace:measured": {
+     "v": 68.83,
+     "fit": [],
+     "grain": [
+      "Measured, Suits The Scene -0.13",
+      "Measured, Suits The Scene -0.07"
+     ]
+    },
+    "pace:driven": {
+     "v": 68.12,
+     "fit": [],
+     "grain": [
+      "Driven, Suits The Scene -0.07",
+      "Driven, Suits The Scene -0.04"
+     ]
+    },
+    "structure:set": {
+     "v": 68,
+     "fit": [],
+     "grain": [
+      "Set, Either Way -0.04",
+      "Set, Either Way -0.01"
+     ]
+    },
+    "structure:open": {
+     "v": 68.35,
+     "fit": [],
+     "grain": [
+      "Open, Suits The Scene -0.22",
+      "Open, Suits The Scene -0.05"
+     ]
+    }
+   },
+   "chosen": "not a chooser"
+  },
+  {
+   "at": "2027-01-16",
+   "assignment": "assignment_00001i",
+   "template": "table-work",
+   "scene": "proposal",
+   "previews": {
+    "open": 78.59,
+    "scale:restrained": {
+     "v": 78.59,
+     "fit": [],
+     "grain": []
+    },
+    "scale:expansive": {
+     "v": 78.31,
+     "fit": [],
+     "grain": []
+    },
+    "pace:measured": {
+     "v": 70.17,
+     "fit": [
+      "Measured: The Proposal doesn’t take it: A farce that escalates: played measured it never reaches the quarrel the text writes. 0.85"
+     ],
+     "grain": []
+    },
+    "pace:driven": {
+     "v": 78.6,
+     "fit": [],
+     "grain": []
+    },
+    "structure:set": {
+     "v": 78.42,
+     "fit": [],
+     "grain": []
+    },
+    "structure:open": {
+     "v": 78.59,
+     "fit": [],
+     "grain": []
+    }
+   },
+   "chosen": "not a chooser"
+  },
+  {
+   "at": "2027-02-05",
+   "assignment": "assignment_00001r",
+   "template": "table-work",
+   "scene": "vanya-2",
+   "previews": {
+    "open": 78.93,
+    "scale:restrained": {
+     "v": 78.93,
+     "fit": [],
+     "grain": []
+    },
+    "scale:expansive": {
+     "v": 78.66,
+     "fit": [],
+     "grain": []
+    },
+    "pace:measured": {
+     "v": 79.15,
+     "fit": [],
+     "grain": []
+    },
+    "pace:driven": {
+     "v": 78.93,
+     "fit": [],
+     "grain": []
+    },
+    "structure:set": {
+     "v": 78.75,
+     "fit": [],
+     "grain": []
+    },
+    "structure:open": {
+     "v": 78.93,
+     "fit": [],
+     "grain": []
+    }
+   },
+   "chosen": "not a chooser"
+  },
+  {
+   "at": "2027-03-05",
+   "assignment": "assignment_000026",
+   "template": "table-work",
+   "scene": "arms-1",
+   "previews": {
+    "open": 79.61,
+    "scale:restrained": {
+     "v": 79.61,
+     "fit": [],
+     "grain": []
+    },
+    "scale:expansive": {
+     "v": 79.27,
+     "fit": [],
+     "grain": []
+    },
+    "pace:measured": {
+     "v": 79.76,
+     "fit": [],
+     "grain": []
+    },
+    "pace:driven": {
+     "v": 79.61,
+     "fit": [],
+     "grain": []
+    },
+    "structure:set": {
+     "v": 79.37,
+     "fit": [],
+     "grain": []
+    },
+    "structure:open": {
+     "v": 79.61,
+     "fit": [],
+     "grain": []
+    }
+   },
+   "chosen": "not a chooser"
+  },
+  {
+   "at": "2027-09-02",
+   "assignment": "assignment_00002p",
+   "template": "table-work",
+   "scene": "windermere-1",
+   "previews": {
+    "open": 86.61,
+    "scale:restrained": {
+     "v": 86.61,
+     "fit": [],
+     "grain": []
+    },
+    "scale:expansive": {
+     "v": 85.85,
+     "fit": [],
+     "grain": []
+    },
+    "pace:measured": {
+     "v": 86.33,
+     "fit": [],
+     "grain": []
+    },
+    "pace:driven": {
+     "v": 86.51,
+     "fit": [],
+     "grain": []
+    },
+    "structure:set": {
+     "v": 86.08,
+     "fit": [],
+     "grain": []
+    },
+    "structure:open": {
+     "v": 86.61,
+     "fit": [],
+     "grain": []
+    }
+   },
+   "chosen": "not a chooser"
+  },
+  {
+   "at": "2027-09-15",
+   "assignment": "assignment_00002w",
+   "template": "classical-scene",
+   "scene": "twelfth-1-5",
+   "previews": {
+    "open": 74.22,
+    "scale:restrained": {
+     "v": 74.49,
+     "fit": [],
+     "grain": [
+      "Restrained, Suits The Scene -0.11",
+      "Restrained, Suits The Scene -0.02"
+     ]
+    },
+    "scale:expansive": {
+     "v": 72.87,
+     "fit": [],
+     "grain": [
+      "Expansive, Works Against The Scene 0.09",
+      "Expansive, Works Against The Scene 0.02"
+     ]
+    },
+    "pace:measured": {
+     "v": 74.61,
+     "fit": [],
+     "grain": [
+      "Measured, Suits The Scene -0.1",
+      "Measured, Suits The Scene -0.05"
+     ]
+    },
+    "pace:driven": {
+     "v": 75.14,
+     "fit": [],
+     "grain": [
+      "Driven, Suits The Scene -0.21",
+      "Driven, Suits The Scene -0.1"
+     ]
+    },
+    "structure:set": {
+     "v": 75.01,
+     "fit": [],
+     "grain": [
+      "Set, Suits The Scene -0.19",
+      "Set, Suits The Scene -0.04"
+     ]
+    },
+    "structure:open": {
+     "v": 75.26,
+     "fit": [],
+     "grain": [
+      "Open, Suits The Scene -0.22",
+      "Open, Suits The Scene -0.05"
+     ]
+    }
+   },
+   "chosen": "not a chooser"
+  },
+  {
+   "at": "2027-09-23",
+   "assignment": "assignment_00002z",
+   "template": "table-work",
+   "scene": "scapin-3-2",
+   "previews": {
+    "open": 86.34,
+    "scale:restrained": {
+     "v": 86.34,
+     "fit": [],
+     "grain": []
+    },
+    "scale:expansive": {
+     "v": 85.69,
+     "fit": [],
+     "grain": []
+    },
+    "pace:measured": {
+     "v": 86.01,
+     "fit": [],
+     "grain": []
+    },
+    "pace:driven": {
+     "v": 86.25,
+     "fit": [],
+     "grain": []
+    },
+    "structure:set": {
+     "v": 85.88,
+     "fit": [],
+     "grain": []
+    },
+    "structure:open": {
+     "v": 86.34,
+     "fit": [],
+     "grain": []
+    }
+   },
+   "chosen": "not a chooser"
+  },
+  {
+   "at": "2027-09-28",
+   "assignment": "assignment_000031",
+   "template": "classical-scene",
+   "scene": "muchado-4-1",
+   "previews": {
+    "open": 72.4,
+    "scale:restrained": {
+     "v": 72.22,
+     "fit": [],
+     "grain": []
+    },
+    "scale:expansive": {
+     "v": 72.24,
+     "fit": [],
+     "grain": [
+      "Expansive, Either Way -0.01",
+      "Expansive, Either Way 0"
+     ]
+    },
+    "pace:measured": {
+     "v": 72.84,
+     "fit": [],
+     "grain": [
+      "Measured, Suits The Scene -0.13",
+      "Measured, Suits The Scene -0.06"
+     ]
+    },
+    "pace:driven": {
+     "v": 73.25,
+     "fit": [],
+     "grain": [
+      "Driven, Suits The Scene -0.19",
+      "Driven, Suits The Scene -0.09"
+     ]
+    },
+    "structure:set": {
+     "v": 73.36,
+     "fit": [],
+     "grain": [
+      "Set, Suits The Scene -0.19",
+      "Set, Suits The Scene -0.04"
+     ]
+    },
+    "structure:open": {
+     "v": 73.27,
+     "fit": [],
+     "grain": [
+      "Open, Suits The Scene -0.22",
+      "Open, Suits The Scene -0.05"
+     ]
+    }
+   },
+   "chosen": "not a chooser"
+  },
+  {
+   "at": "2027-10-07",
+   "assignment": "assignment_00003a",
+   "template": "classical-scene",
+   "scene": "lear-4-7",
+   "previews": {
+    "open": 72.17,
+    "scale:restrained": {
+     "v": 72.05,
+     "fit": [],
+     "grain": []
+    },
+    "scale:expansive": {
+     "v": 71.84,
+     "fit": [],
+     "grain": []
+    },
+    "pace:measured": {
+     "v": 72.94,
+     "fit": [],
+     "grain": [
+      "Measured, Suits The Scene -0.19",
+      "Measured, Suits The Scene -0.1"
+     ]
+    },
+    "pace:driven": {
+     "v": 72.58,
+     "fit": [],
+     "grain": [
+      "Driven, Suits The Scene -0.07",
+      "Driven, Suits The Scene -0.04"
+     ]
+    },
+    "structure:set": {
+     "v": 72.72,
+     "fit": [],
+     "grain": [
+      "Set, Suits The Scene -0.15",
+      "Set, Suits The Scene -0.03"
+     ]
+    },
+    "structure:open": {
+     "v": 73.57,
+     "fit": [],
+     "grain": [
+      "Open, Suits The Scene -0.22",
+      "Open, Suits The Scene -0.05"
+     ]
+    }
+   },
+   "chosen": "not a chooser"
+  }
+ ],
+ "interpretationsSeen": 56,
+ "reloads": {
+  "n": 38,
+  "notSame": []
+ },
+ "ledger": {
+  "n": 35,
+  "bad": []
+ },
+ "notices": [
+  [
+   "2026-08-24",
+   "Welcome To The Class Of 2029"
+  ],
+  [
+   "2026-08-24",
+   "Fall Term 2026 Begins",
+   "Your living-expense scholarship of $15,200.50 met this term’s Yale Health plan, $1,882.00, and $11,356.54 is in your Chase Total Checking, after $1,961.96 withheld for the IRS. Tuition, $20,375.00 a term, is covered by t"
+  ],
+  [
+   "2026-08-24",
+   "Registration And Your Account"
+  ],
+  [
+   "2026-08-25",
+   "Meeting Your Class"
+  ],
+  [
+   "2026-08-26",
+   "Meeting The Acting Faculty"
+  ],
+  [
+   "2026-08-27",
+   "The Building, The Studios And The Library"
+  ],
+  [
+   "2026-08-28",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-08-28",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2026-08-28",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2026-08-28",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2026-08-28",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2026-08-28",
+   "Play: A Game Played Through"
+  ],
+  [
+   "2026-08-28",
+   "Acting Intimacy And Combat For The Stage: Consent And Intimacy Practice"
+  ],
+  [
+   "2026-08-28",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-08-28",
+   "The Courses And What They Ask"
+  ],
+  [
+   "2026-08-31",
+   "Lucia Didn’t Come"
+  ],
+  [
+   "2026-09-08",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-09-09",
+   "Note Not Taken Yet: Scene Study"
+  ],
+  [
+   "2026-09-09",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-09-10",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2026-09-10",
+   "Lucia Asks To Rehearse"
+  ],
+  [
+   "2026-09-11",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2026-09-11",
+   "Lucia Didn’t Hear Back"
+  ],
+  [
+   "2026-09-14",
+   "Ethan Asks To Rehearse"
+  ],
+  [
+   "2026-09-14",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2026-09-14",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2026-09-14",
+   "Lucia: An Apology"
+  ],
+  [
+   "2026-09-15",
+   "Ethan: A Different Reading"
+  ],
+  [
+   "2026-09-15",
+   "Ethan Didn’t Hear Back"
+  ],
+  [
+   "2026-09-15",
+   "Ethan Didn’t Come"
+  ],
+  [
+   "2026-09-16",
+   "Ethan Asks To Rehearse"
+  ],
+  [
+   "2026-09-16",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-09-17",
+   "Play: A Game Played Through"
+  ],
+  [
+   "2026-09-17",
+   "Maya Asks To Rehearse"
+  ],
+  [
+   "2026-09-17",
+   "Maya: Run Lines Together?"
+  ],
+  [
+   "2026-09-17",
+   "Ethan Didn’t Hear Back"
+  ],
+  [
+   "2026-09-18",
+   "Maya Didn’t Hear Back"
+  ],
+  [
+   "2026-09-21",
+   "Daniel: A Request For Help"
+  ],
+  [
+   "2026-09-22",
+   "Note Not Taken Yet: Scene Study"
+  ],
+  [
+   "2026-09-22",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-09-22",
+   "Ethan: An Apology"
+  ],
+  [
+   "2026-09-23",
+   "Theo Didn’t Come"
+  ],
+  [
+   "2026-09-24",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2026-09-25",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2026-09-25",
+   "Acting Intimacy And Combat For The Stage: Consent And Intimacy Practice"
+  ],
+  [
+   "2026-09-25",
+   "Elena: A Word After Class"
+  ],
+  [
+   "2026-09-28",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2026-09-28",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2026-09-28",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2026-09-28",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2026-09-29",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-09-29",
+   "Theo: A Different Reading"
+  ],
+  [
+   "2026-09-29",
+   "A Doctor’s Visit"
+  ],
+  [
+   "2026-10-01",
+   "Maya Asks To Rehearse"
+  ],
+  [
+   "2026-10-06",
+   "Note Taken: Scene Study"
+  ],
+  [
+   "2026-10-06",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-10-08",
+   "Play: A Game Played Through"
+  ],
+  [
+   "2026-10-09",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2026-10-09",
+   "Caleb: Run Lines Together?"
+  ],
+  [
+   "2026-10-10",
+   "Ran Lines With Caleb"
+  ],
+  [
+   "2026-10-11",
+   "Julian Didn’t Come"
+  ],
+  [
+   "2026-10-13",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2026-10-13",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-10-14",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2026-10-16",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2026-10-16",
+   "Theo: A Request For Help"
+  ],
+  [
+   "2026-10-19",
+   "Julian: An Apology"
+  ],
+  [
+   "2026-10-26",
+   "Note Taken: Scene Study"
+  ],
+  [
+   "2026-10-26",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-10-27",
+   "Grace Asks To Rehearse"
+  ],
+  [
+   "2026-10-28",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-10-28",
+   "Grace Didn’t Come"
+  ],
+  [
+   "2026-10-30",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2026-10-30",
+   "Acting Intimacy And Combat For The Stage: Consent And Intimacy Practice"
+  ],
+  [
+   "2026-11-02",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2026-11-02",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2026-11-04",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2026-11-05",
+   "Play: A Game Played Through"
+  ],
+  [
+   "2026-11-05",
+   "Grace: A Different Reading"
+  ],
+  [
+   "2026-11-06",
+   "Noah Didn’t Come"
+  ],
+  [
+   "2026-11-06",
+   "Grace: Run Lines Together?"
+  ],
+  [
+   "2026-11-09",
+   "Note Taken: Scene Study"
+  ],
+  [
+   "2026-11-09",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-11-09",
+   "Zoe Asks To Rehearse"
+  ],
+  [
+   "2026-11-10",
+   "Zoe Didn’t Hear Back"
+  ],
+  [
+   "2026-11-11",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-11-12",
+   "Daniel Asks To Rehearse"
+  ],
+  [
+   "2026-11-13",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2026-11-13",
+   "Daniel Didn’t Hear Back"
+  ],
+  [
+   "2026-11-16",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2026-11-17",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2026-11-17",
+   "Julian: A Request For Help"
+  ],
+  [
+   "2026-11-18",
+   "Note Not Taken Yet: Scene Study"
+  ],
+  [
+   "2026-11-18",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-11-18",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2026-11-19",
+   "Noah: An Apology"
+  ],
+  [
+   "2026-11-23",
+   "Hannah: A Different Reading"
+  ],
+  [
+   "2026-11-24",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2026-11-25",
+   "Julian: Run Lines Together?"
+  ],
+  [
+   "2026-11-27",
+   "Ran Lines With Julian"
+  ],
+  [
+   "2026-12-01",
+   "Note Taken: Scene Study"
+  ],
+  [
+   "2026-12-01",
+   "Acting I: Scene Study"
+  ],
+  [
+   "2026-12-01",
+   "Imani Asks To Rehearse"
+  ],
+  [
+   "2026-12-01",
+   "Elena: A Request For Help"
+  ],
+  [
+   "2026-12-02",
+   "Theo: An Apology"
+  ],
+  [
+   "2026-12-03",
+   "Imani: A Different Reading"
+  ],
+  [
+   "2026-12-08",
+   "Imani Didn’t Come"
+  ],
+  [
+   "2026-12-08",
+   "Zoe: Run Lines Together?"
+  ],
+  [
+   "2026-12-10",
+   "Ran Lines With Zoe"
+  ],
+  [
+   "2026-12-11",
+   "In Good Standing"
+  ],
+  [
+   "2027-01-04",
+   "Spring Term 2027 Begins",
+   "Your living-expense scholarship of $15,200.50 met this term’s Yale Health plan, $1,882.00, and $11,356.54 is in your Chase Total Checking, after $1,961.96 withheld for the IRS. Tuition, $20,375.00 a term, is covered by t"
+  ],
+  [
+   "2027-01-04",
+   "Cast: Carlotta Festival Of New Plays"
+  ],
+  [
+   "2027-01-11",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2027-01-11",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2027-01-11",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2027-01-12",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2027-01-13",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2027-01-13",
+   "Grace: An Apology"
+  ],
+  [
+   "2027-01-14",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2027-01-14",
+   "Text Analysis I: The Actor’s Table Work: Table Work"
+  ],
+  [
+   "2027-01-14",
+   "Ethan: A Different Reading"
+  ],
+  [
+   "2027-01-15",
+   "Acting Intimacy And Combat For The Stage: A Choreographed Sequence"
+  ],
+  [
+   "2027-01-15",
+   "Mateo: Run Lines Together?"
+  ],
+  [
+   "2027-01-20",
+   "Ethan Asks To Rehearse"
+  ],
+  [
+   "2027-01-20",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2027-01-23",
+   "Ethan Didn’t Hear Back"
+  ],
+  [
+   "2027-01-26",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2027-01-26",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2027-01-26",
+   "Imani: An Apology"
+  ],
+  [
+   "2027-01-27",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2027-01-28",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2027-01-28",
+   "Caleb: A Different Reading"
+  ],
+  [
+   "2027-01-29",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2027-01-29",
+   "Hannah: Run Lines Together?"
+  ],
+  [
+   "2027-01-31",
+   "Caleb Didn’t Come"
+  ],
+  [
+   "2027-02-02",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2027-02-03",
+   "Caleb Asks To Rehearse"
+  ],
+  [
+   "2027-02-04",
+   "Text Analysis I: The Actor’s Table Work: Table Work"
+  ],
+  [
+   "2027-02-08",
+   "Caleb: An Apology"
+  ],
+  [
+   "2027-02-09",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2027-02-09",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2027-02-10",
+   "Zoe Asks To Rehearse"
+  ],
+  [
+   "2027-02-10",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2027-02-10",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2027-02-11",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2027-02-12",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2027-02-12",
+   "Acting Intimacy And Combat For The Stage: A Choreographed Sequence"
+  ],
+  [
+   "2027-02-12",
+   "Zoe: A Different Reading"
+  ],
+  [
+   "2027-02-23",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2027-02-23",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2027-02-23",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2027-02-24",
+   "Marcus Asks To Rehearse"
+  ],
+  [
+   "2027-02-25",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2027-02-26",
+   "Lucia: Run Lines Together?"
+  ],
+  [
+   "2027-02-28",
+   "Marcus Didn’t Come"
+  ],
+  [
+   "2027-03-01",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2027-03-03",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2027-03-04",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2027-03-04",
+   "Text Analysis I: The Actor’s Table Work: Table Work"
+  ],
+  [
+   "2027-03-05",
+   "Imani Asks To Rehearse"
+  ],
+  [
+   "2027-03-06",
+   "Imani Didn’t Hear Back"
+  ],
+  [
+   "2027-03-15",
+   "Your Understudy Run-Through"
+  ],
+  [
+   "2027-03-16",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2027-03-16",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2027-03-18",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2027-03-18",
+   "Marcus: An Apology"
+  ],
+  [
+   "2027-03-20",
+   "Your Card Limit Went Up"
+  ],
+  [
+   "2027-03-22",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2027-03-23",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2027-03-23",
+   "You’re On Tonight As Nina"
+  ],
+  [
+   "2027-03-24",
+   "You Went On As Nina"
+  ],
+  [
+   "2027-03-24",
+   "Elena: A Different Reading"
+  ],
+  [
+   "2027-03-25",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2027-03-26",
+   "Acting Intimacy And Combat For The Stage: A Choreographed Sequence"
+  ],
+  [
+   "2027-03-27",
+   "The Director’s Note: The Seagull"
+  ],
+  [
+   "2027-03-27",
+   "Looking Back: The Seagull"
+  ],
+  [
+   "2027-04-01",
+   "Text Analysis I: The Actor’s Table Work: Table Work"
+  ],
+  [
+   "2027-04-04",
+   "Theo Didn’t Come"
+  ],
+  [
+   "2027-04-05",
+   "Acting I: A Simulated Rehearsal"
+  ],
+  [
+   "2027-04-05",
+   "Speech And Accents I: Sound Changes And A Text"
+  ],
+  [
+   "2027-04-05",
+   "Alexander Technique I: Directions In Daily Life"
+  ],
+  [
+   "2027-04-07",
+   "The Body As Source I: A Movement Score"
+  ],
+  [
+   "2027-04-07",
+   "Text And Context Across The Repertory: A Play In Its Context"
+  ],
+  [
+   "2027-04-07",
+   "Ethan: Run Lines Together?"
+  ],
+  [
+   "2027-04-08",
+   "Voice I: A Voice Sequence"
+  ],
+  [
+   "2027-04-09",
+   "Theo Asks To Rehearse"
+  ],
+  [
+   "2027-04-10",
+   "Theo Didn’t Hear Back"
+  ],
+  [
+   "2027-04-10",
+   "Ran Lines With Ethan"
+  ],
+  [
+   "2027-04-16",
+   "Your 2026 Return Is Late",
+   "Your IRS refund waits until you file, with no penalty. Connecticut charges its own penalty on what you owe it. File it on Papers, under Tax Returns."
+  ],
+  [
+   "2027-04-16",
+   "Theo Asks To Rehearse"
+  ],
+  [
+   "2027-04-17",
+   "Theo Didn’t Hear Back"
+  ],
+  [
+   "2027-04-17",
+   "Daniel Didn’t Come"
+  ],
+  [
+   "2027-04-22",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2027-04-23",
+   "In Good Standing"
+  ],
+  [
+   "2027-05-03",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2027-05-13",
+   "The Director’s Note: Carlotta Festival Of New Plays"
+  ],
+  [
+   "2027-05-13",
+   "Looking Back: Carlotta Festival Of New Plays"
+  ],
+  [
+   "2027-05-13",
+   "The Summer Is Yours"
+  ],
+  [
+   "2027-06-14",
+   "Happy Birthday: 25"
+  ],
+  [
+   "2027-07-17",
+   "Connecticut DRS Made Your Return",
+   "Failure To File Notice: your 2026 Connecticut return. You didn’t file, so DRS worked out what you owe from what was reported. File your own within 60 days, or it’s assessed."
+  ],
+  [
+   "2027-08-23",
+   "Fall Term 2027 Begins",
+   "Your living-expense scholarship of $16,128.08 met this term’s Yale Health plan, $2,034.44, and $12,011.49 is in your Chase Total Checking, after $2,082.15 withheld for the IRS. Tuition, $21,031.08 a term, is covered by t"
+  ],
+  [
+   "2027-08-23",
+   "Cast: Directors’ Thesis Production I"
+  ],
+  [
+   "2027-08-30",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2027-08-30",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2027-08-30",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2027-08-31",
+   "Movement Invention II: A Movement Score"
+  ],
+  [
+   "2027-09-01",
+   "Grace Asks To Rehearse"
+  ],
+  [
+   "2027-09-01",
+   "Text Analysis II: Table Work"
+  ],
+  [
+   "2027-09-01",
+   "Play With Text: A Game Played Through"
+  ],
+  [
+   "2027-09-01",
+   "Grace: A Different Reading"
+  ],
+  [
+   "2027-09-02",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2027-09-02",
+   "The Body As Source II: A Movement Score"
+  ],
+  [
+   "2027-09-02",
+   "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence"
+  ],
+  [
+   "2027-09-02",
+   "Marcus: Run Lines Together?"
+  ],
+  [
+   "2027-09-03",
+   "Alexander Technique II Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2027-09-03",
+   "Singing II And Tutorials: A Song Worked Through"
+  ],
+  [
+   "2027-09-04",
+   "Grace Didn’t Come"
+  ],
+  [
+   "2027-09-08",
+   "Grace Asks To Rehearse"
+  ],
+  [
+   "2027-09-08",
+   "Noah Asks To Rehearse"
+  ],
+  [
+   "2027-09-09",
+   "Daniel: An Apology"
+  ],
+  [
+   "2027-09-11",
+   "Noah Didn’t Hear Back"
+  ],
+  [
+   "2027-09-13",
+   "The Emergency Room"
+  ],
+  [
+   "2027-09-14",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2027-09-14",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2027-09-14",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2027-09-15",
+   "Connecticut DRS Assessed Your 2026 Return",
+   "You didn’t file, so Connecticut DRS assessed $53.50: the tax from what was reported, plus its late penalties and interest from the due date, and The Penalty For A Return DRS Made, 10% Or $50, The Greater. File your own r"
+  ],
+  [
+   "2027-09-16",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2027-09-19",
+   "Julian Didn’t Come"
+  ],
+  [
+   "2027-09-20",
+   "Your Card Limit Went Up"
+  ],
+  [
+   "2027-09-22",
+   "Julian Asks To Rehearse"
+  ],
+  [
+   "2027-09-22",
+   "Text Analysis II: Table Work"
+  ],
+  [
+   "2027-09-22",
+   "Play With Text: A Game Played Through"
+  ],
+  [
+   "2027-09-22",
+   "Hannah Asks To Rehearse"
+  ],
+  [
+   "2027-09-25",
+   "Hannah Didn’t Hear Back"
+  ],
+  [
+   "2027-09-27",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2027-09-27",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2027-09-27",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2027-09-28",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2027-09-28",
+   "Movement Invention II: A Movement Score"
+  ],
+  [
+   "2027-09-29",
+   "Lucia Asks To Rehearse"
+  ],
+  [
+   "2027-09-29",
+   "Noah: Run Lines Together?"
+  ],
+  [
+   "2027-09-30",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2027-09-30",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2027-09-30",
+   "The Body As Source II: A Movement Score"
+  ],
+  [
+   "2027-09-30",
+   "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence"
+  ],
+  [
+   "2027-10-01",
+   "Alexander Technique II Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2027-10-01",
+   "Singing II And Tutorials: A Song Worked Through"
+  ],
+  [
+   "2027-10-02",
+   "Lucia Didn’t Hear Back"
+  ],
+  [
+   "2027-10-02",
+   "Ran Lines With Noah"
+  ],
+  [
+   "2027-10-06",
+   "Note Not Taken Yet: Heightened Text Scene"
+  ],
+  [
+   "2027-10-06",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2027-10-11",
+   "Your Understudy Run-Through"
+  ],
+  [
+   "2027-10-13",
+   "Grace Asks To Rehearse"
+  ],
+  [
+   "2027-10-13",
+   "Text Analysis II: Table Work"
+  ],
+  [
+   "2027-10-13",
+   "Play With Text: A Game Played Through"
+  ],
+  [
+   "2027-10-13",
+   "Noah Asks To Rehearse"
+  ],
+  [
+   "2027-10-14",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2027-10-15",
+   "A Bill From Connecticut DRS"
+  ],
+  [
+   "2027-10-16",
+   "Grace Didn’t Hear Back"
+  ],
+  [
+   "2027-10-16",
+   "Noah Didn’t Hear Back"
+  ],
+  [
+   "2027-10-17",
+   "The Director’s Note: Spring Awakening"
+  ],
+  [
+   "2027-10-17",
+   "Looking Back: Spring Awakening"
+  ],
+  [
+   "2027-10-18",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2027-10-19",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2027-10-19",
+   "Grace: A Different Reading"
+  ],
+  [
+   "2027-10-20",
+   "Note Not Taken Yet: Heightened Text Scene"
+  ],
+  [
+   "2027-10-20",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2027-10-20",
+   "Noah Asks To Rehearse"
+  ],
+  [
+   "2027-10-23",
+   "The Director’s Note: A Doll’s House"
+  ],
+  [
+   "2027-10-23",
+   "Looking Back: A Doll’s House"
+  ],
+  [
+   "2027-10-23",
+   "Noah Didn’t Come"
+  ],
+  [
+   "2027-10-25",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2027-10-26",
+   "Movement Invention II: A Movement Score"
+  ],
+  [
+   "2027-10-27",
+   "Theo: Run Lines Together?"
+  ],
+  [
+   "2027-10-28",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2027-10-28",
+   "The Body As Source II: A Movement Score"
+  ],
+  [
+   "2027-10-28",
+   "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence"
+  ],
+  [
+   "2027-10-29",
+   "Alexander Technique II Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2027-10-29",
+   "Singing II And Tutorials: A Song Worked Through"
+  ],
+  [
+   "2027-10-30",
+   "Ran Lines With Theo"
+  ],
+  [
+   "2027-11-01",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2027-11-02",
+   "Note Not Taken Yet: Heightened Text Scene"
+  ],
+  [
+   "2027-11-02",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2027-11-03",
+   "Zoe Asks To Rehearse"
+  ],
+  [
+   "2027-11-03",
+   "Text Analysis II: Table Work"
+  ],
+  [
+   "2027-11-03",
+   "Play With Text: A Game Played Through"
+  ],
+  [
+   "2027-11-08",
+   "Zoe: A Different Reading"
+  ],
+  [
+   "2027-11-10",
+   "Imani: Run Lines Together?"
+  ],
+  [
+   "2027-11-11",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2027-11-14",
+   "Ran Lines With Imani"
+  ],
+  [
+   "2027-11-14",
+   "A Connecticut Tax Lien Is Filed"
+  ],
+  [
+   "2027-11-14",
+   "Connecticut DRS Intends To Levy"
+  ],
+  [
+   "2027-11-15",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2027-11-15",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2027-11-15",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2027-11-16",
+   "Imani Didn’t Come"
+  ],
+  [
+   "2027-11-17",
+   "Imani Asks To Rehearse"
+  ],
+  [
+   "2027-11-18",
+   "Theo Asks To Rehearse"
+  ],
+  [
+   "2027-11-20",
+   "Theo Didn’t Hear Back"
+  ],
+  [
+   "2027-11-30",
+   "Caleb Didn’t Come"
+  ],
+  [
+   "2027-11-30",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2027-11-30",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2027-12-05",
+   "Ethan Didn’t Come"
+  ],
+  [
+   "2027-12-09",
+   "Daniel: Run Lines Together?"
+  ],
+  [
+   "2027-12-10",
+   "In Good Standing"
+  ],
+  [
+   "2027-12-12",
+   "Ran Lines With Daniel"
+  ],
+  [
+   "2027-12-14",
+   "Ask For Your Connecticut Tax Lien’s Release"
+  ],
+  [
+   "2027-12-14",
+   "Connecticut DRS Levied Your Accounts"
+  ],
+  [
+   "2028-01-03",
+   "Spring Term 2028 Begins",
+   "Your living-expense scholarship of $16,128.08 met this term’s Yale Health plan, $2,034.44, and $12,011.49 is in your Chase Total Checking, after $2,082.15 withheld for the IRS. Tuition, $21,031.08 a term, is covered by t"
+  ],
+  [
+   "2028-01-03",
+   "Cast: Directors’ Thesis Production III"
+  ],
+  [
+   "2028-01-10",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-01-10",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2028-01-10",
+   "The Body As Source II: A Movement Score"
+  ],
+  [
+   "2028-01-11",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-01-11",
+   "Alexander Technique II Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2028-01-12",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2028-01-12",
+   "Marcus: A Different Reading"
+  ],
+  [
+   "2028-01-13",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-01-13",
+   "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence"
+  ],
+  [
+   "2028-01-14",
+   "Singing II And Tutorials: A Song Worked Through"
+  ],
+  [
+   "2028-01-17",
+   "Marcus Didn’t Come"
+  ],
+  [
+   "2028-01-21",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2028-01-24",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-01-24",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-01-24",
+   "Note Taken: A Scene From The Greeks"
+  ],
+  [
+   "2028-01-24",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2028-01-25",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-01-27",
+   "Mateo Asks To Rehearse"
+  ],
+  [
+   "2028-01-27",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-01-27",
+   "Caleb: A Word After Class"
+  ],
+  [
+   "2028-01-28",
+   "Maya: Run Lines Together?"
+  ],
+  [
+   "2028-01-29",
+   "Mateo Didn’t Hear Back"
+  ],
+  [
+   "2028-01-30",
+   "Ran Lines With Maya"
+  ],
+  [
+   "2028-01-30",
+   "The Director’s Note: Major Barbara"
+  ],
+  [
+   "2028-01-30",
+   "Looking Back: Major Barbara"
+  ],
+  [
+   "2028-02-02",
+   "Note Not Taken Yet: Heightened Text Scene"
+  ],
+  [
+   "2028-02-02",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-02-02",
+   "Hannah Asks To Rehearse"
+  ],
+  [
+   "2028-02-02",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2028-02-03",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2028-02-04",
+   "Note Not Taken Yet: A Scene From The Greeks"
+  ],
+  [
+   "2028-02-04",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2028-02-08",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-02-08",
+   "Alexander Technique II Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2028-02-10",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-02-10",
+   "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence"
+  ],
+  [
+   "2028-02-11",
+   "Zoe Asks To Rehearse"
+  ],
+  [
+   "2028-02-11",
+   "Singing II And Tutorials: A Song Worked Through"
+  ],
+  [
+   "2028-02-14",
+   "Hannah Didn’t Come"
+  ],
+  [
+   "2028-02-14",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2028-02-14",
+   "The Body As Source II: A Movement Score"
+  ],
+  [
+   "2028-02-14",
+   "Hannah: A Different Reading"
+  ],
+  [
+   "2028-02-15",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-02-15",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-02-16",
+   "Caleb Asks To Rehearse"
+  ],
+  [
+   "2028-02-16",
+   "Mateo: A Word After Class"
+  ],
+  [
+   "2028-02-17",
+   "Note Taken: A Scene From The Greeks"
+  ],
+  [
+   "2028-02-17",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2028-02-22",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-02-23",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2028-02-24",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-02-25",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2028-02-28",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-02-28",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-02-28",
+   "Note Taken: A Scene From The Greeks"
+  ],
+  [
+   "2028-02-28",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2028-03-01",
+   "Diagnosed: Arthritis"
+  ],
+  [
+   "2028-03-01",
+   "Elena Asks To Rehearse"
+  ],
+  [
+   "2028-03-02",
+   "Grace Asks To Rehearse"
+  ],
+  [
+   "2028-03-04",
+   "Grace Didn’t Hear Back"
+  ],
+  [
+   "2028-03-12",
+   "Grace Didn’t Come"
+  ],
+  [
+   "2028-03-13",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2028-03-14",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-03-14",
+   "Alexander Technique II Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2028-03-15",
+   "Elena Asks To Rehearse"
+  ],
+  [
+   "2028-03-16",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-03-16",
+   "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence"
+  ],
+  [
+   "2028-03-17",
+   "Julian Asks To Rehearse"
+  ],
+  [
+   "2028-03-17",
+   "Singing II And Tutorials: A Song Worked Through"
+  ],
+  [
+   "2028-03-18",
+   "Julian Didn’t Hear Back"
+  ],
+  [
+   "2028-03-18",
+   "Elena Didn’t Come"
+  ],
+  [
+   "2028-03-20",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-03-20",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-03-20",
+   "Note Taken: A Scene From The Greeks"
+  ],
+  [
+   "2028-03-20",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2028-03-20",
+   "Your Card Limit Went Up"
+  ],
+  [
+   "2028-03-22",
+   "Clown: A Clown Turn"
+  ],
+  [
+   "2028-03-22",
+   "Caleb: Run Lines Together?"
+  ],
+  [
+   "2028-03-23",
+   "Mateo Asks To Rehearse"
+  ],
+  [
+   "2028-03-25",
+   "Mateo Didn’t Hear Back"
+  ],
+  [
+   "2028-03-27",
+   "The Body As Source II: A Movement Score"
+  ],
+  [
+   "2028-03-28",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-03-28",
+   "Elena: An Apology"
+  ],
+  [
+   "2028-03-29",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-03-29",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-03-29",
+   "Marcus Asks To Rehearse"
+  ],
+  [
+   "2028-03-30",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-03-30",
+   "Mateo: A Different Reading"
+  ],
+  [
+   "2028-03-31",
+   "Note Not Taken Yet: A Scene From The Greeks"
+  ],
+  [
+   "2028-03-31",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2028-03-31",
+   "Imani Asks To Rehearse"
+  ],
+  [
+   "2028-03-31",
+   "Elena: Run Lines Together?"
+  ],
+  [
+   "2028-04-01",
+   "Imani Didn’t Hear Back"
+  ],
+  [
+   "2028-04-01",
+   "Marcus Didn’t Come"
+  ],
+  [
+   "2028-04-02",
+   "Imani Didn’t Come"
+  ],
+  [
+   "2028-04-03",
+   "The Emergency Room"
+  ],
+  [
+   "2028-04-05",
+   "Hannah: An Apology"
+  ],
+  [
+   "2028-04-07",
+   "Imani Asks To Rehearse"
+  ],
+  [
+   "2028-04-07",
+   "Imani: A Different Reading"
+  ],
+  [
+   "2028-04-08",
+   "Imani Didn’t Hear Back"
+  ],
+  [
+   "2028-04-11",
+   "Note Not Taken Yet: Heightened Text Scene"
+  ],
+  [
+   "2028-04-11",
+   "Acting II: Plays Of Extended And Heightened Language: Heightened Text Scene"
+  ],
+  [
+   "2028-04-11",
+   "Voice II: A Voice Sequence"
+  ],
+  [
+   "2028-04-13",
+   "Note Taken: A Scene From The Greeks"
+  ],
+  [
+   "2028-04-13",
+   "The Greeks: A Scene From The Greeks"
+  ],
+  [
+   "2028-04-13",
+   "Hannah Asks To Rehearse"
+  ],
+  [
+   "2028-04-13",
+   "Speech And Accents II: Sound Changes And A Text"
+  ],
+  [
+   "2028-04-13",
+   "Grace: Run Lines Together?"
+  ],
+  [
+   "2028-04-15",
+   "Hannah Didn’t Hear Back"
+  ],
+  [
+   "2028-04-15",
+   "Ran Lines With Grace"
+  ],
+  [
+   "2028-04-17",
+   "Hannah Didn’t Come"
+  ],
+  [
+   "2028-04-19",
+   "Your 2027 Return Is Late",
+   "Your IRS refund waits until you file, with no penalty. Connecticut charges its own penalty on what you owe it. File it on Papers, under Tax Returns."
+  ],
+  [
+   "2028-04-19",
+   "Theo Asks To Rehearse"
+  ],
+  [
+   "2028-04-24",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-04-24",
+   "Note Taken: A Scene From The Greeks"
+  ],
+  [
+   "2028-04-28",
+   "In Good Standing"
+  ],
+  [
+   "2028-06-14",
+   "Happy Birthday: 26"
+  ],
+  [
+   "2028-07-20",
+   "Connecticut DRS Made Your Return",
+   "Failure To File Notice: your 2027 Connecticut return. You didn’t file, so DRS worked out what you owe from what was reported. File your own within 60 days, or it’s assessed."
+  ],
+  [
+   "2028-07-31",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2028-08-28",
+   "Fall Term 2028 Begins",
+   "Your living-expense scholarship of $17,113.12 met this term’s Yale Health plan, $2,199.23, and $12,704.06 is in your Chase Total Checking, after $2,209.83 withheld for the IRS. Tuition, $21,708.28 a term, is covered by t"
+  ],
+  [
+   "2028-08-28",
+   "Cast: Directors’ Thesis Production II"
+  ],
+  [
+   "2028-09-05",
+   "Shakespeare Practicum: Heightened Text Scene"
+  ],
+  [
+   "2028-09-05",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2028-09-05",
+   "You Are The Creator: A Game Played Through"
+  ],
+  [
+   "2028-09-06",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2028-09-06",
+   "Movement Invention III: A Movement Score"
+  ],
+  [
+   "2028-09-06",
+   "Daniel: A Different Reading"
+  ],
+  [
+   "2028-09-07",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2028-09-07",
+   "Acting Through Song: A Song Worked Through"
+  ],
+  [
+   "2028-09-07",
+   "Zoe: Run Lines Together?"
+  ],
+  [
+   "2028-09-08",
+   "Acting III: Scene Study"
+  ],
+  [
+   "2028-09-08",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2028-09-10",
+   "Daniel Didn’t Come"
+  ],
+  [
+   "2028-09-11",
+   "Alexander Technique III Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2028-09-14",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2028-09-15",
+   "Maya: A Different Reading"
+  ],
+  [
+   "2028-09-18",
+   "Connecticut DRS Assessed Your 2027 Return",
+   "You didn’t file, so Connecticut DRS assessed $673.11: the tax from what was reported, plus its late penalties and interest from the due date, and The Penalty For A Return DRS Made, 10% Or $50, The Greater. File your own "
+  ],
+  [
+   "2028-09-19",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2028-09-20",
+   "Your Card Limit Went Up"
+  ],
+  [
+   "2028-09-21",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2028-09-22",
+   "Maya Asks To Rehearse"
+  ],
+  [
+   "2028-09-23",
+   "Maya Didn’t Hear Back"
+  ],
+  [
+   "2028-09-25",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-09-25",
+   "Shakespeare Practicum: Heightened Text Scene"
+  ],
+  [
+   "2028-09-25",
+   "Note Taken: Scene Study"
+  ],
+  [
+   "2028-09-25",
+   "Acting III: Scene Study"
+  ],
+  [
+   "2028-09-26",
+   "You Are The Creator: A Game Played Through"
+  ],
+  [
+   "2028-09-27",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2028-09-29",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2028-10-03",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2028-10-04",
+   "Movement Invention III: A Movement Score"
+  ],
+  [
+   "2028-10-05",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2028-10-05",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2028-10-05",
+   "Acting Through Song: A Song Worked Through"
+  ],
+  [
+   "2028-10-13",
+   "Lucia Asks To Rehearse"
+  ],
+  [
+   "2028-10-16",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-10-16",
+   "Shakespeare Practicum: Heightened Text Scene"
+  ],
+  [
+   "2028-10-16",
+   "Note Taken: Scene Study"
+  ],
+  [
+   "2028-10-16",
+   "Acting III: Scene Study"
+  ],
+  [
+   "2028-10-16",
+   "Alexander Technique III Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2028-10-16",
+   "Your Understudy Run-Through"
+  ],
+  [
+   "2028-10-16",
+   "Elena Didn’t Come"
+  ],
+  [
+   "2028-10-17",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2028-10-17",
+   "You Are The Creator: A Game Played Through"
+  ],
+  [
+   "2028-10-18",
+   "A Bill From Connecticut DRS"
+  ],
+  [
+   "2028-10-18",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2028-10-19",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2028-10-19",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2028-10-19",
+   "Maya: A Word After Class"
+  ],
+  [
+   "2028-10-20",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2028-10-26",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2028-10-26",
+   "Julian: Run Lines Together?"
+  ],
+  [
+   "2028-10-27",
+   "Daniel Asks To Rehearse"
+  ],
+  [
+   "2028-10-28",
+   "The Director’s Note: Mrs Warren’s Profession"
+  ],
+  [
+   "2028-10-28",
+   "Looking Back: Mrs Warren’s Profession"
+  ],
+  [
+   "2028-10-28",
+   "Daniel Didn’t Hear Back"
+  ],
+  [
+   "2028-10-28",
+   "Ran Lines With Julian"
+  ],
+  [
+   "2028-10-30",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2028-10-31",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-10-31",
+   "Shakespeare Practicum: Heightened Text Scene"
+  ],
+  [
+   "2028-10-31",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2028-11-01",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2028-11-01",
+   "Movement Invention III: A Movement Score"
+  ],
+  [
+   "2028-11-02",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2028-11-02",
+   "Acting Through Song: A Song Worked Through"
+  ],
+  [
+   "2028-11-03",
+   "Note Not Taken Yet: Scene Study"
+  ],
+  [
+   "2028-11-03",
+   "Acting III: Scene Study"
+  ],
+  [
+   "2028-11-03",
+   "Hannah Asks To Rehearse"
+  ],
+  [
+   "2028-11-07",
+   "You Are The Creator: A Game Played Through"
+  ],
+  [
+   "2028-11-08",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2028-11-10",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2028-11-10",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2028-11-14",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2028-11-15",
+   "Mateo: A Different Reading"
+  ],
+  [
+   "2028-11-16",
+   "Commedia: A Clown Turn"
+  ],
+  [
+   "2028-11-16",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2028-11-17",
+   "A Connecticut Tax Lien Is Filed"
+  ],
+  [
+   "2028-11-17",
+   "Connecticut DRS Intends To Levy"
+  ],
+  [
+   "2028-11-17",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2028-11-20",
+   "Note Taken: Heightened Text Scene"
+  ],
+  [
+   "2028-11-20",
+   "Shakespeare Practicum: Heightened Text Scene"
+  ],
+  [
+   "2028-11-20",
+   "Note Taken: Scene Study"
+  ],
+  [
+   "2028-11-21",
+   "The Director’s Note: The Wild Duck"
+  ],
+  [
+   "2028-11-21",
+   "Looking Back: The Wild Duck"
+  ],
+  [
+   "2028-12-08",
+   "In Good Standing"
+  ],
+  [
+   "2028-12-17",
+   "Ask For Your Connecticut Tax Lien’s Release"
+  ],
+  [
+   "2028-12-17",
+   "Connecticut DRS Levied Your Accounts"
+  ],
+  [
+   "2029-01-08",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2029-01-08",
+   "Spring Term 2029 Begins",
+   "Your living-expense scholarship of $17,113.12 met this term’s Yale Health plan, $2,199.23, and $12,704.06 is in your Chase Total Checking, after $2,209.83 withheld for the IRS. Tuition, $21,708.28 a term, is covered by t"
+  ],
+  [
+   "2029-01-08",
+   "Cast: Shakespeare Repertory Project I"
+  ],
+  [
+   "2029-01-09",
+   "A Concussion"
+  ],
+  [
+   "2029-01-16",
+   "Actor Showcase: Your Showcase Scene"
+  ],
+  [
+   "2029-01-16",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-01-16",
+   "Alexander Technique III Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2029-01-17",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2029-01-17",
+   "Acting Through Song: A Song Worked Through"
+  ],
+  [
+   "2029-01-18",
+   "Character Analysis And Movement: A Movement Score"
+  ],
+  [
+   "2029-01-18",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2029-01-19",
+   "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
+  ],
+  [
+   "2029-01-19",
+   "Taming The Cyclops: A Self-Tape"
+  ],
+  [
+   "2029-01-24",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2029-01-24",
+   "Caleb Asks To Rehearse"
+  ],
+  [
+   "2029-01-28",
+   "Caleb Didn’t Come"
+  ],
+  [
+   "2029-01-29",
+   "Note Taken: Your Showcase Scene"
+  ],
+  [
+   "2029-01-29",
+   "Actor Showcase: Your Showcase Scene"
+  ],
+  [
+   "2029-01-30",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-01-31",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2029-02-01",
+   "Character Analysis And Movement: A Movement Score"
+  ],
+  [
+   "2029-02-01",
+   "Mateo: Run Lines Together?"
+  ],
+  [
+   "2029-02-02",
+   "Still There: Time On Its Feet"
+  ],
+  [
+   "2029-02-02",
+   "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
+  ],
+  [
+   "2029-02-04",
+   "Ran Lines With Mateo"
+  ],
+  [
+   "2029-02-06",
+   "Still There: Work With Your Partner"
+  ],
+  [
+   "2029-02-07",
+   "The Director’s Note: Macbeth"
+  ],
+  [
+   "2029-02-07",
+   "Looking Back: Macbeth"
+  ],
+  [
+   "2029-02-07",
+   "Note Not Taken Yet: Your Showcase Scene"
+  ],
+  [
+   "2029-02-07",
+   "Actor Showcase: Your Showcase Scene"
+  ],
+  [
+   "2029-02-08",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2029-02-09",
+   "Taming The Cyclops: A Self-Tape"
+  ],
+  [
+   "2029-02-13",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-02-13",
+   "Alexander Technique III Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2029-02-14",
+   "Ethan Asks To Rehearse"
+  ],
+  [
+   "2029-02-14",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2029-02-14",
+   "Acting Through Song: A Song Worked Through"
+  ],
+  [
+   "2029-02-15",
+   "Character Analysis And Movement: A Movement Score"
+  ],
+  [
+   "2029-02-16",
+   "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
+  ],
+  [
+   "2029-02-16",
+   "Ethan: A Different Reading"
+  ],
+  [
+   "2029-02-20",
+   "Note Taken: Your Showcase Scene"
+  ],
+  [
+   "2029-02-20",
+   "Actor Showcase: Your Showcase Scene"
+  ],
+  [
+   "2029-02-22",
+   "Hannah: Run Lines Together?"
+  ],
+  [
+   "2029-02-27",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-02-28",
+   "Zoe Asks To Rehearse"
+  ],
+  [
+   "2029-02-28",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2029-03-01",
+   "Chase Savings Is Dormant"
+  ],
+  [
+   "2029-03-01",
+   "Character Analysis And Movement: A Movement Score"
+  ],
+  [
+   "2029-03-01",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2029-03-02",
+   "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
+  ],
+  [
+   "2029-03-02",
+   "Taming The Cyclops: A Self-Tape"
+  ],
+  [
+   "2029-03-13",
+   "Note Taken: Your Showcase Scene"
+  ],
+  [
+   "2029-03-13",
+   "Actor Showcase: Your Showcase Scene"
+  ],
+  [
+   "2029-03-14",
+   "Lucia: A Different Reading"
+  ],
+  [
+   "2029-03-20",
+   "Alexander Technique III Tutorials: Directions In Daily Life"
+  ],
+  [
+   "2029-03-21",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2029-03-21",
+   "Acting Through Song: A Song Worked Through"
+  ],
+  [
+   "2029-03-22",
+   "Character Analysis And Movement: A Movement Score"
+  ],
+  [
+   "2029-03-26",
+   "Note Taken: Your Showcase Scene"
+  ],
+  [
+   "2029-03-26",
+   "Actor Showcase: Your Showcase Scene"
+  ],
+  [
+   "2029-03-26",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-03-26",
+   "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
+  ],
+  [
+   "2029-03-28",
+   "Lucia: Run Lines Together?"
+  ],
+  [
+   "2029-03-29",
+   "On-Camera Acting Technique: A Self-Tape"
+  ],
+  [
+   "2029-03-30",
+   "Taming The Cyclops: A Self-Tape"
+  ],
+  [
+   "2029-03-31",
+   "Ran Lines With Lucia"
+  ],
+  [
+   "2029-04-04",
+   "Note Not Taken Yet: Your Showcase Scene"
+  ],
+  [
+   "2029-04-04",
+   "Actor Showcase: Your Showcase Scene"
+  ],
+  [
+   "2029-04-04",
+   "Speech And Accents III: Sound Changes And A Text"
+  ],
+  [
+   "2029-04-05",
+   "Character Analysis And Movement: A Movement Score"
+  ],
+  [
+   "2029-04-09",
+   "Voice III: A Voice Sequence"
+  ],
+  [
+   "2029-04-09",
+   "Professional Preparation And Audition Workshop: Two Contrasting Monologues"
+  ],
+  [
+   "2029-04-09",
+   "Hannah: A Different Reading"
+  ],
+  [
+   "2029-04-09",
+   "Hannah Didn’t Come"
+  ],
+  [
+   "2029-04-17",
+   "Note Taken: Your Showcase Scene"
+  ],
+  [
+   "2029-04-17",
+   "Actor Showcase: Your Showcase Scene"
+  ],
+  [
+   "2029-04-18",
+   "Your 2028 Return Is Late",
+   "Your IRS refund waits until you file, with no penalty. Connecticut charges its own penalty on what you owe it. File it on Papers, under Tax Returns."
+  ],
+  [
+   "2029-04-18",
+   "Julian Asks To Rehearse"
+  ],
+  [
+   "2029-04-20",
+   "Your Card Limit Went Up"
+  ],
+  [
+   "2029-04-25",
+   "Ethan: Run Lines Together?"
+  ],
+  [
+   "2029-04-27",
+   "Incomplete: You Are The Creator",
+   "You were ill for 1 of its 1 classes. To complete it, make up one session of work with its teachers by May 27, 2029, each covering a week of the course: press Make Up A Session on the Standing tab. You can ask for a month"
+  ],
+  [
+   "2029-04-27",
+   "In Good Standing"
+  ],
+  [
+   "2029-04-28",
+   "Ran Lines With Ethan"
+  ],
+  [
+   "2029-05-21",
+   "Your MFA Is Conferred"
+  ],
+  [
+   "2029-05-31",
+   "OPT Approved",
+   "You may work in the United States from May 31, 2029 to May 31, 2030, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days."
+  ],
+  [
+   "2029-06-04",
+   "A Doctor’s Appointment"
+  ],
+  [
+   "2029-06-14",
+   "Happy Birthday: 27"
+  ],
+  [
+   "2029-06-21",
+   "A New Card Is On Its Way"
+  ],
+  [
+   "2029-07-19",
+   "Connecticut DRS Made Your Return",
+   "Failure To File Notice: your 2028 Connecticut return. You didn’t file, so DRS worked out what you owe from what was reported. File your own within 60 days, or it’s assessed."
+  ],
+  [
+   "2029-08-01",
+   "Your Health Cover Ended",
+   "You have no health cover from August 1, 2029. You have 60 days to enroll in the marketplace. Enroll on Papers, under Health Cover."
+  ]
+ ],
+ "shownNotices": 263,
+ "showings": [
+  [
+   "assignment_000001",
+   0,
+   "DRAM 103a/b",
+   "scene-study",
+   "strong",
+   0.71,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000008",
+   0,
+   "DRAM 873a/b",
+   "context-presentation",
+   "strong",
+   0.717,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000004",
+   0,
+   "DRAM 133a/b",
+   "movement-score",
+   "strong",
+   0.705,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000002",
+   0,
+   "DRAM 113a/b",
+   "voice-sequence",
+   "strong",
+   0.721,
+   0,
+   "new",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_000003",
+   0,
+   "DRAM 123a/b",
+   "speech-drill",
+   "strong",
+   0.721,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000005",
+   0,
+   "DRAM 143a/b",
+   "alexander-practice",
+   "strong",
+   0.68,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000009",
+   0,
+   "DRAM 873a/b",
+   "context-presentation",
+   "strong",
+   0.727,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000006",
+   0,
+   "DRAM 153a",
+   "play-game",
+   "strong",
+   0.713,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000a",
+   0,
+   "DRAM 103a/b",
+   "scene-study",
+   "strong",
+   0.669,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000b",
+   0,
+   "DRAM 133a/b",
+   "movement-score",
+   "unready",
+   0.471,
+   2,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_000007",
+   0,
+   "DRAM 403a/b",
+   "intimacy-practice",
+   "strong",
+   0.725,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000c",
+   0,
+   "DRAM 113a/b",
+   "voice-sequence",
+   "unready",
+   0.383,
+   1,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00000d",
+   0,
+   "DRAM 123a/b",
+   "speech-drill",
+   "unready",
+   0.468,
+   1,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00000e",
+   0,
+   "DRAM 143a/b",
+   "alexander-practice",
+   "unready",
+   0.412,
+   1,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00000f",
+   0,
+   "DRAM 873a/b",
+   "context-presentation",
+   "unready",
+   0.457,
+   2,
+   "new",
+   "dim:revision",
+   0
+  ],
+  [
+   "assignment_00000h",
+   0,
+   "DRAM 103a/b",
+   "scene-study",
+   "strong",
+   0.684,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000g",
+   0,
+   "DRAM 153a",
+   "play-game",
+   "strong",
+   0.729,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000j",
+   0,
+   "DRAM 113a/b",
+   "voice-sequence",
+   "strong",
+   0.692,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000l",
+   0,
+   "DRAM 123a/b",
+   "speech-drill",
+   "strong",
+   0.684,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000n",
+   0,
+   "DRAM 873a/b",
+   "context-presentation",
+   "strong",
+   0.725,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000i",
+   0,
+   "DRAM 133a/b",
+   "movement-score",
+   "strong",
+   0.688,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000m",
+   0,
+   "DRAM 143a/b",
+   "alexander-practice",
+   "strong",
+   0.69,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000o",
+   0,
+   "DRAM 103a/b",
+   "scene-study",
+   "strong",
+   0.707,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000s",
+   0,
+   "DRAM 873a/b",
+   "context-presentation",
+   "strong",
+   0.748,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000k",
+   0,
+   "DRAM 403a/b",
+   "intimacy-practice",
+   "strong",
+   0.708,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000q",
+   0,
+   "DRAM 113a/b",
+   "voice-sequence",
+   "strong",
+   0.7,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000r",
+   0,
+   "DRAM 123a/b",
+   "speech-drill",
+   "strong",
+   0.714,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000u",
+   0,
+   "DRAM 143a/b",
+   "alexander-practice",
+   "strong",
+   0.691,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000t",
+   0,
+   "DRAM 133a/b",
+   "movement-score",
+   "strong",
+   0.687,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000v",
+   0,
+   "DRAM 103a/b",
+   "scene-study",
+   "strong",
+   0.687,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000p",
+   0,
+   "DRAM 153a",
+   "play-game",
+   "strong",
+   0.739,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000w",
+   0,
+   "DRAM 873a/b",
+   "context-presentation",
+   "strong",
+   0.734,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000x",
+   0,
+   "DRAM 113a/b",
+   "voice-sequence",
+   "strong",
+   0.722,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000010",
+   0,
+   "DRAM 143a/b",
+   "alexander-practice",
+   "strong",
+   0.687,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000z",
+   0,
+   "DRAM 123a/b",
+   "speech-drill",
+   "strong",
+   0.687,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000013",
+   0,
+   "DRAM 103a/b",
+   "scene-study",
+   "strong",
+   0.666,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000011",
+   0,
+   "DRAM 133a/b",
+   "movement-score",
+   "strong",
+   0.681,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000014",
+   0,
+   "DRAM 873a/b",
+   "context-presentation",
+   "strong",
+   0.747,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000018",
+   0,
+   "DRAM 103a/b",
+   "scene-study",
+   "strong",
+   0.715,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000017",
+   0,
+   "DRAM 123a/b",
+   "speech-drill",
+   "strong",
+   0.705,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001a",
+   0,
+   "DRAM 873a/b",
+   "context-presentation",
+   "strong",
+   0.738,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000012",
+   0,
+   "DRAM 153a",
+   "play-game",
+   "strong",
+   0.74,
+   0,
+   "new",
+   "dim:partner",
+   0
+  ],
+  [
+   "assignment_000019",
+   0,
+   "DRAM 133a/b",
+   "movement-score",
+   "strong",
+   0.684,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00000y",
+   0,
+   "DRAM 403a/b",
+   "intimacy-practice",
+   "strong",
+   0.714,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000015",
+   0,
+   "DRAM 113a/b",
+   "voice-sequence",
+   "strong",
+   0.709,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000016",
+   0,
+   "DRAM 143a/b",
+   "alexander-practice",
+   "strong",
+   0.682,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001b",
+   0,
+   "DRAM 103a/b",
+   "scene-study",
+   "strong",
+   0.687,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001c",
+   1,
+   "DRAM 103a/b",
+   "simulated-rehearsal",
+   "strong",
+   0.66,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001f",
+   1,
+   "DRAM 873a/b",
+   "context-presentation",
+   "strong",
+   0.793,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001d",
+   1,
+   "DRAM 123a/b",
+   "speech-drill",
+   "strong",
+   0.712,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001g",
+   1,
+   "DRAM 133a/b",
+   "movement-score",
+   "strong",
+   0.688,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001h",
+   1,
+   "DRAM 113a/b",
+   "voice-sequence",
+   "strong",
+   0.71,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001e",
+   1,
+   "DRAM 143a/b",
+   "alexander-practice",
+   "strong",
+   0.725,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001l",
+   1,
+   "DRAM 103a/b",
+   "simulated-rehearsal",
+   "strong",
+   0.703,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001k",
+   1,
+   "DRAM 873a/b",
+   "context-presentation",
+   "strong",
+   0.773,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001i",
+   1,
+   "DRAM 163b",
+   "table-work",
+   "strong",
+   0.783,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001m",
+   1,
+   "DRAM 123a/b",
+   "speech-drill",
+   "strong",
+   0.713,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001n",
+   1,
+   "DRAM 133a/b",
+   "movement-score",
+   "strong",
+   0.692,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001q",
+   1,
+   "DRAM 873a/b",
+   "context-presentation",
+   "exceptional",
+   0.8,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001o",
+   1,
+   "DRAM 113a/b",
+   "voice-sequence",
+   "strong",
+   0.694,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001j",
+   1,
+   "DRAM 403a/b",
+   "fight-sequence",
+   "strong",
+   0.726,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001p",
+   1,
+   "DRAM 143a/b",
+   "alexander-practice",
+   "working",
+   0.63,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001s",
+   1,
+   "DRAM 103a/b",
+   "simulated-rehearsal",
+   "strong",
+   0.722,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001t",
+   1,
+   "DRAM 123a/b",
+   "speech-drill",
+   "strong",
+   0.723,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001v",
+   1,
+   "DRAM 873a/b",
+   "context-presentation",
+   "strong",
+   0.791,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001u",
+   1,
+   "DRAM 133a/b",
+   "movement-score",
+   "strong",
+   0.69,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001x",
+   1,
+   "DRAM 143a/b",
+   "alexander-practice",
+   "strong",
+   0.73,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001z",
+   1,
+   "DRAM 103a/b",
+   "simulated-rehearsal",
+   "strong",
+   0.708,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000021",
+   1,
+   "DRAM 873a/b",
+   "context-presentation",
+   "exceptional",
+   0.811,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001r",
+   1,
+   "DRAM 163b",
+   "table-work",
+   "strong",
+   0.781,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001w",
+   1,
+   "DRAM 113a/b",
+   "voice-sequence",
+   "strong",
+   0.712,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000020",
+   1,
+   "DRAM 123a/b",
+   "speech-drill",
+   "strong",
+   0.741,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000022",
+   1,
+   "DRAM 133a/b",
+   "movement-score",
+   "strong",
+   0.711,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000023",
+   1,
+   "DRAM 143a/b",
+   "alexander-practice",
+   "strong",
+   0.702,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000027",
+   1,
+   "DRAM 103a/b",
+   "simulated-rehearsal",
+   "strong",
+   0.731,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000024",
+   1,
+   "DRAM 873a/b",
+   "context-presentation",
+   "exceptional",
+   0.807,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000025",
+   1,
+   "DRAM 113a/b",
+   "voice-sequence",
+   "strong",
+   0.731,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00001y",
+   1,
+   "DRAM 403a/b",
+   "fight-sequence",
+   "strong",
+   0.715,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000026",
+   1,
+   "DRAM 163b",
+   "table-work",
+   "exceptional",
+   0.811,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000028",
+   1,
+   "DRAM 123a/b",
+   "speech-drill",
+   "strong",
+   0.724,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002a",
+   1,
+   "DRAM 143a/b",
+   "alexander-practice",
+   "strong",
+   0.734,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000029",
+   1,
+   "DRAM 133a/b",
+   "movement-score",
+   "strong",
+   0.681,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002b",
+   1,
+   "DRAM 873a/b",
+   "context-presentation",
+   "strong",
+   0.798,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002f",
+   1,
+   "DRAM 103a/b",
+   "simulated-rehearsal",
+   "strong",
+   0.735,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002c",
+   1,
+   "DRAM 113a/b",
+   "voice-sequence",
+   "strong",
+   0.72,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002g",
+   1,
+   "DRAM 123a/b",
+   "speech-drill",
+   "strong",
+   0.725,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002h",
+   1,
+   "DRAM 143a/b",
+   "alexander-practice",
+   "strong",
+   0.714,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002j",
+   1,
+   "DRAM 873a/b",
+   "context-presentation",
+   "exceptional",
+   0.801,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002i",
+   1,
+   "DRAM 133a/b",
+   "movement-score",
+   "strong",
+   0.692,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002e",
+   1,
+   "DRAM 163b",
+   "table-work",
+   "exceptional",
+   0.823,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002k",
+   1,
+   "DRAM 113a/b",
+   "voice-sequence",
+   "working",
+   0.511,
+   1,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00002d",
+   1,
+   "DRAM 403a/b",
+   "fight-sequence",
+   "strong",
+   0.735,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002l",
+   2,
+   "DRAM 203a/b",
+   "classical-scene",
+   "working",
+   0.642,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002m",
+   2,
+   "DRAM 223a/b",
+   "speech-drill",
+   "strong",
+   0.761,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002r",
+   2,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "strong",
+   0.764,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002p",
+   2,
+   "DRAM 163a",
+   "table-work",
+   "exceptional",
+   0.874,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002q",
+   2,
+   "DRAM 353a",
+   "play-game",
+   "exceptional",
+   0.8,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002w",
+   2,
+   "DRAM 203a/b",
+   "classical-scene",
+   "working",
+   0.633,
+   1,
+   "recurring",
+   "dim:partner",
+   0
+  ],
+  [
+   "assignment_00002n",
+   2,
+   "DRAM 263a/b",
+   "clown-turn",
+   "strong",
+   0.711,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002o",
+   2,
+   "DRAM 273a",
+   "movement-score",
+   "strong",
+   0.726,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002x",
+   2,
+   "DRAM 223a/b",
+   "speech-drill",
+   "working",
+   0.569,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002s",
+   2,
+   "DRAM 233a/b",
+   "movement-score",
+   "strong",
+   0.732,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00002t",
+   2,
+   "DRAM 405a/b",
+   "fight-sequence",
+   "unready",
+   0.384,
+   2,
+   "recurring",
+   "dim:partner",
+   0
+  ],
+  [
+   "assignment_00002y",
+   2,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "unready",
+   0.344,
+   2,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00002u",
+   2,
+   "DRAM 243a/b",
+   "alexander-practice",
+   "unready",
+   0.488,
+   1,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00002v",
+   2,
+   "DRAM 413a/b",
+   "song",
+   "unready",
+   0.266,
+   3,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_000031",
+   2,
+   "DRAM 203a/b",
+   "classical-scene",
+   "working",
+   0.598,
+   2,
+   "partial",
+   "dim:partner",
+   0
+  ],
+  [
+   "assignment_00002z",
+   2,
+   "DRAM 163a",
+   "table-work",
+   "exceptional",
+   0.858,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000030",
+   2,
+   "DRAM 353a",
+   "play-game",
+   "strong",
+   0.779,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000035",
+   2,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "strong",
+   0.694,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000033",
+   2,
+   "DRAM 223a/b",
+   "speech-drill",
+   "strong",
+   0.785,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003a",
+   2,
+   "DRAM 203a/b",
+   "classical-scene",
+   "working",
+   0.576,
+   2,
+   "recurring",
+   "dim:partner",
+   0
+  ],
+  [
+   "assignment_000032",
+   2,
+   "DRAM 263a/b",
+   "clown-turn",
+   "strong",
+   0.702,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000034",
+   2,
+   "DRAM 273a",
+   "movement-score",
+   "strong",
+   0.744,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000036",
+   2,
+   "DRAM 233a/b",
+   "movement-score",
+   "strong",
+   0.749,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000037",
+   2,
+   "DRAM 405a/b",
+   "fight-sequence",
+   "strong",
+   0.738,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003d",
+   2,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "strong",
+   0.743,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000038",
+   2,
+   "DRAM 243a/b",
+   "alexander-practice",
+   "strong",
+   0.72,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000039",
+   2,
+   "DRAM 413a/b",
+   "song",
+   "strong",
+   0.744,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003e",
+   2,
+   "DRAM 223a/b",
+   "speech-drill",
+   "strong",
+   0.752,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003f",
+   2,
+   "DRAM 203a/b",
+   "classical-scene",
+   "working",
+   0.642,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003b",
+   2,
+   "DRAM 163a",
+   "table-work",
+   "exceptional",
+   0.875,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003c",
+   2,
+   "DRAM 353a",
+   "play-game",
+   "strong",
+   0.745,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003o",
+   2,
+   "DRAM 203a/b",
+   "classical-scene",
+   "strong",
+   0.706,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003i",
+   2,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "strong",
+   0.787,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003g",
+   2,
+   "DRAM 263a/b",
+   "clown-turn",
+   "strong",
+   0.685,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003n",
+   2,
+   "DRAM 223a/b",
+   "speech-drill",
+   "strong",
+   0.778,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003h",
+   2,
+   "DRAM 273a",
+   "movement-score",
+   "strong",
+   0.751,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003s",
+   2,
+   "DRAM 203a/b",
+   "classical-scene",
+   "strong",
+   0.707,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003t",
+   2,
+   "DRAM 223a/b",
+   "speech-drill",
+   "strong",
+   0.789,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003p",
+   2,
+   "DRAM 163a",
+   "table-work",
+   "exceptional",
+   0.88,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003q",
+   2,
+   "DRAM 353a",
+   "play-game",
+   "strong",
+   0.794,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003j",
+   2,
+   "DRAM 233a/b",
+   "movement-score",
+   "strong",
+   0.75,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003k",
+   2,
+   "DRAM 405a/b",
+   "fight-sequence",
+   "strong",
+   0.758,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003r",
+   2,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "exceptional",
+   0.803,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003l",
+   2,
+   "DRAM 243a/b",
+   "alexander-practice",
+   "strong",
+   0.769,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003m",
+   2,
+   "DRAM 413a/b",
+   "song",
+   "strong",
+   0.761,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003u",
+   2,
+   "DRAM 203a/b",
+   "classical-scene",
+   "strong",
+   0.668,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003v",
+   3,
+   "DRAM 203a/b",
+   "classical-scene",
+   "strong",
+   0.676,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003w",
+   3,
+   "DRAM 293b",
+   "greek-scene",
+   "unready",
+   0.373,
+   4,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00003y",
+   3,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "unready",
+   0.487,
+   1,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_000041",
+   3,
+   "DRAM 223a/b",
+   "speech-drill",
+   "working",
+   0.577,
+   1,
+   "partial",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_000044",
+   3,
+   "DRAM 203a/b",
+   "classical-scene",
+   "strong",
+   0.675,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000040",
+   3,
+   "DRAM 263a/b",
+   "clown-turn",
+   "strong",
+   0.708,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000045",
+   3,
+   "DRAM 293b",
+   "greek-scene",
+   "unready",
+   0.35,
+   4,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00003z",
+   3,
+   "DRAM 243a/b",
+   "alexander-practice",
+   "strong",
+   0.729,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000046",
+   3,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "strong",
+   0.765,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000042",
+   3,
+   "DRAM 405a/b",
+   "fight-sequence",
+   "strong",
+   0.762,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000047",
+   3,
+   "DRAM 223a/b",
+   "speech-drill",
+   "strong",
+   0.707,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000043",
+   3,
+   "DRAM 413a/b",
+   "song",
+   "strong",
+   0.739,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00003x",
+   3,
+   "DRAM 233a/b",
+   "movement-score",
+   "strong",
+   0.766,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000048",
+   3,
+   "DRAM 203a/b",
+   "classical-scene",
+   "working",
+   0.639,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004a",
+   3,
+   "DRAM 293b",
+   "greek-scene",
+   "unready",
+   0.334,
+   5,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00004b",
+   3,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "strong",
+   0.797,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000049",
+   3,
+   "DRAM 263a/b",
+   "clown-turn",
+   "strong",
+   0.711,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004h",
+   3,
+   "DRAM 203a/b",
+   "classical-scene",
+   "strong",
+   0.678,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004d",
+   3,
+   "DRAM 223a/b",
+   "speech-drill",
+   "working",
+   0.585,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004i",
+   3,
+   "DRAM 293b",
+   "greek-scene",
+   "unready",
+   0.428,
+   3,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00004c",
+   3,
+   "DRAM 243a/b",
+   "alexander-practice",
+   "exceptional",
+   0.802,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004j",
+   3,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "exceptional",
+   0.812,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004m",
+   3,
+   "DRAM 203a/b",
+   "classical-scene",
+   "strong",
+   0.739,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004e",
+   3,
+   "DRAM 405a/b",
+   "fight-sequence",
+   "strong",
+   0.792,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004l",
+   3,
+   "DRAM 223a/b",
+   "speech-drill",
+   "exceptional",
+   0.805,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004f",
+   3,
+   "DRAM 413a/b",
+   "song",
+   "strong",
+   0.785,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004n",
+   3,
+   "DRAM 293b",
+   "greek-scene",
+   "strong",
+   0.698,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004k",
+   3,
+   "DRAM 263a/b",
+   "clown-turn",
+   "strong",
+   0.714,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004g",
+   3,
+   "DRAM 233a/b",
+   "movement-score",
+   "strong",
+   0.779,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004o",
+   3,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "exceptional",
+   0.806,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004t",
+   3,
+   "DRAM 203a/b",
+   "classical-scene",
+   "strong",
+   0.716,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004q",
+   3,
+   "DRAM 223a/b",
+   "speech-drill",
+   "exceptional",
+   0.804,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004u",
+   3,
+   "DRAM 293b",
+   "greek-scene",
+   "working",
+   0.636,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004y",
+   3,
+   "DRAM 203a/b",
+   "classical-scene",
+   "strong",
+   0.725,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000050",
+   3,
+   "DRAM 293b",
+   "greek-scene",
+   "working",
+   0.639,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004p",
+   3,
+   "DRAM 243a/b",
+   "alexander-practice",
+   "exceptional",
+   0.8,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004x",
+   3,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "strong",
+   0.732,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004v",
+   3,
+   "DRAM 263a/b",
+   "clown-turn",
+   "strong",
+   0.714,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004r",
+   3,
+   "DRAM 405a/b",
+   "fight-sequence",
+   "strong",
+   0.767,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004z",
+   3,
+   "DRAM 223a/b",
+   "speech-drill",
+   "strong",
+   0.713,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004s",
+   3,
+   "DRAM 413a/b",
+   "song",
+   "strong",
+   0.74,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000051",
+   3,
+   "DRAM 203a/b",
+   "classical-scene",
+   "strong",
+   0.695,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000053",
+   3,
+   "DRAM 293b",
+   "greek-scene",
+   "working",
+   0.608,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00004w",
+   3,
+   "DRAM 233a/b",
+   "movement-score",
+   "strong",
+   0.791,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000052",
+   3,
+   "DRAM 213a/b",
+   "voice-sequence",
+   "strong",
+   0.753,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000054",
+   3,
+   "DRAM 223a/b",
+   "speech-drill",
+   "strong",
+   0.783,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000058",
+   4,
+   "DRAM 253a",
+   "clown-turn",
+   "strong",
+   0.725,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000055",
+   4,
+   "DRAM 190a",
+   "classical-scene",
+   "strong",
+   0.726,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000056",
+   4,
+   "DRAM 313a/b",
+   "voice-sequence",
+   "exceptional",
+   0.881,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005a",
+   4,
+   "DRAM 323a/b",
+   "speech-drill",
+   "exceptional",
+   0.869,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005c",
+   4,
+   "DRAM 303a",
+   "scene-study",
+   "strong",
+   0.79,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000057",
+   4,
+   "DRAM 363a",
+   "play-game",
+   "exceptional",
+   0.817,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005f",
+   4,
+   "DRAM 253a",
+   "clown-turn",
+   "strong",
+   0.721,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005d",
+   4,
+   "DRAM 463a/b",
+   "self-tape",
+   "strong",
+   0.735,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005g",
+   4,
+   "DRAM 313a/b",
+   "voice-sequence",
+   "exceptional",
+   0.9,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000059",
+   4,
+   "DRAM 373a",
+   "movement-score",
+   "strong",
+   0.784,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005b",
+   4,
+   "DRAM 423a/b",
+   "song",
+   "exceptional",
+   0.818,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005h",
+   4,
+   "DRAM 323a/b",
+   "speech-drill",
+   "exceptional",
+   0.823,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005l",
+   4,
+   "DRAM 253a",
+   "clown-turn",
+   "strong",
+   0.732,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005i",
+   4,
+   "DRAM 190a",
+   "classical-scene",
+   "strong",
+   0.718,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005j",
+   4,
+   "DRAM 303a",
+   "scene-study",
+   "strong",
+   0.767,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005e",
+   4,
+   "DRAM 343a/b",
+   "alexander-practice",
+   "strong",
+   0.765,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005k",
+   4,
+   "DRAM 363a",
+   "play-game",
+   "working",
+   0.645,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005n",
+   4,
+   "DRAM 313a/b",
+   "voice-sequence",
+   "strong",
+   0.788,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005p",
+   4,
+   "DRAM 253a",
+   "clown-turn",
+   "strong",
+   0.745,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005q",
+   4,
+   "DRAM 323a/b",
+   "speech-drill",
+   "unready",
+   0.353,
+   2,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00005m",
+   4,
+   "DRAM 463a/b",
+   "self-tape",
+   "unready",
+   0.272,
+   3,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00005x",
+   4,
+   "DRAM 253a",
+   "clown-turn",
+   "strong",
+   0.736,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005s",
+   4,
+   "DRAM 190a",
+   "classical-scene",
+   "strong",
+   0.678,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005t",
+   4,
+   "DRAM 303a",
+   "scene-study",
+   "unready",
+   0.498,
+   2,
+   "recurring",
+   "dim:partner",
+   0
+  ],
+  [
+   "assignment_00005v",
+   4,
+   "DRAM 313a/b",
+   "voice-sequence",
+   "working",
+   0.641,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005o",
+   4,
+   "DRAM 373a",
+   "movement-score",
+   "unready",
+   0.309,
+   2,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00005r",
+   4,
+   "DRAM 423a/b",
+   "song",
+   "unready",
+   0.291,
+   3,
+   "new",
+   "dim:interpretation",
+   0
+  ],
+  [
+   "assignment_00005y",
+   4,
+   "DRAM 323a/b",
+   "speech-drill",
+   "unready",
+   0.305,
+   3,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00005w",
+   4,
+   "DRAM 363a",
+   "play-game",
+   "strong",
+   0.797,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000060",
+   4,
+   "DRAM 253a",
+   "clown-turn",
+   "strong",
+   0.736,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00005z",
+   4,
+   "DRAM 463a/b",
+   "self-tape",
+   "unready",
+   0.43,
+   2,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00005u",
+   4,
+   "DRAM 343a/b",
+   "alexander-practice",
+   "working",
+   0.558,
+   1,
+   "partial",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_000061",
+   4,
+   "DRAM 190a",
+   "classical-scene",
+   "strong",
+   0.661,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000062",
+   4,
+   "DRAM 313a/b",
+   "voice-sequence",
+   "unready",
+   0.38,
+   2,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_000064",
+   4,
+   "DRAM 323a/b",
+   "speech-drill",
+   "working",
+   0.5,
+   1,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_000068",
+   4,
+   "DRAM 253a",
+   "clown-turn",
+   "unready",
+   0.393,
+   2,
+   "partial",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_000066",
+   4,
+   "DRAM 303a",
+   "scene-study",
+   "unready",
+   0.3,
+   4,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_000067",
+   4,
+   "DRAM 363a",
+   "play-game",
+   "exceptional",
+   0.813,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006a",
+   4,
+   "DRAM 313a/b",
+   "voice-sequence",
+   "exceptional",
+   0.903,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006d",
+   4,
+   "DRAM 190a",
+   "classical-scene",
+   "strong",
+   0.757,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000063",
+   4,
+   "DRAM 373a",
+   "movement-score",
+   "strong",
+   0.76,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006b",
+   4,
+   "DRAM 253a",
+   "clown-turn",
+   "strong",
+   0.745,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000065",
+   4,
+   "DRAM 423a/b",
+   "song",
+   "exceptional",
+   0.828,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006c",
+   4,
+   "DRAM 323a/b",
+   "speech-drill",
+   "exceptional",
+   0.87,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000069",
+   4,
+   "DRAM 463a/b",
+   "self-tape",
+   "strong",
+   0.785,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006e",
+   5,
+   "DRAM 793b",
+   "showcase-scene",
+   "working",
+   0.557,
+   2,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00006f",
+   5,
+   "DRAM 313a/b",
+   "voice-sequence",
+   "exceptional",
+   0.898,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006h",
+   5,
+   "DRAM 323a/b",
+   "speech-drill",
+   "exceptional",
+   0.87,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006j",
+   5,
+   "DRAM 273b",
+   "movement-score",
+   "strong",
+   0.76,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006l",
+   5,
+   "DRAM 743b",
+   "audition-pair",
+   "unready",
+   0.498,
+   1,
+   "recurring",
+   "dim:rehearsal",
+   0
+  ],
+  [
+   "assignment_00006n",
+   5,
+   "DRAM 793b",
+   "showcase-scene",
+   "working",
+   0.621,
+   1,
+   "recurring",
+   "dim:partner",
+   0
+  ],
+  [
+   "assignment_00006k",
+   5,
+   "DRAM 463a/b",
+   "self-tape",
+   "strong",
+   0.759,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006m",
+   5,
+   "DRAM 473b",
+   "self-tape",
+   "strong",
+   0.765,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006g",
+   5,
+   "DRAM 343a/b",
+   "alexander-practice",
+   "strong",
+   0.73,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006o",
+   5,
+   "DRAM 313a/b",
+   "voice-sequence",
+   "exceptional",
+   0.844,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006i",
+   5,
+   "DRAM 423a/b",
+   "song",
+   "strong",
+   0.768,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006p",
+   5,
+   "DRAM 323a/b",
+   "speech-drill",
+   "strong",
+   0.727,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006q",
+   5,
+   "DRAM 273b",
+   "movement-score",
+   "strong",
+   0.769,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006r",
+   5,
+   "DRAM 743b",
+   "audition-pair",
+   "strong",
+   0.751,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006s",
+   5,
+   "DRAM 793b",
+   "showcase-scene",
+   "strong",
+   0.717,
+   1,
+   "partial",
+   "dim:partner",
+   0
+  ],
+  [
+   "assignment_00006v",
+   5,
+   "DRAM 313a/b",
+   "voice-sequence",
+   "exceptional",
+   0.898,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006x",
+   5,
+   "DRAM 323a/b",
+   "speech-drill",
+   "exceptional",
+   0.867,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000071",
+   5,
+   "DRAM 793b",
+   "showcase-scene",
+   "strong",
+   0.738,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006t",
+   5,
+   "DRAM 463a/b",
+   "self-tape",
+   "strong",
+   0.751,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006z",
+   5,
+   "DRAM 273b",
+   "movement-score",
+   "strong",
+   0.785,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006u",
+   5,
+   "DRAM 473b",
+   "self-tape",
+   "strong",
+   0.764,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000070",
+   5,
+   "DRAM 743b",
+   "audition-pair",
+   "strong",
+   0.721,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006w",
+   5,
+   "DRAM 343a/b",
+   "alexander-practice",
+   "strong",
+   0.785,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00006y",
+   5,
+   "DRAM 423a/b",
+   "song",
+   "exceptional",
+   0.835,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000073",
+   5,
+   "DRAM 323a/b",
+   "speech-drill",
+   "exceptional",
+   0.881,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000078",
+   5,
+   "DRAM 793b",
+   "showcase-scene",
+   "strong",
+   0.706,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000074",
+   5,
+   "DRAM 273b",
+   "movement-score",
+   "strong",
+   0.77,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000072",
+   5,
+   "DRAM 313a/b",
+   "voice-sequence",
+   "exceptional",
+   0.896,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000076",
+   5,
+   "DRAM 743b",
+   "audition-pair",
+   "strong",
+   0.742,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000075",
+   5,
+   "DRAM 463a/b",
+   "self-tape",
+   "strong",
+   0.762,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000077",
+   5,
+   "DRAM 473b",
+   "self-tape",
+   "strong",
+   0.749,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007d",
+   5,
+   "DRAM 793b",
+   "showcase-scene",
+   "strong",
+   0.718,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007a",
+   5,
+   "DRAM 323a/b",
+   "speech-drill",
+   "exceptional",
+   0.872,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007c",
+   5,
+   "DRAM 273b",
+   "movement-score",
+   "strong",
+   0.768,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007e",
+   5,
+   "DRAM 313a/b",
+   "voice-sequence",
+   "exceptional",
+   0.885,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007f",
+   5,
+   "DRAM 743b",
+   "audition-pair",
+   "strong",
+   0.725,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007i",
+   5,
+   "DRAM 793b",
+   "showcase-scene",
+   "strong",
+   0.75,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_000079",
+   5,
+   "DRAM 343a/b",
+   "alexander-practice",
+   "strong",
+   0.782,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007b",
+   5,
+   "DRAM 423a/b",
+   "song",
+   "exceptional",
+   0.824,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007j",
+   5,
+   "DRAM 323a/b",
+   "speech-drill",
+   "exceptional",
+   0.88,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007g",
+   5,
+   "DRAM 463a/b",
+   "self-tape",
+   "strong",
+   0.782,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007k",
+   5,
+   "DRAM 273b",
+   "movement-score",
+   "strong",
+   0.774,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007h",
+   5,
+   "DRAM 473b",
+   "self-tape",
+   "strong",
+   0.784,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007l",
+   5,
+   "DRAM 313a/b",
+   "voice-sequence",
+   "exceptional",
+   0.891,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007m",
+   5,
+   "DRAM 743b",
+   "audition-pair",
+   "strong",
+   0.724,
+   0,
+   "advanced",
+   "advanced",
+   0
+  ],
+  [
+   "assignment_00007n",
+   5,
+   "DRAM 793b",
+   "showcase-scene",
+   "strong",
+   0.742,
+   1,
+   "advanced",
+   "advanced",
+   0
+  ]
+ ],
+ "workByTerm": [
+  "2026 fall scene: 15 @ 69.2",
+  "2026 fall written: 8 @ 69.9",
+  "2026 fall movement: 12 @ 64.7",
+  "2026 fall voice: 12 @ 65.9",
+  "2026 fall improvisation: 4 @ 73",
+  "2026 fall partnered: 3 @ 71.6",
+  "2027 spring scene: 18 @ 70.1",
+  "2027 spring written: 12 @ 79.8",
+  "2027 spring voice: 12 @ 70.1",
+  "2027 spring movement: 12 @ 69.9",
+  "2027 spring partnered: 3 @ 72.5",
+  "2027 spring performance: 6 @ 61.3",
+  "2027 fall scene: 15 @ 65.9",
+  "2027 fall voice: 12 @ 71.4",
+  "2027 fall written: 4 @ 87.2",
+  "2027 fall improvisation: 4 @ 78",
+  "2027 fall clown: 3 @ 69.9",
+  "2027 fall movement: 9 @ 71.4",
+  "2027 fall partnered: 3 @ 62.7",
+  "2027 fall song: 3 @ 59",
+  "2027 fall performance: 9 @ 64.8",
+  "2028 spring scene: 32 @ 62.9",
+  "2028 spring performance: 7 @ 66",
+  "2028 spring voice: 14 @ 72.3",
+  "2028 spring clown: 4 @ 71.2",
+  "2028 spring movement: 6 @ 77.8",
+  "2028 spring partnered: 3 @ 77.4",
+  "2028 spring song: 3 @ 75.5",
+  "2028 fall clown: 8 @ 69.2",
+  "2028 fall scene: 17 @ 66.3",
+  "2028 fall voice: 12 @ 68.4",
+  "2028 fall improvisation: 4 @ 76.8",
+  "2028 fall camera: 4 @ 55.6",
+  "2028 fall movement: 5 @ 63.5",
+  "2028 fall song: 3 @ 64.6",
+  "2028 fall performance: 8 @ 69.5",
+  "2029 spring scene: 15 @ 70.6",
+  "2029 spring voice: 12 @ 86.7",
+  "2029 spring movement: 9 @ 76.9",
+  "2029 spring audition: 6 @ 69.4",
+  "2029 spring performance: 2 @ 70",
+  "2029 spring camera: 8 @ 76.5",
+  "2029 spring song: 3 @ 80.9"
+ ],
+ "advice": [
+  [
+   "2026-08-30",
+   "",
+   null,
+   null,
+   0,
+   ""
+  ],
+  [
+   "2026-09-06",
+   "",
+   null,
+   null,
+   0,
+   ""
+  ],
+  [
+   "2026-09-13",
+   "vocal",
+   64.46,
+   0.61,
+   0,
+   "vocal 0.61 focus 0.57 imagination 0.56 dance 0.44 physical 0.4"
+  ],
+  [
+   "2026-09-20",
+   "imagination",
+   64.61,
+   0.56,
+   0,
+   "imagination 0.56 focus 0.49 vocal 0.44 script 0.41 physical 0.37"
+  ],
+  [
+   "2026-09-27",
+   "vocal",
+   64.68,
+   0.48,
+   0,
+   "prep:rehearsal vocal 0.48 physical 0.47 focus 0.47 imagination 0.44"
+  ],
+  [
+   "2026-10-04",
+   "focus",
+   64.54,
+   0.55,
+   0,
+   "prep:rehearsal prep:revision focus 0.55 physical 0.53 imagination 0.5"
+  ],
+  [
+   "2026-10-11",
+   "vocal",
+   64.94,
+   0.51,
+   0,
+   "prep:rehearsal prep:revision vocal 0.51 focus 0.45 imagination 0.43"
+  ],
+  [
+   "2026-10-18",
+   "focus",
+   64.73,
+   0.54,
+   1,
+   "prep:rehearsal prep:revision focus 0.54 physical 0.51 imagination 0.49"
+  ],
+  [
+   "2026-10-25",
+   "focus",
+   65.06,
+   0.5,
+   1,
+   "prep:revision prep:rehearsal focus 0.5 physical 0.46 imagination 0.45"
+  ],
+  [
+   "2026-11-01",
+   "focus",
+   65.7,
+   0.58,
+   1,
+   "focus 0.58 vocal 0.5 imagination 0.48 physical 0.44 script 0.43"
+  ],
+  [
+   "2026-11-08",
+   "imagination",
+   65.58,
+   0.45,
+   1,
+   "imagination 0.45 focus 0.45 physical 0.44 vocal 0.41 listening 0.39"
+  ],
+  [
+   "2026-11-15",
+   "vocal",
+   65.57,
+   0.51,
+   1,
+   "vocal 0.51 imagination 0.5 focus 0.47 script 0.37 physical 0.37"
+  ],
+  [
+   "2026-11-22",
+   "vocal",
+   65.67,
+   0.51,
+   1,
+   "vocal 0.51 imagination 0.49 physical 0.49 focus 0.47 dance 0.39"
+  ],
+  [
+   "2026-11-29",
+   "focus",
+   66.28,
+   0.52,
+   1,
+   "focus 0.52 imagination 0.52 vocal 0.47 physical 0.44 script 0.44"
+  ],
+  [
+   "2026-12-06",
+   "focus",
+   67.15,
+   0.51,
+   1,
+   "focus 0.51 imagination 0.46 vocal 0.44 physical 0.44 listening 0.41"
+  ],
+  [
+   "2026-12-13",
+   "focus",
+   68.87,
+   0.45,
+   1,
+   "focus 0.45 imagination 0.45 vocal 0.41 physical 0.41 listening 0.39"
+  ],
+  [
+   "2026-12-20",
+   "focus",
+   70.24,
+   0.43,
+   1,
+   "focus 0.43 imagination 0.43 vocal 0.4 physical 0.39 listening 0.38"
+  ],
+  [
+   "2026-12-27",
+   "focus",
+   71.54,
+   0.41,
+   1,
+   "focus 0.41 imagination 0.41 vocal 0.38 physical 0.38 listening 0.37"
+  ],
+  [
+   "2027-01-03",
+   "focus",
+   72.78,
+   0.39,
+   1,
+   "focus 0.39 imagination 0.39 vocal 0.37 physical 0.37 listening 0.36"
+  ],
+  [
+   "2027-01-10",
+   "focus",
+   73.5,
+   0.38,
+   1,
+   "focus 0.38 imagination 0.38 vocal 0.37 physical 0.36 listening 0.36"
+  ],
+  [
+   "2027-01-17",
+   "vocal",
+   66.43,
+   0.36,
+   1,
+   "vocal 0.36 physical 0.35 listening 0.34 focus 0.34 imagination 0.34"
+  ],
+  [
+   "2027-01-24",
+   "imagination",
+   72.46,
+   0.35,
+   1,
+   "condition:stamina imagination 0.35 focus 0.35 listening 0.32 script 0.32"
+  ],
+  [
+   "2027-01-31",
+   "vocal",
+   66.65,
+   0.52,
+   1,
+   "condition:stamina vocal 0.52 physical 0.48 focus 0.4 imagination 0.36"
+  ],
+  [
+   "2027-02-07",
+   "script",
+   61.09,
+   0.43,
+   1,
+   "script 0.43 imagination 0.4 focus 0.4 vocal 0.33 physical 0.32"
+  ],
+  [
+   "2027-02-14",
+   "focus",
+   73.85,
+   0.45,
+   1,
+   "prep:rehearsal focus 0.45 imagination 0.43 physical 0.42 script 0.4"
+  ],
+  [
+   "2027-02-21",
+   "focus",
+   73.87,
+   0.42,
+   1,
+   "prep:rehearsal focus 0.42 imagination 0.37 vocal 0.35 physical 0.33"
+  ],
+  [
+   "2027-02-28",
+   "focus",
+   74.18,
+   0.43,
+   1,
+   "focus 0.43 imagination 0.38 vocal 0.38 physical 0.34 script 0.33"
+  ],
+  [
+   "2027-03-07",
+   "script",
+   62.72,
+   0.46,
+   1,
+   "script 0.46 focus 0.44 imagination 0.43 vocal 0.39 physical 0.32"
+  ],
+  [
+   "2027-03-14",
+   "script",
+   64.27,
+   0.44,
+   1,
+   "script 0.44 focus 0.44 imagination 0.43 vocal 0.38 physical 0.31"
+  ],
+  [
+   "2027-03-21",
+   "vocal",
+   67.24,
+   0.41,
+   1,
+   "vocal 0.41 imagination 0.39 focus 0.38 script 0.34 physical 0.33"
+  ],
+  [
+   "2027-03-28",
+   "vocal",
+   67.37,
+   0.37,
+   1,
+   "vocal 0.37 imagination 0.37 focus 0.37 listening 0.34 physical 0.32"
+  ],
+  [
+   "2027-04-04",
+   "imagination",
+   73.6,
+   0.39,
+   1,
+   "imagination 0.39 focus 0.39 script 0.36 vocal 0.33 listening 0.3"
+  ],
+  [
+   "2027-04-11",
+   "vocal",
+   67.9,
+   0.45,
+   1,
+   "vocal 0.45 focus 0.42 imagination 0.38 physical 0.36 script 0.34"
+  ],
+  [
+   "2027-04-18",
+   "vocal",
+   67.99,
+   0.4,
+   1,
+   "vocal 0.4 focus 0.39 imagination 0.34 physical 0.32 script 0.3"
+  ],
+  [
+   "2027-04-25",
+   "focus",
+   74.91,
+   0.45,
+   1,
+   "prep:rehearsal focus 0.45 imagination 0.41 vocal 0.41 script 0.4"
+  ],
+  [
+   "2027-05-02",
+   "focus",
+   75.72,
+   0.44,
+   1,
+   "prep:rehearsal focus 0.44 imagination 0.43 vocal 0.41 script 0.4"
+  ],
+  [
+   "2027-05-09",
+   "imagination",
+   74.99,
+   0.4,
+   1,
+   "prep:rehearsal imagination 0.4 script 0.36 focus 0.36 presence 0.35"
+  ],
+  [
+   "2027-05-16",
+   "imagination",
+   76,
+   0.37,
+   1,
+   "prep:rehearsal imagination 0.37 presence 0.36 script 0.35 listening 0.31"
+  ],
+  [
+   "2027-05-23",
+   "imagination",
+   77.44,
+   0.37,
+   1,
+   "prep:rehearsal imagination 0.37 presence 0.37 script 0.35 listening 0.32"
+  ],
+  [
+   "2027-05-30",
+   "imagination",
+   78.87,
+   0.38,
+   1,
+   "prep:rehearsal imagination 0.38 presence 0.37 script 0.36 focus 0.33"
+  ],
+  [
+   "2027-06-06",
+   "imagination",
+   80.31,
+   0.38,
+   1,
+   "prep:rehearsal imagination 0.38 presence 0.37 script 0.36 focus 0.33"
+  ],
+  [
+   "2027-06-13",
+   "imagination",
+   81.75,
+   0.38,
+   1,
+   "prep:rehearsal imagination 0.38 presence 0.37 script 0.36 focus 0.33"
+  ],
+  [
+   "2027-06-20",
+   "imagination",
+   83.2,
+   0.38,
+   1,
+   "prep:rehearsal imagination 0.38 presence 0.37 script 0.36 focus 0.33"
+  ],
+  [
+   "2027-06-27",
+   "imagination",
+   84.64,
+   0.38,
+   1,
+   "prep:rehearsal imagination 0.38 presence 0.37 script 0.36 focus 0.33"
+  ],
+  [
+   "2027-07-04",
+   "imagination",
+   86.09,
+   0.38,
+   1,
+   "prep:rehearsal imagination 0.38 presence 0.37 script 0.35 listening 0.33"
+  ],
+  [
+   "2027-07-11",
+   "imagination",
+   87.54,
+   0.37,
+   1,
+   "prep:rehearsal imagination 0.37 presence 0.37 script 0.35 listening 0.32"
+  ],
+  [
+   "2027-07-18",
+   "imagination",
+   88.99,
+   0.37,
+   1,
+   "prep:rehearsal imagination 0.37 presence 0.36 script 0.34 listening 0.32"
+  ],
+  [
+   "2027-07-25",
+   "imagination",
+   90.44,
+   0.36,
+   1,
+   "prep:rehearsal imagination 0.36 presence 0.36 script 0.34 listening 0.31"
+  ],
+  [
+   "2027-08-01",
+   "imagination",
+   91.9,
+   0.36,
+   1,
+   "prep:rehearsal imagination 0.36 presence 0.36 script 0.34 listening 0.31"
+  ],
+  [
+   "2027-08-08",
+   "imagination",
+   93.35,
+   0.36,
+   1,
+   "prep:rehearsal imagination 0.36 presence 0.36 script 0.34 listening 0.31"
+  ],
+  [
+   "2027-08-15",
+   "imagination",
+   94.81,
+   0.36,
+   1,
+   "prep:rehearsal imagination 0.36 presence 0.36 script 0.34 listening 0.31"
+  ],
+  [
+   "2027-08-22",
+   "imagination",
+   96.27,
+   0.36,
+   1,
+   "prep:rehearsal imagination 0.36 presence 0.36 script 0.34 listening 0.31"
+  ],
+  [
+   "2027-08-29",
+   "imagination",
+   97.07,
+   0.36,
+   1,
+   "prep:rehearsal imagination 0.36 presence 0.36 script 0.34 listening 0.31"
+  ],
+  [
+   "2027-09-05",
+   "presence",
+   65.53,
+   0.37,
+   1,
+   "prep:rehearsal presence 0.37 imagination 0.36 script 0.34 listening 0.31"
+  ],
+  [
+   "2027-09-12",
+   "presence",
+   65.53,
+   0.35,
+   1,
+   "prep:rehearsal presence 0.35 imagination 0.34 listening 0.32 script 0.29"
+  ],
+  [
+   "2027-09-19",
+   "vocal",
+   68.77,
+   0.51,
+   1,
+   "vocal 0.51 imagination 0.33 listening 0.33 presence 0.32 adaptability 0.28"
+  ],
+  [
+   "2027-09-26",
+   "vocal",
+   68.85,
+   0.38,
+   1,
+   "prep:partner vocal 0.38 imagination 0.37 listening 0.36 adaptability 0.28"
+  ],
+  [
+   "2027-10-03",
+   "physical",
+   69.54,
+   0.48,
+   1,
+   "prep:rehearsal prep:interpretation prep:partner physical 0.48 vocal 0.41"
+  ],
+  [
+   "2027-10-10",
+   "physical",
+   69.63,
+   0.43,
+   1,
+   "prep:rehearsal prep:interpretation prep:partner physical 0.43 listening 0.41"
+  ],
+  [
+   "2027-10-17",
+   "listening",
+   69.86,
+   0.62,
+   1,
+   "listening 0.62 adaptability 0.53 composure 0.45 imagination 0.45 vocal 0.44"
+  ],
+  [
+   "2027-10-24",
+   "listening",
+   69.96,
+   0.55,
+   1,
+   "prep:partner listening 0.55 adaptability 0.49 vocal 0.41 imagination 0.38"
+  ],
+  [
+   "2027-10-31",
+   "physical",
+   69.97,
+   0.41,
+   1,
+   "prep:partner physical 0.41 vocal 0.33 listening 0.33 dance 0.29"
+  ],
+  [
+   "2027-11-07",
+   "listening",
+   70.2,
+   0.37,
+   1,
+   "condition:stamina listening 0.37 vocal 0.32 focus 0.31 imagination 0.3"
+  ],
+  [
+   "2027-11-14",
+   "vocal",
+   69.69,
+   0.43,
+   1,
+   "vocal 0.43 listening 0.38 focus 0.33 imagination 0.3 adaptability 0.25"
+  ],
+  [
+   "2027-11-21",
+   "vocal",
+   69.77,
+   0.42,
+   1,
+   "vocal 0.42 listening 0.37 focus 0.28 adaptability 0.27 imagination 0.26"
+  ],
+  [
+   "2027-11-28",
+   "listening",
+   71.42,
+   0.36,
+   1,
+   "listening 0.36 vocal 0.34 focus 0.32 physical 0.27 adaptability 0.26"
+  ],
+  [
+   "2027-12-05",
+   "physical",
+   70.8,
+   0.39,
+   1,
+   "physical 0.39 vocal 0.38 focus 0.32 singing 0.3 imagination 0.3"
+  ],
+  [
+   "2027-12-12",
+   "vocal",
+   71.02,
+   0.36,
+   1,
+   "vocal 0.36 physical 0.34 imagination 0.3 focus 0.29 singing 0.28"
+  ],
+  [
+   "2027-12-19",
+   "physical",
+   72.38,
+   0.34,
+   1,
+   "physical 0.34 vocal 0.33 imagination 0.3 focus 0.29 singing 0.26"
+  ],
+  [
+   "2027-12-26",
+   "physical",
+   73.9,
+   0.34,
+   1,
+   "physical 0.34 vocal 0.34 imagination 0.32 focus 0.3 listening 0.27"
+  ],
+  [
+   "2028-01-02",
+   "physical",
+   75.35,
+   0.35,
+   1,
+   "physical 0.35 vocal 0.34 imagination 0.32 focus 0.31 listening 0.28"
+  ],
+  [
+   "2028-01-09",
+   "physical",
+   75.9,
+   0.35,
+   1,
+   "physical 0.35 vocal 0.35 imagination 0.32 focus 0.31 listening 0.28"
+  ],
+  [
+   "2028-01-16",
+   "physical",
+   76.16,
+   0.35,
+   1,
+   "physical 0.35 vocal 0.35 imagination 0.32 focus 0.31 listening 0.28"
+  ],
+  [
+   "2028-01-23",
+   "imagination",
+   97.31,
+   0.31,
+   1,
+   "prep:rehearsal prep:partner imagination 0.31 listening 0.3 vocal 0.29"
+  ],
+  [
+   "2028-01-30",
+   "presence",
+   66.39,
+   0.41,
+   1,
+   "prep:rehearsal presence 0.41 listening 0.4 vocal 0.34 memory 0.3"
+  ],
+  [
+   "2028-02-06",
+   "adaptability",
+   65.78,
+   0.37,
+   1,
+   "prep:rehearsal prep:interpretation adaptability 0.37 listening 0.36 presence 0.29"
+  ],
+  [
+   "2028-02-13",
+   "vocal",
+   74.01,
+   0.37,
+   1,
+   "prep:rehearsal prep:interpretation vocal 0.37 listening 0.32 adaptability 0.31"
+  ],
+  [
+   "2028-02-20",
+   "vocal",
+   74.12,
+   0.31,
+   1,
+   "prep:rehearsal prep:partner condition:stamina vocal 0.31 listening 0.31"
+  ],
+  [
+   "2028-02-27",
+   "vocal",
+   74.22,
+   0.38,
+   1,
+   "prep:rehearsal vocal 0.38 listening 0.32 adaptability 0.3 presence 0.27"
+  ],
+  [
+   "2028-03-05",
+   "adaptability",
+   65.92,
+   0.35,
+   1,
+   "prep:rehearsal condition:stamina adaptability 0.35 vocal 0.33 listening 0.33"
+  ],
+  [
+   "2028-03-12",
+   "adaptability",
+   65.92,
+   0.35,
+   1,
+   "prep:rehearsal condition:stamina adaptability 0.35 vocal 0.33 listening 0.33"
+  ],
+  [
+   "2028-03-19",
+   "vocal",
+   75.08,
+   0.39,
+   1,
+   "prep:rehearsal vocal 0.39 listening 0.35 adaptability 0.33 emotionalDepth 0.27"
+  ],
+  [
+   "2028-03-26",
+   "listening",
+   72.85,
+   0.37,
+   1,
+   "listening 0.37 adaptability 0.36 vocal 0.28 emotionalDepth 0.25 presence 0.24"
+  ],
+  [
+   "2028-04-02",
+   "vocal",
+   75.25,
+   0.38,
+   1,
+   "prep:partner vocal 0.38 adaptability 0.35 listening 0.34 classical 0.28"
+  ],
+  [
+   "2028-04-09",
+   "vocal",
+   75.32,
+   0.38,
+   1,
+   "prep:partner vocal 0.38 adaptability 0.35 listening 0.34 classical 0.28"
+  ],
+  [
+   "2028-04-16",
+   "vocal",
+   75.4,
+   0.37,
+   1,
+   "prep:rehearsal vocal 0.37 listening 0.29 adaptability 0.28 physical 0.28"
+  ],
+  [
+   "2028-04-23",
+   "listening",
+   73.36,
+   0.32,
+   1,
+   "condition:stamina prep:rehearsal listening 0.32 vocal 0.31 physical 0.27"
+  ],
+  [
+   "2028-04-30",
+   "vocal",
+   76.57,
+   0.42,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.42 listening 0.32 imagination 0.29"
+  ],
+  [
+   "2028-05-07",
+   "vocal",
+   78.07,
+   0.42,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.42 listening 0.32 imagination 0.29"
+  ],
+  [
+   "2028-05-14",
+   "vocal",
+   79.57,
+   0.42,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.42 listening 0.32 imagination 0.29"
+  ],
+  [
+   "2028-05-21",
+   "vocal",
+   81.07,
+   0.42,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.42 listening 0.32 imagination 0.29"
+  ],
+  [
+   "2028-05-28",
+   "vocal",
+   82.56,
+   0.42,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.42 listening 0.32 imagination 0.29"
+  ],
+  [
+   "2028-06-04",
+   "vocal",
+   84.06,
+   0.42,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.42 listening 0.32 imagination 0.29"
+  ],
+  [
+   "2028-06-11",
+   "vocal",
+   85.56,
+   0.42,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.42 listening 0.32 imagination 0.29"
+  ],
+  [
+   "2028-06-18",
+   "vocal",
+   87.06,
+   0.42,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.42 listening 0.32 imagination 0.29"
+  ],
+  [
+   "2028-06-25",
+   "vocal",
+   88.56,
+   0.4,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.4 listening 0.3 imagination 0.27"
+  ],
+  [
+   "2028-07-02",
+   "vocal",
+   90.05,
+   0.35,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.35 listening 0.25 imagination 0.22"
+  ],
+  [
+   "2028-07-09",
+   "vocal",
+   91.55,
+   0.3,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.3 listening 0.2 imagination 0.17"
+  ],
+  [
+   "2028-07-16",
+   "vocal",
+   93.04,
+   0.27,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.27 listening 0.17 imagination 0.14"
+  ],
+  [
+   "2028-07-23",
+   "vocal",
+   94.54,
+   0.27,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.27 listening 0.17 imagination 0.14"
+  ],
+  [
+   "2028-07-30",
+   "vocal",
+   96.03,
+   0.27,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.27 listening 0.17 imagination 0.14"
+  ],
+  [
+   "2028-08-06",
+   "vocal",
+   97.52,
+   0.27,
+   1,
+   "condition:stamina prep:rehearsal vocal 0.27 listening 0.17 imagination 0.14"
+  ],
+  [
+   "2028-08-13",
+   "listening",
+   74.4,
+   0.17,
+   1,
+   "condition:stamina prep:rehearsal listening 0.17 vocal 0.17 imagination 0.14"
+  ],
+  [
+   "2028-08-20",
+   "listening",
+   75.88,
+   0.17,
+   1,
+   "condition:stamina prep:rehearsal listening 0.17 vocal 0.15 imagination 0.14"
+  ],
+  [
+   "2028-08-27",
+   "listening",
+   77.37,
+   0.16,
+   1,
+   "condition:stamina prep:rehearsal listening 0.16 vocal 0.15 imagination 0.14"
+  ],
+  [
+   "2028-09-03",
+   "listening",
+   78.2,
+   0.16,
+   1,
+   "condition:stamina prep:rehearsal listening 0.16 vocal 0.15 imagination 0.14"
+  ],
+  [
+   "2028-09-10",
+   "listening",
+   78.65,
+   0.16,
+   1,
+   "condition:stamina prep:rehearsal listening 0.16 vocal 0.15 imagination 0.14"
+  ],
+  [
+   "2028-09-17",
+   "listening",
+   78.66,
+   0.17,
+   1,
+   "condition:stamina prep:rehearsal listening 0.17 adaptability 0.14 physical 0.14"
+  ],
+  [
+   "2028-09-24",
+   "adaptability",
+   66.7,
+   0.19,
+   1,
+   "condition:stamina adaptability 0.19 vocal 0.19 listening 0.14 imagination 0.13"
+  ],
+  [
+   "2028-10-01",
+   "adaptability",
+   66.74,
+   0.28,
+   1,
+   "condition:stamina adaptability 0.28 emotionalDepth 0.21 listening 0.19 presence 0.14"
+  ],
+  [
+   "2028-10-08",
+   "emotionalDepth",
+   72.6,
+   0.15,
+   1,
+   "prep:rehearsal emotionalDepth 0.15 clown 0.15 adaptability 0.14 vocal 0.14"
+  ],
+  [
+   "2028-10-15",
+   "adaptability",
+   66.82,
+   0.22,
+   1,
+   "condition:stamina prep:rehearsal adaptability 0.22 emotionalDepth 0.17 listening 0.14"
+  ],
+  [
+   "2028-10-22",
+   "emotionalDepth",
+   72.72,
+   0.22,
+   1,
+   "prep:rehearsal prep:interpretation prep:partner emotionalDepth 0.22 adaptability 0.22"
+  ],
+  [
+   "2028-10-29",
+   "adaptability",
+   66.9,
+   0.22,
+   1,
+   "prep:rehearsal prep:interpretation prep:partner adaptability 0.22 presence 0.21"
+  ],
+  [
+   "2028-11-05",
+   "adaptability",
+   66.96,
+   0.21,
+   1,
+   "prep:rehearsal prep:interpretation prep:partner adaptability 0.21 emotionalDepth 0.14"
+  ],
+  [
+   "2028-11-12",
+   "adaptability",
+   67,
+   0.2,
+   1,
+   "prep:rehearsal prep:interpretation prep:partner adaptability 0.2 listening 0.18"
+  ],
+  [
+   "2028-11-19",
+   "presence",
+   66.76,
+   0.37,
+   1,
+   "prep:rehearsal presence 0.37 listening 0.3 adaptability 0.28 composure 0.15"
+  ],
+  [
+   "2028-11-26",
+   "presence",
+   66.87,
+   0.36,
+   1,
+   "prep:rehearsal prep:interpretation presence 0.36 listening 0.36 adaptability 0.34"
+  ],
+  [
+   "2028-12-03",
+   "listening",
+   78.81,
+   0.33,
+   1,
+   "prep:rehearsal prep:interpretation listening 0.33 presence 0.29 adaptability 0.28"
+  ],
+  [
+   "2028-12-10",
+   "adaptability",
+   67.67,
+   0.16,
+   1,
+   "adaptability 0.16 listening 0.14 emotionalDepth 0.13 presence 0.12 vocal 0.12"
+  ],
+  [
+   "2028-12-17",
+   "adaptability",
+   69.18,
+   0.13,
+   1,
+   "adaptability 0.13 listening 0.13 emotionalDepth 0.12 presence 0.12 vocal 0.12"
+  ],
+  [
+   "2028-12-24",
+   "listening",
+   81.6,
+   0.12,
+   1,
+   "listening 0.12 emotionalDepth 0.12 adaptability 0.12 vocal 0.12 focus 0.11"
+  ],
+  [
+   "2028-12-31",
+   "listening",
+   82.86,
+   0.12,
+   1,
+   "listening 0.12 focus 0.12 adaptability 0.12 emotionalDepth 0.12 vocal 0.12"
+  ],
+  [
+   "2029-01-07",
+   "focus",
+   77.67,
+   0.12,
+   1,
+   "focus 0.12 listening 0.12 emotionalDepth 0.12 adaptability 0.12 presence 0.12"
+  ],
+  [
+   "2029-01-14",
+   "listening",
+   84.68,
+   0.13,
+   1,
+   "listening 0.13 focus 0.12 emotionalDepth 0.12 adaptability 0.12 presence 0.12"
+  ],
+  [
+   "2029-01-21",
+   "listening",
+   85.03,
+   0.12,
+   1,
+   "listening 0.12 emotionalDepth 0.12 focus 0.12 adaptability 0.12 presence 0.12"
+  ],
+  [
+   "2029-01-28",
+   "adaptability",
+   70.86,
+   0.15,
+   1,
+   "prep:rehearsal adaptability 0.15 emotionalDepth 0.14 listening 0.13 composure 0.12"
+  ],
+  [
+   "2029-02-04",
+   "composure",
+   69.61,
+   0.17,
+   1,
+   "prep:rehearsal composure 0.17 vocal 0.16 imagination 0.13 focus 0.13"
+  ],
+  [
+   "2029-02-11",
+   "presence",
+   66.98,
+   0.34,
+   1,
+   "prep:rehearsal condition:stamina prep:partner presence 0.34 emotionalDepth 0.32"
+  ],
+  [
+   "2029-02-18",
+   "emotionalDepth",
+   75.38,
+   0.18,
+   1,
+   "prep:rehearsal emotionalDepth 0.18 focus 0.16 vocal 0.14 presence 0.14"
+  ],
+  [
+   "2029-02-25",
+   "focus",
+   78.51,
+   0.21,
+   1,
+   "prep:rehearsal focus 0.21 listening 0.18 emotionalDepth 0.14 composure 0.14"
+  ],
+  [
+   "2029-03-04",
+   "emotionalDepth",
+   75.4,
+   0.27,
+   1,
+   "emotionalDepth 0.27 focus 0.17 imagination 0.17 composure 0.14 listening 0.12"
+  ],
+  [
+   "2029-03-11",
+   "emotionalDepth",
+   75.4,
+   0.27,
+   1,
+   "emotionalDepth 0.27 focus 0.17 imagination 0.17 composure 0.14 listening 0.12"
+  ],
+  [
+   "2029-03-18",
+   "emotionalDepth",
+   76.48,
+   0.27,
+   1,
+   "emotionalDepth 0.27 imagination 0.18 focus 0.16 listening 0.16 composure 0.14"
+  ],
+  [
+   "2029-03-25",
+   "physical",
+   77.14,
+   0.2,
+   1,
+   "physical 0.2 emotionalDepth 0.18 imagination 0.15 focus 0.14 dance 0.12"
+  ],
+  [
+   "2029-04-01",
+   "emotionalDepth",
+   77.1,
+   0.21,
+   1,
+   "condition:stamina emotionalDepth 0.21 composure 0.2 focus 0.17 imagination 0.14"
+  ],
+  [
+   "2029-04-08",
+   "focus",
+   78.53,
+   0.2,
+   1,
+   "condition:stamina focus 0.2 physical 0.15 imagination 0.14 composure 0.14"
+  ],
+  [
+   "2029-04-15",
+   "focus",
+   78.53,
+   0.2,
+   1,
+   "condition:stamina focus 0.2 vocal 0.16 imagination 0.15 composure 0.14"
+  ],
+  [
+   "2029-04-22",
+   "focus",
+   79.42,
+   0.23,
+   1,
+   "focus 0.23 emotionalDepth 0.18 physical 0.14 imagination 0.14 screen 0.12"
+  ],
+  [
+   "2029-04-29",
+   "focus",
+   80.85,
+   0.23,
+   1,
+   "focus 0.23 composure 0.2 adaptability 0.19 emotionalDepth 0.17 imagination 0.14"
+  ],
+  [
+   "2029-05-06",
+   "focus",
+   82.33,
+   0.23,
+   1,
+   "focus 0.23 composure 0.2 adaptability 0.19 emotionalDepth 0.17 imagination 0.14"
+  ],
+  [
+   "2029-05-13",
+   "focus",
+   83.81,
+   0.23,
+   1,
+   "focus 0.23 composure 0.2 adaptability 0.19 emotionalDepth 0.17 imagination 0.14"
+  ],
+  [
+   "2029-05-20",
+   "focus",
+   85.3,
+   0.22,
+   1,
+   "focus 0.22 composure 0.2 adaptability 0.19 emotionalDepth 0.17 imagination 0.14"
+  ],
+  [
+   "2029-05-27",
+   "focus",
+   86.8,
+   0.21,
+   1,
+   "focus 0.21 composure 0.2 adaptability 0.19 emotionalDepth 0.18 imagination 0.14"
+  ],
+  [
+   "2029-06-03",
+   "focus",
+   88.29,
+   0.21,
+   1,
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.19 imagination 0.14"
+  ],
+  [
+   "2029-06-10",
+   "focus",
+   89.77,
+   0.21,
+   1,
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.2 imagination 0.14"
+  ],
+  [
+   "2029-06-17",
+   "focus",
+   91.25,
+   0.21,
+   1,
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.2 imagination 0.14"
+  ],
+  [
+   "2029-06-24",
+   "focus",
+   92.74,
+   0.21,
+   1,
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.2 imagination 0.14"
+  ],
+  [
+   "2029-07-01",
+   "focus",
+   94.22,
+   0.21,
+   1,
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.2 imagination 0.14"
+  ],
+  [
+   "2029-07-08",
+   "focus",
+   95.7,
+   0.21,
+   1,
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.2 imagination 0.14"
+  ],
+  [
+   "2029-07-15",
+   "focus",
+   97.19,
+   0.21,
+   1,
+   "focus 0.21 composure 0.2 adaptability 0.2 emotionalDepth 0.2 imagination 0.14"
+  ],
+  [
+   "2029-07-22",
+   "emotionalDepth",
+   77.64,
+   0.2,
+   1,
+   "emotionalDepth 0.2 adaptability 0.19 composure 0.19 focus 0.19 imagination 0.14"
+  ],
+  [
+   "2029-07-29",
+   "emotionalDepth",
+   79.08,
+   0.19,
+   1,
+   "emotionalDepth 0.19 adaptability 0.19 focus 0.19 composure 0.19 imagination 0.14"
+  ]
+ ],
+ "monthly": [
+  {
+   "on": "2026-08-24",
+   "standing": "good",
+   "termsBegun": 1,
+   "abilities": {
+    "emotionalDepth": 63.9,
+    "presence": 63.9,
+    "listening": 63.9,
+    "imagination": 63.9,
+    "focus": 63.9,
+    "memory": 63.9,
+    "adaptability": 63.9,
+    "composure": 63.9,
+    "vocal": 63.9,
+    "physical": 63.9,
+    "discipline": 63.9,
+    "stamina": 50
+   },
+   "genresKnown": 0,
+   "bank": 76574,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2026-09-01",
+   "standing": "good",
+   "termsBegun": 1,
+   "abilities": {
+    "emotionalDepth": 64.3,
+    "presence": 64.2,
+    "listening": 64.2,
+    "imagination": 64.2,
+    "focus": 64.1,
+    "memory": 64.1,
+    "adaptability": 64.2,
+    "composure": 64.2,
+    "vocal": 64.1,
+    "physical": 64.1,
+    "discipline": 64.5,
+    "stamina": 48.6
+   },
+   "genresKnown": 0,
+   "bank": 76494,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2026-10-01",
+   "standing": "good",
+   "termsBegun": 1,
+   "abilities": {
+    "emotionalDepth": 65.1,
+    "presence": 64.3,
+    "listening": 65.4,
+    "imagination": 64.9,
+    "focus": 64.5,
+    "memory": 64.9,
+    "adaptability": 64.4,
+    "composure": 64.3,
+    "vocal": 64.7,
+    "physical": 65,
+    "discipline": 64.8,
+    "stamina": 43.2
+   },
+   "genresKnown": 0,
+   "bank": 76458,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2026-11-01",
+   "standing": "good",
+   "termsBegun": 1,
+   "abilities": {
+    "emotionalDepth": 65.6,
+    "presence": 64.3,
+    "listening": 66.3,
+    "imagination": 65.4,
+    "focus": 65.7,
+    "memory": 65,
+    "adaptability": 64.6,
+    "composure": 64.3,
+    "vocal": 65.3,
+    "physical": 65.7,
+    "discipline": 65.4,
+    "stamina": 37.6
+   },
+   "genresKnown": 0,
+   "bank": 76230,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2026-12-01",
+   "standing": "good",
+   "termsBegun": 1,
+   "abilities": {
+    "emotionalDepth": 66.4,
+    "presence": 64.3,
+    "listening": 67.3,
+    "imagination": 66.7,
+    "focus": 66.8,
+    "memory": 65.2,
+    "adaptability": 64.7,
+    "composure": 64.3,
+    "vocal": 65.9,
+    "physical": 66.5,
+    "discipline": 66.3,
+    "stamina": 35
+   },
+   "genresKnown": 0,
+   "bank": 76482,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2027-01-01",
+   "standing": "good",
+   "termsBegun": 1,
+   "abilities": {
+    "emotionalDepth": 66.6,
+    "presence": 64.3,
+    "listening": 67.6,
+    "imagination": 71,
+    "focus": 72.4,
+    "memory": 65.2,
+    "adaptability": 64.8,
+    "composure": 64.3,
+    "vocal": 66.3,
+    "physical": 66.8,
+    "discipline": 70.1,
+    "stamina": 35
+   },
+   "genresKnown": 0,
+   "bank": 76301,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2027-02-01",
+   "standing": "good",
+   "termsBegun": 2,
+   "abilities": {
+    "emotionalDepth": 67,
+    "presence": 64.3,
+    "listening": 67.9,
+    "imagination": 72.6,
+    "focus": 73.8,
+    "memory": 65.5,
+    "adaptability": 64.8,
+    "composure": 64.3,
+    "vocal": 66.6,
+    "physical": 67.3,
+    "discipline": 71.1,
+    "stamina": 35.7
+   },
+   "genresKnown": 0,
+   "bank": 87401,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2027-03-01",
+   "standing": "good",
+   "termsBegun": 2,
+   "abilities": {
+    "emotionalDepth": 67.5,
+    "presence": 64.3,
+    "listening": 68.4,
+    "imagination": 72.8,
+    "focus": 74.2,
+    "memory": 65.8,
+    "adaptability": 64.9,
+    "composure": 64.3,
+    "vocal": 67,
+    "physical": 68,
+    "discipline": 71.7,
+    "stamina": 35.7
+   },
+   "genresKnown": 0,
+   "bank": 87673,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2027-04-01",
+   "standing": "good",
+   "termsBegun": 2,
+   "abilities": {
+    "emotionalDepth": 67.9,
+    "presence": 64.4,
+    "listening": 68.8,
+    "imagination": 73.4,
+    "focus": 74.3,
+    "memory": 66.1,
+    "adaptability": 65,
+    "composure": 64.7,
+    "vocal": 67.8,
+    "physical": 68.5,
+    "discipline": 72.8,
+    "stamina": 35.2
+   },
+   "genresKnown": 0,
+   "bank": 87640,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2027-05-01",
+   "standing": "good",
+   "termsBegun": 2,
+   "abilities": {
+    "emotionalDepth": 68.2,
+    "presence": 64.5,
+    "listening": 69.1,
+    "imagination": 74,
+    "focus": 75.5,
+    "memory": 66.6,
+    "adaptability": 65.1,
+    "composure": 64.7,
+    "vocal": 68.4,
+    "physical": 69,
+    "discipline": 74.2,
+    "stamina": 35
+   },
+   "genresKnown": 0,
+   "bank": 87892,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2027-06-01",
+   "standing": "good",
+   "termsBegun": 2,
+   "abilities": {
+    "emotionalDepth": 68.3,
+    "presence": 65.5,
+    "listening": 69.2,
+    "imagination": 79.3,
+    "focus": 76.3,
+    "memory": 66.6,
+    "adaptability": 65.1,
+    "composure": 65.4,
+    "vocal": 68.5,
+    "physical": 69,
+    "discipline": 77.5,
+    "stamina": 35
+   },
+   "genresKnown": 0,
+   "bank": 87422,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2027-07-01",
+   "standing": "good",
+   "termsBegun": 2,
+   "abilities": {
+    "emotionalDepth": 68.3,
+    "presence": 65.5,
+    "listening": 69.2,
+    "imagination": 85.5,
+    "focus": 76.3,
+    "memory": 66.6,
+    "adaptability": 65.1,
+    "composure": 65.4,
+    "vocal": 68.5,
+    "physical": 69,
+    "discipline": 80.6,
+    "stamina": 35
+   },
+   "genresKnown": 0,
+   "bank": 86891,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2027-08-01",
+   "standing": "good",
+   "termsBegun": 2,
+   "abilities": {
+    "emotionalDepth": 68.3,
+    "presence": 65.5,
+    "listening": 69.2,
+    "imagination": 91.9,
+    "focus": 76.3,
+    "memory": 66.6,
+    "adaptability": 65.1,
+    "composure": 65.4,
+    "vocal": 68.5,
+    "physical": 69,
+    "discipline": 83.9,
+    "stamina": 35
+   },
+   "genresKnown": 0,
+   "bank": 86572,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2027-09-01",
+   "standing": "good",
+   "termsBegun": 3,
+   "abilities": {
+    "emotionalDepth": 68.5,
+    "presence": 65.5,
+    "listening": 69.2,
+    "imagination": 97.3,
+    "focus": 76.3,
+    "memory": 66.7,
+    "adaptability": 65.1,
+    "composure": 65.4,
+    "vocal": 68.5,
+    "physical": 69.1,
+    "discipline": 86.6,
+    "stamina": 35.7
+   },
+   "genresKnown": 0,
+   "bank": 98263,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2027-10-01",
+   "standing": "good",
+   "termsBegun": 3,
+   "abilities": {
+    "emotionalDepth": 69,
+    "presence": 65.5,
+    "listening": 69.6,
+    "imagination": 97.3,
+    "focus": 76.4,
+    "memory": 67.3,
+    "adaptability": 65.3,
+    "composure": 65.4,
+    "vocal": 68.9,
+    "physical": 69.5,
+    "discipline": 86.7,
+    "stamina": 40.5
+   },
+   "genresKnown": 0,
+   "bank": 98368,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2027-11-01",
+   "standing": "good",
+   "termsBegun": 3,
+   "abilities": {
+    "emotionalDepth": 70.1,
+    "presence": 66,
+    "listening": 70.1,
+    "imagination": 97.3,
+    "focus": 76.4,
+    "memory": 67.6,
+    "adaptability": 65.5,
+    "composure": 67,
+    "vocal": 69.5,
+    "physical": 70,
+    "discipline": 86.8,
+    "stamina": 44.5
+   },
+   "genresKnown": 3,
+   "bank": 98698,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2027-12-01",
+   "standing": "good",
+   "termsBegun": 3,
+   "abilities": {
+    "emotionalDepth": 70.7,
+    "presence": 66,
+    "listening": 71.9,
+    "imagination": 97.3,
+    "focus": 76.5,
+    "memory": 67.7,
+    "adaptability": 65.6,
+    "composure": 67,
+    "vocal": 69.8,
+    "physical": 70.3,
+    "discipline": 87.4,
+    "stamina": 48.2
+   },
+   "genresKnown": 3,
+   "bank": 98951,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2028-01-01",
+   "standing": "good",
+   "termsBegun": 3,
+   "abilities": {
+    "emotionalDepth": 70.8,
+    "presence": 66,
+    "listening": 72,
+    "imagination": 97.3,
+    "focus": 76.5,
+    "memory": 67.7,
+    "adaptability": 65.6,
+    "composure": 67,
+    "vocal": 73.2,
+    "physical": 75.1,
+    "discipline": 90.4,
+    "stamina": 46.3
+   },
+   "genresKnown": 3,
+   "bank": 98715,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2028-02-01",
+   "standing": "good",
+   "termsBegun": 4,
+   "abilities": {
+    "emotionalDepth": 71.3,
+    "presence": 66.4,
+    "listening": 72.3,
+    "imagination": 97.3,
+    "focus": 76.5,
+    "memory": 68.2,
+    "adaptability": 65.7,
+    "composure": 68.2,
+    "vocal": 73.8,
+    "physical": 76.2,
+    "discipline": 91,
+    "stamina": 44.5
+   },
+   "genresKnown": 6,
+   "bank": 110693,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2028-03-01",
+   "standing": "good",
+   "termsBegun": 4,
+   "abilities": {
+    "emotionalDepth": 71.7,
+    "presence": 66.4,
+    "listening": 72.6,
+    "imagination": 97.3,
+    "focus": 76.5,
+    "memory": 68.4,
+    "adaptability": 65.9,
+    "composure": 68.2,
+    "vocal": 74.3,
+    "physical": 76.3,
+    "discipline": 91,
+    "stamina": 44.3
+   },
+   "genresKnown": 6,
+   "bank": 110946,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2028-04-01",
+   "standing": "good",
+   "termsBegun": 4,
+   "abilities": {
+    "emotionalDepth": 72,
+    "presence": 66.4,
+    "listening": 72.9,
+    "imagination": 97.3,
+    "focus": 76.5,
+    "memory": 68.5,
+    "adaptability": 66.5,
+    "composure": 68.2,
+    "vocal": 75.2,
+    "physical": 76.4,
+    "discipline": 91.4,
+    "stamina": 43.6
+   },
+   "genresKnown": 6,
+   "bank": 111030,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2028-05-01",
+   "standing": "good",
+   "termsBegun": 4,
+   "abilities": {
+    "emotionalDepth": 72.3,
+    "presence": 66.4,
+    "listening": 73.8,
+    "imagination": 97.3,
+    "focus": 76.5,
+    "memory": 68.7,
+    "adaptability": 66.6,
+    "composure": 68.2,
+    "vocal": 76.8,
+    "physical": 76.4,
+    "discipline": 92.4,
+    "stamina": 43.3
+   },
+   "genresKnown": 6,
+   "bank": 111114,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2028-06-01",
+   "standing": "good",
+   "termsBegun": 4,
+   "abilities": {
+    "emotionalDepth": 72.3,
+    "presence": 66.4,
+    "listening": 73.8,
+    "imagination": 97.3,
+    "focus": 76.5,
+    "memory": 68.7,
+    "adaptability": 66.6,
+    "composure": 68.2,
+    "vocal": 83.4,
+    "physical": 76.4,
+    "discipline": 95.6,
+    "stamina": 37.7
+   },
+   "genresKnown": 6,
+   "bank": 110745,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2028-07-01",
+   "standing": "good",
+   "termsBegun": 4,
+   "abilities": {
+    "emotionalDepth": 72.3,
+    "presence": 66.4,
+    "listening": 73.8,
+    "imagination": 97.3,
+    "focus": 76.5,
+    "memory": 68.7,
+    "adaptability": 66.6,
+    "composure": 68.2,
+    "vocal": 89.8,
+    "physical": 76.4,
+    "discipline": 98.8,
+    "stamina": 35
+   },
+   "genresKnown": 6,
+   "bank": 110445,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2028-08-01",
+   "standing": "good",
+   "termsBegun": 4,
+   "abilities": {
+    "emotionalDepth": 72.3,
+    "presence": 66.4,
+    "listening": 73.8,
+    "imagination": 97.3,
+    "focus": 76.5,
+    "memory": 68.7,
+    "adaptability": 66.6,
+    "composure": 68.2,
+    "vocal": 96.5,
+    "physical": 76.4,
+    "discipline": 100,
+    "stamina": 35
+   },
+   "genresKnown": 6,
+   "bank": 110086,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2028-09-01",
+   "standing": "good",
+   "termsBegun": 5,
+   "abilities": {
+    "emotionalDepth": 72.3,
+    "presence": 66.4,
+    "listening": 77.8,
+    "imagination": 97.3,
+    "focus": 76.5,
+    "memory": 68.7,
+    "adaptability": 66.6,
+    "composure": 68.2,
+    "vocal": 98.7,
+    "physical": 76.4,
+    "discipline": 100,
+    "stamina": 35
+   },
+   "genresKnown": 6,
+   "bank": 122470,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2028-10-01",
+   "standing": "good",
+   "termsBegun": 5,
+   "abilities": {
+    "emotionalDepth": 72.5,
+    "presence": 66.4,
+    "listening": 78.7,
+    "imagination": 97.3,
+    "focus": 76.5,
+    "memory": 69,
+    "adaptability": 66.7,
+    "composure": 68.2,
+    "vocal": 98.7,
+    "physical": 76.6,
+    "discipline": 100,
+    "stamina": 35.5
+   },
+   "genresKnown": 6,
+   "bank": 122077,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2028-11-01",
+   "standing": "good",
+   "termsBegun": 5,
+   "abilities": {
+    "emotionalDepth": 72.8,
+    "presence": 66.5,
+    "listening": 78.7,
+    "imagination": 97.3,
+    "focus": 76.5,
+    "memory": 69.5,
+    "adaptability": 66.9,
+    "composure": 68.4,
+    "vocal": 98.7,
+    "physical": 76.8,
+    "discipline": 100,
+    "stamina": 35.7
+   },
+   "genresKnown": 7,
+   "bank": 122300,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2028-12-01",
+   "standing": "good",
+   "termsBegun": 5,
+   "abilities": {
+    "emotionalDepth": 73.1,
+    "presence": 66.9,
+    "listening": 78.8,
+    "imagination": 97.3,
+    "focus": 76.6,
+    "memory": 69.8,
+    "adaptability": 67.1,
+    "composure": 69.6,
+    "vocal": 98.7,
+    "physical": 76.9,
+    "discipline": 100,
+    "stamina": 35.7
+   },
+   "genresKnown": 8,
+   "bank": 122512,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2029-01-01",
+   "standing": "good",
+   "termsBegun": 5,
+   "abilities": {
+    "emotionalDepth": 73.9,
+    "presence": 66.9,
+    "listening": 83.1,
+    "imagination": 97.3,
+    "focus": 76.9,
+    "memory": 69.8,
+    "adaptability": 70.8,
+    "composure": 69.6,
+    "vocal": 98.7,
+    "physical": 76.9,
+    "discipline": 100,
+    "stamina": 35
+   },
+   "genresKnown": 8,
+   "bank": 121610,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2029-02-01",
+   "standing": "good",
+   "termsBegun": 6,
+   "abilities": {
+    "emotionalDepth": 75.3,
+    "presence": 66.9,
+    "listening": 85,
+    "imagination": 97.3,
+    "focus": 78.5,
+    "memory": 70,
+    "adaptability": 70.9,
+    "composure": 69.6,
+    "vocal": 98.7,
+    "physical": 77,
+    "discipline": 100,
+    "stamina": 35
+   },
+   "genresKnown": 8,
+   "bank": 133744,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2029-03-01",
+   "standing": "good",
+   "termsBegun": 6,
+   "abilities": {
+    "emotionalDepth": 75.4,
+    "presence": 67,
+    "listening": 85,
+    "imagination": 97.3,
+    "focus": 78.5,
+    "memory": 70.3,
+    "adaptability": 70.9,
+    "composure": 69.9,
+    "vocal": 98.7,
+    "physical": 77.1,
+    "discipline": 100,
+    "stamina": 35
+   },
+   "genresKnown": 11,
+   "bank": 133946,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You can apply from March 2, 2029, 90 days before your program ends.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2029-04-01",
+   "standing": "good",
+   "termsBegun": 6,
+   "abilities": {
+    "emotionalDepth": 77.1,
+    "presence": 67,
+    "listening": 85,
+    "imagination": 97.3,
+    "focus": 78.5,
+    "memory": 70.4,
+    "adaptability": 70.9,
+    "composure": 69.9,
+    "vocal": 98.7,
+    "physical": 77.3,
+    "discipline": 100,
+    "stamina": 35
+   },
+   "genresKnown": 11,
+   "bank": 133571,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30",
+    "permit pending (not in force)"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You’ve already applied for OPT.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2029-05-01",
+   "standing": "good",
+   "termsBegun": 6,
+   "abilities": {
+    "emotionalDepth": 77.1,
+    "presence": 67,
+    "listening": 85,
+    "imagination": 97.3,
+    "focus": 81.3,
+    "memory": 70.6,
+    "adaptability": 70.9,
+    "composure": 69.9,
+    "vocal": 98.7,
+    "physical": 77.4,
+    "discipline": 100,
+    "stamina": 35
+   },
+   "genresKnown": 11,
+   "bank": 133813,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30",
+    "permit pending (not in force)"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You’ve already applied for OPT.",
+   "workAuthorized": false,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2029-06-01",
+   "standing": "graduated",
+   "termsBegun": 6,
+   "abilities": {
+    "emotionalDepth": 77.1,
+    "presence": 67,
+    "listening": 85,
+    "imagination": 97.3,
+    "focus": 87.8,
+    "memory": 70.6,
+    "adaptability": 70.9,
+    "composure": 69.9,
+    "vocal": 98.7,
+    "physical": 77.4,
+    "discipline": 100,
+    "stamina": 35
+   },
+   "genresKnown": 11,
+   "bank": 133494,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30",
+    "permit valid to 2030-05-31"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You’ve already applied for OPT.",
+   "workAuthorized": true,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2029-07-01",
+   "standing": "graduated",
+   "termsBegun": 6,
+   "abilities": {
+    "emotionalDepth": 77.1,
+    "presence": 67,
+    "listening": 85,
+    "imagination": 97.3,
+    "focus": 94.2,
+    "memory": 70.6,
+    "adaptability": 70.9,
+    "composure": 69.9,
+    "vocal": 98.7,
+    "physical": 77.4,
+    "discipline": 100,
+    "stamina": 35
+   },
+   "genresKnown": 11,
+   "bank": 133184,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30",
+    "permit valid to 2030-05-31"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "You’ve already applied for OPT.",
+   "workAuthorized": true,
+   "outOfStatus": false,
+   "cover": "yale",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  },
+  {
+   "on": "2029-08-01",
+   "standing": "graduated",
+   "termsBegun": 6,
+   "abilities": {
+    "emotionalDepth": 79.7,
+    "presence": 67,
+    "listening": 85,
+    "imagination": 97.3,
+    "focus": 98,
+    "memory": 70.6,
+    "adaptability": 71.7,
+    "composure": 70.6,
+    "vocal": 98.7,
+    "physical": 77.4,
+    "discipline": 100,
+    "stamina": 35
+   },
+   "genresKnown": 11,
+   "bank": 132671,
+   "yaleOwed": 0,
+   "hold": false,
+   "mustRegister": false,
+   "docs": [
+    "passport valid to 2035-01-07",
+    "visa valid to 2029-07-30 (not in force)",
+    "permit valid to 2030-05-31"
+   ],
+   "photoId": true,
+   "bankAsk": "Chase: You already have a current account at Chase.",
+   "opt": "The time to apply closed on July 30, 2029, 60 days after your program ended.",
+   "workAuthorized": true,
+   "outOfStatus": false,
+   "cover": "none",
+   "audit": 0,
+   "breaches": 0,
+   "undone": []
+  }
+ ],
+ "practice": {
+  "2026-08": {
+   "sense-memory": 2,
+   "showing-for-classmates": 2,
+   "repetition": 2,
+   "given-circumstances": 2,
+   "concentration": 1,
+   "recall-drill": 1,
+   "adjustments": 2,
+   "graded-exposure": 2,
+   "voice-work": 1,
+   "movement-work": 1
+  },
+  "2026-09": {
+   "recall-drill": 1,
+   "graded-exposure": 1,
+   "showing-for-classmates": 1,
+   "voice-work": 1
+  },
+  "2026-10": {
+   "voice-work": 1,
+   "concentration": 11
+  },
+  "2026-11": {
+   "given-circumstances": 6,
+   "voice-work": 4,
+   "concentration": 8
+  },
+  "2026-12": {
+   "concentration": 67,
+   "voice-work": 2,
+   "given-circumstances": 42
+  },
+  "2027-01": {
+   "concentration": 15,
+   "given-circumstances": 14
+  },
+  "2027-02": {
+   "script-analysis": 6,
+   "concentration": 5
+  },
+  "2027-03": {
+   "script-analysis": 24,
+   "given-circumstances": 5,
+   "voice-work": 2
+  },
+  "2027-04": {
+   "voice-work": 7,
+   "given-circumstances": 6,
+   "concentration": 17
+  },
+  "2027-05": {
+   "concentration": 15,
+   "given-circumstances": 100,
+   "showing-for-classmates": 10
+  },
+  "2027-06": {
+   "given-circumstances": 120
+  },
+  "2027-07": {
+   "given-circumstances": 124
+  },
+  "2027-08": {
+   "given-circumstances": 103
+  },
+  "2027-11": {
+   "repetition": 21
+  },
+  "2027-12": {
+   "movement-work": 68,
+   "voice-work": 42
+  },
+  "2028-01": {
+   "movement-work": 17,
+   "voice-work": 1
+  },
+  "2028-03": {
+   "adjustments": 3,
+   "voice-work": 10
+  },
+  "2028-04": {
+   "repetition": 12,
+   "voice-work": 24
+  },
+  "2028-05": {
+   "voice-work": 124
+  },
+  "2028-06": {
+   "voice-work": 120
+  },
+  "2028-07": {
+   "voice-work": 124
+  },
+  "2028-08": {
+   "voice-work": 40,
+   "repetition": 69
+  },
+  "2028-09": {
+   "repetition": 19
+  },
+  "2028-12": {
+   "repetition": 65,
+   "adjustments": 42,
+   "sense-memory": 6,
+   "concentration": 3
+  },
+  "2029-01": {
+   "concentration": 15,
+   "sense-memory": 13,
+   "repetition": 23
+  },
+  "2029-03": {
+   "sense-memory": 31,
+   "movement-work": 3
+  },
+  "2029-04": {
+   "concentration": 54
+  },
+  "2029-05": {
+   "concentration": 124
+  },
+  "2029-06": {
+   "concentration": 120
+  },
+  "2029-07": {
+   "concentration": 69,
+   "graded-exposure": 5,
+   "adjustments": 7,
+   "sense-memory": 43
+  },
+  "2029-08": {
+   "sense-memory": 10,
+   "adjustments": 1,
+   "graded-exposure": 1
+  }
+ },
+ "commands": {
+  "practice.exercise": 2063,
+  "life.sleep": 1076,
+  "school.prepare": 3952,
+  "school.choose": 395,
+  "school.ask_partner": 1339,
+  "school.read_feedback": 57,
+  "school.choose refused": 2145,
+  "school.answer_partner refused": 43,
+  "school.respond": 75,
+  "school.respond refused": 12,
+  "school.answer_partner": 25,
+  "school.learn_part": 86,
+  "school.work_note": 32,
+  "school.review_blocking": 5,
+  "documents.apply_opt": 1,
+  "school.make_up": 1,
+  "health.enroll": 1
+ }
+}

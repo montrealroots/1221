@@ -525,7 +525,7 @@ export const MODERN_SCENES: readonly Scene[] = [
         obstacle: [
           yes('memory', 'He doesn’t remember, or says he doesn’t'),
           yes('fear', 'His fear of the young knocking at his door'),
-          no('debt', 'His debts', 'Nothing of the kind is in the scene.'),
+          no('debt', 'His debts', 'The scene never mentions any debts.'),
         ],
         tactic: [
           yes('question', 'Question her'),
@@ -546,7 +546,7 @@ export const MODERN_SCENES: readonly Scene[] = [
     relationship: [
       yes('sisters', 'Sisters, a brother lost at sea and another about to sail'),
       no('strangers', 'Neighbors', 'They’re sisters in the one house.'),
-      no('mother', 'Mother and daughter', 'Maurya is their mother; she isn’t in this part.'),
+      no('mother', 'Mother and daughter', 'Maurya is their mother, and she’s lying down in the next room.'),
     ],
     roles: [
       {

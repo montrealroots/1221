@@ -20,7 +20,7 @@ import { PREP_DIMS, sceneById, templateById, type PrepDim } from '@/engine/conte
 import {
   BAND_LABEL, ORIENTATION, WORK, answerRefusal, askRefusal, courseworkOf, minutesOf, orientationRefusal, prepareRefusal, preparedParts, questionsFor, readsLabel, trustOf, mateRecord,
   type Assignment,
-  READER, activitiesOf, approachRefusal, notesOf, persistentFor, readingDiffers, revisitWords, weightsOf,
+  READER, activitiesOf, approachRefusal, notesOf, persistentFor, readingDiffers, revisitWords, weightsOf, whereWords, withPartLabels,
 } from '@/engine/systems/coursework';
 import { ClassMoments } from '@/ui/components/ClassMoments';
 import { WorkThrough } from '@/ui/components/WorkThrough';
@@ -58,7 +58,7 @@ export function CourseworkPane() {
           <ul className="small" data-due-soonest="" style={{ margin: 0, paddingLeft: '1.1rem' }}>
             {short.map(({ a, due, forecast, short: parts }) => {
               const t = templateById(a.template)!;
-              return <li key={a.id}><strong>{courseName(a.course)}: {t.title}</strong>, due {dayOfKey(due)}: about {forecast.toFixed(1)} ({BAND_LABEL[bandFor(a, forecast)]}) shown today. Short of complete: {parts.map((d) => `${t.dims[d]!.label.toLowerCase()} (${remedyWords(a, d)})`).join('; ')}.</li>;
+              return <li key={a.id}><strong>{courseName(a.course)}: {t.title}</strong>, due {dayOfKey(due)}. Shown today, it would come to about {forecast.toFixed(1)} ({BAND_LABEL[bandFor(a, forecast)]}). Still to finish: {parts.map((d) => `${t.dims[d]!.label} (${remedyWords(a, d)})`).join('; ')}.</li>;
             })}
           </ul>
         </Panel>
@@ -66,7 +66,7 @@ export function CourseworkPane() {
       {/* Once the School has ended no course sets work (from 2026-10-16: until then a graduate read “Nothing set yet: each
           course sets its work at a meeting”, found playing a life to the degree). */}
       {open.length === 0
-        ? <Panel title="Work Set" help="school.prepare"><p className="small muted" style={{ margin: 0 }}>{!person.school || !schoolEnded(person.school.standing) ? 'Nothing set yet: each course sets its work at a meeting, or at orientation’s session on the courses.' : `${person.school.standing === 'graduated' ? 'Your degree is conferred' : 'You’ve left the School'}: no course sets work now.`}</p></Panel>
+        ? <Panel title="Work Set" help="school.prepare"><p className="small muted" style={{ margin: 0 }}>{!person.school || !schoolEnded(person.school.standing) ? 'Nothing is set yet. Each course sets its work in class, and in your first week the orientation session The Courses And What They Ask sets the first pieces.' : `${person.school.standing === 'graduated' ? 'Your degree is conferred' : 'You’ve left the School'}, so no course sets work now.`}</p></Panel>
         : open.map((a) => <AssignmentCard key={a.id} a={a} />)}
       {past.length > 0 && <Shown list={past} />}
       <NotesLedger />
@@ -81,7 +81,7 @@ function FirstWeek() {
   const person = useWorld((s) => s.player);
   const cw = courseworkOf(sim, person)!;
   return (
-    <Panel title="Orientation" subtitle="The first week, 24 to 28 August: each session changes what you know or have arranged, once" help="school.orientation">
+    <Panel title="Orientation" subtitle="Your first week, August 24 to 28. Each session runs once, and you can catch up on one you missed" help="school.orientation">
       <div className="col gap-2">
         {ORIENTATION.map((o) => {
           const done = cw.orientation.done[o.task];
@@ -92,11 +92,11 @@ function FirstWeek() {
               <span>{o.label}<span className="xs dim"> · {formatDateTime(when, zone())}</span></span>
               {done ? <span className="xs">Done {formatDate(done, zone())}</span>
                 : sim.now < when ? <span className="xs dim">On The Calendar</span>
-                  : <span className="row gap-2" style={{ alignItems: 'center' }}>{no && <span className="xs dim">{no}</span>}<Gated feature="school.orientation" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? `Catch it up: ${o.minutes} minutes`} onClick={() => { const r = run<{ told: string }>('school.orientation', { task: o.task }); if (r.ok) toast(r.value!.told, 'positive'); }}>Catch Up</Gated></span>}
+                  : <span className="row gap-2" style={{ alignItems: 'center' }}>{no && <span className="xs dim">{no}</span>}<Gated feature="school.orientation" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? `Catch up on it: ${o.minutes} minutes`} onClick={() => { const r = run<{ told: string }>('school.orientation', { task: o.task }); if (r.ok) toast(r.value!.told, 'positive'); }}>Catch Up</Gated></span>}
             </div>
           );
         })}
-        <Fine>The first week’s dates are the school’s (registration, then orientation to the 29th); what each session covers, and its hours, are SLATE’s estimate.</Fine>
+        <Fine>Source: the school’s calendar for the first week (registration, then orientation to the 29th). What each session covers, and its hours, are estimated.</Fine>
       </div>
     </Panel>
   );
@@ -117,27 +117,27 @@ function AssignmentCard({ a }: { a: Assignment }) {
   const course = COURSES.find((c) => c.code === a.course)!;
   const weights = weightsOf(a);
   return (
-    <Panel look={at('assignment', a.id)} title={`${course.name}: ${t.title}${a.status === 'revising' ? ', To Show Again' : ''}${t.rounds ? `, Round ${(a.round ?? 0) + 1} Of ${t.rounds.length}: ${t.rounds[a.round ?? 0]!.label}` : ''}`} subtitle={`${course.code} · Due ${dayOfKey(due)} · Shown for ${readsLabel(t)}`} help="school.prepare">
+    <Panel look={at('assignment', a.id)} title={`${course.name}: ${t.title}${a.status === 'revising' ? ', To Show Again' : ''}${t.rounds ? `, Round ${(a.round ?? 0) + 1} Of ${t.rounds.length}: ${t.rounds[a.round ?? 0]!.label}` : ''}`} subtitle={`${course.code} · Due ${dayOfKey(due)} · Skills: ${readsLabel(t)}`} help="school.prepare">
       <div className="col gap-3">
         <div className="small">
-          {scene ? <><strong>{scene.play}</strong>, {scene.by} ({scene.year}), {scene.where}: you play <strong>{scene.roles[a.role!].name}</strong>{mate ? <>, {mate.name} plays {scene.roles[a.role === 0 ? 1 : 0].name}</> : null}. {scene.summary}</>
-            : a.repPlay ? <>On <strong>{a.repPlay}</strong>, this season at Yale Rep. {t.deliverable}.</>
+          {scene ? <><strong>{scene.play}</strong>, {scene.by} ({scene.year}), {whereWords(scene.where)}: you play <strong>{scene.roles[a.role!].name}</strong>{mate ? <>, {mate.name} plays {scene.roles[a.role === 0 ? 1 : 0].name}</> : null}. {scene.summary}</>
+            : a.repPlay ? <>{t.deliverable}: <strong>{a.repPlay}</strong>.</>
               : <>{t.deliverable}{mate ? `, with ${mate.name}` : ''}.</>}
         </div>
         {scene?.origin === 'original' && scene.facts && (
           <div className="small">
-            <strong>An Original Scene, Written For SLATE.</strong> <span className="xs dim">Its facts, what the readings rest on:</span>
+            <strong>An Original Scene, Written For SLATE.</strong> <span className="xs dim">The facts the readings are based on:</span>
             <ul className="xs" style={{ margin: '0.2rem 0 0', paddingLeft: '1.1rem' }}>{scene.facts.map((f) => <li key={f}>{f}</li>)}</ul>
           </div>
         )}
         {(a.objective || a.revisit) && (
           <div className="small">
             {a.objective && <div><strong>Put First: {objectiveLabel(t, a.objective)}.</strong> <span className="xs dim">{objectiveWhy(a, notesOf(courseworkOf(sim, person)!))}</span></div>}
-            {a.revisit && scene && <div>{revisitWords(a, scene.roles[a.revisit.role].name, courseworkOf(sim, person)!.assignments.find((x) => x.id === a.revisit!.assignmentId)?.partnerName ?? person.school!.classmates[a.revisit.partner ?? -1]?.name)}{a.revisit.change === 'reading' && <span className="xs dim"> {readingDiffers(a) ? 'Your reading differs from last time’s.' : 'Your reading is last time’s so far.'}</span>}</div>}
+            {a.revisit && scene && <div>{revisitWords(a, scene.roles[a.revisit.role].name, courseworkOf(sim, person)!.assignments.find((x) => x.id === a.revisit!.assignmentId)?.partnerName ?? person.school!.classmates[a.revisit.partner ?? -1]?.name)}{a.revisit.change === 'reading' && <span className="xs dim"> {readingDiffers(a) ? 'Your answers differ from last time’s.' : 'So far your answers match last time’s.'}</span>}</div>}
           </div>
         )}
         <div className="grid grid-3">
-          {dims.map((d) => <Stat key={d} label={t.dims[d]!.label} value={pct(parts[d] ?? 0)} note={`Weighs ${pct(weights[d] ?? 0)}; complete at ${pct(EVALUATION.complete.coursework)}`} />)}
+          {dims.map((d) => <Stat key={d} label={t.dims[d]!.label} value={pct(parts[d] ?? 0)} note={`Note priority ${pct(weights[d] ?? 0)}; complete at ${pct(EVALUATION.complete.coursework)}`} />)}
         </div>
         {/* What the showing would make of it today (from 2026-10-16, `showingForecast`): until then a part at nothing that
             "weighed 15%" said nothing of holding the dimensions that read it to a third of themselves. */}
@@ -146,8 +146,8 @@ function AssignmentCard({ a }: { a: Assignment }) {
           const short = shortParts(person, a);
           return (
             <div className="small" data-shown-today={a.id}>
-              <strong>Shown Today:</strong> on a good day it would come to about {now.overall.toFixed(1)} ({BAND_LABEL[bandFor(a, now.overall)]}). {chiefLimit(now) ? `${chiefLimit(now)}.` : 'Every part of it is where the showing asks.'}
-              {short.length > 0 && <span> Short of complete: {short.map((d) => `${t.dims[d]!.label.toLowerCase()} (${remedyWords(a, d)})`).join('; ')}.</span>}
+              <strong>Shown Today:</strong> if you showed it today on a good day, it would come to about {now.overall.toFixed(1)} ({BAND_LABEL[bandFor(a, now.overall)]}). {chiefLimit(withPartLabels(now, a), 'now') ? `${chiefLimit(withPartLabels(now, a), 'now')}.` : 'There’s nothing holding it back.'}
+              {short.length > 0 && <span> Still to finish: {short.map((d) => `${t.dims[d]!.label} (${remedyWords(a, d)})`).join('; ')}.</span>}
             </div>
           );
         })()}
@@ -156,7 +156,9 @@ function AssignmentCard({ a }: { a: Assignment }) {
             const no = prepareRefusal(sim, person, a, act.id);
             return (
               <Gated key={act.id} feature="school.prepare" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? `${minutesOf(a, act)} minutes`}
-                onClick={() => { const r = run<{ moved: number; minutes: number }>('school.prepare', { assignmentId: a.id, activity: act.id }); if (r.ok) toast(`${act.label}: ${r.value!.minutes} minutes, ${t.dims[act.dim]?.label ?? act.dim} up ${pct(r.value!.moved)}.`, 'positive'); }}>
+                // A part the card doesn't name (a scene keeps no part for its revision) is said in words (from 2026-10-17, brief
+                // 14's interface tools): until then the toast fell back to its internal name, "revision up 50%".
+                onClick={() => { const r = run<{ moved: number; minutes: number }>('school.prepare', { assignmentId: a.id, activity: act.id }); const part = t.dims[act.dim]?.label; if (r.ok) toast(`${act.label}: ${r.value!.minutes} minutes, ${part ? `${part} up ${pct(r.value!.moved)}` : `${pct(r.value!.moved)} further${act.dim === 'revision' ? ' on the note' : ''}`}.`, 'positive'); }}>
                 {act.label}
               </Gated>
             );
@@ -167,7 +169,7 @@ function AssignmentCard({ a }: { a: Assignment }) {
         {!playingRefusal(a) && (
           <PlayingChooser material={materialOf(a.sceneId)} current={a.playing} feature="school.choose_playing" help="school.choose_playing"
             preview={(c) => playingPreview(sim, person, a, due, c)}
-            onChoose={(c) => { const r = run<{ prep: number }>('school.choose_playing', { assignmentId: a.id, ...c }); if (r.ok) toast(`Chosen: rehearsed in to ${pct(r.value!.prep)}.`, 'positive'); }} />
+            onChoose={(c) => { const r = run<{ prep: number }>('school.choose_playing', { assignmentId: a.id, ...c }); if (r.ok) toast(`Chosen. You’ve rehearsed this way of playing it to ${pct(r.value!.prep)} so far.`, 'positive'); }} />
         )}
         <AnotherWay a={a} />
         {questionsFor(a).length > 0 && <TableWork a={a} />}
@@ -192,14 +194,14 @@ function TableWork({ a }: { a: Assignment }) {
       {questionsFor(a).map(({ q, options }) => (
         <div key={q.id} className="field" style={{ margin: 0 }}>
           <label htmlFor={`${a.id}-${q.id}`}>{q.label}</label>
-          <select id={`${a.id}-${q.id}`} value={a.answers[q.id] ?? ''} disabled={!choose.open || Boolean(unread)} title={choose.reason ?? unread} onChange={(e) => { if (!e.target.value) return; const r = run<{ supported: boolean }>('school.choose', { assignmentId: a.id, question: q.id, option: e.target.value }); if (r.ok) toast('Decided at the table.', 'neutral'); }}>
+          <select id={`${a.id}-${q.id}`} value={a.answers[q.id] ?? ''} disabled={!choose.open || Boolean(unread)} title={choose.reason ?? unread} onChange={(e) => { if (!e.target.value) return; const r = run<{ supported: boolean }>('school.choose', { assignmentId: a.id, question: q.id, option: e.target.value }); if (r.ok) toast('Answer chosen.', 'neutral'); }}>
             <option value="">Not Decided</option>
             {options.map((o) => <option key={o.id} value={o.id}>{o.text}</option>)}
           </select>
-          {a.shown && (() => { const o = options.find((x) => x.id === a.answers[q.id]); return o?.why ? <div className="xs dim">{o.supported ? 'What it rests on' : 'What cuts against it'}: {o.why}</div> : null; })()}
+          {a.shown && (() => { const o = options.find((x) => x.id === a.answers[q.id]); return o?.why ? <div className="xs dim">{o.supported ? 'Why the text supports it' : 'Why the text doesn’t support it'}: {o.why}</div> : null; })()}
         </div>
       ))}
-      <Fine>Ten minutes a question. Which readings the text supports is SLATE’s reading of the play, and some questions have more than one; each supported reading counts the same. Once it’s shown, each choice says what in the text it rests on or what cuts against it.</Fine>
+      <Fine>Each answer takes ten minutes. Some questions have more than one reading the text supports, and each supported reading counts the same. Once the piece is shown, each answer says why the text supports it or doesn’t. Which readings the text supports is the game’s own reading of the play.</Fine>
     </div>
   );
 }
@@ -228,7 +230,7 @@ function Rehearsals({ a }: { a: Assignment }) {
   return (
     <div className="col gap-2">
       <div className="row-between"><div className="eyebrow">Rehearsing With {first}</div><HowItWorks help="school.ask_partner" /></div>
-      <div className="xs dim">{`Trust ${Math.round(trustOf(mate))} of 100 · Came to ${m.kept ?? 0} of ${(m.kept ?? 0) + (m.stoodUp ?? 0)} agreed${m.missedByYou ? ` · You missed ${m.missedByYou}` : ''}${m.reliability !== undefined ? ` · Reliability ${pct(m.reliability)}` : ''}`}</div>
+      <div className="xs dim">{`Trust ${Math.round(trustOf(mate))} of 100 · ${(m.kept ?? 0) + (m.stoodUp ?? 0) ? `Came to ${m.kept ?? 0} of ${(m.kept ?? 0) + (m.stoodUp ?? 0)} rehearsals agreed` : 'No rehearsals agreed yet'}${m.missedByYou ? ` · You missed ${m.missedByYou}` : ''}${m.reliability !== undefined ? ` · Reliability ${pct(m.reliability)}` : ''}`}</div>
       {days.length > 0 ? (
         <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
           <div className="field" style={{ margin: 0 }}>
@@ -246,14 +248,14 @@ function Rehearsals({ a }: { a: Assignment }) {
             Ask {first}
           </Gated>
         </div>
-      ) : <p className="small muted" style={{ margin: 0 }}>No days left before it’s due.</p>}
+      ) : <p className="small muted" style={{ margin: 0 }}>There are no days left to rehearse before it’s due.</p>}
       {(a.asks ?? []).filter((k) => k.status === 'open').map((k) => {
         const yes = answerRefusal(sim, person, a, k.id, true);
         return (
           <div key={k.id} className="col gap-1">
             <div className="small">{first} asks to rehearse on {formatDateTime(k.at, zone())}. Answer by {formatTime(k.until, zone())} that day.</div>
             <div className="row gap-2">
-              <Gated feature="school.answer_partner" className="btn btn-sm" disabled={Boolean(yes)} title={yes ?? 'Yes: It Goes On Your Calendar'} onClick={() => { const r = run<{ booked: boolean }>('school.answer_partner', { assignmentId: a.id, askId: k.id, yes: true }); if (r.ok) toast('On your calendar.', 'positive'); }}>Say Yes</Gated>
+              <Gated feature="school.answer_partner" className="btn btn-sm" disabled={Boolean(yes)} title={yes ?? 'Yes: It Goes On Your Calendar'} onClick={() => { const r = run<{ booked: boolean }>('school.answer_partner', { assignmentId: a.id, askId: k.id, yes: true }); if (r.ok) toast('It’s on your calendar.', 'positive'); }}>Say Yes</Gated>
               {yes && <span className="xs dim">{yes}</span>}
               <Gated feature="school.answer_partner" className="btn btn-sm btn-ghost" title="No: They’ll Know, And It Costs Nothing" onClick={() => { if (run('school.answer_partner', { assignmentId: a.id, askId: k.id, yes: false }).ok) toast(`You told ${first} you can’t.`, 'neutral'); }}>Say No</Gated>
             </div>
@@ -283,20 +285,20 @@ function FeedbackBlock({ a }: { a: Assignment }) {
       <div className="row-between"><div className="eyebrow">Feedback{a.shown ? `: ${BAND_LABEL[a.shown.band]}, ${Math.round(a.shown.score * 100)} Of 100` : ''}{f.kind ? ` · ${KIND_LABEL[f.kind]}` : ''}</div><HowItWorks help="school.read_feedback" /></div>
       {a.shown && a.shown.strengths.length > 0 && <div className="small">{a.shown.strengths.join('. ')}.</div>}
       <div className="small">{f.text}</div>
-      {a.shown?.together && <div className="small"><strong>The Scene Together.</strong> {a.shown.together.words} The band is your own work.</div>}
-      <div className="xs dim">Simulated feedback in {f.course}, taught by {f.teachers}: the game’s words, not theirs.</div>
+      {a.shown?.together && <div className="small"><strong>The Scene Together.</strong> {a.shown.together.words} The band is for your own work.</div>}
+      <div className="xs dim">Simulated feedback for {f.course} (taught by {f.teachers}). The words are the game’s, not the teachers’.</div>
       {!f.seen && <div><Gated feature="school.read_feedback" className="btn btn-sm btn-ghost" onClick={() => run('school.read_feedback', { assignmentId: a.id })}>Mark As Read</Gated></div>}
     </div>
   );
 }
 
-const KIND_LABEL: Record<NoteKind, string> = { new: 'A New Note', recurring: 'Still There', partial: 'Better, Not Yet', applied: 'Taken', advanced: 'The Next Step' };
+const KIND_LABEL: Record<NoteKind, string> = { new: 'A New Note', recurring: 'Still There', partial: 'Better, Not There Yet', applied: 'Note Taken', advanced: 'The Next Step' };
 
 /** Why an assignment asks what it asks first: the note that keeps coming back, or the part this course hasn't asked of you lately. */
 function objectiveWhy(a: Assignment, notes: readonly NoteRecord[]): string {
   const dim = OBJECTIVE_DIM[a.objective!];
   const rec = notes.find((n) => n.key === `dim:${dim}` && n.status === 'open' && n.given >= 2);
-  return rec ? `Your notes have named it ${rec.given} times since ${dayOfKey(rec.first)}; it weighs more in this showing.` : 'The course hasn’t asked it of you lately; it weighs more in this showing.';
+  return rec ? `Your notes have named it ${rec.given} times since ${dayOfKey(rec.first)}, so it counts for more when this piece is shown.` : 'The course hasn’t asked for it lately, so it counts for more when this piece is shown.';
 }
 
 /** The ledger: every note given, by what it's about, across courses; open ones first. */
@@ -308,15 +310,15 @@ function NotesLedger() {
   if (!notes.length) return null;
   const sorted = [...notes].sort((x, y) => (x.status === y.status ? (x.last < y.last ? 1 : -1) : x.status === 'open' ? -1 : 1));
   return (
-    <Panel title="Your Notes" subtitle="What showings have named, across courses, and where each stands" help="school.read_feedback">
+    <Panel title="Your Notes" subtitle="Every note your pieces have been given, across all your courses, and where each one stands" help="school.read_feedback">
       <div className="col gap-1">
         {sorted.map((n) => (
           <div key={n.key} className="row-between small">
-            <span>{noteSubject(n.key)} <span className="xs dim">· Given {n.given} {n.given === 1 ? 'time' : 'times'}, first {dayOfKey(n.first)}, last {dayOfKey(n.last)}</span></span>
-            <span className="xs">{n.status === 'resolved' ? `Taken ${dayOfKey(n.resolvedOn!)}` : n.history.at(-1)?.kind === 'partial' ? 'Better, Not Yet' : 'Open'}</span>
+            <span>{noteSubject(n.key)} <span className="xs dim">· {n.given === 1 ? `Given once, on ${dayOfKey(n.first)}` : `Given ${n.given === 2 ? 'twice' : `${n.given} times`}, first ${dayOfKey(n.first)}, last ${dayOfKey(n.last)}`}</span></span>
+            <span className="xs">{n.status === 'resolved' ? `Taken ${dayOfKey(n.resolvedOn!)}` : n.history.at(-1)?.kind === 'partial' ? 'Better, Not There Yet' : 'Open'}</span>
           </div>
         ))}
-        <Fine>Simulated notes: the game’s reading of the work, never a teacher’s words. A note taken isn’t given again unless the part slips back.</Fine>
+        <Fine>These notes are simulated: the game’s reading of your work, never a real teacher’s words. Once you take a note, it isn’t given again unless that part slips back.</Fine>
       </div>
     </Panel>
   );
@@ -325,14 +327,14 @@ function NotesLedger() {
 function Shown({ list }: { list: Assignment[] }) {
   const person = useWorld((s) => s.player);
   return (
-    <Panel title="Work Shown" subtitle="The last twelve" help="school.read_feedback">
+    <Panel title="Work Shown" subtitle="Your last twelve pieces" help="school.read_feedback">
       <div className="col gap-2">
         {list.map((a) => {
           const t = templateById(a.template)!;
           const scene = a.sceneId ? sceneById(a.sceneId) : undefined;
           return (
             <div key={a.id} className="small">
-              <strong>{courseName(a.course)}</strong>: {t.title}{scene ? `, ${scene.play}` : ''}{a.partner !== undefined ? `, with ${a.partnerName ?? person.school?.classmates[a.partner]?.name ?? 'a classmate'}` : ''} · {a.status === 'missed' ? 'Not Shown' : a.status === 'excused' ? 'Excused, Not Shown' : a.status === 'lapsed' ? 'Lapsed At Term’s End' : a.shown ? BAND_LABEL[a.shown.band] : 'Done'}
+              <strong>{courseName(a.course)}</strong>: {t.title}{scene ? `, ${scene.play}` : ''}{a.partner !== undefined ? `, with ${a.partnerName ?? person.school?.classmates[a.partner]?.name ?? 'a classmate'}` : ''} · {a.status === 'missed' ? 'Not Shown' : a.status === 'excused' ? 'Excused, Not Shown' : a.status === 'lapsed' ? 'Not Shown Before The Term Ended' : a.shown ? BAND_LABEL[a.shown.band] : 'Done'}
               {/* A revision missed has no `applied`, only `missed` (from 2026-10-16: until then this line was drawn only where
                   `applied` was set, so a missed revision stood at its first band with nothing said, while the term's review
                   counted it Unready; found by tests/remaining-school-term.test.ts). */}
@@ -361,11 +363,11 @@ function Partners() {
           const owed = (p.incidents ?? []).filter((x) => !x.repaired).length;
           return (
             <div key={m.name} className="small">
-              <strong><Open subject={at('classmate', String(i))}>{m.name}</Open></strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · Came {r.kept ?? 0} of {(r.kept ?? 0) + (r.stoodUp ?? 0)}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? ` · Ask A Day Ahead (Lifts After ${boundaryLiftsAfter(p.boundary) - p.boundary.keptSince} More Kept)` : ''}{stoppedAsking(m, sim.now) ? ' · Has Stopped Asking You To Run Lines' : owesYouLines(m, sim.now) ? ' · Owes You Lines' : ''}</span>
+              <strong><Open subject={at('classmate', String(i))}>{m.name}</Open></strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · Came {r.kept ?? 0} of {(r.kept ?? 0) + (r.stoodUp ?? 0)}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? (() => { const n = boundaryLiftsAfter(p.boundary) - p.boundary.keptSince; return ` · Wants A Day’s Notice (Until ${n} More ${n === 1 ? 'Rehearsal Is' : 'Rehearsals Are'} Kept)`; })() : ''}{stoppedAsking(m, sim.now) ? ' · Has Stopped Asking You To Run Lines' : owesYouLines(m, sim.now) ? ' · Owes You Lines' : ''}</span>
               {r.log?.[0] && <div className="xs dim">{formatDate(r.log[0].at, zone())}: {r.log[0].what}</div>}
               {owed > 0 && (
                 <div className="row gap-2" style={{ alignItems: 'center' }}>
-                  <span className="xs">{owed === 1 ? 'One time you let them down, not made right.' : `${owed} times you let them down, not made right.`}</span>
+                  <span className="xs">{owed === 1 ? 'You let them down once and haven’t made it right.' : `You’ve let them down ${owed} times without making it right.`}</span>
                   {amends && <span className="xs dim">{amends}</span>}
                   <Gated feature="school.make_amends" className="btn btn-sm btn-ghost" disabled={Boolean(amends)} title={amends ?? 'Twenty minutes, in person'} onClick={() => { if (run('school.make_amends', { mate: i }).ok) toast(`You made it right with ${m.name.split(' ')[0]}.`, 'positive'); }}>Make Amends</Gated>
                 </div>
@@ -388,12 +390,12 @@ function AnotherWay({ a }: { a: Assignment }) {
   const person = useWorld((s) => s.player);
   const cw = courseworkOf(sim, person)!;
   const weak = persistentFor(cw, a)[0];
-  if (a.approach) return <div className="small"><strong>Another Way At It: {APPROACHES[a.approach.kind].label}.</strong> <span className="xs dim">On {noteSubject(a.approach.key).toLowerCase()}: {APPROACHES[a.approach.kind].words}. It doesn’t take the note by itself.</span></div>;
+  if (a.approach) return <div className="small"><strong>Another Way At It: {APPROACHES[a.approach.kind].label}.</strong> <span className="xs dim">For {noteSubject(a.approach.key).toLowerCase()}: {APPROACHES[a.approach.kind].words}. It won’t take the note on its own.</span></div>;
   if (!weak) return null;
   return (
     <div className="col gap-1">
       <div className="row-between" style={{ alignItems: 'flex-start' }}>
-        <div className="small"><strong>A Note That Keeps Coming Back:</strong> {noteSubject(weak.key)}, given {weak.given} times. <span className="xs dim">Choose another way at it for this work, one.</span></div>
+        <div className="small"><strong>A Note That Keeps Coming Back:</strong> {noteSubject(weak.key)}, given {weak.given} times. <span className="xs dim">Choose one other way to work on it for this piece.</span></div>
         <HowItWorks help="school.approach" />
       </div>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>

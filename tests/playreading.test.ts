@@ -83,7 +83,7 @@ describe('the plays, as facts', () => {
 describe('reading one at school', () => {
   it('needs the library known, takes its time, works the text craft, and leaves a note on what was read', () => {
     const sim = life('pl-read');
-    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'sweat' } }).error).toBe('The library isn’t known to you yet: the tour shows you it.');
+    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'sweat' } }).error).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
     tended(sim, at(9, 5, 18));
     expect(sim.execute({ kind: 'plays.read', payload: { playId: 'nothing' } }).error).toBe('There’s no such play.');
     const before = sim.player.craft!.script;
@@ -107,7 +107,7 @@ describe('reading one at school', () => {
     const s1 = sim.player.craft!.script;
     const soon = sim.must<{ minutes: number; note: string }>({ kind: 'plays.read', payload: { playId: 'doubt-a-parable' } });
     expect(soon.minutes).toBe(PLAYREADING.minutes.full * PLAYREADING.again);
-    expect(soon.note).toMatch(/^Read again; the last read was .*\. Too soon after it to see it fresh\.$/);
+    expect(soon.note).toMatch(/^You read it again\. Your last read was .*\. It’s too soon after that one to see it fresh\.$/);
     expect(sim.player.craft!.script).toBe(s1);
     sim = reload(sim);
     tended(sim, at(10, 9, 18));
@@ -126,7 +126,7 @@ describe('reading one at school', () => {
   it('researched once, after a read, at the library: the first production and edition, and the craft once more', () => {
     let sim = life('pl-research');
     tended(sim, at(9, 5, 18));
-    expect(sim.execute({ kind: 'plays.research', payload: { playId: 'the-children' } }).error).toBe('Read it first: research needs questions.');
+    expect(sim.execute({ kind: 'plays.research', payload: { playId: 'the-children' } }).error).toBe('Read the play first. You need questions before you can research it.');
     sim.must({ kind: 'plays.read', payload: { playId: 'the-children' } });
     sim = reload(sim);
     const s0 = sim.player.craft!.script;
@@ -134,7 +134,7 @@ describe('reading one at school', () => {
     expect(r.minutes).toBe(PLAYREADING.minutes.research);
     expect(r.note).toBe('First staged in 2016 at Royal Court Theatre (Jerwood Theatre Downstairs), London. First published 2016, by Nick Hern Books. Licensed for performance in the US by Dramatists Play Service, in the UK by Nick Hern Books (amateur rights).');
     expect(sim.player.craft!.script).toBeGreaterThan(s0);
-    expect(sim.execute({ kind: 'plays.research', payload: { playId: 'the-children' } }).error).toBe('Its first production is researched: there’s nothing more on record to find.');
+    expect(sim.execute({ kind: 'plays.research', payload: { playId: 'the-children' } }).error).toBe('You’ve already researched its first production, and there’s nothing more on record to find.');
     expect(reload(sim).player.plays!['the-children']!.researchedAt).toBeDefined();
   });
 

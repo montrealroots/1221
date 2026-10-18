@@ -43,7 +43,7 @@ describe('the protective equipment work-study requires', () => {
     expect(r.cost).toBe(ppeCost(sim));
     expect(money(sim)).toBe(before - r.cost);
     sim = reload(sim);
-    expect(sim.execute({ kind: 'school.buy_ppe', payload: {} }).error).toMatch(/^You bought it on /);
+    expect(sim.execute({ kind: 'school.buy_ppe', payload: {} }).error).toMatch(/^You already bought it on /);
     // The first Saturday's shift worked, and nothing charged again.
     const shift = firstShift(sim);
     tended(sim, shift.at + 7 * MS_HOUR);
@@ -73,7 +73,7 @@ describe('the protective equipment work-study requires', () => {
     expect(twin.universe.scheduled.find((i) => i.id === s2.id)!.status).toBe('missed');
     expect(twin.player.school!.tally.worked).toBe(worked);
     expect(twin.universe.notifications.filter((n) => n.title === 'Sent Home From Work-Study')).toHaveLength(1);
-    expect(twin.execute({ kind: 'school.buy_ppe', payload: {} }).error).toMatch(/which the bank can’t cover\.$/);
+    expect(twin.execute({ kind: 'school.buy_ppe', payload: {} }).error).toMatch(/^Your bank can’t cover \$[\d,]+\.\d\d, so nothing was charged\.$/);
     expect(breaches(twin.universe)).toEqual([]);
   });
 });

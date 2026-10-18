@@ -7,7 +7,7 @@
  *
  * - `trait-spending`: the first round evidenced every behavior; what stayed open was a comment, Review's at
  *   CharacterCreation.tsx:1023, naming an engine sum (`costsAt`) that doesn't exist. Here the claim that comment exists
- *   to make is held instead: Going Out A Month on Review is the day's groceries the clock first posts for the same
+ *   to make is held instead: Food Each Month (Going Out A Month until 2026-10-17) on Review is the day's groceries the clock first posts for the same
  *   pick, 365/12 days of them, to the dollar ($261, $304, $370, $334 for 859, 1000, 1216 and 1097 cents). The comment
  *   itself needed a source change, and was reported; later on 2026-10-13 it was corrected to name `foodAt`, `spending`
  *   and `foodOf`.
@@ -32,9 +32,10 @@
  *   worked here; a card payment missed through play, everyday spending put on the card and the current account emptied
  *   into savings before each due date: a payment behind owing $510, then suspended owing $850; and a return filed
  *   with nothing in the bank, You owe $166 of income tax, where its twin who could pay is All Clear.
- * - `h-where-weather`: a student from abroad, born in London, reads "Home." in New Haven as a New Yorker does: the away
- *   line ("… from home in …") was reached by no life since the scope of 2026-10-09 removed the home apart from where
- *   the player stands (`homeCityOf`); it was reported, and went later on 2026-10-13, with Local Time's hours from home.
+ * - `h-where-weather`: a student from abroad, born in London, reads "Your home." ("Home." until 2026-10-17) in New Haven
+ *   as a New Yorker does: the away line ("… from home in …") was reached by no life since the scope of 2026-10-09
+ *   removed the home apart from where the player stands (`homeCityOf`); it was reported, and went later on 2026-10-13,
+ *   with Local Time's hours from home.
  *
  * PLAYER JOURNEYS: new lives (`createSave` with `newLifeConfig`), Ada Cole, she/her, an actress at Yale in New Haven
  * from Monday 24 August 2026 at 7:30 AM, born in New York (the birthplace a player picks on Identity), or in London
@@ -234,7 +235,7 @@ describe('trait-spending', () => {
       h.sim = sim;
       h.calls = 0;
       const text = words(renderToStaticMarkup(createElement(CharacterCreation, { slot: 1 as never, onCancel: () => undefined, onStart: () => undefined })).replace(/<!-- -->/g, ''));
-      shown[who] = text.match(/Going Out A Month \$([\d,]+)/)![1]!;
+      shown[who] = text.match(/Food Each Month \$([\d,]+)/)![1]!;
       // The same pick played: the first midnight's groceries, as they went out of the bank.
       sim.advanceTo(at(2026, 8, 25, 1));
       const groceries = sim.universe.transactions.filter((t) => t.memo === 'Groceries');
@@ -262,7 +263,7 @@ describe('p-abilities', () => {
       const { html, text } = drawn(sim, ProfileWorkspace);
       const rows = abilityRows(html);
       expect(rows.size).toBe(12);
-      return { rows, sentence: text.match(/It’s full at the most a body your age can be brought to, ([\d.]+) now/)?.[1], text };
+      return { rows, sentence: text.match(/Full is the fittest a body your age can be, ([\d.]+) now/)?.[1], text };
     };
     let { rows, sentence, text } = read();
     expect(rows.get('Stamina')![2]).toBe('99.4');
@@ -277,7 +278,7 @@ describe('p-abilities', () => {
     expect(rows.get('Stamina')![2]).toBe('99.3');
     expect(sentence).toBe('99.3');
     expect(text).toContain('Age 25 Born August 31, 2001');
-    expect(drawn(reload(sim), ProfileWorkspace).text).toContain('brought to, 99.3 now');
+    expect(drawn(reload(sim), ProfileWorkspace).text).toContain('can be, 99.3 now');
   });
 
   it('PLAYER JOURNEY: Classes Reach is the craft as admitted and 26 more, or the mean of a new ability’s kin’s, held while the first week of classes moves Now; Presence, Composure, Discipline and Stamina read —, classes don’t build them', () => {
@@ -360,7 +361,7 @@ describe('p-abilities', () => {
     morning.advanceTo(at(2026, 8, 24, 8));
     expect(byHand(morning.player.wellbeing)).toBeGreaterThanOrEqual(60);
     const rows = abilityRows(drawn(morning, ProfileWorkspace).html);
-    expect([...rows.values()].map((r) => r[4])).toEqual(Array(12).fill('Nothing holds it back'));
+    expect([...rows.values()].map((r) => r[4])).toEqual(Array(12).fill('Not held back today'));
   });
 
   it('PLAYER JOURNEY: a run on the first morning sprains her ankle, and Today names an injury mending on the dimensions a task that lists injury reads the ability in, Vocal Expression’s execution and Discipline’s consistency alone; Emotional Depth, Presence, Listening, Imagination and Adaptability hold nothing back', () => {
@@ -378,7 +379,7 @@ describe('p-abilities', () => {
     // read only in written work, which lists fatigue.
     const today = Object.fromEntries([...rows].map(([name, row]) => [name, row[4]!]));
     const mending = (dims: string) => `An injury mending: ${dims}`;
-    const nothing = 'Nothing holds it back';
+    const nothing = 'Not held back today';
     expect(today).toEqual({
       'Emotional Depth': nothing,
       Presence: nothing,
@@ -407,7 +408,7 @@ describe('p-abilities', () => {
     const { html, text } = drawn(sim, ProfileWorkspace);
     const fatigued = [...new Set([...abilityRows(html).values()].flatMap((r) => /^Readiness \d+, under 60: (.+)$/.exec(r[4]!)?.[1]?.split(', ') ?? []))].sort();
     expect(fatigued).toEqual(['believability', 'connection', 'consistency', 'execution', 'responsiveness']);
-    const fine = between(text, 'Tired, an actor’s attention', 'An injury holds back');
+    const fine = between(text, 'When you’re tired', 'An injury holds back');
     // Until 2026-10-13 the sentence named execution, consistency and responsiveness, and left out the two Today names.
     expect(fatigued.filter((d) => !fine.includes(d))).toEqual([]);
   });
@@ -418,7 +419,8 @@ describe('p-abilities', () => {
 // ---------------------------------------------------------------------------
 
 describe('p-journey-history', () => {
-  const journey = (sim: Simulation) => between(drawn(sim, ProfileWorkspace).text, 'School Journey', 'Your School');
+  // To the paragraph's closing period before the School button (from 2026-10-17): “Left the School” has the word too.
+  const journey = (sim: Simulation) => `${between(drawn(sim, ProfileWorkspace).text, 'School Journey', '. School')}.`;
 
   /**
    * Your Work So Far worked out here from the records it reads, by the rule's own numbers (`ARTISTRY`: a pattern from
@@ -429,7 +431,7 @@ describe('p-journey-history', () => {
   function workSoFar(p: Person): string {
     const j = journeyOf(p);
     const pieces = Object.values(j.totals).reduce((a, t) => a + (t?.n ?? 0), 0);
-    const out: string[] = [`Your Work So Far Read from ${pieces} pieces judged, the material met and the choices made How This Works`];
+    const out: string[] = [`Your Work So Far From ${pieces} pieces judged, the material you’ve met and the choices you’ve made How This Works`];
     const section = (title: string, lines: { line: string; evidence: string[] }[]) => { if (lines.length) out.push(title, ...lines.map((l) => `${l.line} From: ${l.evidence.join('; ')}.`)); };
     // Strengths, over the latest forty.
     const work = [...(p.work ?? [])].sort((a, b) => a.at - b.at).slice(-40);
@@ -437,11 +439,11 @@ describe('p-journey-history', () => {
     const dims = new Map<string, { sum: number; n: number; q: { what: string; q: number }[] }>();
     for (const w of work) for (const [d, q] of Object.entries(w.dims)) { const x = dims.get(d) ?? { sum: 0, n: 0, q: [] }; x.sum += q as number; x.n += 1; x.q.push({ what: w.what, q: q as number }); dims.set(d, x); }
     section('What Your Work Shows Most', [...dims].filter(([, x]) => x.n >= 6 && x.sum / x.n - mean >= 4).sort(([a], [b]) => a.localeCompare(b))
-      .map(([d, x]) => ({ line: `Your ${d} runs ahead of the rest: ${r1(x.sum / x.n)} on average across ${x.n} pieces, against ${r1(mean)} for the whole.`, evidence: x.q.sort((a, b) => b.q - a.q).slice(0, 3).map((b) => `${b.what}: ${r1(b.q)}`) })));
+      .map(([d, x]) => ({ line: `Your ${d} runs ahead of the rest: ${r1(x.sum / x.n)} on average across ${x.n} pieces, against ${r1(mean)} overall.`, evidence: x.q.sort((a, b) => b.q - a.q).slice(0, 3).map((b) => `${b.what}: ${r1(b.q)}`) })));
     // Weaknesses for life, and the note that keeps coming back.
     const KIND: Record<string, string> = { ability: 'An ability', technique: 'A technique', preparation: 'Preparation', condition: 'The day' };
     const weak = Object.entries(j.limits ?? {}).filter(([, t]) => t.n >= 3).sort((a, b) => b[1].whole - a[1].whole).slice(0, 3)
-      .map(([k, t]) => ({ line: `${t.label} has held back ${t.n} pieces, about ${r1(t.whole / t.n)} points of the whole each.`, evidence: [`${KIND[k.split(':')[0]!] ?? 'The choice'}, ${r1(t.whole)} points in all`] }));
+      .map(([k, t]) => ({ line: `${t.label} has held back ${t.n} pieces, about ${r1(t.whole / t.n)} points off the whole each.`, evidence: [`${KIND[k.split(':')[0]!] ?? 'The choice'}, ${r1(t.whole)} points in all`] }));
     const notes = ((p.school as { coursework?: { notes?: { key: string; status: string; given: number }[] } }).coursework?.notes ?? []).filter((n) => n.status === 'open' && n.given >= 3).sort((a, b) => b.given - a.given);
     // The class's name for a note on rehearsal: Time On Its Feet.
     expect(notes[0]!.key).toBe('dim:rehearsal');
@@ -450,22 +452,22 @@ describe('p-journey-history', () => {
     // Material met.
     const features = p.experience?.features ?? {};
     section('Material You Know', Object.entries(features).map(([f, x]) => ({ f, n: x.met + x.practiced, best: x.best })).filter((x) => x.n >= 6 && FEATURE_LABEL[x.f]).sort((a, b) => b.n - a.n).slice(0, 4)
-      .map((x) => ({ line: `${FEATURE_LABEL[x.f]}: met or practised ${x.n} times${x.best !== undefined ? `, best ${r1(x.best)}` : ''}.`, evidence: [`The experience record: ${x.f}`] })));
+      .map((x) => ({ line: `${FEATURE_LABEL[x.f]}: met or practiced ${x.n} times${x.best !== undefined ? `, best ${r1(x.best)}` : ''}.`, evidence: ['Your experience record'] })));
     const unmet = Object.keys(FEATURE_LABEL).filter((f) => !((features[f]?.met ?? 0) + (features[f]?.practiced ?? 0)));
-    out.push(`Not met yet: ${unmet.map((f) => FEATURE_LABEL[f]).join(', ')}. A brief built on one is suggested beside a brief.`);
+    out.push(`Not met yet: ${unmet.map((f) => FEATURE_LABEL[f]).join(', ')}. When you open a brief, one built on these is suggested beside it.`);
     // Range.
     const kinds = Object.values(j.totals).filter((t) => (t?.n ?? 0) > 0).length;
     const genres = Object.values(p.engagement?.byGenre ?? {}).filter((g) => (g.practice ?? 0) > 0).length;
-    section('Range', [{ line: `${kinds} kinds of work judged, ${genres} genres worked in, ${12 - unmet.length} of 12 kinds of material met.`, evidence: [`The journey’s kinds of work: ${kinds}`] }]);
+    section('Range', [{ line: `${kinds} kinds of work judged, ${genres} genres worked in, ${12 - unmet.length} of 12 kinds of material met.`, evidence: [`Kinds of work on your record: ${kinds}`] }]);
     const dir = j.direction!;
-    section('Taking Direction', [{ line: `Of ${dir.given} notes and requests on the craft, ${dir.answered} answered.`, evidence: [`Worked ${dir.worked}, answered ${dir.answered}`] }]);
+    section('Taking Direction', [{ line: `Of ${dir.given} notes and requests on your craft, you answered ${dir.answered}.`, evidence: [`Worked ${dir.worked}, answered ${dir.answered}`] }]);
     const school = p.school as unknown as { tally: { calls: number; answered: number }; callsBefore?: { calls: number; answered: number } };
     const calls = (school.callsBefore?.calls ?? 0) + school.tally.calls;
     const answered = (school.callsBefore?.answered ?? 0) + school.tally.answered;
     const kept = (p.school!.classmates as unknown as { kept?: number }[]).reduce((a, m) => a + (m.kept ?? 0), 0);
     section('Reliability', [{ line: `${answered} of ${calls} calls answered; ${kept} rehearsals with a partner kept.`, evidence: ['The school’s record of calls; your partners’ records'] }]);
     const tog = j.together!;
-    section('Playing With Others', [{ line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average; of ${tog.slips} slips by the others, you covered ${tog.covered}.`, evidence: [`Scenes, takes and nights together: ${tog.n}`] }]);
+    section('Playing With Others', [{ line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average; of ${tog.slips === 1 ? 'the 1 slip' : `${tog.slips} slips`} by the others, you covered ${tog.covered === 0 ? 'none' : tog.covered === tog.slips ? (tog.slips === 1 ? 'it' : 'all of them') : tog.covered}.`, evidence: [`Scenes, takes and nights together: ${tog.n}`] }]);
     return words(out.join(' '));
   }
 
@@ -480,7 +482,7 @@ describe('p-journey-history', () => {
     // Each of the sections the first round didn't read is there, and the habit nobody chose isn't.
     for (const title of ['What Your Work Shows Most', 'What Keeps Holding It Back', 'Material You Know', 'Not met yet:', 'Range', 'Taking Direction', 'Reliability', 'Playing With Others']) expect(shown, title).toContain(title);
     expect(shown).not.toContain('How You Tend To Play It');
-    expect(shown).toContain('Taking Direction Of 9 notes and requests on the craft, 0 answered. From: Worked 0, answered 0.');
+    expect(shown).toContain('Taking Direction Of 9 notes and requests on your craft, you answered 0. From: Worked 0, answered 0.');
     expect(shown).toContain('Reliability 68 of 68 calls answered; 0 rehearsals with a partner kept.');
     expect(between(drawn(reload(sim), ProfileWorkspace).text, 'Your Work So Far', 'Sources And Estimates')).toBe(shown);
   });
@@ -574,7 +576,7 @@ describe('p-journey-history', () => {
     // Both on the record at once: the run closed and kept as the casting, and filed by the dismissal (`keepCredit`).
     expect([casting.role, casting.production, casting.performed, casting.closed !== undefined]).toEqual(['Marie', 'Directors’ Thesis Production I', 8, true]);
     expect(school.credits!.map((c) => [c.role, c.production])).toEqual([['A Leading Part In A New Play', 'Carlotta Festival Of New Plays'], ['Marie', 'Directors’ Thesis Production I']]);
-    const said = 'School Journey Left the school, dismissed How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Marie in Directors’ Thesis Production I, 2027.';
+    const said = 'School Journey Left the School, dismissed How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Marie in Directors’ Thesis Production I, 2027.';
     expect(journey(sim)).toBe(said);
     expect(journey(reload(sim))).toBe(said);
   });
@@ -584,10 +586,10 @@ describe('p-journey-history', () => {
     sim.advanceTo(at(2027, 6, 5, 12));
     // TEST SETUP: an understudy's Rep run, The Seagull's, sent on once and closed on its last night.
     (sim.player.school as unknown as { rep: unknown }).rep = { production: 'The Seagull', role: 'Nina', kind: 'understudy', term: 1, performed: 1, closed: at(2027, 3, 27, 22) };
-    expect(journey(sim)).toBe('School Journey Year 1 of three, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');
+    expect(journey(sim)).toBe('School Journey Year 1 of 3, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');
     expect(sim.execute({ kind: 'school.withdraw', payload: { confirm: true } }).ok).toBe(true);
     expect(sim.player.school!.credits!.map((c) => c.role)).toEqual(['A Leading Part In A New Play', 'Nina']);
-    expect(journey(sim)).toBe('School Journey Left the school, withdrawn How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');
+    expect(journey(sim)).toBe('School Journey Left the School, withdrawn How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027.');
   });
 });
 
@@ -659,18 +661,18 @@ describe('h-needs', () => {
     };
     const first = toDue();
     expect(written(first)).toBe('October 11, 2026');
-    expect(needs(sim)).toContain('A Late Card Payment The minimum was $40.00 and only $0.00 went in. A $30.00 fee, and it goes on your record if it’s still short at the next due date, thirty days past due.');
+    expect(needs(sim)).toContain('A Late Card Payment The minimum payment was $40.00, and only $0.00 was paid. That costs a $30.00 late fee, and it goes on your credit record if it’s still short at the next due date, thirty days late.');
     markRead(sim);
     // New Haven's $10.00 of groceries on the card each midnight from 25 August to 11 October, 48 of them, and the late
     // fee: Regulation Z's safe harbor, $30 for a first, never over the $40 minimum it was late on.
-    expect(needs(sim)).toBe(`What Needs You No decision is waiting on you. How This Works No Decisions Waiting Your card is a payment behind, owing $${48 * 10 + 30}.`);
+    expect(needs(sim)).toBe(`What Needs You No questions are waiting on you. How This Works No Questions Waiting Your card is a payment behind, owing $${48 * 10 + 30}.`);
     const second = toDue();
     expect(written(second)).toBe('November 10, 2026');
-    expect(needs(sim)).toContain('Your Card Is Suspended 2 payments missed in a row. Chase has stopped the Chase Freedom Unlimited until it’s brought up to date.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
+    expect(needs(sim)).toContain('Your Card Is Suspended You’ve missed 2 payments in a row, so Chase has suspended the Chase Freedom Unlimited until you catch up.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     markRead(sim);
     // 78 days of groceries to 10 November, the first fee and a repeat within six cycles: the safe harbor's $41, held to
     // the $40 minimum.
-    const said = `What Needs You No decision is waiting on you. How This Works No Decisions Waiting Your card is suspended, owing $${78 * 10 + 30 + 40}.`;
+    const said = `What Needs You No questions are waiting on you. How This Works No Questions Waiting Your card is suspended, owing $${78 * 10 + 30 + 40}.`;
     expect(needs(sim)).toBe(said);
     expect(stateOf(sim.player, card)).toMatchObject({ missed: 2, suspended: 'late' });
     expect(needs(reload(sim))).toBe(said);
@@ -682,7 +684,7 @@ describe('h-needs', () => {
       sim.advanceTo(at(2027, 2, 1, 12));
       const decision = openDecisions(sim)[0]!;
       // $1,656 of income at the first bracket's 10%: $165.60, as the row says.
-      expect(decision.detail).toContain('You owe $165.60 on $1,656.00 of income.');
+      expect(decision.detail).toContain('You owe $165.60, on $1,656.00 of income.');
       expect(Math.round(1656_00 * 0.1)).toBe(165_60);
       const mine = Object.values(sim.universe.accounts).filter((x) => x.ownerId === sim.player.id && !x.nominal && (x.kind === 'checking' || x.kind === 'savings'));
       expect(mine).toHaveLength(2);
@@ -697,12 +699,12 @@ describe('h-needs', () => {
     };
     const unpaid = filed(true);
     expect(returnsOf(unpaid.player)['2026']!.owed).toBe(165_60);
-    expect(needs(unpaid)).toBe('What Needs You No decision is waiting on you. How This Works No Decisions Waiting You owe $166 of income tax.');
+    expect(needs(unpaid)).toBe('What Needs You No questions are waiting on you. How This Works No Questions Waiting You owe $166 of income tax.');
     unpaid.advanceTo(at(2027, 2, 1, 23));
     expect(needs(unpaid)).toContain('You owe $166 of income tax.');
     const paid = filed(false);
     expect(returnsOf(paid.player)['2026']!.owed).toBeUndefined();
-    expect(needs(paid)).toBe('What Needs You No decision is waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.');
+    expect(needs(paid)).toBe('What Needs You No questions are waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.');
   });
 });
 
@@ -716,12 +718,12 @@ describe('h-where-weather', () => {
   it('PLAYER JOURNEY: a student from abroad, born in London, reads Home. in New Haven as a New Yorker does, with no distance or hours from home: Home is the city she lives in (`homeCityOf`), and London is where she’s from', () => {
     const london = fromAbroad('b11-where');
     const newYork = ada('b11-where');
-    const said = 'Where You Are How This Works New Haven, Connecticut · United States Home. 130K people. Local Time 7:30 AM EDT';
+    const said = 'Where You Are How This Works New Haven, Connecticut · United States Your home. 130K people. Local Time 7:30 AM EDT';
     expect(where(london)).toBe(said);
     expect(where(newYork)).toBe(said);
     // Where she's from is kept, and read on the Profile: not where Home measures from.
     expect(drawn(london, ProfileWorkspace).text).toContain('From London A citizen of the United Kingdom');
     london.advanceTo(at(2026, 9, 14, 12));
-    expect(where(london)).toBe('Where You Are How This Works New Haven, Connecticut · United States Home. 130K people. Local Time 12:00 PM EDT');
+    expect(where(london)).toBe('Where You Are How This Works New Haven, Connecticut · United States Your home. 130K people. Local Time 12:00 PM EDT');
   });
 });

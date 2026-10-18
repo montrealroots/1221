@@ -38,7 +38,7 @@ describe('PLAYER JOURNEY: an international student’s banks and Social Security
     expect(sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-capital-one' } }).error).toMatch(/US citizens and permanent residents/);
     expect(sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } }).error).toMatch(/US citizens and permanent residents/);
     // Before registering, no on-campus work to apply on.
-    expect(sim.execute({ kind: 'documents.apply_ssn', payload: {} }).error).toMatch(/register first/);
+    expect(sim.execute({ kind: 'documents.apply_ssn', payload: {} }).error).toMatch(/Register at the School first/);
     // Wells Fargo, without a number: in a branch, an hour there.
     const before = sim.now;
     const wells = sim.execute<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'us-wells-fargo', fundFrom: sim.player.primaryAccountId, amount: 25_00 } });

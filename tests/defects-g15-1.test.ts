@@ -127,8 +127,8 @@ describe('The Card’s Offers on a plan during Chase’s introduction', () => {
     const { sim } = newCardWithPlan('us-chase', 'g15-chase-words');
     const until = formatDate(cardTerms(sim, card(sim), sim.player.credit!.score).introUntil!, sim.zone);
     const words = text(sim);
-    expect(words).toContain(`and ${formatMoney(0, saveCurrency(sim.universe), { cents: false })} a month in place of interest`);
-    expect(words).toContain(`One made while the introductory rate runs, until ${until}, is free to its last month; one made after costs 1.72% of it a month`);
+    expect(words).toContain('with no fee and no interest');
+    expect(words).toContain(`A plan made while the introductory rate lasts, until ${until}, is free for its whole life. One made after that costs 1.72% of the plan a month`);
     expect(words).not.toMatch(/nothing until/);
   });
 
@@ -138,8 +138,8 @@ describe('The Card’s Offers on a plan during Chase’s introduction', () => {
     const { sim } = newCardWithPlan('us-chase', 'g15-chase-words-after', true);
     const fee = formatMoney(10_32, saveCurrency(sim.universe), { cents: false });
     const words = text(sim);
-    expect(words).toContain(`and ${fee} a month in place of interest`);
-    expect(words).toContain('equal months for 1.72% of it a month, the most the bank says it charges, instead of interest');
+    expect(words).toContain(`with a ${fee} monthly fee instead of interest`);
+    expect(words).toContain('equal monthly amounts, for a fee of 1.72% of the plan a month instead of interest. That’s the most the bank says it charges.');
     expect(words).not.toMatch(/is free to its last month|nothing until/);
   });
 });

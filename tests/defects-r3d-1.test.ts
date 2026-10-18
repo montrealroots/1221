@@ -61,7 +61,7 @@ describe('PLAYER JOURNEY: the ID card’s Social Security line, for a graduate w
     tended(sim, end + 2 * MS_DAY);
     expect(inForce(optOf(sim)!, sim.now)).toBe(true);
     expect(sim.player.ssn?.status).toBe('applied');
-    expect(ssnRefusal(sim, sim.player)).toBe('You’ve applied; the card is on its way.');
+    expect(ssnRefusal(sim, sim.player)).toBe('You’ve already applied, and the card is on its way.');
     expect(idCardRefusal(sim.player, sim.now)).toBe(ON_ITS_WAY);
     expect(() => sim.must({ kind: 'documents.apply_idcard', payload: {} })).toThrow(ON_ITS_WAY);
     expect(documentsOf(sim.player).some((d) => d.kind === 'idcard')).toBe(false);

@@ -130,7 +130,7 @@ const still = (sim: Simulation) => JSON.stringify([sim.now, sim.universe.transac
 // journeys.known-graduated-school-page
 // ---------------------------------------------------------------------------
 
-const STALE = ['Only the terms to come stand between you and the degree.', 'courses passed so far', 'In the casting pool.', 'is the floor', 'or more is short', 'Not Cast Yet', 'Nothing set yet'];
+const STALE = ['Only the terms to come stand between you and the degree.', 'courses passed so far', 'You’re in the casting pool.', 'You need 90% or more', 'is short of what’s asked', 'Not Cast Yet', 'Nothing is set yet'];
 
 describe('journeys.known-graduated-school-page: the School page once the School has ended', () => {
   it('DEFECT: a life played to the degree reads it on its Standing, Casting and Coursework tabs, before and after a reload: the degree conferred at Commencement on Monday 21 May 2029, every course passed, the last term’s figures with their floors in the past, no casting and no work ahead (until 2026-10-16 “Only the terms to come stand between you and the degree.”, “so far”, “In the casting pool.”, each floor ahead, Not Cast Yet and Nothing set yet)', () => {
@@ -140,8 +140,8 @@ describe('journeys.known-graduated-school-page: the School page once the School 
     const first = drawn(sim, SchoolWorkspace, 'standing');
     expect(first).toContain('courses passed so far. Only the terms to come stand between you and the degree.');
     expect(first).toContain('Attendance This Term');
-    expect(first).toContain('90% is the floor');
-    expect(first).toContain('In the casting pool.');
+    expect(first).toContain('You need 90% or more');
+    expect(first).toContain('You’re in the casting pool.');
     tend(sim, at(2029, 6, 2, 12));
     expect(sim.player.school!.standing).toBe('graduated');
     // Commencement, the Monday before Memorial Day (28 May 2029), at ten.
@@ -152,14 +152,14 @@ describe('journeys.known-graduated-school-page: the School page once the School 
       expect(all.every((r) => r.result === 'pass')).toBe(true);
       expect(standing).toContain(`${all.length} of ${all.length} courses passed. Every course the degree needs was passed, and it was conferred on May 21, 2029.`);
       expect(standing).toContain('Attendance Last Term');
-      expect(standing).toContain('90% was the floor');
-      expect(standing).toContain('half its pace was the floor');
-      expect(standing).toContain('half of 3 or more was short');
+      expect(standing).toContain('90% was the minimum');
+      expect(standing).toContain('half its pace was the minimum');
+      expect(standing).toContain('Once 3 or more are due, half or more was short of what’s asked');
       const casting = drawn(s, SchoolWorkspace, 'casting');
       expect(casting).toContain('No Casting Ahead');
-      expect(casting).toContain('The chair casts students at the School, and your degree is conferred: no casting comes now. The productions you played stay on your Profile.');
+      expect(casting).toContain('The chair casts students at the School, and your degree is conferred, so there’s no casting now. The productions you played stay on your Profile.');
       const coursework = drawn(s, SchoolWorkspace, 'coursework');
-      expect(coursework).toContain('Your degree is conferred: no course sets work now.');
+      expect(coursework).toContain('Your degree is conferred, so no course sets work now.');
       for (const page of [standing, casting, coursework]) for (const stale of STALE) expect(page, stale).not.toContain(stale);
     }
     expect(breaches(sim.universe)).toEqual([]);
@@ -177,14 +177,14 @@ describe('journeys.known-graduated-school-page: the School page once the School 
     const standing = drawn(sim, SchoolWorkspace, 'standing');
     const all = Object.values(sim.player.school!.courses ?? {});
     const passed = all.filter((r) => r.result === 'pass').length;
-    expect(standing).toContain(`${passed} of ${all.length} courses passed. You withdrew. The Bulletin lets a student who withdrew apply to come back; SLATE doesn’t model a return.`);
+    expect(standing).toContain(`${passed} of ${all.length} courses passed. You withdrew. The Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.`);
     expect(standing).toContain('Attendance Last Term');
     // The fall's courses, left in the middle: Not Finished, and not listed with the term's meetings as if still taken.
     expect(standing).toContain('Fall Term 2026, DRAM 103a/b Acting I: Not Finished');
     expect(standing).not.toContain('In Progress');
     expect(standing).not.toMatch(/Acting I: at \d+ of \d+ meetings/);
-    expect(drawn(sim, SchoolWorkspace, 'casting')).toContain('The chair casts students at the School, and you’ve left it: no casting comes now.');
-    expect(drawn(sim, SchoolWorkspace, 'coursework')).toContain('You’ve left the School: no course sets work now.');
+    expect(drawn(sim, SchoolWorkspace, 'casting')).toContain('The chair casts students at the School, and you’ve left it, so there’s no casting now.');
+    expect(drawn(sim, SchoolWorkspace, 'coursework')).toContain('You’ve left the School, so no course sets work now.');
     for (const tab of ['standing', 'casting', 'coursework']) for (const stale of STALE) expect(drawn(sim, SchoolWorkspace, tab), stale).not.toContain(stale);
   }, 120_000);
 });
@@ -200,9 +200,9 @@ describe('journeys.known-graduated-school-page: a dismissal', () => {
     const standing = drawn(sim, SchoolWorkspace, 'standing');
     const all = Object.values(sim.player.school!.courses ?? {});
     const passed = all.filter((r) => r.result === 'pass').length;
-    expect(standing).toMatch(new RegExp(`${passed} of ${all.length} courses passed\\. You were dismissed(, with [^.]+ not passed)?\\. Once dismissed, a student isn’t eligible to come back\\.`));
-    expect(drawn(sim, SchoolWorkspace, 'casting')).toContain('The chair casts students at the School, and you’ve left it: no casting comes now.');
-    expect(drawn(sim, SchoolWorkspace, 'coursework')).toContain('You’ve left the School: no course sets work now.');
+    expect(standing).toMatch(new RegExp(`${passed} of ${all.length} courses passed\\. You were dismissed(, with [^.]+ not passed)?\\. A dismissed student can’t return to the School\\.`));
+    expect(drawn(sim, SchoolWorkspace, 'casting')).toContain('The chair casts students at the School, and you’ve left it, so there’s no casting now.');
+    expect(drawn(sim, SchoolWorkspace, 'coursework')).toContain('You’ve left the School, so no course sets work now.');
     for (const tab of ['standing', 'casting', 'coursework']) for (const stale of STALE) expect(drawn(sim, SchoolWorkspace, tab), stale).not.toContain(stale);
   }, 300_000);
 });
@@ -242,7 +242,7 @@ const leaveTaken = (() => {
     const period = classPeriod(1);
     expect([period.from, period.to]).toEqual([{ year: 2027, month: 1, day: 11 }, { year: 2027, month: 4, day: 23 }]);
     expect(accountOwed(sim, sim.player)).toBe(7_600_25);
-    expect(titled(sim, 'Your Leave Has Begun')[0]!.body).toContain('$7,600.25 of the term’s scholarship goes back on the rebate schedule, on your Yale account, due by February 26, 2027. Yale Health’s student cover ended today. Affiliate cover, $5,416.00 a term, can be bought until February 19, 2027.');
+    expect(titled(sim, 'Your Leave Has Begun')[0]!.body).toContain('$7,600.25 of the term’s scholarship has to be returned on the rebate schedule. It’s on your Yale account, due by February 26, 2027. Yale Health’s student cover ended today. Affiliate cover, $5,416.00 a term, can be bought until February 19, 2027.');
     expect(coverOn(sim.player, sim.now)).toBeUndefined();
     // The player's own move: all but $500.00 of the current account into the savings beside it, at once at one bank.
     const checking = account(sim, 'Chase Total Checking');
@@ -259,11 +259,11 @@ const leaveTaken = (() => {
     // $500.00 from the current account, the rest from the savings beside it (banking.s7.school).
     expect(checking.balance).toBe(0);
     expect(saved - savings.balance).toBe(8_450_00);
-    expect(refused(sim, 'school.buy_affiliate', { confirm: true })).toBe('You have it.');
+    expect(refused(sim, 'school.buy_affiliate', { confirm: true })).toBe('You already have it.');
     expect(coverOn(sim.player, sim.now)).toBe('yale');
     // A part of the Yale account paid, from savings now; more than owed, and nothing, refused in their words.
-    expect(refused(sim, 'school.pay_balance', { amount: 7_600_26 })).toBe('$7,600.25 is owed; pay that or less.');
-    expect(refused(sim, 'school.pay_balance', { amount: 0 })).toBe('Pay something.');
+    expect(refused(sim, 'school.pay_balance', { amount: 7_600_26 })).toBe('$7,600.25 is owed. Pay that or less.');
+    expect(refused(sim, 'school.pay_balance', { amount: 0 })).toBe('Enter an amount to pay.');
     expect(ok(sim, 'school.pay_balance', { amount: 100_00 })).toEqual({ owed: 7_500_25, held: false });
     expect(saved - savings.balance).toBe(8_550_00);
     expect(breaches(sim.universe)).toEqual([]);
@@ -316,7 +316,7 @@ describe('journeys.x1: a Yale payment drawing on savings, then the hold, then re
     tend(sim, at(2027, 10, 1, 12));
     const notice = ok<{ noticeAt: Instant; returnsAt: Instant }>(sim, 'school.return_notice');
     expect(notice).toEqual({ noticeAt: sim.now, returnsAt: at(2028, 1, 3, 9) });
-    expect(refused(sim, 'school.return_notice')).toBe('You gave notice on October 1, 2027.');
+    expect(refused(sim, 'school.return_notice')).toBe('You already gave notice on October 1, 2027.');
     expect(accountOwed(sim, sim.player)).toBe(7_875_25);
     // The twin: nothing in checking since the cover was bought, $1,000.00 moved back into it from savings, and the account
     // paid from both.
@@ -359,7 +359,7 @@ describe('journeys.x1: a Yale payment drawing on savings, then the hold, then re
     // The return asks registration again; the hold gone, it's taken.
     expect(school().mustRegister).toBe(true);
     expect(ok<{ registeredAt: Instant }>(sim, 'school.reregister').registeredAt).toBe(sim.now);
-    expect(refused(sim, 'school.reregister')).toBe('You’re registered.');
+    expect(refused(sim, 'school.reregister')).toBe('You’re already registered.');
     sim = reload(sim);
     // Monday 10 January 2028, the term's first class day: counted.
     tend(sim, at(2028, 1, 10, 18));
@@ -425,7 +425,7 @@ describe('journeys.x2: a leave and its Affiliate cover, then a bill', () => {
     expect(coverOn(sim.player, sim.now)).toBeUndefined();
     const [appointment] = healthOf(sim.player).appointments!;
     expect(appointment).toMatchObject({ at: at(2027, 3, 4, 10), clinicId: 'us-ct-fhchc-grand' });
-    expect(titled(sim, 'A Doctor’s Appointment').at(-1)!.body).toBe('A doctor’s visit: booked at Fair Haven Community Health Care for March 4, 2027, the wait where you live.');
+    expect(titled(sim, 'A Doctor’s Appointment').at(-1)!.body).toBe('A doctor’s visit: booked at Fair Haven Community Health Care for March 4, 2027, the usual wait where you live.');
     // What Papers prices it at there, before the cover changes and after: the bill it brings, kept.
     ok(sim, 'school.buy_affiliate', { confirm: true });
     expect(coverOn(sim.player, appointment!.at)).toBe('yale');
@@ -438,7 +438,7 @@ describe('journeys.x2: a leave and its Affiliate cover, then a bill', () => {
     // A twin that keeps it: billed at Fair Haven as the uninsured's, the figure Papers gave, and told why.
     const kept = reload(sim);
     tend(kept, at(2027, 3, 4, 18));
-    expect(titled(kept, 'A Doctor’s Visit').at(-1)!.body).toBe(`A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit at its own Health Center, not here. Your share is ${priced}, due in 30 days.`);
+    expect(titled(kept, 'A Doctor’s Visit').at(-1)!.body).toBe(`A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is ${priced}, due on April 3, 2027, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.`);
     // The player's way: called off under Your Doctor, then booked again: Yale Health's Student Health, the next weekday.
     sim = reload(sim);
     expect(titled(sim, 'Your Appointment Is Outside Yale Health')).toHaveLength(1);
@@ -449,7 +449,7 @@ describe('journeys.x2: a leave and its Affiliate cover, then a bill', () => {
     expect(refused(sim, 'health.book')).toBe('There’s nothing to see a doctor about.');
     expect(drawn(sim, PapersWorkspace, 'health')).not.toContain('call this off, then Book An Appointment');
     tend(sim, at(2027, 2, 11, 18));
-    expect(titled(sim, 'A Doctor’s Visit').at(-1)!.body).toBe('A doctor’s visit, Yale Health Center, Student Health. Nothing to pay.');
+    expect(titled(sim, 'A Doctor’s Visit').at(-1)!.body).toBe('A doctor’s visit, Yale Health Center, Student Health. There’s nothing to pay.');
     expect(titled(sim, 'Your Appointment Is Outside Yale Health')).toHaveLength(1);
     expect(breaches(sim.universe)).toEqual([]);
   }, 300_000);
@@ -471,22 +471,22 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
     // Enroll is open at once: January had school at least half-time, HUSKY D's work rule met.
     expect(mayEnroll(sim.player, sim.now, 'USD', sim)).toMatchObject({ ok: true, program: 'medicaid' });
     tend(sim, at(2027, 4, 1, 12));
-    expect(titled(sim, 'Your Health Cover Ended').map((n) => n.body)).toEqual(['You’re uncovered from March 17, 2027. You can enroll in the marketplace until May 16, 2027, 60 days from losing cover.']);
+    expect(titled(sim, 'Your Health Cover Ended').map((n) => n.body)).toEqual(['You have no health cover from March 17, 2027. You can enroll in the marketplace until May 16, 2027, 60 days after you lost cover. Enroll on Papers, under Health Cover.']);
     // March had no work, income or school: HUSKY D isn't hers on April's look, and the marketplace's 60 days are.
-    expect(mayEnroll(sim.player, sim.now, 'USD', sim).why).toBe('From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them. The marketplace is open to you: within 60 days of losing cover.');
+    expect(mayEnroll(sim.player, sim.now, 'USD', sim).why).toBe('From January 1, 2027, HUSKY D asks for $580.00 of income, time at the School or an exception in the month before you apply, and last month had none of them. The marketplace is open to you, because you’re within 60 days of losing cover.');
     sim = reload(sim);
     // The 2026 return, filed on 1 March would have been the same: the withdrawal reaches 2027's, not 2026's. Filed now.
     const filed = ok<{ balance: number; paid: boolean }>(sim, 'tax.file', { year: 2026 });
     expect(filed.paid).toBe(true);
-    expect(refused(sim, 'tax.file', { year: 2026 })).toBe('You’ve filed it. A change is an amended return.');
+    expect(refused(sim, 'tax.file', { year: 2026 })).toBe('You’ve already filed it. To change it, file an amended return.');
     const twin = reload(sim);
     tend(twin, at(2027, 5, 10, 12));
     expect(ok<{ kind: string; from: Instant }>(twin, 'health.enroll')).toEqual({ kind: 'marketplace', from: at(2027, 6, 1, 0) });
     tend(sim, at(2027, 5, 20, 12));
     const before = still(sim);
-    expect(refused(sim, 'health.enroll')).toBe('From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them. Outside open enrollment, 23 October to 15 January, and not within 60 days of losing cover.');
+    expect(refused(sim, 'health.enroll')).toBe('From January 1, 2027, HUSKY D asks for $580.00 of income, time at the School or an exception in the month before you apply, and last month had none of them. It’s outside open enrollment, October 23 to January 15, and you haven’t lost cover in the last 60 days.');
     expect(still(sim)).toBe(before);
-    expect(drawn(sim, PapersWorkspace, 'health')).toContain('not within 60 days of losing cover');
+    expect(drawn(sim, PapersWorkspace, 'health')).toContain('you haven’t lost cover in the last 60 days');
     expect(breaches(sim.universe)).toEqual([]);
   }, 300_000);
 
@@ -506,15 +506,15 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
     for (const s of [steps, jump]) {
       // Uncovered from 4 November at noon, thirty days on; told at December's look, 1 December, with the window's last
       // day, 60 days from the loss, 3 January 2027, and HUSKY D, which takes her at any time on November's income.
-      expect(titled(s, 'Your Health Cover Ended').map((n) => [dated(n.at), n.body])).toEqual([['December 1, 2026', 'You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.']]);
+      expect(titled(s, 'Your Health Cover Ended').map((n) => [dated(n.at), n.body])).toEqual([['December 1, 2026', 'You have no health cover from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days after you lost cover. HUSKY D can take you at any time on last month’s income, with no premium. Enroll on Papers, under Health Cover.']]);
       expect((healthOf(s.player).careLog ?? []).filter((e) => e.at >= at(2026, 11, 1, 0))).toEqual([]);
       expect(ok<{ kind: string; from: Instant }>(s, 'health.enroll')).toEqual({ kind: 'medicaid', from: at(2026, 12, 1, 0) });
-      expect(refused(s, 'health.enroll')).toBe('You’re enrolled.');
+      expect(refused(s, 'health.enroll')).toBe('You’re already enrolled.');
       expect(coverOn(s.player, s.now)).toBe('medicaid');
       tend(s, at(2026, 12, 10, 12));
       const visit = (healthOf(s.player).careLog ?? []).filter((e) => e.at >= at(2026, 12, 1, 0));
       expect(visit.map((e) => [e.at, e.care, e.share, e.billId])).toEqual([[at(2026, 12, 3, 10), 'visit', 0, undefined]]);
-      expect(titled(s, 'A Doctor’s Visit').filter((n) => n.at >= at(2026, 12, 1, 0)).map((n) => n.body)).toEqual(['A doctor’s visit, Fair Haven Community Health Care. Nothing to pay.']);
+      expect(titled(s, 'A Doctor’s Visit').filter((n) => n.at >= at(2026, 12, 1, 0)).map((n) => n.body)).toEqual(['A doctor’s visit, Fair Haven Community Health Care. There’s nothing to pay.']);
     }
   }, 300_000);
 
@@ -531,7 +531,7 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
       const [notice] = titled(s, 'Your Health Cover Ended');
       expect(dated(notice!.at)).toBe('September 1, 2026');
       // 25 August and 60 days: 24 October (45 CFR 155.420(c)(5)); from the cover's own end, 1 August, it would be 30 September.
-      expect(notice!.body).toMatch(/^You’re uncovered from August 1, 2026\. You can enroll in the marketplace until October 24, 2026, 60 days from when it was canceled back/);
+      expect(notice!.body).toMatch(/^You have no health cover from August 1, 2026\. You can enroll in the marketplace until October 24, 2026, 60 days after the cancellation was made/);
     }
     tend(sim, at(2026, 10, 22, 12));
     expect(mayEnroll(sim.player, sim.now, 'USD', sim).ok).toBe(true);
@@ -548,12 +548,12 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
     jump.advanceTo(at(2026, 12, 2, 12));
     const said = (s: Simulation) => s.universe.notifications.filter((n) => ['Out Of Status', 'Your Health Cover Ended'].includes(n.title)).map((n) => [dated(n.at), n.title, n.body]);
     expect(said(sim)).toEqual([
-      ['October 20, 2026', 'Out Of Status', 'You stayed in the United States past your status. Your US visa is void, and the Visa Waiver Program is closed to you for good.'],
-      ['December 1, 2026', 'Your Health Cover Ended', 'You’re uncovered from November 4, 2026. Out of status, neither the marketplace nor Covered Connecticut will take you.'],
+      ['October 20, 2026', 'Out Of Status', 'You stayed in the United States past the end of your status, so you’re now out of status. In the game, your US visa is canceled and the Visa Waiver Program is closed to you from now on.'],
+      ['December 1, 2026', 'Your Health Cover Ended', 'You have no health cover from November 4, 2026. You’re out of status, so neither the marketplace nor Covered Connecticut will take you.'],
     ]);
     expect(said(jump)).toEqual(said(sim));
-    expect(refused(sim, 'health.enroll')).toBe('The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.');
-    expect(refused(sim, 'documents.apply_idcard')).toBe('The DMV checks lawful presence through SAVE, and you stayed past your status.');
+    expect(refused(sim, 'health.enroll')).toBe('The marketplace is only for citizens and people lawfully present, and you’re out of status.');
+    expect(refused(sim, 'documents.apply_idcard')).toBe('The DMV checks lawful presence through SAVE, and you stayed past the end of your status.');
     tend(sim, at(2027, 3, 1, 12));
     const filed = ok<{ balance: number; refundAt?: Instant; irs: number }>(sim, 'tax.file', { year: 2026 });
     // The 14% withheld at source on her taxable scholarship is more than the 1040-NR's tax: a refund, seventy days on.
@@ -596,11 +596,11 @@ describe('journeys.x4: a document running out under a payment', () => {
     tend(sim, at(2028, 6, 20, 12));
     expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
     const papers = drawn(sim, PapersWorkspace, 'passport');
-    expect(papers).toContain('June 14, 2028 Run Out Nothing in SLATE renews a license since the cars went: a passport or an ID card in force is your photo ID, under Your Passport and Your ID.');
+    expect(papers).toContain('June 14, 2028 Run Out A driving license can’t be renewed in the game. A passport or ID card in force is your photo ID: see Your Passport and Your ID.');
     // A new bank asks for a photo ID in force.
     const chase = account(sim, 'Chase Total Checking');
     const before = still(sim);
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase.id, amount: 100_00 })).toBe('Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase.id, amount: 100_00 })).toBe('Citi needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.');
     expect(still(sim)).toBe(before);
     // Connecticut's non-driver ID, where she lives: $28.00, mailed within twenty business days of Tuesday 20 June, the
     // Fourth not among them, Wednesday 19 July; to her first birthday at least seven years on, 14 June 2036 (Connecticut
@@ -610,11 +610,11 @@ describe('journeys.x4: a document running out under a payment', () => {
     expect(got).toMatchObject({ fee: 28_00 });
     expect(dated(got.readyAt)).toBe('July 19, 2028');
     expect(held - chase.balance).toBe(28_00);
-    expect(refused(sim, 'documents.apply_idcard')).toBe('One is on its way.');
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase.id, amount: 100_00 })).toBe('Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
+    expect(refused(sim, 'documents.apply_idcard')).toBe('One is already on its way.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase.id, amount: 100_00 })).toBe('Citi needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.');
     sim = reload(sim);
     tend(sim, got.readyAt + MS_HOUR);
-    expect(refused(sim, 'documents.apply_idcard')).toBe('You hold one in force.');
+    expect(refused(sim, 'documents.apply_idcard')).toBe('You already hold one in force.');
     const card = photoIdOf(sim.player, sim.now)!;
     expect(card).toMatchObject({ kind: 'idcard', issuer: 'us-ct' });
     expect(dated(card.expiresAt!)).toBe('June 14, 2036');
@@ -731,20 +731,20 @@ describe('journeys.d-hardship-ended-renewal: a renewal’s notice once the progr
     expect(healthOf(sim.player).pending).toBeUndefined();
     expect(sim.universe.scheduled.filter((i) => i.kind === WORK_DECIDED_KIND && i.status === 'pending')).toEqual([]);
     const page = drawn(sim, PapersWorkspace, 'health');
-    expect(page).not.toContain('A notice of noncompliance of');
+    expect(page).not.toContain('A notice of noncompliance dated');
     expect(h.clicks.filter((c) => c.feature === 'health.request_hardship')).toEqual([]);
     expect(h.clicks.filter((c) => c.feature === 'health.drop')).toEqual([]);
     expect(page).toContain('Dropped: it ends on November 1, 2027.');
     const before = still(sim);
-    expect(refused(sim, 'health.request_hardship')).toBe('No notice of noncompliance waits on an answer.');
-    expect(refused(sim, 'health.drop')).toBe('It’s dropped: it ends on November 1, 2027.');
+    expect(refused(sim, 'health.request_hardship')).toBe('There’s no notice of noncompliance waiting for an answer.');
+    expect(refused(sim, 'health.drop')).toBe('It’s already dropped, and it ends on November 1, 2027.');
     expect(still(sim)).toBe(before);
     sim = reload(sim, false);
     sim.advanceTo(at(2027, 11, 7, 9));
     expect(coverOn(sim.player, at(2027, 10, 31, 23))).toBe('medicaid');
     expect(coverOn(sim.player, at(2027, 11, 1, 9))).toBeUndefined();
     for (const title of ['Your Public Cover Is Renewed', 'Your Public Cover Ends']) expect(titled(sim, title)).toEqual([]);
-    expect(titled(sim, 'Your Health Cover Ended').filter((n) => n.at >= at(2027, 10, 1, 0)).map((n) => n.body)).toEqual(['You’re uncovered from November 1, 2027. A plan dropped or left unpaid opens no special enrollment: open enrollment, or a month’s income that qualifies you for HUSKY D or Covered Connecticut, is the way back.']);
+    expect(titled(sim, 'Your Health Cover Ended').filter((n) => n.at >= at(2027, 10, 1, 0)).map((n) => n.body)).toEqual(['You have no health cover from November 1, 2027. Dropping a plan or leaving it unpaid doesn’t open special enrollment. You can enroll again in open enrollment, or once a month’s income qualifies you for HUSKY D or Covered Connecticut.']);
     expect(breaches(sim.universe)).toEqual([]);
   }, 600_000);
 
@@ -803,8 +803,8 @@ describe('journeys.f-mexico-residence: Residence Abroad’s Mexico row, which so
     const sim = life('jm-1', 'wealthy', {}, false);
     // Mexico's rule by hand: 11,460 UMA and 680 UMA at 2026's MXN 117.31, MXN 1,344,372.6 and 79,770.8 to the peso; the
     // card's MXN 11,140.74 a year and the consulate's US$56 (the guidelines of 25 July 2025, the Ley Federal de Derechos).
-    const why = 'Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.';
-    const rule = `Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. ${why}`;
+    const why = 'Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.';
+    const rule = `Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, with the card at MXN 11,140.74 a year and the consulate’s visa at US$56. ${why}`;
     const page = drawn(sim, PapersWorkspace, 'work');
     expect(page).toContain(` Mexico ${rule} `);
     expect(page).not.toContain('Open to you');
@@ -822,8 +822,8 @@ describe('journeys.f-mexico-residence: Residence Abroad’s Mexico row, which so
     expect(h.clicks.filter((c) => c.feature === 'documents.residence' || c.feature === 'documents.renew_residence' || c.feature === 'documents.settle' || c.feature === 'documents.naturalize').map((c) => [c.feature, c.label, c.disabled, c.title])).toEqual([['documents.renew_residence', 'Renew', true, renewal]]);
     const held = still(back);
     expect(refused(back, 'documents.renew_residence', { country: 'MX' })).toBe(renewal);
-    expect(refused(back, 'documents.settle', { country: 'MX' })).toBe('Permanent residence comes after four years’ temporary.');
-    expect(refused(back, 'documents.naturalize', { country: 'MX' })).toBe('It asks five years’ residence in Mexico.');
+    expect(refused(back, 'documents.settle', { country: 'MX' })).toBe('Permanent residence comes after four years of temporary residence.');
+    expect(refused(back, 'documents.naturalize', { country: 'MX' })).toBe('It needs five years’ residence in Mexico.');
     expect(still(back)).toBe(held);
     // Run out at its year's end: the row reads Mexico's rule again.
     tend(back, at(2026, 9, 4, 12));

@@ -47,7 +47,7 @@ describe('a state lien’s lifecycle', () => {
     expect(sd().parts!.penalty - penaltyBefore).toBeGreaterThanOrEqual(10_00);
     expect(sim.universe.notifications.filter((n) => n.title === 'A Notice Of State Tax Lien Is Filed')).toHaveLength(1);
     // Released only once paid: asked before, refused with why.
-    expect(lienReleaseRefusal(sim, sim.player, r, 'us-ca')).toMatch(/once the balance it secures is paid in full/);
+    expect(lienReleaseRefusal(sim, sim.player, r, 'us-ca')).toMatch(/once what it was filed for is paid in full/);
     fund(sim, 5_000_00);
     sim.must({ kind: 'tax.pay_state', payload: { state: 'us-ca', year: 2001 } });
     expect(sd().lien!.status).toBe('paid');
@@ -85,7 +85,7 @@ describe('a state lien’s lifecycle', () => {
     expect(r.stateDue!['us-ct']!.lien!.status).toBe('paid');
     expect(lienReleaseRefusal(sim, sim.player, r, 'us-ct')).toBeUndefined();
     sim.must({ kind: 'tax.lien_release', payload: { state: 'us-ct', year: 2001 } });
-    expect(sim.execute({ kind: 'tax.lien_release', payload: { state: 'us-ct', year: 2001 } }).error).toMatch(/Asked: it’s released by/);
+    expect(sim.execute({ kind: 'tax.lien_release', payload: { state: 'us-ct', year: 2001 } }).error).toMatch(/You’ve already asked\. It’s to be released by/);
     sim.advanceTo(sim.now + 31 * DAY);
     expect(r.stateDue!['us-ct']!.lien!.status).toBe('released');
   });
@@ -112,7 +112,7 @@ describe('a state lien’s lifecycle', () => {
     sim.player.returns = { ...(sim.player.returns ?? {}), '2001': r };
     assessStateNonFiler(sim, sim.player, r, 'us-ca', 1_000_00);
     fileStateLien(sim, sim.player, r, 'us-ca', 'collection');
-    expect(lienDisputeRefusal(r, 'us-ca')).toMatch(/secured tax owed when it was filed/);
+    expect(lienDisputeRefusal(r, 'us-ca')).toMatch(/was filed for tax you owed, so it wasn’t filed in error/);
     // Their own return: what was withheld covered it all.
     reconsiderState(sim, sim.player, r, 'us-ca', 0);
     expect(lienDisputeRefusal(r, 'us-ca')).toBeUndefined();
@@ -133,7 +133,7 @@ describe('a state lien’s lifecycle', () => {
     assessStateNonFiler(sim, sim.player, owedAfterAll, 'us-ca', 1_000_00);
     fileStateLien(sim, sim.player, owedAfterAll, 'us-ca', 'collection');
     reconsiderState(sim, sim.player, owedAfterAll, 'us-ca', 800_00);
-    expect(lienDisputeRefusal(owedAfterAll, 'us-ca')).toMatch(/secured tax owed when it was filed/);
+    expect(lienDisputeRefusal(owedAfterAll, 'us-ca')).toMatch(/was filed for tax you owed, so it wasn’t filed in error/);
   });
 });
 
@@ -150,8 +150,8 @@ describe('the IRS’s notice of federal tax lien', () => {
     // the filing on 1 February, before the tax was due; `nextNotice`).
     sim.advanceTo(r().due + 4 * 35 * DAY + 2 * DAY);
     expect(r().lien).toMatchObject({ name: 'Notice Of Federal Tax Lien', status: 'filed' });
-    expect(sim.universe.notifications.find((n) => n.title === 'The IRS Filed A Notice Of Federal Tax Lien')!.body).toMatch(/Letter 3172.*30 days to ask for a Collection Due Process hearing/);
-    expect(sim.execute({ kind: 'tax.federal_lien_withdraw', payload: { year: 2026 } }).error).toMatch(/once it’s released/);
+    expect(sim.universe.notifications.find((n) => n.title === 'The IRS Filed A Notice Of Federal Tax Lien')!.body).toMatch(/Letter 3172.*30 days to ask for a Collection Due Process hearing, which the game doesn’t offer/);
+    expect(sim.execute({ kind: 'tax.federal_lien_withdraw', payload: { year: 2026 } }).error).toMatch(/once the lien is released/);
     fund(sim, 60_000_00);
     sim.must({ kind: 'tax.pay', payload: { year: 2026 } });
     expect(r().lien!.status).toBe('paid');
@@ -168,7 +168,7 @@ describe('the longer arrangements', () => {
   it('New Mexico: twelve months with no lien; thirteen to 72 only as its long-term agreement, with a lien', () => {
     const sim = fresh('nm-long', 'us-nm-santafe');
     owing(sim, 'us-nm', 3_000_00, 2001);
-    expect(statePlanRefusal(sim, sim.player, 'us-nm', 24)).toMatch(/Longer is its long-term installment agreement/);
+    expect(statePlanRefusal(sim, sim.player, 'us-nm', 24)).toMatch(/For longer, apply for its long-term installment agreement/);
     expect(statePlanRefusal(sim, sim.player, 'us-nm', 24, { long: true })).toBeUndefined();
     expect(statePlanRefusal(sim, sim.player, 'us-nm', 80, { long: true })).toMatch(/at most 72 months/);
     sim.must({ kind: 'tax.apply_state_plan', payload: { state: 'us-nm', months: 24, long: true } });
@@ -181,7 +181,7 @@ describe('the longer arrangements', () => {
   it('Pennsylvania: its extended plan over $50,000, decided on the statement from your own records; declined where it doesn’t fit', () => {
     const sim = fresh('pa-ext', 'us-pa-philadelphia');
     owing(sim, 'us-pa', 60_000_00, 2001);
-    expect(statePlanRefusal(sim, sim.player, 'us-pa', 12)).toMatch(/Ask for its extended payment plan/);
+    expect(statePlanRefusal(sim, sim.player, 'us-pa', 12)).toMatch(/Apply for its extended payment plan instead/);
     // FIXTURE: three months of pay, $9,000 a month in, $1,000 out.
     for (const m of [1, 2, 3]) sim.post({ memo: 'Wages', category: 'income', at: sim.now - m * 20 * DAY, postings: [{ accountId: sim.player.primaryAccountId!, amount: 9_000_00 }, { accountId: sim.nominalAccount('income', 'Wages').id, amount: -9_000_00 }] } as never);
     for (const m of [1, 2, 3]) sim.post({ memo: 'Rent', category: 'housing', at: sim.now - m * 20 * DAY, postings: [{ accountId: sim.player.primaryAccountId!, amount: -1_000_00 }, { accountId: sim.nominalAccount('expense', 'Rent').id, amount: 1_000_00 }] } as never);
@@ -196,7 +196,7 @@ describe('the longer arrangements', () => {
     poor.must({ kind: 'tax.apply_state_plan', payload: { state: 'us-pa', months: 36, long: true } });
     poor.advanceTo(poor.now + 15 * DAY);
     expect(poor.player.statePlans!['us-pa']!.status).toBe('declined');
-    expect(poor.player.statePlans!['us-pa']!.why).toMatch(/more than the \$0\.00 your statement leaves/);
+    expect(poor.player.statePlans!['us-pa']!.why).toMatch(/more than the \$0\.00 your financial statement leaves over each month/);
     expect(poor.universe.scheduled.some((i) => i.status === 'pending' && i.kind === 'tax.state_notice' && i.payload.state === 'us-pa')).toBe(true);
   });
 
@@ -239,7 +239,7 @@ describe('the longer arrangements', () => {
     expect(returnsOf(sim.player)['2001']!.stateDue!['us-la']!.owed).toBeLessThanOrEqual(owedBefore - 2_000_00);
     const big = fresh('la-formal', 'us-la-neworleans');
     owing(big, 'us-la', 55_000_00, 2001);
-    expect(statePlanRefusal(big, big.player, 'us-la', 24)).toMatch(/Ask for its formal installment agreement/);
+    expect(statePlanRefusal(big, big.player, 'us-la', 24)).toMatch(/Apply for its formal installment agreement instead/);
     expect(STATE_TAX['us-la'].plan.downPayment!.required).toBe(false);
   });
 
@@ -285,7 +285,7 @@ describe('Oregon’s three years unfiled, and Massachusetts’s discretion', () 
   it('Massachusetts may double a non-filer’s tax; SLATE’s DOR doesn’t, and its letter says so', () => {
     const words = STATE_TAX['us-ma'].nonFiler.letters[0]!.words;
     expect(words).toMatch(/may assess up to double the tax/);
-    expect(words).toMatch(/SLATE’s DOR doesn’t/);
+    expect(words).toMatch(/so the game doesn’t do it/);
     const sim = fresh('ma-nf', 'us-ma-boston');
     const r = { year: 2001, due: sim.now - 500 * DAY, figures: { income: 50_000_00, balance: 1_000_00 } } as unknown as TaxReturn;
     sim.player.returns = { ...(sim.player.returns ?? {}), '2001': r };

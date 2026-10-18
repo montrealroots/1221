@@ -497,9 +497,9 @@ describe('the guide’s worked examples on staying at school, played', () => {
     // reads them, and its reason says nothing of unready work.
     const cw = twoMore.review.coursework ?? { shown: 0, unready: 0, strong: 0 };
     expect(cw.shown < ESTIMATE.coursework.shown || cw.unready < ESTIMATE.coursework.unready * cw.shown).toBe(true);
-    expect(twoMore.review.reason).not.toMatch(/unready or not shown/);
+    expect(twoMore.review.reason).not.toMatch(/Unready or not shown/);
     expect(school.tally.breaches).toBe(0);
-    expect(twoMore.review.reason).toMatch(new RegExp(`You were at ${Math.round(twoMore.review.attendance * 100)}% of what was asked of you`));
+    expect(twoMore.review.reason).toMatch(new RegExp(`You came to ${Math.round(twoMore.review.attendance * 100)}% of the classes, calls and shifts asked of you`));
   }, LONG);
 
   it('Calling In Sick: a first-year’s Monday with the flu excuses the classes and the lab call', () => {

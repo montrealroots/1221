@@ -710,7 +710,7 @@ describe('c-traits', () => {
     const page = creation(STEP.dispositions, ada()).text;
     // The page names no deduction, and says the slight among what the traits change.
     expect(page).not.toMatch(/Keeps Accounts how much|deduct/);
-    expect(page).toContain('how you warm to classmates and how a slight from one cuts');
+    expect(page).toContain('how you warm to classmates and how much a slight from one hurts');
   });
 });
 
@@ -837,7 +837,7 @@ describe('c-wealth', () => {
     };
     const [paid, owed] = [term(false), term(true)];
     const owing = (sim: Simulation) => mine(sim, 'loan').filter((a) => a.name === 'Bills Owed').reduce((n, a) => n - a.balance, 0);
-    const said = (sim: Simulation) => notices(sim, 'Fall Term 2026 Begins').map((n) => n.body.split('none was found, so ')[1]);
+    const said = (sim: Simulation) => notices(sim, 'Fall Term 2026 Begins').map((n) => n.body.split('your family’s means rule it out, so ')[1]);
     expect(said(paid)).toEqual(['this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.']);
     expect(said(owed)).toEqual(['this term’s Yale Health plan, $1,882.00, and living costs are yours. Your bank couldn’t cover the plan: it’s owed, and comes out of your bank the first day there’s money for it.']);
     expect([owing(paid), owing(owed)]).toEqual([0, 1_882_00]);

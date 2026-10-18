@@ -109,12 +109,12 @@ describe('a way of playing, read against the scene', () => {
     expect(against.limits.some((l) => l.kind === 'suitability' && l.dimension === 'connection')).toBe(true);
     expect(withIt.limits.some((l) => l.kind === 'suitability')).toBe(false);
     expect(grainWords(gw)).toMatch(/^The way you played it suited the scene \(Restrained, Suits The Scene\): it gave the take [\d.]+ points/);
-    expect(grainWords(ga)).toMatch(/went against the grain of the scene \(Expansive, Against The Grain\): it cost the take [\d.]+ points/);
+    expect(grainWords(ga)).toMatch(/worked against the scene \(Expansive, Works Against The Scene\): it cost the take [\d.]+ points/);
     // The ability cost is the same arithmetic with or without the grain's: it's what the craft held back.
     expect(gw.ability).toBeGreaterThan(0);
     // An actor weak only in presence, on the side that suits: the chief limit is presence, and nothing about the grain.
     const weak = judgeIt(BRIEF_BY_ID['brief-melodrama']!, act({ presence: 20 }, 90), { scale: 'expansive' });
-    expect(chiefLimit(weak)).toMatch(/^Presence held back/);
+    expect(chiefLimit(weak)).toMatch(/^Your Presence held back/);
   });
 
   it('asks a choice against the grain to be rehearsed in further than one with it, and reads it so', () => {

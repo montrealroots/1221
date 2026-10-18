@@ -89,7 +89,7 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
       {asked.length > 0 && <p className="small" style={{ margin: 0 }}>The director has asked for it {asked.map(([, v]) => APPROACH_EFFECT[v].label.toLowerCase()).join(' and ')}: {asked.map(([, v]) => APPROACH_EFFECT[v].words).join(' ')}</p>}
       <div className="table-scroll">
         <table>
-          <thead><tr><th scope="col">Axis</th><th scope="col">Choice</th><th scope="col">The Scene</th><th scope="col">What It Draws On</th><th scope="col" className="num">Fully Prepared</th></tr></thead>
+          <thead><tr><th scope="col">Aspect</th><th scope="col">Choice</th><th scope="col">The Scene</th><th scope="col">Abilities It Uses</th><th scope="col" className="num">Fully Prepared</th></tr></thead>
           <tbody>
             {(Object.keys(AXES) as Axis[]).flatMap((axis) => AXES[axis].values.map((side, i) => {
               const e = APPROACH_EFFECT[side];
@@ -122,15 +122,15 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
         {(Object.keys(AXES) as Axis[]).map((axis) => draft[axis] && <button key={axis} type="button" className="btn btn-sm btn-ghost" onClick={() => { const next = { ...draft }; delete next[axis]; setDraft(next); }}>Leave The {AXES[axis].label} Open</button>)}
       </div>
       <p className="small" style={{ margin: 0 }}>
-        Played this way, fully prepared and on a good day: {now.overall.toFixed(1)}, against {open.toFixed(1)} with nothing chosen.
-        {current && sidesOf(current).length > 0 ? ` Your choice now is rehearsed in to ${Math.round(current.prep * 100)}% (complete at ${Math.round(requiredFor(sidesOf(current), material, sceneRead) * 100)}%), by work on your feet.` : ' A choice is rehearsed in by work on your feet after it’s made.'}
-        {draftSides.length > 0 ? ` This one is complete at ${Math.round(completeAt * 100)}% rehearsed in: ${completeAt < PLAYING.complete ? 'with the grain of the scene, it asks less' : completeAt > PLAYING.complete ? 'against the grain of the scene, it asks more' : 'neither with the grain nor against it'}.` : ''}
-        {changed && current && sidesOf(current).length > 0 ? ` Changing it keeps ${Math.round(PLAYING.keptOnChange * 100)}% of that.` : ''}
+        Fully prepared and on a good day, playing it this way would come to {now.overall.toFixed(1)}, against {open.toFixed(1)} with nothing chosen.
+        {current && sidesOf(current).length > 0 ? ` You’ve rehearsed your current choice to ${Math.round(current.prep * 100)}% so far (it’s complete at ${Math.round(requiredFor(sidesOf(current), material, sceneRead) * 100)}%). Work on your feet rehearses it.` : ' Choosing a way to play it isn’t rehearsing it: once you choose, work on your feet rehearses it.'}
+        {draftSides.length > 0 ? ` This choice is complete once it’s rehearsed to ${Math.round(completeAt * 100)}%: ${completeAt < PLAYING.complete ? 'it suits the scene, so it asks less' : completeAt > PLAYING.complete ? 'it goes against the scene, so it asks more' : 'the scene neither favors nor resists it'}.` : ''}
+        {changed && current && sidesOf(current).length > 0 ? ` If you change it, you keep ${Math.round(PLAYING.keptOnChange * 100)}% of that rehearsal.` : ''}
       </p>
       <div>
         <Gated feature={feature} className="btn btn-sm" disabled={!changed} onClick={() => onChoose(draft)}>{current && sidesOf(current).length ? 'Change How You Play It' : 'Play It This Way'}</Gated>
       </div>
-      <Fine>Each side leans the work’s quality dimensions toward what it is and draws on the abilities shown; leaning moves weight, never adds it, so at full ability every choice that fits reaches 100. Below it, a choice that leans on what you do well shows you better. A choice the material or the director doesn’t take holds the dimensions it leans on to {Math.round(MISFIT * 100)}% of themselves. A choice that fits can still suit the scene or go against its grain, by what the scene is (its genre, its reader, its tones and turns, its features and language, its circumstances, the medium and the reading you’ve taken): with the grain it’s easier to make work and asks less rehearsal, against it harder and more, and at full ability either reaches 100.{movements ? ' Judged in its movements, the work reads stamina only as tiring late in it, however it’s played, so no side draws on it here.' : ''} The sizes are SLATE’s design.</Fine>
+      <Fine>Each way of playing shifts what counts most in your work toward what it is, and uses the abilities shown. It moves the balance without adding to it, so at full ability every choice that fits reaches 100; below that, a choice that leans on what you do well shows you at your best. A choice the material or the director doesn’t take holds the qualities it leans on to {Math.round(MISFIT * 100)}% of themselves. A choice that fits can still suit the scene or go against it, by what the scene is (its genre, its reader, its tones and turns, its features and language, its circumstances, the medium and the reading you’ve taken): one that suits it is easier to make work and needs less rehearsal, one that goes against it is harder and needs more, and at full ability either reaches 100.{movements ? ' Judged movement by movement, the piece only counts stamina as tiring late in it, however it’s played, so no choice uses it here.' : ''} The sizes are estimated.</Fine>
     </div>
   );
 }

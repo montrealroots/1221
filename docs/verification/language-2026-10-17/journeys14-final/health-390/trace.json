@@ -1,0 +1,493 @@
+{
+ "playthrough": "health",
+ "width": 390,
+ "base": "http://localhost:4217",
+ "commit": "edd7be91",
+ "uncommitted": 0,
+ "startedAt": "2026-10-18T04:56:38.017Z",
+ "startingPoint": {
+  "kind": "save",
+  "file": "health.json",
+  "bytes": 107485,
+  "sha256": "559377c07c03f38979a3021110d405e204e4fbadf3354102d7215612d817d69e",
+  "seed": "sc-0",
+  "command": "npx vite-node tools/scenarios.ts -- --scenario health --seed sc-0 --save SAVEDIR/health.json",
+  "testSetup": "a fall forced through the game’s own mayHurt, with a chance of one, on the first morning from Saturday 12 September 2026 at nine on which a fall would be a sprained ankle (tools/scenarios.ts, health); the run stopped right after it"
+ },
+ "steps": [
+  {
+   "n": 1,
+   "name": "[save: health scenario] the injury’s notice on Home: its name, the days it takes to mend and what it keeps you from",
+   "exercises": [
+    "notification"
+   ],
+   "pressed": [
+    "Continue",
+    "Menu",
+    "Home"
+   ],
+   "said": [
+    "notice “A Sprained Ankle”: It takes 7 days to mend, and you can’t work out until then. Its care, a visit to urgent care and 2 sessions of physical therapy, costs you nothing. Call In Sick, on School, excuses a day of classes while it mends.",
+    "“A Sprained Ankle”: It takes 7 days to mend, and you can’t work out until then. Its care, a visit to urgent care and 2 sessions of physical therapy, costs you nothing. Call In Sick, on School, excuses a day of classes while it mends."
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "9:05 AM"
+  },
+  {
+   "n": 2,
+   "name": "the notice opened in place: its look, Close, the clock as it was",
+   "exercises": [
+    "drill-down"
+   ],
+   "pressed": [
+    "A Sprained Ankle",
+    "Close A Sprained Ankle"
+   ],
+   "said": [
+    "look “A Sprained Ankle” (NOTICE): It came in just now. It’s first of your 28 unread notices."
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "9:05 AM"
+  },
+  {
+   "n": 3,
+   "name": "How You Are into the injury: your look, its way to the injury, the day it mends and what it keeps you from, a way further in, the outer Close shutting all",
+   "exercises": [
+    "drill-down"
+   ],
+   "pressed": [
+    "Rested, steady and ready for a real day.",
+    "An Injury",
+    "Condition",
+    "Close Ada Cole"
+   ],
+   "said": [
+    "look “Ada Cole” (YOURSELF): Rested, steady and ready for a real day.",
+    "“A Sprained Ankle”: It mends by September 19, 2026. Until then you can’t work out, and it holds back the physical side of your work. Call In Sick, on School, excuses a day of classes while it mends.; trail “Ada Cole”",
+    "inside “A Sprained Ankle”: “Condition”: 99. As sound as rest can make you at your fitness. Above 98, it settles back toward 98 each midnight. The lower it is, the likelier a year is to be your last.; trail “Ada Cole · A Sprained Ankle”",
+    "Ada Cole → A Sprained Ankle → Condition"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "9:05 AM"
+  },
+  {
+   "n": 4,
+   "name": "Work Out refused: grayed in Look After Yourself, its reason in its own line naming the injury and its days; forced, the clock stays",
+   "exercises": [
+    "unavailable"
+   ],
+   "pressed": [
+    "Look After Yourself",
+    "Work Out 1 hour · Not with a sprained ankle; it has 7 days yet to mend. (grayed, forced)"
+   ],
+   "said": [
+    "Not with a sprained ankle; it has 7 days yet to mend."
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "9:05 AM"
+  },
+  {
+   "n": 5,
+   "name": "a class’s work refused for it: School, Coursework, a step on the feet refused with Work Out’s words; forced, the clock stays",
+   "exercises": [
+    "navigation",
+    "unavailable"
+   ],
+   "pressed": [
+    "Menu",
+    "School",
+    "Coursework (tab)",
+    "Devise The Score (grayed, forced)"
+   ],
+   "said": [
+    "The Body As Source I: A Movement Score: Devise The Score; Acting Intimacy And Combat For The Stage: Consent And Intimacy Practice: Run It With A Reader"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "9:05 AM"
+  },
+  {
+   "n": 6,
+   "name": "its care and its cost: the notice’s Go There opens Papers; Health Cover; what urgent care costs you now, and no bill for it unless the notice named a share",
+   "exercises": [
+    "navigation"
+   ],
+   "pressed": [
+    "Menu",
+    "Home",
+    "Go There",
+    "Health Cover (tab)"
+   ],
+   "said": [
+    "notice “A Sprained Ankle”: It takes 7 days to mend, and you can’t work out until then. Its care, a visit to urgent care and 2 sessions of physical therapy, costs you nothing. Call In Sick, on School, excuses a day of classes while it mends.",
+    "urgent care now $0.00; the notice’s share: none; bills that day: none",
+    "urgent care $0.00; no share, no bill"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "9:05 AM"
+  },
+  {
+   "n": 7,
+   "name": "Tomorrow Morning, asked: On The Way names the 10:00 AM work-study shift, Cancel leaves the clock",
+   "exercises": [
+    "confirmation"
+   ],
+   "pressed": [
+    "Advance",
+    "Tomorrow Morning",
+    "Cancel"
+   ],
+   "said": [
+    "On The Way: ✕ Moving the clock to Tomorrow Morning (September 13, 2026 at 7:00 AM) passes one commitment, and the clock stops at each one. At each, you can go, or press Stand Here and the clock waits. A plan of your own can also be skipped, and a rehearsal with a partner called off, though at short notice that costs their trust. Work-Study Shift — September 12, 2026 at 10:00 AM Cancel Advance"
+   ],
+   "ok": true,
+   "date": "September 12, 2026",
+   "clock": "9:05 AM"
+  },
+  {
+   "n": 8,
+   "name": "a day on, saved and continued: Work Out’s refusal the same, word for word",
+   "exercises": [
+    "save-continue"
+   ],
+   "pressed": [
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Work-Study Shift: Go",
+    "Look After Yourself",
+    "Save & Exit",
+    "Continue",
+    "Look After Yourself"
+   ],
+   "said": [
+    "September 13, 2026 7:00 AM: “Not with a sprained ankle; it has 7 days yet to mend.”"
+   ],
+   "ok": true,
+   "date": "September 13, 2026",
+   "clock": "7:00 AM"
+  },
+  {
+   "n": 9,
+   "name": "the days it mends: each morning Work Out’s days never rise, and it’s offered the first morning after the day the look gave; your look then offers no way to an injury",
+   "exercises": [],
+   "pressed": [
+    "Advance",
+    "Tomorrow Morning",
+    "Look After Yourself",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Look After Yourself",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Look After Yourself",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Look After Yourself",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Look After Yourself",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "Look After Yourself",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Work-Study Shift: Go",
+    "Look After Yourself",
+    "Menu",
+    "Home",
+    "Holding up, with nothing out of the ordinary to worry about.",
+    "Close Ada Cole"
+   ],
+   "said": [
+    "September 14, 2026: refused, “Not with a sprained ankle; it has 6 days yet to mend.”; September 15, 2026: refused, “Not with a sprained ankle; it has 5 days yet to mend.”; September 16, 2026: refused, “Not with a sprained ankle; it has 4 days yet to mend.”; September 17, 2026: refused, “Not with a sprained ankle; it has 3 days yet to mend.”; September 18, 2026: refused, “Not with a sprained ankle; it has 2 days yet to mend.”; September 19, 2026: refused, “Not with a sprained ankle; it has 1 day yet to mend.”; September 20, 2026: offered",
+    "look “Ada Cole” (YOURSELF): Holding up, with nothing out of the ordinary to worry about.",
+    "offered on September 20, 2026, after 7 mornings"
+   ],
+   "ok": true,
+   "date": "September 20, 2026",
+   "clock": "7:00 AM"
+  },
+  {
+   "n": 10,
+   "name": "Save & Exit; Delete asked and kept; Continue: the same moment, Work Out still offered, Home’s notices as they were",
+   "exercises": [
+    "confirmation",
+    "save-continue"
+   ],
+   "pressed": [
+    "Menu",
+    "Home",
+    "Save & Exit",
+    "Delete",
+    "Keep It",
+    "Continue",
+    "Menu",
+    "Home",
+    "Look After Yourself"
+   ],
+   "said": [
+    "Confirm Deletion: Delete Slot 1? This ends that universe. The character, everywhere they’ve been and everything that happened to them is gone from the slot. A backup is kept, so if you change your mind you can bring it back here with Restore Backup. Keep It Delete Slot 1",
+    "slot 1 kept: SLOT 1 Ada Cole Actor, Yale Drama Year 1 DATE September 20, 2026 LOCATION New Haven NET WORTH $503K PLAYED 22s Version 1.1.0 · Save Format 94 · 35 KB Backup from September 13, 2026 Continue Restore Ba",
+    "September 20, 2026 7:00 AM; Work Out offered"
+   ],
+   "ok": true,
+   "date": "September 20, 2026",
+   "clock": "7:00 AM"
+  }
+ ],
+ "milestones": [
+  {
+   "file": "01-injury-notice.jpg",
+   "step": 1,
+   "at": "September 12, 2026 9:05 AM"
+  },
+  {
+   "file": "02-injury-look.jpg",
+   "step": 3,
+   "at": "September 12, 2026 9:05 AM"
+  },
+  {
+   "file": "03-work-out-refused.jpg",
+   "step": 4,
+   "at": "September 12, 2026 9:05 AM"
+  },
+  {
+   "file": "04-coursework-refused.jpg",
+   "step": 5,
+   "at": "September 12, 2026 9:05 AM"
+  },
+  {
+   "file": "05-health-cover.jpg",
+   "step": 6,
+   "at": "September 12, 2026 9:05 AM"
+  },
+  {
+   "file": "06-confirm-deletion.jpg",
+   "step": 10,
+   "at": ""
+  }
+ ],
+ "dialogs": [
+  {
+   "step": 8,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 12, 2026 10:00 AM"
+  },
+  {
+   "step": 8,
+   "title": "Work-Study Shift",
+   "pressed": "Go",
+   "after": "September 13, 2026 7:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 14, 2026 9:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 14, 2026 3:00 PM"
+  },
+  {
+   "step": 9,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 15, 2026 7:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 15, 2026 9:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 15, 2026 3:00 PM"
+  },
+  {
+   "step": 9,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 16, 2026 7:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 16, 2026 9:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 16, 2026 3:00 PM"
+  },
+  {
+   "step": 9,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 17, 2026 7:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 17, 2026 9:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 17, 2026 3:00 PM"
+  },
+  {
+   "step": 9,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 18, 2026 7:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 18, 2026 9:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 18, 2026 3:00 PM"
+  },
+  {
+   "step": 9,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 19, 2026 7:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 19, 2026 10:00 AM"
+  },
+  {
+   "step": 9,
+   "title": "Work-Study Shift",
+   "pressed": "Go",
+   "after": "September 20, 2026 7:00 AM"
+  }
+ ],
+ "errors": [],
+ "overflows": [],
+ "exercised": {
+  "navigation": [
+   5,
+   6
+  ],
+  "drill-down": [
+   2,
+   3
+  ],
+  "unavailable": [
+   4,
+   5
+  ],
+  "confirmation": [
+   7,
+   10
+  ],
+  "notification": [
+   1
+  ],
+  "save-continue": [
+   8,
+   10
+  ]
+ },
+ "summary": {
+  "steps": 10,
+  "passed": 10,
+  "failed": 0,
+  "sixMissing": [],
+  "errors": 0,
+  "overflows": 0,
+  "languageFails": 0,
+  "languageRecorded": 7
+ },
+ "language": {
+  "fails": [],
+  "recorded": [
+   {
+    "kind": "label wraps",
+    "step": 5,
+    "where": "after step 5",
+    "what": "span “THE DIRECTIONS UNDERSTOOD” on 2 lines"
+   },
+   {
+    "kind": "label wraps",
+    "step": 5,
+    "where": "after step 5",
+    "what": "span “ITS CONTEXT RESEARCHED” on 2 lines"
+   },
+   {
+    "kind": "label wraps",
+    "step": 5,
+    "where": "after step 5",
+    "what": "span “THE PRESENTATION PREPARED” on 2 lines"
+   },
+   {
+    "kind": "label wraps",
+    "step": 5,
+    "where": "after step 5",
+    "what": "span “REHEARSED IN THE BODY” on 2 lines"
+   },
+   {
+    "kind": "label wraps",
+    "step": 5,
+    "where": "after step 5",
+    "what": "span “THE PRACTICE LEARNED” on 2 lines"
+   },
+   {
+    "kind": "label wraps",
+    "step": 5,
+    "where": "after step 5",
+    "what": "span “THE SEQUENCE LEARNED” on 2 lines"
+   },
+   {
+    "kind": "long text",
+    "step": 9,
+    "where": "after step 9",
+    "what": "117 words in one div: “So far this term, 3 of the 8 pieces you’ve shown were Unready. Each was short on a different part, so there’s …”"
+   }
+  ]
+ },
+ "finishedAt": "2026-10-18T04:57:58.178Z"
+}

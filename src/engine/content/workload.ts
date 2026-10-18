@@ -59,7 +59,7 @@ export const RUNNING_TIMES: Readonly<Record<string, RunningTime>> = {
   'The Cherry Orchard': at(158, [20], 'National Theatre, in Andrew Upton’s version, as National Theatre Live filmed it: 2 h 38 with a short interval, its length not given', 'https://www.ntathome.com/the-cherry-orchard-audio-description', true),
   'Major Barbara': at(195, [20], 'Shaw Festival, 2025, the Royal George Theatre: about 3 h 15 with one intermission', 'https://www.stage-door.com/3/news/2025-News/Entries/2025/5/niagara-on-the-lake-major-barbara-begins-previews-at-the-shaw-festival-on-june-1.html', true),
   'Spring Awakening': at(120, [20], 'Landestheater Eisenach, as a school’s report of an April 2026 performance gives it: about two hours, a pause after the second act. The thinnest basis in the table: no theater’s own figure for the play, not the musical, was found', 'https://www.salzmannschule.de/images/Aktuell/Bericht%20Theater.pdf', true),
-  'Ghosts': at(140, [20], 'Riksteatret, the Norwegian Touring Theatre (Bentein Baardson), from 31 August 2017: 2 h 20 with an interval', 'https://sceneweb.no/en/production/74856/Ghosts', true),
+  'Ghosts': at(140, [20], 'Riksteatret, the Norwegian Touring Theatre (Bentein Baardson), from August 31, 2017: 2 h 20 with an interval', 'https://sceneweb.no/en/production/74856/Ghosts', true),
   'The Wild Duck': at(140, [20], 'Norwegian Ibsen Company, 2024, in Bergen and at the Coronet in London: 140 minutes with the interval', 'https://sceneweb.no/en/production/100461/The_Wild%20Duck', true),
   // The Shakespeare Repertory Projects.
   'Twelfth Night': at(174, [20], 'RSC, 2024–25, the Royal Shakespeare Theatre: 2 h 54 with a 20-minute interval', 'https://www.rsc.org.uk/twelfth-night'),
@@ -73,7 +73,7 @@ export const RUNNING_TIMES: Readonly<Record<string, RunningTime>> = {
   // Yale Rep’s classics.
   'A Doll’s House': at(150, [20], 'Nordland Teater’s 1995 production: 2 h 30 with an interval', 'https://sceneweb.no/en/production/51624/A_Doll%27s%20House', true),
   'Uncle Vanya': at(150, [20], 'Harold Pinter Theatre, 2020 (Conor McPherson’s version): 2 h 30 with the interval', 'https://www.londontheatredirect.com/play/uncle-vanya-harold-pinter-theatre-tickets', true),
-  'Tartuffe': at(160, [20], 'Teatr Narodowy, Warsaw, from 25 March 2006 (Jacques Lassalle): 2 h 40 with one interval', 'https://www.narodowy.pl/en,whats_on,performances,79,tartuffe_or_the_impostor.html', true),
+  'Tartuffe': at(160, [20], 'Teatr Narodowy, Warsaw, from March 25, 2006 (Jacques Lassalle): 2 h 40 with one interval', 'https://www.narodowy.pl/en,whats_on,performances,79,tartuffe_or_the_impostor.html', true),
   'An Enemy Of The People': at(135, [20], 'Duke of York’s Theatre, 2024 (Thomas Ostermeier, Duncan Macmillan’s version): 2 h 15 with the interval', 'https://officiallondontheatre.com/show/an-enemy-of-the-people-111442452/', true),
   'The Playboy Of The Western World': at(150, [15], 'National Theatre, 2024, the Lyttelton: 2 h 30 with one interval, 15 minutes as National Theatre Live’s listing gives it', 'https://www.londontheatre.co.uk/show/44282'),
   'Mrs Warren’s Profession': at(105, [], 'Garrick Theatre, 2025: about 1 h 45, no interval', 'https://officiallondontheatre.com/show/mrs-warrens-profession-111447745/'),
@@ -93,9 +93,9 @@ export const RUNNING_TIMES: Readonly<Record<string, RunningTime>> = {
  */
 export const UNNAMED_RUNNING = {
   seagull: at(140, [20], 'Yale Rep hasn’t published its 2027 production’s running time; this is Teatr Narodowy’s, Warsaw, 2010: 2 h 20 with one interval', 'https://teatr.narodowy.pl/en,whats_on,past_seasons,68,the_seagull.html', true),
-  newPlay: { minutes: 100, breaks: [], basis: 'estimate', from: 'SLATE’s estimate: no Carlotta or Langston Hughes festival play’s running time is published (searched 2026-10-16), so a new play of an hour and forty minutes, run straight through' },
-  cabaret: { minutes: 60, breaks: [], basis: 'estimate', from: 'SLATE’s estimate from the Cabaret’s own format, a show about an hour long, as the Daily Nutmeg describes a Yale Cabaret production (https://dailynutmeg.com/blogs/blog/this-yale-cabaret-play-by-ear, read 2026-10-16), run straight through' },
-  solo: { minutes: 20, breaks: [], basis: 'estimate', from: 'SLATE’s estimate: the Bulletin doesn’t give a solo piece’s length for You Are The Creator, so 20 minutes, the one actor on stage throughout' },
+  newPlay: { minutes: 100, breaks: [], basis: 'estimate', from: 'Estimated, since no Carlotta or Langston Hughes festival play’s running time is published (searched October 16, 2026): a new play of an hour and forty minutes, run straight through' },
+  cabaret: { minutes: 60, breaks: [], basis: 'estimate', from: 'Estimated from the Cabaret’s own format, a show about an hour long, as the Daily Nutmeg describes a Yale Cabaret production (https://dailynutmeg.com/blogs/blog/this-yale-cabaret-play-by-ear, read October 16, 2026), run straight through' },
+  solo: { minutes: 20, breaks: [], basis: 'estimate', from: 'Estimated, since the Bulletin doesn’t give a solo piece’s length for You Are The Creator: 20 minutes, the one actor on stage throughout' },
 } as const satisfies Record<string, RunningTime>;
 
 /**

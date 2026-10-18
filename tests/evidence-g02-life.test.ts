@@ -11,7 +11,8 @@
  *   unknown id, the world's own item and a plan already begun are refused in their words, and the world's item is
  *   offered no Call It Off.
  * - `world.dismiss_decision`: the real "Your 2026 Tax Return", raised on 1 February 2027, dismissed from Home's card;
- *   refused a second time and for an unknown id; across a reload its File It is refused "It’s dismissed."; the return
+ *   refused a second time and for an unknown id; across a reload its File It is refused "You dismissed that question,
+ *   so it can’t be answered from What Needs You." ("It’s dismissed." until 2026-10-17, brief 14); the return
  *   is still unfiled and unpaid, comes late in April, and the IRS is set to file it; the row is kept 180 days and
  *   forgotten after. A dated row was kept until its date had passed, and an undated one not, until 2026-10-14, when the
  *   owner had the keeping and the undated row go: a dismissed row is forgotten 180 days on, its date ahead or not. A
@@ -268,7 +269,7 @@ describe('calendar.cancel', () => {
 
     const screen = opened(sim, id);
     expect(screen.text).toContain(NEXT_30);
-    expect(screen.text).toContain('This one wants you there. Move the clock to it and it happens. You put it there, so you can take it off again.');
+    expect(screen.text).toContain('You need to be there. The clock stops when it comes round, so you can go. You put it there, so you can take it off again.');
     expect(screen.has('Leave It')).toBe(true);
     screen.press('Call It Off');
 
@@ -306,10 +307,10 @@ describe('calendar.cancel', () => {
     const cancel = (entryId: string) => sim.must<{ ok: boolean; error?: string }>({ kind: 'calendar.cancel', payload: { entryId } });
     const { id } = sim.must<{ id: string }>({ kind: 'calendar.schedule', payload: { title: 'Call', at: NH(8), durationMinutes: 30 } });
     expect(cancel(id).ok).toBe(true);
-    expect(cancel(id)).toEqual({ ok: false, error: 'That’s already settled one way or the other.' });
+    expect(cancel(id)).toEqual({ ok: false, error: 'That’s already over: it was kept, missed or called off.' });
     expect(sim.timeline.get(id)!.resolvedAt).toBe(NH(7, 30));
-    expect(cancel('nothing-here')).toEqual({ ok: false, error: 'There’s nothing by that name on the calendar.' });
-    expect(cancel(registration.id)).toEqual({ ok: false, error: 'That one isn’t yours to call off.' });
+    expect(cancel('nothing-here')).toEqual({ ok: false, error: 'That isn’t on your calendar.' });
+    expect(cancel(registration.id)).toEqual({ ok: false, error: 'Only a plan you made yourself can be called off here.' });
     expect(registration.status).toBe('pending');
     const world = opened(sim, registration.id);
     expect(world.has('Call It Off')).toBe(false);
@@ -317,7 +318,7 @@ describe('calendar.cancel', () => {
     // Begun: the clock stopped at it, standing in it.
     const { id: begun } = sim.must<{ id: string }>({ kind: 'calendar.schedule', payload: { title: 'Coffee', at: NH(9), durationMinutes: 30 } });
     expect(sim.advanceTo(NH(9, 30), { stopOnPlayerRequired: true }).interruptedBy?.id).toBe(begun);
-    expect(cancel(begun)).toEqual({ ok: false, error: 'It’s already started. You either went or you didn’t.' });
+    expect(cancel(begun)).toEqual({ ok: false, error: 'It’s already started, so it can’t be called off now.' });
     expect(sim.timeline.get(begun)!.status).toBe('pending');
   });
 });
@@ -366,15 +367,15 @@ describe('world.dismiss_decision', () => {
 
     // Once: the day it's kept from doesn't move.
     sim.advanceTo(sim.now + 60 * MS_MINUTE);
-    expect(dismiss(sim, decisionId).error).toBe('It’s dismissed already.');
+    expect(dismiss(sim, decisionId).error).toBe('You’ve already dismissed that question.');
     expect(decision.dismissedAt).toBe(on(2027, 2, 1));
-    expect(dismiss(sim, 'decision_none').error).toBe('No such decision.');
+    expect(dismiss(sim, 'decision_none').error).toBe('That question isn’t in What Needs You any more.');
 
     // Across a reload, its button is refused and nothing is filed.
     const again = reload(sim);
     const pressed = decide(again, { decisionId, actionIndex: 0 });
     expect(pressed.ok).toBe(false);
-    expect(pressed.error).toBe('It’s dismissed.');
+    expect(pressed.error).toBe('You dismissed that question, so it can’t be answered from What Needs You.');
     expect(returnsOf(again.player)['2026']!.filedAt).toBeUndefined();
     expect(taxPaid(again)).toEqual([]);
     // Dismissed isn't filed: the return comes due on its day unfiled, says so, and the IRS is set to file it for her.
@@ -440,13 +441,13 @@ describe('world.take_decision_action', () => {
     sim.advanceTo(sim.now + 60 * MS_MINUTE);
     const twice = decide(sim, { decisionId, actionIndex: 0 });
     expect(twice.ok).toBe(false);
-    expect(twice.error).toBe('That’s been done already.');
+    expect(twice.error).toBe('That question is already settled: it was answered, or its date passed.');
     expect(returnsOf(sim.player)['2026']!.filedAt).toBe(filedOn);
     expect(decision.resolvedAt).toBe(filedOn);
     expect(taxPaid(sim)).toEqual(paid);
 
     const again = reload(sim);
-    expect(decide(again, { decisionId, actionIndex: 0 }).error).toBe('That’s been done already.');
+    expect(decide(again, { decisionId, actionIndex: 0 }).error).toBe('That question is already settled: it was answered, or its date passed.');
     expect(returnsOf(again.player)['2026']!.filedAt).toBe(filedOn);
     // Filed, the due date passes quietly, and the tax was paid once.
     again.advanceTo(on(2027, 4, 16));
@@ -467,10 +468,10 @@ describe('world.take_decision_action', () => {
     sim.requireDecision({ urgency: 50, category: 'test', title: 'Coffee At Nine', detail: 'A row raised by the test.', dueAt: NH(9), refType: 'test', refId: plan, actions: [{ label: 'Call It Off', commandKind: 'calendar.cancel', payload: { entryId: plan } }] });
     const row = openDecisions(sim)[0]!;
 
-    expect(decide(sim, { decisionId: 'decision_none', actionIndex: 0 }).error).toBe('No such decision.');
+    expect(decide(sim, { decisionId: 'decision_none', actionIndex: 0 }).error).toBe('That question isn’t in What Needs You any more.');
     const none = decide(sim, { decisionId: row.id, actionIndex: 9 });
     expect(none.ok).toBe(false);
-    expect(none.error).toBe('That action isn’t available on this item.');
+    expect(none.error).toBe('That isn’t one of this question’s answers.');
     expect(row.resolvedAt).toBeUndefined();
     expect(sim.timeline.get(plan)!.status).toBe('pending');
 
@@ -480,7 +481,7 @@ describe('world.take_decision_action', () => {
     expect(sim.timeline.get(plan)!.status).toBe('cancelled');
     expect(row.resolvedAt).toBe(NH(7, 30));
     expect(openDecisions(sim)).toEqual([]);
-    expect(decide(sim, { decisionId: row.id, actionIndex: 0 }).error).toBe('That’s been done already.');
+    expect(decide(sim, { decisionId: row.id, actionIndex: 0 }).error).toBe('That question is already settled: it was answered, or its date passed.');
 
     const again = reload(sim);
     again.advanceTo(NH(7, 30) + 179 * MS_DAY);
@@ -498,10 +499,10 @@ describe('world.set_preferences', () => {
     expect(sim.universe.preferences).toEqual({ timeSpeed: 'live' });
     const theme = sim.execute({ kind: 'world.set_preferences', payload: { theme: 'dark' } });
     expect(theme.ok).toBe(false);
-    expect(theme.error).toBe('theme isn’t a preference.');
+    expect(theme.error).toBe('That isn’t a setting the game has.');
     const both = sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'paused', theme: 'dark' } });
-    expect(both.error).toBe('theme isn’t a preference.');
-    expect(sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'fast' } }).error).toBe('The clock runs paused or live.');
+    expect(both.error).toBe('That isn’t a setting the game has.');
+    expect(sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'fast' } }).error).toBe('The clock can only be set to Play or Pause.');
     expect(sim.universe.preferences).toEqual({ timeSpeed: 'live' });
     expect(reload(sim).universe.preferences).toEqual({ timeSpeed: 'live' });
   });
@@ -666,7 +667,7 @@ describe('tutorial.read', () => {
     expect(guided.execute({ kind: 'tutorial.read', payload: { chapterId: 'nope' } }).error).toBe('There’s no such chapter.');
     expect(guided.universe.tutorial).toEqual({ read: [] });
     const open = student('g02-guide-none');
-    expect(open.execute({ kind: 'tutorial.read', payload: { chapterId: CHAPTERS[0]!.id } }).error).toBe('This life has no guide to read through; everything is open.');
+    expect(open.execute({ kind: 'tutorial.read', payload: { chapterId: CHAPTERS[0]!.id } }).error).toBe('This life was begun without the guide, so everything is already open.');
     expect(open.universe.tutorial).toBeUndefined();
   });
 
@@ -689,7 +690,7 @@ describe('tutorial.read', () => {
     expect(again.guardedBecause({ kind: 'bank.set_alerts', payload: {} })).toBeUndefined();
     // Change the input: not finished, the same save is held to the chapter.
     delete again.universe.tutorial!.finished; // TEST SETUP
-    expect(alerts(again).error).toBe('Read “Your Bank” in the guide first.');
+    expect(alerts(again).error).toBe('Read “Your Bank” in the guide first. Press Guide, at the top of the screen, to read it.');
     expect(drawn(again, GuideStrip).text).toContain('Your Bank');
   });
 
@@ -729,7 +730,7 @@ describe('tutorial.read', () => {
       expect(atBank.html).not.toMatch(/, Later"/);
       expect(atBank.text).toContain('What It Covers, Already Open');
       expect(atBank.text).not.toContain('What Reading It Opens');
-      expect(contents().text).toContain('The Guide’s Chapters. Every part of the game is open on this life; the chapters are there to read in any order.');
+      expect(contents().text).toContain('The Guide. Everything is open on this life. The chapters are there to read in any order.');
       // Change the input: not finished, the same save is a guide with two chapters to go, the next of them Your Bank.
       delete sim.universe.tutorial!.finished; // TEST SETUP
       const going = guide();
@@ -737,7 +738,7 @@ describe('tutorial.read', () => {
       expect(going.html).toContain('aria-label="17. A Whole Life, Later"');
       expect(going.text).toContain('What Reading It Opens');
       expect(going.has('I’ve Read It')).toBe(true);
-      expect(contents().text).toContain('The Guide’s Chapters. 15 of 17 read: each opens a part of the game.');
+      expect(contents().text).toContain('The Guide. You’ve read 15 of its 17 chapters. Each one you read opens a part of the game.');
     } finally {
       if (had === undefined) delete page.window; else page.window = had;
     }
@@ -852,7 +853,7 @@ describe('health.appeal', () => {
     expect(paidFor(sim, bill).amount).toBe(full);
     expect(memos(sim, 'Appeal won')).toEqual([]);
     // The clinic named as it is written (from 2026-10-13: until then all of it was made small).
-    expect(titled(sim, 'Appeal Upheld').map((n) => n.body)).toEqual(['The plan kept its denial for a checkup, Fair Haven Community Health Care.']);
+    expect(titled(sim, 'Appeal Upheld').map((n) => n.body)).toEqual(['The plan kept its denial for a checkup, Fair Haven Community Health Care, so the full bill stands.']);
     expect(bill.what).toBe('A checkup, Fair Haven Community Health Care');
     expect(paperRow(sim, bill)).toContain('Denial Upheld');
   });
@@ -911,7 +912,7 @@ describe('health.appeal', () => {
     sim.advanceTo(bill.at + 181 * MS_DAY);
     const late = sim.execute({ kind: 'health.appeal', payload: { billId: bill.id } });
     expect(late.ok).toBe(false);
-    expect(late.error).toBe('An appeal is filed within 180 days of the denial.');
+    expect(late.error).toBe('An appeal has to be filed within 180 days of the denial, and that time has passed.');
     expect(bill.denied!.appealedAt).toBeUndefined();
     expect(sim.timeline.pending().filter((i) => i.kind === 'health.appeal_decided')).toEqual([]);
     const row = paperRow(sim, bill);
@@ -942,13 +943,13 @@ describe('health.apply_aid', () => {
     const { sim, bill } = fallen('g02-aid-free');
     const papers = drawn(sim, PapersWorkspace, [], HEALTH);
     expect(rowOf(papers.html, titleCaseLabel(bill.what))).toContain('Apply For Assistance');
-    expect(papers.press('Apply For Assistance')).toEqual(['The hospital took the charity off it.']);
+    expect(papers.press('Apply For Assistance')).toEqual(['The hospital applied its financial assistance to this bill.']);
     expect(bill).toMatchObject({ aid: 'free', amount: 0, paid: true });
     const row = paperRow(sim, bill);
     expect(row).toContain('Free Care');
     expect(row).toContain('Settled');
     expect(row).toContain('$0.00');
-    expect(apply(sim, bill.id).error).toBe('It’s settled or past due.');
+    expect(apply(sim, bill.id).error).toBe('It’s already settled or past its due date.');
 
     const again = reload(sim);
     again.advanceTo(bill.dueAt + MS_DAY);
@@ -963,7 +964,7 @@ describe('health.apply_aid', () => {
     expect(apply(sim, bill.id).value).toEqual({ aid: 'discount', amount: 16_50 });
     expect(bill).toMatchObject({ aid: 'discount', amount: 16_50 });
     expect(bill.paid).toBeUndefined();
-    expect(apply(sim, bill.id).error).toBe('It’s been put to the hospital’s charity.');
+    expect(apply(sim, bill.id).error).toBe('It’s already been put in for the hospital’s financial assistance.');
     expect(paperRow(sim, bill)).toContain('67% Off');
 
     const again = reload(sim);
@@ -984,7 +985,7 @@ describe('health.apply_aid', () => {
     expect(bill.paid).toBeFalsy();
     const late = apply(sim, bill.id);
     expect(late.ok).toBe(false);
-    expect(late.error).toBe('It’s settled or past due.');
+    expect(late.error).toBe('It’s already settled or past its due date.');
     expect(bill.aid).toBeUndefined();
     expect(bill.amount).toBe(50_00);
     const row = paperRow(sim, bill);

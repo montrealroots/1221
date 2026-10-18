@@ -520,7 +520,7 @@ export function registerStatements(sim: Simulation): void {
     const line = (v: unknown, name: string): Money | undefined => {
       if (v === null) return undefined;
       const n = Math.round(Number(v));
-      if (!(n >= 0)) throw new CommandError(`Set the ${name} as an amount, or turn it off.`);
+      if (!(n >= 0)) throw new CommandError(`Enter the ${name} alert as an amount, or leave it blank to turn it off.`);
       return n;
     };
     if ('lowBalance' in p) { next.lowBalance = line(p.lowBalance, 'low balance'); next.lowSentFor = []; delete next.lowSent; }

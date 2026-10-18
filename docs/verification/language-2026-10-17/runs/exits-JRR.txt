@@ -1,0 +1,4 @@
+at 7e1152de, 0 tracked files uncommitted, 2026-10-18T03:38:14Z: J16's checks again on its final state, the journeys tool's OPT check reading the refusal's new words (the game's code is 6d83601a's)
+recheck-J16 exit=0 secs=4 cmd: npx vite-node tools/journeys.ts -- --recheck --journey J16
+journeys-compare exit=0 secs=4 cmd: npx vite-node tools/journeys.ts -- --compare
+journeys-summarize exit=0 secs=4 cmd: npx vite-node tools/journeys.ts -- --summarize

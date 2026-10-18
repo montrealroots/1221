@@ -60,7 +60,7 @@ describe('a switching service', () => {
     const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, bankId: 'gb-barclays' }, 'bk-cass');
     const barclays = primary(sim);
     const natwest = sim.must<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'gb-natwest' } }).accountId;
-    expect(sim.execute({ kind: 'bank.switch', payload: { bankId: 'gb-natwest' } }).error).toMatch(/keep an account at NatWest already/);
+    expect(sim.execute({ kind: 'bank.switch', payload: { bankId: 'gb-natwest' } }).error).toMatch(/already have an account at NatWest/);
     const at = sim.must<{ at: number }>({ kind: 'bank.switch', payload: { bankId: 'gb-hsbc' } }).at;
     expect(sim.universe.scheduled.find((i) => i.kind === SWITCH_KIND && i.status === 'pending')!.payload.fromId).toBe(barclays.id);
     sim.must({ kind: 'bank.set_primary', payload: { accountId: natwest } });

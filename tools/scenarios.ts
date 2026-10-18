@@ -22,6 +22,8 @@
  *   stopped the day the term's warning comes (A Word On Your Coursework), with a scene still open to answer it.
  * - `specialist`: `brief`'s student and Saturday with TEST SETUP the specialist's abilities on the first morning (from
  *   2026-10-17, brief 13's interface playthroughs, `tools/playthroughs-ui.mjs`).
+ * - `health`: `brief`'s student with TEST SETUP a fall that sprains an ankle on Saturday 12 September 2026, stopped right
+ *   after it (from 2026-10-17, brief 14's journeys, `tools/playthroughs-ui.mjs`).
  *
  *   npx vite-node tools/scenarios.ts -- --scenario leave --seed sc-0 [--watch] [--years 1.5 --save leave.json]
  *   npx vite-node tools/scenarios.ts -- --scenario direction --from part.json --years 0.2 --save part2.json   # goes on
@@ -44,6 +46,8 @@ import { workPiece } from '../src/engine/systems/workpieces';
 import { wayRefusal } from '../src/engine/systems/workbook';
 import { courseworkOf, partnerPart } from '../src/engine/systems/coursework';
 import { ADJUSTMENTS } from '../src/engine/content/workbook';
+import { mayHurt } from '../src/engine/systems/injury';
+import { INJURY_MIX } from '../src/engine/content/injury';
 
 const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1]! : d; };
 const SCENARIO = arg('scenario', 'leave');
@@ -70,6 +74,20 @@ const gift = (sim: Simulation, log: string[], amount: number) => {
   if (log.some((l) => l.includes('gift'))) return;
   sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: sim.player.primaryAccountId!, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
   log.push(`${new Date(sim.now).toISOString().slice(0, 10)} TEST SETUP: a gift`);
+};
+
+/**
+ * The injury a fall at this moment would be, read the way `mayHurt` draws it: its stream and key, the first number for
+ * whether it happens and the second for which kind, from the fall's mix. Read, not drawn: the stream is keyed on the
+ * moment, so reading it changes nothing the game draws after. `health` checks the injury `mayHurt` gave against it, so a
+ * change to that draw stops the run rather than setting up another injury unsaid.
+ */
+const fallWouldBe = (sim: Simulation, at: number) => {
+  const rng = sim.rng('health.injury', sim.player.id, `fall-${at}`);
+  rng.next();
+  const mix = INJURY_MIX.fall;
+  let left = rng.next() * mix.reduce((s, [, w]) => s + w, 0);
+  return (mix.find(([, w]) => (left -= w) <= 0) ?? mix[mix.length - 1]!)[0];
 };
 
 /** Each day at nine: try what the scenario asks, and say what happened when it changed. */
@@ -236,6 +254,22 @@ const SCENARIOS: Record<string, Hook> = {
       p.attrs = { ...(p.attrs ?? {}), composure: 90, imagination: 90, presence: 90, listening: 49, focus: 49, adaptability: 49, discipline: 49 } as typeof p.attrs;
       log.push(`${new Date(sim.now).toISOString().slice(0, 10)} TEST SETUP: a specialist`);
     },
+  },
+  // The same student and days with a sprained ankle (from 2026-10-17, brief 14's journeys, `tools/playthroughs-ui.mjs`):
+  // TEST SETUP a fall forced, on the first morning from Saturday 12 September 2026 at nine on which a fall would be a
+  // sprain (`fallWouldBe`). It's the game's own `mayHurt` with a chance of one, so the notice, the bill, the toll and what
+  // the injury refuses are the game's; only that it happens, and when, is set by hand. A sprain keeps a student from
+  // working out and from work on their feet, and mends in days. The run stops right after it, the notice unread. On seed
+  // sc-0 that's the first morning, at 9:05 AM, mending in 7 days.
+  health: {
+    years: 0.06, config: { homeRegionId: 'us-ny-newyork' }, partnerPart: false,
+    daily(sim, log) {
+      if (log.some((l) => l.includes('TEST SETUP: a fall')) || sim.now < on(2026, 9, 12) || fallWouldBe(sim, sim.now) !== 'sprain') return;
+      const hurt = mayHurt(sim, sim.player, 'fall', 1, sim.now);
+      if (hurt?.kind !== 'sprain') throw new Error(`the fall forced was ${hurt?.kind ?? 'nothing'}, where its draw read a sprain: \`fallWouldBe\` no longer reads it as \`mayHurt\` draws`);
+      log.push(`${new Date(sim.now).toISOString().slice(0, 16)} TEST SETUP: a fall, a sprain mending in ${Math.round((hurt.until - hurt.at) / MS_DAY)} days`);
+    },
+    stopWhen: (_sim, log) => log.some((l) => l.includes('TEST SETUP: a fall')),
   },
   withdraw: {
     years: 2.9, config: { homeRegionId: 'us-ny-newyork' },

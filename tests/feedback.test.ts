@@ -40,21 +40,21 @@ describe('a note on the same thing, over time', () => {
     expect(a1.feedback).toMatchObject({ kind: 'new', focus: { kind: 'dim', dim: 'memorization' } });
     // What it measured, and the material and part, in the words.
     const scene = sceneById(a1.sceneId!)!;
-    expect(a1.feedback!.text).toContain('(Lines: 20%.)');
-    expect(a1.feedback!.text).toContain(`As ${scene.roles[a1.role!].name} in ${scene.play}.`);
+    expect(a1.feedback!.text).toContain('(Lines: 20% prepared.)');
+    expect(a1.feedback!.text).toContain(`You played ${scene.roles[a1.role!].name} in ${scene.play}.`);
     const a2 = prepared(sim, 0.22);
     showAt(sim, a2, 8);
     expect(a2.feedback!.kind).toBe('recurring');
-    expect(a2.feedback!.text).toMatch(/^The same note as on October 1, 2026, in Acting I/);
+    expect(a2.feedback!.text).toMatch(/^You had the same note in Acting I on October 1, 2026, and it’s still there\./);
     const a3 = prepared(sim, 0.5);
     showAt(sim, a3, 15);
     expect(a3.feedback!.kind).toBe('partial');
-    expect(a3.feedback!.text).toMatch(/^Better than on October 8, 2026 \(22% then, 50% now\), not there yet\./);
+    expect(a3.feedback!.text).toMatch(/^This has improved since October 8, 2026 \(22% then, 50% now\), but it isn’t there yet\./);
     // Put right: taken, said, and the note is about something else.
     const a4 = prepared(sim, 0.9);
     const s4 = showAt(sim, a4, 22);
     expect(a4.taken).toEqual(['dim:memorization']);
-    expect(s4.strengths).toContain('The note on lines is taken');
+    expect(s4.strengths).toContain('You took the earlier note on Lines');
     expect(a4.feedback!.focus).not.toEqual({ kind: 'dim', dim: 'memorization' });
     const rec = notesOf(courseworkOf(sim, sim.player)!).find((x) => x.key === 'dim:memorization')!;
     expect(rec).toMatchObject({ status: 'resolved', given: 3 });
@@ -77,7 +77,7 @@ describe('a note on the same thing, over time', () => {
     showAt(sim, a2, 8);
     expect(a1.feedback!.kind).toBe('advanced');
     expect(a2.feedback!.kind).toBe('advanced');
-    expect(a1.feedback!.text).toMatch(/^It held together this time\. The next step: /);
+    expect(a1.feedback!.text).toMatch(/^It held together\. Here’s a next step to try\. /);
     expect(a2.feedback!.focus).not.toEqual(a1.feedback!.focus);
   });
 });
@@ -126,8 +126,8 @@ describe('a weakness that keeps coming back', () => {
     const days = [1, 8, 15, 22];
     const shown = days.map((d) => { const a = prepared(sim, 0.2); showAt(sim, a, d); return a; });
     expect(shown.map((a) => a.feedback!.kind)).toEqual(['new', 'recurring', 'recurring', 'recurring']);
-    expect(shown[1]!.feedback!.text).not.toMatch(/ time it’s been given/);
-    expect(shown[2]!.feedback!.text).toMatch(/^The same note as on October 8, 2026, in Acting I, the 3rd time it’s been given: it’s still there\./);
-    expect(shown[3]!.feedback!.text).toMatch(/the 4th time it’s been given/);
+    expect(shown[1]!.feedback!.text).not.toMatch(/ time you’ve had this note/);
+    expect(shown[2]!.feedback!.text).toMatch(/^This is the 3rd time you’ve had this note \(last in Acting I on October 8, 2026\), and it’s still there\./);
+    expect(shown[3]!.feedback!.text).toMatch(/the 4th time you’ve had this note/);
   });
 });

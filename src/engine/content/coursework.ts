@@ -130,6 +130,16 @@ export const QUESTIONS: readonly Question[] = [
   { id: 'tactic', label: 'A Choice To Play' },
 ];
 
+/**
+ * A Table Work question as a sentence names it (from 2026-10-17, brief 14's editorial review): “the given circumstances”,
+ * “the choice to play”, “your objective”. Its label lowercased read “Priya reads given circumstances in Julius Caesar
+ * another way” and “the note on a choice to play”.
+ */
+export const questionWords = (q: Pick<Question, 'label'>): string => {
+  const l = q.label.toLowerCase();
+  return l.startsWith('the ') || l.startsWith('your ') ? l : `the ${l.replace(/^an? /, '')}`;
+};
+
 /** A reading the text supports; `why`, where given, is what in the text it rests on (a second defensible reading of the same question says its own). */
 export const yes = (id: string, text: string, why?: string): Option => ({ id, text, supported: true, ...(why ? { why } : {}) });
 export const no = (id: string, text: string, why: string): Option => ({ id, text, supported: false, why });
@@ -868,7 +878,7 @@ export interface Template {
 }
 
 const read: Activity = { id: 'read', label: 'Read The Scene', minutes: 40, dim: 'familiarity', gain: 0.55 };
-const learn: Activity = { id: 'learn', label: 'Learn Lines', minutes: 60, dim: 'memorization', gain: 0.32, requires: { dim: 'familiarity', at: 0.3, why: 'Read it first: lines are learned from a scene you know.' }, trains: 'memorization' };
+const learn: Activity = { id: 'learn', label: 'Learn Lines', minutes: 60, dim: 'memorization', gain: 0.32, requires: { dim: 'familiarity', at: 0.3, why: 'Read the scene first: you learn lines from a scene you know.' }, trains: 'memorization' };
 // Rehearse Alone is the scene's time on its feet, as its notes say, so it needs your feet (from 2026-10-12): until then it
 // named no need, so it could be done spent, injured or from a hospital bed, and it counted as desk work (`WORK.met`).
 const alone: Activity = { id: 'rehearse', label: 'Rehearse Alone', minutes: 60, dim: 'rehearsal', gain: 0.28, needs: ['feet'], requires: { dim: 'memorization', at: 0.25, why: 'Learn some of the lines first.' } };
@@ -979,7 +989,7 @@ export const TEMPLATES: readonly Template[] = [
       familiarity: { label: 'Knows The Scene', weight: 0.1 }, memorization: { label: 'Lines', weight: 0.25 }, interpretation: { label: 'Scansion And Table Work', weight: 0.25 },
       rehearsal: { label: 'Rehearsal', weight: 0.15 }, partner: { label: 'With Your Partner', weight: 0.25 },
     },
-    activities: [read, learn, { id: 'scan', label: 'Scan The Verse', minutes: 50, dim: 'interpretation', gain: 0.35, requires: { dim: 'familiarity', at: 0.3, why: 'Read it first.' }, trains: 'classical' }, alone, withPartner, revise],
+    activities: [read, learn, { id: 'scan', label: 'Scan The Verse', minutes: 50, dim: 'interpretation', gain: 0.35, requires: { dim: 'familiarity', at: 0.3, why: 'Read the scene first.' }, trains: 'classical' }, alone, withPartner, revise],
     reads: { classical: 2, scene: 1, voice: 1 }, dueAfter: 4, revised: true, par: 55,
     notes: {
       memorization: 'The verse wasn’t secure; the line endings kept getting lost.',
@@ -1098,7 +1108,7 @@ export const TEMPLATES: readonly Template[] = [
     dims: { familiarity: { label: 'The Practice Learned', weight: 0.3 }, partner: { label: 'Practiced Together', weight: 0.5 }, rehearsal: { label: 'The Score Recalled', weight: 0.2 } },
     activities: [
       { id: 'protocol', label: 'Review The Consent Practice', minutes: 30, dim: 'familiarity', gain: 0.5 },
-      { ...withPartner, label: 'Practice The Moment With Your Partner', minutes: 60, needs: ['partner', 'studio'], requires: { dim: 'familiarity', at: 0.5, why: 'Agree how you’ll work first: no partner work without the boundaries set.' } },
+      { ...withPartner, label: 'Practice The Moment With Your Partner', minutes: 60, needs: ['partner', 'studio'], requires: { dim: 'familiarity', at: 0.5, why: 'Agree how you’ll work first: there’s no partner work until the boundaries are set.' } },
       { id: 'score', label: 'Write Out The Score', minutes: 20, dim: 'rehearsal', gain: 0.45, requires: { dim: 'partner', at: 0.3, why: 'Work it with your partner first: there’s no score yet to write out.' }, trains: 'intimacy' },
     ],
     reads: { intimacy: 2, movement: 1 }, dueAfter: 4, revised: false, par: 50,
@@ -1114,7 +1124,7 @@ export const TEMPLATES: readonly Template[] = [
     dims: { familiarity: { label: 'The Play Read', weight: 0.35 }, interpretation: { label: 'Its Context Researched', weight: 0.35 }, revision: { label: 'The Presentation Prepared', weight: 0.3 } },
     activities: [
       { id: 'read-play', label: 'Read The Play', minutes: 90, dim: 'familiarity', gain: 0.55 },
-      { id: 'research', label: 'Research It At The Library', minutes: 90, dim: 'interpretation', gain: 0.4, needs: ['library'], requires: { dim: 'familiarity', at: 0.3, why: 'Read the play first: research needs questions.' }, trains: 'script' },
+      { id: 'research', label: 'Research It At The Library', minutes: 90, dim: 'interpretation', gain: 0.4, needs: ['library'], requires: { dim: 'familiarity', at: 0.3, why: 'Read the play first. You need questions before you can research it.' }, trains: 'script' },
       { id: 'prepare-talk', label: 'Prepare The Presentation', minutes: 60, dim: 'revision', gain: 0.45, requires: { dim: 'interpretation', at: 0.3, why: 'Research it first: there’s nothing yet to present.' } },
     ],
     reads: { script: 3 }, dueAfter: 3, revised: false, par: 50,

@@ -1,0 +1,31 @@
+657
+ 115 src/engine/content/home-accounts.json   e.g. 6/14/2026 | 5/20/2026 | 2026-09-26 | 22 Sept
+ 105 src/engine/content/passports.ts   e.g. 2026-09-29 | 8 April | 18 March | 31 March
+  96 src/engine/content/entry.ts   e.g. 30 Sep | 2025-09-30 | 8 Apr | 8 Jan
+  67 src/engine/content/licenses.ts   e.g. 1 April | 1 October | 1 Oct | 25 March
+  64 src/engine/content/genre-demands.json   e.g. 2026-10-10 | 16 July | 17 Sept | 11 Sept
+  46 src/engine/content/banks-thirteen.ts   e.g. 2026-09-24 | 12 March | 26 August | 2 July
+  40 src/engine/content/banks-lending.ts   e.g. 2026-06-14 | 08/2026 | 2026-07-28 | 1 January
+  39 src/engine/content/banks-world-sheets.ts   e.g. 03/2018 | 16 Jan | 30 June | 15 Sep
+  18 src/engine/content/roundups.ts   e.g. 7 August | 28 July | 2026-10-13 | 1 January
+  16 src/engine/content/guide/papers.ts   e.g. 30 September | 1 October | 1 January | 1 August
+   9 src/engine/content/licensepaths.ts   e.g. 2026-10-06 | 1 October | 19 October | 8 April
+   7 src/ui/workspaces/PapersWorkspace.tsx   e.g. 31 January | 15 April | 30 April | 30 September
+   5 src/engine/content/passportsabroad.ts   e.g. 8 April | 1 July | 1 June | 1 May
+   4 src/engine/content/attributes-matrix.ts   e.g. 2026-10-16 | 2026-10-09 | 2026-10-12
+   4 src/engine/content/workload.ts   e.g. 31 August | 25 March | 2026-10-16
+   3 src/engine/content/bankopening.ts   e.g. 14 June | 20 May | 9 October
+   3 src/engine/content/visas.ts   e.g. 29 September | 1 July | 5 February
+   2 src/engine/content/accountlife.ts   e.g. 2026-09-26
+   2 src/engine/content/banks-world-fees.ts   e.g. 1 December | 1 June
+   2 src/engine/content/cards.ts   e.g. 2026-09-26
+   2 src/engine/content/security.ts   e.g. 08/2026 | 2026-09-26
+   1 src/engine/content/banks-world-iban.ts   e.g. 2026-09-27
+   1 src/engine/content/cash.ts   e.g. 2026-09-26
+   1 src/engine/content/pending.ts   e.g. 2026-09-26
+   1 src/engine/content/tutorial.ts   e.g. 31 January
+   1 src/engine/decided.ts   e.g. 2026-10-10
+   1 src/engine/systems/accountlife.ts   e.g. 2026-10-13
+   1 src/engine/systems/homebenefits.ts   e.g. 8 June
+   1 src/ui/workspaces/SchoolWorkspace.tsx   e.g. 1 August
+exit=0

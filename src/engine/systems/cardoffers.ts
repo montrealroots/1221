@@ -233,7 +233,7 @@ export function transferOnArrival(sim: Simulation, person: Person, card: Account
   credit.transfers = [{ kind: 'balance', owed: owed + fee, accrued: 0, apr: terms.transfer.apr, ...intro }];
   if (person.id === sim.universe.playerId) {
     const cur = saveCurrency(sim.universe);
-    sim.notify({ category: 'bank', title: 'Your Balance Moved', body: `${formatMoney(owed, cur)} from the ${old.name}, for a ${formatMoney(fee, cur)} fee, at ${((intro.introApr ?? terms.transfer.apr) * 100).toFixed(2)}%. The old card is closed.`, importance: 50, route: '/workspace/bank' });
+    sim.notify({ category: 'bank', title: 'Your Balance Moved', body: `${formatMoney(owed, cur)} moved from the ${old.name}, for a ${formatMoney(fee, cur)} fee, at ${((intro.introApr ?? terms.transfer.apr) * 100).toFixed(2)}%. The old card is closed.`, importance: 50, route: '/workspace/bank' });
   }
 }
 
@@ -248,10 +248,10 @@ export function registerCardOffers(sim: Simulation): void {
     const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
     if (!current || current.closedAt) throw new CommandError('You need a current account for the money.');
     const amount = Math.round(Number(p.amount));
-    if (!(amount > 0)) throw new CommandError('Say how much.');
+    if (!(amount > 0)) throw new CommandError('Enter an amount.');
     const fee = Math.round(amount * terms.moneyTransferFee);
     const room = cardRoom(person, card);
-    if (room < amount + fee) throw new CommandError(`The card has ${formatMoney(room, saveCurrency(s.universe))} free, and this takes ${formatMoney(amount + fee, saveCurrency(s.universe))} with its fee.`);
+    if (room < amount + fee) throw new CommandError(`The card has ${formatMoney(room, saveCurrency(s.universe))} of its limit left, and this needs ${formatMoney(amount + fee, saveCurrency(s.universe))} with its fee.`);
     s.post({ memo: `Money transfer from ${card.name}`, category: 'card-transfer', postings: [{ accountId: card.id, amount: -amount }, { accountId: current.id, amount }] });
     s.post({ memo: 'Money transfer fee', category: 'fees', postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: fee }, { accountId: card.id, amount: -fee }] });
     credit.transfers = [...(credit.transfers ?? []), { kind: 'money', owed: amount + fee, accrued: 0, apr: terms.transfer?.apr ?? terms.apr }];
@@ -265,16 +265,16 @@ export function registerCardOffers(sim: Simulation): void {
     const credit = stateOf(person, card);
     const terms = cardTerms(s, card, person.credit.score);
     const interestPlan = card.bankId ? INTEREST_PLANS[card.bankId] : undefined;
-    if (!terms.planFeeShare && !interestPlan) throw new CommandError(`The ${card.name} has no plan SLATE has terms for.`);
+    if (!terms.planFeeShare && !interestPlan) throw new CommandError(`No payment plan terms were found for the ${card.name}.`);
     const months = Math.round(Number(p.months));
     const lengths = planMonthsOf(card);
-    if (!lengths.includes(months)) throw new CommandError(`A plan runs ${lengths.join(', ')} months.`);
+    if (!lengths.includes(months)) throw new CommandError(`A plan runs for ${lengths.length < 2 ? lengths.join('') : `${lengths.slice(0, -1).join(', ')} or ${lengths.at(-1)}`} months.`);
     const amount = Math.round(Number(p.amount));
     const room = planRoom(person, card);
-    if (!(amount > 0) || amount > room) throw new CommandError(`Purchases owe ${formatMoney(room, saveCurrency(s.universe))} that can go into a plan.`);
+    if (!(amount > 0) || amount > room) throw new CommandError(`Only ${formatMoney(room, saveCurrency(s.universe))} of purchases can go into a plan.`);
     const bank = bankById(card.bankId ?? '');
     const least = interestPlan?.min !== undefined && bank ? (exchange(interestPlan.min, bank.currency, saveCurrency(s.universe)) ?? interestPlan.min) : 0;
-    if (amount < least) throw new CommandError(`A plan takes ${formatMoney(least, saveCurrency(s.universe))} at least.`);
+    if (amount < least) throw new CommandError(`A plan needs at least ${formatMoney(least, saveCurrency(s.universe))}.`);
     const term = interestPlan?.months[months];
     const plan: CardPlan = term?.apr !== undefined
       ? { left: amount, monthly: planPayment(amount, term.apr, months), fee: 0, monthsLeft: months, apr: term.apr }
@@ -302,16 +302,16 @@ export function registerCardOffers(sim: Simulation): void {
 export function transferRefusal(sim: Simulation, person: Person, bankId: string, limit: Money, fromId?: string): string | undefined {
   const old = cardFor(sim, person, fromId);
   if (!old) return 'You have no card to move a balance from.';
-  if (old.bankId === bankId) return 'A balance moves onto a card at another bank.';
+  if (old.bankId === bankId) return 'A balance can only move onto a card at another bank.';
   const bank = bankById(bankId);
   const found = CARDS[bankId];
   const offer = found && !('none' in found) ? found.transfer : undefined;
-  if (!bank || !offer) return `SLATE doesn’t have ${bank?.name ?? 'this bank'}’s card’s balance transfer terms.`;
+  if (!bank || !offer) return `No balance transfer terms were found for ${bank?.name ?? 'this bank'}’s card.`;
   const owed = Math.max(0, -old.balance);
-  if (owed <= 0) return `The ${old.name} owes nothing to move.`;
+  if (owed <= 0) return `You owe nothing on the ${old.name}, so there’s no balance to move.`;
   const into = saveCurrency(sim.universe);
   const feeMin = offer.feeMin === undefined ? 0 : bank.currency === into ? offer.feeMin : exchange(offer.feeMin, bank.currency, into) ?? offer.feeMin;
   const fee = Math.max(feeMin, Math.round(owed * (offer.feeShare ?? 0)));
-  if (owed + fee > limit) return `It would come with a ${formatMoney(limit, saveCurrency(sim.universe))} limit, and moving ${formatMoney(owed, saveCurrency(sim.universe))} takes ${formatMoney(owed + fee, saveCurrency(sim.universe))} with its fee. Pay the old card down first.`;
+  if (owed + fee > limit) return `It would come with a ${formatMoney(limit, saveCurrency(sim.universe))} limit, and moving ${formatMoney(owed, saveCurrency(sim.universe))} needs ${formatMoney(owed + fee, saveCurrency(sim.universe))} with its fee. Pay the old card down first.`;
   return undefined;
 }

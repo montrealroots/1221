@@ -78,6 +78,12 @@ export interface GuideEntry {
   unavailable: readonly string[];
   /** Common mistakes, and how to recover. */
   mistakes: readonly string[];
+  /**
+   * What to do next, once it's done: the brief 14 tutorial's seventh question (from 2026-10-17). Every entry has it; one
+   * with nothing to do next has none, and a batch record of the pass says why (`tests/guide.test.ts`). It was optional
+   * while the pass's areas wrote it entry by entry, until all of them were merged.
+   */
+  next: readonly string[];
   /** Other entries worth reading with it. */
   related: readonly string[];
   connections: readonly Connection[];

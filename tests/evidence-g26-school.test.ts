@@ -367,7 +367,7 @@ describe('school.extend_incomplete', () => {
     expect(dueItems(sim, ACTING_I)).toEqual([[at(2027, 1, 3, 17), true], [at(2027, 1, 10, 17), false]]);
 
     const before = drawn(sim, SchoolWorkspace);
-    expect(before.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up sessions left, by January 10, 2027.');
+    expect(before.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up session left, by January 10, 2027.');
     const rows = incompleteRows(before.html);
     expect(rows).toHaveLength(4);
     expect(rows).toContain('Acting I');
@@ -381,7 +381,7 @@ describe('school.extend_incomplete', () => {
     expect(dueItems(sim, ACTING_I)).toEqual([[at(2027, 2, 2, 17), true], [at(2027, 2, 9, 17), false]]);
 
     const after = drawn(sim, SchoolWorkspace);
-    expect(after.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up sessions left, by February 9, 2027.');
+    expect(after.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up session left, by February 9, 2027.');
     expect(drew('school.extend_incomplete')).toHaveLength(3);
     expect(rowOf(after.html, 'Acting I')).toContain('Make Up A Session');
     expect(rowOf(after.html, 'Acting I')).not.toContain('Ask For A Month More');
@@ -404,13 +404,13 @@ describe('school.extend_incomplete', () => {
     tend(sim, at(2027, 2, 2, 16));
     expect(titled(sim, 'A Week Left: Acting I')).toHaveLength(0);
     tend(sim, at(2027, 2, 2, 18));
-    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['1 make-up session left, by February 9, 2027.']);
+    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['One make-up session still to do, by February 9, 2027. Press Make Up A Session on the Standing tab.']);
     // The new date: Incomplete an hour before, Permanent an hour after.
     tend(sim, at(2027, 2, 9, 16));
     expect(acting().result).toBe('incomplete');
     tend(sim, at(2027, 2, 9, 18));
     expect(acting()).toMatchObject({ result: 'permanent', why: 'an Incomplete not made up in its month' });
-    expect(titled(sim, 'Permanent Incomplete: Acting I').map((n) => n.body)).toEqual(['Its month ran out, so Acting I carries no credit, and the degree can’t be completed without it: at the year’s end you can ask to repeat the year, on the Standing tab.']);
+    expect(titled(sim, 'Permanent Incomplete: Acting I').map((n) => n.body)).toEqual(['The month to make it up ran out, so Acting I carries no credit, and the degree can’t be completed without it. At the year’s end you can ask to repeat the year on the Standing tab.']);
 
     // Nothing again through a save; the Standing tab reads it as the degree's shortfall.
     sim = reload(sim);
@@ -420,7 +420,7 @@ describe('school.extend_incomplete', () => {
     const lapsed = drawn(sim, SchoolWorkspace);
     expect(lapsed.html).toContain('<strong>Acting I</strong>, Permanent Incomplete: an Incomplete not made up in its month.');
     expect(lapsed.html).not.toContain('<strong>Acting I</strong>, Incomplete:');
-    expect(lapsed.text).toMatch(/The degree needs [^.]*Acting I[^.]*, not passed yet/);
+    expect(lapsed.text).toMatch(/The degree still needs [^.]*Acting I[^.]*\./);
     expect(drew('school.extend_incomplete')).toHaveLength(0);
     expect(sim.execute({ kind: 'school.extend_incomplete', payload: { key: ACTING_I } }).error).toBe('There’s no Incomplete in that course.');
     expect(sim.execute({ kind: 'school.make_up', payload: { key: ACTING_I } }).error).toBe('There’s no Incomplete in that course to make up.');
@@ -432,7 +432,7 @@ describe('school.extend_incomplete', () => {
     tend(sim, at(2027, 1, 3, 16));
     expect(titled(sim, 'A Week Left: Acting I')).toHaveLength(0);
     tend(sim, at(2027, 1, 3, 18));
-    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['1 make-up session left, by January 10, 2027.']);
+    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['One make-up session still to do, by January 10, 2027. Press Make Up A Session on the Standing tab.']);
     tend(sim, at(2027, 1, 10, 16));
     expect(acting().result).toBe('incomplete');
     tend(sim, at(2027, 1, 10, 18));
@@ -508,7 +508,7 @@ describe('school.request_repeat', () => {
     expect(school().repeat).toMatchObject({ status: 'granted', decidedAt: at(2027, 4, 30, 18) });
     expect(school()).toMatchObject({ offset: 2, classOf: 2030, repeats: 1, repeatedYears: [1] });
     // The same eight terms, two of them billed (until 2026-10-13 the notice counted six and said nothing of it).
-    expect(titled(sim, 'You’ll Repeat The Year').map((n) => n.body)).toEqual(['The chair and the dean granted it: from Fall Term 2027 you take year 1’s courses again, and what you did the first time stays on your record. The tuition scholarship supports six terms, and with the year again the degree takes 8: 2 terms will be billed to your Yale account. This is SLATE’s faculty model: the Bulletin sets no rule for repeating a course.']);
+    expect(titled(sim, 'You’ll Repeat The Year').map((n) => n.body)).toEqual(['The chair and the dean granted it: from Fall Term 2027 you take year 1’s courses again, and what you did the first time stays on your record. The tuition scholarship supports six terms, and with the year again the degree takes 8: 2 terms will be billed to your Yale account. The Bulletin sets no rule for repeating a course; the decision is the game’s.']);
     // Not a last year's: the next term was on the calendar already, and nothing is added to it.
     expect(pendingOf(sim, TERM_KIND).map((i) => i.payload.term)).toEqual([2]);
     sim = reload(sim);
@@ -538,7 +538,7 @@ describe('school.request_repeat', () => {
     const { text } = drawn(fall, SchoolWorkspace);
     expect(text).toContain('Only the terms to come stand between you and the degree.');
     expect(text).not.toContain('The degree needs');
-    expect(fall.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('Every course this year was passed: there’s nothing to repeat it for.');
+    expect(fall.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You passed every course this year, so there’s nothing to repeat it for.');
   }, 120_000);
 
   it('PLAYER JOURNEY: kept on academic warning by the faculty’s review, the year to be repeated, the repeat is granted, and the next fall’s evaluation doesn’t dismiss them on the same Fails', () => {
@@ -556,7 +556,7 @@ describe('school.request_repeat', () => {
     // Granted, on the Fails the review judged (until 2026-10-13 refused on them, and the warning's remedy never had).
     expect(school.repeat!.status).toBe('granted');
     expect(school.offset).toBe(2);
-    expect(titled(sim, 'Your Repeat Is Refused')).toHaveLength(0);
+    expect(titled(sim, 'Your Repeat Isn’t Granted')).toHaveLength(0);
     // The repeated fall's evaluation at five on Friday 10 December 2027: judged on the term, not the old Fails again.
     tend(sim, at(2027, 12, 10, 18));
     expect(school.reviews).toHaveLength(1);
@@ -567,26 +567,26 @@ describe('school.request_repeat', () => {
   it('is refused in its own words: before the year’s end, with a leave asked for, once the next year has begun, a year a second time, and past nine semesters', () => {
     // Before the first spring's evaluation.
     const early = thaw(repeatBase());
-    expect(early.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('A year is repeated from its end, after the spring’s evaluation.');
+    expect(early.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You can ask to repeat a year only at its end, after the spring’s term review.');
     // A medical leave asked for after the spring's evaluation (TEST SETUP: the flu, for the physician's recommendation).
     const leaving = thaw(r1().afterSpring1);
     flu(leaving, 4);
     leaving.must({ kind: 'school.request_leave', payload: { kind: 'medical', reason: 'illness' } });
-    expect(leaving.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('Not with a leave under way.');
+    expect(leaving.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('Not while a leave is under way.');
     expect(leaving.player.school!.repeat).toBeUndefined();
     // Not asked by the next year's first morning: at eight on Monday 23 August the year has begun; at ten, its term has.
     const late = thaw(r1().afterSpring1);
     tend(late, at(2027, 8, 23, 8));
     expect(late.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('The next year has begun.');
     tend(late, at(2027, 8, 23, 10));
-    expect(late.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('A year is repeated from its end, after the spring’s evaluation.');
+    expect(late.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You can ask to repeat a year only at its end, after the spring’s term review.');
     expect(late.player.school!.offset ?? 0).toBe(0);
     // The repeated spring, Text Analysis I slept through again: year 1 isn't repeated twice.
     const again = thaw(r1().jan2028);
     expect(sleepThrough(again, 3, { [TABLE_WORK]: 4 }, 2)[TABLE_WORK]).toHaveLength(4);
     tend(again, at(2028, 4, 28, 18));
     expect(again.player.school!.courses![`3:${TABLE_WORK}`]).toMatchObject({ academic: 1, result: 'fail' });
-    expect(again.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('SLATE’s faculty don’t approve year 1 a second time.');
+    expect(again.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('In the game, the faculty don’t approve repeating year 1 a second time.');
     // The last spring, eight terms enrolled, a course slept through: a repeat would make ten.
     const last = thaw(r1().jan2030);
     expect(enrolledTerms(last.player.school!)).toHaveLength(8);
@@ -663,7 +663,7 @@ describe('school.cancel_repeat', () => {
     // The chair's decision is off the calendar; the thirty days' end stays on it.
     expect(pendingOf(sim, REPEAT_DECIDE_KIND)).toHaveLength(0);
     expect(pendingOf(sim, REPEAT_DUE_KIND).map((i) => i.at)).toEqual([at(2029, 5, 27, 17)]);
-    expect(sim.execute({ kind: 'school.cancel_repeat', payload: { confirm: true } }).error).toBe('No repeat is asked for.');
+    expect(sim.execute({ kind: 'school.cancel_repeat', payload: { confirm: true } }).error).toBe('You haven’t asked to repeat the year.');
 
     sim = reload(sim);
     // The decision's day passes with nothing decided.
@@ -673,7 +673,7 @@ describe('school.cancel_repeat', () => {
     expect(school().offset ?? 0).toBe(0);
     expect(school().classOf).toBe(2029);
     expect(titled(sim, 'You’ll Repeat The Year')).toHaveLength(0);
-    expect(titled(sim, 'Your Repeat Is Refused')).toHaveLength(0);
+    expect(titled(sim, 'Your Repeat Isn’t Granted')).toHaveLength(0);
     expect(f1Of(sim.player)!.expiresAt).toBe(l3().i20);
     // The thirty days' end: in good standing an hour before, the degree withheld at it.
     tend(sim, at(2029, 5, 27, 16));
@@ -821,7 +821,7 @@ describe('school.request_extra_term', () => {
 
   it('is refused in its own words before the last year, while a repeat is asked for, and with every course passed; and allowed as the ninth semester', () => {
     const early = thaw(repeatBase());
-    expect(early.execute({ kind: 'school.request_extra_term', payload: {} }).error).toBe('An additional term comes after your last year’s evaluation, for what it left unpassed.');
+    expect(early.execute({ kind: 'school.request_extra_term', payload: {} }).error).toBe('You can ask for an additional term after your last year’s term review, to retake what you didn’t pass.');
     const repeating = thaw(l3().lastEval);
     repeating.must({ kind: 'school.request_repeat', payload: {} });
     expect(repeating.execute({ kind: 'school.request_extra_term', payload: {} }).error).toBe('Your request to repeat the year is being decided.');
@@ -871,8 +871,8 @@ describe('school.pay_balance', () => {
     expect(stat(panel.html, 'Owed On Your Yale Account')?.value).toBe(usd(sim, returned));
     expect(drew('school.pay_balance').map((c) => c.label)).toEqual(['Pay From Your Bank']);
     // Nothing asked, and more than is owed.
-    expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: 0 } }).error).toBe('Pay something.');
-    expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: returned + 1 } }).error).toBe(`${usd(sim, returned)} is owed; pay that or less.`);
+    expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: 0 } }).error).toBe('Enter an amount to pay.');
+    expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: returned + 1 } }).error).toBe(`${usd(sim, returned)} is owed. Pay that or less.`);
     expect(accountOwed(sim, sim.player)).toBe(returned);
     // Unpaid by its due date thirty days on: the hold, and $125 a month to the term's $375.
     const due = pendingOf(sim, ACCOUNT_DUE_KIND)[0]!;
@@ -898,7 +898,7 @@ describe('school.pay_balance', () => {
     const payments = () => sim.universe.transactions.filter((t) => t.memo === 'Payment: Yale Student Account').length;
     const paidBefore = payments();
     // In the bank's words from 2026-10-16, which say what to do; until then “Your bank can’t cover it.”
-    const nothing = 'Your current account and the savings beside it have nothing to pay it with: move money into your current account first.';
+    const nothing = 'Your current account and the savings beside it can’t cover any of it. Move money into your current account first.';
     expect(sim.execute({ kind: 'school.pay_balance', payload: {} }).error).toBe(nothing);
     expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: 100_00 } }).error).toBe(nothing);
     expect(accountOwed(sim, sim.player)).toBe(owed);
@@ -922,7 +922,7 @@ describe('school.pay_balance', () => {
     expect(school().leaves!.at(-1)!.status).toBe('returned');
     expect(school().mustRegister).toBe(true);
     const register = drawn(sim, LeavePanel);
-    expect(register.text).toContain('Register for Spring Term 2028: until you do, classes don’t count you and shifts can’t be worked.');
+    expect(register.text).toContain('Register for Spring Term 2028: until you do, classes don’t count your attendance and you can’t work shifts.');
     expect(register.text).not.toContain('A financial hold stops it');
     expect(drew('school.reregister').map((c) => c.disabled)).toEqual([false]);
     // The term's scholarship, by hand: 2027–28's living-expense scholarship, $16,128.08, less its plan, $2,034.44, is
@@ -946,7 +946,7 @@ describe('school.pay_balance', () => {
     expect(titled(sim, 'Not Registered')).toHaveLength(0);
     expect(recordsOf(unpaid, 3).map(([k]) => k).sort()).toEqual(met.map(([k]) => k).sort());
     for (const [, r] of recordsOf(unpaid, 3)) expect(r.attended).toBe(0);
-    expect(titled(unpaid, 'Not Registered').map((n) => n.body)).toEqual(['You haven’t registered, so today’s classes didn’t count you. Register on the School screen: late, it takes the chair’s written permission, which SLATE takes as given.']);
+    expect(titled(unpaid, 'Not Registered').map((n) => n.body)).toEqual(['You haven’t registered, so today’s classes didn’t count your attendance. Register on the School screen. Registering late takes the chair’s written permission, which the game assumes you have.']);
     expect(titled(sim, 'The Financial Hold Is Lifted')).toHaveLength(1);
     expect(sim.execute({ kind: 'school.pay_balance', payload: {} }).error).toBe('Your Yale account owes no balance.');
   }, 120_000);
@@ -983,7 +983,7 @@ describe('school.pay_balance', () => {
     expect(school().standing).toBe('good');
     expect(school().awaitingDegree).toBe(true);
     expect(titled(sim, 'The Diploma Is Held').map((n) => n.body)).toEqual([`${usd(sim, eighth + 375_00)} is owed on your Yale account, and a financial hold keeps the diploma until it’s paid. Pay it on the Terms And Award tab.`]);
-    expect(sim.execute({ kind: 'school.request_extra_term', payload: {} }).error).toBe('Every course is passed: there’s nothing to retake.');
+    expect(sim.execute({ kind: 'school.request_extra_term', payload: {} }).error).toBe('You’ve passed every course, so there’s nothing to retake.');
     sim = reload(sim);
     expect(sim.must<{ owed: number; held: boolean }>({ kind: 'school.pay_balance', payload: {} })).toEqual({ owed: 0, held: false });
     expect(school().standing).toBe('graduated');
@@ -1030,7 +1030,7 @@ function sickSaturday(sim: Simulation) {
 describe('school.request_conversion', () => {
   it('is refused in its own words with only hours never assigned in prospect: in January, in the spring before May, and in June, the stat showing none', () => {
     const jan = thaw(c0().jan6);
-    const janWords = 'No hours to convert at January’s processing: only assigned hours missed ill or hurt count then.';
+    const janWords = 'There are no hours to convert at January’s processing. Only assigned hours you missed while ill or hurt count then.';
     expect(jan.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe(janWords);
     const janPanel = drawn(jan, WorkLimitsBlock);
     expect(stat(janPanel.html, 'Convertible To Grant Aid')).toEqual({ value: '0 hours', note: '$0.00 at the rate; 0 converted' });
@@ -1040,7 +1040,7 @@ describe('school.request_conversion', () => {
     // assigned (until 2026-10-13 they were counted so, 54 hours shown and returned, and 6 paid in May).
     const feb = thaw(c0().feb1);
     expect(feb.player.school!.workStudy.assignedBooked).toBe(96);
-    const febWords = 'No hours to convert yet: hours missed ill or hurt count now, and hours never assigned from May, once the spring’s shifts are done.';
+    const febWords = 'There are no hours to convert yet. Hours you missed while ill or hurt count now; hours never assigned count from May, once the spring’s shifts are done.';
     expect(feb.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe(febWords);
     expect(stat(drawn(feb, WorkLimitsBlock).html, 'Convertible To Grant Aid')?.value).toBe('0 hours');
     // Not asked in May: in June the next processing is January's, which pays no hours never assigned (until
@@ -1067,7 +1067,7 @@ describe('school.request_conversion', () => {
     ask[0]!.onClick!();
     expect(h.toasts.at(-1)).toBe('Asked: processed May 15, 2027.');
     expect(pendingOf(sim, CONVERT_KIND).map((i) => [i.at, i.payload.year])).toEqual([[at(2027, 5, 15, 12), '0']]);
-    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Your request is in, for the next processing.');
+    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Your request is already in for the next processing.');
     sim = reload(sim);
     tend(sim, at(2027, 5, 15, 11));
     const before = earningsOf(sim.player).years[2027]!.scholarship ?? 0;
@@ -1089,7 +1089,7 @@ describe('school.request_conversion', () => {
     tend(sim, at(2027, 5, 20, 12));
     expect(grantsOf(sim)).toHaveLength(1);
     expect(titled(sim, 'Hours Converted To Grant Aid')).toHaveLength(1);
-    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('No hours to convert at January’s processing: only assigned hours missed ill or hurt count then.');
+    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('There are no hours to convert at January’s processing. Only assigned hours you missed while ill or hurt count then.');
   }, 120_000);
 
   it('PLAYER JOURNEY: an assigned Saturday called in sick, asked on the drawn button in the fall, is paid at January’s processing, and the 2027 return filed carries it, against a twin that didn’t ask', () => {
@@ -1103,8 +1103,8 @@ describe('school.request_conversion', () => {
     expect(h.toasts.at(-1)).toBe('Asked: processed January 15, 2027.');
     expect(pendingOf(sim, CONVERT_KIND).map((i) => i.at)).toEqual([at(2027, 1, 15, 12)]);
     const asked = drawn(sim, WorkLimitsBlock);
-    expect(drew('school.request_conversion').map((c) => [c.disabled, c.title])).toEqual([[true, 'Your request is in, for the next processing.']]);
-    expect(asked.text).toContain('Your request is in, for the next processing.');
+    expect(drew('school.request_conversion').map((c) => [c.disabled, c.title])).toEqual([[true, 'Your request is already in for the next processing.']]);
+    expect(asked.text).toContain('Your request is already in for the next processing.');
     sim = reload(sim);
     tend(sim, at(2027, 1, 15, 11));
     const before = earningsOf(sim.player).years[2027]?.scholarship ?? 0;
@@ -1147,7 +1147,7 @@ describe('school.request_conversion', () => {
   it('is refused with no aid and on leave, in its own words, and a leave begun with a request in cancels it: nothing paid in January', () => {
     // The new life's own family: wealthy, no need found.
     const rich = thaw(repeatBase());
-    expect(rich.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Conversion to grant aid is for students on financial aid, and no need was found for you.');
+    expect(rich.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Converting hours to grant aid is only for students on financial aid, and the aid office found no need for you.');
     expect(stat(drawn(rich, WorkLimitsBlock).html, 'Convertible To Grant Aid')).toEqual({ value: 'Not On Aid', note: undefined });
     // Asked, then a medical leave (TEST SETUP: the flu, for the physician's recommendation) begun mid-term.
     const sim = life('g26-c3', ON_AID);
@@ -1160,7 +1160,7 @@ describe('school.request_conversion', () => {
     tend(sim, leave.decideAt + MS_HOUR);
     expect(sim.player.school!.leave!.status).toBe('on');
     expect(pendingOf(sim, CONVERT_KIND)).toHaveLength(0);
-    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Not while on leave: a student on leave has no aid.');
+    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('You can’t while you’re on leave: a student on leave has no aid.');
     tend(sim, at(2027, 1, 15, 13));
     expect(grantsOf(sim)).toHaveLength(0);
     expect(sim.player.school!.convertedHours).toBeUndefined();

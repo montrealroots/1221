@@ -56,7 +56,7 @@ import type { Person } from '../domain/model';
 import { formatDate, formatTime, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { YALE_DRAMA, type SchoolDate } from '../content/school';
-import { sceneById } from '../content/coursework';
+import { questionWords, sceneById } from '../content/coursework';
 import { bondMove, keyOf, schoolEnded, type Classmate } from './school';
 import {
   WORK, courseworkOf, mateBusy, mateRecord, questionsFor, trustOf, type Assignment, type Coursework, type MateRecord,
@@ -192,7 +192,7 @@ function had(mate: Classmate, kind: MomentKind, at: Instant): void {
 /** Whether a boundary asks for a day's notice of a rehearsal at a time, and the words if so (read by `askRefusal`). */
 export function boundaryRefusal(mate: Classmate, now: Instant, when: Instant): string | undefined {
   if (!personOf(mate).boundary) return undefined;
-  return when - now < CLASS.boundary.noticeHours * 3_600_000 ? `${first(mate)} asked to be asked a day ahead, after last time.` : undefined;
+  return when - now < CLASS.boundary.noticeHours * 3_600_000 ? `${first(mate)} wants a day’s notice after last time. Ask for an evening at least a day ahead.` : undefined;
 }
 
 /** How many rehearsals kept lift a boundary: by how it was taken (`CLASS.boundary.liftAfterKept`). */
@@ -300,7 +300,7 @@ export function classMoment(sim: Simulation, person: Person, day: SchoolDate): M
   return m;
 }
 
-export const MOMENT_TITLE: Record<MomentKind, string> = { disagreement: 'A Different Reading', study: 'Run Lines Together?', help: 'Asks For Help', encouragement: 'A Word After Class', apology: 'An Apology', boundary: 'A Boundary' };
+export const MOMENT_TITLE: Record<MomentKind, string> = { disagreement: 'A Different Reading', study: 'Run Lines Together?', help: 'A Request For Help', encouragement: 'A Word After Class', apology: 'An Apology', boundary: 'A Boundary' };
 
 /** A disagreement over your shared scene: a question you answered, read their way (another the text supports where there is one). */
 function disagreement(a: Assignment, mate: Classmate, draw: number): Omit<Moment, 'id' | 'mate' | 'kind' | 'at' | 'until' | 'status'> | undefined {
@@ -311,7 +311,7 @@ function disagreement(a: Assignment, mate: Classmate, draw: number): Omit<Moment
   const others = options.filter((o) => o.id !== mine.id);
   const theirs = others.find((o) => o.supported) ?? others[0]!;
   const scene = a.sceneId ? sceneById(a.sceneId)?.play : undefined;
-  return { assignmentId: a.id, question: q.id, theirs: theirs.id, text: `${first(mate)} reads ${q.label.toLowerCase()} in ${scene ?? 'your scene'} another way: “${theirs.text}”, where you have “${mine.text}”.` };
+  return { assignmentId: a.id, question: q.id, theirs: theirs.id, text: `${first(mate)} reads ${questionWords(q)} in ${scene ?? 'your scene'} another way: “${theirs.text}”, where you have “${mine.text}”.` };
 }
 
 /** An evening in the next three a classmate is free to run lines, at seven. */
@@ -321,7 +321,7 @@ function studyEvening(person: Person, i: number, day: SchoolDate, returning = fa
     const when = instantFromZoned({ year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate(), hour: CLASS.study.hour, minute: 0 }, zone());
     if (mateBusy(person, i, when, CLASS.study.minutes)) continue;
     const mate = person.school!.classmates[i]!;
-    return { when, text: `${first(mate)} asks if you’d run lines together on ${formatDate(when, zone())} at ${formatTime(when, zone())}, an hour.${returning ? ' You ran theirs when they were behind.' : ''}` };
+    return { when, text: `${first(mate)} asks if you’d run lines together for an hour on ${formatDate(when, zone())} at ${formatTime(when, zone())}.${returning ? ' You ran theirs when they were behind.' : ''}` };
   }
   return undefined;
 }
@@ -348,7 +348,7 @@ export const CHOICES: Record<MomentKind, readonly { id: string; label: string }[
 /** Why a moment can't be answered so, or nothing. */
 export function respondRefusal(sim: Simulation, person: Person, m: Moment | undefined, choice: string): string | undefined {
   if (!m) return 'There’s no such conversation.';
-  if (m.status === 'lapsed') return 'It’s too late to answer: the moment passed.';
+  if (m.status === 'lapsed') return 'It’s too late to answer. The moment has passed.';
   if (m.status !== 'open') return 'You’ve answered it.';
   if (!CHOICES[m.kind].some((c) => c.id === choice)) return 'That isn’t an answer to it.';
   const a = m.assignmentId ? courseworkOf(sim, person)?.assignments.find((x) => x.id === m.assignmentId) : undefined;
@@ -375,7 +375,7 @@ export function respondRefusal(sim: Simulation, person: Person, m: Moment | unde
     // lapse, which opening a save now lapses (`strandedMoments`).
     if (when <= sim.now) return 'That evening has passed.';
     const clash = sim.universe.scheduled.find((x) => x.status === 'pending' && x.requiresPlayer && x.durationMinutes && x.at < when + CLASS.study.minutes * 60_000 && x.at + x.durationMinutes * 60_000 > when);
-    if (clash) return `You have ${clash.label} then: say no instead.`;
+    if (clash) return `You have ${clash.label} then, so you’ll have to say no.`;
   }
   return undefined;
 }
@@ -476,7 +476,7 @@ export function registerClassmates(sim: Simulation): void {
         if (p?.assignmentId && !chosen) throw new CommandError(`That isn’t a scene you share with ${f}.`);
         s.schedule({ at: m!.when!, kind: STUDY_KIND, label: `Running Lines With ${f}`, category: 'school', priority: 32, requiresPlayer: true, durationMinutes: CLASS.study.minutes, locationId: YALE_DRAMA.cityId, payload: { personId: person.id, mate: m!.mate, momentId: m!.id, ...(chosen ? { assignmentId: chosen.id } : {}) } });
         const what = chosen ? sceneById(chosen.sceneId ?? '')?.play ?? 'your scene' : undefined;
-        return { done: what ? `On your calendar: ${what}, with ${f}.` : `On your calendar. You share no open scene with ${f}, so it’s their lines you’ll run.` };
+        return { done: what ? `It’s on your calendar: ${what}, with ${f}.` : `It’s on your calendar. You share no open scene with ${f}, so you’ll run their lines.` };
       }
       case 'help': {
         if (choice === 'no') { remember(s, mate, 'Asked for your help; you couldn’t'); return { done: `You told ${f} you can’t.` }; }
@@ -497,12 +497,12 @@ export function registerClassmates(sim: Simulation): void {
           personOf(mate).boundary = { since: s.now, keptSince: 0, accepted: true };
           move(person, mate, CLASS.boundary.respect, 0);
           remember(s, mate, 'Set a boundary; you accepted it');
-          return { done: `From now, ask ${f} a day ahead; ${CLASS.boundary.liftAfterKept.accepted} rehearsals kept, and it lifts.` };
+          return { done: `From now on, ask ${f} a day ahead. It lifts after ${CLASS.boundary.liftAfterKept.accepted} rehearsals kept.` };
         }
         personOf(mate).boundary = { since: s.now, keptSince: 0, accepted: false };
         move(person, mate, CLASS.boundary.argue.trust, CLASS.boundary.argue.bond);
         remember(s, mate, 'Set a boundary; you pushed back');
-        return { done: `${f} holds to it, and things are cooler between you: ${CLASS.boundary.liftAfterKept.pushedBack} rehearsals kept before it lifts.` };
+        return { done: `${f} holds to it, and things are cooler between you. It lifts after ${CLASS.boundary.liftAfterKept.pushedBack} rehearsals kept.` };
       }
       default: return { done: '' };
     }
@@ -547,7 +547,7 @@ export function registerClassmates(sim: Simulation): void {
       move(person, mate, CLASS.study.missed.trust, CLASS.study.missed.bond);
       noteIncident(mate, item.at, 'missed');
       remember(s, mate, 'You didn’t come to run lines');
-      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `${first(mate)} Waited For You`, body: 'You didn’t come to run lines. They’ll remember it.', importance: 55, route: '/workspace/school' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `${first(mate)} Waited For You`, body: `You didn’t come to run lines, and ${first(mate)} waited for you. It cost some of their trust, and they’ll remember it. You can make amends under Your Partners.`, importance: 55, route: '/workspace/school' });
       return;
     }
     // The scene shared with them: the one chosen when it was agreed, if it's still open, else another shared one; moved
@@ -564,7 +564,7 @@ export function registerClassmates(sim: Simulation): void {
       const pct = (x: number) => `${Math.round(x * 100)}%`;
       s.notify({ category: 'school', title: `Ran Lines With ${first(mate)}`, body: open
         ? `${sceneById(open.sceneId ?? '')?.play ?? 'Your scene'}: your lines went from ${pct(before)} to ${pct(open.prep.memorization)}.`
-        : `You share no open scene with ${first(mate)}, so you ran theirs: it helped them, and nothing of yours moved.`, importance: 30, route: '/workspace/school' });
+        : `You share no open scene with ${first(mate)}, so you ran their lines. It helped them, but it didn’t move your own work.`, importance: 30, route: '/workspace/school' });
     }
   });
 }

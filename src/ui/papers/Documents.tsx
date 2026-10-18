@@ -25,19 +25,21 @@
 import { ID_CARD_REPLACEMENT } from '@/engine/content/replacements';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
+import { plural } from '@/engine/core/text';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { MS_DAY, dateKey, formatDate } from '@/engine/core/time';
+import { MS_DAY, dateKey, formatDate, instantFromZoned } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { COUNTRIES } from '@/engine/content/geography';
+import { countryOfIso } from '@/engine/content/bankdays';
 import { ENTRY, ENTRY_AS_OF } from '@/engine/content/entry';
 import { inSaveMoney } from '@/engine/systems/banking';
 import {
   authorizationFor, isoOfCountry, documentsOf, isoOfCity, mayEnter,
   LOSABLE, citizenOf, passportOf, passportOffice, passportRefusal, passportRuleFor, type PersonDocument, policeReportRefusal } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
-import { idCardHere, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal, noncitizenTermNote } from '@/engine/systems/identity';
+import { idCardHere, idCardOnItsWay, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal, noncitizenTermNote } from '@/engine/systems/identity';
 import { f1Of, optRefusal, programEnd, usStatusEnds } from '@/engine/systems/permission';
 import { hasSsn, ssnRefusal } from '@/engine/systems/taxid';
 import { WORK_RULES } from '@/engine/content/workrules';
@@ -46,7 +48,7 @@ import { naturalizeRefusal } from '@/engine/systems/citizenship';
 
 const KIND_WORD: Record<PersonDocument['kind'], string> = { passport: 'Passport', authorization: 'Travel Authorization', visa: 'Visa', license: 'Driving License', idp: 'International Driving Permit', permit: 'Permission To Work', idcard: 'State ID Card' };
 const STATUS_WORD: Record<PersonDocument['status'], string> = { pending: 'Being Decided', valid: 'In Force', lost: 'Reported Lost', cancelled: 'Canceled' };
-const countryName = (iso: string) => COUNTRIES.get(iso.toLowerCase())?.name ?? iso;
+const countryName = (iso: string) => COUNTRIES.get(countryOfIso(iso))?.name ?? iso;
 /** The atlas's id for a country by its ISO code: Britain is "uk" there and "GB" on a document. */
 const countryIdOf = (iso: string) => COUNTRIES.all().find((c) => c.iso2?.toUpperCase() === iso.toUpperCase())?.id ?? iso.toLowerCase();
 
@@ -61,7 +63,7 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
   return (
     <LookRegion className="table-scroll">
       <table>
-        <thead><tr><th scope="col">Document</th><th scope="col">Number</th><th scope="col">Issued</th><th scope="col">Runs Out</th><th scope="col">Standing</th><th scope="col"><span className="sr-only">Action</span></th></tr></thead>
+        <thead><tr><th scope="col">Document</th><th scope="col">Number</th><th scope="col">Issued</th><th scope="col">Runs Out</th><th scope="col">Status</th><th scope="col"><span className="sr-only">Action</span></th></tr></thead>
         <tbody>
           {docs.map((d) => {
             const expired = d.status === 'valid' && d.expiresAt !== undefined && d.expiresAt <= sim.now;
@@ -69,27 +71,30 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
               <tr key={d.id}>
                 <td><Open subject={at('document', d.id)}>{d.name}</Open>{d.destination ? <>, <Open subject={at('country', countryIdOf(d.destination))}>{countryName(d.destination)}</Open></> : ''}</td>
                 <td className="mono"><Open subject={at('document', d.id)}>{d.number}</Open></td>
-                <td>{d.issuedAt ? <Open subject={at('day', dateKey(d.issuedAt, sim.homeZone))}>{formatDate(d.issuedAt, sim.zone)}</Open> : '—'}</td>
+                {/* Nothing pending is issued yet (from 2026-10-17): a replacement copies the lost card's fields, and until then its
+                    row showed the lost card's issue date while it was on its way. */}
+                <td>{d.issuedAt && d.status !== 'pending' ? <Open subject={at('day', dateKey(d.issuedAt, sim.homeZone))}>{formatDate(d.issuedAt, sim.zone)}</Open> : '—'}</td>
                 <td>{d.expiresAt ? <Open subject={at('day', dateKey(d.expiresAt, sim.homeZone))}>{formatDate(d.expiresAt, sim.zone)}</Open> : d.readyAt ? <>Ready <Open subject={at('day', dateKey(d.readyAt, sim.homeZone))}>{formatDate(d.readyAt, sim.zone)}</Open></> : '—'}</td>
-                <td><Open subject={at('document', d.id)}>{expired ? 'Run Out' : STATUS_WORD[d.status]}</Open></td>
+                {/* An ID card past every check is on its way, not being decided (from 2026-10-17, `idCardOnItsWay`). */}
+                <td><Open subject={at('document', d.id)}>{expired ? 'Run Out' : idCardOnItsWay(d, sim.now) ? 'On Its Way' : STATUS_WORD[d.status]}</Open></td>
                 <td>
                   {/* What replaces a document run out, said on its row (from 2026-10-16: until then its action cell was empty,
                       and a New Yorker whose license ran out mid-program met it first as a new bank's refusal; found playing
                       seed je-5, brief 09's journeys). Nothing renews a license since the cars went (`licenseReplaceRefusal`). */}
-                  {expired && d.kind === 'license' && <span className="xs dim">Nothing in SLATE renews a license since the cars went: a passport or an ID card in force is your photo ID, under Your Passport and Your ID.</span>}
+                  {expired && d.kind === 'license' && <span className="xs dim">A driving license can’t be renewed in the game. A passport or ID card in force is your photo ID: see Your Passport and Your ID.</span>}
                   {expired && d.kind === 'passport' && <span className="xs dim">Apply for a new one under Your Passport, above.</span>}
                   {expired && d.kind === 'idcard' && <span className="xs dim">Apply for a new one under Your ID, above.</span>}
                   {d.status === 'valid' && !expired && LOSABLE.has(d.kind) && (
                     confirming?.id === d.id ? (
-                      <span className="col gap-1"><span className="xs">Reported {confirming.stolen ? 'stolen' : 'lost'}, it’s canceled for good, even if it turns up{d.kind === 'passport' ? ', with any visa or authorization issued on it (the F-1 status holds)' : ''}.</span>
+                      <span className="col gap-1"><span className="xs">If you report it {confirming.stolen ? 'stolen' : 'lost'}, it’s canceled for good, even if it turns up{d.kind === 'passport' ? ', along with any visa or travel authorization issued on it. An F-1 status you hold continues' : ''}.</span>
                         <span className="row gap-1"><Gated feature="documents.report_lost" className="btn btn-sm btn-danger" onClick={() => { if (run('documents.report_lost', { documentId: d.id, ...(confirming.stolen ? { stolen: true } : {}) }).ok) toast(`${KIND_WORD[d.kind]} reported ${confirming.stolen ? 'stolen' : 'lost'} and canceled.`, 'positive'); setConfirming(undefined); }}>Cancel It</Gated><button type="button" className="btn btn-sm btn-ghost" onClick={() => setConfirming(undefined)}>Keep It</button></span></span>
                     ) : (
                     <><button type="button" className="btn btn-sm btn-ghost" onClick={() => setConfirming({ id: d.id, stolen: false })}>Report Lost…</button><button type="button" className="btn btn-sm btn-ghost" onClick={() => setConfirming({ id: d.id, stolen: true })}>Report Stolen…</button></>
                     )
                   )}
-                  {d.status === 'lost' && d.policeReport === undefined && (() => { const no = policeReportRefusal(sim.player, d); return <>{no && <span className="xs dim">{no} </span>}<Gated feature="documents.police_report" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? 'Online, free, and at once'} onClick={() => { if (run('documents.police_report', { documentId: d.id }).ok) toast('A police report filed.', 'positive'); }}>File A Police Report</Gated></>; })()}
-                  {d.kind === 'license' && d.status === 'lost' && (() => { const no = licenseReplaceRefusal(sim.player, d.id, sim.now); return <>{no && <span className="xs dim">{no} </span>}<Gated feature="documents.replace_license" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ readyAt: number; fee: number }>('documents.replace_license', { documentId: d.id }); if (a.ok) toast(`Replaced${a.value!.fee ? `, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}` : ', free with the police report'}; the card comes ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{no ? 'Replace It' : `Replace It, ${formatMoney(licenseReplaceFee(sim, d), saveCurrency(sim.universe))}`}</Gated></>; })()}
-                  {d.kind === 'idcard' && d.status === 'lost' && (() => { const no = idReplaceRefusal(sim.player, d.id, sim.now); const rule = ID_CARD_REPLACEMENT[d.issuer]; return <>{no && <span className="xs dim">{no} </span>}<Gated feature="documents.replace_idcard" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (rule && !rule.daysRead ? 'Its time to come isn’t published: the license’s, there.' : undefined)} onClick={() => { const a = run<{ readyAt: number }>('documents.replace_idcard', { documentId: d.id }); if (a.ok) toast(`Replaced; the card comes ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{rule && !no ? `Replace It, ${formatMoney(idReplaceFee(sim, sim.player, d.issuer), saveCurrency(sim.universe), { cents: false })}` : 'Replace It'}</Gated></>; })()}
+                  {d.status === 'lost' && d.policeReport === undefined && (() => { const no = policeReportRefusal(sim.player, d); return <>{no && <span className="xs dim">{no} </span>}<Gated feature="documents.police_report" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? 'Online, free, and at once'} onClick={() => { if (run('documents.police_report', { documentId: d.id }).ok) toast('Police report filed.', 'positive'); }}>File A Police Report</Gated></>; })()}
+                  {d.kind === 'license' && d.status === 'lost' && (() => { const no = licenseReplaceRefusal(sim.player, d.id, sim.now); return <>{no && <span className="xs dim">{no} </span>}<Gated feature="documents.replace_license" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ readyAt: number; fee: number }>('documents.replace_license', { documentId: d.id }); if (a.ok) toast(`Replacement ordered${a.value!.fee ? ` for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}` : ', free with the police report'}. The card comes ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{no ? 'Replace It' : `Replace It, ${formatMoney(licenseReplaceFee(sim, d), saveCurrency(sim.universe))}`}</Gated></>; })()}
+                  {d.kind === 'idcard' && d.status === 'lost' && (() => { const no = idReplaceRefusal(sim.player, d.id, sim.now); const rule = ID_CARD_REPLACEMENT[d.issuer]; return <>{no && <span className="xs dim">{no} </span>}<Gated feature="documents.replace_idcard" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (rule && !rule.daysRead ? 'How long it takes isn’t published, so it’s taken to be the same as a license there.' : undefined)} onClick={() => { const a = run<{ readyAt: number }>('documents.replace_idcard', { documentId: d.id }); if (a.ok) toast(`Replacement ordered. The card comes ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{rule && !no ? `Replace It, ${formatMoney(idReplaceFee(sim, sim.player, d.issuer), saveCurrency(sim.universe), { cents: false })}` : 'Replace It'}</Gated></>; })()}
                 </td>
               </tr>
             );
@@ -117,32 +122,35 @@ export function PassportPane() {
   const visa = chosen ? VISAS[`${chosen}<${isoOfCountry(person.citizenshipId)}`] : undefined;
   const apply = (expedite: boolean) => {
     const a = run<{ readyAt: number; fee: number }>('documents.apply_passport', { expedite });
-    if (a.ok) toast(`Applied, for ${money(a.value!.fee)}. It comes by ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive');
+    if (a.ok) toast(`Applied and paid ${money(a.value!.fee)}. It should arrive by ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive');
   };
   return (
     <div className="col gap-5">
       <Panel title="Your Passport" subtitle={rule ? rule.issuer : undefined} look={passport ? at('document', passport.id) : undefined} help="documents.passport-id">
         <div className="col gap-3">
           <div className="grid grid-3">
-            <Stat label="Passport" look={passport ? at('document', passport.id) : undefined} value={passport ? 'In Force' : 'None In Force'} note={passport ? `${passport.number}, runs out ${formatDate(passport.expiresAt!, sim.zone)}` : 'Asked by a new bank and the Social Security office'} />
-            <Stat label="A New One" value={rule && office ? money(inSaveMoney(sim, Math.round(office.fee * 100), office.currency)) : '—'} note={rule && office ? `${office.daysEstimated ? 'About ' : 'Up to '}${office.days} days; good for ${office.years} years${office.abroad ? '; from abroad' : office.renewal ? '; renewed by mail' : ''}` : 'SLATE doesn’t have your country’s office'} />
-            <Stat label="Faster" value={office?.expedite ? money(inSaveMoney(sim, Math.round((office.fee + office.expedite.extra) * 100), office.currency)) : 'Not Offered'} note={office?.expedite ? `${office.expedite.days === 0 ? 'The same day' : `${office.expedite.days} days`}${office.expedite.renewalOnly ? ', renewals only' : ''}` : `${rule?.issuer ?? 'The office'} sells no faster service${office?.abroad ? ' to an applicant abroad' : ''}`} />
+            <Stat label="Passport" look={passport ? at('document', passport.id) : undefined} value={passport ? 'In Force' : 'None In Force'} note={passport ? `${passport.number}, runs out ${formatDate(passport.expiresAt!, sim.zone)}` : 'A new bank and the Social Security office ask for one'} />
+            <Stat label="A New One" value={rule && office ? money(inSaveMoney(sim, Math.round(office.fee * 100), office.currency)) : '—'} note={rule && office ? `${office.daysEstimated ? 'About ' : 'Up to '}${plural(office.days, 'day')}; good for ${plural(office.years, 'year')}${office.abroad ? '; from abroad' : office.renewal ? '; renewed by mail' : ''}` : 'Your country’s passport office isn’t in the game'} />
+            <Stat label="Faster" value={office?.expedite ? money(inSaveMoney(sim, Math.round((office.fee + office.expedite.extra) * 100), office.currency)) : 'Not Offered'} note={office?.expedite ? `${office.expedite.days === 0 ? 'The same day' : plural(office.expedite.days, 'day')}${office.expedite.renewalOnly ? ', renewals only' : ''}` : `${rule?.issuer ?? 'The office'} offers no faster service${office?.abroad ? ' to applicants abroad' : ''}`} />
           </div>
-          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+          <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
             <Gated feature="documents.apply_passport" className="btn btn-sm" disabled={Boolean(passportRefusal(person))} title={passportRefusal(person)} onClick={() => apply(false)}>{passport ? 'Renew It' : 'Apply For One'}</Gated>
             {office?.expedite && (
               <Gated feature="documents.apply_passport" className="btn btn-sm btn-ghost" disabled={Boolean(passportRefusal(person, true))} title={passportRefusal(person, true)} onClick={() => apply(true)}>{passport ? 'Renew It Faster' : 'Apply Faster'}</Gated>
             )}
+            {/* Why they're grayed, in words beside them, once where both say the same (from 2026-10-17, as Your ID's below):
+                until then only their tooltips said it, which a phone never shows. */}
+            {[...new Set([passportRefusal(person), office?.expedite ? passportRefusal(person, true) : undefined])].filter(Boolean).map((no) => <span key={no} className="xs dim">{no}</span>)}
           </div>
           <p className="small" style={{ margin: 0 }}>A new passport replaces the one before it, which is canceled, and a travel authorization issued on the old one ends with it.</p>
           <DocumentList kinds={['passport', 'visa', 'authorization']} />
-          {rule && office && <Fine>{office.basis} {office.daysEstimated ? 'The office publishes no processing time for it; SLATE’s estimate. ' : ''}{office.abroad ? '' : `From abroad: ${rule.abroad} `}Sources: {rule.sources.map((s) => s.url).join('; ')}.{[...office.assumed, ...rule.uncertain].length ? ` Not confirmed: ${[...office.assumed, ...rule.uncertain].join(' ')}` : ''}</Fine>}
+          {rule && office && <Fine>{office.basis} {office.daysEstimated ? 'The office publishes no processing time for it, so the time is estimated. ' : ''}{office.abroad ? '' : `From abroad: ${rule.abroad} `}Sources: {rule.sources.map((s) => s.url).join('; ')}.{office.assumed.length ? ` Assumed in the game: ${office.assumed.join(' ')}` : ''}{rule.uncertain.length ? ' Some details weren’t published, or couldn’t be confirmed on the office’s own pages.' : ''}</Fine>}
         </div>
       </Panel>
 
       <IdPanel />
 
-      <Panel title="Going Abroad" subtitle="What a country asks of your citizenship, for a short visit: the rule, to read">
+      <Panel title="Going Abroad" subtitle="What each country asks of a short-stay visitor with your citizenship, for reference">
         <div className="col gap-3">
           <div className="field-row">
             <div className="field">
@@ -158,8 +166,10 @@ export function PassportPane() {
               : <ul className="small" style={{ margin: 0 }}>{answer.missing.map((m) => <li key={m}>{m}</li>)}</ul>
           )}
           {visa && <Fine>{visa.name}: {visa.basis} Source: {visa.source}.</Fine>}
-          <Fine>There’s no travel in SLATE since 2026-10-09, so a visa or an authorization isn’t applied for here: what each country asks is kept as what it is.</Fine>
-          {answer?.rule && <Fine>{answer.rule.note} Source: {answer.rule.source}. Researched {ENTRY_AS_OF}; permission to live or work there is a different permission.</Fine>}
+          <Fine>Travel isn’t part of the game, so you can’t apply for a visa or travel authorization here. Each country’s rules are shown as they stand, for reference.</Fine>
+          {/* The day the rules were researched, as the game writes a date (from 2026-10-17, brief 14's dynamic cases: until
+              then “Researched 2026-09-29.”, the data's own ISO day). */}
+          {answer?.rule && <Fine>{answer.rule.note} Source: {answer.rule.source}. Researched {(() => { const [year, month, day] = ENTRY_AS_OF.split('-').map(Number); return formatDate(instantFromZoned({ year: year!, month: month!, day: day!, hour: 12 }, sim.zone), sim.zone); })()}. Permission to live or work there is separate.</Fine>}
         </div>
       </Panel>
     </div>
@@ -174,14 +184,17 @@ function IdPanel() {
   const idNo = idCardRefusal(person, sim.now);
   const term = noncitizenTermNote(person);
   return (
-    <Panel title="Your ID" subtitle={card ? card.card.name : 'Where SLATE issues one'} help="documents.passport-id">
+    <Panel title="Your ID" subtitle={card ? card.card.name : 'None issued where you live'} help="documents.passport-id">
       <LookRegion className="col gap-3">
-        <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
           <Gated feature="documents.apply_idcard" className="btn btn-sm" disabled={Boolean(idNo)} title={idNo} onClick={() => {
             const a = run<{ expiresAt?: number; fee: number; readyAt?: number }>('documents.apply_idcard', {});
             // The day a card on its way comes, where it isn't handed over (from 2026-10-17: Connecticut mails it).
-            if (a.ok) toast(`${card?.card.name ?? 'An ID card'}, for ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}${a.value!.readyAt ? `; the card comes ${formatDate(a.value!.readyAt, sim.zone)}` : ''}${a.value!.expiresAt ? `; good until ${formatDate(a.value!.expiresAt, sim.zone)}` : ''}.`, 'positive');
+            if (a.ok) toast(`${card?.card.name ?? 'An ID card'}: you paid ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}.${a.value!.readyAt ? ` The card comes ${formatDate(a.value!.readyAt, sim.zone)}.` : ''}${a.value!.expiresAt ? ` It’s good until ${formatDate(a.value!.expiresAt, sim.zone)}.` : ''}`, 'positive');
           }}>Get {card?.card.name ?? 'An ID Card'}</Gated>
+          {/* Why it's grayed, in words beside it (from 2026-10-17, brief 14's document journey): until then only its tooltip
+              said "One is already on its way." or "You already hold one in force.", which a phone never shows. */}
+          {idNo && <span className="xs dim">{idNo}</span>}
         </div>
         <DocumentList kinds={['idcard', 'license', 'idp']} />
         {/* Where the card's term is SLATE's assumption, said (from 2026-10-17, brief 12's KS-ct-idcard: until then only the guide said it). */}
@@ -211,15 +224,15 @@ export function WorkPane() {
   const optNo = optRefusal(sim, person);
   const apply = (kind: string, payload: Record<string, unknown>, what: string) => {
     const a = run<{ readyAt: number; fee: number }>(kind, payload);
-    if (a.ok) toast(`${what}, for ${money(a.value!.fee)}. Decided by ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive');
+    if (a.ok) toast(`${what} and paid ${money(a.value!.fee)}. It’s decided by ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive');
   };
   return (
     <div className="col gap-5">
-      <Panel title="Permission To Work" subtitle="Apart from permission to enter" help="documents.work">
+      <Panel title="Permission To Work" subtitle="Separate from permission to enter the country" help="documents.work">
         <div className="col gap-3">
           <div className="grid grid-3">
-            <Stat label="Your Program Ends" value={end ? formatDate(end, sim.zone) : '—'} note={end ? 'OPT is filed from 90 days before to 60 after' : 'For a student on an F-1'} />
-            <Stat label="Your US Status" value={person.usOutOfStatus !== undefined ? 'Out Of Status' : status !== undefined ? `Ends ${formatDate(status, sim.zone)}` : end ? 'Held' : '—'} note={person.usOutOfStatus !== undefined ? 'Since ' + formatDate(person.usOutOfStatus, sim.zone) + '; the Visa Waiver Program is closed to you' : status !== undefined ? (idleEnds !== undefined ? `When your OPT’s ${opt.unemploymentDays} days without work run out, with no grace after; stay past it and you’re out of status` : 'With its grace after permission ends; stay past it and you’re out of status') : end ? 'While you study, or while an application is decided' : 'For a student on an F-1'} />
+            <Stat label="Your Program Ends" value={end ? formatDate(end, sim.zone) : '—'} note={end ? 'You can apply for OPT from 90 days before it to 60 days after' : 'For a student on an F-1'} />
+            <Stat label="Your US Status" value={person.usOutOfStatus !== undefined ? 'Out Of Status' : status !== undefined ? `Ends ${formatDate(status, sim.zone)}` : end ? 'Held' : '—'} note={person.usOutOfStatus !== undefined ? 'Since ' + formatDate(person.usOutOfStatus, sim.zone) + '. In the game, the Visa Waiver Program is now closed to you' : status !== undefined ? (idleEnds !== undefined ? `When your OPT’s ${opt.unemploymentDays} days without work run out. There’s no grace period after it, and staying past it puts you out of status` : 'Including the grace period after your permission ends. Staying past it puts you out of status') : end ? 'While you study, or while an application is decided' : 'For a student on an F-1'} />
           </div>
           <DocumentList kinds={['permit', 'visa']} />
         </div>
@@ -227,14 +240,16 @@ export function WorkPane() {
 
       <TaxIdPanel />
 
-      <Panel title="OPT" subtitle={`${opt.form}, after the degree`} help="documents.apply_opt">
+      <Panel title="OPT" subtitle={`${opt.form}, after your degree`} help="documents.apply_opt">
         <div className="col gap-3">
-          <p className="small" style={{ margin: 0 }}>Up to twelve months to work in your field, from the later of the program’s end and the approval, with no more than {opt.unemploymentDays} days without work in all. There’s no work to be had in SLATE after the degree since the career went, so an OPT approved ends after its {opt.unemploymentDays} days without work, and your US status ends with it: it keeps you here about {opt.unemploymentDays} days from its start. {usd(opt.fee)}; premium processing adds {usd(opt.premiumFee)} and decides it in {opt.premiumBusinessDays} business days.</p>
-          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+          <p className="small" style={{ margin: 0 }}>OPT gives you up to twelve months to work in your field, from the later of your program’s end and the approval, with no more than {opt.unemploymentDays} days without work in total. The game has no work after the degree, so an approved OPT ends after its {opt.unemploymentDays} days without work, and your US status ends with it. In practice it keeps you in the US about {opt.unemploymentDays} days from its start. It costs {usd(opt.fee)}. Premium processing adds {usd(opt.premiumFee)} and gets a decision within {opt.premiumBusinessDays} business days.</p>
+          <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
             <Gated feature="documents.apply_opt" className="btn btn-sm" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', {}, 'Applied for OPT')}>Apply For OPT</Gated>
-            <Gated feature="documents.apply_opt" className="btn btn-sm btn-ghost" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', { premium: true }, 'Applied for OPT, premium')}>Apply With Premium Processing</Gated>
+            <Gated feature="documents.apply_opt" className="btn btn-sm btn-ghost" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', { premium: true }, 'Applied for OPT with premium processing')}>Apply With Premium Processing</Gated>
+            {/* Why both are grayed, in words beside them (from 2026-10-17, as Your ID's): until then only their tooltips said it. */}
+            {optNo && <span className="xs dim">{optNo}</span>}
           </div>
-          <Fine>USCIS publishes no standard processing time; SLATE’s {opt.standardDays} days. Source: {opt.source}.</Fine>
+          <Fine>USCIS publishes no standard processing time, so it’s estimated at {opt.standardDays} days. Source: {opt.source}.</Fine>
         </div>
       </Panel>
 
@@ -255,13 +270,13 @@ function TaxIdPanel() {
   if (!citizen && !f1Of(person)) return null;
   const no = ssnRefusal(sim, person);
   const ssn = person.ssn;
-  const where = citizen ? 'Held, as a US citizen' : ssn?.status === 'issued' ? 'Held' : ssn?.status === 'applied' ? `Applied for; the card comes ${formatDate(ssn.arrivesAt!, sim.zone)}` : 'Not yet';
+  const where = citizen ? 'Held, as a US citizen' : ssn?.status === 'issued' ? 'Held' : ssn?.status === 'applied' ? `Applied for. The card comes ${formatDate(ssn.arrivesAt!, sim.zone)}` : 'Not yet';
   return (
     <Panel title="Social Security Number" subtitle={where} help="documents.apply_ssn">
       <div className="col gap-2">
         {!citizen && (
           <p className="small" style={{ margin: 0 }}>
-            On an F-1 you may work only at the School, up to 19 hours a week in term (Yale’s limit) and full time in the breaks, and only while the program lasts. A Social Security number comes with that work: in person at the office on Court Street, with your passport, I-20 and the letters from the international office and the School; the card in two to three weeks. Without one, a 1040-NR goes in with an ITIN application, which holds the return seven weeks, and a bank opens your account only in a branch.
+            On an F-1 you may work only at the School: up to 19 hours a week in term (Yale’s limit) and full time in the breaks, and only while your program lasts. That work lets you get a Social Security number. You apply in person at the office on Court Street, with your passport, your I-20 and letters from the international office and the School, and the card comes in two to three weeks. Without a number, your 1040-NR goes in with an ITIN application, which holds up the return for seven weeks, and a bank will open an account for you only in a branch.
           </p>
         )}
         {!citizen && !hasSsn(person) && ssn?.status !== 'applied' && (
@@ -270,7 +285,7 @@ function TaxIdPanel() {
             {no && <span className="xs dim">{no}</span>}
           </div>
         )}
-        <Fine>SSA POMS RM 10211.245 and the IRS on the ITIN, read 2026-10-10 (research-student-status.json). Whether Yale pays before the card comes isn’t published; SLATE pays, as the IRS lets an employer report the number as applied for.</Fine>
+        <Fine>Source: SSA POMS RM 10211.245, and the IRS on the ITIN, read October 10, 2026. Whether Yale pays you before the card comes isn’t published. In the game it does, since the IRS lets an employer report the number as applied for.</Fine>
       </div>
     </Panel>
   );
@@ -292,14 +307,14 @@ function ResidencePanel() {
     <Panel title="Residence Abroad" subtitle="The right to make a home in another country" help="documents.residence">
       <LookRegion className="table-scroll">
         <table>
-          <thead><tr><th scope="col">Country</th><th scope="col">Where You Stand</th><th scope="col" /></tr></thead>
+          <thead><tr><th scope="col">Country</th><th scope="col">Your Status There</th><th scope="col" /></tr></thead>
           <tbody>
             {places.map((iso) => {
               const held = residenceIn(person, iso, sim.now);
               const no = routeRefusal(sim, person, iso);
               const settle = held ? settleRefusal(sim, person, iso) : undefined;
               const naturalize = naturalizeRefusal(sim, person, iso);
-              const name = COUNTRIES.get(iso === 'GB' ? 'uk' : iso.toLowerCase())?.name ?? iso;
+              const name = COUNTRIES.get(countryOfIso(iso))?.name ?? iso;
               return (
                 <tr key={iso}>
                   <td><Open subject={at('country', iso === 'GB' ? 'uk' : iso.toLowerCase())}>{name}</Open></td>
@@ -318,7 +333,7 @@ function ResidencePanel() {
           </tbody>
         </table>
       </LookRegion>
-      <Fine>Britain’s Global Talent visa and a green card by extraordinary ability were read on a career’s record until the career went on 2026-10-09; there’s none to read now. Mexico’s temporary residence would let you live there, not work. Naturalizing keeps the citizenship you were born with, and its passport stays the one in force in your name.</Fine>
+      <Fine>Britain’s Global Talent visa and a US green card for extraordinary ability both need a record of professional work, and the game has none to show. Mexico’s temporary residence would let you live there, but not work. Naturalizing keeps the citizenship you were born with, and that passport stays the one in force in your name.</Fine>
     </Panel>
   );
 }

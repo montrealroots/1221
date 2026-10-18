@@ -97,7 +97,7 @@ export function problemsOf(p: WorkPiece): Problem[] {
   segs.forEach((s, i) => {
     const turn = spec.segments[i]?.turnInto;
     if (s.part < s.required - 0.005) {
-      out.push({ id: `${turn ? 'turn' : 'segment'}:${i}`, kind: turn ? 'turn' : 'segment', segment: i, label: turn ? `The Turn Into ${s.label}` : `${s.label} Isn’t Secure`, why: `${turn ? `The change into ${s.label.toLowerCase()} asks more rehearsal than the rest` : `${s.label} hasn’t been rehearsed enough`}: ${pct(s.part)} of the ${pct(s.required)} it asks. It comes to ${s.overall} against the whole’s ${e.overall}.`, measure: s.overall, gap: (s.required - s.part) * 100 });
+      out.push({ id: `${turn ? 'turn' : 'segment'}:${i}`, kind: turn ? 'turn' : 'segment', segment: i, label: turn ? `The Turn Into ${s.label}` : `${s.label} Isn’t Secure`, why: `${turn ? `The change into ${s.label.toLowerCase()} needs more rehearsal than the rest` : `${s.label} hasn’t been rehearsed enough`}: it’s at ${pct(s.part)} of the ${pct(s.required)} it needs. It comes to ${s.overall}, against ${e.overall} for the whole piece.`, measure: s.overall, gap: (s.required - s.part) * 100 });
     } else if (segs.length > 1 && s.overall < e.overall - WORKBOOK.segmentGap) {
       const c = chiefOf(s);
       // A segment held back most by tiring is the stamina problem below, said once (from 2026-10-16). At a whole evening’s
@@ -105,36 +105,36 @@ export function problemsOf(p: WorkPiece): Problem[] {
       // by more than `segmentGap`, and the same drain came as two problems, the segment’s first, whose ways don’t include
       // breathing (tests/guide-examples-productions.test.ts, the director’s note on tiring).
       if (c?.kind === 'condition' && c.what === 'stamina') return;
-      out.push({ id: `segment:${i}`, kind: 'segment', segment: i, label: `${s.label} Holds It Back`, why: `${s.label} comes to ${s.overall} against the whole’s ${e.overall}${c ? `: ${c.label.toLowerCase()} costs its ${DIMENSION_LABEL[c.dimension].toLowerCase()} most` : ''}.`, measure: s.overall, gap: e.overall - s.overall });
+      out.push({ id: `segment:${i}`, kind: 'segment', segment: i, label: `${s.label} Holds It Back`, why: `${s.label} comes to ${s.overall}, against ${e.overall} for the whole piece.${c ? ` What costs it most: ${c.label.toLowerCase()}, in ${DIMENSION_LABEL[c.dimension]}.` : ''}`, measure: s.overall, gap: e.overall - s.overall });
     }
   });
   const stamina = e.limits.find((l) => l.what === 'stamina');
   if (stamina && (stamina.whole ?? 0) >= 0.5 && segs.length) {
     const last = segs.length - 1;
-    out.push({ id: 'stamina', kind: 'stamina', segment: last, label: 'Tiring Late In The Piece', why: `Stamina costs the piece ${stamina.whole} points, most of it in ${segs[last]!.label.toLowerCase()}, which comes to ${segs[last]!.overall}.`, measure: segs[last]!.overall, gap: (stamina.whole ?? 0) * 2 });
+    out.push({ id: 'stamina', kind: 'stamina', segment: last, label: 'Tiring Late In The Piece', why: `Your stamina costs the piece ${stamina.whole} points, most of it in ${segs[last]!.label.toLowerCase()}, which comes to ${segs[last]!.overall}.`, measure: segs[last]!.overall, gap: (stamina.whole ?? 0) * 2 });
   }
   const top = e.limits.find((l) => l.kind === 'ability' || l.kind === 'technique');
   if (top && (top.whole ?? 0) >= WORKBOOK.named) {
     // Worked where the piece is weakest: the lowest segment, played another way, can draw on something else.
     const at = segs.length ? segs.reduce((b, s, i) => (s.overall < segs[b]!.overall ? i : b), 0) : undefined;
-    out.push({ id: `limit:${top.what}`, kind: 'limit', ...(at !== undefined ? { segment: at } : {}), label: `${top.label} Holds It Back`, why: `${top.label} costs the ${DIMENSION_LABEL[top.dimension].toLowerCase()} ${top.by} points, ${top.whole} of the whole${at !== undefined ? `; ${segs[at]!.label.toLowerCase()} is where the piece is weakest, at ${segs[at]!.overall}` : ''}. Work on it trains it a little; a segment played another way draws on something else.`, measure: e.overall, gap: top.whole ?? 0 });
+    out.push({ id: `limit:${top.what}`, kind: 'limit', ...(at !== undefined ? { segment: at } : {}), label: `${top.label} Holds It Back`, why: `Your ${top.label} costs ${DIMENSION_LABEL[top.dimension]} ${top.by} points, ${top.whole} of the whole piece.${at !== undefined ? ` The piece is weakest in ${segs[at]!.label.toLowerCase()}, at ${segs[at]!.overall}.` : ''} Working on it trains it a little, and playing one part of the scene another way can lean on a different ability.`, measure: e.overall, gap: top.whole ?? 0 });
   }
   // A part of preparation short, other than the segments' own and the objective's: its own step answers it. Its label is
   // a button's, in Title Case (from 2026-10-12: until then only its first letter was raised, and Work It Through offered
   // "Knowing the genre: Not There Yet").
   for (const l of e.limits.filter((x) => x.kind === 'preparation' && !ignored(x) && x.what !== spec.part && x.what !== p.objective?.part && x.what !== 'way' && (x.whole ?? 0) >= 0.5)) {
     if (out.some((x) => x.id === `prep:${l.what}`)) continue;
-    out.push({ id: `prep:${l.what}`, kind: 'prep', label: `${titleCaseLabel(l.label)}: Not There Yet`, why: `It costs the ${DIMENSION_LABEL[l.dimension].toLowerCase()} ${l.by} points, ${l.whole} of the whole. Its own step of preparation answers it.`, measure: e.overall, gap: l.whole ?? 0 });
+    out.push({ id: `prep:${l.what}`, kind: 'prep', label: `${titleCaseLabel(l.label)}: Not There Yet`, why: `It costs ${DIMENSION_LABEL[l.dimension]} ${l.by} points, ${l.whole} of the whole piece. Its own preparation step works on it.`, measure: e.overall, gap: l.whole ?? 0 });
   }
   if (p.objective) {
     const obj = e.limits.find((l) => l.kind === 'preparation' && l.what === p.objective!.part);
-    if (obj && (obj.whole ?? 0) >= 0.5) out.push({ id: 'objective', kind: 'objective', label: 'What You Want Isn’t Clear Yet', why: `${p.objective.label} is at ${pct(p.objective.get())}, which costs the ${DIMENSION_LABEL[obj.dimension].toLowerCase()} ${obj.by} points.`, measure: e.overall, gap: obj.whole ?? 0 });
+    if (obj && (obj.whole ?? 0) >= 0.5) out.push({ id: 'objective', kind: 'objective', label: 'What You Want Isn’t Clear Yet', why: `${p.objective.label} is at ${pct(p.objective.get())}, which costs ${DIMENSION_LABEL[obj.dimension]} ${obj.by} points.`, measure: e.overall, gap: obj.whole ?? 0 });
   }
   if (p.together && p.partner) {
     const t = p.together(e);
     // Where running it together can't move them, the way at it is asking them to rehearse (from 2026-10-12).
     const first = p.partner.name.split(' ')[0];
-    if (t !== undefined && e.overall - t >= 3) out.push({ id: 'partner', kind: 'partner', label: `${first} Isn’t There Yet`, why: `Together it would come to ${t} against your own ${e.overall}: ${first}’s preparation is at ${pct(p.partner.get())}.${p.partner.set ? '' : ` Ask ${first} to rehearse it with you.`}`, measure: t, gap: e.overall - t });
+    if (t !== undefined && e.overall - t >= 3) out.push({ id: 'partner', kind: 'partner', label: `${first} Isn’t There Yet`, why: `Together it would come to ${t}, against ${e.overall} for your own work: ${first}’s preparation is at ${pct(p.partner.get())}.${p.partner.set ? '' : ` Ask ${first} to rehearse it with you.`}`, measure: t, gap: e.overall - t });
   }
   const sorted = out.sort((a, b) => b.gap - a.gap || a.id.localeCompare(b.id));
   const shown = sorted.slice(0, WORKBOOK.offered);
@@ -331,7 +331,7 @@ export function discoveriesOf(p: WorkPiece): string[] {
   if (!book) return [];
   const segs = p.spec().segments;
   const out: string[] = [];
-  (book.ways ?? []).forEach((w, s) => { if (w) out.push(`${segs[s]?.label ?? `Part ${s + 1}`}, played ${APPROACH_EFFECT[w.side].label.toLowerCase()}: ${Math.round(w.prep * 100)}% rehearsed in.`); });
+  (book.ways ?? []).forEach((w, s) => { if (w) out.push(`${segs[s]?.label ?? `Part ${s + 1}`}, played ${APPROACH_EFFECT[w.side].label.toLowerCase()}: rehearsed to ${Math.round(w.prep * 100)}%.`); });
   if (book.breathe) out.push('Places to breathe found: the piece tires you less.');
   for (const t of book.tries.filter((x) => x.verdict === 'kept' && x.after - x.before >= WORKBOOK.evidence)) out.push(`${ADJUSTMENTS[t.adjustment].label}${t.option ? ` (${t.option.split(':')[1]})` : ''}, for ${t.label.toLowerCase()}: ${t.before} to ${t.after}.`);
   return out;

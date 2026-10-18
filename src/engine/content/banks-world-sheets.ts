@@ -203,7 +203,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "No maintenance charge on peso savings accounts (incl. salary accounts); USD account costs USD 10/month unless salary is paid there"
         },
         "savings": {
-          "name": "Caja de Ahorros en pesos (TNA, rates in force 16 Jan 2026)",
+          "name": "Caja de Ahorros en pesos (TNA, rates in force January 16, 2026)",
           "source": "https://www.bna.com.ar/BackOffice/dataBase/tasas_ope_3732.pdf",
           "rate": 0.0005
         }
@@ -222,10 +222,10 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current account (AMD)",
           "source": "https://ameriabank.am/Portals/0/files/Personal/Individual_standard_tariffs_eng.pdf",
-          "note": "Management free; AMD 1,000 per half-year only if turnover < AMD 150k and balance < AMD 50k, and not charged until 30 June 2027"
+          "note": "Management free; AMD 1,000 per half-year only if turnover < AMD 150k and balance < AMD 50k, and not charged until June 30, 2027"
         },
         "savings": {
-          "name": "Savings Account (AMD; 4.0% requires AMD 200,000 minimum balance, otherwise 0.1%; effective 15 Sep 2025)",
+          "name": "Savings Account (AMD; 4.0% requires AMD 200,000 minimum balance, otherwise 0.1%; effective September 15, 2025)",
           "source": "https://ameriabank.am/Portals/0/files/Personal/Deposit_saving_terms_for_pp_eng.pdf",
           "rate": 0.04
         }
@@ -266,7 +266,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "Online account; fees vary by regional Sparkasse"
         },
         "savings": {
-          "name": "Smart Sparen (rate as published by Sparkasse Oberösterreich, a group savings bank, Sept 2026; Erste Bank Wien rate not published)",
+          "name": "Smart Sparen (rate as published by Sparkasse Oberösterreich, a group savings bank, September 2026; Erste Bank Wien rate not published)",
           "source": "https://www.capitalo.at/anbieter/sparkasse-oberoesterreich/produkte/tagesgeld",
           "rate": 0.015
         }
@@ -354,7 +354,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "No interest. Account maintenance fee is charged half-yearly by average-balance band (up to Tk 200-300 per half-year per schedule of charges); exact figure for this product not confirmed."
         },
         "savings": {
-          "name": "Regular Savings (TBS) — tiered; rate shown is the Tk 1 lac–<25 lac tier (0.50%) up to 2.50% at Tk 5 crore+; effective 5 Mar 2026",
+          "name": "Regular Savings (TBS) — tiered; rate shown is the Tk 1 lac–<25 lac tier (0.50%) up to 2.50% at Tk 5 crore+; effective March 5, 2026",
           "source": "https://brackweb.s3.ap-southeast-1.amazonaws.com/uploads/all/BRAC_Bank_Deposit_Interest_Rate_w.e.f._March_05,_202669a0a6e891870.pdf",
           "rate": 0.005
         }
@@ -481,7 +481,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "$12/month; no charge for Premier and Seniors."
         },
         "savings": {
-          "name": "Everyday Savings (BMD, balances under $50,000; tiered to 0.15% over $1M; rates 24 Sep 2026)",
+          "name": "Everyday Savings (BMD, balances under $50,000; tiered to 0.15% over $1M; rates September 24, 2026)",
           "source": "https://www.hsbc.bm/savings/products/fixed-term/saving-rates/",
           "rate": 0.0001
         }
@@ -580,7 +580,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "Monthly fee not found on page"
         },
         "savings": {
-          "name": "Poloko Savings (tiered; 0.10% for P500–P19,999 per product page; Sept 2026 rate sheet shows 0.00%–3.40% range)",
+          "name": "Poloko Savings (tiered; 0.10% for P500–P19,999 per product page; September 2026 rate sheet shows 0.00%–3.40% range)",
           "source": "https://www.fnbbotswana.co.bw/transactional-savings-account/poloko.html",
           "rate": 0.001
         }
@@ -651,7 +651,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "DSK Bank": {
         "confidence": "H",
         "savings": {
-          "name": "Безсрочен влог (demand savings deposit, EUR; interest bulletin 25.08.2026)",
+          "name": "Безсрочен влог (demand savings deposit, EUR; interest bulletin August 25, 2026)",
           "source": "https://dskbank.bg/docs/default-source/%D0%BB%D0%B8%D1%85%D0%B2%D0%B5%D0%BD-%D0%B1%D1%8E%D0%BB%D0%B5%D1%82%D0%B8%D0%BD/%D0%BB%D0%B8%D1%85%D0%B2%D0%B5%D0%BD-%D0%B1%D1%8E%D0%BB%D0%B5%D1%82%D0%B8%D0%BD-%D0%B7%D0%B0-%D1%84%D0%B8%D0%B7%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8-%D0%BB%D0%B8%D1%86%D0%B0.pdf",
           "rate": 0
         }
@@ -762,7 +762,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "CuentaRUT",
           "source": "https://www.meganoticias.cl/dato-util/531486-bancoestado-elimina-cobro-300-transferencias-cuentarut-otros-bancos-2026.html",
-          "note": "No opening or maintenance fee; transfers to other banks free since 2026-04-15; some per-use charges remain."
+          "note": "No opening or maintenance fee; transfers to other banks free since April 15, 2026; some per-use charges remain."
         },
         "savings": {
           "name": "Cuenta de Ahorro",
@@ -903,7 +903,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "Banco de Costa Rica": {
         "confidence": "H",
         "savings": {
-          "name": "Cuenta de ahorro en colones (tiered 0.25% for ₡0–25,000 up to 1.75% over ₡25M; effective 5 Mar 2026)",
+          "name": "Cuenta de ahorro en colones (tiered 0.25% for ₡0–25,000 up to 1.75% over ₡25M; effective March 5, 2026)",
           "source": "https://www.bancobcr.com/wps/portal/bcr/bancobcr/personas/cuentas/ahorro/tasas",
           "rate": 0.0025
         }
@@ -947,7 +947,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "Privredna banka Zagreb": {
         "confidence": "M",
         "savings": {
-          "name": "e-štedni ulog po viđenju (EUR, rates valid from 21 Apr 2026)",
+          "name": "e-štedni ulog po viđenju (EUR, rates valid from April 21, 2026)",
           "source": "https://www.pbz.hr/document/documents/PBZ/stednja/PBZ_Kamatne-stope_21042026.pdf",
           "rate": 0.0001
         }
@@ -986,7 +986,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "Quarterly maintenance fee reported as rising from EUR 6 to EUR 12 per quarter; not confirmed against the 2026 tariff."
         },
         "savings": {
-          "name": "Savings Account (instant access, adults; minors 0.20%; table dated 17/04/2025)",
+          "name": "Savings Account (instant access, adults; minors 0.20%; table dated April 17, 2025)",
           "source": "https://www.bankofcyprus.com/globalassets/cyprus/personal/loans/rates/katathetika-en/table-of-deposit-interest-rates-17042025.pdf",
           "rate": 0
         }
@@ -1043,7 +1043,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "Nordea": {
         "confidence": "H",
         "savings": {
-          "name": "Opsparingskonto (0.25% up to DKK 100,000, 0% above; from 9 Jun 2026)",
+          "name": "Opsparingskonto (0.25% up to DKK 100,000, 0% above; from June 9, 2026)",
           "source": "https://www.nordea.dk/privat/renteaendringer-privat-erhverv.html",
           "rate": 0.0025
         }
@@ -1051,7 +1051,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "Jyske Bank": {
         "confidence": "H",
         "savings": {
-          "name": "Opsparingskonto – uden opsigelse (0.15% up to DKK 500,000, 0.35% above; price list 24 Sep 2026)",
+          "name": "Opsparingskonto – uden opsigelse (0.15% up to DKK 500,000, 0.35% above; price list September 24, 2026)",
           "source": "https://www.jyskebank.dk/privat/priser/konti/opsparing",
           "rate": 0.0015
         }
@@ -1106,7 +1106,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Cuenta de Ahorro Popular",
           "source": "https://popularenlinea.com/Personas/Paginas/cuentas/ahorro-popular.aspx",
-          "note": "Free while the minimum balance is kept; tariff updated 2026-06-13."
+          "note": "Free while the minimum balance is kept; tariff updated June 13, 2026."
         },
         "savings": {
           "name": "Cuenta de Ahorro Popular",
@@ -1118,7 +1118,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
   "EC": {
     "interestTax": {
       "rate": 0.03,
-      "note": "3% income-tax withholding on interest from 2026-03-01 (was 2%); creditable on the annual return; deposits of 180+ days exempt.",
+      "note": "3% income-tax withholding on interest from March 1, 2026 (was 2%); creditable on the annual return; deposits of 180+ days exempt.",
       "source": "https://aena.com.ec/ecuador-sri-incrementa-al-3-la-retencion-del-impuesto-a-la-renta-sobre-rendimientos-financieros-desde-marzo-de-2026/"
     },
     "products": {
@@ -1151,13 +1151,13 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Classic Current Account",
           "source": "https://www.cibeg.com/en/personal/accounts-and-deposits/current-accounts/classic",
           "monthlyFee": 4000,
-          "note": "Converted from EGP 120 per quarter statement/administrative fee (as of 1 Sep 2026); minimum balance EGP 20,000, EGP 100 fee if below."
+          "note": "Converted from EGP 120 per quarter statement/administrative fee (as of September 1, 2026); minimum balance EGP 20,000, EGP 100 fee if below."
         }
       },
       "Banque Misr": {
         "confidence": "H",
         "savings": {
-          "name": "Saving Account in EGP (annual payout, >EGP 10,000–50,000 tier; 9.00% if paid monthly; min opening EGP 3,000; 20 Sep 2026)",
+          "name": "Saving Account in EGP (annual payout, >EGP 10,000–50,000 tier; 9.00% if paid monthly; min opening EGP 3,000; September 20, 2026)",
           "source": "https://www.banquemisr.com/-/media/Interest-rates/interest-rates-EN.ashx",
           "rate": 0.095
         }
@@ -1354,7 +1354,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "BREDAccess",
           "source": "https://www.moneyvox.fr/tarif-bancaire/bred-guyane/",
           "monthlyFee": 568,
-          "note": "EUR 68.16 per year package; tariff as of 2026-06-25."
+          "note": "EUR 68.16 per year package; tariff as of June 25, 2026."
         },
         "savings": {
           "name": "Livret A",
@@ -1372,7 +1372,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Compte à vue",
           "source": "https://www.socredo.pf/uploads/documents/cards/tarifflyerpart-avril2025-6808484ca2f2f359037817.pdf",
           "monthlyFee": 38300,
-          "note": "Tenue de compte: 383 XPF per month (4,596 XPF per year), tariff from 1 April 2025. A newer tariff from 1 May 2026 exists but was not read. A free basic-banking account (services bancaires de base) also exists."
+          "note": "Tenue de compte: 383 XPF per month (4,596 XPF per year), tariff from April 1, 2025. A newer tariff from May 1, 2026 exists but was not read. A free basic-banking account (services bancaires de base) also exists."
         },
         "savings": {
           "name": "Compte sur livret",
@@ -1469,7 +1469,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Personal Account",
           "source": "https://www.gibintbank.gi/wp-content/uploads/2025/09/Fees-Charges-Guide-18.09.2025.pdf",
-          "note": "The Fees & Charges Guide (18 Sep 2025) lists a monthly maintenance fee only for business accounts (GBP 15); none found for personal accounts."
+          "note": "The Fees & Charges Guide (September 18, 2025) lists a monthly maintenance fee only for business accounts (GBP 15); none found for personal accounts."
         },
         "savings": {
           "name": "Personal Savings Account",
@@ -1728,7 +1728,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "HSBC One",
           "source": "https://www.hsbc.com.hk/accounts/remove-below-balance-fees/",
-          "note": "No below-balance fee for HKID holders; accounts opened from 2026-01-01 by non-HKID holders with total balance under HKD 10,000 pay a management fee."
+          "note": "No below-balance fee for HKID holders; accounts opened from January 1, 2026 by non-HKID holders with total balance under HKD 10,000 pay a management fee."
         },
         "savings": {
           "name": "HSBC Hong Kong Dollar Savings Account",
@@ -1751,7 +1751,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "OTP Smart számlacsomag",
           "source": "https://www.otpbank.hu/static/portal/sw/file/OTP_Smart_H_20251118_v2.pdf",
           "statedFee": 108200,
-          "note": "Normal fee with e-statement (HUF 1,359 with paper); free when at least the net minimum wage (HUF 214,662 in 2026) arrives monthly from another bank. Terms effective 2025-11-18."
+          "note": "Normal fee with e-statement (HUF 1,359 with paper); free when at least the net minimum wage (HUF 214,662 in 2026) arrives monthly from another bank. Terms effective November 18, 2025."
         },
         "savings": {
           "name": "Smart Takarékszámla",
@@ -1863,7 +1863,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "XME Conto",
           "source": "https://www.intesasanpaolo.com/content/dam/vetrina/trasparenza/it/Documenti/Doc/Pdf/FI/FI-Other/FI-1245.pdf",
           "monthlyFee": 850,
-          "note": "Base monthly fee (EUR 102/year) per the information sheet updated 21.07.2026; add-on services and promotions change the total."
+          "note": "Base monthly fee (EUR 102/year) per the information sheet updated July 21, 2026; add-on services and promotions change the total."
         },
         "savings": {
           "name": "XME Salvadanaio",
@@ -1885,7 +1885,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Chequing Account",
           "source": "https://www.jncb.com/getmedia/1fb379c3-ca5a-4921-9e5e-4989b4ec5145/Customer-Fee-Guide-Effective-Dec-1-2025.pdf",
-          "note": "No charge at or above a J$75,000 minimum monthly credit balance; below it J$108.71 per entry with a J$1,015.27 minimum monthly service charge (fee guide effective 2025-12-01)."
+          "note": "No charge at or above a J$75,000 minimum monthly credit balance; below it J$108.71 per entry with a J$1,015.27 minimum monthly service charge (fee guide effective December 1, 2025)."
         },
         "savings": {
           "name": "Quick Save",
@@ -1956,7 +1956,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Kaspi Gold",
           "source": "https://guide.kaspi.kz/client/ru/gold/conditions/q1635",
           "monthlyFee": 16625,
-          "note": "Annual service fee of KZT 1,995, shown here as 1,995/12. First year free; charged only if the card was used during the year. In Feb 2026 Kaspi denied reports of a rise to KZT 10,000."
+          "note": "Annual service fee of KZT 1,995, shown here as 1,995/12. First year free; charged only if the card was used during the year. In February 2026 Kaspi denied reports of a rise to KZT 10,000."
         },
         "savings": {
           "name": "Kaspi Депозит",
@@ -2062,7 +2062,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Current account",
           "source": "https://www.swedbank.lv/private/home/pricelist/accounts",
           "statedFee": 200,
-          "note": "EUR 2.00/month maintenance from 1 June 2026 for many customers; free for some (exemption conditions not verified)."
+          "note": "EUR 2.00/month maintenance from June 1, 2026 for many customers; free for some (exemption conditions not verified)."
         },
         "savings": {
           "name": "Krājrīks",
@@ -2505,7 +2505,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "maib daily",
           "source": "https://www.maib.md/ro/anunturi/anunt-privind-modificarea-tarifelor-si-comisioanelor-pentru-deservirea-cardurilor-persoanelor-fizice",
           "monthlyFee": 1500,
-          "note": "MDL 15/month card-account fee from 2026-03-16; free under Smart Pricing with at least MDL 3,000 of card payments a month"
+          "note": "MDL 15/month card-account fee from March 16, 2026; free under Smart Pricing with at least MDL 3,000 of card payments a month"
         }
       }
     }
@@ -2679,7 +2679,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "ING BasisPakket",
           "source": "https://nieuws.ing.nl/nl-NL/254860-ing-wijzigt-tarieven-voor-particuliere-betaalpakketten-per-januari-2026/",
           "monthlyFee": 485,
-          "note": "Raised from EUR 4.60 on 2026-01-01"
+          "note": "Raised from EUR 4.60 on January 1, 2026"
         },
         "savings": {
           "name": "Oranje Spaarrekening",
@@ -2866,7 +2866,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "HBL Conventional Current Account",
           "source": "https://www.hbl.com/assets/documents/SOBC_January_to_June_2026_-_English_Web.pdf",
-          "note": "Exempt from the Rs 50/month low-balance service charge (SOBC Jan-Jun 2026); other accounts such as HBL Freedom pay Rs 50/month if monthly average balance < Rs 40,000"
+          "note": "Exempt from the Rs 50/month low-balance service charge (SOBC January to June 2026); other accounts such as HBL Freedom pay Rs 50/month if monthly average balance < Rs 40,000"
         },
         "savings": {
           "name": "HBL PLS Savings Account",
@@ -3190,7 +3190,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "СберКарта (SberCard)",
           "source": "https://bankinform.ru/news/138284",
-          "note": "Servicing free without conditions since 1 July 2025."
+          "note": "Servicing free without conditions since July 1, 2025."
         },
         "savings": {
           "name": "Накопительный счёт",
@@ -3370,7 +3370,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Depósito à Ordem",
           "source": "https://www.bistp.st/dotAsset/cd57fa50-a1e9-49f4-bfb7-e6ae4b117a2e.pdf",
-          "note": "The 1 Jan 2026 price list charges a monthly maintenance commission by average-balance tier (roughly Db 11 to 25) plus 3.5% stamp duty; the tier layout was not read cleanly."
+          "note": "The January 1, 2026 price list charges a monthly maintenance commission by average-balance tier (roughly Db 11 to 25) plus 3.5% stamp duty; the tier layout was not read cleanly."
         }
       }
     }
@@ -3550,7 +3550,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Paket Osnovni",
           "source": "https://www.nlb.si/content/dam/nlb/pdf-files/osebne-finance/racuni-paketi/Izvlecek-iz-tarife-osebni-racun-STP.pdf.coredownload.pdf",
           "statedFee": 699,
-          "note": "Tariff extract valid from 1 Aug 2026; Paket Digitalni is €0.99 and free for adults up to 27; under-30s get 50% off Paket Osnovni."
+          "note": "Tariff extract valid from August 1, 2026; Paket Digitalni is €0.99 and free for adults up to 27; under-30s get 50% off Paket Osnovni."
         },
         "savings": {
           "name": "NLB Varčevalni račun",
@@ -3600,7 +3600,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Capitec account (Main account)",
           "source": "https://mybroadband.co.za/news/banking/627990-capitec-bank-charges-for-2026-revealed.html",
           "monthlyFee": 750,
-          "note": "R7.50 monthly admin fee, unchanged for 2026 (valid from 1 March 2026)."
+          "note": "R7.50 monthly admin fee, unchanged for 2026 (valid from March 1, 2026)."
         },
         "savings": {
           "name": "Access anytime",
@@ -3817,7 +3817,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://crdbbank.co.tz/en/for-you/personal-banking/current-account",
-          "note": "Fees are in CRDB's Minimum Disclosure of Bank Fees and Charges (17 Sept 2026), not read."
+          "note": "Fees are in CRDB's Minimum Disclosure of Bank Fees and Charges (September 17, 2026), not read."
         },
         "savings": {
           "name": "Savings Account",
@@ -3952,7 +3952,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
   "TR": {
     "interestTax": {
       "rate": 0.175,
-      "note": "17.5% on TL demand deposits and terms up to 6 months (15% up to 1 year, 10% over 1 year), extended to 31 Dec 2026.",
+      "note": "17.5% on TL demand deposits and terms up to 6 months (15% up to 1 year, 10% over 1 year), extended to December 31, 2026.",
       "source": "https://www.yontemymm.com.tr/mali-aciklamalar/2026-041-tl-mevduat-hesaplarinda-uygulanan-stopaj-oranlarinin-suresi-uzatildi"
     },
     "products": {
@@ -4119,7 +4119,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Cuenta Corriente",
           "source": "https://www.bcv.org.ve/notas-de-prensa/bcv-adecua-tasas-de-interes-todos-los-depositos-en-bs-seran-remunerados-partir-del",
-          "note": "From 2026-09-15 the BCV requires at least 10% a year on bolívar demand deposits."
+          "note": "From September 15, 2026 the BCV requires at least 10% a year on bolívar demand deposits."
         },
         "savings": {
           "name": "Cuenta de Ahorro",
@@ -4284,7 +4284,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "ZERO Package",
           "source": "https://www.procreditbank-kos.com/eng/news/procredit-banks-zero-package-lifetime-free-ma-1869/",
-          "note": "Free lifetime maintenance for new clients who moved their salary to ProCredit by 30 June 2026 (offer now closed). The standard package fee was not found; new fees took effect 1 Oct 2026."
+          "note": "Free lifetime maintenance for new clients who moved their salary to ProCredit by June 30, 2026 (offer now closed). The standard package fee was not found; new fees took effect October 1, 2026."
         }
       }
     }

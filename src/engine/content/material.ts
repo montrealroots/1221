@@ -284,5 +284,5 @@ export const MATERIAL_BY_ID: Readonly<Record<string, MaterialProfile>> = Object.
 /** A camera's material for a self-tape of a genre: the medium alone is known (`systems/engagement.ts`). */
 export const SELF_TAPE_MATERIAL: MaterialProfile = m({
   id: 'self-tape', title: 'A Self-Tape', medium: 'camera', language: 'everyday', timing: 1, physical: 0, partner: 1, vocal: 0, tones: ['grave'], turns: 1, allows: { scale: ['restrained'] },
-  why: { allows: 'A close shot magnifies: what reads at the back of a house reads as too much in a frame (Caine, Acting in Film, 1990; research-practice-material.json).', partner: 'A reader off camera, not a scene partner.' },
+  why: { allows: 'A close shot magnifies: what carries to the back row of a theater looks like too much in a frame (Michael Caine, Acting in Film, 1990).', partner: 'A reader off camera, not a scene partner.' },
 });

@@ -249,7 +249,7 @@ const jan12 = once(() => { const sim = life('e3-r1', chosen('scraping')); tend(s
  * column on 2026-10-16 (the school area: the review's count was written and read by nothing), and until later that day the
  * row asserted here ran from the class's growth straight to the review's words.
  */
-const courseworkCell = (r: { coursework?: { shown: number; unready: number } }) => (r.coursework ? `${r.coursework.unready} of ${r.coursework.shown} unready or not shown` : 'None counted');
+const courseworkCell = (r: { coursework?: { shown: number; unready: number } }) => (r.coursework ? `${r.coursework.unready} of ${r.coursework.shown} Unready or not shown` : 'None counted');
 
 describe('school.respond', () => {
 
@@ -280,7 +280,7 @@ describe('school.respond', () => {
     expect(after.status).toBe('lapsed');
     // An invitation left unanswered costs the trust 1 (`CLASS.study.unanswered`), and nothing of the bond.
     expect(trustOf(sim.player.school!.classmates[m!.mate]!)).toBe(trust - 1);
-    for (const choice of ['yes', 'no']) expect(sim.execute({ kind: 'school.respond', payload: { momentId: m!.id, choice } }).error).toBe('It’s too late to answer: the moment passed.');
+    for (const choice of ['yes', 'no']) expect(sim.execute({ kind: 'school.respond', payload: { momentId: m!.id, choice } }).error).toBe('It’s too late to answer. The moment has passed.');
     expect(pendingOf(sim, STUDY_KIND)).toHaveLength(0);
   }, 60_000);
 
@@ -300,7 +300,7 @@ describe('school.respond', () => {
     expect(pendingOf(before, STUDY_KIND)).toHaveLength(0);
     before.must({ kind: 'school.respond', payload: { momentId: m!.id, choice: 'no' } });
     expect(momentsOf(courseworkOf(before, before.player)!).find((x) => x.id === m!.id)!.status).toBe('answered');
-    expect(now.execute({ kind: 'school.respond', payload: { momentId: m!.id, choice: 'yes' } }).error).toBe('It’s too late to answer: the moment passed.');
+    expect(now.execute({ kind: 'school.respond', payload: { momentId: m!.id, choice: 'yes' } }).error).toBe('It’s too late to answer. The moment has passed.');
   }, 60_000);
 });
 
@@ -335,7 +335,7 @@ describe('school.take_shift', () => {
     expect(drawn(sim, SchoolWorkspace, tab).text).toContain('Elective Hours Asked For 32');
     // The ninth: every evening of the next fourteen days is booked or past the week's cap.
     expect(press('school.take_shift')).toEqual([]);
-    expect(sim.execute({ kind: 'school.take_shift', payload: {} }).error).toBe('No free evening in the next two weeks within Yale’s cap of 19 hours a week in term, across all your Yale jobs.');
+    expect(sim.execute({ kind: 'school.take_shift', payload: {} }).error).toBe('There’s no free evening in the next two weeks within Yale’s cap of 19 hours a week in term, across all your Yale jobs.');
     expect(electives()).toHaveLength(8);
     expect(sim.player.school!.workStudy.electiveHours).toBe(32);
     // Worked as booked: each evening done, and none called off at the door for the cap.
@@ -399,7 +399,7 @@ describe('standing/term evaluation', () => {
     expect(p.growth).toBeLessThan(0.5 * p.classRaw);
     expect(p.paced).toBeGreaterThanOrEqual(1.1 * p.classPace);
     expect(review).toMatchObject({ term: 0, attendance: 1, standing: 'good' });
-    expect(review!.reason.startsWith(`You were at 100% of what was asked of you, and your craft grew ${p.growth.toFixed(1)} against the class’s ${p.classRaw.toFixed(1)}: for the room each of you had to grow, ahead of the class.`)).toBe(true);
+    expect(review!.reason.startsWith(`You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${p.growth.toFixed(1)} points, and the class’s middle student’s grew ${p.classRaw.toFixed(1)}. Allowing for how much room each of you had to grow, that’s ahead of the class.`)).toBe(true);
     expect(near.player.school!.standing).toBe('good');
     expect(drawn(near, SchoolWorkspace, { 'tab:/workspace/school': 'standing' }).text).toContain(`Fall Term 2026 Good Standing 100% ${p.growth.toFixed(1)} ${p.classRaw.toFixed(1)} ${courseworkCell(review!)} ${review!.reason}`);
     // The twin as played began two thirds of the way and grew past half the class's raw points: the same fall otherwise.
@@ -424,7 +424,7 @@ describe('standing/term evaluation', () => {
     expect(review!.coursework!.unready * 2).toBeLessThan(review!.coursework!.shown);
     expect(Object.values(far.player.school!.courses ?? {}).filter((r) => r.result === 'fail')).toEqual([]);
     expect(review!.work).toBeUndefined();
-    expect(review!.reason).toMatch(new RegExp(`^You were at 100% of what was asked of you, and your craft grew ${p.growth.toFixed(1)} against the class’s ${p.classRaw.toFixed(1)}: for the room each of you had to grow, behind the class\\.( The faculty noted your coursework: \\d+ of \\d+ pieces strong or better\\.)?$`));
+    expect(review!.reason).toMatch(new RegExp(`^You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${p.growth.toFixed(1)} points, and the class’s middle student’s grew ${p.classRaw.toFixed(1)}. Allowing for how much room each of you had to grow, that’s behind the class\\.( The faculty noted your coursework: \\d+ of \\d+ pieces were Strong or better\\.)?$`));
     expect(far.player.school!.standing).toBe('concern');
     expect(drawn(far, SchoolWorkspace, { 'tab:/workspace/school': 'standing' }).text).toContain(`Fall Term 2026 Academic Concern 100% ${p.growth.toFixed(1)} ${p.classRaw.toFixed(1)} ${courseworkCell(review!)} ${review!.reason}`);
   }, 60_000);
@@ -542,7 +542,7 @@ describe('school.request_conversion, for a nonresident the screen made with need
     tend(sim, leave.decideAt + MS_HOUR);
     expect(sim.player.school!.leave!.status).toBe('on');
     expect(pendingOf(sim, CONVERT_KIND)).toHaveLength(0);
-    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('Not while on leave: a student on leave has no aid.');
+    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toBe('You can’t while you’re on leave: a student on leave has no aid.');
     tend(sim, at(2027, 1, 15, 13));
     expect(grantsOf(sim)).toHaveLength(0);
     expect(sim.player.school!.convertedHours).toBeUndefined();
@@ -562,8 +562,8 @@ describe('school.pay_balance, for a balance a family chosen on the screen leaves
     // at eleven at night, and a tenth of that has passed only at about seven on the morning of the 21st.
     expect(sim.player.school!.leave!.aidReturned).toBe(15_200_50);
     expect(accountOwed(sim, sim.player)).toBe(15_200_50);
-    expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: 0 } }).error).toBe('Pay something.');
-    expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: 15_200_51 } }).error).toBe('$15,200.50 is owed; pay that or less.');
+    expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: 0 } }).error).toBe('Enter an amount to pay.');
+    expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: 15_200_51 } }).error).toBe('$15,200.50 is owed. Pay that or less.');
     const bank = checking(sim).balance;
     expect(sim.must({ kind: 'school.pay_balance', payload: { amount: 100_00 } })).toEqual({ owed: 15_100_50, held: false });
     expect(checking(sim).balance).toBe(bank - 100_00);

@@ -161,22 +161,22 @@ export function inFuelSeason(at: Instant): boolean {
 }
 
 export function irishPensionRefusal(sim: Simulation, person: Person): string | undefined {
-  if (person.irishPension) return 'You’re drawing it.';
-  if (ageAt(person, sim.now) < IRISH_PENSION.age) return 'From 66; more if you wait to 67, and more again to 68.';
+  if (person.irishPension) return 'You’ve already claimed it.';
+  if (ageAt(person, sim.now) < IRISH_PENSION.age) return 'You can claim it from 66. It’s more if you wait until 67, and more again until 68.';
   const n = irishContributions(person, saveCurrency(sim.universe));
   if (n >= IRISH_PENSION.paidNeeded) return undefined;
-  if (!meansTested(person)) return `It takes 520 paid contributions; your Irish record has ${n}. The means-tested pension is for someone living in Ireland.`;
-  if (nonContributoryWeekly(ageAt(person, sim.now), irishMeans(sim, person)) === 0) return `Your Irish record has ${n} contributions, and your means are over the non-contributory pension’s.`;
+  if (!meansTested(person)) return `It takes 520 paid contributions, and your Irish record has ${n}. The means-tested pension is only for someone living in Ireland.`;
+  if (nonContributoryWeekly(ageAt(person, sim.now), irishMeans(sim, person)) === 0) return `Your Irish record has ${n} contributions, and your means are over the non-contributory pension’s limit.`;
   return undefined;
 }
 
 export const livesInMexico = (person: Person) => CITIES.get(homeOf(person))?.countryId === 'mx';
 
 export function bienestarRefusal(sim: Simulation, person: Person): string | undefined {
-  if (person.bienestarFrom !== undefined) return 'You’re drawing it.';
-  if (isoOfCountry(person.citizenshipId) !== 'MX') return 'It’s for Mexicans.';
-  if (!livesInMexico(person)) return 'It’s for Mexicans living in Mexico.';
-  if (ageAt(person, sim.now) < BIENESTAR.age) return 'From 65.';
+  if (person.bienestarFrom !== undefined) return 'You’ve already claimed it.';
+  if (isoOfCountry(person.citizenshipId) !== 'MX') return 'It’s only for Mexican citizens.';
+  if (!livesInMexico(person)) return 'It’s only for Mexican citizens living in Mexico.';
+  if (ageAt(person, sim.now) < BIENESTAR.age) return 'You can claim it from 65.';
   return undefined;
 }
 

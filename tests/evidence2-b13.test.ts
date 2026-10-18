@@ -239,7 +239,7 @@ describe('i-ui-text', () => {
     // Attributes And Craft: Listening's last change is the hour, to two places.
     expect(listeningRow(page.text)).toContain(`+0.12, ${THE_LINE} `);
     // Development History, newest first: the day, the ability by name, to three places.
-    expect(historyPanel(page.text)).toContain(`Development History The latest 400 changes, newest first August 27, 2026: Listening And Responsiveness +0.120, ${THE_LINE}`);
+    expect(historyPanel(page.text)).toContain(`Development History Your last 400 changes, newest first August 27, 2026: Listening And Responsiveness +0.120, ${THE_LINE}`);
     // Twice, in those two places, and nothing else on the page or its controls says interest.
     expect(count(page.text, THE_LINE)).toBe(2);
     expect(page.text.split(THE_LINE).join('')).not.toMatch(/\binterests?\b/i);
@@ -265,7 +265,7 @@ describe('i-ui-text', () => {
     const twin = drawn(await opened('b13-sound-hour', false), ProfileWorkspace);
     expect(twin.text).not.toMatch(/interest/i);
     expect(listeningRow(twin.text)).toContain(' None yet ');
-    expect(historyPanel(twin.text)).toContain('Nothing yet: the history begins with the first class, step or hour of practice.');
+    expect(historyPanel(twin.text)).toContain('No changes yet. The history begins with your first class, preparation step or hour of practice.');
 
     // An hour of the Repetition Exercise at 1 PM, the Profile's Practice An Hour for Listening.
     tended(game, EDT(2026, 8, 28, 13));
@@ -321,12 +321,12 @@ describe('i-ui-text', () => {
     // The contents, as ? opens them: no interests among the goals and the entries' titles.
     address('#/home');
     const contents = drawn(sim, createElement(HelpProvider, null, null), [[{ kind: 'contents' }]]);
-    expect(contents.text).toContain('The Guide’s Chapters.');
+    expect(contents.text).toContain('The Guide.');
     expect(contents.text).not.toMatch(/\binterests\b/i);
 
     // TEST SETUP: the trail of a player who typed into Search The Guide. "interests" finds nothing.
     const none = drawn(sim, createElement(HelpProvider, null, null), [[{ kind: 'contents' }, { kind: 'search', q: 'interests' }]]);
-    expect(none.text).toContain('Nothing matches “interests”. Try fewer words, or the contents.');
+    expect(none.text).toContain('Nothing matches “interests”. Try fewer or different words, or go back to Contents.');
     // "interest" finds entries, each one money's or the papers'.
     const some = drawn(sim, createElement(HelpProvider, null, null), [[{ kind: 'contents' }, { kind: 'search', q: 'interest' }]]);
     const found = some.controls.filter((c) => c.type === 'button' && c.props.className === 'help-link strong').map((c) => c.text);
@@ -641,9 +641,9 @@ describe('health.enroll: the work rules in the guide and the tutorial, as the pl
     });
     const entry = drawn(sim, createElement(HelpProvider, null, null));
     expect(entry.html).toContain('<h3 id="entry-papers.health-cover"');
-    expect(entry.text).toContain('From 1 January 2027, some of the month before you enroll spent at the School, or $580 of income of any kind in it, or an exception: 65 or over, SNAP received under its work rules, or a stay in hospital you ask for.');
+    expect(entry.text).toContain('From January 1, 2027, some of the month before you enroll spent at the School, or $580 of income of any kind in it, or an exception: 65 or over, SNAP received under its work rules, or a stay in hospital you ask for.');
     expect(entry.text).toContain('A month meets them with any of it spent at the School (the month you leave it, on a leave, by withdrawing or with the degree, counts whole, and so does the month you come back), $580 of income of any kind (pay, an unemployment benefit, interest or a pension)');
-    expect(entry.text).toContain('“From January 1, 2027, HUSKY D asks an applicant for $580.00 of income, time at the School or an exception in the month before, and last month had none of them.”');
+    expect(entry.text).toContain('HUSKY D, its work rules not shown: “From January 1, 2027, … asks for … in the month before you apply, and last month had none of them.”, naming HUSKY D and what it asks: $580.00 of income, time at the School or an exception.');
     expect(entry.text).not.toMatch(/hours’ work|hours of work|half-time/);
 
     // TEST SETUP: the chapter the guide shows, as pressing it in the contents sets it.
@@ -651,7 +651,7 @@ describe('health.enroll: the work rules in the guide and the tutorial, as the pl
     const chapter = drawn(sim, createElement(GuideProvider, null, null), [CHAPTERS[i]!.id]);
     expect(chapter.text).toContain(`Chapter ${i + 1} Of ${CHAPTERS.length} ${CHAPTERS[i]!.title}`);
     expect(chapter.text).toContain('From 2027 Medicaid asks for a month spent partly at the School, or one with $580 of income (pay, interest or a benefit counts), unless you’re 65 or over, on SNAP under its work rules or, if you ask, in hospital that month');
-    expect(chapter.text).toContain('if you fit neither, or its work rules aren’t met, it ends at a month’s end');
+    expect(chapter.text).toContain('If you fit neither, or its work rules aren’t met, it ends at a month’s end');
     expect(chapter.text).not.toMatch(/hours’ work|hours of work|half-time/);
   }, 60_000);
 });

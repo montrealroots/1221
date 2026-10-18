@@ -116,7 +116,7 @@ describe('an hour of practice, said before it', () => {
     // The second hour on it today was a repeat, said so, at half.
     const again = practicePreview(sim, sim.player, e);
     expect(again.terms.repeat).toBe(0.25);
-    expect(again.words).toMatch(/hour 3 on it today keeps 25%/);
+    expect(again.words).toMatch(/hour 3 on it today gives 25% of the first/);
     expect(practiceHour(sim, sim.player, e).gained).toBeCloseTo(again.gain, 12);
   });
 
@@ -179,7 +179,7 @@ describe('a mastered player whose partner never comes', () => {
       const r = step(sim, a, READER.id);
       expect(r.ok, r.error).toBe(true);
       // Once a day, as the step says.
-      expect(step(sim, a, READER.id).error).toMatch(/Done today already/);
+      expect(step(sim, a, READER.id).error).toMatch(/You’ve done this today\./);
       evenings += 1;
       sim.advanceTo(sim.now + MS_DAY);
     }

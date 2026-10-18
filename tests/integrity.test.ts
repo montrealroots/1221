@@ -113,7 +113,9 @@ describe('malformed and hostile input', () => {
   it('refuses a command that does not exist rather than doing nothing quietly', () => {
     const result = sim.execute({ kind: 'finance.drain_everything', payload: {} });
     expect(result.ok).toBe(false);
-    expect(result.error).toMatch(/Unknown command/);
+    // The command's id is the developer's, in `detail`; the player is told in words (from 2026-10-17, brief 14).
+    expect(result.detail).toMatch(/Unknown command/);
+    expect(result.error).toBe('That isn’t something the game can do, so it changed nothing.');
   });
 
   it('does not fall over on an absurdly large payload', () => {
@@ -140,7 +142,7 @@ describe('permission boundaries', () => {
     for (const kind of ['sandbox.add_funds', 'sandbox.max_attributes', 'sandbox.grant_all_traits', 'sandbox.god_mode', 'sandbox.toggle']) {
       const result = sim.execute({ kind, payload: { amount: 1_000_000_00, enabled: true } });
       expect(result.ok, `${kind} still exists`).toBe(false);
-      expect(result.error).toMatch(/unknown command/i);
+      expect(result.detail).toMatch(/unknown command/i);
     }
     expect(sim.ledger.audit()).toEqual([]);
   });

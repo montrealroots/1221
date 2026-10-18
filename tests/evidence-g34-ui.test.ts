@@ -9,9 +9,11 @@
  * them with.
  *
  * - n-dismiss-expire: the tax season's row for a London-born student, Dismiss pressed on Home, takes it off What Needs
- *   You at once; a second press is refused with "It’s dismissed already." and the day of the first is kept, across a
+ *   You at once; a second press is refused with "You’ve already dismissed that question." ("It’s dismissed already."
+ *   until 2026-10-17, brief 14) and the day of the first is kept, across a
  *   save and a load; through its due date nothing asks again; it's kept for 180 days from the dismissal and gone at the
- *   first world tick after, when the command says "No such decision.". Until 2026-10-14 an undated row left alone was
+ *   first world tick after, when the command says "That question isn’t in What Needs You any more." ("No such
+ *   decision." until 2026-10-17). Until 2026-10-14 an undated row left alone was
  *   dismissed by the world at the first tick past 90 days, and a dismissed row dated 300 days on outlived the 180 until
  *   its date, rules no play reached, held here on rows raised by hand; the owner had both go that day, and a dismissed
  *   row dated 300 days on is gone at the first tick past its 180; and Home lists what's open overdue first, then by urgency, then
@@ -229,21 +231,21 @@ describe('n-dismiss-expire', () => {
     expect(sim.universe.decisions[row.id]!.resolvedAt).toBeUndefined();
     expect(openDecisions(sim)).toEqual([]);
     const after = drawn(sim, Home);
-    expect(needs(after.text)).toContain('What Needs You No decision is waiting on you.');
+    expect(needs(after.text)).toContain('What Needs You No questions are waiting on you.');
     expect(after.text).not.toContain('Your 2026 Tax Return');
     expect(after.controls.some((c) => c.type === 'button' && c.text === 'Dismiss')).toBe(false);
 
     // Pressed again an hour on: refused in its own words, and the day it was dismissed is the first press's.
     sim.advanceTo(EST(2027, 2, 1, 11));
     const twice = dismiss(sim, row.id);
-    expect([twice.ok, twice.error]).toEqual([false, 'It’s dismissed already.']);
+    expect([twice.ok, twice.error]).toEqual([false, 'You’ve already dismissed that question.']);
     expect(sim.universe.decisions[row.id]!.dismissedAt).toBe(EST(2027, 2, 1, 10));
 
     // Saved and loaded a month on: still dismissed, from the same day, and still refused.
     sim.advanceTo(EST(2027, 3, 1, 12));
     sim = reload(sim);
     expect(sim.universe.decisions[row.id]!.dismissedAt).toBe(EST(2027, 2, 1, 10));
-    expect(dismiss(sim, row.id).error).toBe('It’s dismissed already.');
+    expect(dismiss(sim, row.id).error).toBe('You’ve already dismissed that question.');
 
     // Past its date: nothing asks again, the one row is the one dismissed, and it was never resolved.
     sim.advanceTo(EDT(2027, 4, 20, 12));
@@ -257,8 +259,8 @@ describe('n-dismiss-expire', () => {
     sim.advanceTo(EST(2027, 2, 1, 10) + 182 * MS_DAY + MS_HOUR);
     expect(sim.universe.decisions[row.id], 'a dismissed row outlived 180 days and its date').toBeUndefined();
     const gone = dismiss(sim, row.id);
-    expect([gone.ok, gone.error]).toEqual([false, 'No such decision.']);
-    expect(dismiss(sim, 'decision_999999').error).toBe('No such decision.');
+    expect([gone.ok, gone.error]).toEqual([false, 'That question isn’t in What Needs You any more.']);
+    expect(dismiss(sim, 'decision_999999').error).toBe('That question isn’t in What Needs You any more.');
   }, 60_000);
 
   // Until 2026-10-14 a test here held a rule no play reached, on a row raised by hand with no date: an undated row left
@@ -548,7 +550,7 @@ describe('i-genres-dispositions-intact', () => {
     expect(game.player.attrs!.discipline).toBe(40);
     expect(game.player.attrs!.composure).toBe(35.5);
     const page = drawn(game, ProfileWorkspace).text;
-    expect(page).toContain('Emotional Stability 30, how fast stress comes and clears, and where composure starts; Conscientiousness 20, how well a night’s sleep restores you, and where discipline starts; Ambition 70, how fast every stress comes; Risk Tolerance 90, over 65, so the card’s autopay started on the minimum; Extraversion 90, how a house watching sits with you; Openness 80, how rehearsing new work does; Agreeableness 10, how a rehearsal does.');
+    expect(page).toContain('Emotional Stability 30, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 20, how well you sleep, and where your Discipline starts; Ambition 70, how quickly stress builds, from work and from money alike; Risk Tolerance 90, over 65, so your card’s autopay began on the minimum payment; Extraversion 90, how being watched as you perform, by an audience or a class, affects your stress; Openness 80, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 10, how a day of rehearsal affects your morale.');
     expect(page).toContain('You love: Comedy.');
     expect(page).toContain('Discipline 40.0 ');
     expect(page).toContain('Composure 35.5 ');
@@ -571,7 +573,7 @@ describe('i-genres-dispositions-intact', () => {
     expect([away.player.credit!.autopay, start.player.credit!.autopay]).toEqual(['minimum', 'full']);
     // Sunday 20 September, 9 AM: twenty-seven midnights of New Haven's $10.00 of groceries, from Tuesday 25 August; Chase's
     // minimum is 1% and the month's interest, never under $40 (its published terms).
-    for (const sim of lives) expect(statements(sim)).toEqual([[EDT(2026, 9, 20, 9), '$270.00 to pay, at least $40.00.']]);
+    for (const sim of lives) expect(statements(sim)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.']]);
     // Sunday 11 October, 21 days on: the minimum, or the whole statement.
     expect(paid(away)).toEqual([40_00]);
     expect(paid(start)).toEqual([270_00]);

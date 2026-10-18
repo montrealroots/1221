@@ -49,12 +49,12 @@ describe('a genre’s register, on the brief', () => {
     expect(noir).toContain('The Genre Asks');
     expect(noir).toContain(`${CONCERNS.restraint.label}: ${CONCERNS.restraint.words}`);
     expect(noir).toContain(`${CONCERNS.tension.label}: ${CONCERNS.tension.words}`);
-    expect(noir).toContain('draws on your composure and focus');
-    expect(noir).toContain('From the genre’s research, mostly at low confidence.');
+    expect(noir).toContain('calls on your composure and focus');
+    expect(noir).toContain('This comes from the genre’s research, mostly held with low confidence.');
     const realism = pane(sim, 'social_realism');
     expect(realism).toContain(`${CONCERNS.spontaneity.label}: ${CONCERNS.spontaneity.words}`);
     expect(realism).not.toContain(CONCERNS.restraint.label);
-    expect(pane(sim, 'steampunk')).toContain('this is SLATE’s reading of its conventions');
+    expect(pane(sim, 'steampunk')).toContain('so this is estimated from its conventions');
   });
 
   it('says on the take’s line and in Your Takes Of It which concern asked for what held the take back', () => {
@@ -70,7 +70,7 @@ describe('a genre’s register, on the brief', () => {
     press('brief.choose', { brief: noir.id, reading: noir.readings[0]!.id });
     for (const step of ['read', 'lines', 'rehearse', 'read', 'lines', 'rehearse']) press('brief.prepare', { brief: noir.id, step });
     // Before the take: the forecast's line already names it.
-    expect(pane(sim, 'nordic_noir')).toMatch(/Composure held back the [a-z]+ by [\d.]+ points: Nordic Noir’s Feeling Held In asks for it\./);
+    expect(pane(sim, 'nordic_noir')).toMatch(/Your Composure holds back [A-Z][a-z]+ by [\d.]+ points: Nordic Noir’s Feeling Held In asks for it\./);
     press('practice.self_tape', { genre: 'nordic_noir', brief: noir.id });
     const after = pane(sim, 'nordic_noir');
     expect(after).toContain('The Last Take');

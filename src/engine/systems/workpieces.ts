@@ -18,7 +18,7 @@ import type { Person } from '../domain/model';
 import { formatTime, zonedParts } from '../core/time';
 import { BRIEF_BY_ID } from '../content/briefs';
 import { BRIEF, briefMaterial, briefPiece, forecast, recordOf, takeTogether, type BriefRecord } from './briefs';
-import { assignmentById, forecastWork, partnerPrepOf, scenePiece, togetherOf } from './coursework';
+import { assignmentById, forecastWork, partnerPrepOf, scenePiece, togetherOf, withPartLabels } from './coursework';
 import { templateById } from '../content/coursework';
 import { holderFor, processOf, runPending, type Which } from './production';
 import { companyRead, nightEvaluation, nightTogether, playPiece, type NightHolder } from './school';
@@ -64,7 +64,7 @@ function briefWork(sim: Simulation, person: Person, id: string): WorkPiece | und
     together: (e) => { const r = rec(); return r ? takeTogether(sim, person, b, r, e)?.overall : undefined; },
     ...(rec()?.reader && person.school?.classmates[rec()!.reader!.mate] ? { partner: { name: person.school.classmates[rec()!.reader!.mate]!.name, get: () => rec()?.reader?.prep ?? 0, set: (v: number) => { const r = recordOf(person, id).reader; if (r) r.prep = Math.round(v * 1000) / 1000; } } } : {}),
     refusal: () => {
-      if (!rec()?.reading) return 'Choose a reading first: the work is on the scene played one way.';
+      if (!rec()?.reading) return 'Choose a reading first. Working it through means working on the scene played one way.';
       if ((rec()?.prep.memorization ?? 0) < BRIEF.rehearseNeeds) return 'Learn some of the lines first: there’s nothing to rehearse without them.';
       return away(sim, person);
     },
@@ -85,7 +85,8 @@ function sceneWork(sim: Simulation, person: Person, id: string): WorkPiece | und
     material,
     ...(a.playing ? { playing: a.playing } : {}),
     spec: () => scenePiece(a) ?? { segments: [], work: [], part: 'rehearsal', perTurn: 0, perBlend: 0, most: 1, load: 0 },
-    forecast: () => forecastWork(sim, person, a, today(sim)),
+    // Its parts named as the card names them (from 2026-10-17, `withPartLabels`).
+    forecast: () => withPartLabels(forecastWork(sim, person, a, today(sim)), a),
     together: (e) => togetherOf(sim, person, a, today(sim), e)?.overall,
     work: () => [...(a.work ?? [])],
     setWork: (w) => { a.work = w; },

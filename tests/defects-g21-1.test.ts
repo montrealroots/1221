@@ -48,6 +48,6 @@ describe('Keep The Balance There opens the switch’s entry, not a card’s offe
     expect(text(offers)).not.toMatch(/Stop The Balance Transfer|Keep The Balance There|switch/i);
     // The command's refusals (`systems/lending.ts`) are listed where the control's help lands.
     expect(text(other)).toMatch(/Keep The Balance There/);
-    expect(text(other)).toMatch(/Its balance transfer is stopped already/);
+    expect(text(other)).toMatch(/Its balance transfer is already stopped/);
   });
 });

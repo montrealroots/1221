@@ -28,6 +28,7 @@ import { LICENSES } from '@/engine/content/licenses';
 import {
   documentsOf, inForce, mayDrive, mayEnter, passportOf, theCountry, type PersonDocument,
 } from '@/engine/systems/documents';
+import { idCardOnItsWay } from '@/engine/systems/identity';
 import { VISITS } from '@/engine/systems/papervisits';
 import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
@@ -39,12 +40,12 @@ import { at } from './subject';
 /** What each sort of document is, in the world’s words. */
 const KIND_WORD: Record<PersonDocument['kind'], string> = {
   passport: 'Travel Document',
-  authorization: 'Leave To Travel',
-  visa: 'Leave To Enter',
-  license: 'Leave To Drive',
-  idp: 'A Translation Of Your License',
-  permit: 'Leave To Work',
-  idcard: 'Proof Of Who You Are',
+  authorization: 'Permission To Travel',
+  visa: 'Permission To Enter',
+  license: 'Permission To Drive',
+  idp: 'License Translation',
+  permit: 'Permission To Work',
+  idcard: 'Proof Of Identity',
 };
 
 /** What to call it where its own name won’t do as a name. */
@@ -105,12 +106,12 @@ function whatItDoes(sim: Simulation, { doc, person }: ThePaper): string {
     case 'passport': {
       // Said, not played: nothing crosses a border since the scope reset of 2026-10-09. Until 2026-10-12 this called
       // it "the passport you travel on", and said one out of force "takes you across no border now".
-      if (!live) return 'Out of force, it’s no use to a bank or an office now.';
+      if (!live) return 'A bank or an office won’t accept it: it’s no longer in force.';
       const carried = passportOf(person, now)?.id === doc.id;
       const rules = Object.keys(ENTRY);
       const open = carried ? rules.filter((iso) => mayEnter(person, iso, now).ok).length : 0;
       return carried
-        ? `It’s the passport in force in your name. Of the ${rules.length} countries SLATE has entry rules for, ${open} would let you in on it today for a week’s visit; nothing in SLATE travels since 2026-10-09.`
+        ? `It’s the passport in force in your name. Of the ${rules.length} countries the game has entry rules for, ${open} would let you in on it today for a week’s visit. Travel isn’t part of the game, so this is for reference.`
         : 'In force, but another passport is the one in force in your name.';
     }
     case 'visa':
@@ -120,23 +121,23 @@ function whatItDoes(sim: Simulation, { doc, person }: ThePaper): string {
       // A reading, as the passport’s is: until 2026-10-12 it said "It lets you into" the country, and "the visit".
       return answer?.ok
         ? `It would let you into ${where(doc.destination)}, and nothing else is missing for a week’s visit there. ${answer.stay ?? ''}`.trim()
-        : `It’s in force for ${where(doc.destination)}, but a week’s visit there would still ask more: ${answer?.missing[0] ?? 'the rule wasn’t found'}`;
+        : `It’s in force for ${where(doc.destination)}, but a week’s visit there would still need more: ${answer?.missing[0] ?? 'the rule wasn’t found'}`;
     }
     case 'license': {
-      if (!live) return 'Nowhere lets you drive on it now.';
+      if (!live) return 'It doesn’t let you drive anywhere now that it’s out of force.';
       const here = CITIES.get(person.currentLocationId)?.name ?? 'where you are';
       const may = mayDrive(person, person.currentLocationId, now, now, doc.vehicleClass ?? 'car');
       // Said, not played: nothing is driven since the car went in the scope reset of 2026-10-09.
-      return `${may.ok ? `In ${here}, it would let you drive.` : `In ${here}, it wouldn’t let you drive. ${may.why ?? ''}`.trim()} Nothing in SLATE is driven since the car went.`;
+      return `${may.ok ? `In ${here}, it would let you drive.` : `In ${here}, it wouldn’t let you drive. ${may.why ?? ''}`.trim()} Driving isn’t part of the game, so this is for reference.`;
     }
     case 'idp':
-      return live ? 'It goes beside your license abroad, where a country asks to read it in its own terms.' : 'Out of force, it goes beside your license nowhere.';
+      return live ? 'It goes with your license abroad, where a country asks for a translation of it.' : 'Now that it’s out of force, it no longer counts with your license.';
     case 'permit':
-      return live ? `It lets you work in ${where(doc.destination ?? doc.issuer)}${doc.bookingId ? ', for the one job it was issued for' : ''}.` : 'Nowhere lets you work on it now.';
+      return live ? `It lets you work in ${where(doc.destination ?? doc.issuer)}${doc.bookingId ? ', for the one job it was issued for' : ''}.` : 'It no longer lets you work anywhere: it’s out of force.';
     case 'idcard':
       return live
         ? 'It proves who you are, anywhere a card is asked for.'
-        : 'Out of force, it proves nothing to anybody.';
+        : 'It no longer proves who you are, because it’s out of force.';
   }
 }
 
@@ -163,12 +164,15 @@ defineLook<ThePaper>('document', {
     const last = lastOf(doc.number);
 
     // The interview or biometrics it waits on, from 2026-10-06 (`systems/papervisits.ts`).
-    const visit = doc.visit && doc.visit.keptAt === undefined ? `It waits on the ${VISITS[doc.visit.rule].what.toLowerCase()} in ${CITIES.get(doc.visit.cityId)?.name ?? 'town'} on ${formatDate(doc.visit.at, zone)}: be there, or ${VISITS[doc.visit.rule].again && !doc.visit.missed ? 'it’s booked once more and then' : 'the application'} ends. ` : '';
+    const visit = doc.visit && doc.visit.keptAt === undefined ? `It’s waiting on your ${VISITS[doc.visit.rule].what.toLowerCase()} in ${CITIES.get(doc.visit.cityId)?.name ?? 'town'} on ${formatDate(doc.visit.at, zone)}. Be there, or ${VISITS[doc.visit.rule].again && !doc.visit.missed ? 'it’s booked once more, and if you miss that too, the application' : 'the application'} ends. ` : '';
+    // An ID card past every check is being made and mailed, not decided (from 2026-10-17, `idCardOnItsWay`): until then
+    // a citizen’s said "it’s being decided" while the toast said it was on its way.
+    const mailed = idCardOnItsWay(doc, sim.now);
     const summary = state === 'pending'
-      ? `${visit}It’s being decided, and it should be ready ${doc.readyAt ? `by ${formatDate(doc.readyAt, zone)}` : 'soon'}.`
+      ? mailed ? `You’ve applied and paid, and the card is on its way. It should arrive by ${formatDate(doc.readyAt!, zone)}.` : `${visit}You’ve applied, and it’s being decided. It should be ready ${doc.readyAt ? `by ${formatDate(doc.readyAt, zone)}` : 'soon'}.`
       : state === 'lost' ? `You reported it lost, so the number ending ${last} is canceled.`
-        : state === 'cancelled' ? `Canceled, the number ending ${last} is no use to you now.`
-          : state === 'expired' ? `Run out on ${formatDate(doc.expiresAt!, zone)}, it no longer counts for anything.`
+        : state === 'cancelled' ? `It’s canceled, so the number ending ${last} is no use to you now.`
+          : state === 'expired' ? `It ran out on ${formatDate(doc.expiresAt!, zone)} and no longer counts for anything.`
             : doc.expiresAt ? `It’s in force until ${formatDate(doc.expiresAt, zone)}, and its number ends ${last}.` : `It’s in force with no end date, and its number ends ${last}.`;
 
     const ways: Way[] = [];
@@ -188,12 +192,12 @@ defineLook<ThePaper>('document', {
       ways.push({ to: at('document', child.id), label: nameOf(child), detail: `Issued on this passport${child.destination ? `, for ${theCountry(countryOfIso(child.destination)?.name ?? child.destination)}` : ''}` });
     }
     if (doc.issuedAt !== undefined) {
-      ways.push({ to: at('day', dateKey(doc.issuedAt, sim.homeZone)), label: `Issued ${formatDate(doc.issuedAt, zone)}`, detail: 'The day it was issued, as the calendar has it' });
+      ways.push({ to: at('day', dateKey(doc.issuedAt, sim.homeZone)), label: `Issued ${formatDate(doc.issuedAt, zone)}`, detail: 'Its first day, and what else happened then' });
     }
     if (doc.expiresAt !== undefined) {
       ways.push({ to: at('day', dateKey(doc.expiresAt, sim.homeZone)), label: `${doc.expiresAt > sim.now ? 'Runs Out' : 'Ran Out'} ${formatDate(doc.expiresAt, zone)}`, detail: 'The day it stops counting, and what else is on that day' });
     }
-    ways.push({ to: at('person', person.id), label: 'You', detail: 'The person it names, and the rest of your life' });
+    ways.push({ to: at('person', person.id), label: 'You', detail: 'Who it names, and the rest of your life' });
 
     return {
       name: nameOf(doc),
@@ -204,25 +208,26 @@ defineLook<ThePaper>('document', {
         <>
           <p className="small">
             {issuer} issued it{doc.issuedAt ? ` on ${formatDate(doc.issuedAt, zone)}` : ''}.{' '}
-            {state === 'valid' ? whatItDoes(sim, paper) : state === 'pending' ? 'Until it comes, it lets you do nothing.' : ''}
+            {state === 'valid' ? whatItDoes(sim, paper) : state === 'pending' ? 'You don’t hold it yet, so it doesn’t let you do anything until it arrives.' : ''}
             {/* A US state card issued non-verified says so, as the card itself does (from 2026-10-16: a non-citizen’s
                 Connecticut card was marked REAL ID until then, `documents.apply_idcard`). */}
             {doc.realId ? ' It meets REAL ID.' : doc.kind === 'idcard' && doc.issuer.startsWith('us-') && doc.realId === false ? ' It’s marked Not For Federal Identification: it isn’t REAL ID.' : ''}
           </p>
           <div className="grid grid-3">
-            <Stat label="Number Ends" value={<span className="mono">{last}</span>} note="How the office knows it" />
-            <Stat label="Issued" value={doc.issuedAt ? formatDate(doc.issuedAt, zone) : 'Not Yet'} note={doc.appliedAt ? `Applied for ${formatDate(doc.appliedAt, zone)}` : 'As it was handed over'} />
+            <Stat label="Number Ends" value={<span className="mono">{last}</span>} note="The last digits of its number" />
+            {/* Not yet while pending (from 2026-10-17), as the row: a replacement carries the lost card’s date until it comes. */}
+            <Stat label="Issued" value={doc.issuedAt && state !== 'pending' ? formatDate(doc.issuedAt, zone) : 'Not Yet'} note={doc.appliedAt ? `Applied for ${formatDate(doc.appliedAt, zone)}` : 'Issued directly, with no application on record'} />
             <Stat
               label={state === 'expired' ? 'Ran Out' : 'Runs Out'}
               value={doc.expiresAt ? formatDate(doc.expiresAt, zone) : 'No End Date'}
               tone={state === 'valid' ? undefined : 'warning'}
-              note={state === 'valid' ? 'In force until then' : state === 'pending' ? 'Being decided' : 'No longer in force'}
+              note={state === 'valid' ? 'In force until then' : state === 'pending' ? (mailed ? 'On its way' : 'Being decided') : 'No longer in force'}
             />
           </div>
         </>
       ),
       ways,
-      provenance: 'What it lets you do is read from the entry and driving rules SLATE holds for each country, as they stand today.',
+      provenance: 'What it lets you do comes from each country’s entry and driving rules, as the game has them today.',
     };
   },
 });

@@ -17,7 +17,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
-import { dateKey, formatDate, zonedParts } from '@/engine/core/time';
+import { dateKey, formatDate, formatDateKey, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { autopayAsk, cardRoom, cardsOf, cardTerms, DUE_KIND, minimumDue, stateOf, statementDayOf, statementDayRefusal, type CardTerm } from '@/engine/systems/credit';
 import { bankById, banksIn } from '@/engine/content/banks';
@@ -30,6 +30,18 @@ import { PENDING } from '@/engine/content/pending';
 import { FIRST_LATE_FEE, US_SAFE_HARBOR } from '@/engine/content/latefees';
 import { bankOf, inSaveMoney } from '@/engine/systems/banking';
 import { CARDS } from '@/engine/content/cards';
+
+/**
+ * A card's source and the day its terms are from, as the game writes a date. Said once where the source already ends on
+ * that day: until 2026-10-17 (brief 14) 45 cards read "…/terms/, 2026-09-26, 2026-09-26.", the research's day and then
+ * the same day again. Where the source ends on another day, the terms' day is named as such: until the same day 40 cards
+ * read "…, September 26, 2026, April 10, 2026." with nothing saying which day was which (the data pass's record).
+ */
+const sourceAndDay = (source: string, asOf: string | undefined): string => {
+  const day = asOf ? formatDateKey(asOf) : '';
+  if (!day || source.endsWith(`, ${day}`)) return source;
+  return /, [A-Z][a-z]+ \d{1,2}, \d{4}$/.test(source) ? `${source}. Terms as of ${day}` : `${source}, ${day}`;
+};
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const pct = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
@@ -79,14 +91,14 @@ function CardApplication({ held }: { held: Account[] }) {
   const refused = from && chosen ? transferRefusal(sim, sim.player, chosen.id, limitFor(sim, credit.score), from.id) : undefined;
   const pending = credit.applied ? bankById(credit.applied.bankId) : undefined;
   return (
-    <Panel title={held.length ? 'Another Card' : 'Credit Card'} subtitle={credit.applied ? 'On its way' : held.length ? `${held.length} held` : 'None'} help="bank.card">
+    <Panel title={held.length ? 'Another Card' : 'Credit Card'} subtitle={credit.applied ? 'On its way' : held.length ? `${held.length} held` : 'None held'} help="bank.card">
       {credit.applied
         ? <LookRegion><p className="small" style={{ margin: 0 }}>{pending ? <Open subject={at('bank', pending.id)}>{pending.name}</Open> : 'The bank'} approved a card with a {money(credit.applied.limit)} limit. It arrives <Open subject={at('day', dateKey(credit.applied.arrivesAt, sim.homeZone))}>{formatDate(credit.applied.arrivesAt, sim.zone)}</Open>.</p></LookRegion>
         : !chosen
-          ? <p className="small" style={{ margin: 0 }}>{held.length ? 'You hold a card from every bank here that issues one.' : `${home?.name ?? 'Your bank'} doesn’t issue a credit card, and no other bank here does.`}</p>
+          ? <p className="small" style={{ margin: 0 }}>{held.length ? 'You already have a card from every bank here that issues one.' : `${home?.name ?? 'Your bank'} doesn’t issue a credit card, and no other bank here does.`}</p>
           : (
             <div className="col gap-3">
-              <p className="small" style={{ margin: 0 }}>Any bank here takes an application, not only yours. It reads your record and what you have to repay from, and if it says yes, the card comes in about a week. Applying costs your record a few points, yes or no.{held.length ? ' The bureaus read what’s used of all your cards’ limits together.' : ''}</p>
+              <p className="small" style={{ margin: 0 }}>You can apply to any bank here, not only yours. It looks at your credit record and whether you have income or money to repay from, and if it says yes, the card arrives a week later. Applying takes a few points off your credit record, whether or not you’re approved.{held.length ? ' Credit bureaus look at how much of all your cards’ limits you use, taken together.' : ''}</p>
               <div className="field-row">
                 <div className="field">
                   <label htmlFor="card-apply-bank">Bank</label>
@@ -104,12 +116,12 @@ function CardApplication({ held }: { held: Account[] }) {
                   </div>
                 )}
                 <Gated feature="card.apply" className="btn btn-sm" disabled={Boolean(refused)} onClick={() => run('card.apply', { bankId: chosen.id, ...(from ? { transfer: true, fromId: from.id } : {}) })}>
-                  {from ? 'Apply And Move The Balance' : 'Apply For Its Card'}
+                  {from ? 'Apply And Move The Balance' : 'Apply For This Card'}
                 </Gated>
               </div>
               {from && offer && (
                 <p className="small" style={{ margin: 0 }}>
-                  The {from.name}’s balance moves onto it when it arrives, for {offer.feeShare ? `${pct(offer.feeShare)} of it` : 'no fee'}{offer.feeMin ? `, never under ${money(inSaveMoney(sim, offer.feeMin, chosen.currency))}` : ''}, at {offer.introMonths !== undefined ? `${pct(offer.introApr ?? 0)} for ${offer.introMonths + ' months'}, then ` : ''}{offer.apr !== undefined ? pct(offer.apr) : 'the card’s own rate'}. The old card takes nothing new while it waits, and closes once it’s moved.
+                  When the new card arrives, the {from.name}’s balance moves onto it {offer.feeShare ? `for a fee of ${pct(offer.feeShare)} of the balance` : 'with no fee'}{offer.feeMin ? ` (at least ${money(inSaveMoney(sim, offer.feeMin, chosen.currency))})` : ''}, and it’s charged {offer.introMonths !== undefined ? `${pct(offer.introApr ?? 0)} for ${offer.introMonths + ' months'}, then ` : ''}{offer.apr !== undefined ? pct(offer.apr) : 'the card’s own rate'}. The old card can’t be used for anything new while it waits, and it closes once the balance has moved.
                 </p>
               )}
               {refused && <p className="small muted" style={{ margin: 0 }}>{refused}</p>}
@@ -141,25 +153,28 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   const opened = MONTH_NAMES[zonedParts(card.openedAt, sim.zone).month - 1];
 
   const lines: string[] = [];
+  const intro = terms.standardApr !== undefined ? ` during the introductory months, then ${pct(terms.standardApr)}` : '';
   if (charge) {
-    lines.push(`${terms.issuer ?? 'The bank'} takes the whole statement from your current account each month. It can’t carry a balance, and it charges ${pct(terms.apr)} a year on anything the account couldn’t cover.`);
+    lines.push(`This is a charge card: ${terms.issuer ?? 'the bank'} takes the whole statement from your current account each month. It can’t carry a balance, and it charges ${pct(terms.apr)} a year on anything the account can’t cover.`);
   } else if (terms.aprFrom !== undefined && terms.aprTo !== undefined) {
-    lines.push(`${pct(terms.apr)} a year on a balance carried. ${terms.issuer} prices a card between ${pct(terms.aprFrom)} and ${pct(terms.aprTo)} by the record when it opens; yours opened at this, and it’s held there. A record today would get ${pct(terms.priced)}.`);
+    // The rate the card was set at when it opened (`card.apr`, as `cardTerms` reads it), not today's: from 2026-10-17. Until
+    // then this said "yours opened at" the rate charged today, which in the introductory months is 0%.
+    lines.push(`${pct(terms.apr)} a year on any balance you carry${intro}. ${terms.issuer} sets a new card’s rate between ${pct(terms.aprFrom)} and ${pct(terms.aprTo)} from your credit record when it opens. Yours was set at ${pct(card.apr ?? terms.priced)} when it opened, and the bank doesn’t reprice it. With your record today, a new card would get ${pct(terms.priced)}.`);
   } else {
-    lines.push(`${pct(terms.apr)} a year on a balance carried.`);
+    lines.push(`${pct(terms.apr)} a year on any balance you carry${intro}.`);
   }
-  if (!charge) lines.push('Interest builds each day on what’s owed, the day’s interest included, once a statement isn’t paid in full; pay a statement in full and new spending draws none until the next is due.');
+  if (!charge) lines.push('Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.');
   // Canada's rule where it runs (`CANADA_PENALTY`), the US's otherwise.
   const canadian = bankIso === 'CA';
   if (terms.penaltyApr) lines.push(terms.penaltyInForce
-    ? `The penalty rate, ${pct(terms.penaltyApr)}, is in force${state.penalty ? ` since ${formatDate(state.penalty.noticeAt, sim.zone)}` : ''}: ${canadian ? 'twelve' : 'six'} payments on time in a row takes it off.`
-    : canadian ? `Two missed minimums in twelve months, and the rate becomes ${pct(terms.penaltyApr)} at once, for twelve payments on time at least.` : `Sixty days late, and after 45 days’ notice the rate becomes ${pct(terms.penaltyApr)}.`);
-  if (card.balance > 0) lines.push(`The card holds ${money(card.balance)} of your money${bankIso === 'US' ? ', and sends it back after six months if it’s still there' : ''}.`);
+    ? `The penalty rate, ${pct(terms.penaltyApr)}, ${state.penalty ? `has applied since ${formatDate(state.penalty.noticeAt, sim.zone)}` : 'applies now'}. ${canadian ? 'Twelve' : 'Six'} payments on time in a row take it off.`
+    : canadian ? `Miss two minimum payments in twelve months, and the rate goes up to ${pct(terms.penaltyApr)} at once, for at least twelve payments on time.` : `If a payment is sixty days late, the rate goes up to ${pct(terms.penaltyApr)} after 45 days’ notice.`);
+  if (card.balance > 0) lines.push(`The card holds ${money(card.balance)} of your money.${bankIso === 'US' ? ' If it’s still there after six months, the bank sends it back to you.' : ''}`);
   // A fee the research didn't find isn't a fee of none; until 2026-09-26 the Barclaycard said it had none.
   // In a US card's first year the law holds its fees to a quarter of the limit (Reg Z §1026.52(a)), as the statement charges it.
   const firstYearFee = bankIso === 'US' && sim.now - card.openedAt < 365 * 86_400_000 ? Math.min(terms.annualFee, Math.round(limit * 0.25)) : undefined;
-  lines.push(firstYearFee !== undefined && firstYearFee < terms.annualFee ? `${money(firstYearFee)} this first year, on the statement in ${opened}: the law holds a first year’s fees to a quarter of the limit. ${money(terms.annualFee)} a year after.` : terms.annualFee > 0 ? `${money(terms.annualFee)} a year, on the statement in ${opened}.` : terms.estimated.includes('annualFee') ? 'Its yearly fee wasn’t found, so SLATE charges none.' : 'No yearly fee.');
-  lines.push(`A statement on the ${statementDayOf(person, card)}${ordinal(statementDayOf(person, card))}, and the payment due ${terms.graceDays !== undefined ? `${terms.graceDays} days after it` : 'on the 15th of the next month'}${due ? `: next on ${formatDate(due.at, sim.zone)}` : ''}.`);
+  lines.push(firstYearFee !== undefined && firstYearFee < terms.annualFee ? `The yearly fee is ${money(firstYearFee)} this first year, on your ${opened} statement, because the law limits a first year’s fees to a quarter of the credit limit. After that it’s ${money(terms.annualFee)} a year.` : terms.annualFee > 0 ? `The yearly fee is ${money(terms.annualFee)}, on your ${opened} statement.` : terms.estimated.includes('annualFee') ? 'No yearly fee was found for it, so none is charged in the game.' : 'No yearly fee.');
+  lines.push(`Statements come on the ${statementDayOf(person, card)}${ordinal(statementDayOf(person, card))}, and payment is due ${terms.graceDays !== undefined ? `${terms.graceDays} days after each one` : 'on the 15th of the next month'}.${due ? ` The next payment is due ${formatDate(due.at, sim.zone)}.` : ''}`);
   // On a hardship plan a statement asks the plan’s payment in the minimum’s place (`autopayAsk`), and the plan’s line
   // below says so with this statement’s; the card’s own rule is what it asks once the plan ends. Until 2026-10-13 these
   // lines gave the card’s minimum on this statement on a plan too, and the late fee’s said “short of the minimum”, where
@@ -167,8 +182,8 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   const plan = state.hardship;
   const thisOne = state.statementBalance > 0 && !plan;
   if (!charge) {
-    if (terms.course) lines.push(`The least a statement asks${plan ? ' once the plan ends' : ''} is the revolving course’s: ${terms.course.shareByScore ? 'a share of it by your credit grade' : terms.course.every ? `${money(inSaveMoney(sim, terms.course.pay ?? 0, bankById(card.bankId ?? '')!.currency))} for each ${money(inSaveMoney(sim, terms.course.every, bankById(card.bankId ?? '')!.currency))} owed` : `${money(inSaveMoney(sim, terms.course.pay ?? 0, bankById(card.bankId ?? '')!.currency))} of what’s owed`}${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${thisOne ? `: ${money(minimumDue(sim, state.statementBalance, terms, state.statementInterest ?? 0))} on this one` : ''}.`);
-    else lines.push(`The least a statement asks${plan ? ' once the plan ends' : ''} is ${pct(terms.minimumShare)} of it${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${terms.minimumFloor > 0 ? `, or ${money(terms.minimumFloor)} if that’s more` : ''}${terms.minimumOfLimit ? `, and never under ${money(terms.minimumOfLimit)}, 1.25% of the limit, as Mexico’s central bank sets it` : ''}${thisOne ? `: ${money(minimumDue(sim, state.statementBalance, terms, state.statementInterest ?? 0))} on this one` : ''}.`);
+    if (terms.course) lines.push(`The minimum payment${plan ? ' once the plan ends' : ''} follows the revolving course: ${terms.course.shareByScore ? 'a share of the statement set by your credit grade' : terms.course.every ? `${money(inSaveMoney(sim, terms.course.pay ?? 0, bankById(card.bankId ?? '')!.currency))} for each ${money(inSaveMoney(sim, terms.course.every, bankById(card.bankId ?? '')!.currency))} owed` : `${money(inSaveMoney(sim, terms.course.pay ?? 0, bankById(card.bankId ?? '')!.currency))} of what’s owed`}${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}.${thisOne ? ` On this statement it’s ${money(minimumDue(sim, state.statementBalance, terms, state.statementInterest ?? 0))}.` : ''}`);
+    else lines.push(`The minimum payment${plan ? ' once the plan ends' : ''} is ${pct(terms.minimumShare)} of the statement${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${terms.minimumFloor > 0 ? `, or ${money(terms.minimumFloor)} if that’s more` : ''}${terms.minimumOfLimit ? `, and never under ${money(terms.minimumOfLimit)}, 1.25% of the limit, as Mexico’s central bank sets it` : ''}.${thisOne ? ` On this statement it’s ${money(minimumDue(sim, state.statementBalance, terms, state.statementInterest ?? 0))}.` : ''}`);
   }
   // As the engine takes it, by country: until 2026-09-27 every card read as America's rule of the day before.
   const asks = plan ? 'the plan’s payment' : 'the minimum';
@@ -181,34 +196,35 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
     const first = Math.min(tier ? Math.min(terms.lateFee, inSaveMoney(sim, tier.first, 'USD')) : terms.lateFee, inSaveMoney(sim, US_SAFE_HARBOR.first, 'USD'));
     const again = Math.min(terms.lateFee, inSaveMoney(sim, US_SAFE_HARBOR.repeat, 'USD'));
     const capped = (fee: number) => money(asked !== undefined ? Math.min(fee, asked) : fee);
-    lines.push(`A payment short of ${short} costs ${capped(first)} the first time and ${capped(again)} again within ${tier?.withinPeriods ?? US_SAFE_HARBOR.withinPeriods} billing periods, never more than ${asks}. An autopay that bounces and leaves it short is charged that and no returned payment’s fee beside it. Still short at the next due date, thirty days past due, it goes on your record and the limit is cut.`);
+    lines.push(`Paying less than ${short} by the due date costs ${capped(first)} the first time, and ${capped(again)} if it happens again within ${tier?.withinPeriods ?? US_SAFE_HARBOR.withinPeriods} billing periods, but never more than ${asks} itself. If an autopay bounces and leaves the payment short, that fee is all you’re charged, with no returned payment fee on top. If it’s still short at the next due date, thirty days late, it goes on your credit record and the limit is cut.`);
   } else {
     const rule = terms.lateRule;
     const costs = rule ? `${rule.fixed ? `${money(rule.fixed)} and ` : ''}${pct(rule.share)} of ${rule.of === 'minimum' ? asks : rule.of === 'balance' ? 'the balance' : 'what went unpaid'}${rule.min !== undefined ? `, at least ${money(rule.min)}` : ''}${rule.max !== undefined ? `, at most ${money(rule.max)}` : ''}${rule.notOverMinimum ? `, never more than ${asks}` : ''}` : money(terms.lateFee);
-    lines.push(`A payment short of ${short} costs ${costs}, goes on your record, and cuts the limit.${bankIso === 'GB' ? ` ${bankName} takes what was missed from your other accounts with it.` : ''}`);
+    lines.push(`Paying less than ${short} by the due date costs ${costs}. It also goes on your credit record, and the limit is cut.${bankIso === 'GB' ? ` ${bankName} then takes what was missed from your other accounts with it.` : ''}`);
   }
   if (bankIso === 'GB' && state.persistentNoticeAt !== undefined && !state.hardship) {
-    lines.push(`Persistent debt: over eighteen months more went to interest and fees than to the card (the bank wrote on ${formatDate(state.persistentNoticeAt, sim.zone)}). At thirty-six the bank freezes the interest, sets ${money(Math.ceil(owed / 48 / 100) * 100)} a month, and suspends the card.`);
+    lines.push(`Persistent debt: over eighteen months, more of what you paid went to interest and fees than to the balance, and the bank wrote to you about it on ${formatDate(state.persistentNoticeAt, sim.zone)}. If that’s still so at thirty-six months, the bank freezes the interest, sets a payment of ${money(Math.ceil(owed / 48 / 100) * 100)} a month, and suspends the card.`);
   }
-  if (state.suspended === 'late') lines.push(`Suspended: ${state.missed ?? 0} payments missed in a row. It works again once a payment is made on time; six in a row and it’s charged off to collections.`);
+  if (state.suspended === 'late') lines.push(`Suspended: you’ve missed ${state.missed ?? 0} ${(state.missed ?? 0) === 1 ? 'payment' : 'payments'} in a row. It works again once you make a payment on time. Miss six in a row, and what’s owed is charged off to collections.`);
   // Until 2026-10-13 this said the card couldn’t be used until it was cleared. A plan ends, and its suspension with it,
   // only at the first statement or due date after it’s paid off (`systems/credit.ts`), as the guide says.
-  if (plan) lines.push(`${state.suspended === 'persistent' ? 'Three years of persistent debt, and the bank put it on a plan' : 'On a plan'} since ${formatDate(plan.since, sim.zone)}: no interest, and each statement asks the plan’s ${money(plan.payment)} in the minimum’s place${state.statementBalance > 0 ? `: ${money(Math.min(state.statementBalance, plan.payment))} on this one` : ''}. The card can’t be used until the first statement or due date after it’s paid off, when the plan ends.`);
+  if (plan) lines.push(`${state.suspended === 'persistent' ? `After three years of persistent debt, the bank put it on a payment plan on ${formatDate(plan.since, sim.zone)}` : `It’s been on a payment plan since ${formatDate(plan.since, sim.zone)}`}. There’s no interest, and each statement asks for the plan’s ${money(plan.payment)} instead of the minimum${state.statementBalance > 0 ? `, ${money(Math.min(state.statementBalance, plan.payment))} on this one` : ''}. You can’t use the card until the plan ends, at the first statement or due date after it’s paid off.`);
   // Credit a payment from another bank freed, held while it clears (`PENDING.paymentHoldDays`).
   const holds = state.paymentHolds ?? [];
-  if (holds.length) lines.push(`${money(holds.reduce((sum, one) => sum + one.amount, 0))} of the credit your payment freed is held until ${formatDate(Math.max(...holds.map((one) => one.until)), sim.zone)}, while it clears from another bank.${card.bankId && PENDING[card.bankId]?.paymentHoldWords ? ` ${PENDING[card.bankId]!.paymentHoldWords}` : ''}`);
-  if (many) lines.push(everyday ? 'The everyday card: the day’s spending goes on it.' : 'Beside the everyday card: the day’s spending goes on that one, and nothing goes on this unless you make it the everyday card.');
-  if (state.closing !== undefined) lines.push('Closed to anything new. What’s owed is paid down as before, and then the account closes.');
-  if (state.overLimitOptIn) lines.push('Opted in to going over the limit: a purchase can take it up to a tenth over, SLATE’s estimate of what a bank allows, and this card charges nothing for it.');
+  if (holds.length) lines.push(`${money(holds.reduce((sum, one) => sum + one.amount, 0))} of the credit your payment freed up is on hold until ${formatDate(Math.max(...holds.map((one) => one.until)), sim.zone)}, while the payment clears from another bank.${card.bankId && PENDING[card.bankId]?.paymentHoldWords ? ` ${PENDING[card.bankId]!.paymentHoldWords}` : ''}`);
+  if (many) lines.push(everyday ? 'This is your everyday card: the day’s spending goes on it.' : 'The day’s spending goes on your everyday card, not this one, unless you make this the everyday card.');
+  if (state.closing !== undefined) lines.push('It’s closed to new spending. You keep paying off what’s owed as before, and then the account closes.');
+  if (state.overLimitOptIn) lines.push('You’ve opted in to going over the limit: a purchase can take it up to a tenth over, and this card charges nothing for it.');
   if (terms.capped) {
-    const caps = [terms.capped.apr !== undefined ? `the rate at ${pct(terms.capped.apr)}` : '', terms.capped.lateFee !== undefined ? `a late fee at ${money(terms.capped.lateFee)}` : ''].filter(Boolean).join(' and ');
-    lines.push(`${terms.capped.law} caps ${caps}, and holds the card to it. Source: ${terms.capped.source}.`);
+    const caps = [terms.capped.apr !== undefined ? `the rate at ${pct(terms.capped.apr)}` : '', terms.capped.lateFee !== undefined ? `the late fee at ${money(terms.capped.lateFee)}` : ''].filter(Boolean).join(' and ');
+    lines.push(`${terms.capped.law} caps ${caps}, and the card is held to that. Source: ${terms.capped.source}.`);
   }
-  const estimated = terms.estimated.includes('card')
-    ? `${terms.issuer ?? 'The bank'}’s own card wasn’t found, so its terms are SLATE’s estimate of a typical American card’s.`
+  const listed = terms.estimated.map((one) => TERM_WORDS[one]);
+  const estimated = [terms.estimated.includes('card')
+    ? `${terms.issuer ?? 'The bank'}’s own card wasn’t found, so its terms are estimated from a typical American card.`
     : terms.estimated.length > 0
-      ? `${terms.estimated.map((one) => TERM_WORDS[one]).join(', ').replace(/^./, (c) => c.toUpperCase())} ${terms.estimated.length === 1 ? 'is' : 'are'} SLATE’s estimate; the rest is ${terms.issuer}’s.`
-      : '';
+      ? `${(listed.length < 2 ? listed.join('') : `${listed.slice(0, -1).join(', ')} and ${listed.at(-1)}`).replace(/^./, (c) => c.toUpperCase())} ${terms.estimated.length === 1 ? 'is' : 'are'} estimated. The rest are ${terms.issuer}’s published terms.`
+      : '', state.overLimitOptIn ? 'How far over the limit a bank lets a purchase go is estimated.' : ''].filter(Boolean).join(' ');
 
   return (
     <Panel title={terms.name} subtitle={<Open subject={at('account', card.id)}>{`${many && everyday ? 'The everyday card, ' : ''}···${card.last4 ?? ''}`}</Open>} look={at('account', card.id)} help="bank.card">
@@ -216,24 +232,24 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
         <div className="grid grid-3">
           <div className="stat">
             <Open subject={at('account', card.id)}>
-              <span className="stat-label">Owed</span>
+              <span className="stat-label">Owed</span>{' '}
               <span className={`stat-value mono ${owed > 0 ? 'negative' : ''}`}>{money(owed)}</span>
             </Open>
           </div>
           <div className="stat">
             <Open subject={at('account', card.id)}>
-              <span className="stat-label">Left To Spend</span>
+              <span className="stat-label">Left To Spend</span>{' '}
               {/* What a purchase can take, as the till asks it (`cardRoom`): until 2026-10-10 the limit less what's owed,
                   which showed room on a locked, suspended or closing card and left out held payments. */}
-              <span className="stat-value mono">{money(cardRoom(person, card))}</span>
+              <span className="stat-value mono">{money(cardRoom(person, card))}</span>{' '}
               <span className="stat-note">Of a {money(limit)} limit</span>
             </Open>
           </div>
           <div className="stat">
             <Open subject={at('account', card.id)}>
-              <span className="stat-label">{charge ? 'Kind' : 'Rate'}</span>
-              <span className="stat-value mono">{charge ? 'Charge' : pct(terms.apr)}</span>
-              <span className="stat-note">{charge ? 'Paid in full each month' : 'A year, on what’s carried'}</span>
+              <span className="stat-label">{charge ? 'Kind' : 'Rate'}</span>{' '}
+              <span className="stat-value mono">{charge ? 'Charge' : pct(terms.apr)}</span>{' '}
+              <span className="stat-note">{charge ? 'Paid in full each month' : 'A year, on a balance carried'}</span>
             </Open>
           </div>
         </div>
@@ -275,23 +291,23 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
             <Gated feature="card.set_statement_day" className="btn btn-sm btn-ghost" disabled={!dayWanted || dayWanted === statementDayOf(person, card) || Boolean(statementDayRefusal(person, card))} onClick={() => {
               const answer = run('card.set_statement_day', { day: dayWanted, accountId: card.id });
               if (answer.ok) { toast(`Statements come on the ${dayWanted}${ordinal(dayWanted)} now, and the due date moves with them.`, 'positive'); setDayWanted(0); }
-            }}>Move It</Gated>
-            <WhyNot reasons={[['Move It', statementDayRefusal(person, card)]]} />
+            }}>Change The Day</Gated>
+            <WhyNot reasons={[['Change The Day', statementDayRefusal(person, card)]]} />
           </div>
           <div className="field-act">
             <div className="field">
-              <label htmlFor={`card-limit-${card.id}`}>A Different Limit ({cur}), Now {money(limit)}</label>
+              <label htmlFor={`card-limit-${card.id}`}>New Limit ({cur}), Now {money(limit)}</label>
               <input id={`card-limit-${card.id}`} type="text" inputMode="decimal" value={limitWanted} onChange={(e) => setLimitWanted(e.target.value)} />
             </div>
             <Gated feature="card.request_limit" className="btn btn-sm" disabled={!limitWanted} onClick={() => {
               const answer = run<{ limit: number; granted: boolean }>('card.request_limit', { limit: centsFromTyped(limitWanted), accountId: card.id });
-              if (answer.ok && answer.value?.granted) { toast(`The limit is ${money(answer.value.limit)} now.`, 'positive'); setLimitWanted(''); }
-            }}>Ask For It</Gated>
+              if (answer.ok && answer.value?.granted) { toast(`Your limit is now ${money(answer.value.limit)}.`, 'positive'); setLimitWanted(''); }
+            }}>Ask For This Limit</Gated>
           </div>
         </div>
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
           <Gated feature="card.set_auto_raise" className="btn btn-sm btn-ghost" onClick={() => run('card.set_auto_raise', { on: Boolean(state.noAutoRaise), accountId: card.id })}>
-            Raise My Limit Unasked: {state.noAutoRaise ? 'Never' : 'When My Record Earns It'}
+            Raise My Limit Automatically: {state.noAutoRaise ? 'Off' : 'When My Record Earns It'}
           </Gated>
           {bankIso === 'US' && (
             <Gated feature="card.set_over_limit" className="btn btn-sm btn-ghost" onClick={() => run('card.set_over_limit', { on: !state.overLimitOptIn, accountId: card.id })}>
@@ -300,7 +316,7 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
           )}
         </div>
         <Fine>
-          {estimated}{estimated && terms.source ? ' ' : ''}{terms.source ? `Source: ${terms.source}, ${terms.asOf}.` : ''}
+          {estimated}{estimated && terms.source ? ' ' : ''}{terms.source ? `Source: ${sourceAndDay(terms.source, terms.asOf)}.` : ''}
         </Fine>
       </div>
     </Panel>

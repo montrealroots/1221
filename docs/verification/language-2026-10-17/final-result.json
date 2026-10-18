@@ -1,0 +1,315 @@
+{
+ "area": "final",
+ "on": "2026-10-18",
+ "tested": "6d83601a",
+ "rows": [
+  {
+   "id": "advice.F2A10-f",
+   "group": "Brief 10 Area: advice",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "exercised": "The fresh set, adv-v-0 to 119, run again on brief 14's commit 6d83601a, brief 12 having run it once unseen; every batch exit 0 and its tree clean (runs14.sh ADVF): F1 120, F2 120, F4 120, F5 120 and F6 120 of 120 (120 asked); F3 120 of 120 (96 asked), by band beginner 30, developing 30, advanced 30, nearMastery 30 of 30 (21 asked), by stage firstWeek 40, midTerm 40, later 40 of 40 (28 asked); read as prepared {'asBuilt': 1, 'cold': 102}; the verdicts {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}, on the cold take {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}. Reported beside them as written, deciding nothing: (e) 119 of 120, (f)'s ladder falls 30 of 30 near mastery.",
+   "evidence": [
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-summary.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/runs/exits-ADVF.txt",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-0-9.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-10-19.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-100-109.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-110-119.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-20-29.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-30-39.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-40-49.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-50-59.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-60-69.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-70-79.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-80-89.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-90-99.json",
+     "kind": "measurement"
+    }
+   ],
+   "measured": {
+    "commit": "6d83601a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "advice.F2A10-h",
+   "group": "Brief 10 Area: advice",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "exercised": "The fresh set on 6d83601a: H1 to H6 120, 120, 120, 120, 120, 120 of 120 (120 asked); followed, the first-named stayed on 75 and another led on 45, changed on 45; rose 5, attributed 5, explained 5; 1965 reads with 0 stale, 3371 forecast changes (1348 rises) with 0 unexplained. Reported beside them as written, deciding nothing: (h) fell on 115 of 120, its own level's part on 120.",
+   "evidence": [
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-summary.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/runs/exits-ADVF.txt",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-0-9.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-10-19.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-100-109.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-110-119.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-20-29.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-30-39.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-40-49.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-50-59.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-60-69.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-70-79.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-80-89.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/fresh-adv-v-90-99.json",
+     "kind": "measurement"
+    }
+   ],
+   "measured": {
+    "commit": "6d83601a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "advice.F2A10-c",
+   "group": "Brief 10 Area: advice",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "exercised": "The held-out set, regression coverage from brief 12, on brief 14's commit 6d83601a (runs14.sh ADVR, every batch exit 0, its tree clean): the advised input's realized gain at or above the median of the others' on 120 of 120 (95% asked), its mean 0.763 against 0.388 for an input chosen at random, 1.965 times (1.5 asked); by stratum beginner 1.864, developing 2.057, advanced 1.961, nearMastery 2.046, firstWeek 1.976, midTerm 1.855, later 2.079; F2-A's 30 held out, 2.187.",
+   "evidence": [
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-summary.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/runs/exits-ADVR.txt",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/f2a-adv-0-9.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/f2a-adv-10-19.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/f2a-adv-20-29.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/f2a-adv-30-39.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-0-9.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-10-19.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-100-109.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-110-119.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-20-29.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-30-39.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-40-49.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-50-59.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-60-69.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-70-79.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-80-89.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-90-99.json",
+     "kind": "measurement"
+    }
+   ],
+   "measured": {
+    "commit": "6d83601a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "advice.heldout",
+   "group": "Brief 10 Area: advice",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "exercised": "Brief 10's held-out set, adv-h-0 to 119, and F2-A's adv-10 to 39, run on brief 14's commit 6d83601a in 16 batches, each exit 0, its commit and a clean tree written in each file, then summarized as regression coverage, the tuning cases apart, each band and stage reported. From brief 12 it isn't unseen validation: its results informed the clarified (f) and (h), and the fresh set took its place.",
+   "evidence": [
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-summary.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/runs/exits-ADVR.txt",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/f2a-adv-0-9.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/f2a-adv-10-19.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/f2a-adv-20-29.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/f2a-adv-30-39.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-0-9.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-10-19.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-100-109.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-110-119.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-20-29.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-30-39.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-40-49.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-50-59.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-60-69.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-70-79.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-80-89.json",
+     "kind": "measurement"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/advice/regression-adv-h-90-99.json",
+     "kind": "measurement"
+    }
+   ],
+   "measured": {
+    "commit": "6d83601a",
+    "watch": "engine"
+   }
+  }
+ ]
+}

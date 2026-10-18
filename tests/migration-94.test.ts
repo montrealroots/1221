@@ -57,7 +57,9 @@ describe('schema 94', () => {
     expect(sim.player.engagement!.byGenre.comedy!.familiarity).toBeGreaterThan(0);
     const pursued = sim.execute({ kind: 'interest.pursue', payload: { interest: 'theatre' } });
     expect(pursued.ok).toBe(false);
-    expect(pursued.error).toMatch(/unknown|no handler|not a command/i);
+    // The player's sentence says it changed nothing; the command's name is the detail, for a developer (brief 14).
+    expect(pursued.error).toBe('That isn’t something the game can do, so it changed nothing.');
+    expect(pursued.detail).toMatch(/unknown|no handler|not a command/i);
   });
 
   it('gives a new life no interests to drop', () => {

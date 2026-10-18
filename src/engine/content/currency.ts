@@ -25,7 +25,7 @@ export interface CurrencyInfo {
   unitsPerUsd?: number;
 }
 
-export const RATES_NOTE = 'Exchange rates are SLATE\'s calibrated estimates, not a live market.';
+export const RATES_NOTE = 'Exchange rates are estimated, not live market rates.';
 
 const SYMBOLS: Record<string, [symbol: string, after?: boolean, decimals?: number]> = {
   USD: ['$'], EUR: ['€'], GBP: ['£'], JPY: ['¥', false, 0], CNY: ['¥'], INR: ['₹'], KRW: ['₩', false, 0],

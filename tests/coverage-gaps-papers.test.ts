@@ -47,7 +47,7 @@ describe('a license from home, lost in New Haven (JOURNEY: a New Yorker at Yale)
     const license = documentsOf(sim.player).find((d) => d.kind === 'license');
     if (!license) return;
     sim.must({ kind: 'documents.report_lost', payload: { documentId: license.id } });
-    expect(licenseReplaceRefusal(sim.player, license.id, sim.now)).toBe('Its issuer replaces it for somebody living there, and SLATE found no way it sends one out of state.');
+    expect(licenseReplaceRefusal(sim.player, license.id, sim.now)).toBe('Its issuer replaces it only for someone living there, and no way to send one out of state was found.');
   });
 });
 
@@ -107,13 +107,13 @@ describe('residence held without a break (FIXTURE: Mexican residence documents)'
     docs.push({ id: 'r1', kind: 'visa', issuer: 'MX', name: 'Residente Temporal', number: 'R1', status: 'valid', issuedAt: t - 5 * YEAR, expiresAt: t - 3 * YEAR, destination: 'MX', route: 'mx-temporary' });
     docs.push({ id: 'r2', kind: 'visa', issuer: 'MX', name: 'Residente Temporal', number: 'R2', status: 'valid', issuedAt: t - 2 * YEAR, expiresAt: t + YEAR, destination: 'MX', route: 'mx-temporary' });
     expect(continuousSince(sim.player, 'MX', t)).toBe(t - 2 * YEAR);
-    expect(settleRefusal(sim, sim.player, 'MX')).toBe('Permanent residence comes after four years’ temporary.');
+    expect(settleRefusal(sim, sim.player, 'MX')).toBe('Permanent residence comes after four years of temporary residence.');
     // Without the lapse, the earlier grant reaches the later one, and four years are held.
     docs.find((d) => d.id === 'r1')!.expiresAt = t - 2 * YEAR;
     expect(continuousSince(sim.player, 'MX', t)).toBe(t - 5 * YEAR);
     // Past the four years settling was allowed (undefined) until 2026-10-16, when Mexico's papers stopped being granted
     // (brief 09's journeys): from then the rule's step gives way to the reason, which a lapse still keeps back.
-    expect(settleRefusal(sim, sim.player, 'MX')).toBe('Mexico grants permanent residence after four years’ temporary, for MXN 13,578.96. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.');
+    expect(settleRefusal(sim, sim.player, 'MX')).toBe('Mexico grants permanent residence after four years of temporary residence, for MXN 13,578.96. Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.');
   });
 });
 

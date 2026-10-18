@@ -30,7 +30,7 @@ import {
   PROPERTY_TAX_RULES, SALES_TAX_RULES, resolveIncomeTaxLayers, resolveRule,
 } from '@/engine/content/tax';
 import { formatDaylight, sunTimes, type SunTimes } from '@/engine/core/sun';
-import { addDays, formatTime, zoneAbbreviation, zonedParts } from '@/engine/core/time';
+import { addDays, formatDurationWords, formatTime, MS_MINUTE, zoneAbbreviation, zonedParts } from '@/engine/core/time';
 import { plural, titleCaseLabel } from '@/engine/core/text';
 import { formatPeople, homeCityOf, placeKindLabel, placeProfile, type PlaceProfile } from '@/engine/world/place';
 import type { Person } from '@/engine/domain/model';
@@ -40,7 +40,7 @@ import { Open } from './Look';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { rentAt } from '@/engine/content/rents';
-import { isAre, said, spokenList, toStart } from './words';
+import { isAre, said, spokenList } from './words';
 
 // ---------------------------------------------------------------------------
 // Reading the world
@@ -134,16 +134,17 @@ function clockAgainstHome(hours: number): string {
 /** What the Daylight tile says, and what a way into the light says. */
 function lightLine(sun: SunTimes, zone: string): string {
   if (sun.polar === 'day') return 'The sun never sets today';
-  if (sun.polar === 'night') return 'No sunrise here today';
+  if (sun.polar === 'night') return 'The sun doesn’t rise here today';
   if (sun.sunrise === undefined || sun.sunset === undefined) return 'No sunrise on file';
-  return `${formatTime(sun.sunrise, zone)} to ${formatTime(sun.sunset, zone)}, ${formatDaylight(sun.daylightMinutes)} of it`;
+  // In words in a sentence (from 2026-10-17): until then “12h 45m of daylight”, the Stat’s form below.
+  return `${formatTime(sun.sunrise, zone)} to ${formatTime(sun.sunset, zone)}, ${formatDurationWords(sun.daylightMinutes * MS_MINUTE)} of daylight`;
 }
 
 /** What SLATE thinks a unit of this money is worth, said honestly. */
 function rateLine(info: CurrencyInfo): string {
-  if (info.code === 'USD') return 'The unit SLATE’s rates are quoted against';
-  if (info.unitsPerUsd === undefined) return 'No rate on file, so nothing is converted into it';
-  return `About ${info.unitsPerUsd.toLocaleString('en-US')} to the dollar, by SLATE’s reckoning`;
+  if (info.code === 'USD') return 'The currency every exchange rate is quoted against';
+  if (info.unitsPerUsd === undefined) return 'No exchange rate on file, so nothing is converted into it';
+  return `About ${info.unitsPerUsd.toLocaleString('en-US')} to the US dollar, estimated`;
 }
 
 // ---------------------------------------------------------------------------
@@ -151,7 +152,7 @@ function rateLine(info: CurrencyInfo): string {
 // ---------------------------------------------------------------------------
 
 defineLook<PlaceProfile>('place', {
-  gone: 'There’s nowhere by that name on the map, or nothing SLATE knows well enough to tell you about.',
+  gone: 'That place isn’t on the map, or the game has too little about it to show.',
   resolve: (sim, id) => profileFor(sim, cityFor(sim, id)),
   seeds: (sim) => {
     const ids = [standingIn(sim)?.id, homeCityOf(sim)?.id];
@@ -183,13 +184,13 @@ defineLook<PlaceProfile>('place', {
       ways.push({
         to: at('region', region.id),
         label: spokenName(region.name),
-        detail: `What ${theCountry(place.countryName)} calls this corner of itself, and ${said(towns, 'town')} of it on the map`,
+        detail: `The part of ${theCountry(place.countryName)} it’s in, with ${said(towns, 'town')} on the map`,
       });
     }
     ways.push({
       to: at('country', place.countryId),
       label: place.countryName,
-      detail: 'Languages, money, which side of the road, and the law over all of it',
+      detail: 'Its languages, its money and which side of the road they drive on',
     });
     ways.push({
       to: at('currency', place.currency.code),
@@ -197,7 +198,7 @@ defineLook<PlaceProfile>('place', {
       // Code first, then the symbol. A symbol is whatever the country writes —
       // kr, zł, ₫ — and half of them start lowercase, which is wrong at the
       // front of a line and not something to correct: it is their spelling.
-      detail: `${place.currency.code}, written ${place.currency.symbol}, and what a hundred dollars turns into here`,
+      detail: `${place.currency.code}, written ${place.currency.symbol}, and what a hundred US dollars comes to here`,
     });
     ways.push({
       to: at('daylight', place.city.id),
@@ -232,10 +233,10 @@ defineLook<PlaceProfile>('place', {
             {place.medianRentCents > 0 && `Rent on a one-bedroom runs about ${rent} a month, `}
             {place.medianRentCents > 0
               ? `and the cost of living sits at ${place.costOfLivingIndex}, where a hundred is the United States’ price level.`
-              : `The cost of living sits at ${place.costOfLivingIndex}, where a hundred is the American average.`}
+              : `The cost of living sits at ${place.costOfLivingIndex}, where a hundred is the United States’ price level.`}
             {(() => { const figure = rentAt(place.city.id, 'USD'); return figure.kind === 'published' ? ` The rent is published: ${figure.measure}, ${figure.period}; source: ${figure.source}.` : ''; })()}
             {layers.length === 0
-              ? ` SLATE has no income tax table for ${theCountry(place.countryName)} yet, so the tile below says so rather than showing you a zero it can’t stand behind.`
+              ? ` The game has no income tax table for ${theCountry(place.countryName)}, so the tile below says Not On File instead of showing a zero.`
               : taking.length === 0
                 ? ` No income tax comes out of a wage here, at any level.`
                 : ` Income tax comes in ${said(taking.length, 'layer')} here: ${spokenList(taking.map((l) => l.label))}${takesNone.length > 0 ? `, and ${spokenList(takesNone)} ${takesNone.length === 1 ? 'adds' : 'add'} nothing on top` : ''}.`}
@@ -255,7 +256,7 @@ defineLook<PlaceProfile>('place', {
               label="Daylight"
               value={place.sun.polar === 'day' ? 'Midnight Sun' : place.sun.polar === 'night' ? 'Polar Night'
                 : `${formatTime(place.sun.sunrise ?? sim.now, place.zone)} – ${formatTime(place.sun.sunset ?? sim.now, place.zone)}`}
-              note={`${formatDaylight(place.sun.daylightMinutes)} of light`}
+              note={`${formatDaylight(place.sun.daylightMinutes)} of daylight`}
             />
             <Stat
               label="Currency"
@@ -266,7 +267,7 @@ defineLook<PlaceProfile>('place', {
             <Stat
               label="Tax On A Wage"
               value={layers.length > 0 ? `${Math.round(place.effectiveIncomeTax * 100)}%` : 'Not On File'}
-              note={layers.length > 0 ? 'Income tax and payroll both, on a US$60,000 wage' : 'No table for this country yet'}
+              note={layers.length > 0 ? 'Income tax and payroll both, on a US$60,000 wage' : 'No tax table for this country'}
             />
             <Stat
               label="Sales Tax"
@@ -276,18 +277,18 @@ defineLook<PlaceProfile>('place', {
             <Stat
               label="Languages"
               value={place.languages[0] ?? 'Not On File'}
-              note={spokenList(place.languages.slice(1)) || 'Just the one, on the country’s own list'}
+              note={spokenList(place.languages.slice(1)) || 'The only one listed'}
             />
           </div>
         </>
       ),
       ways,
-      provenance: 'Where it sits, what the clock says and which country it answers to are public record. '
+      provenance: 'Its location, time zone and country are public record. '
         + (rentAt(place.city.id, 'USD').kind === 'published'
-          ? 'Its rent is published, and its cost index and tax rates are SLATE’s calibration.'
+          ? 'Its rent is published, and its cost of living and tax rates are estimated.'
           : rentAt(place.city.id, 'USD').kind === 'calibrated'
-            ? 'Its rent is SLATE’s estimate, scaled to published rents, and its cost index and tax rates are SLATE’s calibration.'
-            : 'Its rent, cost index and tax rates are SLATE’s own calibration.'),
+            ? 'Its rent is estimated, scaled to published rents, and its cost of living and tax rates are estimated.'
+            : 'Its rent, cost of living and tax rates are estimated.'),
     };
   },
 });
@@ -299,12 +300,12 @@ defineLook<PlaceProfile>('place', {
  */
 function summaryOfPlace(place: PlaceProfile, isHome: boolean): string {
   if (isHome) {
-    return `You’re home, it’s ${place.localTime} on the clock you keep, and ${formatPeople(place.cityPopulation)} people are keeping it with you.`;
+    return `This is where you live. It’s ${place.localTime}, and ${formatPeople(place.cityPopulation)} people live here.`;
   }
   if (!place.homeCity || !place.distanceFromHome) {
-    return `It’s ${place.localTime} there, and you’re not in it.`;
+    return `It’s ${place.localTime} there. You live somewhere else.`;
   }
-  return `It’s ${place.localTime} there, ${place.distanceFromHome} from home, and you’re not in it.`;
+  return `It’s ${place.localTime} there, ${place.distanceFromHome} from home.`;
 }
 
 // ---------------------------------------------------------------------------
@@ -322,15 +323,16 @@ const REGION_WORD: Record<string, string> = {
 const regionWord = (countryId: string): string => REGION_WORD[countryId] ?? 'Region';
 
 /**
- * How many first-level pieces a country is cut into, said without the word.
+ * How many first-level parts a country is divided into, said without the word.
  *
  * The gazetteer gives the United States fifty-one of them and Canada thirteen,
  * because the District of Columbia is not a state and Nunavut is not a
  * province. Counting them as states is a sentence that is wrong about the
- * world, so the count is of pieces and the word is kept for the one piece the
- * look is actually about.
+ * world, so the count is of parts and the word is kept for the one part the
+ * look is actually about. They were "pieces" the map "cuts" a country into
+ * until 2026-10-17 (brief 14).
  */
-const pieces = (countryId: string): string => said(REGIONS.childrenOf(countryId).length, 'piece');
+const pieces = (countryId: string): string => said(REGIONS.childrenOf(countryId).length, 'part');
 
 /**
  * A capital, said the way a name is said.
@@ -346,7 +348,7 @@ function capitalName(country: Country): string {
 }
 
 defineLook<Region>('region', {
-  gone: 'Somebody redrew the map, and it isn’t one of the pieces any more.',
+  gone: 'That region isn’t on the map.',
   resolve: (sim, id) => REGIONS.get(id || standingIn(sim)?.parentId || ''),
   seeds: (sim) => {
     const ids = [standingIn(sim)?.parentId, homeCityOf(sim)?.parentId];
@@ -360,7 +362,6 @@ defineLook<Region>('region', {
     const inIt = here?.parentId === region.id;
     const towns = CITIES.childrenOf(region.id);
     const named = towns.map((c) => spokenName(c.name));
-    const siblings = REGIONS.childrenOf(region.parentId).length;
 
     // Read from a town inside it, not from where the player happens to be:
     // California takes its own cut whether or not anybody is standing in it.
@@ -375,8 +376,8 @@ defineLook<Region>('region', {
       // Only the one you came in through if you are actually in it. Read from
       // a state on the other side of the country, that is somebody else’s.
       detail: inIt
-        ? `${toStart(pieces(region.parentId))} on the map, and this is the one you came in through`
-        : `The country over it, and the ${siblings - 1} other pieces of it on the map`,
+        ? `The country it’s in, which the map divides into ${pieces(region.parentId)}, and you’re in this one`
+        : `The country it’s in, which the map divides into ${pieces(region.parentId)}`,
     }];
     for (const town of orderedTowns(towns, here?.id)) {
       ways.push({
@@ -391,28 +392,28 @@ defineLook<Region>('region', {
       kind: `The ${word}`,
       parent: at('country', region.parentId),
       summary: inIt && here
-        ? `You’re inside it, in ${spokenName(here.name)}, one of the ${said(towns.length, 'place')} in it SLATE can name.`
+        ? `You’re in it, in ${spokenName(here.name)}, ${towns.length === 1 ? 'its only place' : `one of its ${said(towns.length, 'place')}`} on the map.`
         : towns.length > 0
-          ? `Part of ${theCountry(countryName)}, with ${said(towns.length, 'place')} in it SLATE can name, and you’re in none of them today.`
-          : `Part of ${theCountry(countryName)}, and not one of its towns is on your map yet.`,
+          ? `Part of ${theCountry(countryName)}, with ${said(towns.length, 'place')} on the map. You’re in none of them.`
+          : `Part of ${theCountry(countryName)}, and none of its towns are on your map yet.`,
       body: (
         <>
           <p className="small muted">
             {towns.length > 0
-              ? `One of ${pieces(region.parentId)} the map cuts ${theCountry(countryName)} into, and the towns of it on your map are ${spokenSome(named, 6)}.`
-              : `One of ${pieces(region.parentId)} the map cuts ${theCountry(countryName)} into, and none of its towns are on your map yet — SLATE loads a country’s full list the first time somebody goes looking in it.`}
+              ? `It’s one of the ${pieces(region.parentId)} the map divides ${theCountry(countryName)} into. ${named.length === 1 ? `Its one town on your map is ${named[0]}` : `Its towns on your map are ${spokenSome(named, 6)}`}.`
+              : `It’s one of the ${pieces(region.parentId)} the map divides ${theCountry(countryName)} into. A country’s towns are loaded once your life has a place in it.`}
           </p>
           {sample && (
             <p className="small muted">
               {layer && layer.kind !== 'none'
-                ? `Tax isn’t only set nationally here: ${layer.label} lands on top of whatever the country already takes.`
-                : `Income tax is set above this level — the ${word.toLowerCase()} adds none of its own.`}
+                ? `Income tax here isn’t only the country’s: ${layer.label} is added on top of it.`
+                : `The ${word.toLowerCase()} adds no income tax of its own.`}
             </p>
           )}
         </>
       ),
       ways,
-      provenance: `The ${word.toLowerCase()} and everything in it come from the public gazetteer. Which of its towns SLATE has loaded depends on where you’ve been looking.`,
+      provenance: `The ${word.toLowerCase()} and its towns come from a public gazetteer. A country’s towns are loaded once your life has a place in it.`,
     };
   },
 });
@@ -430,7 +431,7 @@ function orderedTowns(towns: readonly City[], hereId: string | undefined): City[
 // ---------------------------------------------------------------------------
 
 defineLook<Country>('country', {
-  gone: 'There’s no country by that name to be in.',
+  gone: 'That country isn’t on the map.',
   resolve: (sim, id) => COUNTRIES.get(id || standingIn(sim)?.countryId || ''),
   seeds: (sim) => {
     const ids = [standingIn(sim)?.countryId, homeCityOf(sim)?.countryId];
@@ -454,7 +455,7 @@ defineLook<Country>('country', {
       ways.push({
         to: at('region', region.id),
         label: spokenName(region.name),
-        detail: `The ${regionWord(country.id).toLowerCase()} you’re standing in, one of ${pieces(country.id)} the map cuts it into`,
+        detail: `The ${regionWord(country.id).toLowerCase()} you’re in, one of its ${pieces(country.id)}`,
       });
     }
     if (capitalHere && capitalHere.id !== here?.id && placeOpens(capitalHere)) {
@@ -469,18 +470,18 @@ defineLook<Country>('country', {
       name: country.name,
       kind: 'The Country',
       summary: inIt
-        ? `You’re in ${theCountry(country.name)} today, ${formatPeople(country.population)} people are in it with you, and everything you buy is priced in ${money.toLowerCase()}.`
-        : `${country.continent}, ${formatPeople(country.population)} people, and you’re not in it — you’re in ${here ? spokenName(here.name) : 'somewhere else'}.`,
+        ? `You’re in ${theCountry(country.name)}, a country of ${formatPeople(country.population)} people, and its money is the ${money.toLowerCase()}.`
+        : `A country in ${country.continent}, with ${formatPeople(country.population)} people. You’re in ${here ? spokenName(here.name) : 'another country'}.`,
       body: (
         <>
           <p className="small muted">
-            {country.capital ? `The capital is ${capitalName(country)}, and the country ` : 'The country '}
-            {`sits in ${country.continent}, with ${formatPeople(country.population)} people spread over `}
-            {`${country.areaKm2.toLocaleString('en-US')} square kilometers of it.`}
+            {country.capital ? `The capital is ${capitalName(country)}. ` : ''}
+            {`The country is in ${country.continent}, with ${formatPeople(country.population)} people across `}
+            {`${country.areaKm2.toLocaleString('en-US')} square kilometers.`}
           </p>
           <p className="small muted">
             {`They drive on the ${country.drivesOn}, measure distance in ${usesMiles(country.id) ? 'miles' : 'kilometers'} and read the temperature in ${usesFahrenheit(country.id) ? 'Fahrenheit' : 'Celsius'}.`}
-            {languages.length > 0 && ` ${spokenList(languages)} ${isAre(languages.length)} spoken, in that order.`}
+            {languages.length > 0 && ` ${spokenList(languages)} ${isAre(languages.length)} spoken${languages.length > 1 ? ', in the order the country lists them' : ''}.`}
           </p>
           <div className="grid grid-3">
             <Stat label="Capital" value={country.capital ? capitalName(country) : 'Not On File'} note={country.continent} />
@@ -493,7 +494,7 @@ defineLook<Country>('country', {
         </>
       ),
       ways,
-      provenance: 'Country facts are public reference data, as the gazetteer publishes them.',
+      provenance: 'These facts come from a public gazetteer.',
     };
   },
 });
@@ -511,7 +512,7 @@ interface TheMoney {
 }
 
 defineLook<TheMoney>('currency', {
-  gone: 'Nobody prices anything in that any more.',
+  gone: 'No country on the map uses that currency.',
   resolve: (sim, id) => {
     const here = standingIn(sim);
     const country = COUNTRIES.get(here?.countryId ?? '');
@@ -534,7 +535,7 @@ defineLook<TheMoney>('currency', {
     const here = standingIn(sim);
     const place = profileFor(sim, here);
     const hundred = formatLocal(100_00, money.info.code);
-    const users = money.users.map((c) => c.name);
+    const users = money.users.map((c) => c.name.trim());
 
     const ways: Way[] = money.users
       .slice()
@@ -543,7 +544,9 @@ defineLook<TheMoney>('currency', {
       .map((c) => ({
         to: at('country', c.id),
         label: c.name,
-        detail: `${formatPeople(c.population)} people, and ${c.capital ? capitalName(c) : 'no capital'} at the middle of it`,
+        detail: c.population > 0
+          ? `${formatPeople(c.population)} people${c.capital ? `, with its capital at ${capitalName(c)}` : ''}`
+          : 'Nobody lives there',
       }));
 
     return {
@@ -551,27 +554,27 @@ defineLook<TheMoney>('currency', {
       kind: 'The Money',
       parent: money.home ? at('country', money.home.id) : undefined,
       summary: money.home
-        ? `You pay for things here in ${money.name.toLowerCase()}, written ${money.info.symbol}, and ${money.info.unitsPerUsd === undefined ? 'SLATE has no rate on file to turn it into dollars' : `SLATE puts it at about ${money.info.unitsPerUsd.toLocaleString('en-US')} to the dollar`}.`
-        : `${spokenSome(users, 4)} ${users.length === 1 ? 'prices' : 'price'} everything in it, and you’re not standing ${users.length === 1 ? 'there' : 'in any of them'} today.`,
+        ? `The ${money.name.toLowerCase()} is the money here, written ${money.info.symbol}. ${money.info.code === 'USD' ? 'Every exchange rate is quoted against it.' : money.info.unitsPerUsd === undefined ? 'The game has no exchange rate for it.' : `It’s about ${money.info.unitsPerUsd.toLocaleString('en-US')} to the US dollar, estimated.`}`
+        : `The money of ${spokenSome(users, 4)}. You’re not in ${users.length === 1 ? 'it' : 'any of them'}.`,
       body: (
         <>
           <p className="small muted">
             {money.info.code === 'USD'
-              ? 'SLATE’s exchange rates are quoted against the dollar, so it’s where every conversion starts.'
+              ? 'Every exchange rate in the game is quoted against the US dollar, so every conversion goes through it.'
               : hundred
-                ? `A hundred dollars is ${hundred} on the ground ${money.home ? 'here' : 'there'}.`
-                : 'SLATE has no rate on file for it, so nothing is converted into it, and a save started here keeps its money in euros.'}
+                ? `A hundred US dollars is ${hundred} ${money.home ? 'here' : 'there'}.`
+                : 'The game has no exchange rate for it, so nothing is converted into it, and a life started here keeps its money in euros.'}
             {money.info.decimals === 0
-              ? ` There are no cents in it — the smallest thing you can hand over is one whole ${money.name.toLowerCase()}.`
-              : ` It divides into hundredths, and prices are written to two of them.`}
+              ? ' It has no smaller unit, so prices in it are whole numbers.'
+              : ' Prices in it are written to two decimal places.'}
             {money.info.symbolAfter
-              ? ` The symbol goes after the number, the way ${money.info.symbol} is written on a receipt.`
-              : ' The symbol goes in front of the number.'}
+              ? ' Its symbol goes after the number.'
+              : ' Its symbol goes before the number.'}
           </p>
           <p className="small muted">
-            {`SLATE prices ${spokenSome(users, 4)} in it.`}
+            {`It’s used in ${spokenSome(users, 4)}.`}
             {place && place.currency.code === money.info.code && place.localRent
-              && ` A one-bedroom in ${spokenName(place.city.name)} is about ${place.localRent} a month in it.`}
+              && ` A one-bedroom in ${spokenName(place.city.name)} is about ${place.localRent} a month.`}
           </p>
         </>
       ),
@@ -594,7 +597,7 @@ interface TheLight {
 }
 
 defineLook<TheLight>('daylight', {
-  gone: 'Sunrise still happens. It just isn’t anywhere SLATE can name.',
+  gone: 'That place isn’t on the map, so its daylight can’t be shown.',
   resolve: (sim, id) => {
     const city = cityFor(sim, id);
     if (!city) return undefined;
@@ -627,72 +630,72 @@ defineLook<TheLight>('daylight', {
       // so the parent is declared only where it would open.
       parent: placeOpens(city) ? at('place', city.id) : undefined,
       summary: today.polar === 'day'
-        ? `The sun doesn’t go down here today — you get all twenty-four hours of it, and the difference between two in the afternoon and two in the morning is the color of the light.`
+        ? 'The sun doesn’t set here today, so it’s light all day and all night.'
         : today.polar === 'night'
-          ? `The sun doesn’t come up here today — you get a few hours of blue in the middle of it and that’s the whole day.`
-          : `It’s light from ${formatTime(today.sunrise ?? 0, city.timeZone)} to ${formatTime(today.sunset ?? 0, city.timeZone)}, ${formatDaylight(today.daylightMinutes)} of it, and ${swingLine(swing)}.`,
+          ? 'The sun doesn’t rise here today.'
+          : `Daylight runs from ${formatTime(today.sunrise ?? 0, city.timeZone)} to ${formatTime(today.sunset ?? 0, city.timeZone)} today, ${formatDurationWords(today.daylightMinutes * MS_MINUTE)}, and ${swingLine(swing)}.`,
       body: (
         <>
           <p className="small muted">
-            {`${spokenName(city.name)} sits at ${degrees}° ${north ? 'north' : 'south'}, ${latitudeLine(city.latitude)}`}
+            {`${spokenName(city.name)} is at ${degrees}° ${north ? 'north' : 'south'}, ${latitudeLine(city.latitude)}`}
           </p>
           <p className="small muted">{yearLine(midsummer, midwinter)}</p>
           <div className="grid grid-3">
             <Stat
               label="Sunrise"
               value={today.polar ? 'None Today' : formatTime(today.sunrise ?? 0, city.timeZone)}
-              note={today.polar === 'day' ? 'It never got dark' : today.polar === 'night' ? 'It stays under the horizon' : 'Local clock'}
+              note={today.polar === 'day' ? 'It doesn’t get dark' : today.polar === 'night' ? 'It stays below the horizon' : 'Local time'}
             />
             <Stat
               label="Sunset"
               value={today.polar ? 'None Today' : formatTime(today.sunset ?? 0, city.timeZone)}
-              note={today.polar ? 'The sun never crosses the horizon' : 'Local clock'}
+              note={today.polar ? 'The sun doesn’t cross the horizon' : 'Local time'}
             />
             <Stat
               label="Length"
               value={today.polar === 'day' ? 'All Of It' : today.polar === 'night' ? 'None Of It' : formatDaylight(today.daylightMinutes)}
-              note={swing === 0 ? 'Barely moving' : `${swing > 0 ? 'Gaining' : 'Losing'} ${plural(Math.abs(swing), 'minute')} a day`}
+              note={swing === 0 ? 'Barely changing' : `${swing > 0 ? 'Gaining' : 'Losing'} ${plural(Math.abs(swing), 'minute')} a day`}
             />
             <Stat
               label="Longest Day"
               value={midsummer.polar === 'day' ? 'All Of It' : formatDaylight(midsummer.daylightMinutes)}
-              note="Around the solstice in June or December, whichever is summer here"
+              note={north ? 'At the June solstice' : 'At the December solstice'}
             />
             <Stat
               label="Shortest Day"
               value={midwinter.polar === 'night' ? 'None Of It' : formatDaylight(midwinter.daylightMinutes)}
-              note="The other solstice, six months from it"
+              note={north ? 'At the December solstice' : 'At the June solstice'}
             />
-            <Stat label="Time Zone" value={zoneAbbreviation(sim.now, city.timeZone)} note="The clock everyone here keeps" />
+            <Stat label="Time Zone" value={zoneAbbreviation(sim.now, city.timeZone)} note="The local time zone" />
           </div>
         </>
       ),
-      provenance: 'Not a lookup — the tilt of the Earth, the day of the year and this latitude, worked out the way an almanac works it out. Good to a minute or two.',
+      provenance: 'Calculated from the Earth’s tilt, the day of the year and this latitude, as an almanac does, and good to a minute or two.',
     };
   },
 });
 
 /** How fast the day is growing or shrinking, in the words you would use. */
 function swingLine(minutes: number): string {
-  if (minutes === 0) return 'the length of the day is barely moving';
+  if (minutes === 0) return 'the days are barely changing in length';
   const size = Math.abs(minutes);
-  return `you’re ${minutes > 0 ? 'gaining' : 'losing'} about ${said(size, 'minute')} of it a day`;
+  return `the days are getting about ${said(size, 'minute')} ${minutes > 0 ? 'longer' : 'shorter'} each day`;
 }
 
 /** What this latitude does to a year, said plainly. */
 function latitudeLine(latitude: number): string {
   const size = Math.abs(latitude);
   const circle = latitude >= 0 ? 'Arctic Circle' : 'Antarctic Circle';
-  if (size >= 66.5) return `inside the ${circle}, where the sun spends part of the year refusing to set and part of it refusing to rise.`;
-  if (size >= 58) return `just short of the ${circle}, which is close enough that the year swings hard at both ends.`;
-  if (size >= 45) return `far enough from the equator that winter afternoons end early and summer evenings go on.`;
-  if (size >= 23.5) return `in the middle latitudes, where the day stretches and shrinks by a couple of hours either side of the year.`;
-  return `close enough to the equator that the day is near enough twelve hours the whole year round.`;
+  if (size >= 66.5) return `inside the ${circle}, where for part of the year the sun doesn’t set, and for part of it, it doesn’t rise.`;
+  if (size >= 58) return `just short of the ${circle}, so the days are very long in summer and very short in winter.`;
+  if (size >= 45) return 'far enough from the equator that winter afternoons end early and summer evenings run late.';
+  if (size >= 23.5) return 'in the middle latitudes, where the length of the day changes by a few hours over the year.';
+  return 'close enough to the equator that the day is about twelve hours long all year.';
 }
 
 /** The two ends of the year, from the same geometry. */
 function yearLine(midsummer: SunTimes, midwinter: SunTimes): string {
-  const long = midsummer.polar === 'day' ? 'the sun never sets at all' : `you get ${formatDaylight(midsummer.daylightMinutes)}`;
-  const short = midwinter.polar === 'night' ? 'it never comes up' : `you get ${formatDaylight(midwinter.daylightMinutes)}`;
-  return `On the longest day of the year ${long}; on the shortest, ${short}. That gap is the whole difference between living here and living somewhere flat.`;
+  const long = midsummer.polar === 'day' ? 'the sun doesn’t set at all' : `there’s ${formatDaylight(midsummer.daylightMinutes)} of daylight`;
+  const short = midwinter.polar === 'night' ? 'it doesn’t rise at all' : `there’s ${formatDaylight(midwinter.daylightMinutes)}`;
+  return `On the longest day of the year ${long}, and on the shortest, ${short}.`;
 }

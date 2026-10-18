@@ -182,7 +182,7 @@ const memos = (sim: Simulation, memo: string | RegExp, from = 0) => sim.universe
 /** What a transaction took from the player's own accounts. */
 const taken = (sim: Simulation, t: { postings: { accountId: string; amount: number }[] }) => -t.postings.filter((p) => sim.universe.accounts[p.accountId]?.ownerId === sim.player.id).reduce((s, p) => s + p.amount, 0);
 
-const CITI_REFUSES = 'Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.';
+const CITI_REFUSES = 'Citi needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.';
 /** An account at a New Haven bank she doesn't bank with: Citi, online, for a US citizen, no opening deposit. */
 const openAtCiti = (sim: Simulation) => sim.execute<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } });
 const APPLY_ID = { kind: 'documents.apply_idcard', payload: {} };
@@ -273,13 +273,13 @@ describe('documents.apply_idcard', () => {
   it('refuses a second card while one is on its way and once it has come, in its words, charges once, and holds it across a save and a load', () => {
     const sim = life('g15-idcard-twice');
     sim.must(APPLY_ID);
-    expect(sim.execute(APPLY_ID).error).toBe('One is on its way.');
+    expect(sim.execute(APPLY_ID).error).toBe('One is already on its way.');
     const back = reload(sim);
-    expect(back.execute(APPLY_ID).error).toBe('One is on its way.');
+    expect(back.execute(APPLY_ID).error).toBe('One is already on its way.');
     tended(back, COMES + MS_HOUR);
-    expect(back.execute(APPLY_ID).error).toBe('You hold one in force.');
+    expect(back.execute(APPLY_ID).error).toBe('You already hold one in force.');
     const again = reload(back);
-    expect(again.execute(APPLY_ID).error).toBe('You hold one in force.');
+    expect(again.execute(APPLY_ID).error).toBe('You already hold one in force.');
     expect(held(again, 'idcard')).toEqual([expect.objectContaining({ status: 'valid', expiresAt: ENDS })]);
     expect(memos(again, 'Non-Driver Identification Card').map((t) => taken(again, t))).toEqual([28_00]);
     // Loaded, it's still the photo ID a new bank takes.
@@ -292,7 +292,7 @@ describe('documents.apply_idcard', () => {
     const sim = life('g15-ct', 'us-ct-newhaven');
     expect(held(sim, 'license')).toEqual([expect.objectContaining({ issuer: 'us-ct', status: 'valid' })]);
     const before = checking(sim).balance;
-    expect(sim.execute(APPLY_ID).error).toBe('You hold a license here. It serves as your ID.');
+    expect(sim.execute(APPLY_ID).error).toBe('You hold a driving license from here, and it already serves as your ID.');
     expect(held(sim, 'idcard')).toEqual([]);
     expect(checking(sim).balance).toBe(before);
   });
@@ -300,7 +300,7 @@ describe('documents.apply_idcard', () => {
   it('refuses a student whose bank can’t cover the $28, and charges nothing', () => {
     const sim = life('g15-idcard-broke');
     broke(sim);
-    expect(sim.execute(APPLY_ID).error).toBe('$28.00 is more than the bank can cover.');
+    expect(sim.execute(APPLY_ID).error).toBe('Your bank can’t cover $28.00, so nothing was charged.');
     expect(held(sim, 'idcard')).toEqual([]);
     expect(memos(sim, 'Non-Driver Identification Card')).toEqual([]);
   });
@@ -309,10 +309,10 @@ describe('documents.apply_idcard', () => {
     const sim = life('g15-oos', 'uk-eng-london');
     tended(sim, at(2026, 9, 8));
     sim.must({ kind: 'school.withdraw', payload: { confirm: true } });
-    expect(sim.execute(APPLY_ID).error).toBe('On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.');
+    expect(sim.execute(APPLY_ID).error).toBe('On an F-1, the DMV asks for your I-20 and proof that you’re enrolled, and you’re not at school.');
     tended(sim, at(2026, 9, 25));
     expect(sim.player.usOutOfStatus).toBe(at(2026, 9, 8) + 15 * MS_DAY);
-    expect(sim.execute(APPLY_ID).error).toBe('The DMV checks lawful presence through SAVE, and you stayed past your status.');
+    expect(sim.execute(APPLY_ID).error).toBe('The DMV checks lawful presence through SAVE, and you stayed past the end of your status.');
     expect(held(sim, 'idcard')).toEqual([]);
   });
 
@@ -339,7 +339,7 @@ describe('documents.apply_idcard', () => {
     // The program's end: the class of 2029's last day at the School, 31 May 2029, its F-1 running 60 days past it.
     expect(r).toEqual({ fee: 28_00, readyAt: comes, expiresAt: Date.UTC(2029, 4, 31, 12) });
     expect(held(sim, 'idcard')).toEqual([expect.objectContaining({ name: 'Non-Driver Identification Card, Limited Term', status: 'pending', appliedAt: applied, readyAt: comes, expiresAt: Date.UTC(2029, 4, 31, 12) })]);
-    expect(sim.execute(APPLY_ID).error).toBe('One is on its way.');
+    expect(sim.execute(APPLY_ID).error).toBe('One is already on its way.');
     // Saved and loaded while SAVE decides: past its approval it's still in the mail, and it comes once, on its day.
     tended(sim, Date.UTC(2026, 9, 26, 14));
     const back = reload(sim);
@@ -351,7 +351,31 @@ describe('documents.apply_idcard', () => {
     expect(held(back, 'idcard')).toEqual([expect.objectContaining({ status: 'valid', issuedAt: comes, expiresAt: Date.UTC(2029, 4, 31, 12) })]);
     expect(titled(back, 'Non-Driver Identification Card, Limited Term Arrived')).toHaveLength(1);
     expect(memos(back, 'Non-Driver Identification Card').map((t) => taken(back, t))).toEqual([28_00]);
-    expect(back.execute(APPLY_ID).error).toBe('You hold one in force.');
+    expect(back.execute(APPLY_ID).error).toBe('You already hold one in force.');
+  });
+
+  // From 2026-10-17 (brief 14's document journey, `idCardOnItsWay`): until then every pending card read Being Decided to
+  // the day it came, a citizen's, which waits on no check, and a non-citizen's in the mail after SAVE's approval alike.
+  it('PLAYER JOURNEY: a British student’s Limited Term card reads Being Decided while SAVE decides and On Its Way once it has, on its row and in its look', async () => {
+    const { resolveLook } = await import('@/ui/looks/registry');
+    const { at: lookAt } = await import('@/ui/looks/subject');
+    const sim = life('g15-save-words', 'uk-eng-london');
+    tended(sim, at(2026, 9, 8, 19));
+    sim.must({ kind: 'documents.apply_ssn', payload: {} });
+    tended(sim, Date.UTC(2026, 9, 19, 14));
+    sim.must(APPLY_ID);
+    const card = held(sim, 'idcard')[0]!;
+    const row = /Non-Driver Identification Card, Limited Term ID\d{8} — May 31, 2029 (Being Decided|On Its Way)/;
+    const said = () => {
+      const look = resolveLook(sim, lookAt('document', card.id));
+      if (!look || 'gone' in look) throw new Error('the card’s look didn’t resolve');
+      return { row: papers(sim, 'passport').text.match(row)?.[1], summary: (look as { summary?: string }).summary };
+    };
+    // SAVE's last day is Monday 2 November: a day before it, being decided.
+    tended(sim, Date.UTC(2026, 10, 1, 14));
+    expect(said()).toEqual({ row: 'Being Decided', summary: 'You’ve applied, and it’s being decided. It should be ready by December 2, 2026.' });
+    tended(sim, Date.UTC(2026, 10, 2, 15));
+    expect(said()).toEqual({ row: 'On Its Way', summary: 'You’ve applied and paid, and the card is on its way. It should arrive by December 2, 2026.' });
   });
 
   // Renamed on 2026-10-17 (brief 11's KS-ct-idcard, inputs/renames.json): until then 'on Passport And ID, Get Non-Driver
@@ -364,17 +388,19 @@ describe('documents.apply_idcard', () => {
     const get = button(first, 'Get Non-Driver Identification Card');
     expect(get).toMatchObject({ feature: 'documents.apply_idcard', disabled: false });
     const before = checking(sim).balance;
-    expect(press(get)).toEqual(['Non-Driver Identification Card, for $28.00; the card comes September 22, 2026; good until June 14, 2034.']);
+    expect(press(get)).toEqual(['Non-Driver Identification Card: you paid $28.00. The card comes September 22, 2026. It’s good until June 14, 2034.']);
     expect(before - checking(sim).balance).toBe(28_00);
     const after = papers(sim, 'passport');
-    expect(button(after, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'One is on its way.' });
-    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} — June 14, 2034 Being Decided/);
+    expect(button(after, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'One is already on its way.' });
+    // A citizen's card waits on no check, so its row says On Its Way, as the toast and the refusal do. Until 2026-10-17 it
+    // said Being Decided (brief 14's document journey, `idCardOnItsWay`).
+    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} — June 14, 2034 On Its Way/);
     tended(sim, COMES + MS_HOUR);
     const come = papers(sim, 'passport');
-    expect(button(come, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'You hold one in force.' });
+    expect(button(come, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'You already hold one in force.' });
     expect(come.text).toMatch(/Non-Driver Identification Card ID\d{8} September 22, 2026 June 14, 2034 In Force/);
     const ct = papers(life('g15-ct', 'us-ct-newhaven'), 'passport');
-    expect(button(ct, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'You hold a license here. It serves as your ID.' });
+    expect(button(ct, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'You hold a driving license from here, and it already serves as your ID.' });
   });
 });
 
@@ -393,7 +419,7 @@ describe('documents.apply_opt', () => {
     expect(memos(sim, 'Form I-765, (c)(3)(B), OPT').map((t) => taken(sim, t))).toEqual([470_00]);
     expect(r).toEqual({ fee: 470_00, readyAt: START + 90 * MS_DAY });
     expect(held(sim, 'permit')).toEqual([expect.objectContaining({ name: 'Employment Authorization, OPT', status: 'pending' })]);
-    expect(sim.execute(APPLY_OPT).error).toBe('You’ve applied for OPT already.');
+    expect(sim.execute(APPLY_OPT).error).toBe('You’ve already applied for OPT.');
     // The grace after the program ended 40 days ago ends in 20; five days past it, the application holds her status.
     tended(sim, START + 25 * MS_DAY);
     expect(sim.player.usOutOfStatus).toBeUndefined();
@@ -401,11 +427,11 @@ describe('documents.apply_opt', () => {
     expect(held(sim, 'visa')).toEqual([expect.objectContaining({ name: 'F-1 Student Visa', status: 'valid' })]);
     // Saved and loaded while it's decided: the window shut behind it, charged once, approved once.
     const back = reload(sim);
-    expect(back.execute(APPLY_OPT).error).toBe('It closed September 13, 2026, 60 days after the program ended.');
+    expect(back.execute(APPLY_OPT).error).toBe('The time to apply closed on September 13, 2026, 60 days after your program ended.');
     tended(back, START + 90 * MS_DAY + MS_HOUR);
     const opt = held(back, 'permit')[0]!;
     expect(opt).toMatchObject({ status: 'valid', issuedAt: START + 90 * MS_DAY, expiresAt: Date.UTC(2027, 10, 22, 11, 30) });
-    expect(titled(back, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from November 22, 2026 to November 22, 2027, with no more than 90 days between jobs in all.']);
+    expect(titled(back, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from November 22, 2026 to November 22, 2027, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.']);
     expect(back.player.usOutOfStatus).toBeUndefined();
     expect(memos(back, /OPT/).map((t) => taken(back, t))).toEqual([470_00]);
     // No work after the degree: thirteen weeks idle is 91 days, past OPT's 90, and the status ends with it, no grace.
@@ -432,7 +458,7 @@ describe('documents.apply_opt', () => {
     };
     const withheld = decided('withheld');
     expect(held(withheld, 'permit')).toEqual([expect.objectContaining({ name: 'Employment Authorization, OPT', status: 'cancelled' })]);
-    expect(titled(withheld, 'OPT Denied').map((n) => n.body)).toEqual(['OPT follows a degree completed, and you left without it. The fee isn’t refunded.']);
+    expect(titled(withheld, 'OPT Denied').map((n) => n.body)).toEqual(['USCIS denied your OPT, because OPT follows a completed degree and you left without one. The fee isn’t refunded.']);
     expect(titled(withheld, 'OPT Approved')).toEqual([]);
     expect(memos(withheld, /OPT/).map((t) => taken(withheld, t))).toEqual([470_00]);
     // Across a save and a load, denied once and not again.
@@ -452,7 +478,7 @@ describe('documents.apply_opt', () => {
     const d = Object.values(sim.universe.decisions).find((x) => x.refType === 'us-status' && !x.resolvedAt)!;
     expect(d.title).toBe('Your US Status Is Ending');
     // The program's end tomorrow and its 60 days' grace: 24 October 2026.
-    expect(d.detail).toContain('your status ends October 24, 2026. OPT can still be applied for before then.');
+    expect(d.detail).toContain('your status ends October 24, 2026. You can still apply for OPT before then.');
     expect(d.actions.map((a) => [a.label, a.commandKind, a.payload])).toEqual([['Apply For OPT', 'documents.apply_opt', {}], ['Apply For OPT, Premium Processing', 'documents.apply_opt', { premium: true }]]);
     const before = checking(sim).balance;
     const now = sim.now;
@@ -491,19 +517,19 @@ describe('documents.apply_opt', () => {
       expect(held(sim, 'permit')).toEqual([]);
       expect(checking(sim).balance).toBe(before);
     };
-    refused(life('g15-opt-citizen'), 'OPT is for a student on an F-1; you’re a citizen.');
+    refused(life('g15-opt-citizen'), 'OPT is for a student on an F-1, and you’re a US citizen.');
     // The class of 2029's program ends 31 May 2029; its window opens 90 days before.
-    refused(life('g15-opt-early', 'uk-eng-london'), 'It opens March 2, 2029, 90 days before the program ends.');
+    refused(life('g15-opt-early', 'uk-eng-london'), 'You can apply from March 2, 2029, 90 days before your program ends.');
     const left = life('g15-opt-left', 'uk-eng-london');
     left.must({ kind: 'school.withdraw', payload: { confirm: true } });
-    refused(left, 'OPT follows a degree completed, and you left without it.');
+    refused(left, 'OPT follows a completed degree, and you left without one.');
     const late = life('g15-opt-late', 'uk-eng-london');
     graduated(late, 61);
-    refused(late, 'It closed August 23, 2026, 60 days after the program ended.');
+    refused(late, 'The time to apply closed on August 23, 2026, 60 days after your program ended.');
     const poor = life('g15-opt-poor', 'uk-eng-london');
     graduated(poor, 40);
     broke(poor);
-    refused(poor, '$470.00 is more than the bank can cover.');
+    refused(poor, 'Your bank can’t cover $470.00, so nothing was charged.');
   });
 
   it('on Permission To Work, the OPT panel says its fees and Apply For OPT pressed says $470.00 and its day; the status then reads Held while it’s decided, and both buttons are shut with the reason', () => {
@@ -511,16 +537,16 @@ describe('documents.apply_opt', () => {
     graduated(sim, 40);
     const first = papers(sim, 'work');
     expect(first.text).toContain('Your Program Ends July 15, 2026');
-    expect(first.text).toContain('Your US Status Ends September 13, 2026 With its grace after permission ends');
-    expect(first.text).toContain('Up to twelve months to work in your field, from the later of the program’s end and the approval');
-    expect(first.text).toContain('$470.00; premium processing adds $1,780.00 and decides it in 30 business days.');
+    expect(first.text).toContain('Your US Status Ends September 13, 2026 Including the grace period after your permission ends');
+    expect(first.text).toContain('OPT gives you up to twelve months to work in your field, from the later of your program’s end and the approval');
+    expect(first.text).toContain('$470.00. Premium processing adds $1,780.00 and gets a decision within 30 business days.');
     expect(button(first, 'Apply With Premium Processing')).toMatchObject({ feature: 'documents.apply_opt', disabled: false });
-    expect(press(button(first, 'Apply For OPT'))).toEqual(['Applied for OPT, for $470.00. Decided by November 22, 2026.']);
+    expect(press(button(first, 'Apply For OPT'))).toEqual(['Applied for OPT and paid $470.00. It’s decided by November 22, 2026.']);
     const after = papers(sim, 'work');
     expect(after.text).toContain('Your US Status Held While you study, or while an application is decided');
     expect(after.text).toContain('Employment Authorization, OPT');
     expect(after.text).toContain('Ready November 22, 2026 Being Decided');
-    for (const words of ['Apply For OPT', 'Apply With Premium Processing']) expect(button(after, words)).toMatchObject({ disabled: true, title: 'You’ve applied for OPT already.' });
+    for (const words of ['Apply For OPT', 'Apply With Premium Processing']) expect(button(after, words)).toMatchObject({ disabled: true, title: 'You’ve already applied for OPT.' });
     expect(memos(sim, /OPT/).map((t) => taken(sim, t))).toEqual([470_00]);
   });
 });
@@ -553,8 +579,8 @@ describe('documents.replace_idcard', () => {
     expect([copy.stolen, copy.policeReport]).toEqual([undefined, undefined]);
     expect(openAtCiti(sim).error).toBe(CITI_REFUSES);
     // The old card again, and a card applied for meanwhile: each refused in its words.
-    expect(sim.execute({ kind: 'documents.replace_idcard', payload: { documentId: card.id } }).error).toBe('It isn’t lost: report it lost first.');
-    expect(sim.execute(APPLY_ID).error).toBe('One is on its way.');
+    expect(sim.execute({ kind: 'documents.replace_idcard', payload: { documentId: card.id } }).error).toBe('It isn’t lost. Report it lost first.');
+    expect(sim.execute(APPLY_ID).error).toBe('One is already on its way.');
     const back = reload(sim);
     tended(back, NOW + 30 * MS_DAY - MS_HOUR);
     expect(openAtCiti(back).error).toBe(CITI_REFUSES);
@@ -571,7 +597,7 @@ describe('documents.replace_idcard', () => {
     // TEST SETUP: a New York non-driver ID, reported lost, on a New Haven student's record: no life there comes to hold one.
     documentsOf(sim.player).push({ id: 'ny-card', kind: 'idcard', issuer: 'us-ny', name: 'Non-Driver ID Card', number: 'ID00000001', status: 'lost', issuedAt: START - 400 * MS_DAY, expiresAt: START + 2_000 * MS_DAY });
     const before = checking(sim).balance;
-    expect(sim.execute({ kind: 'documents.replace_idcard', payload: { documentId: 'ny-card' } }).error).toBe('It’s replaced where it was issued, for someone living there.');
+    expect(sim.execute({ kind: 'documents.replace_idcard', payload: { documentId: 'ny-card' } }).error).toBe('It’s replaced only where it was issued, for someone living there.');
     expect(held(sim, 'idcard').map((d) => d.status)).toEqual(['lost']);
     expect(checking(sim).balance).toBe(before);
   });
@@ -582,7 +608,7 @@ describe('documents.replace_idcard', () => {
     const card = held(sim, 'idcard')[0]!;
     sim.must({ kind: 'documents.report_lost', payload: { documentId: card.id } });
     broke(sim);
-    expect(sim.execute({ kind: 'documents.replace_idcard', payload: { documentId: card.id } }).error).toBe('$30.00 is more than the bank can cover.');
+    expect(sim.execute({ kind: 'documents.replace_idcard', payload: { documentId: card.id } }).error).toBe('Your bank can’t cover $30.00, so nothing was charged.');
     expect(held(sim, 'idcard').map((d) => d.status)).toEqual(['lost']);
     expect(memos(sim, /, replaced$/)).toEqual([]);
   });
@@ -598,12 +624,14 @@ describe('documents.replace_idcard', () => {
     expect(button(first, 'File A Police Report')).toMatchObject({ feature: 'documents.police_report', disabled: false, title: 'Online, free, and at once' });
     const replace = button(first, 'Replace It, $30');
     expect(replace).toMatchObject({ feature: 'documents.replace_idcard', disabled: false });
-    expect(press(replace)).toEqual(['Replaced; the card comes October 22, 2026.']);
+    expect(press(replace)).toEqual(['Replacement ordered. The card comes October 22, 2026.']);
     const after = papers(sim, 'passport');
-    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} September 22, 2026 June 14, 2034 Being Decided/);
+    // The replacement is made and mailed, with nothing to decide: On Its Way, from 2026-10-17 (Being Decided until then).
+    // It isn't issued until it comes: until that day its row showed the lost card's issue date, September 22, 2026.
+    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} — June 14, 2034 On Its Way/);
     expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} September 22, 2026 June 14, 2034 Canceled/);
     expect(after.buttons.filter((b) => b.feature === 'documents.replace_idcard')).toEqual([]);
-    expect(button(after, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'One is on its way.' });
+    expect(button(after, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'One is already on its way.' });
   });
 });
 
@@ -628,14 +656,14 @@ describe('documents.replace_license', () => {
     const copy = held(sim, 'license').find((d) => d.id !== license.id)!;
     expect(copy).toMatchObject({ status: 'pending', issuer: 'us-ct', expiresAt: license.expiresAt, realId: license.realId });
     expect(copy.number).not.toBe(license.number);
-    expect(sim.execute({ kind: 'documents.replace_license', payload: { documentId: license.id } }).error).toBe('It isn’t lost: report it lost first.');
+    expect(sim.execute({ kind: 'documents.replace_license', payload: { documentId: license.id } }).error).toBe('It isn’t lost. Report it lost first.');
     const back = reload(sim);
     tended(back, START + 30 * MS_DAY - MS_HOUR);
     expect(openAtCiti(back).error).toBe(CITI_REFUSES);
     tended(back, START + 30 * MS_DAY + MS_HOUR);
     expect(held(back, 'license').map((d) => [d.status, d.issuedAt === START + 30 * MS_DAY])).toEqual([['cancelled', false], ['valid', true]]);
     expect(memos(back, /, replaced$/).map((t) => taken(back, t))).toEqual([30_00]);
-    expect(back.execute(APPLY_ID).error).toBe('You hold a license here. It serves as your ID.');
+    expect(back.execute(APPLY_ID).error).toBe('You hold a driving license from here, and it already serves as your ID.');
     const opened = openAtCiti(back);
     expect(opened.ok, opened.error).toBe(true);
   });
@@ -665,7 +693,7 @@ describe('documents.replace_license', () => {
     expect(license).toMatchObject({ issuer: 'us-ca', status: 'valid' });
     sim.must({ kind: 'documents.report_lost', payload: { documentId: license.id } });
     const before = checking(sim).balance;
-    expect(sim.execute({ kind: 'documents.replace_license', payload: { documentId: license.id } }).error).toBe('Its issuer replaces it for somebody living there, and SLATE found no way it sends one out of state.');
+    expect(sim.execute({ kind: 'documents.replace_license', payload: { documentId: license.id } }).error).toBe('Its issuer replaces it only for someone living there, and no way to send one out of state was found.');
     expect(held(sim, 'license').map((d) => d.status)).toEqual(['lost']);
     expect(checking(sim).balance).toBe(before);
   });
@@ -675,7 +703,7 @@ describe('documents.replace_license', () => {
     const license = held(sim, 'license')[0]!;
     sim.must({ kind: 'documents.report_lost', payload: { documentId: license.id } });
     broke(sim);
-    expect(sim.execute({ kind: 'documents.replace_license', payload: { documentId: license.id } }).error).toBe('$30.00 is more than the bank can cover.');
+    expect(sim.execute({ kind: 'documents.replace_license', payload: { documentId: license.id } }).error).toBe('Your bank can’t cover $30.00, so nothing was charged.');
     expect(held(sim, 'license').map((d) => d.status)).toEqual(['lost']);
   });
 
@@ -685,13 +713,13 @@ describe('documents.replace_license', () => {
     sim.must({ kind: 'documents.report_lost', payload: { documentId: license.id } });
     const replace = button(papers(sim, 'passport'), 'Replace It, $30.00');
     expect(replace).toMatchObject({ feature: 'documents.replace_license', disabled: false });
-    expect(press(replace)).toEqual(['Replaced, for $30.00; the card comes September 23, 2026.']);
+    expect(press(replace)).toEqual(['Replacement ordered for $30.00. The card comes September 23, 2026.']);
     expect(papers(sim, 'passport').text).toMatch(/Class D operator's license D\d{8} .+ June 14, 2028 Being Decided/);
     const ca = life('g15-ca', 'us-ca-losangeles');
     ca.must({ kind: 'documents.report_lost', payload: { documentId: held(ca, 'license')[0]!.id } });
     const shown = papers(ca, 'passport');
-    expect(shown.text).toContain('Its issuer replaces it for somebody living there, and SLATE found no way it sends one out of state. Replace It');
-    expect(button(shown, 'Replace It')).toMatchObject({ disabled: true, title: 'Its issuer replaces it for somebody living there, and SLATE found no way it sends one out of state.' });
+    expect(shown.text).toContain('Its issuer replaces it only for someone living there, and no way to send one out of state was found. Replace It');
+    expect(button(shown, 'Replace It')).toMatchObject({ disabled: true, title: 'Its issuer replaces it only for someone living there, and no way to send one out of state was found.' });
   });
 });
 
@@ -710,11 +738,11 @@ describe('documents.report_lost', () => {
     expect(license.status).toBe('lost');
     expect(license.stolen).toBeUndefined();
     expect(openAtCiti(sim).error).toBe(CITI_REFUSES);
-    expect(sim.execute({ kind: 'documents.report_lost', payload: { documentId: passport.id } }).error).toBe('That isn’t a document you hold.');
+    expect(sim.execute({ kind: 'documents.report_lost', payload: { documentId: passport.id } }).error).toBe('That isn’t a document you hold in force.');
     const back = reload(sim);
     expect(documentsOf(back.player).map((d) => [d.kind, d.status, d.stolen ?? false])).toEqual([['passport', 'lost', true], ['license', 'lost', false]]);
     expect(openAtCiti(back).error).toBe(CITI_REFUSES);
-    expect(back.execute({ kind: 'documents.report_lost', payload: { documentId: license.id, stolen: true } }).error).toBe('That isn’t a document you hold.');
+    expect(back.execute({ kind: 'documents.report_lost', payload: { documentId: license.id, stolen: true } }).error).toBe('That isn’t a document you hold in force.');
     // What reads a report: the police take one for a document reported lost.
     back.must({ kind: 'documents.police_report', payload: { documentId: passport.id } });
     expect(held(back, 'passport')[0]!.policeReport).toBe(START);
@@ -723,7 +751,7 @@ describe('documents.report_lost', () => {
   it('refuses a British student’s F-1 in its words, which holds; her passport reported lost leaves the F-1 in force', () => {
     const sim = life('g15-lost-f1', 'uk-eng-london');
     const f1 = held(sim, 'visa')[0]!;
-    expect(sim.execute({ kind: 'documents.report_lost', payload: { documentId: f1.id } }).error).toBe('A status isn’t lost with its paper: it holds.');
+    expect(sim.execute({ kind: 'documents.report_lost', payload: { documentId: f1.id } }).error).toBe('A status can’t be reported lost: it stays in force whatever happens to the paper.');
     expect(f1.status).toBe('valid');
     sim.must({ kind: 'documents.report_lost', payload: { documentId: held(sim, 'passport')[0]!.id } });
     expect(f1.status).toBe('valid');
@@ -740,7 +768,7 @@ describe('documents.report_lost', () => {
     const passport = held(sim, 'passport')[0]!;
     // TEST SETUP: Report Stolen… pressed on the passport, given as the row's confirming state.
     const confirm = papers(sim, 'passport', { id: passport.id, stolen: true });
-    expect(confirm.text).toContain('Reported stolen, it’s canceled for good, even if it turns up, with any visa or authorization issued on it (the F-1 status holds). Cancel It Keep It');
+    expect(confirm.text).toContain('If you report it stolen, it’s canceled for good, even if it turns up, along with any visa or travel authorization issued on it. An F-1 status you hold continues. Cancel It Keep It');
     expect([count(confirm.text, 'Report Lost…'), count(confirm.text, 'Report Stolen…')]).toEqual([1, 1]);
     const cancel = button(confirm, 'Cancel It');
     expect(cancel).toMatchObject({ feature: 'documents.report_lost', disabled: false });
@@ -780,7 +808,7 @@ describe('benefits.assistance', () => {
     const sim = life('g15-snap');
     const r = sim.must<{ scheme: string; firstPaymentAt: number }>({ kind: 'benefits.assistance', payload: {} });
     expect(r).toEqual({ scheme: 'snap', firstPaymentAt: Date.UTC(2026, 7, 31, 11, 30) });
-    expect(sim.execute({ kind: 'benefits.assistance', payload: {} }).error).toBe('You have a claim open.');
+    expect(sim.execute({ kind: 'benefits.assistance', payload: {} }).error).toBe('You already have a claim open.');
     tended(sim, Date.UTC(2026, 7, 31, 12, 30));
     // USDA's maximum allotment for one in fiscal 2026, $298: each month reads the calendar month before, and July, before
     // her life began, held nothing.
@@ -831,14 +859,14 @@ describe('benefits.assistance', () => {
       const applied = sim.now;
       const r = sim.must<{ scheme: string; firstPaymentAt: number }>({ kind: 'benefits.assistance', payload: {} });
       expect(r.firstPaymentAt - applied).toBe(days * MS_DAY);
-      expect(sim.execute({ kind: 'benefits.assistance', payload: {} }).error).toBe('You have a claim open.');
+      expect(sim.execute({ kind: 'benefits.assistance', payload: {} }).error).toBe('You already have a claim open.');
       sim.advanceTo(applied + (days + 30) * MS_DAY + MS_HOUR);
       // Into her own bank, what came to her: once a month, and nothing more.
       expect(memos(sim, memo).map((t) => [t.at, -taken(sim, t)])).toEqual([[applied + days * MS_DAY, monthly], [applied + (days + 30) * MS_DAY, monthly]]);
       expect(sim.player.assistance).toMatchObject({ months: 2 });
     }
     const comfortable = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'comfortable' }, 'g15-ow-rich');
-    expect(comfortable.execute({ kind: 'benefits.assistance', payload: {} }).error).toBe('Ontario Works asks liquid assets under CAD 10,000.');
+    expect(comfortable.execute({ kind: 'benefits.assistance', payload: {} }).error).toBe('Ontario Works asks for liquid assets under CAD 10,000.');
     expect(comfortable.player.assistance).toBeUndefined();
   });
 
@@ -891,9 +919,9 @@ describe('benefits.claim', () => {
     const first = papers(sim, 'benefits');
     expect(first.text).toContain('No Claim Open File A Claim How This Works Filed now, your base period, 2026-4, 2027-1, 2027-2, 2027-3, pays $93.00 a week for up to 26 weeks.');
     const twin = reload(sim);
-    expect(press(button(first, 'File A Claim'))).toEqual(['Filed: $93.00 a week.']);
+    expect(press(button(first, 'File A Claim'))).toEqual(['Claim filed: $93.00 a week.']);
     expect(unemploymentOf(sim.player).claim).toMatchObject({ state: 'ct', weekly: 93_00, maxTotal: 2_418_00, basePeriod: ['2026-4', '2027-1', '2027-2', '2027-3'] });
-    expect(sim.execute({ kind: 'benefits.claim', payload: {} }).error).toBe('You have a claim open.');
+    expect(sim.execute({ kind: 'benefits.claim', payload: {} }).error).toBe('You already have a claim open.');
     const filed = papers(sim, 'benefits');
     expect(filed.text).toContain('A Connecticut Claim Filed January 3, 2028 How This Works A Week $93.00 Connecticut has no waiting week Paid $0.00 Of $2,418.00 at most At Most $2,418.00 Until January 2, 2029');
     tended(sim, SUNDAY[0]! + MS_HOUR);

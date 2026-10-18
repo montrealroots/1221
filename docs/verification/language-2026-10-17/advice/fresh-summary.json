@@ -1,0 +1,1036 @@
+{
+ "commit": "6d83601a774ab536b2988353feaeb3971d5fff28",
+ "clean": true,
+ "command": "npx vite-node tools/advice.ts -- --summarize docs/verification/language-2026-10-17/advice/fresh-adv-v-0-9.json docs/verification/language-2026-10-17/advice/fresh-adv-v-10-19.json docs/verification/language-2026-10-17/advice/fresh-adv-v-20-29.json docs/verification/language-2026-10-17/advice/fresh-adv-v-30-39.json docs/verification/language-2026-10-17/advice/fresh-adv-v-40-49.json docs/verification/language-2026-10-17/advice/fresh-adv-v-50-59.json docs/verification/language-2026-10-17/advice/fresh-adv-v-60-69.json docs/verification/language-2026-10-17/advice/fresh-adv-v-70-79.json docs/verification/language-2026-10-17/advice/fresh-adv-v-80-89.json docs/verification/language-2026-10-17/advice/fresh-adv-v-90-99.json docs/verification/language-2026-10-17/advice/fresh-adv-v-100-109.json docs/verification/language-2026-10-17/advice/fresh-adv-v-110-119.json --out docs/verification/language-2026-10-17/advice/fresh-summary.json",
+ "files": [
+  "docs/verification/language-2026-10-17/advice/fresh-adv-v-0-9.json",
+  "docs/verification/language-2026-10-17/advice/fresh-adv-v-10-19.json",
+  "docs/verification/language-2026-10-17/advice/fresh-adv-v-20-29.json",
+  "docs/verification/language-2026-10-17/advice/fresh-adv-v-30-39.json",
+  "docs/verification/language-2026-10-17/advice/fresh-adv-v-40-49.json",
+  "docs/verification/language-2026-10-17/advice/fresh-adv-v-50-59.json",
+  "docs/verification/language-2026-10-17/advice/fresh-adv-v-60-69.json",
+  "docs/verification/language-2026-10-17/advice/fresh-adv-v-70-79.json",
+  "docs/verification/language-2026-10-17/advice/fresh-adv-v-80-89.json",
+  "docs/verification/language-2026-10-17/advice/fresh-adv-v-90-99.json",
+  "docs/verification/language-2026-10-17/advice/fresh-adv-v-100-109.json",
+  "docs/verification/language-2026-10-17/advice/fresh-adv-v-110-119.json"
+ ],
+ "commits": [
+  "6d83601a774ab536b2988353feaeb3971d5fff28"
+ ],
+ "cases": 120,
+ "roles": {
+  "fresh": "unseen validation (brief 12): run once, on the tested commit, after the clarified criteria were written"
+ },
+ "groups": {
+  "fresh": {
+   "n": 120,
+   "b": {
+    "pass": 120,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 118,
+    "tieSaid": 48,
+    "chiefIsFirst": 40
+   },
+   "c": {
+    "named": 120,
+    "atOrAboveMedian": 120,
+    "share": 1,
+    "firstMean": 0.751,
+    "randomMean": 0.375,
+    "ratio": 2
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 30,
+    "allFullSaid": 30,
+    "allFullSaidEveryCase": 120
+   },
+   "e": {
+    "named": 120,
+    "within": 119,
+    "share": 0.992,
+    "meanError": 0.111
+   },
+   "f": {
+    "prepPieces": 1,
+    "prepSaid": 1,
+    "prepSameEvery": 120,
+    "prepApart": 120,
+    "nearMastery": 30,
+    "ladderFalls": 30,
+    "everyCandidate": 275,
+    "ofCandidates": 287,
+    "prepLimited": 61,
+    "prepSame": 16,
+    "prepStepsLimited": 1,
+    "prepStepsSame": 1,
+    "prepAnyLimited": 74,
+    "prepAnySame": 10
+   },
+   "g": {
+    "recs": 516,
+    "ok": 516
+   },
+   "h": {
+    "cases": 120,
+    "fell": 115,
+    "leads": 45,
+    "changedWhereLed": 45,
+    "leadsWithinATie": 28,
+    "ownFell": 120,
+    "rose": 5,
+    "withinLift": 120,
+    "roseSinceNote": 6,
+    "explained": 6
+   },
+   "i": {
+    "same": 120
+   },
+   "f12": {
+    "F1": 120,
+    "F2": 120,
+    "F3": 120,
+    "F4": 120,
+    "F5": 120,
+    "F6": 120,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 1,
+     "cold": 102
+    },
+    "verdicts": {
+     "both": 120,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 120,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 120,
+    "H2": 120,
+    "H3": 120,
+    "H4": 120,
+    "H5": 120,
+    "H6": 120,
+    "followed": {
+     "stayed": 75,
+     "leads": 45,
+     "changedWhereLed": 45,
+     "rose": 5,
+     "roseAttributed": 5,
+     "roseExplained": 5
+    },
+    "reads": 1965,
+    "staleReads": 0,
+    "changes": 3371,
+    "rises": 1348,
+    "unexplained": 0
+   }
+  },
+  "fresh F2-A10": {
+   "n": 120,
+   "b": {
+    "pass": 120,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 118,
+    "tieSaid": 48,
+    "chiefIsFirst": 40
+   },
+   "c": {
+    "named": 120,
+    "atOrAboveMedian": 120,
+    "share": 1,
+    "firstMean": 0.751,
+    "randomMean": 0.375,
+    "ratio": 2
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 30,
+    "allFullSaid": 30,
+    "allFullSaidEveryCase": 120
+   },
+   "e": {
+    "named": 120,
+    "within": 119,
+    "share": 0.992,
+    "meanError": 0.111
+   },
+   "f": {
+    "prepPieces": 1,
+    "prepSaid": 1,
+    "prepSameEvery": 120,
+    "prepApart": 120,
+    "nearMastery": 30,
+    "ladderFalls": 30,
+    "everyCandidate": 275,
+    "ofCandidates": 287,
+    "prepLimited": 61,
+    "prepSame": 16,
+    "prepStepsLimited": 1,
+    "prepStepsSame": 1,
+    "prepAnyLimited": 74,
+    "prepAnySame": 10
+   },
+   "g": {
+    "recs": 516,
+    "ok": 516
+   },
+   "h": {
+    "cases": 120,
+    "fell": 115,
+    "leads": 45,
+    "changedWhereLed": 45,
+    "leadsWithinATie": 28,
+    "ownFell": 120,
+    "rose": 5,
+    "withinLift": 120,
+    "roseSinceNote": 6,
+    "explained": 6
+   },
+   "i": {
+    "same": 120
+   },
+   "f12": {
+    "F1": 120,
+    "F2": 120,
+    "F3": 120,
+    "F4": 120,
+    "F5": 120,
+    "F6": 120,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 1,
+     "cold": 102
+    },
+    "verdicts": {
+     "both": 120,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 120,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 120,
+    "H2": 120,
+    "H3": 120,
+    "H4": 120,
+    "H5": 120,
+    "H6": 120,
+    "followed": {
+     "stayed": 75,
+     "leads": 45,
+     "changedWhereLed": 45,
+     "rose": 5,
+     "roseAttributed": 5,
+     "roseExplained": 5
+    },
+    "reads": 1965,
+    "staleReads": 0,
+    "changes": 3371,
+    "rises": 1348,
+    "unexplained": 0
+   }
+  },
+  "fresh F2-A10 beginner": {
+   "n": 30,
+   "b": {
+    "pass": 30,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 30,
+    "tieSaid": 13,
+    "chiefIsFirst": 5
+   },
+   "c": {
+    "named": 30,
+    "atOrAboveMedian": 30,
+    "share": 1,
+    "firstMean": 0.985,
+    "randomMean": 0.511,
+    "ratio": 1.929
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 30
+   },
+   "e": {
+    "named": 30,
+    "within": 30,
+    "share": 1,
+    "meanError": 0.059
+   },
+   "f": {
+    "prepPieces": 0,
+    "prepSaid": 0,
+    "prepSameEvery": 30,
+    "prepApart": 30,
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 0,
+    "prepSame": 0,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 0,
+    "prepAnySame": 0
+   },
+   "g": {
+    "recs": 150,
+    "ok": 150
+   },
+   "h": {
+    "cases": 30,
+    "fell": 30,
+    "leads": 24,
+    "changedWhereLed": 24,
+    "leadsWithinATie": 12,
+    "ownFell": 30,
+    "rose": 0,
+    "withinLift": 30,
+    "roseSinceNote": 0,
+    "explained": 0
+   },
+   "i": {
+    "same": 30
+   },
+   "f12": {
+    "F1": 30,
+    "F2": 30,
+    "F3": 30,
+    "F4": 30,
+    "F5": 30,
+    "F6": 30,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 0,
+     "cold": 15
+    },
+    "verdicts": {
+     "both": 30,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 30,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 30,
+    "H2": 30,
+    "H3": 30,
+    "H4": 30,
+    "H5": 30,
+    "H6": 30,
+    "followed": {
+     "stayed": 6,
+     "leads": 24,
+     "changedWhereLed": 24,
+     "rose": 0,
+     "roseAttributed": 0,
+     "roseExplained": 0
+    },
+    "reads": 532,
+    "staleReads": 0,
+    "changes": 857,
+    "rises": 327,
+    "unexplained": 0
+   }
+  },
+  "fresh F2-A10 developing": {
+   "n": 30,
+   "b": {
+    "pass": 30,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 29,
+    "tieSaid": 12,
+    "chiefIsFirst": 9
+   },
+   "c": {
+    "named": 30,
+    "atOrAboveMedian": 30,
+    "share": 1,
+    "firstMean": 0.822,
+    "randomMean": 0.399,
+    "ratio": 2.059
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 30
+   },
+   "e": {
+    "named": 30,
+    "within": 30,
+    "share": 1,
+    "meanError": 0.061
+   },
+   "f": {
+    "prepPieces": 1,
+    "prepSaid": 1,
+    "prepSameEvery": 30,
+    "prepApart": 30,
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 1,
+    "prepSame": 1,
+    "prepStepsLimited": 1,
+    "prepStepsSame": 1,
+    "prepAnyLimited": 14,
+    "prepAnySame": 0
+   },
+   "g": {
+    "recs": 140,
+    "ok": 140
+   },
+   "h": {
+    "cases": 30,
+    "fell": 30,
+    "leads": 14,
+    "changedWhereLed": 14,
+    "leadsWithinATie": 9,
+    "ownFell": 30,
+    "rose": 0,
+    "withinLift": 30,
+    "roseSinceNote": 0,
+    "explained": 0
+   },
+   "i": {
+    "same": 30
+   },
+   "f12": {
+    "F1": 30,
+    "F2": 30,
+    "F3": 30,
+    "F4": 30,
+    "F5": 30,
+    "F6": 30,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 1,
+     "cold": 27
+    },
+    "verdicts": {
+     "both": 30,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 30,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 30,
+    "H2": 30,
+    "H3": 30,
+    "H4": 30,
+    "H5": 30,
+    "H6": 30,
+    "followed": {
+     "stayed": 16,
+     "leads": 14,
+     "changedWhereLed": 14,
+     "rose": 0,
+     "roseAttributed": 0,
+     "roseExplained": 0
+    },
+    "reads": 530,
+    "staleReads": 0,
+    "changes": 907,
+    "rises": 349,
+    "unexplained": 0
+   }
+  },
+  "fresh F2-A10 advanced": {
+   "n": 30,
+   "b": {
+    "pass": 30,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 29,
+    "tieSaid": 9,
+    "chiefIsFirst": 14
+   },
+   "c": {
+    "named": 30,
+    "atOrAboveMedian": 30,
+    "share": 1,
+    "firstMean": 0.676,
+    "randomMean": 0.317,
+    "ratio": 2.13
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 30
+   },
+   "e": {
+    "named": 30,
+    "within": 29,
+    "share": 0.967,
+    "meanError": 0.168
+   },
+   "f": {
+    "prepPieces": 0,
+    "prepSaid": 0,
+    "prepSameEvery": 30,
+    "prepApart": 30,
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 30,
+    "prepSame": 12,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 30,
+    "prepAnySame": 7
+   },
+   "g": {
+    "recs": 117,
+    "ok": 117
+   },
+   "h": {
+    "cases": 30,
+    "fell": 30,
+    "leads": 4,
+    "changedWhereLed": 4,
+    "leadsWithinATie": 4,
+    "ownFell": 30,
+    "rose": 0,
+    "withinLift": 30,
+    "roseSinceNote": 0,
+    "explained": 0
+   },
+   "i": {
+    "same": 30
+   },
+   "f12": {
+    "F1": 30,
+    "F2": 30,
+    "F3": 30,
+    "F4": 30,
+    "F5": 30,
+    "F6": 30,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 0,
+     "cold": 30
+    },
+    "verdicts": {
+     "both": 30,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 30,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 30,
+    "H2": 30,
+    "H3": 30,
+    "H4": 30,
+    "H5": 30,
+    "H6": 30,
+    "followed": {
+     "stayed": 26,
+     "leads": 4,
+     "changedWhereLed": 4,
+     "rose": 0,
+     "roseAttributed": 0,
+     "roseExplained": 0
+    },
+    "reads": 526,
+    "staleReads": 0,
+    "changes": 947,
+    "rises": 310,
+    "unexplained": 0
+   }
+  },
+  "fresh F2-A10 nearMastery": {
+   "n": 30,
+   "b": {
+    "pass": 30,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 30,
+    "tieSaid": 14,
+    "chiefIsFirst": 12
+   },
+   "c": {
+    "named": 30,
+    "atOrAboveMedian": 30,
+    "share": 1,
+    "firstMean": 0.521,
+    "randomMean": 0.274,
+    "ratio": 1.896
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 30,
+    "allFullSaid": 30,
+    "allFullSaidEveryCase": 30
+   },
+   "e": {
+    "named": 30,
+    "within": 30,
+    "share": 1,
+    "meanError": 0.155
+   },
+   "f": {
+    "prepPieces": 0,
+    "prepSaid": 0,
+    "prepSameEvery": 30,
+    "prepApart": 30,
+    "nearMastery": 30,
+    "ladderFalls": 30,
+    "everyCandidate": 275,
+    "ofCandidates": 287,
+    "prepLimited": 30,
+    "prepSame": 3,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 30,
+    "prepAnySame": 3
+   },
+   "g": {
+    "recs": 109,
+    "ok": 109
+   },
+   "h": {
+    "cases": 30,
+    "fell": 25,
+    "leads": 3,
+    "changedWhereLed": 3,
+    "leadsWithinATie": 3,
+    "ownFell": 30,
+    "rose": 5,
+    "withinLift": 30,
+    "roseSinceNote": 6,
+    "explained": 6
+   },
+   "i": {
+    "same": 30
+   },
+   "f12": {
+    "F1": 30,
+    "F2": 30,
+    "F3": 30,
+    "F4": 30,
+    "F5": 30,
+    "F6": 30,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 0,
+     "cold": 30
+    },
+    "verdicts": {
+     "both": 30,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 30,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 30,
+    "H2": 30,
+    "H3": 30,
+    "H4": 30,
+    "H5": 30,
+    "H6": 30,
+    "followed": {
+     "stayed": 27,
+     "leads": 3,
+     "changedWhereLed": 3,
+     "rose": 5,
+     "roseAttributed": 5,
+     "roseExplained": 5
+    },
+    "reads": 377,
+    "staleReads": 0,
+    "changes": 660,
+    "rises": 362,
+    "unexplained": 0
+   }
+  },
+  "fresh F2-A10 firstWeek": {
+   "n": 40,
+   "b": {
+    "pass": 40,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 40,
+    "tieSaid": 17,
+    "chiefIsFirst": 20
+   },
+   "c": {
+    "named": 40,
+    "atOrAboveMedian": 40,
+    "share": 1,
+    "firstMean": 0.772,
+    "randomMean": 0.388,
+    "ratio": 1.989
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 10,
+    "allFullSaid": 10,
+    "allFullSaidEveryCase": 40
+   },
+   "e": {
+    "named": 40,
+    "within": 40,
+    "share": 1,
+    "meanError": 0.118
+   },
+   "f": {
+    "prepPieces": 1,
+    "prepSaid": 1,
+    "prepSameEvery": 40,
+    "prepApart": 40,
+    "nearMastery": 10,
+    "ladderFalls": 10,
+    "everyCandidate": 82,
+    "ofCandidates": 82,
+    "prepLimited": 21,
+    "prepSame": 9,
+    "prepStepsLimited": 1,
+    "prepStepsSame": 1,
+    "prepAnyLimited": 23,
+    "prepAnySame": 7
+   },
+   "g": {
+    "recs": 174,
+    "ok": 174
+   },
+   "h": {
+    "cases": 40,
+    "fell": 39,
+    "leads": 13,
+    "changedWhereLed": 13,
+    "leadsWithinATie": 8,
+    "ownFell": 40,
+    "rose": 1,
+    "withinLift": 40,
+    "roseSinceNote": 2,
+    "explained": 2
+   },
+   "i": {
+    "same": 40
+   },
+   "f12": {
+    "F1": 40,
+    "F2": 40,
+    "F3": 40,
+    "F4": 40,
+    "F5": 40,
+    "F6": 40,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 1,
+     "cold": 34
+    },
+    "verdicts": {
+     "both": 40,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 40,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 40,
+    "H2": 40,
+    "H3": 40,
+    "H4": 40,
+    "H5": 40,
+    "H6": 40,
+    "followed": {
+     "stayed": 27,
+     "leads": 13,
+     "changedWhereLed": 13,
+     "rose": 1,
+     "roseAttributed": 1,
+     "roseExplained": 1
+    },
+    "reads": 592,
+    "staleReads": 0,
+    "changes": 816,
+    "rises": 323,
+    "unexplained": 0
+   }
+  },
+  "fresh F2-A10 midTerm": {
+   "n": 40,
+   "b": {
+    "pass": 40,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 39,
+    "tieSaid": 13,
+    "chiefIsFirst": 11
+   },
+   "c": {
+    "named": 40,
+    "atOrAboveMedian": 40,
+    "share": 1,
+    "firstMean": 0.766,
+    "randomMean": 0.379,
+    "ratio": 2.02
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 10,
+    "allFullSaid": 10,
+    "allFullSaidEveryCase": 40
+   },
+   "e": {
+    "named": 40,
+    "within": 39,
+    "share": 0.975,
+    "meanError": 0.108
+   },
+   "f": {
+    "prepPieces": 0,
+    "prepSaid": 0,
+    "prepSameEvery": 40,
+    "prepApart": 40,
+    "nearMastery": 10,
+    "ladderFalls": 10,
+    "everyCandidate": 87,
+    "ofCandidates": 92,
+    "prepLimited": 20,
+    "prepSame": 1,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 26,
+    "prepAnySame": 1
+   },
+   "g": {
+    "recs": 170,
+    "ok": 170
+   },
+   "h": {
+    "cases": 40,
+    "fell": 38,
+    "leads": 12,
+    "changedWhereLed": 12,
+    "leadsWithinATie": 10,
+    "ownFell": 40,
+    "rose": 2,
+    "withinLift": 40,
+    "roseSinceNote": 2,
+    "explained": 2
+   },
+   "i": {
+    "same": 40
+   },
+   "f12": {
+    "F1": 40,
+    "F2": 40,
+    "F3": 40,
+    "F4": 40,
+    "F5": 40,
+    "F6": 40,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 0,
+     "cold": 30
+    },
+    "verdicts": {
+     "both": 40,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 40,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 40,
+    "H2": 40,
+    "H3": 40,
+    "H4": 40,
+    "H5": 40,
+    "H6": 40,
+    "followed": {
+     "stayed": 28,
+     "leads": 12,
+     "changedWhereLed": 12,
+     "rose": 2,
+     "roseAttributed": 2,
+     "roseExplained": 2
+    },
+    "reads": 667,
+    "staleReads": 0,
+    "changes": 1231,
+    "rises": 397,
+    "unexplained": 0
+   }
+  },
+  "fresh F2-A10 later": {
+   "n": 40,
+   "b": {
+    "pass": 40,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 39,
+    "tieSaid": 18,
+    "chiefIsFirst": 9
+   },
+   "c": {
+    "named": 40,
+    "atOrAboveMedian": 40,
+    "share": 1,
+    "firstMean": 0.715,
+    "randomMean": 0.359,
+    "ratio": 1.992
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 10,
+    "allFullSaid": 10,
+    "allFullSaidEveryCase": 40
+   },
+   "e": {
+    "named": 40,
+    "within": 40,
+    "share": 1,
+    "meanError": 0.107
+   },
+   "f": {
+    "prepPieces": 0,
+    "prepSaid": 0,
+    "prepSameEvery": 40,
+    "prepApart": 40,
+    "nearMastery": 10,
+    "ladderFalls": 10,
+    "everyCandidate": 106,
+    "ofCandidates": 113,
+    "prepLimited": 20,
+    "prepSame": 6,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 25,
+    "prepAnySame": 2
+   },
+   "g": {
+    "recs": 172,
+    "ok": 172
+   },
+   "h": {
+    "cases": 40,
+    "fell": 38,
+    "leads": 20,
+    "changedWhereLed": 20,
+    "leadsWithinATie": 10,
+    "ownFell": 40,
+    "rose": 2,
+    "withinLift": 40,
+    "roseSinceNote": 2,
+    "explained": 2
+   },
+   "i": {
+    "same": 40
+   },
+   "f12": {
+    "F1": 40,
+    "F2": 40,
+    "F3": 40,
+    "F4": 40,
+    "F5": 40,
+    "F6": 40,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 0,
+     "cold": 38
+    },
+    "verdicts": {
+     "both": 40,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 40,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 40,
+    "H2": 40,
+    "H3": 40,
+    "H4": 40,
+    "H5": 40,
+    "H6": 40,
+    "followed": {
+     "stayed": 20,
+     "leads": 20,
+     "changedWhereLed": 20,
+     "rose": 2,
+     "roseAttributed": 2,
+     "roseExplained": 2
+    },
+    "reads": 706,
+    "staleReads": 0,
+    "changes": 1324,
+    "rises": 628,
+    "unexplained": 0
+   }
+  }
+ }
+}

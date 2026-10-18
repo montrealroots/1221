@@ -55,10 +55,26 @@ export type CommandHandler<P = never, R = unknown> = (payload: P, ctx: CommandCo
 export interface CommandResult<R = unknown> {
   ok: boolean;
   value?: R;
+  /** Why it failed, in words for the player. */
   error?: string;
+  /**
+   * What went wrong inside, for a developer, where the failure was one the game didn't foresee: the command's id and
+   * the internal message. Never shown to the player. Until 2026-10-17 it was the player's `error` itself
+   * (`school.attend failed: …`), so the toast showed a command's id and an internal message (brief 14).
+   */
+  detail?: string;
   /** Events emitted, for tests and the developer console. */
   events?: string[];
 }
+
+/**
+ * What the player is told when something fails for a reason the game didn't foresee (from 2026-10-17, brief 14). A
+ * command the player gave is rolled back whole (`execute`), so nothing changed. One the game gave itself while the clock
+ * moved, and a calendar item's handler, aren't rolled back: what they did before the error stands, and the clock goes on.
+ */
+const FAULT_ROLLED_BACK = 'That didn’t go through because of an error in the game. It changed nothing and charged you nothing, so you can carry on from here.';
+const FAULT_WHILE_TIME_PASSED = 'An error in the game stopped something it was doing as time passed, so that didn’t happen. Anything it did before the error still stands, and the clock went on.';
+const UNKNOWN_COMMAND = 'That isn’t something the game can do, so it changed nothing.';
 
 export class CommandError extends Error {
   constructor(message: string, readonly code = 'command_failed') {
@@ -445,10 +461,21 @@ export class Simulation {
           handler(due, this);
         } catch (err) {
           due.status = 'missed';
+          // Said in the player's words (from 2026-10-17, brief 14): until then it was titled "A Scheduled Event Could Not
+          // Be Processed" and said `'<label>' failed: <the internal message>`. A refusal in the world's own words is
+          // kept as the reason; an error the game didn't foresee goes to the developer console, not the notice. A
+          // background item ("World Simulation") is named as what it is, not by that label.
+          const background = due.category === 'system';
+          const refusal = err instanceof CommandError ? err.message : undefined;
+          if (!refusal) console.error(`'${due.label}' (${due.kind}) failed:`, err);
           this.notify({
             category: 'system',
-            title: 'A Scheduled Event Could Not Be Processed',
-            body: `'${due.label}' failed: ${(err as Error).message}`,
+            title: background ? 'Something Didn’t Go Through' : `${due.label} Didn’t Go Through`,
+            body: background
+              ? (refusal ?? 'An error in the game stopped something it does in the background. Anything it did before the error still stands, and the clock went on.')
+              : refusal
+                ? `${refusal} It shows as missed on your calendar.`
+                : `An error in the game stopped it, so it shows as missed on your calendar. Anything it did before the error still stands, and the clock went on.`,
             importance: 40,
           });
           result.missed.push(due);
@@ -518,7 +545,7 @@ export class Simulation {
   execute<R = unknown>(command: Command<Record<string, unknown>, R>): CommandResult<R> {
     const handler = this.commandHandlers.get(command.kind);
     if (!handler) {
-      return { ok: false, error: `Unknown command '${command.kind}'.` };
+      return { ok: false, error: UNKNOWN_COMMAND, detail: `Unknown command '${command.kind}'.` };
     }
 
     // Nested commands share the outer transaction rather than snapshotting again.
@@ -534,10 +561,14 @@ export class Simulation {
         const value = (handler as CommandHandler<Record<string, unknown>, R>)(command.payload, this.context());
         return { ok: true, value };
       } catch (err) {
-        const message = err instanceof CommandError ? err.message : `${command.kind} failed: ${(err as Error).message}`;
-        // Said to the player as it happens: a CommandError is the world's own sentence for why.
+        // Said to the player as it happens: a CommandError is the world's own sentence for why. Anything else is a fault,
+        // said in the player's words, its detail for a developer (from 2026-10-17, brief 14).
+        const refused = err instanceof CommandError;
+        const message = refused ? err.message : FAULT_WHILE_TIME_PASSED;
+        const detail = refused ? undefined : `${command.kind} failed: ${(err as Error).message}`;
+        if (detail) console.error(detail, err);
         this.notify({ category: 'system', title: 'Something Didn’t Go Through', body: message, importance: 60 });
-        return { ok: false, error: message };
+        return { ok: false, error: message, ...(detail ? { detail } : {}) };
       } finally {
         this.depth--;
       }
@@ -560,8 +591,8 @@ export class Simulation {
     } catch (err) {
       restoreUniverse(this.universe, snapshot);
       this.pendingEvents.length = eventsBefore;
-      const message = err instanceof CommandError ? err.message : `${command.kind} failed: ${(err as Error).message}`;
-      return { ok: false, error: message };
+      if (err instanceof CommandError) return { ok: false, error: err.message };
+      return { ok: false, error: FAULT_ROLLED_BACK, detail: `${command.kind} failed: ${(err as Error).message}` };
     } finally {
       this.depth--;
       if (done && this.depth === 0) this.settleNotices();
@@ -576,7 +607,9 @@ export class Simulation {
   /** Throws on failure. For internal call sites that treat failure as a bug. */
   must<R = unknown>(command: Command<Record<string, unknown>, R>): R {
     const result = this.execute<R>(command);
-    if (!result.ok) throw new CommandError(result.error ?? 'command failed');
+    // A fault keeps its detail, and isn't a refusal: an outer command that meets it says the fault, not the detail.
+    if (!result.ok && result.detail) throw new Error(result.detail);
+    if (!result.ok) throw new CommandError(result.error ?? FAULT_ROLLED_BACK);
     return result.value as R;
   }
 

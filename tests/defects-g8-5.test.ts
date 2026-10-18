@@ -18,7 +18,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { newLifeConfig, type StartingWealth } from '@/engine/world/bootstrap';
 import { recordInterest } from '@/engine/systems/earnings';
-import { coverOn, healthMonth, healthOf, mayEnroll, yaleUntil } from '@/engine/systems/health';
+import { coverOn, fillsCharged, healthMonth, healthOf, mayEnroll, medicineShareOf, yaleUntil } from '@/engine/systems/health';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { overdraftRoom } from '@/engine/systems/lending';
 import { THERAPISTS, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
@@ -86,7 +86,9 @@ describe('Fill A Longer Supply pays for what it fills, or fills nothing, and no 
     const before = sim.universe.transactions.length;
     const r = sim.execute({ kind: 'health.extra_supply', payload: { days: 90 } });
     expect(r.ok).toBe(false);
-    expect(r.error).toBe('It comes to more than the bank can cover.');
+    expect(r.error).toBe('Your bank can’t cover $125.37 for every condition’s fill, so nothing was filled or charged.');
+    // The figure is the fill's own price: the condition's share for each usual fill the 90 days cover (from 2026-10-17).
+    expect(medicineShareOf(sim.player, 'hypertension', healthOf(sim.player).chronic!.hypertension!, sim.now, 'USD') * fillsCharged(sim.player, 90)).toBe(125_37);
     expect(healthOf(sim.player).chronic!.hypertension!.supplyUntil).toBeUndefined();
     expect(sim.universe.transactions.length).toBe(before);
   });
@@ -170,7 +172,7 @@ describe('a plan dropped, or its premium left unpaid, opens no special enrollmen
     expect(healthOf(sim.player).lostAt).toBeUndefined();
     const notice = titled(sim, 'Your Health Cover Ended')[0]!;
     expect(notice.body).not.toMatch(/60 days to enroll/);
-    expect(notice.body).toMatch(/opens no special enrollment/);
+    expect(notice.body).toMatch(/doesn’t open special enrollment/);
     expect(notice.body).toMatch(/HUSKY D or Covered Connecticut/);
     expect(mayEnroll(sim.player, at(2026, 2, 10)).ok).toBe(false);
   });
@@ -199,7 +201,7 @@ describe('a plan dropped, or its premium left unpaid, opens no special enrollmen
     recordInterest(sim.player, at(2026, 2, 20), NY, 10_000_00);
     healthMonth(sim, sim.player, at(2026, 3, 1, 1));
     expect(healthOf(sim.player).lostAt).toBe(at(2026, 3, 1, 1));
-    expect(mayEnroll(sim.player, at(2026, 3, 10))).toMatchObject({ ok: true, why: 'Within 60 days of losing cover.' });
+    expect(mayEnroll(sim.player, at(2026, 3, 10))).toMatchObject({ ok: true, why: 'You’re within 60 days of losing cover.' });
   });
 });
 

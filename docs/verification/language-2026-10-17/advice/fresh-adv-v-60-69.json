@@ -1,0 +1,6427 @@
+{
+ "commit": "6d83601a774ab536b2988353feaeb3971d5fff28",
+ "clean": true,
+ "command": "npx vite-node tools/advice.ts -- --cases adv-v-60..69 --fresh --out docs/verification/language-2026-10-17/advice/fresh-adv-v-60-69.json",
+ "roles": {
+  "fresh": "unseen validation (brief 12): run once, on the tested commit, after the clarified criteria were written"
+ },
+ "cases": [
+  {
+   "seed": "adv-v-60",
+   "set": "fresh",
+   "design": "F2-A10",
+   "band": "advanced",
+   "stage": "firstWeek",
+   "takes": [
+    "brief-magical_realism-2:messenger",
+    "brief-anime:sync",
+    "brief-dance-2:two"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 65,
+    "composure": 80,
+    "dance": 70.002,
+    "emotionalDepth": 73,
+    "focus": 74,
+    "imagination": 74.006,
+    "listening": 78,
+    "memory": 75.004,
+    "physical": 71.009,
+    "presence": 61,
+    "scene": 72,
+    "screen": 77.002,
+    "vocal": 62.01,
+    "voiceover": 80
+   },
+   "advice": [
+    {
+     "target": "prep:genre",
+     "points": 2.2,
+     "why": "Coming to your work short on knowing the genre cost about 2.2 points off the whole a piece. That’s preparation, not training."
+    },
+    {
+     "target": "imagination",
+     "points": 0.4,
+     "forecast": 0.3974271578003178,
+     "tiedWith": [
+      "Focus"
+     ],
+     "why": "20 hours of its exercise, a session a day, would take it from 74 to about 76. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.4 points a piece (3 of your last 3 pieces call on it; Postmarked Thursday (The Sister’s Messenger), Taped would gain most, about +0.5). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old. About as useful: Focus. Either is a sound next step."
+    },
+    {
+     "target": "focus",
+     "points": 0.3,
+     "forecast": 0.3049183375397556,
+     "why": "20 hours of its exercise, a session a day, would take it from 74 to about 76. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (3 of your last 3 pieces call on it; Last Launch From The Roof (Inside The Lines), Taped would gain most, about +0.4). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "presence",
+     "points": 0.3,
+     "forecast": 0.2875450508528535,
+     "why": "20 hours of its exercise, a session a day, would take it from 61 to about 64. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (3 of your last 3 pieces call on it; Last Launch From The Roof (Inside The Lines), Taped would gain most, about +0.4). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "memory",
+     "points": 0.3,
+     "forecast": 0.2669718799123828,
+     "why": "20 hours of its exercise, a session a day, would take it from 75 to about 77. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (3 of your last 3 pieces call on it; The Box Step (Two Men Who Miss Her), Taped would gain most, about +0.3). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination",
+    "focus"
+   ],
+   "chief": "memory",
+   "chiefIsFirst": false,
+   "predicted": {
+    "adaptability": 0.243,
+    "composure": 0.183,
+    "dance": 0.201,
+    "emotionalDepth": 0.237,
+    "focus": 0.305,
+    "imagination": 0.397,
+    "listening": 0.229,
+    "memory": 0.267,
+    "physical": 0.236,
+    "presence": 0.288,
+    "scene": 0.168,
+    "screen": 0.183,
+    "vocal": 0.265,
+    "voiceover": 0.173
+   },
+   "candidates": [
+    "adaptability",
+    "composure",
+    "dance",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal",
+    "voiceover"
+   ],
+   "realized": {
+    "adaptability": 0.32,
+    "composure": 0.237,
+    "dance": 0.264,
+    "emotionalDepth": 0.311,
+    "focus": 0.406,
+    "imagination": 0.541,
+    "listening": 0.3,
+    "memory": 0.356,
+    "physical": 0.312,
+    "presence": 0.374,
+    "scene": 0.217,
+    "screen": 0.238,
+    "vocal": 0.348,
+    "voiceover": 0.224
+   },
+   "best": "imagination",
+   "bestGain": 0.541,
+   "firstGain": 0.541,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.311,
+    "atOrAboveMedian": true,
+    "randomMean": 0.318,
+    "firstGain": 0.541
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.397,
+    "realized": 0.541,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.397,
+     0.375,
+     0.399
+    ],
+    "falls": false,
+    "leastDrop": -0.024489301626270277,
+    "prep": {
+     "limited": true,
+     "largest": 0,
+     "same": false,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": true,
+     "anyLargest": 0.084,
+     "anySame": false,
+     "preparation": {
+      "pieces": 0,
+      "said": null,
+      "worked": 0,
+      "same": true,
+      "apart": true
+     }
+    }
+   },
+   "g": {
+    "recs": 4,
+    "ok": 4,
+    "missing": []
+   },
+   "h": {
+    "before": 0.397,
+    "after": 0.384,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "focus",
+    "leaderPoints": 0.295,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false,
+    "atBeforeDiscipline": 0.393,
+    "ownFell": true,
+    "rose": false,
+    "withinLift": true,
+    "roseSinceNote": false
+   },
+   "i": {
+    "same": true
+   },
+   "f12": {
+    "asBuilt": {
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 0,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 1.927,
+      "genres": 2.999,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "cold": {
+     "brief": "brief-hood_film-2",
+     "chief": "preparation:rehearsal",
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 1,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 18.557,
+      "genres": 3.56,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "like": {
+     "predicted": 0.397,
+     "realized": 0.426,
+     "within": true
+    },
+    "growth": {
+     "growth": [
+      2.190103,
+      2.16872,
+      2.16872
+     ],
+     "ok": true
+    },
+    "ok": {
+     "F1": true,
+     "F2": true,
+     "F3": true,
+     "F4": true,
+     "F5": true,
+     "F6": true
+    }
+   },
+   "h12": {
+    "followed": {
+     "notStale": true,
+     "stale": [],
+     "moved": true,
+     "stayed": true,
+     "leads": false,
+     "changedWhereLed": true,
+     "rose": false,
+     "noted": true,
+     "change": {
+      "residual": 0,
+      "parts": {
+       "work": 0,
+       "genre": 0,
+       "others": -0.000682,
+       "own": -0.003813,
+       "discipline": -0.008593
+      }
+     },
+     "attributed": true,
+     "explained": true,
+     "like": {
+      "predicted": 0.397,
+      "realized": 0.426,
+      "within": true
+     }
+    },
+    "reads": [
+     {
+      "who": "as built",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.070174,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "ignored",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.071544,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained adaptability",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009329,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained composure",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009469,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained dance",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009551,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained emotionalDepth",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009341,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained focus",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009343,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "followed",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.013088,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained listening",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009266,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained memory",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009334,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained physical",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009324,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained presence",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009266,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained scene",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009387,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained screen",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009454,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained vocal",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009272,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained voiceover",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.009342,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "cold take",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.089571,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     }
+    ],
+    "staleReads": 0,
+    "changes": 17,
+    "unexplained": 0,
+    "rises": 0,
+    "ok": {
+     "H1": true,
+     "H2": true,
+     "H3": true,
+     "H4": true,
+     "H5": true,
+     "H6": true
+    }
+   }
+  },
+  {
+   "seed": "adv-v-61",
+   "set": "fresh",
+   "design": "F2-A10",
+   "band": "advanced",
+   "stage": "firstWeek",
+   "takes": [
+    "brief-holiday:sincere",
+    "brief-dance:legacy",
+    "brief-rockumentary-2:song"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 73,
+    "composure": 64,
+    "dance": 81,
+    "emotionalDepth": 72,
+    "focus": 78,
+    "imagination": 69.035,
+    "listening": 78,
+    "memory": 62.056,
+    "physical": 69.006,
+    "presence": 81,
+    "scene": 83,
+    "screen": 64.073,
+    "singing": 60.018,
+    "vocal": 67.021
+   },
+   "advice": [
+    {
+     "target": "prep:genre",
+     "points": 2.9,
+     "why": "Coming to your work short on knowing the genre cost about 2.9 points off the whole a piece. That’s preparation, not training."
+    },
+    {
+     "target": "imagination",
+     "points": 0.4,
+     "forecast": 0.3976973312278436,
+     "why": "20 hours of its exercise, a session a day, would take it from 69 to about 72. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.4 points a piece (3 of your last 3 pieces call on it; Soundcheck At The Granary (The Song Was For Her), Taped would gain most, about +0.4). Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "memory",
+     "points": 0.3,
+     "forecast": 0.2482312255149755,
+     "why": "20 hours of its exercise, a session a day, would take it from 62 to about 65. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (3 of your last 3 pieces call on it; The Phrase (Passing It On), Taped would gain most, about +0.2). Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "physical",
+     "points": 0.2,
+     "forecast": 0.22633171861267223,
+     "why": "20 hours of its exercise, a session a day, would take it from 69 to about 72. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.2 points a piece (3 of your last 3 pieces call on it; The Phrase (Passing It On), Taped would gain most, about +0.3). Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "screen",
+     "points": 0.2,
+     "forecast": 0.20513298921075554,
+     "why": "20 hours of its exercise, a session a day, would take it from 64 to about 67. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.2 points a piece (3 of your last 3 pieces call on it; The Last Thanksgiving Plate (Meant Every Word), Taped would gain most, about +0.3). Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination"
+   ],
+   "chief": "imagination",
+   "chiefIsFirst": true,
+   "predicted": {
+    "adaptability": 0.179,
+    "composure": 0.205,
+    "dance": 0.084,
+    "emotionalDepth": 0.188,
+    "focus": 0.153,
+    "imagination": 0.398,
+    "listening": 0.145,
+    "memory": 0.248,
+    "physical": 0.226,
+    "presence": 0.107,
+    "scene": 0.102,
+    "screen": 0.205,
+    "singing": 0.13,
+    "vocal": 0.202
+   },
+   "candidates": [
+    "adaptability",
+    "composure",
+    "dance",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "singing",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.267,
+    "composure": 0.362,
+    "dance": 0.133,
+    "emotionalDepth": 0.279,
+    "focus": 0.229,
+    "imagination": 0.571,
+    "listening": 0.223,
+    "memory": 0.358,
+    "physical": 0.33,
+    "presence": 0.169,
+    "scene": 0.158,
+    "screen": 0.301,
+    "singing": 0.196,
+    "vocal": 0.295
+   },
+   "best": "imagination",
+   "bestGain": 0.571,
+   "firstGain": 0.571,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.267,
+    "atOrAboveMedian": true,
+    "randomMean": 0.276,
+    "firstGain": 0.571
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.398,
+    "realized": 0.571,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.398,
+     0.357,
+     0.244
+    ],
+    "falls": true,
+    "leastDrop": 0.04107516792582311,
+    "prep": {
+     "limited": true,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": true,
+     "anyLargest": 0.042,
+     "anySame": false,
+     "preparation": {
+      "pieces": 0,
+      "said": null,
+      "worked": 0,
+      "same": true,
+      "apart": true
+     }
+    }
+   },
+   "g": {
+    "recs": 4,
+    "ok": 4,
+    "missing": []
+   },
+   "h": {
+    "before": 0.398,
+    "after": 0.381,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "composure",
+    "leaderPoints": 0.276,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false,
+    "atBeforeDiscipline": 0.381,
+    "ownFell": true,
+    "rose": false,
+    "withinLift": true,
+    "roseSinceNote": false
+   },
+   "i": {
+    "same": true
+   },
+   "f12": {
+    "asBuilt": {
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 0,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 1.228,
+      "genres": 3.333,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "cold": {
+     "brief": "brief-jidaigeki",
+     "chief": "preparation:rehearsal",
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 1,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 17.939,
+      "genres": 3.974,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "like": {
+     "predicted": 0.398,
+     "realized": 0.462,
+     "within": true
+    },
+    "growth": {
+     "growth": [
+      2.619761,
+      2.205063,
+      2.205063
+     ],
+     "ok": true
+    },
+    "ok": {
+     "F1": true,
+     "F2": true,
+     "F3": true,
+     "F4": true,
+     "F5": true,
+     "F6": true
+    }
+   },
+   "h12": {
+    "followed": {
+     "notStale": true,
+     "stale": [],
+     "moved": true,
+     "stayed": true,
+     "leads": false,
+     "changedWhereLed": true,
+     "rose": false,
+     "noted": true,
+     "change": {
+      "residual": 0,
+      "parts": {
+       "work": 0,
+       "genre": 0,
+       "others": 0.018987,
+       "own": -0.035104,
+       "discipline": 0.000513
+      }
+     },
+     "attributed": true,
+     "explained": true,
+     "like": {
+      "predicted": 0.398,
+      "realized": 0.462,
+      "within": true
+     }
+    },
+    "reads": [
+     {
+      "who": "as built",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.033913,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.053808,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "ignored",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.015528,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.072193,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained adaptability",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.024589,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.009926,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained composure",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.006367,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.040882,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained dance",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.014995,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.019519,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained emotionalDepth",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.02464,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.009875,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained focus",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.024585,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.00993,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "followed",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.050119,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.015604,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained listening",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.024556,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.009959,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained memory",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.024604,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.009911,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained physical",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.024611,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.009903,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained presence",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.024556,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.009959,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained scene",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.021239,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.013276,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained screen",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.015464,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.019051,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained singing",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.024788,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.009726,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained vocal",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.024588,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.009927,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "cold take",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.018895,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.106616,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     }
+    ],
+    "staleReads": 0,
+    "changes": 34,
+    "unexplained": 0,
+    "rises": 18,
+    "ok": {
+     "H1": true,
+     "H2": true,
+     "H3": true,
+     "H4": true,
+     "H5": true,
+     "H6": true
+    }
+   }
+  },
+  {
+   "seed": "adv-v-62",
+   "set": "fresh",
+   "design": "F2-A10",
+   "band": "advanced",
+   "stage": "firstWeek",
+   "takes": [
+    "brief-political_drama-2:orator",
+    "brief-prison_film-2:rules"
+   ],
+   "genres": 2,
+   "atFull": [],
+   "levels": {
+    "adaptability": 72,
+    "composure": 62,
+    "emotionalDepth": 74,
+    "focus": 65,
+    "imagination": 61.034,
+    "listening": 79,
+    "memory": 76,
+    "physical": 73,
+    "presence": 70,
+    "scene": 74,
+    "screen": 78.001,
+    "vocal": 77
+   },
+   "advice": [
+    {
+     "target": "prep:genre",
+     "points": 4.3,
+     "why": "Coming to your work short on knowing the genre cost about 4.3 points off the whole a piece. That’s preparation, not training."
+    },
+    {
+     "target": "imagination",
+     "points": 0.6,
+     "forecast": 0.5660743848836253,
+     "why": "20 hours of its exercise, a session a day, would take it from 61 to about 64. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.6 points a piece (2 of your last 2 pieces call on it; First Night On The Tier (House Rules), Taped would gain most, about +0.5). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "composure",
+     "points": 0.5,
+     "forecast": 0.4475207480312283,
+     "why": "20 hours of its exercise, a session a day, would take it from 62 to about 65. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.5 points a piece (2 of your last 2 pieces call on it; First Night On The Tier (House Rules), Taped would gain most, about +0.3). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "focus",
+     "points": 0.4,
+     "forecast": 0.3535534160542587,
+     "why": "20 hours of its exercise, a session a day, would take it from 65 to about 68. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.4 points a piece (2 of your last 2 pieces call on it; The Vote On Ridge Line (Winning The Room), Taped would gain most, about +0.3). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "memory",
+     "points": 0.3,
+     "forecast": 0.34422534834833607,
+     "why": "20 hours of its exercise, a session a day, would take it from 76 to about 78. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (2 of your last 2 pieces call on it; The Vote On Ridge Line (Winning The Room), Taped would gain most, about +0.3). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination"
+   ],
+   "chief": "imagination",
+   "chiefIsFirst": true,
+   "predicted": {
+    "adaptability": 0.259,
+    "composure": 0.448,
+    "emotionalDepth": 0.247,
+    "focus": 0.354,
+    "imagination": 0.566,
+    "listening": 0.243,
+    "memory": 0.344,
+    "physical": 0.193,
+    "presence": 0.199,
+    "scene": 0.239,
+    "screen": 0.336,
+    "vocal": 0.274
+   },
+   "candidates": [
+    "adaptability",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.333,
+    "composure": 0.583,
+    "emotionalDepth": 0.316,
+    "focus": 0.462,
+    "imagination": 0.753,
+    "listening": 0.311,
+    "memory": 0.451,
+    "physical": 0.241,
+    "presence": 0.249,
+    "scene": 0.304,
+    "screen": 0.438,
+    "vocal": 0.353
+   },
+   "best": "imagination",
+   "bestGain": 0.753,
+   "firstGain": 0.753,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.333,
+    "atOrAboveMedian": true,
+    "randomMean": 0.4,
+    "firstGain": 0.753
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.566,
+    "realized": 0.753,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.566,
+     0.424,
+     0.364
+    ],
+    "falls": true,
+    "leastDrop": 0.059963160178658825,
+    "prep": {
+     "limited": true,
+     "largest": 0,
+     "same": false,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": true,
+     "anyLargest": 0,
+     "anySame": false,
+     "preparation": {
+      "pieces": 0,
+      "said": null,
+      "worked": 0,
+      "same": true,
+      "apart": true
+     }
+    }
+   },
+   "g": {
+    "recs": 4,
+    "ok": 4,
+    "missing": []
+   },
+   "h": {
+    "before": 0.566,
+    "after": 0.519,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "composure",
+    "leaderPoints": 0.441,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false,
+    "atBeforeDiscipline": 0.523,
+    "ownFell": true,
+    "rose": false,
+    "withinLift": true,
+    "roseSinceNote": false
+   },
+   "i": {
+    "same": true
+   },
+   "f12": {
+    "asBuilt": {
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 0,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 0.042,
+      "genres": 3.552,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "cold": {
+     "brief": "brief-found_footage",
+     "chief": "preparation:rehearsal",
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 1,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 22.025,
+      "genres": 4.306,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "like": {
+     "predicted": 0.566,
+     "realized": 0.621,
+     "within": true
+    },
+    "growth": {
+     "growth": [
+      3.29083,
+      2.221789,
+      2.201013
+     ],
+     "ok": true
+    },
+    "ok": {
+     "F1": true,
+     "F2": true,
+     "F3": true,
+     "F4": true,
+     "F5": true,
+     "F6": true
+    }
+   },
+   "h12": {
+    "followed": {
+     "notStale": true,
+     "stale": [],
+     "moved": true,
+     "stayed": true,
+     "leads": false,
+     "changedWhereLed": true,
+     "rose": false,
+     "noted": true,
+     "change": {
+      "residual": 0,
+      "parts": {
+       "work": 0,
+       "genre": 0,
+       "others": -0.000776,
+       "own": -0.041997,
+       "discipline": -0.003837
+      }
+     },
+     "attributed": true,
+     "explained": true,
+     "like": {
+      "predicted": 0.566,
+      "realized": 0.621,
+      "within": true
+     }
+    },
+    "reads": [
+     {
+      "who": "as built",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.057441,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "ignored",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.056624,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained adaptability",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.052916,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004484,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained composure",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.052456,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004944,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained emotionalDepth",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.052901,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004499,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained focus",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.052807,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004593,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "followed",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.01079,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.04661,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained listening",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.05295,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.00445,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained memory",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.052917,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004483,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained physical",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.052934,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004466,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained presence",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.05295,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.00445,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained scene",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.052669,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004732,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained screen",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.052394,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.005007,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained vocal",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.052933,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004467,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "cold take",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.074315,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     }
+    ],
+    "staleReads": 0,
+    "changes": 27,
+    "unexplained": 0,
+    "rises": 15,
+    "ok": {
+     "H1": true,
+     "H2": true,
+     "H3": true,
+     "H4": true,
+     "H5": true,
+     "H6": true
+    }
+   }
+  },
+  {
+   "seed": "adv-v-63",
+   "set": "fresh",
+   "design": "F2-A10",
+   "band": "advanced",
+   "stage": "firstWeek",
+   "takes": [
+    "brief-nature_documentary:story"
+   ],
+   "genres": 1,
+   "atFull": [],
+   "levels": {
+    "adaptability": 81,
+    "composure": 71,
+    "emotionalDepth": 74,
+    "focus": 69,
+    "imagination": 80,
+    "listening": 79,
+    "memory": 63.018,
+    "presence": 66,
+    "scene": 61,
+    "vocal": 82,
+    "voiceover": 72.005
+   },
+   "advice": [
+    {
+     "target": "prep:genre",
+     "points": 3.6,
+     "why": "Coming to your work short on knowing the genre cost about 3.6 points off the whole a piece. That’s preparation, not training."
+    },
+    {
+     "target": "imagination",
+     "points": 0.4,
+     "forecast": 0.4210928360202786,
+     "tiedWith": [
+      "Emotional Depth"
+     ],
+     "why": "20 hours of its exercise, a session a day, would take it from 80 to about 82. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.4 points a piece (your last piece calls on it; The Last Pool (Telling A Story), Taped would gain most, about +0.3). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old. About as useful: Emotional Depth. Either is a sound next step."
+    },
+    {
+     "target": "emotionalDepth",
+     "points": 0.3,
+     "forecast": 0.32500619438043543,
+     "why": "20 hours of its exercise, a session a day, would take it from 74 to about 76. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (your last piece calls on it; The Last Pool (Telling A Story), Taped would gain most, about +0.2). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "voiceover",
+     "points": 0.3,
+     "forecast": 0.32105288840199364,
+     "why": "20 hours of its exercise, a session a day, would take it from 72 to about 74. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (your last piece calls on it; The Last Pool (Telling A Story), Taped would gain most, about +0.2). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "vocal",
+     "points": 0.3,
+     "forecast": 0.3127219837457318,
+     "why": "20 hours of its exercise, a session a day, would take it from 82 to about 84. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (your last piece calls on it; The Last Pool (Telling A Story), Taped would gain most, about +0.2). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination",
+    "emotionalDepth"
+   ],
+   "chief": "presence",
+   "chiefIsFirst": false,
+   "predicted": {
+    "adaptability": 0.211,
+    "composure": 0.215,
+    "emotionalDepth": 0.325,
+    "focus": 0.228,
+    "imagination": 0.421,
+    "listening": 0.168,
+    "memory": 0.114,
+    "presence": 0.3,
+    "scene": 0.174,
+    "vocal": 0.313,
+    "voiceover": 0.321
+   },
+   "candidates": [
+    "adaptability",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "presence",
+    "scene",
+    "vocal",
+    "voiceover"
+   ],
+   "realized": {
+    "adaptability": 0.288,
+    "composure": 0.292,
+    "emotionalDepth": 0.452,
+    "focus": 0.311,
+    "imagination": 0.58,
+    "listening": 0.226,
+    "memory": 0.147,
+    "presence": 0.405,
+    "scene": 0.233,
+    "vocal": 0.433,
+    "voiceover": 0.445
+   },
+   "best": "imagination",
+   "bestGain": 0.58,
+   "firstGain": 0.58,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.301,
+    "atOrAboveMedian": true,
+    "randomMean": 0.346,
+    "firstGain": 0.58
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.421,
+    "realized": 0.58,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.421,
+     0.419,
+     0.416
+    ],
+    "falls": true,
+    "leastDrop": 0.0023484685303998276,
+    "prep": {
+     "limited": true,
+     "largest": 0.001,
+     "same": false,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": true,
+     "anyLargest": 0.001,
+     "anySame": false,
+     "preparation": {
+      "pieces": 0,
+      "said": null,
+      "worked": 0,
+      "same": true,
+      "apart": true
+     }
+    }
+   },
+   "g": {
+    "recs": 4,
+    "ok": 4,
+    "missing": []
+   },
+   "h": {
+    "before": 0.421,
+    "after": 0.42,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "emotionalDepth",
+    "leaderPoints": 0.324,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false,
+    "atBeforeDiscipline": 0.419,
+    "ownFell": true,
+    "rose": false,
+    "withinLift": true,
+    "roseSinceNote": false
+   },
+   "i": {
+    "same": true
+   },
+   "f12": {
+    "asBuilt": {
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 0,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 0.074,
+      "genres": 3.466,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "cold": {
+     "brief": "brief-cyberpunk",
+     "chief": "preparation:interpretation",
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 1,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 29.09,
+      "genres": 5.812,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "like": {
+     "predicted": 0.421,
+     "realized": 0.464,
+     "within": true
+    },
+    "growth": {
+     "growth": [
+      2.23859,
+      2.23859,
+      2.23859
+     ],
+     "ok": true
+    },
+    "ok": {
+     "F1": true,
+     "F2": true,
+     "F3": true,
+     "F4": true,
+     "F5": true,
+     "F6": true
+    }
+   },
+   "h12": {
+    "followed": {
+     "notStale": true,
+     "stale": [],
+     "moved": true,
+     "stayed": true,
+     "leads": false,
+     "changedWhereLed": true,
+     "rose": false,
+     "noted": true,
+     "change": {
+      "residual": 0,
+      "parts": {
+       "work": 0,
+       "genre": 0,
+       "others": -0.000662,
+       "own": -0.000953,
+       "discipline": 0.001005
+      }
+     },
+     "attributed": true,
+     "explained": true,
+     "like": {
+      "predicted": 0.421,
+      "realized": 0.464,
+      "within": true
+     }
+    },
+    "reads": [
+     {
+      "who": "as built",
+      "stale": [],
+      "changes": []
+     },
+     {
+      "who": "ignored",
+      "stale": [],
+      "changes": []
+     },
+     {
+      "who": "trained adaptability",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.000299,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained composure",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.000025,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained emotionalDepth",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.000085,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained focus",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.000347,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "followed",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.00061,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained listening",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.000331,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained memory",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.000347,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained presence",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.000112,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained scene",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.000187,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained vocal",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.000347,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained voiceover",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.00011,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "cold take",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.103252,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     }
+    ],
+    "staleReads": 0,
+    "changes": 12,
+    "unexplained": 0,
+    "rises": 9,
+    "ok": {
+     "H1": true,
+     "H2": true,
+     "H3": true,
+     "H4": true,
+     "H5": true,
+     "H6": true
+    }
+   }
+  },
+  {
+   "seed": "adv-v-64",
+   "set": "fresh",
+   "design": "F2-A10",
+   "band": "advanced",
+   "stage": "firstWeek",
+   "takes": [
+    "brief-slapstick:panic",
+    "brief-domestic_drama-2:sewing",
+    "brief-family-2:pro"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 79,
+    "clown": 77,
+    "combat": 80,
+    "comedy": 80,
+    "composure": 69,
+    "emotionalDepth": 76,
+    "focus": 82,
+    "imagination": 72.011,
+    "listening": 80,
+    "memory": 76.002,
+    "physical": 76.001,
+    "presence": 80,
+    "scene": 76,
+    "screen": 80,
+    "vocal": 67
+   },
+   "advice": [
+    {
+     "target": "prep:genre",
+     "points": 4.3,
+     "why": "Coming to your work short on knowing the genre cost about 4.3 points off the whole a piece. That’s preparation, not training."
+    },
+    {
+     "target": "condition:stamina",
+     "points": 1,
+     "why": "Tiring through the later moments of a piece cost about 1 point off the whole a piece. Stamina is your fitness, and Work Out, under Look After Yourself, builds it. Places to breathe in a piece leave less of it to drain, and on a night so does coming to the curtain rested. Rest restores energy, not fitness."
+    },
+    {
+     "target": "imagination",
+     "points": 0.4,
+     "forecast": 0.43724483314118123,
+     "why": "20 hours of its exercise, a session a day, would take it from 72 to about 74. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.4 points a piece (3 of your last 3 pieces call on it; The Boxes In The Hall (The Sewing Room), Taped would gain most, about +0.4). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "focus",
+     "points": 0.3,
+     "forecast": 0.26279620968097817,
+     "why": "20 hours of its exercise, a session a day, would take it from 82 to about 84. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (3 of your last 3 pieces call on it; The Last Strip (Rising Panic), Taped would gain most, about +0.3). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "physical",
+     "points": 0.3,
+     "forecast": 0.2595297793361695,
+     "why": "20 hours of its exercise, a session a day, would take it from 76 to about 78. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (3 of your last 3 pieces call on it; The Last Strip (Rising Panic), Taped would gain most, about +0.3). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination"
+   ],
+   "chief": "imagination",
+   "chiefIsFirst": true,
+   "predicted": {
+    "adaptability": 0.251,
+    "clown": 0.117,
+    "combat": 0.109,
+    "comedy": 0.117,
+    "composure": 0.177,
+    "emotionalDepth": 0.193,
+    "focus": 0.263,
+    "imagination": 0.437,
+    "listening": 0.182,
+    "memory": 0.256,
+    "physical": 0.26,
+    "presence": 0.161,
+    "scene": 0.177,
+    "screen": 0.254,
+    "vocal": 0.156
+   },
+   "candidates": [
+    "adaptability",
+    "clown",
+    "combat",
+    "comedy",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.349,
+    "clown": 0.152,
+    "combat": 0.14,
+    "comedy": 0.152,
+    "composure": 0.238,
+    "emotionalDepth": 0.263,
+    "focus": 0.366,
+    "imagination": 0.618,
+    "listening": 0.247,
+    "memory": 0.356,
+    "physical": 0.361,
+    "presence": 0.217,
+    "scene": 0.241,
+    "screen": 0.353,
+    "vocal": 0.21
+   },
+   "best": "imagination",
+   "bestGain": 0.618,
+   "firstGain": 0.618,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.244,
+    "atOrAboveMedian": true,
+    "randomMean": 0.284,
+    "firstGain": 0.618
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.437,
+    "realized": 0.618,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.437,
+     0.409,
+     0.397
+    ],
+    "falls": true,
+    "leastDrop": 0.012143668723858525,
+    "prep": {
+     "limited": true,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": true,
+     "anyLargest": 0,
+     "anySame": true,
+     "preparation": {
+      "pieces": 0,
+      "said": null,
+      "worked": 0,
+      "same": true,
+      "apart": true
+     }
+    }
+   },
+   "g": {
+    "recs": 3,
+    "ok": 3,
+    "missing": []
+   },
+   "h": {
+    "before": 0.437,
+    "after": 0.413,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "focus",
+    "leaderPoints": 0.262,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false,
+    "atBeforeDiscipline": 0.413,
+    "ownFell": true,
+    "rose": false,
+    "withinLift": true,
+    "roseSinceNote": false
+   },
+   "i": {
+    "same": true
+   },
+   "f12": {
+    "asBuilt": {
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 0,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 0,
+      "genres": 4.333,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "cold": {
+     "brief": "brief-drama",
+     "chief": "preparation:rehearsal",
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 1,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 18.838,
+      "genres": 4.306,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "like": {
+     "predicted": 0.437,
+     "realized": 0.48,
+     "within": true
+    },
+    "growth": {
+     "growth": [
+      2.39811,
+      2.234389,
+      2.234389
+     ],
+     "ok": true
+    },
+    "ok": {
+     "F1": true,
+     "F2": true,
+     "F3": true,
+     "F4": true,
+     "F5": true,
+     "F6": true
+    }
+   },
+   "h12": {
+    "followed": {
+     "notStale": true,
+     "stale": [],
+     "moved": true,
+     "stayed": true,
+     "leads": false,
+     "changedWhereLed": true,
+     "rose": false,
+     "noted": true,
+     "change": {
+      "residual": 0,
+      "parts": {
+       "work": 0,
+       "genre": 0,
+       "others": -0.000551,
+       "own": -0.024159,
+       "discipline": 0.000951
+      }
+     },
+     "attributed": true,
+     "explained": true,
+     "like": {
+      "predicted": 0.437,
+      "realized": 0.48,
+      "within": true
+     }
+    },
+    "reads": [
+     {
+      "who": "as built",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048864,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "ignored",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.049445,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained adaptability",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048499,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000395,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained clown",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048499,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000394,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained combat",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048477,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000417,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained comedy",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048499,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000394,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained composure",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048681,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000212,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained emotionalDepth",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048509,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000384,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained focus",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048505,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000388,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "followed",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.072652,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.023759,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained listening",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048454,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.00044,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained memory",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048492,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000402,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained physical",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048506,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000388,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained presence",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048459,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000434,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained scene",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048721,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000173,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained screen",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048986,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.000093,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained vocal",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.048472,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000422,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "cold take",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.106426,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     }
+    ],
+    "staleReads": 0,
+    "changes": 33,
+    "unexplained": 0,
+    "rises": 13,
+    "ok": {
+     "H1": true,
+     "H2": true,
+     "H3": true,
+     "H4": true,
+     "H5": true,
+     "H6": true
+    }
+   }
+  },
+  {
+   "seed": "adv-v-65",
+   "set": "fresh",
+   "design": "F2-A10",
+   "band": "advanced",
+   "stage": "firstWeek",
+   "takes": [
+    "brief-romance-2:nerve",
+    "brief-isekai-2:fan"
+   ],
+   "genres": 2,
+   "atFull": [],
+   "levels": {
+    "adaptability": 63,
+    "composure": 78,
+    "dance": 63.006,
+    "emotionalDepth": 75,
+    "focus": 61,
+    "imagination": 67.022,
+    "listening": 80,
+    "memory": 64.032,
+    "physical": 74.004,
+    "presence": 75,
+    "scene": 63,
+    "screen": 67.01,
+    "vocal": 72.004,
+    "voiceover": 83
+   },
+   "advice": [
+    {
+     "target": "prep:genre",
+     "points": 3.7,
+     "why": "Coming to your work short on knowing the genre cost about 3.7 points off the whole a piece. That’s preparation, not training."
+    },
+    {
+     "target": "imagination",
+     "points": 0.6,
+     "forecast": 0.6286859241020675,
+     "tiedWith": [
+      "Memory"
+     ],
+     "why": "20 hours of its exercise, a session a day, would take it from 67 to about 70. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.6 points a piece (2 of your last 2 pieces call on it; Dialogue Option Three (Inside Her Own Work), Taped would gain most, about +0.4). About 0.2 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old. About as useful: Memory. Either is a sound next step."
+    },
+    {
+     "target": "memory",
+     "points": 0.6,
+     "forecast": 0.5544115610908353,
+     "why": "20 hours of its exercise, a session a day, would take it from 64 to about 67. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.6 points a piece (2 of your last 2 pieces call on it; Dialogue Option Three (Inside Her Own Work), Taped would gain most, about +0.4). About 0.2 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "focus",
+     "points": 0.4,
+     "forecast": 0.40567294285156186,
+     "why": "20 hours of its exercise, a session a day, would take it from 61 to about 64. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.4 points a piece (2 of your last 2 pieces call on it; Dialogue Option Three (Inside Her Own Work), Taped would gain most, about +0.2). About 0.2 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "vocal",
+     "points": 0.4,
+     "forecast": 0.35339465200889697,
+     "why": "20 hours of its exercise, a session a day, would take it from 72 to about 74. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.4 points a piece (1 of your last 2 pieces calls on it; Dialogue Option Three (Inside Her Own Work), Taped would gain most, about +0.2). About 0.2 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination",
+    "memory"
+   ],
+   "chief": "memory",
+   "chiefIsFirst": false,
+   "predicted": {
+    "adaptability": 0.341,
+    "composure": 0.305,
+    "dance": 0.256,
+    "emotionalDepth": 0.286,
+    "focus": 0.406,
+    "imagination": 0.629,
+    "listening": 0.28,
+    "memory": 0.554,
+    "physical": 0.254,
+    "presence": 0.238,
+    "scene": 0.262,
+    "screen": 0.25,
+    "vocal": 0.353,
+    "voiceover": 0.341
+   },
+   "candidates": [
+    "adaptability",
+    "composure",
+    "dance",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal",
+    "voiceover"
+   ],
+   "realized": {
+    "adaptability": 0.44,
+    "composure": 0.389,
+    "dance": 0.322,
+    "emotionalDepth": 0.364,
+    "focus": 0.524,
+    "imagination": 0.843,
+    "listening": 0.357,
+    "memory": 0.726,
+    "physical": 0.317,
+    "presence": 0.297,
+    "scene": 0.329,
+    "screen": 0.313,
+    "vocal": 0.451,
+    "voiceover": 0.44
+   },
+   "best": "imagination",
+   "bestGain": 0.843,
+   "firstGain": 0.843,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.364,
+    "atOrAboveMedian": true,
+    "randomMean": 0.436,
+    "firstGain": 0.843
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.629,
+    "realized": 0.843,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.629,
+     0.521,
+     0.396
+    ],
+    "falls": true,
+    "leastDrop": 0.10736009177858818,
+    "prep": {
+     "limited": true,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": true,
+     "anyLargest": 0,
+     "anySame": true,
+     "preparation": {
+      "pieces": 0,
+      "said": null,
+      "worked": 0,
+      "same": true,
+      "apart": true
+     }
+    }
+   },
+   "g": {
+    "recs": 4,
+    "ok": 4,
+    "missing": []
+   },
+   "h": {
+    "before": 0.629,
+    "after": 0.571,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "memory",
+    "leaderPoints": 0.537,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false,
+    "atBeforeDiscipline": 0.586,
+    "ownFell": true,
+    "rose": false,
+    "withinLift": true,
+    "roseSinceNote": false
+   },
+   "i": {
+    "same": true
+   },
+   "f12": {
+    "asBuilt": {
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 0,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 0,
+      "genres": 3.465,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "cold": {
+     "brief": "brief-action-2",
+     "chief": "preparation:rehearsal",
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 1,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 20.099,
+      "genres": 3.595,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "like": {
+     "predicted": 0.629,
+     "realized": 0.683,
+     "within": true
+    },
+    "growth": {
+     "growth": [
+      2.74597,
+      2.16872,
+      2.16872
+     ],
+     "ok": true
+    },
+    "ok": {
+     "F1": true,
+     "F2": true,
+     "F3": true,
+     "F4": true,
+     "F5": true,
+     "F6": true
+    }
+   },
+   "h12": {
+    "followed": {
+     "notStale": true,
+     "stale": [],
+     "moved": true,
+     "stayed": true,
+     "leads": false,
+     "changedWhereLed": true,
+     "rose": false,
+     "noted": true,
+     "change": {
+      "residual": 0,
+      "parts": {
+       "work": 0,
+       "genre": 0,
+       "others": -0.001129,
+       "own": -0.041991,
+       "discipline": -0.014733
+      }
+     },
+     "attributed": true,
+     "explained": true,
+     "like": {
+      "predicted": 0.629,
+      "realized": 0.683,
+      "within": true
+     }
+    },
+    "reads": [
+     {
+      "who": "as built",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.038868,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "ignored",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.03768,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained adaptability",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.023076,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.015733,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained composure",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.022802,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.016007,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained dance",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.022943,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.015866,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained emotionalDepth",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.023084,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.015725,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained focus",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.023077,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.015732,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "followed",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.019045,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.057853,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained listening",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.023158,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.015651,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained memory",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.023126,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.015683,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained physical",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.023136,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.015673,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained presence",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.023158,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.015651,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained scene",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.022955,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.015854,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained screen",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.022966,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.015843,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained vocal",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.023158,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.015651,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained voiceover",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.022757,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.016052,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "cold take",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.076609,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     }
+    ],
+    "staleReads": 0,
+    "changes": 31,
+    "unexplained": 0,
+    "rises": 16,
+    "ok": {
+     "H1": true,
+     "H2": true,
+     "H3": true,
+     "H4": true,
+     "H5": true,
+     "H6": true
+    }
+   }
+  },
+  {
+   "seed": "adv-v-66",
+   "set": "fresh",
+   "design": "F2-A10",
+   "band": "advanced",
+   "stage": "firstWeek",
+   "takes": [
+    "brief-time_travel:weary"
+   ],
+   "genres": 1,
+   "atFull": [],
+   "levels": {
+    "adaptability": 62,
+    "composure": 76,
+    "emotionalDepth": 77,
+    "focus": 73,
+    "imagination": 84,
+    "listening": 81,
+    "memory": 77.004,
+    "presence": 65,
+    "scene": 78,
+    "screen": 81.002
+   },
+   "advice": [
+    {
+     "target": "prep:genre",
+     "points": 4.1,
+     "why": "Coming to your work short on knowing the genre cost about 4.1 points off the whole a piece. That’s preparation, not training."
+    },
+    {
+     "target": "imagination",
+     "points": 0.5,
+     "forecast": 0.4763141353031415,
+     "why": "20 hours of its exercise, a session a day, would take it from 84 to about 86. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.5 points a piece (your last piece calls on it; The Ninth Afternoon (The Ninth Time), Taped would gain most, about +0.5). Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "emotionalDepth",
+     "points": 0.3,
+     "forecast": 0.3362796210272023,
+     "why": "20 hours of its exercise, a session a day, would take it from 77 to about 79. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (your last piece calls on it; The Ninth Afternoon (The Ninth Time), Taped would gain most, about +0.3). Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "screen",
+     "points": 0.2,
+     "forecast": 0.23110640028467344,
+     "why": "20 hours of its exercise, a session a day, would take it from 81 to about 83. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.2 points a piece (your last piece calls on it; The Ninth Afternoon (The Ninth Time), Taped would gain most, about +0.2). Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "focus",
+     "points": 0.2,
+     "forecast": 0.20159466074080967,
+     "why": "20 hours of its exercise, a session a day, would take it from 73 to about 75. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.2 points a piece (your last piece calls on it; The Ninth Afternoon (The Ninth Time), Taped would gain most, about +0.2). Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination"
+   ],
+   "chief": "emotionalDepth",
+   "chiefIsFirst": false,
+   "predicted": {
+    "adaptability": 0.185,
+    "composure": 0.153,
+    "emotionalDepth": 0.336,
+    "focus": 0.202,
+    "imagination": 0.476,
+    "listening": 0.186,
+    "memory": 0.039,
+    "presence": 0.078,
+    "scene": 0.129,
+    "screen": 0.231
+   },
+   "candidates": [
+    "adaptability",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "presence",
+    "scene",
+    "screen"
+   ],
+   "realized": {
+    "adaptability": 0.261,
+    "composure": 0.213,
+    "emotionalDepth": 0.481,
+    "focus": 0.284,
+    "imagination": 0.698,
+    "listening": 0.262,
+    "memory": 0.051,
+    "presence": 0.106,
+    "scene": 0.184,
+    "screen": 0.334
+   },
+   "best": "imagination",
+   "bestGain": 0.698,
+   "firstGain": 0.698,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.261,
+    "atOrAboveMedian": true,
+    "randomMean": 0.287,
+    "firstGain": 0.698
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.476,
+    "realized": 0.698,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.476,
+     0.473,
+     0.47
+    ],
+    "falls": true,
+    "leastDrop": 0.0029566644495560013,
+    "prep": {
+     "limited": true,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": true,
+     "anyLargest": 0,
+     "anySame": true,
+     "preparation": {
+      "pieces": 0,
+      "said": null,
+      "worked": 0,
+      "same": true,
+      "apart": true
+     }
+    }
+   },
+   "g": {
+    "recs": 4,
+    "ok": 4,
+    "missing": []
+   },
+   "h": {
+    "before": 0.476,
+    "after": 0.475,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "emotionalDepth",
+    "leaderPoints": 0.335,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false,
+    "atBeforeDiscipline": 0.475,
+    "ownFell": true,
+    "rose": false,
+    "withinLift": true,
+    "roseSinceNote": false
+   },
+   "i": {
+    "same": true
+   },
+   "f12": {
+    "asBuilt": {
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 0,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 0,
+      "genres": 4.339,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "cold": {
+     "brief": "brief-black_comedy",
+     "chief": "preparation:rehearsal",
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 1,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 31.54,
+      "genres": 3.879,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "like": {
+     "predicted": 0.476,
+     "realized": 0.536,
+     "within": true
+    },
+    "growth": {
+     "growth": [
+      2.164684,
+      2.164684,
+      2.164684
+     ],
+     "ok": true
+    },
+    "ok": {
+     "F1": true,
+     "F2": true,
+     "F3": true,
+     "F4": true,
+     "F5": true,
+     "F6": true
+    }
+   },
+   "h12": {
+    "followed": {
+     "notStale": true,
+     "stale": [],
+     "moved": true,
+     "stayed": true,
+     "leads": false,
+     "changedWhereLed": true,
+     "rose": false,
+     "noted": true,
+     "change": {
+      "residual": 0,
+      "parts": {
+       "work": 0,
+       "genre": 0,
+       "others": -0.000091,
+       "own": -0.001441,
+       "discipline": 0.000194
+      }
+     },
+     "attributed": true,
+     "explained": true,
+     "like": {
+      "predicted": 0.476,
+      "realized": 0.536,
+      "within": true
+     }
+    },
+    "reads": [
+     {
+      "who": "as built",
+      "stale": [],
+      "changes": []
+     },
+     {
+      "who": "ignored",
+      "stale": [],
+      "changes": []
+     },
+     {
+      "who": "trained adaptability",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.000022,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained composure",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.00002,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained emotionalDepth",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.000229,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained focus",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.000067,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "followed",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.001338,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained listening",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.000111,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained memory",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.000111,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained presence",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": true,
+        "by": 0.000111,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained scene",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.000148,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained screen",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.000405,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "cold take",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.102061,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     }
+    ],
+    "staleReads": 0,
+    "changes": 11,
+    "unexplained": 0,
+    "rises": 4,
+    "ok": {
+     "H1": true,
+     "H2": true,
+     "H3": true,
+     "H4": true,
+     "H5": true,
+     "H6": true
+    }
+   }
+  },
+  {
+   "seed": "adv-v-67",
+   "set": "fresh",
+   "design": "F2-A10",
+   "band": "advanced",
+   "stage": "firstWeek",
+   "takes": [
+    "brief-superhero-2:bakery",
+    "brief-biker:hard",
+    "brief-survival-2:mechanic"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 71,
+    "combat": 67.005,
+    "comedy": 80.002,
+    "composure": 60,
+    "emotionalDepth": 77,
+    "focus": 77,
+    "imagination": 78.006,
+    "listening": 81,
+    "memory": 64.071,
+    "physical": 77,
+    "presence": 85,
+    "scene": 65,
+    "screen": 68.062,
+    "vocal": 62
+   },
+   "advice": [
+    {
+     "target": "prep:genre",
+     "points": 2.8,
+     "why": "Coming to your work short on knowing the genre cost about 2.8 points off the whole a piece. That’s preparation, not training."
+    },
+    {
+     "target": "composure",
+     "points": 0.4,
+     "forecast": 0.43372912199760333,
+     "tiedWith": [
+      "Imagination",
+      "On Camera"
+     ],
+     "why": "20 hours of its exercise, a session a day, would take it from 60 to about 63. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.4 points a piece (3 of your last 3 pieces call on it; No Patch Tonight (Tough Love), Taped would gain most, about +0.5). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old. About as useful: Imagination, On Camera. Any of them is a sound next step."
+    },
+    {
+     "target": "imagination",
+     "points": 0.4,
+     "forecast": 0.4329617086892838,
+     "why": "20 hours of its exercise, a session a day, would take it from 78 to about 80. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.4 points a piece (3 of your last 3 pieces call on it; The Bakery On Calder Street (The Bakery Matters), Taped would gain most, about +0.4). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "screen",
+     "points": 0.4,
+     "forecast": 0.3597485334307772,
+     "why": "20 hours of its exercise, a session a day, would take it from 68 to about 71. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.4 points a piece (3 of your last 3 pieces call on it; No Patch Tonight (Tough Love), Taped would gain most, about +0.3). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "emotionalDepth",
+     "points": 0.3,
+     "forecast": 0.29424501110399603,
+     "why": "20 hours of its exercise, a session a day, would take it from 77 to about 79. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (3 of your last 3 pieces call on it; The Bakery On Calder Street (The Bakery Matters), Taped would gain most, about +0.2). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    }
+   ],
+   "first": "composure",
+   "said": [
+    "composure",
+    "imagination",
+    "screen"
+   ],
+   "chief": "composure",
+   "chiefIsFirst": true,
+   "predicted": {
+    "adaptability": 0.226,
+    "combat": 0.12,
+    "comedy": 0.116,
+    "composure": 0.434,
+    "emotionalDepth": 0.294,
+    "focus": 0.193,
+    "imagination": 0.433,
+    "listening": 0.215,
+    "memory": 0.227,
+    "physical": 0.23,
+    "presence": 0.179,
+    "scene": 0.243,
+    "screen": 0.36,
+    "vocal": 0.163
+   },
+   "candidates": [
+    "adaptability",
+    "combat",
+    "comedy",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.33,
+    "combat": 0.183,
+    "comedy": 0.178,
+    "composure": 0.668,
+    "emotionalDepth": 0.427,
+    "focus": 0.284,
+    "imagination": 0.495,
+    "listening": 0.319,
+    "memory": 0.327,
+    "physical": 0.333,
+    "presence": 0.269,
+    "scene": 0.312,
+    "screen": 0.434,
+    "vocal": 0.239
+   },
+   "best": "composure",
+   "bestGain": 0.668,
+   "firstGain": 0.668,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.319,
+    "atOrAboveMedian": true,
+    "randomMean": 0.343,
+    "firstGain": 0.668
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.434,
+    "realized": 0.668,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.434,
+     0.32,
+     0.31
+    ],
+    "falls": true,
+    "leastDrop": 0.009256056185617922,
+    "prep": {
+     "limited": true,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": true,
+     "anyLargest": 0,
+     "anySame": true,
+     "preparation": {
+      "pieces": 0,
+      "said": null,
+      "worked": 0,
+      "same": true,
+      "apart": true
+     }
+    }
+   },
+   "g": {
+    "recs": 4,
+    "ok": 4,
+    "missing": []
+   },
+   "h": {
+    "before": 0.434,
+    "after": 0.396,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "imagination",
+    "leaderPoints": 0.429,
+    "leads": true,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": true,
+    "atBeforeDiscipline": 0.399,
+    "ownFell": true,
+    "rose": false,
+    "withinLift": true,
+    "roseSinceNote": false
+   },
+   "i": {
+    "same": true
+   },
+   "f12": {
+    "asBuilt": {
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 0,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 0,
+      "genres": 2.529,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "cold": {
+     "brief": "brief-detective-2",
+     "chief": "preparation:rehearsal",
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 1,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 17.991,
+      "genres": 3.201,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "like": {
+     "predicted": 0.434,
+     "realized": 0.475,
+     "within": true
+    },
+    "growth": {
+     "growth": [
+      3.378167,
+      2.257824,
+      2.201013
+     ],
+     "ok": true
+    },
+    "ok": {
+     "F1": true,
+     "F2": true,
+     "F3": true,
+     "F4": true,
+     "F5": true,
+     "F6": true
+    }
+   },
+   "h12": {
+    "followed": {
+     "notStale": true,
+     "stale": [],
+     "moved": true,
+     "stayed": false,
+     "leads": true,
+     "changedWhereLed": true,
+     "rose": false,
+     "noted": true,
+     "change": {
+      "residual": 0,
+      "parts": {
+       "work": 0,
+       "genre": 0,
+       "others": -0.001448,
+       "own": -0.033179,
+       "discipline": -0.002976
+      }
+     },
+     "attributed": true,
+     "explained": true,
+     "like": {
+      "predicted": 0.434,
+      "realized": 0.475,
+      "within": true
+     }
+    },
+    "reads": [
+     {
+      "who": "as built",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.083992,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "ignored",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.084589,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.023625,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained adaptability",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.004398,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained combat",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.00435,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained comedy",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.004349,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "followed",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.037603,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained emotionalDepth",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.004474,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained focus",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.004365,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained imagination",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.004367,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained listening",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.004348,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained memory",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.004368,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained physical",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.004376,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained presence",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.004348,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained scene",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.00437,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained screen",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.004388,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained vocal",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.004358,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "cold take",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.140664,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.03245,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     }
+    ],
+    "staleReads": 0,
+    "changes": 19,
+    "unexplained": 0,
+    "rises": 1,
+    "ok": {
+     "H1": true,
+     "H2": true,
+     "H3": true,
+     "H4": true,
+     "H5": true,
+     "H6": true
+    }
+   }
+  },
+  {
+   "seed": "adv-v-68",
+   "set": "fresh",
+   "design": "F2-A10",
+   "band": "advanced",
+   "stage": "firstWeek",
+   "takes": [
+    "brief-anthology-2:glove",
+    "brief-medical_drama-2:witness"
+   ],
+   "genres": 2,
+   "atFull": [],
+   "levels": {
+    "adaptability": 69,
+    "classical": 74,
+    "composure": 84,
+    "emotionalDepth": 79,
+    "focus": 64,
+    "imagination": 70.011,
+    "listening": 82,
+    "memory": 78.001,
+    "physical": 81,
+    "presence": 74,
+    "scene": 81,
+    "screen": 83,
+    "vocal": 72,
+    "voiceover": 72.007
+   },
+   "advice": [
+    {
+     "target": "prep:genre",
+     "points": 5.5,
+     "why": "Coming to your work short on knowing the genre cost about 5.5 points off the whole a piece. That’s preparation, not training."
+    },
+    {
+     "target": "imagination",
+     "points": 0.5,
+     "forecast": 0.4918105667635568,
+     "why": "20 hours of its exercise, a session a day, would take it from 70 to about 73. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.5 points a piece (2 of your last 2 pieces call on it; The Last Thing Handed In (Her Own Story), Taped would gain most, about +0.6). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "focus",
+     "points": 0.3,
+     "forecast": 0.267046735050414,
+     "why": "20 hours of its exercise, a session a day, would take it from 64 to about 67. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (2 of your last 2 pieces call on it; First Touch, Bay Four (Every Parent Before Him), Taped would gain most, about +0.2). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "emotionalDepth",
+     "points": 0.3,
+     "forecast": 0.26497356550954027,
+     "why": "20 hours of its exercise, a session a day, would take it from 79 to about 81. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (2 of your last 2 pieces call on it; The Last Thing Handed In (Her Own Story), Taped would gain most, about +0.3). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "memory",
+     "points": 0.2,
+     "forecast": 0.2264377293209871,
+     "why": "20 hours of its exercise, a session a day, would take it from 78 to about 80. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.2 points a piece (2 of your last 2 pieces call on it; First Touch, Bay Four (Every Parent Before Him), Taped would gain most, about +0.2). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination"
+   ],
+   "chief": "imagination",
+   "chiefIsFirst": true,
+   "predicted": {
+    "adaptability": 0.201,
+    "classical": 0.111,
+    "composure": 0.22,
+    "emotionalDepth": 0.265,
+    "focus": 0.267,
+    "imagination": 0.492,
+    "listening": 0.204,
+    "memory": 0.226,
+    "physical": 0.125,
+    "presence": 0.157,
+    "scene": 0.154,
+    "screen": 0.197,
+    "vocal": 0.181,
+    "voiceover": 0.113
+   },
+   "candidates": [
+    "adaptability",
+    "classical",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal",
+    "voiceover"
+   ],
+   "realized": {
+    "adaptability": 0.273,
+    "classical": 0.145,
+    "composure": 0.303,
+    "emotionalDepth": 0.367,
+    "focus": 0.364,
+    "imagination": 0.683,
+    "listening": 0.278,
+    "memory": 0.308,
+    "physical": 0.165,
+    "presence": 0.211,
+    "scene": 0.205,
+    "screen": 0.266,
+    "vocal": 0.244,
+    "voiceover": 0.148
+   },
+   "best": "imagination",
+   "bestGain": 0.683,
+   "firstGain": 0.683,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.266,
+    "atOrAboveMedian": true,
+    "randomMean": 0.283,
+    "firstGain": 0.683
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.492,
+    "realized": 0.683,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.492,
+     0.433,
+     0.428
+    ],
+    "falls": true,
+    "leastDrop": 0.004646991889989294,
+    "prep": {
+     "limited": true,
+     "largest": 0,
+     "same": false,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": true,
+     "anyLargest": 0,
+     "anySame": false,
+     "preparation": {
+      "pieces": 0,
+      "said": null,
+      "worked": 0,
+      "same": true,
+      "apart": true
+     }
+    }
+   },
+   "g": {
+    "recs": 4,
+    "ok": 4,
+    "missing": []
+   },
+   "h": {
+    "before": 0.492,
+    "after": 0.447,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "focus",
+    "leaderPoints": 0.262,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false,
+    "atBeforeDiscipline": 0.45,
+    "ownFell": true,
+    "rose": false,
+    "withinLift": true,
+    "roseSinceNote": false
+   },
+   "i": {
+    "same": true
+   },
+   "f12": {
+    "asBuilt": {
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 0,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 0.031,
+      "genres": 5.599,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "cold": {
+     "brief": "brief-romantic_drama",
+     "chief": "preparation:rehearsal",
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 1,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 22.715,
+      "genres": 6.388,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "like": {
+     "predicted": 0.492,
+     "realized": 0.545,
+     "within": true
+    },
+    "growth": {
+     "growth": [
+      2.528202,
+      2.196976,
+      2.196976
+     ],
+     "ok": true
+    },
+    "ok": {
+     "F1": true,
+     "F2": true,
+     "F3": true,
+     "F4": true,
+     "F5": true,
+     "F6": true
+    }
+   },
+   "h12": {
+    "followed": {
+     "notStale": true,
+     "stale": [],
+     "moved": true,
+     "stayed": true,
+     "leads": false,
+     "changedWhereLed": true,
+     "rose": false,
+     "noted": true,
+     "change": {
+      "residual": 0,
+      "parts": {
+       "work": 0,
+       "genre": 0,
+       "others": -0.000452,
+       "own": -0.040892,
+       "discipline": -0.003718
+      }
+     },
+     "attributed": true,
+     "explained": true,
+     "like": {
+      "predicted": 0.492,
+      "realized": 0.545,
+      "within": true
+     }
+    },
+    "reads": [
+     {
+      "who": "as built",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.111959,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "ignored",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.112435,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained adaptability",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.116028,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004046,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained classical",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.116104,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004122,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained composure",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.116192,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.00421,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained emotionalDepth",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.116068,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004086,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained focus",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.116241,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004258,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "followed",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.157044,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.045062,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained listening",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.116007,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004025,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained memory",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.116012,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.00403,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained physical",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.116002,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.00402,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained presence",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.115996,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004013,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained scene",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.116161,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004179,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained screen",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.116219,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004237,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained vocal",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.116003,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004021,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained voiceover",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.116111,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.004128,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "cold take",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.177523,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     }
+    ],
+    "staleReads": 0,
+    "changes": 31,
+    "unexplained": 0,
+    "rises": 0,
+    "ok": {
+     "H1": true,
+     "H2": true,
+     "H3": true,
+     "H4": true,
+     "H5": true,
+     "H6": true
+    }
+   }
+  },
+  {
+   "seed": "adv-v-69",
+   "set": "fresh",
+   "design": "F2-A10",
+   "band": "advanced",
+   "stage": "firstWeek",
+   "takes": [
+    "brief-wuxia-2:student",
+    "brief-rockumentary:pro"
+   ],
+   "genres": 2,
+   "atFull": [],
+   "levels": {
+    "adaptability": 78,
+    "combat": 65.007,
+    "composure": 68,
+    "emotionalDepth": 78,
+    "focus": 69,
+    "imagination": 65.026,
+    "listening": 82,
+    "memory": 65.02,
+    "physical": 80,
+    "presence": 69,
+    "scene": 67,
+    "screen": 70.008,
+    "vocal": 77
+   },
+   "advice": [
+    {
+     "target": "prep:genre",
+     "points": 5.2,
+     "why": "Coming to your work short on knowing the genre cost about 5.2 points off the whole a piece. That’s preparation, not training."
+    },
+    {
+     "target": "imagination",
+     "points": 0.5,
+     "forecast": 0.5423616502813597,
+     "why": "20 hours of its exercise, a session a day, would take it from 65 to about 68. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.5 points a piece (2 of your last 2 pieces call on it; Learned Through The Shutters (Already A Student), Taped would gain most, about +0.5). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "screen",
+     "points": 0.3,
+     "forecast": 0.307210497815215,
+     "why": "20 hours of its exercise, a session a day, would take it from 70 to about 73. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (2 of your last 2 pieces call on it; The Long Version (On The Record), Taped would gain most, about +0.3). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "composure",
+     "points": 0.3,
+     "forecast": 0.2504394138149829,
+     "why": "20 hours of its exercise, a session a day, would take it from 68 to about 71. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.3 points a piece (2 of your last 2 pieces call on it; The Long Version (On The Record), Taped would gain most, about +0.2). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    },
+    {
+     "target": "focus",
+     "points": 0.2,
+     "forecast": 0.21737798024772798,
+     "why": "20 hours of its exercise, a session a day, would take it from 69 to about 72. On your recent work, replayed with you as you are now, that’s forecast to be worth about 0.2 points a piece (2 of your last 2 pieces call on it; The Long Version (On The Record), Taped would gain most, about +0.2). About 0.1 of it is the discipline 20 days of practice build, which any exercise kept up daily would bring. Choose Steady to begin; Spaced pays once your last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination"
+   ],
+   "chief": "imagination",
+   "chiefIsFirst": true,
+   "predicted": {
+    "adaptability": 0.204,
+    "combat": 0.111,
+    "composure": 0.25,
+    "emotionalDepth": 0.204,
+    "focus": 0.217,
+    "imagination": 0.542,
+    "listening": 0.213,
+    "memory": 0.145,
+    "physical": 0.156,
+    "presence": 0.185,
+    "scene": 0.197,
+    "screen": 0.307,
+    "vocal": 0.081
+   },
+   "candidates": [
+    "adaptability",
+    "combat",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.283,
+    "combat": 0.146,
+    "composure": 0.343,
+    "emotionalDepth": 0.282,
+    "focus": 0.297,
+    "imagination": 0.749,
+    "listening": 0.297,
+    "memory": 0.195,
+    "physical": 0.211,
+    "presence": 0.253,
+    "scene": 0.267,
+    "screen": 0.422,
+    "vocal": 0.104
+   },
+   "best": "imagination",
+   "bestGain": 0.749,
+   "firstGain": 0.749,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.275,
+    "atOrAboveMedian": true,
+    "randomMean": 0.296,
+    "firstGain": 0.749
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.542,
+    "realized": 0.749,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.542,
+     0.414,
+     0.408
+    ],
+    "falls": true,
+    "leastDrop": 0.0059917315916304115,
+    "prep": {
+     "limited": true,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": true,
+     "anyLargest": 0,
+     "anySame": true,
+     "preparation": {
+      "pieces": 0,
+      "said": null,
+      "worked": 0,
+      "same": true,
+      "apart": true
+     }
+    }
+   },
+   "g": {
+    "recs": 4,
+    "ok": 4,
+    "missing": []
+   },
+   "h": {
+    "before": 0.542,
+    "after": 0.495,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "screen",
+    "leaderPoints": 0.307,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false,
+    "atBeforeDiscipline": 0.493,
+    "ownFell": true,
+    "rose": false,
+    "withinLift": true,
+    "roseSinceNote": false
+   },
+   "i": {
+    "same": true
+   },
+   "f12": {
+    "asBuilt": {
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 0,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 0,
+      "genres": 5.358,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "cold": {
+     "brief": "brief-absurdist",
+     "chief": "preparation:rehearsal",
+     "apart": true,
+     "prepWorked": true,
+     "assumedMatch": true,
+     "assumedSaid": true,
+     "counterfactual": {
+      "pieces": 1,
+      "named": true,
+      "taped": true,
+      "readAsSaid": true
+     },
+     "attention": {
+      "verdict": "both",
+      "own": 21.644,
+      "genres": 5.769,
+      "matches": true,
+      "said": true
+     },
+     "ok": {
+      "F1": true,
+      "F2": true,
+      "F4": true,
+      "F5": true
+     }
+    },
+    "like": {
+     "predicted": 0.542,
+     "realized": 0.604,
+     "within": true
+    },
+    "growth": {
+     "growth": [
+      2.996608,
+      2.234389,
+      2.234389
+     ],
+     "ok": true
+    },
+    "ok": {
+     "F1": true,
+     "F2": true,
+     "F3": true,
+     "F4": true,
+     "F5": true,
+     "F6": true
+    }
+   },
+   "h12": {
+    "followed": {
+     "notStale": true,
+     "stale": [],
+     "moved": true,
+     "stayed": true,
+     "leads": false,
+     "changedWhereLed": true,
+     "rose": false,
+     "noted": true,
+     "change": {
+      "residual": 0,
+      "parts": {
+       "work": 0,
+       "genre": 0,
+       "others": -0.00028,
+       "own": -0.048786,
+       "discipline": 0.001493
+      }
+     },
+     "attributed": true,
+     "explained": true,
+     "like": {
+      "predicted": 0.542,
+      "realized": 0.604,
+      "within": true
+     }
+    },
+    "reads": [
+     {
+      "who": "as built",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.105124,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "ignored",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.105419,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained adaptability",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.103806,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.001333,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained combat",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.103959,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.00118,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained composure",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.103993,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.001146,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained emotionalDepth",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.103855,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.001284,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained focus",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.103757,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.001382,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "followed",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.152712,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": false,
+        "by": -0.047573,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained listening",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.103743,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.001396,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained memory",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.103771,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.001368,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained physical",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.103777,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.001362,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained presence",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.103743,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.001396,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained scene",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.10423,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000909,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained screen",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.104626,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.000513,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "trained vocal",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.103743,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       },
+       {
+        "since": "last",
+        "rose": true,
+        "by": 0.001396,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     },
+     {
+      "who": "cold take",
+      "stale": [],
+      "changes": [
+       {
+        "since": "first",
+        "rose": false,
+        "by": -0.084625,
+        "residual": 0,
+        "said": true,
+        "unexplained": false
+       }
+      ]
+     }
+    ],
+    "staleReads": 0,
+    "changes": 29,
+    "unexplained": 0,
+    "rises": 12,
+    "ok": {
+     "H1": true,
+     "H2": true,
+     "H3": true,
+     "H4": true,
+     "H5": true,
+     "H6": true
+    }
+   }
+  }
+ ],
+ "summary": {
+  "fresh": {
+   "n": 10,
+   "b": {
+    "pass": 10,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 10,
+    "tieSaid": 4,
+    "chiefIsFirst": 6
+   },
+   "c": {
+    "named": 10,
+    "atOrAboveMedian": 10,
+    "share": 1,
+    "firstMean": 0.67,
+    "randomMean": 0.327,
+    "ratio": 2.051
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 10
+   },
+   "e": {
+    "named": 10,
+    "within": 10,
+    "share": 1,
+    "meanError": 0.191
+   },
+   "f": {
+    "prepPieces": 0,
+    "prepSaid": 0,
+    "prepSameEvery": 10,
+    "prepApart": 10,
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 10,
+    "prepSame": 6,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 10,
+    "prepAnySame": 5
+   },
+   "g": {
+    "recs": 39,
+    "ok": 39
+   },
+   "h": {
+    "cases": 10,
+    "fell": 10,
+    "leads": 1,
+    "changedWhereLed": 1,
+    "leadsWithinATie": 1,
+    "ownFell": 10,
+    "rose": 0,
+    "withinLift": 10,
+    "roseSinceNote": 0,
+    "explained": 0
+   },
+   "i": {
+    "same": 10
+   },
+   "f12": {
+    "F1": 10,
+    "F2": 10,
+    "F3": 10,
+    "F4": 10,
+    "F5": 10,
+    "F6": 10,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 0,
+     "cold": 10
+    },
+    "verdicts": {
+     "both": 10,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 10,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 10,
+    "H2": 10,
+    "H3": 10,
+    "H4": 10,
+    "H5": 10,
+    "H6": 10,
+    "followed": {
+     "stayed": 9,
+     "leads": 1,
+     "changedWhereLed": 1,
+     "rose": 0,
+     "roseAttributed": 0,
+     "roseExplained": 0
+    },
+    "reads": 161,
+    "staleReads": 0,
+    "changes": 244,
+    "rises": 88,
+    "unexplained": 0
+   }
+  },
+  "fresh F2-A10": {
+   "n": 10,
+   "b": {
+    "pass": 10,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 10,
+    "tieSaid": 4,
+    "chiefIsFirst": 6
+   },
+   "c": {
+    "named": 10,
+    "atOrAboveMedian": 10,
+    "share": 1,
+    "firstMean": 0.67,
+    "randomMean": 0.327,
+    "ratio": 2.051
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 10
+   },
+   "e": {
+    "named": 10,
+    "within": 10,
+    "share": 1,
+    "meanError": 0.191
+   },
+   "f": {
+    "prepPieces": 0,
+    "prepSaid": 0,
+    "prepSameEvery": 10,
+    "prepApart": 10,
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 10,
+    "prepSame": 6,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 10,
+    "prepAnySame": 5
+   },
+   "g": {
+    "recs": 39,
+    "ok": 39
+   },
+   "h": {
+    "cases": 10,
+    "fell": 10,
+    "leads": 1,
+    "changedWhereLed": 1,
+    "leadsWithinATie": 1,
+    "ownFell": 10,
+    "rose": 0,
+    "withinLift": 10,
+    "roseSinceNote": 0,
+    "explained": 0
+   },
+   "i": {
+    "same": 10
+   },
+   "f12": {
+    "F1": 10,
+    "F2": 10,
+    "F3": 10,
+    "F4": 10,
+    "F5": 10,
+    "F6": 10,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 0,
+     "cold": 10
+    },
+    "verdicts": {
+     "both": 10,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 10,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 10,
+    "H2": 10,
+    "H3": 10,
+    "H4": 10,
+    "H5": 10,
+    "H6": 10,
+    "followed": {
+     "stayed": 9,
+     "leads": 1,
+     "changedWhereLed": 1,
+     "rose": 0,
+     "roseAttributed": 0,
+     "roseExplained": 0
+    },
+    "reads": 161,
+    "staleReads": 0,
+    "changes": 244,
+    "rises": 88,
+    "unexplained": 0
+   }
+  },
+  "fresh F2-A10 advanced": {
+   "n": 10,
+   "b": {
+    "pass": 10,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 10,
+    "tieSaid": 4,
+    "chiefIsFirst": 6
+   },
+   "c": {
+    "named": 10,
+    "atOrAboveMedian": 10,
+    "share": 1,
+    "firstMean": 0.67,
+    "randomMean": 0.327,
+    "ratio": 2.051
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 10
+   },
+   "e": {
+    "named": 10,
+    "within": 10,
+    "share": 1,
+    "meanError": 0.191
+   },
+   "f": {
+    "prepPieces": 0,
+    "prepSaid": 0,
+    "prepSameEvery": 10,
+    "prepApart": 10,
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 10,
+    "prepSame": 6,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 10,
+    "prepAnySame": 5
+   },
+   "g": {
+    "recs": 39,
+    "ok": 39
+   },
+   "h": {
+    "cases": 10,
+    "fell": 10,
+    "leads": 1,
+    "changedWhereLed": 1,
+    "leadsWithinATie": 1,
+    "ownFell": 10,
+    "rose": 0,
+    "withinLift": 10,
+    "roseSinceNote": 0,
+    "explained": 0
+   },
+   "i": {
+    "same": 10
+   },
+   "f12": {
+    "F1": 10,
+    "F2": 10,
+    "F3": 10,
+    "F4": 10,
+    "F5": 10,
+    "F6": 10,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 0,
+     "cold": 10
+    },
+    "verdicts": {
+     "both": 10,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 10,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 10,
+    "H2": 10,
+    "H3": 10,
+    "H4": 10,
+    "H5": 10,
+    "H6": 10,
+    "followed": {
+     "stayed": 9,
+     "leads": 1,
+     "changedWhereLed": 1,
+     "rose": 0,
+     "roseAttributed": 0,
+     "roseExplained": 0
+    },
+    "reads": 161,
+    "staleReads": 0,
+    "changes": 244,
+    "rises": 88,
+    "unexplained": 0
+   }
+  },
+  "fresh F2-A10 firstWeek": {
+   "n": 10,
+   "b": {
+    "pass": 10,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 10,
+    "tieSaid": 4,
+    "chiefIsFirst": 6
+   },
+   "c": {
+    "named": 10,
+    "atOrAboveMedian": 10,
+    "share": 1,
+    "firstMean": 0.67,
+    "randomMean": 0.327,
+    "ratio": 2.051
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 10
+   },
+   "e": {
+    "named": 10,
+    "within": 10,
+    "share": 1,
+    "meanError": 0.191
+   },
+   "f": {
+    "prepPieces": 0,
+    "prepSaid": 0,
+    "prepSameEvery": 10,
+    "prepApart": 10,
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 10,
+    "prepSame": 6,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 10,
+    "prepAnySame": 5
+   },
+   "g": {
+    "recs": 39,
+    "ok": 39
+   },
+   "h": {
+    "cases": 10,
+    "fell": 10,
+    "leads": 1,
+    "changedWhereLed": 1,
+    "leadsWithinATie": 1,
+    "ownFell": 10,
+    "rose": 0,
+    "withinLift": 10,
+    "roseSinceNote": 0,
+    "explained": 0
+   },
+   "i": {
+    "same": 10
+   },
+   "f12": {
+    "F1": 10,
+    "F2": 10,
+    "F3": 10,
+    "F4": 10,
+    "F5": 10,
+    "F6": 10,
+    "F3share": 1,
+    "readAsPrepared": {
+     "asBuilt": 0,
+     "cold": 10
+    },
+    "verdicts": {
+     "both": 10,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    },
+    "coldVerdicts": {
+     "both": 10,
+     "training": 0,
+     "preparation": 0,
+     "neither": 0
+    }
+   },
+   "h12": {
+    "H1": 10,
+    "H2": 10,
+    "H3": 10,
+    "H4": 10,
+    "H5": 10,
+    "H6": 10,
+    "followed": {
+     "stayed": 9,
+     "leads": 1,
+     "changedWhereLed": 1,
+     "rose": 0,
+     "roseAttributed": 0,
+     "roseExplained": 0
+    },
+    "reads": 161,
+    "staleReads": 0,
+    "changes": 244,
+    "rises": 88,
+    "unexplained": 0
+   }
+  }
+ }
+}

@@ -18,6 +18,9 @@
  * player can see what a later part of the game does before getting there; until then the later chapters were shut in
  * the contents. The clock holds while the guide is open. The counts count only the chapters there are now: a save
  * from before the chapters were cut to these seventeen still holds the old ones' ids.
+ *
+ * From 2026-10-17 (the owner's brief 14) a chapter's figures and finer conditions (`more`) are behind The Details,
+ * under its steps, so a chapter reads as a task first: until then every chapter was one run of paragraphs.
  */
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ButtonHTMLAttributes, type ReactNode } from 'react';
@@ -113,7 +116,7 @@ export function LockedPanel({ feature, title }: { feature: string; title: string
         <span className="lock-word">Locked</span>
       </div>
       <p className="small muted" style={{ margin: '0 0 var(--s3)' }}>
-        Opens with “{chapter.title}” in the guide: {chapter.lead.charAt(0).toLowerCase() + chapter.lead.slice(1)}
+        This opens when you read “{chapter.title}” in the guide: {chapter.lead.charAt(0).toLowerCase() + chapter.lead.slice(1)}
       </p>
       <button type="button" className="btn btn-sm" onClick={ask}>Read About It</button>
     </section>
@@ -240,26 +243,34 @@ function GuideDialog({ start, onClose }: { start: string; onClose: () => void })
               </ul>
               <p className="small muted">
                 {next
-                  ? `Try it now, or go straight on. “${next.title}” is next, whenever you open the guide.`
-                  : 'That was the last chapter. Every part of the game is open, and the guide stays in the top bar whenever you want to read any of it again.'}
+                  ? `It’s open now. Try it, or go straight on to “${next.title}”. The guide picks up there whenever you open it.`
+                  : 'That was the last chapter, and every part of the game is open. Guide, at the top of the screen, opens any chapter again whenever you want it.'}
               </p>
             </>
           ) : (
             <>
               {waiting && at === waiting.id && next && (
                 <div className="callout small" style={{ marginBottom: 'var(--s3)' }}>
-                  This chapter opens what you pressed. Chapters are marked read in order, and “{next.title}” comes first.
+                  This chapter opens what you pressed. The chapters open in order, so read “{next.title}” first.
                 </div>
               )}
               {!isNext && isGuided && !read.includes(chapter.id) && !waiting && next && (
                 <div className="callout small" style={{ marginBottom: 'var(--s3)' }}>
-                  Read ahead as you like. Chapters are marked read in order, and “{next.title}” comes first.
+                  You can read ahead, but the chapters open in order, and “{next.title}” is next.
                 </div>
               )}
               <div className="eyebrow">Chapter {index + 1} Of {CHAPTERS.length}</div>
               <h3 style={{ margin: 'var(--s1) 0 var(--s1)' }}>{chapter.title}</h3>
               <p className="small muted" style={{ marginTop: 0 }}>{chapter.lead}</p>
               {chapter.body.map((paragraph) => <p key={paragraph} className="small">{paragraph}</p>)}
+              {chapter.more && chapter.more.length > 0 && (
+                <details className="help-section guide-more">
+                  <summary>The Details</summary>
+                  <div className="help-section-body">
+                    {chapter.more.map((paragraph) => <p key={paragraph} className="small">{paragraph}</p>)}
+                  </div>
+                </details>
+              )}
               <div className="guide-opens-box">
                 <div className="eyebrow">{read.includes(chapter.id) ? 'What It Opened' : finished ? 'What It Covers, Already Open' : 'What Reading It Opens'}</div>
                 <ul className="small guide-opens">

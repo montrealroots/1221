@@ -325,7 +325,7 @@ describe('conditions carried', () => {
     alone.advanceTo(week);
     well.advanceTo(week);
     expect(well.player.wellbeing.morale - alone.player.wellbeing.morale).toBeCloseTo(CHRONIC.untreated.moraleAWeek, 0);
-    expect(sim.execute({ kind: 'health.treat', payload: { condition: 'asthma', on: true } })).toMatchObject({ ok: false, error: 'You don’t have that.' });
+    expect(sim.execute({ kind: 'health.treat', payload: { condition: 'asthma', on: true } })).toMatchObject({ ok: false, error: 'You don’t have that condition.' });
   });
 
   it('let asthma left alone double the emergencies', () => {

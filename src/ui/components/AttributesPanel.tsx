@@ -30,8 +30,8 @@ export function AttributesPanel() {
     <Panel title="Your Composure" subtitle="What nerves do to a performance">
       <div className="col gap-3">
         <Stat label="Composure" value={whole(attrs.composure)} note={stress > 0 ? `Nerves add ${stress} stress before a performance` : 'Nerves add no stress'} />
-        <p className="small" style={{ margin: 0 }}>Composure holds consistency under pressure, in a scene, a song, a tape, an audition and a night, and steadies you after a slip. A little comes with every night in front of a house, and graded exposure practises it.</p>
-        <Fine>Performance anxiety falls with exposure (Reeves et al., 2022); how fast it moves here is SLATE’s estimate.</Fine>
+        <p className="small" style={{ margin: 0 }}>Composure keeps your work consistent under pressure, in a scene, a song, a self-tape, an audition and a night on stage, and steadies you after a slip. A little comes with every night in front of an audience, and the Graded Exposure exercise trains it.</p>
+        <Fine>Source: Reeves et al. (2022), on performance anxiety falling with exposure. How fast it moves here is estimated.</Fine>
       </div>
     </Panel>
   );

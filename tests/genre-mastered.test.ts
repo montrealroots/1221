@@ -83,7 +83,7 @@ function prepared(sim: Simulation, b = ABSURDIST) {
     sim.advanceTo(sim.now + MS_DAY);
     rest(sim);
   }
-  for (const step of steps) expect(prepareRefusal(sim, sim.player, b, step), step).toBe('There’s nothing more to gain from it now.');
+  for (const step of steps) expect(prepareRefusal(sim, sim.player, b, step), step).toBe('You’ve done all this step can do.');
   sim.player.wellbeing.fitness = abilityFull(sim, sim.player, 'stamina');
 }
 const tape = (sim: Simulation, b = ABSURDIST) => go<{ overall: number }>(sim, 'practice.self_tape', { genre: b.kinds[0], brief: b.id });

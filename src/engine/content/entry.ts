@@ -73,7 +73,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "CA": {
@@ -213,7 +213,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.gov.uk/guidance/apply-for-an-electronic-travel-authorisation-eta"
       },
       "IE": {
@@ -228,7 +228,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after 8 Jan 2025 (Appendix ETA National List section (c)); enforced with carrier checks from 25 Feb 2026.",
+        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "CA": {
@@ -236,7 +236,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after 8 Jan 2025 (Appendix ETA National List section (c)); enforced with carrier checks from 25 Feb 2026.",
+        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "JP": {
@@ -244,7 +244,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after 8 Jan 2025 (Appendix ETA National List section (c)); enforced with carrier checks from 25 Feb 2026.",
+        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "KR": {
@@ -252,7 +252,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after 8 Jan 2025 (Appendix ETA National List section (c)); enforced with carrier checks from 25 Feb 2026.",
+        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "MX": {
@@ -260,7 +260,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after 8 Jan 2025 (Appendix ETA National List section (c)); enforced with carrier checks from 25 Feb 2026.",
+        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "AU": {
@@ -268,7 +268,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after 8 Jan 2025 (Appendix ETA National List section (c)); enforced with carrier checks from 25 Feb 2026.",
+        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "BR": {
@@ -276,7 +276,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after 8 Jan 2025 (Appendix ETA National List section (c)); enforced with carrier checks from 25 Feb 2026.",
+        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "NZ": {
@@ -284,7 +284,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after 8 Jan 2025 (Appendix ETA National List section (c)); enforced with carrier checks from 25 Feb 2026.",
+        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "IS": {
@@ -292,7 +292,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after 2 Apr 2025 (Appendix ETA National List section (d)); applications opened 5 Mar 2025.",
+        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after April 2, 2025 (Appendix ETA National List section (d)); applications opened March 5, 2025.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "DE": {
@@ -300,7 +300,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after 2 Apr 2025 (Appendix ETA National List section (d)); applications opened 5 Mar 2025.",
+        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after April 2, 2025 (Appendix ETA National List section (d)); applications opened March 5, 2025.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "FR": {
@@ -308,7 +308,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after 2 Apr 2025 (Appendix ETA National List section (d)); applications opened 5 Mar 2025.",
+        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after April 2, 2025 (Appendix ETA National List section (d)); applications opened March 5, 2025.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "ES": {
@@ -316,7 +316,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after 2 Apr 2025 (Appendix ETA National List section (d)); applications opened 5 Mar 2025.",
+        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after April 2, 2025 (Appendix ETA National List section (d)); applications opened March 5, 2025.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "LV": {
@@ -324,7 +324,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after 2 Apr 2025 (Appendix ETA National List section (d)); applications opened 5 Mar 2025.",
+        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after April 2, 2025 (Appendix ETA National List section (d)); applications opened March 5, 2025.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       }
     }
@@ -353,7 +353,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "US": {
@@ -368,7 +368,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "Visitor visa (TRV), or eTA if eligible",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Since 29 Feb 2024 Mexican citizens need a visitor visa, unless flying on a Mexican passport and holding a valid US nonimmigrant visa or having held a Canadian visa in the past 10 years, in which case an eTA suffices (air only; land and sea arrivals always need a visa).",
+        "note": "Since February 29, 2024 Mexican citizens need a visitor visa, unless flying on a Mexican passport and holding a valid US nonimmigrant visa or having held a Canadian visa in the past 10 years, in which case an eTA suffices (air only; land and sea arrivals always need a visa).",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/campaigns/eta-work-visa-mexico.html"
       },
       "BR": {
@@ -482,7 +482,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.irishimmigration.ie/coming-to-visit-ireland/"
       },
       "GB": {
@@ -610,21 +610,21 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29). UK nationals have been third-country nationals since 1 Jan 2021.",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026). UK nationals have been third-country nationals since January 1, 2021.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "IE": {
@@ -638,7 +638,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "DE": {
@@ -666,42 +666,42 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "LV": {
@@ -738,21 +738,21 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29). UK nationals have been third-country nationals since 1 Jan 2021.",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026). UK nationals have been third-country nationals since January 1, 2021.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "IE": {
@@ -773,7 +773,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "FR": {
@@ -794,42 +794,42 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "LV": {
@@ -866,21 +866,21 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29). UK nationals have been third-country nationals since 1 Jan 2021.",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026). UK nationals have been third-country nationals since January 1, 2021.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "IE": {
@@ -908,7 +908,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "ES": {
@@ -922,42 +922,42 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "LV": {
@@ -994,21 +994,21 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29). UK nationals have been third-country nationals since 1 Jan 2021.",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026). UK nationals have been third-country nationals since January 1, 2021.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "IE": {
@@ -1043,49 +1043,49 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "JP": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "LV": {
@@ -1122,21 +1122,21 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29). UK nationals have been third-country nationals since 1 Jan 2021.",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026). UK nationals have been third-country nationals since January 1, 2021.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "IE": {
@@ -1178,49 +1178,49 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since 12 Oct 2025 (fully operational 10 Apr 2026). ETIAS will be required once it launches (not live on 2026-09-29).",
+        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "LV": {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       }
     }
@@ -1238,105 +1238,105 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "US": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "IS": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "FR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "ES": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "LV": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
+        "note": "Visa exemption up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "IE": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
+        "note": "Visa exemption up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "DE": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
+        "note": "Visa exemption up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Ion up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
+        "note": "Visa exemption up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver for Brazilian holders of ICAO-compliant e-passports since 30 Sep 2023, originally for 3 years (to 29 Sep 2026); extended by an exchange of notes in July 2026 to 29 Sep 2029. Holders of non-chip passports need a visa.",
+        "note": "Visa waiver for Brazilian holders of ICAO-compliant e-passports since September 30, 2023, originally for 3 years (to September 29, 2026); extended by an exchange of notes in July 2026 to September 29, 2029. Holders of non-chip passports need a visa.",
         "source": "https://www.gov.br/mre/en/contact-us/press-area/press-releases/reciprocal-visa-exemption-between-brazil-and-japan"
       }
     }
@@ -1365,70 +1365,70 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.k-eta.go.kr/"
       },
       "US": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until 31 Dec 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from 1 Jan 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until 31 Dec 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from 1 Jan 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "DE": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until 31 Dec 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from 1 Jan 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "FR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until 31 Dec 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from 1 Jan 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "ES": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until 31 Dec 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from 1 Jan 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "JP": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until 31 Dec 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from 1 Jan 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until 31 Dec 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from 1 Jan 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until 31 Dec 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from 1 Jan 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "CA": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Up to 6 months under the Korea-Canada arrangement. Temporarily exempt from K-ETA until 31 Dec 2026.",
+        "note": "Up to 6 months under the Korea-Canada arrangement. Temporarily exempt from K-ETA until December 31, 2026.",
         "source": "https://www.mofa.go.kr/ca-en/wpge/m_5236/contents.do"
       },
       "IE": {
@@ -1486,7 +1486,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "US": {
@@ -1585,7 +1585,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "Mexican visitor visa",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Mexico reinstated the visa requirement for Brazilians on 18 Aug 2022. Exempt if holding a valid US, Canada, UK, Japan or Schengen visa, or permanent residence in those countries or the Pacific Alliance (then entry as a visa-exempt visitor).",
+        "note": "Mexico reinstated the visa requirement for Brazilians on August 18, 2022. Exempt if holding a valid US, Canada, UK, Japan or Schengen visa, or permanent residence in those countries or the Pacific Alliance (then entry as a visa-exempt visitor).",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-requieren-visa-para-mexico/"
       }
     }
@@ -1624,7 +1624,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601"
       },
       "NZ": {
@@ -1764,7 +1764,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.gov.br/mre/pt-br/assuntos/portal-consular/vistos/quadro-geral-de-regime-de-vistos-para-a-entrada-de-estrangeiros-no-brasil"
       },
       "GB": {
@@ -1841,7 +1841,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Reciprocal visa waiver since 30 Sep 2023 for holders of ICAO e-passports; extended in July 2026 to 29 Sep 2029.",
+        "note": "Reciprocal visa waiver since September 30, 2023 for holders of ICAO e-passports; extended in July 2026 to September 29, 2029.",
         "source": "https://www.gov.br/mre/en/contact-us/press-area/press-releases/reciprocal-visa-exemption-between-brazil-and-japan"
       },
       "US": {
@@ -1849,7 +1849,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "e-Visa (electronic visitor visa)",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa requirement reinstated on reciprocity grounds from 10 Apr 2025; apply online for an e-Visa (USD 80.90). Up to 90 days per entry, extendable to 180 per 12 months. Validity: 10 years for US citizens, 5 years for Canadian and Australian citizens (see uncertain).",
+        "note": "Visa requirement reinstated on reciprocity grounds from April 10, 2025; apply online for an e-Visa (USD 80.90). Up to 90 days per entry, extendable to 180 per 12 months. Validity: 10 years for US citizens, 5 years for Canadian and Australian citizens (see uncertain).",
         "source": "https://www.gov.br/mre/pt-br/consulado-miami/information-about-visas-in-english/electronic-visitor-visa-e-visa"
       },
       "CA": {
@@ -1857,7 +1857,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "e-Visa (electronic visitor visa)",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa requirement reinstated on reciprocity grounds from 10 Apr 2025; apply online for an e-Visa (USD 80.90). Up to 90 days per entry, extendable to 180 per 12 months. Validity: 10 years for US citizens, 5 years for Canadian and Australian citizens (see uncertain).",
+        "note": "Visa requirement reinstated on reciprocity grounds from April 10, 2025; apply online for an e-Visa (USD 80.90). Up to 90 days per entry, extendable to 180 per 12 months. Validity: 10 years for US citizens, 5 years for Canadian and Australian citizens (see uncertain).",
         "source": "https://www.gov.br/mre/pt-br/consulado-miami/information-about-visas-in-english/electronic-visitor-visa-e-visa"
       },
       "AU": {
@@ -1865,7 +1865,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "e-Visa (electronic visitor visa)",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa requirement reinstated on reciprocity grounds from 10 Apr 2025; apply online for an e-Visa (USD 80.90). Up to 90 days per entry, extendable to 180 per 12 months. Validity: 10 years for US citizens, 5 years for Canadian and Australian citizens (see uncertain).",
+        "note": "Visa requirement reinstated on reciprocity grounds from April 10, 2025; apply online for an e-Visa (USD 80.90). Up to 90 days per entry, extendable to 180 per 12 months. Validity: 10 years for US citizens, 5 years for Canadian and Australian citizens (see uncertain).",
         "source": "https://www.gov.br/mre/pt-br/consulado-miami/information-about-visas-in-english/electronic-visitor-visa-e-visa"
       }
     }
@@ -1894,7 +1894,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "citizen",
         "maxDays": null,
         "windowDays": null,
-        "note": "Own nationals.",
+        "note": "You’re one of its citizens.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "AU": {

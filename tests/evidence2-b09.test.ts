@@ -23,7 +23,7 @@
  *   then let them ask; and a student who had withdrawn could still be given a month more, its deadline put back on
  *   their calendar.
  * - `school.request_repeat`: refused beside an additional term in each of its words, the one asked for and the one
- *   granted, where a twin with neither is let ask. The decision's own refusal, 'Your Repeat Is Refused' for a first
+ *   granted, where a twin with neither is let ask. The decision's own refusal, 'Your Repeat Isn’t Granted' for a first
  *   year and the degree withheld for a last, is reached only from a fixture (a second Fail put on the record between
  *   the asking and the deciding), which no play makes: the decision counts as the asking did, and no evaluation falls
  *   between them.
@@ -357,7 +357,7 @@ describe('school.make_up', () => {
     // Tuesday 22 May at ten: the line and its button on the Standing tab, pressed.
     tend(sim, at(2029, 5, 22, 10));
     const shown = drawn(sim, SchoolWorkspace);
-    expect(shown.html).toContain('<strong>On-Camera Acting Technique</strong>, Incomplete: 1 of 1 make-up sessions left, by May 27, 2029.');
+    expect(shown.html).toContain('<strong>On-Camera Acting Technique</strong>, Incomplete: 1 of 1 make-up session left, by May 27, 2029.');
     const make = drew('school.make_up');
     expect(make.map((c) => [c.label, c.disabled])).toEqual([['Make Up A Session', false]]);
     make[0]!.onClick!();
@@ -415,7 +415,7 @@ describe('school.make_up', () => {
     // and Take A Shift offer nothing once you’ve left: until 2026-10-13 it stayed, grayed with “You’re not at school.”, for good
     // (found by that day’s final checks).
     const tab = drawn(sim, SchoolWorkspace);
-    expect(tab.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up sessions left, by January 10, 2027.');
+    expect(tab.html).toContain('<strong>Acting I</strong>, Incomplete: 1 of 1 make-up session left, by January 10, 2027.');
     expect(drew('school.make_up')).toHaveLength(0);
     expect(tab.text).not.toContain('You’re not at school.');
     // Past the month: still the School's words, not the month's.
@@ -434,7 +434,7 @@ describe('school.extend_incomplete', () => {
     const school = () => sim.player.school!;
     tend(sim, at(2029, 5, 22, 10));
     const before = drawn(sim, SchoolWorkspace);
-    expect(before.html).toContain('<strong>On-Camera Acting Technique</strong>, Incomplete: 1 of 1 make-up sessions left, by May 27, 2029.');
+    expect(before.html).toContain('<strong>On-Camera Acting Technique</strong>, Incomplete: 1 of 1 make-up session left, by May 27, 2029.');
     const ask = drew('school.extend_incomplete');
     expect(ask.map((c) => c.label)).toEqual(['Ask For A Month More']);
     ask[0]!.onClick!();
@@ -459,9 +459,9 @@ describe('school.extend_incomplete', () => {
     // The twin: reminded again a week before the new date (the first reminder came on 20 May, before the extension),
     // Incomplete an hour before it, then Permanent and withheld.
     tend(twin, at(2029, 6, 19, 16));
-    expect(titled(twin, 'A Week Left: On-Camera Acting Technique').map((n) => n.body)).toEqual(['1 make-up session left, by May 27, 2029.']);
+    expect(titled(twin, 'A Week Left: On-Camera Acting Technique').map((n) => n.body)).toEqual(['One make-up session still to do, by May 27, 2029. Press Make Up A Session on the Standing tab.']);
     tend(twin, at(2029, 6, 19, 18));
-    expect(titled(twin, 'A Week Left: On-Camera Acting Technique').map((n) => n.body)).toEqual(['1 make-up session left, by May 27, 2029.', '1 make-up session left, by June 26, 2029.']);
+    expect(titled(twin, 'A Week Left: On-Camera Acting Technique').map((n) => n.body)).toEqual(['One make-up session still to do, by May 27, 2029. Press Make Up A Session on the Standing tab.', 'One make-up session still to do, by June 26, 2029. Press Make Up A Session on the Standing tab.']);
     tend(twin, at(2029, 6, 26, 16));
     expect(twin.player.school!.courses![ON_CAMERA_KEY]!.result).toBe('incomplete');
     expect(twin.player.school!.standing).not.toBe('withheld');
@@ -479,7 +479,7 @@ describe('school.extend_incomplete', () => {
     expect(sim.player.school!.standing).toBe('withheld');
     expect(sim.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You’re not at school.');
     expect(sim.execute({ kind: 'school.request_extra_term', payload: {} }).error).toBe('You’re not at school.');
-    expect(titled(sim, 'Permanent Incomplete: On-Camera Acting Technique').map((n) => n.body)).toEqual(['Its month ran out, so On-Camera Acting Technique carries no credit, and the degree can’t be completed without it.']);
+    expect(titled(sim, 'Permanent Incomplete: On-Camera Acting Technique').map((n) => n.body)).toEqual(['The month to make it up ran out, so On-Camera Acting Technique carries no credit, and the degree can’t be completed without it.']);
   }, 60_000);
 
   it('DEFECT: a student who has withdrawn with an Incomplete open is refused a month more in the School’s words, before its month runs out and after; nothing goes back on the calendar, and the Standing tab offers none', () => {
@@ -552,7 +552,7 @@ describe('school.request_repeat', () => {
     tend(sim, at(2027, 4, 30, 19));
     const why = '2 courses failed in Spring Term 2027: the Bulletin disqualifies a student with 2 Failures in a term.';
     expect(school.repeat).toMatchObject({ status: 'refused', why, decidedAt: at(2027, 4, 30, 18) });
-    expect(titled(sim, 'Your Repeat Is Refused').map((n) => n.body)).toEqual([`The chair and the dean refused it. ${why}`]);
+    expect(titled(sim, 'Your Repeat Isn’t Granted').map((n) => n.body)).toEqual([`The chair and the dean refused it. ${why}`]);
     expect(school.offset ?? 0).toBe(0);
     expect(school.classOf).toBe(2029);
     expect(school.repeatedYears).toBeUndefined();
@@ -579,7 +579,7 @@ describe('school.request_repeat', () => {
     expect(school.endedAt).toBe(at(2029, 5, 4, 18));
     // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
     expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual([`The chair and the dean refused your request to repeat the year. ${why} The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.`]);
-    expect(titled(sim, 'Your Repeat Is Refused')).toHaveLength(0);
+    expect(titled(sim, 'Your Repeat Isn’t Granted')).toHaveLength(0);
     expect(school.offset ?? 0).toBe(0);
     expect(f1Of(sim.player)!.expiresAt).toBe(l3().i20);
     expect(pendingOf(sim, TERM_KIND)).toHaveLength(0);
@@ -729,7 +729,7 @@ describe('school.request_conversion', () => {
     const sim = working(createSave(1, 'b09-new', made));
     expect(sim.player.family).toBe('wealthy');
     sickSaturday(sim);
-    const words = 'Conversion to grant aid is for students on financial aid, and no need was found for you.';
+    const words = 'Converting hours to grant aid is only for students on financial aid, and the aid office found no need for you.';
     const panel = drawn(sim, WorkLimitsBlock);
     expect(stat(panel.html, 'Hours Excused This Year')?.value).toBe('6');
     expect(stat(panel.html, 'Convertible To Grant Aid')).toEqual({ value: 'Not On Aid', note: undefined });

@@ -35,11 +35,11 @@ export interface AdjustmentDef {
 }
 
 export const ADJUSTMENTS: Readonly<Record<AdjustmentId, AdjustmentDef>> = {
-  'work-beat': { id: 'work-beat', label: 'Work It Slowly', words: 'Take the segment on its own, slowly, until it’s secure: its own rehearsal rises.', minutes: 30, feet: true, kind: 'work', answers: ['segment', 'turn', 'limit'] },
-  'run-into': { id: 'run-into', label: 'Run Into It From The One Before', words: 'Run the end of the segment before into this one, again and again, until the change between them is there.', minutes: 40, feet: true, kind: 'work', answers: ['turn', 'segment'] },
-  'beat-way': { id: 'beat-way', label: 'Play This Part Another Way', words: 'Pace, size or fix this segment its own way, where the whole is left open: it leans the segment and draws on other abilities.', minutes: 30, feet: true, kind: 'choice', answers: ['segment', 'limit', 'stamina'] },
+  'work-beat': { id: 'work-beat', label: 'Work It Slowly', words: 'Take this part on its own, slowly, until it’s secure: its own rehearsal rises.', minutes: 30, feet: true, kind: 'work', answers: ['segment', 'turn', 'limit'] },
+  'run-into': { id: 'run-into', label: 'Run Into It From The One Before', words: 'Run the end of the part before into this one, again and again, until the change between them is there.', minutes: 40, feet: true, kind: 'work', answers: ['turn', 'segment'] },
+  'beat-way': { id: 'beat-way', label: 'Play This Part Another Way', words: 'Pace, size or shape this part its own way, where the whole is left open: it shifts this part toward other abilities.', minutes: 30, feet: true, kind: 'choice', answers: ['segment', 'limit', 'stamina'] },
   breathe: { id: 'breathe', label: 'Find Places To Breathe', words: 'Find where the piece lets you rest and spend less early, so there’s more left at the end.', minutes: 45, feet: true, kind: 'choice', answers: ['stamina'] },
-  objective: { id: 'objective', label: 'Name What You Want In Each Part', words: 'At the desk: what you want in each segment, what’s in the way, and what changes it. The ground the reading stands on.', minutes: 30, feet: false, kind: 'work', answers: ['objective', 'limit', 'segment'] },
+  objective: { id: 'objective', label: 'Name What You Want In Each Part', words: 'At the desk: what you want in each part, what’s in the way, and what changes it. Your reading rests on it.', minutes: 30, feet: false, kind: 'work', answers: ['objective', 'limit', 'segment'] },
   'with-partner': { id: 'with-partner', label: 'Run It With Your Partner', words: 'Run it with whoever plays opposite you: they learn your timing and you theirs.', minutes: 45, feet: true, kind: 'work', answers: ['partner'] },
 };
 

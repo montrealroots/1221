@@ -59,10 +59,10 @@ export function creditRefusal(sim: Simulation, person: Person): string | undefin
   if (!livesInBritain(person)) return 'Universal Credit is for someone living in Britain.';
   const own = isoOfCountry(person.citizenshipId);
   // Settled, indefinite leave to remain lifts the condition of no recourse to public funds (from 2026-09-30).
-  if (own !== 'GB' && own !== 'IE' && !citizenOf(person, 'GB') && residenceIn(person, 'GB', sim.now)?.route !== 'uk-settled') return 'On a visa, Britain gives no recourse to public funds.';
+  if (own !== 'GB' && own !== 'IE' && !citizenOf(person, 'GB') && residenceIn(person, 'GB', sim.now)?.route !== 'uk-settled') return 'On a visa, you have no recourse to public funds in Britain, so you can’t claim it.';
   const age = (sim.now - person.birthInstant) / YEAR;
   if (age >= UNIVERSAL_CREDIT.pensionAge) return 'Past the state pension age, it’s Pension Credit, not Universal Credit.';
-  if (person.universalCredit && person.universalCredit.closedAt === undefined) return 'You have a claim open.';
+  if (person.universalCredit && person.universalCredit.closedAt === undefined) return 'You already have a claim open.';
   if (capitalOf(sim, person) > UNIVERSAL_CREDIT.capitalUpper * 100) return `Savings over £${UNIVERSAL_CREDIT.capitalUpper.toLocaleString('en-GB')} rule it out.`;
   return undefined;
 }

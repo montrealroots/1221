@@ -54,7 +54,7 @@ import { createSave, loadSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Personality, Wellbeing } from '@/engine/domain/model';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
-import { MS_DAY, MS_HOUR } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, formatDate } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { catching, healthOf } from '@/engine/systems/health';
 import { readiness, trainingAt } from '@/engine/systems/life';
@@ -253,16 +253,16 @@ describe('life.sleep', () => {
     const { id } = sim.must<{ id: string }>({ kind: 'calendar.schedule', payload: { title: 'Gym', at: NH(9, 30), durationMinutes: 60 } });
     // TEST SETUP: the bar with Sleep open (its first state), the slider at 8 hours (the dialog's own state).
     const { text, buttons } = bar(sim, [true, false, null, false, false, 8]);
-    expect(text).toContain('"Gym" is in 2.0 hours, and getting up and there takes an hour and a half, so a full night isn’t available.');
-    expect(text).toContain('You’d wake at 3:30 PM, August 24, 2026');
-    expect(text).toContain('You would sleep through 1 commitment: Gym — 9:30 AM');
+    expect(text).toContain('“Gym” is in 2 hours. Getting up and there takes an hour and a half, so there isn’t time for a full night.');
+    expect(text).toContain('You’d Wake At 3:30 PM, August 24, 2026');
+    expect(text).toContain('You’d sleep through one commitment: Gym — 9:30 AM');
     buttons.find((b) => b.text === 'Sleep 8 Hours')!.onClick!();
 
     expect(sim.now).toBe(NH(15, 30));
     expect(sim.player.lastSleptAt).toBe(NH(15, 30));
     // Missed, and quietly: the night says what it slept through, the plan's own handler doesn't say it again.
     expect(sim.timeline.get(id)!.status).toBe('missed');
-    expect(notices(sim, 'You Slept Through 1 Commitment').map((n) => n.body)).toEqual(['Gym']);
+    expect(notices(sim, 'You Slept Through 1 Commitment').map((n) => n.body)).toEqual(['You were asleep for Gym, so you missed it.']);
     expect(notices(sim, 'You Missed Gym')).toHaveLength(0);
 
     const again = reload(sim);
@@ -278,7 +278,7 @@ describe('life.sleep', () => {
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at: NH(9, 30), durationMinutes: 60 } });
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Lunch', at: NH(12), durationMinutes: 60 } });
     expect(sleep(sim, { hours: 8 }).ok).toBe(true);
-    expect(notices(sim, 'You Slept Through 2 Commitments').map((n) => n.body)).toEqual(['Gym, Lunch']);
+    expect(notices(sim, 'You Slept Through 2 Commitments').map((n) => n.body)).toEqual(['You were asleep for Gym and Lunch, so you missed them.']);
     expect(notices(sim, 'You Slept Through 1 Commitment')).toHaveLength(0);
   });
 
@@ -592,10 +592,10 @@ describe('life.look_after:exercise', () => {
     expect(days).toBeGreaterThanOrEqual(hurt.days[0]);
     expect(days).toBeLessThanOrEqual(hurt.days[1]);
     expect(notices(sim, hurt.label)).toHaveLength(1);
-    expect(notices(sim, hurt.label)[0]!.body.startsWith(`${days} days to mend`)).toBe(true);
+    expect(notices(sim, hurt.label)[0]!.body.startsWith(`It takes ${days} days to mend`)).toBe(true);
     // Yale Health pays a student's care in full: no bill, and the notice names no cost.
     expect(healthOf(sim.player).bills).toHaveLength(0);
-    expect(notices(sim, hurt.label)[0]!.body).not.toContain('Its care comes to');
+    expect(notices(sim, hurt.label)[0]!.body).not.toContain('Your share of its care');
 
     const words = `Not with ${hurt.label.toLowerCase()}; it has ${days} days yet to mend.`;
     Object.assign(sim.player.wellbeing, { energy: 90 }); // TEST SETUP: rested, so only the injury stands in the way
@@ -637,7 +637,7 @@ describe('life.look_after:exercise', () => {
     expect(bill.dueAt).toBe(sim.now + 30 * MS_DAY);
     expect(bill.amount).toBeGreaterThan(0);
     const dollars = `$${(bill.amount / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    expect(notices(sim, hurt.label)[0]!.body).toContain(`Its care comes to ${dollars}, due in 30 days.`);
+    expect(notices(sim, hurt.label)[0]!.body).toContain(`Your share of its care is ${dollars}, due on ${formatDate(bill.dueAt, sim.zone)}, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.`);
     expect(sim.universe.scheduled.filter((i) => i.label === `Medical Bill Due: ${hurt.bill}` && i.at === bill.dueAt)).toHaveLength(1);
     // Refused while it mends; reloaded, still one bill.
     expect(lookAfter(sim, 'exercise').error).toMatch(/^Not with /);
@@ -805,7 +805,7 @@ describe('calendar.schedule', () => {
     };
     const blank = form('');
     expect(blank.text).toContain('Put Something On August 24, 2026');
-    expect(blank.text).toContain('It will want you in New Haven, and the clock stops when it comes round.');
+    expect(blank.text).toContain('You’ll need to be in New Haven for it, and the clock stops when it comes round.');
     expect(blank.put.disabled).toBe(true);
     const named = form('Gym');
     expect(named.put.disabled).toBe(false);

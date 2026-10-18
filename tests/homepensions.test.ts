@@ -45,13 +45,13 @@ describe('Ireland’s State Pension', () => {
     sim.player.birthInstant = sim.now - 65.9 * YEAR;
     const born = new Date(sim.player.birthInstant).getUTCFullYear();
     for (let y = born + 30; y < born + 50; y += 1) recordWages(sim.player, Date.UTC(y, 6, 1), 'Europe/Dublin', { gross: inCur(30_000_00, 'EUR'), where: 'ie-lei-dublin' });
-    expect(irishPensionRefusal(sim, sim.player)).toMatch(/From 66/);
+    expect(irishPensionRefusal(sim, sim.player)).toMatch(/from 66/);
     sim.player.birthInstant = sim.now - 66.05 * YEAR;
     const r = sim.execute<{ weekly: number }>({ kind: 'pension.ie_state', payload: {} });
     expect(r.ok, r.error).toBe(true);
     // Twenty years, 1,040 contributions: half the full rate.
     expect(r.value!.weekly).toBe(inCur(Math.round(299_30 / 2), 'EUR'));
-    expect(irishPensionRefusal(sim, sim.player)).toBe('You’re drawing it.');
+    expect(irishPensionRefusal(sim, sim.player)).toBe('You’ve already claimed it.');
     sim.advanceBy(15 * MS_DAY);
     expect(sim.universe.transactions.filter((t) => t.memo === 'The State Pension (Contributory), the week').length).toBe(2);
   });
@@ -84,7 +84,7 @@ describe('the Pensión para el Bienestar', () => {
     const { sim } = at('mx-cmx-mexicocity', 'bien-who');
     sim.player.birthInstant = sim.now - 70 * YEAR;
     sim.player.citizenshipId = 'us';
-    expect(bienestarRefusal(sim, sim.player)).toMatch(/for Mexicans\./);
+    expect(bienestarRefusal(sim, sim.player)).toMatch(/only for Mexican citizens\./);
     const abroad = at('us-ny-newyork', 'bien-abroad').sim;
     abroad.player.citizenshipId = 'mx';
     abroad.player.birthInstant = abroad.now - 70 * YEAR;

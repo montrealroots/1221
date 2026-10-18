@@ -7,12 +7,8 @@
  * shipped in the first draft of the readiness sentence.
  */
 
-/** "a", "a and b", "a, b and c". No Oxford comma; the house does not use one. */
-export function spokenList(items: readonly string[]): string {
-  if (items.length === 0) return '';
-  if (items.length === 1) return items[0]!;
-  return `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
-}
+/** "a", "a and b", "a, b and c": the engine’s own, from 2026-10-17, so a sentence there joins a list the same way. */
+export { spokenList } from '@/engine/core/text';
 
 /** Agreement for a list that becomes the subject of a sentence. */
 export const isAre = (n: number): string => (n === 1 ? 'is' : 'are');

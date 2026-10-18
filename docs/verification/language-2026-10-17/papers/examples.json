@@ -1,0 +1,1100 @@
+[
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#PapersWorkspace",
+  "kind": "other",
+  "before": "Your returns, your health cover, unemployment, your pensions, your passport and your ID.",
+  "after": "Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work.",
+  "why": "Names all five tabs in the order the screen gives them; Permission To Work was missing.",
+  "meaningSensitive": false,
+  "verified": "text walk after-1440, Papers"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#StatePlanPanel",
+  "kind": "official",
+  "before": "Connecticut DRS’s own plan, apart from any with the IRS: up to $50,000.00, over 2 to 12 months, no fee. Collection stops while it stands; interest goes on. What a missed payment does isn’t published: SLATE ends the plan.",
+  "after": "This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It takes up to $50,000.00, paid over 2 to 12 months. There’s no fee. While the plan is in force, collection stops, but interest keeps adding up. What happens after a missed payment isn’t published. In the game, the plan ends.",
+  "why": "One thought a sentence; the game’s assumption said as the game’s, after the published rule.",
+  "meaningSensitive": true,
+  "verified": "tests/scope-taxpapers.test.ts, the walk’s tax save"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#StatePlanPanel",
+  "kind": "button",
+  "before": "Ask For The Plan",
+  "after": "Apply For The Plan",
+  "why": "One verb for one action: the IRS plan’s button is Apply, and the glossary’s word is apply.",
+  "meaningSensitive": false,
+  "verified": "tools/acceptance-ui.mjs step; tests/scope-taxpapers.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#StatePlanPanel",
+  "kind": "notification",
+  "before": "Asked: $48.78 a month, decided by February 1, 2028.",
+  "after": "Applied: $48.78 a month. Connecticut DRS decides by February 1, 2028.",
+  "why": "Says who decides; applying isn’t holding the plan.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-taxpapers.test.ts tax.apply_state_plan"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel",
+  "kind": "official",
+  "before": "The IRS takes what’s owed to it on every year in one plan: federal tax only, a state’s being the state’s, with a plan of its own. … The least monthly payment, what’s owed over 72 months, is SLATE’s.",
+  "after": "One IRS plan covers what you owe the IRS for every year. It’s for federal tax only: a state has its own plan for what you owe it. … The lowest monthly payment shown, what you owe spread over 72 months, is estimated.",
+  "why": "SLATE’s mid-sentence becomes the standard’s ‘estimated’; every figure still read from PLAN and RETURN.",
+  "meaningSensitive": true,
+  "verified": "text walk after-1440 tax save; tests/guide-examples-papers.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel",
+  "kind": "label",
+  "before": "Caught Up By",
+  "after": "Catch Up By",
+  "why": "A deadline, not a past event: the state plan’s label already said Catch Up By.",
+  "meaningSensitive": false,
+  "verified": "tools/acceptance-ui.mjs plan step"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#PLAN_STATUS",
+  "kind": "label",
+  "before": "With the IRS",
+  "after": "Being decided",
+  "why": "One status word for a pending plan, the IRS’s and a state’s alike.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g17-papers.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel",
+  "kind": "notification",
+  "before": "Applied: answered by February 1, 2027, a fee of $29.00.",
+  "after": "Applied. The IRS answers by February 1, 2027, and the setup fee is $29.00.",
+  "why": "Leads with what happened, names who answers and what the fee is for.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g17-papers.test.ts tax.apply_plan"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnLife",
+  "kind": "notification",
+  "before": "Paid: $165.60 to the tax, $23.28 to penalties, $0.00 to interest. $188.88 still owed.",
+  "after": "Paid the IRS: $165.60 to the tax, $23.28 to penalties and $0.00 to interest. You still owe $188.88.",
+  "why": "Names the payee (the state toast already did), and says the balance to the player.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g16-papers.test.ts tax.pay"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnLife",
+  "kind": "official",
+  "before": "The IRS filed this from what your employers and banks reported, $13,208.37 of tax with no credit only your own return claims. File your own and it reconsiders: …",
+  "after": "The IRS filed this return for you from what your employers and banks reported. It assessed $13,208.37 of tax, without the credits only your own return can claim. If you file your own, the IRS reconsiders: …",
+  "why": "Split into sentences; same figure and condition.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g17-papers.test.ts tax.substitute"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnLife",
+  "kind": "official",
+  "before": "A part goes to the tax first, then the penalties, then the interest, the IRS’s order where you name none; a lower tax lowers the months of penalty still to come.",
+  "after": "A partial payment goes to the tax first, then penalties, then interest, which is the IRS’s order when you don’t choose one. Paying down the tax also lowers the monthly penalty still to come.",
+  "why": "Plain order, plain consequence.",
+  "meaningSensitive": false,
+  "verified": "text walk after-1440 tax save"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#filedWords",
+  "kind": "notification",
+  "before": "Filed. The bank couldn’t pay all of it: what’s owed shows under Who It’s Owed To. A state’s refund comes on its own day, under Who It’s Owed To.",
+  "after": "Filed. Your bank couldn’t pay all of it. What you still owe is under Who It’s Owed To. A state refund comes on that state’s own schedule, under Who It’s Owed To.",
+  "why": "Variant with a balance owed and a state refund; the other variants (refund date, reconsidered, nothing either way) rewritten the same way.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g8-8.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnLife",
+  "kind": "label",
+  "before": "Comes Back To You",
+  "after": "Your Refund",
+  "why": "The common word for money due back.",
+  "meaningSensitive": false,
+  "verified": "text walk; tests/evidence-g16-papers.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnLife",
+  "kind": "official",
+  "before": "Each February, a year with anything owed or due back, or with income over the standard deduction, has its return ready, and a student on an F-1 has one every year. 2026’s is due April 15, 2027; with no wages on it, a 1040-NR is due June 15, 2027.",
+  "after": "Each February, last year’s return is ready here if you owe tax, are due a refund, or had income over the standard deduction. A student on an F-1 has one every year. The return for 2026 is due April 15, 2027, or June 15, 2027 for a 1040-NR with no wages on it.",
+  "why": "Same condition and both dates; the nonresident variant and the citizen’s (no June date) both checked.",
+  "meaningSensitive": true,
+  "verified": "tests/defects-g8-8.test.ts No Returns Yet; tests/evidence-g16-papers.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#HealthPane",
+  "kind": "official",
+  "before": "On a low month’s income, Medicaid (Medi-Cal in California, HUSKY D in Connecticut) takes you at 138% of the poverty line, … Short of it, a notice gives 30 days from its receipt to answer before an application is denied or cover ends, and an ending is said 10 days or more ahead, at a month’s end.",
+  "after": "Public cover depends on your income in a month. Medicaid (Medi-Cal in California, HUSKY D in Connecticut) covers you up to 138% of the poverty line. … If you don’t meet them, a notice gives you 30 days from when you receive it to answer before an application is denied or cover ends. An ending is announced at least 10 days ahead, at the end of a month.",
+  "why": "A 180-word sentence chain becomes short sentences; every percentage, day count and exception kept.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-health-eligibility.test.ts RULES_LINE"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#HealthPane",
+  "kind": "official",
+  "before": "A notice of noncompliance of January 4, 2027: HUSKY D couldn’t find the work rules met in December 2026. Answer by February 7, 2027; the application is decided on February 8, 2027.",
+  "after": "A notice of noncompliance dated January 4, 2027: HUSKY D couldn’t find that you met the work rules in December 2026. Answer by February 7, 2027. The application is decided on February 8, 2027.",
+  "why": "Both variants, an application and a renewal (You’re covered until it’s decided), kept apart.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-health-eligibility.test.ts, tests/remaining-09-hardship.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#YourDoctor",
+  "kind": "notification",
+  "before": "Your doctor, chosen.",
+  "after": "Fair Haven Community Health Care is now your doctor.",
+  "why": "A fragment becomes a sentence that names the choice.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g03-life.test.ts, tests/scope-health.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#YourDoctor",
+  "kind": "label",
+  "before": "As Your Cover Has It",
+  "after": "The Practice Your Cover Uses",
+  "why": "Says what the empty choice means.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b01.test.ts, tests/scope-health.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#BenefitsPane",
+  "kind": "notification",
+  "before": "Filed: $93.00 a week.",
+  "after": "Claim filed: $93.00 a week.",
+  "why": "Says what was filed.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g15-papers.test.ts benefits.claim"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#BenefitsPane",
+  "kind": "empty",
+  "before": "SLATE pays unemployment in New York, California and Connecticut, where you’d have to live.",
+  "after": "Unemployment is paid in the game only in New York, California and Connecticut, and you’d have to live in one of them.",
+  "why": "No SLATE inside a sentence.",
+  "meaningSensitive": false,
+  "verified": "read in the code; the branch needs a life outside the three states, which a New Haven life never is"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#EiPanel",
+  "kind": "label",
+  "before": "Premiums would come from self-employed earnings, of which there are none since the career went: 1.64% to $1,077.48 a year",
+  "after": "Premiums are 1.64% of self-employed earnings, up to $1,077.48 a year. You have no self-employed earnings in the game, so none are charged",
+  "why": "No internal history (the career that went) shown to the player.",
+  "meaningSensitive": false,
+  "verified": "read in the code; EI shows only for a life in Canada"
+ },
+ {
+  "source": "src/ui/components/LienPanels.tsx#LienFacts",
+  "kind": "official",
+  "before": "Connecticut Tax Lien · Paid: Release To Come. Filed as its collection reached that step. It secured {…}, recorded with the town clerk’s land records and the Secretary of the State’s UCC filings on {…}.",
+  "after": "Connecticut Tax Lien · Paid: Release To Come. It was filed for {…} when collection reached that stage, and recorded in the town clerk’s land records and the Secretary of the State’s UCC filings on {…}.",
+  "why": "Plain verbs; the amount is the one on record when filed.",
+  "meaningSensitive": false,
+  "verified": "tools/acceptance-ui.mjs lien step; tests/scope-taxpapers.test.ts"
+ },
+ {
+  "source": "src/ui/components/LienPanels.tsx#StateLienAndPenalty",
+  "kind": "official",
+  "before": "{…} added on {…}: {…}% of the year’s tax, with no Oregon return for three years running (ORS 305.992), the year’s penalties held to its tax. Its waiver, asked now, would be {…}% by its schedule.",
+  "after": "{…} was added on {…}: a penalty of {…}% of the year’s tax, because no Oregon return was filed for three years in a row (ORS 305.992). The year’s penalties are capped at its tax. If you ask for a waiver now, its schedule waives {…}%.",
+  "why": "Reason and cap said plainly.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-tax.test.ts tax.request_waiver"
+ },
+ {
+  "source": "src/ui/papers/Documents.tsx#DocumentList",
+  "kind": "confirmation",
+  "before": "Reported stolen, it’s canceled for good, even if it turns up, with any visa or authorization issued on it (the F-1 status holds).",
+  "after": "If you report it stolen, it’s canceled for good, even if it turns up, along with any visa or travel authorization issued on it. An F-1 status you hold continues.",
+  "why": "A confirmation says what pressing will do, before it’s done.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g15-papers.test.ts, tests/evidence2-b05.test.ts"
+ },
+ {
+  "source": "src/ui/papers/Documents.tsx#DocumentList",
+  "kind": "error",
+  "before": "Nothing in SLATE renews a license since the cars went: a passport or an ID card in force is your photo ID, under Your Passport and Your ID.",
+  "after": "A driving license can’t be renewed in the game. A passport or ID card in force is your photo ID: see Your Passport and Your ID.",
+  "why": "No internal history; the next step named by its panels.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-09-journeys.test.ts journeys.x4"
+ },
+ {
+  "source": "src/ui/papers/Documents.tsx#WorkPane",
+  "kind": "label",
+  "before": "Since October 20, 2026; the Visa Waiver Program is closed to you",
+  "after": "Since October 20, 2026. In the game, the Visa Waiver Program is now closed to you",
+  "why": "Said as the game’s rule, not as settled law (brief 13’s J16 limitation).",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g16-papers.test.ts documents.us_status"
+ },
+ {
+  "source": "src/ui/papers/Documents.tsx#PassportPane",
+  "kind": "notification",
+  "before": "Applied, for $165.00. It comes by October 5, 2026.",
+  "after": "Applied and paid $165.00. It should arrive by October 5, 2026.",
+  "why": "Applying isn’t holding: ‘should arrive’ for a decision still to come.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-papers.test.ts tax.s8.passport"
+ },
+ {
+  "source": "src/ui/papers/Documents.tsx#IdPanel",
+  "kind": "notification",
+  "before": "Non-Driver Identification Card, for $28.00; the card comes September 22, 2026; good until June 14, 2034.",
+  "after": "Non-Driver Identification Card: you paid $28.00. The card comes September 22, 2026. It’s good until June 14, 2034.",
+  "why": "Three facts, three sentences; the handed-over variant (no ‘comes’ date) reads the same without it.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g15-papers.test.ts documents.apply_idcard; tools/acceptance-ui.mjs"
+ },
+ {
+  "source": "src/ui/looks/papers.tsx#KIND_WORD",
+  "kind": "label",
+  "before": "Leave To Enter",
+  "after": "Permission To Enter",
+  "why": "‘Leave to enter’ is a British legal term; the eyebrow says the plain thing. Kept apart from each document’s own name (tests/looks.test.ts).",
+  "meaningSensitive": false,
+  "verified": "tests/looks.test.ts never puts the kind inside the name"
+ },
+ {
+  "source": "src/ui/looks/papers.tsx#whatItDoes",
+  "kind": "other",
+  "before": "It’s the passport in force in your name. Of the {…} countries SLATE has entry rules for, {…} would let you in on it today for a week’s visit; nothing in SLATE travels since 2026-10-09.",
+  "after": "It’s the passport in force in your name. Of the {…} countries the game has entry rules for, {…} would let you in on it today for a week’s visit. Travel isn’t part of the game, so this is for reference.",
+  "why": "No internal date; says why the count is for reference.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g25-1.test.ts"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#COLLECTION [CP501]",
+  "kind": "notification",
+  "before": "Notice CP501: $1,728.81 on your 2027 return; you still owe it, with the interest and penalty since.",
+  "after": "Notice CP501: you owe $1,728.81 on your 2027 return. It’s still unpaid, and interest and the late-payment penalty keep adding up. Pay it on Papers, under Tax Returns, or apply for a payment plan there.",
+  "why": "What happened, what it means, the next step.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-tax.test.ts tax.early_filing_notices"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#COLLECTION [LT11]",
+  "kind": "notification",
+  "before": "Notice LT11: $1,789.55 on your 2027 return; in 30 days it takes what you owe from your bank accounts.",
+  "after": "Notice LT11: you owe $1,789.55 on your 2027 return. In 30 days the IRS takes what you owe from your bank accounts. Paying it, or a payment plan, stops the levy.",
+  "why": "The way out is the game’s: a plan being decided or in force stops the IRS’s notices and levy (the TAX_NOTICE_KIND handler).",
+  "meaningSensitive": true,
+  "verified": "tests/scope-taxpapers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#billed",
+  "kind": "notification",
+  "before": "Notice CP14: your 2027 return shows $1,700.39 owed to the IRS, due by April 18, 2028. Paid by then, nothing is added; from then, interest at 7% a year and a penalty for paying late of 0.5% a month run on what’s unpaid, and its reminders begin 5 weeks after that date.",
+  "after": "Notice CP14: your 2027 return shows $1,700.39 owed to the IRS, due by April 18, 2028. If you pay by then, nothing is added. After that, interest at 7% a year and a penalty for paying late of 0.5% a month are added to what’s unpaid, and the IRS’s reminders begin 5 weeks after the due date. Pay it on Papers, under Tax Returns.",
+  "why": "Filed-early variant; the filed-late variant (with penalties already charged) rewritten alike.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-tax.test.ts"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#registerTaxReturn",
+  "kind": "notification",
+  "before": "Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least $535.00. New York charges its own on what it’s owed.",
+  "after": "Each month it’s late adds 5% of what you owe the IRS, up to a quarter of it, and after 60 days the penalty is at least $535.00. New York charges its own penalty on what you owe it. File it on Papers, under Tax Returns.",
+  "why": "Variants: one state, two states, none; the IRS owed nothing; a refund waiting; nothing either way. The 5% and the 60 days now read from RETURN.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g17-papers.test.ts, tests/evidence2-b06.test.ts"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#registerTaxReturn",
+  "kind": "notification",
+  "before": "With no tax owed on it and no refund due, there’s no penalty; it’s still yours to file.",
+  "after": "With no tax owed and no refund due, there’s no penalty, but you still need to file it.",
+  "why": "The zero-balance variant.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g16-papers.test.ts tax.season"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#registerTaxReturn",
+  "kind": "notification",
+  "before": "$500.00 taken from your bank accounts for your 2026 return; $18,499.88 is still owed, and it levies again while it is.",
+  "after": "The IRS took $500.00 from your bank accounts for your 2026 return. You still owe $18,499.88, and it will levy again while you do.",
+  "why": "A subject first; the paid-off variant says ‘That pays it in full.’",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g17-papers.test.ts tax.notice"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#federalLienStep",
+  "kind": "notification",
+  "before": "Letter 3172: a notice of federal tax lien for $… on your 2026 return, filed with the county recorder where you live. You have 30 days to ask for a Collection Due Process hearing. …",
+  "after": "Letter 3172: the IRS filed a notice of federal tax lien for $… on your 2026 return, with the county recorder’s office where you live. The letter gives you 30 days to ask for a Collection Due Process hearing, which the game doesn’t offer. …",
+  "why": "It no longer offers a hearing the game has no way to ask for.",
+  "meaningSensitive": true,
+  "verified": "tests/liens-and-arrangements.test.ts the IRS’s notice of federal tax lien"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#federalLienWithdrawRefusal",
+  "kind": "error",
+  "before": "A withdrawal after payment comes once it’s released, within 30 days of payment in full; one filed in error can be withdrawn now.",
+  "after": "You can ask for a withdrawal once the lien is released, which happens within 30 days of paying in full. Only a lien filed in error can be withdrawn sooner, and this one wasn’t.",
+  "why": "The 30 days now read from FEDERAL_LIEN.releaseDays; says why this lien waits.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-09-coverage.test.ts"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#planRefusal",
+  "kind": "error",
+  "before": "A Simple Payment Plan is for $50,000 or less; more needs a financial statement SLATE doesn’t model.",
+  "after": "A Simple Payment Plan is for $50,000 or less. A larger balance needs a financial statement, which the game doesn’t offer.",
+  "why": "Says the limit and that the longer route isn’t in the game, not that SLATE doesn’t model it.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-tax.test.ts tax.other_refusals"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.pay>",
+  "kind": "error",
+  "before": "$100.00 is more than the bank can cover.",
+  "after": "Your bank can’t cover $100.00. Nothing was paid.",
+  "why": "The obstacle and what happened to the money (payFromBank failed, so nothing posted).",
+  "meaningSensitive": true,
+  "verified": "tests/scope-taxpapers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#registerTaxReturn",
+  "kind": "notification",
+  "before": "Form 8843, which every F-1 student files; no income to report. Nothing owed or due back on $0.00 of income. File by June 15, 2027.",
+  "after": "Form 8843, which every F-1 student files. There’s no income to report. Nothing is owed or due back, on $0.00 of income. File it by June 15, 2027.",
+  "why": "The decision’s detail; the owe and refund variants rewritten alike.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g16-papers.test.ts tax.season"
+ },
+ {
+  "source": "src/engine/systems/statetax.ts#missStatePlan",
+  "kind": "notification",
+  "before": "The bank couldn’t pay {…}. Collection resumes on what’s owed to it.",
+  "after": "Your bank couldn’t pay the plan’s {…}. Connecticut DRS doesn’t publish what happens after a missed payment, so in the game the plan ends. Collection resumes on what you owe it.",
+  "why": "The game’s rule said as the game’s, beside the unpublished state rule.",
+  "meaningSensitive": true,
+  "verified": "tests/scope-taxpapers.test.ts tax.apply_state_plan (history line)"
+ },
+ {
+  "source": "src/engine/systems/statetax.ts#statePlanRefusal",
+  "kind": "error",
+  "before": "Connecticut DRS won’t set up a plan on an account it has levied: pay it, or ask by phone, which SLATE doesn’t model.",
+  "after": "Connecticut DRS won’t set up a plan on an account it has levied. Pay the balance instead. It also takes requests by phone, which the game doesn’t offer.",
+  "why": "The next real step first; the phone route said to be outside the game.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-taxpapers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/statetax.ts#registerStateTax",
+  "kind": "notification",
+  "before": "DRS Bill: $649.71 on your 2027 Connecticut return; the tax, its 10% penalty and 1% a month of interest are due.",
+  "after": "DRS Bill: you owe $649.71 on your 2027 Connecticut return. The tax, its 10% penalty and 1% a month of interest are due. You can pay it on Papers, under Tax Returns.",
+  "why": "The state’s own words now open a sentence (capitalized in assembly), and the next step follows.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-tax.test.ts, tests/scope-taxpapers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/statetax.ts#lienReleaseWords",
+  "kind": "official",
+  "before": "It’s released once it’s paid, on request: DRS issues a release certificate on request, for you to record.",
+  "after": "It’s released once it’s paid and you ask: DRS issues a release certificate on request, for you to record.",
+  "why": "Drops the doubled ‘on request’.",
+  "meaningSensitive": false,
+  "verified": "text walk after-1440 lien save"
+ },
+ {
+  "source": "src/engine/systems/statetax.ts#orderWords",
+  "kind": "official",
+  "before": "New York DTF doesn’t publish the order a part goes in: SLATE puts it to the tax, then the penalty, then the interest.",
+  "after": "New York DTF doesn’t publish the order a partial payment goes in, so in the game it goes to the tax, then the penalty, then the interest.",
+  "why": "The game’s choice said as the game’s.",
+  "meaningSensitive": true,
+  "verified": "read in the code for its two variants; New York’s shows on a New York life only"
+ },
+ {
+  "source": "src/engine/content/statetax.ts#STATE_TAX [Notice Of Proposed Assessment]",
+  "kind": "official",
+  "before": "45 days to pay or appeal.",
+  "after": "you have 45 days to pay or appeal.",
+  "why": "A fragment the notice printed after a semicolon becomes a sentence once assembly capitalizes it.",
+  "meaningSensitive": false,
+  "verified": "read in the code; Georgia’s notice reaches only a Georgia life"
+ },
+ {
+  "source": "src/engine/content/statetax.ts#STATE_UNRESEARCHED",
+  "kind": "official",
+  "before": "SLATE hasn’t researched this state’s collection: the balance is kept with no penalty, interest, notice or plan added, rather than the IRS’s rules copied over.",
+  "after": "This state’s collection rules haven’t been researched for the game, so the balance is kept with no penalty, interest, notice or plan added.",
+  "why": "Says what the player sees; the design note stays in the comment.",
+  "meaningSensitive": true,
+  "verified": "read in the code; reached by New Jersey, Michigan or Utah, which no New Haven life owes"
+ },
+ {
+  "source": "src/engine/content/tax.ts#INCOME_TAX_RULES [flat]",
+  "kind": "official",
+  "before": "Philadelphia Department of Revenue: 3.74% to June 2026, 3.735% from July; the year’s mean, SLATE’s reading.",
+  "after": "Philadelphia Department of Revenue: 3.74% to June 2026, 3.735% from July; the game uses the year’s average.",
+  "why": "No SLATE mid-sentence.",
+  "meaningSensitive": false,
+  "verified": "read in the code"
+ },
+ {
+  "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.return]",
+  "kind": "tutorial",
+  "before": "Each February 1 the year before gets a return on Papers where it owes or is owed anything, or its income reached the standard deduction (every year, on an F-1), worked out line by line from what you earned, what was withheld and where you lived. File It settles it: …",
+  "after": "Your tax return settles a year’s income tax with the IRS and your state. The game prepares it for you each February 1 from what you earned, what was withheld and where you lived, and you file it with one button. …",
+  "why": "Leads with what it’s for; the steps follow.",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-papers.test.ts taxes.return"
+ },
+ {
+  "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.return]",
+  "kind": "tutorial",
+  "before": "(none: the entry had no next step)",
+  "after": "If the panel shows a balance still owed, pay it or set up a plan: see Paying Tax Owed and Payment Plans And Waivers.",
+  "why": "The brief’s seventh question, the new next field.",
+  "meaningSensitive": false,
+  "verified": "read against the entry titles in the guide"
+ },
+ {
+  "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.plan]",
+  "kind": "tutorial",
+  "before": "For a state, on its own panel, such as Connecticut DRS Installment Agreement, choose the months under Over and press Ask For The Plan.",
+  "after": "For a state, use its own panel, such as Connecticut DRS Installment Agreement: choose the months under Pay Over and press Apply For The Plan.",
+  "why": "The screen’s new labels.",
+  "meaningSensitive": false,
+  "verified": "text walk after-1440 tax save: Pay Over, Apply For The Plan"
+ },
+ {
+  "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.plan]",
+  "kind": "tutorial",
+  "before": "Connecticut ends its plan at the first missed payment, SLATE’s reading since DRS publishes no rule, …",
+  "after": "Connecticut ends its plan at the first missed payment. DRS publishes no rule for this, so that part is the game’s. …",
+  "why": "The game’s rule apart from the state’s.",
+  "meaningSensitive": true,
+  "verified": "read against missStatePlan"
+ },
+ {
+  "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.lien]",
+  "kind": "tutorial",
+  "before": "SLATE’s credit record and banks read no lien, so its standing is all that changes.",
+  "after": "In the game, no credit record or bank reads a lien, so its status is all that changes.",
+  "why": "Status is the screen’s column word now.",
+  "meaningSensitive": false,
+  "verified": "read against LienPanels and the credit code"
+ },
+ {
+  "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.pay]",
+  "kind": "tutorial",
+  "before": "A state whose notes read “None added: unresearched” keeps its balance with no penalty or interest, since SLATE hasn’t researched its collection.",
+  "after": "A state whose notes read “None added: this state’s rules aren’t researched” keeps its balance with no penalty or interest, because its collection rules aren’t in the game.",
+  "why": "Quotes the screen’s new words.",
+  "meaningSensitive": false,
+  "verified": "read against PapersWorkspace WhoIsOwed"
+ },
+ {
+  "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.return]",
+  "kind": "tutorial",
+  "before": "Press File It, on the panel or on the year’s question in What Needs You. Where the IRS has filed one for you, the button reads File Your Own In Its Place.",
+  "after": "Press File It, on the panel or on the year’s item in What Needs You. If the IRS has filed one for you, the button reads File Your Own In Its Place.",
+  "why": "Plainer connective; labels unchanged.",
+  "meaningSensitive": false,
+  "verified": "text walk: File It, File Your Own In Its Place"
+ },
+ {
+  "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.plan]",
+  "kind": "tutorial",
+  "before": "“The least a month is …, what’s owed over 72 months.”",
+  "after": "“The lowest monthly payment is …: what you owe, spread over 72 months.”",
+  "why": "Quotes the refusal’s new words.",
+  "meaningSensitive": false,
+  "verified": "tests/guide.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.lien]",
+  "kind": "tutorial",
+  "before": "A withdrawal is decided on its date and the lien reads Withdrawn; the IRS’s notice says it’s as if it had never been filed, …",
+  "after": "A withdrawal is decided on its date, and the lien reads Withdrawn. The IRS’s notice says a withdrawn notice is treated as if it had never been filed, …",
+  "why": "Matches the notice’s new, attributed wording.",
+  "meaningSensitive": true,
+  "verified": "read against registerFederalLien"
+ },
+ {
+  "source": "src/engine/systems/permission.ts#registerPermission",
+  "kind": "notification",
+  "before": "You stayed in the United States past your status. Your US visa is void, and the Visa Waiver Program is closed to you for good.",
+  "after": "You stayed in the United States past the end of your status, so you’re now out of status. In the game, your US visa is canceled and the Visa Waiver Program is closed to you from now on.",
+  "why": "Brief 13’s J16 limitation: for an F-1 student, 222(g) voidance generally follows a finding of a status violation. The words now say what the game does (it cancels the F-1 document and keeps the Waiver closed), as the game’s rule, without asserting the law.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-09-journeys.test.ts, tests/evidence-g16-papers.test.ts documents.us_status"
+ },
+ {
+  "source": "src/engine/systems/permission.ts#registerPermission",
+  "kind": "notification",
+  "before": "Your permission to work in the United States has ended, and your status ends May 31, 2027. OPT can still be applied for before then. After it, you’re out of status: no work can be had here, a US visa you hold is void, and the Visa Waiver Program is closed to you for good.",
+  "after": "Your permission to work in the United States has ended, and your status ends May 31, 2027. You can still apply for OPT before then. If you’re still here after that, you’ll be out of status. In the game, that means you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you from then on.",
+  "why": "The same legal-certainty change, said before it happens; the no-OPT variant drops the second sentence.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g33-ui.test.ts, tests/remaining-09-journeys.test.ts"
+ },
+ {
+  "source": "src/engine/systems/permission.ts#registerPermission",
+  "kind": "notification",
+  "before": "You may work in the United States from August 30, 2029 to August 30, 2030, with no more than 90 days between jobs in all.",
+  "after": "You may work in the United States from August 30, 2029 to August 30, 2030, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.",
+  "why": "Says what approval means in this game, where OPT ends on its ninety-first day without work.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g26-school.test.ts, tests/scope-taxpapers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/permission.ts#optRefusal",
+  "kind": "error",
+  "before": "It opens {…}, 90 days before the program ends.",
+  "after": "You can apply from {…}, 90 days before your program ends.",
+  "why": "The date as the next step.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g16-papers.test.ts documents.permission"
+ },
+ {
+  "source": "src/engine/systems/documents.ts#mayEnter",
+  "kind": "other",
+  "before": "A passport in force: you have none. Apply to the United States for one.",
+  "after": "You need a passport in force, and you don’t have one. Apply for one under Your Passport.",
+  "why": "Sends the player to the panel that applies.",
+  "meaningSensitive": false,
+  "verified": "text walk after-1440, Passport And ID, Going Abroad"
+ },
+ {
+  "source": "src/engine/systems/documents.ts#mayEnter",
+  "kind": "other",
+  "before": "ETA (Electronic Travel Authority, subclass 601), which Australia asks of citizens of the United States: A$20.00, applied for online, good for 1 year or until the passport runs out.",
+  "after": "Australia asks citizens of the United States for ETA (Electronic Travel Authority, subclass 601): A$20.00, applied for online, and good for 1 year or until the passport runs out.",
+  "why": "Subject first; ‘the United Kingdom’ keeps its article through theCountry.",
+  "meaningSensitive": false,
+  "verified": "text walk after-1440 Going Abroad"
+ },
+ {
+  "source": "src/engine/systems/documents.ts#policeReportRefusal",
+  "kind": "error",
+  "before": "A theft is reported at a station here.",
+  "after": "Here a theft is reported in person at a police station, not online.",
+  "why": "Says why File A Police Report, online, can’t do it.",
+  "meaningSensitive": false,
+  "verified": "read in the code; no New Haven life reaches it, since New Haven’s police take reports online"
+ },
+ {
+  "source": "src/engine/systems/documents.ts#mayDrive",
+  "kind": "error",
+  "before": "You don’t hold a motorcycle license in force: earn one on the Papers screen.",
+  "after": "You don’t hold a motorcycle license in force.",
+  "why": "Promised a step the game no longer has.",
+  "meaningSensitive": true,
+  "verified": "read in the code; the document page asks only for a car"
+ },
+ {
+  "source": "src/engine/systems/identity.ts#noncitizenTermNote",
+  "kind": "official",
+  "before": "You’re not a US citizen, so your card runs to the end of your lawful presence: the program’s end at school, OPT’s end on OPT. That’s SLATE’s assumption, not the state’s published policy: the state publishes no term for a card it doesn’t verify. A card already issued keeps its date if that’s ever corrected.",
+  "after": "You’re not a US citizen, so your card runs to the end of your lawful presence: your program’s end while you’re at school, or your OPT’s end while you’re on OPT. The state publishes no term for a card it doesn’t verify, so this term is assumed. A card already issued keeps its date if the assumption is ever corrected.",
+  "why": "Published fact first, then the assumption, said as one.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-papers.test.ts tax.s8.idcard, its term"
+ },
+ {
+  "source": "src/engine/systems/identity.ts#licenseReplaceRefusal",
+  "kind": "error",
+  "before": "It runs out on October 1, 2026, before a new card would come, and a replacement keeps its date: a license past it is renewed, and SLATE renews none since the cars went.",
+  "after": "It runs out on October 1, 2026, before a new card would come, and a replacement keeps the same date. A license past its date has to be renewed instead, and driving licenses can’t be renewed in the game.",
+  "why": "No internal history; the two facts as two sentences.",
+  "meaningSensitive": false,
+  "verified": "tests/idreplace.test.ts"
+ },
+ {
+  "source": "src/engine/systems/residence.ts#MEXICO_UNREAD",
+  "kind": "error",
+  "before": "Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.",
+  "after": "Moving abroad isn’t part of the game, so it grants none of Mexico’s papers.",
+  "why": "No date of a design change, no ‘nothing would read it’.",
+  "meaningSensitive": false,
+  "verified": "tests/residence.test.ts, tests/commands-kept.test.ts, tests/guide-examples-papers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/taxid.ts#ssnRefusal",
+  "kind": "error",
+  "before": "On an F-1, the number needs on-campus work begun or starting within 30 days: register first, and the School’s work-study is yours.",
+  "after": "On an F-1, the number needs on-campus work that has begun or starts within 30 days. Register at the School first, and the School’s work-study is yours.",
+  "why": "Names where to register.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g17-papers.test.ts documents.apply_ssn"
+ },
+ {
+  "source": "src/engine/content/visas.ts#VISAS",
+  "kind": "official",
+  "before": "US$10 from 5 February 2026, for a stay under 180 days, flying in (Deloitte and the press, read secondhand); SLATE’s three days to decide.",
+  "after": "US$10 from 5 February 2026, for a stay under 180 days, flying in (Deloitte and the press, read secondhand); three days to decide (estimated).",
+  "why": "Estimated, not SLATE’s.",
+  "meaningSensitive": false,
+  "verified": "read in the code"
+ },
+ {
+  "source": "src/engine/content/guide/documents.ts#DOCUMENTS [documents.passport-id]",
+  "kind": "tutorial",
+  "before": "Passport And ID holds the papers that prove who you are: … A paper lost or stolen is reported here, a license or an ID card is replaced here, and each paper opens when you press its name.",
+  "after": "Passport And ID holds the papers that prove who you are: … Applying for a paper isn’t the same as holding it: it counts only once it’s issued and arrives. You also report a lost or stolen paper here, and replace a license or ID card.",
+  "why": "The brief’s named distinction, applying versus holding.",
+  "meaningSensitive": true,
+  "verified": "tests/guide-examples-papers.test.ts documents.passport-id"
+ },
+ {
+  "source": "src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]",
+  "kind": "tutorial",
+  "before": "Stay past it and you’re out of status: the F-1 is void, a marketplace plan ends with the month, Covered Connecticut and the DMV’s ID card are closed to you, and so is the Visa Waiver Program, for good.",
+  "after": "If you stay past it, you’re out of status. In the game, that cancels your F-1 visa, ends a marketplace plan at the end of the month, closes Covered Connecticut and the DMV’s ID card to you, and closes the Visa Waiver Program to you from then on.",
+  "why": "The legal-certainty change in the tutorial too.",
+  "meaningSensitive": true,
+  "verified": "read against permission.ts and health.ts lawfullyPresent"
+ },
+ {
+  "source": "src/engine/content/guide/documents.ts#DOCUMENTS [documents.residence]",
+  "kind": "tutorial",
+  "before": "Mexico’s row says its rule, savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, and that SLATE grants none, living there having gone with moving. …",
+  "after": "Mexico’s row gives its rule, savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, and says the game grants none of its papers, because moving abroad isn’t part of the game. …",
+  "why": "The example says what the row says.",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-papers.test.ts documents.residence"
+ },
+ {
+  "source": "src/engine/systems/unemployment.ts#studentUnavailable",
+  "kind": "error",
+  "before": "Connecticut takes a full-time student as not available for work (CGS 31-235(b)): a claim pays once you’ve left school.",
+  "after": "Connecticut treats a full-time student as not available for work (CGS 31-235(b)), so a claim pays only once you’ve left school.",
+  "why": "One sentence with its reason.",
+  "meaningSensitive": false,
+  "verified": "text walk after-1440 Unemployment; tests/evidence-g15-papers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/assistance.ts#assistanceRefusal",
+  "kind": "error",
+  "before": "SNAP is kept for a citizen; a non-citizen’s eligibility turns on status SLATE doesn’t keep.",
+  "after": "In the game, SNAP is only for US citizens, because a noncitizen’s eligibility depends on immigration details the game doesn’t track.",
+  "why": "The game’s limit said as the game’s.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g15-papers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/assistance.ts#registerAssistance",
+  "kind": "notification",
+  "before": "Three months in three years without 80 hours of work a month: SNAP pays no more until an exemption applies, as study at least half-time or an unemployment claim does.",
+  "after": "You’ve had three months of SNAP in three years without 80 hours of work a month, so SNAP pays nothing more until an exemption applies, such as studying at least half-time or having an unemployment claim open.",
+  "why": "A clear subject; the exemptions named as the player’s.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b06.test.ts"
+ },
+ {
+  "source": "src/engine/systems/socialsecurity.ts#socialSecurityRefusal",
+  "kind": "label",
+  "before": "From 62; full at 67, and more if you wait to 70.",
+  "after": "You can claim it from 62. It’s full at 67, and more if you wait until 70.",
+  "why": "Says what the player can do.",
+  "meaningSensitive": false,
+  "verified": "text walk after-1440 Unemployment, Social Security"
+ },
+ {
+  "source": "src/engine/systems/homepensions.ts#bienestarRefusal",
+  "kind": "error",
+  "before": "It’s for Mexicans living in Mexico.",
+  "after": "It’s only for Mexican citizens living in Mexico.",
+  "why": "Citizens, not ‘Mexicans’.",
+  "meaningSensitive": false,
+  "verified": "tests/commands-kept.test.ts"
+ },
+ {
+  "source": "src/engine/systems/abroad.ts#cardAbroadRefusal",
+  "kind": "error",
+  "before": "SLATE has no research on what {…} charges for a purchase in dollars on its card, so it can’t be your everyday card here.",
+  "after": "What {…} charges for a purchase in dollars on its card isn’t known to the game, so it can’t be your everyday card here.",
+  "why": "No ‘SLATE has no research’.",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-transfers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/abroad.ts#foreignAccountsNotice",
+  "kind": "official",
+  "before": "… (the highest each held at a day’s end, at SLATE’s rate) … SLATE doesn’t file either form for you or charge the penalties for not filing one, and it converts at its own rate, not Treasury’s for the year’s end.",
+  "after": "… (the highest each held at a day’s end, at the game’s exchange rate) … The game doesn’t file either form for you or charge the penalties for not filing one. It also converts at its own exchange rate, not the Treasury’s rate for the year’s end.",
+  "why": "What the game doesn’t do, said plainly and apart from the FBAR rule.",
+  "meaningSensitive": true,
+  "verified": "tests/home-account-tax.test.ts"
+ },
+ {
+  "source": "src/engine/systems/papervisits.ts#VISITS",
+  "kind": "notification",
+  "before": "You didn’t give your biometrics within the 30 days of IRCC’s letter, so the application is refused.",
+  "after": "You didn’t give your biometrics within the 30 days of IRCC’s letter, so IRCC refuses the application.",
+  "why": "Names who refuses.",
+  "meaningSensitive": false,
+  "verified": "read in the code; Canada’s visit isn’t reached by a New Haven life"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.overview]",
+  "kind": "tutorial",
+  "before": "Papers is where your life’s forms are kept: each year’s tax return, the health cover you hold and the care it bills, …",
+  "after": "Papers is where your official paperwork lives: each year’s tax return, your health cover and the bills for your care, …",
+  "why": "Says what the screen is in the player’s words; “the care it bills” had the cover billing the care.",
+  "meaningSensitive": false,
+  "verified": "tests/guide.test.ts; text walk after-1440, Papers"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.overview]",
+  "kind": "tutorial",
+  "before": "The tab is kept in memory, not in your save.",
+  "after": "The tab is remembered on screen, not in your save.",
+  "why": "“Kept in memory” is the program’s view; the player sees the screen remember it.",
+  "meaningSensitive": false,
+  "verified": "tests/guide.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.overview]",
+  "kind": "tutorial",
+  "before": "(no next field)",
+  "after": "next: Start with whatever the Papers line on Home flags: a return due, tax owed, or no health cover. / Each tab’s panels have their own How This Works, which explains that part in detail.",
+  "why": "The brief’s new question: what to do next.",
+  "meaningSensitive": false,
+  "verified": "tests/guide.test.ts, every entry’s fields"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "Apply For HUSKY D: … You aren’t covered by it yet; the marketplace still sells to you.",
+  "after": "Apply For HUSKY D: … Applying isn’t being covered: you aren’t covered by HUSKY D yet, and you can still buy a marketplace plan.",
+  "why": "Keeps applying apart from holding, as the brief asks for official status.",
+  "meaningSensitive": true,
+  "verified": "tests/guide.test.ts; tests/remaining-health-eligibility.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "Unanswered, it’s decided the day after: … an application is refused, with “Public Cover Denied”.",
+  "after": "Unanswered, it’s decided the day after: … an application is denied, with “Public Cover Denied”.",
+  "why": "Uses the notice’s own word, and clears a “refused, with no reason” engine-speak hit: the reason is the sentence before it.",
+  "meaningSensitive": false,
+  "verified": "node tools/text-inventory.mjs --check; tests/guide.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "Drop The Plan: … The toast says “It ends at the month’s end, and opens no special enrollment.”",
+  "after": "Drop The Plan: … The toast says “Your plan ends at the end of the month. Dropping it doesn’t open a special enrollment period.”",
+  "why": "Quotes the toast as it now reads; the consequence (no special enrollment period) kept exactly.",
+  "meaningSensitive": true,
+  "verified": "tests/guide-examples-papers.test.ts; tests/scope-health.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]",
+  "kind": "tutorial",
+  "before": "Choosing a doctor or a pharmacy sets it at once: “Your doctor, chosen.” or “Your pharmacy, chosen.”",
+  "after": "Choosing a doctor or a pharmacy sets it at once, and the toast names it: “… is now your doctor.” or “… is now your pharmacy.”",
+  "why": "The toast now names the practice chosen; the guide quotes it.",
+  "meaningSensitive": false,
+  "verified": "tests/guide.test.ts; the toast in src/ui/workspaces/PapersWorkspace.tsx YourDoctor"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]",
+  "kind": "tutorial",
+  "before": "A visit kept changes no dial by itself.",
+  "after": "A visit you keep doesn’t change your wellbeing by itself.",
+  "why": "“Dial” is engine-speak; says what doesn’t change.",
+  "meaningSensitive": false,
+  "verified": "tests/guide.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]",
+  "kind": "tutorial",
+  "before": "Until you pick, As Your Cover Has It, a visit goes to Yale Health Center.",
+  "after": "Until you pick, The Practice Your Cover Uses sends a visit to Yale Health Center.",
+  "why": "Quotes the option as the box now names it.",
+  "meaningSensitive": false,
+  "verified": "tests/guide.test.ts; text walk after-1440, Papers, Health Cover"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.conditions]",
+  "kind": "tutorial",
+  "before": "Begin A Course Of 6.",
+  "after": "Begin A Course Of 6 Sessions.",
+  "why": "A button names a thing, not a bare number; guide and button changed together.",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-papers.test.ts; text walk after-1440, Papers, Health Cover"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.conditions]",
+  "kind": "tutorial",
+  "before": "Each Monday a condition left alone moves a dial: depression morale, diabetes condition, arthritis energy.",
+  "after": "Each Monday a condition left alone takes its toll: depression lowers morale, diabetes condition, arthritis energy.",
+  "why": "“Moves a dial” is engine-speak; the three effects kept as they are.",
+  "meaningSensitive": false,
+  "verified": "tests/guide.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.benefits]",
+  "kind": "tutorial",
+  "before": "“SNAP is kept for a citizen; a non-citizen’s eligibility turns on status SLATE doesn’t keep.”",
+  "after": "“In the game, SNAP is only for US citizens, because a noncitizen’s eligibility depends on immigration details the game doesn’t track.”",
+  "why": "Says the game’s rule as the game’s, not as SNAP’s federal rule, and drops SLATE.",
+  "meaningSensitive": true,
+  "verified": "tests/guide.test.ts; the refusal in src/engine/systems/assistance.ts, tests/remaining-09-coverage.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.benefits]",
+  "kind": "tutorial",
+  "before": "File A Claim opens unemployment insurance with Connecticut, where a New Haven life’s wages are earned: a week’s benefit of your two highest quarters’ average over 26, …",
+  "after": "Unemployment insurance pays you each week when you’re out of work, and SNAP helps pay for food. File A Claim opens a claim with Connecticut, where a New Haven life’s wages are earned. A week’s benefit is your two highest quarters’ average over 26, …",
+  "why": "Answers what it is before how to use it, one thought a sentence; the formula and limits unchanged.",
+  "meaningSensitive": true,
+  "verified": "tests/guide.test.ts; tests/remaining-papers.test.ts"
+ },
+ {
+  "source": "src/engine/content/passportsabroad.ts#PASSPORTS_ABROAD",
+  "kind": "official",
+  "before": "HM Passport Office publishes no turnaround from overseas: SLATE takes its three weeks at home.",
+  "after": "HM Passport Office publishes no turnaround from overseas, so the game uses its three weeks at home.",
+  "why": "Shown under “Assumed in the game:”; the 21 days unchanged.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-papers.test.ts; text walk after-1440, Papers, Passport And ID"
+ },
+ {
+  "source": "src/engine/content/passportsabroad.ts#PASSPORTS_ABROAD",
+  "kind": "official",
+  "before": "Canada’s urgent and express services are given at its passport offices in Canada: SLATE offers none from New Haven, the research not saying either way.",
+  "after": "Canada’s urgent and express services are given at its passport offices in Canada. Whether they’re offered from abroad wasn’t found, so the game offers none from New Haven.",
+  "why": "Says what wasn’t found and what the game does about it, in that order.",
+  "meaningSensitive": true,
+  "verified": "read in the code: no New Haven save holds a Canadian passport"
+ },
+ {
+  "source": "src/engine/content/passportsabroad.ts#PASSPORTS_ABROAD",
+  "kind": "official",
+  "before": "SLATE takes a student as registered with the consulate in New York.",
+  "after": "You’re taken to be registered with the consulate in New York.",
+  "why": "Speaks to the player; the assumption stays an assumption.",
+  "meaningSensitive": true,
+  "verified": "read in the code"
+ },
+ {
+  "source": "src/engine/content/passportsabroad.ts#nzTerms",
+  "kind": "official",
+  "before": "SLATE’s assumption, not DIA’s published policy: GST is charged. DIA charges none to a non-resident for New Zealand tax applying online, and whether you’re one turns on a home in New Zealand that SLATE doesn’t keep.",
+  "after": "GST is charged. DIA charges none to a non-resident for New Zealand tax applying online, and whether you’re one turns on a home in New Zealand, which the game doesn’t keep.",
+  "why": "The screen now labels it “Assumed in the game:”, so it isn’t passed off as DIA’s rule; NZ$247.00 unchanged.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-papers.test.ts"
+ },
+ {
+  "source": "src/ui/papers/Documents.tsx#PassportPane",
+  "kind": "official",
+  "before": "Not confirmed: {the game’s assumptions and the research’s raw notes, run together}",
+  "after": "Assumed in the game: {the game’s assumptions}. Some details weren’t published, or couldn’t be confirmed on the office’s own pages.",
+  "why": "The research notes named fields (processingDays.min, lostReplacement.fee) and HTTP errors; the game’s assumptions now stand apart from what the research couldn’t confirm, and that uncertainty is still said.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-papers.test.ts; text walk after-1440, Papers, Passport And ID"
+ },
+ {
+  "source": "src/engine/systems/identity.ts#registerIdentity <documents.apply_idcard>",
+  "kind": "error",
+  "before": "$28.00 is more than the bank can cover.",
+  "after": "Your bank can’t cover $28.00, so nothing was charged.",
+  "why": "Leads with whose money is short and says what didn’t happen; one sentence, no sentence opening on “Nothing” (the tics check).",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g15-papers.test.ts"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.apply_plan>",
+  "kind": "error",
+  "before": "The $69.00 setup fee is more than the bank can cover.",
+  "after": "Your bank can’t cover the $69.00 setup fee, so you haven’t applied and nothing was charged.",
+  "why": "Says both consequences: you haven’t applied, and nothing was charged.",
+  "meaningSensitive": true,
+  "verified": "tests/defects-g8-7.test.ts"
+ },
+ {
+  "source": "src/engine/systems/taxreturn.ts#registerTaxReturn",
+  "kind": "notification",
+  "before": "Form 8843, which every F-1 student files; no income to report. Nothing owed or due back on $0.00 of income. File by June 15, 2027.",
+  "after": "Form 8843, which every F-1 student files. There’s no income to report. You owe nothing and are due nothing back, on $0.00 of income. File it by June 15, 2027.",
+  "why": "Sentences, said to the player; the form, the date and the zero kept.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g16-papers.test.ts"
+ },
+ {
+  "source": "src/engine/content/statetax.ts#STATE_TAX [Notice Of Deficiency]",
+  "kind": "official",
+  "before": "worked out from what was reported; it’s assessed in 60 days.",
+  "after": "it’s based on what was reported, and assessed in 60 days.",
+  "why": "Read into “Notice Of Deficiency: you owe … It’s based on …”: a whole sentence once capitalized, with plain words; the 60 days unchanged. Five other states’ estimated notices the same.",
+  "meaningSensitive": false,
+  "verified": "node tools/text-inventory.mjs --check; tests/state-tax.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnLife",
+  "kind": "other",
+  "before": "A part goes to the tax first, then the penalties, then the interest, the IRS’s order where you name none; a lower tax lowers the months of penalty still to come.",
+  "after": "When you don’t choose, the IRS puts a partial payment toward the tax first, then penalties, then interest. Paying down the tax also lowers the monthly penalty still to come.",
+  "why": "Leads with who applies the payment; the order and the penalty’s effect kept.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g16-papers.test.ts; text walk after-1440, Papers"
+ },
+ {
+  "source": "src/ui/looks/papers.tsx#whatItDoes",
+  "kind": "other",
+  "before": "Nowhere lets you drive on it now.",
+  "after": "It doesn’t let you drive anywhere now that it’s out of force.",
+  "why": "Says why: the license is out of force. Varied so five of the look’s summaries don’t open the same way.",
+  "meaningSensitive": false,
+  "verified": "tests/looks.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnLife",
+  "kind": "feedback",
+  "before": "Paid: … to the tax, … to penalties, … to interest. … still owed.",
+  "after": "Paid the IRS: … to the tax, … to penalties and … to interest. You still owe ….",
+  "why": "Names who was paid and speaks to the player; the split unchanged. Variant: part paid.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g16-papers.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnLife",
+  "kind": "feedback",
+  "before": "Paid in full.",
+  "after": "Paid the IRS in full.",
+  "why": "Variant: nothing left owed. Kept apart from the School’s own “Paid in full.”, which this pass doesn’t own.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b06.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#StatePlanPanel",
+  "kind": "feedback",
+  "before": "Asked with … down: … a month, decided by ….",
+  "after": "Applied with … down: … a month. Connecticut DRS decides by ….",
+  "why": "Applying is said as applying, and the agency that decides is named. Variants: with and without a down payment.",
+  "meaningSensitive": true,
+  "verified": "tests/scope-taxpapers.test.ts; tools/acceptance-ui.mjs matcher updated"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel",
+  "kind": "feedback",
+  "before": "Applied: answered by …, a fee of ….",
+  "after": "Applied. The IRS answers by …, and the setup fee is ….",
+  "why": "Says what the fee is; variant without a fee ends at the date.",
+  "meaningSensitive": true,
+  "verified": "tests/defects-g8-7.test.ts; tools/acceptance-ui.mjs matcher updated"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel",
+  "kind": "label",
+  "before": "Caught Up By",
+  "after": "Catch Up By",
+  "why": "A deadline for the player, not a past event; the date beside it unchanged.",
+  "meaningSensitive": true,
+  "verified": "tools/acceptance-ui.mjs matcher /^Catch Up By$/; tests/scope-taxpapers.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel",
+  "kind": "label",
+  "before": "Plan",
+  "after": "Plan Type",
+  "why": "The select chooses a kind of plan, not a plan.",
+  "meaningSensitive": false,
+  "verified": "text walk after-1440, Papers, Tax Returns (tax save)"
+ },
+ {
+  "source": "src/ui/papers/Documents.tsx#DocumentList",
+  "kind": "heading",
+  "before": "Standing",
+  "after": "Status",
+  "why": "One word for a document’s state across Papers.",
+  "meaningSensitive": false,
+  "verified": "text walk after-1440, Papers, Passport And ID"
+ },
+ {
+  "source": "src/ui/papers/Documents.tsx#ResidencePanel",
+  "kind": "heading",
+  "before": "Where You Stand",
+  "after": "Your Status There",
+  "why": "Says what the column holds.",
+  "meaningSensitive": false,
+  "verified": "text walk after-1440, Papers, Permission To Work"
+ },
+ {
+  "source": "src/ui/components/LienPanels.tsx#StateLienAndPenalty",
+  "kind": "feedback",
+  "before": "Asked: released by ….",
+  "after": "Asked. It’s to be released by ….",
+  "why": "A promise of a date, said as the agency’s to keep. Variant: released at once reads “Released.”",
+  "meaningSensitive": true,
+  "verified": "tests/scope-taxpapers.test.ts; tools/acceptance-ui.mjs matcher updated"
+ },
+ {
+  "source": "src/ui/components/LienPanels.tsx#FederalLien",
+  "kind": "feedback",
+  "before": "Form 12277 sent: decided by April 9, 2030.",
+  "after": "Form 12277 sent. The IRS decides by April 9, 2030.",
+  "why": "Names who decides. Variant for a lien filed in error: “Asked for its release as erroneous. The IRS decides by …”",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-09-coverage.test.ts"
+ },
+ {
+  "source": "src/ui/papers/Documents.tsx#PassportPane",
+  "kind": "feedback",
+  "before": "Applied, for …. It comes by ….",
+  "after": "Applied and paid …. It should arrive by ….",
+  "why": "A passport office’s time is a target, not a promise; “should” keeps that.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-papers.test.ts"
+ },
+ {
+  "source": "src/ui/papers/Documents.tsx#DocumentList",
+  "kind": "feedback",
+  "before": "A police report filed.",
+  "after": "Police report filed.",
+  "why": "Plain toast.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g15-papers.test.ts"
+ },
+ {
+  "source": "src/ui/papers/Documents.tsx#WorkPane",
+  "kind": "feedback",
+  "before": "Applied for OPT, for $470.00. Decided by ….",
+  "after": "Applied for OPT and paid $470.00. It’s decided by ….",
+  "why": "Applying apart from holding: the date is when it’s decided, not granted.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g15-papers.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#HomeClaimsPanel",
+  "kind": "label",
+  "before": "Months Nothing",
+  "after": "Months With Nothing Due",
+  "why": "A full label; the count unchanged.",
+  "meaningSensitive": false,
+  "verified": "tests/universalcredit.test.ts; read in the code (a British life)"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#AssistancePanel",
+  "kind": "label",
+  "before": "Assets Kept To",
+  "after": "Asset Limit",
+  "why": "The usual name for the cap.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g15-papers.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#HealthPane",
+  "kind": "feedback",
+  "before": "The hardship is granted, and the work rules met.",
+  "after": "Hardship exception granted. The work rules count as met.",
+  "why": "Names the exception by its name; “count as met” keeps that they weren’t met in fact.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-health-eligibility.test.ts"
+ }
+]

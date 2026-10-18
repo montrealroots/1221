@@ -1,0 +1,58 @@
+/**
+ * Prints every line the game shows of an account kept at home, for brief 14's json area, and checks that none of
+ * `src/engine/content/home-accounts.json`'s words is among them: creation's Starting Point for each of the 55 banks
+ * kept from abroad (`homeAccountRefusal`, `whatFollows`, the words Before Yale shows), then a life made with five of
+ * them and the lines Money shows under each kept account (`homeAccountLines`), and the refusal for opening something new
+ * there (`abroadRefusal`).
+ * Kept as .txt so the lint and the typecheck leave it be: copy it to probe/print-home-accounts.ts in the clone, then from
+ * the clone run npx vite-node probe/print-home-accounts.ts -- <out.txt>
+ */
+import { readFileSync, writeFileSync } from 'node:fs';
+import { createSave } from '@/engine';
+import { newLifeConfig, withFamily, type NewSaveConfig } from '@/engine/world/bootstrap';
+import { homeAccountRefusal, isoOfPlace, whatFollows } from '@/engine/systems/homeaccount';
+import { abroadRefusal, homeAccountLines } from '@/engine/systems/abroad';
+import { RESEARCH } from '@/engine/content/homeaccounts';
+import { bankById } from '@/engine/content/banks';
+import { CITIES } from '@/engine/content/geography';
+
+const out: string[] = [];
+const shown: string[] = [];
+const say = (line: string) => { out.push(line); shown.push(line); };
+const cityIn = (iso: string) => CITIES.all().map((c) => c.id).find((id) => isoOfPlace(id) === iso)!;
+const life = (bankId: string): NewSaveConfig => {
+  const bank = bankById(bankId)!;
+  return { ...withFamily(newLifeConfig(), 'modest'), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', bankId: 'us-chase', priorResidence: { cityId: cityIn(bank.iso), fromYear: 2002, fromMonth: 6 }, homeBankId: bankId };
+};
+
+out.push('# Starting Point, Before Yale: each researched bank, raised in its country from birth, born 14 June 2002');
+for (const bankId of Object.keys(RESEARCH.banks).filter((id) => !id.startsWith('us-'))) {
+  const config = life(bankId);
+  const refused = homeAccountRefusal(config, bankId);
+  out.push(`\n## ${bankById(bankId)!.name} (${bankId}), raised in ${CITIES.get(config.priorResidence!.cityId)!.name}`);
+  if (refused) say(`  Refused: ${refused}`);
+  else for (const line of whatFollows(config, bankId)) say(`  ${line}`);
+}
+
+out.push('\n# A life made with the account kept: what Money shows under it, and opening something new there');
+for (const bankId of ['gb-barclays', 'de-deutsche-bank', 'fr-societe-generale', 'jp-smbc', 'kr-kakaobank']) {
+  const sim = createSave(1, `json14-${bankId}`, life(bankId));
+  out.push(`\n## ${bankById(bankId)!.name}`);
+  for (const account of Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && a.bankId === bankId && !a.nominal)) {
+    out.push(`  ${account.name} (${account.kind}):`);
+    for (const line of homeAccountLines(sim, account)) say(`    ${line}`);
+  }
+  const no = abroadRefusal(sim.player, bankById(bankId));
+  if (no) say(`  Opening something new there: ${no}`);
+}
+
+// Every sentence of the research's words, eight words or more, looked for in what was shown.
+const words: string[] = [];
+const leaves = (v: unknown): void => { if (typeof v === 'string') words.push(v); else if (Array.isArray(v)) v.forEach(leaves); else if (v && typeof v === 'object') Object.values(v).forEach(leaves); };
+leaves(JSON.parse(readFileSync('src/engine/content/home-accounts.json', 'utf8')));
+const sentences = [...new Set(words.flatMap((w) => w.split(/(?<=[.;:])\s+/)).map((s) => s.trim()).filter((s) => s.split(/\s+/).length >= 8))];
+const all = shown.join('\n');
+const found = sentences.filter((s) => all.includes(s));
+out.push(`\n# home-accounts.json's words on these screens\n  ${sentences.length} sentences of eight words or more in home-accounts.json; ${found.length} of them among the ${shown.length} lines shown above.${found.length ? `\n  ${found.join('\n  ')}` : ''}`);
+writeFileSync(process.argv[2] ?? 'home-accounts.txt', `${out.join('\n')}\n`);
+console.log(`${shown.length} lines shown; ${found.length} of ${sentences.length} research sentences among them`);

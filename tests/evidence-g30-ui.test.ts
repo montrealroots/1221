@@ -27,7 +27,7 @@
  *   Look After menu prices Eat A Meal at $4.29, $5.00, $6.08 and $5.49, and pressed it posts that; the midnight's
  *   groceries are $8.59, $10.00, $12.16 and $10.97, once a midnight across a save and a load; a meal ordered in is
  *   LendingTree's 21/3.03 of each; on $5.50 the spender is refused in `spendRefusal`'s words and grayed on the menu
- *   where the generous life eats to its last cent; and creation's Review shows Going Out A Month as $261, $304, $370
+ *   where the generous life eats to its last cent; and creation's Review shows Food Each Month (Going Out A Month until 2026-10-17) as $261, $304, $370
  *   and $334.
  * - `trait-illnessToll` (resilient 0.6 → 0.6474, inside [0.5, 1.5]): the same first-morning workout sprains the same
  *   ankle, seven days to mend for a plain body and four for a resilient one, and Work Out is refused in
@@ -315,9 +315,9 @@ describe('trait-hygieneDrift', () => {
     expect(out.chaotic.lost).toBeCloseTo(0.4 * (6 - 8 / (1.6 * K.chaotic)), 9);
     expect(out.chaotic.lost).toBeCloseTo(0.78066336, 7);
     // The menu reads it too: the Shower is needed now for the two past the line, and not for the orderly body.
-    expect(out.orderly.says).not.toContain('wears on the mood');
-    expect(out.plain.says).toContain('Hygiene at 48: every hour under 50 wears on the mood.');
-    expect(out.chaotic.says).toContain('Hygiene at 46: every hour under 50 wears on the mood.');
+    expect(out.orderly.says).not.toContain('wears on your morale');
+    expect(out.plain.says).toContain('Hygiene at 48: every hour under 50 wears on your morale.');
+    expect(out.chaotic.says).toContain('Hygiene at 46: every hour under 50 wears on your morale.');
   });
 
   it('takes 17.92 hygiene off an orderly body with a workout through life.look_after, 21.6 off a plain one and 26.68 off a chaotic one: the hour’s 1.6 and the sweat’s 20, by the knob', () => {
@@ -626,7 +626,7 @@ describe('trait-spending', () => {
       expect(h.states).toHaveLength(0);
       return text;
     };
-    const month = (text: string) => text.match(/Going Out A Month \$([\d,]+)/)?.[1];
+    const month = (text: string) => text.match(/Food Each Month \$([\d,]+)/)?.[1];
     // A day's $10.00 of groceries in New Haven at the knob, 365/12 days: $261.24, $304.17, $369.77 and $333.76, to the dollar.
     expect(month(review(['frugal']))).toBe('261');
     expect(month(review([]))).toBe('304');
@@ -660,8 +660,8 @@ describe('trait-illnessToll', () => {
     // The draw is 7 days for the plain body, so somewhere in [6.5, 7.5); at 0.6474 that is [4.21, 4.86): 4 days.
     expect((injury(plain).until - RAN_AT) / MS_DAY).toBe(7);
     expect((injury(resilient).until - RAN_AT) / MS_DAY).toBe(4);
-    expect(notices(plain, 'A Sprained Ankle').map((n) => n.body)[0]).toContain('7 days to mend.');
-    expect(notices(resilient, 'A Sprained Ankle').map((n) => n.body)[0]).toContain('4 days to mend.');
+    expect(notices(plain, 'A Sprained Ankle').map((n) => n.body)[0]).toContain('It takes 7 days to mend, and you can’t work out until then.');
+    expect(notices(resilient, 'A Sprained Ankle').map((n) => n.body)[0]).toContain('It takes 4 days to mend, and you can’t work out until then.');
     expect(lookAfter(plain, 'exercise').error).toBe('Not with a sprained ankle; it has 7 days yet to mend.');
     expect(lookAfter(resilient, 'exercise').error).toBe('Not with a sprained ankle; it has 4 days yet to mend.');
 
@@ -689,7 +689,7 @@ describe('trait-illnessToll', () => {
       expect(notices(sim, 'You Have The Flu')).toHaveLength(0);
       const before = { ...sim.player.wellbeing };
       sim.advanceTo(AT + 1);
-      expect(notices(sim, 'You Have The Flu').map((n) => n.body)).toEqual(['The flu. It costs nothing.']);
+      expect(notices(sim, 'You Have The Flu').map((n) => n.body)).toEqual(['You have the flu. It lasts until December 19, 2026, and it has cost you some condition and energy. Work Out waits until it passes, and Call In Sick, on School, excuses a day of classes. You didn’t see a doctor, so there’s nothing to pay.']);
       return { sim, condition: before.condition - sim.player.wellbeing.condition, energy: before.energy - sim.player.wellbeing.energy };
     };
     const plain = draw([]);
@@ -971,9 +971,9 @@ describe('trait-appetite', () => {
     const HAZARD = { disciplined: 1.0, plain: 1.0, indulgent: 1.07 } as const;
     // 80.589 / 3.24 = 24.873; 80.9 / 3.24 = 24.969; 81.404 / 3.24 = 25.125.
     const WORDS = {
-      disciplined: '5 ft 11 in and 178 lb, a body mass index of 24.9: healthy weight',
-      plain: '5 ft 11 in and 178 lb, a body mass index of 25.0: healthy weight',
-      indulgent: '5 ft 11 in and 179 lb, a body mass index of 25.1: overweight',
+      disciplined: '5 ft 11 in and 178 lb, with a body mass index of 24.9, in the healthy weight range',
+      plain: '5 ft 11 in and 178 lb, with a body mass index of 25.0, in the healthy weight range',
+      indulgent: '5 ft 11 in and 179 lb, with a body mass index of 25.1, in the overweight range',
     } as const;
     for (const who of WHO) {
       const sim = lives[who];

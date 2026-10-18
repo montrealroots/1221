@@ -165,16 +165,16 @@ export function snapStudentRefusal(sim: Simulation, person: Person, at: Instant)
 /** Why they can't claim, or nothing. */
 export function assistanceRefusal(sim: Simulation, person: Person): string | undefined {
   const scheme = schemeFor(person);
-  if (!scheme) return 'SLATE keeps assistance in Ontario, British Columbia, New York, California and Connecticut only yet.';
-  if (person.assistance && person.assistance.closedAt === undefined) return 'You have a claim open.';
+  if (!scheme) return 'In the game, assistance is available only in Ontario, British Columbia, New York, California and Connecticut.';
+  if (person.assistance && person.assistance.closedAt === undefined) return 'You already have a claim open.';
   const own = isoOfCountry(person.citizenshipId);
-  if (scheme === 'snap' && own !== 'US' && !citizenOf(person, 'US')) return 'SNAP is kept for a citizen; a non-citizen’s eligibility turns on status SLATE doesn’t keep.';
-  if (scheme !== 'snap' && own !== 'CA' && !citizenOf(person, 'CA')) return 'Assistance is kept for a Canadian citizen; a newcomer’s eligibility turns on status SLATE doesn’t keep.';
+  if (scheme === 'snap' && own !== 'US' && !citizenOf(person, 'US')) return 'In the game, SNAP is only for US citizens, because a noncitizen’s eligibility depends on immigration details the game doesn’t track.';
+  if (scheme !== 'snap' && own !== 'CA' && !citizenOf(person, 'CA')) return 'In the game, assistance is only for Canadian citizens, because a newcomer’s eligibility depends on immigration details the game doesn’t track.';
   const age = (sim.now - person.birthInstant) / YEAR;
-  if (age < 18) return 'It’s claimed by an adult.';
+  if (age < 18) return 'Only an adult can claim it.';
   if (scheme === 'snap') { const student = snapStudentRefusal(sim, person, sim.now); if (student) return student; }
-  if (scheme === 'ontario-works' && inLocal(sim, liquid(sim, person), 'CAD') > ONTARIO_WORKS.assets * 100) return `Ontario Works asks liquid assets under CAD ${ONTARIO_WORKS.assets.toLocaleString('en-US')}.`;
-  if (scheme === 'bc-assistance' && inLocal(sim, liquid(sim, person), 'CAD') > BC_ASSISTANCE.assets * 100) return `Income assistance asks assets under CAD ${BC_ASSISTANCE.assets.toLocaleString('en-US')}.`;
+  if (scheme === 'ontario-works' && inLocal(sim, liquid(sim, person), 'CAD') > ONTARIO_WORKS.assets * 100) return `Ontario Works asks for liquid assets under CAD ${ONTARIO_WORKS.assets.toLocaleString('en-US')}.`;
+  if (scheme === 'bc-assistance' && inLocal(sim, liquid(sim, person), 'CAD') > BC_ASSISTANCE.assets * 100) return `Income assistance asks for assets under CAD ${BC_ASSISTANCE.assets.toLocaleString('en-US')}.`;
   return undefined;
 }
 
@@ -283,7 +283,7 @@ export function registerAssistance(sim: Simulation): void {
       // The notice names the exemptions a player can reach (from 2026-10-17, brief 12): until then it said SNAP paid no more
       // “until you work them”, an action nobody off the School has since jobs went in the scope reset of 2026-10-09.
       if (limited && within.length >= SNAP.abawd.months) {
-        if (mine) s.notify({ category: 'benefits', title: 'SNAP Time Limit Reached', body: 'Three months in three years without 80 hours of work a month: SNAP pays no more until an exemption applies, as study at least half-time or an unemployment claim does.', importance: 60, route: '/workspace/papers' });
+        if (mine) s.notify({ category: 'benefits', title: 'SNAP Time Limit Reached', body: 'You’ve had three months of SNAP in three years without 80 hours of work a month, so SNAP pays nothing more until an exemption applies, such as studying at least half-time or having an unemployment claim open.', importance: 60, route: '/workspace/papers' });
         schedule(s, person, item.at + 30 * MS_DAY);
         return;
       }

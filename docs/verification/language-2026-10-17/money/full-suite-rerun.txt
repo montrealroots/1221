@@ -1,0 +1,30 @@
+
+ RUN  v2.1.9 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/l14-money
+
+ ✓ tests/evidence2-b13.test.ts (7 tests) 6787ms
+   ✓ i-ui-text > PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense, the one interest wording on either; its twin without the hour says none; an hour of practice takes the Listening column and the history keeps the line, across a save and a load 600ms
+   ✓ i-ui-text > PLAYER JOURNEY: the guide’s reference, every entry opened by its own address, its contents, and a search for “interests” and for “interest”, names no interests, and says “interest” only on money’s and the papers’ pages, in money’s words 499ms
+   ✓ i-stale-claims > keeps every sentence naming the interests in the places the row corrected dated by the removal with no clause in the present, or among the sentences read and found true 483ms
+   ✓ i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal with no clause in the present, or among the sentences read and found true; the audit trail and the research records aside 5114ms
+ ✓ tests/evidence3-person.test.ts (19 tests) 8576ms
+   ✓ trait-receipts: changing the two traits changes no return > PLAYER JOURNEY: London-born twins, one holding Keeps Accounts and Chaotic, played to the tax season of 2027 with the same work each midnight, are given the same 2026 return to the cent, on income earned 2931ms
+   ✓ i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal, or read and listed true; the audit trail, the research records and the two files that quote them aside 4911ms
+ ✓ tests/home-account-screens.test.ts (3 tests) 576ms
+   ✓ an account kept at home, in its own money on every screen > shows HSBC UK’s accounts in pounds with the dollars beside, on the bank, Home, the looks and the statement, through a reload 315ms
+ ✓ tests/decisions-arion.test.ts (16 tests) 15979ms
+   ✓ arion.AR1: Arion’s debit card, its first year charged on the first night > FIXTURE, Mosfellsbær: an Arion account a life opens is charged its first night, 6 January 2026, and renewed on 6 January 2027, where until brief 10 it waited a year for its first 475ms
+   ✓ arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr ($5.92) of the card’s 950 kr, the 314 of its 365 days left, with Iceland’s Act and the label; Close It pressed posts it once against Bank Fees; a second press is refused, and a reload run past 25 August 2027 charges the closed account nothing and gives nothing back again 2635ms
+   ✓ arion.AR3: a close gives back the card year’s days left > GUARD: a second settling of a Veltureikningur’s fees gives nothing of the card’s year back again (FIXTURE: only a home bank’s close tried again settles twice, and Arion closes no home account) 630ms
+   ✓ arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: kept, the year is renewed at midnight in New Haven on 25 August 2027 and on 25 August 2028, not on 24 August 2028, where the 365-day year until brief 10 fell across 29 February; the same whether the clock jumps from 20 August 2028 or runs a day at a time with a reload on the 24th, and a minute at a time across the night and reloaded in it 3560ms
+   ✓ arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25 August 2027, which holds 29 February: 189 days used, 177 of its 366 left 2478ms
+   ✓ arion.AR2: the card year renewed once a year, on its date in Reykjavík > FIXTURE, Mosfellsbær: an Arion account opened on Monday 28 February 2028 is charged on its first night, 29 February, and renewed on 28 February 2029, the month’s last day in a year without a 29th, not on 1 March 367ms
+   ✓ arion.AR7: the close’s days by Reykjavík’s calendar > PLAYER JOURNEY: closed at 9 PM in New Haven on New Year’s Eve 2026, already 2 AM on 1 January 2027 in Reykjavík, the Veltureikningur refunds 612 kr, 130 days used by Reykjavík’s date, not the 614 kr New Haven’s would give; closed at 9 PM on 24 August 2027, already the year’s date in Reykjavík, it gives nothing back and is charged no new year 1106ms
+   ✓ arion.AR5: an account that can’t cover the year’s fee > PLAYER JOURNEY: with 300 kr left on the eve of 25 August 2027 (TEST SETUP), the year’s 950 kr is taken all the same, −650 kr, as the panel says; Close It is refused while it’s below zero; with 1,000 kr paid in (TEST SETUP) it closes on 27 August and refunds 942 kr, 363 of the year’s 366 days 1190ms
+   ✓ arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > FIXTURE (TEST SETUP: paid behind): the Reykjavík-raised student’s account opens with two years’ fees, 1,900 kr, nothing is charged on her first night, a close on 14 October 2026 charges 133 kr, the 51 days used of 365, said first with the Act’s rule, and kept, the year is charged at its end, 25 August 2027, once 986ms
+   ✓ arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > FIXTURE (TEST SETUP: the setting changed to behind on 1 September 2026): the year she was charged ahead on 25 August 2026 is still given back on a close, 817 kr on 14 October, and kept, is charged nothing at its end; the next year, opened behind, is charged at its end, 25 August 2028: each year paid once 1833ms
+
+ Test Files  4 passed (4)
+      Tests  45 passed (45)
+   Start at  20:29:39
+   Duration  26.06s (transform 8.91s, setup 1.43s, collect 27.54s, tests 31.92s, environment 1ms, prepare 609ms)
+

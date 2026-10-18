@@ -272,7 +272,7 @@ describe('time, commands and reloads', () => {
     expect(owedToState(c.player, 'us-ny', c.now)).toBe(owedToState(a.player, 'us-ny', a.now));
     const owed = owedToState(a.player, 'us-ny', a.now);
     fund(a, owed + 20_000_00);
-    expect(a.execute({ kind: 'tax.pay_state', payload: { state: 'us-ny', year: 2026, amount: owed + 1 } }).error).toMatch(/pay that or less/);
+    expect(a.execute({ kind: 'tax.pay_state', payload: { state: 'us-ny', year: 2026, amount: owed + 1 } }).error).toMatch(/Pay that amount or less/);
     a.must({ kind: 'tax.pay_state', payload: { state: 'us-ny', year: 2026 } });
     expect(a.execute({ kind: 'tax.pay_state', payload: { state: 'us-ny', year: 2026 } }).error).toMatch(/owe New York DTF nothing/);
     expect(a.universe.scheduled.some((i) => i.kind === STATE_NOTICE_KIND && i.status === 'pending' && i.payload.state === 'us-ny')).toBe(false);

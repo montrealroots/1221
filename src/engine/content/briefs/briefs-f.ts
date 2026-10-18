@@ -288,7 +288,7 @@ export const BRIEFS_F: readonly Brief[] = [
     why: {
       timing: 'Every beat is a stall, and the pauses are what keep him there.',
       partner: 'She reads him the whole time, and her next line depends on what his face does with hers.',
-      allows: 'The scene’s premise is that he mustn’t see she knows, so any fear shown outward ends it: it can be played only restrained.',
+      allows: 'The scene’s premise is that he mustn’t see she knows, so any fear she shows outward ends it. It can only be played restrained.',
       beats: 'A routine, then menace in a friendly voice, then a stall that’s nearly funny, then the moment the stall stops working.',
     },
     readings: [
@@ -342,7 +342,7 @@ export const BRIEFS_F: readonly Brief[] = [
       beats: 'Procedure, a moment of wonder at something enormous, then defiance.',
     },
     readings: [
-      { id: 'scale', label: 'Something Enormous', reading: 'The scene is the size of what she sees: she plays it out of the suit, the way the genre’s actors do, to the eyeline of a suit performer working a miniature set, and the wonder carries the argument.', rests: 'The creature is the height of an office block and looks straight at the tower.', lean: { interpretation: 1.2, connection: 1.1 }, draws: [{ dim: 'interpretation', ability: 'imagination', weight: 0.7 }, { dim: 'connection', ability: 'presence', weight: 0.4 }] },
+      { id: 'scale', label: 'Something Enormous', reading: 'The scene is the size of what she sees. She plays to the eyeline of a performer in a creature suit on a miniature set, the way the genre’s actors do, and the wonder carries the argument.', rests: 'The creature is the height of an office block and looks straight at the tower.', lean: { interpretation: 1.2, connection: 1.1 }, draws: [{ dim: 'interpretation', ability: 'imagination', weight: 0.7 }, { dim: 'connection', ability: 'presence', weight: 0.4 }] },
       { id: 'recruit', label: 'The Junior Voice', reading: 'The scene is about rank: a recruit finding the nerve to overrule the man who recruited her.', rests: 'She’s the most junior person on the channel, and he has never had to trust her judgment.', lean: { responsiveness: 1.2, believability: 1.05 }, draws: [{ dim: 'responsiveness', ability: 'listening', weight: 0.5 }, { dim: 'believability', ability: 'composure', weight: 0.5 }] },
     ],
   },

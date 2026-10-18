@@ -40,7 +40,7 @@ describe('the pension', () => {
     sim.player.birthInstant = sim.now - 65.2 * YEAR;
     // Three days' work in a week: three sevenths of a week.
     contribute(sim, sim.player, sim.now - 30 * MS_DAY, pesos(3 * 500_00), 3);
-    expect(imssRefusal(sim, sim.player)).toMatch(/875 weeks this year; your IMSS record has 0/);
+    expect(imssRefusal(sim, sim.player)).toMatch(/875 weeks this year, and your IMSS record has 0/);
     // A working life's weeks, the last year at 500 pesos a day.
     sim.player.imss!.days = 7 * 900;
     expect(imssRefusal(sim, sim.player)).toBeUndefined();

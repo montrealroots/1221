@@ -1,0 +1,198 @@
+{
+ "profile": "specialist",
+ "seed": "bj-1",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 79.4,
+  "training": 84,
+  "study": 30
+ },
+ "takes": 19,
+ "briefs": 10,
+ "readings": 16,
+ "genres": 8,
+ "purposes": {
+  "first": 10,
+  "another-reading": 6,
+  "callback": 3
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 2,
+   "mean": 62.8,
+   "min": 61.4,
+   "max": 64.1
+  },
+  "m2": {
+   "n": 3,
+   "mean": 62.8,
+   "min": 60.1,
+   "max": 66.7
+  },
+  "m3": {
+   "n": 14,
+   "mean": 62.8,
+   "min": 58.2,
+   "max": 67.9
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 10,
+  "mean": 1.41,
+  "max": 2.7,
+  "over1": 6
+ },
+ "notes": {
+  "takes": 19,
+  "distinct": 5,
+  "longestSame": 4,
+  "sameAgainInAnotherGenre": 3,
+  "withConcern": 15,
+  "concerns": [
+   "rhythm",
+   "stylized",
+   "exactness",
+   "heightened",
+   "extremity"
+  ],
+  "asShown": {
+   "distinct": 9,
+   "longestSame": 2,
+   "sameAgainInAnotherGenre": 0
+  },
+  "sequence": [
+   "d2 absurdist first 61.4: Your Focus held back Execution: absurdist’s rhythm",
+   "d13 silent_film first 64.1: Your Physical Expression held back Execution: silent_film’s stylized",
+   "d61 absurdist another-reading 60.1: Your Focus held back Execution: absurdist’s rhythm",
+   "d62 historical_drama first 66.7: Your Memory held back Execution",
+   "d76 historical_drama callback 61.7: Your Memory held back Execution",
+   "d96 silent_film another-reading 62.9: Your Physical Expression held back Execution: silent_film’s stylized",
+   "d97 anime first 59.1: Your Focus held back Execution: anime’s exactness",
+   "d103 animated first 63.4: Your Vocal Expression held back Execution: animated’s heightened",
+   "d104 historical_drama another-reading 67.9: Your Memory held back Execution",
+   "d107 historical_drama callback 61.6: Your Memory held back Execution",
+   "d109 comedy first 62.6: Your Focus held back Execution: comedy’s rhythm",
+   "d110 anime another-reading 58.2: Your Focus held back Execution: anime’s exactness",
+   "d111 romantic_comedy first 67: Your Focus held back Execution: romantic_comedy’s rhythm",
+   "d114 romantic_comedy callback 59.5: Your Focus held back Execution: romantic_comedy’s rhythm",
+   "d114 animated another-reading 62.4: Your Vocal Expression held back Execution: animated’s heightened",
+   "d116 horror first 64.2: Your Physical Expression held back Execution: horror’s extremity",
+   "d118 romantic_comedy first 61.8: Your Focus held back Execution: romantic_comedy’s rhythm",
+   "d118 comedy another-reading 61.4: Your Focus held back Execution: comedy’s rhythm",
+   "d119 absurdist first 66.8: Your Adaptability held back Responsiveness: absurdist’s rhythm"
+  ]
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 4,
+  "longestSameTarget": 3,
+  "longestSameMessage": 1,
+  "longestSameState": 1,
+  "longRuns": [],
+  "sequence": [
+   "7:adaptability@50",
+   "14:adaptability@50",
+   "21:focus@50",
+   "28:focus@50",
+   "35:vocal@50",
+   "42:focus@50",
+   "49:vocal@51",
+   "56:focus@51",
+   "63:focus@52",
+   "70:focus@52",
+   "77:listening@54",
+   "84:focus@53",
+   "91:focus@53",
+   "98:focus@54",
+   "105:vocal@53",
+   "112:adaptability@52",
+   "119:adaptability@54"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 90,
+  "presence": 90,
+  "listening": 57,
+  "imagination": 90,
+  "focus": 57,
+  "memory": 52,
+  "adaptability": 54,
+  "composure": 90,
+  "vocal": 54,
+  "physical": 55,
+  "discipline": 55,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 114,
+   "brief": "brief-romantic_comedy-2",
+   "genre": "romantic_comedy",
+   "reading": "bet",
+   "sides": "expansive",
+   "purpose": "callback",
+   "overall": 59.5,
+   "chief": "Your Focus held back Execution by 30.6 points",
+   "concern": "rhythm"
+  },
+  {
+   "day": 114,
+   "brief": "brief-animated",
+   "genre": "animated",
+   "reading": "brag",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 62.4,
+   "chief": "Your Vocal Expression held back Execution by 23.8 points",
+   "concern": "heightened"
+  },
+  {
+   "day": 116,
+   "brief": "brief-horror",
+   "genre": "horror",
+   "reading": "trust",
+   "sides": "",
+   "purpose": "first",
+   "overall": 64.2,
+   "chief": "Your Physical Expression held back Execution by 13.3 points",
+   "concern": "extremity"
+  },
+  {
+   "day": 118,
+   "brief": "brief-romantic_comedy",
+   "genre": "romantic_comedy",
+   "reading": "flustered",
+   "sides": "",
+   "purpose": "first",
+   "overall": 61.8,
+   "chief": "Your Focus held back Execution by 17.3 points",
+   "concern": "rhythm"
+  },
+  {
+   "day": 118,
+   "brief": "brief-comedy",
+   "genre": "comedy",
+   "reading": "timing",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 61.4,
+   "chief": "Your Focus held back Execution by 22.6 points",
+   "concern": "rhythm"
+  },
+  {
+   "day": 119,
+   "brief": "brief-absurdist-2",
+   "genre": "absurdist",
+   "reading": "relief",
+   "sides": "",
+   "purpose": "first",
+   "overall": 66.8,
+   "chief": "Your Adaptability held back Responsiveness by 27.6 points",
+   "concern": "rhythm"
+  }
+ ]
+}

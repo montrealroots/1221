@@ -63,7 +63,7 @@ const HAVEN_CLIMATE = climateTypeFor(HAVEN);
 const HAVEN_THUNDER = thunderDaysFor(HAVEN.id, HAVEN_CLIMATE);
 const HAVEN_THUNDER_FROM = THUNDER_DAYS[HAVEN.id]
   ? `as published: ${THUNDER_DAYS[HAVEN.id]!.source}`
-  : `SLATE’s estimate for ${CLIMATE_NAMES[HAVEN_CLIMATE].toLowerCase()} country, where no count is published`;
+  : `estimated for a ${CLIMATE_NAMES[HAVEN_CLIMATE].toLowerCase()} climate, where no count is published`;
 const RUN_MORE = Math.round((TRAINING.run / TRAINING.indoors - 1) * 100);
 const STEP_MINUTES = Math.round(MAX_STEP_MS / 60_000);
 const LENGTHS = PLAN_LENGTHS.map((l) => l.label);
@@ -78,11 +78,11 @@ export const DAY: readonly GuideEntry[] = [
     covers: ['ui.calendar', 'ui.go', 'calendar.skip', 'look.entry'],
     synonyms: ['commitment', 'what’s coming', 'go button', 'skip it', 'stand here', 'clock stopped', 'wanted you', 'upcoming', 'due now'],
     questions: ['Why did the clock stop?', 'What happens if I don’t go?', 'What does Stand Here do?', 'Can I walk away from a class?', 'What’s coming up next?'],
-    where: { route: '/home', label: 'Home, The Calendar Panel, And The Dialog When The Clock Stops' },
+    where: { route: '/home', label: 'Home, The Calendar Panel, Open Calendar' },
     available: `From ${chapter('calendar')}: the panel, Go, Skip It and the entries. The clock that brings a commitment round opens with ${chapter('clock')}.`,
-    short: 'The Calendar panel at the top of Home is what’s coming: the next thing that wants you, how far off it is, and up to five more after it. When the clock reaches something that wants you, it stops, pauses and asks. Go spends the hours it takes and the clock goes through them; Skip It walks away from a plan of your own, and Call It Off from a rehearsal with a classmate; Stand Here leaves the clock paused at it.',
+    short: 'The Calendar panel at the top of Home is what’s coming: the next thing you need to be at, how far off it is, and up to five more after it. When the clock reaches a commitment, it stops, pauses and asks. Go spends the hours it takes and the clock goes through them; Skip It walks away from a plan of your own, and Call It Off from a rehearsal with a classmate; Stand Here leaves the clock paused at it.',
     steps: [
-      'Read the Calendar panel on Home: the next thing that wants you, how long until it, its date and time, and under it up to five more things coming, a card statement or a birthday among them.',
+      'Read the Calendar panel on Home: the next thing you need to be at, how long until it, its date and time, and under it up to five more things coming, a card statement or a birthday among them.',
       'Press an entry’s name or its time to open it under the panel: what it is, when, how long it runs, and what missing it costs.',
       'When the clock stops at something, a dialog named for it gives the time and how long going takes. Press Go to be there.',
       'For a plan of your own, Skip It walks away instead, and for a rehearsal with a classmate, Call It Off. Stand Here closes the dialog and leaves the clock paused at the commitment.',
@@ -97,7 +97,7 @@ export const DAY: readonly GuideEntry[] = [
       { label: 'Money', value: 'None' },
     ],
     reads: [
-      { label: 'What Wants You', value: 'Anything booked for you to attend: classes, labs, rehearsal and performance calls, work-study shifts, orientation, the doctor, therapy, a partner’s rehearsal or lines with a classmate, and your own plans' },
+      { label: 'What Needs You There', value: 'Anything booked for you to attend: classes, labs, rehearsal and performance calls, work-study shifts, orientation, the doctor, therapy, a partner’s rehearsal or lines with a classmate, and your own plans' },
       { label: 'Whether You’re There', value: 'When it runs, the commitment reads whether you’re awake, out of hospital and in the town it names. In hospital, you were at nothing but Yale Health’s assessment; out of it and asleep, you weren’t there' },
       { label: 'Where The Clock Was Headed', value: 'Go carries on the move the stop broke off, so a jump to the morning still ends in the morning' },
     ],
@@ -114,24 +114,28 @@ export const DAY: readonly GuideEntry[] = [
     ],
     interpret: [
       'The time above the next commitment’s name counts down from now: “in 2h 30m” is two and a half hours away.',
-      'An entry opened says Something You Have To Be At, or Something The World Handles. The second, a card statement or the start of a term, runs whether you’re there or not.',
-      'A stop dialog with neither Skip It nor Call It Off, and a line saying it isn’t yours to skip, is one you can go to or stand at, never walk away from.',
+      'An entry, opened, says A Commitment or Happens Without You. The second, a card statement or the start of a term, runs whether you’re there or not.',
+      'A stop dialog with neither Skip It nor Call It Off, and a line saying only a plan of your own can be skipped, is one you can go to or stand at, never walk away from.',
     ],
     unavailable: [
       `Go, Skip It and the entries show Locked until ${chapter('calendar')} is read; pressing one opens the guide there.`,
-      'Skip It before the plan comes round: “It hasn’t come round yet. Call it off instead.”',
-      'Skip It on something the world booked: “That one isn’t yours to walk away from.”',
-      'Skip It on something already done or missed: “That’s already settled one way or the other.”',
+      'Skip It before the plan comes round: “It hasn’t started yet. To drop it, open it on the Calendar and press Call It Off.”',
+      'Skip It on something the world booked: “Only a plan you made yourself can be skipped.”',
+      'Skip It on something already done or missed: “That’s already over: it was kept, missed or called off.”',
     ],
     mistakes: [
       'Stand Here and then Sleep sleeps through the commitment: it runs while you’re asleep and counts as missed.',
       'Pressing Play after Stand Here skips nothing. The commitment runs at once, and you’re there for it live, hour by hour.',
       'A commitment can’t be undone once it has run. Before it comes round, a plan of your own can be called off on the Calendar screen.',
     ],
+    next: [
+      'Answer each stop as it comes: Go to be there, or Stand Here to wait.',
+      'To put a plan of your own on the calendar, press Open Calendar on Home.',
+    ],
     related: ['day.clock', 'day.advance', 'day.plans', 'day.needs', 'school.standing'],
     connections: [
       { to: 'day.clock', kind: 'prerequisite', why: 'A commitment only comes round as the clock moves, and Play opens with the chapter after this one.' },
-      { to: 'day.advance', kind: 'immediate', why: 'Every move of the clock, Advance and Choose An Event among them, stops here at anything that wants you.' },
+      { to: 'day.advance', kind: 'immediate', why: 'Every move of the clock, Advance and Choose An Event among them, stops here at each commitment.' },
       { to: 'day.plans', kind: 'optional', why: 'The plans you put on the calendar yourself are the commitments Skip It works on.' },
       { to: 'school.standing', kind: 'evaluation', why: 'Classes, calls and shifts you went to or missed are counted at the end of each term’s classes.' },
       { to: 'school.sick', kind: 'optional', why: 'Calling in sick before a school day begins excuses the commitments you’d otherwise miss.' },
@@ -141,7 +145,7 @@ export const DAY: readonly GuideEntry[] = [
       setup: 'Your first morning at Yale, at 7:30 AM, with Registration And Your Account at ten.',
       steps: [
         'Press Advance, then Tomorrow Morning.',
-        'On The Way says the jump comes to 1 commitment; press Advance.',
+        'On The Way says the move passes one commitment; press Advance.',
         'The clock stops at 10:00 AM, and a dialog named Registration And Your Account says going takes 2 hours. Press Go.',
       ],
       result: `Registration runs with you there, and the clock carries on through the night to 7:00 AM, where the jump was headed. A night you didn’t choose was slept on the way, so energy stands at ${COASTING_ENERGY_CEILING}.`,
@@ -156,7 +160,7 @@ export const DAY: readonly GuideEntry[] = [
     questions: ['How fast does time pass?', 'Does time pass while I’m away?', 'Does reading the guide cost time?', 'Why did the clock pause by itself?', 'What happens if I leave it running overnight?'],
     where: { route: '/home', label: 'The Top Bar’s Play Or Pause Button' },
     available: `From ${chapter('clock')}.`,
-    short: 'The clock at the top runs one to one with real time: a minute of yours is a minute of your character’s. Play starts it and Pause stops it. While it runs you tire and get hungry, what’s due comes due, and it pauses itself at anything that wants you. It holds while the guide or this help is open.',
+    short: 'The clock at the top runs one to one with real time: a minute of yours is a minute of your character’s. Play starts it and Pause stops it. While it runs you tire and get hungry, what’s due comes due, and it pauses itself at each commitment. It holds while the guide or this help is open.',
     steps: [
       'Press Play in the top bar. The button then reads Pause.',
       'Leave it running, and the day goes on around you a second at a time.',
@@ -174,7 +178,7 @@ export const DAY: readonly GuideEntry[] = [
     reads: [
       { label: 'The Wall Clock', value: 'Your device’s own clock, so a slow browser tab loses no time' },
       { label: 'Time Owed', value: `Time that passed while the tab was hidden or the device slept, paid out in steps of up to ${plural(STEP_MINUTES, 'minute')}` },
-      { label: 'What Wants You', value: 'Anything on the calendar that needs you: the live clock stops there and pauses' },
+      { label: 'What Needs You There', value: 'Anything on the calendar you need to be at: the live clock stops there and pauses' },
       { label: 'Open Help', value: 'While the guide or this help is open the clock holds, and the minutes spent reading are never counted' },
     ],
     now: [
@@ -184,7 +188,7 @@ export const DAY: readonly GuideEntry[] = [
     later: [
       'Each second costs what a waking second costs: energy and food run down, sleep debt builds, and what’s scheduled runs as its moment comes.',
       `Past midnight with the clock live, your character stays up with you. The live clock never moves more than ${plural(STEP_MINUTES, 'minute')} at a step, and a night is slept on its own only on a move of more than an hour; Sleep, or a jump of more than an hour, gives the night.`,
-      'Left on Play while the device sleeps, the world keeps counting. Back on screen it catches up through every minute, stopping at the first thing that wants you.',
+      'Left on Play while the device sleeps, the world keeps counting. Back on screen it catches up through every minute, stopping at the first commitment.',
       'Save & Exit, or closing the tab, stops the world at that moment until you Continue.',
     ],
     interpret: [
@@ -200,10 +204,14 @@ export const DAY: readonly GuideEntry[] = [
       'A dialog you’re reading, the Sleep dialog or a plan’s form, doesn’t hold the clock; only the guide and this help do. Pause first if you want time to think.',
       'Pausing doesn’t put a commitment off. It waits at its moment, however long the clock is stopped.',
     ],
+    next: [
+      'Press Play to start the day, and Pause when you step away.',
+      'To skip hours you don’t want to wait through, press Advance.',
+    ],
     related: ['day.calendar', 'day.advance', 'body.sleep', 'start.guide'],
     connections: [
-      { to: 'day.calendar', kind: 'immediate', why: 'The live clock stops and pauses at anything on the calendar that wants you, and asks.' },
-      { to: 'body.how', kind: 'immediate', why: 'Every second the clock runs is charged to your dials as waking time, as it passes.' },
+      { to: 'day.calendar', kind: 'immediate', why: 'The live clock stops and pauses at each commitment on the calendar, and asks.' },
+      { to: 'body.how', kind: 'immediate', why: 'Every second the clock runs is charged to your energy, food and the rest of your wellbeing as waking time, as it passes.' },
       { to: 'day.advance', kind: 'optional', why: 'For hours you don’t want to wait through, Advance jumps them.' },
       { to: 'body.sleep', kind: 'optional', why: 'A live clock keeps you up past midnight; Sleep is how the night gets slept.' },
     ],
@@ -225,7 +233,7 @@ export const DAY: readonly GuideEntry[] = [
     short: 'Advance moves the clock ahead on purpose when you don’t want to wait: an hour, this evening, tonight, tomorrow morning, the next event, next Monday, a week, or an event you choose. Everything on the way happens, in order. The clock stops at each commitment and asks, and a jump of more than an hour through the night is a night your character sleeps on their own.',
     steps: [
       'Press Advance in the top bar and pick a line: One Hour, This Evening (6:00 PM), Tonight (10:00 PM), Tomorrow Morning (7:00 AM), Next Event, Next Monday (9:00 AM) or One Week. Each says where it lands.',
-      'If the jump crosses something that wants you, On The Way lists it first: press Advance to go on, or Cancel.',
+      'If the move passes a commitment, On The Way lists it first: press Advance to go on, or Cancel.',
       'Or pick Choose An Event… for the next fourteen things on the calendar. Skip To Event shows what each jump crosses; press Skip To and the event’s name.',
       'At each stop, answer the dialog: Go, Stand Here, Skip It on a plan of yours, or Call It Off on a rehearsal with a classmate.',
     ],
@@ -239,7 +247,7 @@ export const DAY: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'Where It Lands', value: 'The line’s time, on your town’s clock' },
-      { label: 'What’s On The Way', value: 'Every scheduled thing between now and then, run in order at its moment' },
+      { label: 'What’s On The Way', value: 'Everything on the calendar between now and then, run in order at its moment' },
       { label: 'How Far You Sent It', value: 'More than an hour through the night, and your character sleeps it on their own from midnight; an hour or less, and they stay up with you' },
     ],
     now: [
@@ -253,7 +261,7 @@ export const DAY: readonly GuideEntry[] = [
     interpret: [
       'The gray detail on each line is where it lands; on Next Event, it names the thing.',
       'In Skip To Event, “3 on the way” means the clock will stop three times before it gets there.',
-      'The count of scheduled things processed on the way includes ones that don’t need you, such as a card statement.',
+      'The count of things on your calendar on the way includes ones that don’t need you, such as a card statement.',
     ],
     unavailable: [
       `Advance shows Locked until ${chapter('advance')} is read, and pressing it opens the guide there.`,
@@ -263,7 +271,11 @@ export const DAY: readonly GuideEntry[] = [
     mistakes: [
       'After midnight, Tomorrow Morning means seven on the next date, a whole day on. For this morning, use Next Event or One Hour.',
       'One Hour at a time through the night keeps your character up: an hour is short enough to count as you being there. Sleep, or a longer jump, gives the night.',
-      'A jump never runs over a commitment. If it stops early, that’s the thing that wanted you; go on from it with Go.',
+      'A jump never runs over a commitment. If it stops early, that’s the thing you need to be at; go on from it with Go.',
+    ],
+    next: [
+      'Before a long jump through the night, press Sleep instead: a night you choose puts back more.',
+      'Answer each stop on the way as it comes.',
     ],
     related: ['day.clock', 'day.calendar', 'body.sleep'],
     connections: [
@@ -294,24 +306,24 @@ export const DAY: readonly GuideEntry[] = [
       'Press Go There to open the screen a question or a notice is about.',
       'Press Dismiss to take a question off the list without answering it.',
       'Press Mark N Read, at the top of the panel, to mark every unread notice read at once.',
-      'Press Show All N, under the notices, to see every unread one before you do: the panel draws the six weightiest first, and Show The Heaviest Six goes back to them.',
-      'Press a question’s or a notice’s title to open it: how much it weighs, when it closes, and where it sits in the list.',
+      'Press Show All N, under the notices, to see every unread one before you do: the panel draws the six most important first, and Show The Six Most Important goes back to them.',
+      'Press a question’s or a notice’s title to open it: how urgent or important it is, when it closes, and where it sits in the list.',
     ],
     needs: [
       `The panel, Mark Read, the answers and Dismiss open with ${chapter('needs')}.`,
-      'An answer runs a command of its own, and that command’s chapter has to have been read too.',
+      'An answer does what the same button does on its own screen, so that screen’s chapter has to have been read too.',
     ],
     costs: [
       { label: 'Time', value: 'None: reading, dismissing and marking read move no clock' },
-      { label: 'Money', value: 'None for the panel. An answer costs what its own command costs, a fee or a payment.' },
+      { label: 'Money', value: 'None for the panel. An answer costs what the same button costs on its own screen, a fee or a payment.' },
     ],
     reads: [
-      { label: 'A Question’s Weight', value: 'Its urgency, out of a hundred. Overdue ones come first, then the heaviest, then the soonest due.' },
-      { label: 'A Notice’s Weight', value: 'Its importance, out of a hundred. The heaviest unread come first, then the newest.' },
-      { label: 'An Answer’s Own Lock', value: 'The command the button runs, held to its own chapter as it would be from its own screen' },
+      { label: 'A Question’s Urgency', value: 'Out of a hundred. Overdue ones come first, then the most urgent, then the soonest due.' },
+      { label: 'A Notice’s Importance', value: 'Out of a hundred. The most important unread come first, then the newest.' },
+      { label: 'An Answer’s Own Lock', value: 'What the button does, held to its own chapter as it would be on its own screen' },
     ],
     now: [
-      'An answer runs its command. Done, the question closes; refused, it stays open and the refusal shows.',
+      'An answer does what its button does on its own screen. Done, the question closes; if it can’t be done, the question stays open and the reason shows.',
       'Dismiss closes the question unanswered. What it was about stands: a return still falls due, and can still be filed from its screen.',
       'Mark Read marks every unread notice read, and the count beside Home falls by that many.',
     ],
@@ -324,21 +336,25 @@ export const DAY: readonly GuideEntry[] = [
     interpret: [
       'The stripe beside a question turns amber at an urgency of 65 and red at 85.',
       'Overdue, in red, means a question’s date has passed; it closes at the world’s next look.',
-      'All Clear means every question is answered and every notice read, nothing is owed past due, the bank and the card are in order, and the calendar has no clash for a month. No Decisions Waiting lists what still weighs: money owed, an overdrawn account, a card near its limit or behind, a late return, a clash.',
+      'All Clear means every question is answered and every notice read, nothing is owed past due, the bank and the card are in order, and the calendar has no clash for a month. No Questions Waiting lists what still weighs: money owed, an overdrawn account, a card near its limit or behind, a late return, a clash.',
       // Until 2026-10-17 this said the notices past the sixth moved up as those above them cleared, where Mark N Read
       // cleared them all at once and a notice past the sixth was on no screen (found by brief 13's interface playthroughs).
-      'Home shows six questions, with “N more waiting.” for the rest, and the six weightiest unread notices, with “N more waiting.” and Show All N for the rest. A question moves up as those above it clear. Mark N Read marks every unread notice read, shown or not.',
+      'Home shows six questions, with “N more waiting.” for the rest, and the six most important unread notices, with “N more unread.” and Show All N for the rest. A question moves up as those above it clear. Mark N Read marks every unread notice read, shown or not.',
     ],
     unavailable: [
       `Before ${chapter('needs')} is read, the panel shows Locked, with Read About It.`,
-      `An answer whose own chapter hasn’t been read is refused with the chapter to read: File It waits for ${chapter('papers')}.`,
-      '“That’s been done already.” A question answered once can’t be answered again.',
-      'An answer its command refuses keeps the question open, with the reason on screen: a payment the bank can’t cover, say.',
+      `An answer whose own chapter hasn’t been read says which chapter to read first: File It waits for ${chapter('papers')}.`,
+      '“That question is already settled: it was answered, or its date passed.” A question answered once can’t be answered again.',
+      'An answer that can’t be done keeps the question open, with the reason on screen: a payment the bank can’t cover, say.',
     ],
     mistakes: [
       'Dismiss doesn’t answer anything. Go to the question’s screen and do it there, before its date.',
       'Mark Read clears every unread notice at once, and Home lists only the unread, so read a notice before marking it.',
       'Opening a notice by its title doesn’t mark it read; only Mark Read does.',
+    ],
+    next: [
+      'Answer or dismiss each question before its date.',
+      'Press Go There to deal with a notice on its own screen, then Mark N Read.',
     ],
     related: ['day.calendar', 'taxes.return', 'start.find', 'documents.work'],
     connections: [
@@ -363,7 +379,7 @@ export const DAY: readonly GuideEntry[] = [
     questions: ['How do I put something on my calendar?', 'How do I cancel a plan?', 'What happens if two things clash?', 'Does keeping a plan do anything?', 'How far ahead can I plan?'],
     where: { route: '/workspace/calendar', label: 'The Calendar Screen, From Open Calendar On Home' },
     available: `From ${chapter('plans')}. The Calendar screen itself opens with ${chapter('calendar')}.`,
-    short: 'Open Calendar on Home is the month. Pick a day, Put Something On It, and give it a name, a start on the half hour and a length from half an hour to all day. A plan is a commitment: the clock stops at it and asks, it holds its hours for you, and Call It Off takes it off before it comes. Keeping one moves no dial and costs no money.',
+    short: 'Open Calendar on Home is the month. Pick a day, Put Something On It, and give it a name, a start on the half hour and a length from half an hour to all day. A plan is a commitment: the clock stops at it and asks, it holds its hours for you, and Call It Off takes it off before it comes. Keeping one costs no money and changes nothing in your wellbeing beyond the hours it takes.',
     steps: [
       'Press Open Calendar on Home’s Calendar panel, or C anywhere.',
       'Page the months with ‹ and ›, or Today, and press a day to open it under the month.',
@@ -381,40 +397,41 @@ export const DAY: readonly GuideEntry[] = [
       { label: 'Money', value: 'None' },
     ],
     reads: [
-      { label: 'Where You Are', value: 'A plan wants you in the town you’re in when you make it, and no move in the game takes you out of it' },
-      { label: 'Its Hours', value: 'From its start to its end, checked against everything else that wants you for a clash' },
+      { label: 'Where You Are', value: 'A plan is in the town you’re in when you make it, and no move in the game takes you out of it' },
+      { label: 'Its Hours', value: 'From its start to its end, checked for a clash against everything else you need to be at' },
       { label: 'Its Limits', value: `At least ${plural(SHORTEST_MINUTES, 'minute')}, at most ${plural(LONGEST_MINUTES / 60, 'hour')}, and no more than ${plural(FURTHEST_AHEAD_DAYS / 365, 'year')} ahead` },
       { label: 'The Lengths Offered', value: listed(LENGTHS) },
     ],
     now: [
-      'Put It On: the plan joins the calendar at once, on its day and in Next Thirty Days, and on Home once it’s among the next few things coming. A clash with anything else that wants you is marked Clash, and allowed.',
+      'Put It On: the plan joins the calendar at once, on its day and in Next Thirty Days, and on Home once it’s among the next few things coming. A clash with anything else you need to be at is marked Clash, and allowed.',
       'Call It Off: it leaves the calendar, and its hours are free again.',
     ],
     later: [
       'When the clock reaches it, the clock stops and asks: Go spends its length, and Skip It marks it missed, with a notice.',
       'Inside a Sleep you chose, it comes while you’re asleep and is missed, and the morning’s notice names it.',
       'In hospital when it comes, it’s missed even if you press Go, and no notice says so.',
-      'Before it begins it holds the time: an hour of practice, or anything in Look After Yourself, that would run into it is refused, with what’s coming and when.',
+      'Before it begins it holds the time: an hour of practice, or anything in Look After Yourself, that would run into it can’t be started, and the reason says what’s coming and when.',
       'While you’re at it, Sleep and everything in Look After Yourself but Eat A Meal wait until it ends.',
     ],
     interpret: [
-      'Clash marks two things that want you at once; the red box at the top of the screen counts the collisions in the next month.',
-      'You, beside an entry in Next Thirty Days, means it wants you there.',
+      'Clash marks two things you need to be at, at the same time; the red box at the top of the screen counts the clashes in the next month.',
+      'You, beside an entry in Next Thirty Days, means you need to be there.',
       'A plan’s status reads Pending, Completed, Missed or Canceled.',
       'Your Own Plans counts what’s Waiting, Called Off and Gone By.',
       'A plan’s hours, opened, give the temperature across them and how much of them is dark or wet.',
     ],
     unavailable: [
       `Open Calendar, Put Something On It and Call It Off show Locked until ${chapter('plans')} is read.`,
-      '“That’s already been and gone. Pick a time you can still get to.” The clock passed the start while the form was open.',
-      '“That’s further out than the calendar goes.” The day is past the furthest the calendar takes a plan.',
-      '“It’s already started. You either went or you didn’t.” Call It Off after the plan’s start has come.',
+      '“That time has already passed. Pick a time that’s still to come.” The clock passed the start while the form was open.',
+      '“The calendar takes plans up to … years ahead. Pick an earlier day.” The day is past the furthest the calendar takes a plan.',
+      '“It’s already started, so it can’t be called off now.” Call It Off after the plan’s start has come.',
     ],
     mistakes: [
       'The clock keeps running while the form is open, so on a live clock a start can pass before you press Put It On. Pause first.',
       'A plan made a few minutes ahead stops the clock almost at once.',
       'Call It Off before it begins leaves it Called Off and nothing more. Skip It once the clock stands at it counts it Gone By, with a notice.',
     ],
+    next: ['When the clock reaches your plan, press Go, or Skip It if you aren’t going.'],
     related: ['day.calendar', 'day.weather', 'day.needs', 'body.sleep'],
     connections: [
       { to: 'day.calendar', kind: 'scheduled', why: 'A plan is a commitment: when the clock reaches it, the clock stops and asks Go or Skip It.' },
@@ -431,7 +448,7 @@ export const DAY: readonly GuideEntry[] = [
         'Press Put Something On It. What Is It: Dinner With Sam. When It Starts: 8:00 PM. How Long It Takes: Two Hours.',
         'Press Put It On.',
       ],
-      result: `Dinner With Sam is on the calendar from 8:00 to 10:00 PM, wanting you in ${HAVEN.name}. At eight the clock stops and asks, and Go takes the clock to ten, or on to where it was headed if that’s later. Called off before eight, it counts as Called Off in Your Own Plans, and that’s all it leaves.`,
+      result: `Dinner With Sam is on the calendar from 8:00 to 10:00 PM, in ${HAVEN.name}. At eight the clock stops and asks, and Go takes the clock to ten, or on to where it was headed if that’s later. Called off before eight, it counts as Called Off in Your Own Plans, and that’s all it leaves.`,
     },
   },
   {
@@ -443,7 +460,7 @@ export const DAY: readonly GuideEntry[] = [
     questions: ['What’s the weather doing?', 'Does the weather change anything?', 'Will it rain tomorrow?', 'Why is it the same every time I look?', 'When does the flu come round?'],
     where: { route: '/home', label: 'Home, The Weather Panel' },
     available: `From ${chapter('weather')}.`,
-    short: 'The Weather panel is the sky over your town: now, the day’s high and low, humidity and wind, and the five days after today. Every figure opens: a day into its hours, an hour into itself, the sky into the week ahead. It’s worked out from the town’s climate, its season and the day’s own luck, so it’s the same every time you look. One thing in the game reads it: whether a workout is a run.',
+    short: 'The Weather panel is the sky over your town: now, the day’s high and low, humidity and wind, and the five days after today. Every figure opens: a day into its hours, an hour into itself, the sky into the week ahead. It’s calculated from the town’s climate, its season and the day’s own luck, so it’s the same every time you look. One thing in the game reads it: whether a workout is a run.',
     steps: [
       'Read the Weather panel on Home: the temperature now and the condition, the high and the low, humidity, wind and the climate, and five days after today.',
       'Press the temperature or the condition to open the sky: the wind, the humidity, how the day sits against the date’s normal, and What It’s Usually Like.',
@@ -460,22 +477,23 @@ export const DAY: readonly GuideEntry[] = [
       { label: 'The Day’s Luck', value: 'A draw from your save’s own seed for the town and the day: its warmth blended with the two days before it and its wet with the day before, so a cold snap lasts and a wet spell lingers' },
       { label: `Thunder In ${HAVEN.name}`, value: `About ${plural(HAVEN_THUNDER, 'day')} a year, ${HAVEN_THUNDER_FROM}`, estimate: true },
     ],
-    now: ['Opening the sky, a day or an hour changes nothing: the weather is worked out as you look, and never stored.'],
+    now: ['Opening the sky, a day or an hour changes nothing: the weather is calculated as you look, and never stored.'],
     later: [
       `Work Out reads the weather as its hour ends. Dry, at ${RUN_COLD} or warmer and feeling no hotter than ${RUN_HOT} with the humidity, it was a run, which builds ${RUN_MORE}% more fitness than a workout indoors.`,
       `The flu comes in the weeks your town’s climate brings it: its coldest weeks where the coldest month averages ${FLU_TIMING.coldDryBelowC}°C or less, its wettest where that month averages ${FLU_TIMING.humidRainyFromC}°C or more, and a blend between. That reads the climate’s usual year, never the day on the panel.`,
     ],
     interpret: [
       'Against Usual is how far the day sits from the date’s normal, in the degrees on show.',
-      'The high comes mid-afternoon and the low a little before dawn. A wet day rains for a spell of three to nine hours and is overcast either side of it.',
+      'The high comes around 3 PM and the low around 3 AM. A wet day rains for a spell of three to nine hours and is overcast either side of it.',
       'Fahrenheit and miles an hour in the United States and the few other countries that read Fahrenheit; Celsius and kilometers an hour elsewhere.',
-      'SLATE’s weather is a climate model of the town, so a day ahead is as fixed as today: what it shows for Thursday is what Thursday brings.',
+      'The weather is estimated from a climate model of the town, so a day ahead is as fixed as today: what it shows for Thursday is what Thursday brings.',
     ],
     unavailable: [`The panel and its figures stay plain until ${chapter('weather')} is read.`],
     mistakes: [
       'Expecting rain to call off a class or a shift: it changes neither. The one thing it changes is whether a workout is a run.',
       'Judging a run by the sky now: a workout reads the weather as its hour ends, and so does its line in Look After Yourself, which tells you before you press it whether it’ll be a run.',
     ],
+    next: ['For a run, choose Work Out in Look After Yourself on a dry, mild day: its line says whether it’ll be a run.'],
     related: ['body.look-after', 'start.home', 'day.plans', 'school.sick'],
     connections: [
       { to: 'body.look-after', kind: 'evaluation', why: 'Work Out reads the weather as it ends: dry and mild, it was a run, building more fitness and burning more.' },
@@ -489,7 +507,7 @@ export const DAY: readonly GuideEntry[] = [
         'Check the next hour is dry, and not freezing or sweltering.',
         'Open Look After Yourself and press Work Out.',
       ],
-      result: `The hour was a run: ${RUN_MORE}% more fitness than the same hour indoors, for more calories burned and a run’s higher chance of an injury. The Work Out line had said so before you pressed it: “A run in fine weather.”`,
+      result: `The hour was a run: ${RUN_MORE}% more fitness than the same hour indoors, for more calories burned and a run’s higher chance of an injury. The Work Out line had said so before you pressed it, opening “A run in fine weather”.`,
     },
   },
 ];

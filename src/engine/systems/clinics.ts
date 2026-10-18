@@ -101,7 +101,7 @@ export const MEMBERS_ONLY: Readonly<Record<'yale', string>> = { yale: 'Yale Heal
 export function clinicRefusal(person: Person, clinicId: string, at?: Instant): string | undefined {
   const c = clinicById(clinicId);
   if (!c) return 'No such practice.';
-  if (c.cityId !== person.currentLocationId) return 'Your doctor is in the town you live in.';
+  if (c.cityId !== person.currentLocationId) return 'Your doctor has to be in the town you live in.';
   if (!DOCTOR_KINDS.includes(c.kind)) return 'That isn’t a doctor’s practice.';
   if (c.members !== null && !seesThem(person, c, at)) return MEMBERS_ONLY[c.members];
   return undefined;

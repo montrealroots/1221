@@ -49,7 +49,7 @@ export const OPENING: Readonly<Record<string, Opening>> = {
     sendDays: 3,
     minimumAge: 18,
     withoutSsn: 'branch',
-    source: 'Chase: "International students ... must open account at a Chase branch", with a passport, a US address and a second ID such as the I-20, no SSN needed (research-student-status.json A3). Chase Total Checking page and Deposit Account Agreement of 14 June 2026: 18 or older; the debit card "typically arrives in about a week"; a transfer to or from a non-Chase account "typically takes 2-3 business days"',
+    source: 'Chase: "International students ... must open account at a Chase branch", with a passport, a US address and a second ID such as the I-20, no SSN needed. Chase Total Checking page and Deposit Account Agreement of June 14, 2026: 18 or older; the debit card "typically arrives in about a week"; a transfer to or from a non-Chase account "typically takes 2-3 business days"',
   },
   'us-bank-of-america': {
     reviewDays: 2,
@@ -57,7 +57,7 @@ export const OPENING: Readonly<Record<string, Opening>> = {
     card: { days: 6, business: true, digital: true },
     minimumAge: 18,
     withoutSsn: 'branch',
-    source: 'Bank of America: no SSN needed in person, a foreign passport and a second ID, with both addresses (research-student-status.json A3); "Your application will be processed in 1 to 2 business days"; Advantage Plus Banking "requires a $100 opening deposit"; "You will receive your debit card in 4-6 business days", with a digital card in the app "to use while you\'re waiting". Its time for a transfer to another bank isn\'t published',
+    source: 'Bank of America: no SSN needed in person, a foreign passport and a second ID, with both addresses; "Your application will be processed in 1 to 2 business days"; Advantage Plus Banking "requires a $100 opening deposit"; "You will receive your debit card in 4-6 business days", with a digital card in the app "to use while you\'re waiting". Its time for a transfer to another bank isn\'t published',
   },
   'us-wells-fargo': {
     minimumDeposit: 25_00,
@@ -65,7 +65,7 @@ export const OPENING: Readonly<Record<string, Opening>> = {
     sendDays: 2,
     minimumAge: 18,
     withoutSsn: 'branch',
-    source: 'Wells Fargo: online needs an SSN or ITIN, and in a branch a passport serves (research-student-status.json A3, medium: its FAQ also says a branch asks for one); "Be at least 18 years old"; Everyday Checking "$25 opening deposit"; a new card "within 5 to 7 calendar days"; "Initially the delivery speed is 2 business days for a transfer from your Wells Fargo account to your account at another financial institution". Its closing of a zero-balance account at a fee period\'s end, unless something posted in two months, isn\'t kept',
+    source: 'Wells Fargo: online needs an SSN or ITIN, and in a branch a passport serves (though its FAQ also says a branch asks for one); "Be at least 18 years old"; Everyday Checking "$25 opening deposit"; a new card "within 5 to 7 calendar days"; "Initially the delivery speed is 2 business days for a transfer from your Wells Fargo account to your account at another financial institution". Its closing of a zero-balance account at a fee period\'s end, unless something posted in two months, isn\'t kept',
   },
   'us-citi': {
     closesAtZeroAfterDays: 90,
@@ -74,7 +74,7 @@ export const OPENING: Readonly<Record<string, Opening>> = {
     minimumAge: 18,
     usPersonsOnly: true,
     closeWithPendingDays: 21,
-    source: 'Citi Consumer Deposit Account Agreement: "no minimum opening deposit"; "Accounts with zero balances are subject to closure after 90 days"; with items pending "the account may remain open for a period of up to 21 days"; a transfer to another bank the same day before 12:30 PM ET, the next after; $10,000 a day and $15,000 a month out for an account not yet "tenured" (when one becomes tenured isn\'t published, so SLATE keeps the lower limits throughout); its inbound limits are for money Citi pulls in, and SLATE has every transfer sent by the bank it leaves, so they aren\'t kept. Online, a US citizen or resident alien, 18 or older. Its debit card\'s delivery isn\'t published',
+    source: 'Citi Consumer Deposit Account Agreement: "no minimum opening deposit"; "Accounts with zero balances are subject to closure after 90 days"; with items pending "the account may remain open for a period of up to 21 days"; a transfer to another bank the same day before 12:30 PM ET, the next after; $10,000 a day and $15,000 a month out for an account not yet "tenured" (when one becomes tenured isn\'t published, so the game keeps the lower limits throughout); its inbound limits are for money Citi pulls in, and in the game every transfer is sent by the bank it leaves, so they aren\'t kept. Online, a US citizen or resident alien, 18 or older. Its debit card\'s delivery isn\'t published',
   },
   'us-capital-one': {
     openedWhenFunded: true,
@@ -82,7 +82,7 @@ export const OPENING: Readonly<Record<string, Opening>> = {
     usPersonsOnly: true,
     card: { days: 7, business: true },
     sendDays: 3,
-    source: 'Capital One 360 Checking: for "United States citizens or lawful permanent residents" (disclosure of 20 May 2026); "There is no minimum deposit required"; it "won\'t be considered \'opened\' until it\'s funded ... at least a penny"; it "must be funded within 60 days of account opening, otherwise it will automatically close"; the debit card "within 5-7 business days"; transfers to your own account elsewhere "typically take 2-3 business days". Its minimum age isn\'t stated',
+    source: 'Capital One 360 Checking: for "United States citizens or lawful permanent residents" (disclosure of May 20, 2026); "There is no minimum deposit required"; it "won\'t be considered \'opened\' until it\'s funded ... at least a penny"; it "must be funded within 60 days of account opening, otherwise it will automatically close"; the debit card "within 5-7 business days"; transfers to your own account elsewhere "typically take 2-3 business days". Its minimum age isn\'t stated',
   },
 };
 
@@ -97,15 +97,15 @@ export const ESTIMATE_CARD_DAYS = 7;
  */
 export const TRANSFERS: Readonly<Record<string, { instant?: boolean; days?: number; sameDayBefore?: number; scheme: string; source: string }>> = {
   GB: { instant: true, scheme: 'Faster Payments', source: 'Pay.UK: in seconds; the Payment Services Regulations 2017, reg. 86, allow until the next business day. A fraud hold of up to four business days (2024) isn\'t kept' },
-  IE: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886: every euro bank sends instant transfers from 9 October 2025, within ten seconds' },
+  IE: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886: every euro bank sends instant transfers from October 9, 2025, within ten seconds' },
   DE: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886, as for Ireland' },
   FR: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886, as for Ireland' },
   ES: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886, as for Ireland' },
   IS: { instant: true, scheme: 'the Central Bank\'s real-time system', source: 'Central Bank of Iceland: domestic krónur transfers settle in real time' },
-  JP: { sameDayBefore: 15.5, scheme: 'Zengin', source: 'Zengin-Net: in real time in its core hours, 8:30 AM to 3:30 PM on business days; at night and on holidays only between banks in its extended hours since October 2018, so SLATE takes the next business day then' },
+  JP: { sameDayBefore: 15.5, scheme: 'Zengin', source: 'Zengin-Net: in real time in its core hours, 8:30 AM to 3:30 PM on business days; at night and on holidays only between banks in its extended hours since October 2018, so the game uses the next business day then' },
   KR: { instant: true, scheme: 'KFTC interbank network', source: 'Korea Financial Telecommunications and Clearings Institute (BIS CPMI): in seconds' },
   MX: { instant: true, scheme: 'SPEI', source: 'Banco de México, SPEI rules: credited within 5 or 30 seconds, every day' },
   AU: { instant: true, scheme: 'NPP / Osko', source: 'Reserve Bank of Australia: near real time, every day, where both banks are on the NPP' },
-  NZ: { instant: true, scheme: 'interbank settlement', source: 'Payments NZ: settled within the day, every day since 2025, usually in one to two hours (secondary summaries); SLATE takes it as arriving at once' },
+  NZ: { instant: true, scheme: 'interbank settlement', source: 'Payments NZ: settled within the day, every day since 2025, usually in one to two hours (secondary summaries); the game has it arrive at once' },
   CA: { days: 1, scheme: 'electronic funds transfer', source: 'Payments Canada: an EFT the next business day, often one to three; Interac e-Transfer takes minutes but has its own limits, and the Real-Time Rail launches from late 2026' },
 };

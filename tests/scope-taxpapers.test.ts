@@ -210,7 +210,7 @@ describe('tax.catch_up_plan and tax.revise_plan', () => {
   const behind = once(() => {
     const sim = thaw(unpaid());
     papers(sim);
-    expect(press('tax.apply_plan')).toEqual(['Applied: answered by February 1, 2028.']);
+    expect(press('tax.apply_plan')).toEqual(['Applied. The IRS answers by February 1, 2028.']);
     sim.advanceTo(sim.now + 2 * 60_000);
     const p = sim.player.taxPlan!;
     // $1,700.39 over 72 months, rounded up; no fee, her $32,336.56 under 2.5 times $15,960, by direct debit.
@@ -219,7 +219,7 @@ describe('tax.catch_up_plan and tax.revise_plan', () => {
     sim.advanceTo(at(2028, 3, 10, 12));
     expect(p.status).toBe('default');
     expect(p.defaultBy).toBe(p.nextDue! + 30 * MS_DAY);
-    expect(titled(sim, 'Notice CP523: A Payment Missed').map((n) => n.body)).toEqual(['The bank couldn’t pay $23.62. Catch up by April 1, 2028, on Papers, or the plan ends and collection resumes.']);
+    expect(titled(sim, 'Notice CP523: A Payment Missed').map((n) => n.body)).toEqual(['Your bank couldn’t pay the plan’s $23.62. Catch up by April 1, 2028 on Papers, under Tax Returns, or the plan ends and collection resumes.']);
     expect(ret(sim).owed).toBe(1_700_39);
     return freeze(sim);
   });
@@ -231,7 +231,7 @@ describe('tax.catch_up_plan and tax.revise_plan', () => {
     papers(sim);
     // Her money is in the CD: refused, nothing paid.
     press('tax.catch_up_plan');
-    expect(refusal(sim, 'tax.catch_up_plan')).toBe('$23.62 is more than the bank can cover.');
+    expect(refusal(sim, 'tax.catch_up_plan')).toBe('Your bank can’t cover $23.62, so nothing was paid.');
     expect([p.status, ret(sim).owed]).toEqual(['default', 1_700_39]);
     breakCd(sim);
     papers(sim);
@@ -242,7 +242,7 @@ describe('tax.catch_up_plan and tax.revise_plan', () => {
     expect(ret(sim).payments!.at(-1)).toMatchObject({ amount: 23_62, tax: 23_62, penalty: 0, interest: 0, how: 'payment' });
     expect(fromChecking(sim, 'IRS payment plan, caught up')).toEqual([23_62]);
     expect(pending(sim, TAX_PLAN_KIND).map((i) => i.at)).toEqual([at(2028, 3, 10, 12) + 30 * MS_DAY]);
-    expect(refusal(sim, 'tax.catch_up_plan')).toBe('Your plan isn’t behind.');
+    expect(refusal(sim, 'tax.catch_up_plan')).toBe('Your plan isn’t behind, so there’s nothing to catch up.');
     const again = reload(sim);
     again.advanceTo(oldDefault + MS_HOUR);
     expect(again.player.taxPlan!.status).toBe('active');
@@ -257,8 +257,8 @@ describe('tax.catch_up_plan and tax.revise_plan', () => {
     const sim = thaw(behind());
     const p = sim.player.taxPlan!;
     const oldDefault = p.defaultBy!;
-    expect(refusal(sim, 'tax.revise_plan', { monthly: 23_61 })).toBe('The least a month is $23.62.');
-    expect(refusal(sim, 'tax.revise_plan')).toBe('The $6.00 fee is more than the bank can cover.');
+    expect(refusal(sim, 'tax.revise_plan', { monthly: 23_61 })).toBe('The lowest monthly payment is $23.62.');
+    expect(refusal(sim, 'tax.revise_plan')).toBe('Your bank can’t cover the $6.00 revision fee, so nothing was changed.');
     expect([p.status, p.monthly]).toEqual(['default', 23_62]);
     breakCd(sim);
     sim.must({ kind: 'tax.revise_plan', payload: { monthly: 100_00 } });
@@ -291,8 +291,8 @@ describe('tax.catch_up_plan and tax.revise_plan', () => {
     expect(titled(sim, 'Your IRS Payment Plan Has Ended')).toHaveLength(1);
     papers(sim);
     expect([drew('tax.catch_up_plan'), drew('tax.revise_plan')]).toEqual([[], []]);
-    expect(refusal(sim, 'tax.catch_up_plan')).toBe('Your plan isn’t behind.');
-    expect(refusal(sim, 'tax.revise_plan')).toBe('Only a monthly plan in force is revised.');
+    expect(refusal(sim, 'tax.catch_up_plan')).toBe('Your plan isn’t behind, so there’s nothing to catch up.');
+    expect(refusal(sim, 'tax.revise_plan')).toBe('Only a monthly plan that’s in force can be revised.');
     // Collection back at the LT11, five weeks after the 18 April due date, since the plan ended before it: one letter,
     // though the save was opened while the plan was behind. Until 2026-10-15 opening it put a second on the calendar
     // beside it (`armCollection`); until 2026-10-16 the five weeks ran from the plan's end, 6 May (`nextNotice`).
@@ -317,7 +317,7 @@ describe('tax.pay_state and tax.lien_release', () => {
     sim.advanceTo(due + 30 * MS_DAY + MS_HOUR);
     // A month begun: $585.33, its 10% ($58.533, $58.53) and 1% ($5.8533, $5.85), $649.71. Until 2026-10-15 the engine
     // rounded the whole, $649.7163, to $649.72 and gave the interest the $5.86 left.
-    expect(titled(sim, 'A Bill From Connecticut DRS').map((n) => [n.at, n.body])).toEqual([[due + 30 * MS_DAY, 'DRS Bill: $649.71 on your 2027 Connecticut return; the tax, its 10% penalty and 1% a month of interest are due.']]);
+    expect(titled(sim, 'A Bill From Connecticut DRS').map((n) => [n.at, n.body])).toEqual([[due + 30 * MS_DAY, 'DRS Bill: you owe $649.71 on your 2027 Connecticut return. The tax, its 10% penalty and 1% a month of interest are due. You can pay it on Papers, under Tax Returns.']]);
     // Read from the bill, three months begun on 2 July: each month's 1% to the cent, $5.85 three times, $17.55, as charged
     // a month at a time on the life that plays to 25 June below. Until 2026-10-15 the same read was $17.57.
     expect(statePartsOn(ct(sim), due, due + 75 * MS_DAY)).toEqual({ tax: 585_33, penalty: 58_53, interest: 17_55 });
@@ -331,7 +331,7 @@ describe('tax.pay_state and tax.lien_release', () => {
     const sim = thaw(unpaid());
     // In March, before anything of Connecticut's is due, her money is in the CD: a part refused. She breaks the CD.
     sim.advanceTo(at(2028, 3, 10, 12));
-    expect(refusal(sim, 'tax.pay_state', { state: 'us-ct', year: 2027, amount: 100_00 })).toBe('$100.00 is more than the bank can cover.');
+    expect(refusal(sim, 'tax.pay_state', { state: 'us-ct', year: 2027, amount: 100_00 })).toBe('Your bank can’t cover $100.00, so nothing was paid.');
     breakCd(sim);
     sim.advanceTo(at(2028, 6, 25, 12));
     const sd = ct(sim);
@@ -343,12 +343,12 @@ describe('tax.pay_state and tax.lien_release', () => {
     // Its release shut until it's paid, with its reason. The withdrawal as filed in error isn't drawn: the panel says why
     // in the engine's words (from 2026-10-16: until then it was drawn shut with them, on a lien no Connecticut state lets
     // it act on; tests/remaining-tax.test.ts).
-    expect(drew('tax.lien_release').map((c) => [c.disabled, c.title])).toEqual([[true, 'It’s released once the balance it secures is paid in full.']]);
+    expect(drew('tax.lien_release').map((c) => [c.disabled, c.title])).toEqual([[true, 'You can ask for its release once what it was filed for is paid in full.']]);
     expect(drew('tax.lien_dispute')).toEqual([]);
-    expect(screen).toContain('It secured tax owed when it was filed: it’s released once that’s paid, not withdrawn.');
+    expect(screen).toContain('It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.');
     expect(sim.must({ kind: 'tax.pay_state', payload: { state: 'us-ct', year: 2027, amount: 100_00 } })).toEqual({ paid: 100_00, owed: 561_41, tax: 23_92, penalty: 58_53, interest: 17_55 });
-    expect(refusal(sim, 'tax.pay_state', { state: 'us-ct', year: 2027, amount: 561_42 })).toBe('$561.41 is owed to Connecticut DRS; pay that or less.');
-    expect(refusal(sim, 'tax.pay_state', { state: 'us-ct', year: 2027, amount: 0 })).toBe('Pay something.');
+    expect(refusal(sim, 'tax.pay_state', { state: 'us-ct', year: 2027, amount: 561_42 })).toBe('You owe Connecticut DRS $561.41. Pay that amount or less.');
+    expect(refusal(sim, 'tax.pay_state', { state: 'us-ct', year: 2027, amount: 0 })).toBe('Enter an amount above zero.');
     papers(sim);
     expect(press('tax.pay_state')).toEqual(['Paid Connecticut DRS in full.']);
     expect(sd.owed).toBeUndefined();
@@ -360,20 +360,20 @@ describe('tax.pay_state and tax.lien_release', () => {
     expect(pending(sim, STATE_NOTICE_KIND)).toEqual([]);
     papers(sim);
     expect(drew('tax.lien_release').map((c) => c.disabled)).toEqual([false]);
-    expect(press('tax.lien_release')).toEqual(['Asked: released by July 25, 2028.']);
+    expect(press('tax.lien_release')).toEqual(['Asked. It’s to be released by July 25, 2028.']);
     expect(lien.releaseDue).toBe(at(2028, 7, 25, 12));
-    expect(refusal(sim, 'tax.lien_release', { state: 'us-ct', year: 2027 })).toBe('Asked: it’s released by July 25, 2028.');
-    expect(refusal(sim, 'tax.lien_dispute', { state: 'us-ct', year: 2027 })).toBe('It secured tax owed when it was filed: it’s released once that’s paid, not withdrawn.');
+    expect(refusal(sim, 'tax.lien_release', { state: 'us-ct', year: 2027 })).toBe('You’ve already asked. It’s to be released by July 25, 2028.');
+    expect(refusal(sim, 'tax.lien_dispute', { state: 'us-ct', year: 2027 })).toBe('It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.');
     const again = reload(sim);
     again.advanceTo(at(2028, 7, 25, 11));
     expect(ct(again).lien!.status).toBe('paid');
     again.advanceTo(at(2028, 8, 1, 12));
     expect(ct(again).lien).toMatchObject({ status: 'released', releasedAt: at(2028, 7, 25, 12) });
-    expect(titled(again, 'Your Connecticut Tax Lien Is Released').map((n) => n.body)).toEqual(['Connecticut DRS released the Connecticut Tax Lien on your 2027 Connecticut return, recorded with the town clerk’s land records and the Secretary of the State’s UCC filings.']);
+    expect(titled(again, 'Your Connecticut Tax Lien Is Released').map((n) => n.body)).toEqual(['Connecticut DRS released the Connecticut Tax Lien on your 2027 Connecticut return. The release is recorded with the town clerk’s land records and the Secretary of the State’s UCC filings.']);
     // Past 17 July, when the levy was pending before she paid, and none came.
     expect(again.now).toBeGreaterThan(ret(again).due + 90 * MS_DAY);
     expect(titled(again, 'Connecticut DRS Levied Your Accounts')).toEqual([]);
-    expect(refusal(again, 'tax.lien_release', { state: 'us-ct', year: 2027 })).toBe('It’s been released.');
+    expect(refusal(again, 'tax.lien_release', { state: 'us-ct', year: 2027 })).toBe('The lien has already been released.');
     expect(again.ledger.audit()).toEqual([]);
   });
   it('PLAYER JOURNEY: her Connecticut plan in force, its first $48.78 taken on 2 March, the rest paid by Pay on Papers on 15 March: the plan ends paid, and takes nothing more', () => {
@@ -409,11 +409,11 @@ describe('tax.apply_state_plan and tax.catch_up_state_plan', () => {
   it('PLAYER JOURNEY: asked for on Papers over 12 months, $48.78 a month, decided at once, its bill off the calendar; paid each 30 days, the third after the due date to its 10% penalty first, and paid off with no letter or lien, across a reload', () => {
     const sim = thaw(unpaid());
     papers(sim);
-    expect(press('tax.apply_state_plan')).toEqual(['Asked: $48.78 a month, decided by February 1, 2028.']);
+    expect(press('tax.apply_state_plan')).toEqual(['Applied: $48.78 a month. Connecticut DRS decides by February 1, 2028.']);
     sim.advanceTo(sim.now + 60_000);
     const p = sim.player.statePlans!['us-ct']!;
     expect([p.status, p.months, p.monthly, p.covers, p.fee]).toEqual(['active', 12, 48_78, 585_33, 0]);
-    expect(titled(sim, 'Connecticut DRS Approved Your Plan').map((n) => n.body)).toEqual(['$48.78 a month for 12 months, from March 2, 2028. Interest goes on; collection has stopped.']);
+    expect(titled(sim, 'Connecticut DRS Approved Your Plan').map((n) => n.body)).toEqual(['$48.78 a month for 12 months, from March 2, 2028. Collection has stopped, but interest keeps adding up.']);
     expect(pending(sim, STATE_NOTICE_KIND)).toEqual([]);
     breakCd(sim);
     sim.advanceTo(at(2028, 3, 2, 14));
@@ -442,11 +442,11 @@ describe('tax.apply_state_plan and tax.catch_up_state_plan', () => {
     sim.must({ kind: 'tax.apply_state_plan', payload: { state: 'us-ct', months: 12 } });
     sim.advanceTo(at(2028, 3, 2, 14));
     const p = sim.player.statePlans!['us-ct']!;
-    expect([p.status, p.why]).toEqual(['ended', 'Ended: a payment missed (SLATE’s reading: Connecticut DRS’s rule on a missed payment wasn’t found)']);
-    expect(titled(sim, 'Connecticut DRS Ended Your Plan').map((n) => n.body)).toEqual(['The bank couldn’t pay $48.78. Collection resumes on what’s owed to it.']);
+    expect([p.status, p.why]).toEqual(['ended', 'Ended: a payment missed (Connecticut DRS’s rule on a missed payment isn’t published, so the game ends the plan)']);
+    expect(titled(sim, 'Connecticut DRS Ended Your Plan').map((n) => n.body)).toEqual(['Your bank couldn’t pay the plan’s $48.78. Connecticut DRS doesn’t publish what happens after a missed payment, so in the game the plan ends. Collection resumes on what you owe it.']);
     papers(sim);
     expect(drew('tax.catch_up_state_plan')).toEqual([]);
-    expect(refusal(sim, 'tax.catch_up_state_plan', { state: 'us-ct' })).toBe('That plan isn’t behind.');
+    expect(refusal(sim, 'tax.catch_up_state_plan', { state: 'us-ct' })).toBe('That plan isn’t behind, so there’s nothing to catch up.');
     expect(STATE_TAX['us-ct'].plan.cure).toEqual({ kind: 'none' });
     const due = ret(sim).due;
     expect(pending(sim, STATE_NOTICE_KIND).map((i) => i.at)).toEqual([due + 30 * MS_DAY]);
@@ -457,11 +457,11 @@ describe('tax.apply_state_plan and tax.catch_up_state_plan', () => {
 
   it('refuses months outside 2 to 12 and a second plan, in Connecticut’s words, charging nothing', () => {
     const sim = thaw(unpaid());
-    expect(refusal(sim, 'tax.apply_state_plan', { state: 'us-ct', months: 13 })).toBe('Connecticut DRS sets a plan over 2 to 12 months.');
-    expect(refusal(sim, 'tax.apply_state_plan', { state: 'us-ct', months: 1 })).toBe('Connecticut DRS sets a plan over 2 to 12 months.');
+    expect(refusal(sim, 'tax.apply_state_plan', { state: 'us-ct', months: 13 })).toBe('Connecticut DRS sets up a plan over 2 to 12 months.');
+    expect(refusal(sim, 'tax.apply_state_plan', { state: 'us-ct', months: 1 })).toBe('Connecticut DRS sets up a plan over 2 to 12 months.');
     expect(sim.player.statePlans?.['us-ct']).toBeUndefined();
     sim.must({ kind: 'tax.apply_state_plan', payload: { state: 'us-ct', months: 6 } });
-    expect(refusal(sim, 'tax.apply_state_plan', { state: 'us-ct', months: 6 })).toBe('You have a plan with Connecticut DRS.');
+    expect(refusal(sim, 'tax.apply_state_plan', { state: 'us-ct', months: 6 })).toBe('You already have a plan with Connecticut DRS.');
   });
 
   /** Her 2026 return left to Connecticut: assessed, its lien filed, its $3.35 and penalties taken by levy in 2027. */
@@ -480,14 +480,14 @@ describe('tax.apply_state_plan and tax.catch_up_state_plan', () => {
     const sim = thaw(levied());
     expect(sim.must<{ monthly: number }>({ kind: 'tax.apply_state_plan', payload: { state: 'us-ct', months: 12 } }).monthly).toBe(48_78);
     // That year's lien, filed on DRS's assessment and replaced by her own return, secured tax she owed: no error.
-    expect(refusal(sim, 'tax.lien_dispute', { state: 'us-ct', year: 2026 })).toBe('It secured tax owed when it was filed: it’s released once that’s paid, not withdrawn.');
+    expect(refusal(sim, 'tax.lien_dispute', { state: 'us-ct', year: 2026 })).toBe('It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.');
   });
 
   it('PLAYER JOURNEY: a year levied and still owed does refuse it: her 2027 balance’s levy on 17 July finds nothing to take', () => {
     const sim = thaw(levied());
     sim.advanceTo(at(2028, 7, 20, 12));
-    expect(titled(sim, 'Connecticut DRS Levied Your Accounts').at(-1)!.body).toMatch(/^\$0\.00 taken from your bank accounts for your 2027 Connecticut return; \$[\d,.]+ is still owed\.$/);
-    expect(refusal(sim, 'tax.apply_state_plan', { state: 'us-ct', months: 12 })).toBe('Connecticut DRS won’t set up a plan on an account it has levied: pay it, or ask by phone, which SLATE doesn’t model.');
+    expect(titled(sim, 'Connecticut DRS Levied Your Accounts').at(-1)!.body).toMatch(/^Connecticut DRS took \$0\.00 from your bank accounts for your 2027 Connecticut return\. You still owe \$[\d,.]+\.$/);
+    expect(refusal(sim, 'tax.apply_state_plan', { state: 'us-ct', months: 12 })).toBe('Connecticut DRS won’t set up a plan on an account it has levied. Pay the balance instead. It also takes requests by phone, which the game doesn’t offer.');
   });
 });
 
@@ -498,7 +498,7 @@ describe('tax.apply_state_plan and tax.catch_up_state_plan', () => {
 describe('what her life never reaches', () => {
   it('tax.amend: her filed 2026 and 2027 match the record, and a year more on the clock leaves them so', () => {
     const sim = thaw(unpaid());
-    const none = 'Your return as filed matches what’s on record: there’s nothing to amend.';
+    const none = 'Your return as filed matches what’s on record, so there’s nothing to amend.';
     expect([refusal(sim, 'tax.amend', { year: 2026 }), refusal(sim, 'tax.amend', { year: 2027 })]).toEqual([none, none]);
     const before = JSON.stringify(ret(sim).figures);
     sim.advanceTo(at(2029, 2, 2, 12));
@@ -520,7 +520,7 @@ describe('what her life never reaches', () => {
     sim.advanceTo(at(2028, 9, 5, 12));
     expect(titled(sim, 'Final Notice Of Intent To Levy')).toEqual([]);
     sim.advanceTo(at(2028, 9, 6, 12));
-    expect(titled(sim, 'Final Notice Of Intent To Levy').map((n) => [n.at, n.body])).toEqual([[ret(sim).due + 140 * MS_DAY, 'Notice LT11: $1,789.55 on your 2027 return; in 30 days it takes what you owe from your bank accounts.']]);
+    expect(titled(sim, 'Final Notice Of Intent To Levy').map((n) => [n.at, n.body])).toEqual([[ret(sim).due + 140 * MS_DAY, 'Notice LT11: you owe $1,789.55 on your 2027 return. In 30 days the IRS takes what you owe from your bank accounts. Paying it, or a payment plan, stops the levy.']]);
     expect(ret(sim).lien).toBeUndefined();
     expect(refusal(sim, 'tax.federal_lien_withdraw', { year: 2027 })).toBe('There’s no federal tax lien on that year.');
     papers(sim);
@@ -571,7 +571,7 @@ describe('Connecticut’s due date on a 1040-NR', () => {
     expect(pending(sim, STATE_NOTICE_KIND).map((i) => i.at)).toEqual([ctDue + 30 * MS_DAY]);
     sim.advanceTo(ctDue + 30 * MS_DAY + MS_HOUR);
     // A month begun from 15 April: $3.35, its 10% ($0.335, $0.34) and 1% ($0.0335, $0.03), $3.72.
-    expect(titled(sim, 'A Bill From Connecticut DRS').map((n) => [n.at, n.body])).toEqual([[ctDue + 30 * MS_DAY, 'DRS Bill: $3.72 on your 2026 Connecticut return; the tax, its 10% penalty and 1% a month of interest are due.']]);
+    expect(titled(sim, 'A Bill From Connecticut DRS').map((n) => [n.at, n.body])).toEqual([[ctDue + 30 * MS_DAY, 'DRS Bill: you owe $3.72 on your 2026 Connecticut return. The tax, its 10% penalty and 1% a month of interest are due. You can pay it on Papers, under Tax Returns.']]);
   });
 });
 
@@ -636,13 +636,13 @@ describe('documents.apply_ssn on a London-born student', () => {
     };
     const held = asked(true);
     expect(held.sim.player.ssn?.status).toBe('issued');
-    expect(held.toast).toEqual(['Applied: answered by February 1, 2027.']);
+    expect(held.toast).toEqual(['Applied. The IRS answers by February 1, 2027.']);
     expect(held.sim.player.taxPlan!.history.map((x) => x.what)).toEqual(['Applied online']);
     held.sim.advanceTo(held.sim.now + 2 * 60_000);
     expect(held.sim.player.taxPlan!.status).toBe('active');
 
     const without = asked(false);
-    expect(without.toast).toEqual(['Applied: answered by March 3, 2027.']);
+    expect(without.toast).toEqual(['Applied. The IRS answers by March 3, 2027.']);
     expect(without.sim.player.taxPlan!.history.map((x) => x.what)).toEqual(['Form 9465 mailed: no Social Security number for the online application']);
     expect(without.sim.player.taxPlan!.decideAt).toBe(at(2027, 2, 1, 12) + 30 * MS_DAY);
   });

@@ -267,7 +267,7 @@ describe('savings', () => {
     expect(answer.on).toBeGreaterThan(sim.now + 85 * MS_DAY);
     expect(saver.closedAt).toBeUndefined();
     expect(savingsNotice(sim, saver)?.at).toBe(answer.on);
-    expect(run(sim, 'bank.close_savings', { accountId: saver.id }).error).toMatch(/Notice is given/);
+    expect(run(sim, 'bank.close_savings', { accountId: saver.id }).error).toMatch(/You’ve already given notice/);
     const held = saver.balance;
     sim.advanceTo(answer.on! + 60_000);
     expect(saver.closedAt).toBeDefined();

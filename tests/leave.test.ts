@@ -32,7 +32,7 @@ describe('PLAYER JOURNEY: a medical leave and the way back', () => {
     let sim = student('lv-med');
     tended(sim, at(2026, 10, 5));
     // Not well, and the first term not done: no personal leave, but a medical one on a physician's recommendation.
-    expect(leaveRefusal(sim, sim.player, 'personal', 'family')).toMatch(/after one term completed/);
+    expect(leaveRefusal(sim, sim.player, 'personal', 'family')).toMatch(/only after you’ve completed one term/);
     expect(leaveRefusal(sim, sim.player, 'medical', 'illness')).toMatch(/physician’s written recommendation/);
     // FIXTURE: the flu, as `careFor` gives one.
     healthOf(sim.player).fluUntil = sim.now + 4 * MS_DAY;
@@ -257,7 +257,7 @@ describe('failing, repeating and disqualification', () => {
     const s = sim.player.school!;
     expect(s.repeat!.status).toBe('granted');
     expect(s.offset).toBe(2);
-    expect(titled(sim, 'You’ll Repeat The Year')[0]!.body).toMatch(/SLATE’s faculty model/);
+    expect(titled(sim, 'You’ll Repeat The Year')[0]!.body).toMatch(/The Bulletin sets no rule for repeating a course; the decision is the game’s\./);
     // The second fall is the first year's fall again; the first attempts stay.
     tended(sim, at(2027, 8, 24, 12));
     expect(academicTerm(s, 2)).toBe(0);
@@ -276,7 +276,7 @@ describe('failing, repeating and disqualification', () => {
     s.history.push({ term: 3, standing: 'concern', attendance: 1, growth: 0, classGrowth: 0, reason: 'TEST SETUP' });
     // FIXTURE: the same first year failed again: the faculty don't approve it a second time.
     Object.assign(s, { termsBegun: 4 });
-    expect(repeatRefusal(sim, sim.player)).toMatch(/don’t approve year 1 a second time/);
+    expect(repeatRefusal(sim, sim.player)).toMatch(/don’t approve repeating year 1 a second time/);
   });
 
   it('PLAYER JOURNEY: a last year failed waits thirty days for a repeat, then bills the seventh term, holds the account unpaid, and lifts the hold paid', () => {
@@ -316,7 +316,7 @@ describe('failing, repeating and disqualification', () => {
     fund(sim, owed + 1_000_00);
     sim.must({ kind: 'school.pay_balance', payload: { amount: 1_000_00 } });
     expect(s.hold).toBeDefined();
-    expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: owed * 2 } }).error).toMatch(/is owed; pay that or less/);
+    expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: owed * 2 } }).error).toMatch(/is owed\. Pay that or less\./);
     sim.must({ kind: 'school.pay_balance', payload: {} });
     expect(accountOwed(sim, sim.player)).toBe(0);
     expect(s.hold).toBeUndefined();

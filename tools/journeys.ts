@@ -839,7 +839,8 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
     const optWords = new Set((rec.monthly as { opt: string }[]).map((m) => m.opt.replace(/[A-Z][a-z]+ \d+, \d{4}/g, 'DATE')));
     if (citizen && [...optWords].some((w) => !w.includes('citizen'))) fails.push(`a citizen's OPT refusal: ${[...optWords].join(' | ')}`);
     const left = ['dismissed', 'withdrawn', 'withheld'].includes(String(e.standing));
-    if (!citizen && left && !(rec.monthly as { opt: string; standing?: string }[]).filter((m) => m.standing === e.standing).every((m) => m.opt.includes('left without it'))) fails.push('OPT not refused after leaving without the degree');
+    // The refusal's own words (`optRefusal`): "you left without one" from 2026-10-17 (brief 14), "you left without it" until then.
+    if (!citizen && left && !(rec.monthly as { opt: string; standing?: string }[]).filter((m) => m.standing === e.standing).every((m) => m.opt.includes('you left without one'))) fails.push('OPT not refused after leaving without the degree');
     const applied = rec.acts.filter((x) => x.includes('documents.apply_opt') && !x.includes('refused'));
     const issued = has(rec, 'OPT Approved');
     if (applied.length && !issued.length && e.on && String(e.on) > '2029-08-01') fails.push('OPT applied for and never decided');
@@ -883,7 +884,7 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
       const cw = r.coursework;
       const forCoursework = cw && cw.shown >= 4 && cw.unready >= 0.5 * cw.shown;
       if (forCoursework && !warned.length) fails.push(`term ${r.term}: stepped for coursework (${cw!.unready} of ${cw!.shown}) with no warning in the term`);
-      for (const w of warned) { const m = /^(\d+) of the (\d+)/.exec(w[3]); if (m && cw && Number(m[1]) > cw.unready) fails.push(`term ${r.term}: the warning counted ${m[1]}, the review ${cw.unready}`); }
+      for (const w of warned) { const m = /^So far this term, (\d+) of the (\d+)/.exec(w[3]); if (m && cw && Number(m[1]) > cw.unready) fails.push(`term ${r.term}: the warning counted ${m[1]}, the review ${cw.unready}`); }
       const rank = { good: 0, concern: 1, warning: 2, dismissed: 3 } as Record<string, number>;
       if (r.standing in rank && prevStanding in rank && rank[r.standing]! > rank[prevStanding]! + 1) fails.push(`term ${r.term}: ${prevStanding} to ${r.standing}, more than a step`);
       if (r.standing === 'dismissed' && prevStanding !== 'warning' && !has(rec, /Fails|Disqualif/).length) fails.push(`term ${r.term}: dismissed from ${prevStanding}`);
@@ -891,7 +892,7 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
     }
     // The cause a warning names is among the parts short on the pieces it counts.
     for (const w of words) {
-      const m = /Most often short on them: ([^,]+), on/.exec(w[3]);
+      const m = /What held most of them back was “([^”]+)”, unfinished on/.exec(w[3]);
       if (!m) continue;
       const label = m[1]!.toLowerCase();
       const shortLabels = new Set((rec.showings as { at: string; shortLabels: string[]; band: string }[]).filter((x) => x.at <= w[0] && x.band === 'unready').flatMap((x) => x.shortLabels.map((l) => String(l).toLowerCase())));

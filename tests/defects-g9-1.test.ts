@@ -55,7 +55,7 @@ describe('the course record’s header, against the code', () => {
     for (const kind of named) {
       const sim = life(`g9-${kind}`);
       const r = sim.execute({ kind, payload: {} });
-      expect(r.ok ? '' : r.error, kind).not.toMatch(/Unknown command/);
+      expect(r.ok ? '' : (r.detail ?? r.error), kind).not.toMatch(/Unknown command/);
     }
   });
 });
@@ -78,7 +78,7 @@ describe('the Incomplete notice', () => {
     const said = sim.universe.notifications.slice(before).filter((n) => n.category === 'school');
     expect(said.map((n) => n.title).sort()).toEqual(['Incomplete: Acting I', 'Not Passed: Voice I']);
     const incomplete = said.find((n) => n.title === 'Incomplete: Acting I')!;
-    expect(incomplete.body).toContain('a week’s each');
+    expect(incomplete.body).toContain('each covering a week of the course');
     for (const n of said) expect(`${n.title} ${n.body}`, n.title).not.toContain("'");
   });
 });

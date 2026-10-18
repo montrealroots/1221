@@ -43,12 +43,12 @@ export function grainWords(g: GrainRead | undefined): string {
   if (!g) return '';
   const where = g.on.map((x) => `${x.points > 0 ? '+' : ''}${x.points} on the ${DIMENSION_LABEL[x.dimension].toLowerCase()}`).join(', ');
   const why = [...new Set(g.on.map((x) => x.why))].join('; ');
-  const lead = g.points > 0 ? `The way you played it suited the scene (${why}): it gave the take ${g.points} points (${where})` : g.points < 0 ? `The way you played it went against the grain of the scene (${why}): it cost the take ${Math.abs(g.points)} points (${where})` : `The way you played it came to nothing either way against the scene (${why})`;
+  const lead = g.points > 0 ? `The way you played it suited the scene (${why}): it gave the take ${g.points} points (${where})` : g.points < 0 ? `The way you played it worked against the scene (${why}): it cost the take ${Math.abs(g.points)} points (${where})` : `The way you played it made no difference either way to the scene (${why})`;
   return `${lead}. What your abilities and techniques cost it, apart from that: ${g.ability} points.`;
 }
 
 /** A kept take's grain in a sentence (`Take.grain`), from what it kept: the same account after a reload. */
 export function takeGrainWords(g: { points: number; ability: number; why: string }): string {
-  const lead = g.points > 0 ? `Played that way it suited the scene (${g.why}), which gave it ${g.points} points` : g.points < 0 ? `Played that way it went against the grain of the scene (${g.why}), which cost it ${Math.abs(g.points)} points` : `Played that way it came to nothing either way against the scene (${g.why})`;
+  const lead = g.points > 0 ? `Played that way it suited the scene (${g.why}), which gave it ${g.points} points` : g.points < 0 ? `Played that way it worked against the scene (${g.why}), which cost it ${Math.abs(g.points)} points` : `Played that way it made no difference either way to the scene (${g.why})`;
   return `${lead}; your abilities and techniques cost it ${g.ability}.`;
 }

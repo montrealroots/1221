@@ -203,8 +203,8 @@ describe('h-needs', () => {
     drawn(sim, Home);
     expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
   };
-  const WAITING = 'What Needs You No decision is waiting on you. How This Works No Decisions Waiting';
-  const ALL_CLEAR = 'What Needs You No decision is waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.';
+  const WAITING = 'What Needs You No questions are waiting on you. How This Works No Questions Waiting';
+  const ALL_CLEAR = 'What Needs You No questions are waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do.';
 
   it('PLAYER JOURNEY: the checking moved to savings at 7:30 on the first morning, the fall’s Yale Health plan, $1,882, goes unpaid at nine: “You owe $1,882 that went unpaid.” at noon, across a reload, paid back out of savings at midnight; her twin who kept it is All Clear', () => {
     const played = (move: boolean) => {
@@ -285,7 +285,7 @@ describe('h-needs', () => {
     if (openDecisions(sim).some((d) => d.title === 'Your 2026 Tax Return')) expect(press(button('File It'))).toMatchObject({ ok: true });
     expect(openDecisions(sim)).toEqual([]);
     markRead(sim);
-    const said = `${WAITING} $1,999 is with collections.`;
+    const said = `${WAITING} $1,999 you owe is with a collection agency.`;
     expect(needs(sim)).toBe(said);
     expect(needs(reload(sim))).toBe(said);
     // h-money: the card closed to collections, the checking stays, and the Money line names it.
@@ -326,7 +326,7 @@ describe('h-needs', () => {
     // Chase pays an item up to $500 past zero (`perItemCover`, SLATE's estimate), so the bill is paid into an overdraft.
     const chase = played(true, 'us-chase');
     expect(healthOf(chase.player).bills[0]!.paid).toBe(true);
-    expect(needs(chase)).toBe(`${WAITING} Your current account is $50 overdrawn.`);
+    expect(needs(chase)).toBe(`${WAITING} Your account is $50 overdrawn.`);
   });
 });
 
@@ -336,7 +336,7 @@ describe('h-money', () => {
     // 40 € at 0.92 to the dollar, $43, and no savings or card (tests/need-paths.test.ts).
     expect(sim.ledger.accountsOf(sim.player.id).map((a) => [a.name, a.balance])).toEqual([['Chase Total Checking', 43_00]]);
     expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: checkingOf(sim).id } }).error)
-      .toBe('It’s your only current account. Open another first: SLATE keeps every life a current account to be paid into.');
+      .toBe('It’s your only current account. Open another one first: you always need a current account to be paid into.');
     expect(between(drawn(sim, Home).text, 'Your Affairs', 'School')).toMatch(/Money Chase Total Checking: \$43\.00\. Worth \$43\. Chase How This Works/);
   });
 });
@@ -449,7 +449,8 @@ const SLICES: [number, number, number][] = [
 const kept: { text?: string; april2027?: string; graduated?: string } = {};
 const statusDecision = (sim: Simulation) => Object.values(sim.universe.decisions).filter((d) => d.refType === 'us-status');
 const optPermits = (sim: Simulation) => documentsOf(sim.player).filter((d) => d.kind === 'permit' && d.name === 'Employment Authorization, OPT');
-const journey = (sim: Simulation) => between(drawn(sim, ProfileWorkspace).text, 'School Journey', 'Your School');
+// To the paragraph's closing period before the School button (from 2026-10-17): “Left the School” has the word too.
+const journey = (sim: Simulation) => `${between(drawn(sim, ProfileWorkspace).text, 'School Journey', '. School')}.`;
 
 describe('the graduate, played', () => {
   for (const [y, m, d] of SLICES) {
@@ -474,7 +475,7 @@ describe('the graduate, played', () => {
     const mean = (c: object) => SKILLS.reduce((a, s) => a + (c as Record<string, number>)[s.id]!, 0) / SKILLS.length;
     const mine = mean(sim.player.craft!);
     const place = 1 + sim.player.school!.classmates.filter((x) => mean(x.craft) > mine).length;
-    const line = `School Graduated, ${place} of 16 in the class. Yale How This Works`;
+    const line = `School Graduated, ${place}${[11, 12, 13].includes(place % 100) || place % 10 > 3 ? 'th' : ['th', 'st', 'nd', 'rd'][place % 10]} of 16 in the class. Yale How This Works`;
     for (const one of [sim, reload(sim)]) {
       const affairs = between(drawn(one, Home).text, 'Your Affairs');
       expect(affairs).toContain(line);
@@ -509,7 +510,7 @@ describe('the graduate, played', () => {
     expect(later.player.usOutOfStatus).toBeUndefined();
     later.advanceTo(at(2029, 8, 30, 13));
     expect(optPermits(later)[0]).toMatchObject({ status: 'valid', issuedAt: at(2029, 8, 30, 12), expiresAt: at(2030, 8, 30, 12) });
-    expect(titled(later, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from August 30, 2029 to August 30, 2030, with no more than 90 days between jobs in all.']);
+    expect(titled(later, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from August 30, 2029 to August 30, 2030, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.']);
   });
 
   it('p-journey-history: PLAYER JOURNEY: the played graduate’s School Journey says every part she was on stage in once, The Seagull’s Nina among them, as her credits keep them', () => {

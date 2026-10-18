@@ -206,10 +206,10 @@ describe('bank.borrow', () => {
     expect(before.player.credit!.score).toBe(795);
     const start = checking.balance;
     const shown = lending(before, 'us-citi', ['borrowing'], checking, { borrow: '2000', months: '60' });
-    expect(shown.text).toContain('10.24% to 18.49% a year, by your record.');
-    expect(shown.text).toContain('The bank lends against wages paid in, and none has been paid in this month.');
+    expect(shown.text).toContain('10.24% to 18.49% a year, set by your credit record.');
+    expect(shown.text).toContain('The bank lends against wages paid in over the last 30 days, and none has been paid in.');
     expect(shown.button('Borrow It').disabled).toBe(true);
-    expect(refused(before, 'bank.borrow', ASK)).toBe('The bank lends against wages paid in, and none has been paid in this month.');
+    expect(refused(before, 'bank.borrow', ASK)).toBe('The bank lends against wages paid in over the last 30 days, and none has been paid in.');
     expect(loansOf(before, before.player)).toEqual([]);
     expect(checking.balance).toBe(start);
 
@@ -262,10 +262,10 @@ describe('bank.borrow', () => {
     sim.advanceTo(at(2026, 9, 12));
     // 35% of the $138 the clock paid is $48.30. Over 12 months the payment is $176.06 (the same annuity), past it.
     expect(refused(sim, 'bank.borrow', { ...ASK, months: 12 })).toBe('A payment of $176 a month is more than the bank lets a loan take of $138 of wages.');
-    expect(refused(sim, 'bank.borrow', { ...ASK, amount: 1_999_99 })).toBe('The bank lends $2,000 or more.');
+    expect(refused(sim, 'bank.borrow', { ...ASK, amount: 1_999_99 })).toBe('The bank lends at least $2,000.');
     // TEST SETUP: the record set at a figure, each in turn.
     sim.player.credit!.score = 579;
-    expect(refused(sim, 'bank.borrow', ASK)).toBe('The bank turns down a credit record this poor.');
+    expect(refused(sim, 'bank.borrow', ASK)).toBe('Your credit record isn’t strong enough for the bank.');
     // At 580, the top of the range: 18.49% makes the payment $51.33, past the $48.30.
     sim.player.credit!.score = 580;
     expect(refused(sim, 'bank.borrow', ASK)).toBe('A payment of $51 a month is more than the bank lets a loan take of $138 of wages.');
@@ -297,7 +297,7 @@ describe('bank.break_term', () => {
     const screen = accountLife(sim, 'us-chase');
     // Citi's CDs of a year or less: 90 days' simple interest on the principal, $1,000 × 4.25% × 90 ÷ 365 = $10.479.
     expect(screen.text).toContain('CD, $1,000.00 at 4.25%');
-    expect(screen.text).toContain('Broken now it costs $10.48.');
+    expect(screen.text).toContain('Breaking it now costs $10.48.');
     expect(screen.text).toContain('The bank’s terms: On the principal withdrawn: 90 days\' simple interest for CD terms of 1 year or less');
     const press = screen.button('Break It Early');
     expect(press.disabled).toBe(false);
@@ -354,9 +354,9 @@ describe('bank.break_term', () => {
     give.onClick!();
     expect(term.breakAt).toBe(asked + 35 * MS_DAY);
     const closing = accountLife(sim, 'gb-natwest');
-    expect(closing.text).toContain('Closing on February 9, 2026, on the notice given.');
+    expect(closing.text).toContain('It closes on February 9, 2026, on the notice you gave.');
     expect(closing.button('Give 35 Days’ Notice').disabled).toBe(true);
-    expect(refused(sim, 'bank.break_term', { accountId })).toBe('It closes on February 9, 2026, on the notice given.');
+    expect(refused(sim, 'bank.break_term', { accountId })).toBe('It already closes on February 9, 2026, on the notice you gave.');
     sim.advanceTo(asked + 34 * MS_DAY);
     expect(term.closedAt).toBeUndefined();
     sim.advanceTo(asked + 36 * MS_DAY);
@@ -366,7 +366,7 @@ describe('bank.break_term', () => {
     expect(posted(sim, current, 'Fixed-Term Savings broken early')).toEqual([{ at: term.closedAt!, amount: 10_000_00 }]);
     // The £10,000 is what arrived, the charge already taken: until the third round of 2026-10-13 the notice said “less”
     // it, which read as less than £10,000 to come (defect 57 of that round).
-    expect(notices(sim, 'Your Fixed-Term Savings Closed')[0]!.body).toMatch(/^On the notice given: £10,000\.00 to your current account, after £\d+\.\d\d taken for closing early\.$/);
+    expect(notices(sim, 'Your Fixed-Term Savings Closed')[0]!.body).toMatch(/^Your notice period ended: £10,000\.00 went to your current account, after a £\d+\.\d\d penalty for closing early\.$/);
   });
 });
 
@@ -391,7 +391,7 @@ describe('bank.claim_unclaimed', () => {
     const letter = Object.values(sim.universe.decisions).find((d) => d.refType === 'unclaimed-notice' && d.refId === savings.id)!;
     expect(letter.detail).toContain('it goes to the state’s unclaimed-property office as unclaimed money.');
     const whole = `$${Math.round(held / 100).toLocaleString('en-US')}`;
-    expect(notices(sim, 'Unclaimed Money').map((n) => n.body)).toEqual([`${whole} left untouched in Chase Savings for 3 years went to the state’s unclaimed-property office. It can be claimed back from that office.`]);
+    expect(notices(sim, 'Unclaimed Money').map((n) => n.body)).toEqual([`${whole} left unused in Chase Savings for 3 years went to the state’s unclaimed-property office. It can be claimed back from that office.`]);
     for (const words of [letter.detail, notices(sim, 'Unclaimed Money')[0]!.body]) expect(words).not.toMatch(/New York|Comptroller|yes, from/);
 
     const again = reload(sim);
@@ -400,11 +400,11 @@ describe('bank.claim_unclaimed', () => {
     const liability = again.nominalAccount('liability_other', 'Unclaimed Money');
     expect(liability.balance).toBe(held);
     const screen = accountLife(again, 'us-chase');
-    expect(screen.text).toContain(`${whole} went to the state’s unclaimed-property office after years untouched. It can be claimed back from that office.`);
+    expect(screen.text).toContain(`${whole} went to the state’s unclaimed-property office after years unused. It can be claimed back from that office.`);
     expect(screen.text).not.toMatch(/New York|Comptroller|yes, from/);
     // The rules shown are Connecticut’s, by its statute, which gives the three years taken: until the third round of
     // 2026-10-13 they were New York’s research, a law firm’s note on its Comptroller (defect 58 of that round).
-    expect(screen.text).toContain('The country’s rules: each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, 2026-10-13), and SLATE takes the three years for every state.');
+    expect(screen.text).toContain('The country’s rules: each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, October 13, 2026); the game uses the three years for every state.'); // the day as the game writes one from 2026-10-17 (brief 14's data pass)
     expect(screen.text).not.toContain('cullenllp');
     const b0 = bank.balance;
     screen.button('Claim It Back').onClick!();
@@ -441,7 +441,7 @@ describe('bank.debit_overdraft', () => {
   it('at Chase: opted in by its button, the clock’s groceries go into the overdraft, and the $34 fee is held and charged after the next business day; opted out, nothing is bought and nothing charged', () => {
     const { sim, checking } = lockedOut('g10-optin', 'us-chase', -45_00);
     const asked = lending(sim, 'us-chase', ['borrowing'], checking);
-    expect(asked.text).toContain('You haven’t opted in, so an everyday debit card purchase the account can’t cover goes on the card, or is declined, and costs no fee. Bills and checks go into the overdraft either way. The law has a US bank ask first.');
+    expect(asked.text).toContain('You haven’t opted in, so an everyday debit card purchase the account can’t cover goes on the card, or is declined, and costs no fee. Other payments, like autopay and standing orders, go into the overdraft either way. The law requires a US bank to ask you first.');
     asked.button('Opt In To Debit Card Overdrafts').onClick!();
     expect(checking.debitOverdraft).toBe(true);
     expect(lending(sim, 'us-chase', ['borrowing'], checking).text).toContain('You’ve opted in: an everyday debit card purchase the account can’t cover is paid into the overdraft, with its fee.');
@@ -456,7 +456,7 @@ describe('bank.debit_overdraft', () => {
     expect(c.balance).toBe(-55_00);
     expect(c.pendingItems).toEqual([{ day: '2026-08-25', count: 1 }]);
     expect(fees(opted, c)).toEqual([]);
-    expect(lending(opted, 'us-chase', ['borrowing'], c).text).toContain('1 overdraft fee is held, $34.00: each comes off after the end of August 26, 2026 unless the account is back to −$50.00 or better.');
+    expect(lending(opted, 'us-chase', ['borrowing'], c).text).toContain('1 overdraft fee is on hold, $34.00. It’s charged after the end of August 26, 2026, unless the account is back to −$50.00 or better by then.');
     // Wednesday is the next business day: still held through it, charged once it has ended.
     opted.advanceTo(at(2026, 8, 26));
     expect(fees(opted, c)).toEqual([]);
@@ -492,7 +492,7 @@ describe('bank.debit_overdraft', () => {
   it('is refused where the bank doesn’t ask, at Citi and Capital One, and at Bank of America, which never pays a debit purchase into an overdraft, in their words and on its screen', () => {
     for (const bankId of ['us-citi', 'us-capital-one']) {
       const sim = student(`g10-optin-${bankId}`, bankId);
-      expect(refused(sim, 'bank.debit_overdraft', { on: true }), bankId).toBe('Your bank doesn’t ask you this.');
+      expect(refused(sim, 'bank.debit_overdraft', { on: true }), bankId).toBe('Your bank doesn’t offer this choice.');
       expect(primary(sim).debitOverdraft).toBeUndefined();
     }
     const boa = student('g10-optin-boa', 'us-bank-of-america');
@@ -514,9 +514,9 @@ describe('bank.open_term', () => {
     const checking = primary(sim);
     const start = checking.balance;
     expect(start).toBe(92_391_00);
-    expect(refused(sim, 'bank.open_term', { amount: 100_000_00 })).toBe('Chase Total Checking holds $92,391.');
-    expect(refused(sim, 'bank.open_term', { amount: 1_000_00, bankId: 'us-wells-fargo' })).toBe('A term deposit at Wells Fargo is funded from your current account there: open one first.');
-    expect(refused(sim, 'bank.open_term', { amount: 0 })).toBe('Say how much to put in.');
+    expect(refused(sim, 'bank.open_term', { amount: 100_000_00 })).toBe('Chase Total Checking has only $92,391.00, so no term deposit was opened.');
+    expect(refused(sim, 'bank.open_term', { amount: 1_000_00, bankId: 'us-wells-fargo' })).toBe('A term deposit at Wells Fargo is paid for from your current account there. Open a current account at Wells Fargo first.');
+    expect(refused(sim, 'bank.open_term', { amount: 0 })).toBe('Enter how much to put away.');
     expect(termsOf(sim, sim.player)).toEqual([]);
     expect(checking.balance).toBe(start);
   });
@@ -671,20 +671,20 @@ describe('bank.pay_collections', () => {
     // Owed and unpaid: nothing to pay it with yet, every reader holds it.
     expect(refused(sim, 'bank.pay_collections', { amount: 100_00 })).toBe('There’s nothing in the account to pay it with.');
     expect(troubles(sim, sim.player).filter((t) => t.kind === 'collections')).toEqual([{ kind: 'collections', amount: owed }]);
-    expect(applied(sim)).toMatchObject({ approved: false, said: expect.stringMatching(/ said no: you have a debt in collections\.$/) });
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for somebody who owes it a charged-off debt.');
-    expect(refused(sim, 'bank.switch', { bankId: 'us-chase' })).toBe('Chase won’t open an account for somebody who owes it a charged-off debt.');
+    expect(applied(sim)).toMatchObject({ approved: false, said: expect.stringMatching(/ turned down your application: you have a debt in collections\.$/) });
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for you while you owe it a debt it has charged off.');
+    expect(refused(sim, 'bank.switch', { bankId: 'us-chase' })).toBe('Chase won’t open an account for you while you owe it a debt it has charged off.');
 
     // Friday's wages land in the new account; on Saturday, $100 from the panel.
     sim.advanceTo(at(2026, 11, 7));
     const bankOf = bankById(moved.bankId!)!;
     const panel = lending(sim, bankOf.id, ['borrowing'], moved, { toCollections: '100' });
     expect(panel.text).toContain(`In Collections $${Math.round(owed / 100)} owed`);
-    expect(panel.text).toContain('Chase closed your account after it was overdrawn for 60 days, SLATE’s estimate of how long a bank lets one run, and charged off what it couldn’t recover. It’s on your record until it’s paid.');
+    expect(panel.text).toContain('Chase closed your account after it was overdrawn for 60 days, and charged off what it couldn’t recover. How long a bank lets an overdraft run is estimated. It’s on your record until it’s paid.');
     const b0 = moved.balance;
     expect(b0).toBeGreaterThanOrEqual(100_00);
     panel.button('Pay It').onClick!();
-    expect(h.toasts).toEqual(['Paid.']);
+    expect(h.toasts).toEqual([expect.stringMatching(/^Paid \$[\d,]+ toward the debt\.$/)]);
     expect(moved.balance - b0).toBe(-100_00);
     expect(debt.balance).toBe(-(owed - 100_00));
     expect(debt.closedAt).toBeUndefined();
@@ -725,8 +725,8 @@ describe('bank.pay_collections', () => {
     expect(toChase.id).not.toBe(toCiti.id);
     expect(toChase.balance).toBe(heldBefore(sim, [chase, savings], 'Charged off by Chase'));
     expect(toCiti.balance).toBe(heldBefore(sim, [citi], 'Charged off by Citi'));
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for somebody who owes it a charged-off debt.');
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi' })).toBe('Citi won’t open an account for somebody who owes it a charged-off debt.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for you while you owe it a debt it has charged off.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi' })).toBe('Citi won’t open an account for you while you owe it a debt it has charged off.');
     expect(['us-chase', 'us-citi']).not.toContain(primary(sim).bankId);
   });
 
@@ -807,24 +807,24 @@ describe('bank.reactivate', () => {
     sim.advanceTo(at(2028, 9, 1));
     expect([capital.dormant, savings.dormant]).toEqual([true, true]);
     for (const name of ['360 Checking', '360 Performance Savings']) {
-      expect(notices(sim, `${name} Is Dormant`).map((n) => ({ at: n.at, body: n.body }))).toEqual([{ at: at(2028, 9, 1, 0), body: 'Untouched for 24 months. Capital One has blocked it until you use it again.' }]);
+      expect(notices(sim, `${name} Is Dormant`).map((n) => ({ at: n.at, body: n.body }))).toEqual([{ at: at(2028, 9, 1, 0), body: 'It hasn’t been used for 24 months, so Capital One has blocked it. Reactivate it on Money, under Your Accounts Over Time, to use it again.' }]);
     }
     // Capital One stops the interest on an account it holds dormant.
     const stopped = savings.accrued;
     sim.advanceTo(at(2028, 9, 2));
     expect(savings.accrued).toBe(stopped);
     // Every way in refused: Move Money out, cash in, and the ATM once 360 Checking is primary again.
-    expect(refused(sim, 'bank.transfer', { fromId: savings.id, toId: capital.id, amount: 100_00 })).toBe('360 Performance Savings is dormant; use Reactivate first.');
+    expect(refused(sim, 'bank.transfer', { fromId: savings.id, toId: capital.id, amount: 100_00 })).toBe('360 Performance Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
     sim.must({ kind: 'cash.withdraw', payload: { amount: 200_00, from: 'atm' } });
-    expect(refused(sim, 'cash.deposit', { amount: 100_00, toId: savings.id, at: 'counter' })).toBe('360 Performance Savings is dormant; use Reactivate first.');
+    expect(refused(sim, 'cash.deposit', { amount: 100_00, toId: savings.id, at: 'counter' })).toBe('360 Performance Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
     sim.must({ kind: 'bank.set_primary', payload: { accountId: capital.id } });
-    expect(refused(sim, 'cash.withdraw', { amount: 100_00, from: 'atm' })).toBe('360 Checking is dormant; use Reactivate first.');
+    expect(refused(sim, 'cash.withdraw', { amount: 100_00, from: 'atm' })).toBe('360 Checking is dormant. Reactivate it first, under Your Accounts Over Time.');
     expect(refused(sim, 'bank.reactivate', { accountId: citi.id })).toBe('That account isn’t dormant.');
 
     // Your Accounts Over Time, as the player has it: a line and a Reactivate for each.
     const screen = accountLife(sim, 'us-capital-one');
-    expect(screen.text).toContain('360 Checking is dormant, blocked until it’s used again.');
-    expect(screen.text).toContain('360 Performance Savings is dormant, blocked until it’s used again.');
+    expect(screen.text).toContain('360 Checking is dormant: the bank has blocked it until you reactivate it.');
+    expect(screen.text).toContain('360 Performance Savings is dormant: the bank has blocked it until you reactivate it.');
     expect(screen.text).toContain('The bank’s terms: Dormant after 24 months with no transactional activity.');
     const presses = screen.buttons.filter((b) => b.text === 'Reactivate');
     expect(presses).toHaveLength(2);

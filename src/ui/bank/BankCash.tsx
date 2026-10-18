@@ -34,20 +34,20 @@ export function BankCash({ bankId }: { bankId: string }) {
   const withdraw = () => {
     const answer = run<{ fee: number; ownerFee?: boolean }>('cash.withdraw', { amount: cents(outAmount), from });
     if (answer.ok && answer.value) {
-      toast(`${money(cents(outAmount))} in hand${answer.value.fee > 0 ? `, for ${money(answer.value.fee)}` : ''}.`, 'positive');
+      toast(`You took out ${money(cents(outAmount))}${answer.value.fee > 0 ? `, for a ${money(answer.value.fee)} fee` : ''}.`, 'positive');
       setOutAmount('');
     }
   };
   const deposit = () => {
     const answer = run('cash.deposit', { amount: cents(inAmount), toId: into || accounts[0]?.id, at });
-    if (answer.ok) { toast('Paid in.', 'positive'); setInAmount(''); }
+    if (answer.ok) { toast(`You paid in ${money(cents(inAmount))}.`, 'positive'); setInAmount(''); }
   };
 
   return (
-    <Panel title="Cash" subtitle={`${money(inHand)} in hand.`} help="bank.cash">
+    <Panel title="Cash" subtitle={`You have ${money(inHand)} in cash.`} help="bank.cash">
       <div className="field-row">
         <div className="field">
-          <label htmlFor="cash-out">Take Out ({cur})</label>
+          <label htmlFor="cash-out">Amount To Take Out ({cur})</label>
           <input id="cash-out" inputMode="decimal" value={outAmount} onChange={(e) => setOutAmount(e.target.value)} />
         </div>
         <div className="field">
@@ -63,8 +63,8 @@ export function BankCash({ bankId }: { bankId: string }) {
       </div>
       {quote && (
         <p className="small" style={{ margin: 'var(--s2) 0' }}>
-          {quote.refused ?? `${quote.fee > 0 ? `${money(quote.fee)} for it` : 'Free'}${quote.ownerCharge ? `, and ${money(quote.ownerCharge)} to the machine’s owner, what one charges on average` : ''}${quote.ownerFee ? ', and the machine’s owner may add a fee of its own, which the screen shows before you take it; SLATE doesn’t know it' : ''}.`}
-          {from === 'card' && cash && !quote.refused && ` It draws ${(cash.cashApr * 100).toFixed(2)}% a year from today, with no grace period.`}
+          {quote.refused ?? `${quote.fee > 0 ? `It costs ${money(quote.fee)}` : 'It’s free'}${quote.ownerCharge ? `, plus ${money(quote.ownerCharge)} to the machine’s owner, the average such charge` : ''}.${quote.ownerFee ? ' The machine’s owner may add a fee of its own, shown on the machine before you take the cash. That fee isn’t known, so the game doesn’t charge it.' : ''}`}
+          {from === 'card' && cash && !quote.refused && ` A cash advance is charged ${(cash.cashApr * 100).toFixed(2)}% a year from today, with no interest-free period.`}
         </p>
       )}
       <Gated feature="cash.withdraw" className="btn btn-sm" disabled={!outAmount || Boolean(quote?.refused)} onClick={withdraw}>Take It Out</Gated>
@@ -73,7 +73,7 @@ export function BankCash({ bankId }: { bankId: string }) {
         <div style={{ marginTop: 'var(--s4)' }}>
           <div className="field-row">
             <div className="field">
-              <label htmlFor="cash-in">Pay In ({cur})</label>
+              <label htmlFor="cash-in">Amount To Pay In ({cur})</label>
               <input id="cash-in" inputMode="decimal" value={inAmount} onChange={(e) => setInAmount(e.target.value)} />
             </div>
             <div className="field">
@@ -95,8 +95,8 @@ export function BankCash({ bankId }: { bankId: string }) {
         </div>
       )}
       <Fine>
-        {rules ? `Fees and limits from the bank: ${rules.source}.` : 'This bank’s cash fees weren’t found, so taking cash out here costs nothing.'}
-        {cash?.estimated.includes('cashAdvance') ? ` The cash advance’s fee is SLATE’s estimate of a US card’s: ${Number((cash.cashFeeShare * 100).toFixed(2))}% or ${money(cash.cashFeeMin)}.` : ''}
+        {rules ? `Source: ${rules.source}.` : 'This bank’s cash fees weren’t found, so taking cash out here is free in the game.'}
+        {cash?.estimated.includes('cashAdvance') ? ` The cash advance fee is estimated from a typical US card: ${Number((cash.cashFeeShare * 100).toFixed(2))}% or ${money(cash.cashFeeMin)}, whichever is more.` : ''}
       </Fine>
     </Panel>
   );

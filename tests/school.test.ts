@@ -166,7 +166,7 @@ describe('one student, one calendar', () => {
   it('offers no Cabaret show where no week can be, in a term’s last three weeks', () => {
     const sim = life('cab-late');
     play(sim, at(2026, 11, 25, 12));
-    expect(cabaretRefusal(sim, sim.player)).toMatch(/No Cabaret week/);
+    expect(cabaretRefusal(sim, sim.player)).toMatch(/no Cabaret week left this term/);
     expect(sim.execute({ kind: 'school.cabaret', payload: {} }).ok).toBe(false);
   }, 180_000);
 });
@@ -420,7 +420,7 @@ describe('classes', () => {
     sim.advanceTo(at(2026, 9, 1, 12));
     const late = sim.execute({ kind: 'school.call_in_sick', payload: {} });
     expect(late.ok).toBe(false);
-    expect(late.error).toMatch(/been and gone/);
+    expect(late.error).toMatch(/classes are over/);
   });
 
   it('can’t be called in sick from on a day with nothing at school, and can on a Saturday shift (from 2026-10-10)', () => {
@@ -757,7 +757,7 @@ describe('the Yale Cabaret', () => {
       const key = `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.day).padStart(2, '0')}`;
       expect(period.off.some(([a, b]) => key >= a && key <= b), `${key} is in a recess`).toBe(false);
     }
-    expect(sim.execute({ kind: 'school.cabaret', payload: {} })).toMatchObject({ ok: false, error: 'You’re in a Cabaret show this term already.' });
+    expect(sim.execute({ kind: 'school.cabaret', payload: {} })).toMatchObject({ ok: false, error: 'You’re already in a Cabaret show this term.' });
     const last = calls.at(-1)!.at;
     for (const one of [sim, control]) play(one, last + 60_000);
     expect(sim.player.school!.cabaret!.performed).toBeGreaterThan(0);
@@ -777,7 +777,7 @@ describe('the Yale Cabaret', () => {
     const warned = life('cabaret-warning');
     play(warned, at(2026, 9, 7, 18));
     warned.player.school!.standing = 'warning';
-    expect(warned.execute({ kind: 'school.cabaret', payload: {} })).toMatchObject({ ok: false, error: 'Nobody on academic warning may take part in the Cabaret.' });
+    expect(warned.execute({ kind: 'school.cabaret', payload: {} })).toMatchObject({ ok: false, error: 'You can’t take part in the Cabaret while you’re on academic warning.' });
     const cast = life('cabaret-cast');
     cast.player.school!.classmates[0]!.craft.scene = 99;
     cast.advanceTo(at(2027, 1, 4, 9) + 60_000);
@@ -874,10 +874,10 @@ describe('the Yale Summer Cabaret', () => {
   it('forms in the spring of the first and second years, for a student in good standing, by the end of April', () => {
     const fall = life('summer-fall');
     play(fall, at(2026, 10, 1, 12));
-    expect(fall.execute({ kind: 'school.summer_cabaret', payload: {} })).toMatchObject({ ok: false, error: 'The company forms in the spring, for students with a year still to come.' });
+    expect(fall.execute({ kind: 'school.summer_cabaret', payload: {} })).toMatchObject({ ok: false, error: 'The company forms in the spring, from students with at least a year still to go.' });
     const late = life('summer-late');
     play(late, at(2027, 5, 2, 12));
-    expect(late.execute({ kind: 'school.summer_cabaret', payload: {} })).toMatchObject({ ok: false, error: 'This summer’s company has formed.' });
+    expect(late.execute({ kind: 'school.summer_cabaret', payload: {} })).toMatchObject({ ok: false, error: 'This summer’s company has already formed.' });
     const concern = life('summer-concern');
     play(concern, at(2027, 3, 20, 12));
     concern.player.school!.standing = 'concern';

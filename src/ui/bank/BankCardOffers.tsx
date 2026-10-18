@@ -49,17 +49,18 @@ function CardOffers({ card }: { card: Account }) {
   const transfers = credit.transfers ?? [];
   const plans = credit.plans ?? [];
   const room = planRoom(sim.player, card);
+  const roomWords = room > 0 ? `You can put up to ${money(room)} into one.` : 'There’s nothing on the card to put into one right now.';
   if (!terms.introUntil && !terms.moneyTransferFee && !terms.planFeeShare && !(card?.bankId && INTEREST_PLANS[card.bankId]) && !terms.rewardsRate && transfers.length === 0 && plans.length === 0) return null;
 
   const lines: string[] = [];
-  if (terms.standardApr !== undefined && terms.introUntil !== undefined) lines.push(`${pct(terms.apr)} on purchases until ${formatDate(terms.introUntil, sim.zone)}, then ${pct(terms.standardApr)}.${bankById(card.bankId ?? '')?.iso === 'US' ? ' A payment sixty days late ends it early.' : ''}`);
-  else if (terms.introUntil !== undefined && credit.introLost) lines.push('Its introductory rate ended with a payment sixty days late.');
+  if (terms.standardApr !== undefined && terms.introUntil !== undefined) lines.push(`${pct(terms.apr)} on purchases until ${formatDate(terms.introUntil, sim.zone)}, then ${pct(terms.standardApr)}.${bankById(card.bankId ?? '')?.iso === 'US' ? ' A payment that’s sixty days late ends it early.' : ''}`);
+  else if (terms.introUntil !== undefined && credit.introLost) lines.push('Its introductory rate ended because a payment was sixty days late.');
   for (const one of transfers) {
-    lines.push(`${one.kind === 'balance' ? 'A balance transfer' : 'A money transfer'}: ${money(one.owed)} at ${pct(transferRate(sim, credit, one))}${one.introUntil !== undefined && sim.now < one.introUntil && !credit.introLost ? ` until ${formatDate(one.introUntil, sim.zone)}, then ${pct(one.apr)}` : ''}, interest from the day it was made.`);
+    lines.push(`${one.kind === 'balance' ? 'A balance transfer' : 'A money transfer'}: ${money(one.owed)} at ${pct(transferRate(sim, credit, one))}${one.introUntil !== undefined && sim.now < one.introUntil && !credit.introLost ? ` until ${formatDate(one.introUntil, sim.zone)}, then ${pct(one.apr)}` : ''}. Interest is charged on it from the day it was made.`);
   }
   // Each plan's fee is the one it was made with, for its life, nothing on one made in Chase's introduction
   // (`PLAN_FREE_IN_INTRO`): until 2026-10-12 that plan carried its 1.72%, and this said so.
-  for (const plan of plans) lines.push(`A plan: ${money(plan.left)} left, ${money(plan.monthly)} a month for ${plan.monthsLeft === 1 ? 'one more month' : plan.monthsLeft + ' more months'}, and ${money(plan.fee)} a month in place of interest.`);
+  for (const plan of plans) lines.push(`A payment plan: ${money(plan.left)} left, paid at ${money(plan.monthly)} a month for ${plan.monthsLeft === 1 ? 'one more month' : plan.monthsLeft + ' more months'}${plan.fee > 0 ? `, with a ${money(plan.fee)} monthly fee instead of interest` : ', with no fee and no interest'}.`);
   // A plan made today is free for its life while Chase's introduction runs (`planFreeIfMadeNow`); until 2026-10-12
   // the offer said 1.72% a month then too.
   const freeUntil = planFreeIfMadeNow(sim, card, credit, terms) && terms.introUntil !== undefined ? formatDate(terms.introUntil, sim.zone) : undefined;
@@ -70,7 +71,7 @@ function CardOffers({ card }: { card: Account }) {
   const part = (what: string, b: { rate: number; cap?: number; after?: number } | undefined, cur2: string) => b === undefined ? undefined
     : `${pct(b.rate)} on ${what}${b.cap !== undefined ? ` to the first ${money(inSaveMoney(sim, b.cap, cur2))} ${per[bonus!.per]}, ${pct(b.after ?? 0)} after` : ''}`;
   const bonusWords = bonus && card?.bankId ? [part('groceries', bonus.food, bankById(card.bankId)?.currency ?? 'USD'), bonus.other ? part('everything else', bonus.other, bankById(card.bankId)?.currency ?? 'USD') : `${pct(terms.rewardsRate ?? 0)} on everything else`].filter(Boolean).join('; ') : undefined;
-  if (terms.rewardsRate || bonus) lines.push(`Rewards: ${bonusWords ?? `${pct(terms.rewardsRate ?? 0)} back on every purchase`}, counted at each statement. ${money(credit.rewards ?? 0)} to redeem.${terms.rewardsWords ? ` The bank’s words: ${terms.rewardsWords}. ${bonus ? 'Groceries are what a card buys here: nothing pays a bill since 2026-10-09.' : 'Its categories are ones a card doesn’t buy in SLATE, so the base rate is what it would earn.'}` : ''}`);
+  if (terms.rewardsRate || bonus) lines.push(`Rewards: ${bonusWords ?? `${pct(terms.rewardsRate ?? 0)} back on every purchase`}, added up at each statement. You have ${money(credit.rewards ?? 0)} to redeem.${terms.rewardsWords ? ` In the bank’s words: ${terms.rewardsWords}. ${bonus ? 'In the game, groceries are the only thing a card buys: no bill is paid by card.' : 'Those categories are things a card doesn’t buy in the game, so you earn the base rate.'}` : ''}`);
 
   return (
     <Panel title="The Card’s Offers" subtitle={<Open subject={at('account', card.id)}>{terms.name}</Open>} look={at('account', card.id)} help="bank.card-offers">
@@ -82,27 +83,27 @@ function CardOffers({ card }: { card: Account }) {
         {terms.moneyTransferFee && (
           <div className="field-row">
             <div className="field">
-              <label htmlFor={`card-money-transfer-${card.id}`}>A Money Transfer To Your Account ({cur})</label>
+              <label htmlFor={`card-money-transfer-${card.id}`}>Money Transfer To Your Account ({cur})</label>
               <input id={`card-money-transfer-${card.id}`} inputMode="decimal" value={moveAmount} onChange={(e) => setMoveAmount(e.target.value)} />
             </div>
             <Gated feature="card.money_transfer" className="btn btn-sm" disabled={!moveAmount} onClick={() => {
               const answer = run<{ fee: number }>('card.money_transfer', { amount: cents(moveAmount), accountId: card.id });
-              if (answer.ok) { toast(`Moved, for a ${money(answer.value!.fee)} fee.`, 'positive'); setMoveAmount(''); }
-            }}>Move It ({pct(terms.moneyTransferFee)} Fee)</Gated>
+              if (answer.ok) { toast(`Transferred to your account, for a ${money(answer.value!.fee)} fee.`, 'positive'); setMoveAmount(''); }
+            }}>Transfer It ({pct(terms.moneyTransferFee)} Fee)</Gated>
           </div>
         )}
         {(terms.planFeeShare || interestPlan) && (
           <>
             <p className="small" style={{ margin: 0 }}>
               {interestPlan
-                ? `A plan pays part of what purchases owe off in equal months: ${Object.entries(interestPlan.months).map(([m, t]) => `${m} months ${t.apr !== undefined ? `at ${pct(t.apr)} a year` : t.fee ? `for ${pct(t.fee)} of it` : 'free'}`).join(', ')}${interestPlan.min !== undefined ? `, on ${formatMoney(inSaveMoney(sim, interestPlan.min, bankById(card!.bankId!)!.currency), cur)} or more` : ''}. ${money(room)} can go into one.`
+                ? `A payment plan pays off part of what you owe for purchases in equal monthly amounts: ${Object.entries(interestPlan.months).map(([m, t]) => `${m} months ${t.apr !== undefined ? `at ${pct(t.apr)} a year` : t.fee ? `for ${pct(t.fee)} of the plan` : 'free'}`).join(', ')}${interestPlan.min !== undefined ? `, on ${formatMoney(inSaveMoney(sim, interestPlan.min, bankById(card!.bankId!)!.currency), cur)} or more` : ''}. ${roomWords}`
                 : freeUntil
-                  ? `A plan pays part of what purchases owe off in equal months instead of interest. One made while the introductory rate runs, until ${freeUntil}, is free to its last month; one made after costs ${pct(terms.planFeeShare!)} of it a month, the most the bank says it charges. ${money(room)} can go into one.`
-                  : `A plan pays part of what purchases owe off in equal months for ${pct(terms.planFeeShare!)} of it a month, the most the bank says it charges, instead of interest. ${money(room)} can go into one.`}
+                  ? `A payment plan pays off part of what you owe for purchases in equal monthly amounts, instead of interest. A plan made while the introductory rate lasts, until ${freeUntil}, is free for its whole life. One made after that costs ${pct(terms.planFeeShare!)} of the plan a month, the most the bank says it charges. ${roomWords}`
+                  : `A payment plan pays off part of what you owe for purchases in equal monthly amounts, for a fee of ${pct(terms.planFeeShare!)} of the plan a month instead of interest. That’s the most the bank says it charges. ${roomWords}`}
             </p>
             <div className="field-row">
               <div className="field">
-                <label htmlFor={`card-plan-amount-${card.id}`}>Into A Plan ({cur})</label>
+                <label htmlFor={`card-plan-amount-${card.id}`}>Amount For The Plan ({cur})</label>
                 <input id={`card-plan-amount-${card.id}`} inputMode="decimal" value={planAmount} onChange={(e) => setPlanAmount(e.target.value)} />
               </div>
               <div className="field">

@@ -58,7 +58,7 @@ describe('running lines with a classmate', () => {
     tended(sim, when + 2 * MS_HOUR);
     const after = courseworkOf(sim, sim.player)!.assignments.slice(0, before.length).map((a) => a.prep.memorization);
     expect(after).toEqual(before);
-    expect(sim.universe.notifications.find((n) => n.title.startsWith('Ran Lines With'))?.body).toMatch(/nothing of yours moved/);
+    expect(sim.universe.notifications.find((n) => n.title.startsWith('Ran Lines With'))?.body).toMatch(/it didn’t move your own work/);
   });
 });
 
@@ -99,7 +99,7 @@ describe('leaving the School: withdrawal, dismissal, a degree withheld and the d
     expect(yaleUntil(sim.player)).toBe(school.endedAt);
     expect(graceDays(sim.player)).toBe(15);
     expect(usStatusEnds(sim.player)).toBe(school.endedAt! + 15 * MS_DAY);
-    expect(optRefusal(sim, sim.player)).toMatch(/degree completed/);
+    expect(optRefusal(sim, sim.player)).toMatch(/completed degree/);
     // Nothing of the student's own is left on the calendar but a classmate’s moment brought in that day’s class, which
     // lapses at its hour as one does at the School. Until 2026-10-13 this held nothing at all: the moment was called off
     // with the rest and stayed open for good (tests/evidence2-b07.test.ts, school.respond). The class they left keeps
@@ -132,11 +132,11 @@ describe('leaving the School: withdrawal, dismissal, a degree withheld and the d
     expect(yaleUntil(sim.player)).toBe(school.endedAt! + 30 * MS_DAY);
     Object.assign(school, { standing: 'withheld', endedAt: at(2029, 4, 30) });
     expect(graceDays(sim.player)).toBe(15);
-    expect(optRefusal(sim, sim.player)).toMatch(/degree completed/);
+    expect(optRefusal(sim, sim.player)).toMatch(/completed degree/);
     expect(yaleUntil(sim.player)).toBe(instantFromZoned({ year: 2029, month: 8, day: 1, hour: 0 }, zone));
     Object.assign(school, { standing: 'graduated', endedAt: at(2029, 5, 21) });
     expect(graceDays(sim.player)).toBe(60);
-    expect(optRefusal(sim, sim.player) ?? '').not.toMatch(/degree completed/);
+    expect(optRefusal(sim, sim.player) ?? '').not.toMatch(/completed degree/);
   });
 });
 
@@ -172,7 +172,7 @@ describe('each course passed, incomplete or failed, and what the degree needs', 
     school.courses = { '0:DRAM 103a': { term: 0, code: 'DRAM 103a', name: 'Acting I', meetings: 20, attended: 10, excused: 0 } };
     settleCourses(sim, sim.player, 0, () => ({ due: 0, notShown: 0 }));
     expect(school.courses['0:DRAM 103a']!.result).toBe('fail');
-    expect(evaluate(sim, sim.player, 0)!.reason).toMatch(/Not passed: Acting I/);
+    expect(evaluate(sim, sim.player, 0)!.reason).toMatch(/You didn’t pass Acting I/);
     // FIXTURE: the last term's evaluation in good standing otherwise.
     Object.assign(school, { standing: 'good', termsBegun: 6 });
     Object.assign(school.tally, { classDays: 40, attended: 40, excused: 0 });

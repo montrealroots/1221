@@ -168,7 +168,7 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
     ]),
     standardDeduction: 16_100_00,
     effectiveFrom: YEAR(2026),
-    note: 'Rev. Proc. 2025-32: 2026’s single filer’s table, held after until the IRS publishes 2027’s. Not tax advice.',
+    note: 'Rev. Proc. 2025-32: 2026’s single filer’s table, kept for later years until the IRS publishes 2027’s. Not tax advice.',
   },
   { jurisdictionCode: 'US-CA', label: 'California Income Tax', kind: 'progressive', brackets: brackets([[0, 0.01], [10_412, 0.02], [24_684, 0.04], [38_959, 0.06], [54_081, 0.08], [68_350, 0.093], [349_137, 0.103], [418_961, 0.113], [698_271, 0.123]]), standardDeduction: 5_363_00, effectiveFrom: YEAR(2018), note: APPROX },
   // New York City's resident income tax, a single filer's brackets (NY Form IT-201 instructions, NYC rate schedule;
@@ -180,11 +180,11 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
   // Philadelphia's resident Wage and Earnings Tax, which changes each 1 July: a calendar year's rate here is its two
   // halves' mean, SLATE's reading of a year's income as earned evenly (3.74% to June 2026 and 3.735% after; 3.73% from
   // July 2027). No deduction. Collected by the city's Department of Revenue, not the state (research-local-income-taxes.json).
-  { jurisdictionCode: 'US-PA-philadelphia', label: 'Philadelphia Wage And Earnings Tax', kind: 'flat', brackets: [], flatRate: (0.0375 + 0.0374) / 2, standardDeduction: 0, effectiveFrom: YEAR(2025), effectiveTo: YEAR(2026), note: 'Philadelphia Department of Revenue: 3.75% to June 2025, 3.74% from July; the year’s mean, SLATE’s reading.' },
-  { jurisdictionCode: 'US-PA-philadelphia', label: 'Philadelphia Wage And Earnings Tax', kind: 'flat', brackets: [], flatRate: (0.0374 + 0.03735) / 2, standardDeduction: 0, effectiveFrom: YEAR(2026), effectiveTo: YEAR(2027), note: 'Philadelphia Department of Revenue: 3.74% to June 2026, 3.735% from July; the year’s mean, SLATE’s reading.' },
-  { jurisdictionCode: 'US-PA-philadelphia', label: 'Philadelphia Wage And Earnings Tax', kind: 'flat', brackets: [], flatRate: (0.03735 + 0.0373) / 2, standardDeduction: 0, effectiveFrom: YEAR(2027), note: 'Philadelphia Department of Revenue: 3.735% to June 2027, 3.73% from July; the year’s mean, SLATE’s reading, held after.' },
+  { jurisdictionCode: 'US-PA-philadelphia', label: 'Philadelphia Wage And Earnings Tax', kind: 'flat', brackets: [], flatRate: (0.0375 + 0.0374) / 2, standardDeduction: 0, effectiveFrom: YEAR(2025), effectiveTo: YEAR(2026), note: 'Philadelphia Department of Revenue: 3.75% to June 2025, 3.74% from July; the game uses the year’s average.' },
+  { jurisdictionCode: 'US-PA-philadelphia', label: 'Philadelphia Wage And Earnings Tax', kind: 'flat', brackets: [], flatRate: (0.0374 + 0.03735) / 2, standardDeduction: 0, effectiveFrom: YEAR(2026), effectiveTo: YEAR(2027), note: 'Philadelphia Department of Revenue: 3.74% to June 2026, 3.735% from July; the game uses the year’s average.' },
+  { jurisdictionCode: 'US-PA-philadelphia', label: 'Philadelphia Wage And Earnings Tax', kind: 'flat', brackets: [], flatRate: (0.03735 + 0.0373) / 2, standardDeduction: 0, effectiveFrom: YEAR(2027), note: 'Philadelphia Department of Revenue: 3.735% to June 2027, 3.73% from July; the game uses the year’s average, and keeps it for later years.' },
   // Columbus's city income tax, 2.5% (2025 confirmed; 2026 and on not restated, held), collected by its Income Tax Division.
-  { jurisdictionCode: 'US-OH-columbus', label: 'Columbus City Income Tax', kind: 'flat', brackets: [], flatRate: 0.025, standardDeduction: 0, effectiveFrom: YEAR(2025), note: 'City of Columbus Income Tax Division: 2.5% (2025 confirmed; held after, SLATE’s assumption).' },
+  { jurisdictionCode: 'US-OH-columbus', label: 'Columbus City Income Tax', kind: 'flat', brackets: [], flatRate: 0.025, standardDeduction: 0, effectiveFrom: YEAR(2025), note: 'City of Columbus Income Tax Division: 2.5% (confirmed for 2025, and assumed for later years).' },
   // Portland's two regional taxes, collected together by the City of Portland's Revenue Division: Metro's Supportive
   // Housing Services tax, 1% over $125,000 (2025), $128,000 (2026), $132,000 (2027); Multnomah County's Preschool For All
   // tax, 1.5% over $125,000 and 1.5% more over $250,000. Kept as one schedule; none below $125,000.
@@ -220,11 +220,11 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
   // Marion County's income tax, 2.02% for 2025 and 2026, by county of residence on 1 January, on the state's base (Indiana
   // AGI less exemptions), filed on the state's return and collected by Indiana's DOR. The 2027 rate isn't published:
   // 2026's is held, SLATE's assumption.
-  { jurisdictionCode: 'US-IN-indianapolis', label: 'Marion County Income Tax', kind: 'flat', brackets: [], flatRate: 0.0202, standardDeduction: 1_000_00, effectiveFrom: YEAR(2025), note: 'Indiana DOR Departmental Notice 1: Marion County 2.02% for 2025 and 2026; 2027 held at 2026’s, SLATE’s assumption.' },
+  { jurisdictionCode: 'US-IN-indianapolis', label: 'Marion County Income Tax', kind: 'flat', brackets: [], flatRate: 0.0202, standardDeduction: 1_000_00, effectiveFrom: YEAR(2025), note: 'Indiana DOR Departmental Notice 1: Marion County 2.02% for 2025 and 2026; 2027 is assumed to stay at 2026’s rate.' },
   // The District's brackets, unchanged since 2022 (DC Code 47-1806.03), on federal AGI less the $15,000 standard
   // deduction (2025). The 2026 deduction is $15,000 indexed to local inflation, and the indexed figure isn't published:
   // $15,000 is held, SLATE's assumption.
-  { jurisdictionCode: 'US-DC', label: 'District Of Columbia Income Tax', kind: 'progressive', brackets: brackets([[0, 0.04], [10_000, 0.06], [40_000, 0.065], [60_000, 0.085], [250_000, 0.0925], [500_000, 0.0975], [1_000_000, 0.1075]]), standardDeduction: 15_000_00, effectiveFrom: YEAR(2022), note: 'DC Code 47-1806.03; the $15,000 standard deduction of 2025, held for 2026 and on (its inflation-indexed 2026 figure unpublished), SLATE’s assumption.' },
+  { jurisdictionCode: 'US-DC', label: 'District Of Columbia Income Tax', kind: 'progressive', brackets: brackets([[0, 0.04], [10_000, 0.06], [40_000, 0.065], [60_000, 0.085], [250_000, 0.0925], [500_000, 0.0975], [1_000_000, 0.1075]]), standardDeduction: 15_000_00, effectiveFrom: YEAR(2022), note: 'DC Code 47-1806.03; the $15,000 standard deduction of 2025, assumed for 2026 and later because the inflation-indexed 2026 figure isn’t published.' },
   // Oklahoma's, 2025's six steps, then 2026's four (HB 2764, 68 O.S. 2355); no further cut certified for 2027, so 2026's
   // stand. A single filer's $6,350 standard deduction and $1,000 exemption, inferred for 2026 from the OW-2 tables.
   { jurisdictionCode: 'US-OK', label: 'Oklahoma Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0025], [1_000, 0.0075], [2_500, 0.0175], [3_750, 0.0275], [4_900, 0.0375], [7_200, 0.0475]]), standardDeduction: 7_350_00, effectiveFrom: YEAR(2025), effectiveTo: YEAR(2026), note: '68 O.S. 2355: 2025’s six steps, single; the $6,350 standard deduction and $1,000 exemption.' },
@@ -262,9 +262,9 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
   { jurisdictionCode: 'IT', label: 'Italy Income Tax', kind: 'progressive', brackets: brackets([[0, 0.23], [28_000, 0.35], [50_000, 0.43]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX, currency: 'EUR' },
   { jurisdictionCode: 'AU', label: 'Australia Income Tax', kind: 'progressive', brackets: brackets([[0, 0], [18_200, 0.16], [45_000, 0.30], [135_000, 0.37], [190_000, 0.45]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX, currency: 'AUD' },
   { jurisdictionCode: 'NZ', label: 'New Zealand Income Tax', kind: 'progressive', brackets: brackets([[0, 0.105], [15_600, 0.175], [53_500, 0.30], [78_100, 0.33], [180_000, 0.39]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX, currency: 'NZD' },
-  { jurisdictionCode: 'JP', label: 'Japan Income Tax', kind: 'progressive', brackets: brackets([[0, 0.05], [1_950, 0.10], [3_300, 0.20], [6_950, 0.23], [9_000, 0.33], [18_000, 0.40], [40_000, 0.45]]), standardDeduction: 480_00, effectiveFrom: YEAR(2020), note: `${APPROX} Amounts modeled in USD-equivalent for simulation purposes.` },
-  { jurisdictionCode: 'KR', label: 'South Korea Income Tax', kind: 'progressive', brackets: brackets([[0, 0.06], [12_000, 0.15], [46_000, 0.24], [88_000, 0.35], [150_000, 0.38], [300_000, 0.40]]), standardDeduction: 0, effectiveFrom: YEAR(2023), note: `${APPROX} Amounts modeled in USD-equivalent.` },
-  { jurisdictionCode: 'MX', label: 'Mexico Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0192], [4_000, 0.064], [34_000, 0.1088], [60_000, 0.16], [120_000, 0.2152], [250_000, 0.30], [400_000, 0.35]]), standardDeduction: 0, effectiveFrom: YEAR(2023), effectiveTo: YEAR(2026), note: `${APPROX} Amounts modeled in USD-equivalent.` },
+  { jurisdictionCode: 'JP', label: 'Japan Income Tax', kind: 'progressive', brackets: brackets([[0, 0.05], [1_950, 0.10], [3_300, 0.20], [6_950, 0.23], [9_000, 0.33], [18_000, 0.40], [40_000, 0.45]]), standardDeduction: 480_00, effectiveFrom: YEAR(2020), note: `${APPROX} Amounts are modeled in US dollar equivalents.` },
+  { jurisdictionCode: 'KR', label: 'South Korea Income Tax', kind: 'progressive', brackets: brackets([[0, 0.06], [12_000, 0.15], [46_000, 0.24], [88_000, 0.35], [150_000, 0.38], [300_000, 0.40]]), standardDeduction: 0, effectiveFrom: YEAR(2023), note: `${APPROX} Amounts are modeled in US dollar equivalents.` },
+  { jurisdictionCode: 'MX', label: 'Mexico Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0192], [4_000, 0.064], [34_000, 0.1088], [60_000, 0.16], [120_000, 0.2152], [250_000, 0.30], [400_000, 0.35]]), standardDeduction: 0, effectiveFrom: YEAR(2023), effectiveTo: YEAR(2026), note: `${APPROX} Amounts are modeled in US dollar equivalents.` },
   // SAT's annual tariff for 2026 (Article 152, Anexo 8 of the RMF 2026), in
   // pesos, the first update since 2023; its fixed quotas are the brackets
   // below summed. The employment subsidy, a credit against a wage's ISR up
@@ -602,7 +602,7 @@ export function localRate(byYear: Readonly<Record<number, number>> | undefined, 
 }
 
 /** Denver's Occupational Privilege Tax on an employee: $5.75 for each month their Denver earnings reach $500. */
-export const DENVER_OPT = { cityId: 'us-co-denver', monthly: 5_75, threshold: 500_00, source: 'Denver Treasury, Occupational Privilege Tax (research-local-income-taxes.json)' } as const;
+export const DENVER_OPT = { cityId: 'us-co-denver', monthly: 5_75, threshold: 500_00, source: 'Denver Treasury, Occupational Privilege Tax' } as const;
 
 export function salesTaxRate(cityId: string, at: number, category: string): number {
   const rule = resolveRule(SALES_TAX_RULES, cityId, at);

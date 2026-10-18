@@ -22,13 +22,13 @@ import { bankById } from '@/engine/content/banks';
 import { SECURITY } from '@/engine/content/security';
 import { bankAccountsOf, banksFor, closingFeesWords, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import { checkingsOf } from '@/engine/systems/lending';
-import { waiverWords } from '@/ui/bank/feeWords';
+import { waiverWords, nth } from '@/ui/bank/feeWords';
 import { balanceText } from '@/engine/systems/abroad';
 import { homeOf } from '@/engine/systems/earnings';
 import { paymentsOf } from '@/engine/systems/payments';
 import { cardsOf, autopaySource } from '@/engine/systems/credit';
 import { depositAccount, linkedTo, orderSource, DEPOSIT_LEAD, PAYER_LEAD } from '@/engine/systems/routing';
-import { PRIMARY_DOES, applicationsOf, channelFor, closeRefusal, openRefusal, openingOf, transfersOf } from '@/engine/systems/bankmoves';
+import { BRANCH_MINUTES, PRIMARY_DOES, applicationsOf, channelFor, closeRefusal, openRefusal, openingOf, transfersOf } from '@/engine/systems/bankmoves';
 
 export function BankMoves() {
   const { sim, run, toast } = useGame();
@@ -67,19 +67,25 @@ export function BankMoves() {
     });
     if (!answer.ok || !answer.value) return;
     const v = answer.value;
-    toast(v.decidedAt ? `Applied: ${chosen.name} decides by ${formatDate(v.decidedAt, sim.zone)}.` : `Opened at ${chosen.name}.${v.cardAt ? ` The card arrives ${formatDate(v.cardAt, sim.zone)}.` : ''}`, 'positive');
+    toast(v.decidedAt ? `Application sent. ${chosen.name} decides by ${formatDate(v.decidedAt, sim.zone)}.` : `Your account at ${chosen.name} is open.${v.cardAt ? ` The debit card arrives ${formatDate(v.cardAt, sim.zone)}.` : ''}`, 'positive');
     setFundAmount('');
   };
 
-  const whatItTakes = (): string => {
-    if (!chosen) return '';
+  // What the chosen bank asks and how long each step takes, and, for the line at the panel's foot, which of those figures
+  // are estimated (from 2026-10-17: until then each estimate was said inside its sentence, "SLATE’s estimate").
+  const whatItTakes = (): { said: string; estimated: string[] } => {
+    if (!chosen) return { said: '', estimated: [] };
     const parts: string[] = [];
-    if (channelFor(person, chosen) === 'branch') parts.push('Without a Social Security number, you apply in a branch here, with your passport and I-20: an hour there.');
-    parts.push(rules?.reviewDays ? `It decides an application in ${rules.reviewDays} business days, the longer end of what it says.` : 'It opens the account as you apply.');
-    parts.push(minimum > 0 ? `It asks for an opening deposit of ${money(minimum)}, sent from another of your accounts.` : rules ? 'It asks for no opening deposit.' : 'SLATE has found no opening deposit it asks for.');
-    if (rules?.openedWhenFunded) parts.push('The account counts as open only once money is in it.');
-    if (rules?.fundWithinDays) parts.push(`Unfunded ${rules.fundWithinDays} days after opening, it closes.`);
-    if (rules?.closesAtZeroAfterDays) parts.push(`At a zero balance for ${rules.closesAtZeroAfterDays} days, it may close.`);
+    const estimated: string[] = [];
+    if (channelFor(person, chosen) === 'branch') {
+      parts.push(`Without a Social Security number, you apply in person at a branch, with your passport and I-20. It takes ${BRANCH_MINUTES === 60 ? 'an hour' : `${BRANCH_MINUTES} minutes`}.`);
+      estimated.push('The time at the branch is estimated.');
+    }
+    parts.push(rules?.reviewDays ? `It decides an application in ${rules.reviewDays} business days, the top of the range it gives.` : 'It opens the account as soon as you apply.');
+    parts.push(minimum > 0 ? `It asks for an opening deposit of ${money(minimum)}, sent from another of your accounts.` : rules ? 'It doesn’t ask for an opening deposit.' : 'No opening deposit was found for it, so none is asked for.');
+    if (rules?.openedWhenFunded) parts.push('The account only counts as open once money is paid in.');
+    if (rules?.fundWithinDays) parts.push(`If nothing is paid in within ${rules.fundWithinDays} days of opening, the bank closes it.`);
+    if (rules?.closesAtZeroAfterDays) parts.push(`If it sits at a zero balance for ${rules.closesAtZeroAfterDays} days, the bank may close it.`);
     // The card's line says what `cardArrival` and `openApproved` (`systems/bankmoves.ts`) do. Until 2026-10-12 it gave
     // Bank of America's 6 business days "with a digital card in the app meanwhile", and nothing read the 6: a digital
     // card works from the day the account opens, and nothing arrives after it (docs/UNBITTEN.md). And where a bank
@@ -88,9 +94,10 @@ export function BankMoves() {
     const card = rules?.card;
     const replacement = chosen ? SECURITY[chosen.id]?.standardDays : undefined;
     parts.push(card?.digital ? 'The debit card works from the day the account opens, as a digital card in the app.'
-      : card ? `The debit card takes ${card.days} ${card.business ? 'business' : 'calendar'} days.`
-        : replacement !== undefined ? `The debit card takes ${replacement} business days, as the bank’s replacement card does: SLATE’s estimate, as no figure for a new account’s card was found.`
-          : `The debit card takes ${ESTIMATE_CARD_DAYS} business days, SLATE’s estimate: the bank doesn’t say.`);
+      : card ? `The debit card arrives in ${card.days} ${card.business ? 'business ' : ''}days.`
+        : `The debit card arrives in ${replacement ?? ESTIMATE_CARD_DAYS} business days.`);
+    if (!card && replacement !== undefined) estimated.push('The new card’s days are estimated from the bank’s time for a replacement card, as no figure for a new account’s card was found.');
+    else if (!card) estimated.push('The debit card’s days are estimated: the bank doesn’t say.');
     // In the order `arrivalOf` (`systems/bankmoves.ts`) runs: the bank’s cut-off, its days, the country’s instant
     // scheme, the country’s cut-off, its days. Until 2026-10-12 the country’s cut-off was never read, so a Japanese
     // bank said SLATE’s 3-day estimate while Zengin landed the money the same day, and the bank’s cut-off was written
@@ -99,12 +106,13 @@ export function BankMoves() {
     // time the player reads: 15.5 is 3:30 PM, the clock that many hours into a day at UTC. For part of 2026-10-12 a
     // second formatter here wrote both cut-offs on a 24-hour clock, "before 15:30" for Zengin.
     const cutOff = (h: number) => formatTime(h * MS_HOUR, 'UTC');
-    parts.push(rules?.sameDayBefore !== undefined ? `Money it sends to another bank arrives the same business day before ${cutOff(rules.sameDayBefore)}, the next after.`
+    parts.push(rules?.sameDayBefore !== undefined ? `Money it sends to another bank arrives the same business day if it’s sent before ${cutOff(rules.sameDayBefore)}, or the next business day if later.`
       : rules?.sendDays ? `Money it sends to another bank takes ${rules.sendDays} business days.`
-        : scheme?.instant ? `Money between banks here arrives at once, by ${scheme.scheme}.`
-          : scheme?.sameDayBefore !== undefined ? `Money between banks here arrives the same business day before ${cutOff(scheme.sameDayBefore)}, the next after, by ${scheme.scheme}.`
+        : scheme?.instant ? `Money between banks here arrives instantly, by ${scheme.scheme}.`
+          : scheme?.sameDayBefore !== undefined ? `Money between banks here goes by ${scheme.scheme}, and arrives the same business day if it’s sent before ${cutOff(scheme.sameDayBefore)}, or the next business day if later.`
             : scheme?.days ? `Money between banks here takes ${scheme.days} business day${scheme.days === 1 ? '' : 's'}, by ${scheme.scheme}.`
-              : `Money it sends to another bank takes ${ESTIMATE_SEND_DAYS} business days, SLATE’s estimate: the bank doesn’t say.`);
+              : `Money it sends to another bank takes ${ESTIMATE_SEND_DAYS} business days.`);
+    if (rules?.sameDayBefore === undefined && !rules?.sendDays && !scheme?.instant && scheme?.sameDayBefore === undefined && !scheme?.days) estimated.push('How long money takes to another bank is estimated: the bank doesn’t say.');
     // Its monthly fee and how the bank waives it, from the product `feeFor` (`systems/banking.ts`) charges by, as Your
     // Accounts says it of an account held (from 2026-10-16). Until then the panel said nothing of it before Apply, and a
     // student of 24 who opened Citi Access Checking and left it empty met its fee as an overdraft, charged off to
@@ -112,8 +120,9 @@ export function BankMoves() {
     const fee = chosen.current.monthlyFee;
     const inBank = (c: number) => formatMoney(inSaveMoney(sim, c, chosen.currency), cur);
     parts.push(fee ? `Its ${chosen.current.name} costs ${inBank(fee)} a month${waiverWords(chosen.current, inBank)}.` : `Its ${chosen.current.name} has no monthly fee.`);
-    return parts.join(' ');
+    return { said: parts.join(' '), estimated };
   };
+  const takes = whatItTakes();
 
   return (
     <div className="col gap-4" style={{ marginBottom: 'var(--s5)' }}>
@@ -131,53 +140,53 @@ export function BankMoves() {
               <div key={a.id} className="col gap-2" style={{ borderTop: '1px solid var(--line)', paddingTop: 'var(--s2)' }}>
                 <p className="small" style={{ margin: 0 }}>
                   <Open subject={at('account', a.id)}><strong>{a.name}</strong></Open> at {a.institution}, {balanceText(sim, a, a.balance, undefined, { cents: false })}
-                  {a.id === person.primaryAccountId ? '. Primary.' : '.'}
-                  {a.awaitingFunds !== undefined ? ` Waiting for ${a.awaitingFunds > 1 ? `its opening deposit of ${money(a.awaitingFunds)}` : 'its first deposit'}${a.fundBy ? `, by ${formatDate(a.fundBy, sim.zone)}` : ''}.` : ''}
+                  {a.id === person.primaryAccountId ? '. This is your primary account.' : '.'}
+                  {a.awaitingFunds !== undefined ? ` It’s waiting for ${a.awaitingFunds > 1 ? `its opening deposit of ${money(a.awaitingFunds)}` : 'its first deposit'}${a.fundBy ? `, due by ${formatDate(a.fundBy, sim.zone)}` : ''}.` : ''}
                   {a.plastic?.stopped === 'new' && a.plastic.replacementAt ? ` Its debit card arrives ${formatDate(a.plastic.replacementAt, sim.zone)}.` : ''}
-                  {a.closingAt !== undefined ? ` Closing ${formatDate(a.closingAt, sim.zone)}, once its pending items post.` : ''}
+                  {a.closingAt !== undefined ? ` It closes ${formatDate(a.closingAt, sim.zone)}, after its pending payments post.` : ''}
                 </p>
                 {links.length > 0 && <p className="xs dim" style={{ margin: 0 }}>{links.join('. ')}.</p>}
                 <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'end' }}>
                   {a.id !== person.primaryAccountId && a.closingAt === undefined && (
-                    <Gated feature="bank.set_primary" className="btn btn-sm" onClick={() => { const r = run<{ unchanged: string[] }>('bank.set_primary', { accountId: a.id }); if (r.ok) toast(`${a.name} is primary. ${r.value?.unchanged.length ? 'What was set up elsewhere stays there.' : ''}`, 'positive'); }}>
+                    <Gated feature="bank.set_primary" className="btn btn-sm" onClick={() => { const r = run<{ unchanged: string[] }>('bank.set_primary', { accountId: a.id }); if (r.ok) toast(`${a.name} is now your primary account.${r.value?.unchanged.length ? ' Payments already set up on another account stay there.' : ''}`, 'positive'); }}>
                       Make Primary
                     </Gated>
                   )}
                   {deposits?.id !== a.id && pay.depositChange?.to !== a.id && a.closingAt === undefined && (
-                    <Gated feature="bank.redirect_deposits" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ at: number }>('bank.redirect_deposits', { accountId: a.id }); if (r.ok && r.value) toast(`Wages and other payments go to ${a.name} from ${formatDate(r.value.at, sim.zone)}.`, 'positive'); }}>
+                    <Gated feature="bank.redirect_deposits" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ at: number }>('bank.redirect_deposits', { accountId: a.id }); if (r.ok && r.value) toast(`Your wages and other payments go to ${a.name} from ${formatDate(r.value.at, sim.zone)}.`, 'positive'); }}>
                       Have Wages Paid Here
                     </Gated>
                   )}
                   {a.id !== person.primaryAccountId && a.closingAt === undefined && (
                     <>
                       {a.balance > 0 && elsewhere.length > 0 && (
-                        <div className="field"><label htmlFor={`close-into-${a.id}`}>What It Holds Goes To</label>
+                        <div className="field"><label htmlFor={`close-into-${a.id}`}>Send What It Holds To</label>
                           <select id={`close-into-${a.id}`} value={into} onChange={(e) => setRemainder({ ...remainder, [a.id]: e.target.value })}>
                             {elsewhere.map((b) => <option key={b.id} value={b.id}>{label(b.id)}</option>)}
                           </select>
                         </div>
                       )}
                       <Gated feature="bank.close_current" className="btn btn-sm btn-ghost" title={closing} disabled={!!closing}
-                        onClick={() => { const r = run<{ closedAt: number; arrivesAt?: number }>('bank.close_current', { accountId: a.id, remainderTo: into }); if (r.ok && r.value) toast(r.value.closedAt > sim.now ? `It closes ${formatDate(r.value.closedAt, sim.zone)}.` : `Closed.${r.value.arrivesAt ? ` What it held arrives ${formatDate(r.value.arrivesAt, sim.zone)}.` : ''}`, 'positive'); }}>
+                        onClick={() => { const r = run<{ closedAt: number; arrivesAt?: number }>('bank.close_current', { accountId: a.id, remainderTo: into }); if (r.ok && r.value) toast(r.value.closedAt > sim.now ? `It closes ${formatDate(r.value.closedAt, sim.zone)}.` : `Account closed.${r.value.arrivesAt ? ` What it held arrives ${formatDate(r.value.arrivesAt, sim.zone)}.` : ''}`, 'positive'); }}>
                         Close It
                       </Gated>
                     </>
                   )}
                 </div>
-                {closing && a.id !== person.primaryAccountId && <p className="xs dim" style={{ margin: 0 }}>To close it: {closing}</p>}
+                {closing && a.id !== person.primaryAccountId && <p className="xs dim" style={{ margin: 0 }}>You can’t close it yet. {closing}</p>}
                 {fees && a.id !== person.primaryAccountId && a.closingAt === undefined && <p className="xs dim" style={{ margin: 0 }}>{fees}</p>}
               </div>
             );
           })}
           <div className="row-between gap-2" style={{ alignItems: 'start' }}>
             <p className="xs dim" style={{ margin: 0 }}>
-              The primary account is where {PRIMARY_DOES.map((w) => w.charAt(0).toLowerCase() + w.slice(1)).join('; ')}. Making another primary moves nothing already set up.
+              Your primary account is the one money comes from unless you say otherwise: {PRIMARY_DOES.map((w) => w.charAt(0).toLowerCase() + w.slice(1)).join('; ')}. Making another account primary doesn’t move anything already set up.
             </p>
             <HowItWorks help="bank.set_primary" />
           </div>
           <div className="row-between gap-2" style={{ alignItems: 'start' }}>
             <p className="xs dim" style={{ margin: 0 }}>
-              Wages and other payments go to {name(deposits?.id)}{pay.depositChange ? `, and to ${name(pay.depositChange.to)} from ${formatDate(pay.depositChange.at, sim.zone)}` : ''}: a change reaches Yale’s payroll in {PAYER_LEAD['yale-payroll']} days, about one of its weekly pay cycles, as Yale says, and other payers in {DEPOSIT_LEAD.days}, SLATE’s estimate (employers say one to two pay cycles).
+              Your wages and other payments go to {name(deposits?.id)}{pay.depositChange ? `, and to ${name(pay.depositChange.to)} from ${formatDate(pay.depositChange.at, sim.zone)}` : ''}. A change reaches Yale’s payroll in {PAYER_LEAD['yale-payroll']} days, about one of its weekly pay cycles, as Yale says. Other payers take {DEPOSIT_LEAD.days} days, which is estimated: employers say one to two pay cycles.
             </p>
             <HowItWorks help="bank.redirect_deposits" />
           </div>
@@ -185,18 +194,18 @@ export function BankMoves() {
       </Panel>
 
       {(pay.standingOrders.length > 0 || cards.length > 0) && currents.length > 1 && (
-        <Panel title="What Pays From Where" subtitle="Each set up on its own account, until you move it." help="bank.payments">
+        <Panel title="What Pays From Where" subtitle="Each payment stays on the account it was set up on until you move it." help="bank.payments">
           <div className="col gap-2">
             {pay.standingOrders.map((o) => (
               <div key={o.id} className="field">
-                <label htmlFor={`order-from-${o.id}`}>Standing Order, {money(o.amount)} On The {o.day}, Into {name(o.toId)}</label>
+                <label htmlFor={`order-from-${o.id}`}>Standing Order Of {money(o.amount)} On The {o.day}{nth(o.day)}, Into {name(o.toId)}</label>
                 <div className="field-act" style={{ flexWrap: 'wrap' }}>
                   <select id={`order-from-${o.id}`} value={sources[o.id] ?? orderSource(sim, person, o)?.id ?? ''} onChange={(e) => setSources({ ...sources, [o.id]: e.target.value })}>
                     {currents.filter((a) => a.id !== o.toId).map((a) => <option key={a.id} value={a.id}>{label(a.id)}</option>)}
                   </select>
                   <Gated feature="bank.set_order_source" className="btn btn-sm btn-ghost" disabled={!sources[o.id] || sources[o.id] === orderSource(sim, person, o)?.id}
-                    onClick={() => { if (run('bank.set_order_source', { orderId: o.id, accountId: sources[o.id] }).ok) toast('It pays from there from its next date.', 'positive'); }}>
-                    Pay From There
+                    onClick={() => { if (run('bank.set_order_source', { orderId: o.id, accountId: sources[o.id] }).ok) toast('From its next payment, it pays from that account.', 'positive'); }}>
+                    Pay From This Account
                   </Gated>
                 </div>
               </div>
@@ -209,8 +218,8 @@ export function BankMoves() {
                     {currents.map((a) => <option key={a.id} value={a.id}>{label(a.id)}</option>)}
                   </select>
                   <Gated feature="card.set_autopay_from" className="btn btn-sm btn-ghost" disabled={!sources[c.id] || sources[c.id] === autopaySource(sim, person, c)?.id}
-                    onClick={() => { if (run('card.set_autopay_from', { cardId: c.id, accountId: sources[c.id] }).ok) toast('Autopay pays from there from its next due date.', 'positive'); }}>
-                    Pay From There
+                    onClick={() => { if (run('card.set_autopay_from', { cardId: c.id, accountId: sources[c.id] }).ok) toast('From its next due date, autopay pays from that account.', 'positive'); }}>
+                    Pay From This Account
                   </Gated>
                   <HowItWorks help="card.set_autopay_from" />
                 </div>
@@ -221,7 +230,7 @@ export function BankMoves() {
       )}
 
       {transfers.length > 0 && (
-        <Panel title="On Its Way" subtitle="Between your banks: out of one, not yet in the other.">
+        <Panel title="On Its Way" subtitle="Money that has left one of your banks and hasn’t reached the other yet.">
           <ul className="small" style={{ margin: 0 }}>
             {transfers.map((t) => <li key={t.id}>{money(t.amount)} from {name(t.fromId)} to {t.toId ? name(t.toId) : bankById(t.toBankId)?.name ?? 'another bank'}, arriving {formatDate(t.at, sim.zone)}.</li>)}
           </ul>
@@ -229,12 +238,12 @@ export function BankMoves() {
       )}
 
       <Panel title="Open An Account At Another Bank" subtitle={applications.length ? applications.map((a) => `${bankById(a.bankId)?.name} decides by ${formatDate(a.at, sim.zone)}`).join('; ') : undefined} help="bank.other-banks">
-        {others.length === 0 ? <p className="small">You keep an account at every bank here SLATE knows.</p> : (
+        {others.length === 0 ? <p className="small">You already have an account at every bank the game has here.</p> : (
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
               {service
                 ? `The ${service.scheme} below moves everything for you in ${service.workingDays} working days. Or open a second account here and keep both.`
-                : 'There’s no switching service here. To move banks: open the account, have your wages paid into it, move each standing order and autopay, move the money across, then close the old account. The new account starts with nothing, and its own history.'}
+                : 'There’s no switching service here. To move banks, open the new account, have your wages paid into it, move each standing order and autopay, move the money across, and then close the old account. The new account starts empty, with its own history.'}
             </p>
             <div className="field-row">
               <div className="field"><label htmlFor="open-at">Bank</label>
@@ -259,8 +268,8 @@ export function BankMoves() {
               </Gated>
             </div>
             {refusal && <p className="small muted" style={{ margin: 0 }}>{refusal}</p>}
-            <p className="small" style={{ margin: 0 }}>{whatItTakes()}</p>
-            <Fine>Source: {rules?.source ?? 'nothing published was found for this bank; what SLATE assumes says so'}{scheme && !rules?.sendDays && rules?.sameDayBefore === undefined ? `; ${scheme.source}` : ''}.</Fine>
+            <p className="small" style={{ margin: 0 }}>{takes.said}</p>
+            <Fine>Source: {rules?.source ?? 'nothing published was found for this bank, so its figures here are estimated'}{scheme && !rules?.sendDays && rules?.sameDayBefore === undefined ? `; ${scheme.source}` : ''}.{takes.estimated.map((e) => ` ${e}`).join('')}</Fine>
           </div>
         )}
       </Panel>

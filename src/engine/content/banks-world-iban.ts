@@ -1523,7 +1523,7 @@ export const IBAN_CODES: Readonly<Record<string, { code: string; source: string 
   },
   "YE|Al-Kuraimi Islamic Microfinance Bank": {
     "code": "KRMB",
-    "source": "SLATE's estimate: the first four letters of its BIC, KRMBYESA, as the IBAN Registry's example uses the Central Bank's; added 2026-09-27"
+    "source": "Estimated: the first four letters of its BIC, KRMBYESA, as the IBAN Registry's example uses the Central Bank's; added 2026-09-27"
   },
   "SE|Swedbank": {
     "code": "800",

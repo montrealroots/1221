@@ -94,7 +94,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'us-capital-one', name: 'Capital One', iso: 'US', currency: 'USD', format: 'us', code: '031176110',
         current: p('360 Checking', 'capitalone.com: no monthly fee'),
-        savings: p('360 Performance Savings', '3.00% APY variable, as a rate aggregator had it on 2026-09-24', { rate: 0.03 }),
+        savings: p('360 Performance Savings', '3.00% APY variable, as a rate aggregator had it on September 24, 2026', { rate: 0.03 }),
         overdraft: 'Capital One charges no overdraft fees.',
       },
     ],
@@ -105,29 +105,29 @@ export const THIRTEEN: readonly CountryBanking[] = [
     interestTax: { rate: 0, note: 'The bank withholds no tax from a resident; interest is reported on a T5 slip.', source: 'canada.ca, line 12100' },
     banks: [
       {
-        id: 'ca-rbc', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'RBC Royal Bank', iso: 'CA', currency: 'CAD', format: 'ca', code: '003',
+        id: 'ca-rbc', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since March 12, 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'RBC Royal Bank', iso: 'CA', currency: 'CAD', format: 'ca', code: '003',
         current: p('RBC Signature No Limit Banking', 'rbcroyalbank.com: $16.95 a month; the $4,000 minimum-balance waiver is from secondary sources', { monthlyFee: 16_95, waiver: { balanceAtLeast: 4_000_00 } }),
         savings: p('RBC High Interest eSavings', 'rbcroyalbank.com: 0.550% regular rate', { rate: 0.0055 }),
       },
       {
-        id: 'ca-td', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'TD Canada Trust', iso: 'CA', currency: 'CAD', format: 'ca', code: '004',
+        id: 'ca-td', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since March 12, 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'TD Canada Trust', iso: 'CA', currency: 'CAD', format: 'ca', code: '004',
         current: p('TD Unlimited Chequing', 'td.com: $17.95 a month, waived with a $4,000 minimum daily balance', { monthlyFee: 17_95, waiver: { balanceAtLeast: 4_000_00 } }),
         savings: p('TD ePremium Savings', 'td.com: 0.45%, only on balances of $10,000 or more', { rate: 0.0045, rateFrom: 10_000_00 }),
       },
       {
-        id: 'ca-scotiabank', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'Scotiabank', iso: 'CA', currency: 'CAD', format: 'ca', code: '002',
+        id: 'ca-scotiabank', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since March 12, 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'Scotiabank', iso: 'CA', currency: 'CAD', format: 'ca', code: '002',
         current: p('Preferred Package', 'scotiabank.com: $16.95 a month, waived with a $4,000 daily balance', { monthlyFee: 16_95, waiver: { balanceAtLeast: 4_000_00 } }),
         savings: p('MomentumPLUS Savings', 'scotiabank.com: 0.40% base rate, with premiums for money held 90 to 360 days not modeled', { rate: 0.004 }),
       },
       {
-        id: 'ca-bmo', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'BMO', iso: 'CA', currency: 'CAD', format: 'ca', code: '001',
+        id: 'ca-bmo', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since March 12, 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'BMO', iso: 'CA', currency: 'CAD', format: 'ca', code: '001',
         current: p('Performance Chequing Plan', 'finder.com/ca: $17.95 a month, waived with a $4,000 minimum balance', { monthlyFee: 17_95, waiver: { balanceAtLeast: 4_000_00 } }),
-        savings: p('Savings Amplifier Account', 'bmo.com promotional offer terms, 26 August 2026: the posted rate 0.450%, paid monthly (the 4.550% promotion for 120 days, for accounts opened in September 2026 with a chequing plan, not modeled)', { rate: 0.0045 }),
+        savings: p('Savings Amplifier Account', 'bmo.com promotional offer terms, August 26, 2026: the posted rate 0.450%, paid monthly (the 4.550% promotion for 120 days, for accounts opened in September 2026 with a chequing plan, not modeled)', { rate: 0.0045 }),
       },
       {
-        id: 'ca-cibc', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'CIBC', iso: 'CA', currency: 'CAD', format: 'ca', code: '010',
+        id: 'ca-cibc', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since March 12, 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'CIBC', iso: 'CA', currency: 'CAD', format: 'ca', code: '010',
         current: p('CIBC Smart Account', 'cibc.com: $16.95 a month, rebated with a $4,000 daily balance; free under 25', { monthlyFee: 16_95, waiver: { balanceAtLeast: 4_000_00, ageBelow: 25 } }),
-        savings: p('CIBC eAdvantage Savings', 'CIBC’s own rate feed, 2 July 2026: 0.30% up to $99,999.99 and 0.60% from $100,000, applied here to the whole balance at its tier; the 4.60% three-month bonus and the Smart Interest top-up not modeled', { rate: 0.003, tiers: [{ from: 100_000_00, rate: 0.006 }] }),
+        savings: p('CIBC eAdvantage Savings', 'CIBC’s own rate feed, July 2, 2026: 0.30% up to $99,999.99 and 0.60% from $100,000, applied here to the whole balance at its tier; the 4.60% three-month bonus and the Smart Interest top-up not modeled', { rate: 0.003, tiers: [{ from: 100_000_00, rate: 0.006 }] }),
       },
     ],
   },
@@ -144,17 +144,17 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'mx-banorte', name: 'Banorte', iso: 'MX', currency: 'MXN', format: 'mx', code: '072',
         current: p('Cuenta Enlace Personal', 'banorte.com: a MXN 5,000 minimum average, waived with payroll; the fee itself was not found'),
-        savings: p('Inversión Enlace', 'banorte.com Enlace Personal brochure, 3 July 2026: GAT nominal 0.31% (GAT real −3.50%) before tax', { rate: 0.0031 }),
+        savings: p('Inversión Enlace', 'banorte.com Enlace Personal brochure, July 3, 2026: GAT nominal 0.31% (GAT real −3.50%) before tax', { rate: 0.0031 }),
       },
       {
         id: 'mx-santander', quietMonth: { fee: 11_48, minTransactions: 2, unlessWages: true, source: 'santander.com.mx: MXN 9.90 plus 16% VAT in a month with fewer than two transactions and no payroll' }, name: 'Santander México', iso: 'MX', currency: 'MXN', format: 'mx', code: '014',
         current: p('Débito LikeU', 'santander.com.mx: no monthly fee but the quiet-month fee'),
-        savings: p('Débito LikeU', 'financera.mx, 5 September 2026: the account pays no interest (santander.com.mx could not be read)'),
+        savings: p('Débito LikeU', 'financera.mx, September 5, 2026: the account pays no interest (santander.com.mx could not be read)'),
       },
       {
         id: 'mx-banamex', name: 'Banamex', iso: 'MX', currency: 'MXN', format: 'mx', code: '002',
         current: p('Cuenta de Nómina Banamex', 'banamex.com: no fee while a salary is paid into it'),
-        savings: p('Ahorro Fácil', 'banamex.com, 5 August 2026: a variable 0.00%, GAT nominal 0.00%'),
+        savings: p('Ahorro Fácil', 'banamex.com, August 5, 2026: a variable 0.00%, GAT nominal 0.00%'),
       },
     ],
   },
@@ -166,7 +166,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'gb-barclays', name: 'Barclays', iso: 'GB', currency: 'GBP', format: 'gb', code: '20',
         current: p('Barclays Bank Account', 'barclays.co.uk: no monthly fee'),
-        savings: p('Everyday Saver', 'barclays.co.uk: 1.00% AER from 11 March 2026', { rate: 0.01 }),
+        savings: p('Everyday Saver', 'barclays.co.uk: 1.00% AER from March 11, 2026', { rate: 0.01 }),
       },
       {
         id: 'gb-lloyds', name: 'Lloyds Bank', iso: 'GB', currency: 'GBP', format: 'gb', code: '30',
@@ -181,12 +181,12 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'gb-hsbc', name: 'HSBC UK', iso: 'GB', currency: 'GBP', format: 'gb', code: '40',
         current: p('HSBC Bank Account', 'hsbc.co.uk: no monthly fee'),
-        savings: p('Flexible Saver', 'hsbc.co.uk: 1.05% AER from 12 March 2026', { rate: 0.0105 }),
+        savings: p('Flexible Saver', 'hsbc.co.uk: 1.05% AER from March 12, 2026', { rate: 0.0105 }),
       },
       {
         id: 'gb-santander', name: 'Santander UK', iso: 'GB', currency: 'GBP', format: 'gb', code: '09',
         current: p('Everyday Current Account', 'santander.co.uk: no monthly fee'),
-        savings: p('Easy Access Saver', 'santander.co.uk Issue 31 key facts, 17 July 2026: 2.00% AER for 12 months, then moved to the Everyday Saver at 0.90% (rates at 4 August 2026)', { rate: 0.009, intro: [{ months: 12, rate: 0.02 }] }),
+        savings: p('Easy Access Saver', 'santander.co.uk Issue 31 key facts, July 17, 2026: 2.00% AER for 12 months, then moved to the Everyday Saver at 0.90% (rates at August 4, 2026)', { rate: 0.009, intro: [{ months: 12, rate: 0.02 }] }),
       },
       {
         id: 'gb-nationwide', name: 'Nationwide Building Society', iso: 'GB', currency: 'GBP', format: 'gb', code: '07',
@@ -202,13 +202,13 @@ export const THIRTEEN: readonly CountryBanking[] = [
     banks: [
       {
         id: 'ie-aib', name: 'AIB', iso: 'IE', currency: 'EUR', format: 'ie', code: 'AIBK93',
-        current: p('Personal Current Account', 'aib.ie: €6 a month from 1 July 2026; exemptions for students, graduates, over-66s and mortgage holders not modeled', { monthlyFee: 6_00 }),
+        current: p('Personal Current Account', 'aib.ie: €6 a month from July 1, 2026; exemptions for students, graduates, over-66s and mortgage holders not modeled', { monthlyFee: 6_00 }),
         savings: p('Demand Deposit Account', 'aib.ie: 0.25% AER (rates dated May 2025)', { rate: 0.0025 }),
       },
       {
         id: 'ie-bank-of-ireland', name: 'Bank of Ireland', iso: 'IE', currency: 'EUR', format: 'ie', code: 'BOFI90',
         current: p('Personal Current Account', 'bankofireland.com: €6 a month flat', { monthlyFee: 6_00 }),
-        savings: p('Demand Deposit Account', 'bankofireland.com rate table, 14 September 2026: 0.10% AER', { rate: 0.001 }),
+        savings: p('Demand Deposit Account', 'bankofireland.com rate table, September 14, 2026: 0.10% AER', { rate: 0.001 }),
       },
       {
         id: 'ie-ptsb', name: 'PTSB', iso: 'IE', currency: 'EUR', format: 'ie', code: 'IPBS99',
@@ -228,20 +228,20 @@ export const THIRTEEN: readonly CountryBanking[] = [
     banks: [
       {
         id: 'is-landsbankinn', name: 'Landsbankinn', iso: 'IS', currency: 'ISK', format: 'is', code: '01', currentLedger: '26', savingsLedger: '05',
-        current: p('Einkareikningur', 'landsbankinn.is rate decision, 1 September 2026: the current account pays 0.50%; fees not found', { rate: 0.005 }),
-        savings: p('Vaxtareikningur', 'landsbankinn.is rate decision, 1 September 2026: 5.79% on the lowest tier, up to 6.25%', { rate: 0.0579 }),
+        current: p('Einkareikningur', 'landsbankinn.is rate decision, September 1, 2026: the current account pays 0.50%; fees not found', { rate: 0.005 }),
+        savings: p('Vaxtareikningur', 'landsbankinn.is rate decision, September 1, 2026: 5.79% on the lowest tier, up to 6.25%', { rate: 0.0579 }),
       },
       {
         // The source said "Arion price list, 23 September 2026" until brief 10 (2026-10-16), when the price list read was
         // the one valid from 7 May 2026, its figures the same; the timing is `ARION_CARD_YEAR`'s, labelled simulated.
-        id: 'is-arion', card: { yearly: 950_00, perPurchase: 19_00, freeUnder: 24, year: ARION_CARD_YEAR, source: 'Arion’s price list and payment-account fee sheet, from 7 May 2026 (read 16 October 2026): a debit card at 950 kr a year and 19 kr a purchase, free for 23 and under' }, name: 'Arion banki', iso: 'IS', currency: 'ISK', format: 'is', code: '03', currentLedger: '26', savingsLedger: '13',
-        current: p('Veltureikningur', 'arionbanki.is rate table, 24 September 2026: 0.05%; no monthly fee', { rate: 0.0005 }),
-        savings: p('Vöxtur', 'arionbanki.is individuals’ rate table, 24 September 2026, Vöxtur óbundinn: 5.55% to 1 million kr, 5.65% to 5 million, 5.75% to 20 million, 5.85% over', { rate: 0.0555, tiers: [{ from: 1_000_000_00, rate: 0.0565 }, { from: 5_000_000_00, rate: 0.0575 }, { from: 20_000_000_00, rate: 0.0585 }] }),
+        id: 'is-arion', card: { yearly: 950_00, perPurchase: 19_00, freeUnder: 24, year: ARION_CARD_YEAR, source: 'Arion’s price list and payment-account fee sheet, from May 7, 2026 (read October 16, 2026): a debit card at 950 kr a year and 19 kr a purchase, free for 23 and under' }, name: 'Arion banki', iso: 'IS', currency: 'ISK', format: 'is', code: '03', currentLedger: '26', savingsLedger: '13',
+        current: p('Veltureikningur', 'arionbanki.is rate table, September 24, 2026: 0.05%; no monthly fee', { rate: 0.0005 }),
+        savings: p('Vöxtur', 'arionbanki.is individuals’ rate table, September 24, 2026, Vöxtur óbundinn: 5.55% to 1 million kr, 5.65% to 5 million, 5.75% to 20 million, 5.85% over', { rate: 0.0555, tiers: [{ from: 1_000_000_00, rate: 0.0565 }, { from: 5_000_000_00, rate: 0.0575 }, { from: 20_000_000_00, rate: 0.0585 }] }),
       },
       {
         id: 'is-islandsbanki', name: 'Íslandsbanki', iso: 'IS', currency: 'ISK', format: 'is', code: '05', currentLedger: '26',
-        current: p('Almennur reikningur', 'islandsbanki.is rate table, 3 September 2026: 0.25%; fees not found', { rate: 0.0025 }),
-        savings: p('Vaxtaþrep', 'islandsbanki.is rate table from 3 September 2026, Vaxtaþrep, interest paid monthly: 6.13% under 1 million kr, 6.17% to 5 million, 6.22% to 20 million, 6.27% to 75 million, 6.31% to 100 million', { rate: 0.0613, tiers: [{ from: 1_000_000_00, rate: 0.0617 }, { from: 5_000_000_00, rate: 0.0622 }, { from: 20_000_000_00, rate: 0.0627 }, { from: 75_000_000_00, rate: 0.0631 }] }),
+        current: p('Almennur reikningur', 'islandsbanki.is rate table, September 3, 2026: 0.25%; fees not found', { rate: 0.0025 }),
+        savings: p('Vaxtaþrep', 'islandsbanki.is rate table from September 3, 2026, Vaxtaþrep, interest paid monthly: 6.13% under 1 million kr, 6.17% to 5 million, 6.22% to 20 million, 6.27% to 75 million, 6.31% to 100 million', { rate: 0.0613, tiers: [{ from: 1_000_000_00, rate: 0.0617 }, { from: 5_000_000_00, rate: 0.0622 }, { from: 20_000_000_00, rate: 0.0627 }, { from: 75_000_000_00, rate: 0.0631 }] }),
       },
     ],
   },
@@ -252,28 +252,28 @@ export const THIRTEEN: readonly CountryBanking[] = [
     banks: [
       {
         id: 'fr-bnp-paribas', name: 'BNP Paribas', iso: 'FR', currency: 'EUR', format: 'fr', code: '30004',
-        current: p('Compte de dépôt', 'BNP Paribas price list from 1 January 2026, via moneyvox.fr: account keeping €2.60 a month, free for 18 to 24', { monthlyFee: 2_60, waiver: { ageBelow: 25 } }),
-        savings: p('Livret A', 'economie.gouv.fr: 1.7% from 1 August 2026, tax-free, paid once a year at the end of December', { rate: 0.017, taxFree: true, pays: [12] }),
+        current: p('Compte de dépôt', 'BNP Paribas price list from January 1, 2026, via moneyvox.fr: account keeping €2.60 a month, free for 18 to 24', { monthlyFee: 2_60, waiver: { ageBelow: 25 } }),
+        savings: p('Livret A', 'economie.gouv.fr: 1.7% from August 1, 2026, tax-free, paid once a year at the end of December', { rate: 0.017, taxFree: true, pays: [12] }),
       },
       {
         id: 'fr-societe-generale', name: 'SG', iso: 'FR', currency: 'EUR', format: 'fr', code: '30003',
         current: p('Compte bancaire', 'SG price list 2026: €7.65 a quarter (€2.55 a month here), waived under 25', { monthlyFee: 2_55, waiver: { ageBelow: 25 } }),
-        savings: p('Livret A', 'economie.gouv.fr: 1.7% from 1 August 2026, tax-free, paid once a year', { rate: 0.017, taxFree: true, pays: [12] }),
+        savings: p('Livret A', 'economie.gouv.fr: 1.7% from August 1, 2026, tax-free, paid once a year', { rate: 0.017, taxFree: true, pays: [12] }),
       },
       {
         id: 'fr-lcl', name: 'LCL', iso: 'FR', currency: 'EUR', format: 'fr', code: '30002',
         current: p('Compte de dépôt', 'LCL via moneyvox.fr: free where a salary is paid in, else €10 a quarter (€3.33 a month here)', { monthlyFee: 3_33, waiver: { depositsAtLeast: 1 } }),
-        savings: p('Livret A', 'economie.gouv.fr: 1.7% from 1 August 2026, tax-free, paid once a year', { rate: 0.017, taxFree: true, pays: [12] }),
+        savings: p('Livret A', 'economie.gouv.fr: 1.7% from August 1, 2026, tax-free, paid once a year', { rate: 0.017, taxFree: true, pays: [12] }),
       },
       {
         id: 'fr-credit-agricole', name: 'Crédit Agricole Paris Île-de-France', iso: 'FR', currency: 'EUR', format: 'fr', code: '18206',
         current: p('Compte de dépôt', 'moneyvox.fr: €18 a year (€1.50 a month here), varying by regional bank', { monthlyFee: 1_50 }),
-        savings: p('Livret A', 'economie.gouv.fr: 1.7% from 1 August 2026, tax-free, paid once a year', { rate: 0.017, taxFree: true, pays: [12] }),
+        savings: p('Livret A', 'economie.gouv.fr: 1.7% from August 1, 2026, tax-free, paid once a year', { rate: 0.017, taxFree: true, pays: [12] }),
       },
       {
         id: 'fr-la-banque-postale', name: 'La Banque Postale', iso: 'FR', currency: 'EUR', format: 'fr', code: '20041',
         current: p('CCP', 'moneyvox.fr: €25.20 a year (€2.10 a month here)', { monthlyFee: 2_10 }),
-        savings: p('Livret A', 'economie.gouv.fr: 1.7% from 1 August 2026, tax-free, paid once a year', { rate: 0.017, taxFree: true, pays: [12] }),
+        savings: p('Livret A', 'economie.gouv.fr: 1.7% from August 1, 2026, tax-free, paid once a year', { rate: 0.017, taxFree: true, pays: [12] }),
       },
     ],
   },
@@ -285,7 +285,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'de-deutsche-bank', name: 'Deutsche Bank', iso: 'DE', currency: 'EUR', format: 'de', code: '10070000',
         // Its opening month free from 2026-10-16, read in the price list that day; until then charged whole.
-        current: p('AktivKonto', 'deutsche-bank.de fee information, 23 September 2026: €6.90 a month; its price list (Stand 1 October 2026, read 16 October 2026): the month it opens free', { monthlyFee: 6_90, waiver: { openingMonth: true } }),
+        current: p('AktivKonto', 'deutsche-bank.de fee information, September 23, 2026: €6.90 a month; its price list (Stand October 1, 2026, read October 16, 2026): the month it opens free', { monthlyFee: 6_90, waiver: { openingMonth: true } }),
         savings: p('Flexgeld', 'deutsche-bank.de: 0.50%', { rate: 0.005 }),
       },
       {
@@ -295,12 +295,12 @@ export const THIRTEEN: readonly CountryBanking[] = [
         // nächstfolgenden Kontoabschluss berechnet”) and its payment-account information (“zum jeweiligen
         // Rechnungsabschluss belastet”) say the closing instead; the booking clause, the one that names the account fee and
         // sets it apart from the interest charged at the closing, is the one followed.
-        current: p('GiroKonto', 'commerzbank.de, 1 December 2025: €4.90 a month, free only with €50,000 held at the bank (kept here as €50,000 in the account); charged at each month’s end (commerzbank.de distance-selling information, 19 June 2026, read 16 October 2026)', { monthlyFee: 4_90, waiver: { balanceAtLeast: 50_000_00 }, feePosts: 'month' }),
+        current: p('GiroKonto', 'commerzbank.de, December 1, 2025: €4.90 a month, free only with €50,000 held at the bank (kept here as €50,000 in the account); charged at each month’s end (commerzbank.de distance-selling information, June 19, 2026, read October 16, 2026)', { monthlyFee: 4_90, waiver: { balanceAtLeast: 50_000_00 }, feePosts: 'month' }),
         savings: p('Tagesgeld', NOT_FOUND),
       },
       {
         id: 'de-postbank', name: 'Postbank', iso: 'DE', currency: 'EUR', format: 'de', code: '10010010',
-        current: p('Giro plus', 'postbank.de, 15 July 2026: €6.90 a month, €5.90 in a month with €1,000 paid in', { deposits: 'electronic', monthlyFee: 6_90, reduced: { to: 5_90, depositsAtLeast: 1_000_00 } }),
+        current: p('Giro plus', 'postbank.de, July 15, 2026: €6.90 a month, €5.90 in a month with €1,000 paid in', { deposits: 'electronic', monthlyFee: 6_90, reduced: { to: 5_90, depositsAtLeast: 1_000_00 } }),
         savings: p('Tagesgeld', NOT_FOUND),
       },
       {
@@ -308,15 +308,15 @@ export const THIRTEEN: readonly CountryBanking[] = [
         // Taken in the month after from 2026-10-16 (brief 09's follow-up): “Belastung des monatlichen Entgelts im
         // Folgemonat” (ing.de conditions, Stand 1 June 2026); until then at the quarter's closing. The day in that month
         // isn't published: SLATE takes the first.
-        current: p('Girokonto', 'ing.de conditions, 25 September 2026: free with €1,000 paid in a month or under 28, else €4.90, charged in the month after', { deposits: 'electronic', monthlyFee: 4_90, waiver: { depositsAtLeast: 1_000_00, ageBelow: 28 }, feePosts: 'next' }),
+        current: p('Girokonto', 'ing.de conditions, September 25, 2026: free with €1,000 paid in a month or under 28, else €4.90, charged in the month after', { deposits: 'electronic', monthlyFee: 4_90, waiver: { depositsAtLeast: 1_000_00, ageBelow: 28 }, feePosts: 'next' }),
         savings: p('Extra-Konto', 'ing.de: 3.20% for a new customer’s first four months, then 0.75%', { rate: 0.0075, intro: [{ months: 4, rate: 0.032 }] }),
       },
       {
         // Its Sparkassen-Card from 2026-10-16 (brief 09's follow-up): until then SLATE charged nothing for it.
         id: 'de-berliner-sparkasse', name: 'Berliner Sparkasse', iso: 'DE', currency: 'EUR', format: 'de', code: '10050000',
         // `ahead: true` until brief 10 (2026-10-16), the same rule in `CardYear`'s words.
-        card: { yearly: 12_00, year: { paid: 'ahead', length: 365 }, source:'berliner-sparkasse.de Giro Digital fee information, 1 February 2026, and price list, 15 July 2026 (read 16 October 2026): Giro Digital includes no Sparkassen-Card, which costs €12.00 a year, paid ahead, the unused part refunded on an early close (footnote 45, § 675h(3) BGB); the month it’s charged in isn’t published' },
-        current: p('Giro Digital', 'berliner-sparkasse.de, 1 February 2026: €4.95 a month', { monthlyFee: 4_95 }),
+        card: { yearly: 12_00, year: { paid: 'ahead', length: 365 }, source:'berliner-sparkasse.de Giro Digital fee information, February 1, 2026, and price list, July 15, 2026 (read October 16, 2026): Giro Digital includes no Sparkassen-Card, which costs €12.00 a year, paid ahead, the unused part refunded on an early close (footnote 45, § 675h(3) BGB); the month it’s charged in isn’t published' },
+        current: p('Giro Digital', 'berliner-sparkasse.de, February 1, 2026: €4.95 a month', { monthlyFee: 4_95 }),
         savings: p('Tagesgeld', 'berliner-sparkasse.de: 0.50%', { rate: 0.005 }),
       },
     ],
@@ -329,12 +329,12 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'es-santander', name: 'Banco Santander', iso: 'ES', currency: 'EUR', format: 'es', code: '0049',
         current: p('Cuenta Santander', 'bancosantander.es: €20 a month, free with a nómina of €600 and three bills or six card payments in the quarter, more than €25,000 at the bank, or under 29', { monthlyFee: 20_00, waiver: { depositsAtLeast: 600_00, depositsAlso: { bills: 3, purchases: 6, months: 3 }, linkedAverageAtLeast: 25_000_01, ageBelow: 29 } }),
-        savings: p('Cuenta Hucha', 'Finantres, 16 September 2026, and bancosantander.es: Santander’s accounts pay 0% TIN, 0% TAE'),
+        savings: p('Cuenta Hucha', 'Finantres, September 16, 2026, and bancosantander.es: Santander’s accounts pay 0% TIN, 0% TAE'),
       },
       {
         id: 'es-bbva', name: 'BBVA', iso: 'ES', currency: 'EUR', format: 'es', code: '0182',
         current: p('Cuenta Online Sin Comisiones', 'bbva.es via comparison sites: no fee, no conditions'),
-        savings: p('Cuenta Metas', 'bbva.es and Kelisto, 21 September 2026: 0% TIN, 0% TAE'),
+        savings: p('Cuenta Metas', 'bbva.es and Kelisto, September 21, 2026: 0% TIN, 0% TAE'),
       },
       {
         id: 'es-caixabank', name: 'CaixaBank', iso: 'ES', currency: 'EUR', format: 'es', code: '2100',
@@ -360,27 +360,27 @@ export const THIRTEEN: readonly CountryBanking[] = [
     banks: [
       {
         id: 'jp-mufg', dormant: { yearly: 1_320_00, afterYears: 2, source: 'bk.mufg.jp: ¥1,320 a year on an account unused for two years' }, name: 'MUFG Bank', iso: 'JP', currency: 'JPY', format: 'jp', code: '0005',
-        current: p('普通預金 (Ordinary Deposit)', 'bk.mufg.jp: 0.40% since 3 August 2026, 0.50% from 2 November 2026, paid in February and August; SLATE’s accounts use the paperless passbook, which carries no fee', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
+        current: p('普通預金 (Ordinary Deposit)', 'bk.mufg.jp: 0.40% since August 3, 2026, 0.50% from November 2, 2026, paid in February and August; the game’s accounts use the paperless passbook, which carries no fee', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
         savings: p('普通預金 (Ordinary Deposit)', 'bk.mufg.jp: as the everyday account', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
       },
       {
         id: 'jp-smbc', name: 'SMBC', iso: 'JP', currency: 'JPY', format: 'jp', code: '0009',
-        current: p('普通預金 (Ordinary Deposit)', 'smbc.co.jp: 0.40%, 0.50% from 2 November 2026; SMBC’s ¥1,100 yearly fee on an account unused for two years holding under ¥10,000 spares one with the Web passbook, which SLATE’s accounts use (smbc.co.jp digitalmiriyou, 8 April 2024)', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
+        current: p('普通預金 (Ordinary Deposit)', 'smbc.co.jp: 0.40%, 0.50% from November 2, 2026; SMBC’s ¥1,100 yearly fee on an account unused for two years holding under ¥10,000 spares one with the Web passbook, which the game’s accounts use (smbc.co.jp digitalmiriyou, April 8, 2024)', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
         savings: p('普通預金 (Ordinary Deposit)', 'smbc.co.jp: as the everyday account', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
       },
       {
         id: 'jp-mizuho', name: 'Mizuho Bank', iso: 'JP', currency: 'JPY', format: 'jp', code: '0001',
-        current: p('普通預金 (Ordinary Deposit)', 'mizuhobank.co.jp: 0.40%, 0.50% from 2 November 2026', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
+        current: p('普通預金 (Ordinary Deposit)', 'mizuhobank.co.jp: 0.40%, 0.50% from November 2, 2026', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
         savings: p('普通預金 (Ordinary Deposit)', 'mizuhobank.co.jp: as the everyday account', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
       },
       {
         id: 'jp-resona', dormant: { yearly: 1_320_00, afterYears: 2, belowBalance: 10_000_00, source: 'resona-gr.co.jp: ¥1,320 a year on an account unused for two years holding under ¥10,000' }, name: 'Resona Bank', iso: 'JP', currency: 'JPY', format: 'jp', code: '0010',
-        current: p('普通預金 (Ordinary Deposit)', 'resona-gr.co.jp: 0.40% from 3 August 2026', { rate: 0.004, pays: [2, 8] }),
+        current: p('普通預金 (Ordinary Deposit)', 'resona-gr.co.jp: 0.40% from August 3, 2026', { rate: 0.004, pays: [2, 8] }),
         savings: p('普通預金 (Ordinary Deposit)', 'resona-gr.co.jp: as the everyday account', { rate: 0.004, pays: [2, 8] }),
       },
       {
         id: 'jp-japan-post-bank', name: 'Japan Post Bank', iso: 'JP', currency: 'JPY', format: 'jp', code: '9900',
-        current: p('通常貯金 (Ordinary Savings)', 'jp-bank.japanpost.jp: 0.400%, 0.500% from 9 November 2026', { rate: 0.004, changes: [{ from: '2026-11-09', rate: 0.005 }], pays: [2, 8] }),
+        current: p('通常貯金 (Ordinary Savings)', 'jp-bank.japanpost.jp: 0.400%, 0.500% from November 9, 2026', { rate: 0.004, changes: [{ from: '2026-11-09', rate: 0.005 }], pays: [2, 8] }),
         savings: p('通常貯金 (Ordinary Savings)', 'jp-bank.japanpost.jp: as the everyday account', { rate: 0.004, changes: [{ from: '2026-11-09', rate: 0.005 }], pays: [2, 8] }),
       },
     ],
@@ -413,7 +413,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'kr-kakaobank', name: 'KakaoBank', iso: 'KR', currency: 'KRW', format: 'kr', code: '090', groups: [4, 2, 7],
         current: p('입출금통장 (everyday account)', 'kakaobank.com: 0.10%', { rate: 0.001 }),
-        savings: p('세이프박스 (savings box)', 'kakaobank.com: 1.80% from 10 September 2026', { rate: 0.018 }),
+        savings: p('세이프박스 (savings box)', 'kakaobank.com: 1.80% from September 10, 2026', { rate: 0.018 }),
       },
     ],
   },
@@ -425,7 +425,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'au-commbank', name: 'Commonwealth Bank', iso: 'AU', currency: 'AUD', format: 'au', code: '06',
         current: p('Everyday Account Smart Access', 'commbank.com.au: $4 a month, waived with $2,000 deposited in the month or under 30', { deposits: 'electronic', monthlyFee: 4_00, waiver: { depositsAtLeast: 2_000_00, ageBelow: 30 } }),
-        savings: p('NetBank Saver', 'commbank.com.au, 24 September 2026: 5.20% for the first five months, then 2.10% standard', { rate: 0.021, intro: [{ months: 5, rate: 0.052 }] }),
+        savings: p('NetBank Saver', 'commbank.com.au, September 24, 2026: 5.20% for the first five months, then 2.10% standard', { rate: 0.021, intro: [{ months: 5, rate: 0.052 }] }),
       },
       {
         id: 'au-westpac', name: 'Westpac', iso: 'AU', currency: 'AUD', format: 'au', code: '03',
@@ -435,7 +435,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'au-nab', name: 'NAB', iso: 'AU', currency: 'AUD', format: 'au', code: '08',
         current: p('NAB Classic Banking', 'nab.com.au: no monthly fee'),
-        savings: p('NAB Reward Saver', 'nab.com.au, from 21 September 2026: 0.01% base, and a 4.99% bonus in a month with no withdrawals', { rate: 0.0001, bonus: { rate: 0.0499, when: 'no_withdrawals' } }),
+        savings: p('NAB Reward Saver', 'nab.com.au, from September 21, 2026: 0.01% base, and a 4.99% bonus in a month with no withdrawals', { rate: 0.0001, bonus: { rate: 0.0499, when: 'no_withdrawals' } }),
       },
       {
         id: 'au-anz', name: 'ANZ', iso: 'AU', currency: 'AUD', format: 'au', code: '01',
@@ -458,7 +458,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
     banks: [
       {
         id: 'nz-anz', name: 'ANZ', iso: 'NZ', currency: 'NZD', format: 'nz', code: '01',
-        current: p('ANZ Go', 'anz.co.nz fees, 1 September 2026: no monthly fee'),
+        current: p('ANZ Go', 'anz.co.nz fees, September 1, 2026: no monthly fee'),
         savings: p('Serious Saver', 'anz.co.nz: 0.05% base, and a 2.00% bonus in a month with no withdrawals', { rate: 0.0005, bonus: { rate: 0.02, when: 'no_withdrawals' } }),
       },
       {

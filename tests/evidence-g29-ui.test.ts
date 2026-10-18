@@ -251,7 +251,7 @@ function sleepDialog(sim: Simulation): { text: string; press: () => void } {
   h.states = [true, false, null, false, false, h.keep];
   const text = onScreen(renderToStaticMarkup(createElement(TimeControls)));
   expect(h.states).toHaveLength(0);
-  const button = h.elements.find((e) => e.type === 'button' && /^Sleep [\d.]+ Hours$/.test(e.text));
+  const button = h.elements.find((e) => e.type === 'button' && /^Sleep [\d.]+ Hours?$/.test(e.text));
   expect(button, 'the dialog’s Sleep button').toBeDefined();
   return { text, press: button!.props.onClick as () => void };
 }
@@ -569,7 +569,7 @@ describe('c-tutorial', () => {
     expect(kept.universe.preferences.timeSpeed).toBe('live');
     const read = kept.execute({ kind: 'tutorial.read', payload: { chapterId: CHAPTERS[0]!.id } });
     expect(read.ok).toBe(false);
-    expect(read.error).toBe('This life has no guide to read through; everything is open.');
+    expect(read.error).toBe('This life was begun without the guide, so everything is already open.');
   });
 
   it('makes a guided life, paused, when Begin is pressed on the default, and refuses Sleep naming its chapter and the first', async () => {
@@ -579,13 +579,13 @@ describe('c-tutorial', () => {
     expect(sim.universe.preferences.timeSpeed).toBe('paused');
     const refused = sim.execute({ kind: 'life.sleep', payload: { hours: 8 } });
     expect(refused.ok).toBe(false);
-    expect(refused.error).toBe('Read “Sleep” in the guide first. The next chapter is “Your Life, Hour By Hour”.');
+    expect(refused.error).toBe('Read “Sleep” in the guide first. The chapters open in order, and “Your Life, Hour By Hour” is next: press Guide, at the top of the screen.');
     expect(sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'live' } }).ok).toBe(false);
     expect(sim.universe.preferences.timeSpeed).toBe('paused');
     // And Money opens as Locked, naming its chapter.
     const bank = screenAt(sim, '/workspace/bank');
     expect(bank).toContain('Money, Locked');
-    expect(bank).toContain('It opens with “Your Bank” in the guide');
+    expect(bank).toContain('It opens once you read “Your Bank” in the guide.');
     expect(bank).not.toContain('Your Bank Chase');
   });
 
@@ -603,7 +603,7 @@ describe('c-tutorial', () => {
 
     const held = take(sim);
     expect(held.ok).toBe(false);
-    expect(held.error).toBe('Read “Cover, Benefits And Returns” in the guide first. The next chapter is “How You Are”.');
+    expect(held.error).toBe('Read “Cover, Benefits And Returns” in the guide first. The chapters open in order, and “How You Are” is next: press Guide, at the top of the screen.');
     // The same command given directly is held in the same words.
     expect(sim.execute({ kind: 'tax.file', payload: { year: 2026 } }).error).toBe(held.error);
 
@@ -617,7 +617,7 @@ describe('c-tutorial', () => {
     expect(kept.player.returns?.['2026']?.filedAt).toBe(kept.now);
     const again = take(kept);
     expect(again.ok).toBe(false);
-    expect(again.error).toBe('That’s been done already.');
+    expect(again.error).toBe('That question is already settled: it was answered, or its date passed.');
   });
 });
 

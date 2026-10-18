@@ -1,0 +1,201 @@
+{
+ "seed": "lives-0",
+ "profile": "london",
+ "policy": "attentive",
+ "ended": "2028-01-17",
+ "standing": "good",
+ "hours": 12264.7,
+ "terms": [
+  {
+   "termsBegun": 0,
+   "supply": {
+    "idle:other": 1
+   },
+   "shown": 0,
+   "unready": 0,
+   "partsShortAtShowing": {}
+  },
+  {
+   "termsBegun": 1,
+   "supply": {
+    "at:health.appointment": 0.3,
+    "at:school.classes": 390,
+    "at:school.lab": 42,
+    "at:school.orientation": 11.5,
+    "at:school.partner_rehearsal": 123,
+    "at:school.shift": 72,
+    "at:school.study_session": 1,
+    "idle:other": 659,
+    "idle:working-hours": 330,
+    "life.sleep": 931,
+    "prepare:familiarity": 99.3,
+    "prepare:interpretation": 117,
+    "prepare:memorization": 67.3,
+    "prepare:reader": 8,
+    "prepare:rehearsal": 156.2,
+    "prepare:revision": 56,
+    "school.choose": 6.7,
+    "school.respond": 3
+   },
+   "demand": {
+    "pieces": 47,
+    "hoursToComplete": 581.5,
+    "partnerHours": 87,
+    "byPart": {
+     "familiarity": 78,
+     "memorization": 63,
+     "rehearsal": 175.5,
+     "partner": 87,
+     "revision": 64,
+     "interpretation": 114
+    }
+   },
+   "shown": 47,
+   "unready": 9,
+   "partsShortAtShowing": {
+    "rehearsal": 14,
+    "partner": 5,
+    "revision": 2,
+    "interpretation": 3,
+    "familiarity": 1
+   }
+  },
+  {
+   "termsBegun": 2,
+   "supply": {
+    "at:health.appointment": 0.7,
+    "at:school.call:performance": 9.4,
+    "at:school.call:rehearsal": 105,
+    "at:school.call:runthrough": 2.4,
+    "at:school.classes": 390,
+    "at:school.lab": 30,
+    "at:school.partner_rehearsal": 45,
+    "at:school.shift": 72,
+    "at:school.study_session": 3,
+    "idle:other": 1503,
+    "idle:working-hours": 1063,
+    "life.sleep": 1617,
+    "prepare:familiarity": 116.2,
+    "prepare:interpretation": 121.5,
+    "prepare:memorization": 70,
+    "prepare:reader": 32,
+    "prepare:rehearsal": 153.7,
+    "prepare:revision": 65,
+    "school.choose": 8.3,
+    "school.learn_part": 26,
+    "school.respond": 2.3,
+    "school.work_note": 4.5
+   },
+   "demand": {
+    "pieces": 45,
+    "hoursToComplete": 502.5,
+    "partnerHours": 57,
+    "byPart": {
+     "familiarity": 84,
+     "memorization": 51,
+     "rehearsal": 148.5,
+     "partner": 57,
+     "interpretation": 114,
+     "revision": 48
+    }
+   },
+   "shown": 45,
+   "unready": 3,
+   "partsShortAtShowing": {
+    "rehearsal": 11,
+    "partner": 8
+   }
+  },
+  {
+   "termsBegun": 3,
+   "supply": {
+    "at:school.call:performance": 18.5,
+    "at:school.call:rehearsal": 106,
+    "at:school.call:runthrough": 1.8,
+    "at:school.classes": 414,
+    "at:school.partner_rehearsal": 54,
+    "at:school.shift": 78,
+    "at:school.study_session": 2,
+    "idle:other": 644,
+    "idle:working-hours": 302.8,
+    "life.sleep": 931,
+    "prepare:familiarity": 49.7,
+    "prepare:interpretation": 107.2,
+    "prepare:memorization": 99,
+    "prepare:reader": 31,
+    "prepare:rehearsal": 163.7,
+    "prepare:revision": 39,
+    "school.choose": 10,
+    "school.learn_part": 26,
+    "school.respond": 3,
+    "school.work_note": 2
+   },
+   "demand": {
+    "pieces": 46,
+    "hoursToComplete": 563.3,
+    "partnerHours": 87,
+    "byPart": {
+     "familiarity": 48,
+     "memorization": 76.5,
+     "interpretation": 111.3,
+     "rehearsal": 192.5,
+     "partner": 87,
+     "revision": 48
+    }
+   },
+   "shown": 46,
+   "unready": 11,
+   "partsShortAtShowing": {
+    "partner": 8,
+    "rehearsal": 16,
+    "familiarity": 3,
+    "memorization": 1,
+    "interpretation": 2
+   }
+  },
+  {
+   "termsBegun": 4,
+   "supply": {
+    "at:school.call:rehearsal": 48,
+    "at:school.classes": 30,
+    "at:school.partner_rehearsal": 1.5,
+    "at:school.shift": 6,
+    "at:school.study_session": 1,
+    "idle:other": 82,
+    "idle:working-hours": 23,
+    "life.sleep": 98,
+    "prepare:familiarity": 4,
+    "prepare:interpretation": 3.3,
+    "prepare:memorization": 10,
+    "prepare:reader": 1,
+    "prepare:rehearsal": 6,
+    "school.choose": 0.8,
+    "school.learn_part": 12,
+    "school.work_note": 2
+   },
+   "demand": {
+    "pieces": 9,
+    "hoursToComplete": 126,
+    "partnerHours": 19,
+    "byPart": {
+     "familiarity": 14,
+     "memorization": 19,
+     "interpretation": 24.8,
+     "rehearsal": 41.3,
+     "partner": 19,
+     "revision": 8
+    }
+   },
+   "shown": 0,
+   "unready": 0,
+   "partsShortAtShowing": {}
+  }
+ ],
+ "notices": [
+  "2026-12-11 In Good Standing: The acting faculty find you in good standing. You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.7 points, and the class’s middle student’s grew 1.2. Allowing for how much room each of you had to grow, that’s ahead of the class.",
+  "2027-04-23 In Good Standing: The acting faculty find you in good standing. You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.5 points, and the class’s middle student’s grew 1.0. Allowing for how much room each of you had to grow, that’s ahead of the class.",
+  "2027-10-01 A Word On Your Coursework: So far this term, 5 of the 14 pieces you’ve shown were Unready. Each was short on a different part, so there’s no single pattern. Each one’s feedback says what held it back. 10 pieces are set and still to be shown. This is a warning, not the term review. The faculty reviews the term on December 10, 2027. If half or more of the term’s pieces are Unready or not shown by then, the term falls short of",
+  "2027-12-10 In Good Standing: The acting faculty find you in good standing. You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.7 points, and the class’s middle student’s grew 1.4. Allowing for how much room each of you had to grow, that’s ahead of the class."
+ ],
+ "breaches": 0
+}

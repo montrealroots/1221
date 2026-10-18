@@ -208,8 +208,8 @@ describe('health.therapy', () => {
       // Free on Yale Health: nothing posted for it.
       expect(sim.universe.transactions.filter((t) => t.memo.includes('Yale Mental Health'))).toHaveLength(0);
       // Said once, either way; lifted, the depression is off the record, and not, it's as it was, left alone.
-      expect(titled(sim, 'The Depression Has Lifted').map((n) => n.body)).toEqual(lifts ? ['After 8 sessions with Yale Mental Health & Counseling, it no longer weighs on you.'] : []);
-      expect(titled(sim, 'The Course Is Done').map((n) => n.body)).toEqual(lifts ? [] : ['8 sessions with Yale Mental Health & Counseling; it hasn’t lifted yet, and another course can be had.']);
+      expect(titled(sim, 'The Depression Has Lifted').map((n) => n.body)).toEqual(lifts ? ['After 8 sessions with Yale Mental Health & Counseling, your depression has lifted. It no longer needs care, and it no longer takes from your morale.'] : []);
+      expect(titled(sim, 'The Course Is Done').map((n) => n.body)).toEqual(lifts ? [] : ['You’ve finished 8 sessions with Yale Mental Health & Counseling. The depression hasn’t lifted yet, and you can start another course on Papers, under Health Cover.']);
       expect(healthOf(sim.player).chronic?.depression).toEqual(lifts ? undefined : { treated: false });
       // The next health week, Monday 26 October: depression left alone takes its 3 morale (SLATE's estimate); lifted, none.
       const week = atHealthWeek(sim, 'morale');
@@ -283,7 +283,7 @@ describe('health.therapy', () => {
     // By the fifteenth day of classes: the cover ends that day.
     expect(sim.must<{ early: boolean }>({ kind: 'school.withdraw', payload: { confirm: true } }).early).toBe(true);
     sim.advanceTo(r.first + 7 * MS_DAY + 60_000);
-    expect(titled(sim, 'Your Counseling At Yale Ended').map((n) => n.body)).toEqual(['Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, after 1 of 8 sessions. A therapist outside Yale can take it on.']);
+    expect(titled(sim, 'Your Counseling At Yale Ended').map((n) => n.body)).toEqual(['Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, so your course there stopped after 1 of 8 sessions. A therapist outside Yale can start a new course with you: choose one on Papers, under Health Cover.']);
     expect(sim.player.therapy).toBeUndefined();
     expect(sessions(sim).filter((i) => i.status === 'pending')).toHaveLength(0);
     sim.advanceTo(r.first + 14 * MS_DAY + 60_000);
@@ -302,20 +302,20 @@ describe('health.therapy', () => {
     const before = drawn(sim, PapersWorkspace, HEALTH_TAB);
     expect(before.html).toMatch(/<option value="Yale Mental Health &amp; Counseling" selected="">Yale Mental Health &amp; Counseling, Free With Yale Health<\/option>/);
     expect(before.text).toContain('Adna Linden Psychotherapy, $240 A Session');
-    const begin = before.buttons.find((b) => b.text === 'Begin A Course Of 8')!;
+    const begin = before.buttons.find((b) => b.text === 'Begin A Course Of 8 Sessions')!;
     expect(begin.disabled).toBe(false);
     begin.onClick!();
-    expect(h.toasts).toEqual(['The first session, August 31, 2026.']);
+    expect(h.toasts).toEqual(['Your first session is August 31, 2026.']);
     expect(sim.player.therapy).toMatchObject({ therapist: 'Yale Mental Health & Counseling', done: 0 });
     expect(drawn(sim, PapersWorkspace, HEALTH_TAB).text).toContain('Therapy with Yale Mental Health & Counseling: 0 of 8 sessions');
     sim.advanceTo(EDT(2026, 9, 1, 12));
     const after = drawn(sim, PapersWorkspace, HEALTH_TAB);
     expect(after.text).toContain('Therapy with Yale Mental Health & Counseling: 1 of 8 sessions');
-    expect(after.buttons.some((b) => b.text === 'Begin A Course Of 8')).toBe(false);
+    expect(after.buttons.some((b) => b.text === 'Begin A Course Of 8 Sessions')).toBe(false);
     // A student who drew no depression ('g04-dep-3') has no course offered, and is refused one in the rule's words.
     const well = student('g04-dep-3');
     expect(healthOf(well.player).chronic?.depression).toBeUndefined();
-    expect(drawn(well, PapersWorkspace, HEALTH_TAB).buttons.some((b) => b.text === 'Begin A Course Of 8')).toBe(false);
+    expect(drawn(well, PapersWorkspace, HEALTH_TAB).buttons.some((b) => b.text === 'Begin A Course Of 8 Sessions')).toBe(false);
     expect(well.execute({ kind: 'health.therapy', payload: { therapist: 'Yale Mental Health & Counseling' } }).error).toBe('A course of therapy here is for depression.');
     expect(well.player.therapy).toBeUndefined();
   });
@@ -332,7 +332,7 @@ describe('health.treat', () => {
     let sim = newYorker('g04-ny-care');
     expect(Object.keys(healthOf(sim.player).chronic ?? {})).toEqual(['depression', 'asthma']);
     // A condition not carried is refused in its own words, and nothing is paid for it.
-    expect(sim.execute({ kind: 'health.treat', payload: { condition: 'arthritis', on: true } }).error).toBe('You don’t have that.');
+    expect(sim.execute({ kind: 'health.treat', payload: { condition: 'arthritis', on: true } }).error).toBe('You don’t have that condition.');
     expect(memos(sim, 'Care for arthritis')).toHaveLength(0);
     h.toasts = [];
     const letGo = conditionButton(sim, 0);
@@ -450,7 +450,7 @@ describe('life.birthday', () => {
     // TEST SETUP: the band the year was drawn at put out of reach of any body, so its redraw at the birthday shows.
     healthOf(sim.player).endBand = 99;
     sim.advanceTo(EDT(2026, 8, 30, 9, 1));
-    expect(titled(sim, 'Happy Birthday: 24').map((n) => n.body)).toEqual(['You\'re 24 today.']);
+    expect(titled(sim, 'Happy Birthday: 24').map((n) => n.body)).toEqual(['You’re 24 today.']);
     expect(birthdays(sim, 'done').map((i) => i.at)).toEqual([EDT(2026, 8, 30, 9)]);
     expect(birthdays(sim, 'pending').map((i) => [i.at, i.label])).toEqual([[EDT(2027, 8, 30, 9), 'Your Birthday']]);
     // The year's band from the body at the birthday, by the rule's own figures (`bandFor`).
@@ -477,7 +477,7 @@ describe('life.birthday', () => {
     sim.advanceTo(EST(2027, 2, 28, 9, 1));
     // The day the birthday falls on is the day the age turns: 2027 − 2004 = 23. `ageOn` counted it from 1 March until
     // 2026-10-13; fixed that day.
-    expect(sim.universe.notifications.filter((n) => n.title.startsWith('Happy Birthday')).map((n) => [n.title, n.body])).toEqual([['Happy Birthday: 23', 'You\'re 23 today.']]);
+    expect(sim.universe.notifications.filter((n) => n.title.startsWith('Happy Birthday')).map((n) => [n.title, n.body])).toEqual([['Happy Birthday: 23', 'You’re 23 today.']]);
   });
 
   it('PLAYER JOURNEY: a student born in 1940, who turns 86 on the Sunday, has the coming year drawn at the birthday: its end, none before it', () => {
@@ -526,7 +526,7 @@ describe('life.commitment', () => {
     const night = sleepFor(sim, 8);
     expect(night.value!.wokeAt).toBe(EDT(2026, 8, 25, 7));
     expect(sim.timeline.get(gym)!.status).toBe('missed');
-    expect(titled(sim, 'You Slept Through 1 Commitment').map((n) => n.body)).toEqual(['Gym']);
+    expect(titled(sim, 'You Slept Through 1 Commitment').map((n) => n.body)).toEqual(['You were asleep for Gym, so you missed it.']);
     expect(titled(sim, 'You Missed Gym')).toHaveLength(0);
     // Missed, its hours to 9 AM aren't spent at it: a nap at 7 isn't refused as "You're at Gym until 9:00 AM."
     const nap = sleepFor(sim, 1);
@@ -543,10 +543,10 @@ describe('life.commitment', () => {
     sim.advanceTo(EDT(2026, 8, 24, 12, 30));
     expect(sim.timeline.get(gym)!.status).toBe('done');
     expect(sleepFor(sim, 1).error).toBe('You’re at Gym until 2:00 PM.');
-    expect(sim.execute<{ ok: boolean; error?: string }>({ kind: 'calendar.skip', payload: { entryId: gym } }).value).toEqual({ ok: false, error: 'That’s already settled one way or the other.' });
+    expect(sim.execute<{ ok: boolean; error?: string }>({ kind: 'calendar.skip', payload: { entryId: gym } }).value).toEqual({ ok: false, error: 'That’s already over: it was kept, missed or called off.' });
     sim.advanceTo(EDT(2026, 8, 24, 19));
     expect(sim.timeline.get(dinner)!.status).toBe('missed');
-    expect(titled(sim, 'You Missed Dinner').map((n) => n.body)).toEqual(['It wanted you in New York at 6:00 PM, and you were in New Haven.']);
+    expect(titled(sim, 'You Missed Dinner').map((n) => n.body)).toEqual(['It was in New York at 6:00 PM, and you were in New Haven. Missing a plan of your own costs nothing else.']);
     // Done, its hours over: sleep is taken again.
     expect(sleepFor(sim, 1).ok).toBe(true);
     sim = reload(sim);
@@ -593,8 +593,9 @@ describe('life.day_rollover', () => {
     sim.advanceTo(midnight);
     expect(healthOf(sim.player).injury).toEqual({ kind: 'bruise', at: midnight, until: midnight + 5 * MS_DAY });
     // Yale Health leaves nothing to pay for it, so the notice names no bill. Until 2026-10-16 this read '5 days to mend. ',
-    // the space the empty second sentence left behind it, which the notice had (brief 09's journeys, injury.ts).
-    expect(titled(sim, 'A Bad Knock').map((n) => [n.at, n.body])).toEqual([[midnight, '5 days to mend.']]);
+    // the space the empty second sentence left behind it, which the notice had (brief 09's journeys, injury.ts). Until
+    // 2026-10-17 it said nothing of the care; it now says what it was and that it cost nothing (brief 14's health journey).
+    expect(titled(sim, 'A Bad Knock').map((n) => [n.at, n.body])).toEqual([[midnight, 'It takes 5 days to mend. Its care, a doctor’s visit, costs you nothing.']]);
     sim.advanceTo(EST(2026, 11, 25, 12));
     expect(titled(sim, 'A Bad Knock')).toHaveLength(1);
   });
@@ -730,7 +731,7 @@ describe('world.tick', () => {
     expect(closed.resolvedAt! - ret.dueAt!).toBeLessThanOrEqual(2 * MS_DAY);
     expect(closed.dismissedAt).toBeUndefined();
     expect(drawn(sim, Home).text).not.toContain('Your 2026 Tax Return');
-    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: ret.id, actionIndex: 0 } }).error).toBe('That’s been done already.');
+    expect(sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: ret.id, actionIndex: 0 } }).error).toBe('That question is already settled: it was answered, or its date passed.');
     // Kept 180 days after it closed, gone at the tick after.
     sim.advanceTo(closed.resolvedAt! + 179 * MS_DAY);
     expect(sim.universe.decisions[ret.id]).toBeDefined();

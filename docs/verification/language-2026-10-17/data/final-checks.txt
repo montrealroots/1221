@@ -1,0 +1,24 @@
+# Brief 14, the research data's dates: the last checks, on d9f3239b plus the record's last edits (no source changed after them).
+# Each command's output went to its own file, and its exit was read from that file, never through a pipe.
+
+npx tsc -b --noEmit                                            exit=0
+npx eslint <the 33 .ts and .tsx files changed since c74a02e1> --max-warnings=0   exit=0
+npx vitest run <final-tests-files.txt, 140 files: every test file that imports a changed source or file>
+  first 72 files:  Tests  1026 passed (1026)   exit=0   (final-tests-1.txt)
+  last 68 files:   Tests  918 passed (918)   exit=0   (final-tests-2.txt)
+node tools/text-inventory.mjs --check   exit=0   The text inventory holds.
+node tools/title-case.mjs --check       exit=0   0 strings in 0 files would change
+node tools/label-sweep.mjs              exit=0   
+node tools/plural-check.mjs             exit=0   0 counts printed in front of a plural noun without agreeing with it.
+node tools/voice-check.mjs --check      exit=0         1  src/ui/workspaces/CalendarWorkspace.tsx
+node tools/tics.mjs --check             exit=0   30 in all, across 9 habits.
+node tools/spelling.mjs                 exit=0   0 British spellings in 0 files.
+node tools/typos.mjs                    exit=0   0 misspellings or doubled words.
+node tools/doc-refs.mjs --check         exit=0   Every one of them is there.
+node tools/deciders.mjs --check         exit=0   24 registered: weather.day, life.end, bank.number, bank.fraud, documents.start, attributes.presence, school.class, schoo
+node tools/inventory.mjs --check        exit=0   Inventory matches the code: 158 commands, 96 scheduled kinds, 2 passage reactors, 3 events, 1 listener, 0 scenes, 5 rout
+node tools/research-dates.mjs           exit=0   0 fields would be rewritten
+npx vite-node tools/geo-check.mjs                              exit=0
+
+The builders (builders-rerun.txt): every builder whose research is in the repository, run on the result, each exit 0,
+and git status clean but for the batch's own genre-demands.json, which the genre builder wrote.

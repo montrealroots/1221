@@ -10,7 +10,7 @@
 
 import { useState } from 'react';
 import { formatDaylight } from '@/engine/core/sun';
-import { titleCaseLabel } from '@/engine/core/text';
+import { ordinal, titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { MS_DAY, WEEKDAY_NAMES, formatDateTime } from '@/engine/core/time';
@@ -62,7 +62,7 @@ export function Home() {
     const said: string[] = [];
     for (const t of troubles(s, s.player)) {
       if (t.kind === 'owed') said.push(`You owe ${m(t.amount)} that went unpaid.`);
-      else if (t.kind === 'overdrawn') said.push(`Your current account is ${m(t.amount)} overdrawn.`);
+      else if (t.kind === 'overdrawn') said.push(`Your account is ${m(t.amount)} overdrawn.`);
       else if (t.kind === 'card') said.push(`Your card is nearly at its limit, owing ${m(t.amount)}.`);
       else if (t.kind === 'card_behind') {
         // The card named, where there's more than one.
@@ -74,12 +74,12 @@ export function Home() {
         // no played life once a card paid off reset its count (defect 68 of that day’s third round; found by its final checks).
         said.push(`${which} is ${state?.suspended ? 'suspended' : 'a payment behind'}, owing ${m(t.amount)}.`);
       }
-      else if (t.kind === 'return_late') said.push(`A tax return is past its day, unfiled, ${m(t.amount)} with its penalty so far.`);
+      else if (t.kind === 'return_late') said.push(`A tax return is past its due date and unfiled: ${m(t.amount)}, with its penalty so far.`);
       else if (t.kind === 'medical') said.push(`You owe ${m(t.amount)} for medical care.`);
-      else if (t.kind === 'collections') said.push(`${m(t.amount)} is with collections.`);
+      else if (t.kind === 'collections') said.push(`${m(t.amount)} you owe is with a collection agency.`);
       else said.push(`You owe ${m(t.amount)} of income tax.`);
     }
-    if (clash) said.push('Two things on your calendar in the next month want you at once.');
+    if (clash) said.push('Two things on your calendar in the next month are at the same time.');
     return said;
   });
 
@@ -95,7 +95,10 @@ export function Home() {
     const was = kept.get(a.institution ?? '') ?? { currency: a.currency, held: 0 };
     kept.set(a.institution ?? '', { currency: was.currency, held: was.held + heldOf(a) });
   }
-  const keptWords = [...kept].map(([bank, k]) => `, and ${formatMoney(k.held, k.currency)} at ${bank}`).join('');
+  // A negative written with the minus sign, as Money writes an overdrawn balance (“−$3.30”), from 2026-10-17 (brief 14):
+  // until then Home's line said “Worth -$227” where Money said “−$227”.
+  const signed = (text: string) => text.replace(/(^|\()-/g, '$1−');
+  const keptWords = [...kept].map(([bank, k]) => `, and ${signed(formatMoney(k.held, k.currency))} at ${bank}`).join('');
   const place = city ? placeProfile(sim, city.id) : undefined;
   const today = dateKey(sim.now, sim.zone);
   const season = seasonOf(sim.now, sim.zone, city?.latitude ?? 34);
@@ -164,7 +167,7 @@ export function Home() {
       <Panel
         look={at('day', today)}
         title="Calendar"
-        subtitle={next ? 'What is coming, and when.' : undefined}
+        subtitle={next ? 'What’s coming up, and when.' : undefined}
         actions={(
           <Gated feature="ui.open-calendar" className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
             Open Calendar
@@ -206,7 +209,9 @@ export function Home() {
               <div className="col gap-2">
                 {soon.filter((entry) => entry.id !== next?.id).slice(0, 5).map((entry) => (
                   <div key={entry.id} className="row-between">
-                    <span className="small truncate">
+                    {/* Two lines before it's cut (from 2026-10-17, brief 14's document journey): one line cut "Yale Cabaret,
+                        Season 59: The Show Ends" short at 390 wide. */}
+                    <span className="small clamp-2" style={{ minWidth: 0 }}>
                       <Open subject={at('entry', entry.id)}>{titleCaseLabel(entry.title)}</Open>
                     </span>
                     <span className="xs dim nowrap">
@@ -228,7 +233,7 @@ export function Home() {
         {!shows.needs ? <LockedPanel feature="ui.needs" title="What Needs You" /> : (
         <Panel
           title="What Needs You"
-          subtitle={decisions.length === 0 ? 'No decision is waiting on you.' : `${decisions.length} open`}
+          subtitle={decisions.length === 0 ? 'No questions are waiting on you.' : `${decisions.length} open`}
           flush
           actions={unread.length > 0 ? (
             <Gated feature="world.mark_read" className="btn btn-ghost btn-sm" onClick={() => run('world.mark_read')}>
@@ -244,7 +249,7 @@ export function Home() {
                 body="You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do."
               />
             ) : (
-              <Empty title="No Decisions Waiting" body={weighing.join(' ')} />
+              <Empty title="No Questions Waiting" body={weighing.join(' ')} />
             )
           ) : (
             <LookRegion className="list">
@@ -297,7 +302,8 @@ export function Home() {
               ))}
               {decisions.length > 6 && (
                 <div className="xs dim" style={{ padding: 'var(--s3) var(--s4)' }}>
-                  {decisions.length - 6} more waiting.
+                  {/* Past the sixth there's nothing to open: each comes up as one above it closes (`openDecisions`' order). */}
+                  {decisions.length - 6} more waiting. Each one comes up here as one above it closes.
                 </div>
               )}
             </LookRegion>
@@ -329,9 +335,9 @@ export function Home() {
           )}
           {unread.length > 6 && (
             <div className="row-between xs dim" style={{ padding: 'var(--s3) var(--s4)' }}>
-              <span>{allNotices ? `All ${unread.length} unread, the heaviest first.` : `${unread.length - 6} more waiting.`}</span>
+              <span>{allNotices ? `All ${unread.length} unread, the most important first.` : `${unread.length - 6} more unread.`}</span>
               <button type="button" className="btn btn-ghost btn-sm" onClick={() => setAllNotices(!allNotices)}>
-                {allNotices ? 'Show The Heaviest Six' : `Show All ${unread.length}`}
+                {allNotices ? 'Show The Six Most Important' : `Show All ${unread.length}`}
               </button>
             </div>
           )}
@@ -376,12 +382,12 @@ export function Home() {
                   <Open subject={at('country', place.city.countryId)}>{place.countryName}</Open>
                 </div>
                 {/* Until 2026-10-13 this line said the distance and the hours from home when away, and Local Time’s note
-                    the hours from home; nothing has put a player away from home since the home went in the scope of
-                    2026-10-09, as the city Home profiles is the one `homeCityOf` gives (found by that day’s evidence
-                    pass). The place look still says them for another city. */}
+                    the hours from home; none since the scope of 2026-10-09, as the city Home profiles is the one
+                    `homeCityOf` gives (found by that day’s evidence pass). The place look still says them for another
+                    city. Until 2026-10-17 it began “Home.”, the screen’s own name, where it means the player’s. */}
                 <div className="xs dim" style={{ marginBottom: 'var(--s3)' }}>
                   <Open subject={at('place', place.city.id)}>
-                    Home.
+                    Your home.
                     {placeLine(place) && ` ${placeLine(place)}.`}
                   </Open>
                 </div>
@@ -396,7 +402,7 @@ export function Home() {
                   label="Daylight"
                   value={place.sun.polar === 'day' ? 'Midnight Sun' : place.sun.polar === 'night' ? 'Polar Night'
                     : `${formatTime(place.sun.sunrise ?? sim.now, place.zone)} – ${formatTime(place.sun.sunset ?? sim.now, place.zone)}`}
-                  note={`${formatDaylight(place.sun.daylightMinutes)} of light`}
+                  note={`${formatDaylight(place.sun.daylightMinutes)} of daylight`}
                   look={at('daylight', place.city.id)}
                 />
                 </div>
@@ -477,7 +483,7 @@ export function Home() {
           {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
             <AffairLine
               title="Money"
-              line={`${primary?.name ?? 'No account'}: ${primary ? balanceText(sim, primary) : formatMoney(0, cur)}${keptWords}. Worth ${formatMoney(worth.total, cur, { cents: false })}${worth.liabilities > 0 ? `, ${formatMoney(worth.liabilities, cur, { cents: false })} of it owed` : ''}.`}
+              line={`${primary?.name ?? 'No account'}: ${primary ? signed(balanceText(sim, primary)) : formatMoney(0, cur)}${keptWords}. Worth ${signed(formatMoney(worth.total, cur, { cents: false }))}${worth.liabilities > 0 ? `, after ${formatMoney(worth.liabilities, cur, { cents: false })} owed.` : '.'}`}
               alert={(primary?.balance ?? 0) < 0 ? 'Your account is overdrawn.' : undefined}
               action={<Gated feature="ui.bank" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{primary?.institution ?? 'Your Bank'}</Gated>}
               help="bank.accounts"
@@ -523,7 +529,7 @@ function SchoolLine() {
   const classes = enrolled ? nextClasses(sim.now, school) : undefined;
   const next = enrolled ? booked ?? (classes !== undefined ? { label: 'Classes', at: classes } : undefined) : undefined;
   // Left without the degree, not a year of study (from 2026-10-10: until then a dismissed student was "Year 2").
-  const where = school.standing === 'graduated' ? 'Graduated' : !enrolled ? 'Left the school' : school.termsBegun === 0 ? 'Arriving' : school.leave?.status === 'on' ? 'On Leave' : `Year ${yearOfStudy(person)}`;
+  const where = school.standing === 'graduated' ? 'Graduated' : !enrolled ? 'Left the School' : school.termsBegun === 0 ? 'Arriving' : school.leave?.status === 'on' ? 'On Leave' : `Year ${yearOfStudy(person)}`;
   const troubled = school.standing === 'concern' || school.standing === 'warning' || school.standing === 'dismissed';
   // The standing after where they are, except where that already says it: until 2026-10-13 a graduate's line read
   // "Graduated, graduated, …" (found by the review of that day).
@@ -531,9 +537,9 @@ function SchoolLine() {
   return (
     <AffairLine
       title="School"
-      line={`${where}${standing}, ${rankIn(person)} of ${YALE_DRAMA.classSize} in the class.${next ? ` Next: ${next.label}, ${formatDateTime(next.at, zone)}.` : ''}`}
-      alert={troubled ? `Your standing is ${STANDING_LABEL[school.standing].toLowerCase()}: the School screen says why.` : undefined}
-      action={<Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'Your School')}>{YALE_DRAMA.short}</Gated>}
+      line={`${where}${standing}, ${ordinal(rankIn(person))} of ${YALE_DRAMA.classSize} in the class.${next ? ` Next: ${next.label}, ${formatDateTime(next.at, zone)}.` : ''}`}
+      alert={troubled ? `Your standing is ${STANDING_LABEL[school.standing].toLowerCase()}. The School screen says why.` : undefined}
+      action={<Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'School')}>{YALE_DRAMA.short}</Gated>}
       help="school.standing"
     />
   );

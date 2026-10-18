@@ -1,0 +1,187 @@
+note, new: The lines weren’t secure, so the attention went to remembering, not to the other person. (Lines: 45% prepared.)
+note, the second time: You had the same note in Acting I on October 1, 2026, and it’s still there. The lines weren’t secure, so the attention went to remembering, not to the other person. (Lines: 45% prepared.)
+note, the fourth time: This is the 4th time you’ve had this note (last in Acting I on October 8, 2026), and it’s still there. The lines weren’t secure, so the attention went to remembering, not to the other person. (Lines: 45% prepared.)
+note, better with figures: This has improved since October 8, 2026 (22% then, 50% now), but it isn’t there yet. The lines weren’t secure, so the attention went to remembering, not to the other person. (Lines: 45% prepared.)
+note, better without figures: This has improved since October 8, 2026, but it isn’t there yet. The lines weren’t secure, so the attention went to remembering, not to the other person. (Lines: 45% prepared.)
+note, back after it was taken: You’d put this right on October 15, 2026, but it has slipped back. The lines weren’t secure, so the attention went to remembering, not to the other person. (Lines: 45% prepared.)
+note, the step beyond: It held together. Here’s a next step to try. Make one moment exact: choose where it starts and ends, and repeat it the same way twice.
+limit, preparation, shown: Learning the lines wasn’t complete, which cost Believability 12.4 points
+limit, preparation, today: Learning the lines isn’t complete, which costs Believability 12.4 points
+limit, preparation, rehearsal, shown: Rehearsal wasn’t complete, which cost Execution 22 points
+limit, preparation, rehearsal, today: Rehearsal isn’t complete, which costs Execution 22 points
+limit, condition, tired, shown: Tiredness (readiness at 61, under 80) cost Believability 12.4 points
+limit, condition, tired, today: Tiredness (readiness at 61, under 80) costs Believability 12.4 points
+limit, condition, ill, shown: Being down with the flu cost Believability 12.4 points
+limit, condition, ill, today: Being down with the flu costs Believability 12.4 points
+limit, condition, injured, shown: Working with an injury still mending cost Believability 12.4 points
+limit, condition, injured, today: Working with an injury still mending costs Believability 12.4 points
+limit, condition, concussed, shown: Working with a concussion still mending cost Believability 12.4 points
+limit, condition, concussed, today: Working with a concussion still mending costs Believability 12.4 points
+limit, condition, stamina, shown: Your stamina running low by the Close cost Believability 12.4 points
+limit, condition, stamina, today: Your stamina running low by the Close costs Believability 12.4 points
+limit, condition, shaken, shown: Being shaken by a slip in Beat 3 cost Believability 12.4 points
+limit, condition, shaken, today: Being shaken by a slip in Beat 3 costs Believability 12.4 points
+limit, difficulty, shown: The piece asked more than your craft can give yet, which cost Believability 12.4 points
+limit, difficulty, today: The piece asks more than your craft can give yet, which costs Believability 12.4 points
+limit, fit, shown: The way you played it didn’t fit (Restrained, Where It Asks For Scale), which cost Believability 12.4 points
+limit, fit, today: The way you are playing it doesn’t fit (Restrained, Where It Asks For Scale), which costs Believability 12.4 points
+limit, suitability, shown: The way you played it didn’t suit the scene (Expansive), which cost Believability 12.4 points
+limit, suitability, today: The way you are playing it doesn’t suit the scene (Expansive), which costs Believability 12.4 points
+limit, ability, shown: Your Presence held back Connection by 8.1 points
+limit, ability, today: Your Presence holds back Connection by 8.1 points
+limit, technique, shown: Your Scene Study held back Interpretation by 5 points
+limit, technique, today: Your Scene Study holds back Interpretation by 5 points
+the review, from good standing: give you a notice of academic concern
+the review, from concern: put you on academic warning
+the review, from warning: dismiss you from the School
+the review, from concern, the last term: not recommend your degree
+the review, kept on warning by a faculty review: keep you on academic warning
+partner busy, too early: Ethan won’t rehearse before 7 in the morning or after 10 at night.
+partner busy, in class: Ethan is in class until three.
+NOTICE Welcome To The Class Of 2029
+    You’re one of the 16 actors in the MFA in Acting at the David Geffen School of Drama at Yale University, chosen from this year’s auditions with the 15 others you’ll be cast beside and against. Tuition is covered, as it is for every student. The fall term begins with registration, then orientation until August 29, 2026, and classes start on August 31, 2026, at 9 a.m.
+NOTICE Acting I: Scene Study
+    Trifles, the one act, the Wright kitchen. You play Mrs. Hale, and Ethan Kim plays Mrs. Peters. Put Knows The Scene first: it counts for more when this piece is shown. It’s due in class on September 14, 2026.
+NOTICE Shown: Scene Study, Unready
+    Well prepared: Knows The Scene, Table Work, Rehearsal and With Your Partner. Your scene study, character work and emotional depth carried it. Simulated note from Acting I: The lines weren’t secure, so the attention went to remembering, not to the other person. (Lines: 20% prepared.) You played Mrs. Hale in Trifles.
+NOTICE Note Taken: Scene Study
+    You showed Scene Study again on September 15, 2026, and took the note on lines. Lines went from 20% to 50%. Shown again: Working.
+NOTICE Acting I: Scene Study
+    Suppressed Desires, Scene Two, the studio at dusk. You play Stephen, and Zoe Castillo plays Henrietta. Put Lines first: it counts for more when this piece is shown. It’s due in class on September 23, 2026.
+NOTICE Shown: Scene Study, Unready
+    Unready again, as on the course’s last piece, shown September 14, 2026. Well prepared: Knows The Scene, Table Work, Rehearsal and With Your Partner. Your scene study, character work and emotional depth carried it. Simulated note from Acting I: You’d put this right on September 15, 2026, but it has slipped back. The lines weren’t secure, so the attention went to remembering, not to the other person. (Lines: 25% prepared.) You played Stephen in Suppressed Desires.
+NOTICE Note Taken: Scene Study
+    You showed Scene Study again on September 28, 2026, and took the note on lines. Lines went from 25% to 55%. Shown again: Working.
+NOTICE Acting I: Scene Study
+    Riders to the Sea, the kitchen of a cottage on an island off the west of Ireland. You play Cathleen, and Hannah Park plays Nora. Put Table Work first: it counts for more when this piece is shown. It’s due in class on October 7, 2026.
+NOTICE Shown: Scene Study, Working
+    Up from Unready on the course’s last piece, shown September 23, 2026. Well prepared: Knows The Scene, Table Work, Rehearsal and With Your Partner. Your scene study, character work and emotional depth carried it. Simulated note from Acting I: It didn’t come together today. Learning the lines wasn’t complete, which cost Believability 18.7 points. Once it does, here’s a next step to try. Do less: find the moments that need nothing added, and trust the text in them.
+NOTICE Note Taken: Scene Study
+    You showed Scene Study again on October 13, 2026, and worked in the next step you were given. Shown again: Working.
+NOTICE Acting I: Scene Study
+    The Night Desk, the front desk of a motel off the interstate, two in the morning, January 2017. You play Rosa, and Priya Brooks plays Theo. Put Rehearsal first: it counts for more when this piece is shown. It’s due in class on October 27, 2026.
+NOTICE Shown: Scene Study, Working
+    Working again, as on the course’s last piece, shown October 7, 2026. Well prepared: Knows The Scene, Lines, Table Work, Rehearsal and With Your Partner. Your scene study, character work and emotional depth carried it. Simulated note from Acting I: It didn’t come together today. Your Adaptability held back Responsiveness by 29.9 points. Once it does, here’s a next step to try. Find the turn: where your character wants the opposite of what they wanted a minute ago, and make the change visible.
+NOTICE Note Taken: Scene Study
+    You showed Scene Study again on October 28, 2026, and worked in the next step you were given. Shown again: Working.
+NOTICE Acting I: Scene Study
+    The Cherry Orchard, Act Four, the emptied house. You play Varya, and Daniel Mendez plays Lopakhin. Put With Your Partner first: it counts for more when this piece is shown. It’s due in class on November 10, 2026.
+NOTICE Shown: Scene Study, Unready
+    Down from Working on the course’s last piece, shown October 27, 2026. Well prepared: Knows The Scene, Table Work, Rehearsal and With Your Partner. Your scene study, character work and emotional depth carried it. Simulated note from Acting I: You’d put this right on September 28, 2026, but it has slipped back. The lines weren’t secure, so the attention went to remembering, not to the other person. (Lines: 30% prepared.) You played Varya in The Cherry Orchard.
+NOTICE Note Taken: Scene Study
+    You showed Scene Study again on November 11, 2026, and took the note on lines. Lines went from 30% to 60%. Shown again: Working.
+a scene back, the other part: You’ve worked on this scene before. It was set on September 1, 2026, and you played Lear with Zoe Park. This time you play the other part.
+a scene back, another reading: You’ve worked on this scene before. It was set on September 1, 2026, and you played Lear. You’ve now played both parts, so this time find a different reading: answer at least one Table Work question another way the text supports.
+what works on the partner part: Rehearse With Your Partner, asked for an evening at least 2 hours ahead, or Run It With A Reader
+what works on the table work: an answer the text supports for each Table Work question
+what works on the lines: Learn Lines
+a note on the partner part, 0 kept, 0 with a reader: The two of you weren’t playing the same scene yet: it needed time together. You and Sofia hadn’t rehearsed together. Run It With A Reader lets you work on your side of it without them. (With Your Partner: 10% prepared.) You played Mrs. Hale in Trifles.
+a note on the partner part, 1 kept, 0 with a reader: The two of you weren’t playing the same scene yet: it needed time together. You and Sofia had rehearsed together once. Run It With A Reader lets you work on your side of it without them. (With Your Partner: 10% prepared.) You played Mrs. Hale in Trifles.
+a note on the partner part, 2 kept, 1 with a reader: The two of you weren’t playing the same scene yet: it needed time together. You and Sofia had rehearsed together twice. You ran it with a reader once. (With Your Partner: 10% prepared.) You played Mrs. Hale in Trifles.
+a note on the partner part, 3 kept, 3 with a reader: The two of you weren’t playing the same scene yet: it needed time together. You and Sofia had rehearsed together 3 times. You ran it with a reader 3 times. (With Your Partner: 10% prepared.) You played Mrs. Hale in Trifles.
+meetings left: 38
+MONTH Welcome To The Class Of 2029
+    You’re one of the 16 actors in the MFA in Acting at the David Geffen School of Drama at Yale University, chosen from this year’s auditions with the 15 others you’ll be cast beside and against. Tuition is covered, as it is for every student. The fall term begins with registration, then orientation until August 29, 2026, and classes start on August 31, 2026, at 9 a.m.
+MONTH Fall Term 2026 Begins
+    Tuition, $20,375.00 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and none was found, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.
+MONTH Registration And Your Account
+    Your tuition, $20,375.00 a term, is covered by the tuition scholarship. The aid office found no financial need, so you pay the Yale Health plan, $1,882.00 a term, yourself. Work-study is 150 assigned hours a year at $23.00 an hour: a shift each Saturday while classes run.
+MONTH Meeting Your Class
+    You met the 15 others in your class: you’ll partner them in scenes, rehearse with them and be cast beside them.
+MONTH Meeting The Acting Faculty
+    You met the acting faculty, with the chair, Tamilla Woodard. First-year courses are taught by Gregory Wallace, Walton Wilson, Julie Foh, Erica Fae, Fabio Tavares, Justine Williams, Tamilla Woodard, Kelsey Rainwater, Michael Rossmy, Paul Walsh. They set out what the School asks: attendance at every class, rehearsal and call; telling your teachers and the chair when you’re ill; Pass/Fail courses, and an Incomplete made up within a month; the casting pool, the Cabaret and work-study. It’s all kept on the Standing tab.
+MONTH The Building, The Studios And The Library
+    You were shown the studios you can book to rehearse in, the theaters, and the Haas Family Arts Library.
+MONTH Acting I: Scene Study
+    Suppressed Desires, Scene Two, the studio at dusk. You play Stephen, and Zoe Reyes plays Henrietta. Put Knows The Scene first: it counts for more when this piece is shown. It’s due in class on September 8, 2026.
+MONTH Voice I: A Voice Sequence
+    The breath and resonance sequence shown, then a short text spoken on it. Put The Sequence Learned first: it counts for more when this piece is shown. It’s due in class on September 11, 2026.
+MONTH Speech And Accents I: Sound Changes And A Text
+    A text transcribed and spoken with the term’s sound changes. Put The Text first: it counts for more when this piece is shown. It’s due in class on September 14, 2026.
+MONTH The Body As Source I: A Movement Score
+    A short movement score of your own, shown. Put The Score Made first: it counts for more when this piece is shown. It’s due in class on September 10, 2026.
+MONTH Alexander Technique I: Directions In Daily Life
+    The lesson’s directions shown in a simple action, in the tutorial. Put The Directions Understood first: it counts for more when this piece is shown. It’s due in class on September 14, 2026.
+MONTH Play: A Game Played Through
+    An improvised game played in class. Put Built On first: it counts for more when this piece is shown. It’s due in class on September 17, 2026.
+MONTH Acting Intimacy And Combat For The Stage: Consent And Intimacy Practice
+    A short choreographed moment of intimacy shown, with its boundaries agreed and kept. Put The Practice Learned first: it counts for more when this piece is shown. It’s due in class on September 25, 2026.
+MONTH Text And Context Across The Repertory: A Play In Its Context
+    A short presentation on the season’s play at Yale Rep, its world and its writer (Yale Rep’s October Production). Put The Play Read first: it counts for more when this piece is shown. It’s due in class on September 8, 2026.
+MONTH The Courses And What They Ask
+    Each course set out what it asks. 8 courses gave you their first piece now, so you can start before classes.
+MONTH Zoe: Run Lines Together?
+    Zoe asks if you’d run lines together on September 1, 2026 at 7:00 PM, an hour.
+MONTH Mateo: Asks For Help
+    Mateo is behind on their lines and asks if you’d run them for three quarters of an hour now. They’ve had a hard week away from school.
+MONTH Ethan: Run Lines Together?
+    Ethan asks if you’d run lines together on September 3, 2026 at 7:00 PM, an hour.
+MONTH Noah Asks To Rehearse
+    Noah asks to rehearse A Game Played Through on September 4, 2026 at 7:00 PM. Answer by 5:00 PM that day.
+MONTH Maya: Asks For Help
+    Maya is behind on their lines and asks if you’d run them for three quarters of an hour now. They’re auditioning outside school and short of time.
+MONTH Noah Didn’t Hear Back
+    You didn’t answer Noah about rehearsing on September 4, 2026, so that rehearsal isn’t happening.
+MONTH Shown: Scene Study, Unready
+    Simulated note from Acting I: The lines weren’t secure, so the attention went to remembering, not to the other person. (Lines: 0% prepared.) You played Stephen in Suppressed Desires.
+MONTH Shown: A Play In Its Context, Unready
+    You came rested and ready. Simulated note from Text And Context Across The Repertory: The play hadn’t been read closely enough to speak to. (The Play Read: 0% prepared.)
+MONTH Text And Context Across The Repertory: A Play In Its Context
+    A short presentation on the season’s play at Yale Rep, its world and its writer (Yale Rep’s October Production). Put Its Context Researched first: it counts for more when this piece is shown. It’s due in class on September 16, 2026.
+MONTH Note Not Taken Yet: Scene Study
+    You showed Scene Study again on September 9, 2026, but the note on lines wasn’t taken yet. Lines stayed at 0%. Shown again: Unready. It stays open under Your Notes.
+MONTH Acting I: Scene Study
+    Trifles, the one act, the Wright kitchen. You play Mrs. Peters, and Julian Bennett plays Mrs. Hale. Put Lines first: it counts for more when this piece is shown. It’s due in class on September 21, 2026.
+MONTH Julian Asks To Rehearse
+    Julian asks to rehearse Trifles on September 10, 2026 at 7:00 PM. Answer by 5:00 PM that day.
+MONTH Jordan: Run Lines Together?
+    Jordan asks if you’d run lines together on September 10, 2026 at 7:00 PM, an hour.
+MONTH Shown: A Movement Score, Unready
+    You came rested and ready. Simulated note from The Body As Source I: The score wasn’t made yet; it was found in the room, which shows. (The Score Made: 0% prepared.)
+MONTH The Body As Source I: A Movement Score
+    A short movement score of your own, shown. Put Rehearsed In The Body first: it counts for more when this piece is shown. It’s due in class on September 24, 2026.
+MONTH Isaiah: Asks For Help
+    Isaiah is behind on their lines and asks if you’d run them for three quarters of an hour now. They’re auditioning outside school and short of time.
+MONTH Julian Didn’t Hear Back
+    You didn’t answer Julian about rehearsing on September 10, 2026, so that rehearsal isn’t happening.
+MONTH Shown: A Voice Sequence, Unready
+    You came rested and ready. Simulated note from Voice I: It hadn’t been practiced day by day: a voice opens over days, not in one session. (Daily Practice: 0% prepared.)
+MONTH Voice I: A Voice Sequence
+    The breath and resonance sequence shown, then a short text spoken on it. Put Daily Practice first: it counts for more when this piece is shown. It’s due in class on September 25, 2026.
+MONTH Julian Asks To Rehearse
+    Julian asks to rehearse Trifles on September 15, 2026 at 7:00 PM. Answer by 5:00 PM that day.
+MONTH Shown: Sound Changes And A Text, Unready
+    You came rested and ready. Simulated note from Speech And Accents I: You had the same note in Voice I on September 11, 2026, and it’s still there. The drills weren’t done enough: the new sounds slipped back under pressure. (Drills: 0% prepared.)
+MONTH Speech And Accents I: Sound Changes And A Text
+    A text transcribed and spoken with the term’s sound changes. Put Drills first: it counts for more when this piece is shown. It’s due in class on September 28, 2026.
+MONTH Shown: Directions In Daily Life, Unready
+    You came rested and ready. Simulated note from Alexander Technique I: This is the 3rd time you’ve had this note (last in Speech And Accents I on September 14, 2026), and it’s still there. It wasn’t practiced in daily life between lessons. That’s where it takes. (Daily Practice: 0% prepared.)
+MONTH A Word On Your Coursework
+    So far this term, 6 of the 6 pieces you’ve shown were Unready. Every part of each one was unfinished, so it’s the preparation as a whole, not one part. Work through each piece’s steps. 7 pieces are set and still to be shown. This is a warning, not the term review. The faculty reviews the term on December 11, 2026. If half or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would give you a notice of academic concern. On the Coursework tab, each open piece’s Shown Today line says how it would do if shown today and what’s holding it back.
+MONTH Alexander Technique I: Directions In Daily Life
+    The lesson’s directions shown in a simple action, in the tutorial. Put Daily Practice first: it counts for more when this piece is shown. It’s due in class on September 28, 2026.
+MONTH Julian Didn’t Hear Back
+    You didn’t answer Julian about rehearsing on September 15, 2026, so that rehearsal isn’t happening.
+MONTH Shown: A Play In Its Context, Unready
+    Unready again, as on the course’s last piece, shown September 8, 2026. You came rested and ready. Simulated note from Text And Context Across The Repertory: You had the same note in The Body As Source I on September 10, 2026, and it’s still there. The context was thin: who wrote it, when, and for whom, needed research. (Its Context Researched: 0% prepared.)
+MONTH Text And Context Across The Repertory: A Play In Its Context
+    A short presentation on the season’s play at Yale Rep, its world and its writer (Yale Rep’s October Production). Put Its Context Researched first: it counts for more when this piece is shown. It’s due in class on September 29, 2026.
+MONTH Still There: Time On Its Feet
+    A Game Played Through was shown at Unready, and the same note came back: 4 times now. It stays open under Your Notes. On the Coursework tab, an open piece that works on it offers other ways to tackle it, under A Note That Keeps Coming Back.
+MONTH Play: A Game Played Through
+    An improvised game played in class. Put Built On first: it counts for more when this piece is shown. It’s due in class on October 8, 2026.
+MONTH Shown: Scene Study, Unready
+    Unready again, as on the course’s last piece, shown September 8, 2026. Simulated note from Acting I: You had the same note in Acting I on September 8, 2026, and it’s still there. The lines weren’t secure, so the attention went to remembering, not to the other person. (Lines: 0% prepared.) You played Mrs. Peters in Trifles.
+director's note, nights averaging 1.5: Remarkable work, night after night.
+director's note, nights averaging 0.8: Strong, reliable work across the run.
+director's note, nights averaging 0: Solid, sound nights. The next step is to take more risks in them.
+director's note, nights averaging -1: Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does.
+teacher's note, ahead, Acting I: Real progress this term: you’re pulling ahead of the class in scene study, character work and emotional depth.
+teacher's note, ahead, Voice I: Real progress this term: you’re pulling ahead of the class in vocal expression.
+teacher's note, ahead, Speech And Accents I: Real progress this term: you’re pulling ahead of the class in speech, and accents and dialects.
+teacher's note, in step, Acting I: Real progress this term: you’re pulling ahead of the class in scene study, character work and emotional depth.
+teacher's note, in step, Voice I: Steady work, in step with the class. Keep at your vocal expression.
+teacher's note, in step, Speech And Accents I: Steady work, in step with the class. Keep at your speech, and accents and dialects.
+teacher's note, behind, Acting I: You’ve grown less than the class in scene study, character work and emotional depth this term. Come to class rested, and do the work between classes.
+teacher's note, behind, Voice I: You’ve grown less than the class in vocal expression this term. Come to class rested, and do the work between classes.
+teacher's note, behind, Speech And Accents I: You’ve grown less than the class in speech, and accents and dialects this term. Come to class rested, and do the work between classes.

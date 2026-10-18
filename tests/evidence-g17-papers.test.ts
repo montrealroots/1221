@@ -226,7 +226,7 @@ describe('tax.due', () => {
     expect(pending(sim, TAX_SFR_KIND)).toEqual([]);
     sim.advanceTo(on(2027, 4, 16));
     const late = titled(sim, 'Your 2026 Return Is Late');
-    expect(late.map((n) => [n.at, n.body])).toEqual([[DUE_2026, 'Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least $165.60.']]);
+    expect(late.map((n) => [n.at, n.body])).toEqual([[DUE_2026, 'Each month it’s late adds 5% of what you owe the IRS, up to a quarter of it, and after 60 days the penalty is at least $165.60. File it on Papers, under Tax Returns.']]);
     // The IRS's substitute a year after the due date; no state is owed, so no state's letters.
     const sfr = pending(sim, TAX_SFR_KIND);
     expect(sfr.map((i) => [i.at, i.payload])).toEqual([[DUE_2026 + 365 * MS_DAY, { personId: sim.player.id, year: 2026, step: 'proposed' }]]);
@@ -248,7 +248,7 @@ describe('tax.due', () => {
     // New York is owed too, and charges its own (from 2026-10-13: until then the notice didn't say so, and took the $525
     // least against the IRS's part and New York's together).
     expect(r.figures.owedTo!.states['us-ny']).toBeGreaterThan(0);
-    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual(['Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least $535.00. New York charges its own on what it’s owed.']);
+    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual(['Each month it’s late adds 5% of what you owe the IRS, up to a quarter of it, and after 60 days the penalty is at least $535.00. New York charges its own penalty on what you owe it. File it on Papers, under Tax Returns.']);
   });
 
   it('gives the least past 60 days on the IRS’s part alone where New York’s takes the whole over $535, as latePenalty charges it; a New York quickSave life', () => {
@@ -263,7 +263,7 @@ describe('tax.due', () => {
     expect(irs).toBeGreaterThan(0);
     expect(irs).toBeLessThan(535_00);
     expect(r.figures.balance).toBeGreaterThan(535_00);
-    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual([`Each month late adds 5% of what you owe the IRS, to a quarter of it; past 60 days, at least ${usd(Math.min(535_00, irs))}. New York charges its own on what it’s owed.`]);
+    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual([`Each month it’s late adds 5% of what you owe the IRS, up to a quarter of it, and after 60 days the penalty is at least ${usd(Math.min(535_00, irs))}. New York charges its own penalty on what you owe it. File it on Papers, under Tax Returns.`]);
     // And what filing it late is charged reads the same part: the IRS's at 5 months and over 60 days is 22.5% of it plus
     // a half point a month, or $535, or all of it, whichever is less; filed now, two days late, neither applies yet.
     expect(latePenaltyAll(sim.player, r, on(2027, 4, 17))).toBe(latePenalty(irs, r.due, on(2027, 4, 17)) + stateLateAt(rulesOf('us-ny')!, r.figures.owedTo!.states['us-ny']!, r.due, on(2027, 4, 17), 'USD'));
@@ -277,7 +277,7 @@ describe('tax.due', () => {
     const r = returnsOf(sim.player)['2026']!;
     expect(r.figures.owedTo!.irs).toBeLessThan(0);
     expect(r.figures.owedTo!.states['us-ny']).toBeGreaterThan(0);
-    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual(['The IRS’s refund waits for the return, with no penalty on it. New York charges its own on what it’s owed.']);
+    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => n.body)).toEqual(['Your IRS refund waits until you file, with no penalty. New York charges its own penalty on what you owe it. File it on Papers, under Tax Returns.']);
     // The IRS sets no substitute on a refund; New York acts on its own part.
     expect(pending(sim, TAX_SFR_KIND, 2026)).toEqual([]);
   });
@@ -292,7 +292,7 @@ describe('tax.due', () => {
     expect(r.figures.balance).toBe(-120_00);
     expect(r.figures.owedTo).toEqual({ irs: -120_00, states: {} });
     sim.advanceTo(on(2027, 4, 16));
-    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => [n.at, n.body])).toEqual([[DUE_2026, 'A refund waits for the return; there’s no penalty on one.']]);
+    expect(titled(sim, 'Your 2026 Return Is Late').map((n) => [n.at, n.body])).toEqual([[DUE_2026, 'Your refund waits until you file it. There’s no penalty when you’re due a refund.']]);
     expect(pending(sim, TAX_SFR_KIND)).toEqual([]);
     expect(pending(sim, STATE_NONFILER_KIND)).toEqual([]);
     const again = reload(sim);
@@ -358,7 +358,7 @@ describe('tax.substitute', () => {
     expect(Math.round(0.005 * 12 * 165_60 + Math.max(0.045 * 5 * 165_60, Math.min(535_00, 165_60)))).toBe(175_54);
     expect(Math.round(interestOn(165_60 + 165_60, 260, 105))).toBe(23_99);
     const proposal = titled(sim, 'The IRS Figured Your 2026 Return');
-    expect(proposal.map((n) => [n.at, n.body])).toEqual([[proposedAt, 'Notice CP2566: with no return from you, the IRS worked out $365.13 from what your employers and banks reported, with the penalty for filing late and the interest. File your own within 120 days to replace it.']]);
+    expect(proposal.map((n) => [n.at, n.body])).toEqual([[proposedAt, 'Notice CP2566: you didn’t file, so the IRS worked out that you owe $365.13 from what your employers and banks reported, including the late-filing penalty and interest. File your own return within 120 days to replace it.']]);
     // A 1040-NR claims no credit the IRS would leave out.
     expect(r().substituteFigures!.balance).toBe(165_60);
     expect(r().filedAt).toBeUndefined();
@@ -379,7 +379,7 @@ describe('tax.substitute', () => {
     expect(a.parts).toEqual({ tax: 165_60, penalty: 178_85, interest: 32_24 });
     expect(a.owed).toBe(376_69);
     expect(a.collection).toBe(0);
-    expect(titled(again, 'The IRS Assessed Your 2026 Return').map((n) => [n.at, n.body])).toEqual([[assessedAt, '$376.69 is owed as the IRS figured it, and its collection begins.']]);
+    expect(titled(again, 'The IRS Assessed Your 2026 Return').map((n) => [n.at, n.body])).toEqual([[assessedAt, 'You owe $376.69 as the IRS worked it out, and its collection begins. You can still file your own return to replace it.']]);
     expect(titled(again, 'The IRS Figured Your 2026 Return')).toHaveLength(1);
     // Collection from its 35th day (`tax.notice`): CP501 for the $376.69 with 35 days more of interest on all of it, the
     // paying-late share’s from the assessment too, as it’s unpaid past 21 days (IRC 6601(e)(2)(A)), at 2028’s 366th; and
@@ -387,13 +387,13 @@ describe('tax.substitute', () => {
     expect(pending(again, TAX_NOTICE_KIND).map((i) => i.at)).toEqual([assessedAt + 35 * MS_DAY]);
     const papers = drawn(again, PapersWorkspace);
     expect(papers.text).toContain('2026 Return Filed by the IRS August 12, 2028');
-    expect(papers.text).toContain('The IRS filed this from what your employers and banks reported, $165.60 of tax with no credit only your own return claims. File your own and it reconsiders');
+    expect(papers.text).toContain('The IRS filed this return for you from what your employers and banks reported. It assessed $165.60 of tax, without the credits only your own return can claim. If you file your own, the IRS reconsiders');
     expect(papers.has('File Your Own In Its Place')).toBe(true);
     // One File It: the 2027 return's, unfiled too by August 2028; the 2026 return offers only its replacement.
     expect(papers.buttons.filter((b) => b.text === 'File It')).toHaveLength(1);
     again.advanceTo(assessedAt + 35 * MS_DAY + MS_MINUTE);
     const cp501 = Math.round(376_69 + 0.01 * 165_60 + interestOn(376_69, 0, 35));
-    expect(titled(again, 'A Reminder From The IRS').map((n) => [n.at, n.body])).toEqual([[assessedAt + 35 * MS_DAY, `Notice CP501: ${usd(cp501)} on your 2026 return; you still owe it, with the interest and penalty since.`]]);
+    expect(titled(again, 'A Reminder From The IRS').map((n) => [n.at, n.body])).toEqual([[assessedAt + 35 * MS_DAY, `Notice CP501: you owe ${usd(cp501)} on your 2026 return. It’s still unpaid, and interest and the late-payment penalty keep adding up. Pay it on Papers, under Tax Returns, or apply for a payment plan there.`]]);
   });
 
   it('leaves out the premium tax credit only their own return claims: CP2566 on the IRS’s part with the credit added back, and Papers says the tax with no credit (a New York quickSave life on $60,000, a marketplace plan the student’s Yale Health never needs)', () => {
@@ -415,12 +415,12 @@ describe('tax.substitute', () => {
     const federal = irs + credit;
     const total = federal + Math.round(0.005 * 12 * federal + 0.045 * 5 * federal) + Math.round(interestOn(federal + Math.round(0.045 * 5 * federal), 260, 105));
     play(sim, DUE_2026 + 365 * MS_DAY + MS_MINUTE);
-    expect(titled(sim, 'The IRS Figured Your 2026 Return').map((n) => n.body)).toEqual([`Notice CP2566: with no return from you, the IRS worked out ${usd(total)} from what your employers and banks reported, with the penalty for filing late and the interest. File your own within 120 days to replace it.`]);
+    expect(titled(sim, 'The IRS Figured Your 2026 Return').map((n) => n.body)).toEqual([`Notice CP2566: you didn’t file, so the IRS worked out that you owe ${usd(total)} from what your employers and banks reported, including the late-filing penalty and interest. File your own return within 120 days to replace it.`]);
     expect(r.substituteFigures!.credit).toBe(0);
     expect(r.substituteFigures!.balance).toBe(r.figures.balance + credit);
     play(sim, DUE_2026 + 485 * MS_DAY + MS_MINUTE);
     expect(r.parts!.tax).toBe(federal);
-    expect(drawn(sim, PapersWorkspace).text).toContain(`The IRS filed this from what your employers and banks reported, ${usd(r.figures.balance + credit)} of tax with no credit only your own return claims.`);
+    expect(drawn(sim, PapersWorkspace).text).toContain(`The IRS filed this return for you from what your employers and banks reported. It assessed ${usd(r.figures.balance + credit)} of tax, without the credits only your own return can claim.`);
   });
 
   it('a save from before, holding the unfiled 1040-NR past due with no substitute on the calendar, has it put there on opening: at the year after the due date, or a day on once that has passed; never twice', () => {
@@ -498,10 +498,10 @@ describe('tax.notice', () => {
     expect(r.payments).toEqual([{ at: levyAt, amount: 500_00, tax: 500_00, penalty: 0, interest: 0, how: 'levy' }]);
     expect(r.parts!.tax).toBe(irs - 500_00);
     expect(r.owed).toBe(owedThen - 500_00);
-    expect(titled(sim, 'The IRS Levied Your Accounts').map((n) => [n.at, n.body])).toEqual([[levyAt, `$500.00 taken from your bank accounts for your 2026 return; ${usd(r.owed!)} is still owed, and it levies again while it is.`]]);
+    expect(titled(sim, 'The IRS Levied Your Accounts').map((n) => [n.at, n.body])).toEqual([[levyAt, `The IRS took $500.00 from your bank accounts for your 2026 return. You still owe ${usd(r.owed!)}, and it will levy again while you do.`]]);
     expect(pending(sim, TAX_NOTICE_KIND).map((i) => i.at)).toEqual([levyAt + 91 * MS_DAY]);
     const papers = drawn(sim, PapersWorkspace);
-    expect(papers.text).toContain('Payments On The Year October 2, 2027: $500.00, taken by levy; to the tax $500.00, penalties $0.00, interest $0.00.');
+    expect(papers.text).toContain('Payments On The Year October 2, 2027: $500.00 taken by levy. $500.00 went to the tax, $0.00 to penalties and $0.00 to interest.');
     expect(papers.text).toContain(`Tax Unpaid ${usd(irs - 500_00)}`);
     const again = reload(sim);
     again.advanceTo(levyAt + 2 * MS_DAY);
@@ -519,7 +519,7 @@ describe('tax.notice', () => {
     expect(memos(sim, 'IRS levy, 2026 return')).toEqual([]);
     expect(r.payments ?? []).toEqual([]);
     expect(r.collection).toBe(5);
-    expect(titled(sim, 'The IRS Levied Your Accounts').map((n) => [n.at, n.body])).toEqual([[levyAt, `$0.00 taken from your bank accounts for your 2026 return; ${usd(r.owed!)} is still owed, and it levies again while it is.`]]);
+    expect(titled(sim, 'The IRS Levied Your Accounts').map((n) => [n.at, n.body])).toEqual([[levyAt, `The IRS took $0.00 from your bank accounts for your 2026 return. You still owe ${usd(r.owed!)}, and it will levy again while you do.`]]);
     expect(pending(sim, TAX_NOTICE_KIND).map((i) => i.at)).toEqual([levyAt + 91 * MS_DAY]);
     emptyTo(sim, levyAt + 91 * MS_DAY - MS_MINUTE);
     sim.advanceTo(levyAt + 91 * MS_DAY + MS_MINUTE);
@@ -559,13 +559,13 @@ describe('tax.apply_plan', () => {
     // Online with direct debit, $29 (IRS.gov, July 2026), past the low-income line on $60,000.
     expect(before.text).toContain('Setup fee: $29.00.');
     const applied = sim.now;
-    expect(before.press('Apply')).toEqual(['Applied: answered by February 1, 2027, a fee of $29.00.']);
+    expect(before.press('Apply')).toEqual(['Applied. The IRS answers by February 1, 2027, and the setup fee is $29.00.']);
     const plan = sim.player.taxPlan!;
     expect(plan.status).toBe('pending');
     expect(plan.decideAt).toBe(applied + 60_000);
     expect(plan.history.map((x) => x.what)).toEqual(['Applied online']);
     const waiting = drawn(sim, PapersWorkspace);
-    expect(waiting.text).toContain('IRS Payment Plan With the IRS');
+    expect(waiting.text).toContain('IRS Payment Plan Being decided');
     expect(waiting.text).toContain('Answered By February 1, 2027');
     expect(waiting.has('Apply')).toBe(false);
 
@@ -579,7 +579,7 @@ describe('tax.apply_plan', () => {
     expect(inForce.text).toContain('IRS Payment Plan In force');
     expect(inForce.text).toContain(`Each Month ${usd(Math.ceil(owed / 72))} By direct debit`);
     expect(inForce.text).toContain('Next Payment March 3, 2027');
-    expect(sim.execute({ kind: 'tax.apply_plan', payload: { kind: 'long' } }).error).toBe('You have a payment plan.');
+    expect(sim.execute({ kind: 'tax.apply_plan', payload: { kind: 'long' } }).error).toBe('You already have a payment plan with the IRS.');
   });
 
   it('a month of the late-payment penalty that begins under the plan is charged a quarter point of the tax, exactly; its twin with no plan is charged the half point', () => {
@@ -674,8 +674,8 @@ describe('documents.apply_ssn', () => {
     const first = drawn(sim, WorkPane);
     expect(first.text).toContain('Social Security Number Not yet');
     expect(first.button('Apply At The Social Security Office')!.disabled).toBe(true);
-    expect(first.text).toContain('On an F-1, the number needs on-campus work begun or starting within 30 days: register first, and the School’s work-study is yours.');
-    expect(sim.execute({ kind: 'documents.apply_ssn', payload: {} }).error).toBe('On an F-1, the number needs on-campus work begun or starting within 30 days: register first, and the School’s work-study is yours.');
+    expect(first.text).toContain('On an F-1, the number needs on-campus work that has begun or starts within 30 days. Register at the School first, and the School’s work-study is yours.');
+    expect(sim.execute({ kind: 'documents.apply_ssn', payload: {} }).error).toBe('On an F-1, the number needs on-campus work that has begun or starts within 30 days. Register at the School first, and the School’s work-study is yours.');
 
     sim.advanceTo(SSN_DAY());
     expect(registered(sim.player.school, courseworkOf(sim, sim.player))).toBe(true);
@@ -687,9 +687,9 @@ describe('documents.apply_ssn', () => {
     expect(sim.player.ssn).toEqual({ status: 'applied', appliedAt: on(2026, 8, 30, 13), arrivesAt: on(2026, 9, 20, 13) });
     expect(pending(sim, SSN_ARRIVES_KIND).map((i) => i.at)).toEqual([on(2026, 9, 20, 13)]);
     const applied = drawn(sim, WorkPane);
-    expect(applied.text).toContain('Social Security Number Applied for; the card comes September 20, 2026');
+    expect(applied.text).toContain('Social Security Number Applied for. The card comes September 20, 2026');
     expect(applied.has('Apply At The Social Security Office')).toBe(false);
-    expect(sim.execute({ kind: 'documents.apply_ssn', payload: {} }).error).toBe('You’ve applied; the card is on its way.');
+    expect(sim.execute({ kind: 'documents.apply_ssn', payload: {} }).error).toBe('You’ve already applied, and the card is on its way.');
     expect(sim.now).toBe(on(2026, 8, 30, 13));
 
     const again = reload(sim);
@@ -697,11 +697,11 @@ describe('documents.apply_ssn', () => {
     expect(hasSsn(again.player)).toBe(false);
     again.advanceTo(on(2026, 9, 20, 13) + MS_MINUTE);
     expect(hasSsn(again.player)).toBe(true);
-    expect(titled(again, 'Your Social Security Card Came').map((n) => [n.at, n.body])).toEqual([[on(2026, 9, 20, 13), 'Give it to the School’s payroll and your bank. A bank that opens accounts online for someone with a number can now.']]);
+    expect(titled(again, 'Your Social Security Card Came').map((n) => [n.at, n.body])).toEqual([[on(2026, 9, 20, 13), 'Give the number to the School’s payroll and your bank. A bank that opens accounts online for people with a number can now open one for you online.']]);
     const held = drawn(again, WorkPane);
     expect(held.text).toContain('Social Security Number Held');
     expect(held.has('Apply At The Social Security Office')).toBe(false);
-    expect(again.execute({ kind: 'documents.apply_ssn', payload: {} }).error).toBe('Your Social Security card came already.');
+    expect(again.execute({ kind: 'documents.apply_ssn', payload: {} }).error).toBe('Your Social Security card has already come.');
   });
 
   it('the bank’s channel: before the card, Wells Fargo opens her account only in a branch, an hour there; once it has come, online, with no hour', () => {
@@ -796,10 +796,10 @@ describe('documents.apply_ssn', () => {
     const passport = documentsOf(sim.player).find((d) => d.kind === 'passport' && d.status === 'valid')!;
     sim.must({ kind: 'documents.report_lost', payload: { documentId: passport.id } });
     const lost = sim.execute({ kind: 'documents.apply_ssn', payload: {} });
-    expect(lost.error).toBe('The office asks for your passport, in force.');
+    expect(lost.error).toBe('The office asks for your passport, and you don’t have one in force.');
     expect(sim.player.ssn).toBeUndefined();
     expect(pending(sim, SSN_ARRIVES_KIND)).toEqual([]);
-    expect(student('g17-ssn-citizen').execute({ kind: 'documents.apply_ssn', payload: {} }).error).toBe('You have a Social Security number already, as a citizen.');
+    expect(student('g17-ssn-citizen').execute({ kind: 'documents.apply_ssn', payload: {} }).error).toBe('As a US citizen, you already have a Social Security number.');
   });
 
   it('Discover, which the row named as reading the number, changes only its words for her: it asks for a number, then, with the card, for $25,000 a year of income; refused either way, no loan opened', () => {
@@ -811,7 +811,7 @@ describe('documents.apply_ssn', () => {
     const arrives = sim.must<{ arrivesAt: number }>({ kind: 'documents.apply_ssn', payload: {} }).arrivesAt;
     sim.advanceTo(arrives + MS_MINUTE);
     expect(hasSsn(sim.player)).toBe(true);
-    expect(borrow().error).toBe('Discover Personal Loans lends on $25,000 a year of income or more, and last month’s wages come to less, a year of them.');
+    expect(borrow().error).toBe('Discover Personal Loans lends on $25,000 a year of income or more, and the last 30 days’ wages come to less than that over a year.');
     expect(loans()).toEqual([]);
   });
 });

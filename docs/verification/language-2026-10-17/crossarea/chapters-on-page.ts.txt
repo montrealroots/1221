@@ -1,0 +1,21 @@
+// Kept as .txt so the lint and the typecheck leave it be: copy it to the clone's root as a .ts, then
+// npx vite-node <file> -- docs/verification/language-2026-10-17/crossarea/capture/brief.json
+// On 9246c074's build: "271 of 271 on their chapter's page".
+// Each chapter's paragraphs, details and names, looked for on its own page in the capture of the built app.
+import { readFileSync } from 'node:fs';
+import { CHAPTERS } from './src/engine/content/tutorial';
+const file = process.argv.filter((a) => a !== '--').at(-1)!;
+const screens = JSON.parse(readFileSync(file, 'utf8')) as { screen: string; text?: string }[];
+const norm = (s: string) => s.replace(/[’']/g, "'").replace(/\s+/g, ' ').trim();
+let all = 0, found = 0;
+const missing: string[] = [];
+for (const c of CHAPTERS) {
+  const page = screens.find((s) => s.screen === `Guide: ${c.title}`);
+  const text = norm(page?.text ?? '');
+  for (const p of [...c.body, ...(c.more ?? []), ...c.names]) {
+    all += 1;
+    if (text.includes(norm(p))) found += 1; else missing.push(`${c.id}: ${p.slice(0, 80)}`);
+  }
+}
+console.log(`${found} of ${all} on their chapter's page`);
+for (const m of missing.slice(0, 20)) console.log('  missing', m);

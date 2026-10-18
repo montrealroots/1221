@@ -74,7 +74,7 @@ describe('hours converted to grant aid', () => {
   it('PLAYER JOURNEY: assigned hours missed ill, asked to be converted, paid in January as a taxable scholarship; refused to a student with no aid', () => {
     let sim = student('wl-convert', { family: undefined, wealth: 'scraping' });
     tended(sim, at(2026, 10, 2, 8));
-    expect(conversionRefusal(sim, sim.player)).toMatch(/No hours to convert/);
+    expect(conversionRefusal(sim, sim.player)).toMatch(/There are no hours to convert/);
     // Called in sick on a Saturday with an assigned shift.
     const sat = sim.universe.scheduled.find((i) => i.kind === SHIFT_KIND && i.status === 'pending' && i.payload.elective === false)!;
     tended(sim, sat.at - 2 * MS_HOUR);
@@ -86,7 +86,7 @@ describe('hours converted to grant aid', () => {
     expect(convertibleHours(sim.player, key)).toBe(Number(sat.payload.hours));
     const asked = sim.must<{ at: number; hours: number }>({ kind: 'school.request_conversion', payload: {} });
     expect(new Date(asked.at).getUTCMonth()).toBe(0);
-    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toMatch(/request is in/);
+    expect(sim.execute({ kind: 'school.request_conversion', payload: {} }).error).toMatch(/request is already in/);
     sim = reload(sim);
     tended(sim, asked.at - MS_HOUR);
     const scholarshipBefore = earningsOf(sim.player).years[2027]?.scholarship ?? 0;

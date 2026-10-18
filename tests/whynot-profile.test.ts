@@ -105,7 +105,7 @@ describe('Practice An Hour refused, on the Player Profile', () => {
       expect(r.ok, r.error).toBe(true);
     }
     const why = practiceRefusal(sim, sim.player, desk)!;
-    expect(why).toBe(`You’ve practiced ${PRACTICE.dailyHours} hours today: past that, more stops helping. Tomorrow.`);
+    expect(why).toBe(`You’ve practiced ${PRACTICE.dailyHours} hours today, and more stops helping after that. Practice again tomorrow.`);
     const { html, text } = drawn(sim, true);
     const opened = shown(sim);
     // The button is refused and keeps its title.

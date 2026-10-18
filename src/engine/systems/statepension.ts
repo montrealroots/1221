@@ -66,10 +66,10 @@ export function weeklyPension(person: Person, at: Instant, currency = 'GBP'): Mo
 }
 
 export function statePensionRefusal(sim: Simulation, person: Person): string | undefined {
-  if (person.statePensionFrom !== undefined) return 'You’re drawing it.';
-  if (sim.now < statePensionAge(person)) return `From ${formatDate(statePensionAge(person), sim.zone)}, State Pension age.`;
+  if (person.statePensionFrom !== undefined) return 'You’ve already claimed it.';
+  if (sim.now < statePensionAge(person)) return `You can claim it from ${formatDate(statePensionAge(person), sim.zone)}, your State Pension age.`;
   const n = qualifyingYears(person, saveCurrency(sim.universe)).length;
-  if (n < STATE_PENSION.yearsForAny) return `Ten qualifying years give a pension; your National Insurance record has ${n}.`;
+  if (n < STATE_PENSION.yearsForAny) return `It takes ten qualifying years, and your National Insurance record has ${n}.`;
   return undefined;
 }
 

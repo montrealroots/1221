@@ -103,13 +103,13 @@ describe('a brief suggested for a weakness', () => {
       const recent = suggestions(p, { target: t, label, level: 5, full: MASTERED });
       const life = suggestions(p, undefined, { ...identityOf(p), recurring: { target: t, label, pieces: 9, whole: 31.5, last: 0, evidence: [] } });
       for (const s of [...recent, ...life]) {
-        expect(s.why, t).not.toMatch(/% of the work\)/);
+        expect(s.why, t).not.toMatch(/% of what its tape is judged on\)/);
         expect(s.why, t).not.toContain(label.toLowerCase());
       }
     }
     // The falsifiability test: a technique a brief reads is still suggested the brief that leans on it most.
     expect(briefsRead(p, 'screen')).toBe(true);
-    expect(suggestions(p, { target: 'screen', label: TECHNIQUE_LABEL.screen, level: 5, full: MASTERED }).some((s) => /on camera more than any other brief \([1-9]\d*% of the work\)/.test(s.why))).toBe(true);
+    expect(suggestions(p, { target: 'screen', label: TECHNIQUE_LABEL.screen, level: 5, full: MASTERED }).some((s) => /on camera more than any other brief \([1-9]\d*% of what its tape is judged on\)/.test(s.why))).toBe(true);
   });
 
   it('PLAYER JOURNEY: once every brief that reads it is taped, is the one leaning most, never an untaped one at 0%', () => {
@@ -120,12 +120,12 @@ describe('a brief suggested for a weakness', () => {
     expect(readers.length).toBeLessThan(5);
     for (const b of readers) taped(sim, b.id);
     const s = suggestions(sim.player, { target: 'accents', label: TECHNIQUE_LABEL.accents, level: 5, full: MASTERED });
-    for (const x of s) expect(x.why).not.toMatch(/\(0% of the work\)/);
+    for (const x of s) expect(x.why).not.toMatch(/\(0% of what its tape is judged on\)/);
     const weak = s.find((x) => x.why.includes('accents and dialects'));
     // Suggested again, a brief that reads it, unless every one of them is already suggested as a callback.
     if (weak) {
       expect(readers.map((b) => b.id)).toContain(weak.brief);
-      expect(weak.why).toMatch(/more than any other brief \([1-9]\d*% of the work\)/);
+      expect(weak.why).toMatch(/more than any other brief \([1-9]\d*% of what its tape is judged on\)/);
     } else for (const b of readers) expect(s.some((x) => x.brief === b.id && x.why.startsWith('A callback'))).toBe(true);
   });
 
@@ -145,14 +145,14 @@ describe('a brief suggested for a weakness', () => {
     const html = pane(sim, 'drama', 'brief-drama');
     expect(html).toContain('>What To Work On<');
     expect(html).toContain('data-practice="script"');
-    expect(html).not.toMatch(/% of the work\)/);
-    expect(html).toContain('No practice brief reads script analysis, so a take won’t show it and none is suggested for it.');
+    expect(html).not.toMatch(/% of what its tape is judged on\)/);
+    expect(html).toContain('No practice brief calls on script analysis, so a tape won’t show it and none is suggested for it.');
     // The falsifiability test: with the take held back by something a brief reads, a brief is suggested for it, and
     // the pane doesn't say none reads it.
     w.limits = w.limits.filter((l) => l.what !== 'script');
     w.inputs.techniques = Object.fromEntries(Object.entries(w.inputs.techniques).filter(([k]) => k !== 'script'));
     const read = pane(sim, 'drama', 'brief-drama');
-    expect(read).not.toContain('No practice brief reads');
+    expect(read).not.toContain('No practice brief calls on');
   });
 });
 
@@ -190,7 +190,7 @@ describe('What To Work On, with the work so far', () => {
     expect(without.map((r) => r.target)).toEqual(['presence', 'imagination', 'focus']);
     const near = run(w, life('imagination'));
     expect(near.map((r) => r.target)).toEqual(['imagination', 'presence', 'focus']);
-    expect(near[0]!.why).toContain('Your work keeps coming back to it: it’s held back 9 of your pieces for life, 31.5 points of the whole in all.');
+    expect(near[0]!.why).toContain('Your work keeps coming back to it: it has held back 9 of your pieces in all, 31.5 points off the whole.');
     expect(near[0]!.recurring).toEqual({ last: 0, evidence: ['An ability, 31.5 points in all'] });
     // The falsifiability test: the words and the order change, the numbers don't.
     expect(numbers(near)).toEqual(numbers(without));
@@ -198,7 +198,7 @@ describe('What To Work On, with the work so far', () => {
     // More than half a point under the top, it's named where its points put it.
     const far = run(w, life('focus'));
     expect(far.map((r) => r.target)).toEqual(['presence', 'imagination', 'focus']);
-    expect(far[2]!.why).toContain('it’s held back 9 of your pieces for life');
+    expect(far[2]!.why).toContain('it has held back 9 of your pieces in all');
     expect(numbers(far)).toEqual(numbers(without));
   });
 
@@ -224,11 +224,11 @@ describe('What To Work On, with the work so far', () => {
     const without = recsOf(sim);
     const mine = withIt.find((x) => x.target === r.target)!;
     expect(mine).toBeDefined();
-    expect(mine.why).toContain(`it’s held back ${r.pieces} of your pieces for life`);
+    expect(mine.why).toContain(`it has held back ${r.pieces} of your pieces in all`);
     expect(numbers(withIt)).toEqual(numbers(without));
     const html = profile(sim);
-    expect(html).toContain(`it’s held back ${r.pieces} of your pieces for life`);
-    expect(html).toContain(`From your work for life: ${r.evidence.join('; ')}`);
+    expect(html).toContain(`it has held back ${r.pieces} of your pieces in all`);
+    expect(html).toContain(`From your record: ${r.evidence.join('; ')}`);
     // A brief's pane names the first ability or technique and says it as the Profile does. Until 2026-10-16 that was
     // the recurring weakness here, put first within half a point; from then what's first is what training pays most for
     // (`trainingForecast`), and the recurring weakness goes first only where it's about as useful.
@@ -322,7 +322,7 @@ describe('What To Work On in a brief’s pane', () => {
     expect(recsOf(sim).find((r) => !r.target.includes(':'))!.target).toBe(top.target);
     const html = pane(sim, 'drama', 'brief-drama');
     expect(html).toContain(`<strong>${top.label}</strong>. ${now.why}`);
-    expect(html).toContain('Spaced: the last session was a day to a week ago, when spacing pays.');
+    expect(html).toContain('Choose Spaced: your last session was a day to a week ago, when spacing pays.');
     expect(profile(sim)).toContain(now.why);
   });
 });

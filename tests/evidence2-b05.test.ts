@@ -188,7 +188,7 @@ function tended(sim: Simulation, until: number): void {
   }
 }
 
-const CITI_REFUSES = 'Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.';
+const CITI_REFUSES = 'Citi needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.';
 
 // ---------------------------------------------------------------------------
 // The screen
@@ -264,8 +264,8 @@ function tally(sim: Simulation, banks: readonly string[], dates: readonly number
   }
   sim.player.chex = report;
   // A report stands five years of 365 days from its date, and each refusal on it names that day.
-  const chex = errors.filter(({ date, error }) => error.endsWith(` turned you away on the ChexSystems report Chase made, which stands until ${DAY.format(date + FIVE_YEARS)}.`));
-  const photoId = errors.filter(({ error }) => / asks a new customer for a photo ID in force: a passport, a license or an ID card\. Papers has each\.$/.test(error));
+  const chex = errors.filter(({ date, error }) => error.endsWith(` won’t open an account for you because of the ChexSystems report Chase filed, which stays on your record until ${DAY.format(date + FIVE_YEARS)}.`));
+  const photoId = errors.filter(({ error }) => / needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card\. You can apply for a passport or an ID card on Papers, under Passport And ID\.$/.test(error));
   // Every refusal is one of the two: nothing else stood in the way, and nothing was opened.
   expect(chex.length + photoId.length).toBe(errors.length);
   return { draws: errors.length, chex: chex.length, photoId: photoId.length };
@@ -278,9 +278,9 @@ describe('bank.open_current', () => {
   it('refuses a bank in London as no bank where she lives, and a deposit from the books’ own Wages account as no account of hers; a life holds no other person’s account to try', () => {
     const sim = student('b05-where');
     const before = untouched(sim);
-    expect(refused(sim, 'bank.open_current', { bankId: 'gb-barclays' })).toBe('That isn’t a bank where you live.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'gb-barclays' })).toBe('You can only open an account at a bank where you live.');
     const wages = sim.nominalAccount('income', 'Wages').id;
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: wages, amount: 10_00 })).toBe('Fund it from one of your own current or savings accounts.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: wages, amount: 10_00 })).toBe('Pay the opening deposit from one of your own current or savings accounts.');
     expect(untouched(sim)).toEqual(before);
     // Every account a life holds that isn't the books' own is hers: there's no one else's to send from.
     expect(Object.values(sim.universe.accounts).filter((a) => !a.nominal && a.ownerId !== sim.player.id)).toEqual([]);
@@ -301,12 +301,12 @@ describe('bank.open_current', () => {
     sim = reload(sim);
     sim.advanceTo(at(2026, 8, 26, 7, 31));
     expect(checkingsOf(sim, sim.player).map((a) => a.bankId)).toEqual(['us-chase']);
-    expect(titled(sim, 'Bank of America Turned Down Your Application').map((n) => [n.at, n.body])).toEqual([[at(2026, 8, 26, 7, 30), 'Bank of America asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each. Any opening deposit you sent comes back to the account it left.']]);
+    expect(titled(sim, 'Bank of America Turned Down Your Application').map((n) => [n.at, n.body])).toEqual([[at(2026, 8, 26, 7, 30), 'Bank of America needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID. Any opening deposit you sent comes back to the account it left.']]);
     expect(inTransitOf(sim, sim.player).balance).toBe(100_00);
     sim.advanceTo(at(2026, 8, 27, 7, 31));
     expect(postingsTo(sim, chase, applied).filter((p) => p.memo.startsWith('Returned'))).toEqual([{ memo: 'Returned: the account it was sent to isn’t open', at: at(2026, 8, 27, 7, 30), amount: 100_00 }]);
     expect(inTransitOf(sim, sim.player).balance).toBe(0);
-    expect(titled(sim, 'A Transfer Came Back').map((n) => n.body)).toEqual(['$100.00 came back to Chase Total Checking: the account it was sent to isn’t open.']);
+    expect(titled(sim, 'A Transfer Came Back').map((n) => n.body)).toEqual(['$100.00 came back to Chase Total Checking because the account it was sent to isn’t open.']);
     // The twin kept her license: opened on the 26th, the $100 landing in it on the 27th.
     twin.advanceTo(at(2026, 8, 27, 7, 31));
     const bofa = checkingsOf(twin, twin.player).find((a) => a.bankId === 'us-bank-of-america')!;
@@ -319,7 +319,7 @@ describe('bank.open_current', () => {
     const before = untouched(sim);
     const report = sim.player.chex!.at;
     // Chase, owed the $30, refuses before any draw; the others draw.
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for somebody who owes it a charged-off debt.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for you while you owe it a debt it has charged off.');
     const banks = ['us-citi', 'us-wells-fargo', 'us-bank-of-america'] as const;
     const within = tally(sim, banks, weeksBack(report, 80));
     expect(within.draws).toBe(240);
@@ -362,7 +362,7 @@ describe('bank.open_current', () => {
     expect(postingsTo(young, citi)).toEqual([]);
     young.advanceTo(at(2026, 11, 23, 9));
     expect(acct(young, citi).closedAt).toBe(at(2026, 11, 23, 0));
-    expect(titled(young, 'Citi Closed Citi Access Checking').map((n) => n.body)).toEqual(['It held nothing for 90 days, and the bank closes an account at zero that long.']);
+    expect(titled(young, 'Citi Closed Citi Access Checking').map((n) => n.body)).toEqual(['It sat at a zero balance for 90 days, so the bank closed it.']);
 
     // Born in 2002: 24, past the waiver, with no direct deposit into it.
     const adult = student('b05-adult');
@@ -377,7 +377,7 @@ describe('bank.open_current', () => {
     expect(acct(adult, hers).closedAt).toBe(at(2026, 10, 31, 0));
     expect(collectionsOf(adult, adult.player, 'Citi')!.balance).toBe(-10_00);
     expect(adult.player.chex).toEqual({ at: at(2026, 10, 31, 0), bank: 'Citi' });
-    expect(titled(adult, 'Citi Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at Chase now.']);
+    expect(titled(adult, 'Citi Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your credit record. You can pay it on Money, under Borrowing. Your money is at Chase now.']);
     expect(titled(adult, 'Citi Closed Citi Access Checking')).toEqual([]);
   });
 });
@@ -401,7 +401,7 @@ describe('bank.set_order_source', () => {
     expect(was.cap).toBe(0);
     sim.advanceTo(at(2026, 8, 28, 9, 1));
     expect({ chase: acct(sim, chase).balance, savings: acct(sim, savings).balance, cap: acct(sim, cap).balance, transit: inTransitOf(sim, sim.player).balance }).toEqual(was);
-    expect(titled(sim, 'A Standing Order Didn’t Go').map((n) => [n.at, n.body])).toEqual([[at(2026, 8, 28, 9), '$50.00 to Chase Savings: It wasn’t in 360 Checking on the day, so the bank didn’t make it.']]);
+    expect(titled(sim, 'A Standing Order Didn’t Go').map((n) => [n.at, n.body])).toEqual([[at(2026, 8, 28, 9), 'Your $50.00 standing order to Chase Savings didn’t go. There wasn’t enough in 360 Checking on the day. Move money into it before the order’s next date.']]);
 
     // $100 from Chase, in Chase's three business days: Wednesday 2 September.
     const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase, toId: cap, amount: 100_00 });
@@ -423,7 +423,7 @@ describe('bank.set_order_source', () => {
     const chase = primaryId(sim);
     const cap = run<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'us-capital-one' }).accountId;
     for (const current of [chase, cap]) {
-      expect(refused(sim, 'bank.add_standing_order', { toId: current, amount: 50_00, day: 28 })).toBe('A standing order of your own goes into one of your savings accounts.');
+      expect(refused(sim, 'bank.add_standing_order', { toId: current, amount: 50_00, day: 28 })).toBe('A standing order can only go into one of your savings accounts.');
     }
     const orderId = run<{ id: string }>(sim, 'bank.add_standing_order', { toId: savingsAt(sim, 'us-chase').id, amount: 50_00, day: 28 }).id;
     expect(paymentsOf(sim.player).standingOrders.map((o) => acct(sim, o.toId).kind)).toEqual(['savings']);
@@ -461,7 +461,7 @@ describe('bank.close_current', () => {
     let { sim } = journey;
     // The groceries of Tuesday's midnight, on Chase's card, post two business days on, Thursday 10 September.
     expect(sim.universe.transactions.filter((t) => t.memo === 'Groceries' && t.postsAt !== undefined && t.postsAt > sim.now && t.postings.some((p) => p.accountId === chase)).map((t) => t.at)).toContain(at(2026, 9, 8, 0));
-    expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: cap })).toBe('Card payments are still pending on it. Chase closes it once they’ve posted.');
+    expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: cap })).toBe('Card payments are still pending on it. You can close it once they’ve posted.');
     const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase, toId: cap, amount: 100_00 });
     // Chase's three business days from Tuesday 8 September: Friday 11 September.
     expect(sent.arrivesAt).toBe(at(2026, 9, 11, 8));
@@ -540,7 +540,7 @@ describe('documents.report_lost', () => {
     expect(named(first, 'Report Stolen…')).toHaveLength(2);
     expect(press(named(first, 'Report Stolen…')[0])).toEqual([]);
     const asked = papers(sim, 'passport');
-    expect(rowOf(asked, passport)).toMatch(/In Force Reported stolen, it’s canceled for good, even if it turns up, with any visa or authorization issued on it \(the F-1 status holds\)\. Cancel It Keep It$/);
+    expect(rowOf(asked, passport)).toMatch(/In Force If you report it stolen, it’s canceled for good, even if it turns up, along with any visa or travel authorization issued on it\. An F-1 status you hold continues\. Cancel It Keep It$/);
     expect(rowOf(asked, license)).toMatch(/In Force Report Lost… Report Stolen…$/);
     expect(press(named(asked, 'Keep It')[0])).toEqual([]);
     const kept = papers(sim, 'passport');
@@ -550,7 +550,7 @@ describe('documents.report_lost', () => {
     // The second Report Lost… is the license's.
     expect(press(named(kept, 'Report Lost…')[1])).toEqual([]);
     const confirm = papers(sim, 'passport');
-    expect(rowOf(confirm, license)).toMatch(/In Force Reported lost, it’s canceled for good, even if it turns up\. Cancel It Keep It$/);
+    expect(rowOf(confirm, license)).toMatch(/In Force If you report it lost, it’s canceled for good, even if it turns up\. Cancel It Keep It$/);
     expect(rowOf(confirm, passport)).toMatch(/In Force Report Lost… Report Stolen…$/);
     expect(press(named(confirm, 'Cancel It')[0])).toEqual(['Driving License reported lost and canceled.']);
     expect(license.status).toBe('lost');
@@ -593,7 +593,7 @@ describe('documents.report_lost', () => {
     const shown = papers(sim, 'passport');
     // From 2026-10-16 the row says what replaces it after Run Out (brief 09's journeys, tests/remaining-09-journeys.test.ts):
     // until then nothing came after it, and this read the row's end there.
-    expect(rowOf(shown, license)).toMatch(/June 14, 2028 Run Out Nothing in SLATE renews a license since the cars went: a passport or an ID card in force is your photo ID, under Your Passport and Your ID\.$/);
+    expect(rowOf(shown, license)).toMatch(/June 14, 2028 Run Out A driving license can’t be renewed in the game\. A passport or ID card in force is your photo ID: see Your Passport and Your ID\.$/);
     expect([named(shown, 'Report Lost…'), named(shown, 'Report Stolen…')]).toEqual([[], []]);
   }, 60_000);
 

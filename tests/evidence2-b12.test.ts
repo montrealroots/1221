@@ -7,7 +7,7 @@
  *
  * - `h-money`: an overdraft reached by play, where the first round brought one about by hand: debit card coverage opted
  *   into at Chase, the checking's $92,391.00 moved to savings, and the first midnight's $10.00 of groceries reads
- *   "-$10.00" and "Your account is overdrawn." (Chase charges nothing overdrawn by $50 or less), where a twin that
+ *   "−$10.00" (a hyphen until 2026-10-17) and "Your account is overdrawn." (Chase charges nothing overdrawn by $50 or less), where a twin that
  *   never opted in owes the $10.00 instead and shows no alert. "No account" stays a fixture's: with the savings closed
  *   into the checking and the card closed, the bank refuses the checking, and the line names it; only every account
  *   closed by hand draws "No account: $0.00. Worth $0." and its "Your Bank" button.
@@ -15,7 +15,7 @@
  *   26 November, the fall recess, nothing the School books wants her, and Next is Monday 30 November at nine; and after
  *   a fall kept up hour by hour, at noon on 12 December, the spring's first class day, 11 January. A leave pinned to
  *   its standing and alert ("On Leave, academic concern" and the concern's alert); a first year left to the clock is
- *   "Year 2, academic warning" in its second fall and "Left the school, dismissed" after it, each with its alert; and
+ *   "Year 2, academic warning" in its second fall and "Left the School, dismissed" after it (until 2026-10-17 "Left the school"), each with its alert; and
  *   the place in the class as a literal, sixth of sixteen, from craft records whose means are set so the rule's own
  *   words give it.
  * - `h-papers`: the Unemployment clause played: a fall kept up, a part in the Summer Cabaret's company paid $375 a
@@ -249,7 +249,7 @@ describe('h-money', () => {
     // $92,391 and $413,043 less the fall’s Yale Health plan, $1,882, owed at nine on the first morning for want of money
     // in checking and paid back out of savings at midnight, and the $10.00: $503,542. Until 2026-10-13 this read $505,424:
     // the plan the bank couldn’t pay was dropped (tests/evidence2-b10.test.ts, c-wealth).
-    const line = 'Money Chase Total Checking: -$10.00. Worth $503,542. Your account is overdrawn. Chase How This Works';
+    const line = 'Money Chase Total Checking: −$10.00. Worth $503,542. Your account is overdrawn. Chase How This Works';
     expect(drawn(sim).affairs).toContain(line);
     press('Chase');
     expect(h.went).toEqual([['/workspace/bank', 'Money']]);
@@ -262,7 +262,7 @@ describe('h-money', () => {
     expect(checking.balance).toBe(0);
     const { affairs } = drawn(sim);
     // The plan owed and paid back out of savings, as the opted-in twin’s was (until 2026-10-13, $505,424, the plan dropped).
-    expect(affairs).toContain('Money Chase Total Checking: $0.00. Worth $503,542, $10 of it owed. Chase How This Works');
+    expect(affairs).toContain('Money Chase Total Checking: $0.00. Worth $503,542, after $10 owed. Chase How This Works');
     expect(affairs).not.toContain('Your account is overdrawn.');
   });
 
@@ -273,7 +273,7 @@ describe('h-money', () => {
     expect(sim.must({ kind: 'bank.close_savings', payload: { accountId: savings.id } })).toEqual({ closed: savings.id });
     expect(sim.must({ kind: 'card.close', payload: { accountId: own(sim, 'credit_card').id } })).toEqual({ closing: true });
     expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: checking.id } }).error)
-      .toBe('It’s your only current account. Open another first: SLATE keeps every life a current account to be paid into.');
+      .toBe('It’s your only current account. Open another one first: you always need a current account to be paid into.');
     expect(sim.ledger.accountsOf(sim.player.id).map((a) => a.name)).toEqual(['Chase Total Checking']);
     // $92,391.00 and the savings' $413,043.00 (the profile's 380,000 € at 0.92, to the dollar) in one account, written to the
     // dollar from $100,000.
@@ -331,7 +331,7 @@ describe('h-school', () => {
     sim.advanceTo(asked.decideAt + MS_HOUR);
     expect(sim.player.school!.leave!.status).toBe('on');
     const { affairs } = drawn(sim);
-    expect(affairs).toMatch(/School On Leave, academic concern, \d+ of 16 in the class\. Your standing is academic concern: the School screen says why\. Yale How This Works/);
+    expect(affairs).toMatch(/School On Leave, academic concern, \d+(?:st|nd|rd|th) of 16 in the class\. Your standing is academic concern. The School screen says why\. Yale How This Works/);
     expect(affairs).not.toContain('Next:');
   });
 
@@ -342,7 +342,7 @@ describe('h-school', () => {
     expect(titled(sim, 'Academic Warning')).toHaveLength(1);
     // The second fall's classes from the Monday a week after the fourth Monday of August, 30 August 2027; Wednesday
     // 1 September at noon, the next is Thursday's.
-    expect(drawn(sim).affairs).toMatch(/School Year 2, academic warning, \d+ of 16 in the class\. Next: Classes, September 2, 2027 at 9:00 AM\. Your standing is academic warning: the School screen says why\. Yale How This Works/);
+    expect(drawn(sim).affairs).toMatch(/School Year 2, academic warning, \d+(?:st|nd|rd|th) of 16 in the class\. Next: Classes, September 2, 2027 at 9:00 AM\. Your standing is academic warning. The School screen says why\. Yale How This Works/);
   });
 
   it('PLAYER JOURNEY: left to the clock, the warning unmet, the second fall’s evaluation dismisses her: “Left the school, dismissed”, with the dismissal’s alert and no Next, across a reload', () => {
@@ -352,7 +352,7 @@ describe('h-school', () => {
     expect(bookedFor(sim)).toEqual([]);
     for (const one of [sim, reload(sim)]) {
       const { affairs } = drawn(one);
-      expect(affairs).toMatch(/School Left the school, dismissed, \d+ of 16 in the class\. Your standing is dismissed: the School screen says why\. Yale How This Works/);
+      expect(affairs).toMatch(/School Left the School, dismissed, \d+(?:st|nd|rd|th) of 16 in the class\. Your standing is dismissed. The School screen says why\. Yale How This Works/);
       expect(affairs).not.toContain('Next:');
     }
   });
@@ -368,9 +368,9 @@ describe('h-school', () => {
     school.classmates.forEach((m, i) => even(m.craft, i < 4 ? 60 : i === 4 || i === 5 ? 50 : 40));
     // One skill 21 points up moves a mean over 21 skills by one: 51, above her 50. The tie, at 50, isn't above her.
     (school.classmates[4]!.craft as unknown as Record<string, number>)[SKILLS[0]!.id] = 71;
-    expect(drawn(sim).affairs).toContain('School Arriving, good standing, 6 of 16 in the class. Next: Registration And Your Account, August 24, 2026 at 10:00 AM. Yale How This Works');
+    expect(drawn(sim).affairs).toContain('School Arriving, good standing, 6th of 16 in the class. Next: Registration And Your Account, August 24, 2026 at 10:00 AM. Yale How This Works');
     (school.classmates[5]!.craft as unknown as Record<string, number>)[SKILLS[20]!.id] = 51;
-    expect(drawn(sim).affairs).toContain('School Arriving, good standing, 7 of 16 in the class.');
+    expect(drawn(sim).affairs).toContain('School Arriving, good standing, 7th of 16 in the class.');
   });
 });
 
@@ -572,7 +572,7 @@ describe('l-person', () => {
     const config = play.started()!;
     expect(config).toMatchObject({ homeRegionId: 'uk-eng-london', startLocationId: 'us-ct-newhaven', heightCm: 170.2, weightKg: 64.9 });
     const sim = createSave(1, 'b12-born-london', config);
-    expect(openedFromHome(sim).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, a body mass index of 22.4: healthy weight. In feet, inches and pounds, the units of the United States, where you live.']);
+    expect(openedFromHome(sim).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, with a body mass index of 22.4, in the healthy weight range. In feet, inches and pounds, the units of the United States, where you live.']);
   });
 
   it('born in New York, the same step asks feet, inches and pounds: 5, 7 and 143 are 170.2 cm and 64.9 kg, a body mass index of 22.4, and the look says them back in New Haven', () => {
@@ -596,7 +596,7 @@ describe('l-person', () => {
     const config = play.started()!;
     expect(config).toMatchObject({ homeRegionId: 'us-ny-newyork', heightCm: 170.2, weightKg: 64.9 });
     // The units' why after the figures, from 2026-10-14 (`bodyUnits`).
-    expect(openedFromHome(createSave(1, 'b12-born-newyork', config)).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, a body mass index of 22.4: healthy weight. In feet, inches and pounds, the units of the United States, where you live.']);
+    expect(openedFromHome(createSave(1, 'b12-born-newyork', config)).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, with a body mass index of 22.4, in the healthy weight range. In feet, inches and pounds, the units of the United States, where you live.']);
   });
 
   it('PLAYER JOURNEY: the first morning’s run breaks a bone at 8:30 AM: “till October 6, 2026”, 43 days, inside a broken bone’s 42 to 84; the clock still has it at 8 AM that day and has mended it by 9', () => {
@@ -605,7 +605,7 @@ describe('l-person', () => {
     expect(INJURY_KIND.fracture.days).toEqual([42, 84]);
     // Monday 24 August and 43 days: 7 to the end of August, 30 in September, 6 in October.
     expect((at(2026, 10, 6, 8, 30) - at(2026, 8, 24, 8, 30)) / MS_DAY).toBe(43);
-    const line: [string, string] = ['Mending. ', 'A Broken Bone, till October 6, 2026, and off work till then.'];
+    const line: [string, string] = ['Mending. ', 'A Broken Bone, until October 6, 2026, and laid up until then.'];
     expect(openedFromHome(sim).lines).toContainEqual(line);
     sim.advanceTo(at(2026, 10, 6, 8));
     expect(openedFromHome(sim).lines).toContainEqual(line);
@@ -634,7 +634,7 @@ describe('l-person', () => {
     // A copy of her, she/her, is spoken of as “her” (from 2026-10-15: until then as “they”, whatever the pronouns, so
     // this read “Their body.” above “On their papers. she/her”; tests/scope-people.test.ts holds all three pronouns).
     expect(said).toContain('Her body. ');
-    expect(said).toContain('On her papers. she/her, a citizen of United Kingdom.');
+    expect(said).toContain('On her papers. Pronouns she/her. A citizen of the United Kingdom.');
     expect(said).not.toMatch(/Your body|On your papers/);
   });
 });
@@ -672,7 +672,7 @@ describe('n-decision-us-status', () => {
     const [d] = statusDecision(sim);
     expect(d).toMatchObject({
       title: 'Your US Status Is Ending', createdAt: Date.UTC(2029, 4, 31, 12), dueAt: Date.UTC(2029, 6, 30, 12), route: '/workspace/papers',
-      detail: 'Your permission to work in the United States has ended, and your status ends July 30, 2029. OPT can still be applied for before then. After it, you’re out of status: no work can be had here, a US visa you hold is void, and the Visa Waiver Program is closed to you for good.',
+      detail: 'Your permission to work in the United States has ended, and your status ends July 30, 2029. You can still apply for OPT before then. If you’re still here after that, you’ll be out of status. In the game, that means you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you from then on.',
       actions: [{ label: 'Apply For OPT', commandKind: 'documents.apply_opt', payload: {} }, { label: 'Apply For OPT, Premium Processing', commandKind: 'documents.apply_opt', payload: { premium: true } }],
     });
     drawn(sim);
@@ -691,7 +691,7 @@ describe('n-decision-us-status', () => {
     expect(titled(kept, 'Out Of Status')).toEqual([]);
     kept.advanceTo(at(2029, 8, 30, 13));
     expect(optPermits(kept)[0]).toMatchObject({ status: 'valid', issuedAt: at(2029, 8, 30, 12), expiresAt: at(2030, 8, 30, 12) });
-    expect(titled(kept, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from August 30, 2029 to August 30, 2030, with no more than 90 days between jobs in all.']);
+    expect(titled(kept, 'OPT Approved').map((n) => n.body)).toEqual(['You may work in the United States from August 30, 2029 to August 30, 2030, with no more than 90 days without work in total. The game has no work after the degree, so in practice it ends after those 90 days.']);
   });
 
   it('Apply For OPT, Premium Processing pressed on Home on Friday 1 June 2029 pays $2,250, and is decided in thirty business days with Juneteenth and Independence Day not among them, on Tuesday 17 July', () => {
@@ -719,11 +719,11 @@ describe('n-decision-us-status', () => {
     // Fifteen days' grace after a withdrawal the school authorizes (8 CFR 214.2(f)(5)(iv)): Wednesday 16 September.
     expect(statusDecision(sim)[0]).toMatchObject({
       title: 'Your US Status Is Ending', createdAt: at(2026, 9, 1, 12, 1), dueAt: at(2026, 9, 16, 12), actions: [],
-      detail: 'Your permission to work in the United States has ended, and your status ends September 16, 2026. After it, you’re out of status: no work can be had here, a US visa you hold is void, and the Visa Waiver Program is closed to you for good.',
+      detail: 'Your permission to work in the United States has ended, and your status ends September 16, 2026. If you’re still here after that, you’ll be out of status. In the game, that means you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you from then on.',
     });
     const { text } = drawn(sim);
     expect(text).toContain('Your US Status Is Ending');
-    expect(text).toContain('your status ends September 16, 2026. After it, you’re out of status');
+    expect(text).toContain('your status ends September 16, 2026. If you’re still here after that, you’ll be out of status.');
     expect(h.buttons.filter((b) => b.text.startsWith('Apply For OPT'))).toEqual([]);
     const kept = reload(sim);
     kept.advanceTo(at(2026, 9, 19, 12));

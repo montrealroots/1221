@@ -246,9 +246,21 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     expect(Math.round(byHand(sim.player.wellbeing))).toBe(88);
     const before = asSaved(sim);
     const { html } = drawn(sim, ProfileWorkspace);
-    expect(condition(sim)).toBe('Current Condition What today’s work meets Readiness 88 88 at this hour’s fit For Work Sufficient Nothing today holds the work back Energy, Stress 95, 15 Sleep owed 0 hours');
+    expect(condition(sim)).toBe('Current Condition Your readiness for work today Readiness 88 88 at this hour For Work Sufficient Today, nothing holds your work back Energy, Stress 95, 15 No sleep owed');
     expect(html).toContain('<span class="stat-label">For Work</span><span class="stat-value">Sufficient</span>');
     expect(asSaved(sim)).toBe(before);
+  });
+
+  it('says the sleep owed in whole hours, one hour singular and none as none (a defect until 2026-10-17: “Sleep owed 1 hours”)', () => {
+    const sim = ada('g32-condition-owed');
+    sim.advanceTo(at(2026, 8, 24, 14));
+    dials(sim); // TEST SETUP
+    const owed = (hours: number) => { sim.player.wellbeing.sleepDebt = hours; return condition(sim); }; // TEST SETUP: the debt set by hand
+    expect(owed(1)).toContain('Energy, Stress 95, 15 1 hour of sleep owed');
+    expect(owed(1)).not.toContain('1 hours');
+    expect(owed(1.4)).toContain(' 1 hour of sleep owed');
+    expect(owed(3)).toContain(' 3 hours of sleep owed');
+    expect(owed(0.3)).toContain(' No sleep owed');
   });
 
   it('PLAYER JOURNEY: an early riser at nine reads 96 at this hour’s fit against her 88, and at six in the evening 79', () => {
@@ -257,13 +269,13 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     dials(sim); // TEST SETUP
     // Early Riser's mornings at 1.1 and evenings at 0.88, bent inside the knob's [0.8, 1.2] (exp(L·tanh(ln v / L))):
     // 1.09142 and 0.89095, times 88.255.
-    expect(condition(sim)).toContain('Readiness 88 96 at this hour’s fit');
+    expect(condition(sim)).toContain('Readiness 88 96 at this hour');
     sim.advanceTo(at(2026, 8, 24, 18));
     dials(sim); // TEST SETUP
-    expect(condition(sim)).toContain('Readiness 88 79 at this hour’s fit');
+    expect(condition(sim)).toContain('Readiness 88 79 at this hour');
     sim.advanceTo(at(2026, 8, 25, 14));
     dials(sim); // TEST SETUP
-    expect(condition(sim)).toContain('Readiness 88 88 at this hour’s fit');
+    expect(condition(sim)).toContain('Readiness 88 88 at this hour');
   });
 
   it('PLAYER JOURNEY: a day kept up hour by hour falls under the line of 60 and For Work is Held Back by fatigue, the figures the dials’ own; a night’s sleep and it’s Sufficient again', () => {
@@ -277,14 +289,14 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     const hour = zonedParts(sim.now, NY).hour;
     expect(hour >= 12 && hour < 17, 'an hour that suits everybody the same').toBe(true);
     const { html } = drawn(sim, ProfileWorkspace);
-    expect(condition(sim)).toBe(`Current Condition What today’s work meets Readiness ${ready} ${ready} at this hour’s fit For Work Held Back Under 60: fatigue holds back the work that reads it Energy, Stress ${Math.round(w.energy)}, ${Math.round(w.stress)} Sleep owed ${Math.round(w.sleepDebt)} hours`);
+    expect(condition(sim)).toBe(`Current Condition Your readiness for work today Readiness ${ready} ${ready} at this hour For Work Held Back Under 60: tiredness holds your work back Energy, Stress ${Math.round(w.energy)}, ${Math.round(w.stress)} ${Math.round(w.sleepDebt) ? `${Math.round(w.sleepDebt)} ${Math.round(w.sleepDebt) === 1 ? 'hour' : 'hours'} of sleep owed` : 'No sleep owed'}`);
     expect(html).toContain('<span class="stat-label">For Work</span><span class="stat-value warning">Held Back</span>');
     // Kept up to ten, then a night's sleep to seven.
     while (zonedParts(sim.now, NY).hour < 22) sim.advanceTo(sim.now + MS_HOUR);
     expect(sim.execute({ kind: 'life.sleep', payload: { hours: (at(2026, 8, 25, 7) - sim.now) / MS_HOUR } }).ok).toBe(true);
     expect(byHand(sim.player.wellbeing)).toBeGreaterThanOrEqual(60);
     expect(condition(sim)).toContain(`Readiness ${Math.round(byHand(sim.player.wellbeing))}`);
-    expect(condition(sim)).toContain('For Work Sufficient Nothing today holds the work back');
+    expect(condition(sim)).toContain('For Work Sufficient Today, nothing holds your work back');
   });
 
   it('PLAYER JOURNEY: a run on the first morning breaks a bone, and For Work is Held Back, An injury holds back the body, over the line; the twin who didn’t run is Sufficient; a reload keeps it; mended, it holds nothing back', () => {
@@ -295,13 +307,13 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     expect(injury.kind).toBe('fracture');
     const ready = Math.round(byHand(run.player.wellbeing));
     expect(ready).toBeGreaterThanOrEqual(60);
-    expect(condition(run)).toContain(`Readiness ${ready} ${ready} at this hour’s fit For Work Held Back An injury holds back the body`);
+    expect(condition(run)).toContain(`Readiness ${ready} ${ready} at this hour For Work Held Back An injury holds back your physical work`);
     twin.advanceTo(run.now);
-    expect(condition(twin)).toContain('For Work Sufficient Nothing today holds the work back');
-    expect(condition(reload(run))).toContain('For Work Held Back An injury holds back the body');
+    expect(condition(twin)).toContain('For Work Sufficient Today, nothing holds your work back');
+    expect(condition(reload(run))).toContain('For Work Held Back An injury holds back your physical work');
     run.advanceTo(injury.until + MS_HOUR);
     dials(run); // TEST SETUP: the day rested, so the bone is what's measured.
-    expect(condition(run)).toContain('For Work Sufficient Nothing today holds the work back');
+    expect(condition(run)).toContain('For Work Sufficient Today, nothing holds your work back');
   });
 
   it('the flu, an injury, a concussion and the line, each said in its own words and in the panel’s order, and a cut holds nothing back (TEST SETUP: each set by hand, as tests/condition-reach.test.ts sets them)', () => {
@@ -311,21 +323,21 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     const forWork = () => between(condition(sim), 'For Work', 'Energy, Stress');
     const hurt = (kind: 'sprain' | 'concussion' | 'cut') => { healthOf(sim.player).injury = { kind, at: sim.now, until: sim.now + 10 * MS_DAY }; };
     healthOf(sim.player).fluUntil = sim.now + 5 * MS_DAY; // TEST SETUP
-    expect(forWork()).toBe('For Work Held Back The flu holds back the voice and the body');
+    expect(forWork()).toBe('For Work Held Back The flu holds back your voice and body work');
     hurt('sprain'); // TEST SETUP: the flu is said before an injury.
-    expect(forWork()).toBe('For Work Held Back The flu holds back the voice and the body');
+    expect(forWork()).toBe('For Work Held Back The flu holds back your voice and body work');
     delete healthOf(sim.player).fluUntil;
-    expect(forWork()).toBe('For Work Held Back An injury holds back the body');
+    expect(forWork()).toBe('For Work Held Back An injury holds back your physical work');
     healthOf(sim.player).fluUntil = sim.now + 5 * MS_DAY;
     hurt('concussion'); // TEST SETUP: a concussion before the flu.
-    expect(forWork()).toBe('For Work Held Back A concussion holds back all of it');
+    expect(forWork()).toBe('For Work Held Back A concussion holds back all your work');
     dials(sim, { energy: 5 }); // TEST SETUP: 38 by hand, under the line, said before all of them.
     expect(Math.round(byHand(sim.player.wellbeing))).toBe(38);
-    expect(forWork()).toBe('For Work Held Back Under 60: fatigue holds back the work that reads it');
+    expect(forWork()).toBe('For Work Held Back Under 60: tiredness holds your work back');
     dials(sim);
     delete healthOf(sim.player).fluUntil;
     hurt('cut'); // TEST SETUP: a deep cut limits nothing.
-    expect(forWork()).toBe('For Work Sufficient Nothing today holds the work back');
+    expect(forWork()).toBe('For Work Sufficient Today, nothing holds your work back');
   });
 });
 
@@ -349,7 +361,7 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
     const sim = ada('g32-history');
     clearCalendar(sim); // TEST SETUP
     dials(sim); // TEST SETUP
-    expect(between(drawn(sim, ProfileWorkspace).text, 'Development History')).toBe('Development History The latest 400 changes, newest first Nothing yet: the history begins with the first class, step or hour of practice.');
+    expect(between(drawn(sim, ProfileWorkspace).text, 'Development History')).toBe('Development History Your last 400 changes, newest first No changes yet. The history begins with your first class, preparation step or hour of practice.');
     const before = { focus: sim.player.attrs!.focus!, discipline: sim.player.attrs!.discipline! };
     expect(sim.execute({ kind: 'practice.exercise', payload: { exercise: 'concentration', focus: 'steady' } }).ok).toBe(true);
     const moved = { focus: (sim.player.attrs!.focus! - before.focus).toFixed(3), discipline: (sim.player.attrs!.discipline! - before.discipline).toFixed(3) };
@@ -370,7 +382,7 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
     expect(casting.closed).toBeUndefined();
     expect(school.standing).toBe('warning');
     let { html, text } = drawn(sim, ProfileWorkspace);
-    expect(between(text, 'School Journey', 'Your School')).toBe('School Journey Year 1 of three, academic warning How This Works No production finished yet; A Leading Part In A New Play in Carlotta Festival Of New Plays is running.');
+    expect(`${between(text, 'School Journey', '. School')}.`).toBe('School Journey Year 1 of 3, academic warning How This Works No production finished yet; A Leading Part In A New Play in Carlotta Festival Of New Plays is running.');
     const [halves, work] = tables(journeyHtml(html));
     // Counted here, by task and by half-year, from every piece the save keeps (all of them: fewer than its 160).
     const kept = sim.player.work!;
@@ -427,8 +439,8 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
     sim.advanceTo(at(2027, 9, 15, 12));
     const { text } = drawn(sim, ProfileWorkspace);
     const journey = between(text, 'School Journey', 'Your Work So Far');
-    expect(between(journey, 'School Journey', 'Your School')).toBe('School Journey Year 2 of three, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027.');
-    press(button('Your School'));
+    expect(`${between(journey, 'School Journey', '. School')}.`).toBe('School Journey Year 2 of 3, academic warning How This Works On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027.');
+    press(button('School'));
     expect(h.went).toEqual(['/workspace/school']);
     expect(between(drawn(reload(sim), ProfileWorkspace).text, 'School Journey', 'Your Work So Far')).toBe(journey);
     expect(journey.split('On stage:').length - 1).toBe(1);
@@ -436,12 +448,12 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
 
   it('PLAYER JOURNEY: Your Work So Far is early days on a new life and, a year on, read from the pieces judged: their count, their kinds, and each line with what it rests on', () => {
     const fresh = ada('g32-work-so-far');
-    expect(between(drawn(fresh, ProfileWorkspace).text, 'Your Work So Far', 'How This Works')).toBe('Your Work So Far Early days: 0 pieces judged. Patterns are named from 6.');
+    expect(between(drawn(fresh, ProfileWorkspace).text, 'Your Work So Far', 'How This Works')).toBe('Your Work So Far Early days: 0 pieces judged. Patterns are named once 6 are.');
     const sim = ada('r8-a');
     sim.advanceTo(at(2027, 9, 15, 12));
     const shown = between(drawn(sim, ProfileWorkspace).text, 'Your Work So Far', 'Development History');
     const kept = sim.player.work!;
-    expect(shown).toContain(`Your Work So Far Read from ${kept.length} pieces judged, the material met and the choices made`);
+    expect(shown).toContain(`Your Work So Far From ${kept.length} pieces judged, the material you’ve met and the choices you’ve made`);
     expect(shown).toContain(`Range ${new Set(kept.map((w) => w.task)).size} kinds of work judged`);
     const id = identityOf(sim.player);
     expect(id.strengths.length + id.weaknesses.length).toBeGreaterThan(0);
@@ -484,10 +496,10 @@ describe('h-head: the head of Home', () => {
       ['Monday, August 24, 2026', 'The Day Monday, August 24 Close It’s 7:30 AM in New Haven on Monday, August 24'],
       ['Actress', 'Yourself Ada Cole Close'],
       ['Ada', 'Yourself Ada Cole Close'],
-      ['New Haven', 'Where You Live New Haven Close You’re home, it’s 7:30 AM'],
+      ['New Haven', 'Where You Live New Haven Close This is where you live. It’s 7:30 AM'],
       ['EDT', 'Where You Live New Haven Close'],
-      ['Summer', 'A Quarter Of The Year Summer Close You’re in Summer in New Haven, which here runs June, July and August.'],
-      [`${w.temperature}°F ${w.condition}`, `Out The Window Weather In New Haven Close It’s ${w.temperature}°F and ${w.condition.toLowerCase()} where you are, ${w.high}°F over ${w.low}°F on the day.`],
+      ['Summer', 'Season Summer Close It’s summer in New Haven. Here it runs through June, July and August.'],
+      [`${w.temperature}°F ${w.condition}`, `Weather Now Weather In New Haven Close It’s ${w.temperature}°F and ${w.condition.toLowerCase()} where you are, with a high of ${w.high}°F and a low of ${w.low}°F today.`],
     ];
     for (const [word, look] of looks) {
       h.given = new Map();
@@ -546,7 +558,7 @@ describe('h-calendar: the Calendar section of Home', () => {
     const read = plan(sim, { title: 'table read', at: sim.now + 2 * MS_DAY, durationMinutes: 120 });
     expect(read.ok).toBe(true);
     let shown = calendar(sim);
-    expect(shown.startsWith('Calendar What is coming, and when. Open Calendar How This Works in 2 days Table Read August 26, 2026 at 7:30 AM')).toBe(true);
+    expect(shown.startsWith('Calendar What’s coming up, and when. Open Calendar How This Works in 2 days Table Read August 26, 2026 at 7:30 AM')).toBe(true);
     const coffee = plan(sim, { title: 'Coffee With Sam', at: sim.now + 3 * MS_DAY + 2 * MS_HOUR, durationMinutes: 60 });
     shown = calendar(sim);
     expect(shown).toContain('in 2 days Table Read August 26, 2026 at 7:30 AM');
@@ -554,7 +566,7 @@ describe('h-calendar: the Calendar section of Home', () => {
     expect(shown.split('Table Read').length - 1).toBe(1);
     expect(shown.split('Coffee With Sam').length - 1).toBe(1);
     const late = plan(sim, { title: 'Too Late', at: sim.now - MS_HOUR });
-    expect(late).toEqual({ ok: false, error: 'That’s already been and gone. Pick a time you can still get to.' });
+    expect(late).toEqual({ ok: false, error: 'That time has already passed. Pick a time that’s still to come.' });
     expect(calendar(sim)).toBe(shown);
     expect(sim.must<{ ok: boolean }>({ kind: 'calendar.cancel', payload: { entryId: read.id } }).ok).toBe(true);
     expect(sim.must<{ ok: boolean }>({ kind: 'calendar.cancel', payload: { entryId: coffee.id } }).ok).toBe(true);
@@ -574,7 +586,7 @@ describe('h-calendar: the Calendar section of Home', () => {
     expect(sim.timeline.get(call.id!)?.status).toBe('missed');
     // The notice gives the call’s own clock, as Home did. Until 2026-10-13 it gave the home clock with no zone, “at 7:30
     // AM”, and this held it (found by that day’s third round).
-    expect(sim.universe.notifications.filter((n) => n.title === 'You Missed Call With The Agent').map((n) => n.body)).toEqual(['It wanted you in Los Angeles at 4:30 AM PDT, and you were in New Haven.']);
+    expect(sim.universe.notifications.filter((n) => n.title === 'You Missed Call With The Agent').map((n) => n.body)).toEqual(['It was in Los Angeles at 4:30 AM PDT, and you were in New Haven. Missing a plan of your own costs nothing else.']);
     plan(sim, { title: 'Lunch With Theo', at: at(2026, 8, 28, 13), durationMinutes: 60 });
     const shown = calendar(sim);
     expect(shown).toContain('Lunch With Theo August 28, 2026 at 1:00 PM');
@@ -589,7 +601,7 @@ describe('h-calendar: the Calendar section of Home', () => {
     expect(h.went).toEqual(['/workspace/calendar']);
     const guided = ada('g32-calendar-guided', { tutorial: true });
     const read = (id: string) => expect(guided.execute({ kind: 'tutorial.read', payload: { chapterId: id } }).ok, id).toBe(true);
-    expect(drawn(guided, Home).text).toContain('Calendar Locked Opens with “What’s Coming” in the guide');
+    expect(drawn(guided, Home).text).toContain('Calendar Locked This opens when you read “What’s Coming” in the guide');
     read('welcome');
     read('calendar');
     const { text } = drawn(guided, Home);
@@ -640,7 +652,7 @@ describe('h-needs: What Needs You on Home', () => {
     const shown = needs(sim);
     // 15 April at 11:59 PM is 73 days and twelve hours on: two months, as a month is 30.44 days.
     expect(shown.startsWith(`What Needs You 1 open Mark ${n} Read How This Works Your 2026 Tax Return in 2 months ${decision.detail} File It Go There Dismiss`)).toBe(true);
-    expect(decision.detail).toContain('File by April 15, 2027.');
+    expect(decision.detail).toContain('File it by April 15, 2027.');
     // Urgency 70: past the 65 that's high, short of the 85 that's critical.
     expect(html.match(/data-urgency="\w+"/g)).toEqual(['data-urgency="high"']);
     expect(html.match(/<div class="list-item list-static">/g)).toHaveLength(6);
@@ -662,12 +674,12 @@ describe('h-needs: What Needs You on Home', () => {
     expect(press(button('Dismiss'))).toMatchObject({ ok: true, value: { dismissed: true } });
     expect(sim.universe.decisions[decision.id]!.dismissedAt).toBe(sim.now);
     let shown = needs(sim);
-    expect(shown.startsWith(`What Needs You No decision is waiting on you. Mark ${n} Read`)).toBe(true);
+    expect(shown.startsWith(`What Needs You No questions are waiting on you. Mark ${n} Read`)).toBe(true);
     expect(shown).not.toContain('Your 2026 Tax Return');
     expect(shown).not.toContain('All Clear');
     expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
     shown = needs(sim);
-    expect(shown).toBe(`What Needs You No decision is waiting on you. How This Works ${ALL_CLEAR}`);
+    expect(shown).toBe(`What Needs You No questions are waiting on you. How This Works ${ALL_CLEAR}`);
     const back = reload(sim);
     expect(needs(back)).toBe(shown);
     expect(openDecisions(back)).toHaveLength(0);
@@ -685,7 +697,7 @@ describe('h-needs: What Needs You on Home', () => {
     drawn(sim, Home);
     press(button('Welcome To The Class Of 2029'));
     let shown = needs(sim);
-    expect(shown).toContain('Something You Were Told Welcome To The Class Of 2029 Close It came in');
+    expect(shown).toContain('Notice Welcome To The Class Of 2029 Close It came in');
     expect(shown).not.toContain('2,029');
     sim.advanceTo(at(2027, 2, 1, 12));
     h.given = new Map();
@@ -710,20 +722,20 @@ describe('h-needs: What Needs You on Home', () => {
     const seventh = [...sim.universe.notifications].filter((x) => !x.read).sort((a, b) => b.importance - a.importance || b.at - a.at)[6]!;
     const rows = (html: string) => html.match(/<div class="list-item list-static">/g)?.length ?? 0;
     expect(rows(drawn(sim, Home).html)).toBe(6);
-    expect(needs(sim)).toContain(`${n - 6} more waiting. Show All ${n}`);
+    expect(needs(sim)).toContain(`${n - 6} more unread. Show All ${n}`);
     expect(needs(sim)).not.toContain(seventh.body);
     drawn(sim, Home);
     press(button(`Show All ${n}`));
     expect(rows(drawn(sim, Home).html)).toBe(n);
     expect(needs(sim)).toContain(seventh.body);
-    expect(needs(sim)).toContain(`All ${n} unread, the heaviest first. Show The Heaviest Six`);
+    expect(needs(sim)).toContain(`All ${n} unread, the most important first. Show The Six Most Important`);
     drawn(sim, Home);
     expect(h.buttons.filter((b) => b.text === 'Go There').length).toBe(1 + sim.universe.notifications.filter((x) => !x.read && x.route).length);
-    press(button('Show The Heaviest Six'));
+    press(button('Show The Six Most Important'));
     expect(rows(drawn(sim, Home).html)).toBe(6);
     expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
     expect(rows(drawn(sim, Home).html)).toBe(0);
-    expect(needs(sim)).not.toContain('more waiting');
+    expect(needs(sim)).not.toContain('more unread');
   });
 
   it('PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused in the guide’s words and the row stays; read, it files the return and pays what the row said was owed', () => {
@@ -733,7 +745,7 @@ describe('h-needs: What Needs You on Home', () => {
     sim.advanceTo(at(2027, 2, 1, 12));
     const decision = openDecisions(sim)[0]!;
     drawn(sim, Home);
-    expect(press(button('File It'))).toEqual({ ok: false, error: 'Read “Cover, Benefits And Returns” in the guide first. The next chapter is “How You Are”.' });
+    expect(press(button('File It'))).toEqual({ ok: false, error: 'Read “Cover, Benefits And Returns” in the guide first. The chapters open in order, and “How You Are” is next: press Guide, at the top of the screen.' });
     expect(needs(sim)).toContain(`Your 2026 Tax Return in 2 months ${decision.detail} File It Go There Dismiss`);
     expect(sim.universe.decisions[decision.id]!.resolvedAt).toBeUndefined();
     for (const id of ['body', 'sleep', 'looking-after', 'plans', 'weather', 'school', 'profile', 'papers']) read(id);
@@ -768,7 +780,7 @@ describe('h-needs: What Needs You on Home', () => {
     sim.must({ kind: 'world.mark_read', payload: {} });
     // 4.5% for filing late and 0.5% for paying late, the first month or part of one: 5% of what it owed, to the dollar.
     const late = `$${Math.round((r.figures.balance * 1.05) / 100)}`;
-    const said = `What Needs You No decision is waiting on you. How This Works No Decisions Waiting A tax return is past its day, unfiled, ${late} with its penalty so far.`;
+    const said = `What Needs You No questions are waiting on you. How This Works No Questions Waiting A tax return is past its due date and unfiled: ${late}, with its penalty so far.`;
     expect(needs(sim)).toBe(said);
     expect(needs(reload(sim))).toBe(said);
   });
@@ -782,7 +794,7 @@ describe('h-needs: What Needs You on Home', () => {
       expect(needs(sim)).toContain(ALL_CLEAR);
       return sim;
     };
-    const weighs = (sim: Simulation) => needs(sim).replace('What Needs You No decision is waiting on you. How This Works ', '');
+    const weighs = (sim: Simulation) => needs(sim).replace('What Needs You No questions are waiting on you. How This Works ', '');
     /** TEST SETUP: an account set to a balance by a posting against a test equity line, as tests/defects-g18-1.test.ts sets one. */
     const setBalance = (sim: Simulation, id: string, to: number) => {
       const a = sim.universe.accounts[id]!;
@@ -798,13 +810,13 @@ describe('h-needs: What Needs You on Home', () => {
     it('something gone unpaid: You owe $120 that went unpaid.', () => {
       const sim = clear('g32-weigh-owed');
       debt(sim, 'arrears', 'Bills Owed', 120_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting You owe $120 that went unpaid.');
+      expect(weighs(sim)).toBe('No Questions Waiting You owe $120 that went unpaid.');
     });
 
     it('the current account overdrawn: Your current account is $250 overdrawn.', () => {
       const sim = clear('g32-weigh-overdrawn');
       setBalance(sim, sim.player.primaryAccountId!, -250_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting Your current account is $250 overdrawn.');
+      expect(weighs(sim)).toBe('No Questions Waiting Your account is $250 overdrawn.');
     });
 
     it('the card at nine-tenths of its limit and over: Your card is nearly at its limit, owing $59,000; under it, nothing', () => {
@@ -814,7 +826,7 @@ describe('h-needs: What Needs You on Home', () => {
       setBalance(sim, card(sim).id, -58_000_00); // TEST SETUP
       expect(weighs(sim)).toBe(ALL_CLEAR);
       setBalance(sim, card(sim).id, -59_000_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting Your card is nearly at its limit, owing $59,000.');
+      expect(weighs(sim)).toBe('No Questions Waiting Your card is nearly at its limit, owing $59,000.');
     });
 
     it('the card behind: a payment, and suspended', () => {
@@ -822,11 +834,11 @@ describe('h-needs: What Needs You on Home', () => {
       setBalance(sim, card(sim).id, -500_00); // TEST SETUP
       expect(weighs(sim)).toBe(ALL_CLEAR);
       Object.assign(sim.player.credit!, { missed: 1 }); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting Your card is a payment behind, owing $500.');
+      expect(weighs(sim)).toBe('No Questions Waiting Your card is a payment behind, owing $500.');
       // Until 2026-10-13 two missed and unsuspended read “Your card is 2 payments behind”, set here by hand: no played life
       // reaches it, the second miss suspending the card (`SUSPEND_AFTER`), and the words went.
       Object.assign(sim.player.credit!, { missed: 0, suspended: true }); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting Your card is suspended, owing $500.');
+      expect(weighs(sim)).toBe('No Questions Waiting Your card is suspended, owing $500.');
     });
 
     it('PLAYER JOURNEY: with a second card, applied for at Capital One and arrived a week on, the card behind is named: The Platinum from Capital One is a payment behind', () => {
@@ -839,29 +851,29 @@ describe('h-needs: What Needs You on Home', () => {
       expect(weighs(sim)).toBe(ALL_CLEAR);
       setBalance(sim, cards[1]!.id, -80_00); // TEST SETUP
       Object.assign(sim.player.credit!.cards![cards[1]!.id]!, { missed: 1 }); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting The Platinum from Capital One is a payment behind, owing $80.');
+      expect(weighs(sim)).toBe('No Questions Waiting The Platinum from Capital One is a payment behind, owing $80.');
     });
 
     it('medical care owed, and a debt with collections', () => {
       const sim = clear('g32-weigh-medical');
       debt(sim, 'medical', 'Owed For Medical Care', 350_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting You owe $350 for medical care.');
+      expect(weighs(sim)).toBe('No Questions Waiting You owe $350 for medical care.');
       debt(sim, 'collections', 'In Collections', 800_00); // TEST SETUP
-      expect(weighs(sim)).toBe('No Decisions Waiting You owe $350 for medical care. $800 is with collections.');
+      expect(weighs(sim)).toBe('No Questions Waiting You owe $350 for medical care. $800 you owe is with a collection agency.');
     });
 
     it('income tax owed on a return filed: You owe $1,234 of income tax.', () => {
       const sim = clear('g32-weigh-tax');
       // TEST SETUP: a 2026 return filed before its day, $1,234 of it owed and nothing charged on it yet.
       returnsOf(sim.player)['2026'] = { year: 2026, due: APRIL_15, filedAt: sim.now, figures: { income: 50_000_00, balance: 1_234_00, owedTo: { irs: 1_234_00, states: {} } }, owed: 1_234_00, parts: { tax: 1_234_00, penalty: 0, interest: 0 }, base: 1_234_00, accruedAt: sim.now } as unknown as TaxReturn;
-      expect(weighs(sim)).toBe('No Decisions Waiting You owe $1,234 of income tax.');
+      expect(weighs(sim)).toBe('No Questions Waiting You owe $1,234 of income tax.');
     });
 
     it('PLAYER JOURNEY: two of her plans a week out wanting her at once: the calendar clashes; the same two a month and a day out don’t weigh yet', () => {
       const sim = clear('g32-weigh-clash');
       sim.must({ kind: 'calendar.schedule', payload: { title: 'Rehearsal With Theo', at: at(2026, 8, 31, 19), durationMinutes: 120 } });
       sim.must({ kind: 'calendar.schedule', payload: { title: 'Dinner With Sam', at: at(2026, 8, 31, 20), durationMinutes: 60 } });
-      expect(weighs(sim)).toBe('No Decisions Waiting Two things on your calendar in the next month want you at once.');
+      expect(weighs(sim)).toBe('No Questions Waiting Two things on your calendar in the next month are at the same time.');
       const later = clear('g32-weigh-clash-later');
       later.must({ kind: 'calendar.schedule', payload: { title: 'Rehearsal With Theo', at: at(2026, 9, 24, 19), durationMinutes: 120 } });
       later.must({ kind: 'calendar.schedule', payload: { title: 'Dinner With Sam', at: at(2026, 9, 24, 20), durationMinutes: 60 } });
@@ -886,7 +898,7 @@ describe('h-needs: What Needs You on Home', () => {
     expect([...shown.matchAll(/Question (\d)/g)].map((m) => m[1])).toEqual(['5', '1', '2', '3', '4', '6']);
     expect(shown).toContain('Question 5 Overdue Detail 5.');
     expect(html.match(/data-urgency="\w+"/g)).toEqual(['normal', 'critical', 'critical', 'high', 'high', 'normal'].map((u) => `data-urgency="${u}"`));
-    expect(shown).toContain('1 more waiting.');
+    expect(shown).toContain('1 more waiting. Each one comes up here as one above it closes.');
     expect(h.buttons.filter((b) => b.text === 'Go There')).toHaveLength(1);
     press(button('Go There'));
     expect(h.went).toEqual(['/workspace/bank']);
@@ -945,7 +957,7 @@ describe('h-how: How You Are on Home', () => {
     expect(shown({ stress: 79 }).summary).toBe('Stretched very thin. Something is going to give.');
     expect(shown({ nourishment: 24 }).summary).toBe('Hungry, and it’s starting to show.');
     expect(shown({ energy: 70, morale: 29 }).summary).toBe('Flat. The work is fine, the feeling isn’t.');
-    expect(shown({ energy: 70, stress: 40 }).summary).toBe('Holding up, and no dial is far enough out to be worth naming.');
+    expect(shown({ energy: 70, stress: 40 }).summary).toBe('Holding up, with nothing out of the ordinary to worry about.');
     // Readiness has no line of its own: red under a quarter, amber under a half. Every dial at its worst is
     // 0.45 × 0.62 × 0.66 × 0.78 × 0.82 × 0.92 × 0.7 = 0.07585, over 1.35: 5.6, red; at 40 by hand, amber.
     s = shown({ energy: 0, stress: 100, sleepDebt: 30, nourishment: 0, morale: 0, hygiene: 0, condition: 0 });
@@ -961,8 +973,8 @@ describe('h-how: How You Are on Home', () => {
     const sim = ada('g32-how-looks');
     const before = serialise(sim.universe);
     const looks: [string, string][] = [
-      ['Readiness', 'How Well You Would Do Today Readiness Close 79, and'],
-      ['Energy', 'One Of Eight Energy Close 82,'],
+      ['Readiness', 'How Ready You Are Today Readiness Close 79.'],
+      ['Energy', 'Your Wellbeing Energy Close 82.'],
       ['Stress', 'Stress Close 18'],
     ];
     for (const [label, look] of looks) {
@@ -1007,8 +1019,8 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
     const sim = ada('g32-where');
     const shown = where(drawn(sim, Home).text);
     // 130,322 people, to the thousand.
-    expect(shown.startsWith('Where You Are How This Works New Haven, Connecticut · United States Home. 130K people. Local Time 7:30 AM EDT Daylight ')).toBe(true);
-    const [, rise, set, hours, minutes] = shown.match(/Daylight (\d+:\d+ AM) – (\d+:\d+ PM) (\d+)h (\d+)m of light$/)!;
+    expect(shown.startsWith('Where You Are How This Works New Haven, Connecticut · United States Your home. 130K people. Local Time 7:30 AM EDT Daylight ')).toBe(true);
+    const [, rise, set, hours, minutes] = shown.match(/Daylight (\d+:\d+ AM) – (\d+:\d+ PM) (\d+)h (\d+)m of daylight$/)!;
     // New Haven at 41.3081° N, 72.9282° W.
     const sun = sunByHand(2026, 8, 24, 41.3081, -72.9282);
     expect(Math.abs(clockMinutes(rise!) - edtMinutes(sun.rise))).toBeLessThanOrEqual(2);
@@ -1044,8 +1056,7 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
     drawn(sim, Home);
     press(button('Tue'));
     const look = opened(drawn(sim, Home).html);
-    expect(look).toContain('Tomorrow Tuesday Close You’re looking at');
-    expect(look).toContain(`${tue.low}°F to ${tue.high}°F`);
+    expect(look).toMatch(new RegExp(`Tomorrow Tuesday Close [A-Z][a-z ]+ in New Haven tomorrow, ${tue.low}°F to ${tue.high}°F\\.`));
   });
 
   it('Home profiles where she is: a life in London (quickSave: no student’s life is lived there) reads London, England · United Kingdom, Home. with the city’s own tags, 7:30 AM GMT, its short January daylight by the sunrise equation, and the sky in °C with the wind in km/h', () => {
@@ -1056,7 +1067,7 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
     const shown = where(text);
     // Tags where SLATE keeps them, in place of the kind and the size New Haven reads; "Theater" as the player reads it
     // (until 2026-10-13 the tag was spelled the British way, and this read it so).
-    expect(shown.startsWith('Where You Are How This Works London, England · United Kingdom Home. Theater · Production Hub · International. Local Time 7:30 AM GMT Daylight ')).toBe(true);
+    expect(shown.startsWith('Where You Are How This Works London, England · United Kingdom Your home. Theater · Production Hub · International. Local Time 7:30 AM GMT Daylight ')).toBe(true);
     // London at 51.51° N, 0.13° W, its January clock on UTC.
     const [, rise, set] = shown.match(/Daylight (\d+:\d+ AM) – (\d+:\d+ PM) /)!;
     const sun = sunByHand(2026, 1, 5, 51.51, -0.13);
