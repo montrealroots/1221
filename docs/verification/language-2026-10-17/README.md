@@ -80,3 +80,4 @@ code is `ebdb5577`'s.
 - **The gate:** on `a51b0e15`, exit 0, 391 of 391 test files and 4,713 of 4,713 tests passed, none skipped, every one of the twenty checks holding; the build exit 0 (`runs/gate.txt`, `final-checks/`).
 - **The matrix:** 612 of 636 rows in scope Implemented And Verified, the same rows as at brief 13's close.
 - **Not claimed:** human usability approval. `PLAYTEST.md` is the owner's route, and only the owner can give it.
+- **Merged** to `main` in #42 at the owner's word (`99f3c756`). Deploying is the owner's.
