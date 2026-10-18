@@ -145,6 +145,19 @@ export const SKILLS: readonly { id: Skill; label: string }[] = [
 ];
 
 /**
+ * Each skill as a sentence says it after “your” (from 2026-10-17, brief 14's editorial review): the label lowercased
+ * read “Your on camera and scene study carried it.” and “It asked for more clown and mask than you have yet.” The words
+ * are the glossary's (Material: Techniques It Asks).
+ */
+export const SKILL_WORDS: Readonly<Record<Skill, string>> = {
+  accents: 'accents and dialects', audition: 'audition technique', character: 'character work', classical: 'classical text work',
+  clown: 'clowning', coldReading: 'cold reading', comedy: 'comic timing', dance: 'dance', emotion: 'emotional depth',
+  improv: 'improvisation', intimacy: 'intimacy work', memorization: 'memory', screen: 'on-camera work', movement: 'physical expression',
+  scene: 'scene study', script: 'script analysis', singing: 'singing', speech: 'speech', combat: 'stage combat',
+  voice: 'vocal expression', voiceover: 'voice-over work',
+};
+
+/**
  * A save from before the 21 skills: each new one from the old area it grew
  * out of. Acting was scene study, character, emotional access, improvisation,
  * comedy, clown, the audition, cold reading and memorization at once; body,

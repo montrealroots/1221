@@ -743,10 +743,10 @@ describe('success, partial progress, failure and recovery', () => {
       const band = { unready: 'Unready', working: 'Working', strong: 'Strong', exceptional: 'Exceptional' }[a.revision!.band!];
       if (worked) {
         expect(notice.title).toBe('Note Taken: Scene Study');
-        expect(notice.body).toBe(`You showed Scene Study again on ${shownOn}, and took the note on ${label.toLowerCase()}. ${label} went from ${before}% to ${after}%. Shown again: ${band}.`);
+        expect(notice.body).toBe(`You showed Scene Study again on ${shownOn}, and took the note on ${label}. ${label} went from ${before}% to ${after}%. Shown again: ${band}.`);
       } else {
         expect(notice.title).toBe('Note Not Taken Yet: Scene Study');
-        expect(notice.body).toBe(`You showed Scene Study again on ${shownOn}, but the note on ${label.toLowerCase()} wasn’t taken yet. ${label} stayed at ${after}%. Shown again: ${band}. It stays open under Your Notes.`);
+        expect(notice.body).toBe(`You showed Scene Study again on ${shownOn}, but the note on ${label} isn’t taken yet. ${label} stayed at ${after}%. Shown again: ${band}. It stays open under Your Notes.`);
       }
       const shown = drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'coursework' });
       expect(shown).toContain(`${worked ? 'Note Taken' : 'Note Not Taken'}, Shown Again ${band}`);

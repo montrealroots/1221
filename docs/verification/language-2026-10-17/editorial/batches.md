@@ -88,3 +88,64 @@ words.
 
 **Statuses:** the 24 sources Rewritten And Verified, each `--by` its owning area (money 11, health 4, papers 4, school
 5), with the test and title that holds its words.
+
+## Batch 2: The School's Words, One Name For Each Thing (Coursework, Notes, Classmates)
+
+Read in the notices journey J01 is given across its degree (`tools/journeys.ts`, played again on `c74a02e1`: 798
+notices kept by its two saves, the same words as the dynamic cases' fixtures but for an injury's two new lines), the
+scenario saves written again on today's code (3,251 notices), and the Coursework tab of the walk. Five faults ran through
+the school's own words:
+
+- **One part, two names (Wrong).** A piece's card names its parts by the course's work (“The Presentation Prepared”,
+  “Written Up”, “Drills”, “Played Through”, “Daily Practice”), and the forecast beside them and the teacher's note named
+  the part the task's way (“The revision”, “Rehearsal”, “Making your choices”). So A Play In Its Context said “Still to
+  finish: the presentation prepared (Prepare The Presentation)” and, in the line above, “The revision isn’t complete”,
+  of a piece not yet shown and so with no revision possible; a voice sequence's note said “Rehearsal wasn’t complete”
+  where its card has no part called Rehearsal. `withPartLabels` names each preparation limit by its card's label, in the
+  Shown Today line, the teacher's note on a piece that didn't come together, and Work It Through's problems. Only the
+  label changes; the evaluation, its figures and its saved records are as they were. “Drills wasn’t complete, which cost
+  Execution 20.2 points.” now agrees with the warning's “What held most of them back was “Drills””.
+- **A part's name lowercased into a sentence (Mechanics).** “the note on with your partner wasn’t taken yet”, “You took
+  the earlier note on drilled with your partner”, “on built on”, “Still to finish: played together (…); built on (…)”.
+  Each part is named as its card names it, as “Put With Your Partner first” already did: “the note on With Your Partner
+  isn’t taken yet”, “You took the earlier note on Built On”, “Still to finish: Played Together (…)”. A Table Work
+  question is said as a sentence names it (`questionWords`): “Priya reads the given circumstances in Julius Caesar another
+  way”, where it read “reads given circumstances”; “the note on the choice to play”.
+- **A skill lowercased into a sentence (Mechanics).** “Your on camera and scene study carried it.”, “Your speech, and
+  accents and dialects carried it.”, “It asked for more clown and mask than you have yet.” `SKILL_WORDS` (content/school.ts)
+  gives each skill the glossary's words after “your”: on-camera work, clowning, voice-over work, comic timing, classical
+  text work, intimacy work, and the rest as they were. Where one has an “and” in it, each takes its “your”: “Your speech
+  and your accents and dialects carried it.”
+- **A note taken that read as not taken (Wrong).** A note on a part counts as taken when the part rises enough, crosses
+  three quarters, or is worked into the revision (`noteTaken`). By the third, “You showed Heightened Text Scene again
+  on October 31, 2028, and took the note on rehearsal. Rehearsal stayed at 0%.” It says what happened now: “… and worked
+  the note on Rehearsal into the revision. Rehearsal stayed at 0%.” Chosen by the figures the notice already prints, the
+  part no further on; the rule is unchanged.
+- **Smaller ones.** “the next step you were given didn’t show yet” → “doesn’t show in it yet”; “wasn’t taken yet” →
+  “isn’t taken yet”. A classmate's “Run Lines Together?” read “on October 28, 2028 at 7:00 PM, an hour.” → “for an hour on
+  October 28, 2028 at 7:00 PM.” “Caleb: Asks For Help”, the one moment titled as a verb, → “Caleb: A Request For Help”,
+  as “A Different Reading” and “A Word After Class” are. “It helped them, and nothing of yours moved.” → “It helped them,
+  but it didn’t move your own work.”, and the line under Run Lines Together? likewise. A scene's place mid-sentence read
+  “What We Keep, Their late father’s apartment” and “The Bacchae, Before the castle of Pentheus”: `whereWords`, which
+  lowered only a leading “The”, lowers the common words a place opens on (The, A, An, Their, Before and the like) and
+  leaves an act, a scene, an episode and a name alone.
+
+**Kept, and why:** a classmate is “they” throughout: the game keeps no pronouns for classmates (`Classmate` has a name and
+a performer's title), so “they” is the only true word. A role named “Bottom, As Pyramus” is a character's name in the
+play's data, read in tables in Title Case; it stays (Left, `defects.md`).
+
+**Meaning-sensitive changes, and how each was checked:** the part labels change only names, which `withPartLabels` takes
+from the template the card reads (`tests/editorial-school-words.test.ts` holds that an ability's limit and a part the
+card doesn't have keep theirs). The revision wording is chosen from the figures the notice prints (`to <= from`), which
+are what `noteTaken`'s third way leaves; the first two ways raise the part, so they still say “took the note”. Played
+through J01's four parts on this code, every changed sentence is in `b2-rendered.txt` (88), and the journey's ten checks
+passed in each part as on `c74a02e1`.
+
+**Tests updated:** `tests/language-dynamic.test.ts` (the note taken and not taken, exact), `tests/feedback.test.ts`
+(“You took the earlier note on Lines”), `tests/evidence-g18-school.test.ts` and `tests/evidence-g24-school.test.ts` (a
+choice note, by `questionWords`; g18 gained an import line, and `tools/coverage.mjs --check` still holds every cited
+line), `tests/student-experience.test.ts`. **New:** `tests/editorial-school-words.test.ts`.
+
+**Checks:** `tsc` 0, `eslint` on the changed files 0, the eleven language checks 0 and `guide-quotes` 0 (581 of 581);
+35 school test files, 476 of 476; `editorial-school-words` 4 of 4; `traceability`, `devmap --check` and `coverage
+--check` 0. **Statuses:** 7 sources Rewritten And Verified `--by school` (`SKILL_WORDS` new).

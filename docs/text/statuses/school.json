@@ -1637,6 +1637,12 @@
   "on": "2026-10-17",
   "reason": "Names, titles and sources as the Bulletin gives them (courses, faculty, skills, labs, the Seagull production)."
  },
+ "src/engine/content/school.ts#SKILL_WORDS": {
+  "status": "Rewritten And Verified",
+  "hash": "f3208321a20c",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2, new: tests/editorial-school-words.test.ts \"a Table Work question and a skill, as a sentence names them\"; rendered in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through its four parts on this code, its notices set beside the same journey before): \"Your speech and your accents and dialects carried it.\", \"It asked for more clowning than you have yet.\""
+ },
  "src/engine/content/school.ts#SKILLS [accents]": {
   "status": "Reviewed And Retained",
   "hash": "140715fdb03a",
@@ -2112,10 +2118,10 @@
   "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
  },
  "src/engine/systems/classmates.ts#MOMENT_TITLE": {
-  "status": "Reviewed And Retained",
-  "hash": "6aecae3aaa66",
-  "on": "2026-10-17",
-  "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
+  "status": "Rewritten And Verified",
+  "hash": "ead9f8eabb2c",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2: tests/editorial-school-words.test.ts \"a classmate’s request for help is titled as the other moments are\"; \"Maya: A Request For Help\" in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through its four parts on this code, its notices set beside the same journey before)"
  },
  "src/engine/systems/classmates.ts#PRIORITY_WORDS": {
   "status": "Reviewed And Retained",
@@ -2125,9 +2131,9 @@
  },
  "src/engine/systems/classmates.ts#registerClassmates": {
   "status": "Rewritten And Verified",
-  "hash": "7629e027dcd0",
-  "on": "2026-10-17",
-  "evidence": "tests/classmate-moments.test.ts, tests/evidence-g18-school.test.ts, tests/defects-g8-13.test.ts"
+  "hash": "72ea9830c01d",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2: tests/student-experience.test.ts \"with no scene shared, runs their lines: it helps them, moves nothing of yours, and says so\" (/it didn’t move your own work/); \"It helped them, but it didn’t move your own work.\" in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through its four parts on this code, its notices set beside the same journey before)"
  },
  "src/engine/systems/classmates.ts#registerClassmates <school.make_amends>": {
   "status": "Reviewed And Retained",
@@ -2148,10 +2154,10 @@
   "evidence": "tests/classmate-moments.test.ts, tests/evidence-g18-school.test.ts, tests/defects-g8-13.test.ts"
  },
  "src/engine/systems/classmates.ts#studyEvening": {
-  "status": "Reviewed And Retained",
-  "hash": "2a9ad5813c44",
-  "on": "2026-10-17",
-  "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
+  "status": "Rewritten And Verified",
+  "hash": "2718ce2626b2",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2: \"Noah asks if you’d run lines together for an hour on September 11, 2026 at 7:00 PM.\" in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through its four parts on this code, its notices set beside the same journey before)"
  },
  "src/engine/systems/courserecord.ts#extendRefusal": {
   "status": "Reviewed And Retained",
@@ -2407,9 +2413,9 @@
  },
  "src/engine/systems/coursework.ts#reshownWords": {
   "status": "Rewritten And Verified",
-  "hash": "7f8f23695db4",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g18-school.test.ts, tests/evidence-g24-school.test.ts, tests/remaining-school-term.test.ts, tests/workload.test.ts, tests/evidence2-b11.test.ts (159 unread, as distinct as before); rendered.txt; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "70a1bfa5814c",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2: tests/language-dynamic.test.ts \"a note worked and the piece shown again: taken, the part’s figure before and after, and not taken, still open\" (\"took the note on ${label}\" and \"isn’t taken yet\", exact); \"worked the note on Rehearsal into the revision\" and \"doesn’t show in it yet\" in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through on this code)"
  },
  "src/engine/systems/coursework.ts#revisitWords": {
   "status": "Rewritten And Verified",
@@ -2425,9 +2431,9 @@
  },
  "src/engine/systems/coursework.ts#show": {
   "status": "Rewritten And Verified",
-  "hash": "6b64eb0efa05",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g18-school.test.ts, tests/evidence-g24-school.test.ts, tests/remaining-school-term.test.ts, tests/workload.test.ts, tests/evidence2-b11.test.ts (159 unread, as distinct as before); rendered.txt; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "b97ff8d2014a",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2: tests/feedback.test.ts (\"You took the earlier note on Lines\"), tests/evidence-g18-school.test.ts and tests/evidence-g24-school.test.ts (a choice note, by questionWords); \"Your speech and your accents and dialects carried it.\", \"Drills wasn’t complete, which cost Execution 20.2 points.\", \"You took the earlier note on Built On.\" in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through its four parts on this code, its notices set beside the same journey before)"
  },
  "src/engine/systems/coursework.ts#sinceLast": {
   "status": "Rewritten And Verified",
@@ -3343,9 +3349,9 @@
  },
  "src/ui/components/ClassMoments.tsx#ClassMoments": {
   "status": "Rewritten And Verified",
-  "hash": "a540b255ef9c",
-  "on": "2026-10-17",
-  "evidence": "tests/classmate-moments.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "1c1de9e46236",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 2: the line under Run Lines Together? says what the notice says, \"That helps them, but it doesn’t move your own work.\"; the walk of the built app (editorial/walk-1440, the Coursework tab of each save with a request open) reads it"
  },
  "src/ui/components/CourseworkPane.tsx#AnotherWay": {
   "status": "Rewritten And Verified",

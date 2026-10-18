@@ -80,6 +80,7 @@ import {
 import { momentsOf, personOf, type Moment } from '@/engine/systems/classmates';
 import { recordNote } from '@/engine/systems/learning';
 import { abilityOf, developmentOf, stepSpeed } from '@/engine/systems/attributes';
+import { questionWords } from '@/engine/content/coursework';
 
 const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
@@ -565,7 +566,7 @@ describe('school.choose', () => {
     sim = reload(sim);
     toMeeting(sim, next.dueOn);
     expect(work(sim, next.id).taken).toContain(key);
-    expect(work(sim, next.id).shown!.strengths).toContain(`You took the earlier note on ${odd.q.label.toLowerCase()}`);
+    expect(work(sim, next.id).shown!.strengths).toContain(`You took the earlier note on ${questionWords(odd.q)}`);
     expect(notesOf(cwOf(sim)).find((n) => n.key === key)).toMatchObject({ status: 'resolved', resolvedOn: next.dueOn });
     // The third: answered against the text again, the note comes back.
     sim.advanceTo(onDay(next.dueOn, 20) + 4 * 86_400_000);

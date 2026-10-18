@@ -56,7 +56,7 @@ import type { Person } from '../domain/model';
 import { formatDate, formatTime, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { YALE_DRAMA, type SchoolDate } from '../content/school';
-import { sceneById } from '../content/coursework';
+import { questionWords, sceneById } from '../content/coursework';
 import { bondMove, keyOf, schoolEnded, type Classmate } from './school';
 import {
   WORK, courseworkOf, mateBusy, mateRecord, questionsFor, trustOf, type Assignment, type Coursework, type MateRecord,
@@ -300,7 +300,7 @@ export function classMoment(sim: Simulation, person: Person, day: SchoolDate): M
   return m;
 }
 
-export const MOMENT_TITLE: Record<MomentKind, string> = { disagreement: 'A Different Reading', study: 'Run Lines Together?', help: 'Asks For Help', encouragement: 'A Word After Class', apology: 'An Apology', boundary: 'A Boundary' };
+export const MOMENT_TITLE: Record<MomentKind, string> = { disagreement: 'A Different Reading', study: 'Run Lines Together?', help: 'A Request For Help', encouragement: 'A Word After Class', apology: 'An Apology', boundary: 'A Boundary' };
 
 /** A disagreement over your shared scene: a question you answered, read their way (another the text supports where there is one). */
 function disagreement(a: Assignment, mate: Classmate, draw: number): Omit<Moment, 'id' | 'mate' | 'kind' | 'at' | 'until' | 'status'> | undefined {
@@ -311,7 +311,7 @@ function disagreement(a: Assignment, mate: Classmate, draw: number): Omit<Moment
   const others = options.filter((o) => o.id !== mine.id);
   const theirs = others.find((o) => o.supported) ?? others[0]!;
   const scene = a.sceneId ? sceneById(a.sceneId)?.play : undefined;
-  return { assignmentId: a.id, question: q.id, theirs: theirs.id, text: `${first(mate)} reads ${q.label.toLowerCase()} in ${scene ?? 'your scene'} another way: “${theirs.text}”, where you have “${mine.text}”.` };
+  return { assignmentId: a.id, question: q.id, theirs: theirs.id, text: `${first(mate)} reads ${questionWords(q)} in ${scene ?? 'your scene'} another way: “${theirs.text}”, where you have “${mine.text}”.` };
 }
 
 /** An evening in the next three a classmate is free to run lines, at seven. */
@@ -321,7 +321,7 @@ function studyEvening(person: Person, i: number, day: SchoolDate, returning = fa
     const when = instantFromZoned({ year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate(), hour: CLASS.study.hour, minute: 0 }, zone());
     if (mateBusy(person, i, when, CLASS.study.minutes)) continue;
     const mate = person.school!.classmates[i]!;
-    return { when, text: `${first(mate)} asks if you’d run lines together on ${formatDate(when, zone())} at ${formatTime(when, zone())}, an hour.${returning ? ' You ran theirs when they were behind.' : ''}` };
+    return { when, text: `${first(mate)} asks if you’d run lines together for an hour on ${formatDate(when, zone())} at ${formatTime(when, zone())}.${returning ? ' You ran theirs when they were behind.' : ''}` };
   }
   return undefined;
 }
@@ -564,7 +564,7 @@ export function registerClassmates(sim: Simulation): void {
       const pct = (x: number) => `${Math.round(x * 100)}%`;
       s.notify({ category: 'school', title: `Ran Lines With ${first(mate)}`, body: open
         ? `${sceneById(open.sceneId ?? '')?.play ?? 'Your scene'}: your lines went from ${pct(before)} to ${pct(open.prep.memorization)}.`
-        : `You share no open scene with ${first(mate)}, so you ran their lines. It helped them, and nothing of yours moved.`, importance: 30, route: '/workspace/school' });
+        : `You share no open scene with ${first(mate)}, so you ran their lines. It helped them, but it didn’t move your own work.`, importance: 30, route: '/workspace/school' });
     }
   });
 }

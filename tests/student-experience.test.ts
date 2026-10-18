@@ -58,7 +58,7 @@ describe('running lines with a classmate', () => {
     tended(sim, when + 2 * MS_HOUR);
     const after = courseworkOf(sim, sim.player)!.assignments.slice(0, before.length).map((a) => a.prep.memorization);
     expect(after).toEqual(before);
-    expect(sim.universe.notifications.find((n) => n.title.startsWith('Ran Lines With'))?.body).toMatch(/nothing of yours moved/);
+    expect(sim.universe.notifications.find((n) => n.title.startsWith('Ran Lines With'))?.body).toMatch(/it didn’t move your own work/);
   });
 });
 

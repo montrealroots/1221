@@ -130,6 +130,16 @@ export const QUESTIONS: readonly Question[] = [
   { id: 'tactic', label: 'A Choice To Play' },
 ];
 
+/**
+ * A Table Work question as a sentence names it (from 2026-10-17, brief 14's editorial review): “the given circumstances”,
+ * “the choice to play”, “your objective”. Its label lowercased read “Priya reads given circumstances in Julius Caesar
+ * another way” and “the note on a choice to play”.
+ */
+export const questionWords = (q: Pick<Question, 'label'>): string => {
+  const l = q.label.toLowerCase();
+  return l.startsWith('the ') || l.startsWith('your ') ? l : `the ${l.replace(/^an? /, '')}`;
+};
+
 /** A reading the text supports; `why`, where given, is what in the text it rests on (a second defensible reading of the same question says its own). */
 export const yes = (id: string, text: string, why?: string): Option => ({ id, text, supported: true, ...(why ? { why } : {}) });
 export const no = (id: string, text: string, why: string): Option => ({ id, text, supported: false, why });

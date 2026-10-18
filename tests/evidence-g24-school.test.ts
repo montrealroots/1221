@@ -69,7 +69,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
-import { PREP_DIMS } from '@/engine/content/coursework';
+import { PREP_DIMS, questionWords } from '@/engine/content/coursework';
 import { TASK_PROFILES, TEMPLATE_TASK, type Dimension } from '@/engine/content/tasks';
 import { CALL_KIND, SUMMER_KIND } from '@/engine/systems/school';
 import { attributesOf } from '@/engine/systems/attributes';
@@ -720,7 +720,7 @@ describe('notes and feedback', () => {
     answerAsTheTextSupports(sim, second);
     toMeeting(sim, second.dueOn);
     expect(work(sim, second.id).taken).toContain(key);
-    expect(work(sim, second.id).shown!.strengths).toContain(`You took the earlier note on ${odd.q.label.toLowerCase()}`);
+    expect(work(sim, second.id).shown!.strengths).toContain(`You took the earlier note on ${questionWords(odd.q)}`);
     expect(notesOf(cwOf(sim)).find((x) => x.key === key)).toMatchObject({ status: 'resolved', resolvedOn: second.dueOn });
     // The third: answered against the text again, and the note is given again, recurring.
     sim.advanceTo(onDay(second.dueOn, 18, 30) + 24 * MS_HOUR);

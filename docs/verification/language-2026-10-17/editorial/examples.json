@@ -1,18 +1,272 @@
 [
- {"source": "src/engine/systems/health.ts#registerHealth <health.extra_supply>", "kind": "error", "before": "It costs more than your bank can cover.", "after": "Your bank can’t cover $125.37 for every condition’s fill, so nothing was filled or charged.", "why": "One shape for money that isn't there: what can't pay, the amount, and what didn't happen. It named no amount at all, so the player couldn't tell how much to move.", "meaningSensitive": true, "verified": "tests/defects-g8-5.test.ts \"PLAYER JOURNEY: refused, and nothing filled, when the bank can’t cover the supply\", exact, with the figure held to medicineShareOf × fillsCharged; two conditions: tests/evidence-g03-life.test.ts, $60.00"},
- {"source": "src/engine/systems/health.ts#registerHealth <health.dental>", "kind": "error", "before": "The year costs $312.72, more than your bank can cover.", "after": "Your bank can’t cover $312.72 for the year, so nothing was charged.", "why": "The same shape as Papers' refusals, saying nothing was charged.", "meaningSensitive": false, "verified": "tests/evidence-g03-life.test.ts \"refused in its own words when the bank can’t cover the year, and nothing bought or posted\""},
- {"source": "src/engine/systems/health.ts#registerHealth <health.dental>", "kind": "error", "before": "The month costs $25.00, more than your bank can cover.", "after": "Your bank can’t cover $25.00 for the first month, so nothing was charged.", "why": "The monthly variant: it's the first month's premium the purchase takes, so it says so.", "meaningSensitive": true, "verified": "tests/editorial-money-refusals.test.ts \"England’s prescription prepayment and a monthly dental plan: …\""},
- {"source": "src/engine/systems/health.ts#registerHealth <health.prepay>", "kind": "error", "before": "It costs £32.05, more than your bank can cover.", "after": "Your bank can’t cover £32.05, so nothing was charged.", "why": "One shape.", "meaningSensitive": false, "verified": "tests/editorial-money-refusals.test.ts \"England’s prescription prepayment and a monthly dental plan: …\""},
- {"source": "src/engine/systems/health.ts#registerHealth <health.pay_bill>", "kind": "error", "before": "Chase Total Checking holds $50.00 of the $100.00: move money into it first, on your bank’s Move Money.", "after": "Chase Total Checking has only $50.00 of the $100.00, so nothing was paid. Move money into it first, on your bank’s Move Money.", "why": "The account the player chose, what it has of what was asked, what didn't happen, then the next step as its own sentence.", "meaningSensitive": false, "verified": "tests/editorial-money-refusals.test.ts \"a medical debt part covered: …\"; tests/commands-kept.test.ts \"pays toward a debt for care from the current account, only what it holds\""},
- {"source": "src/engine/systems/school.ts#registerSchool <school.buy_ppe>", "kind": "error", "before": "It costs $150.00, and your bank can’t cover it. You haven’t been charged.", "after": "Your bank can’t cover $150.00, so nothing was charged.", "why": "One shape, one sentence.", "meaningSensitive": false, "verified": "tests/school-everyday.test.ts \"not bought before, is bought at the first shift; the bank short of it, the supervisor sends you home\""},
- {"source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>", "kind": "error", "before": "Chase Total Checking only has $92,391 in it.", "after": "Chase Total Checking has only $92,391.00, so nothing was moved.", "why": "The player chose the account and the amount, so the figure is what the account has, now to the cent (with the cents dropped, $40.75 read as “$41” and a $40.80 move was refused by an account that seemed to hold more); and it says nothing moved.", "meaningSensitive": true, "verified": "tests/language-money.test.ts \"refuses a move, savings and a standing order in words that name the obstacle, and moves nothing\""},
- {"source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>", "kind": "error", "before": "Citi Access Checking only has $0 in it.", "after": "Citi Access Checking has nothing in it, so nothing was moved.", "why": "Zero said as nothing, not “only $0”.", "meaningSensitive": false, "verified": "tests/remaining-banking.test.ts \"PLAYER JOURNEY: $100 moved from Chase to a Citi account on Monday 5 October …\""},
- {"source": "src/engine/systems/cash.ts#shortWords", "kind": "error", "before": "Chase Total Checking only has $20.01 in it.", "after": "Chase Total Checking has only $20.01, and $20.00 in cash with its fees comes to $26.22.", "why": "Refused for the fees, it said only what the account held, which was more than the cash asked: the player couldn't see why. Said before pressing, so it doesn't say nothing was taken out.", "meaningSensitive": true, "verified": "tests/editorial-money-refusals.test.ts \"a withdrawal its fees push over: …\", the fees from the quote that went through; a mutation dropping the clause fails it"},
- {"source": "src/engine/systems/lending.ts#registerLending <bank.repay_loan>", "kind": "error", "before": "Paying it off takes $3,017, and the repayment account can’t cover it all.", "after": "Citi Access Checking can’t cover the $3,016.83 it takes to pay it off, so nothing was paid.", "why": "Names the account and the payoff to the cent, and what didn't happen.", "meaningSensitive": true, "verified": "tests/evidence-g11-money.test.ts \"pays a Citi loan off from the Personal Loan panel 20 days into a 30-day month: …\", the payoff the test works out"},
- {"source": "src/engine/systems/lending.ts#registerLending <bank.open_term>", "kind": "error", "before": "Chase Total Checking only has $92,391 in it.", "after": "Chase Total Checking has only $92,391.00, so no term deposit was opened.", "why": "One shape, with what didn't happen.", "meaningSensitive": false, "verified": "tests/evidence-g10-money.test.ts \"is refused past what the account holds, …\""},
- {"source": "src/engine/systems/cash.ts#registerCash <cash.deposit>", "kind": "error", "before": "You have $60.00 in cash.", "after": "You have only $60.00 in cash, so nothing was paid in.", "why": "It answered a typed nothing and too much alike, and didn't say why or what didn't happen. A typed nothing is “Enter how much cash to pay in.” now.", "meaningSensitive": true, "verified": "tests/evidence-g12-money.test.ts \"pays $40 of $100 back in at Chase’s machine, …\""},
- {"source": "src/engine/systems/leave.ts#bankShortWords", "kind": "error", "before": "Your current account and the savings beside it have nothing to pay it with: move money into your current account first.", "after": "Your current account and the savings beside it can’t cover any of it. Move money into your current account first.", "why": "A reason shown before pressing: what can't pay and the next step, as two sentences.", "meaningSensitive": false, "verified": "tests/remaining-banking.test.ts, tests/evidence-g25-school.test.ts, tests/evidence-g26-school.test.ts"},
- {"source": "src/engine/systems/statetax.ts#statePlanRefusal", "kind": "error", "before": "Your bank can’t cover $500.00 down.", "after": "Your bank can’t cover the $500.00 down payment.", "why": "“$… down” was clipped. A reason shown beside the form, so it names the amount and not a charge stopped.", "meaningSensitive": false, "verified": "tests/editorial-money-refusals.test.ts \"a state plan’s down payment, said before it’s asked for: …\""},
- {"source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]", "kind": "tutorial", "before": "Pressed, Buy Dental says “The year costs …, more than your bank can cover.” when the bank can’t pay the year.", "after": "Pressed, Buy Dental says “Your bank can’t cover … for the year, so nothing was charged.” when the bank can’t pay the year.", "why": "The guide quotes what the game says.", "meaningSensitive": false, "verified": "tools/guide-quotes.mjs --check, 581 of 581"},
- {"source": "src/engine/content/guide/money.ts#MONEY [bank.cash]", "kind": "tutorial", "before": "“… only has … in it.”: less than the amount and its fees.", "after": "“… has only ….”, or, where the fees push it over, “… has only …, and … in cash with its fees comes to ….”", "why": "The guide quotes both variants the game says.", "meaningSensitive": false, "verified": "tools/guide-quotes.mjs --check, 581 of 581"}
+ {
+  "source": "src/engine/systems/health.ts#registerHealth <health.extra_supply>",
+  "kind": "error",
+  "before": "It costs more than your bank can cover.",
+  "after": "Your bank can’t cover $125.37 for every condition’s fill, so nothing was filled or charged.",
+  "why": "One shape for money that isn't there: what can't pay, the amount, and what didn't happen. It named no amount at all, so the player couldn't tell how much to move.",
+  "meaningSensitive": true,
+  "verified": "tests/defects-g8-5.test.ts \"PLAYER JOURNEY: refused, and nothing filled, when the bank can’t cover the supply\", exact, with the figure held to medicineShareOf × fillsCharged; two conditions: tests/evidence-g03-life.test.ts, $60.00"
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth <health.dental>",
+  "kind": "error",
+  "before": "The year costs $312.72, more than your bank can cover.",
+  "after": "Your bank can’t cover $312.72 for the year, so nothing was charged.",
+  "why": "The same shape as Papers' refusals, saying nothing was charged.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g03-life.test.ts \"refused in its own words when the bank can’t cover the year, and nothing bought or posted\""
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth <health.dental>",
+  "kind": "error",
+  "before": "The month costs $25.00, more than your bank can cover.",
+  "after": "Your bank can’t cover $25.00 for the first month, so nothing was charged.",
+  "why": "The monthly variant: it's the first month's premium the purchase takes, so it says so.",
+  "meaningSensitive": true,
+  "verified": "tests/editorial-money-refusals.test.ts \"England’s prescription prepayment and a monthly dental plan: …\""
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth <health.prepay>",
+  "kind": "error",
+  "before": "It costs £32.05, more than your bank can cover.",
+  "after": "Your bank can’t cover £32.05, so nothing was charged.",
+  "why": "One shape.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-refusals.test.ts \"England’s prescription prepayment and a monthly dental plan: …\""
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth <health.pay_bill>",
+  "kind": "error",
+  "before": "Chase Total Checking holds $50.00 of the $100.00: move money into it first, on your bank’s Move Money.",
+  "after": "Chase Total Checking has only $50.00 of the $100.00, so nothing was paid. Move money into it first, on your bank’s Move Money.",
+  "why": "The account the player chose, what it has of what was asked, what didn't happen, then the next step as its own sentence.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-refusals.test.ts \"a medical debt part covered: …\"; tests/commands-kept.test.ts \"pays toward a debt for care from the current account, only what it holds\""
+ },
+ {
+  "source": "src/engine/systems/school.ts#registerSchool <school.buy_ppe>",
+  "kind": "error",
+  "before": "It costs $150.00, and your bank can’t cover it. You haven’t been charged.",
+  "after": "Your bank can’t cover $150.00, so nothing was charged.",
+  "why": "One shape, one sentence.",
+  "meaningSensitive": false,
+  "verified": "tests/school-everyday.test.ts \"not bought before, is bought at the first shift; the bank short of it, the supervisor sends you home\""
+ },
+ {
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "Chase Total Checking only has $92,391 in it.",
+  "after": "Chase Total Checking has only $92,391.00, so nothing was moved.",
+  "why": "The player chose the account and the amount, so the figure is what the account has, now to the cent (with the cents dropped, $40.75 read as “$41” and a $40.80 move was refused by an account that seemed to hold more); and it says nothing moved.",
+  "meaningSensitive": true,
+  "verified": "tests/language-money.test.ts \"refuses a move, savings and a standing order in words that name the obstacle, and moves nothing\""
+ },
+ {
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "Citi Access Checking only has $0 in it.",
+  "after": "Citi Access Checking has nothing in it, so nothing was moved.",
+  "why": "Zero said as nothing, not “only $0”.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-banking.test.ts \"PLAYER JOURNEY: $100 moved from Chase to a Citi account on Monday 5 October …\""
+ },
+ {
+  "source": "src/engine/systems/cash.ts#shortWords",
+  "kind": "error",
+  "before": "Chase Total Checking only has $20.01 in it.",
+  "after": "Chase Total Checking has only $20.01, and $20.00 in cash with its fees comes to $26.22.",
+  "why": "Refused for the fees, it said only what the account held, which was more than the cash asked: the player couldn't see why. Said before pressing, so it doesn't say nothing was taken out.",
+  "meaningSensitive": true,
+  "verified": "tests/editorial-money-refusals.test.ts \"a withdrawal its fees push over: …\", the fees from the quote that went through; a mutation dropping the clause fails it"
+ },
+ {
+  "source": "src/engine/systems/lending.ts#registerLending <bank.repay_loan>",
+  "kind": "error",
+  "before": "Paying it off takes $3,017, and the repayment account can’t cover it all.",
+  "after": "Citi Access Checking can’t cover the $3,016.83 it takes to pay it off, so nothing was paid.",
+  "why": "Names the account and the payoff to the cent, and what didn't happen.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g11-money.test.ts \"pays a Citi loan off from the Personal Loan panel 20 days into a 30-day month: …\", the payoff the test works out"
+ },
+ {
+  "source": "src/engine/systems/lending.ts#registerLending <bank.open_term>",
+  "kind": "error",
+  "before": "Chase Total Checking only has $92,391 in it.",
+  "after": "Chase Total Checking has only $92,391.00, so no term deposit was opened.",
+  "why": "One shape, with what didn't happen.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts \"is refused past what the account holds, …\""
+ },
+ {
+  "source": "src/engine/systems/cash.ts#registerCash <cash.deposit>",
+  "kind": "error",
+  "before": "You have $60.00 in cash.",
+  "after": "You have only $60.00 in cash, so nothing was paid in.",
+  "why": "It answered a typed nothing and too much alike, and didn't say why or what didn't happen. A typed nothing is “Enter how much cash to pay in.” now.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g12-money.test.ts \"pays $40 of $100 back in at Chase’s machine, …\""
+ },
+ {
+  "source": "src/engine/systems/leave.ts#bankShortWords",
+  "kind": "error",
+  "before": "Your current account and the savings beside it have nothing to pay it with: move money into your current account first.",
+  "after": "Your current account and the savings beside it can’t cover any of it. Move money into your current account first.",
+  "why": "A reason shown before pressing: what can't pay and the next step, as two sentences.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-banking.test.ts, tests/evidence-g25-school.test.ts, tests/evidence-g26-school.test.ts"
+ },
+ {
+  "source": "src/engine/systems/statetax.ts#statePlanRefusal",
+  "kind": "error",
+  "before": "Your bank can’t cover $500.00 down.",
+  "after": "Your bank can’t cover the $500.00 down payment.",
+  "why": "“$… down” was clipped. A reason shown beside the form, so it names the amount and not a charge stopped.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-refusals.test.ts \"a state plan’s down payment, said before it’s asked for: …\""
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "Pressed, Buy Dental says “The year costs …, more than your bank can cover.” when the bank can’t pay the year.",
+  "after": "Pressed, Buy Dental says “Your bank can’t cover … for the year, so nothing was charged.” when the bank can’t pay the year.",
+  "why": "The guide quotes what the game says.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, 581 of 581"
+ },
+ {
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.cash]",
+  "kind": "tutorial",
+  "before": "“… only has … in it.”: less than the amount and its fees.",
+  "after": "“… has only ….”, or, where the fees push it over, “… has only …, and … in cash with its fees comes to ….”",
+  "why": "The guide quotes both variants the game says.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, 581 of 581"
+ },
+ {
+  "source": "src/ui/components/CourseworkPane.tsx#AssignmentCard",
+  "kind": "label",
+  "before": "Shown Today: … it would come to about 41.3 (Unready). The revision isn’t complete, which costs Execution 43.9 points. Still to finish: its context researched (Research It At The Library); the presentation prepared (Prepare The Presentation).",
+  "after": "Shown Today: … it would come to about 41.3 (Unready). The Presentation Prepared isn’t complete, which costs Execution 43.9 points. Still to finish: Its Context Researched (Research It At The Library); The Presentation Prepared (Prepare The Presentation).",
+  "why": "One part was named two ways on one card, and “the revision” of a piece not yet shown named something the player can't do yet. The card's own labels, as the stat tiles and Put First name them.",
+  "meaningSensitive": true,
+  "verified": "tests/editorial-school-words.test.ts \"a part of a piece is named as its card names it, …\""
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#show",
+  "kind": "feedback",
+  "before": "Simulated note from Speech And Accents III: It didn’t come together today. Rehearsal wasn’t complete, which cost Execution 16.9 points.",
+  "after": "Simulated note from Speech And Accents III: It didn’t come together today. Drills wasn’t complete, which cost Execution 16.9 points.",
+  "why": "The teacher names the part the card names; the warning already said “What held most of them back was “Drills””.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#show",
+  "kind": "feedback",
+  "before": "Your speech, and accents and dialects carried it.",
+  "after": "Your speech and your accents and dialects carried it.",
+  "why": "A list with an “and” inside an item, joined so it reads once.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#show",
+  "kind": "feedback",
+  "before": "Your on camera and scene study carried it.",
+  "after": "Your on-camera work and scene study carried it.",
+  "why": "A skill's label lowercased isn't a phrase; the glossary's words for it.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-school-words.test.ts; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#show",
+  "kind": "feedback",
+  "before": "You took the earlier note on drilled with your partner.",
+  "after": "You took the earlier note on Drilled With Your Partner.",
+  "why": "The part as its card names it; lowercased, a past participle read as a sentence's verb.",
+  "meaningSensitive": false,
+  "verified": "tests/feedback.test.ts; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#reshownWords",
+  "kind": "notification",
+  "before": "You showed Heightened Text Scene again on October 31, 2028, and took the note on rehearsal. Rehearsal stayed at 0%.",
+  "after": "You showed Heightened Text Scene again on October 31, 2028, and worked the note on Rehearsal into the revision. Rehearsal stayed at 0%.",
+  "why": "A note taken by the revision's own work, with the part no further on, read as a contradiction. It says how it was taken.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#reshownWords",
+  "kind": "notification",
+  "before": "You showed Scene Study again on September 22, 2026, but the note on with your partner wasn’t taken yet.",
+  "after": "You showed Scene Study again on September 22, 2026, but the note on With Your Partner isn’t taken yet.",
+  "why": "The part's name, and the tense of what's still true.",
+  "meaningSensitive": false,
+  "verified": "tests/language-dynamic.test.ts \"a note worked and the piece shown again: …\""
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#reshownWords",
+  "kind": "notification",
+  "before": "…, but the next step you were given didn’t show yet.",
+  "after": "…, but the next step you were given doesn’t show in it yet.",
+  "why": "“didn’t show yet” mixed tenses.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/classmates.ts#disagreement",
+  "kind": "notification",
+  "before": "Priya reads given circumstances in Julius Caesar another way: “The Capitol on the Ides of March”, where you have “…”.",
+  "after": "Priya reads the given circumstances in Julius Caesar another way: “The Capitol on the Ides of March”, where you have “…”.",
+  "why": "A question's label lowercased lost its article; “a choice to play” became “the choice to play”.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-school-words.test.ts; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/classmates.ts#studyEvening",
+  "kind": "notification",
+  "before": "Caleb asks if you’d run lines together on October 28, 2028 at 7:00 PM, an hour.",
+  "after": "Caleb asks if you’d run lines together for an hour on October 28, 2028 at 7:00 PM.",
+  "why": "The duration tacked on after the time.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/classmates.ts#MOMENT_TITLE",
+  "kind": "heading",
+  "before": "Caleb: Asks For Help",
+  "after": "Caleb: A Request For Help",
+  "why": "The one moment titled as a verb after a colon; the others are nouns (A Different Reading, A Word After Class).",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-school-words.test.ts"
+ },
+ {
+  "source": "src/engine/systems/classmates.ts#registerClassmates",
+  "kind": "notification",
+  "before": "You share no open scene with Maya, so you ran their lines. It helped them, and nothing of yours moved.",
+  "after": "You share no open scene with Maya, so you ran their lines. It helped them, but it didn’t move your own work.",
+  "why": "“nothing of yours moved” is the engine's view; the player's is their own work.",
+  "meaningSensitive": false,
+  "verified": "tests/student-experience.test.ts; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#setWork",
+  "kind": "notification",
+  "before": "What We Keep, Their late father’s apartment, half packed into boxes, a Saturday in 2012.",
+  "after": "What We Keep, their late father’s apartment, half packed into boxes, a Saturday in 2012.",
+  "why": "A place opening on a capital mid-sentence.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-school-words.test.ts \"a scene’s place reads mid-sentence, …\"; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#noteText",
+  "kind": "feedback",
+  "before": "It asked for more clown and mask than you have yet.",
+  "after": "It asked for more clowning than you have yet.",
+  "why": "The glossary's word for the technique in a sentence.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+ }
 ]

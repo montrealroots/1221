@@ -54,7 +54,7 @@ describe('a note on the same thing, over time', () => {
     const a4 = prepared(sim, 0.9);
     const s4 = showAt(sim, a4, 22);
     expect(a4.taken).toEqual(['dim:memorization']);
-    expect(s4.strengths).toContain('You took the earlier note on lines');
+    expect(s4.strengths).toContain('You took the earlier note on Lines');
     expect(a4.feedback!.focus).not.toEqual({ kind: 'dim', dim: 'memorization' });
     const rec = notesOf(courseworkOf(sim, sim.player)!).find((x) => x.key === 'dim:memorization')!;
     expect(rec).toMatchObject({ status: 'resolved', given: 3 });
