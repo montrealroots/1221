@@ -109,7 +109,7 @@ for f in sorted(glob.glob(f'{B}/runs/exits-*.txt')) + sorted(glob.glob(f'{B}/fin
     lane_exits[f.replace(B + '/', '')] = (len(rows), bad)
 numbers = load(f'{B}/numbers-same.json')
 if numbers is None: problems.append('the comparison with brief 13: not run')
-elif any(v.get('different') for v in numbers.values()): problems.append('a final run differs from brief 13 in a number')
+elif any(v.get('unexplained') or v.get('missing') for v in numbers.values()): problems.append('a final run differs from brief 13 in a number nothing explains')
 
 # --- The built app --------------------------------------------------------------------------------------------------
 def walk_count(d):
@@ -289,10 +289,13 @@ w('- **The final runs**, each step’s exit recorded (`runs/exits-*.txt`, `final
 w('')
 w(table(['Record', 'Steps', 'Not exit 0'], [[k, n, '; '.join(bad) or 'none'] for k, (n, bad) in lane_exits.items()]))
 w('')
-w('- **Gameplay unchanged.** Every number, id, list length and key in the final runs against brief 13\'s, words allowed to differ (`numbers-same.json`):')
+w('- **Gameplay unchanged.** Every number, id, list length and key in the final runs against brief 13\'s, words allowed '
+  'to differ (`numbers-same.py`, `numbers-same.json`). A difference is explained only by the kind of field it\'s in, with '
+  'the reason the script gives; one nothing explains fails it:')
 w('')
 if numbers:
-    w(table(['Runs', 'Files the same game', 'Files different'], [[k, v.get('same'), len(v.get('different') or {})] for k, v in numbers.items()]))
+    w(table(['Runs', 'Files', 'Identical in every number', 'Differences explained', 'Unexplained'],
+            [[k, v.get('files'), v.get('same'), '; '.join(f'{n} ({r})' for r, n in (v.get('explained') or {}).items()) or 'none', len(v.get('unexplained') or {})] for k, v in numbers.items()]))
 else:
     w('Not run yet.')
 w('')

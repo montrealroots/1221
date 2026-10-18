@@ -420,8 +420,11 @@ SAME14 = False
 if os.path.exists(f'{B14F}/figures.json') and os.path.exists(f'{B13F}/figures.json'):
     FIG14 = json.load(open(f'{B14F}/figures.json', encoding='utf-8'))
     B14AT = re.search(r'^at (\w+)', open(f'{B14F}/exits.txt', encoding='utf-8').read(), re.M).group(1)
-    shared14 = sorted(f for f in os.listdir(B13F) if f.endswith('.json') and f != 'figures.json' and os.path.exists(f'{B14F}/{f}'))
-    SAME14 = bool(shared14) and all(filecmp.cmp(f'{B13F}/{f}', f'{B14F}/{f}', shallow=False) for f in shared14)
+    # Brief 14 changed words, and the eight brief journeys record a take's words, so byte for byte can't hold. What
+    # holds is its own measure (numbers-same.py): every number, id and key in every output the same as brief 13's, with
+    # nothing explained away. An area item moves only on that.
+    NS14 = json.load(open('docs/verification/language-2026-10-17/numbers-same.json', encoding='utf-8')).get('final', {}) if os.path.exists('docs/verification/language-2026-10-17/numbers-same.json') else {}
+    SAME14 = bool(NS14) and NS14.get('same') == NS14.get('files') and not NS14.get('unexplained') and not NS14.get('missing') and not NS14.get('explained')
     for r in rows:
         if r.get('measured') == {'commit': B13AT, 'watch': 'judge'}:
             assert r['id'] in FIG14, r['id']
