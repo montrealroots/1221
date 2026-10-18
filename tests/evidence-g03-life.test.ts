@@ -232,7 +232,7 @@ describe('health.book', () => {
     expect(h.toasts).toEqual(['Booked for September 28, 2026.']);
     const booked = appointmentsOf(sim.player);
     expect(booked).toEqual([{ id: expect.any(String), at: at(2026, 9, 28, 10), what: 'A doctor’s visit', clinicId: 'us-ct-fhchc-grand' }]);
-    expect(titled(sim, 'A Doctor’s Appointment', sim.now).map((n) => n.body)).toEqual(['A doctor’s visit: booked at Fair Haven Community Health Care for September 28, 2026, the wait where you live.']);
+    expect(titled(sim, 'A Doctor’s Appointment', sim.now).map((n) => n.body)).toEqual(['A doctor’s visit: booked at Fair Haven Community Health Care for September 28, 2026, the usual wait where you live.']);
     // The visit is no longer owed: the button is gone, and booking again is refused as owing nothing.
     expect(healthOf(sim.player).owedVisit).toBeUndefined();
     expect(shown(sim).buttons.map((b) => b.text)).not.toContain('Book An Appointment');
@@ -387,8 +387,8 @@ describe('health.choose_clinic', () => {
     expect(didnt.booked).toEqual([{ id: expect.any(String), at: day, what: 'A doctor’s visit', clinicId: 'uk-ldn-sohosquare-gp' }]);
     expect(chose.label).toBe('The Doctor, Bupa Private GP (pay-as-you-go)');
     expect(didnt.label).toBe('The Doctor, Soho Square General Practice');
-    expect(chose.notice).toEqual(['A doctor’s visit: booked at Bupa Private GP (pay-as-you-go) for January 26, 2026, the wait where you live.']);
-    expect(didnt.notice).toEqual(['A doctor’s visit: booked at Soho Square General Practice for January 26, 2026, the wait where you live.']);
+    expect(chose.notice).toEqual(['A doctor’s visit: booked at Bupa Private GP (pay-as-you-go) for January 26, 2026, the usual wait where you live.']);
+    expect(didnt.notice).toEqual(['A doctor’s visit: booked at Soho Square General Practice for January 26, 2026, the usual wait where you live.']);
     // Bupa's pay-as-you-go GP is private, and the NHS doesn't pay it: its 15-minute visit's £79 (`SELF_PAY`). Until
     // 2026-10-13 this held "Nothing to pay." for it, as at Soho Square, the choice moving only the name.
     expect(chose.kept).toEqual(['A doctor’s visit, Bupa Private GP (pay-as-you-go). Your share is £79.00, due on February 25, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.']);

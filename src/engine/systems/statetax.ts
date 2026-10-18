@@ -702,7 +702,7 @@ export function lienReleaseRefusal(sim: Simulation, person: Person, r: TaxReturn
   const lr = rulesOf(state)?.lien;
   if (!l || !lr) return 'There’s no lien on that year.';
   if (l.status === 'released' || l.status === 'withdrawn') return 'The lien has already been released.';
-  if (l.status !== 'paid') return 'You can ask for its release once the balance it secures is paid in full.';
+  if (l.status !== 'paid') return 'You can ask for its release once what it was filed for is paid in full.';
   if (!(lr.releaseOnRequest || lr.releaseFee)) return `There’s nothing to ask: it’s released on its own, ${lienReleaseWords(lr)}.`;
   if (l.releaseDue !== undefined) return `You’ve already asked. It’s to be released by ${formatDate(l.releaseDue, HOME)}.`;
   const fee = lr.releaseFee ? usd(lr.releaseFee, saveCurrency(sim.universe)) : 0;
@@ -726,7 +726,7 @@ export function lienInError(r: TaxReturn, state: string): boolean {
 export function lienDisputeRefusal(r: TaxReturn | undefined, state: string): string | undefined {
   const l = r?.stateDue?.[state]?.lien;
   if (!l || !['filed', 'paid', 'released'].includes(l.status)) return l?.status === 'disputed' ? `You’ve already asked. A decision is due by ${formatDate(l.decideAt!, HOME)}.` : l?.status === 'withdrawn' ? 'The lien has already been withdrawn.' : 'There’s no lien on that year to dispute.';
-  if (!lienInError(r!, state)) return 'It secured tax you owed when it was filed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.';
+  if (!lienInError(r!, state)) return 'It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.';
   return undefined;
 }
 

@@ -424,7 +424,7 @@ describe('HUSKY D’s renewal: the six months before read, then a notice and thi
     expect(healthOf(june.player).program).toMatchObject({ kind: 'medicaid', from: at(2026, 10, 1, 0), renewAt: at(2028, 4, 1, 0) });
     expect(healthOf(june.player).program!.until).toBeUndefined();
     // Until 2026-10-17 “by 80 hours’ work”: since then the hours aren’t read, and the $600 they were paid is (brief 12, health-criteria.md).
-    expect(titled(june, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 1, 0, 30), 'HUSKY D is renewed until its next renewal, on April 1, 2028. Last month’s income is within its limit, and June 2027 met its work rules with $580.00 or more of income.']]);
+    expect(titled(june, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 1, 0, 30), 'HUSKY D is renewed. Its next renewal is on April 1, 2028. Last month’s income is within its limit, and June 2027 met its work rules with $580.00 or more of income.']]);
     expect(titled(june, 'A Notice Of Noncompliance')).toEqual([]);
     const reloaded = thaw(freeze(june));
     reloaded.advanceTo(at(2027, 11, 2, 9));

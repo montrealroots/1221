@@ -145,7 +145,7 @@ describe('HUSKY D’s work test reads last month’s work: its hours and its pay
     healthMonth(sim, sim.player, renewal);
     expect(healthOf(sim.player).program!.until).toBeUndefined();
     expect(healthOf(sim.player).program!.renewAt).toBe(at(2028, 1, 1, 0));
-    expect(titled(sim, 'Your Public Cover Is Renewed').map((n) => n.body)).toEqual(['HUSKY D is renewed until its next renewal, on January 1, 2028. Last month’s income is within its limit, and June 2027 met its work rules with $580.00 or more of income.']);
+    expect(titled(sim, 'Your Public Cover Is Renewed').map((n) => n.body)).toEqual(['HUSKY D is renewed. Its next renewal is on January 1, 2028. Last month’s income is within its limit, and June 2027 met its work rules with $580.00 or more of income.']);
     const short = huskyD('g84-work-benefit-short');
     recordBenefit(short.player, at(2027, 6, 10), NY, 500_00);
     recordInterest(short.player, at(2027, 6, 30), NY, 20_00);

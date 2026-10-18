@@ -373,7 +373,7 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     // under the allowance, settled before it, as Germany pays at the quarter's end.
     expect(postedTo(sim, 'Interest: Flexgeld, before the set-off', flex.id)).toEqual([41]);
     expect([db.closedAt, db.balance, flex.closedAt, flex.balance]).toEqual([berlin(2026, 3, 7, 0), 0, undefined, 500_00 + 41 - 110_65]);
-    expect(titled(sim, 'Deutsche Bank Closed An Account').map((n) => n.body)).toEqual(['It had been below zero for 60 days, so the bank took what it was owed from your other money there. It closed AktivKonto. Flexgeld stays open. Its standing order of €10.00 into Flexgeld on the 20th ended with it. You can set one up again on How You Pay.']);
+    expect(titled(sim, 'Deutsche Bank Closed An Account').map((n) => n.body)).toEqual(['Deutsche Bank closed AktivKonto. It had been below zero for 60 days, so the bank took what it was owed from your other money there. Flexgeld stays open. Its standing order of €10.00 into Flexgeld on the 20th ended with it. You can set one up again on How You Pay.']);
     // It failed on 20 January and 20 February, said once and brought up to the later day; not on 20 March.
     expect(titled(sim, 'A Standing Order Didn’t Go').map((n) => n.at)).toEqual([berlin(2026, 2, 20, 9)]);
     expect(paymentsOf(sim.player).standingOrders).toEqual([]);

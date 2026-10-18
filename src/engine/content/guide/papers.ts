@@ -489,7 +489,7 @@ export const PAPERS: readonly GuideEntry[] = [
       steps: [
         // From 2026-10-15: until then the visit was booked at Fair Haven, 24 days on, a student on Yale Health being given
         // the town's first practice with nothing picked.
-        `A notice: “A doctor’s visit: booked at ${YALE_PRACTICE} for …, the wait where you live.”, ${YALE_SOON}.`,
+        `A notice: “A doctor’s visit: booked at ${YALE_PRACTICE} for …, the usual wait where you live.”, ${YALE_SOON}.`,
         `On the day you sleep past ${clock(CONSULT_HOUR)}, and “Missed The Doctor” follows.`,
         'Open Papers, Health Cover, and press Book An Appointment beside “A doctor’s visit: not yet seen”.',
       ],

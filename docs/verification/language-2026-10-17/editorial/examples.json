@@ -439,5 +439,86 @@
   "why": "A list with no “and”.",
   "meaningSensitive": false,
   "verified": "journey J01 part 1 replayed on this code: the Meeting The Acting Faculty notice ends “…, Kelsey Rainwater, Michael Rossmy and Paul Walsh.”"
+ },
+ {
+  "source": "src/engine/systems/credit.ts#registerCredit",
+  "kind": "official",
+  "before": "$270.00 to pay, at least $40.00.",
+  "after": "The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.",
+  "why": "A statement notice with no due date; the date is the one the card's due item is set to.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g28-ui.test.ts, tests/evidence-g34-ui.test.ts"
+ },
+ {
+  "source": "src/engine/systems/credit.ts#registerCredit",
+  "kind": "official",
+  "before": "It’s $78,260.00 now, because your record has been clean.",
+  "after": "The Chase Freedom Unlimited’s limit is $78,260.00 now, because your credit score is 700 or more and you haven’t paid late in the past year.",
+  "why": "Which card, and the review's own conditions in place of “clean”.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g13-money.test.ts \"raises a clean record’s limit by a fifth …\""
+ },
+ {
+  "source": "src/engine/systems/lending.ts#closeForOverdraft",
+  "kind": "official",
+  "before": "It had been below zero for 60 days, so the bank took what it was owed from your other money there. It closed AktivKonto. Flexgeld stays open.",
+  "after": "Deutsche Bank closed AktivKonto. It had been below zero for 60 days, so the bank took what it was owed from your other money there. Flexgeld stays open.",
+  "why": "A notice leads with what happened.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-banking.test.ts, tests/home-account-setoff.test.ts"
+ },
+ {
+  "source": "src/engine/systems/health.ts#applyRenewal",
+  "kind": "official",
+  "before": "HUSKY D is renewed until its next renewal, on January 1, 2028.",
+  "after": "HUSKY D is renewed. Its next renewal is on January 1, 2028.",
+  "why": "Renewed until its renewal said nothing.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-cover.test.ts and five more"
+ },
+ {
+  "source": "src/engine/systems/statetax.ts#lienDisputeRefusal",
+  "kind": "error",
+  "before": "It secured tax you owed when it was filed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.",
+  "after": "It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.",
+  "why": "The glossary's word for a lien; “It secured” is the one it replaced.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-taxpapers.test.ts, tests/remaining-tax.test.ts, tests/liens-and-arrangements.test.ts"
+ },
+ {
+  "source": "src/engine/systems/statetax.ts#lienReleaseRefusal",
+  "kind": "error",
+  "before": "You can ask for its release once the balance it secures is paid in full.",
+  "after": "You can ask for its release once what it was filed for is paid in full.",
+  "why": "One word for one thing.",
+  "meaningSensitive": false,
+  "verified": "tests/liens-and-arrangements.test.ts, tests/scope-taxpapers.test.ts, tests/remaining-tax.test.ts"
+ },
+ {
+  "source": "src/engine/systems/residence.ts#MEXICO_UNREAD",
+  "kind": "official",
+  "before": "Moving abroad isn’t part of the game, so it grants none of Mexico’s papers.",
+  "after": "Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.",
+  "why": "“it” read as Mexico.",
+  "meaningSensitive": false,
+  "verified": "tests/residence.test.ts and four more"
+ },
+ {
+  "source": "src/engine/systems/appointments.ts#bookIn",
+  "kind": "notification",
+  "before": "A doctor’s visit: booked at Yale Health Center, Student Health for September 1, 2026, the wait where you live.",
+  "after": "A doctor’s visit: booked at Yale Health Center, Student Health for September 1, 2026, the usual wait where you live.",
+  "why": "The date isn't the wait; the usual wait where you live sets it.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-health.test.ts and six more; tests/guide-examples-papers.test.ts holds the guide's quote to it"
+ },
+ {
+  "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.lien]",
+  "kind": "tutorial",
+  "before": "On a lien that secured tax you owed when it was filed, the panel says so …",
+  "after": "On a lien filed for tax you owed, the panel says so …",
+  "why": "The guide in the glossary's word, quoting the panel's.",
+  "meaningSensitive": false,
+  "verified": "tools/guide-quotes.mjs --check, 580 of 580"
  }
 ]

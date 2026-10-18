@@ -534,10 +534,10 @@
   "reason": "Programming errors thrown when a random pick is asked of an empty list: internal, never caught for a screen, and the code never asks it (a player meets them only as a crash, not as words to read). Its one engine-speak hit, “weighted”, is the function’s own name (rng.weighted), right for a programmer’s error."
  },
  "src/engine/systems/appointments.ts#bookIn": {
-  "status": "Reviewed And Retained",
-  "hash": "ec7e3e245ba3",
-  "on": "2026-10-17",
-  "reason": "The booking notice keeps its words because the papers guide quotes them whole (guide/papers.ts, papers.doctor’s example) and tests/guide-examples-papers.test.ts holds the two equal. A rewrite that names the next step (“…, the usual wait where you live. Be there then, or Call It Off on Papers, under Health Cover.”) is with the coordinator, to land with that quote (batches.md, batch 2). Its labels (A Referral, A Doctor’s Appointment, The Doctor, …) are plain."
+  "status": "Rewritten And Verified",
+  "hash": "2a5c9b70b3d1",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 5: “… for September 1, 2026, the usual wait where you live.” asserted exactly by tests/scope-health.test.ts \"PLAYER JOURNEY: the student who picks Yale Health on Your Doctor …\", tests/defects-g8-6.test.ts (a referral, both variants), tests/evidence2-b02.test.ts, tests/evidence2-b03.test.ts, tests/evidence-g03-life.test.ts and tests/remaining-09-journeys.test.ts"
  },
  "src/engine/systems/appointments.ts#mayRefer": {
   "status": "Reviewed And Retained",
@@ -613,9 +613,9 @@
  },
  "src/engine/systems/health.ts#applyRenewal": {
   "status": "Rewritten And Verified",
-  "hash": "c59319186109",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g05-life.test.ts “PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026…”; tests/need-paths.test.ts “PLAYER JOURNEY: on Covered Connecticut from 1 November 2026…” and “…on HUSKY D from 1 October 2026…”; tests/scope-cover.test.ts"
+  "hash": "1e6b9080f6b2",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 5: “HUSKY D is renewed. Its next renewal is on January 1, 2028. …” asserted exactly by tests/scope-cover.test.ts \"PLAYER JOURNEY: a student with need takes HUSKY D on her leave …\", tests/evidence-g05-life.test.ts, tests/defects-g8-4.test.ts, tests/remaining-health-billing.test.ts, tests/remaining-health-eligibility.test.ts and tests/remaining-09-hardship.test.ts"
  },
  "src/engine/systems/health.ts#armHealth": {
   "status": "Reviewed And Retained",

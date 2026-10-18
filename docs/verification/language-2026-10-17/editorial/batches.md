@@ -233,3 +233,49 @@ attendance …”, a sentence opening on Nothing over a budget of none; turned r
 `traceability`, `devmap`, `coverage` 0; 30 test files, 540 of 540 after four assertions were brought to the new words,
 then 79 of 79 and 142 of 142. **Statuses:** 9 sources Rewritten And Verified (school 4, profile 2, frame 1, money 1, and
 `registerSchool`); `StandingPane` and `sourceWords` are verified on the final walk (batch 6).
+
+## Batch 5: The Bank's, The Authorities' And The Doctor's Notices (Money, Papers, Health)
+
+Read in the scenario saves written again on today's code (`tools/scenario-saves.mjs`, all fifteen, every exit 0: 3,251
+notices, 817 distinct sentences J01 doesn't meet) and in J01's own:
+
+- **A card statement said nothing of when (Unclear).** “Statement Ready: Chase Freedom Unlimited”, body “$270.00 to pay,
+  at least $40.00.” It names the due date now, which the card's due item is already set to (`dueAt`, the same call
+  `scheduleDue` makes): “The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.”
+  “At least” is what the due date judges, the card's minimum or a hardship plan's payment, as before.
+- **A card limit raised named no card and no reason a player could check.** “It’s $78,260.00 now, because your record
+  has been clean.” → “The Chase Freedom Unlimited’s limit is $78,260.00 now, because your credit score is 700 or more and
+  you haven’t paid late in the past year.”, the review's own two conditions (`RAISE_FROM`, a late payment in 365 days), as
+  the guide's card entry already states them.
+- **A bank closing an account led with the reason.** “It had been below zero for 60 days, so the bank took what it was
+  owed from your other money there. It closed AktivKonto. Flexgeld stays open.” → “Deutsche Bank closed AktivKonto. It had
+  been below zero for 60 days, …”: what happened, then why, then what's left. The variant that closes nothing keeps its
+  order, with nothing to lead with.
+- **A renewal renewed until its renewal.** “HUSKY D is renewed until its next renewal, on January 1, 2028.” → “HUSKY D
+  is renewed. Its next renewal is on January 1, 2028.”
+- **One word for one thing: a lien.** The glossary's Papers row says a lien is filed for what's owed, and lists “It
+  secured” as the word replaced; the refusal and the guide still said it. “It secured tax you owed when it was filed, so
+  it wasn’t filed in error.” → “It was filed for tax you owed, so it wasn’t filed in error.”; “once the balance it secures
+  is paid in full” → “once what it was filed for is paid in full”; and the tax guide's five lines likewise.
+- **Mexico's papers.** “Moving abroad isn’t part of the game, so it grants none of Mexico’s papers.”, where “it” read as
+  Mexico → “…, so you can’t get Mexico’s papers here.”
+- **A doctor's appointment.** “A doctor’s visit: booked at Yale Health Center, Student Health for September 1, 2026, the
+  wait where you live.” said the date is the wait; it's the usual wait where you live that sets it (`waitDays`, the
+  place's published wait). → “…, the usual wait where you live.” The health area had left this for the papers guide's
+  example, which quotes it and whose test holds the two equal; both changed together, and the test passes.
+
+**Left, with why:** a state's added penalty is named in its assessment notice by its Title Case label, “and The Penalty For
+A Return DRS Made, 10% Or $50, The Greater”: the labels are `label:` fields `tools/label-sweep.mjs` holds to Title Case,
+and the notice is their only reader. A prose field beside each is a change of the data's shape, for the papers area or the
+owner (`defects.md`).
+
+**Tests updated:** the renewal in six files, Mexico in five, the appointment in seven, the lien in three, the statement in
+five (each with its due date: September 20 → October 11, October 20 → November 10, November 20 → December 11, Chase's
+21 days; a pattern that had no date gained the one the test's dates give), the limit in one, the closing in two.
+`tests/liens-and-arrangements.test.ts`'s two patterns for the lien (`/secured tax you owed when it was filed/`) failed on
+the first run and were brought to the new words, as narrow.
+
+**Checks:** `tsc` 0, `eslint` 0, the eleven language checks 0, `guide-quotes` 0 (580 of 580: one quote fewer, the release
+refusal's now four words shorter than the five a quote needs), `traceability`, `devmap`, `coverage` 0; 28 test files, 419
+of 419 once the lien's two patterns were brought to the new words. **Statuses:** 10 sources Rewritten And Verified (papers 6,
+health 2, money 2).

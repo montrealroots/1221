@@ -710,7 +710,7 @@ describe('health.month', () => {
     expect(healthOf(working.player).program!.until).toBeUndefined();
     expect(titled(working, 'A Notice Of Noncompliance')).toEqual([]);
     // Until 2026-10-17 “by 80 hours’ work”: since then the hours aren’t read, and the $600 they were paid is (brief 12, health-criteria.md).
-    expect(titled(working, 'Your Public Cover Is Renewed').map((n) => n.body)).toEqual(['HUSKY D is renewed until its next renewal, on February 1, 2028. Last month’s income is within its limit, and July 2027 met its work rules with $580.00 or more of income.']);
+    expect(titled(working, 'Your Public Cover Is Renewed').map((n) => n.body)).toEqual(['HUSKY D is renewed. Its next renewal is on February 1, 2028. Last month’s income is within its limit, and July 2027 met its work rules with $580.00 or more of income.']);
     const workingScreen = drawn(working).text;
     expect(workingScreen).toContain('Your Cover How This Works This Month HUSKY D');
     // HUSKY D asks no copays.

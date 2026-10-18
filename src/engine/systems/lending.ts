@@ -1085,7 +1085,10 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
     if (person.id === sim.universe.playerId) {
       const kept = mine.filter((a) => a.closedAt === undefined);
       const which = `${closed.length > 0 ? ` It closed ${closed.map((a) => a.name).join(' and ')}.` : ''}${kept.length > 0 ? ` ${kept.map((a) => a.name).join(' and ')} ${kept.length > 1 ? 'stay' : 'stays'} open.` : ''}`;
-      sim.notify({ category: 'bank', title: closed.length > 0 ? `${bank.name} Closed An Account` : `${bank.name} Took What It Was Owed`, body: `It had been below zero for ${ESTIMATE.closeAfterDays} days, so the bank took what it was owed from your other money there.${which}${endedWords(sim, ended)}`, importance: 60 });
+      // What happened first (from 2026-10-17, brief 14's editorial review): until then the reason opened it, “It had been
+      // below zero …”, and the account closed came after.
+      const why = `had been below zero for ${ESTIMATE.closeAfterDays} days, so the bank took what it was owed from your other money there.`;
+      sim.notify({ category: 'bank', title: closed.length > 0 ? `${bank.name} Closed An Account` : `${bank.name} Took What It Was Owed`, body: closed.length > 0 ? `${bank.name} closed ${closed.map((a) => a.name).join(' and ')}. ${closed.length > 1 ? 'They' : 'It'} ${why}${kept.length > 0 ? ` ${kept.map((a) => a.name).join(' and ')} ${kept.length > 1 ? 'stay' : 'stays'} open.` : ''}${endedWords(sim, ended)}` : `It ${why}${which}${endedWords(sim, ended)}`, importance: 60 });
     }
     return;
   }

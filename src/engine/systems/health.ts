@@ -1068,7 +1068,7 @@ function applyRenewal(sim: Simulation, person: Person, prog: NonNullable<HealthR
     prog.band = still.band;
     if (still.scope) prog.scope = still.scope; else delete prog.scope;
     prog.renewAt = next;
-    if (mine) sim.notify({ category: 'health', title: 'Your Public Cover Is Renewed', body: `${capital(names[prog.kind])} is renewed until its next renewal, on ${formatDate(next, HOME)}. Last month’s income is within its limit${work}.`, importance: 60, route: '/workspace/papers' });
+    if (mine) sim.notify({ category: 'health', title: 'Your Public Cover Is Renewed', body: `${capital(names[prog.kind])} is renewed. Its next renewal is on ${formatDate(next, HOME)}. Last month’s income is within its limit${work}.`, importance: 60, route: '/workspace/papers' });
     return;
   }
   const why = still.kind === 'medicaid' ? `Last month’s income is within ${names.medicaid}’s limit, and ${names.medicaid} replaces ${names.essential}`

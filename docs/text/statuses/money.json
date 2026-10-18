@@ -3181,9 +3181,9 @@
  },
  "src/engine/systems/credit.ts#registerCredit": {
   "status": "Rewritten And Verified",
-  "hash": "4d50dd07ffaa",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g12-money.test.ts and tests/evidence-g13-money.test.ts (A Card Payment Bounced: Autopay asked for …, and the current account couldn’t cover it. The payment is late now, and the late fee is the only fee charged for it.; the late-payment notice: The minimum payment was …, and only … was paid. That costs a … late fee …; Your Card Limit Went Up: It’s … now, because your record has been clean.); the memos are statement memos and nominal account keys (Bank Fees, Card Fees, Card Interest, Overdraft Interest, Tax On Interest, Loan Interest) that statements, the year's totals and lending.ts match by name; plain already"
+  "hash": "0358fca8c9e7",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 5: tests/evidence-g13-money.test.ts \"raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; …\" (“The Chase Freedom Unlimited’s limit is $78,260.00 now, because your credit score is 700 or more and you haven’t paid late in the past year.”); tests/evidence-g28-ui.test.ts \"PLAYER JOURNEY: the same groceries on the card each midnight: …\" (five statements, each with its due date 21 days on), tests/evidence-g34-ui.test.ts, tests/evidence-g11-money.test.ts and tests/evidence2-b04.test.ts (a hardship plan’s payment as the least)"
  },
  "src/engine/systems/credit.ts#registerCredit <card.refund_credit>": {
   "status": "Reviewed And Retained",
@@ -3313,9 +3313,9 @@
  },
  "src/engine/systems/lending.ts#closeForOverdraft": {
   "status": "Rewritten And Verified",
-  "hash": "df6601368913",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-banking.test.ts, tests/evidence2-b05.test.ts and tests/home-account-abroad.test.ts (… Closed Your Account: It was overdrawn for 60 days. … went to collections and onto your credit record. You can pay it on Money, under Borrowing. …)"
+  "hash": "4f0e8ba3f9c3",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 5: tests/remaining-banking.test.ts \"FIXTURE, Berlin: the same AktivKonto …\" (“Deutsche Bank closed AktivKonto. It had been below zero for 60 days, …”) and tests/home-account-setoff.test.ts \"writes BNP Paribas’ letters in euros, …\", exact"
  },
  "src/engine/systems/lending.ts#closeForOverdraft [loan]": {
   "status": "Reviewed And Retained",

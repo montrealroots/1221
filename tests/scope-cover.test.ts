@@ -509,7 +509,7 @@ describe('health.enroll: a renewal kept by a month at the School, played', () =>
    * February to July, all on the leave, with under $580 of income in each, no SNAP and no stay: a notice of noncompliance.
    * Each is said on Home, as What Needs You draws it once the player has read what was there.
    */
-  const RENEWED = 'HUSKY D is renewed until its next renewal, on January 1, 2028. Last month’s income is within its limit, and January 2027 met its work rules with time at the School.';
+  const RENEWED = 'HUSKY D is renewed. Its next renewal is on January 1, 2028. Last month’s income is within its limit, and January 2027 met its work rules with time at the School.';
   const NOTICE = 'HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from February to July 2027.';
 
   it('PLAYER JOURNEY: on a personal leave from 20 January 2027, she enrolls in HUSKY D on Papers on 21 January, from 1 January; its renewal on 1 July is kept, Home saying January 2027 met its work rules at the School, said once across a reload; her twin who enrolls on 1 February is renewed on 1 August with no month at the School, and Home draws the notice of noncompliance', async () => {

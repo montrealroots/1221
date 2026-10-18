@@ -205,7 +205,7 @@ describe('a life in Mexico', () => {
   it('is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid', () => {
     // TEST SETUP: a life begun in Mexico City by somebody born in New York, wealthy enough for the solvency test.
     const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'us-ny-newyork', livesWhereBorn: false, wealth: 'wealthy' }, 'mx-settle');
-    const why = 'Moving abroad isn’t part of the game, so it grants none of Mexico’s papers.';
+    const why = 'Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.';
     const balance = () => sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
     const held = balance();
     expect(sim.execute({ kind: 'documents.settle', payload: { country: 'MX' } }).error).toBe('You hold no residence there to settle from.');

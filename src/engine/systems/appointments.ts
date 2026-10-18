@@ -163,8 +163,9 @@ function bookIn(sim: Simulation, person: Person, what: string, days: number, why
   appointmentsOf(person).push(a);
   sim.schedule({ at: a.at, kind: APPOINTMENT_KIND, label: what === SPECIALIST ? 'A Specialist' : `The Doctor${clinic ? `, ${clinic.name}` : ''}`, category: 'personal', priority: 35, requiresPlayer: true, durationMinutes: CONSULT_MINUTES, locationId: homeCity(person), payload: { personId: person.id, appointmentId: a.id } });
   // Its words are the papers guide's quote (`guide/papers.ts`, papers.doctor's example, which tests/guide-examples-papers
-  // holds equal), so brief 14 left them for that guide's area to change with it (health's batches.md, batch 2).
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: what === SPECIALIST ? 'A Referral' : 'A Doctor’s Appointment', body: `${why ? `${why}: a` : `${what}: booked`}${what === SPECIALIST ? (why ? ' specialist, booked' : '') : clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, the wait where you live.`, importance: 50, route: '/workspace/papers' });
+  // holds equal), so brief 14's health area left them for that guide's area; the editorial review changed both together,
+  // “the wait where you live” becoming “the usual wait where you live”.
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: what === SPECIALIST ? 'A Referral' : 'A Doctor’s Appointment', body: `${why ? `${why}: a` : `${what}: booked`}${what === SPECIALIST ? (why ? ' specialist, booked' : '') : clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, the usual wait where you live.`, importance: 50, route: '/workspace/papers' });
   return a;
 }
 

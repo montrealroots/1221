@@ -425,7 +425,7 @@ describe('journeys.x2: a leave and its Affiliate cover, then a bill', () => {
     expect(coverOn(sim.player, sim.now)).toBeUndefined();
     const [appointment] = healthOf(sim.player).appointments!;
     expect(appointment).toMatchObject({ at: at(2027, 3, 4, 10), clinicId: 'us-ct-fhchc-grand' });
-    expect(titled(sim, 'A Doctor’s Appointment').at(-1)!.body).toBe('A doctor’s visit: booked at Fair Haven Community Health Care for March 4, 2027, the wait where you live.');
+    expect(titled(sim, 'A Doctor’s Appointment').at(-1)!.body).toBe('A doctor’s visit: booked at Fair Haven Community Health Care for March 4, 2027, the usual wait where you live.');
     // What Papers prices it at there, before the cover changes and after: the bill it brings, kept.
     ok(sim, 'school.buy_affiliate', { confirm: true });
     expect(coverOn(sim.player, appointment!.at)).toBe('yale');
@@ -803,7 +803,7 @@ describe('journeys.f-mexico-residence: Residence Abroad’s Mexico row, which so
     const sim = life('jm-1', 'wealthy', {}, false);
     // Mexico's rule by hand: 11,460 UMA and 680 UMA at 2026's MXN 117.31, MXN 1,344,372.6 and 79,770.8 to the peso; the
     // card's MXN 11,140.74 a year and the consulate's US$56 (the guidelines of 25 July 2025, the Ley Federal de Derechos).
-    const why = 'Moving abroad isn’t part of the game, so it grants none of Mexico’s papers.';
+    const why = 'Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.';
     const rule = `Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, with the card at MXN 11,140.74 a year and the consulate’s visa at US$56. ${why}`;
     const page = drawn(sim, PapersWorkspace, 'work');
     expect(page).toContain(` Mexico ${rule} `);

@@ -300,7 +300,7 @@ describe('tax.early_filing_notices: a plan refused, and a save from before', () 
 // ---------------------------------------------------------------------------
 
 describe('tax.ct_filed_in_error', () => {
-  const SECURED = 'It secured tax you owed when it was filed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.';
+  const SECURED = 'It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.';
 
   it('PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date: Papers draws no Ask For Its Withdrawal As Filed In Error and says why in the engine’s words, Ask For Its Release beside it; the command sent anyway is refused and moves nothing', () => {
     const sim = thaw(unpaid());
@@ -309,7 +309,7 @@ describe('tax.ct_filed_in_error', () => {
     expect(ct(sim).lien).toMatchObject({ status: 'filed', filedAt: due + 60 * MS_DAY });
     const screen = papers(sim);
     expect(drew('tax.lien_dispute')).toEqual([]);
-    expect(drew('tax.lien_release').map((c) => [c.disabled, c.title])).toEqual([[true, 'You can ask for its release once the balance it secures is paid in full.']]);
+    expect(drew('tax.lien_release').map((c) => [c.disabled, c.title])).toEqual([[true, 'You can ask for its release once what it was filed for is paid in full.']]);
     expect(screen).toContain(SECURED);
     expect(screen).not.toContain('Because it was filed in error, you can ask for it to be withdrawn');
     // GUARD: the command, which the screen no longer sends here.
