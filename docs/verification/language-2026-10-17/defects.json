@@ -1,0 +1,2756 @@
+{
+  "note": "A defect here is something wrong apart from ordinary rewording: a sentence that misstated the game, a sentence built from parts that came out wrong, a control or layout fault, or a fault in what the game does, in a test or tool the pass runs, or in the research data or its builders. Read: every defects.md, coordinator.md, each area's HANDOFF.md, and the editorial review's batches.md where its defects.md points there. One heading, numbered item, table row or bold item is one defect, as its record drew it, except where a record names a second fault found beside the first. Two records of one defect make one entry that names both. A fixed entry gives the commit whose fix stands in the tree (another that fixed it too under also), the files it changed for it, and what holds it now: a test, a check, or the source as it reads. A left entry gives its record's reason and who it's for. Read on l14-defects at 1db33e2d, and held to the tree by defects.py --verify.",
+  "entries": [
+    {
+      "id": "frame-1",
+      "title": "The live clock stopped without a word when a tick threw, and the top bar kept offering Pause on a clock that no longer moved",
+      "records": [
+        {
+          "file": "frame/defects.md",
+          "at": "1. The live clock stops without a word when a move of it throws"
+        },
+        {
+          "file": "frame/HANDOFF.md",
+          "at": "**Defect 1**"
+        },
+        {
+          "file": "crossarea/defects.md",
+          "at": "1. The live clock stopped without a word when a tick threw"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "The live clock that throws"
+        }
+      ],
+      "kind": "behavior",
+      "status": "fixed",
+      "commit": "44779b5d",
+      "touches": [
+        "src/app/game-context.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-crossarea.test.ts",
+          "title": "PLAYER JOURNEY: a tick that throws pauses the save, says so once, and the top bar offers Play; Play pressed is one more try, a second failure pauses it again with one more toast and no loop, and a third press runs the clock"
+        }
+      ]
+    },
+    {
+      "id": "frame-2",
+      "title": "The entry rules' builder cut “Visa exemption” to “Ion” in Japan's rule for thirteen citizenships, on Papers' travel fine print",
+      "records": [
+        {
+          "file": "frame/defects.md",
+          "at": "2. The entry rules' builder cut \"Visa exemption\" to \"Ion\""
+        }
+      ],
+      "kind": "data",
+      "status": "fixed",
+      "commit": "c706a964",
+      "touches": [
+        "tools/build-entry.mjs",
+        "src/engine/content/entry.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-frame.test.ts",
+          "title": "keeps a note’s first word whole, and says a country’s own citizen is one"
+        }
+      ]
+    },
+    {
+      "id": "tutorial-1",
+      "title": "The help's empty search suggested an example search, “why is my rehearsal refused”, that found nothing",
+      "records": [
+        {
+          "file": "tutorial/defects.md",
+          "at": "The help's empty search suggested a search that found nothing."
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "01030ec1",
+      "touches": [
+        "src/engine/content/guide/index.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/guide.test.ts",
+          "title": "suggests only searches that find an entry"
+        }
+      ]
+    },
+    {
+      "id": "tutorial-2",
+      "title": "Looking After Yourself said the menu marks what you love, though the interests went on 2026-10-10 and the menu says nothing of love",
+      "records": [
+        {
+          "file": "tutorial/defects.md",
+          "at": "“Looking After Yourself” said the menu marked what you loved."
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "01030ec1",
+      "touches": [
+        "src/engine/content/tutorial.ts"
+      ],
+      "evidence": [
+        {
+          "absent": "src/engine/content/tutorial.ts",
+          "string": "Something you love lifts you more"
+        }
+      ],
+      "remark": "the interests' guard test looks for “interest” and so never saw this sentence; nothing but its absence holds it"
+    },
+    {
+      "id": "tutorial-3",
+      "title": "You As An Actor sent the player to a Practice button beside each ability, which the Profile doesn't have",
+      "records": [
+        {
+          "file": "tutorial/defects.md",
+          "at": "“You As An Actor” sent the player to a Practice button beside each ability."
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "01030ec1",
+      "touches": [
+        "src/engine/content/tutorial.ts"
+      ],
+      "evidence": [
+        {
+          "source": "src/engine/content/tutorial.ts",
+          "holds": "press the exercise beside an ability or a technique, such as Comic Timing, pick a tier and a focus, and press Practice An Hour"
+        },
+        {
+          "check": "npx vite-node tools/tutorial-routes.mjs -- editorial/after-1440 editorial/after-390 crossarea/capture --check",
+          "result": "exit 0, no label nowhere, on 2026-10-18"
+        }
+      ]
+    },
+    {
+      "id": "tutorial-4",
+      "title": "The Core glossary said food brings energy back and an injury lowers condition; only sleep raises energy, and an injury never lowers condition",
+      "records": [
+        {
+          "file": "tutorial/defects.md",
+          "at": "The glossary says sleep and food bring energy back."
+        },
+        {
+          "file": "health/glossary.md",
+          "at": "and an injury doesn't lower condition"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "Energy and condition in Core"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "6dff8679",
+      "touches": [
+        "docs/GLOSSARY.md"
+      ],
+      "evidence": [
+        {
+          "source": "docs/GLOSSARY.md",
+          "holds": "only sleep brings it back (`applySleep`): a meal doesn't."
+        }
+      ]
+    },
+    {
+      "id": "tutorial-5",
+      "title": "Where labels in the guide's entries named controls no screen and no code has, descriptions written as labels (14 at the tutorial area, 15 on the merged build)",
+      "records": [
+        {
+          "file": "tutorial/defects.md",
+          "at": "Where labels written as descriptions."
+        },
+        {
+          "file": "coordinator.md",
+          "at": "The guide's labels are on the built app's screens"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "9246c074",
+      "touches": [
+        "src/engine/content/guide/start.ts",
+        "src/engine/content/guide/taxes.ts"
+      ],
+      "evidence": [
+        {
+          "check": "npx vite-node tools/tutorial-routes.mjs -- editorial/after-1440 editorial/after-390 crossarea/capture --check",
+          "result": "exit 0, no label nowhere, on 2026-10-18"
+        }
+      ]
+    },
+    {
+      "id": "school-1",
+      "title": "“You and Sofia had rehearsed together 1 times.”: the partner note's count printed bare, and the reader's evenings the same",
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "“You and Sofia had rehearsed together 1 times.”"
+        },
+        {
+          "file": "profile/defects.md",
+          "at": "rehearsed together 1 times."
+        },
+        {
+          "file": "material/defects.md",
+          "at": "You and Hannah had rehearsed together 1 times."
+        },
+        {
+          "file": "material/HANDOFF.md",
+          "at": "Two plural faults outside the area"
+        },
+        {
+          "file": "frame/HANDOFF.md",
+          "at": "\"rehearsed together 1"
+        },
+        {
+          "file": "editorial/batches.md",
+          "at": "The final walk"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "1b16d006",
+      "touches": [
+        "src/engine/systems/coursework.ts"
+      ],
+      "evidence": [
+        {
+          "source": "src/engine/systems/coursework.ts",
+          "holds": "const timesWords = (n: number): string => (n === 1 ? 'once' : n === 2 ? 'twice' : `${n} times`);"
+        },
+        {
+          "record": "docs/verification/language-2026-10-17/editorial/render-now-workload.txt",
+          "holds": "0 distinct faults"
+        }
+      ],
+      "remark": "the record names tests/evidence-g24-school.test.ts as holding it, and no assertion there reads the count; the editorial review's final walk met the old words once more in a save's stored feedback, written before the fix"
+    },
+    {
+      "id": "school-2",
+      "title": "“The choices wasn't complete”: a plural preparation label as the subject of “wasn't”",
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "“The choices wasn’t complete, which cost the believability 47.3 points.”"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "1b16d006",
+      "touches": [
+        "src/engine/content/tasks.ts"
+      ],
+      "evidence": [
+        {
+          "source": "src/engine/content/tasks.ts",
+          "holds": "interpretation: 'Making your choices'"
+        }
+      ]
+    },
+    {
+      "id": "school-3",
+      "title": "A forecast on Shown Today and on a brief's taped-now line said its limit in the past tense, “wasn't complete, which cost”",
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "A forecast in the past tense."
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "1b16d006",
+      "touches": [
+        "src/engine/systems/evaluation.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/editorial-school-words.test.ts",
+          "title": "a part of a piece is named as its card names it, so a presentation’s forecast says its own part and not a revision"
+        }
+      ]
+    },
+    {
+      "id": "school-4",
+      "title": "“… so the 1 calls still to come are off.” when a Cabaret show is left",
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "“… so the 1 calls still to come are off.”"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "1b16d006",
+      "touches": [
+        "src/engine/systems/school.ts"
+      ],
+      "evidence": [
+        {
+          "source": "src/engine/systems/school.ts",
+          "holds": "'the one call still to come is'"
+        }
+      ]
+    },
+    {
+      "id": "school-5",
+      "title": "“1 courses gave you their first work now.” at orientation",
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "“1 courses gave you their first work now.”"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "1b16d006",
+      "touches": [
+        "src/engine/systems/coursework.ts"
+      ],
+      "evidence": [
+        {
+          "source": "src/engine/systems/coursework.ts",
+          "holds": "gave you ${set.length === 1 ? 'its' : 'their'} first piece"
+        }
+      ]
+    },
+    {
+      "id": "school-6",
+      "title": "A note taken and then slipped back under 45% read as a note never taken",
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "A note taken and back again read as never taken."
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "1b16d006",
+      "touches": [
+        "src/engine/systems/coursework.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "a teacher’s note on an unchanged weakness says it was said before, how often, and when; never as a new discovery"
+        }
+      ]
+    },
+    {
+      "id": "school-7",
+      "title": "A scene's place opened on a capital mid-sentence: “Trifles, The one act, the Wright kitchen: you play …”",
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "“Trifles, The one act, the Wright kitchen: you play …”"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "1b16d006",
+      "touches": [
+        "src/engine/systems/coursework.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/editorial-school-words.test.ts",
+          "title": "a scene’s place reads mid-sentence, and a name stays as it is"
+        }
+      ]
+    },
+    {
+      "id": "school-8",
+      "title": "“Ethan won't rehearse before 7 or past 22.”: the hours printed as raw numbers",
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "“Ethan won’t rehearse before 7 or past 22.”"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "1b16d006",
+      "touches": [
+        "src/engine/systems/coursework.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/evidence-g18-school.test.ts",
+          "title": "is refused under two hours ahead, past the due, over a rehearsal or another commitment, and before the boundaries of an intimacy scene are agreed; and declined by the partner’s own day"
+        }
+      ]
+    },
+    {
+      "id": "school-9",
+      "title": "A notice of concern given before the last term named an academic warning as the next step, where a short last term withholds the degree",
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "A notice of concern named the wrong next step before the last term."
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "1b16d006",
+      "touches": [
+        "src/engine/systems/school.ts"
+      ],
+      "evidence": [
+        {
+          "source": "src/engine/systems/school.ts",
+          "holds": "if (next === 'warning') return last ? 'not recommend your degree'"
+        }
+      ],
+      "remark": "the two tests the record names hold the cases either side (an early concern reads “put you on academic warning”; a concern in the last term graduates), and no test asserts “not recommend your degree”"
+    },
+    {
+      "id": "school-10-text",
+      "title": "An accidental whole-tree run of the voice check's fix contracted sentences English doesn't: “nothing says when you'll be”, “How rested you're when”, “a show there's”",
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "**“… and nothing says when you’ll be.”**"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "69ab6cb3",
+      "touches": [
+        "src/engine/systems/leave.ts"
+      ],
+      "evidence": [
+        {
+          "source": "src/engine/systems/leave.ts",
+          "holds": "and there’s no knowing yet when you can."
+        }
+      ],
+      "remark": "the contracted forms never reached a commit: the batch commit holds the sentences rewritten so neither form is needed, and the run's changes to sixteen of other areas' files were reverted before it"
+    },
+    {
+      "id": "school-10-tool",
+      "title": "The voice check's --fix, run with no file named, rewrites every file in the tree, and it contracted forms English doesn't",
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "The tool's `--fix` rewrites every file when given none"
+        },
+        {
+          "file": "school/HANDOFF.md",
+          "at": "`node tools/voice-check.mjs --fix` with no file rewrites every file in the tree."
+        }
+      ],
+      "kind": "test-or-tool",
+      "status": "left",
+      "why": "The school area mended its sentences, reverted the rest and recorded the hazard for whoever runs the tool next (school/HANDOFF.md, Watch For); tools/voice-check.mjs is unchanged since 2026-09-29 (4e1a2ace).",
+      "owner": "a future pass"
+    },
+    {
+      "id": "school-11",
+      "title": "The school, coursework and productions guides quoted 69 refusals in words the game no longer said",
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "The guides quoted refusals the game no longer says."
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "69ab6cb3",
+      "touches": [
+        "src/engine/content/guide/school.ts",
+        "src/engine/content/guide/coursework.ts",
+        "src/engine/content/guide/productions.ts"
+      ],
+      "evidence": [
+        {
+          "check": "node tools/guide-quotes.mjs --check",
+          "result": "exit 0, 580 of 580 quoted sentences the game says, on 2026-10-18"
+        }
+      ]
+    },
+    {
+      "id": "profile-1",
+      "title": "Four ability looks said their first level came “for a life from before it”, where every life starts at that value, a new one included",
+      "records": [
+        {
+          "file": "profile/defects.md",
+          "at": "One untrue sentence, corrected as words"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "5e41a640",
+      "touches": [
+        "src/engine/content/abilities.ts"
+      ],
+      "evidence": [
+        {
+          "source": "src/engine/content/abilities.ts",
+          "holds": "It started at the average of your Scene Study and Improvisation."
+        },
+        {
+          "absent": "src/engine/content/abilities.ts",
+          "string": "derivedFrom: 'For a life from before it"
+        }
+      ]
+    },
+    {
+      "id": "profile-sleep",
+      "title": "“Sleep owed 1 hours” on the Player Profile's Current Condition, and “Sleep owed 0 hours” at none",
+      "records": [
+        {
+          "file": "profile/defects.md",
+          "at": "**Sleep owed printed \"1 hours\"** (fixed)"
+        },
+        {
+          "file": "health/defects.md",
+          "at": "5. **\"Sleep owed 1 hours\" on the Player Profile.**"
+        },
+        {
+          "file": "health/HANDOFF.md",
+          "at": "5 (Profile's \"Sleep owed 1 hours\")"
+        },
+        {
+          "file": "school/HANDOFF.md",
+          "at": "**“Sleep owed 1 hours”**"
+        },
+        {
+          "file": "material/defects.md",
+          "at": "**\"Sleep owed 1 hours\"**"
+        },
+        {
+          "file": "material/HANDOFF.md",
+          "at": "\"Sleep owed 1 hours\" (`src/ui/workspaces/ProfileWorkspace.tsx`)"
+        },
+        {
+          "file": "frame/HANDOFF.md",
+          "at": "\"Sleep owed 1 hours\" (Player Profile)"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "6bfb8928",
+      "touches": [
+        "src/ui/workspaces/ProfileWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/evidence-g32-ui.test.ts",
+          "title": "says the sleep owed in whole hours, one hour singular and none as none (a defect until 2026-10-17: “Sleep owed 1 hours”)"
+        }
+      ]
+    },
+    {
+      "id": "profile-advice",
+      "title": "The advice's sentences built from parts: “0 days ago”, “it held back 0”, “about 1 points a piece” beside a brief, and “Coming to the work with knowing the genre short”",
+      "records": [
+        {
+          "file": "profile/defects.md",
+          "at": "**Found by rendering the advice, fixed as words** (batch 2)"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "c121725d",
+      "touches": [
+        "src/engine/systems/next-steps.ts"
+      ],
+      "evidence": [
+        {
+          "source": "src/engine/systems/next-steps.ts",
+          "holds": "return d < 1 ? 'today'"
+        },
+        {
+          "source": "src/engine/systems/next-steps.ts",
+          "holds": "${theirs.points === 1 ? 'point' : 'points'} a piece"
+        }
+      ]
+    },
+    {
+      "id": "money-d1",
+      "title": "Other Charges said a returned payment's fee is waived on a payment under C$10.00; the bank waives it when the account is less than that short",
+      "records": [
+        {
+          "file": "money/defects.md",
+          "at": "d1. A returned payment's fee said the wrong condition"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "075f25c4",
+      "touches": [
+        "src/ui/workspaces/BankWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-money.test.ts",
+          "title": "says a returned payment’s fee by the shortfall the bank reads, a dormant account’s and a quiet month’s, each with its source"
+        }
+      ]
+    },
+    {
+      "id": "money-d2",
+      "title": "A closing account's notice said what it held is “on its way” of money moved at once, and of an empty account",
+      "records": [
+        {
+          "file": "money/defects.md",
+          "at": "d2. The \"… Closed\" notice said \"on its way\" of money moved at once, and of an empty account"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "075f25c4",
+      "touches": [
+        "src/engine/systems/bankmoves.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-money.test.ts",
+          "title": "refuses what a closing account can’t take, saying why, and says where what it held went when it closes"
+        }
+      ]
+    },
+    {
+      "id": "money-d3",
+      "title": "Closing an overdrawn savings account said a negative sum moves: “Its -$3, moves to Chase Total Checking.”, where closing takes $3.30 from checking",
+      "records": [
+        {
+          "file": "money/defects.md",
+          "at": "d3. Closing an overdrawn savings account said a negative sum moves"
+        },
+        {
+          "file": "profile/defects.md",
+          "at": "\"Its -$3, moves to …\""
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "075f25c4",
+      "touches": [
+        "src/ui/workspaces/BankWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-money.test.ts",
+          "title": "says what closing savings does, above zero, at zero and overdrawn, to the cent; and closing an overdrawn one takes what it says"
+        }
+      ]
+    },
+    {
+      "id": "money-d4",
+      "title": "The balance tile's control was named “Balance-$3” and “Balance$3,025”, its label and figure run together",
+      "records": [
+        {
+          "file": "money/defects.md",
+          "at": "d4. A control named \"Balance-$3\""
+        },
+        {
+          "file": "profile/defects.md",
+          "at": "\"Balance-$3\""
+        }
+      ],
+      "kind": "layout",
+      "status": "fixed",
+      "commit": "075f25c4",
+      "touches": [
+        "src/ui/workspaces/BankWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-money.test.ts",
+          "title": "says what closing savings does, above zero, at zero and overdrawn, to the cent; and closing an overdrawn one takes what it says"
+        }
+      ]
+    },
+    {
+      "id": "money-minus",
+      "title": "An overdrawn balance was written “-$3” on the balance tile and the From list (“Chase (-$3)”), with a hyphen and no cents",
+      "records": [
+        {
+          "file": "profile/defects.md",
+          "at": "\"Chase (-$3)\""
+        },
+        {
+          "file": "material/defects.md",
+          "at": "money written \"-$3\""
+        },
+        {
+          "file": "frame/HANDOFF.md",
+          "at": "\"-$3\" on Money"
+        },
+        {
+          "file": "money/batches.md",
+          "at": "The check still found \"money"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "164251a2",
+      "touches": [
+        "src/ui/workspaces/BankWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-money.test.ts",
+          "title": "says what closing savings does, above zero, at zero and overdrawn, to the cent; and closing an overdrawn one takes what it says"
+        }
+      ]
+    },
+    {
+      "id": "money-d5",
+      "title": "The card said it “opened at” its introductory 0%, where it was set at 18.46% and the 0% runs only for the introductory months",
+      "records": [
+        {
+          "file": "money/defects.md",
+          "at": "d5. The card said it \"opened at\" its introductory 0%"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "164251a2",
+      "touches": [
+        "src/ui/bank/BankCard.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-money.test.ts",
+          "title": "says the card’s rate as set when it opened, its fees and its minimum, in the introductory months"
+        }
+      ]
+    },
+    {
+      "id": "money-d6",
+      "title": "A card offer showed the scope reset's development date: “nothing pays a bill since 2026-10-09”",
+      "records": [
+        {
+          "file": "money/defects.md",
+          "at": "d6. A development date shown to the player"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "164251a2",
+      "touches": [
+        "src/ui/bank/BankCardOffers.tsx"
+      ],
+      "evidence": [
+        {
+          "absent": "src/ui/bank/BankCardOffers.tsx",
+          "string": "nothing pays a bill since"
+        },
+        {
+          "source": "src/ui/bank/BankCardOffers.tsx",
+          "holds": "groceries are the only thing a card buys"
+        }
+      ]
+    },
+    {
+      "id": "money-closing-fees",
+      "title": "Closing a savings account doesn't say the closing fees a German account settles when it goes",
+      "records": [
+        {
+          "file": "money/defects.md",
+          "at": "A German account's closing fees aren't in \"Closing it moves its …\"."
+        }
+      ],
+      "kind": "text",
+      "status": "left",
+      "why": "No German savings account in the game has a monthly fee today, so no figure on screen is wrong; a product given one would make it so. The record suggests the line read closingFeesDue, and closingWords still doesn't.",
+      "owner": "a future pass"
+    },
+    {
+      "id": "papers-1",
+      "title": "A refusal told a player with no motorcycle license to “earn one on the Papers screen”, which nothing there does since driving went",
+      "records": [
+        {
+          "file": "papers/defects.md",
+          "at": "A refusal promised a step the game no longer has."
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "56c73270",
+      "touches": [
+        "src/engine/systems/documents.ts"
+      ],
+      "evidence": [
+        {
+          "absent": "src/engine/systems/documents.ts",
+          "string": "earn one on the Papers screen"
+        }
+      ],
+      "remark": "no New Haven life reaches it, so no test does"
+    },
+    {
+      "id": "papers-2",
+      "title": "The IRS's lien notice offered a Collection Due Process hearing the game has no way to ask for",
+      "records": [
+        {
+          "file": "papers/defects.md",
+          "at": "The IRS's lien notice offered a hearing the game has no way to ask for."
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "56c73270",
+      "touches": [
+        "src/engine/systems/taxreturn.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/liens-and-arrangements.test.ts",
+          "title": "PLAYER JOURNEY: $10,000 or more unpaid at the LT11 files it; paid, released within 30 days; then withdrawn on Form 12277"
+        }
+      ]
+    },
+    {
+      "id": "papers-3",
+      "title": "The Returns tab and the tax notices typed rule figures (7%, 5%, 0.5%, 60 days, 30 days) beside the constants that hold them",
+      "records": [
+        {
+          "file": "papers/defects.md",
+          "at": "Typed rule figures beside the rules' constants."
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "56c73270",
+      "touches": [
+        "src/engine/systems/taxreturn.ts",
+        "src/ui/workspaces/PapersWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "source": "src/engine/systems/taxreturn.ts",
+          "holds": "It’s released within ${FEDERAL_LIEN.releaseDays} days of payment in full."
+        }
+      ]
+    },
+    {
+      "id": "papers-4",
+      "title": "The IRS's decision on a payment plan skipped a refusal whose words matched “payment plan” or “application”: a rule keyed on the player's words",
+      "records": [
+        {
+          "file": "papers/defects.md",
+          "at": "A rule reads the player's words."
+        },
+        {
+          "file": "crossarea/defects.md",
+          "at": "2. The IRS's decision on a payment plan read its refusal's words"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "`tax.apply_plan` deciding by words"
+        }
+      ],
+      "kind": "behavior",
+      "status": "fixed",
+      "commit": "0cce8bc3",
+      "touches": [
+        "src/engine/systems/taxreturn.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-crossarea.test.ts",
+          "title": "the IRS’s decision on a payment plan"
+        }
+      ]
+    },
+    {
+      "id": "papers-5",
+      "title": "Dead content: licensepaths.ts has no reader since driving went, and of licenses.ts only a license's authority, name and permit issuer reach a player",
+      "records": [
+        {
+          "file": "papers/defects.md",
+          "at": "5. **Dead content.**"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "**Dead content.**"
+        }
+      ],
+      "kind": "data",
+      "status": "left",
+      "why": "Both are marked Reviewed And Retained with that reason; deleting them is a scope call, not a writing one.",
+      "owner": "owner"
+    },
+    {
+      "id": "papers-7",
+      "title": "Britain was named “GB” on two refusals and a list, a country looked up by a code that isn't Britain's id (“Living in GB needs permission …”)",
+      "records": [
+        {
+          "file": "papers/defects.md",
+          "at": "Britain was named “GB” on two refusals and a list."
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "56c73270",
+      "touches": [
+        "src/engine/systems/documents.ts",
+        "src/ui/papers/Documents.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/residence.test.ts",
+          "title": "is refused where none is open to an actor, with the reason"
+        }
+      ]
+    },
+    {
+      "id": "papers-8",
+      "title": "A test expected the ID card's refusal for an IRS payment, a rewrite misapplied in a test migration",
+      "records": [
+        {
+          "file": "papers/defects.md",
+          "at": "A test quoted a misapplied rewrite."
+        }
+      ],
+      "kind": "test-or-tool",
+      "status": "fixed",
+      "commit": "56c73270",
+      "touches": [
+        "tests/evidence-g16-papers.test.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/evidence-g16-papers.test.ts",
+          "title": "refuses a payment the bank can’t cover in its words, charging nothing, and keeps the part paid across a reload"
+        }
+      ]
+    },
+    {
+      "id": "papers-9",
+      "title": "The passport fine print showed raw research notes under “Not confirmed:”: field names, HTTP errors and “the brief asked …”",
+      "records": [
+        {
+          "file": "papers/defects.md",
+          "at": "The passport fine print showed raw research notes."
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "56c73270",
+      "touches": [
+        "src/ui/papers/Documents.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/remaining-papers.test.ts",
+          "title": "PLAYER JOURNEY: an Auckland-born student renews her New Zealand passport faster on Papers from New Haven: NZ$247 and NZ$247 more, in dollars, GST charged and the urgent fee taken as the standard one, each said on the screen to be SLATE’s assumption; charged once, a second application refused, issued in five days across a reload"
+        }
+      ]
+    },
+    {
+      "id": "health-1",
+      "title": "“1 hours on the books”: the Sleep Debt measure's hours printed bare on your own page",
+      "records": [
+        {
+          "file": "health/defects.md",
+          "at": "1. **\"1 hours\" on your own page.**"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "93cf918b",
+      "touches": [
+        "src/ui/looks/wellbeing.tsx"
+      ],
+      "evidence": [
+        {
+          "source": "src/ui/looks/wellbeing.tsx",
+          "holds": "${plural(Math.round(valueOf(w, d.key)), 'hour')}"
+        }
+      ]
+    },
+    {
+      "id": "health-2",
+      "title": "“a citizen of United States”: a country's bare name after “a citizen of”",
+      "records": [
+        {
+          "file": "health/defects.md",
+          "at": "2. **\"a citizen of United States\".**"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "93cf918b",
+      "touches": [
+        "src/ui/looks/wellbeing.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/evidence-g33-ui.test.ts",
+          "title": "PLAYER JOURNEY: her name on Home opens her: the trait, her body in feet and pounds where she lives, her papers, her own terms, her background and films; the eight dials, Readiness, Curious, a drawn Depression kept up, and Your Own Plans"
+        }
+      ]
+    },
+    {
+      "id": "health-3",
+      "title": "A type 2 diabetes left untreated was told type 1's risk of an emergency",
+      "records": [
+        {
+          "file": "health/defects.md",
+          "at": "A type 2 diabetes told type 1's risk."
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "93cf918b",
+      "touches": [
+        "src/ui/looks/wellbeing.tsx"
+      ],
+      "evidence": [
+        {
+          "source": "src/ui/looks/wellbeing.tsx",
+          "holds": "function leftAlone(c: Condition, typeOne?: boolean)"
+        }
+      ]
+    },
+    {
+      "id": "health-4",
+      "title": "Readiness at its ceiling of 100 said a measure short of its best was costing you, though the clamp takes nothing off",
+      "records": [
+        {
+          "file": "health/defects.md",
+          "at": "Readiness at its ceiling said something held it back."
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "93cf918b",
+      "touches": [
+        "src/ui/looks/wellbeing.tsx"
+      ],
+      "evidence": [
+        {
+          "source": "src/ui/looks/wellbeing.tsx",
+          "holds": "As good as a day gets, even with"
+        }
+      ]
+    },
+    {
+      "id": "health-7",
+      "title": "Stray spaces in the gazetteer reached the screen: Bonaire's name, Curacao's capital, and a calling code of “+ ” for Heard Island",
+      "records": [
+        {
+          "file": "health/defects.md",
+          "at": "Stray spaces in the gazetteer's country table."
+        },
+        {
+          "file": "crossarea/defects.md",
+          "at": "4. The gazetteer's stray spaces"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "the gazetteer's spaces"
+        }
+      ],
+      "kind": "data",
+      "status": "fixed",
+      "commit": "d182e81b",
+      "also": [
+        "4f56e99f"
+      ],
+      "touches": [
+        "src/engine/content/world-data.ts",
+        "tools/build-world-data.mjs"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-crossarea.test.ts",
+          "title": "holds no field that starts or ends with a space in any country, region or bundled city; Bonaire’s name, Curacao’s capital and Heard Island’s dialling code read as they should, on the country look too"
+        }
+      ]
+    },
+    {
+      "id": "health-days",
+      "title": "“1 days” and “1 years” on Passport And ID, where Canada's faster service takes a day",
+      "records": [
+        {
+          "file": "health/HANDOFF.md",
+          "at": "\"1 days\" on Papers, Passport And ID"
+        },
+        {
+          "file": "crossarea/batches.md",
+          "at": "**“1 days” on Passport And ID.**"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "The Papers screens' faults found by the health area."
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "ce8b26e6",
+      "touches": [
+        "src/ui/papers/Documents.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/remaining-papers.test.ts",
+          "title": "a passport office’s days and years are said in the right number: Canada’s faster service in Vancouver takes “1 day”"
+        }
+      ]
+    },
+    {
+      "id": "health-husky",
+      "title": "“HUSKY D: $20.00 of $0.00 paid this year”: a plan with no yearly most said a most of nothing",
+      "records": [
+        {
+          "file": "crossarea/batches.md",
+          "at": "**“HUSKY D: $20.00 of $0.00 paid this year.”**"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "\"HUSKY D: $20.00 of $0.00 paid this year\""
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "ce8b26e6",
+      "touches": [
+        "src/ui/workspaces/PapersWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/defects-g8-4.test.ts",
+          "title": "on Your Cover, on the bills’ subtitle and on Home’s Papers line"
+        }
+      ]
+    },
+    {
+      "id": "crossarea-3",
+      "title": "The score a raised card limit needs, 700, was typed in the ask, its notice and the guide beside the review's constant",
+      "records": [
+        {
+          "file": "crossarea/defects.md",
+          "at": "3. The card limit's 700 was typed in three places beside its constant"
+        },
+        {
+          "file": "money/glossary.md",
+          "at": "**The limit review's 700**"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "the 700"
+        }
+      ],
+      "kind": "behavior",
+      "status": "fixed",
+      "commit": "218d1551",
+      "touches": [
+        "src/engine/systems/cardlife.ts",
+        "src/engine/systems/credit.ts",
+        "src/engine/content/guide/money.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-crossarea-raise.test.ts",
+          "title": "is one figure: moved, a raise asked for a point under it is declined and the notice says the moved figure, at it the raise is granted, and the guide says the moved figure for the ask and the six-monthly review"
+        }
+      ]
+    },
+    {
+      "id": "crossarea-5",
+      "title": "The guide's next step was optional, so an entry without one showed no What To Do Next and nothing said so",
+      "records": [
+        {
+          "file": "crossarea/defects.md",
+          "at": "5. The guide's `next` was optional, and nothing asked it of an entry"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "The guide's `next` on every entry"
+        }
+      ],
+      "kind": "test-or-tool",
+      "status": "fixed",
+      "commit": "22a3654f",
+      "touches": [
+        "src/engine/content/guide/types.ts",
+        "src/ui/guide/Help.tsx",
+        "tests/guide.test.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/guide.test.ts",
+          "title": "gives every entry what to do next, and leaves it empty only where a batch record of brief 14 says why"
+        }
+      ]
+    },
+    {
+      "id": "crossarea-typecheck",
+      "title": "The gazetteer test's cast didn't typecheck, and tsc in build mode reported a pass on it once",
+      "records": [
+        {
+          "file": "crossarea/defects.md",
+          "at": "One fault of this pass's own"
+        }
+      ],
+      "kind": "test-or-tool",
+      "status": "fixed",
+      "commit": "4f56e99f",
+      "touches": [
+        "tests/language-crossarea.test.ts"
+      ],
+      "evidence": [
+        {
+          "check": "npx tsc -p tsconfig.app.json --noEmit",
+          "result": "exit 0 on 2026-10-18"
+        }
+      ],
+      "remark": "why build mode missed it once isn't known"
+    },
+    {
+      "id": "crossarea-coverage",
+      "title": "The coverage audit's line citations went stale as the brief's test edits moved lines (“line 189 isn't inside a test”), so coverage --check failed",
+      "records": [
+        {
+          "file": "crossarea/defects.md",
+          "at": "`node tools/coverage.mjs --check` fails on"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "The coverage audit's line citations"
+        }
+      ],
+      "kind": "test-or-tool",
+      "status": "fixed",
+      "commit": "f7fba3e1",
+      "also": [
+        "d5c9509e"
+      ],
+      "touches": [
+        "docs/GAMEPLAY-COVERAGE.md"
+      ],
+      "evidence": [
+        {
+          "check": "node tools/coverage.mjs --check",
+          "result": "exit 0 on 2026-10-18"
+        }
+      ]
+    },
+    {
+      "id": "crossarea-suite",
+      "title": "The material area's words test held a label the school area's later batches rewrote, so the whole suite failed at the merge",
+      "records": [
+        {
+          "file": "crossarea/defects.md",
+          "at": "fails the same way, on the same assertion"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "The material area's test held words the school area renamed"
+        }
+      ],
+      "kind": "test-or-tool",
+      "status": "fixed",
+      "commit": "243a35bb",
+      "touches": [
+        "tests/material-words.test.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/material-words.test.ts",
+          "title": "shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s"
+        }
+      ]
+    },
+    {
+      "id": "crossarea-traceability",
+      "title": "TRACEABILITY says the IRS's plan decision changes nothing, since its tool reads only the assignments in a handler's own body",
+      "records": [
+        {
+          "file": "crossarea/defects.md",
+          "at": "TRACEABILITY's Changes column for `tax.plan_decide` went from \"status\" to \"—\""
+        }
+      ],
+      "kind": "test-or-tool",
+      "status": "left",
+      "why": "The decision still changes the plan's status, through refusePlan and startPlan, which tools/traceability.mjs doesn't follow; the record explains the column and leaves the tool as it is.",
+      "owner": "a future pass"
+    },
+    {
+      "id": "json-d1",
+      "title": "The genre look said “only in single examples” of ten genres the research holds low for other reasons, and the Profile's table said “rests on one example” of 51",
+      "records": [
+        {
+          "file": "json/defects.md",
+          "at": "D1. The genre look says \"only in single examples\""
+        },
+        {
+          "file": "coordinator.md",
+          "at": "The false \"only in single examples\""
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "20f2757e",
+      "touches": [
+        "src/ui/looks/actor.tsx",
+        "src/ui/workspaces/ProfileWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-genre-look.test.ts",
+          "title": "says a genre the research holds low is held with low confidence, never that it rests on single examples"
+        }
+      ]
+    },
+    {
+      "id": "json-d2",
+      "title": "“Why it's applied, in the research's words:” headed the game's own wording of the research, claiming a quotation",
+      "records": [
+        {
+          "file": "json/defects.md",
+          "at": "now heads the game's words"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "the heading that claimed a"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "20f2757e",
+      "touches": [
+        "src/ui/looks/actor.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-genre-look.test.ts",
+          "title": "gives the small print as three paragraphs, the applied reasons headed in the game’s own words"
+        }
+      ]
+    },
+    {
+      "id": "json-d3",
+      "title": "The genre look's small print was one paragraph of about 2,000 characters, some forty lines at 390 wide",
+      "records": [
+        {
+          "file": "json/defects.md",
+          "at": "D3. The genre look's small print is one paragraph"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "the 2,000-character paragraph"
+        }
+      ],
+      "kind": "layout",
+      "status": "fixed",
+      "commit": "20f2757e",
+      "touches": [
+        "src/ui/looks/actor.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-genre-look.test.ts",
+          "title": "gives the small print as three paragraphs, the applied reasons headed in the game’s own words"
+        }
+      ]
+    },
+    {
+      "id": "data-1",
+      "title": "The license builder had drifted from the file it builds: a rebuild would have dropped New York's district and put the research's description back into Mexico City's license name",
+      "records": [
+        {
+          "file": "data/defects.md",
+          "at": "The license builder had drifted from the file it builds."
+        }
+      ],
+      "kind": "data",
+      "status": "fixed",
+      "commit": "27939a7f",
+      "touches": [
+        "tools/build-licenses.mjs"
+      ],
+      "evidence": [
+        {
+          "source": "tools/build-licenses.mjs",
+          "holds": "const DISTRICT = { 'us-ny': { cityIds: ['us-ny-newyork'], perHalfYear: 1 } };"
+        },
+        {
+          "record": "docs/verification/language-2026-10-17/data/builders-rerun.txt",
+          "holds": "$ node tools/build-licenses.mjs docs/research/world/research-licences.json"
+        }
+      ],
+      "remark": "no test runs a builder, as each writes into src/; the record's rerun of every builder on the unchanged tree is the check"
+    },
+    {
+      "id": "data-2",
+      "title": "A card's fine print said its day twice, “…, 2026-09-26, 2026-09-26.”, on 45 cards",
+      "records": [
+        {
+          "file": "data/defects.md",
+          "at": "A card's fine print said its day twice."
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "25cf21d0",
+      "touches": [
+        "src/ui/bank/BankCard.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-data-dates.test.ts",
+          "title": "says the day a product, a card, its cash, its security and its term deposit were read, once each, as the data holds it"
+        }
+      ]
+    },
+    {
+      "id": "data-roundups",
+      "title": "Round-Ups' fine print said one day twice: “read live October 13, 2026, checked October 13, 2026.”",
+      "records": [
+        {
+          "file": "data/defects.md",
+          "at": "A round-up rule's two days."
+        },
+        {
+          "file": "coordinator.md",
+          "at": "a round-up rule read and checked on one day says it once"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "7bfc4532",
+      "touches": [
+        "src/ui/bank/RoundUps.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-data-dates.test.ts",
+          "title": "says NatWest’s round-up rule was read live and checked on one day, once, and BofA’s, checked on another, both"
+        }
+      ]
+    },
+    {
+      "id": "data-terms-day",
+      "title": "Forty cards' fine print gave two days with nothing saying which was which: “…, September 26, 2026, April 10, 2026.”",
+      "records": [
+        {
+          "file": "data/defects.md",
+          "at": "A card source and its terms' day, where they differ."
+        },
+        {
+          "file": "coordinator.md",
+          "at": "names its terms' day"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "7bfc4532",
+      "touches": [
+        "src/ui/bank/BankCard.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-data-dates.test.ts",
+          "title": "names a card’s terms’ day where its source ends on the day it was read, Lloyds’s among them"
+        }
+      ]
+    },
+    {
+      "id": "data-colon",
+      "title": "The money guide quoted creation's label with a space before its colon: “Kept At … : £… In …”",
+      "records": [
+        {
+          "file": "data/defects.md",
+          "at": "Kept At … : £… In …"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "7bfc4532",
+      "touches": [
+        "src/engine/content/guide/money.ts"
+      ],
+      "evidence": [
+        {
+          "source": "src/engine/content/guide/money.ts",
+          "holds": "'“Kept At …: £… In …” is the balance the bank holds, in its currency.'"
+        }
+      ]
+    },
+    {
+      "id": "journeys-1",
+      "title": "Your ID's Get button was grayed with its reason only in a tooltip, which a phone never shows",
+      "records": [
+        {
+          "file": "journeys/defects.md",
+          "at": "### 1. Your ID's Get button was grayed with its reason in a tooltip alone"
+        }
+      ],
+      "kind": "layout",
+      "status": "fixed",
+      "commit": "f1705589",
+      "touches": [
+        "src/ui/papers/Documents.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/journeys14-idcard-reason.test.ts",
+          "title": "says “One is already on its way.” while it comes, and “You already hold one in force.” once it has, in words beside the grayed button"
+        }
+      ]
+    },
+    {
+      "id": "journeys-1-siblings",
+      "title": "Your Passport's and OPT's grayed buttons gave their reasons only in a tooltip",
+      "records": [
+        {
+          "file": "journeys/defects.md",
+          "at": "**The siblings, fixed at the merge**"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "The passport's and OPT's grayed buttons said why only in a tooltip"
+        }
+      ],
+      "kind": "layout",
+      "status": "fixed",
+      "commit": "fa1126d1",
+      "touches": [
+        "src/ui/papers/Documents.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/journeys14-idcard-reason.test.ts",
+          "title": "says a passport already applied for is being decided, once for both buttons, and why OPT isn’t open, beside the grayed buttons"
+        }
+      ]
+    },
+    {
+      "id": "journeys-2",
+      "title": "A Connecticut ID card in the mail read Being Decided on its row and in its look, where for a citizen nothing is decided",
+      "records": [
+        {
+          "file": "journeys/defects.md",
+          "at": "### 2. A Connecticut ID card on its way reads \"Being Decided\""
+        },
+        {
+          "file": "coordinator.md",
+          "at": "A Connecticut ID card in the mail read Being Decided"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "dcbf4b23",
+      "touches": [
+        "src/engine/systems/identity.ts",
+        "src/ui/looks/papers.tsx",
+        "src/ui/papers/Documents.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/evidence-g15-papers.test.ts",
+          "title": "PLAYER JOURNEY: a British student’s Limited Term card reads Being Decided while SAVE decides and On Its Way once it has, on its row and in its look"
+        }
+      ],
+      "remark": "a non-citizen's replacement still reads Being Decided for SAVE's days, though no check is made, as the commit says"
+    },
+    {
+      "id": "journeys-2-replacement",
+      "title": "A pending replacement card showed the lost card's issue date on its row, and as Issued in its look",
+      "records": [
+        {
+          "file": "journeys/defects.md",
+          "at": "Found beside it: a pending replacement showed the lost card's issue date on its row"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "a pending replacement showed the lost card's issue date"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "dcbf4b23",
+      "touches": [
+        "src/ui/looks/papers.tsx",
+        "src/ui/papers/Documents.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/evidence-g15-papers.test.ts",
+          "title": "on Passport And ID, a lost card’s row offers File A Police Report and Replace It, $30; pressed, it says the day it comes, and the row then reads Being Decided"
+        }
+      ]
+    },
+    {
+      "id": "journeys-3",
+      "title": "On The Way can't see next week's classes before Sunday evening: from a Friday it asks nothing, and from a Saturday it says five commitments and stops at ten",
+      "records": [
+        {
+          "file": "journeys/defects.md",
+          "at": "### 3. On The Way can't see next week's classes before Sunday evening"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "**On The Way before Sunday evening**"
+        }
+      ],
+      "kind": "behavior",
+      "status": "left",
+      "why": "planWeek puts a week's classes on the timeline at 6 PM the Sunday before, and On The Way reads only the timeline. It's the engine's scheduling, not its words: either the week is planned earlier or On The Way reads the timetable too, and both change what the engine schedules or reads. Left as found.",
+      "owner": "a future pass"
+    },
+    {
+      "id": "journeys-4",
+      "title": "Health Cover's Marketplace panel was one paragraph of 246 to 309 words, on screen in full whenever Health Cover opened",
+      "records": [
+        {
+          "file": "journeys/defects.md",
+          "at": "### 4. Health Cover's Marketplace paragraph is a wall of text"
+        },
+        {
+          "file": "health/HANDOFF.md",
+          "at": "The Marketplace's"
+        },
+        {
+          "file": "crossarea/batches.md",
+          "at": "**The Marketplace's paragraph,**"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "the Marketplace's 246 to 309 words in one block"
+        }
+      ],
+      "kind": "layout",
+      "status": "fixed",
+      "commit": "ce8b26e6",
+      "touches": [
+        "src/ui/workspaces/PapersWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "source": "src/ui/workspaces/PapersWorkspace.tsx",
+          "holds": "<summary>Who Public Cover Takes</summary>"
+        }
+      ]
+    },
+    {
+      "id": "journeys-5",
+      "title": "Home's Calendar cut a long title to one line at 390 wide (“Yale Cabaret, Season 59: The Show Ends”)",
+      "records": [
+        {
+          "file": "journeys/defects.md",
+          "at": "### 5. Home's Calendar cuts an event's title to one line at 390"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "Home's Calendar title on two lines at 390"
+        }
+      ],
+      "kind": "layout",
+      "status": "fixed",
+      "commit": "20f2757e",
+      "touches": [
+        "src/ui/screens/Home.tsx"
+      ],
+      "evidence": [
+        {
+          "source": "src/ui/screens/Home.tsx",
+          "holds": "<span className=\"small clamp-2\" style={{ minWidth: 0 }}>"
+        }
+      ]
+    },
+    {
+      "id": "journeys-6",
+      "title": "A covered injury's notice said nothing of its care, or that it cost nothing, or that Call In Sick excuses a class day while it mends",
+      "records": [
+        {
+          "file": "journeys/defects.md",
+          "at": "### 6. A covered injury's notice says nothing of its care, or of Call In Sick"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "An injury's notice said nothing of a care the plan paid"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "961b3f08",
+      "touches": [
+        "src/engine/systems/injury.ts",
+        "src/ui/looks/wellbeing.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-injury.test.ts",
+          "title": "names the care a plan paid whole as costing nothing, and Call In Sick for a student, not for one who has left"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-1",
+      "title": "“Came to 1 of 1 rehearsals with you” on the classmate look",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 1 | `src/ui/looks/classmate.tsx#top` (school) |"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "0a955a6f",
+      "touches": [
+        "src/ui/looks/classmate.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "rehearsals with a classmate: none yet, one, several, one more to lift a boundary, and missed by you"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-2",
+      "title": "“that lifts after 1 more rehearsals kept” on the classmate look",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 2 | `src/ui/looks/classmate.tsx#top` (school) |"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "0a955a6f",
+      "touches": [
+        "src/ui/looks/classmate.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "rehearsals with a classmate: none yet, one, several, one more to lift a boundary, and missed by you"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-3",
+      "title": "“(Until 1 More Rehearsals Are Kept)” on Your Partners",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 3 | `src/ui/components/CourseworkPane.tsx#Partners` (school) |"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "0a955a6f",
+      "touches": [
+        "src/ui/components/CourseworkPane.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "rehearsals with a classmate: none yet, one, several, one more to lift a boundary, and missed by you"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-4",
+      "title": "“Attendance counts 1 of 1 class days” on the Standing tab, and a call and a shift the same at one",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 4 | `src/ui/workspaces/SchoolWorkspace.tsx#StandingPane` (school) |"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "0a955a6f",
+      "touches": [
+        "src/ui/workspaces/SchoolWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "a course’s meetings and the term’s class days on the first day of classes, and make-up sessions owed, one or several"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-5",
+      "title": "“Acting I: at 1 of 1 classes.” for a course met once",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 5 | `src/ui/workspaces/SchoolWorkspace.tsx#CoursesPanel` (school) |"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "0a955a6f",
+      "touches": [
+        "src/ui/workspaces/SchoolWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "a course’s meetings and the term’s class days on the first day of classes, and make-up sessions owed, one or several"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-6",
+      "title": "“1 of 1 make-up sessions left” for an Incomplete owing one",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 6 | `src/ui/workspaces/SchoolWorkspace.tsx#CoursesPanel` (school) |"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "0a955a6f",
+      "touches": [
+        "src/ui/workspaces/SchoolWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "a course’s meetings and the term’s class days on the first day of classes, and make-up sessions owed, one or several"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-7",
+      "title": "“Researched 2026-09-29.” in the entry rules' fine print, a day as the code keeps it",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 7 | `src/ui/papers/Documents.tsx#PassportPane` (papers) |"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "0a955a6f",
+      "touches": [
+        "src/ui/papers/Documents.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "payments missed in a row and a payment plan’s months, one and several; documents held, none, one and several"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-8",
+      "title": "“read 2026-10-10.” in a Social Security number's fine print",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 8 | `src/ui/papers/Documents.tsx#TaxIdPanel` (papers) |"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "0a955a6f",
+      "touches": [
+        "src/ui/papers/Documents.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "a document’s missing number: a student on an F-1 with no Social Security number, its status in the number’s place and why it can’t be applied for yet"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-9",
+      "title": "A tax return's lines that take away were written with a hyphen: “Withheld From Your Pay And Pension -$1,961.96”",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 9 | `src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane` (papers) |"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "0a955a6f",
+      "touches": [
+        "src/ui/workspaces/PapersWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "a tax return’s balance: a refund due, and nothing owed or due back, as the return and its question say it"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-10",
+      "title": "A return with nothing owed or due back read “Your Refund $0.00”",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 10 | `src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane` (papers) |"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "0a955a6f",
+      "touches": [
+        "src/ui/workspaces/PapersWorkspace.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "a tax return’s balance: a refund due, and nothing owed or due back, as the return and its question say it"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-11",
+      "title": "Home wrote an overdrawn account and a worth below nothing with a hyphen (“-$41.10”, “Worth -$41”, “Worth -$227”), where Money writes the minus sign",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 11 | `src/ui/screens/Home.tsx#Home` (frame) |"
+        },
+        {
+          "file": "health/batches.md",
+          "at": "\"Worth -$227\" (Home's money line"
+        },
+        {
+          "file": "crossarea/batches.md",
+          "at": "**“Worth -$227”** on Home's Money line."
+        },
+        {
+          "file": "coordinator.md",
+          "at": "\"Worth -$227\""
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "ce8b26e6",
+      "also": [
+        "0a955a6f"
+      ],
+      "touches": [
+        "src/ui/screens/Home.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/evidence-g33-ui.test.ts",
+          "title": "a worth below nothing is written with the minus sign, as Money writes an overdrawn balance"
+        },
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "an account: money in it, nothing, and overdrawn, on its look and on Home, written as money is written"
+        }
+      ],
+      "remark": "the dynamic cases and the cross-area words pass each fixed it; the tree keeps the words pass's"
+    },
+    {
+      "id": "dynamic-12",
+      "title": "An overdrawn account's look read “Balance -$41.10”",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 12 | `src/ui/looks/money.tsx#accountBody` (money) |"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "0a955a6f",
+      "touches": [
+        "src/ui/looks/money.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "an account: money in it, nothing, and overdrawn, on its look and on Home, written as money is written"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-13",
+      "title": "A card paid past what it owed said only that the whole limit was free to use, beside a Left To Spend over the limit",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 13 | `src/ui/looks/money.tsx#accountSentence` (money) |"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "0a955a6f",
+      "touches": [
+        "src/ui/looks/money.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "a card: owing on it, owing nothing, and holding your money after paying more than was owed"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-14",
+      "title": "The advice said “cost about 1 points off the whole a piece” wherever a cost rounded to one",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 14 | `src/engine/systems/experience.ts#recommendations` (profile) |"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "2c99cb85",
+      "touches": [
+        "src/engine/systems/experience.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "the advice’s counts: a cost of one point and several, and the pieces that call on an ability, one and several"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-15",
+      "title": "The advice said “1 of your last 12 pieces call on it”, and “1 of your last 1 piece” of a single piece",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "| 15 | `src/engine/systems/experience.ts#recommendations` (profile) |"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "**The advice's count.**"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "ce8b26e6",
+      "also": [
+        "2c99cb85"
+      ],
+      "touches": [
+        "src/engine/systems/experience.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/decisions-advice.test.ts",
+          "title": "says one piece read as “your last piece”, and agrees the verb with the pieces that call on it"
+        }
+      ],
+      "remark": "the dynamic cases and the cross-area words pass each fixed it; the merge kept the words pass's, which also says the one piece as one"
+    },
+    {
+      "id": "dynamic-comment",
+      "title": "A comment merged from the main tree wrote straight apostrophes in the looks, which the looks test fails",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "One more, outside the dynamic cases"
+        }
+      ],
+      "kind": "test-or-tool",
+      "status": "fixed",
+      "commit": "520e3336",
+      "touches": [
+        "src/ui/looks/wellbeing.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/looks.test.ts",
+          "title": "writes the apostrophe the house writes"
+        }
+      ]
+    },
+    {
+      "id": "dynamic-dates",
+      "title": "The research data's own dates reached the fine print as their sources wrote them (“2026-09-26”, “8 April 2026”), not as the game writes a date",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "**The research data's own dates, in fine print.**"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "**The research data's own dates**"
+        }
+      ],
+      "kind": "data",
+      "status": "fixed",
+      "commit": "a5c167ff",
+      "also": [
+        "25cf21d0",
+        "27939a7f",
+        "d9f3239b"
+      ],
+      "touches": [
+        "src/engine/content/cards.ts",
+        "src/engine/content/entry.ts",
+        "src/engine/content/banks-thirteen.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-data-dates.test.ts",
+          "title": "the research data writes its dates the game’s way wherever a screen shows them"
+        }
+      ],
+      "remark": "the data pass's three batches, merged in a5c167ff: 344 strings in 230 sources, through each builder's words step; the 316 left are each in a field no screen reads, in code that's gone, a day the code reads, a document's number or a quotation"
+    },
+    {
+      "id": "dynamic-semicolon",
+      "title": "Chase's card source had a space before a semicolon on the Cards tab's fine print",
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "**A space before a semicolon in a card's source.**"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "space before a semicolon went with them"
+        }
+      ],
+      "kind": "data",
+      "status": "fixed",
+      "commit": "25cf21d0",
+      "touches": [
+        "src/engine/content/cards.ts"
+      ],
+      "evidence": [
+        {
+          "absent": "src/engine/content/cards.ts",
+          "string": "LGC61498.html ;"
+        }
+      ]
+    },
+    {
+      "id": "editorial-1",
+      "title": "A casting notice names a part cast by size as if it were a name: “has cast you as A Leading Part In A New Play”",
+      "records": [
+        {
+          "file": "editorial/defects.md",
+          "at": "A casting notice names a part cast by size as a name."
+        },
+        {
+          "file": "editorial/batches.md",
+          "at": "the casting notice itself still says"
+        }
+      ],
+      "kind": "assembly",
+      "status": "left",
+      "why": "redateCredits dates an old save's credits by finding each credit's part in its casting notice word for word, so the notice's part is a key the code reads back; changing it needs redateCredits to match another way, a change of behavior for old saves.",
+      "owner": "owner"
+    },
+    {
+      "id": "editorial-2",
+      "title": "A state's added penalty is named in its assessment notice by its Title Case label: “and The Penalty For A Return DRS Made, 10% Or $50, The Greater”",
+      "records": [
+        {
+          "file": "editorial/defects.md",
+          "at": "A state's added penalty is named in prose by its Title Case label."
+        },
+        {
+          "file": "editorial/batches.md",
+          "at": "a state's added penalty is named in its assessment notice by its Title Case label"
+        }
+      ],
+      "kind": "assembly",
+      "status": "left",
+      "why": "The labels are label fields the label sweep holds to Title Case, and the notice is their only reader; a prose field beside each is a change of the data's shape, for the papers area.",
+      "owner": "a future pass"
+    },
+    {
+      "id": "editorial-3",
+      "title": "Card security and the fraud law on Money's Cards tab keep the research text's straight apostrophes (“the customer's reply”)",
+      "records": [
+        {
+          "file": "editorial/defects.md",
+          "at": "The research text's straight apostrophes."
+        }
+      ],
+      "kind": "data",
+      "status": "left",
+      "why": "Left to the data pass rather than edited twice; that pass changed the file's dates, not its punctuation, and the four apostrophes in src/engine/content/security.ts are still straight.",
+      "owner": "a future pass"
+    },
+    {
+      "id": "editorial-4",
+      "title": "Two roles are named “Bottom, As Pyramus” and “Flute, As Thisbe”, so a notice reads “You play Bottom, As Pyramus, and …”",
+      "records": [
+        {
+          "file": "editorial/defects.md",
+          "at": "A role named “Bottom, As Pyramus”."
+        },
+        {
+          "file": "editorial/batches.md",
+          "at": "A role named “Bottom, As Pyramus” is a character's name"
+        }
+      ],
+      "kind": "data",
+      "status": "left",
+      "why": "The name is the material area's data, read in tables in Title Case; “Bottom, as Pyramus” would read right in both if the label sweep allows a name's “as”.",
+      "owner": "a future pass"
+    },
+    {
+      "id": "editorial-direction",
+      "title": "Looking Back says what's still open goes with you into class even when the only open note is the director's request, which class doesn't carry",
+      "records": [
+        {
+          "file": "editorial/defects.md",
+          "at": "Notes from a production's director that aren't weaknesses."
+        }
+      ],
+      "kind": "text",
+      "status": "left",
+      "why": "Saying which notes go needs the same filter reflect uses, and whether a direction should go into class is the school area's call, so the words were kept.",
+      "owner": "a future pass"
+    },
+    {
+      "id": "editorial-parts",
+      "title": "One part named two ways: a forecast and a teacher's note named the task's part (“The revision isn't complete” of a piece not yet shown) beside the card's own label",
+      "records": [
+        {
+          "file": "editorial/defects.md",
+          "at": "one part named two ways"
+        },
+        {
+          "file": "editorial/batches.md",
+          "at": "**One part, two names (Wrong).**"
+        },
+        {
+          "file": "school/HANDOFF.md",
+          "at": "A forecast's limit names the task's part, not the card's."
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "4abc583d",
+      "touches": [
+        "src/engine/systems/coursework.ts",
+        "src/ui/components/CourseworkPane.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/editorial-school-words.test.ts",
+          "title": "a part of a piece is named as its card names it, so a presentation’s forecast says its own part and not a revision"
+        }
+      ]
+    },
+    {
+      "id": "editorial-note-worked",
+      "title": "A note counted as taken because it was worked into the revision said “took the note” beside a part that stayed at 0%",
+      "records": [
+        {
+          "file": "editorial/defects.md",
+          "at": "a note taken that read as not"
+        },
+        {
+          "file": "editorial/batches.md",
+          "at": "**A note taken that read as not taken (Wrong).**"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "4abc583d",
+      "touches": [
+        "src/engine/systems/coursework.ts"
+      ],
+      "evidence": [
+        {
+          "source": "src/engine/systems/coursework.ts",
+          "holds": "worked ${about} into the revision"
+        },
+        {
+          "record": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt",
+          "holds": "into the revision"
+        }
+      ],
+      "remark": "no test asserts the worked-into-the-revision variant"
+    },
+    {
+      "id": "editorial-worth",
+      "title": "Home's Money line said “Worth $4,851, $149 of it owed”, though worth has the $149 already taken off",
+      "records": [
+        {
+          "file": "editorial/defects.md",
+          "at": "Home's worth"
+        },
+        {
+          "file": "editorial/batches.md",
+          "at": "**Home's Money line said the wrong thing (Wrong).**"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "3d2996cf",
+      "touches": [
+        "src/ui/screens/Home.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/evidence-g33-ui.test.ts",
+          "title": "with the day’s spending put on the card, the worth counts what the card owes and the line says “, $X of it owed”"
+        }
+      ],
+      "remark": "the test's title quotes the old words, since titles don't change; its assertion holds the new"
+    },
+    {
+      "id": "editorial-place",
+      "title": "Home's “1 of 16 in the class” read as one of sixteen, where the School's look gives a place, “1st of 16”",
+      "records": [
+        {
+          "file": "editorial/batches.md",
+          "at": "**Home and the School's look disagreed (Wrong).**"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "3d2996cf",
+      "touches": [
+        "src/ui/screens/Home.tsx",
+        "src/engine/core/text.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/language-dynamic.test.ts",
+          "title": "the term review’s notice and the screens at good standing, then a concern, a warning and a dismissal"
+        }
+      ]
+    },
+    {
+      "id": "editorial-statement",
+      "title": "A card statement's notice said what to pay and nothing of when it's due",
+      "records": [
+        {
+          "file": "editorial/defects.md",
+          "at": "a statement with no due date"
+        },
+        {
+          "file": "editorial/batches.md",
+          "at": "**A card statement said nothing of when (Unclear).**"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "6bc754b9",
+      "touches": [
+        "src/engine/systems/credit.ts"
+      ],
+      "evidence": [
+        {
+          "test": "tests/evidence-g28-ui.test.ts",
+          "title": "PLAYER JOURNEY: the same groceries on the card each midnight: at 66 autopay pays Chase’s $40.00 floor on 11 October and 10 November, the card carries what’s left and is charged interest on 20 November; at 65 each statement is paid whole and nothing is charged; across a save and a load, once"
+        }
+      ]
+    },
+    {
+      "id": "editorial-arrow",
+      "title": "The top bar's Advance and Look After Yourself buttons were named with their arrow, “Advance ▾”, so a screen reader said the character",
+      "records": [
+        {
+          "file": "editorial/batches.md",
+          "at": "**Two controls named with their arrow (Unclear).**"
+        }
+      ],
+      "kind": "layout",
+      "status": "fixed",
+      "commit": "41caccde",
+      "touches": [
+        "src/ui/shell/TimeControls.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/editorial-frame-names.test.ts",
+          "title": "Advance and Look After Yourself each hide their arrow from a screen reader, and no arrow on the bar is said"
+        }
+      ]
+    },
+    {
+      "id": "editorial-comments",
+      "title": "Four comments in the looks wrote straight apostrophes, three of them from 20f2757e, so the looks test was already failing on c74a02e1",
+      "records": [
+        {
+          "file": "editorial/batches.md",
+          "at": "**`tests/looks.test.ts`**"
+        }
+      ],
+      "kind": "test-or-tool",
+      "status": "fixed",
+      "commit": "be528852",
+      "touches": [
+        "src/ui/looks/actor.tsx",
+        "src/ui/looks/attention.tsx",
+        "src/ui/looks/place.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/looks.test.ts",
+          "title": "writes the apostrophe the house writes"
+        }
+      ]
+    },
+    {
+      "id": "coordinator-quotes",
+      "title": "The guide quoted words other areas had rewritten: 74 of 595 quoted sentences at the merge of the eight areas, among them the money guide's quotes of papers' refusals",
+      "records": [
+        {
+          "file": "coordinator.md",
+          "at": "**Quotes across areas.**"
+        },
+        {
+          "file": "papers/defects.md",
+          "at": "The money guide quotes this area's refusals."
+        },
+        {
+          "file": "health/HANDOFF.md",
+          "at": "**The papers guide's quotes**"
+        },
+        {
+          "file": "frame/HANDOFF.md",
+          "at": "quotes “You’d wake at”"
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "ce8b26e6",
+      "touches": [
+        "src/engine/content/guide/money.ts",
+        "src/engine/content/guide/papers.ts",
+        "src/engine/content/guide/body.ts"
+      ],
+      "evidence": [
+        {
+          "check": "node tools/guide-quotes.mjs --check",
+          "result": "exit 0, 580 of 580 quoted sentences the game says, on 2026-10-18"
+        }
+      ]
+    },
+    {
+      "id": "coordinator-genre-work",
+      "title": "The Core glossary said class scenes count as work in a genre; only nights on stage and self-tapes do",
+      "records": [
+        {
+          "file": "coordinator.md",
+          "at": "\"work in a genre\" corrected"
+        },
+        {
+          "file": "profile/batches.md",
+          "at": "The Core glossary's **work in a genre** says class scenes count toward a genre."
+        }
+      ],
+      "kind": "text",
+      "status": "fixed",
+      "commit": "71706a77",
+      "touches": [
+        "docs/GLOSSARY.md"
+      ],
+      "evidence": [
+        {
+          "source": "docs/GLOSSARY.md",
+          "holds": "Class scenes don't count."
+        }
+      ]
+    },
+    {
+      "id": "material-take",
+      "title": "The engine-speak count can't tell a self-tape's take from a take for any judged work, so it counts the right word and kept the material area from writing “every take”",
+      "records": [
+        {
+          "file": "material/HANDOFF.md",
+          "at": "**The engine-speak ratchet's \"a take\".**"
+        }
+      ],
+      "kind": "test-or-tool",
+      "status": "left",
+      "why": "74 of the material area's 120 hits are a self-tape's take, which Core keeps; the ratchet's pattern in tools/text-inventory.mjs still counts “a take” anywhere but “a take on the part”.",
+      "owner": "a future pass"
+    }
+  ],
+  "excluded": [
+    {
+      "records": [
+        {
+          "file": "tutorial/defects.md",
+          "at": "Generated tables behind the code, and the completion matrix."
+        },
+        {
+          "file": "school/defects.md",
+          "at": "`node tools/completion-matrix.mjs --check` exits 1 in this clone"
+        },
+        {
+          "file": "material/HANDOFF.md",
+          "at": "**The completion matrix.**"
+        },
+        {
+          "file": "editorial/batches.md",
+          "at": "**The completion matrix.**"
+        }
+      ],
+      "why": "The check doing its job: a change to a source the matrix watches puts a row's measurement behind until the matrix is written again, which each merge did. It holds now, 527 of 636."
+    },
+    {
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "`tools/text-inventory.mjs` counts a source's status against its text's hash"
+        }
+      ],
+      "why": "The school area's other notes for the coordinator (a status to mark again, other areas' tests changed with its words, a fallback label worded twice, TRACEABILITY written again, PlayingChooser's bands) are coordination, not faults."
+    },
+    {
+      "records": [
+        {
+          "file": "school/defects.md",
+          "at": "`src/ui/bank/RoundUps.tsx` (the money area's) heads the round-ups notes"
+        },
+        {
+          "file": "school/HANDOFF.md",
+          "at": "**`src/ui/bank/RoundUps.tsx`**"
+        }
+      ],
+      "why": "“What SLATE Leaves Out” and “Not in SLATE:” were engine-speak, the pass's ordinary rewording; gone by the money area's batch 2."
+    },
+    {
+      "records": [
+        {
+          "file": "school/HANDOFF.md",
+          "at": "**The Standing tab's paragraph on how the review works**"
+        }
+      ],
+      "why": "The record says it says nothing untrue once the School has ended, only that nothing more is reviewed; it was so at the baseline."
+    },
+    {
+      "records": [
+        {
+          "file": "papers/defects.md",
+          "at": "The look's kind words and the document names."
+        }
+      ],
+      "why": "A test's rule noted for the next writer: nothing was wrong."
+    },
+    {
+      "records": [
+        {
+          "file": "papers/defects.md",
+          "at": "The health guide's “It comes to more than the bank can cover.”"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "A refusal's shape for money that isn't there."
+        }
+      ],
+      "why": "Three true shapes for one refusal: a consistency of wording, settled by the editorial review's batch 1 (c483f432)."
+    },
+    {
+      "records": [
+        {
+          "file": "health/defects.md",
+          "at": "The person look's summary, and Home's How You Are line, say \"dial\"."
+        }
+      ],
+      "why": "Engine-speak in a true sentence, the pass's ordinary rewording; gone by the frame area's batches 2 to 5 (fa089142)."
+    },
+    {
+      "records": [
+        {
+          "file": "frame/HANDOFF.md",
+          "at": "**Words other areas use that the frame changed:**"
+        },
+        {
+          "file": "health/HANDOFF.md",
+          "at": "Papers' \"charity\" beside the button"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "One word for a commitment"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "**Disposition lines.**"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "Rates and SLATE's estimate in money's words"
+        },
+        {
+          "file": "coordinator.md",
+          "at": "**The JSON the game shows**"
+        }
+      ],
+      "why": "One thing said two true ways across areas, and the genres rewritten: the pass's own rewording, settled by the cross-area words pass and the json area."
+    },
+    {
+      "records": [
+        {
+          "file": "frame/HANDOFF.md",
+          "at": "keep the research's British spellings"
+        }
+      ],
+      "why": "An authority's text quoted with its source, kept on purpose."
+    },
+    {
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "**“Left the school” and “Left the School.”**"
+        }
+      ],
+      "why": "Two true forms of one name, a consistency choice; one form from 20f2757e."
+    },
+    {
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "**A duration in a sentence as a clock writes it.**"
+        }
+      ],
+      "why": "The record calls it sound by every rule, and terse for prose; said in words from 20f2757e."
+    },
+    {
+      "records": [
+        {
+          "file": "dynamic/defects.md",
+          "at": "**The advice's item names its label twice.**"
+        }
+      ],
+      "why": "The record calls it true; a repetition of wording, kept."
+    },
+    {
+      "records": [
+        {
+          "file": "editorial/defects.md",
+          "at": "A teacher's note that didn't come together reads as the evaluation."
+        },
+        {
+          "file": "editorial/defects.md",
+          "at": "The Profile's advice and its record are dense."
+        }
+      ],
+      "why": "Decisions about the feedback's voice and the advice's density; the record calls both accurate and true."
+    },
+    {
+      "records": [
+        {
+          "file": "editorial/batches.md",
+          "at": "**`tests/evidence-g22-school.test.ts`**"
+        },
+        {
+          "file": "editorial/batches.md",
+          "at": "**`tests/statements.test.ts`**"
+        }
+      ],
+      "why": "Tests brought to the review's own new words, as every batch's tests are; the whole suite found them after the batch that should have."
+    },
+    {
+      "records": [
+        {
+          "file": "journeys/defects.md",
+          "at": "## Seen, Not Counted As Defects"
+        }
+      ],
+      "why": "The record doesn't count them: a statement region made to scroll at 390, blocks of 80 to 120 words, labels on two lines."
+    },
+    {
+      "records": [
+        {
+          "file": "material/defects.md",
+          "at": "One observation that isn't a defect"
+        }
+      ],
+      "why": "The record says so: two option ids that are unique within their questions never meet."
+    },
+    {
+      "records": [
+        {
+          "file": "material/HANDOFF.md",
+          "at": "**Two shapes kept across all briefs**"
+        }
+      ],
+      "why": "A style kept on purpose across the briefs, a decision for the standard."
+    }
+  ],
+  "counts": {
+    "total": 100,
+    "by_status": {
+      "fixed": 89,
+      "left": 11
+    },
+    "by_kind": {
+      "text": {
+        "fixed": 33,
+        "left": 2,
+        "total": 35
+      },
+      "assembly": {
+        "fixed": 34,
+        "left": 2,
+        "total": 36
+      },
+      "layout": {
+        "fixed": 7,
+        "left": 0,
+        "total": 7
+      },
+      "behavior": {
+        "fixed": 3,
+        "left": 1,
+        "total": 4
+      },
+      "test-or-tool": {
+        "fixed": 7,
+        "left": 3,
+        "total": 10
+      },
+      "data": {
+        "fixed": 5,
+        "left": 3,
+        "total": 8
+      }
+    },
+    "by_record": {
+      "coordinator.md": 30,
+      "dynamic/defects.md": 18,
+      "school/defects.md": 12,
+      "editorial/batches.md": 11,
+      "crossarea/defects.md": 9,
+      "editorial/defects.md": 9,
+      "papers/defects.md": 9,
+      "journeys/defects.md": 8,
+      "money/defects.md": 7,
+      "profile/defects.md": 7,
+      "health/defects.md": 6,
+      "data/defects.md": 5,
+      "frame/HANDOFF.md": 5,
+      "tutorial/defects.md": 5,
+      "crossarea/batches.md": 4,
+      "health/HANDOFF.md": 4,
+      "json/defects.md": 3,
+      "material/HANDOFF.md": 3,
+      "material/defects.md": 3,
+      "school/HANDOFF.md": 3,
+      "frame/defects.md": 2,
+      "health/batches.md": 1,
+      "health/glossary.md": 1,
+      "money/batches.md": 1,
+      "money/glossary.md": 1,
+      "profile/batches.md": 1
+    },
+    "fixed_held_by": {
+      "a test": 60,
+      "a check": 6,
+      "the source alone": 23
+    },
+    "left_by_owner": {
+      "owner": 2,
+      "a future pass": 9,
+      "none": 0
+    },
+    "not_counted": 17
+  }
+}

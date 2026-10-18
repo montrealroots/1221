@@ -139,7 +139,8 @@ defects = load(f'{B}/defects.json')
 if defects is None: problems.append('the defect index: not written')
 else:
     st = Counter(e['status'] for e in defects['entries'])
-    if dict(st) != {k: v for k, v in defects.get('counts', {}).get('status', {}).items() if v}: problems.append('the defect index’s counts don’t add up')
+    if dict(st) != {k: v for k, v in defects.get('counts', {}).get('by_status', {}).items() if v} or len(defects['entries']) != defects['counts'].get('total'):
+        problems.append('the defect index’s counts don’t add up')
 
 # --- What's open ----------------------------------------------------------------------------------------------------
 coord = read(f'{B}/coordinator.md')
@@ -263,11 +264,12 @@ w('')
 w('## 8. Defects')
 w('')
 if defects:
-    w(f"Every defect the pass found, one entry each, from every record (`DEFECTS.md`, `defects.json`):")
+    w(f"Every defect the pass found, one entry each, from every record, and checked against the tree by `defects.py --verify` "
+      f"(`DEFECTS.md`, `defects.json`): {defects['counts']['total']} in all, {defects['counts']['by_status'].get('fixed', 0)} fixed and "
+      f"{defects['counts']['by_status'].get('left', 0)} left, each left one with its reason and who it's for. {len(defects.get('excluded', []))} more items "
+      'the records raised were read and not counted, each with why.')
     w('')
-    w(table(['Status', 'Defects'], sorted(defects['counts'].get('status', {}).items())))
-    w('')
-    w(table(['Kind', 'Defects'], sorted(defects['counts'].get('kind', {}).items())))
+    w(table(['Kind', 'Fixed', 'Left', 'All'], [[k, v.get('fixed', 0), v.get('left', 0), v.get('total', 0)] for k, v in defects['counts'].get('by_kind', {}).items()]))
 else:
     w('The index isn’t written yet.')
 w('')
