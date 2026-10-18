@@ -199,6 +199,13 @@ w('')
 w('The start counted TypeScript alone; the JSON the game shows joined the inventory during the pass (224 sources). '
   f"The engine-speak ratchet (`docs/text/engine-speak.json`) stands at {sum(ratchet.values())}; it may fall and may not rise.")
 w('')
+w('Engine-speak by kind, at the start and now. The pattern counts a word; each hit left is in a source an area read '
+  'and kept. Most are a "take" in a self-tape\'s sense, which the glossary allows; the code and file names in '
+  '`content/attributes-matrix.ts`, which writes the documentation and no screen; and words in their ordinary sense, '
+  'a body\'s weight in creation, a safe\'s dial and hand signals in a brief\'s scene:')
+w('')
+w(table(['Kind', 'At the start', 'Now'], [[k, speak_start.get(k, 0), ratchet.get(k, 0)] for k in sorted(set(speak_start) | set(ratchet), key=lambda k: -speak_start.get(k, 0))]))
+w('')
 w('By the area whose status names each source:')
 w('')
 w(table(['Area'] + STATUSES, [[a] + [c.get(k, 0) for k in STATUSES] for a, c in sorted(by_area.items())]))
