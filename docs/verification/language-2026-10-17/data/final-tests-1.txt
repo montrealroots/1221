@@ -1,0 +1,376 @@
+
+ RUN  v2.1.9 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/l14-data
+
+ ✓ tests/attributes-phase-2b.test.ts (35 tests) 20731ms
+   ✓ what a piece demands decides which abilities count > has no ability best on half or more of the briefs, the scenes or the nights: the specialist built on it, 85 against the rest lowered to keep the budget 2853ms
+   ✓ listening and adaptability speed the steps their descriptions name > PLAYER JOURNEY: a director’s note on the blocking, worked into the part, goes further with more adaptability, by the ratio of the two speeds 1540ms
+   ✓ A4: what the game says each ability does and what develops it, it does (brief 11) > the ability’s look says what develops it, what it does and which work reads it, and every task and dimension it names moves with it on every piece of that task; stamina’s are the drain’s, exactly, all twelve 4412ms
+   ✓ A4: what the game says each ability does and what develops it, it does (brief 11) > every effect each ability’s affects sentence names, it has, clause by clause, all twelve 3809ms
+   ✓ A5: an action the player chooses develops each ability, and says what moved (brief 11) > PLAYER JOURNEY: an hour of each of the ten abilities’ exercises, pressed on its control, grows it, its words and the toast say by how much, and the Profile’s row says the last change, across a save and a load 368ms
+   ✓ T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: each of the ten abilities’ controls says the hour’s gain and its tier before it, the hour’s words the same gain, the tier and that it’s pitched where you are after; a second hour the same day is said a repeat before and after, at half 345ms
+   ✓ T1: training says its value before the hour and after it (brief 11) > PLAYER JOURNEY: every technique past 90 is said to move no result, on its control before the hour and in the hour’s words after; at 85, neither says it 571ms
+   ✓ F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: takes taped cold are advised as preparation, in its words, with no exercise; the same briefs prepared aren’t 671ms
+   ✓ F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: takes with the flu are advised as the day’s condition, in its words, with no exercise; a well twin’s aren’t 631ms
+   ✓ F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: takes played a way the scene doesn’t allow are advised as the choice, in its words, with no exercise 518ms
+   ✓ F3: feedback says the condition and the preparation apart from ability (brief 11) > PLAYER JOURNEY: stamina draining through long takes is advised as stamina, built by a Work Out, never as rest; a fitter twin isn’t advised it 987ms
+   ✓ F1: every note names what the evaluation found (brief 11) > PLAYER JOURNEY: twins taping the same prepared brief, one weak in imagination and one in emotional depth: each take’s chief limit, its look, What To Work On Next and the brief suggested for it name what each one’s evaluation found 320ms
+   ✓ A1: every ability is causal somewhere, at half a point or more (brief 11) > gives each of the twelve a kind of work where +10 moves the mean result half a point or more, and stamina half a point on the class scenes 1330ms
+   ✓ health, stamina and energy kept apart (brief 11, section 7) > PLAYER JOURNEY: the flu the clock brings takes condition and energy and is told, leaves fitness as it was, reaches each ability’s work where its task lists illness, as the Profile’s Today says, and stops a Work Out in its words 380ms
+ ✓ tests/evidence-g26-school.test.ts (24 tests) 23190ms
+   ✓ school.extend_incomplete > PLAYER JOURNEY: Ask For A Month More, pressed on the Standing tab, moves Acting I’s month to 9 February once; the reminder and the Permanent Incomplete come on the new date and not the old, through a save, once each 1094ms
+   ✓ school.request_repeat > PLAYER JOURNEY: a first spring failed by sleeping through a course, Ask pressed on Finishing The Degree, decided in five working days through a save: two terms back, the class of 2030, once 4731ms
+   ✓ school.request_repeat > PLAYER JOURNEY: kept on academic warning by the faculty’s review, the year to be repeated, the repeat is granted, and the next fall’s evaluation doesn’t dismiss them on the same Fails 1021ms
+   ✓ school.request_repeat > is refused in its own words: before the year’s end, with a leave asked for, once the next year has begun, a year a second time, and past nine semesters 1434ms
+   ✓ school.request_repeat > refuses a second year’s repeat that would take the degree to ten semesters, past the Bulletin’s nine 645ms
+   ✓ school.request_repeat > refuses a repeat while an additional term is asked for, as an additional term is refused while a repeat is 3302ms
+   ✓ school.request_extra_term > the additional term holds each of its class days once, Movement Invention III meeting its fourteen Wednesdays, counted against program term 4 367ms
+   ✓ school.request_extra_term > is refused in its own words before the last year, while a repeat is asked for, and with every course passed; and allowed as the ninth semester 696ms
+   ✓ school.pay_balance > PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel before the return lifts the hold and leaves the return term’s scholarship whole; an unpaid twin’s return term pays the account from its scholarship first, the hold lifting at the term’s start, and only the student who registers is counted 1227ms
+   ✓ school.pay_balance > PLAYER JOURNEY: a repeated year’s seventh term paid from the drawn panel in full; the eighth left unpaid holds the diploma at Commencement, and paying it confers the degree 1384ms
+   ✓ school.request_conversion > is refused in its own words with only hours never assigned in prospect: in January, in the spring before May, and in June, the stat showing none 1177ms
+   ✓ school.request_conversion > PLAYER JOURNEY: an assigned Saturday called in sick, asked on the drawn button in the fall, is paid at January’s processing, and the 2027 return filed carries it, against a twin that didn’t ask 4237ms
+   ✓ school.request_conversion > PLAYER JOURNEY: a nonresident’s grant has 14% withheld, the account getting the rest, and the year’s withholding raised by it 585ms
+ ✓ tests/evidence-g24-school.test.ts (29 tests) 14752ms
+   ✓ classmate trust/bonds > reads the cast list the day it goes up: the own lead lifts the mood two points, a friend’s lead half a point more, a rival’s lead adds a point and a half of stress, and a friend cast smaller moves nothing 737ms
+   ✓ casting (castFit/castScore) > reads a Carlotta closing night slept through as delivered at nothing, the run at its nights’ mean, and casts the twin a featured part where the one who played it keeps a lead 1406ms
+   ✓ standing/term evaluation > weighs a fall played with every piece shown unready and every class attended as a concern, in its own words, where the twin that does the work stays good 1448ms
+   ✓ standing/term evaluation > holds the Rep and the Summer Cabaret to that standing: at the spring’s casting the good twin understudies at the Rep and the concern doesn’t, and the summer’s company is refused the concern in its words 573ms
+   ✓ standing/term evaluation > weighs a fall come to every class spent, every class attended, as growing behind the class, in its words, where the rested twin is not behind 609ms
+   ✓ standing/term evaluation > weighs a student who began the term at their reach and grew nothing as in line with the class, good, not behind it 663ms
+   ✓ standing/term evaluation > judges a run played after its term’s evaluation at the next, once: its nights with the term’s own at their mean are the term’s work, short, in its words 2024ms
+   ✓ notes and feedback > takes a note on a skill at the showing again because the skill grew by practice, where the twin that worked on it at the desk didn’t, and each meeting grows the class by it 730ms
+   ✓ notes and feedback > sets the next scene’s objective by the note the showings keep giving, at the meeting that sets it, and that objective leans its showing, where a twin with it cleared shows the same work otherwise 368ms
+   ✓ notes and feedback > draws the note on the Coursework tab: the skill note new, then taken, shown again and marked taken in the ledger; and the objective a note put first, with why 421ms
+   ✓ credits > puts Carlotta on the résumé at the next casting with every night played, once, and the twin that slept through the closing with three 1206ms
+   ✓ credits > puts the Summer Cabaret’s first show on the résumé at its last night with the nights played, once 649ms
+   ✓ credits > draws the Profile’s School Journey line: nothing yet, the run going on, then on stage with its year, and the summer’s show beside it 1694ms
+ ✓ tests/evidence-g05-life.test.ts (26 tests) 7142ms
+   ✓ health.bill > PLAYER JOURNEY: a stay’s $200 falls due and is paid from the checking account, Settled on Papers, once across a reload 320ms
+   ✓ health.month > PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where $600 of wages in July (TEST SETUP) renews it six months 562ms
+   ✓ health.month > PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported on the first month a year past due, once, across a reload 1247ms
+   ✓ health.therapy_session > PLAYER JOURNEY: a course that lifts the depression ends its medicine and its toll, against a twin’s that doesn’t 560ms
+   ✓ health.week > PLAYER JOURNEY: the flu, seen at urgent care, is five days, 25 of condition and 30 of energy, a sick day called in and the work shown ill 686ms
+   ✓ health.week > the week’s flu draw is 4.5 times likelier at ten hours’ sleep debt and full stress (2.5 × 1.8), as the clock draws it 970ms
+ ✓ tests/evidence-g16-papers.test.ts (26 tests) 28143ms
+   ✓ tax.pay > PLAYER JOURNEY: half typed into Pay on the Returns tab leaves the current account as “Income tax owed, 2026, in part”, all of the tax first, then penalty; blank, it pays the rest the screen showed, the notices stop, and Pay goes 3236ms
+   ✓ tax.pay > refuses a payment the bank can’t cover in its words, charging nothing, and keeps the part paid across a reload 3860ms
+   ✓ tax.pay > paid in full, plays 200 days across a reload with no levy and no word from the IRS on 2026; a twin that never paid is levied 3118ms
+   ✓ tax.pay > the day after the assessment, Still Owed charges no month of paying late not yet begun: sixteen months from the due date to 13 August 2028, not a seventeenth counted afresh from the assessment 3285ms
+   ✓ documents.idcard_arrives > PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes by mail twenty business days after SAVE’s ten, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport 504ms
+   ✓ documents.permission > PLAYER JOURNEY: Apply For OPT on Papers, refused before its window in its words, applied on 5 March 2029 for $470, decided 90 days on, valid twelve calendar months, said with both dates; status held past the degree’s sixty days; ended by its ninety days without work 1121ms
+   ✓ documents.permission > with premium processing, $2,250 and thirty business days: decided 16 April, it runs twelve months from the program’s end, not the approval 693ms
+   ✓ documents.permission > is refused in its words to a citizen, to a student who withdrew, to a life never on an F-1, and once its window has closed 943ms
+   ✓ documents.us_status > PLAYER JOURNEY: withdrawn on 1 February 2027, an F-1 student keeps fifteen days’ status by the School’s own reschedule; on the sixteenth she is out of status, her F-1 canceled, told once, and refused the marketplace, an ID card and unemployment 602ms
+   ✓ documents.us_status > PLAYER JOURNEY: a student who lets her classes go is dismissed, and is out of status the same hour, with no grace 1281ms
+   ✓ documents.us_status > the degree: the look armed when the life was made asks “Your US Status Is Ending” on the program’s end, due sixty days on with OPT both ways; out of status the day it falls due, where a twin that presses Apply For OPT keeps hers 701ms
+   ✓ benefits.assistance_month > PLAYER JOURNEY: Apply on Papers on 20 March 2027; $306 a month by the clock, her work-study left out; the midnight groceries on the EBT card; “2 months paid” across a reload; closed on the summer’s first look, nothing paid after 748ms
+   ✓ benefits.assistance_month > a graduate on unemployment: each month pays $306 less 30% of the month before’s benefit and interest over $217, rounded up to the dollar; on a claim she’s exempt from the time limit, so no month is counted and the fourth is paid too 886ms
+   ✓ benefits.assistance_month > a month with a week’s pay in it takes a fifth of the pay off before the 30%: the graduate’s March payment, on February’s benefit, interest and $375 of wages 841ms
+   ✓ benefits.assistance_month > reads the calendar month before the payment: claimed 20 January 2028, the month paid on the 27th is $306, December having brought nothing over $217, not January’s weeks so far 866ms
+   ✓ benefits.week > PLAYER JOURNEY: File A Claim on Papers for $93 a week; Sunday’s week posted to her account and year; nothing for a week in hospital; $31 for a week with four hours worked, $92; across a reload paid to its $2,418 and ended in its words, with Papers showing each 1140ms
+   ✓ benefits.week > while she is enrolled, a Connecticut claim is refused at filing in its words and Papers offers none; nothing in SLATE returns a claimant to school, so the week’s own student check is never reached 740ms
+   ✓ benefits.week > an F-1 graduate on OPT: paid while it is in force, nothing once it has ended, the claim ended a year from filing; her 2029 1040-NR reports exactly what the clock paid 1153ms
+   ✓ tax.season > PLAYER JOURNEY: a student born in New York earns $1,670.59 in 2026, under any year’s standard deduction, and on 1 February 2027 is asked for no return; April passes with no late notice 639ms
+   ✓ tax.season > Papers’ No Returns Yet doesn’t tell the student with $1,670.59 of income that a year with any income has its return ready 388ms
+   ✓ tax.season > an F-1 student with work-study is asked for her 1040-NR at 10%, due 15 April 2027, Tax Return Due on the calendar at that minute and Tax Season again for 1 February 2028, once each across a reload 574ms
+ ✓ tests/evidence-g12-money.test.ts (33 tests) 3301ms
+   ✓ card.request_hardship > freezes a Capital One card’s 28.99% on a plan: no interest at the statement after a due date the plan’s payment met, where its twin off a plan is charged it nightly 596ms
+   ✓ card.request_limit > is read by the record at the due date: the same $2,960 owed costs a $3,750 limit ten points of utilization and a raised $4,500 one seven 398ms
+ ✓ tests/evidence-g15-papers.test.ts (34 tests) 9725ms
+   ✓ documents.apply_idcard > PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days from Monday 19 October to Monday 2 November 2026, then comes by mail twenty business days on, Wednesday 2 December, and runs to the program’s end, 31 May 2029 356ms
+   ✓ documents.apply_opt > with premium processing, $2,250 leaves the bank and it is decided on the thirtieth business day, Tuesday 30 March 2027, not before 519ms
+   ✓ benefits.assistance > closes the case in the summer recess without 20 hours of work a week, says so once, and refuses a new application under 7 CFR 273.5 887ms
+   ✓ benefits.claim > PLAYER JOURNEY: a summer’s stipends earned and school left, File A Claim on 3 January 2028 pays Connecticut’s $93 on the first Sunday with no waiting week, 26 weeks to $2,418 once each across a save and a load, and the 2028 return counts it 2580ms
+   ✓ benefits.claim > pays nothing for a week certified in hospital, nor for one laid up, the next week whole, and a week with three hours worked, $69, $93 less two-thirds of it, $47 1656ms
+   ✓ benefits.claim > refuses a British student out of status in FUTA’s words, with a base period that would pay, and Unemployment says so with no button 1441ms
+ ✓ tests/evidence-g22-school.test.ts (20 tests) 15173ms
+   ✓ school.company > PLAYER JOURNEY: the fall Cabaret show ends by the clock: four classmates grown by its 9 evenings and 5 nights, composure by 5 nights, judged into Around The Class, the stronger shown higher 355ms
+   ✓ school.company > PLAYER JOURNEY: shown counts each run and names the latest: the classmate in both Cabaret shows has two by February, and the Carlotta Festival’s four nights add one to every classmate 1172ms
+   ✓ school.lab > PLAYER JOURNEY: the third year’s solo showing, booked for Friday 19 January 2029 by the clock, judged as a lead’s night: band from its whole, morale by the band, the scene grown three sessions’ worth 4010ms
+   ✓ school.cabaret (kind) > PLAYER JOURNEY: played Thursday, away in New York for Friday at eight and the Saturday closing: two nights missed in the record, the closing credited with the three played, the run closed with its note, look back, ledger and milestone, and the screens saying so 370ms
+   ✓ school.summer > PLAYER JOURNEY: the first show’s closing missed in hospital after three nights is credited with the three and closed; its twin who plays the closing has a fourth; both grew past a twin who never joined 1710ms
+   ✓ school.summer > PLAYER JOURNEY: the first show’s closing missed away in New York after three nights: let go, and credited with the three and the run closed with its note and look back, as the Cabaret’s and a School production’s are 1009ms
+   ✓ school.summer > PLAYER JOURNEY: a performance missed away from New Haven: out of the company, the stipend stopped at the hours worked, the night noted missed in the record of runs, and the fall’s casting reads it at nothing delivered 1138ms
+   ✓ school.stipend > PLAYER JOURNEY: the first Friday’s $375, paid by the clock, withholds FICA’s 7.65% ($28.69) and nothing else, into the account and the year’s wages, once through a save 880ms
+   ✓ school.stipend > PLAYER JOURNEY: with $40,000 of wages earlier in the year the first stipend withholds $129.38, Connecticut’s $55.69 kept as Connecticut’s, and the next February’s return reads every week the clock paid and withheld 2016ms
+   ✓ school.stipend > PLAYER JOURNEY: an F-1 student’s stipend bears no FICA, the IRS’s 10% of $375 ($37.50) withheld where a resident’s withholds FICA’s $28.69, and the 1040-NR reads the summer’s wages at 10% with no payroll tax 1770ms
+ ✓ tests/evidence-g20-school.test.ts (27 tests) 13475ms
+   ✓ school.summer_cabaret > PLAYER JOURNEY: joined in the first spring, its first show’s four nights go into the run record, its first Friday puts $375 on the year’s wages with $28.69 of FICA withheld, and the second fall’s casting reads its three shows at half weight into the delivery the chair reads, once, across a save and a load 2835ms
+   ✓ school.summer_cabaret > PLAYER JOURNEY: a twin who never joined comes to the second fall’s casting with the Carlotta alone on the record the chair reads 1114ms
+   ✓ school.summer_cabaret > casts its parts within the company by castFit: mastered, she plays the lead written for a woman in each play; floored, the supporting part where the play writes one for a woman, and the company’s unnamed part where it writes her only a lead 1530ms
+   ✓ school.summer_cabaret > on the Casting tab, a student in concern is told why in words and offered nothing; in good standing, Join The Summer Company pressed puts her in the company, says so, and the panel lists the three plays, her parts and their dates, the button gone 850ms
+   ✓ plays.read > PLAYER JOURNEY: every play read leaves her more script and imagination than a twin who read none, and nothing else, and castFit and the spring casting read her higher for it 1614ms
+   ✓ practice.exercise > spends the hour each way against a steady twin: precision rested 1.15, spaced the first time 0.9, variation and live 0.85 carrying 0.3 and 0.15 to their kin under transfer:sense-memory, a tier below 0.75 and above 0.8 338ms
+   ✓ genre.study > PLAYER JOURNEY: in the Summer Cabaret’s company, two studies of comedy speed A Marriage Proposal’s lines through Learn The Part by 1 + 11.68/600 of a twin’s who didn’t study 1523ms
+   ✓ school.term > PLAYER JOURNEY: the second fall’s start begins the year’s work-study again: elective hours to nothing, the hours owed carried and paid with the first Saturday’s, 10 × $23, and the class weeks’ Saturdays booked again from 6 hours, the same across a save and a load 1095ms
+   ✓ school.term > PLAYER JOURNEY: the second fall’s casting, reached in order by the clock, numbers every rehearsal call it books from 1 to the last, the read-through first and the technical and the dress last 878ms
+ ✓ tests/evidence-g23-school.test.ts (34 tests) 6544ms
+   ✓ school.study_session > PLAYER JOURNEY: an invitation the class brought, said yes to and kept, moves the shared scene’s lines a fifth of what was left, trust 2 and bond 2, once through a reload, and the scene’s showing reads those lines 463ms
+   ✓ school.study_session > PLAYER JOURNEY: said yes and in New York that evening, it’s missed: trust 6 and bond 3 down, an incident to make right, and “Waited For You”; a second such evening lets the class bring a boundary 337ms
+   ✓ abilities+techniques > PLAYER JOURNEY: the first spring’s festival, its rehearsal call and its night played by the clock, keeps each rise under the production’s name 774ms
+   ✓ development ledger > PLAYER JOURNEY: the Profile’s Development History says where each played change came from: practice, a coursework step, a lab and a night 332ms
+   ✓ development ledger > PLAYER JOURNEY: a School production’s rehearsal call is said with the production’s name 366ms
+   ✓ work records + journey > PLAYER JOURNEY: Taking Direction reads, for life, the notes on the craft a run gave and those the work answered 534ms
+   ✓ genre familiarity/practice > PLAYER JOURNEY: a genre studied makes Learn The Part of a play of that kind move the lines further, by the same sixth 944ms
+   ✓ classmates abilities/craft > PLAYER JOURNEY: the class’s growth a term is weighed against is the middle classmate’s, from the term’s start to its evaluation 314ms
+ ✓ tests/evidence-g19-school.test.ts (19 tests) 11172ms
+   ✓ school.learn_part > PLAYER JOURNEY: four hours on the part after the read-through: an hour each, the lines up each time, memory grown and recorded on the first three only, the cap kept across a reload 864ms
+   ✓ school.learn_part > PLAYER JOURNEY: the first night reads the lines learned: its preparation is the process’s lines, above a twin who only came to the calls and holds what twelve calls make; the twin’s night factor is the par’s 1, the learner’s above it; the next casting reads each run’s own delivery, changed by the hours on the part 1430ms
+   ✓ school.learn_part > is refused not cast there, in class, once the lines are known, and once the run is over, each in its words with nothing spent 984ms
+   ✓ school.learn_part > PLAYER JOURNEY: Learn The Part on the Casting tab: pressed, an hour on the lines, its toast, and the Lines figure the screen shows after 776ms
+   ✓ school.review_blocking > PLAYER JOURNEY: the fourth call missed; caught up after a reload: an hour, the gap closed, the blocking up by half of what was left, memory recorded; then refused; the next note is on the lines where a twin who left the gap is given the blocking, and the first night reads the difference 864ms
+   ✓ school.review_blocking > grows memory from the book after Learn The Part has trained its three: the book isn’t held to that cap 671ms
+   ✓ school.review_blocking > PLAYER JOURNEY: Catch Up The Blocking on the Casting tab: offered with the gap shown, pressed, its toast, then grayed with the reason in words 691ms
+   ✓ school.work_note > PLAYER JOURNEY: every note worked through the festival: the direction tally as the notes have it, a note given again says what was tried, and the closing looks back once, carrying the note not taken into class 916ms
+   ✓ school.work_note > PLAYER JOURNEY: a lines note worked moves the lines as an hour on the part does, on a twin at the same moment; refused a second time across a reload; taken at the next call, whose growth is a note taken’s 1.1 of a twin’s who left it 739ms
+   ✓ school.call_in_sick > PLAYER JOURNEY: called in sick the morning of a Carlotta work-through: the call excused and not counted, no gap in the blocking, no breach, still in the pool, across a reload; a twin who stays away without calling is counted 709ms
+   ✓ school.take_shift > PLAYER JOURNEY: asked the day before a Seagull night on call, it skips every evening held by a call at five to the curtain’s end 694ms
+   ✓ school.cabaret > PLAYER JOURNEY: Join A Cabaret Show pressed on the Casting tab; played through the clock; the fall’s evaluation reads its nights and names the show, the spring’s casting reads the run once at half weight and Why This Cast says so; a twin who never joined has none of it 1092ms
+ ✓ tests/evidence-g11-money.test.ts (21 tests) 4089ms
+   ✓ bank.repay_loan > pays a Citi loan off from the Personal Loan panel 20 days into a 30-day month: refused first where the account can’t cover it, then $3,000 and 20 days’ interest from Citi Access Checking, the next payment called off, and Citi lending again 449ms
+   ✓ bank.set_alerts > tells of a statement ready only while Statement Ready is pressed On on the Alerts form, and of a card’s statement with a payment due whatever it is 430ms
+   ✓ bank.take_term_interest > takes a Chase CD’s $174.52 from the panel 30 days before its end: refused with nothing earned, the penalty falling from $172.60 to nothing, and the renewal reinvesting only what the 30 days after earned 897ms
+   ✓ card.close > leaves Citi’s $2,500 of $5,000 alone in what’s used once Chase’s card is closed from the panel, owing nothing: Citi’s due date moves the record a point down, where beside Chase’s it moves 1.5 up 411ms
+   ✓ card.close > charges no yearly fee on a closing card: AIB’s €30 on December’s statement, the month it was opened, to the card left open and not to the one closing (a quick-save life in Dublin, since no New Haven card has a yearly fee) 634ms
+ ✓ tests/evidence-g21-school.test.ts (24 tests) 15462ms
+   ✓ school.week > PLAYER JOURNEY: books the first year’s 24 class-week Saturdays and the second year’s 25 to Yale’s 150 assigned hours, never the twenty-sixth, 22 April 2028 2863ms
+   ✓ school.call > closes a run whose last night is missed in hospital: the note from the three nights played, one run milestone, the process looked back on, no breach, once across a save 1087ms
+   ✓ school.call > counts a last night missed in New York as a breach and a missed night on the run’s record, closes the run the same, and the next casting reads it as delivered at 3 of 4 448ms
+   ✓ school.evaluation > PLAYER JOURNEY: keeps a student at the reach of every skill who grows nothing in good standing, in line with the class; a twin with room who grows nothing is behind, at a concern the Summer Cabaret refuses 1614ms
+   ✓ school.evaluation > reads a first-year Carlotta played weak at the second fall’s evaluation: its work the mean of both runs’ nights, falling short; a twin at their own craft doesn’t 2529ms
+   ✓ school.evaluation > PLAYER JOURNEY: forgives two missed rehearsal calls at a good evaluation, and the chair casts them next term; missed after it, they’re out of the next casting 1408ms
+   ✓ school.evaluation > PLAYER JOURNEY: reads a fall of coursework never prepared as short at the clock’s evaluation, every piece due counted; a twin who prepares each piece stays in good standing 870ms
+   ✓ school.evaluation > PLAYER JOURNEY: holds a student at warning, not dismissed, at the evaluation of the term a performance was missed in, saying why; the twin who played it is in good standing 2483ms
+   ✓ school.evaluation > dismisses a student on warning who falls short at the clock’s evaluation, and lets the School’s calendar go: no spring, Yale Health thirty days on 613ms
+ ✓ tests/evidence-g02-life.test.ts (23 tests) 6615ms
+   ✓ world.dismiss_decision > PLAYER JOURNEY: Dismiss on Home’s card takes the return’s question off; refused again and for no id; across a reload File It is refused; the return still comes due 1421ms
+   ✓ world.dismiss_decision > forgets a dismissed row 180 days on, its date ahead or not 839ms
+   ✓ world.take_decision_action > PLAYER JOURNEY: File It on Home’s card files the 2026 return and closes the row; pressed again, refused with nothing filed twice, across a reload; no late notice in April; forgotten 180 days on 1182ms
+   ✓ world.take_decision_action > closes a row whose command doesn’t close it itself, and forgets it 180 days on; an unknown id and an index with no action are refused, the row left open 725ms
+   ✓ health.appeal > PLAYER JOURNEY: Appeal It on Papers; refused a second time; overturned 60 days on, what was paid over the plan’s share comes back once, across a reload 389ms
+   ✓ health.appeal > refuses an appeal 181 days after the denial in its words, which Papers no longer offers; a claim never denied is refused too 353ms
+ ✓ tests/evidence-g28-ui.test.ts (21 tests) 9539ms
+   ✓ c-disp-riskTolerance > PLAYER JOURNEY: the same groceries on the card each midnight: at 66 autopay pays Chase’s $40.00 floor on 11 October and 10 November, the card carries what’s left and is charged interest on 20 November; at 65 each statement is paid whole and nothing is charged; across a save and a load, once 952ms
+   ✓ c-disp-extraversion > PLAYER JOURNEY: the first Cabaret curtain adds a reserved student (5) 3.6 more stress than one at 50 and an outgoing one (95) 3.6 less, 7.2 apart (DISPOSED.room 4 × 0.9), over the nerves’ 6 × (1 − composure/100); the same across a save and a load 680ms
+   ✓ c-disp-openness > PLAYER JOURNEY: the Cabaret’s read-through, new work, lifts an open student (95) 1.8 more than one at 50 and a conventional one (5) 1.8 less, over the 0.2 the default agreeableness of 55 gives each; stress alike 367ms
+   ✓ c-disp-openness > PLAYER JOURNEY: the Carlotta Festival’s read-through, a festival’s new play, lifts the open student 3.6 more than the conventional twin; its curtain, not a rehearsal, reads no openness 1837ms
+   ✓ c-disp-agreeableness > PLAYER JOURNEY: Drama 50’s first meeting takes 1.8 off a blunt student’s morale (5), gives an accommodating one (95) 1.8 and one at 50 nothing (DISPOSED.rehearsal 2 × 0.9), stress alike, across a save and a load; the Cabaret’s read-through 3.6 apart 414ms
+   ✓ c-genres > PLAYER JOURNEY: at every second-year call that reads a play’s kind, its lover has 1.5 more morale and 1.5 less stress than an unread genre’s twin, the other play’s lover nothing, and the unread genre a no-genre life’s day; the last across a save and a load 4534ms
+ ✓ tests/evidence-g17-papers.test.ts (22 tests) 16302ms
+   ✓ tax.due > PLAYER JOURNEY: the student born in New York, her work-study under the filing threshold, has no 2026 return: nothing raised, nothing late on 16 April 2027, nothing for the IRS to file 1024ms
+   ✓ tax.due > PLAYER JOURNEY: the F-1 student’s 1040-NR left unfiled is late at 11:59 PM on 15 April 2027, and the notice gives the least past 60 days as the $165.60 she owes, not $525; the IRS’s substitute is set a year on, once, across a reload 810ms
+   ✓ tax.due > a $90,000 return left unfiled is told the $535 least, the lesser of $535 and what it owes (IRC 6651(a), Rev. Proc. 2025-32 for a return due in 2027) being $535 there; a New York quickSave life, since no student owes that much 569ms
+   ✓ tax.due > gives the least past 60 days on the IRS’s part alone where New York’s takes the whole over $535, as latePenalty charges it; a New York quickSave life 498ms
+   ✓ tax.due > tells a return the IRS owes a refund on, with New York owed, that the refund waits and New York charges its own; a New York quickSave life 546ms
+   ✓ tax.due > PLAYER JOURNEY: a return due a refund left unfiled is told the refund waits with no penalty, and a year and a day on the IRS has filed nothing and no state has written 1469ms
+   ✓ tax.due > an Oregon return owing the IRS and Oregon: at the due date the IRS’s substitute a year on, Oregon’s demand a year on and its three-year check at the extended date, 183 days; its twin filed in February, none (a Portland quickSave life: no student lives there) 818ms
+   ✓ tax.substitute > PLAYER JOURNEY: the F-1 student’s 1040-NR left unfiled: CP2566 a year after the due date for $365.13, assessed 120 days on in its parts, $376.69, and collected from the 35th day; Papers says the IRS filed it 1471ms
+   ✓ tax.substitute > leaves out the premium tax credit only their own return claims: CP2566 on the IRS’s part with the credit added back, and Papers says the tax with no credit (a New York quickSave life on $60,000, a marketplace plan the student’s Yale Health never needs) 806ms
+   ✓ tax.substitute > a save from before, holding the unfiled 1040-NR past due with no substitute on the calendar, has it put there on opening: at the year after the due date, or a day on once that has passed; never twice 1230ms
+   ✓ tax.notice > PLAYER JOURNEY: CP501, CP503, CP504 and LT11 on the 35th, 70th, 105th and 140th days after filing; the levy on the 170th finds $500, takes it to the tax, says what is still owed, and comes again 91 days on, once across a reload; Papers lists it 703ms
+   ✓ tax.notice > a levy that finds the bank empty takes nothing and posts nothing, says $0.00 was taken and what is still owed, and comes again 91 days on 924ms
+   ✓ tax.apply_plan > PLAYER JOURNEY: Apply on Papers’ IRS Payment Plan gives one toast, “Applied: answered by February 1, 2027, a fee of $29.00.”; the plan is with the IRS, then in force a minute on at what is owed over 72 months, the fee taken once and collection stopped 401ms
+   ✓ tax.apply_plan > a month of the late-payment penalty that begins under the plan is charged a quarter point of the tax, exactly; its twin with no plan is charged the half point 1007ms
+   ✓ tax.apply_plan > an amended return’s tax that adds two payments or less joins the plan: still in force, “New tax joined the plan” with what it added, no CP523; its twin adding far more is CP523 874ms
+   ✓ tax.apply_plan > PLAYER JOURNEY: the F-1 student files her 1040-NR with the bank empty and owes $165.60; with no Social Security number her plan goes by Form 9465, no fee by direct debit at her income, answered 30 days on; in force at $2.30 a month, collection stopped, and the first payment taken 600ms
+   ✓ documents.apply_ssn > a 1040-NR filed with the card in hand is processed in the IRS’s 21 days; without it the W-7 holds it seven weeks more, 70 1274ms
+   ✓ documents.apply_ssn > the IRS’s payment plan on her 1040-NR’s $165.60: with the card come, applied for online and answered in a minute; without it, Form 9465 and 30 days 814ms
+ ✓ tests/evidence-g14-money.test.ts (18 tests) 2726ms
+   ✓ bank.open_current > refuses Chase for the $30 it charged off and three banks on its ChexSystems report, opening, applying for and sending nothing, and the panel says so with Apply shut 447ms
+   ✓ bank.open_current > refuses a seventeen-year-old at the four banks that open from 18, in their words, and opens Citi on her eighteenth birthday 344ms
+   ✓ bank.set_primary > refuses one primary already, a savings account, a card, an account the bank closed and Citi while it closes, leaving the primary where it was 389ms
+ ✓ tests/evidence-g25-school.test.ts (20 tests) 12161ms
+   ✓ work-study > PLAYER JOURNEY: the first fall’s twelve class-week Saturdays are booked, worked and paid on the Fridays as wages; 2026’s $1,656 is the year’s work-study and on the return the tax season makes, which reckons it with the scholarship under 2026’s deduction 883ms
+   ✓ work-study > PLAYER JOURNEY: the second year’s twenty-six class-week Saturdays are booked to its 150 assigned hours and no further, twenty-five and none on 22 April 2028, after a first year of twenty-four that stopped at 144 2449ms
+   ✓ school.request_leave > PLAYER JOURNEY: asked on the third day of spring classes, decided five of Yale’s working days on, Martin Luther King Jr. Day closed, and begun that day: past a tenth of the classes, half the term’s scholarship goes back on the rebate schedule, $7,600.25 owed on the Yale account; kept through a reload, and not done twice 463ms
+   ✓ school.request_leave > a medical leave begun past a quarter of the spring’s classes and before half returns a quarter of the scholarship, $3,800.13 1144ms
+   ✓ school.request_leave > PLAYER JOURNEY: decided on the record as it stands then: asked a week before the spring’s evaluation, refused when the evaluation fails a course, in its words, once; the next fall begins as if never asked, where a twin with every course passed is granted the leave 1143ms
+   ✓ school.request_leave > an F-1 student’s personal leave is refused through the command, in its words, and nothing is asked 334ms
+   ✓ school.request_leave > PLAYER JOURNEY: Ask For A Leave… opens the form’s Ask, which says what asking does; pressed, it asks for the form’s kind, reason and length, and the panel says who has it and by when 313ms
+   ✓ school.cancel_leave > PLAYER JOURNEY: a leave granted for the spring and not yet begun, called off on Call It Off after its warning: the spring begins as if it was never asked, through a reload, where a twin left alone begins the leave 430ms
+   ✓ school.appeal_leave > PLAYER JOURNEY: a dean’s leave for an assessment slept through, appealed on Appeal To The Dean and overturned once cleared: the courses, the term, the half of the scholarship returned and the I-20’s extra year all back, the evaluation and the spring on the calendar again and played to; through a reload, and once 429ms
+   ✓ school.reregister > PLAYER JOURNEY: back from a leave whose returned scholarship went unpaid: the hold refuses Register in its words and grays it, a class day and a Saturday don’t count the student; paid, Register takes, once, and the next class counts 1016ms
+   ✓ school.reregister > a term begun under a hold, with no leave behind it, asks for registration again: refused until paid, the first class day not counted, then registered and counted 386ms
+   ✓ school.buy_affiliate > PLAYER JOURNEY: quoted at the leave’s two terms less the spring’s fee, $8,950; refused while the bank can’t cover it, the lapse and the bill as they were; bought on Buy It once it can, the cover back to the day student cover ended and the urgent care had in the lapse billed as Yale Health’s, $0; kept through a reload, and not bought twice 485ms
+   ✓ school.buy_affiliate > past its deadline it’s refused in its words, with the money there: no cover, no charge, the lapse open, and the button gone 570ms
+   ✓ school.make_up > PLAYER JOURNEY: an Incomplete extended a month into the spring’s classes is refused an hour before class and in class, in their words, the clock and the record as they were; made up after class on Make Up A Session in two hours, passed, and its deadline passes with nothing more; through a reload 762ms
+   ✓ school.make_up > a session begun an hour before its month runs out, which it can’t hold, is refused in its words, and the course isn’t passed after its deadline made it permanent 518ms
+ ✓ tests/evidence-g04-life.test.ts (25 tests) 6316ms
+   ✓ health.therapy > PLAYER JOURNEY: Yale’s course of eight, across a reload, lifts the depression for one student and not for her twin, and the week’s morale toll goes with it 824ms
+   ✓ health.treat > PLAYER JOURNEY: asthma let go has an emergency its kept-up twin doesn’t, and type 1 diabetes let go one too; every emergency the twin had, the one left alone had as well 748ms
+   ✓ life.birthday > PLAYER JOURNEY: born 29 February 2004, the birthday is on the calendar on 28 February in 2027, fires there, and is put on 29 February in 2028 502ms
+   ✓ life.birthday > born 29 February 2004, the birthday said on 28 February 2027 is her 23rd, the age she turns that day 499ms
+   ✓ world.tick > PLAYER JOURNEY: a London-born student’s 2026 return, raised on 1 February, is on Home until its date; the tick after closes it, Home drops it, and it’s gone a season and a half on 1416ms
+   ✓ world.tick > PLAYER JOURNEY: a row dismissed with its date 300 days ahead is forgotten 180 days on; a day’s done items go after 400 days, across a reload 1051ms
+ ✓ tests/evidence-g03-life.test.ts (25 tests) 6683ms
+   ✓ health.dental > a January filling is in the plan year that began on 1 October, so its $50 deductible, paid in October, isn’t charged again 905ms
+   ✓ health.extra_supply > PLAYER JOURNEY: Fill A Longer Supply pressed fills a drawn high blood pressure for 90 days at three of Yale’s $10 fills, $30 in one posting; no refill for twelve weeks across a reload, where a twin paid $10 a month 579ms
+   ✓ health.extra_supply > a supply in hand is read by the health week: on 5 October a twin whose medicine ran out on 30 September, its refill unpaid, loses 3 morale; the twin holding 90 days doesn’t 332ms
+   ✓ health.pay_bill > PLAYER JOURNEY: Pay It Off pressed settles the bill on Papers and takes it off Home’s worries; a year and a month on the clock a twin who didn’t pay is reported once, across a reload, and the one who paid never is 2751ms
+ ✓ tests/evidence-g13-money.test.ts (25 tests) 7065ms
+   ✓ finance.pay_card > paid by hand to the minimum before its due date: autopay asks nothing, so a bank emptied the minute before bounces nothing, charges no late fee and reports the month, across a save and a load; unpaid, the twin bounces, is late and pays $30 509ms
+   ✓ finance.pay_card > paid in full by hand, the statement keeps its grace period and the next charges no interest; with the minimum alone it carries, and the next charges the $62.47 that $2,000 built a day at a time at 18.46% 649ms
+   ✓ finance.pay_card > paid by hand, a US card takes the minimum to the cheapest balance and the rest to the dearest: $540 clears a cash advance at 28.49%, and the next statement charges it no interest; the $40 minimum alone leaves it to draw 426ms
+   ✓ bank.scheduled_payment > from a current account Chase closed for sixty days overdrawn doesn’t go, and says so: nothing leaves it, nothing is in transit; the twin never overdrawn sends it 571ms
+   ✓ card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it 1148ms
+   ✓ credit score > asked to move the statement day every morning, it moves once a cycle: the statements, their due dates, their interest and their reports still come, and at day 125 the score has gained nothing on a twin’s who never moved it 1153ms
+   ✓ credit score > with no card open, the record ages back 2 a month on the 1st, to 680 and no further, and not at all with a payment late in the year 398ms
+   ✓ statements > shows a card’s kept cuts as its periods, a transition cycle’s charge under one statement, the minimum and the minimum-only warning, as the player has it 544ms
+ ✓ tests/decisions-stamina.test.ts (21 tests) 8568ms
+   ✓ W1: every play has a running time, with its basis > PLAYER JOURNEY: books the Carlotta’s performances for its new play’s running time and the curtain call, where every School performance held two and a half hours 989ms
+   ✓ W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand 786ms
+   ✓ W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent 823ms
+   ✓ W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again 705ms
+   ✓ W5: a break recovers, once > PLAYER JOURNEY: holds the interval on the clock as waking time charged as any, and a night’s sleep after restores from the dials by its own rule, whatever the interval gave back 756ms
+   ✓ W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand 797ms
+   ✓ W6: the evening’s time and fatigue, once > PLAYER JOURNEY: a save and a load in the middle of the evening and after it take neither the time nor the energy again 721ms
+   ✓ W6: the evening’s time and fatigue, once > times the performance calls a save from before booked, once, on its first opening, and keeps one whose new span would meet another call (GUARD) 748ms
+   ✓ W9: bounded, and said > PLAYER JOURNEY: says the workload before the curtain under A Night Now and in the night’s record after it, from the engine’s own figures 709ms
+   ✓ W10: a night kept under the ruleset before is shown as it was > opens a save from before with its nights as they were judged under evaluation-10, replays none, names the ruleset, and judges the next by its workload 688ms
+   ✓ a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone 785ms
+ ✓ tests/accountlife.test.ts (30 tests) 1739ms
+   ✓ a term deposit’s end > renews at Chase for the same term, with ten days to take it whole 415ms
+   ✓ a term deposit’s end > pays out instead when the holder says so, and moves into savings where that’s the bank’s way 418ms
+ ✓ tests/bank-fees.test.ts (32 tests) 2416ms
+   ✓ Arion’s debit card > costs 19 kr a purchase and 950 kr a year, and nothing at 23 357ms
+   ✓ a dormant account > costs ¥1,320 a year at MUFG once two years pass without use 428ms
+   ✓ an introductory rate > and Bankinter’s 5% for a year, 2% for the next, then none on record 598ms
+ ✓ tests/decisions-arion.test.ts (16 tests) 10489ms
+   ✓ arion.AR1: Arion’s debit card, its first year charged on the first night > FIXTURE, Mosfellsbær: an Arion account a life opens is charged its first night, 6 January 2026, and renewed on 6 January 2027, where until brief 10 it waited a year for its first 316ms
+   ✓ arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr ($5.92) of the card’s 950 kr, the 314 of its 365 days left, with Iceland’s Act and the label; Close It pressed posts it once against Bank Fees; a second press is refused, and a reload run past 25 August 2027 charges the closed account nothing and gives nothing back again 1006ms
+   ✓ arion.AR3: a close gives back the card year’s days left > GUARD: a second settling of a Veltureikningur’s fees gives nothing of the card’s year back again (FIXTURE: only a home bank’s close tried again settles twice, and Arion closes no home account) 317ms
+   ✓ arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: kept, the year is renewed at midnight in New Haven on 25 August 2027 and on 25 August 2028, not on 24 August 2028, where the 365-day year until brief 10 fell across 29 February; the same whether the clock jumps from 20 August 2028 or runs a day at a time with a reload on the 24th, and a minute at a time across the night and reloaded in it 1755ms
+   ✓ arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25 August 2027, which holds 29 February: 189 days used, 177 of its 366 left 1535ms
+   ✓ arion.AR2: the card year renewed once a year, on its date in Reykjavík > FIXTURE, Mosfellsbær: an Arion account opened on Monday 28 February 2028 is charged on its first night, 29 February, and renewed on 28 February 2029, the month’s last day in a year without a 29th, not on 1 March 316ms
+   ✓ arion.AR7: the close’s days by Reykjavík’s calendar > PLAYER JOURNEY: closed at 9 PM in New Haven on New Year’s Eve 2026, already 2 AM on 1 January 2027 in Reykjavík, the Veltureikningur refunds 612 kr, 130 days used by Reykjavík’s date, not the 614 kr New Haven’s would give; closed at 9 PM on 24 August 2027, already the year’s date in Reykjavík, it gives nothing back and is charged no new year 893ms
+   ✓ arion.AR5: an account that can’t cover the year’s fee > PLAYER JOURNEY: with 300 kr left on the eve of 25 August 2027 (TEST SETUP), the year’s 950 kr is taken all the same, −650 kr, as the panel says; Close It is refused while it’s below zero; with 1,000 kr paid in (TEST SETUP) it closes on 27 August and refunds 942 kr, 363 of the year’s 366 days 964ms
+   ✓ arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > FIXTURE (TEST SETUP: paid behind): the Reykjavík-raised student’s account opens with two years’ fees, 1,900 kr, nothing is charged on her first night, a close on 14 October 2026 charges 133 kr, the 51 days used of 365, said first with the Act’s rule, and kept, the year is charged at its end, 25 August 2027, once 926ms
+   ✓ arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > FIXTURE (TEST SETUP: the setting changed to behind on 1 September 2026): the year she was charged ahead on 25 August 2026 is still given back on a close, 817 kr on 14 October, and kept, is charged nothing at its end; the next year, opened behind, is charged at its end, 25 August 2028: each year paid once 1837ms
+ ✓ tests/cardlife.test.ts (20 tests) 2053ms
+   ✓ a record with no card open > ages back a little each month while nothing is in collections, stops at a thin file’s ceiling, and holds while anything is 312ms
+   ✓ persistent debt in Britain > writes at eighteen months of paying more in interest and fees than off the card, and at thirty-six sets a plan and stops it 890ms
+ ✓ tests/arrears.test.ts (18 tests) 280ms
+ ✓ tests/defects-g8-4.test.ts (13 tests) 991ms
+   ✓ a withdrawal by the fifteenth day of classes says when Yale Health’s cover ends > PLAYER JOURNEY: in a spring it ends that day, and care since 4 January stays covered by the fall’s insurance term 499ms
+ ✓ tests/defects-r8-1.test.ts (10 tests) 3492ms
+   ✓ a brief suggested for a weakness > is never made for a technique no brief reads, whether recent work or the work for life names it 392ms
+   ✓ What To Work On, with the work so far > PLAYER JOURNEY: on the Player Profile, a fall term of school in, names it with the pieces it has held back for life 775ms
+   ✓ a director’s note on the craft > PLAYER JOURNEY: says it on the festival’s notes on that limit, and nothing else about the festival changes 1739ms
+ ✓ tests/carried.test.ts (19 tests) 1310ms
+   ✓ catching the flu > is likelier short of sleep and under stress, by the tempered studies 555ms
+ ✓ tests/defects3-50-70.test.ts (7 tests) 1840ms
+   ✓ documents.us_status > PLAYER JOURNEY: an F-1 student who withdraws by the fifteenth day of the spring’s classes takes the marketplace from 1 February, Covered Connecticut not being hers in 2027; out of status on the 4th, it ends at the month’s look, and the notice when her cover ends offers her no marketplace 625ms
+   ✓ documents.apply_idcard > PLAYER JOURNEY: an F-1 student’s limited-term card applied for at noon on Thursday 5 November 2026 is approved by SAVE ten federal workdays on, Friday the 20th, Veterans Day not among them, and comes by mail twenty business days later, Monday 21 December, Thanksgiving not among them 355ms
+   ✓ documents.apply_idcard > PLAYER JOURNEY: the card applied for at 9 PM on Wednesday 4 November, 2 AM on the Thursday in UTC, is approved by SAVE at 9 PM on Thursday the 19th and comes at 9 PM on Friday 18 December, its days counted as New Haven has them 304ms
+   ✓ documents.replace_license > PLAYER JOURNEY: a license reported lost in force is refused a replacement once a new card would come after its date, and once the date has passed, in words on Papers and through the command, with nothing charged; a twin who asks in time is sent one in force 329ms
+ ✓ tests/defects-g8-2.test.ts (8 tests) 1901ms
+   ✓ PLAYER JOURNEY: Buy Affiliate Cover… on a personal leave of three terms > shows and charges the leave’s own three terms, the same figure 527ms
+   ✓ Ask For An Aid Review > PLAYER JOURNEY: is refused to a student back from a leave and within the six, with why, and isn’t offered 628ms
+ ✓ tests/defects-g8-8.test.ts (9 tests) 3961ms
+   ✓ taxes-file-toast-whole-balance: File It says what happened to the IRS’s part and each state’s > PLAYER JOURNEY: the IRS’s part owed and the bank empty, Connecticut’s a refund: no money “comes back in 21 days” 454ms
+   ✓ taxes-file-toast-whole-balance: File It says what happened to the IRS’s part and each state’s > PLAYER JOURNEY: a 1040-NR filed without a Social Security number says the day its refund arrives, seven weeks past the 21 days 581ms
+   ✓ taxes-file-toast-whole-balance: File It says what happened to the IRS’s part and each state’s > PLAYER JOURNEY: their own return in place of the IRS’s assessed one says what came back now, not in 21 days 657ms
+   ✓ taxes-file-toast-whole-balance: File It says what happened to the IRS’s part and each state’s > PLAYER JOURNEY: the IRS’s assessment paid in full, New York’s side filed with it and the bank empty: what’s still owed is said 581ms
+   ✓ taxes-amend-zero-change: an amendment that moves tax between the IRS and a state > PLAYER JOURNEY: says no change in the total, in its toast and on its line, before and after the IRS processes it 650ms
+   ✓ taxes-refund-offset-label: another year’s refund kept for this one > PLAYER JOURNEY: reads “from a refund” in the IRS’s list, not “from an amended return’s refund” 451ms
+   ✓ taxes-straight-apostrophes: the refusals beside Apply and Revise The Plan > say “doesn’t” with the typographic apostrophe 560ms
+ ✓ tests/bank-moves.test.ts (11 tests) 865ms
+ ✓ tests/defects-r1-1.test.ts (11 tests) 4936ms
+   ✓ `spendRefusal`, against what `spend` does > says why exactly when `spend` can’t pay, and `spend` takes nothing then and owes nothing otherwise, for every way of paying, in New York and Paris 3382ms
+   ✓ `spendRefusal`, against what `spend` does > is what the menu says and what the command does, for a meal, for every way of paying, in New York and Paris 1398ms
+ ✓ tests/defects-g8-6.test.ts (13 tests) 466ms
+ ✓ tests/cardoffers.test.ts (13 tests) 355ms
+ ✓ tests/cards.test.ts (17 tests) 594ms
+   ✓ the yearly fee > is charged on the statement in the month the card was opened, once a year 310ms
+ ✓ tests/defects-g4-2.test.ts (8 tests) 103ms
+ ✓ tests/banking.test.ts (19 tests) 671ms
+   ✓ interest > takes New Zealand’s by the saver’s income, and France’s not at all on a Livret A 306ms
+ ✓ tests/defects-g8-7.test.ts (11 tests) 3515ms
+   ✓ taxes-plan-refused-stops-collection: a refused IRS plan resumes the IRS’s letters > PLAYER JOURNEY: a mailed plan refused on its decision day puts the IRS’s collection back on the calendar 870ms
+   ✓ taxes-plan-setup-fee-not-charged: an IRS plan’s setup fee leaves the bank, or there’s no plan > is refused at the application when the bank can’t cover the fee 453ms
+   ✓ taxes-plan-setup-fee-not-charged: an IRS plan’s setup fee leaves the bank, or there’s no plan > PLAYER JOURNEY: approved online, the fee leaves the bank once 582ms
+   ✓ taxes-plan-setup-fee-not-charged: an IRS plan’s setup fee leaves the bank, or there’s no plan > PLAYER JOURNEY: mailed, the bank emptied in Form 9465’s thirty days: refused for the fee, nothing charged, collection back 394ms
+   ✓ taxes-irs-pay-late-accrual: the IRS’s failure-to-pay penalty > PLAYER JOURNEY: a plan’s months on a played return add the quarter rate’s penalty each month 1184ms
+ ✓ tests/defects-g8-5.test.ts (12 tests) 678ms
+   ✓ a graduate can enroll before Yale Health ends, and the cover starts as it ends > PLAYER JOURNEY: withdrawn after the fifteenth day of classes, enrolling starts cover the day Yale Health ends, with no gap 325ms
+ ✓ tests/defects-g8-12.test.ts (6 tests) 7363ms
+   ✓ a Rep understudy’s part > is forecast as the lead it covers, as the run-through judges it 1061ms
+   ✓ the Rep’s company with classmates in it > lists the class’s others asked in, reads them as the company, and counts a friend among them at the curtain 6217ms
+ ✓ tests/defects-g8-3.test.ts (6 tests) 1505ms
+   ✓ The Classes tab, a year behind or past the sixth term > PLAYER JOURNEY: back from a first-fall leave, shows the first year’s week and courses, which the engine schedules 691ms
+   ✓ PLAYER JOURNEY: a scholarship returned on a leave > is due in thirty days, said when the leave begins, and unpaid brings the hold and the late fee 636ms
+ ✓ tests/defects-g3-1.test.ts (7 tests) 476ms
+ ✓ tests/defects-g4-1.test.ts (9 tests) 135ms
+ ✓ tests/bank-moves-card-line.test.ts (6 tests) 184ms
+ ✓ tests/cash.test.ts (10 tests) 163ms
+ ✓ tests/documents.test.ts (9 tests) 1400ms
+   ✓ the papers a life begins with > give a US citizen a passport and a license at the shares that hold them 1179ms
+ ✓ tests/defects-g14-1.test.ts (4 tests) 262ms
+ ✓ tests/defects-g15-1.test.ts (6 tests) 258ms
+ ✓ tests/defects3-unread.test.ts (6 tests) 2073ms
+   ✓ the refusals for being away from New Haven (defect 71) > PLAYER JOURNEY: a played first fall is in New Haven still, where every life at the School begins and nothing moves it 407ms
+   ✓ recordWages’ SAG-AFTRA mark (loose end L3) > PLAYER JOURNEY: a summer’s stipends, paid by the clock, leave the year and its quarters no SAG-AFTRA wages, which nothing read 1562ms
+ ✓ tests/defects-g20-1.test.ts (2 tests) 98ms
+ ✓ tests/defects-g30-1.test.ts (3 tests) 95ms
+ ✓ tests/engagement.test.ts (5 tests) 5922ms
+   ✓ every genre > is studied and taped by a command: familiarity, practice and a self-tape judged in its families, every one 5259ms
+ ✓ tests/defects-r3a-1.test.ts (7 tests) 88ms
+ ✓ tests/defects-g27-1.test.ts (4 tests) 514ms
+ ✓ tests/defects-g22-1.test.ts (6 tests) 67ms
+ ✓ tests/banking-complete.test.ts (3 tests) 230ms
+ ✓ tests/account-alerts.test.ts (3 tests) 911ms
+   ✓ PLAYER JOURNEY: autopay from one bank, school money into the other > warns once that Capital One is short for the card, names the account, the payment and the remedy, and not again 442ms
+   ✓ PLAYER JOURNEY: autopay from one bank, school money into the other > says nothing when the account can cover it, and nothing when turned off 438ms
+ ✓ tests/defects-g17-1.test.ts (3 tests) 216ms
+ ✓ tests/defects-g19-1.test.ts (3 tests) 732ms
+   ✓ the card’s payment hold reads the account autopay paid from > holds nothing when autopay pays the Chase card from a Chase account, though the primary is at Capital One 413ms
+   ✓ the card’s payment hold reads the account autopay paid from > holds the Chase days when autopay pays the Chase card from Capital One, though the primary is at Chase 311ms
+ ✓ tests/defects-r4-1.test.ts (3 tests) 206ms
+ ✓ tests/defects-r5-1.test.ts (2 tests) 111ms
+ ✓ tests/defects-g1-1.test.ts (2 tests) 25ms
+ ✓ tests/coverage-gaps-number.test.ts (4 tests) 1295ms
+   ✓ a debit tried on an exposed number > stops being tried after its year, and the account’s own payments go on 1222ms
+ ✓ tests/defects-g21-1.test.ts (2 tests) 12ms
+ ✓ tests/defects-g7-1.test.ts (3 tests) 6ms
+ ✓ tests/defects-g12-1.test.ts (3 tests) 4ms
+ ✓ tests/defects-r6-2.test.ts (1 test) 31ms
+ ✓ tests/defects-g2-1.test.ts (1 test) 27ms
+ ✓ tests/decisions-judge.test.ts (48 tests) 207309ms
+   ✓ ST3-R: identical effective inputs give identical results (brief 10) > the same scene judged twice, replayed from its own record, replayed with its draw, and replayed after a save and a load comes to the same exact result on every case 1148ms
+   ✓ ST3-R: identical effective inputs give identical results (brief 10) > an actor even in everything the formula reads, undrained, is 100 × n^(1 + difficulty) on stage and at a close frame, at full precision and as shown 565ms
+   ✓ ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the voice-and-body specialist is better on stage than at a close frame on every case, and a stamina at 55 costs on both, at a budget of 600 535ms
+   ✓ ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the criterion’s even actor’s difference is its techniques’ part and its stamina’s part, and what’s left is floating point 437ms
+   ✓ ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > every shown figure is its own exact value rounded once, and each whole is worked by hand from its parts’ exact values 501ms
+   ✓ ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > ST3-R (e), it catches what it should: with the stage’s and the close frame’s leans at 1 the voice-and-body specialist isn’t better on stage on every case, with no drain a stamina of 55 costs nothing on any, and with the grain let into the comparison the undrained even actor comes apart 852ms
+   ✓ ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own abilities decide it: with emotional depth, composure or focus at the even actor’s, or all three, and nothing else changed, the specialist’s restrained take falls on every material, by more than its expansive take on nine in ten; against the grain, the grain costs it more, and restraint is its better choice less often 839ms
+   ✓ ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: the measure judges each piece as the game does: with no way chosen, every class scene and play, night and brief reading comes to what tools/pieces.ts gives it, to the last digit; played restrained, every brief at its first reading comes to the brief pane’s own preview for a played save’s actor 1320ms
+   ✓ ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a1) and (a2), a measurable contribution, and restraint’s own: on every piece, for every actor, emotional depth, composure and focus raised together by 10 raise the restrained take by more than 0.05, by more with restraint’s draws than with them taken out, and each one’s own +10 by more with its own draw than without it 11781ms
+   ✓ ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a3), more is better up to the cap: each of the three set to 0, 20, 40, 60, 80 and 100, everything else held, raises the restrained take at every step, on every piece for every actor; set past its full it moves nothing, the cap `termsOf` documents 22348ms
+   ✓ ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (a4), the guarantee kept: a mastered actor, fully prepared, played restrained, on a sufficient day, comes to 100 on every class scene, play, night and brief reading, with no draw and with one 596ms
+   ✓ ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c1), preparation in its direction: the choice rehearsed in from nothing to full never lowers the restrained take, half rehearsed it’s behind by more than 0.05 and names the rehearsal, and against the grain it asks more: rehearsed only to 0.9 it’s short exactly where the scene’s mark is over 0.9, which is only where restraint’s suitability is under nothing 5759ms
+   ✓ ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c2), the scene’s circumstances in their direction: on every class scene, play and night, each circumstance a level up or down, everything else held, moves restraint’s suitability its way and the restrained and expansive takes theirs, strictly wherever the suitability moved; and on every piece, reading the scene’s grain never moves a restrained take the wrong way, and lifts it wherever restraint suits 5369ms
+   ✓ ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c3), a valid interpretation: on every brief reading, under a callback asking for it expansive, restraint doesn’t fit, the chooser’s reason is the director’s, and the take is behind the same take under a callback asking for it restrained by more than 0.05, naming the misfit, for every actor; a mastered actor’s isn’t 100 there 4324ms
+   ✓ ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on 5696ms
+   ✓ ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever the scene favors restraint, restraint is the better choice for the beginner, the even actor, the restrained specialist and the near-master across 6 works and 3 register families or more, no work over a quarter, on stage and on tape; the mirror holds for expansive; and on tape each side’s specialist finds its side the better choice more often than the even actor 5029ms
+   ✓ ST6-R2: restrained acting judged by what it does for a player (brief 12) > PLAYER JOURNEY: ST6-R2 through the commands: a brief at a close frame that suits restraint, chosen restrained (the brief pane’s chooser naming what restraint draws on and that it suits the scene), prepared and rehearsed in on its feet across a week of Sense Memory, taped, saved and opened again: the rehearsal and the week each raise the take, the emotional depth the week built more played restrained than expansive and by restraint’s draws in part, and the choice, the forecast and the take come back to the last digit 424ms
+   ✓ ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.2), the scene read or not, down to the engine’s precision: on every piece, for every actor, reading the scene’s grain never moves a restrained take the wrong way, moves it strictly the right way wherever grainOf keeps a share of it, and leaves it the same exactly where the rule keeps none, the brief readings at a suitability of ±0.01; carried at full precision there, it moves each the right way 4378ms
+   ✓ ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c2.3), the boundaries: on the real readings the grain moves nothing at a suitability of 0 and ±0.01 and every take strictly the right way at ±0.02; the judge reads every hundredth it’s handed, the grain’s floor holds at −0.75 and not past it, and a circumstance moves a side’s suitability and its take until the side’s sum is past ±1, and then neither 1226ms
+   ✓ ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.1), the dependency map is the engine’s: on every piece, for every actor, each of the twelve raised alone by 10 moves the restrained take wherever the context the judge reads gives it a path (directly, as a supporting read or through the drain), and moves nothing where it gives none 13082ms
+   ✓ ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.2), no strength where it’s unrelated: on every piece, every ability nothing in the take reads (the voice or the body on a brief with neither in it) leaves its specialist behind its comparison actor, at brief 12’s budget and the three fresh ones 1669ms
+   ✓ ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.c (c4.3), a weakness still costs, one input at a time: on every piece, for each of the twelve specialists at brief 12’s budget, each of its eleven the take reads, raised alone to the even actor’s 50, raises its restrained take, each it doesn’t read moves nothing, and the eleven together raise it 32794ms
+   ✓ ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e2′), restraint’s abilities widen its opportunities where there’s room: for each comparison actor, its counterpart at the same budget has more where it has room and every suitable piece where it hasn’t (a ceiling case), restraint’s draws carry part of what it gains on every suitable piece, its opportunities and what it gains are varied, and it gains none of size’s 25068ms
+   ✓ ST6-R2.c and ST6-R2.e clarified (brief 13) > FIXTURE: ST6-R2.e (e3′), size keeps its own where there’s room, the mirror: for each comparison actor, its size counterpart has more expansive opportunities where it has room and every suitable piece where it hasn’t, size’s draws carry part of what it gains on every suitable piece, its opportunities are varied, what it gains on tape is, and it gains none of restraint’s 27061ms
+   ✓ H4-R: every ability’s contribution on its own work (brief 10) > each specialist is on the even actor’s budget, and its own work (the pieces where its ability’s +10 effect is the largest of the twelve) is five pieces or more in two kinds or more, where all twelve are ahead on at least 60% by a median of 0.3 or more 5742ms
+   ✓ H4-R: every ability’s contribution on its own work (brief 10) > no strength erases an unrelated weakness: where an ability carries under a tenth of what a piece’s abilities move, its specialist is never ahead of the even actor 2556ms
+   ✓ The judge area’s second phase: stamina’s, memory’s and composure’s second kind of work (brief 10) > PLAYER JOURNEY: twins at the first Carlotta’s first curtain, a lead and a featured part in Major Barbara, each night’s record reading the text its part holds and the same stakes 1251ms
+   ✓ L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: a specialist and a generalist, each played through a month of the first term, judge L3-R’s fixed set higher at the month’s end than at its start, and no piece falls but where stamina, which they never trained, fell 1887ms
+   ✓ L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: L3-R (e), the journey kept in view: two months played by the journeys’ tool, and its report gives each month’s takes, their purposes, their difficulty’s mean and range, their stakes and genres, with L3 as written beside the controlled measure 10772ms
+   ✓ L3-R: real progress, controlled (brief 10) > more never makes it worse: raising any one ability, by ten or to full, never lowers a result, on every fourth piece for the even actor, a specialist, a beginner and a near-master 10074ms
+   ✓ M1: mastery at 100 (brief 10) > every judged piece and reading comes to 100 for a mastered actor, prepared, on a sufficient day, with no draw and with a draw; and every class scene and play on every way of playing that fits 1115ms
+
+ Test Files  72 passed (72)
+      Tests  1026 passed (1026)
+   Start at  00:52:53
+   Duration  213.31s (transform 9.99s, setup 2.26s, collect 85.61s, tests 523.25s, environment 14ms, prepare 5.84s)
+
+exit=0

@@ -1,0 +1,3 @@
+
+17346 strings read, 0 distinct faults
+exit=0

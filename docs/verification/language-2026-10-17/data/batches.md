@@ -272,3 +272,59 @@ the new one, 147 of 147 (exit 0). `npx tsc -b --noEmit` 0; `npx eslint` 0; the e
 ### Statuses
 
 62 sources re-marked Rewritten And Verified by the json area, whose file held them, by `mark.mjs`, after the builder's run.
+
+## The Whole Pass
+
+### Changed and left, counted
+
+Counted by `changed-inventory.mjs` and `left-inventory.mjs` on `text-inventory.mjs --show "*"` at `c74a02e1` and now
+(`changed-inventory.txt`, `left-inventory-base.txt`, `left-inventory.txt`):
+
+- **344 strings changed, in 230 sources and 24 files.** The inventory counts each `JSON.parse` export as one string, so
+  its 8 hold 449 changed data fields (`generated-diff.txt`); with them, 785 fields and literals.
+- **657 strings held a date the game doesn't write, outside a quotation, an address or a file name, at `c74a02e1`; 316
+  do now.** Every one left is in a field no screen reads, is data, or is a document's or a law's number:
+
+| Strings | File | Why it's left |
+|---|---|---|
+| 115 | `content/home-accounts.json` | No screen shows its prose (batch 3). |
+| 94 | `content/passports.ts` | Each source's `statedDate`, `uncertain` and `lost`: no screen reads them (batch 2). |
+| 66 | `content/licenses.ts` | Every field but the authority, the name and the permit's issuer: no screen reads them (batch 2). |
+| 22 | `content/entry.ts` | The authorizations' `processing` and `statedDate`, `ENTRY_UNCERTAIN`: no screen reads them; `ENTRY_AS_OF` is data, formatted where shown. |
+| 9 | `content/licensepaths.ts` | The license paths went in the scope reset of 2026-10-09; only a type is imported. |
+| 4 | `content/attributes-matrix.ts` | Writes `docs/` Markdown; nothing in `src/` imports it. |
+| 1 | `content/cards.ts` | `CARDS`' `asOf` days, data a test keys on and the screen formats; the rest of its export is clean. |
+| 1 | `content/security.ts` | `FRAUD_LAW`'s `avgLossBasis` ("on 9 April 2026"): no screen reads it. |
+| 1 | `content/banks-world-sheets.ts` | "BNA Aviso 03/2018", a notice's number. |
+| 1 | `content/banks-world-iban.ts` | A code's source ("added 2026-09-27"): `banks.ts` reads only the code. |
+| 1 | `decided.ts` | A decider's description, read by `tests/deciders.test.ts` and `tools/deciders.mjs` only. |
+| 1 | `systems/homebenefits.ts` | `CDMX_DESEMPLEO.source`: the screen reads its payments and amount only. |
+
+Besides these, the shown fields keep a date where it's the source's: quotations, addresses, file names, a document's
+own number, a word in another language, and the two card fields the screen calls the bank's own words. `KEEPS` in the
+test lists the three numbers a shown field keeps.
+
+### The built app
+
+Built in the clone (`build.txt`, `vite build` exit 0, after `tsc -b --noEmit` 0) and served on its own port, the text
+walk read two of brief 13's saves (`roundups.json`, `tax.json`) at 1440 and 390 wide: 25 screens each, every
+destination and tab (`walk-1440.log`, `walk-390.log`, exit 0; `after-1440/`, `after-390/`). `text-render-check.mjs` on
+both: 17,346 strings, 0 faults (`render-check.txt`, exit 0). `walk-dates.mjs` set each save's screens beside the walk
+before this pass (`scratchpad/l14/walk-before-*`): 3 and 2 dates in another form before, 0 after, at both widths
+(`walk-dates-1440.txt`, `walk-dates-390.txt`). Of the three, "2026-09-26" in Citi's terms' line was this pass's; "The
+first week, 24 to 28 August" and "moving on 2026-10-09" the school and papers areas had already changed.
+The Citi line now reads "Source: the bank’s terms, https://online.citi.com/JRS/popups/ao/CDAA.pdf, September 26, 2026."
+Most source lines sit in a closed Sources And Estimates disclosure, which the walk doesn't open, so the walk reads only
+what shows unopened; the drawn tests read the disclosures' words. The walk records words, not overflow, and
+`acceptance-ui.mjs` wasn't run. Every date changed is inside a sentence of fine print, a source line or a guide's prose,
+which wraps as prose, but for eleven world banks' product names (`banks-world-sheets.ts`), each already a long name with
+the research's note in brackets, which becomes an account's name. None of those banks is one the walked saves bank at,
+nor one a life made on the creation screen can (`newLifeConfig` starts every life at the School in New Haven, and a home
+account is only at the sixty researched banks): the bank screens show a world sheet's words for a life started in its
+country, as `quickSave` starts one in tests and tools, so they were rewritten with the rest.
+
+### Last checks, before the last commit
+
+`final-checks.txt`, each exit read from its own file: `npx tsc -b --noEmit`, `npx eslint` on every changed `.ts` and
+`.tsx`, every test file that names a changed source or file (the three batches' lists together), the eleven language and
+inventory checks, `geo-check`, and `node tools/research-dates.mjs`.
