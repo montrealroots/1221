@@ -5,11 +5,14 @@
 (`docs/verification/briefs-2026-10-16/14-complete-player-facing-language-and-tutorial-overhaul.txt`, kept verbatim). The
 work was done on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `0368d46b` (#41's merge). Brief 13's section
 below was the status until brief 14 began. It is pushed and in pull request #42
-(https://github.com/yvcbcjhsy7-prog/1221/pull/42). **Nothing of brief 14 is merged or deployed.**
+(https://github.com/yvcbcjhsy7-prog/1221/pull/42), merged to `main` with a merge commit at the owner's word ("Merge
+it.", 2026-10-18, `99f3c756`); until then this said nothing of brief 14 was merged. **Merged isn't deployed: nothing
+is.**
 
 ## 1. The Repository
 
-- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `0368d46b`, #41's merge.
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `99f3c756`, #42's merge;
+  until then this said `0368d46b`, #41's.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 14's commits on `0368d46b`
   (`git log --oneline 0368d46b..origin/claude/peaceful-hamilton-59zdbb`). It was pushed and never force-pushed. The
   eight areas and the passes after them were each merged in from their clones with merge commits
@@ -114,8 +117,9 @@ is section 10's receipt, written by `receipt.py` from the records.
 - **What only a person can judge:** whether the game reads well, what's clear, and where the pace drags. That is what
   `PLAYTEST.md` is for: a route through the game with what to expect at each step. `playtest-check.py` finds each
   phrase it quotes on the built app or in the code.
-- **Merging and deploying are the owner's.** Base44 deployment waits for the owner and the gate (rule 14). Read section
-  10 further down first.
+- **Deploying is the owner's.** The pull request was merged at the owner's "Merge it." (`99f3c756`); until then this
+  said merging was the owner's too. Base44 deployment waits for the owner and the gate (rule 14). Read section 10
+  further down first.
 
 ## 5. The Rules, The Schema And The Model
 

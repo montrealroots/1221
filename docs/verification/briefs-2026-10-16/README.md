@@ -33,7 +33,8 @@ merged #32), "Merge it all." (which merged #35), and the requests for screen cap
 three "Merge it." that merged #37, #38 and #39, each after a "Yes." to watching the pull request. Until 2026-10-17 it
 stopped at 14:58 the day before: brief 13's coordinator added the rest from the session's transcript. The fourth
 "Merge it.", which merged #40 (brief 13's), came with no question of watching before it, and the handoff was fixed after
-it on a fresh branch, as the owner asked.
+it on a fresh branch, as the owner asked. The fifth merged #41, that fix. Brief 14's "Yes." answered whether to watch
+#42, and the sixth "Merge it." merged it; the handoff was fixed after it on a fresh branch, as it was after #40.
 
 What isn't here: the session's own summaries of itself, written when its context ran out, are the model's words, not
 the owner's, and the briefs of the sessions before this one are in `../prompts-2026-10-16/` where they were kept.
