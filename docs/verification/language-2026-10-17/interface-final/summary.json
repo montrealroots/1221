@@ -1,0 +1,437 @@
+{
+ "written": "by summary.py, from the traces and exits.txt",
+ "runs": [
+  {
+   "playthrough": "normal",
+   "width": 1440,
+   "commit": "edd7be91",
+   "trackedChangesWhenRun": 0,
+   "startingPoint": {
+    "kind": "new life",
+    "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
+    "seed": "1-AlexRivera-mvdc0c3l"
+   },
+   "steps": 14,
+   "passed": 14,
+   "failed": [],
+   "exercised": {
+    "navigation": [
+     9,
+     12,
+     13
+    ],
+    "drill-down": [
+     4,
+     5
+    ],
+    "unavailable": [
+     2,
+     10,
+     12
+    ],
+    "confirmation": [
+     6,
+     7,
+     14
+    ],
+    "notification": [
+     4,
+     7,
+     9,
+     12
+    ],
+    "save-continue": [
+     14
+    ]
+   },
+   "sixMissing": [],
+   "gameFrom": "August 24, 2026 7:30 AM",
+   "gameTo": "September 9, 2026 8:00 AM",
+   "dialogsGoneThrough": 24,
+   "errors": 0,
+   "overflows": 0,
+   "trace": "docs/verification/language-2026-10-17/interface-final/normal-1440/trace.json",
+   "log": "docs/verification/language-2026-10-17/interface-final/normal-1440/run.log",
+   "screenshots": [
+    "docs/verification/language-2026-10-17/interface-final/normal-1440/01-creation-review.jpg",
+    "docs/verification/language-2026-10-17/interface-final/normal-1440/02-home-notice-look.jpg",
+    "docs/verification/language-2026-10-17/interface-final/normal-1440/03-first-preparation.jpg",
+    "docs/verification/language-2026-10-17/interface-final/normal-1440/04-showing-notice.jpg",
+    "docs/verification/language-2026-10-17/interface-final/normal-1440/05-confirm-deletion.jpg"
+   ],
+   "stepNames": [
+    "1. passed: the save slots, emptied first: New Save offered",
+    "2. passed: creation: Continue grayed with what the step needs listed; the five steps; Review names the choices; Begin",
+    "3. passed: the guide: controls locked until its chapters are read; read, none locked",
+    "4. passed: Home, the first morning: Welcome To The Class Of 2029 read; its look opened and closed",
+    "5. passed: Home: How You Are’s sentence opened into your own look, Readiness inside it, the outer Close shutting both",
+    "6. passed: Tomorrow Morning, asked before the orientation: On The Way names it, Cancel leaves the clock",
+    "7. passed: Tomorrow Morning, taken: On The Way’s Advance, the orientation’s stop and Go, Tuesday morning; Registration And Your Account on Home",
+    "8. passed: the orientation week: each morning to the weekend, each stop gone to",
+    "9. passed: the work set: the courses’ notices on Home; Go There opens School; Coursework lists each piece with its day",
+    "10. passed: the first step of preparation on the scene: its minutes, the clock and its part’s figure; a step refused, its reason on the card",
+    "11. passed: to the first showing: each day every step the scene allows, a partner answered, each stop gone to; Shown Today rises on each day of work",
+    "12. passed: the showing: “Shown: …” on Home, Go There, the scene’s feedback with its band and score; Working or better; steps refused until it’s read",
+    "13. passed: Papers and Money by the rail, and School’s tab kept on the way back",
+    "14. passed: Save & Exit; Delete asked and kept; Continue: the same moment, the scene’s showing as it was"
+   ]
+  },
+  {
+   "playthrough": "normal",
+   "width": 390,
+   "commit": "edd7be91",
+   "trackedChangesWhenRun": 0,
+   "startingPoint": {
+    "kind": "new life",
+    "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
+    "seed": "1-AlexRivera-mvdc4fm1"
+   },
+   "steps": 14,
+   "passed": 14,
+   "failed": [],
+   "exercised": {
+    "navigation": [
+     9,
+     12,
+     13
+    ],
+    "drill-down": [
+     4,
+     5
+    ],
+    "unavailable": [
+     2,
+     10,
+     12
+    ],
+    "confirmation": [
+     6,
+     7,
+     14
+    ],
+    "notification": [
+     4,
+     7,
+     9,
+     12
+    ],
+    "save-continue": [
+     14
+    ]
+   },
+   "sixMissing": [],
+   "gameFrom": "August 24, 2026 7:30 AM",
+   "gameTo": "September 9, 2026 8:00 AM",
+   "dialogsGoneThrough": 25,
+   "errors": 0,
+   "overflows": 0,
+   "trace": "docs/verification/language-2026-10-17/interface-final/normal-390/trace.json",
+   "log": "docs/verification/language-2026-10-17/interface-final/normal-390/run.log",
+   "screenshots": [
+    "docs/verification/language-2026-10-17/interface-final/normal-390/01-creation-review.jpg",
+    "docs/verification/language-2026-10-17/interface-final/normal-390/02-home-notice-look.jpg",
+    "docs/verification/language-2026-10-17/interface-final/normal-390/03-first-preparation.jpg",
+    "docs/verification/language-2026-10-17/interface-final/normal-390/04-showing-notice.jpg",
+    "docs/verification/language-2026-10-17/interface-final/normal-390/05-confirm-deletion.jpg"
+   ],
+   "stepNames": [
+    "1. passed: the save slots, emptied first: New Save offered",
+    "2. passed: creation: Continue grayed with what the step needs listed; the five steps; Review names the choices; Begin",
+    "3. passed: the guide: controls locked until its chapters are read; read, none locked",
+    "4. passed: Home, the first morning: Welcome To The Class Of 2029 read; its look opened and closed",
+    "5. passed: Home: How You Are’s sentence opened into your own look, Readiness inside it, the outer Close shutting both",
+    "6. passed: Tomorrow Morning, asked before the orientation: On The Way names it, Cancel leaves the clock",
+    "7. passed: Tomorrow Morning, taken: On The Way’s Advance, the orientation’s stop and Go, Tuesday morning; Registration And Your Account on Home",
+    "8. passed: the orientation week: each morning to the weekend, each stop gone to",
+    "9. passed: the work set: the courses’ notices on Home; Go There opens School; Coursework lists each piece with its day",
+    "10. passed: the first step of preparation on the scene: its minutes, the clock and its part’s figure; a step refused, its reason on the card",
+    "11. passed: to the first showing: each day every step the scene allows, a partner answered, each stop gone to; Shown Today rises on each day of work",
+    "12. passed: the showing: “Shown: …” on Home, Go There, the scene’s feedback with its band and score; Working or better; steps refused until it’s read",
+    "13. passed: Papers and Money by the rail, and School’s tab kept on the way back",
+    "14. passed: Save & Exit; Delete asked and kept; Continue: the same moment, the scene’s showing as it was"
+   ]
+  },
+  {
+   "playthrough": "setback",
+   "width": 1440,
+   "commit": "edd7be91",
+   "trackedChangesWhenRun": 0,
+   "startingPoint": {
+    "kind": "save",
+    "file": "workload.json",
+    "bytes": 1063547,
+    "sha256": "3f03023d61bb0b0bc1d10362801ba034f15e94fe225d731c1dc750ff78805b60",
+    "seed": "sc-0",
+    "command": "npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json"
+   },
+   "steps": 9,
+   "passed": 9,
+   "failed": [],
+   "exercised": {
+    "navigation": [
+     3
+    ],
+    "drill-down": [
+     2,
+     4
+    ],
+    "unavailable": [
+     5
+    ],
+    "confirmation": [
+     6,
+     7
+    ],
+    "notification": [
+     1,
+     8
+    ],
+    "save-continue": [
+     1,
+     9
+    ]
+   },
+   "sixMissing": [],
+   "gameFrom": "September 22, 2027 9:30 AM",
+   "gameTo": "October 1, 2027 7:00 AM",
+   "dialogsGoneThrough": 22,
+   "errors": 0,
+   "overflows": 0,
+   "trace": "docs/verification/language-2026-10-17/interface-final/setback-1440/trace.json",
+   "log": "docs/verification/language-2026-10-17/interface-final/setback-1440/run.log",
+   "screenshots": [
+    "docs/verification/language-2026-10-17/interface-final/setback-1440/01-warning-on-home.jpg",
+    "docs/verification/language-2026-10-17/interface-final/setback-1440/02-scene-before-the-remedy.jpg",
+    "docs/verification/language-2026-10-17/interface-final/setback-1440/03-reader-refused-today.jpg",
+    "docs/verification/language-2026-10-17/interface-final/setback-1440/04-scene-shown.jpg"
+   ],
+   "stepNames": [
+    "1. passed: [save: workload scenario] continued: A Word On Your Coursework on Home, its count, its cause, its remedy and the review’s day",
+    "2. passed: the warning opened in place: its look, who sent it and when, and Close",
+    "3. passed: Go There: School at Coursework; Due Soonest; the scene with a partner the warning names, Shown Today Unready",
+    "4. passed: the scene’s How This Works: its entry, a connected system followed and Back, then closed with the tab and the clock as they were",
+    "5. passed: Run It With A Reader: an hour, Shown Today rises; again the same day it’s refused, its reason on the card",
+    "6. passed: the next morning, Tomorrow Morning asked: On The Way lists the day’s classes and calls, Cancel leaves the clock",
+    "7. passed: the days to the scene’s meeting: every step the scene allows each morning, then on, each stop gone to; Shown Today rises on each day of work, Working by the eve",
+    "8. passed: the scene shown: “Shown: …, Working or better” on Home; the other pieces shown on the way recorded",
+    "9. passed: Save & Exit, Continue: the same moment, the showing’s notice and Coursework as they were"
+   ]
+  },
+  {
+   "playthrough": "setback",
+   "width": 390,
+   "commit": "edd7be91",
+   "trackedChangesWhenRun": 0,
+   "startingPoint": {
+    "kind": "save",
+    "file": "workload.json",
+    "bytes": 1063547,
+    "sha256": "3f03023d61bb0b0bc1d10362801ba034f15e94fe225d731c1dc750ff78805b60",
+    "seed": "sc-0",
+    "command": "npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json"
+   },
+   "steps": 9,
+   "passed": 9,
+   "failed": [],
+   "exercised": {
+    "navigation": [
+     3
+    ],
+    "drill-down": [
+     2,
+     4
+    ],
+    "unavailable": [
+     5
+    ],
+    "confirmation": [
+     6,
+     7
+    ],
+    "notification": [
+     1,
+     8
+    ],
+    "save-continue": [
+     1,
+     9
+    ]
+   },
+   "sixMissing": [],
+   "gameFrom": "September 22, 2027 9:30 AM",
+   "gameTo": "October 1, 2027 7:00 AM",
+   "dialogsGoneThrough": 22,
+   "errors": 0,
+   "overflows": 0,
+   "trace": "docs/verification/language-2026-10-17/interface-final/setback-390/trace.json",
+   "log": "docs/verification/language-2026-10-17/interface-final/setback-390/run.log",
+   "screenshots": [
+    "docs/verification/language-2026-10-17/interface-final/setback-390/01-warning-on-home.jpg",
+    "docs/verification/language-2026-10-17/interface-final/setback-390/02-scene-before-the-remedy.jpg",
+    "docs/verification/language-2026-10-17/interface-final/setback-390/03-reader-refused-today.jpg",
+    "docs/verification/language-2026-10-17/interface-final/setback-390/04-scene-shown.jpg"
+   ],
+   "stepNames": [
+    "1. passed: [save: workload scenario] continued: A Word On Your Coursework on Home, its count, its cause, its remedy and the review’s day",
+    "2. passed: the warning opened in place: its look, who sent it and when, and Close",
+    "3. passed: Go There: School at Coursework; Due Soonest; the scene with a partner the warning names, Shown Today Unready",
+    "4. passed: the scene’s How This Works: its entry, a connected system followed and Back, then closed with the tab and the clock as they were",
+    "5. passed: Run It With A Reader: an hour, Shown Today rises; again the same day it’s refused, its reason on the card",
+    "6. passed: the next morning, Tomorrow Morning asked: On The Way lists the day’s classes and calls, Cancel leaves the clock",
+    "7. passed: the days to the scene’s meeting: every step the scene allows each morning, then on, each stop gone to; Shown Today rises on each day of work, Working by the eve",
+    "8. passed: the scene shown: “Shown: …, Working or better” on Home; the other pieces shown on the way recorded",
+    "9. passed: Save & Exit, Continue: the same moment, the showing’s notice and Coursework as they were"
+   ]
+  },
+  {
+   "playthrough": "specialist",
+   "width": 1440,
+   "commit": "edd7be91",
+   "trackedChangesWhenRun": 0,
+   "startingPoint": {
+    "kind": "save",
+    "file": "specialist.json",
+    "bytes": 103896,
+    "sha256": "b77e48d1bbab45589894d222833ee33cde9cd7b22d3e440fe82e35e7272fbd3f",
+    "seed": "sc-0",
+    "command": "npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
+    "testSetup": "emotional depth, composure, imagination and presence at 90; memory, voice, movement, listening, focus, adaptability and discipline at 49 (tools/brief-journeys.ts’s specialist), on the first morning"
+   },
+   "steps": 11,
+   "passed": 11,
+   "failed": [],
+   "exercised": {
+    "navigation": [
+     2
+    ],
+    "drill-down": [
+     2
+    ],
+    "unavailable": [
+     3,
+     7
+    ],
+    "confirmation": [
+     8,
+     11
+    ],
+    "notification": [
+     1
+    ],
+    "save-continue": [
+     11
+    ]
+   },
+   "sixMissing": [],
+   "gameFrom": "September 12, 2026 4:05 PM",
+   "gameTo": "September 13, 2026 2:05 PM",
+   "dialogsGoneThrough": 0,
+   "errors": 0,
+   "overflows": 0,
+   "trace": "docs/verification/language-2026-10-17/interface-final/specialist-1440/trace.json",
+   "log": "docs/verification/language-2026-10-17/interface-final/specialist-1440/run.log",
+   "screenshots": [
+    "docs/verification/language-2026-10-17/interface-final/specialist-1440/01-profile-abilities.jpg",
+    "docs/verification/language-2026-10-17/interface-final/specialist-1440/02-brief-before-the-take.jpg",
+    "docs/verification/language-2026-10-17/interface-final/specialist-1440/03-take-and-advice.jpg",
+    "docs/verification/language-2026-10-17/interface-final/specialist-1440/04-second-take.jpg",
+    "docs/verification/language-2026-10-17/interface-final/specialist-1440/05-confirm-deletion.jpg"
+   ],
+   "stepNames": [
+    "1. passed: [save: specialist scenario] continued: the first term’s showings on Home, one read",
+    "2. passed: the Player Profile: the four strengths at 90.0 and the rest about 49; Composure opened, its look, a way further in, Close",
+    "3. passed: Nordic Noir’s brief: the scene, what the take weighs, its readings; Tape It refused until a reading is chosen",
+    "4. passed: prepared: broken down, the lines learned, a reading chosen; the side The Scene says suits it chosen, its mark said; rehearsed on the feet",
+    "5. passed: taped: the figure, what the way gave apart from what the abilities cost, what held it back; one take in the table",
+    "6. passed: the advice: What To Work On names what to train, its forecast, what it assumes, and what deserves attention; none of the four strengths",
+    "7. passed: trained: the exercise the advice names, an hour at a time until the day’s practice is spent; then refused, its reason under it",
+    "8. passed: One Week, asked: On The Way lists Monday’s labs, Cancel leaves the clock",
+    "9. passed: Sunday: Tomorrow Morning, the exercise practiced again, and what it trains higher than at the first take",
+    "10. passed: taped again: prepared further, the second take above the first, two rows, the newest better prepared or better able; the advice read again",
+    "11. passed: Save & Exit; Delete asked and kept; Continue: the same moment, the brief’s two takes, its reading and its last take as they were"
+   ]
+  },
+  {
+   "playthrough": "specialist",
+   "width": 390,
+   "commit": "edd7be91",
+   "trackedChangesWhenRun": 0,
+   "startingPoint": {
+    "kind": "save",
+    "file": "specialist.json",
+    "bytes": 103896,
+    "sha256": "b77e48d1bbab45589894d222833ee33cde9cd7b22d3e440fe82e35e7272fbd3f",
+    "seed": "sc-0",
+    "command": "npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
+    "testSetup": "emotional depth, composure, imagination and presence at 90; memory, voice, movement, listening, focus, adaptability and discipline at 49 (tools/brief-journeys.ts’s specialist), on the first morning"
+   },
+   "steps": 11,
+   "passed": 11,
+   "failed": [],
+   "exercised": {
+    "navigation": [
+     2
+    ],
+    "drill-down": [
+     2
+    ],
+    "unavailable": [
+     3,
+     7
+    ],
+    "confirmation": [
+     8,
+     11
+    ],
+    "notification": [
+     1
+    ],
+    "save-continue": [
+     11
+    ]
+   },
+   "sixMissing": [],
+   "gameFrom": "September 12, 2026 4:05 PM",
+   "gameTo": "September 13, 2026 2:05 PM",
+   "dialogsGoneThrough": 0,
+   "errors": 0,
+   "overflows": 0,
+   "trace": "docs/verification/language-2026-10-17/interface-final/specialist-390/trace.json",
+   "log": "docs/verification/language-2026-10-17/interface-final/specialist-390/run.log",
+   "screenshots": [
+    "docs/verification/language-2026-10-17/interface-final/specialist-390/01-profile-abilities.jpg",
+    "docs/verification/language-2026-10-17/interface-final/specialist-390/02-brief-before-the-take.jpg",
+    "docs/verification/language-2026-10-17/interface-final/specialist-390/03-take-and-advice.jpg",
+    "docs/verification/language-2026-10-17/interface-final/specialist-390/04-second-take.jpg",
+    "docs/verification/language-2026-10-17/interface-final/specialist-390/05-confirm-deletion.jpg"
+   ],
+   "stepNames": [
+    "1. passed: [save: specialist scenario] continued: the first term’s showings on Home, one read",
+    "2. passed: the Player Profile: the four strengths at 90.0 and the rest about 49; Composure opened, its look, a way further in, Close",
+    "3. passed: Nordic Noir’s brief: the scene, what the take weighs, its readings; Tape It refused until a reading is chosen",
+    "4. passed: prepared: broken down, the lines learned, a reading chosen; the side The Scene says suits it chosen, its mark said; rehearsed on the feet",
+    "5. passed: taped: the figure, what the way gave apart from what the abilities cost, what held it back; one take in the table",
+    "6. passed: the advice: What To Work On names what to train, its forecast, what it assumes, and what deserves attention; none of the four strengths",
+    "7. passed: trained: the exercise the advice names, an hour at a time until the day’s practice is spent; then refused, its reason under it",
+    "8. passed: One Week, asked: On The Way lists Monday’s labs, Cancel leaves the clock",
+    "9. passed: Sunday: Tomorrow Morning, the exercise practiced again, and what it trains higher than at the first take",
+    "10. passed: taped again: prepared further, the second take above the first, two rows, the newest better prepared or better able; the advice read again",
+    "11. passed: Save & Exit; Delete asked and kept; Continue: the same moment, the brief’s two takes, its reading and its last take as they were"
+   ]
+  }
+ ],
+ "allPassed": true,
+ "exits": [
+  "at edd7be91, 0 tracked files uncommitted, 2026-10-18T04:33:11Z",
+  "ui-build exit=0 secs=47 cmd: npm run build",
+  "ui-save-workload exit=0 secs=26 cmd: npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f14-UI-3-work/ui-saves/workload.json",
+  "ui-save-specialist exit=0 secs=4 cmd: npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f14-UI-3-work/ui-saves/specialist.json",
+  "preview-4217 exit=0 secs=6 cmd: this clone's dist/index.html served",
+  "ui-normal-1440 exit=0 secs=193 cmd: env SLATE_BASE=http://localhost:4217 node tools/playthroughs-ui.mjs normal 1440 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f14-UI-3-work/ui-saves docs/verification/language-2026-10-17/interface-final",
+  "ui-normal-390 exit=0 secs=203 cmd: env SLATE_BASE=http://localhost:4217 node tools/playthroughs-ui.mjs normal 390 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f14-UI-3-work/ui-saves docs/verification/language-2026-10-17/interface-final",
+  "ui-setback-1440 exit=0 secs=118 cmd: env SLATE_BASE=http://localhost:4217 node tools/playthroughs-ui.mjs setback 1440 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f14-UI-3-work/ui-saves docs/verification/language-2026-10-17/interface-final",
+  "ui-setback-390 exit=0 secs=127 cmd: env SLATE_BASE=http://localhost:4217 node tools/playthroughs-ui.mjs setback 390 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f14-UI-3-work/ui-saves docs/verification/language-2026-10-17/interface-final",
+  "ui-specialist-1440 exit=0 secs=64 cmd: env SLATE_BASE=http://localhost:4217 node tools/playthroughs-ui.mjs specialist 1440 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f14-UI-3-work/ui-saves docs/verification/language-2026-10-17/interface-final",
+  "ui-specialist-390 exit=0 secs=69 cmd: env SLATE_BASE=http://localhost:4217 node tools/playthroughs-ui.mjs specialist 390 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f14-UI-3-work/ui-saves docs/verification/language-2026-10-17/interface-final"
+ ]
+}

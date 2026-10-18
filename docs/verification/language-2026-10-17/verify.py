@@ -47,7 +47,7 @@ j_missing = sorted(set(b13) - set(final))
 j_steps, j_bad = lane_exits('JR1', 'JR2', 'JR3', 'JRC')
 j_ok = not j_fail and not j_missing and not j_bad and not j_moved
 j_at = lane_at('JR1')
-j_said = (f"Played again on brief 14's tested commit {j_at} (runs14.sh JR1 to JR3 and JRC, {j_steps} steps, " + (f"not exit 0: {', '.join(j_bad)}" if j_bad else 'every one exit 0') + f"): {len(final)} journeys, "
+j_said = (f"Played again on brief 14's commit {j_at} (runs14.sh JR1 to JR3 and JRC, {j_steps} steps, " + (f"not exit 0: {', '.join(j_bad)}" if j_bad else 'every one exit 0') + f"): {len(final)} journeys, "
           f"{sum(1 for x in final.values() if x.get('done'))} played to the end, {len(final) - len(j_fail)} with all ten checks passed"
           + (f'; failed: {", ".join(j_fail)}' if j_fail else '') + (f'; missing: {", ".join(j_missing)}' if j_missing else '')
           + (f"; ending other than brief 13's final run: {', '.join(j_moved)}" if j_moved else "; each ending as brief 13's final run ended") + '.')
@@ -56,7 +56,7 @@ j_evidence = [{'file': f'{B}/journeys-final/summary.json', 'kind': 'measurement'
 u_at = lane_at('UI')
 u_steps, u_bad = lane_exits('UI', only=r'ui-(build|save-workload|save-specialist|normal|setback|specialist)')
 u_ok = bool(ui.get('allPassed')) and len(ui.get('runs', [])) == 6 and not u_bad
-u_said = (f"Played again on brief 14's tested commit {u_at} (runs14.sh UI, on its build, {u_steps} steps of brief 13's playthroughs, " + (f"not exit 0: {', '.join(u_bad)}" if u_bad else 'every one exit 0') + "): "
+u_said = (f"Played again on brief 14's commit {u_at} (runs14.sh UI, on its build, {u_steps} steps of brief 13's playthroughs, " + (f"not exit 0: {', '.join(u_bad)}" if u_bad else 'every one exit 0') + "): "
           + '; '.join(f"{x['playthrough']} at {x['width']}: {x.get('passed')} of {x.get('steps')}" for x in ui.get('runs', [])) + '.')
 
 rows = []

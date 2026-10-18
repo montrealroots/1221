@@ -273,6 +273,19 @@ w('The interface journeys on the final commit (exit 0 is every step passed and e
 w('')
 w(table(['Journey', 'Exit'], [[k, 'not run' if v is None else v] for k, v in journeys.items()]))
 w('')
+# A journey that didn't exit 0: its failed steps from its trace, and the defect left that accounts for it. The defect is
+# named here and checked against the index, so a journey failing for any other reason, or a defect fixed or gone, fails it.
+FAILS_LEFT = {'banking': 'journeys-3'}
+for k, v in journeys.items():
+    if not v: continue
+    name = k.rsplit('-', 1)[0]
+    tr = load(f"{B}/{'interface-final' if name in ('normal', 'setback', 'specialist') else 'journeys14-final'}/{k}/trace.json", {})
+    failed = [s for s in tr.get('steps', []) if not s.get('ok')]
+    d = next((e for e in (defects or {}).get('entries', []) if e['id'] == FAILS_LEFT.get(name)), None)
+    if not d or d['status'] != 'left' or not failed: problems.append(f'{k} exited {v} and no defect left accounts for it')
+    for s in failed:
+        w(f"- {k}, step {s['n']} failed: {cut(s.get('why') or s['name'], 300)}" + (f" That is `{d['id']}`, left: {d['title']}" if d else ''))
+w('')
 w('## 8. Defects')
 w('')
 if defects:

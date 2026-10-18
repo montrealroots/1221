@@ -27,12 +27,12 @@
  {
   "kind": "quote",
   "text": "nothing was moved",
-  "found": "in the code only"
+  "found": "on the built app"
  },
  {
   "kind": "quote",
   "text": "One is already on its way.",
-  "found": "in the code only"
+  "found": "on the built app"
  },
  {
   "kind": "label",
@@ -52,7 +52,7 @@
  {
   "kind": "label",
   "text": "Cancel",
-  "found": "in the code only"
+  "found": "on the built app"
  },
  {
   "kind": "label",
@@ -107,7 +107,7 @@
  {
   "kind": "label",
   "text": "On Its Way",
-  "found": "in the code only"
+  "found": "on the built app"
  },
  {
   "kind": "label",

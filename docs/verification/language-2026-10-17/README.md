@@ -59,3 +59,23 @@ changes, the screens checked. The areas:
 - **material:** the scenes, plays and audition sides, in their characters' voices.
 
 The coordinator merges them, runs the final verification and writes the receipt.
+
+## Where It Ended
+
+Each figure here is read from a file in this folder, and `RECEIPT.md` is written by `receipt.py` from them. The tested
+code is `ebdb5577`'s.
+
+- **The inventory:** 4,151 sources, every one with a status: 1,285 Rewritten And Verified, 2,866 Reviewed And Retained,
+  0 Pending, 0 Blocked. Engine-speak fell from 758 hits to 332. From this close-out the gate fails a Pending source as
+  well as one with no status, and `tools/guide-quotes.mjs --check` is in the gate.
+- **The same game:** `numbers-same.py` compared every number, id and key in the final runs with brief 13's
+  (`numbers-same.json`), and the judge's 36 figures are brief 13's (`final/README.md`). Nothing the game judges moved,
+  and RULESET stays evaluation-11.
+- **The built app:** the final walk's render check found 0 faults in 68,812 strings at each width, and no label the
+  guide names is nowhere (`final-walk/`). On `edd7be91` the acceptance walk passed 77 of 77 steps and brief 13's
+  playthroughs every step, at both widths. Brief 14's journeys passed too, but for banking's step 8, which is `journeys-3`
+  (`runs/README.md`, `interface-final/`, `journeys14-final/`).
+- **Defects:** 101, 90 fixed and 11 left, each left one with its reason (`DEFECTS.md`).
+- **Left open:** dead content (the owner's) and On The Way before Sunday evening (`journeys-3`), in `coordinator.md`.
+- **The gate:** its figures are folded in after it runs (`runs/gate.txt`).
+- **Not claimed:** human usability approval. `PLAYTEST.md` is the owner's route, and only the owner can give it.

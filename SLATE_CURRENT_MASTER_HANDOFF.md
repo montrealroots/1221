@@ -1,23 +1,129 @@
-# Read First: Brief 14, The Player's Language, 2026-10-17 (In Progress)
+# Read First: Brief 14, The Player's Language, 2026-10-18
 
-**This section is the current status, and where a new session starts.** It's written while the owner's brief 14,
+**This section is the current status, and where a new session starts.** It was written at the end of the owner's
 "Complete Player-Facing Language And Tutorial Overhaul"
-(`docs/verification/briefs-2026-10-16/14-complete-player-facing-language-and-tutorial-overhaul.txt`, kept verbatim),
-is being worked. Brief 13's section below was the status until it began. Nothing of brief 14 is merged or deployed.
+(`docs/verification/briefs-2026-10-16/14-complete-player-facing-language-and-tutorial-overhaul.txt`, kept verbatim). The
+work was done on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `0368d46b` (#41's merge). Brief 13's section
+below was the status until brief 14 began. **Nothing of brief 14 is merged or deployed.**
 
-- **The branch:** `claude/peaceful-hamilton-59zdbb`, restarted by a fast-forward from `main` at `0368d46b` (#41's
-  merge). Brief 14's baseline is `d82d38d0`: the standard (`docs/STYLE.md`, "Talking to the player"), the glossary
-  (`docs/GLOSSARY.md`), the text inventory (`tools/text-inventory.mjs`, `docs/text/`), and the gate's nineteenth check.
-  The record is `docs/verification/language-2026-10-17/`.
-- **The work:** eight areas rewrite the game's text in clones in this session's scratchpad (`prompts/` says what each
-  holds). A clone lives only as long as this container. A new session finds what's merged here and nothing else, so it
-  starts again from `docs/text/INVENTORY.md`: every source still Pending is still to do.
-- **The gate on the baseline:** all 376 files and 4,587 tests passed, and the text inventory held. The completion
-  matrix check then failed, because the guide's types gained an optional field. Every row measured on the built app or
-  the engine went stale: 46 rows, from 612 of 636 to 566. The pass changes `src/`, so they stay stale until its final
-  runs measure them again on the merged code (`before/gate-baseline.txt`).
+## 1. The Repository
 
-**Completion, by the matrix:** 527 of 636 rows in scope Implemented And Verified (82.8%); 105 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `0368d46b`, #41's merge.
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 14's commits on `0368d46b`
+  (`git log --oneline 0368d46b..origin/claude/peaceful-hamilton-59zdbb`). It was pushed and never force-pushed. The
+  eight areas and the passes after them were each merged in from their clones with merge commits
+  (`git log --merges 0368d46b..HEAD`).
+- **The tested code is `ebdb5577`'s.**
+  - **Lanes A and UI** ran on `edd7be91`, which adds only records to `ebdb5577`.
+  - **The other lanes and the final walk** ran on `6d83601a`. Between `6d83601a` and `ebdb5577`, `src/` differs only in
+    Work On The Note's toast (`CourseworkPane.tsx`). No engine run reads that toast, and the walk never presses for it.
+  - **The gate** ran last; its figures are folded in after it (`docs/verification/language-2026-10-17/runs/gate.txt`).
+  - Each run's commit, command and exit is in `runs/exits-*.txt`, under `docs/verification/language-2026-10-17/`.
+- **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
+  worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
+
+## 2. Where It Stands
+
+**Completion, by the matrix:** 611 of 636 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+- **Every source of player text has a status, and none is Pending** (`docs/text/INVENTORY.md`, by
+  `tools/text-inventory.mjs`).
+  - **The inventory now:** 4,151 sources, 34,202 strings, 550,968 words. 1,285 are Rewritten And Verified, 2,866
+    Reviewed And Retained, 0 Pending and 0 Blocked.
+  - **At the start** (`d82d38d0`): 3,894 sources, every one Pending. The JSON the game shows joined the inventory during
+    the pass.
+  - **Engine-speak** fell from 758 hits to 332. The ratchet holds it: the count may fall and may not rise. Each hit
+    left is in a source an area read and kept (`RECEIPT.md`, section 2).
+- **The gate now holds the standard for new work.** text-inventory fails a source with no status, and a source whose
+  words changed since it was read (Pending). guide-quotes fails a quote in the guide that the game no longer says.
+  CLAUDE.md counts twenty checks.
+- **The game is the same game.** Every number, id and key in the final runs was compared with brief 13's
+  (`numbers-same.py`). The judge's 36 figures are brief 13's exactly, so RULESET stays evaluation-11.
+  - **The judge's outputs** (`final/`): 35 of 35 the same in every number.
+  - **The runs** (`runs/`): 16 of 17. The other is freshness's count of suggestions found by their phrases.
+  - **The advice** (`advice/`): only the commit differs.
+  - **The journeys** (`journeys-final/`): brief 13's 25 played to the end, all ten checks passed on each, and each
+    ending as brief 13's ended. Their differences are notices that no longer merge, because a repeated notice now says
+    what changed; the events they tell of are the same. The rest are counts of words and the runs' own records.
+- **On the built app.**
+  - **The final walk** (`final-walk/`): 816 screens of 15 saves at 1440 and 390. The render check found 0 faults in
+    68,812 strings at each width; before the pass it found 6 in 64,513, of two kinds (a plural that disagrees, money
+    written oddly). Of the 1,614 labels the guide names, 1,334 are on the walk's screens and 280 are in the code only,
+    for screens the walk didn't reach. None is nowhere (`final-walk/routes.md`).
+  - **The interface** (on `edd7be91`):
+    - the acceptance walk, 77 of 77 steps at 1440 and at 390 (`runs/acceptance/`);
+    - brief 13's playthroughs at both widths: normal 14 of 14, setback 9 of 9 and specialist 11 of 11
+      (`interface-final/`);
+    - brief 14's journeys at both widths (`journeys14-final/`): document 8 of 8, health 10 of 10, and banking 9 of 10.
+      Banking's step 8 asks One Week from a Friday evening and expects On The Way to ask first, and `journeys-3` keeps
+      it from asking;
+    - no errors and no overflows in any of them.
+    The first runs, on `6d83601a`, are kept in `runs/first/`.
+- **Defects:** 101 found by the pass (`DEFECTS.md`, by `defects.py`, checked against the tree): 90 fixed and 11 left.
+  Each left one has its reason, and is either the owner's (2) or a future pass's (9).
+- **Not claimed.** No automated run judges how the game reads to a person, and nothing here is human usability
+  approval: `PLAYTEST.md` is the owner's route. The game is not complete, and no score is claimed for it.
+
+## 3. What Brief 14 Did
+
+The record is `docs/verification/language-2026-10-17/`. `README.md` there says how the pass was worked, and `RECEIPT.md`
+is section 10's receipt, written by `receipt.py` from the records.
+- **The standard first:** `docs/STYLE.md`, "Talking to the player", and `docs/GLOSSARY.md`, both written before any text
+  changed and revised as the areas found what they missed.
+- **The inventory:** `tools/text-inventory.mjs` parses `src/` for every string a player can see. It groups the strings
+  into sources, gives each source a subsystem, and keeps each status against a hash of the source's text.
+  - `tools/text-walk.mjs` records the built app's screens.
+  - `tools/text-render-check.mjs` reads those screens, and the journeys' notices, for the faults of assembled text.
+- **Eight areas, each in its own clone,** from instructions written before their work (`prompts/`): frame, tutorial,
+  school, profile, money, papers, health and material. Each worked in batches, with before-and-after examples, 960 pairs
+  in all.
+- **The passes after them:**
+  - **journeys:** brief 14's three journeys (the bank, an ID card on its way, a sprained ankle) at 1440 and 390;
+  - **crossarea:** the code, then the words, that crossed areas;
+  - **json:** the JSON the game shows;
+  - **dynamic:** sections 7 and 8, plurals, variants and repetition, held by `tests/language-dynamic.test.ts`;
+  - **data:** the research data's own dates;
+  - **editorial:** a review of the whole, read as a player reads it;
+  - **uitools:** the interface tools' matchers moved to the game's new words, each failure judged
+    (`uitools/README.md`).
+- **The tutorials,** rebuilt around what a player does. Each How This Works entry says what to do next, or why
+  nothing follows (`tests/guide.test.ts`). Each label the guide names was looked for on the built app
+  (`tools/tutorial-routes.mjs`), and the guide's quotes are held to the game's words (`tools/guide-quotes.mjs`).
+- **The coordinator** merged the areas, settled what crossed them (`coordinator.md`), fixed what integration found, and
+  ran the final verification. The fixes include Work On The Note's toast, which named a part by the engine's id
+  (`ebdb5577`).
+- **The tests:** 15 test files added and older ones changed to hold the new words as exactly as they held the old. No
+  test title changed and none was skipped.
+
+## 4. What Remains, And What It Waits On
+
+- **Left open** (`coordinator.md`, Open):
+  - **Dead content:** `licensepaths.ts` and most of `licenses.ts`. Whether to delete them is the owner's.
+  - **On The Way before Sunday evening:** `journeys-3`, the engine's week planning, which is not its words.
+- **The 11 defects left** (`DEFECTS.md`):
+  - **The owner's:** the dead content, and a casting notice naming a part cast by size.
+  - **A future pass's:** the other nine, each with why.
+- **From brief 13, unchanged:** ST6-R2.e is still the owner's question (brief 13's section 4). Decision 4's 23 rows are
+  unchanged.
+- **What only a person can judge:** whether the game reads well, what's clear, and where the pace drags. That is what
+  `PLAYTEST.md` is for: a route through the game with what to expect at each step. `playtest-check.py` finds each
+  phrase it quotes on the built app or in the code.
+- **Merging and deploying are the owner's.** Base44 deployment waits for the owner and the gate (rule 14). Read section
+  10 further down first.
+
+## 5. The Rules, The Schema And The Model
+
+- **The checks:** CLAUDE.md counts twenty. text-inventory was added at brief 14's start, and guide-quotes at its
+  integration. text-inventory has failed a Pending source since its close.
+- **The save schema is unchanged:** **94** in both places.
+- **RULESET is evaluation-11:** nothing the judge reads changed.
+- **New player-facing text follows `docs/STYLE.md` and `docs/GLOSSARY.md`.** Each new source is read, then given a
+  status with `node tools/text-inventory.mjs --mark`. The gate fails a source with no status, a Pending source, and a
+  rise in engine-speak.
+- **The matrix:**
+  - `criteria.py` reads brief 14's results after brief 13's.
+  - Where watched files changed, brief 14's final runs move the measurements brief 13 made.
+  - `verify.py` restates brief 13's clauses on brief 14's tested commit.
 
 # Earlier: Brief 13, The Final Acting Clauses And The Playthroughs, 2026-10-17
 

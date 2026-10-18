@@ -1,0 +1,476 @@
+{
+ "commit": "15421228",
+ "standard": {
+  "parts": [
+   "Each kind of text has its own job",
+   "Tutorials and help teach a task",
+   "Text built from parts",
+   "Repetition says what changed",
+   "Comments aren't player text"
+  ],
+  "glossary": [
+   [
+    "Core",
+    44
+   ],
+   [
+    "In-World Material: Briefs, Readings And Class Scenes",
+    10
+   ],
+   [
+    "School",
+    23
+   ],
+   [
+    "Profile, Abilities, Genres And Advice",
+    25
+   ],
+   [
+    "Money",
+    16
+   ],
+   [
+    "Papers And Taxes",
+    29
+   ],
+   [
+    "Health, Body And Time",
+    25
+   ],
+   [
+    "Start, Home, Notices And Controls",
+    8
+   ],
+   [
+    "The Guide And Help",
+    10
+   ]
+  ]
+ },
+ "inventory": {
+  "start": {
+   "sources": 3894,
+   "strings": 31397,
+   "words": 463488,
+   "speak": 758,
+   "Rewritten And Verified": 0,
+   "Reviewed And Retained": 0,
+   "Pending": 3894,
+   "Blocked": 0
+  },
+  "now": {
+   "sources": 4151,
+   "strings": 34202,
+   "words": 550968,
+   "speak": 332,
+   "Rewritten And Verified": 1285,
+   "Reviewed And Retained": 2866,
+   "Pending": 0,
+   "Blocked": 0
+  },
+  "byArea": {
+   "frame": {
+    "Rewritten And Verified": 137,
+    "Reviewed And Retained": 350
+   },
+   "profile": {
+    "Rewritten And Verified": 92,
+    "Reviewed And Retained": 374
+   },
+   "money": {
+    "Rewritten And Verified": 255,
+    "Reviewed And Retained": 425
+   },
+   "health": {
+    "Reviewed And Retained": 112,
+    "Rewritten And Verified": 59
+   },
+   "material": {
+    "Reviewed And Retained": 893,
+    "Rewritten And Verified": 101
+   },
+   "school": {
+    "Reviewed And Retained": 396,
+    "Rewritten And Verified": 221
+   },
+   "papers": {
+    "Reviewed And Retained": 233,
+    "Rewritten And Verified": 232
+   },
+   "tutorial": {
+    "Rewritten And Verified": 39,
+    "Reviewed And Retained": 8
+   },
+   "json": {
+    "Rewritten And Verified": 149,
+    "Reviewed And Retained": 75
+   }
+  },
+  "engineSpeak": {
+   "start": 758,
+   "now": 332,
+   "ratchet": 332
+  }
+ },
+ "examples": {
+  "count": 960,
+  "meaningSensitive": 342,
+  "byArea": {
+   "crossarea": 39,
+   "data": 39,
+   "editorial": 61,
+   "frame": 102,
+   "health": 73,
+   "json": 52,
+   "material": 154,
+   "money": 111,
+   "papers": 122,
+   "profile": 61,
+   "school": 87,
+   "tutorial": 59
+  },
+  "byKind": {
+   "tutorial": 133,
+   "button": 12,
+   "label": 86,
+   "other": 149,
+   "confirmation": 9,
+   "feedback": 68,
+   "official": 137,
+   "error": 101,
+   "notification": 97,
+   "heading": 9,
+   "narration": 140,
+   "empty": 11,
+   "accessible": 3,
+   "refusal": 5
+  }
+ },
+ "tests": {
+  "added": {
+   "tests/editorial-class-moments.test.ts": 1,
+   "tests/editorial-frame-names.test.ts": 1,
+   "tests/editorial-money-refusals.test.ts": 4,
+   "tests/editorial-school-words.test.ts": 5,
+   "tests/journeys14-idcard-reason.test.ts": 2,
+   "tests/language-crossarea-raise.test.ts": 1,
+   "tests/language-crossarea.test.ts": 5,
+   "tests/language-data-dates.test.ts": 12,
+   "tests/language-dynamic.test.ts": 33,
+   "tests/language-frame-ui.test.ts": 13,
+   "tests/language-frame.test.ts": 7,
+   "tests/language-genre-look.test.ts": 2,
+   "tests/language-injury.test.ts": 3,
+   "tests/language-money.test.ts": 20,
+   "tests/material-words.test.ts": 3
+  },
+  "changedFiles": 216
+ },
+ "final": {
+  "gate": null,
+  "suite": null,
+  "files": null,
+  "build": null,
+  "lanes": {
+   "runs/exits-A.txt": {
+    "steps": 5,
+    "notZero": []
+   },
+   "runs/exits-ADVF.txt": {
+    "steps": 13,
+    "notZero": []
+   },
+   "runs/exits-ADVR.txt": {
+    "steps": 18,
+    "notZero": []
+   },
+   "runs/exits-B.txt": {
+    "steps": 13,
+    "notZero": []
+   },
+   "runs/exits-C.txt": {
+    "steps": 13,
+    "notZero": []
+   },
+   "runs/exits-D.txt": {
+    "steps": 14,
+    "notZero": []
+   },
+   "runs/exits-J.txt": {
+    "steps": 4,
+    "notZero": []
+   },
+   "runs/exits-JR1.txt": {
+    "steps": 32,
+    "notZero": []
+   },
+   "runs/exits-JR2.txt": {
+    "steps": 32,
+    "notZero": []
+   },
+   "runs/exits-JR3.txt": {
+    "steps": 36,
+    "notZero": []
+   },
+   "runs/exits-JRC.txt": {
+    "steps": 2,
+    "notZero": []
+   },
+   "runs/exits-JRR.txt": {
+    "steps": 3,
+    "notZero": []
+   },
+   "runs/exits-M1.txt": {
+    "steps": 0,
+    "notZero": []
+   },
+   "runs/exits-M2.txt": {
+    "steps": 0,
+    "notZero": []
+   },
+   "runs/exits-M3.txt": {
+    "steps": 0,
+    "notZero": []
+   },
+   "runs/exits-M4.txt": {
+    "steps": 0,
+    "notZero": []
+   },
+   "runs/exits-MF.txt": {
+    "steps": 0,
+    "notZero": []
+   },
+   "runs/exits-UI.txt": {
+    "steps": 19,
+    "notZero": [
+     "ui-banking-1440 exit=1 secs=58",
+     "ui-banking-390 exit=1 secs=61"
+    ]
+   },
+   "final-walk/exits.txt": {
+    "steps": 8,
+    "notZero": []
+   }
+  },
+  "firstRuns": {
+   "runs/exits-A-first.txt": {
+    "steps": 4,
+    "notZero": [
+     "acceptance-1440 exit=1 secs=872",
+     "acceptance-390 exit=1 secs=720"
+    ]
+   },
+   "runs/exits-UI-first.txt": {
+    "steps": 18,
+    "notZero": [
+     "ui-normal-1440 exit=1 secs=188",
+     "ui-normal-390 exit=1 secs=195",
+     "ui-setback-1440 exit=1 secs=38",
+     "ui-setback-390 exit=1 secs=42",
+     "ui-specialist-1440 exit=1 secs=62",
+     "ui-specialist-390 exit=1 secs=67",
+     "ui-banking-1440 exit=1 secs=58",
+     "ui-banking-390 exit=1 secs=61"
+    ]
+   }
+  },
+  "journeys": {
+   "normal-1440": 0,
+   "normal-390": 0,
+   "setback-1440": 0,
+   "setback-390": 0,
+   "specialist-1440": 0,
+   "specialist-390": 0,
+   "banking-1440": 1,
+   "banking-390": 1,
+   "document-1440": 0,
+   "document-390": 0,
+   "health-1440": 0,
+   "health-390": 0
+  },
+  "numbersSame": {
+   "final": {
+    "files": 35,
+    "same": 35,
+    "explained": {},
+    "unexplained": {},
+    "missing": [],
+    "skipped": [
+     "figures.json"
+    ]
+   },
+   "runs": {
+    "files": 17,
+    "same": 16,
+    "explained": {
+     "a measure of words: freshness finds a suggestion by its phrases": 2
+    },
+    "unexplained": {},
+    "missing": [],
+    "skipped": [
+     "figures.json"
+    ]
+   },
+   "advice": {
+    "files": 31,
+    "same": 0,
+    "explained": {
+     "the run’s own record: its commit, the files it read, its seconds": 61
+    },
+    "unexplained": {},
+    "missing": [],
+    "skipped": []
+   },
+   "journeys-final": {
+    "files": 102,
+    "same": 1,
+    "explained": {
+     "a count of notices: fewer merge, since a repeated one says what changed (section 8); the events are compared apart": 12378,
+     "the run’s own record: its commit, the files it read, its seconds": 198,
+     "a measure of words: the journeys’ continuity counts text": 870,
+     "the OPT check before its fix read the refusal’s old words; J16’s final part, checked again, passes": 4
+    },
+    "unexplained": {},
+    "missing": [],
+    "skipped": []
+   }
+  }
+ },
+ "builtApp": {
+  "screens": {
+   "1440": [
+    350,
+    375
+   ],
+   "390": [
+    350,
+    375
+   ]
+  },
+  "render": {
+   "1440": [
+    [
+     64513,
+     6,
+     [
+      "a plural that disagrees",
+      "money written oddly"
+     ]
+    ],
+    [
+     68812,
+     0,
+     []
+    ]
+   ],
+   "390": [
+    [
+     64513,
+     6,
+     [
+      "a plural that disagrees",
+      "money written oddly"
+     ]
+    ],
+    [
+     68812,
+     0,
+     []
+    ]
+   ]
+  },
+  "routes": {
+   "nowhere": 0,
+   "on a screen": 1155,
+   "in the code only": 280,
+   "on its screen": 179
+  }
+ },
+ "defects": {
+  "total": 101,
+  "by_status": {
+   "fixed": 90,
+   "left": 11
+  },
+  "by_kind": {
+   "text": {
+    "fixed": 33,
+    "left": 2,
+    "total": 35
+   },
+   "assembly": {
+    "fixed": 35,
+    "left": 2,
+    "total": 37
+   },
+   "layout": {
+    "fixed": 7,
+    "left": 0,
+    "total": 7
+   },
+   "behavior": {
+    "fixed": 3,
+    "left": 1,
+    "total": 4
+   },
+   "test-or-tool": {
+    "fixed": 7,
+    "left": 3,
+    "total": 10
+   },
+   "data": {
+    "fixed": 5,
+    "left": 3,
+    "total": 8
+   }
+  },
+  "by_record": {
+   "coordinator.md": 30,
+   "dynamic/defects.md": 18,
+   "school/defects.md": 12,
+   "editorial/batches.md": 11,
+   "crossarea/defects.md": 9,
+   "editorial/defects.md": 9,
+   "papers/defects.md": 9,
+   "journeys/defects.md": 8,
+   "money/defects.md": 7,
+   "profile/defects.md": 7,
+   "health/defects.md": 6,
+   "data/defects.md": 5,
+   "frame/HANDOFF.md": 5,
+   "tutorial/defects.md": 5,
+   "crossarea/batches.md": 4,
+   "health/HANDOFF.md": 4,
+   "json/defects.md": 3,
+   "material/HANDOFF.md": 3,
+   "material/defects.md": 3,
+   "school/HANDOFF.md": 3,
+   "frame/defects.md": 2,
+   "health/batches.md": 1,
+   "health/glossary.md": 1,
+   "money/batches.md": 1,
+   "money/glossary.md": 1,
+   "profile/batches.md": 1,
+   "uitools/README.md": 1
+  },
+  "fixed_held_by": {
+   "a test": 61,
+   "a check": 6,
+   "the source alone": 23
+  },
+  "left_by_owner": {
+   "owner": 2,
+   "a future pass": 9,
+   "none": 0
+  },
+  "not_counted": 17
+ },
+ "open": [
+  "Dead content.",
+  "On The Way before Sunday evening"
+ ],
+ "problems": [
+  "the gate: not run",
+  "the build: not run"
+ ]
+}
