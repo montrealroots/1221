@@ -870,6 +870,29 @@ describe('preparation dims', () => {
     ({ text } = drawn(sim, CourseworkPane));
     expect(text).toContain(`Lines ${pct}% Note priority`);
   });
+
+  // From 2026-10-17 (brief 14's interface tools): a scene keeps no part for its revision, and until then the toast named
+  // the part by its internal name, "Work On The Note: 60 minutes, revision up 50%."
+  it('says what Work On The Note, pressed on a scene shown and given its note, moved in words, where the card names no part for it', () => {
+    const sim = kept('g18-probe:oct18', () => { const s = probeAug28(); s.advanceTo(at(2026, 10, 18, 18)); return s; });
+    const a = actingI(sim);
+    Object.assign(a.prep, { familiarity: 0.95, memorization: 0.95, rehearsal: 0.95, partner: 0.95, revision: 0 });
+    answerAsTheTextSupports(sim, a);
+    toMeeting(sim, '2026-10-19');
+    expect(work(sim, a.id).status).toBe('revising');
+    dials(sim);
+    drawn(sim, CourseworkPane);
+    // The feedback read first, as the card asks: Mark As Read pressed.
+    press(buttons('school.read_feedback', 'Mark As Read')[0]!);
+    drawn(sim, CourseworkPane);
+    const revise = buttons('school.prepare', 'Work On The Note');
+    expect(revise.length).toBeGreaterThan(0);
+    expect(revise[0]!.disabled).toBe(false);
+    const toasts = press(revise[0]!);
+    const moved = Math.round(work(sim, a.id).prep.revision * 100);
+    expect(moved).toBeGreaterThan(0);
+    expect(toasts).toEqual([`Work On The Note: 60 minutes, ${moved}% further on the note.`]);
+  });
 });
 
 // ---------------------------------------------------------------------------

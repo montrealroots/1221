@@ -3367,9 +3367,9 @@
  },
  "src/ui/components/CourseworkPane.tsx#AssignmentCard": {
   "status": "Rewritten And Verified",
-  "hash": "e5710f629c44",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g24-school.test.ts, tests/evidence-g18-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "hash": "fdedf7b65bfd",
+  "on": "2026-10-18",
+  "evidence": "tests/evidence-g24-school.test.ts ‘says what Work On The Note, pressed on a scene shown and given its note, moved in words…’ (the old toast restored fails it); found by brief 14's interface tools (uitools/README.md)"
  },
  "src/ui/components/CourseworkPane.tsx#CourseworkPane": {
   "status": "Rewritten And Verified",

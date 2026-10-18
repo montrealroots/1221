@@ -8,7 +8,7 @@ Every string the game can show, by source and subsystem, written by `tools/text-
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 47 | 432 | 10929 | 0 | 39 | 8 | 0 | 0 |
 | Home And Its Retained Actions | 17 | 165 | 781 | 0 | 7 | 10 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 615 | 3531 | 53667 | 177 | 241 | 374 | 0 | 0 |
-| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 617 | 6139 | 65552 | 11 | 221 | 396 | 0 | 0 |
+| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 617 | 6140 | 65554 | 11 | 221 | 396 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 755 | 6520 | 147405 | 13 | 255 | 500 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 465 | 4505 | 55976 | 3 | 232 | 233 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 101 | 782 | 7963 | 0 | 58 | 43 | 0 | 0 |
@@ -17,7 +17,7 @@ Every string the game can show, by source and subsystem, written by `tools/text-
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 40 | 172 | 657 | 0 | 12 | 28 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 994 | 9182 | 153657 | 120 | 101 | 893 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 70 | 183 | 30379 | 1 | 1 | 69 | 0 | 0 |
-| **All** | 4151 | 34201 | 550966 | 332 | 1285 | 2866 | 0 | 0 |
+| **All** | 4151 | 34202 | 550968 | 332 | 1285 | 2866 | 0 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -1604,7 +1604,7 @@ Every string the game can show, by source and subsystem, written by `tools/text-
 | `src/ui/components/ClassMoments.tsx#ClassMoments` | 11 | accessible, attribute, label, prose | 0 | Rewritten And Verified | Editorial review, batch 2: the line under Run Lines Together? where you share no open scene says what the notice says, "That helps them, but it doesn’t move your own work.", and the invitation says "for an hour on" its date at 7:00 PM; tests/editorial-class-moments.test.ts renders the panel on a played student with such a request open and reads both. No walk save holds that request, so the walk doesn't show it |
 | `src/ui/components/CourseworkPane.tsx#CourseworkPane` | 8 | accessible, label, prose | 0 | Rewritten And Verified | tests/evidence-g24-school.test.ts, tests/evidence-g18-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code) |
 | `src/ui/components/CourseworkPane.tsx#FirstWeek` | 7 | accessible, attribute, label, prose | 0 | Rewritten And Verified | tests/evidence-g24-school.test.ts, tests/evidence-g18-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code) |
-| `src/ui/components/CourseworkPane.tsx#AssignmentCard` | 16 | attribute, label, prose | 0 | Rewritten And Verified | tests/evidence-g24-school.test.ts, tests/evidence-g18-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code) |
+| `src/ui/components/CourseworkPane.tsx#AssignmentCard` | 17 | attribute, label, prose | 0 | Rewritten And Verified | tests/evidence-g24-school.test.ts ‘says what Work On The Note, pressed on a scene shown and given its note, moved in words…’ (the old toast restored fails it); found by brief 14's interface tools (uitools/README.md) |
 | `src/ui/components/CourseworkPane.tsx#TableWork` | 7 | label, prose | 0 | Rewritten And Verified | tests/evidence-g24-school.test.ts, tests/evidence-g18-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code) |
 | `src/ui/components/CourseworkPane.tsx#Rehearsals` | 30 | accessible, label, prose | 0 | Rewritten And Verified | tests/evidence-g24-school.test.ts, tests/evidence-g18-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code) |
 | `src/ui/components/CourseworkPane.tsx#FeedbackBlock` | 7 | label, prose | 0 | Rewritten And Verified | tests/evidence-g24-school.test.ts, tests/evidence-g18-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code) |

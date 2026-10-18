@@ -156,7 +156,9 @@ function AssignmentCard({ a }: { a: Assignment }) {
             const no = prepareRefusal(sim, person, a, act.id);
             return (
               <Gated key={act.id} feature="school.prepare" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? `${minutesOf(a, act)} minutes`}
-                onClick={() => { const r = run<{ moved: number; minutes: number }>('school.prepare', { assignmentId: a.id, activity: act.id }); if (r.ok) toast(`${act.label}: ${r.value!.minutes} minutes, ${t.dims[act.dim]?.label ?? act.dim} up ${pct(r.value!.moved)}.`, 'positive'); }}>
+                // A part the card doesn't name (a scene keeps no part for its revision) is said in words (from 2026-10-17, brief
+                // 14's interface tools): until then the toast fell back to its internal name, "revision up 50%".
+                onClick={() => { const r = run<{ moved: number; minutes: number }>('school.prepare', { assignmentId: a.id, activity: act.id }); const part = t.dims[act.dim]?.label; if (r.ok) toast(`${act.label}: ${r.value!.minutes} minutes, ${part ? `${part} up ${pct(r.value!.moved)}` : `${pct(r.value!.moved)} further${act.dim === 'revision' ? ' on the note' : ''}`}.`, 'positive'); }}>
                 {act.label}
               </Gated>
             );
