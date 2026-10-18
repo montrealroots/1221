@@ -56,6 +56,9 @@ screens were brought to this file's word (`docs/verification/language-2026-10-17
 | **in the game**, **the game's** | What the game does where the world's rule isn't published or isn't modeled: "In the game, the plan ends.", "so the game uses three business days", the game's rule. Said as the game's, never SLATE's. | SLATE ends, SLATE doesn't model, SLATE's rule, SLATE's faculty model |
 | **Assumed in the game:** | The fine-print label for what the game takes where an office publishes nothing (a passport office's `AbroadTerms.assumed`). | Not confirmed, SLATE's assumption |
 | **Source:** | Where a real figure or name comes from, in one line at the foot of what it explains. | |
+| **September 26, 2026** | A date, as `formatDate` writes it: the month's name, the day, a comma, the year. A day without a year is "September 30"; a month and year, "September 2026"; a run of days, "August 24 to 28"; a span of months, "January to June 2026". A day kept as a key ('YYYY-MM-DD') is said through `formatDateKey`. A date inside a quotation or a field the screen quotes as the bank's own words stays as its source wrote it. | 2026-09-26, 26 September 2026, 26 Sep 2026, Sept 2026, 2026-09, 9/26/2026, 26.09.2026, 30 September |
+| **read October 10, 2026**, **checked October 13, 2026**, **terms as of April 10, 2026** | In a Source line, after the source: the day it was read, the day a rule was checked against it (said once, "read live and checked", where it's the same day), and the day its terms are from where that's another. | read 2026-10-10, checked 2026-10-13, two bare days with nothing to say which is which |
+| **15 hours and 59 minutes**, **2 days and 3 hours** | A duration in a sentence (`formatDurationWords`). "15h 59m" and "2d 3h" are a list's, a chip's and a stat's short form, and only there. | That's in 15h 59m. |
 
 ## In-World Material: Briefs, Readings And Class Scenes
 

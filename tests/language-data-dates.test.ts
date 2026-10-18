@@ -13,7 +13,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createElement, type ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { createSave } from '@/engine';
+import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
 import { formatDateKey } from '@/engine/core/time';
@@ -264,6 +264,32 @@ describe('PLAYER JOURNEY: a New York student at Bank of America reads Your Accou
     expect(words).toContain(`Source: ${rule.source}, checked ${formatDateKey(rule.checked)}.`);
     expect(rule.source).toContain('effective August 7, 2026');
     expect(words).toContain(`Source: the bank’s terms, ${ACCOUNT_LIFE['us-bank-of-america']!.source}.`);
+    expect(notTheGames(words)).toBeUndefined();
+  });
+});
+
+// From 2026-10-17, at the merge of this pass (its record, Recorded And Left): a source read and checked on one day said
+// that day once, and a card whose source ends on another day names its terms' day as such.
+describe('PLAYER JOURNEY: each source line says each of its days once, and which day is which', () => {
+  it('says NatWest’s round-up rule was read live and checked on one day, once, and BofA’s, checked on another, both', () => {
+    const rule = ROUND_UPS['gb-natwest']!;
+    const day = formatDateKey(rule.checked);
+    expect(rule.source.endsWith(`read live ${day}`)).toBe(true);
+    const words = drawn(nyStudent('data-dates-natwest'), () => createElement(BankAccountLife, { bankId: 'gb-natwest' }));
+    expect(words).toContain(`Source: ${rule.source.replace(`read live ${day}`, `read live and checked ${day}`)}.`);
+    expect(words.split(day).length - 1).toBe(1);
+    const bofa = ROUND_UPS['us-bank-of-america']!;
+    expect(drawn(nyStudent('data-dates-bofa-2', 'us-bank-of-america'), () => createElement(BankAccountLife, { bankId: 'us-bank-of-america' }))).toContain(`Source: ${bofa.source}, checked ${formatDateKey(bofa.checked)}.`);
+  });
+
+  it('names a card’s terms’ day where its source ends on the day it was read, Lloyds’s among them', () => {
+    const card = CARDS['gb-lloyds'] as { source: string; asOf: string };
+    expect(card.source).toMatch(/, September 26, 2026$/);
+    expect(card.asOf).toBe('2026-04-10');
+    // A Londoner at Lloyds, whose card the panel shows.
+    const londoner = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, bankId: 'gb-lloyds' }, 'data-dates-lloyds');
+    const words = drawn(londoner, () => createElement(BankCard, { bankId: 'gb-lloyds' }));
+    expect(words).toContain(`Source: ${card.source}. Terms as of April 10, 2026.`);
     expect(notTheGames(words)).toBeUndefined();
   });
 });

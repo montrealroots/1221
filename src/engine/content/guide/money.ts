@@ -1434,7 +1434,7 @@ export const MONEY: readonly GuideEntry[] = [
       `A US citizen whose accounts abroad together held over ${usd(US_REPORTS.fbar.over)} at any time in a year is told once, with the next February’s return, that FinCEN’s FBAR is due April 15, extended to October 15, and, past ${usd(US_REPORTS.form8938.yearEnd)} at the year’s end or ${usd(US_REPORTS.form8938.anyTime)} at any time, that Form 8938 is due with a return. The game files neither, charges no penalty, and converts at an estimated exchange rate.`,
     ],
     interpret: [
-      '“Kept At … : £… In …” is the balance the bank holds, in its currency.',
+      '“Kept At …: £… In …” is the balance the bank holds, in its currency.',
       `What keeping it means says how sure the research was: ${RETENTION_CONFIDENCE.H.toLowerCase().replace(/\.$/, '')}; or only partly; or the bank publishes nothing and the game assumes it.`,
       'Move Money’s line under the amount says what the bank sends, for what fee, at what margin, what arrives after the receiving bank’s fee, and on what day.',
       'Each account there shows its balance in its currency, Held From Abroad beside its number, and its value in dollars at an estimated exchange rate under it, with the bank’s fee for a customer abroad, its card’s fees here, and its closing date if it’s closing. Its statements, Home’s Money line and the alerts give it in its currency too.',

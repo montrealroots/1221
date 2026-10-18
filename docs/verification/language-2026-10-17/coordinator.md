@@ -7,16 +7,9 @@ commits) settled them.
 
 ## Open
 
-- **The research data's own dates, in fine print** (`dynamic/defects.md`). About 306 strings in the money, papers and
-  health areas' reference data print a source's date as the source wrote it, "2026-09-26" or "8 April 2026", under
-  what it explains. A pass over that data is given at integration (below, when it's settled).
 - **A refusal's shape for money that isn't there.** Papers says "Your bank can’t cover $…, so nothing was charged.",
-  health "It costs …, more than your bank can cover.", and Money's refusals have their own words (`crossarea/`).
-- **The genre look's small print** (`json/defects.md`, D1 to D3): a sentence false of ten genres, a heading that
-  claims a quotation, and one 2,000-character paragraph.
-- **Smaller ones the integration found:** "Left the school" on Home and the Profile against "Left the School." on the
-  School screen; a duration in a sentence written as a clock writes it ("That’s in 15h 59m."); a space before a
-  semicolon in Chase's card source; Home's Calendar cutting a long title to one line at 390 (`journeys/defects.md` 5).
+  health "It costs …, more than your bank can cover.", and Money's refusals have their own words (`crossarea/`). Given
+  to the editorial review (`prompts/editorial.md`).
 - **Dead content.** `licensepaths.ts` is read by nothing, and most of `licenses.ts` reaches no player (papers). Both
   are Reviewed And Retained. Deleting them is a scope call, left to the owner.
 - **On The Way before Sunday evening** (`journeys/defects.md` 3). It can't see next week's classes until `planWeek`
@@ -53,6 +46,14 @@ commits) settled them.
   list. `home-accounts.json` was shown to reach no screen and is Reviewed And Retained.
 - **The live clock that throws; `tax.apply_plan` deciding by words; the 700; the gazetteer's spaces** (the
   cross-area code pass, merged `9b313002`, each with a test that fails without it: `crossarea/defects.md`).
+- **The research data's own dates** (the data pass, merged `a5c167ff`). 344 strings in 230 sources say a source's
+  date as the game writes one, through each builder's words step, so a rebuild keeps them. The 316 left are each in a
+  field no screen reads, in code that's gone, a day the code reads, a document's number, or a quotation. Chase's stray
+  space before a semicolon went with them. After that merge, a round-up rule read and checked on one day says it once,
+  and a card whose source ends on the day it was read names its terms' day ("Terms as of April 10, 2026").
+- **The genre look's small print** (`20f2757e`). The false "only in single examples", the heading that claimed a
+  quotation, and the 2,000-character paragraph (`json/defects.md`, D1 to D3).
+- **"Left the School"; a duration in words in a sentence; Home's Calendar title on two lines at 390** (`20f2757e`).
 
 ## Found At Integration And Fixed There
 

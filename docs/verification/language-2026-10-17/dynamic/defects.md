@@ -47,6 +47,9 @@ reads every line of the looks, comments too. The comment now has the typographic
 
 ## Recorded And Left
 
+The first two below, the research data's dates and Chase's semicolon, were settled after this record by the data pass
+(`data/`, merged `a5c167ff`); "Left the school" and the durations by `20f2757e`. They're kept here as they were found.
+
 - **The research data's own dates, in fine print.** 306 strings in the inventory hold an ISO day, and some a British one,
   as their source wrote it: “Source: chase.com …, 2026-09-26”, “(read 2026-10-10)”, “tariff updated 2026-06-13”,
   “£116.50 from 8 April 2026”. They're the money, papers and health areas' reference data (`content/banks-*.ts`,

@@ -34,11 +34,13 @@ import { CARDS } from '@/engine/content/cards';
 /**
  * A card's source and the day its terms are from, as the game writes a date. Said once where the source already ends on
  * that day: until 2026-10-17 (brief 14) 45 cards read "…/terms/, 2026-09-26, 2026-09-26.", the research's day and then
- * the same day again.
+ * the same day again. Where the source ends on another day, the terms' day is named as such: until the same day 40 cards
+ * read "…, September 26, 2026, April 10, 2026." with nothing saying which day was which (the data pass's record).
  */
 const sourceAndDay = (source: string, asOf: string | undefined): string => {
   const day = asOf ? formatDateKey(asOf) : '';
-  return !day || source.endsWith(`, ${day}`) ? source : `${source}, ${day}`;
+  if (!day || source.endsWith(`, ${day}`)) return source;
+  return /, [A-Z][a-z]+ \d{1,2}, \d{4}$/.test(source) ? `${source}. Terms as of ${day}` : `${source}, ${day}`;
 };
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

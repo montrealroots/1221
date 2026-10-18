@@ -2581,9 +2581,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.home-account]": {
   "status": "Rewritten And Verified",
-  "hash": "b10db1b7e7df",
-  "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-money.test.ts (the money entries’ worked examples, played; money.affairs’ quote of Home’s line read from Home); each quote set against the code that writes it (crossarea/examples.json)"
+  "hash": "d2420f31a921",
+  "on": "2026-10-18",
+  "evidence": "tools/guide-quotes.mjs --check; the quoted label as creation writes it, “Kept At …: £… In …”, with no space before the colon (the data pass's Recorded And Left)"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.other-banks]": {
   "status": "Rewritten And Verified",
@@ -3785,6 +3785,12 @@
   "on": "2026-10-17",
   "reason": "Month names for the month a card's yearly fee is charged; the English names"
  },
+ "src/ui/bank/BankCard.tsx#sourceAndDay": {
+  "status": "Rewritten And Verified",
+  "hash": "d1c4cc48d5ca",
+  "on": "2026-10-18",
+  "evidence": "tests/language-data-dates.test.ts ‘each source line says each of its days once, and which day is which’ (NatWest read live and checked once, BofA checked on another day, Lloyds’s terms as of their own day; 2 mutations killed); the data pass's Recorded And Left"
+ },
  "src/ui/bank/BankCard.tsx#TERM_WORDS": {
   "status": "Reviewed And Retained",
   "hash": "1cf9b88acca6",
@@ -3901,9 +3907,9 @@
  },
  "src/ui/bank/RoundUps.tsx#RoundUps": {
   "status": "Rewritten And Verified",
-  "hash": "7483dce649cc",
-  "on": "2026-10-17",
-  "evidence": "tests/roundups.test.ts (‘2 purchases since the last transfer were already a multiple of $1.00, so they added nothing.’); the sentence is written whole for one purchase and for several, the same words as before; the round-ups save in the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves)"
+  "hash": "b9956fbab72a",
+  "on": "2026-10-18",
+  "evidence": "tests/language-data-dates.test.ts ‘each source line says each of its days once, and which day is which’ (NatWest read live and checked once, BofA checked on another day, Lloyds’s terms as of their own day; 2 mutations killed); the data pass's Recorded And Left"
  },
  "src/ui/looks/bank.tsx#movedWords": {
   "status": "Reviewed And Retained",

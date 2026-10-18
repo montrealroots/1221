@@ -114,7 +114,9 @@ export function RoundUps({ bankId }: { bankId: string }) {
           {rule.open.map((o) => <li key={o}>{o}</li>)}
           {rule.notHere.map((o) => <li key={o}>Not in the game: {o}</li>)}
         </ul>
-        <p className="dim" style={{ margin: 'var(--s1) 0 0' }}>Source: {rule.source}, checked {formatDateKey(rule.checked)}.</p>
+        {/* Read and checked on one day said once (from 2026-10-17): until then most banks read "read live October 13,
+            2026, checked October 13, 2026." */}
+        <p className="dim" style={{ margin: 'var(--s1) 0 0' }}>Source: {rule.source.endsWith(`read live ${formatDateKey(rule.checked)}`) ? rule.source.replace(/read live (?=[^,]*, \d{4}$)/, 'read live and checked ') : `${rule.source}, checked ${formatDateKey(rule.checked)}`}.</p>
       </details>
     </div>
   );
