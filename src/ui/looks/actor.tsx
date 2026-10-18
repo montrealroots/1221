@@ -64,7 +64,7 @@ export function sourceWords(source: string): string {
   // code alone and the part’s key, "Class: DRAM 153a", "Coursework: interpretation".
   if (kind === 'class') { const c = COURSES.find((x) => x.code === rest); return c ? `Class: ${c.name} (${c.code})` : `Class: ${rest}`; }
   // A step with no part of its own said as what it is (from 2026-10-17, brief 14's editorial review): until then the
-  // reader's evenings showed as their key, "Coursework: reader".
+  // reader’s evenings showed as their key, "Coursework: reader".
   if (kind === 'prepare') return `Coursework: ${(TASK_PROFILES.scene?.prepLabel?.[rest ?? ''] ?? ({ reader: 'running it with a reader', approach: 'rehearsing how you play it', genre: 'knowing the genre' } as Record<string, string>)[rest ?? ''] ?? rest ?? 'preparation').toLowerCase()}`;
   if (kind === 'interest') return 'An interest, from before they were removed';
   if (kind === 'workout') return rest === 'run' ? 'A run' : 'A workout';
@@ -206,7 +206,7 @@ defineLook<TheGenre>('genre', {
               </p>
               {/* The small print in three paragraphs, each under the words it opens with (from 2026-10-17, brief 14's json
                   area, D1 to D3): until then one paragraph, about 2,000 characters for adventure, some forty lines at 390
-                  wide; its first heading said "in the research’s words" over the game's wording of the research; and the
+                  wide; its first heading said "in the research’s words" over the game’s wording of the research; and the
                   sentence above said "only in single examples" of ten genres whose research is low for other reasons,
                   which this small print gives. Every genre it reaches is low, by `applied`. */}
               {applied(id) && demand.tags.length ? <p className="xs dim">Why it’s applied: {demand.tags.map((t) => t.why).join(' ')}</p> : null}

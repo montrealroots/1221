@@ -80,12 +80,12 @@ into class.” when the only open note is a direction, which doesn't go into cla
 The final walk (`after-1440/`, `after-390/`) is the fourteen saves on the build of the last batch's code, 25 screens
 each at both widths, every exit 0. `names.mjs` asks the browser for the accessible names and reads the rewritten lines
 on the saves that show them (`names.json`). The render check on the final walk and the last commit's checks, each exit
-read from its own file:
+read from its own file, run again after the whole suite's three fixes:
 
 | Check | Exit |
 |---|---|
 | `npx tsc -b --noEmit` | 0 |
-| `npx eslint` on the 90 TypeScript files changed since `c74a02e1` | 0 |
+| `npx eslint` on the 94 TypeScript files changed since `c74a02e1` | 0 |
 | `text-inventory --check` (4,150 sources, Pending 0) | 0 |
 | `title-case --check`, `label-sweep`, `plural-check`, `voice-check --check`, `tics --check`, `spelling`, `typos` | 0 each |
 | `doc-refs --check`, `deciders --check` | 0 each |
@@ -95,3 +95,4 @@ read from its own file:
 | `tools/text-render-check.mjs` on `after-1440/` and `after-390/` (`render-after.txt`) | 1: 128,638 strings, one distinct fault, the workload save's stored “rehearsed together 1 times”, written before the school area fixed it |
 | the same on the workload save written again on this code, at both widths (`render-now-workload.txt`) | 0: 10,336 strings, “rehearsed together once” |
 | each batch's test files (in `batches.md`), once the tests that held the old words held the new | 0 |
+| the whole suite, once, on `41caccde` (`full-suite.txt`) | 1: 390 files, 4,700 tests, 3 failed, each fixed and its file run again with exit 0 (`batches.md`, The Whole Suite) |

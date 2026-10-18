@@ -330,3 +330,24 @@ and too much); the page and its completion line are unchanged, 527 of 636 (82.8%
 **Checks:** listed in `README.md` with the last commit's. **Statuses:** `Home#Home`, `AdvanceMenu` and `LookAfterMenu`
 `--by frame`; `StandingPane` `--by school` and `sourceWords` `--by profile` on this walk; `ClassMoments` `--by school`
 again, on the new test.
+
+## The Whole Suite
+
+`npx vitest run --maxWorkers=3`, once, on `41caccde`, its exit read from its file (`full-suite.txt`): 390 files,
+4,700 tests, 3 failed, exit 1, 704 seconds. Each failure was a test this review should have brought to its new words,
+or a fault a check it hadn't run would have found, and each is fixed and its file run again:
+
+- **`tests/evidence-g22-school.test.ts`**, the Cabaret run's Looking Back, held the ledger's words, “N calls answered of
+  9; …”. It names `reflect` through the run's `reflection`, not a source batch 3 searched for, so batch 3's six files
+  didn't include it. Brought to the sentences as exactly, each variant the count can take: “you answered N of your 9
+  calls.” (“all 9 calls”, “none of your 9 calls”). 20 of 20.
+- **`tests/statements.test.ts`** told a statement with a payment due from one without by “to pay” in its body, which
+  batch 5's due date took out (“The statement comes to …, due …. At least … has to be paid by then.”). Its mark is now
+  “has to be paid by then”, as narrow; the failure is what showed it tells the two apart. 17 of 17.
+- **`tests/looks.test.ts`** (“writes the apostrophe the house writes”) holds every line of `src/ui/looks/` to the
+  house's apostrophe. Batch 4's comment in `actor.tsx` wrote “reader's”; three more were there before this review began
+  (`attention.tsx` and `place.tsx`, and `actor.tsx`'s research heading, from `20f2757e`), so the test was failing on
+  `c74a02e1` too. All four are comments, and each has its ’ now. 23 of 23.
+
+Then `tsc`, `eslint`, the eleven language checks, `guide-quotes`, `coverage`, `traceability`, `devmap` and the rest
+again, each 0 (`README.md`).
