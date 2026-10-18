@@ -11132,7 +11132,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11207,7 +11207,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-g",
@@ -11259,7 +11259,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-i",
@@ -11335,7 +11335,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -13749,7 +13749,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14169,7 +14169,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14529,7 +14529,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14947,7 +14947,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14974,7 +14974,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15001,7 +15001,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15028,7 +15028,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15055,7 +15055,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15082,7 +15082,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15109,7 +15109,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15136,7 +15136,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15163,7 +15163,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15190,7 +15190,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15217,7 +15217,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15244,7 +15244,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15271,7 +15271,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15298,7 +15298,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15325,7 +15325,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15352,7 +15352,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15379,7 +15379,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15406,7 +15406,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15433,7 +15433,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15460,7 +15460,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15487,7 +15487,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15514,7 +15514,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15541,7 +15541,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15568,7 +15568,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15617,7 +15617,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15644,7 +15644,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15671,7 +15671,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15698,7 +15698,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15725,7 +15725,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15752,7 +15752,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15779,7 +15779,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15806,7 +15806,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/bankopening.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/accountlife.ts, src/engine/content/approaches.ts, …): measure it again"
   }
  ]
 }

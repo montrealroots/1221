@@ -3,6 +3,7 @@
 // engine reads. Run: node tools/build-passports.mjs docs/research/world/research-passports.json
 import { readFileSync, writeFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
+import { gameDates } from './research-dates.mjs';
 
 const j = JSON.parse(readFileSync(process.argv[2], 'utf8'));
 /**
@@ -34,11 +35,13 @@ for (const x of j) {
   const c = CURATED[x.iso2];
   if (!c) throw new Error('no curated rule for ' + x.iso2);
   out[x.iso2] = {
-    issuer: x.issuer, name: x.docName, fee: x.fee.amount, currency: x.fee.currency, feeBasis: x.fee.feeBasis,
+    // The fee's basis and the note on applying from abroad are shown under Your Passport, so their dates are the game's
+    // (from 2026-10-17, brief 14: until then "Fees effective 8 April 2026."); the research keeps its own.
+    issuer: x.issuer, name: x.docName, fee: x.fee.amount, currency: x.fee.currency, feeBasis: gameDates(x.fee.feeBasis),
     days: c.days, daysEstimated: Boolean(c.estimated), expedite: c.expedite, validityYears: x.validityYears,
     ...(c.young ? { young: c.young } : {}),
     lost: typeof x.lostReplacement === 'string' ? x.lostReplacement : JSON.stringify(x.lostReplacement ?? null),
-    abroad: x.abroadNote ?? '', sources: x.sources, uncertain: x.uncertain ?? [],
+    abroad: gameDates(x.abroadNote ?? ''), sources: x.sources, uncertain: x.uncertain ?? [],
   };
 }
 const text = `/**

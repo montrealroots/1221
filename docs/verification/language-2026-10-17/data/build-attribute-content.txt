@@ -1,0 +1,2 @@
+wrote genre-demands.json (149 genres, 377 edits)
+exit=0

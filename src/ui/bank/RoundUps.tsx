@@ -13,7 +13,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { WhyNot } from '@/ui/components/primitives';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { formatDate } from '@/engine/core/time';
+import { formatDate, formatDateKey } from '@/engine/core/time';
 import { bankById } from '@/engine/content/banks';
 import { ROUND_UPS, type RoundUpEvery } from '@/engine/content/roundups';
 import type { RoundUpChoice } from '@/engine/domain/model';
@@ -114,7 +114,7 @@ export function RoundUps({ bankId }: { bankId: string }) {
           {rule.open.map((o) => <li key={o}>{o}</li>)}
           {rule.notHere.map((o) => <li key={o}>Not in the game: {o}</li>)}
         </ul>
-        <p className="dim" style={{ margin: 'var(--s1) 0 0' }}>Source: {rule.source}, checked {rule.checked}.</p>
+        <p className="dim" style={{ margin: 'var(--s1) 0 0' }}>Source: {rule.source}, checked {formatDateKey(rule.checked)}.</p>
       </details>
     </div>
   );

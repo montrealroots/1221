@@ -20,7 +20,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { loadSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
-import { instantFromZoned, MS_DAY, MS_HOUR } from '@/engine/core/time';
+import { formatDateKey, instantFromZoned, MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { ROUND_UPS } from '@/engine/content/roundups';
 import { bankAccountsOf } from '@/engine/systems/banking';
@@ -504,7 +504,7 @@ describe('the panel', () => {
     sim.advanceTo(after(sim, 6));
     expect(words()).toMatch(/Last moved to savings: £\d+\.\d\d, on /);
     for (const o of rule.open) expect(words()).toContain(o);
-    expect(words()).toContain(`Source: ${rule.source}, checked ${rule.checked}.`);
+    expect(words()).toContain(`Source: ${rule.source}, checked ${formatDateKey(rule.checked)}.`);
     expect(words()).toContain(`When the account is short: ${rule.short}`);
     // A bank that isn't the primary one's: its words, and why it can't be turned on here.
     const other = renderToStaticMarkup(createElement(BankAccountLife, { bankId: 'gb-lloyds' })).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');

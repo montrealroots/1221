@@ -1,0 +1,2 @@
+wrote 15 destinations
+exit=0

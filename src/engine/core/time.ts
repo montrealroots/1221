@@ -334,6 +334,15 @@ export function formatDate(instant: Instant, zone: TimeZone): string {
   return `${MONTH_NAMES[p.month - 1]} ${p.day}, ${p.year}`;
 }
 
+/**
+ * A day kept as a key ('YYYY-MM-DD'), as the game writes a date: "September 26, 2026". The research's days are kept
+ * that way, as data (the day a card's terms were read, a round-up rule checked), and the screens that show one say it
+ * through this (from 2026-10-17, brief 14: until then "Source: …, 2026-09-26.").
+ */
+export function formatDateKey(key: string): string {
+  return formatDate(parseDateKey(key, 'UTC', 12), 'UTC');
+}
+
 export function formatWeekdayDate(instant: Instant, zone: TimeZone): string {
   const p = zonedParts(instant, zone);
   return `${WEEKDAY_NAMES[p.weekday]}, ${MONTH_NAMES[p.month - 1]} ${p.day}, ${p.year}`;

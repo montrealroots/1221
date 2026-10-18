@@ -1,0 +1,10 @@
+src/engine/content/cards.ts CARDS: 88 fields changed by the step
+src/engine/content/cards.ts CARD_LAW: 79 fields changed by the step
+src/engine/content/accountlife.ts ACCOUNT_LIFE: 69 fields changed by the step
+src/engine/content/accountlife.ts UNCLAIMED: 15 fields changed by the step
+src/engine/content/cash.ts CASH: 60 fields changed by the step
+src/engine/content/pending.ts PENDING: 60 fields changed by the step
+src/engine/content/security.ts SECURITY: 64 fields changed by the step
+src/engine/content/security.ts FRAUD_LAW: 14 fields changed by the step
+Every other value is as it was.
+exit=0

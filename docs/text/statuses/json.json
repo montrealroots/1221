@@ -1,9 +1,9 @@
 {
  "src/engine/content/genre-demands.json#absurdist": {
   "status": "Rewritten And Verified",
-  "hash": "8f79525b7e5c",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'. Its engine-speak hit (a code name) is a path in a source's URL, which stays as cited."
+  "hash": "635969aa2628",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'. Its engine-speak hit (a code name) is a path in a source's URL, which stays as cited."
  },
  "src/engine/content/genre-demands.json#action": {
   "status": "Rewritten And Verified",
@@ -19,9 +19,9 @@
  },
  "src/engine/content/genre-demands.json#adventure": {
   "status": "Rewritten And Verified",
-  "hash": "e3147360bad5",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "f34a8b6d3ca1",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#alternate_history": {
   "status": "Rewritten And Verified",
@@ -55,9 +55,9 @@
  },
  "src/engine/content/genre-demands.json#art_house": {
   "status": "Rewritten And Verified",
-  "hash": "c044fceee4e3",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'. Its engine-speak hit (a code name) is a path in a source's URL, which stays as cited."
+  "hash": "dc73056a4f4c",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'. Its engine-speak hit (a code name) is a path in a source's URL, which stays as cited."
  },
  "src/engine/content/genre-demands.json#avant_garde": {
   "status": "Rewritten And Verified",
@@ -73,45 +73,45 @@
  },
  "src/engine/content/genre-demands.json#biker": {
   "status": "Rewritten And Verified",
-  "hash": "fe30334aaecb",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "beef022de5a8",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#biographical": {
   "status": "Rewritten And Verified",
-  "hash": "e666b8f51ccf",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "9c937e7b30e6",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#black_comedy": {
   "status": "Rewritten And Verified",
-  "hash": "a24adc9309e4",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "d8587f25f37e",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#blaxploitation": {
   "status": "Rewritten And Verified",
-  "hash": "3224c8a34109",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "e791cbeaefde",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#body_horror": {
   "status": "Rewritten And Verified",
-  "hash": "7385454d0cc4",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "f3bf631e38b1",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#buddy_comedy": {
   "status": "Rewritten And Verified",
-  "hash": "f2fa2bb99476",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "f30b3c6dce46",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#buddy_cop": {
   "status": "Rewritten And Verified",
-  "hash": "b6b8bb7d2ac0",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "73df7f3293a1",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#caper": {
   "status": "Rewritten And Verified",
@@ -127,9 +127,9 @@
  },
  "src/engine/content/genre-demands.json#chase": {
   "status": "Rewritten And Verified",
-  "hash": "35572512def1",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "d565fc6a8496",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#childrens": {
   "status": "Rewritten And Verified",
@@ -157,9 +157,9 @@
  },
  "src/engine/content/genre-demands.json#concert_film": {
   "status": "Rewritten And Verified",
-  "hash": "a3694f176c8f",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "b6a0e05247c9",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#conspiracy_thriller": {
   "status": "Rewritten And Verified",
@@ -175,9 +175,9 @@
  },
  "src/engine/content/genre-demands.json#costume_drama": {
   "status": "Rewritten And Verified",
-  "hash": "6523ca3695b4",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "ab0333e78570",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#courtroom_drama": {
   "status": "Rewritten And Verified",
@@ -187,9 +187,9 @@
  },
  "src/engine/content/genre-demands.json#creature_feature": {
   "status": "Rewritten And Verified",
-  "hash": "1292a23ff16d",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "cd4a55aabb6a",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#crime": {
   "status": "Rewritten And Verified",
@@ -199,9 +199,9 @@
  },
  "src/engine/content/genre-demands.json#cyberpunk": {
   "status": "Rewritten And Verified",
-  "hash": "1578ca50ebd6",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "fef2593700c9",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#dance": {
   "status": "Rewritten And Verified",
@@ -211,9 +211,9 @@
  },
  "src/engine/content/genre-demands.json#dark_fantasy": {
   "status": "Rewritten And Verified",
-  "hash": "07177f57b30a",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "15134cef88fc",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#detective": {
   "status": "Rewritten And Verified",
@@ -223,9 +223,9 @@
  },
  "src/engine/content/genre-demands.json#disaster": {
   "status": "Rewritten And Verified",
-  "hash": "eb2c7ff45c9c",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'. Its engine-speak hit (a weight) is a weighted chair in the actor's account, in a reason the look doesn't show."
+  "hash": "b943e91614f8",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 2 and read whole in json/b2-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'. Its engine-speak hit (a weight) is a weighted chair in the actor's account, in a reason the look doesn't show."
  },
  "src/engine/content/genre-demands.json#docudrama": {
   "status": "Rewritten And Verified",
@@ -271,9 +271,9 @@
  },
  "src/engine/content/genre-demands.json#epic": {
   "status": "Rewritten And Verified",
-  "hash": "03875c095e0a",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "8ca057f8c8cd",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#erotic_thriller": {
   "status": "Rewritten And Verified",
@@ -289,9 +289,9 @@
  },
  "src/engine/content/genre-demands.json#experimental": {
   "status": "Rewritten And Verified",
-  "hash": "e4b71b638914",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "82407a0d6321",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#exploitation": {
   "status": "Rewritten And Verified",
@@ -313,9 +313,9 @@
  },
  "src/engine/content/genre-demands.json#fantasy": {
   "status": "Rewritten And Verified",
-  "hash": "eb07501ca776",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "77e6b10c0b3e",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#farce": {
   "status": "Rewritten And Verified",
@@ -331,9 +331,9 @@
  },
  "src/engine/content/genre-demands.json#folk_horror": {
   "status": "Rewritten And Verified",
-  "hash": "9f8738017186",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "e0b8027ed5c6",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#found_footage": {
   "status": "Rewritten And Verified",
@@ -349,27 +349,27 @@
  },
  "src/engine/content/genre-demands.json#giallo": {
   "status": "Rewritten And Verified",
-  "hash": "90d2dae9a1b2",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "631853b3abe8",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#gothic_horror": {
   "status": "Rewritten And Verified",
-  "hash": "83e3d477b83b",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "a34f6a170f94",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#grindhouse": {
   "status": "Rewritten And Verified",
-  "hash": "25ff2fb33180",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "0b739fd723cb",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#hangout": {
   "status": "Rewritten And Verified",
-  "hash": "8953d31b2ae7",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "c19b9502ee32",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#heist": {
   "status": "Rewritten And Verified",
@@ -379,15 +379,15 @@
  },
  "src/engine/content/genre-demands.json#historical_drama": {
   "status": "Rewritten And Verified",
-  "hash": "80de741e1249",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "bd5a13060df3",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#historical_fiction": {
   "status": "Rewritten And Verified",
-  "hash": "e6bcbf4e97bb",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "26ac3a083ae3",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#holiday": {
   "status": "Rewritten And Verified",
@@ -403,21 +403,21 @@
  },
  "src/engine/content/genre-demands.json#horror": {
   "status": "Rewritten And Verified",
-  "hash": "0055b776a242",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "4c615732c714",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#horror_comedy": {
   "status": "Rewritten And Verified",
-  "hash": "c7001623f9c5",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "cb95df7ceedf",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#isekai": {
   "status": "Rewritten And Verified",
-  "hash": "663dbad5639c",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "d403ff0f64fd",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#jidaigeki": {
   "status": "Rewritten And Verified",
@@ -433,15 +433,15 @@
  },
  "src/engine/content/genre-demands.json#kaiju": {
   "status": "Rewritten And Verified",
-  "hash": "ebeafa941d98",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "915131ae547e",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#kitchen_sink": {
   "status": "Rewritten And Verified",
-  "hash": "2a33cb6edf64",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "397470a10bf1",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#legal_drama": {
   "status": "Rewritten And Verified",
@@ -451,9 +451,9 @@
  },
  "src/engine/content/genre-demands.json#magical_realism": {
   "status": "Rewritten And Verified",
-  "hash": "3c3162712300",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "5b69795f6e44",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#martial_arts": {
   "status": "Rewritten And Verified",
@@ -475,9 +475,9 @@
  },
  "src/engine/content/genre-demands.json#military": {
   "status": "Rewritten And Verified",
-  "hash": "81d76e927546",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "af7356ce5056",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#mockumentary": {
   "status": "Rewritten And Verified",
@@ -487,15 +487,15 @@
  },
  "src/engine/content/genre-demands.json#monster_movie": {
   "status": "Rewritten And Verified",
-  "hash": "4a4ff5532100",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "0ee6a20770a5",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#mumblecore": {
   "status": "Rewritten And Verified",
-  "hash": "8f976895a69c",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "090af7364d5b",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#musical": {
   "status": "Rewritten And Verified",
@@ -517,15 +517,15 @@
  },
  "src/engine/content/genre-demands.json#neo_noir": {
   "status": "Rewritten And Verified",
-  "hash": "ca61c8ac64ba",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "64b0d1a3faed",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#neorealism": {
   "status": "Rewritten And Verified",
-  "hash": "80c4a33ac7cd",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "10d54c2904a0",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#new_wave": {
   "status": "Rewritten And Verified",
@@ -541,9 +541,9 @@
  },
  "src/engine/content/genre-demands.json#occult": {
   "status": "Rewritten And Verified",
-  "hash": "02e8858de100",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "8ef82799d43f",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 3 and read whole in json/b3-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#parody": {
   "status": "Rewritten And Verified",
@@ -553,9 +553,9 @@
  },
  "src/engine/content/genre-demands.json#period_drama": {
   "status": "Rewritten And Verified",
-  "hash": "296a2512937e",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "f7f9dc30b5df",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#picaresque": {
   "status": "Rewritten And Verified",
@@ -583,15 +583,15 @@
  },
  "src/engine/content/genre-demands.json#post_apocalyptic": {
   "status": "Rewritten And Verified",
-  "hash": "740943915055",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "cc498702cad0",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#prison_film": {
   "status": "Rewritten And Verified",
-  "hash": "e55f795d292d",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "69a57c51d889",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#psychological_horror": {
   "status": "Rewritten And Verified",
@@ -601,21 +601,21 @@
  },
  "src/engine/content/genre-demands.json#psychological_thriller": {
   "status": "Rewritten And Verified",
-  "hash": "df90e88f6c46",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "500b5ed8a7ae",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#queer_cinema": {
   "status": "Rewritten And Verified",
-  "hash": "091af2c97140",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "a389df2d2365",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#revenge": {
   "status": "Rewritten And Verified",
-  "hash": "16641f1064f3",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "62a1c1d5f0fd",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#road_movie": {
   "status": "Rewritten And Verified",
@@ -625,9 +625,9 @@
  },
  "src/engine/content/genre-demands.json#rockumentary": {
   "status": "Rewritten And Verified",
-  "hash": "7fa6b79a8250",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "d822cce8b730",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#romance": {
   "status": "Rewritten And Verified",
@@ -655,9 +655,9 @@
  },
  "src/engine/content/genre-demands.json#satire": {
   "status": "Rewritten And Verified",
-  "hash": "67caaeb28de6",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "7da78a32dd8a",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#science_fantasy": {
   "status": "Rewritten And Verified",
@@ -697,33 +697,33 @@
  },
  "src/engine/content/genre-demands.json#slasher": {
   "status": "Rewritten And Verified",
-  "hash": "1baa4df9055e",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "fb99817357d2",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#slice_of_life": {
   "status": "Rewritten And Verified",
-  "hash": "b6b74d2b2395",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "ff9190065bfe",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#social_realism": {
   "status": "Rewritten And Verified",
-  "hash": "b59faeedee96",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "60fd1cf17c0b",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#space_opera": {
   "status": "Rewritten And Verified",
-  "hash": "87b2d46c5906",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "03f0711a540e",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#spaghetti_western": {
   "status": "Rewritten And Verified",
-  "hash": "5cf86d7222ff",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "b2b6da343806",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#splatter": {
   "status": "Rewritten And Verified",
@@ -733,9 +733,9 @@
  },
  "src/engine/content/genre-demands.json#sports": {
   "status": "Rewritten And Verified",
-  "hash": "e36f0e4e8281",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "114e4dcc3bd9",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#spy": {
   "status": "Rewritten And Verified",
@@ -751,9 +751,9 @@
  },
  "src/engine/content/genre-demands.json#stoner_comedy": {
   "status": "Rewritten And Verified",
-  "hash": "18c0ec0f3e7f",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "7963f9e72f35",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#superhero": {
   "status": "Rewritten And Verified",
@@ -817,21 +817,21 @@
  },
  "src/engine/content/genre-demands.json#time_travel": {
   "status": "Rewritten And Verified",
-  "hash": "e8337e1f0143",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "174a7c8084ff",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#tokusatsu": {
   "status": "Rewritten And Verified",
-  "hash": "34737e9227d4",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "6578fab4c059",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#tragedy": {
   "status": "Rewritten And Verified",
-  "hash": "80d9d84cf412",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "c00c158fff56",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#tragicomedy": {
   "status": "Rewritten And Verified",
@@ -841,9 +841,9 @@
  },
  "src/engine/content/genre-demands.json#true_crime": {
   "status": "Rewritten And Verified",
-  "hash": "999e39ea8f1e",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "fbb892dc666a",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 4 and read whole in json/b4-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#vampire": {
   "status": "Rewritten And Verified",
@@ -859,9 +859,9 @@
  },
  "src/engine/content/genre-demands.json#werewolf": {
   "status": "Rewritten And Verified",
-  "hash": "f64e02a41042",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "c4c5b70dff47",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#western": {
   "status": "Rewritten And Verified",
@@ -871,9 +871,9 @@
  },
  "src/engine/content/genre-demands.json#whodunit": {
   "status": "Rewritten And Verified",
-  "hash": "254dabb56dc5",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "db78b9b1bf21",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#wuxia": {
   "status": "Rewritten And Verified",
@@ -883,15 +883,15 @@
  },
  "src/engine/content/genre-demands.json#yakuza": {
   "status": "Rewritten And Verified",
-  "hash": "87d18b72f0f0",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "fd266541d20d",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/genre-demands.json#zombie": {
   "status": "Rewritten And Verified",
-  "hash": "d854dcf6a982",
-  "on": "2026-10-17",
-  "evidence": "The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
+  "hash": "3fac43e78319",
+  "on": "2026-10-18",
+  "evidence": "Its dates as the game writes them (how it was read, \"reviewed October 10, 2026\"; what's uncertain, \"On review (October 10, 2026)\"; a citation's day), by tools/build-attribute-content.mjs's words step (gameDates, never inside a quotation or a web address; the research keeps its own): tests/language-data-dates.test.ts 'each genre’s claim, reasons, what the research says…' and 'PLAYER JOURNEY: a first-year opens Horror and Adventure…' (the genre look drawn); the builder run (build-attribute-content.txt), its diff those three fields alone. As the json area verified the rest: The genre look rendered by resolveLook (json/render-genre-looks.ts.txt) at the commit of brief 14 json batch 5 and read whole in json/b5-genre-looks.txt; json/sweep-words.mjs finds none of the research's working words outside quotations; json/json-diff-check.mjs 0 problems (genres, confidence, tags, belongsTo, URLs and dates unchanged); tests/engagement.test.ts and tests/genre-coverage.test.ts pass for every genre. The reasons the look doesn't show (a low genre's) keep the research's words with the house's spelling; quotations and citations keep their sources'."
  },
  "src/engine/content/home-accounts.json#banks [au-anz]": {
   "status": "Reviewed And Retained",

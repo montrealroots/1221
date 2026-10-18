@@ -52,7 +52,7 @@ export interface AbroadTerms {
 export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
   GB: {
     fee: 116.5, currency: 'GBP', days: 21, daysEstimated: true, expedite: null,
-    basis: 'An adult passport applied for online from outside the UK: £116.50 from 8 April 2026 (£130 on paper). Fast Track and the other urgent services are for applicants in the UK.',
+    basis: 'An adult passport applied for online from outside the UK: £116.50 from April 8, 2026 (£130 on paper). Fast Track and the other urgent services are for applicants in the UK.',
     assumed: ['HM Passport Office publishes no turnaround from overseas, so the game uses its three weeks at home.'],
   },
   CA: {
@@ -98,7 +98,7 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
   // own rate, which came to the same $62.00, and said the figure was its own.
   JP: {
     fee: 62, currency: 'USD', days: 30, daysEstimated: true, expedite: null,
-    basis: 'At a Japanese embassy or consulate in the US, on paper: US$62 from 1 July 2026, the fee MOFA’s ordinance on passport fees abroad sets for the United States (US$60 applied for online); about a month, the passport made in Japan.',
+    basis: 'At a Japanese embassy or consulate in the US, on paper: US$62 from July 1, 2026, the fee MOFA’s ordinance on passport fees abroad sets for the United States (US$60 applied for online); about a month, the passport made in Japan.',
     assumed: [],
   },
   KR: {
@@ -122,7 +122,7 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
   // 2026-10-17 SLATE charged the Polícia Federal's R$257.25 at home.
   BR: {
     fee: 60, currency: 'USD', days: 8, daysEstimated: true, expedite: null,
-    basis: 'Issued by Brazilian embassies and consulates through e-consular, at the consular fee from 1 June 2026: 60 reais-ouro, a real-ouro being a dollar, so US$60.',
+    basis: 'Issued by Brazilian embassies and consulates through e-consular, at the consular fee from June 1, 2026: 60 reais-ouro, a real-ouro being a dollar, so US$60.',
     assumed: ['The consulate’s time wasn’t found, so the game uses the days at home.', 'The Polícia Federal’s urgent service isn’t given at consulates, so none is offered.'],
   },
   // Read when it's asked for, so a change to `NZ_FROM_ABROAD` reaches the screen and the command alike (from 2026-10-17:
@@ -134,7 +134,7 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
   // service. Until 2026-10-17 SLATE took the embassy in Ireland's for it: €140 in about five weeks, and €165 urgent.
   LV: {
     fee: 140, youngFee: 115, currency: 'EUR', days: 56, daysEstimated: false, expedite: null,
-    basis: 'In person at the Embassy of Latvia in Washington, at its own fees from 1 May 2026: €140 (€115 under 20), in about eight weeks on average; no urgent service.',
+    basis: 'In person at the Embassy of Latvia in Washington, at its own fees from May 1, 2026: €140 (€115 under 20), in about eight weeks on average; no urgent service.',
     assumed: ['Shipment by FedEx, €35, isn’t charged: you’re taken to collect the passport at the embassy, where you apply in person.'],
   },
 };
@@ -172,7 +172,7 @@ function nzTerms(): AbroadTerms {
   return {
     fee: nzFee(NZ_FROM_ABROAD.feeBeforeGst), currency: 'NZD', days: 28, daysEstimated: false,
     expedite: { extra: nzFee(NZ_FROM_ABROAD.urgentBeforeGst), days: 5, note: 'Urgent service, its fee from overseas assumed' },
-    basis: `Online to DIA from overseas: NZ$${NZ_FROM_ABROAD.feeBeforeGst.toFixed(2)} before GST, NZ$${(NZ_FROM_ABROAD.feeBeforeGst * (1 + NZ_FROM_ABROAD.gstRate)).toFixed(2)} with it, from 2 May 2025.`,
+    basis: `Online to DIA from overseas: NZ$${NZ_FROM_ABROAD.feeBeforeGst.toFixed(2)} before GST, NZ$${(NZ_FROM_ABROAD.feeBeforeGst * (1 + NZ_FROM_ABROAD.gstRate)).toFixed(2)} with it, from May 2, 2025.`,
     assumed: [
       gst
         ? 'GST is charged. DIA charges none to a non-resident for New Zealand tax applying online, and whether you’re one turns on a home in New Zealand, which the game doesn’t keep.'

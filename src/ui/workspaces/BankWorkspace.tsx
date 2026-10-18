@@ -32,7 +32,7 @@ import { BankCash } from '@/ui/bank/BankCash';
 import { BankAccountLife } from '@/ui/bank/BankAccountLife';
 import { apyOf } from '@/engine/systems/statements';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
-import { dateKey, formatDate } from '@/engine/core/time';
+import { dateKey, formatDate, formatDateKey } from '@/engine/core/time';
 import { bankById, bankingIn } from '@/engine/content/banks';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Product } from '@/engine/content/banks';
@@ -163,7 +163,7 @@ export function BankWorkspace() {
                 {homeAccountLines(sim, account).map((line) => <p key={line} className="small" style={{ margin: 0 }}>{line}</p>)}
                 {/* The debit card's year (`cardYearWords`, from brief 10, 2026-10-16): until then no panel said it. */}
                 {cardYearWords(sim, account) && <p className="small" style={{ margin: 0 }}>{cardYearWords(sim, account)}</p>}
-                {product && <Fine>{product.estimate ? 'Estimated' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[own.confidence ?? 'H']}{account.secondChance ? ' The second-chance account’s fee is estimated.' : ''}</Fine>}
+                {product && <Fine>{product.estimate ? 'Estimated' : 'Source'}: {product.source}, {formatDateKey(product.asOf)}.{CONFIDENCE[own.confidence ?? 'H']}{account.secondChance ? ' The second-chance account’s fee is estimated.' : ''}</Fine>}
                 {account.kind === 'savings' && (() => {
                   // Where closing it sends the money, as `closeSavings` does: the current account at its own bank, or the
                   // primary with none there (from 2026-10-16: until then both lines named the primary, so a Berlin-raised

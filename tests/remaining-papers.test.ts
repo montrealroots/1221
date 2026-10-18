@@ -228,7 +228,7 @@ describe('tax.s8.passport', () => {
     const screen = drawn(sim, PassportPane);
     expect(screen).toContain(`A New One ${'$' + (fee / 100).toFixed(2)} About 21 days; good for 10 years; from abroad`);
     expect(screen).toContain('Faster Not Offered HM Passport Office (Home Office) offers no faster service to applicants abroad');
-    expect(screen).toContain('An adult passport applied for online from outside the UK: £116.50 from 8 April 2026 (£130 on paper).');
+    expect(screen).toContain('An adult passport applied for online from outside the UK: £116.50 from April 8, 2026 (£130 on paper).');
     expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It']);
     const before = held(sim);
     expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe('HM Passport Office (Home Office) offers no faster service to applicants abroad.');
@@ -280,7 +280,7 @@ describe('tax.s8.passport', () => {
     expect(PASSPORTS_ABROAD['LV']).toMatchObject({ fee: 140, youngFee: 115, currency: 'EUR', days: 56, daysEstimated: false, expedite: null });
     // Japan's, read in MOFA Ordinance 4 of 2006 as amended from 1 July 2026: the United States's row, ten years on paper.
     expect(PASSPORTS_ABROAD['JP']).toMatchObject({ fee: 62, currency: 'USD', expedite: null, assumed: [] });
-    expect(PASSPORTS_ABROAD['JP']!.basis).toContain('US$62 from 1 July 2026, the fee MOFA’s ordinance on passport fees abroad sets for the United States (US$60 applied for online)');
+    expect(PASSPORTS_ABROAD['JP']!.basis).toContain('US$62 from July 1, 2026, the fee MOFA’s ordinance on passport fees abroad sets for the United States (US$60 applied for online)');
     // New Zealand's: DIA's NZ$214.78 before GST, and SLATE's two assumptions, each one value, said on the screen as SLATE's.
     expect(NZ_FROM_ABROAD).toEqual({ feeBeforeGst: 214.78, urgentBeforeGst: 214.78, gstRate: 0.15, gstCharged: true });
     expect(PASSPORTS_ABROAD['NZ']).toMatchObject({ fee: 247, currency: 'NZD', days: 28, expedite: { extra: 247, days: 5 } });
@@ -302,7 +302,7 @@ describe('tax.s8.passport', () => {
     const screen = drawn(sim, PassportPane);
     expect(screen).toContain('A New One $62.00 About 30 days; good for 10 years; from abroad');
     expect(screen).toContain(`Faster Not Offered ${issuer} offers no faster service to applicants abroad`);
-    expect(screen).toContain('At a Japanese embassy or consulate in the US, on paper: US$62 from 1 July 2026, the fee MOFA’s ordinance on passport fees abroad sets for the United States (US$60 applied for online)');
+    expect(screen).toContain('At a Japanese embassy or consulate in the US, on paper: US$62 from July 1, 2026, the fee MOFA’s ordinance on passport fees abroad sets for the United States (US$60 applied for online)');
     expect(screen).not.toContain('yen fee');
     expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It']);
     const before = held(sim);
@@ -333,7 +333,7 @@ describe('tax.s8.passport', () => {
     const screen = drawn(sim, PassportPane);
     expect(screen).toContain(`A New One ${'$' + (fee / 100).toFixed(2)} Up to 28 days; good for 10 years; from abroad`);
     expect(screen).toContain(`Faster ${'$' + (faster / 100).toFixed(2)} 5 days`);
-    expect(screen).toContain('Online to DIA from overseas: NZ$214.78 before GST, NZ$247.00 with it, from 2 May 2025.');
+    expect(screen).toContain('Online to DIA from overseas: NZ$214.78 before GST, NZ$247.00 with it, from May 2, 2025.');
     expect(screen).toContain('Assumed in the game: GST is charged. DIA charges none to a non-resident for New Zealand tax applying online');
     expect(screen).toContain('The urgent fee from overseas is the standard fee');
     expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It', 'Renew It Faster']);
@@ -399,7 +399,7 @@ describe('tax.s8.passport', () => {
     const screen = drawn(sim, PassportPane);
     expect(screen).toContain('A New One $60.00 About 8 days; good for 10 years; from abroad');
     expect(screen).toContain(`Faster Not Offered ${issuer} offers no faster service to applicants abroad`);
-    expect(screen).toContain('at the consular fee from 1 June 2026: 60 reais-ouro, a real-ouro being a dollar, so US$60.');
+    expect(screen).toContain('at the consular fee from June 1, 2026: 60 reais-ouro, a real-ouro being a dollar, so US$60.');
     expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It']);
     const before = held(sim);
     expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe(`${issuer} offers no faster service to applicants abroad.`);
@@ -453,7 +453,7 @@ describe('tax.s8.passport', () => {
     const screen = drawn(sim, PassportPane);
     expect(screen).toContain(`A New One ${'$' + (fee / 100).toFixed(2)} Up to 56 days; good for 10 years; from abroad`);
     expect(screen).toContain(`Faster Not Offered ${issuer} offers no faster service to applicants abroad`);
-    expect(screen).toContain('In person at the Embassy of Latvia in Washington, at its own fees from 1 May 2026: €140 (€115 under 20), in about eight weeks on average; no urgent service.');
+    expect(screen).toContain('In person at the Embassy of Latvia in Washington, at its own fees from May 1, 2026: €140 (€115 under 20), in about eight weeks on average; no urgent service.');
     expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It']);
     const before = held(sim);
     expect(refusal(sim, 'documents.apply_passport', { expedite: true })).toBe(`${issuer} offers no faster service to applicants abroad.`);

@@ -1,0 +1,16 @@
+{
+ "base": "http://localhost:4391",
+ "width": 390,
+ "visited": [
+  {
+   "save": "roundups.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "tax.json",
+   "screens": 25,
+   "failed": []
+  }
+ ]
+}

@@ -344,7 +344,7 @@ PLAYS['papers.health-cover'] = () => {
   const july = earningsOf(sim.player).kinds?.['2027-07'];
   expect((july?.wages ?? 0) + (july?.workStudy ?? 0)).toBe(0);
   // On 1 August, the notice.
-  expect(ex.steps[0]).toContain('On 1 August a notice says “Your Health Cover Ended”.');
+  expect(ex.steps[0]).toContain('On August 1 a notice says “Your Health Cover Ended”.');
   const ended = titled(sim, 'Your Health Cover Ended', at(2027, 8, 1, 0));
   expect(ended).toHaveLength(1);
   expect(ended[0]!.body).toContain(`You have no health cover from ${day(ends)}.`);
@@ -377,13 +377,13 @@ PLAYS['papers.health-cover'] = () => {
   expect(coverLabel(sim.player, sim.now)).toBe('Marketplace Plan');
   expect(healthOf(sim.player).premiums['2027']).toHaveLength(1);
   expect(careQuote(sim, sim.player, 'visit')).toBe(45_00);
-  expect(ex.result).toContain(`From 1 September its premium is taken on each month’s first, and a visit costs ${usd(45_00)}.`);
+  expect(ex.result).toContain(`From September 1 its premium is taken on each month’s first, and a visit costs ${usd(45_00)}.`);
 
   // Enrolled ahead: Enroll shows from the day the example names, and cover then begins 1 August.
   const ahead = graduateOfTheSpring('guide-papers-cover');
   const opens = yaleUntil(ahead.player)! - 60 * MS_DAY;
   const o = zonedParts(opens, NY);
-  expect(ex.result).toContain(`Enrolled ahead, from ${o.day} ${MONTHS[o.month - 1]} while Yale Health still covered them, their cover would have begun 1 August.`);
+  expect(ex.result).toContain(`Enrolled ahead, from ${MONTHS[o.month - 1]} ${o.day} while Yale Health still covered them, their cover would have begun August 1.`);
   tended(ahead, opens - 12 * MS_HOUR);
   expect(mayEnroll(ahead.player, ahead.now).why).toContain(`You can enroll from ${day(opens)}`);
   tended(ahead, opens + 12 * MS_HOUR);

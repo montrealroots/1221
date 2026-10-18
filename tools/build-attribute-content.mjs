@@ -13,15 +13,19 @@
  *   rather than a citation). Each old text must be found exactly once in what the research says now, or the build
  *   stops: a change to the research is never covered by words written for what it said before.
  * - **How each was read** (`how`), said as the look's parenthesis reads it: "from a search summary"; "two of its three
- *   sources read directly and the remaining one from a search summary, reviewed 2026-10-10".
+ *   sources read directly and the remaining one from a search summary, reviewed October 10, 2026" (until 2026-10-17's
+ *   dates below, "reviewed 2026-10-10").
  * - **The house's spelling and contractions** in the research's own sentences, never inside a quotation: "summarized"
  *   where the research wrote it the British way, "doesn’t" for "does not"; and its apostrophe inside a word, "Beckett’s".
  * - **A source's citations** as the research wrote them, but for its marks of how each was read ("[fetched]" is
  *   "[read directly]", "[snippet]" "[from a search summary]"), the space it left before each semicolon, and its last
  *   full stop, which the look adds itself ("pages..").
+ * - **Dates** as the game writes them (`gameDates`, tools/research-dates.mjs), in the research's own sentences, its
+ *   citations and how each was read, never inside a quotation or a web address: "On review (October 10, 2026)",
+ *   "StageMilk (July 16, 2024)". From 2026-10-17 (brief 14's research data): until then "2026-10-10" and "16 July 2024".
  *
  * Nothing the game computes from changes: the ids, the confidence, the tags, what a demand belongs to (present or not)
- * and its basis are copied as they were, and a source's citation keeps its words.
+ * and its basis are copied as they were, and a source's citation keeps its words, its dates written the game's way.
  *
  * Until the owner removed the interests on 2026-10-10 this also generated src/engine/content/engagement.ts from
  * research-interests.json and its review: each interest's definition, what it grew, its kind of rest and when it could
@@ -31,6 +35,7 @@
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
+import { gameDates } from './research-dates.mjs';
 
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'));
 const confidence = (r) => (['high', 'medium', 'low'].includes(r) ? r : 'low');
@@ -128,10 +133,10 @@ const BRITISH = new RegExp(`\\b(${Object.keys(AMERICAN).join('|')})\\b`, 'g');
 /** The house's apostrophe (’) inside a word, quotation or not: "Beckett’s", "It’s like a dance". A quotation mark stays as written. */
 const typographic = (text) => text.replace(/(\p{L})'(\p{L})/gu, '$1’$2');
 
-const house = (text) => typographic(outside(outside(text, CONTRACTION, contract), BRITISH, (w) => AMERICAN[w]));
+const house = (text) => gameDates(typographic(outside(outside(text, CONTRACTION, contract), BRITISH, (w) => AMERICAN[w])));
 
 /** A source's citations as written, with the research's marks of how each was read in the look's words, no space before a semicolon, and no last full stop. */
-const cited = (text) => text.replace(/ ; /g, '; ').replace(/ \[fetched\]/g, ' [read directly]').replace(/ \[snippet\]/g, ' [from a search summary]').replace(/\.$/, '');
+const cited = (text) => gameDates(text.replace(/ ; /g, '; ').replace(/ \[fetched\]/g, ' [read directly]').replace(/ \[snippet\]/g, ' [from a search summary]').replace(/\.$/, ''));
 
 // ---------------------------------------------------------------------------------------------------------------------
 // How each was read, as the look's parenthesis says it: "(… ; medium confidence)".
@@ -150,7 +155,7 @@ function howWords(how) {
     : read === 0
       ? (of === 2 ? 'neither of its sources read directly, both from search summaries' : `none of its ${n(of)} sources read directly, all from search summaries`)
       : `${n(read)} of its ${n(of)} sources read directly and ${rest === 1 ? (of === 2 ? 'the other' : 'the remaining one') : `the other ${n(rest)}`} from ${rest === 1 ? 'a search summary' : 'search summaries'}`;
-  return `${said}, reviewed ${on}`;
+  return `${said}, reviewed ${gameDates(on)}`;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

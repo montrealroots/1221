@@ -79,7 +79,7 @@ export function unclaimedLaw(iso: string): (typeof UNCLAIMED)[string] | undefine
     ...law,
     to: 'the state’s unclaimed-property office',
     claimBack: 'It can be claimed back from that office.',
-    source: 'each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, 2026-10-13); the game uses the three years for every state',
+    source: 'each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, October 13, 2026); the game uses the three years for every state',
   };
 }
 

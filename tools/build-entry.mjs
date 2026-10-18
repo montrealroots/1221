@@ -3,6 +3,7 @@
 // the research's own uncertainties. Run: node tools/build-entry.mjs docs/research/world/research-entry.json
 import { readFileSync, writeFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
+import { gameDates } from './research-dates.mjs';
 
 /**
  * A note without the "visa-exempt" it opens on: the status already says it, and eighty-odd notes opening on one word read
@@ -54,7 +55,9 @@ for (const [dest, d] of Object.entries(j.destinations)) {
       if (/eVisitor/.test(want) && auths.eVisitor) authorization = 'eVisitor';
       if (!authorization) throw new Error(`${dest} ${iso}: no authorization for "${want}"`);
     }
-    citizens[iso] = { status: c.status, ...(authorization ? { authorization } : {}), ...(c.status === 'visa' ? { visa: c.authorization } : {}), maxDays: c.maxDays, windowDays: c.windowDays, note: noteOf(c.note), source: c.source };
+    // The note is shown under Going Abroad, so its dates are the game's (from 2026-10-17, brief 14: until then "on or
+    // after 8 Jan 2025"); the research keeps its own.
+    citizens[iso] = { status: c.status, ...(authorization ? { authorization } : {}), ...(c.status === 'visa' ? { visa: c.authorization } : {}), maxDays: c.maxDays, windowDays: c.windowDays, note: gameDates(noteOf(c.note)), source: c.source };
   }
   out[dest] = { authority: d.authority, passport: { ...PASSPORT[dest], rule: d.passportRule }, authorizations: auths, citizens };
 }

@@ -1,0 +1,353 @@
+[
+ {
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61498.html ; minimum-payment formula from https://www.chase.com/content/feed/public/creditcards/cma/Chase/COL00095.pdf; returned payment fee, penalty rate, cash advance fee, cash rate, introductory rate, balance transfer, plan fee, rewards: https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61498.html, 2026-09-26",
+  "after": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61498.html; minimum-payment formula from https://www.chase.com/content/feed/public/creditcards/cma/Chase/COL00095.pdf; returned payment fee, penalty rate, cash advance fee, cash rate, introductory rate, balance transfer, plan fee, rewards: https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61498.html, September 26, 2026",
+  "why": "The read day as the game writes a date, and no space before the semicolon after the first address (the defect the dynamic cases recorded). Shown on Money, Cards, as \"Source: ….\"",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'says the day a product, a card…' (drawn, Chase)"
+ },
+ {
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "official",
+  "before": "Source: https://creditcards.wellsfargo.com/active-cash-credit-card/ ; terms from https://files.consumerfinance.gov/a/assets/credit-card-agreements/pdf/WELLS_FARGO_BANK_NATIONAL_ASSOCIATION/Wells_Fargo_Active_Cash_Card.pdf; cash advance fee, cash rate, introductory rate, balance transfer, rewards: https://www.wellsfargo.com/credit-cards/active-cash/terms/, 2026-09-26, 2026-09-26.",
+  "after": "Source: https://creditcards.wellsfargo.com/active-cash-credit-card/; terms from https://files.consumerfinance.gov/a/assets/credit-card-agreements/pdf/WELLS_FARGO_BANK_NATIONAL_ASSOCIATION/Wells_Fargo_Active_Cash_Card.pdf; cash advance fee, cash rate, introductory rate, balance transfer, rewards: https://www.wellsfargo.com/credit-cards/active-cash/terms/, September 26, 2026.",
+  "why": "The card fine print added the terms’ day (asOf) after a source that already ended on the same day: 45 cards said it twice. Now said once, the game’s way; where the two days differ, both stay.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts (Chase’s, drawn: the day once); the 45 counted from CARDS"
+ },
+ {
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "official",
+  "before": "Source: chase.com Total Checking: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, or a $5,000 average across it and linked Chase accounts, 2026-09-25.",
+  "after": "Source: chase.com Total Checking: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, or a $5,000 average across it and linked Chase accounts, September 25, 2026.",
+  "why": "A product’s day (asOf) is data the code keeps as a key, and was printed raw. It’s formatted where it’s shown (formatDateKey), and stays ISO in the data.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'says the day a product…' (Accounts drawn)"
+ },
+ {
+  "source": "src/ui/bank/RoundUps.tsx#RoundUps",
+  "kind": "official",
+  "before": "Source: natwest.com/savings/tools-for-savings/round-ups.html and the support FAQ, read live 2026-10-13, checked 2026-10-13.",
+  "after": "Source: natwest.com/savings/tools-for-savings/round-ups.html and the support FAQ, read live October 13, 2026, checked October 13, 2026.",
+  "why": "The rule’s source and the day it was checked (data, formatted where shown). The two days are the same here; they say different things (read, checked), so both stay.",
+  "meaningSensitive": false,
+  "verified": "tests/roundups.test.ts 'the panel' (drawn)"
+ },
+ {
+  "source": "src/engine/content/accountlife.ts#UNCLAIMED",
+  "kind": "official",
+  "before": "the Dormant Accounts Fund (account becomes dormant on 30 September after 15 years with no transaction; funds move after 31 March following)",
+  "after": "the Dormant Accounts Fund (account becomes dormant on September 30 after 15 years with no transaction; funds move after March 31 following)",
+  "why": "Days without a year in the game’s order. Shown in the question that warns of it, the ledger line and Your Accounts Over Time.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'the bank research made by scripts outside the repository…'"
+ },
+ {
+  "source": "src/engine/content/pending.ts#PENDING",
+  "kind": "official",
+  "before": "Capital One 360 Checking Key account terms, revised 2/2024 (ecm.capitalone.com/WCM/bank/pdfs/360-checking-pew.pdf); capitalone.com/bank/disclosures/checking-accounts/online-checking-account/ (5/20/2026); capitalone.com/help-center/checking-savings/pending-transactions/; capitalone.com/help-center/credit-cards/card-pending-transactions/; capitalone.com/help-center/credit-cards/understanding-payment-holds/, 2026-09-26",
+  "after": "Capital One 360 Checking Key account terms, revised February 2024 (ecm.capitalone.com/WCM/bank/pdfs/360-checking-pew.pdf); capitalone.com/bank/disclosures/checking-accounts/online-checking-account/ (May 20, 2026); capitalone.com/help-center/checking-savings/pending-transactions/; capitalone.com/help-center/credit-cards/card-pending-transactions/; capitalone.com/help-center/credit-cards/understanding-payment-holds/, September 26, 2026",
+  "why": "Slashed dates in the research’s own sentence, written by hand: 5/20/2026 can only be May 20 (20 is no month), and 2/2024 a month and year. Shown on Statements as the Source line.",
+  "meaningSensitive": true,
+  "verified": "tests/language-data-dates.test.ts 'the bank research made by scripts…'; BY_HAND in tools/research-dates.mjs"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY",
+  "kind": "official",
+  "before": "deutsche-bank.de Preis- und Leistungsverzeichnis der Deutsche Bank AG (PDF); FAQ 'Wie sperre ich meine Karten?'; FAQ 'Wie bestelle ich eine Ersatzkarte für meine Debitkarte/SparCard?'; 3D Secure / Sicherheitspaket page; Bedingungen für die Debitkarten (Stand 01/2025); Bedingungen für die Kreditkarten (Stand 06/2021), PLV Stand 23.09.2026",
+  "after": "deutsche-bank.de Preis- und Leistungsverzeichnis der Deutsche Bank AG (PDF); FAQ 'Wie sperre ich meine Karten?'; FAQ 'Wie bestelle ich eine Ersatzkarte für meine Debitkarte/SparCard?'; 3D Secure / Sicherheitspaket page; Bedingungen für die Debitkarten (Stand January 2025); Bedingungen für die Kreditkarten (Stand June 2021), PLV Stand September 23, 2026",
+  "why": "A German document’s \"Stand\" day with dots, day first as Europe writes it, and its month-and-year editions; the German titles and quotations stay as written.",
+  "meaningSensitive": true,
+  "verified": "tests/language-data-dates.test.ts 'the bank research made by scripts…'"
+ },
+ {
+  "source": "src/engine/content/banks-world-sheets.ts#SHEETS",
+  "kind": "label",
+  "before": "Savings Account (instant access, adults; minors 0.20%; table dated 17/04/2025)",
+  "after": "Savings Account (instant access, adults; minors 0.20%; table dated April 17, 2025)",
+  "why": "Bank of Cyprus’s product name, which becomes the account’s name: 17 can only be the day.",
+  "meaningSensitive": true,
+  "verified": "tests/language-data-dates.test.ts 'the bank research kept by hand…'"
+ },
+ {
+  "source": "src/engine/content/banks-world-sheets.ts#SHEETS",
+  "kind": "official",
+  "before": "Exempt from the Rs 50/month low-balance service charge (SOBC Jan-Jun 2026); other accounts such as HBL Freedom pay Rs 50/month if monthly average balance < Rs 40,000",
+  "after": "Exempt from the Rs 50/month low-balance service charge (SOBC January to June 2026); other accounts such as HBL Freedom pay Rs 50/month if monthly average balance < Rs 40,000",
+  "why": "A span of short months as two months in words.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'the bank research kept by hand…'"
+ },
+ {
+  "source": "src/engine/content/banks-lending.ts#LENDING .us-wells-fargo",
+  "kind": "official",
+  "before": "wellsfargo.com personal loans: 6.74% to 26.74% APR, $3,000 to $100,000, 12 to 84 months, for customers of 12 months or more (read 2026-10-10)",
+  "after": "wellsfargo.com personal loans: 6.74% to 26.74% APR, $3,000 to $100,000, 12 to 84 months, for customers of 12 months or more (read October 10, 2026)",
+  "why": "A reading day as the brief asks: \"read October 10, 2026\".",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'the bank research kept by hand…'"
+ },
+ {
+  "source": "src/engine/content/banks-thirteen.ts#THIRTEEN [is-arion]",
+  "kind": "official",
+  "before": "Arion’s price list and payment-account fee sheet, from 7 May 2026 (read 16 October 2026): a debit card at 950 kr a year and 19 kr a purchase, free for 23 and under",
+  "after": "Arion’s price list and payment-account fee sheet, from May 7, 2026 (read October 16, 2026): a debit card at 950 kr a year and 19 kr a purchase, free for 23 and under",
+  "why": "A day the price list runs from and the day it was read, both the game’s way.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'the bank research kept by hand…'; tests/language-money.test.ts 'says the debit card’s yearly fee and age…' (drawn, holds \"Source: Arion’s price list\")"
+ },
+ {
+  "source": "src/engine/content/cards.ts#CARD_LAW",
+  "kind": "official",
+  "before": "Bangladesh Bank circular of 1 December 2024 on credit card interest (effective 1 January 2025)",
+  "after": "Bangladesh Bank circular of December 1, 2024 on credit card interest (effective January 1, 2025)",
+  "why": "A law named with its day, shown when it caps a card: \"<law> caps …\".",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'the bank research made by scripts…'"
+ },
+ {
+  "source": "src/engine/content/banks-lending.ts#LENDING [per_item]",
+  "kind": "official",
+  "before": "NerdWallet review of Bank of America; bankofamerica.com: everyday debit card purchases and ATM withdrawals aren’t authorized into an overdraft; Clarity Statement 08/2026: $10 an item, two a day at most, none overdrawn by $1 or less or on an item of $1 or less, electronic items posted highest first",
+  "after": "NerdWallet review of Bank of America; bankofamerica.com: everyday debit card purchases and ATM withdrawals aren’t authorized into an overdraft; Clarity Statement, August 2026: $10 an item, two a day at most, none overdrawn by $1 or less or on an item of $1 or less, electronic items posted highest first",
+  "why": "A month and year with a slash, by hand.",
+  "meaningSensitive": true,
+  "verified": "tests/language-data-dates.test.ts 'the bank research kept by hand…'"
+ },
+ {
+  "source": "src/engine/content/entry.ts#ENTRY .GB",
+  "kind": "official",
+  "before": "Visitor (up to 6 months per visit); ETA required for travel on or after 8 Jan 2025 (Appendix ETA National List section (c)); enforced with carrier checks from 25 Feb 2026.",
+  "after": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
+  "why": "An entry rule’s note under Going Abroad, its days the game’s way by build-entry.mjs’s words step; the research file keeps \"8 Jan 2025\".",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'each passport’s fee and its note from abroad, each entry rule’s note…'"
+ },
+ {
+  "source": "src/engine/content/passports.ts#PASSPORTS .GB",
+  "kind": "official",
+  "before": "British nationals overseas apply online to HM Passport Office at higher fees: 116.50 adult online / 130 paper; child 75.50 online / 89 paper (from 8 April 2026). Different turnaround times apply overseas (not stated on the pages read). Passports are free for people born on or before 2 September 1929.",
+  "after": "British nationals overseas apply online to HM Passport Office at higher fees: 116.50 adult online / 130 paper; child 75.50 online / 89 paper (from April 8, 2026). Different turnaround times apply overseas (not stated on the pages read). Passports are free for people born on or before September 2, 1929.",
+  "why": "The note on applying from abroad, under Your Passport, by build-passports.mjs’s words step.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts; tests/remaining-papers.test.ts (drawn)"
+ },
+ {
+  "source": "src/engine/content/passports.ts#PASSPORTS .NZ",
+  "kind": "official",
+  "before": "Standard adult passport (GST inclusive), fee in force from 2 May 2025; the same fee applies to first passports and renewals. Courier delivery is charged on top (NZD 7 to 78 for online applications, by destination).",
+  "after": "Standard adult passport (GST inclusive), fee in force from May 2, 2025; the same fee applies to first passports and renewals. Courier delivery is charged on top (NZD 7 to 78 for online applications, by destination).",
+  "why": "A fee’s basis, under Your Passport.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/engine/content/licenses.ts#LICENSES .gb",
+  "kind": "error",
+  "before": "PayPoint shops (in person; Post Office no longer issues since 1 April 2024)",
+  "after": "PayPoint shops (in person; Post Office no longer issues since April 1, 2024)",
+  "why": "Who issues the permit, said in the refusal to drive without one; build-licenses.mjs, which now gives the committed file and this.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "The marketplace: Connecticut’s open enrollment, 23 October to 15 January; the 60 days before Yale Health’s cover ends, once its end is set by the degree, a withdrawal or a dismissal; or within 60 days of losing cover, which a plan you dropped or left unpaid isn’t. And not having stayed past your US status.",
+  "after": "The marketplace: Connecticut’s open enrollment, October 23 to January 15; the 60 days before Yale Health’s cover ends, once its end is set by the degree, a withdrawal or a dismissal; or within 60 days of losing cover, which a plan you dropped or left unpaid isn’t. And not having stayed past your US status.",
+  "why": "Days built from parts (dayMonth): month first now, as formatDate writes them.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'every entry of the guide…'"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "HUSKY D: last month’s income at or under 138% of the poverty line, $1,835 a month in 2026, and from 1 October 2026 US citizenship or a green card held five years. From 1 January 2027, some of the month before you enroll spent at the School, or $580 of income of any kind in it, or an exception: 65 or over, SNAP received under its work rules, or a stay in hospital you ask for.",
+  "after": "HUSKY D: last month’s income at or under 138% of the poverty line, $1,835 a month in 2026, and from October 1, 2026 US citizenship or a green card held five years. From January 1, 2027, some of the month before you enroll spent at the School, or $580 of income of any kind in it, or an exception: 65 or over, SNAP received under its work rules, or a stay in hospital you ask for.",
+  "why": "A day kept as a key, built by fullDay: \"January 1, 2027\", the form the notice the guide quotes already used.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b13.test.ts (Health Cover’s reference drawn)"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "The toast says “Enrolled in the marketplace, from September 1, …”. From 1 September its premium is taken on each month’s first, and a visit costs $45. Care in August, uncovered, is billed at the uninsured price, less the hospital’s financial assistance on an emergency or a stay. Enrolled ahead, from 2 June while Yale Health still covered them, their cover would have begun 1 August.",
+  "after": "The toast says “Enrolled in the marketplace, from September 1, …”. From September 1 its premium is taken on each month’s first, and a visit costs $45. Care in August, uncovered, is billed at the uninsured price, less the hospital’s financial assistance on an emergency or a stay. Enrolled ahead, from June 2 while Yale Health still covered them, their cover would have begun August 1.",
+  "why": "The day Enroll opens, built from a date, and the day cover begins, written: both month first.",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-papers.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "Yale Delta Dental Basic runs to its 30 September whatever happens to Yale Health, through August and September after the degree too. Paid for the year, it can’t be dropped.",
+  "after": "Yale Delta Dental Basic runs to its September 30 whatever happens to Yale Health, through August and September after the degree too. Paid for the year, it can’t be dropped.",
+  "why": "A day without a year, month first.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane",
+  "kind": "official",
+  "before": "A return is due 15 April, or the next business day. A 1040-NR with no wages on it is due 15 June. Filed late with tax owed, the penalty is",
+  "after": "A return is due April 15, or the next business day. A 1040-NR with no wages on it is due June 15. Filed late with tax owed, the penalty is",
+  "why": "The returns’ fine print, its deadlines month first, as the No Returns Yet line above it already said them (formatDate).",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g8-8.test.ts 'the fine print gives the 1040-NR’s June date…' (drawn)"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane",
+  "kind": "label",
+  "before": "April to April, each settled on the 31 January after it ends",
+  "after": "April to April, each settled on the January 31 after it ends",
+  "why": "A tooltip on the UK tax year’s row.",
+  "meaningSensitive": false,
+  "verified": "read in the diff; the same day in the tutorial is held by tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#DentalPanel",
+  "kind": "official",
+  "before": "It’s paid for the year to 30 September, and can’t be canceled once paid.",
+  "after": "It’s paid for the year to September 30, and can’t be canceled once paid.",
+  "why": "The dental plan’s year end.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'PLAYER JOURNEY: a student reads Health Cover’s dental plan…' (drawn)"
+ },
+ {
+  "source": "src/ui/workspaces/SchoolWorkspace.tsx#WithdrawControl",
+  "kind": "confirmation",
+  "before": "Withdrawing gives up your place today: classes, calls, shifts and coursework end, and hours you worked are still paid. By the fifteenth day of a term’s classes Yale Health’s cover ends the day you withdraw, or goes back to the start of its insurance term (1 August, for a fall term) where that came first, and its premium is refunded; after it, you’re covered thirty days more. On an F-1 you’d have fifteen days’ grace and no OPT. The Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.",
+  "after": "Withdrawing gives up your place today: classes, calls, shifts and coursework end, and hours you worked are still paid. By the fifteenth day of a term’s classes Yale Health’s cover ends the day you withdraw, or goes back to the start of its insurance term (August 1, for a fall term) where that came first, and its premium is refunded; after it, you’re covered thirty days more. On an F-1 you’d have fifteen days’ grace and no OPT. The Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.",
+  "why": "The day Yale Health’s cover goes back to, in Withdraw’s warning.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g8-4.test.ts (drawn)"
+ },
+ {
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "On a 1040-NR with no wages, the return is due by June 15, though Connecticut’s return on it is still due in mid-April. A UK tax year’s is settled on its own, by the next 31 January. The IRS’s refund comes",
+  "after": "On a 1040-NR with no wages, the return is due by June 15, though Connecticut’s return on it is still due in mid-April. A UK tax year’s is settled on its own, by the next January 31. The IRS’s refund comes",
+  "why": "A UK tax year’s deadline in the tutorial, month first.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'every entry of the guide and every chapter of the tutorial…'"
+ },
+ {
+  "source": "src/engine/content/visas.ts#US_B1B2",
+  "kind": "official",
+  "before": "The $185 application fee; the interview about five months out at the Mexico City consulate (29 September 2026, read secondhand)",
+  "after": "The $185 application fee; the interview about five months out at the Mexico City consulate (September 29, 2026, read secondhand)",
+  "why": "A visa’s basis, shown under Going Abroad with the visa’s name.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'each passport’s fee…, each visa'"
+ },
+ {
+  "source": "src/engine/content/passportsabroad.ts#PASSPORTS_ABROAD",
+  "kind": "official",
+  "before": "An adult passport applied for online from outside the UK: £116.50 from 8 April 2026 (£130 on paper). Fast Track and the other urgent services are for applicants in the UK.",
+  "after": "An adult passport applied for online from outside the UK: £116.50 from April 8, 2026 (£130 on paper). Fast Track and the other urgent services are for applicants in the UK.",
+  "why": "The UK passport office’s fee from abroad, under Your Passport.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-papers.test.ts (drawn, a London-born student in New Haven)"
+ },
+ {
+  "source": "src/engine/content/workload.ts#RUNNING_TIMES",
+  "kind": "official",
+  "before": "Riksteatret, the Norwegian Touring Theatre (Bentein Baardson), from 31 August 2017: 2 h 20 with an interval",
+  "after": "Riksteatret, the Norwegian Touring Theatre (Bentein Baardson), from August 31, 2017: 2 h 20 with an interval",
+  "why": "A production’s running time, shown as Source for the running time on a piece and in Rehearsal.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'each production’s running time…'"
+ },
+ {
+  "source": "src/engine/content/workload.ts#UNNAMED_RUNNING",
+  "kind": "official",
+  "before": "Estimated, since no Carlotta or Langston Hughes festival play’s running time is published (searched 2026-10-16): a new play of an hour and forty minutes, run straight through",
+  "after": "Estimated, since no Carlotta or Langston Hughes festival play’s running time is published (searched October 16, 2026): a new play of an hour and forty minutes, run straight through",
+  "why": "A searched day, as the brief asks a reading day to read.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts 'each production’s running time…'"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#adventure",
+  "kind": "official",
+  "before": "two of its three sources read directly and the remaining one from a search summary, reviewed 2026-10-10",
+  "after": "two of its three sources read directly and the remaining one from a search summary, reviewed October 10, 2026",
+  "why": "How a demand was read, as the look’s parenthesis says it: the review’s day the game’s way, written by howWords.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts (Adventure drawn: \", reviewed October 10, 2026; \")"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#blaxploitation",
+  "kind": "official",
+  "before": "all three of its sources read directly, reviewed 2026-10-10",
+  "after": "all three of its sources read directly, reviewed October 10, 2026",
+  "why": "The same, all its sources read directly.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts (every genre’s field)"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#absurdist",
+  "kind": "official",
+  "before": "All of the evidence is Beckett, mostly Godot. Ionesco, Pinter and absurdist film aren’t covered. The study guide’s PDF couldn’t be read as text, so the quotations come from a search engine’s summary of it, not from a direct reading. Nothing found covers 'holding comedy and despair together' as an acting demand in so many words. On review (2026-10-10), evidence that’s all Beckett wasn’t enough to make it a requirement of the whole genre.",
+  "after": "All of the evidence is Beckett, mostly Godot. Ionesco, Pinter and absurdist film aren’t covered. The study guide’s PDF couldn’t be read as text, so the quotations come from a search engine’s summary of it, not from a direct reading. Nothing found covers 'holding comedy and despair together' as an acting demand in so many words. On review (October 10, 2026), evidence that’s all Beckett wasn’t enough to make it a requirement of the whole genre.",
+  "why": "Still uncertain: the review’s day in the research’s own sentence.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts (Absurdist drawn)"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#biographical",
+  "kind": "official",
+  "before": "Film Inquiry is an independent film-criticism site, not a primary source. The examples are celebrated star performances, and not every biopic asks this much. The review of 2026-10-10 took Accents away: an accent is asked only where the subject spoke differently from the actor, which belongs to the role, not the genre.",
+  "after": "Film Inquiry is an independent film-criticism site, not a primary source. The examples are celebrated star performances, and not every biopic asks this much. The review of October 10, 2026 took Accents away: an accent is asked only where the subject spoke differently from the actor, which belongs to the role, not the genre.",
+  "why": "\"The review of …\" with its day the game’s way.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts (every genre’s field)"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#horror",
+  "kind": "official",
+  "before": "Frazer Shepherdson, 'A Comprehensive Guide to Acting in Horror Movies', StageMilk (16 July 2024), https://www.stagemilk.com/a-comprehensive-guide-to-acting-in-horror-movies/",
+  "after": "Frazer Shepherdson, 'A Comprehensive Guide to Acting in Horror Movies', StageMilk (July 16, 2024), https://www.stagemilk.com/a-comprehensive-guide-to-acting-in-horror-movies/",
+  "why": "A citation’s publication day, outside the title’s quotation marks; the title and the address as written.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts (Horror drawn: \"StageMilk (July 16, 2024), https://\")"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#horror_comedy",
+  "kind": "official",
+  "before": "'Shaun of the Dead: An Interview with Simon Pegg', BlackFilm.com (17 Sept 2004), http://www.blackfilm.com/20040917/features/simonpegg.shtml",
+  "after": "'Shaun of the Dead: An Interview with Simon Pegg', BlackFilm.com (September 17, 2004), http://www.blackfilm.com/20040917/features/simonpegg.shtml",
+  "why": "\"Sept\" is September.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#psychological_thriller",
+  "kind": "official",
+  "before": "Deadline, ''Gone Girl's Rosamund Pike: Portraying The Complicated Amazing Amy' (Dec 2014), https://deadline.com/2014/12/rosamund-pike-interview-gone-girl-oscars-1201332014/ (behind a paywall; seen in a search summary)",
+  "after": "Deadline, ''Gone Girl's Rosamund Pike: Portraying The Complicated Amazing Amy' (December 2014), https://deadline.com/2014/12/rosamund-pike-interview-gone-girl-oscars-1201332014/ (behind a paywall; seen in a search summary)",
+  "why": "A month and year with a short month; the title in its quotation marks (an apostrophe inside it) kept.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#queer_cinema",
+  "kind": "official",
+  "before": "PinkNews, 'Intimacy co-ordinator behind major queer sex scenes reveals what their job is really like' (30 Oct 2024), https://www.thepinknews.com/2024/10/30/queer-intimacy-coordinator-robbie-taylor-hunt-mr-loverman-reverberation/",
+  "after": "PinkNews, 'Intimacy co-ordinator behind major queer sex scenes reveals what their job is really like' (October 30, 2024), https://www.thepinknews.com/2024/10/30/queer-intimacy-coordinator-robbie-taylor-hunt-mr-loverman-reverberation/",
+  "why": "A citation’s day after the quoted headline.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ },
+ {
+  "source": "src/engine/content/genre-demands.json#isekai",
+  "kind": "official",
+  "before": "'Interview: Miho Okasaki', Anime News Network (11 Sept 2019), https://www.animenewsnetwork.com/feature/2019-09-11/interview-miho-okasaki/.150880",
+  "after": "'Interview: Miho Okasaki', Anime News Network (September 11, 2019), https://www.animenewsnetwork.com/feature/2019-09-11/interview-miho-okasaki/.150880",
+  "why": "The day in the citation changed; the same day in the address (/2019-09-11/) kept.",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts"
+ }
+]
