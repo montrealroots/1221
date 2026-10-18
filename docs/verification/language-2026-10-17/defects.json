@@ -2470,6 +2470,28 @@
       "status": "left",
       "why": "74 of the material area's 120 hits are a self-tape's take, which Core keeps; the ratchet's pattern in tools/text-inventory.mjs still counts “a take” anywhere but “a take on the part”.",
       "owner": "a future pass"
+    },
+    {
+      "id": "uitools-toast",
+      "title": "Work On The Note's toast named the part by the engine's id: “Work On The Note: 60 minutes, revision up 50%.”",
+      "records": [
+        {
+          "file": "uitools/README.md",
+          "at": "**Seen on the way, read by no check.**"
+        }
+      ],
+      "kind": "assembly",
+      "status": "fixed",
+      "commit": "ebdb5577",
+      "touches": [
+        "src/ui/components/CourseworkPane.tsx"
+      ],
+      "evidence": [
+        {
+          "test": "tests/evidence-g24-school.test.ts",
+          "title": "says what Work On The Note, pressed on a scene shown and given its note, moved in words, where the card names no part for it"
+        }
+      ]
     }
   ],
   "excluded": [
@@ -2676,9 +2698,9 @@
     }
   ],
   "counts": {
-    "total": 100,
+    "total": 101,
     "by_status": {
-      "fixed": 89,
+      "fixed": 90,
       "left": 11
     },
     "by_kind": {
@@ -2688,9 +2710,9 @@
         "total": 35
       },
       "assembly": {
-        "fixed": 34,
+        "fixed": 35,
         "left": 2,
-        "total": 36
+        "total": 37
       },
       "layout": {
         "fixed": 7,
@@ -2739,10 +2761,11 @@
       "health/glossary.md": 1,
       "money/batches.md": 1,
       "money/glossary.md": 1,
-      "profile/batches.md": 1
+      "profile/batches.md": 1,
+      "uitools/README.md": 1
     },
     "fixed_held_by": {
-      "a test": 60,
+      "a test": 61,
       "a check": 6,
       "the source alone": 23
     },

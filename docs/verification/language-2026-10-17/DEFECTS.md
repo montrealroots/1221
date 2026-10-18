@@ -16,22 +16,22 @@ defects.py --verify.
 
 ## The Counts
 
-**100 defects:** 89 fixed and 11 left. 17 more items in the records were read and not counted (the last table says why).
+**101 defects:** 90 fixed and 11 left. 17 more items in the records were read and not counted (the last table says why).
 
 | Kind | What It Covers | Fixed | Left | All |
 |---|---|---|---|---|
 | text | A sentence that misstated the game | 33 | 2 | 35 |
-| assembly | A sentence built from parts that came out wrong: a plural, a leaked value, a date, a sign | 34 | 2 | 36 |
+| assembly | A sentence built from parts that came out wrong: a plural, a leaked value, a date, a sign | 35 | 2 | 37 |
 | layout | A control or a screen’s layout | 7 | 0 | 7 |
 | behavior | What the game does, not what it says | 3 | 1 | 4 |
 | test-or-tool | A test, a check or a tool the pass runs | 7 | 3 | 10 |
 | data | The research data, or the builder that writes it | 5 | 3 | 8 |
-| **all** | | **89** | **11** | **100** |
+| **all** | | **90** | **11** | **101** |
 
-Of the 89 fixed, 60 are held by a test, 6 by a check alone, and 23 by the source as it reads now, where no test was found that asserts the new words. Of the 11 left, 2 are for the owner and 9 for a future pass.
+Of the 90 fixed, 61 are held by a test, 6 by a check alone, and 23 by the source as it reads now, where no test was found that asserts the new words. Of the 11 left, 2 are for the owner and 9 for a future pass.
 
 By record: how many defects each file names. A defect two records describe is counted in each, so this column
-adds up to more than 100.
+adds up to more than 101.
 
 | Record | Defects |
 |---|---|
@@ -61,6 +61,7 @@ adds up to more than 100.
 | `money/batches.md` | 1 |
 | `money/glossary.md` | 1 |
 | `profile/batches.md` | 1 |
+| `uitools/README.md` | 1 |
 
 ## Fixed
 
@@ -155,6 +156,7 @@ adds up to more than 100.
 | `editorial-comments` | Four comments in the looks wrote straight apostrophes, three of them from 20f2757e, so the looks test was already failing on c74a02e1 | test-or-tool | `editorial/batches.md` | `be528852` | `tests/looks.test.ts`, “writes the apostrophe the house writes” |
 | `coordinator-quotes` | The guide quoted words other areas had rewritten: 74 of 595 quoted sentences at the merge of the eight areas, among them the money guide's quotes of papers' refusals | text | `coordinator.md`<br>`papers/defects.md`<br>`health/HANDOFF.md`<br>`frame/HANDOFF.md` | `ce8b26e6` | `node tools/guide-quotes.mjs --check` (exit 0, 580 of 580 quoted sentences the game says, on 2026-10-18) |
 | `coordinator-genre-work` | The Core glossary said class scenes count as work in a genre; only nights on stage and self-tapes do | text | `coordinator.md`<br>`profile/batches.md` | `71706a77` | `docs/GLOSSARY.md` holds “Class scenes don't count.” |
+| `uitools-toast` | Work On The Note's toast named the part by the engine's id: “Work On The Note: 60 minutes, revision up 50%.” | assembly | `uitools/README.md` | `ebdb5577` | `tests/evidence-g24-school.test.ts`, “says what Work On The Note, pressed on a scene shown and given its note, moved in words,…” |
 
 ## Left
 

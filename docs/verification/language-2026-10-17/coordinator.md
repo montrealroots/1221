@@ -7,9 +7,6 @@ commits) settled them.
 
 ## Open
 
-- **A refusal's shape for money that isn't there.** Papers says "Your bank can’t cover $…, so nothing was charged.",
-  health "It costs …, more than your bank can cover.", and Money's refusals have their own words (`crossarea/`). Given
-  to the editorial review (`prompts/editorial.md`).
 - **Dead content.** `licensepaths.ts` is read by nothing, and most of `licenses.ts` reaches no player (papers). Both
   are Reviewed And Retained. Deleting them is a scope call, left to the owner.
 - **On The Way before Sunday evening** (`journeys/defects.md` 3). It can't see next week's classes until `planWeek`
@@ -18,6 +15,11 @@ commits) settled them.
 
 ## Settled
 
+- **A refusal's shape for money that isn't there** (the editorial review's batch 1, merged `6d83601a`). Papers said
+  "Your bank can’t cover $…, so nothing was charged.", health "It costs …, more than your bank can cover.", and Money's
+  refusals had their own words. It's one shape now: what can't pay, the amount, what didn't happen, then the next step.
+  It has two variants, each with why in `docs/STYLE.md` (`editorial/batches.md`). Until this close-out it was listed
+  as open, given to the editorial review.
 - **Energy and condition in Core** (2026-10-17, `6dff8679`). Only sleep restores energy, and an injury doesn't lower
   condition. The health area found both; the Core entries say so.
 - **One word for a commitment; the Sleep dialog's labels; School and Your School; the term's review; the mood and
@@ -65,3 +67,6 @@ Each with a test that fails without it, and its mutations, in the commit named.
 - An injury's notice said nothing of a care the plan paid, nor of Call In Sick (`961b3f08`).
 - A Connecticut ID card in the mail read Being Decided, and a pending replacement showed the lost card's issue date
   (`dcbf4b23`).
+- Work On The Note's toast named the part by the engine's id, “revision up 50%”, where a scene's card names no part for
+  its revision (`ebdb5577`, `uitools/README.md`). The old toast restored, the note's words dropped, and a named part
+  said as “further” each fail a test in `tests/evidence-g24-school.test.ts`.

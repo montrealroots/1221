@@ -145,7 +145,9 @@ gives the player.
   offer `revise` (`src/engine/content/coursework.ts:886`, part `revision`) but don't name a `revision` part in their
   `dims`, so the toast falls back to the id.
 - **Not new:** brief 13's run on `695683c4` recorded the same toast, "revision up 49%".
-- **Not fixed here:** it's player-facing text in the school area's sources, and this pass changed the tools only.
+- **Not fixed here:** it was player-facing text in the school area's sources, and this pass changed the tools only.
+  `ebdb5577` fixed it after: where the card names no part, the toast says how much further the note is, "Work On
+  The Note: 60 minutes, 50% further on the note." (`tests/evidence-g24-school.test.ts`).
 
 ## The Final Runs
 

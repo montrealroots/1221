@@ -102,11 +102,12 @@ files = re.findall(r'Test Files\s+(\d+) passed \((\d+)\)', gate_txt)
 if gate_exit != 0: problems.append(f'the gate: {"not run" if gate_exit is None else f"exit {gate_exit}"}')
 build_exit = exit_of(f'{B}/final-checks/build-exit.txt')
 if build_exit != 0: problems.append(f'the build: {"not run" if build_exit is None else f"exit {build_exit}"}')
-lane_exits = {}
+lane_exits, first_exits = {}, {}
 for f in sorted(glob.glob(f'{B}/runs/exits-*.txt')) + sorted(glob.glob(f'{B}/final-walk/exits.txt')):
     rows = [l for l in read(f).splitlines() if ' exit=' in l]
     bad = [l.split(' cmd:')[0] for l in rows if not re.search(r' exit=0 ', l)]
-    lane_exits[f.replace(B + '/', '')] = (len(rows), bad)
+    # Lanes A and UI's first runs, on 6d83601a, kept as what they showed and superseded (runs/first/README.md).
+    (first_exits if f.endswith('-first.txt') else lane_exits)[f.replace(B + '/', '')] = (len(rows), bad)
 numbers = load(f'{B}/numbers-same.json')
 if numbers is None: problems.append('the comparison with brief 13: not run')
 elif any(v.get('unexplained') or v.get('missing') for v in numbers.values()): problems.append('a final run differs from brief 13 in a number nothing explains')
@@ -126,6 +127,10 @@ def faults(p):
     return x.get('read'), sum(v.get('distinct', 0) for v in x.get('found', {}).values()), sorted(x.get('found', {}))
 render = {w: (faults(f'{B}/before/render-before-{w}.json'), faults(f'{B}/final-walk/render-{w}.json')) for w in ('1440', '390')}
 routes = load(f'{B}/final-walk/routes.json')
+# One entry per label the guide names, with where it was found; counted here, a label found nowhere failing it.
+route_counts = {'nowhere': 0, **Counter(x['status'] for x in routes)} if isinstance(routes, list) else None
+if route_counts is None: problems.append('the tutorial routes: not run')
+elif route_counts.get('nowhere'): problems.append(f"{route_counts['nowhere']} labels the guide names found nowhere")
 # Brief 13's three playthroughs and brief 14's three journeys, each at both widths, as the UI lane recorded them.
 ui = read(f'{B}/runs/exits-UI.txt')
 journeys = {}
@@ -156,8 +161,8 @@ receipt = {
     'inventory': {'start': base.get('all'), 'now': all_now, 'byArea': {a: dict(c) for a, c in by_area.items()}, 'engineSpeak': {'start': sum(speak_start.values()), 'now': all_now.get('speak'), 'ratchet': sum(ratchet.values())}},
     'examples': {'count': len(ex_all), 'meaningSensitive': ex_meaning, 'byArea': {a: len(x) for a, x in examples.items()}, 'byKind': dict(ex_kinds)},
     'tests': {'added': dict(added_counts), 'changedFiles': changed_tests},
-    'final': {'gate': gate_exit, 'suite': suite[-1] if suite else None, 'files': files[-1] if files else None, 'build': build_exit, 'lanes': {k: {'steps': n, 'notZero': bad} for k, (n, bad) in lane_exits.items()}, 'journeys': journeys, 'numbersSame': numbers},
-    'builtApp': {'screens': walks, 'render': render, 'routes': routes.get('counts') if isinstance(routes, dict) else None},
+    'final': {'gate': gate_exit, 'suite': suite[-1] if suite else None, 'files': files[-1] if files else None, 'build': build_exit, 'lanes': {k: {'steps': n, 'notZero': bad} for k, (n, bad) in lane_exits.items()}, 'firstRuns': {k: {'steps': n, 'notZero': bad} for k, (n, bad) in first_exits.items()}, 'journeys': journeys, 'numbersSame': numbers},
+    'builtApp': {'screens': walks, 'render': render, 'routes': route_counts},
     'defects': defects.get('counts') if defects else None,
     'open': still_open,
     'problems': problems,
@@ -234,10 +239,10 @@ for x in picked:
 w('')
 w('## 5. The Tutorials’ Routes, Verified On The Built App')
 w('')
-if isinstance(routes, dict):
+if route_counts is not None:
     w('`tools/tutorial-routes.mjs` read every label the guide and How This Works name against the final walk and its capture (`final-walk/routes.md`):')
     w('')
-    w(table(['Outcome', 'Labels'], sorted((routes.get('counts') or {}).items())))
+    w(table(['Outcome', 'Labels'], sorted(route_counts.items())))
 else:
     w('Not run yet.')
 w('')
@@ -289,6 +294,13 @@ w('- **The final runs**, each step’s exit recorded (`runs/exits-*.txt`, `final
 w('')
 w(table(['Record', 'Steps', 'Not exit 0'], [[k, n, '; '.join(bad) or 'none'] for k, (n, bad) in lane_exits.items()]))
 w('')
+if first_exits:
+    w('Lanes A and UI ran first on `6d83601a`, and those runs are kept as what they showed, superseded by the runs above '
+      '(`runs/first/README.md`: each failure a tool reading replaced words or a step after one that threw, and banking’s '
+      'the engine’s week planning):')
+    w('')
+    w(table(['First run', 'Steps', 'Not exit 0'], [[k, n, '; '.join(bad) or 'none'] for k, (n, bad) in first_exits.items()]))
+    w('')
 w('- **Gameplay unchanged.** Every number, id, list length and key in the final runs against brief 13\'s, words allowed '
   'to differ (`numbers-same.py`, `numbers-same.json`). A difference is explained only by the kind of field it\'s in, with '
   'the reason the script gives; one nothing explains fails it:')
